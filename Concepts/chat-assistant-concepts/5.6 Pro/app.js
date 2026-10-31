@@ -3922,16 +3922,26 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      flag that defaulted to 'favorites' while the rail drew "All configured
      providers" as the active tab -- which is why only 3 of 6 models showed.
      The rail (state.modelProvider) is now the only source of truth. */
+  /* On the Project onboarding just made, the picker offers what onboarding connected (PM_ONBOARDING_RESULT's accounts
+     carry Settings' provider ids; provider-login audit P13): a model whose provider has no connected account there is
+     not offered. Every other Project keeps this fixture's configured models. */
+  const ONB_PICKER={'claude-code':'Anthropic','anthropic-api':'Anthropic','openai-codex':'OpenAI','cursor-cli':'Cursor','qwen-coding':'Alibaba','qwen-token':'Alibaba','kimi-coding':'Moonshot','zai-coding':'z.ai'};
+  function configuredModels(){
+    const r=window.PM_ONBOARDING_RESULT;
+    if(!r||!r.project||r.project.id!==window.PM_ACTIVE_PROJECT_ID||!Array.isArray(r.accounts)) return D.models;
+    const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.settings_provider_id||a.provider_entry_id]).filter(Boolean));
+    return D.models.filter(m=>ok.has(m.provider));
+  }
   function filteredModels(){
     const q=state.modelSearch.toLowerCase().trim();
-    let models=D.models.filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q));
+    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q));
     if(state.modelProvider==='favorites') models=models.filter(x=>isFavorite(x.id));
     else if(state.modelProvider!=='all') models=models.filter(x=>x.provider===state.modelProvider);
     return models;
   }
   function renderModelMenu(){
     const models=filteredModels();
-    const providers=[...new Set(D.models.map(x=>x.provider))];
+    const providers=[...new Set(configuredModels().map(x=>x.provider))];
     /* Three inline declarations are the whole fix for "the model list cannot
        scroll". .overlay-menu.model-menu carries a definite inline height and
        overflow:hidden, but .model-layout was a block-level grid with
@@ -3946,7 +3956,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
            modelMenuHeight() so the two cannot disagree.
        Measured, not assumed: verified in-browser that .model-scroll's
        scrollHeight exceeds its clientHeight and that it really scrolls. */
-    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites"${hoverAttrs('model-provider:favorites','Favorites')}>${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all"${hoverAttrs('model-provider:all','All configured providers')}>${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}"${hoverAttrs('model-provider:'+p, p)}>${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">No configured model matches this view.</div>`}</div></div></div>`;
+    return `<div class="model-layout" style="height:100%;max-height:none;grid-template-rows:minmax(0,1fr)"><div class="provider-rail"><button class="provider-button ${state.modelProvider==='favorites'?'active':''}" data-action="model-provider" data-value="favorites"${hoverAttrs('model-provider:favorites','Favorites')}>${icon('star',14)}</button><button class="provider-button ${state.modelProvider==='all'?'active':''}" data-action="model-provider" data-value="all"${hoverAttrs('model-provider:all','All configured providers')}>${icon('users',14)}</button>${providers.map(p=>`<button class="provider-button ${state.modelProvider===p?'active':''}" data-action="model-provider" data-value="${esc(p)}"${hoverAttrs('model-provider:'+p, p)}>${providerMark(p,16)}</button>`).join('')}</div><div class="model-main"><div class="menu-search"><label class="input-wrap">${icon('search',12)}<input data-input="model-search" value="${esc(state.modelSearch)}" placeholder="Search configured models…"></label></div><div class="model-scroll">${models.length?groupModels(models):`<div style="padding:18px;text-align:center;color:var(--muted);font-size:11px">${configuredModels().length?'No configured model matches this view.':'No AI is connected to this Project yet. Add one in Settings › Providers &amp; Accounts.'}</div>`}</div></div></div>`;
   }
   function effortWords(m){
     return `<span class="effort-words">${m.efforts.map((e,i)=>{

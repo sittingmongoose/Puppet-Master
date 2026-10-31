@@ -1108,15 +1108,9 @@
   "ai": {
     "eyebrow": "AI",
     "title": "Choose what powers Puppet Master",
-    "lead": "Use an AI subscription or API account you already have. You can add more later.",
+    "lead": "Connect an AI account you already use. You can add more later, or skip for now.",
     "checking": "Checking…",
     "ready": "Ready",
-    "readyVia": "Ready · uses your {plan}",
-    "charged": {
-      "subscription": "Charged to your {plan}",
-      "api": "Charged to your API account",
-      "runtime": "Uses your own OpenCode setup"
-    },
     "found": "Found on this computer",
     "foundOn": "Found on {host}",
     "from": "From {project}",
@@ -1126,8 +1120,8 @@
     "signIn": "Sign In",
     "key": "Enter API Key",
     "keyLabel": "API key for {name}",
-    "keyHint": "Kept in your system keychain. Never shown again.",
-    "keyBad": "That key wasn't accepted. Check it and try again.",
+    "keyHint": "Paste the key, not your password. Kept in {where}. Never shown again.",
+    "keyBad": "That key wasn't accepted. Check it's a {name} key, then try again.",
     "verify": "Check key",
     "installAsk": "Install {name} on {host}? It uses {vendor}'s official installer.",
     "installGo": "Install",
@@ -1136,48 +1130,149 @@
       "install": "Installing",
       "verify": "Checking it works"
     },
-    "signinWait": "Finish signing in in your browser…",
+    "signinWait": "Finish signing in in your browser.",
     "notReady": "Not signed in",
     "seeAll": "See all providers",
     "allTitle": "All providers",
-    "subs": "Subscriptions and plans",
-    "subsSub": "A monthly plan you already pay for",
-    "apis": "Pay-as-you-go API accounts",
+    "subs": "Plans with included usage",
+    "subsSub": "A plan you already pay for",
+    "apis": "Pay for what you use",
     "apisSub": "Billed by what you use",
     "none": "I don't have any of these",
-    "another": "Add another account",
     "skip": "Skip for now",
     "skipNote": "Puppet Master can't plan or work until an AI is added.",
     "free": {
       "title": "Set Up Free Models",
-      "sub": "Add free options for suitable tasks. Availability and limits can vary."
+      "sub": "Free options with limits, for suitable tasks.",
+      "some": "{n} set up. Add or change them."
     },
     "pairs": {
       "claude": "Claude plan, not the Anthropic API",
-      "anthropic-api": "Pay as you go, separate from a Claude plan",
+      "codex": "ChatGPT sign-in, or an OpenAI API key",
+      "cursor": "A Cursor API key, or Cursor's browser sign-in",
+      "copilot": "The Copilot plan on your GitHub account",
+      "qwen-coding": "Qwen and other models, with the plan's own key",
+      "qwen-token": "A monthly plan, not the Coding Plan",
+      "kimi": "Kimi Code's own key, not Kimi Open Platform",
+      "minimax": "Formerly the MiniMax Coding Plan",
+      "anthropic-api": "Billed by use, separate from a Claude plan",
       "antigravity": "Antigravity plan, not the Gemini API",
-      "gemini-api": "Pay as you go, separate from Antigravity",
-      "vertex": "Google Cloud billing",
+      "gemini-api": "Free limits or billed by use, separate from Antigravity",
+      "vertex": "Billed by Google Cloud, separate from Antigravity and the Gemini API",
       "grok": "Grok Build plan, not the xAI API",
-      "xai-api": "Pay as you go, separate from Grok Build",
+      "xai-api": "Billed by use, separate from Grok Build",
       "muse": "Muse Code plan, not the Meta Model API",
-      "meta-api": "Pay as you go, separate from Muse Code",
-      "opencode-go": "OpenCode's monthly plan",
-      "opencode-zen": "OpenCode pay as you go",
-      "opencode-runtime": "OpenCode installed on your computer"
+      "meta-api": "Billed by use, separate from Muse Code",
+      "opencode-go": "OpenCode's monthly plan, not the OpenCode server",
+      "opencode-zen": "Billed by use from credit you buy. Formerly OpenCode Zen",
+      "opencode-runtime": "Runs OpenCode itself. Its model accounts stay in OpenCode."
     },
-    "names": {
-      "opencode-runtime": "OpenCode on your computer"
+    "names": {},
+    "notInstalled": "Not installed",
+    "allLead": "Find yours by name. They're grouped by what pays for them.",
+    "where": "The AI works on {host}. Sign-ins open here on this device, and are kept on {host}.",
+    "keychainHere": "this computer's keychain",
+    "keychainOn": "the keychain on {host}",
+    "connect": "Connect",
+    "setUp": "Set up",
+    "notSetUp": "Not set up",
+    "keyFrom": "Get a key from {name}",
+    "offline": "This computer is offline, so nothing could be checked. Connect to the internet, then try again.",
+    "cancel": "Cancel",
+    "signinWaitOn": "Finish signing in in this device's browser. The sign-in is kept on {host}.",
+    "signinWaitPill": "Waiting for you",
+    "own": "Your own setup",
+    "ownSub": "A server you run, or one Puppet Master runs for you.",
+    "manage": "Change",
+    "acct": {
+      "key": "Key {n}",
+      "altKey": "{product} key",
+      "server": "OpenCode server",
+      "many": "{n} accounts"
     },
-    "notInstalled": "Not installed"
+    "bill": {
+      "plan": "Uses your {product}",
+      "use": "{product}, billed by use",
+      "managed": "Run by Puppet Master on {host}",
+      "attached": "Your server at {address}"
+    },
+    "addAnother": "Add another {name} account",
+    "remove": "Remove",
+    "removeAsk": "Remove {who} from Puppet Master? Your {vendor} account itself stays as it is.",
+    "removeGo": "Remove",
+    "keep": "Keep it",
+    "dup": "That's {who}, already connected. To add a different one, sign in with another account.",
+    "way": {
+      "codex": {
+        "main": "Sign in with ChatGPT",
+        "mainSub": "Uses Codex through your ChatGPT plan limits.",
+        "alt": "Use an OpenAI API key",
+        "altSub": "Billed by use, separately from ChatGPT."
+      },
+      "cursor": {
+        "main": "Use a Cursor API key",
+        "mainSub": "From your Cursor dashboard. Uses your Cursor plan.",
+        "alt": "Sign in in the browser instead",
+        "altSub": "Installs Cursor's command-line tool, then signs in."
+      }
+    },
+    "ctx": {
+      "billing": {
+        "title": "Whose Copilot plan should Puppet Master use?",
+        "me": "Your own ({who})",
+        "org": "{org} (organization)",
+        "via": "through {who}"
+      },
+      "workspace": {
+        "title": "This key works in more than one workspace. Which one should pay for its use?",
+        "default": "Default workspace"
+      },
+      "project": {
+        "label": "Google Cloud project ID (optional)",
+        "hint": "Leave it empty if your key isn't tied to a project.",
+        "named": "Project {project}"
+      }
+    },
+    "needsChoice": "Needs a choice",
+    "deviceLead": "On any device, open {vendor}'s sign-in page and enter this code.",
+    "pasteLead": "Open the sign-in link in any browser and finish there. The page then shows a code: paste it here.",
+    "copyLink": "Copy sign-in link",
+    "pasteLabel": "Code from the page",
+    "pasteGo": "Use this code",
+    "pasteBad": "That code wasn't accepted. Copy it again from the page.",
+    "oc": {
+      "managed": "Let Puppet Master run it",
+      "managedSub": "Installs OpenCode on {host} if needed, then starts it.",
+      "attached": "Use a server I already run",
+      "attachedSub": "Connect to it by its address.",
+      "start": "Start OpenCode on {host}",
+      "addr": "Server address",
+      "addrHint": "Where your OpenCode server answers.",
+      "user": "Username (if it asks for one)",
+      "pass": "Password (if it asks for one)",
+      "connect": "Connect",
+      "phase": {
+        "launch": "Starting OpenCode on {host}",
+        "connect": "Connecting",
+        "health": "Checking it answers",
+        "discover": "Finding its models"
+      },
+      "failTitle": "Couldn't connect",
+      "fail": "No OpenCode server answered at that address. Check it's running, then try again."
+    },
+    "expired": {
+      "title": "Sign-in expired",
+      "body": "{who} · that sign-in has expired. Sign in again to keep using it."
+    },
+    "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here."
   },
   "aiNone": {
     "eyebrow": "AI",
     "title": "No AI account yet? That's fine",
-    "lead": "Puppet Master needs one AI to plan and work. Pick whichever suits you.",
+    "lead": "Puppet Master needs one AI to plan and work. Pick the kind that suits you.",
     "sub": {
       "title": "A monthly plan",
-      "sub": "Like Claude or ChatGPT. One price each month."
+      "sub": "Like Claude or ChatGPT. A plan you subscribe to."
     },
     "api": {
       "title": "Pay as you go",
@@ -1187,21 +1282,32 @@
       "title": "Free Models",
       "sub": "Free options with limits. Good for trying things out."
     },
-    "signup": "Open {name}'s sign-up page"
+    "signup": "Open {name}'s sign-up page",
+    "nothing": "Not ready to choose? Go back and skip for now. Puppet Master can't plan or work until an AI is added; you can add one any time in Settings."
   },
   "free": {
     "eyebrow": "AI",
     "title": "Set Up Free Models",
-    "lead": "Add free options for suitable tasks. Availability and limits can vary.",
+    "lead": "Free options with limits, for suitable tasks. Limits, and what's free, can change.",
     "needsSignin": "Needs sign-in",
     "ready": "Ready",
-    "limited": "Rate limited right now",
+    "limited": "Limit reached",
     "signIn": "Sign in",
     "setup": "Set up",
-    "reconnect": "Reconnect",
-    "paidFirst": "Your paid accounts are used first.",
+    "paidFirst": "Your paid accounts are used first by default. You can change that in Settings.",
     "attribution": "Free model list based on the community free-coding-models list",
-    "done": "Done"
+    "done": "Done",
+    "needsSetup": "Not set up",
+    "limitedMeta": "Set up. {provider} says this account is at its limit for now. It's used again once the limit resets.",
+    "retry": "Retry now",
+    "via": "{provider} · {who}",
+    "notConnected": "{provider} · no account connected yet",
+    "keyAccount": "key added",
+    "retired": "No longer available",
+    "retiredMeta": "{provider} closed this service. Choose another.",
+    "more": "More free options",
+    "turnOn": "Turn on",
+    "noAccountNeeded": "{provider} · no account needed"
   },
   "ready": {
     "eyebrow": "Ready",
@@ -1219,7 +1325,8 @@
     "tour": "Take the Guided Tour",
     "tourSub": "About {m} minutes. Uses a practice example; nothing changes.",
     "enter": "Enter Puppet Master",
-    "createNow": "Create a Project now"
+    "createNow": "Create a Project now",
+    "aiFreeOnly": "Free Models only, with their limits"
   },
   "nas": {
     "find": {
@@ -1794,7 +1901,8 @@
       "noAnswer": "no answer",
       "refused": "refused",
       "taken": "taken",
-      "expired": "runs out"
+      "expired": "runs out",
+      "revoked": "revoked"
     }
   },
   "endpoint": {

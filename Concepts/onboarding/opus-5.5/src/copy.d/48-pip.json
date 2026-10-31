@@ -4,103 +4,103 @@
       "common": {
         "provider:claude": {
           "title": "Claude",
-          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice.",
-          "expert": "Claude Code CLI signed in with your Claude subscription (OAuth); usage counts against the plan's limits. The Anthropic API (per-token billing, API key) is a separate provider."
+          "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate, pay-as-you-go choice.",
+          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider billed per token."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
-          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT.",
-          "expert": "OpenAI Codex CLI signed in with your ChatGPT subscription (OAuth); usage counts against the plan's limits."
+          "text": "Two ways in: sign in with ChatGPT to use your plan's limits, or use an OpenAI API key, billed separately by use. Each one is its own account here.",
+          "expert": "Direct provider with two auth families: ChatGPT OAuth (plan-backed usage) or an OpenAI API key (API billing). Separate account rows; their usage and cooldowns never merge."
         },
         "provider:antigravity": {
           "title": "Google Antigravity",
-          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice.",
-          "expert": "Google Antigravity signed in with its plan; the Gemini API (per-token billing, API key) is a separate provider."
+          "text": "Uses your Google Antigravity account, through Google's own app on the computer that does the work. The Gemini API is a separate choice.",
+          "expert": "Antigravity CLI (agy) with Google sign-in; the CLI keeps its sign-in on the execution host, and on a remote host uses its sign-in link and returned code. Gemini API is a separate provider."
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again.",
-          "expert": "Cursor through an API key from your Cursor account, checked before it is saved; the key is stored in the OS keychain and never shown again."
+          "text": "Paste an API key from your Cursor dashboard. It uses your Cursor plan.",
+          "expert": "Cursor SDK route with a user or service-account API key from the Cursor dashboard; Team Admin keys aren't accepted. Browser sign-in through cursor-agent is the other way in."
         },
         "provider:grok": {
           "title": "Grok Build",
-          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice.",
-          "expert": "Grok Build subscription; the xAI API (per-token billing, API key) is a separate provider."
+          "text": "Uses Grok Build, signed in through xAI's own app on the computer that does the work. The xAI API is a separate, pay-as-you-go choice.",
+          "expert": "Grok Build CLI (grok) with xAI browser sign-in, or a device code when the browser is on another device; the CLI keeps its sign-in. The xAI API is a separate provider."
         },
         "provider:muse": {
           "title": "Muse Code",
-          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice.",
-          "expert": "Muse Code subscription; the Meta Model API (per-token billing, API key) is a separate provider."
+          "text": "Uses Muse Code, signed in through Meta's own app. That sign-in works only in Muse Code; other Meta keys are billed separately.",
+          "expert": "Muse Code CLI (muse) with its own sign-in; the subscription credential is limited to Muse Code, and an API key set in Muse takes precedence over it. The Meta Model API is separate."
         },
         "provider:copilot": {
           "title": "GitHub Copilot",
-          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot.",
-          "expert": "GitHub Copilot through your GitHub account's Copilot subscription (GitHub OAuth)."
+          "text": "Signs in with your GitHub account, then asks whose Copilot plan to use: yours or an organization's. It doesn't change where your code is kept.",
+          "expert": "GitHub Copilot direct hosted API: GitHub OAuth, then entitlement and billing-entity selection before Ready. Separate from the GitHub account used for repositories."
         },
         "provider:qwen-coding": {
-          "title": "Qwen Coding Plan",
-          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account.",
-          "expert": "Alibaba Cloud's Qwen Coding Plan, a monthly subscription; authenticates with an API key from your Alibaba Cloud account."
+          "title": "Alibaba Coding Plan",
+          "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key. A plan bought for China is set up in Settings.",
+          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with DashScope pay-as-you-go keys. The China route is in Settings."
         },
         "provider:qwen-token": {
-          "title": "Qwen Token Plan",
-          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account.",
-          "expert": "Alibaba Cloud's Qwen Token Plan, billed per token; authenticates with an API key."
+          "title": "Alibaba Token Plan",
+          "text": "Alibaba Cloud's Token Plan, a monthly plan. It has its own key, separate from the Coding Plan.",
+          "expert": "Alibaba Model Studio Token Plan: a subscription (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account.",
-          "expert": "Z.AI Coding Plan, a monthly subscription (GLM models); authenticates with an API key."
+          "text": "Z.AI's monthly plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
+          "expert": "Z.AI GLM Coding Plan with an API key on the coding endpoint. Zhipu's China plan is a separate route, in Settings."
         },
         "provider:kimi": {
           "title": "Kimi Code",
-          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account.",
-          "expert": "Moonshot's Kimi Code subscription; authenticates with an API key."
+          "text": "Kimi Code's monthly plan. Get the key from the Kimi Code console; a Kimi Open Platform key is a different, pay-as-you-go account.",
+          "expert": "Kimi For Coding direct route with a Kimi Code console key, separate from Moonshot Open Platform keys; Puppet Master sends its own client identity."
         },
         "provider:minimax": {
-          "title": "MiniMax Coding Plan",
-          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account.",
-          "expert": "MiniMax Coding Plan, a monthly subscription; authenticates with an API key."
+          "title": "MiniMax M Plan",
+          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
+          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; a pay-as-you-go MiniMax key isn't plan access. The China route is in Settings."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account.",
-          "expert": "OpenCode Go, a monthly subscription; authenticates with an API key from OpenCode."
+          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console.",
+          "expert": "OpenCode Go subscription key from the OpenCode Console. Not the OpenCode server."
         },
         "provider:opencode-zen": {
-          "title": "OpenCode Zen",
-          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account.",
-          "expert": "OpenCode Zen, billed per token; authenticates with an API key from OpenCode."
+          "title": "OpenCode Console",
+          "text": "OpenCode's pay-as-you-go service, which used to be called Zen. You buy credit in the OpenCode Console, then use its key.",
+          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway funded by Console credit, with an API key; not the OpenCode server connection."
         },
         "provider:opencode-runtime": {
-          "title": "OpenCode on your computer",
-          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today.",
-          "expert": "Your own OpenCode install, used as it is configured: its providers, models and credentials stay its own."
+          "title": "OpenCode server",
+          "text": "Uses OpenCode itself as a server. Puppet Master can run it for you, or connect to one you already run. Its own model accounts stay in OpenCode.",
+          "expert": "OpenCode server profile: Managed Server (launched on the execution host) or Attach to Existing Server (endpoint plus optional HTTP Basic auth). Upstream auth stays in OpenCode."
         },
         "provider:anthropic-api": {
           "title": "Anthropic API",
-          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key.",
-          "expert": "The Anthropic API, billed per token; authenticates with an API key. Separate from a Claude subscription."
+          "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
-          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key.",
-          "expert": "The Gemini API (Google AI Studio), billed per token; authenticates with an API key. Separate from an Antigravity plan."
+          "text": "Google's Gemini through a key from Google AI Studio. Separate from Antigravity.",
+          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides its free or paid tier and quota. Separate from Antigravity."
         },
         "provider:vertex": {
           "title": "Vertex AI",
-          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud.",
-          "expert": "Gemini and partner models through Vertex AI on Google Cloud, billed to your Google Cloud project; authenticates with your Google Cloud credentials."
+          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already uses Google Cloud.",
+          "expert": "Vertex AI with a Google Cloud API key, in express mode or tied to a project; billing and quota follow that project."
         },
         "provider:xai-api": {
           "title": "xAI API",
-          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key.",
-          "expert": "The xAI API, billed per token; authenticates with an API key. Separate from a Grok Build plan."
+          "text": "Pay as you go with xAI, using a key from the xAI Console. Separate from a Grok Build plan.",
+          "expert": "xAI API key from the xAI Console, billed per request. Separate from Grok Build."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
-          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key.",
-          "expert": "The Meta Model API, billed per token; authenticates with an API key. Separate from a Muse Code plan."
+          "text": "Pay as you go with Meta's models, using a key from Meta's developer site. A Muse Code plan's sign-in is different.",
+          "expert": "Meta Model API key from dev.meta.ai, billed by use. The Muse Code subscription credential works only in Muse Code."
         },
         "pairing:approval": {
           "title": "Approve from another device",
@@ -154,8 +154,8 @@
         },
         "field:key": {
           "title": "API key",
-          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store.",
-          "expert": "The provider's API key. Checked against the provider before it is saved, then stored in the OS keychain."
+          "text": "A long secret code from the AI company, not your password. Paste it, then choose Check key. It's kept in the keychain on the computer that does the work.",
+          "expert": "The route's own API key, checked against the provider before it is saved; stored in the OS keychain on the execution host, never in Puppet Master's files."
         },
         "tour": {
           "title": "Take the Guided Tour",
@@ -168,6 +168,71 @@
         "startOver": {
           "title": "Start over",
           "text": "Clears the choices from last time and begins setup again from the first page."
+        },
+        "way:codex|main": {
+          "title": "Sign in with ChatGPT",
+          "text": "Uses your ChatGPT plan. Codex use counts against that plan's limits.",
+          "expert": "ChatGPT OAuth account row; plan-backed usage bucket."
+        },
+        "way:codex|alt": {
+          "title": "Use an OpenAI API key",
+          "text": "A key from the OpenAI API dashboard. Billed by use, separately from any ChatGPT plan.",
+          "expert": "API-key account row at standard API pricing, separate from ChatGPT plan usage."
+        },
+        "way:cursor|main": {
+          "title": "Use a Cursor API key",
+          "text": "Make a key in your Cursor dashboard under API Keys, then paste it here.",
+          "expert": "Cursor SDK with a user or service-account API key; no CLI needed."
+        },
+        "way:cursor|alt": {
+          "title": "Sign in in the browser instead",
+          "text": "Installs Cursor's command-line tool on the computer that does the work, then you sign in to Cursor in your browser.",
+          "expert": "cursor-agent login in a Puppet Master profile root on the execution host; needs the CLI installed."
+        },
+        "field:paste": {
+          "title": "Code from the page",
+          "text": "After you sign in on the company's page, it shows a code. Paste it here so the sign-in reaches the computer that does the work.",
+          "expert": "One-use return code for the sign-in on the execution host; read once, never saved."
+        },
+        "field:project": {
+          "title": "Google Cloud project ID",
+          "text": "The project your key belongs to, if it belongs to one. It decides which Google Cloud bill pays.",
+          "expert": "Optional project ID for billing and quota; leave empty for an express-mode key."
+        },
+        "field:ocAddr": {
+          "title": "Server address",
+          "text": "The web address your OpenCode server answers on. On the same computer it's often http://127.0.0.1:4096.",
+          "expert": "Base URL of the running opencode serve (default 127.0.0.1:4096)."
+        },
+        "field:ocUser": {
+          "title": "Username",
+          "text": "Only if your OpenCode server asks for one. It's usually opencode.",
+          "expert": "HTTP Basic username (OPENCODE_SERVER_USERNAME, default opencode)."
+        },
+        "field:ocPass": {
+          "title": "Password",
+          "text": "Only if your OpenCode server has a password. It's the server's own password, not a key from an AI company.",
+          "expert": "HTTP Basic password (OPENCODE_SERVER_PASSWORD); kept in the OS keychain, separate from model-provider keys."
+        },
+        "group:entity": {
+          "title": "Whose Copilot plan",
+          "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one that should pay.",
+          "expert": "Copilot billing entity; entitlement and premium-request limits follow it."
+        },
+        "group:workspace": {
+          "title": "Workspace",
+          "text": "Anthropic bills each workspace separately. Pick the one this key's use should go to.",
+          "expert": "Workspace context for a key that isn't scoped to one workspace."
+        },
+        "ocMode:managed": {
+          "title": "Let Puppet Master run it",
+          "text": "Puppet Master installs OpenCode if needed, starts it and keeps it running on the computer that does the work.",
+          "expert": "Managed Server profile: Puppet Master owns launch, config root, reconnect and shutdown."
+        },
+        "ocMode:attached": {
+          "title": "Use a server I already run",
+          "text": "For an OpenCode server you started yourself. Puppet Master connects to it and leaves its settings to you.",
+          "expert": "Attach to Existing Server: Puppet Master owns the endpoint, its auth and health checks only; the server's own settings stay External / Not Managed."
         }
       },
       "chrome": {
@@ -1123,8 +1188,8 @@
       "ai": {
         "all": {
           "title": "See all providers",
-          "text": "Every AI Puppet Master works with, in two groups: monthly plans and pay-as-you-go accounts. An AI provider is the company your assistant uses; a model is one of its AI options.",
-          "expert": "Every supported provider, grouped as subscriptions and pay-as-you-go API accounts."
+          "text": "The full list, in three groups: plans you pay for, keys billed by what you use, and your own server. An AI provider is the company your assistant uses.",
+          "expert": "All providers in this concept, grouped as subscriptions, API billing, and self-run servers."
         },
         "none": {
           "title": "I don't have any of these",
@@ -1138,13 +1203,13 @@
         },
         "free": {
           "title": "Set Up Free Models",
-          "text": "Adds free options for suitable tasks. Their limits vary and can change. Your paid accounts are preferred by default; you can change that order in Settings.",
-          "expert": "Adds free model routes for suitable tasks. Availability and limits vary; paid accounts are preferred by default, and you can change the priorities in Settings."
+          "text": "Adds free options with limits for suitable tasks. Their limits can change. Your paid accounts are used first by default; change that in Settings.",
+          "expert": "Adds Free Models routes, each set up through its own provider's account. Paid accounts are preferred by default; the priorities are in Settings."
         },
         "group:install": {
           "title": "Install",
-          "text": "This AI needs its own app on the computer that does the work. Puppet Master uses the maker's official installer.",
-          "expert": "Installs the provider's CLI on the work computer with the vendor's official installer."
+          "text": "This AI needs its own app on the computer that does the work. Puppet Master installs it with the maker's official installer, only when you choose Install.",
+          "expert": "Explicit, consented install of the vendor CLI on the exact execution host from its official source; the CLI then owns its sign-in there."
         }
       },
       "ai-all": {
@@ -1157,8 +1222,8 @@
       "ai-none": {
         "pick:sub": {
           "title": "A monthly plan",
-          "text": "Like Claude or ChatGPT. A monthly price with usage limits: the simplest place to start.",
-          "expert": "A subscription (Claude, ChatGPT and others): a monthly price with usage limits; the provider's CLI signs in with it."
+          "text": "A plan you subscribe to, like Claude or ChatGPT.",
+          "expert": "A subscription account (Claude, ChatGPT and others)."
         },
         "pick:api": {
           "title": "Pay as you go",
@@ -1172,40 +1237,40 @@
         },
         "group:signup": {
           "title": "Sign-up pages",
-          "text": "Opens that company's own sign-up page in your browser. Come back here once you have an account.",
-          "expert": "Opens the provider's own sign-up page; come back once the account exists."
+          "text": "Opens that company's own sign-up page in your browser. When you come back, it's at the top of the list.",
+          "expert": "Opens the provider's sign-up page; on return the AI step lists that provider first."
         }
       },
       "free": {
         "route:free-openrouter": {
           "title": "OpenRouter free models",
-          "text": "A site that offers several AI models for free, with limits. You sign in on its page.",
-          "expert": "OpenRouter's free model variants, rate-limited; you sign in on OpenRouter."
+          "text": "OpenRouter's free models: free to use, with a small daily limit. You sign in on OpenRouter's page.",
+          "expert": "OpenRouter :free model variants through OpenRouter sign-in; per-minute and per-day request limits depend on credit bought."
         },
         "route:free-github-models": {
           "title": "GitHub Models",
-          "text": "Free AI from GitHub, with limits. It uses your GitHub account; Puppet Master checks which models your account can use.",
-          "expert": "GitHub Models through your GitHub account; Puppet Master checks which models your account can use and their limits before it is ready."
-        },
-        "route:free-cerebras": {
-          "title": "Cerebras free tier",
-          "text": "Cerebras's free option, known for quick answers. Limits apply.",
-          "expert": "Cerebras's free tier, rate-limited."
+          "text": "GitHub closed this service. Choose another route.",
+          "expert": "GitHub Models was fully retired on July 30, 2026; shown only as No longer available for a saved choice."
         },
         "route:free-groq": {
-          "title": "Groq free tier",
-          "text": "Groq's free option. Limits apply, and when one is reached it waits until it resets.",
-          "expert": "Groq's free tier, rate-limited; when a limit is reached it waits until it resets."
-        },
-        "route:free-hf": {
-          "title": "Hugging Face Inference",
-          "text": "Free AI from Hugging Face, a big library of models. Limits apply.",
-          "expert": "Hugging Face Inference Providers' free allowance, rate-limited."
+          "title": "Groq free plan",
+          "text": "Groq's free plan, with limits. Get a key from Groq's console. When a limit is reached, it waits for it to reset.",
+          "expert": "Groq Free plan with a Groq API key; a 429 carries retry-after and reset headers. Retry now, never a reconnect."
         },
         "attribution": {
           "title": "Where this list comes from",
           "text": "The free model list is based on a community list. Opens it in your browser.",
           "expert": "The free route list is based on a community-maintained list; opens it in your browser."
+        },
+        "route:free-nvidia": {
+          "title": "NVIDIA free models",
+          "text": "Free AI models from NVIDIA, with limits. Get a key from NVIDIA's API catalog.",
+          "expert": "NVIDIA API catalog (NIM) endpoints with free inference for listed models; an NVIDIA API key; rate limits apply."
+        },
+        "group:route": {
+          "title": "Free option",
+          "text": "A free option from the community list. Set it up with that company's key or sign-in, or just turn it on where none is needed.",
+          "expert": "A free route from free-coding-models (v0.6.0), set up through its own provider's key, sign-in, or no credential; limits are the provider's."
         }
       },
       "ready": {
@@ -1715,12 +1780,12 @@
         "free": "Free models? Good for a start."
       },
       "ai-all": {
-        "enter": "Every AI I can work with.",
+        "enter": "Here's everyone I know. Find yours.",
         "typing": "Ooh, who are we looking for?"
       },
       "ai-none": {
         "enter": "No AI yet? That's fine.",
-        "pick:sub": "One price a month. Simple.",
+        "pick:sub": "A plan with included use. Simple.",
         "pick:api": "Pay for what you use. Fair.",
         "pick:free": "Free! With a few limits."
       },
@@ -2103,7 +2168,7 @@
         "unavailable": "Signed in. All set!"
       },
       "free": {
-        "limited": "Reconnected. Ready!"
+        "limited": "Its limit reset. Ready!"
       }
     },
     "oopsAny": {
