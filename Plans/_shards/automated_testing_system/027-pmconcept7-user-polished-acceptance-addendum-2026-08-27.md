@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3447-L4129
+Source lines: L3459-L4143
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -36,13 +36,15 @@ canonical_text: 'The canonical Usage GUI fixture suite is rooted at tests/fixtur
   treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and source lineage and fail closed
   for unknown, hidden, disabled, unsupported, partial, redacted, and missing data. Fixture presence and `must`/`must_not`
   lists grant static representation only; runtime, visual, motion, and migration behavior require fresh browser execution,
-  raw receipts, and independent review. For the redesigned Usage page (2026-10-09) the suite also covers the Accounts
-  room acting in place (one row per account of each provider, Use this account, each provider''s Auto-switch toggle and
-  switch level and each account''s own switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control
-  commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and target choice (MA-073), Live / Paused
-  as a remembered view-only choice, every widget kind''s size presets and their stored preset_id (WS-017, WS-020), and
-  the single commit of Usage board gravity and Tidy (WS-019). Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+  raw receipts, and independent review. Amended 2026-10-31 (DL-270): the suite also covers that the Usage page and every
+  widget read redb rollups with no raw-event scan, and that daily usage totals per account, provider and model are kept
+  whatever Keep usage history for says while detailed usage records follow that setting (UF-108, SP-341). For the redesigned
+  Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per account of each provider,
+  Use this account, each provider''s Auto-switch toggle and switch level and each account''s own switch level (D43, 2026-10-10)
+  with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution,
+  notches, blocks and target choice (MA-073), Live / Paused as a remembered view-only choice, every widget kind''s size
+  presets and their stored preset_id (WS-017, WS-020), and the single commit of Usage board gravity and Tidy (WS-019).
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: This unit owns the canonical fixtures for visible Usage behavior across PM surfaces.
 depends_on: [UF-088, F3-514, WS-017, WS-018, WS-019, WS-020, MA-073, SSYS-044, UCC-147]

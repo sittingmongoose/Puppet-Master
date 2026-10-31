@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L267-L572
+Source lines: L267-L574
 
-Source SHA256: `3fd4b170772eafe0d813cf29d7e5407613a7bad1baddbb2a7d5c9f8fa649f92a`
+Source SHA256: `d0cc39238102b109a3cf45f7cb5551f742116c3e1753b99b2711bfbec9e96b66`
 
 ---
 
@@ -202,6 +202,8 @@ MCP tool inventory discovery around `listTools` is degraded, not unavailable: re
 Bridged-provider execution consumes `### Contract shape (facade)` and `### Provider guard rails` from `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`), the provider-facade owner-doc for bridge tool-event payloads. Provider adapters must complete `/parsing/sanitization/payload-preflight` before executor classification, and stream disconnects use `/resume` with at most three reconnect attempts, provider-specific constants, and a circuit breaker that moves open to half-open to close or `/reopen`.
 
 Storage and usage alignment consumes `### 2.4 Projector pipeline`, `## 3. Implementation checklist`, and `### 8.3 Startup and shutdown` from `Plans/storage-plan.md`, plus `### Canonical usage pipeline` from `Plans/usage-feature.md` (`/usage-feature.md`). Executor receipts carry `checkpoint-marker`, `run.completed.usage`, the bounded `usage.jsonl` compatibility retirement path, `lock-path` / FileSafe / worktree path alignment, and the split between pre-dispatch `kill.budget_exceeded` and post-response `done.budget_exceeded`.
+
+Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file (SP-339, UF-108). Receipts reference `usage.event` refs and the redb daily usage rollups, never a `usage.jsonl` artifact, and `pm export` writes JSONL on request. How long detailed usage records are kept is set by `ai.usage.usage-retention` (UF-108); daily totals are kept regardless.
 
 Regex-index build lifecycle state is executor-observable for scheduling, blocking, and cancellation: each project index transitions `no_index` -> `building_full` -> `ready`, `ready` -> `rebuilding_incremental` -> `ready`, and forced rebuild uses `ready` -> `building_full` -> `ready`; failures and cancellation still use the executor's classified error/cancel paths rather than anonymous indexing work.
 

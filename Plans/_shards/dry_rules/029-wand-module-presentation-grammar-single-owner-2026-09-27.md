@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2787-L2881
+Source lines: L2801-L2896
 
-Source SHA256: `93145b08570f8d45c2cd48fab76318b3c7aaa7d213fccc6195d7c264566fed4f`
+Source SHA256: `29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be`
 
 ---
 
@@ -25,25 +25,25 @@ canonical_text: 'The wand modules'' presentation grammar has exactly one GUI own
   puppet primitive draws every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the
   dock, the one-line reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation
   builds these from one shared set of primitives; a module owner supplies content only and never forks or restyles a
-  primitive. Every module''s finished trace uses the one receipt grammar, and time, cost and token phrases each come
-  from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone implementation for the app. Behaviour
-  stays with the module owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem,
-  assistant-chat-design). DR-043''s owners stand: the transcript family map is ACD-469''s and the accent budget is a
-  theme-token role rule, and the assistant-turn vocabulary is EP-128''s. The wand grammar consumes them and never restates
-  them, and DR-043''s owners do not restate this grammar. Amended 2026-10-29 (X1, PC1–PC5; PM7): Pip redraws the one
-  agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes the agent category only, never
-  an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements. DL-259 FS-1, 2026-10-31,
-  supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an
-  embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel
-  theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge
-  take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or
-  recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent
-  of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus
-  uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared
-  affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259 FS-2, 2026-10-31: one cast-plate
-  sizing/fit owner counts real text insets and final placement offsets for fixed input labels and BrainStorm/You spacing.
-  Compact’s intentional names-only grammar remains F3-595’s; no Retro-specific second fit engine or forced model line
-  is added.'
+  primitive. Every module''s finished trace uses the one receipt grammar, and time, cost, token and byte-size phrases
+  each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone implementation for the
+  app. Behaviour stays with the module owners (Collaborative_Workflows, Back_Seat_Driver, Scheduling_and_Quota_Resume,
+  assistant-memory-subsystem, assistant-chat-design). DR-043''s owners stand: the transcript family map is ACD-469''s
+  and the accent budget is a theme-token role rule, and the assistant-turn vocabulary is EP-128''s. The wand grammar
+  consumes them and never restates them, and DR-043''s owners do not restate this grammar. Amended 2026-10-29 (X1, PC1–PC5;
+  PM7): Pip redraws the one agent primitive (F3-594), no second legacy puppet or Classic preset. Small robot denotes
+  the agent category only, never an alternate figure. Sheet hosts and empty marks use this kit rather than layered replacements.
+  DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. DL-259 FS-2, 2026-10-31:
+  one cast-plate sizing/fit owner counts real text insets and final placement offsets for fixed input labels and BrainStorm/You
+  spacing. Compact’s intentional names-only grammar remains F3-595’s; no Retro-specific second fit engine or forced model
+  line is added.'
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
@@ -80,6 +80,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- Plans/Decision_Log.md#DL-270 (storage health and the backup loss window show sizes and times)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
   sections 4.0, 4.3 (A2-14), 7.14
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/COORDINATION.md (SHA-256 0bbcd8a1649f0e90dd93a5a18966c7a344442a8a99d1bb714afe91f8d168f076)

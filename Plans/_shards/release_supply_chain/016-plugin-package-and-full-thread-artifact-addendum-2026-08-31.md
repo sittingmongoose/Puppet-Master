@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L964-L1102
+Source lines: L964-L1105
 
-Source SHA256: `8baf0c26f092afc0d51d69c8ca4342b41d97bf0d1ade74af8632f544df46d428`
+Source SHA256: `3d544077b7a9aab12c0834d5aaa8b887e7f037cc567cc93bf09112b6e39f900d`
 
 ---
 
@@ -50,6 +50,8 @@ Installed-size budgets report PM core, bundled CEF, each renderer/backend, Safe 
 By explicit user approval on 2026-09-09, Release consumes the `Plans/FinalGUISpec.md` renderer-owner order, which the owner amended on 2026-10-01 (DL-139): Skia is the only renderer compiled and shipped, drawing on the GPU (`winit-skia`) by default with Skia's own CPU raster (`winit-skia-software`) as the only fallback, and Puppet Master's Skia renderer extensions (F3-582) ship with it. FemtoVG and Slint's separate software renderer are not packaged. Selection precedence remains `SLINT_BACKEND` explicit override, persisted renderer preference, then the compiled Skia GPU default and the Skia CPU fallback (the CPU fallback is also always used on a software GPU adapter, even over an explicit GPU choice, with a warning that no GPU was detected); the compiled default never overrides either explicit operator choice. Release verification measures that selected order and precedence across themes/platforms, old GPU/CPU, VM/RDP, Wayland/X11, resize, effects, startup, frame, idle, memory, and package size. Those results may block a release or motivate a later explicit GUI-owner amendment, but Release does not reopen a renderer bakeoff, silently reorder the selector, or treat static packaging as runtime proof.
 
 Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
+
+Amended 2026-10-31 (DL-270): release acceptance also consumes the storage gate receipts that SP-344 defines, run on Windows, macOS and Linux: 20 producer streams with 100k-event paging, a backup and maintenance; first page p95 at most 150 ms, warm or cold; commit p99 at most 50 ms; no storage-caused UI stall over 50 ms; no acknowledged event lost, duplicated or corrupted after kill -9, torn writes and store-creation crashes; after simulated power cuts nothing reordered or corrupted and no loss beyond SP-336's durability classes; derived families within their budgets and canonical families over budget raising the notice and reclaim offer (SP-340). A skipped or missing storage gate on any OS is not_run and blocks the release; SP-344 owns the thresholds.
 
 ### Commands, events, and reverse coverage
 
@@ -130,6 +132,7 @@ acceptance_criteria:
   - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia on the GPU as the compiled default, then Winit plus Skia CPU raster (winit-skia-software) selection, including the CPU raster always used when the GPU adapter is a software implementation, even over an explicit GPU choice, with a no-GPU warning, with the Skia renderer extensions present on both paths and no FemtoVG or separate software renderer packaged, without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
+  - Release evidence includes the SP-344 storage gate receipts (20 producer streams with 100k-event paging, first-page p95, commit p99, UI stall, kill -9, power-cut, torn-write and store-creation-crash convergence, disk budgets) on Windows, macOS and Linux; a storage gate not run on any of the three OSes blocks the release.
 validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
 risk_class: release_platform_or_performance_false_claim
 reasoning_tier: high

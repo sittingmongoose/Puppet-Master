@@ -325,7 +325,7 @@ ContractRef: Primitive:PatchPipeline, ContractName:Plans/WorktreeGitImprovement.
 ### SessionStore
 The persistent storage boundary for sessions, runs, events, and artifacts. Implementation uses seglog (append-only event ledger), redb (durable KV state/projections), and Tantivy (full-text search). Secrets are forbidden.
 
-`seglog` is the canonical event ledger. redb is not one authority class: registry-declared `canonical_non_rebuildable` families are canonical product state recovered from mandatory verified backup, `canonical_dual_homed` families reconcile through their registered peer, and only `derived_rebuildable` redb/index/checkpoint families are disposable projections. `/Tantivy/JSONL` and search indexes remain derived. Replay and `/rebuild` target a deterministic survivor/checkpoint boundary and may rebuild only from a materialized retained registered source; projection freshness notifications derive from committed state instead of ad-hoc polling.
+`seglog` is the canonical event ledger. redb is not one authority class: registry-declared `canonical_non_rebuildable` families are canonical product state recovered from mandatory verified backup, `canonical_dual_homed` families reconcile through their registered peer, and only `derived_rebuildable` redb/index/checkpoint families are disposable projections. `/Tantivy` and search indexes remain derived, as do the Parquet analytics archive written at segment seal and the on-demand, read-only DuckDB views over it (SP-341). There is no always-on JSONL mirror (SP-339); JSONL is only a `pm export` format. redb is two files, canonical and derived families kept apart (SP-340). Amended 2026-10-31 (DL-270): SP-339 retires the JSONL mirror. Replay and `/rebuild` target a deterministic survivor/checkpoint boundary and may rebuild only from a materialized retained registered source; projection freshness notifications derive from committed state instead of ad-hoc polling.
 
 Runtime persistence records distinguish `attempt_record`, `tier_runtime_record`, `blocked_projection`, and `usage_record`; storage-plan and storage-plan.md own the durable overlay shape while glossary terms name the records consistently.
 
@@ -1385,7 +1385,7 @@ plan_unit_id: G-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/JSONL/search state; replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
+canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/Parquet/search state (SP-341; no always-on JSONL mirror, SP-339); replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
 gui_related: false
 gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
 split_recommended: false

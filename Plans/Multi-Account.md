@@ -145,7 +145,7 @@ Current-canon correction for this inventory: sections `3. Assessment` and `3.2/3
 
 ### 3.4 Rewrite alignment
 
-- **Storage:** Account registry, active index, cooldowns, usage cache in **redb** (or single JSON under app data root until redb). Usage/rate-limit events in **seglog**. No SQLite.
+- **Storage:** Account registry, active index, cooldowns, usage cache in **redb**, in the canonical or derived family SP-340 assigns, with values stored as MessagePack or typed fields. There is no JSON fallback file (SP-339). Usage/rate-limit events in **seglog**. No SQLite (SP-342). Stored state is read through `pm db dump`, `pm inspect` and the record inspector. Amended 2026-10-31 (DL-270).
 - **Provider abstraction:** Account selection and env/config wiring are part of the **Provider** contract.
 - **UI:** GUI and usage views are **UX requirements only**; no Iced/Slint commitment (future UI is Slint per rewrite-tie-in).
 
@@ -730,7 +730,7 @@ Rules:
 - MCP rows are server-centric at the top level; per-provider/runtime state appears in the inspector rather than pretending every provider has a literal install state.
 - Separate user-visible provider entries are acceptable where runtime `/auth/control` differences are meaningful, even when PM keeps an internal shared vendor `/family` layer.
 - Provider entries expose `display_name`, `enabled`, `supports_family_pooling`, and `default_model_id_raw` so family pooling and defaults can be inspected without deriving them from labels.
-- OpenCode server profiles use a per-profile PM sidecar layout under the profile root: `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+- OpenCode server profiles use a per-profile PM sidecar layout under the profile root: `pm/logs/`, `pm/projections/`, and `pm/backups/`. Amended 2026-10-31 (DL-270): profile state is no longer a `pm/state.json` file; it lives in redb (SP-339, SP-340) and is read through `pm inspect`, `pm db dump` and the record inspector.
 - `Import Existing Auth` copies or seeds only the minimum auth-bearing material needed into the PM-owned root; it must not wholesale clone unrelated provider history, caches, logs, projections, or backups by default.
 - `/migration`, `/caches`, `/logs/`, and `/backups/` path families from an existing provider home are source-side context by default, not automatic wholesale imports.
 - import metadata preserves the source path for audit/debug, but the imported account or server profile runs from the PM-owned root after import.
@@ -1454,8 +1454,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Account registry, active index, cooldowns, and usage cache live in redb or a temporary app-data JSON until redb,
-  while usage and rate-limit events live in seglog. Account selection and env/config wiring are part of the Provider
+  Account registry, active index, cooldowns, and usage cache live in redb only, in the canonical or derived family SP-340 assigns, as MessagePack or typed fields, with no JSON state
+  file (SP-339), while usage and rate-limit events live in seglog. Account selection and env/config wiring are part of the Provider
   contract. GUI and usage views are UX requirements only, with no Iced/Slint lock-in from this document. The historical
   Rust/Iced and platform_specs.rs context is preserved as source context, while future native auth for Codex, Copilot,
   and Gemini uses OpenCode PR #11832-style stores and per-request context.
@@ -1467,7 +1467,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Storage alignment remains redb plus seglog, with temporary JSON only as an interim app-data option.
+- Storage alignment is redb plus seglog, with no JSON state files or interim JSON option (SP-339, SP-340). Amended 2026-10-31 (DL-270).
 - Provider abstraction owns account selection and env/config wiring.
 - Historical Rust/Iced wording is preserved as source context and does not authorize legacy app recreation.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -4313,7 +4313,6 @@ preserved_exact_tokens:
 - enabled
 - supports_family_pooling
 - default_model_id_raw
-- pm/state.json
 - pm/logs/
 - pm/projections/
 - pm/backups/
@@ -5227,7 +5226,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Rows expose source_class, source_confidence, source_authority, quota_state, credits_state, cost_status, pricing snapshot/custom price row refs when relevant, and stale/degraded/unknown reasons. Antigravity CLI remains a separate provider route with provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, and `/credits` render stats unavailable, usage unknown, quota not exposed, and credits not exposed. Disabled Models & Quota buckets render disabled, and G1 credits remain credits only. BYOK and subscription/provider-plan cost display suppression preserves usage identity while avoiding fake token-cost display.
+  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Amended 2026-10-31 (DL-270): the usage values on these rows read the redb daily rollups per account, provider and model that UF-108 owns, never raw usage.event records, and the existing projection_freshness and stale/degraded/unknown reasons show rollup freshness. Rows expose source_class, source_confidence, source_authority, quota_state, credits_state, cost_status, pricing snapshot/custom price row refs when relevant, and stale/degraded/unknown reasons. Antigravity CLI remains a separate provider route with provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, and `/credits` render stats unavailable, usage unknown, quota not exposed, and credits not exposed. Disabled Models & Quota buckets render disabled, and G1 credits remain credits only. BYOK and subscription/provider-plan cost display suppression preserves usage identity while avoiding fake token-cost display.
 gui_related: true
 gui_classification_reason: Provider/account settings rows and readiness displays are user-visible GUI.
 depends_on: [MA-067, MA-068, UF-087, UF-088, CBP-027]

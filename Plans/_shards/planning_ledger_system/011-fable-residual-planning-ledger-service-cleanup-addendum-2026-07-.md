@@ -4,7 +4,7 @@ Source: `Plans/Planning_Ledger_System.md`
 
 Source lines: L1033-L1228
 
-Source SHA256: `516b9ec4748fe0aaafe6af831dcc84ca522b7829bfcda607a48d7cf1ccf6b866`
+Source SHA256: `356d0b9f03bff75f1bd2b61c22d380c534a3624375c0b1868086a2122e768ffb`
 
 ---
 
@@ -34,7 +34,7 @@ acceptance_criteria:
   - commit_turn requires ledger_id, turn_id, accepted_atom_ids[], rejected_atom_ids[], open_item_updates[], expected_current_version, and emits committed_projection_version plus validation_receipt_ref.
   - recover_turn returns last_committed_turn_id, unapplied_event_ids[], projection_version, conflict_records[], and recommended_replay_start_event_id.
   - import_package rejects path traversal, absolute paths, symlink escape, package-size overflow, expanded-size overflow, and ledger id/name collision unless explicit replace or keep-both policy is recorded.
-  - Storage bindings name canonical ledger JSONL/state files as source memory and mark redb/search/projection/export surfaces as rebuildable derived views.
+  - Storage bindings name the seglog EventRecord stream as the canonical source memory of the Native Ledger Service and mark redb/search/projection/export surfaces as rebuildable derived views. Amended 2026-10-31 (DL-270): per SP-339 the service keeps no always-on JSONL mirror or JSON state files; JSONL or JSON appear only as pm export output on request. JSONL/JSON files remain canonical only for the bootstrap ledger under Plans/ledgers/v2/.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs

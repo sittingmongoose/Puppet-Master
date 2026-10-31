@@ -2,8 +2,67 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_id": "pm.wiring_matrix.v0",
   "response_contract_ref": "Plans/ui_command_response.schema.json",
-  "generated_at": "2026-10-14T18:30:00Z",
+  "generated_at": "2026-10-31T00:00:00Z",
   "entries": {
+    "assistant.chat.history.load_older": {
+      "ui_element_id": "assistant.chat.history.load_older",
+      "ui_location": "Assistant Chat > thread history > top of the loaded history > Load 50 older (the list host's near-top threshold dispatches the same request)",
+      "ui_command_id": "cmd.chat.load_older",
+      "handler_location": "handlers::chat::load_older",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "The request carries thread_id and before_page_ref from the oldest loaded page, and returns exactly the next older sealed 50-item page from the thread's render-page store (SP-338); it never replays the thread's events and never reads full event bodies",
+        "Returned items are display headers and references; a full body loads only through cmd.chat.toggle_message_details or a scroll-to, from the event log or payload store",
+        "The control is available whenever the oldest loaded page is not the thread's first page; a replay of the same before_page_ref returns the same page, a moved head returns stale_projection, and render pages that are rebuilding return degraded with the rebuilding disclosure",
+        "Loading older items keeps the scroll anchor and focus on the item that was first visible and announces how many older items loaded; it changes no stored state"
+      ],
+      "evidence_required": "Required future evidence only; this row does not assert that the planned handler or runtime exists. Owner refs: UI_Command_Catalog UCC-212, assistant-chat-design ACD-242, storage-plan SP-338 and Commands_System CS-107. Acceptance refs: DL270-LOADOLDER dispatcher, page-cursor, stale-head, rebuilding, scroll-anchor and accessibility fixtures plus the SP-338 first-page CI gate.",
+      "state_selector": "state.chat.history.load_older.availability",
+      "disabled_reason_projection": "state.chat.history.load_older.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.chat.load_older is a read-only shell_view dispatch with no declared persisted event; dispatch records a no-persist command receipt carrying the page it returned.",
+        "receipt_or_event_refs": [
+          "cmd.chat.load_older.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Button named Load 50 older; loading is announced politely and the count of loaded items is announced when done.",
+        "keyboard_access": "The button is reachable by keyboard and activates with Enter or Space; the threshold dispatch is not the only way to load.",
+        "focus_management": "Focus and scroll anchor stay on the previously first visible item after the page is inserted; on refusal focus stays on the button.",
+        "disabled_announcement": "The control announces stale_projection and degraded reasons, and hides when the first page of the thread is loaded."
+      },
+      "test_evidence": [
+        {
+          "test_id": "DL270-LOADOLDER.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "A future fixture must prove cmd.chat.load_older reaches the planned handlers::chat::load_older target with thread_id and before_page_ref and returns one 50-item page; this row is not implementation evidence."
+        },
+        {
+          "test_id": "DL270-LOADOLDER.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.chat.history.load_older.availability and disabled copy reads state.chat.history.load_older.disabled_reason; disabled_reason values come only from the closed set: stale_projection, degraded."
+        },
+        {
+          "test_id": "DL270-LOADOLDER.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert no event is replayed, no event body is read, the page holds headers and references only, and a repeated before_page_ref returns the same page."
+        },
+        {
+          "test_id": "DL270-LOADOLDER.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role and name, keyboard activation, scroll-anchor and focus handling, and the loading and loaded announcements."
+        },
+        {
+          "test_id": "DL270-LOADOLDER.regression",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatch, refusal and replay of cmd.chat.load_older emit no unexpected persisted domain event and preserve command_id, origin and correlation_id."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.chat.load_older records a dispatch receipt and emits no unexpected persisted domain event."
+      ]
+    },
     "assistant.chat.restore_point.create": {
       "ui_element_id": "assistant.chat.restore_point.create",
       "ui_location": "Assistant Chat > Message action menu > Create restore point",
@@ -11164,7 +11223,8 @@
         "Read state.commands.backup_verify.availability and state.commands.backup_verify.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
-        "BRS-030: every producer supplies an explicit verification depth or current plan selector, immutable backup/snapshot and target-bound cost/read acknowledgement; dispatch revalidates plan and target and receipt distinguishes requested from performed depth."
+        "BRS-030: every producer supplies an explicit verification depth or current plan selector, immutable backup/snapshot and target-bound cost/read acknowledgement; dispatch revalidates plan and target and receipt distinguishes requested from performed depth.",
+        "DL-270 (BRS-031) reverse coverage: a completed verification updates the backup-status record that every backup-state surface reads, including the Backup manager and the recovery surfaces. Verified means the newest backup at Structure verified or higher, with its level shown; a newer unverified backup is shown beside it. The line is a read-only projection, issues no command, and says so when no backup has been verified."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_verify.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -16453,7 +16513,8 @@
         "cmd.chat.open_thread availability class is selection (thread_exists) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
         "Cross-surface thread entry wrapper carrying route/OpenSubject identity; it opens the chat panel when closed, does not duplicate the chat-panel-local cmd.chat.switch_thread, and retired prototype token cmd.chat.open_at (excluded from production wiring) migrates to this canonical id.",
         "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message.",
-        "D7/D8/D13 work producer work.open_thread: Exact bound Assistant thread via cmd.chat.open_thread. Native route resolves signed thread/Project, not the local owner-row selection or a child transcript tab by accident."
+        "D7/D8/D13 work producer work.open_thread: Exact bound Assistant thread via cmd.chat.open_thread. Native route resolves signed thread/Project, not the local owner-row selection or a child transcript tab by accident.",
+        "DL-270 (SP-338, ACD-242): opening a thread reads thread_head, the hot tail and the newest 50-item page from the render-page store and never replays the thread's events. Older pages load only through cmd.chat.load_older. A missing or rebuilding page store shows the degraded state; it does not fall back to replay."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/assistant-chat-design.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_chat_open_thread.enabled",
@@ -17495,7 +17556,8 @@
         "cmd.chat.toggle_message_details must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.toggle_message_details dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.toggle_message_details must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.toggle_message_details must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.toggle_message_details must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "DL-270 (SP-338): expanding a collapsed section or tool output loads its full body from the event log or payload store on demand. A render page holds only the display header and references, so the body is never read from the page."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.toggle_message_details; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_toggle_message_details.availability",
@@ -38908,7 +38970,8 @@
         "cmd.nav.open_usage_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
         "cmd.nav.open_usage_subject supports an event-primary branch with route_target.object_kind = usage_event and object_id derived from usage_event_ref, plus the PMConcept7 Ledger attempt-primary branch with route_target.object_kind = usage_attempt and object_id derived from attempt_id",
         "cmd.nav.open_usage_subject must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id",
-        "PMConcept7 Ledger attempt drill-through reuses this command with canonical usage_attempt/attempt_id route_target identity, retains usage_event_ref as correlation, and carries no OpenSubject; provider/account/presentation-panel aggregate details remain local and dispatch no UICommand."
+        "PMConcept7 Ledger attempt drill-through reuses this command with canonical usage_attempt/attempt_id route_target identity, retains usage_event_ref as correlation, and carries no OpenSubject; provider/account/presentation-panel aggregate details remain local and dispatch no UICommand.",
+        "DL-270 (UF-108): Ledger rows and drill-through resolve through the indexed usage ledger projection by usage_event_ref and never by scanning raw segments or usage.jsonl. Detailed usage records follow Keep usage history (ai.usage.usage-retention, 90 days by default), so a ledger row resolves while its record is kept; daily usage totals are kept whatever that setting says."
       ],
       "evidence_required": "Production Usage object-route contract for cmd.nav.open_usage_subject; certification requires render/control evidence, dispatcher fixture, typed event-primary and attempt-primary route_target assertions, proof that OpenSubject is absent, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, local aggregate no-dispatch proof, and regression test evidence.",
       "state_selector": "state.commands.nav_open_usage_subject.availability",
@@ -62686,7 +62749,8 @@
         "Export output is a view export per the record/bundle/view taxonomy and never becomes canonical record truth",
         "Export includes no secrets and no unauthorized provider/account details",
         "cmd.usage.export must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.usage.export must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.usage.export must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "DL-270 (UF-108): Ledger rows and drill-through resolve through the indexed usage ledger projection by usage_event_ref and never by scanning raw segments or usage.jsonl. Detailed usage records follow Keep usage history (ai.usage.usage-retention, 90 days by default), so a ledger row resolves while its record is kept; daily usage totals are kept whatever that setting says."
       ],
       "evidence_required": "Production wiring contract for cmd.usage.export; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.usage_export.availability",
@@ -72107,9 +72171,11 @@
       "acceptance_checks": [
         "The control is an owner-admitted request only and requires writer posture, permission, storage_maintenance_operation availability, and the maintenance lease",
         "Dispatch never directly compacts, selects a generation, or bypasses retention eligibility, holds, recovery/recent-run/live/backup/rollback refs, registry policy, or maintenance exclusion",
-        "Only an accepted owner lifecycle persists storage_maintenance_operation and emits the application-scoped compaction lifecycle event"
+        "Only an accepted owner lifecycle persists storage_maintenance_operation and emits the application-scoped compaction lifecycle event",
+        "DL-270 (SP-340): the request asks the owner to reclaim free space now, passing the effective retention_policy_ref. The owner's maintenance operation also runs SP-340's store compaction on the families whose fragmentation passes its threshold, under the same maintenance lease and idle admission as the scheduled job, and the storage_maintenance_operation row records per family the bytes before, the bytes after and the bytes returned, measured again after the run. Storage health, the read-only section on this page, shows that result as the last compaction (time and bytes returned), per group.",
+        "The dispatch still never deletes data, selects a generation or bypasses holds, anchors, backups or retention eligibility. This request is the only manual space action; no second reclaim or compact command exists (DL-270, SP-340)."
       ],
-      "evidence_required": "Required future evidence only; this row does not assert that the planned handler or compaction runtime exists. Owner refs: UI_Command_Catalog UCC-124, storage-plan SP-237, Contracts_V0 CV-319, Commands_System CS-059, and FinalGUISpec F3-457. Acceptance refs: CMP-* and future legal-hold/compaction command and generation crash-cut fixtures.",
+      "evidence_required": "Required future evidence only; this row does not assert that the planned handler or compaction runtime exists. Owner refs: UI_Command_Catalog UCC-124, storage-plan SP-237, Contracts_V0 CV-319, Commands_System CS-059, and FinalGUISpec F3-457. Acceptance refs: CMP-* and future legal-hold/compaction command and generation crash-cut fixtures. DL-270 refs: storage-plan SP-340, Wiring_Matrix WM-098.",
       "state_selector": "state.settings.storage_retention.compaction_request.availability",
       "disabled_reason_projection": "state.settings.storage_retention.compaction_request.disabled_reason",
       "effect_contract": {
@@ -72140,7 +72206,7 @@
         {
           "test_id": "CMP-CMD-request.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Assert accepted request creates storage_maintenance_operation and the owner lifecycle event without direct segment rewrite or bypass."
+          "requirement": "Assert accepted request creates storage_maintenance_operation and the owner lifecycle event without direct segment rewrite or bypass. The result carries per-family bytes before, after and returned, verified by measuring again after the run."
         },
         {
           "test_id": "CMP-CMD-request.accessibility",
@@ -72229,7 +72295,8 @@
       "acceptance_checks": [
         "The control opens Advanced > Storage & Retention through route_target and OpenSubject only when the settings inventory and route target are available",
         "Navigation changes no retention value, clears no hold, starts no maintenance, and creates no peer per-setting command",
-        "The destination shows owner minima, effective policies, schedules, pressure, compaction, holds, and quarantine as projections rather than proof that maintenance ran"
+        "The destination shows owner minima, effective policies, schedules, pressure, compaction, holds, and quarantine as projections rather than proof that maintenance ran",
+        "DL-270 (SP-340): the destination also shows Storage health, a read-only section with about eight storage groups, each with its usage against one disk budget, reclaimable bytes and the last compaction. The section has no command of its own; it hosts the existing compaction request."
       ],
       "evidence_required": "Required future evidence only; this row does not assert that the planned handler or route exists. Owner refs: UI_Command_Catalog UCC-124, storage-plan SP-237, and FinalGUISpec F3-457. Acceptance refs: future Case L Final GUI retention/deletion/quarantine and RET/CMP/legal-hold route fixtures.",
       "state_selector": "state.settings.storage_retention.open.availability",
@@ -72966,7 +73033,8 @@
       "acceptance_checks": [
         "The control carries storage instance, root generation, store family, value-key ref, route_target, and OpenSubject and requires a compatible captured value under ordinary read/export permission",
         "Open value renders the exact redacted owner-resolved identity at the captured high-water mark and never uses raw path or focused row as authority",
-        "Navigation performs no write, promotion, retention, hold, repair, or storage-family mutation"
+        "Navigation performs no write, promotion, retention, hold, repair, or storage-family mutation",
+        "DL-270 (SP-339, F3-666): the value opens in the read-only record inspector as a record tab, decoded under the owner's typed field names and never as base64 or hex, with the same redaction, permission and FileSafe outcome as pm inspect. A payload reference shows its size, kind and a bounded preview and loads the whole body only on request (SP-337). In viewer mode it opens from the frozen snapshot and names the high-water mark. Opening writes no JSON or JSONL file."
       ],
       "evidence_required": "Required future evidence only; this row does not assert that the planned handler or route exists. Owner refs: UI_Command_Catalog UCC-123, storage-plan SP-239/SP-240, Commands_System CS-055, and FinalGUISpec F3-456. Acceptance refs: future value navigation, frozen-snapshot, route-target/OpenSubject, redaction, permission, and no-mutation fixtures.",
       "state_selector": "state.storage.value.open.availability",

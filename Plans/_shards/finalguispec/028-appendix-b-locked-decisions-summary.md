@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4279-L4301
+Source lines: L4305-L4327
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -19,7 +19,7 @@ These decisions are final and must not be revisited during implementation:
 5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
-8. **redb for layout persistence**, seglog for events, Tantivy for search
+8. **redb for layout persistence**, seglog for events, Tantivy for search. Amended 2026-10-31 (DL-270): the storage stack is owned by storage-plan SP-335 to SP-345: seglog with sealed-segment zstd, a content-addressed payload store, canonical and derived redb in two files, Tantivy, a Parquet archive read by embedded DuckDB, and SQLite banned for PM-owned stores (SP-342).
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management

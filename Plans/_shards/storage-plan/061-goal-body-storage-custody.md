@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22337-L22454
+Source lines: L22372-L22489
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -30,7 +30,7 @@ Definition names in the table mean exact `#/$defs/<name>` locations. The inner `
 
 ### Canonical bytes and two comparison domains
 
-All five rows use registry encoding `json_canonical` with GRS-064's exact local `pm.goal.canonical_json.v1` qualification: canonical UTF-8 JSON without BOM, closed ASCII properties, exact scalar strings/whitespace, canonical arbitrary-precision integers and exact decode/re-encode equality. Reject duplicate/extra properties, unsupported IDs/versions, noncanonical encodings, naked inner records, another family's wrapper and a wrapper nested inside `record`. `json_canonical` is an existing encoding token, not automatic activation or a global codec redefinition.
+All five rows use registry encoding `json_canonical` with GRS-064's exact local `pm.goal.canonical_json.v1` qualification: canonical UTF-8 JSON without BOM, closed ASCII properties, exact scalar strings/whitespace, canonical arbitrary-precision integers and exact decode/re-encode equality. Reject duplicate/extra properties, unsupported IDs/versions, noncanonical encodings, naked inner records, another family's wrapper and a wrapper nested inside `record`. `json_canonical` is an existing encoding token, not automatic activation or a global codec redefinition. Amended 2026-10-31 (DL-270): SP-339 moves redb values stored as JSON text to MessagePack or typed fields. The five Goal body families are re-encoded as canonical MessagePack under a new schema version with a registered migration edge; JSON stays for API and export output only. Each family also declares a maximum value size of 16 KiB or less (SP-340).
 
 All currentness, objective-revision, body-byte, start-intent and pending-intent hashes cover their unchanged GRS-064 semantic inputs. `pending.after_record`, `pending.accepted_revision` and `pending.origin` remain inner records. The complete reserved semantic control comparison also remains unchanged. A physical whole-value preimage comparison or backup checksum covers complete outer bytes and is separately named; it never substitutes for a semantic hash, enters an existing semantic field or creates another durable record. No wrapper hash or recursive digest is introduced.
 

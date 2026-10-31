@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47930-L51124
+Source lines: L48055-L51426
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -2877,7 +2877,18 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
   result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
   recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
-  Motion settlement remain additional to real owner completion.'
+  Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance
+  is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination
+  family, auth method and credential mode determine the actual required fields and validation through their existing
+  owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns
+  incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase,
+  rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the
+  Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The
+  wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31:
+  long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
+  scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
+  including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
+  content version.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2942,6 +2953,18 @@ acceptance_criteria:
   its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
   settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
   rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 FO-14, 2026-10-31: long tokens in an opened question note wrap within its available width, so their full text
+  is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
+  applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
+  adds no second note renderer or per-family content version.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2971,6 +2994,14 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute
@@ -3203,3 +3234,149 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-249, ContractName:Plans/Comma
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### F3-666 - The Record Inspector
+
+```yaml
+plan_unit_id: F3-666
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL
+  mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>`
+  (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant,
+  window, command family, event or schema. It is reached only from a labelled expert control on the storage page that
+  `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires
+  `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add
+  an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
+  owner's words, its time and place in the record order, and its decoded fields under the owner's typed field
+  names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a
+  bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows
+  as media or as its size, never as base64 or hex. The inspector reads the record as of the high-water mark that
+  `cmd.storage.open_value` captured and says so. In viewer mode (`storage_read_only`) it still opens, from the
+  frozen snapshot. It applies the same redaction profile, permission and FileSafe checks as `pm inspect`, and
+  shows `redaction_status` and the permissioned-unavailable state in place of withheld content (F3-418). It may
+  copy the record it shows, already decoded and redacted, as JSON, under FileSafe's rules; bulk export stays with
+  `pm export`, and the inspector has no export control of its own. `pm db dump`, `pm inspect`, `pm tail` and
+  `pm export` are command-line entry points to the same read paths, not separate dispatchers and not `cmd.*`
+  commands, and the inspector's help line names `pm inspect` and `pm tail`. It has no edit, delete, repair,
+  replay or re-dispatch control. The Technical-details rule of F3-617 is unchanged: the inspector is an expert
+  surface, never part of a plain chat surface's text.
+gui_related: true
+gui_classification_reason: Defines the visible in-app surface that replaces readable JSON and JSONL mirror files.
+split_recommended: false
+depends_on: [SP-337, SP-339, F3-148, F3-418, F3-457, F3-617, F3-634, F3-635, UCC-123]
+unblocks: []
+acceptance_criteria:
+  - "A record from any registered family opens in the inspector with decoded fields, and no JSON or JSONL mirror file is read or written to fill it."
+  - "A payload reference shows size, kind and a bounded preview, and loads the full body only on request; no base64 or hex is shown."
+  - "In viewer mode the inspector opens from the frozen snapshot and says which high-water mark it shows."
+  - "Redaction, permissioned-unavailable and FileSafe outcomes match `pm inspect` for the same record."
+  - "The only copy it offers is the shown, redacted record as JSON under FileSafe's rules; no control edits, deletes, repairs, replays or re-dispatches a record."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: json_mirror_replacement_drift
+reasoning_tier: standard
+context_scope: dl270_storage_profile
+implementation_surfaces:
+  - "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-339"
+preserved_exact_tokens:
+  - "inspect:"
+  - "cmd.storage.open_value"
+  - "pm inspect"
+  - "pm db dump"
+  - "pm tail"
+  - "pm export"
+negative_constraints:
+  - "Do not read or create a JSON or JSONL mirror file to fill the inspector."
+  - "Do not add an Activity Bar occupant, a window, a command or an editing control."
+  - "Do not show encoded bytes, base64 or hex as text."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/FinalGUISpec.md"
+  - "Plans/storage-plan.md"
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/UI_Command_Catalog.md#UCC-123
+
+### F3-667 - Chat Opens From Render Pages And Loads Older
+
+```yaml
+plan_unit_id: F3-667
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat
+  reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display
+  header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and
+  loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the
+  floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging
+  is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by
+  itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the
+  fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name
+  carries the number of items it will add. Both the scroll and the row fetch the page through
+  `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the
+  thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and
+  its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or
+  Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and
+  loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in
+  between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read,
+  the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding
+  or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's
+  canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide.
+  This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread
+  the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB.
+gui_related: true
+gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
+split_recommended: false
+depends_on: [ACD-242, F3-103, F3-368, F3-420, F3-506, F3-648, SP-338, SP-344]
+unblocks: []
+acceptance_criteria:
+  - "Opening a thread paints the newest page and hot tail from display headers and replays no event."
+  - "Scrolling near the top loads the next older page by itself; a Load 50 older row sits above the oldest loaded item until the first item is loaded, is keyboard reachable and is screen-reader named with its count."
+  - "Both the scroll and the row fetch through `cmd.chat.load_older`, and loading a page leaves the reading position unchanged."
+  - "A jump to an unloaded message, search hit or anchor loads only a bounded window around its page, resolved from thread_head, and lands on it with no event replay."
+  - "A page that is rebuilding, stale or unreadable shows its state and reason; history is not reported lost."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: long_chat_open_and_paging_drift
+reasoning_tier: high
+context_scope: dl270_storage_profile
+implementation_surfaces:
+  - "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-338"
+  - "Plans/assistant-chat-design.md#ACD-242"
+preserved_exact_tokens:
+  - "thread_head"
+  - "50-item"
+  - "Load 50 older"
+  - "cmd.chat.load_older"
+negative_constraints:
+  - "Do not replay a thread's events to open it or to reach an older item."
+  - "Do not make load-older an optional or settings-gated control."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/FinalGUISpec.md"
+  - "Plans/assistant-chat-design.md"
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-338, ContractName:Plans/assistant-chat-design.md#ACD-242

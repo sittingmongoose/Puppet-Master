@@ -2,15 +2,15 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24078-L24109
+Source lines: L24113-L24144
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
 ## Goal start original command custody and publication
 
-For exactly `cmd.chat.goal.start`, the original Goal body issuer joins the five existing SP-287 physical `goal_body_record`, `goal_objective_revision`, `goal_objective_origin`, `goal_body_control` and `goal_body_mutation_receipt` values with one new `goal_start_command_custody` row in its actual original body transaction. The new row is canonical, non-rebuildable redb authority, wrapper `pm.storage_value.goal_start_command_custody.v1` version `1.0.0`, encoded by `pm.goal.start_command_json.v1` under the CV-341 key/codec. No independent caller tuple, later sync, copied owner or post-publication repair establishes participation. The existing pure body API remains separate; SP-287's body pending mechanism still supports its existing update/metadata transactions and is not repurposed as a durable pre-body start reservation. Exact objective text remains only in the existing body/history custody after lawful transient command input disposal.
+For exactly `cmd.chat.goal.start`, the original Goal body issuer joins the five existing SP-287 physical `goal_body_record`, `goal_objective_revision`, `goal_objective_origin`, `goal_body_control` and `goal_body_mutation_receipt` values with one new `goal_start_command_custody` row in its actual original body transaction. The new row is canonical, non-rebuildable redb authority, wrapper `pm.storage_value.goal_start_command_custody.v1` version `1.0.0`, encoded by `pm.goal.start_command_json.v1` under the CV-341 key/codec. No independent caller tuple, later sync, copied owner or post-publication repair establishes participation. The existing pure body API remains separate; SP-287's body pending mechanism still supports its existing update/metadata transactions and is not repurposed as a durable pre-body start reservation. Exact objective text remains only in the existing body/history custody after lawful transient command input disposal. Amended 2026-10-31 (DL-270): SP-339 moves redb values stored as JSON text to MessagePack or typed fields. The goal_start_command_custody row is stored as canonical MessagePack under a new schema version, and JSON remains only for API and export output. Key, wrapper and participation rules are unchanged.
 
 The actual original start builder authenticates original source birth, source/input/grant/decision/stage custody, exact original source-owner enrollment, permission and Stop/owner epoch before entering execution or calling a selected capture. It derives the full body/receipt, command row and producer expectation from the original source arguments and actual body builder before any returning whole-record helper can supply a candidate. The admitted command's original source, operation, command instance, original request argument digest and accepted goal identity stay bound together; changing the generated Goal or operation cannot evade original command-instance uniqueness.
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5815-L6180
+Source lines: L5819-L6184
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -14,7 +14,7 @@ This addendum repairs non-runtime usage rows without creating WorkNodes, impleme
 
 - Repairs `sfk-f5e4f21174c14fb661692c70`: legacy `UnifiedUsageRecord` import fields such as `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version` are source-lineage/migration inputs only; active persistence, aggregation, GUI projection, and route/open drill-through normalize them to UF-085 UsageRecord fields, source_class/source_confidence/source_authority, settlement, cost, quota, and refs packets before use.
 - Repairs `sfk-08907092c21fff88a8b7c871`: `UsageAnomalyGuard` computes `current_window_cost / max(median_previous_7_windows_cost, 1)` over a default 1-hour window. Default spike ratio threshold is `3.0`; confidence is `min(1.0, observed_samples / 7.0)`.
-- Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion.
+- Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion. Amended 2026-10-31 (DL-270): that key reads as `ai.usage.usage-retention` and bounds detailed usage records only; daily usage totals per account, provider and model are kept forever, whatever it says (UF-108).
 
 ### UF-080 - P0-CACHE-USAGE-ENVELOPE
 

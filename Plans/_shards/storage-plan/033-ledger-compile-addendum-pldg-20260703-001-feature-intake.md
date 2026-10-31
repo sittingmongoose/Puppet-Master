@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16373-L16852
+Source lines: L16397-L16879
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -437,18 +437,21 @@ canonical_text: >-
   authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and
   optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and
   `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination
-  truth.
+  truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the
+  `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`,
+  `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON, on request, and it emits no event, so
+  `coordination.debug_mirror_exported` is retired (SP-339).
 gui_related: false
 gui_classification_reason: This unit defines backend storage records and mirror/export boundaries, not GUI presentation.
 depends_on: [SP-230, SP-231, CV-309, OSI-432]
 unblocks: []
 acceptance_criteria:
-  - The canonical coordination event families are named for agent registration, status update, operation update, file-activity update, unregister, crash, abort, and debug mirror export.
+  - The canonical coordination event families are named for agent registration, status update, operation update, file-activity update, unregister, crash and abort. Amended 2026-10-31 (DL-270): debug mirror export is retired (SP-339).
   - The authoritative projection families are `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}`.
   - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.
   - Stale writes fail with coordination conflict diagnostics rather than overwriting canonical state.
-  - "`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are registered or retired as debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
-  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`.
+  - "`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are registered or retired as debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Amended 2026-10-31 (DL-270, SP-339): those four files are retired as live files and cannot drive any decision; JSON for them is produced only on request by `pm export`, which emits no event."
+  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`. Amended 2026-10-31 (DL-270, SP-339): no always-on mirror exists, so an absent or stale export needs no quarantine or regeneration; the next `pm export` reads seglog and redb.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness

@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L1948-L2023
+Source lines: L1950-L2027
 
-Source SHA256: `e7aa2b010c748593bb7c5f4615faa78dac656603b0f0a9d14793cbff7d5eefce`
+Source SHA256: `fe048767cd39d62ee7e90db30eefc91a6c7a6d35a4e06679ac041404fe28a050`
 
 ---
 
@@ -84,3 +84,5 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Contracts_V0.md
 ```
+
+Amended 2026-10-31 (DL-270): the Raw view resolves `raw_payload_ref` through the payload store (SP-337) and may open the record inspector (F3-666) once its own production wiring row lands; the command-line form is `pm inspect`. It never reads a JSON mirror file.

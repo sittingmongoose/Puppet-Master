@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1038-L1098
+Source lines: L1038-L1099
 
-Source SHA256: `d3a505b118c49657485e9bb15c1366dbd0956c5094f2f294e72b2c4ad3cd9aa0`
+Source SHA256: `43a07fb905a5098940dacc4b2c05a638530069963510181b5e38b1a24f630bb1`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget.
+  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget. Amended 2026-10-31 (DL-270, UF-108): a Usage widget reads the redb rollups that update as each usage.event lands and never scans raw usage events; Dashboard and Usage share those rollups.
 gui_related: true
 gui_classification_reason: Dashboard widgets and Add Widget catalog behavior are visible GUI surfaces.
 depends_on: [WS-013, F3-418, UF-087]
@@ -30,6 +30,7 @@ acceptance_criteria:
   - Usage widget fixtures cover no-double-count behavior for cache and reasoning inclusive/exclusive semantics.
   - Add Widget catalog either exposes a named Usage widget with this contract or marks Usage widget hostability unavailable with a reason; it must not expose an unowned placeholder widget.
   - Dashboard widget rollups use usage_event_ref or UsageRecord aggregation refs and never timestamp/run/thread/tier-only joins for accounting identity.
+  - No Usage widget on Dashboard or the Usage page scans raw usage events or shows a usage retention window; each reads redb rollups per account, provider and model.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates

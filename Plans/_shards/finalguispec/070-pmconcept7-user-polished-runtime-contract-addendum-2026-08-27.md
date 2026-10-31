@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36114-L36593
+Source lines: L36177-L36656
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -320,7 +320,7 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
-  - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
+  - "Do not create a second authoritative Assistant, transcript store, context store, or Context Detail Pane. The per-thread render-page store (SP-338, ACD-242) is a derived, rebuildable projection of the one transcript store, not a second authority, and is allowed."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
 stale_retired_dispositions:

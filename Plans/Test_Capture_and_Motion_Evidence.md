@@ -96,7 +96,9 @@ Backend order is platform-specific and truthful:
 
 Ordinary requested cadence is 30 fps. Motion-sensitive requested cadence is 60 fps. These are requested profiles, not guarantees. Every artifact records requested and effective cadence, delivered frame count, dropped/repeated/black/blank/frozen/stale/corrupt frames, cadence collapse, backpressure, and effective-quality changes.
 
-Codec selection order is H.264 High, VP9 Profile 0, VP8, then certified/offline AV1. HEVC is export-only. Raw evidence uses durable atomic Matroska segments; MP4 is an export/derived container, never the only crash-recovery source.
+Codec selection order is hardware AV1 or HEVC encoding first, with H.264 High, VP9 Profile 0 and VP8 as named fallbacks only when no hardware AV1 or HEVC encoder is available. Raw evidence uses durable atomic Matroska segments; MP4 is an export/derived container, never the only crash-recovery source.
+
+Amended 2026-10-31 (DL-270): recordings use hardware AV1 or HEVC encoding, with a thumbnail per recording for lists, as SP-343 in Plans/storage-plan.md owns. The hardware encoder is chosen per platform, and each segment records the requested and effective codec, the encoder and any fallback reason. Recording bytes live in the payload store (SP-337). Matroska segments and MP4-as-export are unchanged.
 
 Audio defaults to `off`. Target audio requires a separate explicit target and capability grant, uses Opus at 48 kHz for raw Matroska capture, and may use AAC-LC only in an MP4 export. Microphone and system audio are never inferred from screen, window, browser, test, or recording permission.
 

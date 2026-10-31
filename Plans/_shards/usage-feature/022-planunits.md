@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L928-L5024
+Source lines: L927-L5028
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -71,7 +71,7 @@ plan_unit_id: UF-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage reads 5h/7d, dashboard, and analytics values from redb rollups produced by analytics scan jobs over the canonical seglog pipeline, with Tantivy search/projector support where applicable; usage.jsonl remains a human-readable mirror or compatibility input, not the canonical rollup source.
+canonical_text: Usage reads 5h/7d, dashboard, and analytics values from redb rollups produced by analytics scan jobs over the canonical seglog pipeline, with Tantivy search/projector support where applicable; usage.jsonl is retired as a live file (SP-339); a one-time legacy import may read it, and pm export writes JSONL on request. Rollups come from seglog and the Parquet archive (SP-341), per DL-270 (amended 2026-10-31).
 gui_related: true
 gui_classification_reason: The unit supports user-visible Usage numbers but primarily preserves storage-backed projection requirements.
 split_recommended: true
@@ -113,7 +113,7 @@ negative_constraints:
 - 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans.
 preserved_contractrefs: []
 compatibility_only_notes:
-- usage.jsonl may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
+- usage.jsonl is retired as a live file (SP-339, UF-108); only a one-time legacy import may read it, and it is never the canonical rollup source.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -1395,7 +1395,7 @@ plan_unit_id: UF-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage backend inputs follow a hierarchy of canonical usage projections and redb rollups over seglog first, supported provider/runtime outputs second, and compatibility mirrors such as usage.jsonl or retired side files only as noncanonical migration/debug inputs.
+canonical_text: Usage backend inputs follow a hierarchy of canonical usage projections and redb rollups over seglog first, supported provider/runtime outputs second, and compatibility mirrors such as usage.jsonl or retired side files only as noncanonical migration/debug inputs. Amended 2026-10-31 (DL-270), usage.jsonl is retired (SP-339); only a one-time legacy import reads it, and it is not a debug input. Retired side files stay noncanonical migration inputs.
 gui_related: false
 gui_classification_reason: The unit preserves backend storage/input hierarchy and source attribution rather than visual presentation.
 split_recommended: true
@@ -1440,7 +1440,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md'
 - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md\xA72"
 compatibility_only_notes:
-- usage.jsonl may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+- usage.jsonl is retired (SP-339) and is read only by a one-time legacy import; it is never the canonical 5h/7d rollup source.
 stale_retired_dispositions:
 - Retired subagent side files remain compatibility projections only.
 owner_hints:
@@ -2147,7 +2147,7 @@ negative_constraints:
 - Ledger, rollups, and UI projections must not fork into separate attribution models.
 preserved_contractrefs: []
 compatibility_only_notes:
-- If usage.jsonl persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+- usage.jsonl is retired as a live file (SP-339); no usage JSON mirror is kept, and pm export writes JSONL on request.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -2217,7 +2217,12 @@ plan_unit_id: UF-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage event storage uses retention, optional export-first archival/compaction, daily summary records, incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and MUST NOT serve aggregation or 5h/7d windows.
+canonical_text: >-
+  Usage event storage uses retention, optional export-first archival/compaction, daily summary records,
+  incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and
+  MUST NOT serve aggregation or 5h/7d windows. Amended 2026-10-31 (DL-270): usage.jsonl is retired as a live file
+  and pm export writes it on request (SP-339); detailed usage records follow ai.usage.usage-retention and daily
+  summary records are canonical and kept (UF-108).
 gui_related: true
 gui_classification_reason: The unit defines visible rollup freshness and backend retention behavior.
 split_recommended: false
@@ -2258,7 +2263,7 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes:
-- usage.jsonl follows the same retention policy as seglog if retained for debugging.
+- usage.jsonl is retired as a live file (SP-339); pm export writes JSONL on request, so no retention policy applies to it.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -2678,7 +2683,7 @@ plan_unit_id: UF-051
 unit_type: deferred_enhancement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage may log approaching-limit or quota-exhausted alerts in a small log such as alerts.jsonl and display them in Usage or Settings; phase label is Post-v1.
+canonical_text: Usage may log approaching-limit or quota-exhausted alerts as typed store records (not an alerts.jsonl file, SP-339) and display them in Usage or Settings, readable through pm inspect and the record inspector; phase label is Post-v1.
 gui_related: false
 gui_classification_reason: The unit preserves future alert history persistence rather than current GUI layout.
 split_recommended: false

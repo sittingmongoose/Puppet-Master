@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L52-L238
+Source lines: L55-L244
 
-Source SHA256: `a87d9c23b0ec20816ad76a2b27d626c88754eb6856a208ad1711a86e44d1372b`
+Source SHA256: `18beb1ce4384e6d95e4879828eb26a3bec9021fead28ad787abb2188b6d264e0`
 
 ---
 
 ## Change Summary
+
+- 2026-10-31: DL-270 records Jared's answers to the storage review's 13 decision cards: the recommended option on each. The event log compresses sealed segments, with the format ready for more; an ordinary batch takes one disk sync and key moments a full flush; large payloads are stored once by fingerprint; chats open from ready-made pages under a CI speed gate, with load-older paging mandatory; the always-on JSON copies give way to dump, inspect, tail and export commands; redb gets value limits, two files, quick repair and scheduled compaction; a Parquet archive with DuckDB on demand answers questions over history, detailed usage records follow the existing retention setting (90 days by default) and daily usage totals are kept; backups copy in the background; the SQLite ban is written as Jared's four requirements and gated on every OS; remote streams use zstd; screenshots become lossless WebP; and data sits where desktop indexers don't look. Amended 2026-10-31 (DL-270): the commands part is `Plans/Commands_System.md` CS-107 and `Plans/UI_Command_Catalog.md` UCC-212: reclaim reuses `cmd.storage.compaction.request` (one action for the whole storage instance, results shown per group) and chat load-older is the new `cmd.chat.load_older`; `pm db dump`, `pm inspect`, `pm tail` and `pm export` are command-line reads with no command id (SP-339). Storage health, the record inspector (F3-666), the last verified backup (BRS-031) and chat load-older (ACD-242, F3-667) go to FinalGUISpec; bindings go to Wiring_Matrix.production.json.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-335, ContractName:Plans/storage-plan.md#SP-345, ContractName:Plans/assistant-chat-design.md#ACD-242, ContractName:Plans/usage-feature.md#UF-108, ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Remote_Access_System.md#RAS-016
 
 - 2026-10-30: F3-1 final GUI 5abe285507 aligns F3-5 entry/exit click-through on every page (Usage included, first mount and late completion guarded) and F3-6 inbox push measured after owner open/reopen from resting/destination layout height, updated for content/resize and cleared on close. Prose precedes companions; no command, binding, setting or native evidence is added. Focused verification only; the lead’s landing check supplies the next full gates/dry.
   ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-461, ContractName:Plans/Commands_System.md#CS-102, ContractName:Plans/UI_Wiring_Rules.md#UIW-045, ContractName:Plans/Wiring_Matrix.md#WM-097

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L647-L730
+Source lines: L646-L729
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -80,7 +80,7 @@ Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471
 - **Benefit**
   - Log when we showed "approaching limit" or "quota exhausted"; user can review "I was warned at 14:00" for debugging or awareness.
 - **Notes**
-  - Optional; store in a small log or append to a file under `.puppet-master/usage/` (e.g. `alerts.jsonl`). Display in Usage or Settings.
+  - Optional; store alert history as typed records in the store (seglog events with a redb index), not as a new JSON or JSONL file (SP-339). Display in Usage or Settings; people read the raw records through `pm inspect` and the record inspector.
 - **Phase**
   - Post-v1.
 

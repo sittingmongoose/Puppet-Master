@@ -1877,7 +1877,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **AfterTierEnd verification responsibilities:**
 
-- **Persist verification results:** Append the verification result to the canonical runtime verification/receipt event family and project it into redb-backed verification read models. The legacy `.puppet-master/state/verification-{node_id}-end.json` path is retired source-lineage and may exist only as an explicit debug/export mirror generated from canonical storage.
+- **Persist verification results:** Append the verification result to the canonical runtime verification/receipt event family and project it into redb-backed verification read models. The legacy `.puppet-master/state/verification-{node_id}-end.json` path is retired source-lineage. Amended 2026-10-31 (DL-270, SP-339): no file is written; results are read through `pm inspect` or `pm export`.
 - **Update tier status:** Update tier status in PRD/state based on verification results
 - **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
 - **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
@@ -2465,7 +2465,7 @@ where F: FnOnce() -> Result<T>,
 
 **AfterHandoffValidation responsibilities:**
 
-- **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage and may exist only as an explicit debug/export mirror generated from canonical storage.
+- **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage. Amended 2026-10-31 (DL-270, SP-339): no file is written; results are read through `pm inspect` or `pm export`.
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
 - **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
 
@@ -3608,7 +3608,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Agent coordination
 
-- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; optional debug mirrors may exist, but they are not the source of truth.
+- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; no mirror file is written, and coordination state is read through `pm inspect` and `pm export` (SP-339, DL-270).
 - **What:** (1) **Canonical coordination projection (cross-platform):** Implement `AgentCoordinator` over child-run state, lineage, current file activity, and platform/runtime metadata projected from seglog/redb. Register agents before execution, update status during execution from hooks/provider events/tool activity, unregister or terminally resolve after execution. **This enables cross-platform coordination** without making `active-agents.json` the canon. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update canonical coordination state periodically. (4) **Conflict prevention:** Check projected coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected.
 - **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution by resolving the child run through canonical status projection. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
 
@@ -3781,7 +3781,7 @@ Canonical seglog record families:
 - `coordination.agent_unregistered` records normal completion or explicit unregister.
 - `coordination.agent_crashed` records crash/heartbeat expiry resolution.
 - `coordination.agent_aborted` records parent/user/runtime abort resolution.
-- `coordination.debug_mirror_exported` records optional mirror export attempts and outcomes.
+- `coordination.debug_mirror_exported` records optional mirror export attempts and outcomes. Amended 2026-10-31 (DL-270, SP-339): no mirror file is exported, so nothing emits this family any more; retiring its registry entry belongs to the Storage owner.
 
 Canonical redb projections:
 - `coordination_agent_projection.v1:{project_id}:{agent_id}` for the latest agent lifecycle, status, runtime/platform identity, worktree binding, operation ref, and last applied coordination sequence.
@@ -3795,7 +3795,7 @@ Concurrency and atomicity rules:
 - A coordination mutation is admitted only as one append/CAS boundary: the writer checks the current `agent_revision` or `last_applied_event_id`, appends one EventRecord with an idempotency key, and the projector advances the redb projection plus checkpoint in one redb transaction.
 - Lost updates are prevented by CAS on `agent_revision`/`last_applied_event_id`. A stale update returns a coordination conflict diagnostic; the caller reloads the projection and emits a new event instead of overwriting the old projection.
 - Canonical scheduling, conflict prevention, prompt injection, and execution decisions read only the redb projections whose checkpoint covers the required seglog sequence. They never read `active-agents.json`, `agent-messages.json`, verification JSON, or handoff JSON as authority.
-- Mirror writers run after canonical projection commits. If a mirror write fails, lags, or is corrupt, PM emits diagnostics and regenerates the mirror from seglog/redb; canonical scheduling and execution continue from projections only.
+- Amended 2026-10-31 (DL-270, SP-339): no mirror writer exists. A damaged redb projection is rebuilt from seglog replay from the last valid checkpoint; canonical scheduling and execution continue from projections only.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.event.v0
 
@@ -3881,7 +3881,7 @@ The lifecycle enum applies to every coordination agent, including node agents, b
 
 **Restart and restore.** After an Orchestrator restart, or after a verified restore of an older backup, every non-terminal agent whose process no longer exists is resolved by the crash detector with `process_lost`, as a new operation. A restored or lost request is never replayed as a new event. An agent started after the restart gets a new `agent_id`.
 
-**Readers.** The scheduler, the `AgentCoordinator` context and conflict reads, the prompt context assembler, the debug mirror exporter and the inspection views read coordination state only through the versioned Storage readers of SP-320, after checkpoint coverage is verified. When coverage cannot be verified, the scheduler treats it as `coordination_conflict`. It neither schedules nor injects context from stale rows or mirrors.
+**Readers.** The scheduler, the `AgentCoordinator` context and conflict reads, the prompt context assembler, `pm export` and the inspection views (`pm inspect`, `pm db dump`, `pm tail` and the in-app record inspector) read coordination state only through the versioned Storage readers of SP-320, after checkpoint coverage is verified. When coverage cannot be verified, the scheduler treats it as `coordination_conflict`. It neither schedules nor injects context from stale rows or exports.
 
 **Owner text per family.** Each family keeps its own lines, refined by this section:
 - `coordination.agent_registered`: "records agent registration before execution" in the canonical records list; `register_agent` in the `AgentCoordinator` sketch; "Before execution" in "Coordination event updates"; OSI-258.
@@ -3961,19 +3961,16 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Contr
 
 #### Compatibility and debug mirror contract
 
-`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are compatibility/debug/export artifacts only. They are written by PM-owned projection or export code after redb commits, may lag canonical storage, and may be absent in headless or clean-room runs.
+Amended 2026-10-31 (DL-270, SP-339): `.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are retired as live files. No projector or exporter writes them after redb commits, so no mirror lags, is quarantined or is regenerated. Their contents are read through `pm db dump`, `pm inspect`, `pm tail` and the in-app record inspector, and are written only as `pm export` output (JSON or JSONL) on request. Every other mention of these files in this document is retired lineage.
 
-Mirror contract:
-- **Writer:** only PM projector/exporter code writes mirrors; child agents, provider adapters, and platform hooks do not write them directly.
-- **Lag:** mirrors may lag until the next projector/export tick and must expose source sequence/checkpoint metadata when present.
-- **Corruption:** invalid JSON, partial writes, missing files, stale sequence ids, or disk-full failures are mirror failures. PM quarantines or overwrites the mirror from canonical seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.
-- **Authority:** mirrors cannot drive scheduling, conflict prevention, execution admission, unregister/crash cleanup, or prompt-injection decisions. Consumers that need authority must read `coordination_snapshot_projection.v1` or the more specific redb projections.
+Retired mirror duties (the Writer, Lag and Corruption bullets, and the `coordination.debug_mirror_exported` failure path, are no longer runtime duties):
+- **Authority:** exports and inspection output cannot drive scheduling, conflict prevention, execution admission, unregister/crash cleanup, or prompt-injection decisions. Consumers that need authority must read `coordination_snapshot_projection.v1` or the more specific redb projections.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
 
 #### Canonical crew message-board contract
 
-PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for attributable cross-agent coordination that cannot be reduced to live status projection alone. `.puppet-master/state/agent-messages.json` may exist as an optional debug or interoperability mirror, but it is not the canonical persistence store.
+PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for attributable cross-agent coordination that cannot be reduced to live status projection alone. Amended 2026-10-31 (DL-270, SP-339): crew-board records are read through `pm inspect`, `pm tail` and the in-app record inspector, and exported with `pm export` (JSON on request). No `agent-messages.json` state file is written.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -4039,22 +4036,22 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 - **Context awareness:** Agents understand what other agents are working on, reducing confusion when seeing changes
 - **Efficient collaboration:** Agents can build on each other's work, reference shared decisions, and avoid duplicate effort
 - **Reduced errors:** Agents don't overwrite each other's changes or create conflicting implementations
-- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) coordinate through the shared seglog/redb coordination projection; optional state files are debug/export mirrors only.
+- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) coordinate through the shared seglog/redb coordination projection; no state file is written (SP-339, DL-270).
 
 **Coordination mechanisms:**
 
 1. **Source-lineage shared files (existing):** `progress.txt`, `AGENTS.md`, and `prd.json` may remain source-lineage or project-context inputs where a run explicitly imports them, but they do not provide canonical live coordination truth.
 
-2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection, optionally mirrored to `.puppet-master/state/active-agents.json` for debugging, that tracks:
+2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection (redb read model), read through `pm inspect` and exported with `pm export` on request, that tracks (amended 2026-10-31, DL-270, SP-339: no `active-agents.json` file is written):
    - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
    - What files/modules each agent is working on
    - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
 
-   **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
+   **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state.
 
-3. **Attributable crew message board (canonical records):** Persist durable questions, answers, decisions, warnings, requests, and announcements through the child-run/event-store coordination record family; `.puppet-master/state/agent-messages.json` is an optional debug or interoperability mirror for those records.
+3. **Attributable crew message board (canonical records):** Persist durable questions, answers, decisions, warnings, requests, and announcements through the child-run/event-store coordination record family; those records are read through `pm inspect` and `pm export` (JSON on request); no `agent-messages.json` state file is written (SP-339, DL-270).
 
 4. **Provider-bridge coordination (current):**
 
@@ -4242,7 +4239,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 
 **Provider coordination model (Codex/Copilot included):**
 
-- **Canonical mode:** Coordination projection for all platforms, optionally mirrored to `active-agents.json` for debugging.
+- **Canonical mode:** Coordination projection for all platforms; no `active-agents.json` file is written (SP-339, DL-270).
 - **Scope:** Works for same-platform and cross-platform crews using the same coordination event/projection schema.
 - **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
 - **Prompt contract:** Every subagent receives coordination context built from the canonical coordination snapshot projection.
@@ -4250,7 +4247,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 **When to use coordination modes:**
 
 - **Seglog/redb coordination (canonical):** Always on for orchestrator-managed runs. All platforms (Codex, Claude, Cursor, Gemini, Copilot) append coordination events and read the same redb coordination projections.
-- **Debug/export mirrors (optional):** `active-agents.json` and related `.puppet-master/state/*.json` files may be emitted after projection commits for debugging or interoperability, but they are not read by schedulers or agents as authority.
+- **Export on request:** `pm export` renders coordination projections as JSON or JSONL when asked. No `.puppet-master/state/*.json` file is emitted after projection commits (SP-339, DL-270). Exports are never read as authority.
 - **Platform-native hooks (optional enrichments):** Use hook events where available to improve update fidelity, but keep hooks as producers of normalized coordination events rather than a replacement for canonical seglog/redb state.
 
 **Benefits:**
@@ -4539,17 +4536,17 @@ When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
 | Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All supported providers |
 | Orchestrator visibility | Limited | Limited | ✅ Full visibility |
 | Agent-to-agent messaging | ✅ Native | ❌ Not supported | ✅ Supported |
-| Debug/export mirror available | ❌ Uses API | ❌ Uses API | ✅ Optional non-canonical mirror |
-| Works with CLI-only | ❌ Requires Teams API | ❌ Requires Fleets API | ✅ Seglog/redb coordination plus optional mirror export |
+| Export available | ❌ Uses API | ❌ Uses API | ✅ `pm export` on request (no mirror file, SP-339) |
+| Works with CLI-only | ❌ Requires Teams API | ❌ Requires Fleets API | ✅ Seglog/redb coordination plus `pm export` on request |
 
 **Architecture:**
 
-The communication system extends the canonical coordination event stream and redb read models with a crew board. The file tree below is a debug/export mirror shape only:
+The communication system extends the canonical coordination event stream and redb read models with a crew board. Retired 2026-10-31 (DL-270, SP-339): the `.puppet-master/state/` tree below (`active-agents.json`, `agent-messages.json`) is no longer written. Treat the tree as the shape of `pm export` output only. Crew-board and status records live in seglog and redb and are read through `pm inspect`, `pm db dump` and `pm tail`.
 
 ```
 .puppet-master/state/
-├── active-agents.json          # Optional debug mirror of agent status projection
-└── agent-messages.json         # Optional debug/interoperability mirror of crew-board records
+├── active-agents.json          # Retired: pm export output only (agent status projection)
+└── agent-messages.json         # Retired: pm export output only (crew-board records)
 ```
 
 **Message structure:**
@@ -4572,7 +4569,7 @@ pub struct AgentMessage {
     pub to_node_id: Option<String>, // e.g., "1.1" (all agents in this node)
     pub message_type: MessageType,
     pub subject: String, // Brief summary
-    pub content: String, // Full message content
+    pub content: String, // Full message content; Amended 2026-10-31 (DL-270, SP-337): at most 16 KiB inline, longer bodies go to the payload store by BLAKE3 reference
     pub context: MessageContext, // Files, operations, etc.
     pub thread_id: Option<String>, // For threaded conversations
     pub in_reply_to: Option<String>, // message_id of message being replied to
@@ -4837,7 +4834,7 @@ impl AgentCommunicator {
 }
 ```
 
-The legacy `message_board_file` / `agent-messages.json` sketch is source-lineage only. PM may export that mirror from the canonical crew-board projection, but agents and schedulers must not use it as the durable board store.
+The legacy `message_board_file` / `agent-messages.json` sketch is source-lineage only. `pm export --json` may render the crew-board projection on request (SP-339, DL-270). No `agent-messages.json` mirror is kept, and agents and schedulers never use an export as the board store.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
@@ -4887,7 +4884,7 @@ impl OrchestratorInsights {
 1. **Cross-platform:** Works for all providers, even without native teams/fleets
 2. **Orchestrator visibility:** Boss agent can see all subagent communication
 3. **Enhanced coordination:** Agents can ask for help, share decisions, warn about conflicts
-4. **File-based:** No API calls, pure file-based (fits Puppet Master architecture)
+4. **Store-backed:** No provider API calls; the board is a seglog and redb family read through `pm inspect` and `pm export` (SP-339, DL-270; amended 2026-10-31, replaces "File-based")
 5. **Flexible routing:** Messages can be direct, by type, by tier, or broadcast
 6. **Threaded conversations:** Supports multi-turn conversations
 7. **Integration:** Works seamlessly with existing coordination state
@@ -4896,7 +4893,7 @@ impl OrchestratorInsights {
 
 - **Message spam:** Limit message rate per agent (max 10 messages/minute)
 - **Large message board:** Archive old messages, limit message history
-- **File locking:** Use same locking mechanism as coordination state
+- **File locking:** Retired 2026-10-31 (DL-270, SP-339): append/CAS replaces file locks, since no board file is written
 - **Message parsing:** Agents may not always format messages correctly -- provide clear instructions in prompts
 - **Orphaned messages:** Messages from crashed agents -- mark as resolved after agent unregisters
 
@@ -4917,7 +4914,7 @@ impl OrchestratorInsights {
 **Mitigation:**
 - **Canonical append/CAS:** Each update appends one coordination EventRecord with an idempotency key and expected agent revision; stale expected revisions fail with a conflict diagnostic.
 - **Projection transaction:** The coordination projector writes all affected redb rows and the checkpoint in one transaction. It does not advance the checkpoint on partial failure.
-- **Mirror-only atomic writes:** Optional mirrors use same-directory temp files, fsync, and rename. Mirror failure is a debug/export failure, not a canonical coordination failure.
+- **Mirror-only atomic writes:** Retired 2026-10-31 (DL-270, SP-339, SP-336): no mirror files are written, so no mirror atomic-write rule remains. `pm export` writes its output on request through a temp file and rename. New stores are created in `<name>.creating/`, fsynced, renamed, then the parent is fsynced (SP-336). The append/CAS and projection-transaction bullets above stay.
 - **No fail-open scheduling:** Lock timeout, mirror write failure, or mirror corruption must never authorize scheduling or execution from stale mirror data.
 
 ```rust
@@ -5022,10 +5019,12 @@ impl AgentCoordinator {
 
 **Issue:** If the optional `active-agents.json` mirror becomes corrupted (invalid JSON, partial write, disk full), debug/interoperability views can be stale or unreadable.
 
+Retired 2026-10-31 (DL-270, SP-339): no `active-agents.json` mirror exists to corrupt, so the mirror regeneration, quarantine and `coordination.debug_mirror_exported` bullets below no longer apply. Two rules stay: authority is the redb projections, and a damaged projection is rebuilt from seglog replay from the last valid checkpoint, never replaced by empty state.
+
 **Mitigation:**
 - **Authority fallback:** Read canonical `coordination_snapshot_projection.v1` and specific redb projections; do not parse a corrupt mirror for authority.
-- **Mirror regeneration:** Quarantine or overwrite the mirror by replaying seglog/redb projection state from the last valid coordination checkpoint.
-- **Diagnostic event:** Emit `coordination.debug_mirror_exported` with failure metadata when mirror recovery is needed.
+- **Mirror regeneration (retired, DL-270):** Quarantine or overwrite the mirror by replaying seglog/redb projection state from the last valid coordination checkpoint.
+- **Diagnostic event (retired, DL-270):** Emit `coordination.debug_mirror_exported` with failure metadata when mirror recovery is needed.
 - **No empty canonical state fallback:** A corrupt mirror must not create an empty canonical active-agent set or unregister agents by implication.
 
 ```rust
@@ -5404,7 +5403,7 @@ impl AgentCoordinator {
 
 **Improvement #2: Coordination state backup and recovery**
 
-Automatically backup coordination state before each write, with retention policy:
+Retired 2026-10-31 (DL-270, SP-339, BRS-031): no JSON coordination state file is written, so no per-write `.bak` copy or keep-last-10 policy applies. Recovery is seglog replay plus redb rebuild; backups copy sealed segments and a redb read snapshot per BRS-031. The same retirement covers OSI-327 and the backup-before-write requirement in OSI-348. The legacy sketch below is kept as source lineage:
 
 ```rust
 // Legacy mirror-only source-lineage sketch. Canonical recovery is seglog/redb replay plus mirror export.
@@ -5473,7 +5472,7 @@ When multiple subagents run in parallel:
 2. **Independent Selection**: Each subtask selects subagents independently based on its own context
 3. **Resource Management**: Platform runners handle concurrent invocations
 4. **Context Sharing**: Completed subtasks share results via dependency chain, not direct subagent communication
-5. **Coordination**: Agents coordinate through canonical seglog/redb coordination records and projections; optional shared state files are debug/export mirrors only (see "Agent Coordination and Communication" above)
+5. **Coordination**: Agents coordinate through canonical seglog/redb coordination records and projections; no shared state file is written (SP-339, DL-270; see "Agent Coordination and Communication" above)
 
 **Example:**
 ```rust
@@ -13375,7 +13374,10 @@ preserved_exact_tokens:
 - 'rework'
 - 'complete with warnings'
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- >-
+  Amended 2026-10-31 (DL-270): the .puppet-master/state/verification-{node_id}-end.json path is retired (SP-339). Verification
+  results are canonical events plus a redb projection, read through pm inspect or pm export.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15129,8 +15131,10 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  The .puppet-master/state/handoff-validation-{node_id}.json path is preserved from source and requires storage-owner alignment
-  when implemented.
+  Amended 2026-10-31 (DL-270): the storage-owner alignment is settled by SP-339. The
+  .puppet-master/state/handoff-validation-{node_id}.json path is retired; results are canonical events plus a redb projection,
+  read through pm inspect or pm export. The same applies to .puppet-master/state/verification-{node_id}-end.json (OSI-121) and
+  the former debug-mirror clauses in the persist-results bullets.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -20001,8 +20005,8 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Agent coordination is placed in src/core/agent_coordination.rs around an AgentCoordinator over child-run state, lineage,
-  current file activity, and platform/runtime metadata projected from seglog/redb; optional debug mirrors may exist, but
-  active-agents.json is not canon.
+  current file activity, and platform/runtime metadata projected from seglog/redb. Amended 2026-10-31 (DL-270, SP-339): coordination state is
+  read through pm inspect and pm export; no mirror file is written, and active-agents.json is retired.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination projection and storage boundary behavior rather than GUI presentation.
@@ -20014,7 +20018,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Canonical coordination state is projected from runtime/storage records, not owned by a debug mirror.
+- Canonical coordination state is projected from runtime/storage records; no mirror file exists (SP-339, DL-270).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -20043,7 +20047,7 @@ preserved_exact_tokens:
 negative_constraints:
 - active-agents.json must not become the canonical coordination store.
 compatibility_only_notes:
-- Optional debug mirrors are allowed but are not the source of truth.
+- Amended 2026-10-31 (DL-270, SP-339): debug mirrors are retired; pm inspect and pm export are the read path.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Consumes child-run lifecycle and runtime/storage projection contracts from Plans/Contracts_V0.md.
@@ -21090,8 +21094,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for durable attributable
-  crew-board coordination that cannot be reduced to live status projection alone; `.puppet-master/state/agent-messages.json`
-  may be an optional debug or interoperability mirror, but it is not the canonical persistence store.
+  crew-board coordination that cannot be reduced to live status projection alone. Amended 2026-10-31 (DL-270, SP-339):
+  crew-board records are read through pm export (JSON on request) and the in-app record inspector; no
+  `.puppet-master/state/agent-messages.json` state file is written.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend durable coordination records rather than GUI presentation.
@@ -21102,7 +21107,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The crew message board is represented as durable attributable coordination, not active-status projection.
-- "`.puppet-master/state/agent-messages.json` is optional mirror lineage and not canonical persistence."
+- "`.puppet-master/state/agent-messages.json` is retired mirror lineage: no state file is written and it is not canonical persistence (SP-339, DL-270)."
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -21425,8 +21430,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Coordination mechanisms include legacy asynchronous context files, a cross-platform canonical coordination projection for
-  active agents/files/operations/platform/timestamps optionally mirrored to active-agents.json for debugging, and durable
-  attributable crew-board records for revisitable exchanges.
+  active agents/files/operations/platform/timestamps, and durable attributable crew-board records for revisitable exchanges.
+  Amended 2026-10-31 (DL-270, SP-339): pm inspect and pm export are the debug read path for coordination projections; no
+  active-agents.json file is written.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination mechanisms and projection boundaries rather than GUI presentation.
@@ -21466,12 +21472,12 @@ preserved_exact_tokens:
 - ALL platforms
 - Attributable crew message board
 negative_constraints:
-- active-agents.json is only an optional debug mirror and must not become canonical state.
-- agent-messages.json is only an optional debug or interoperability mirror and must not become canonical persistence.
+- active-agents.json is retired (SP-339, DL-270) and must not become canonical state.
+- agent-messages.json is retired (SP-339, DL-270) and must not become canonical persistence.
 compatibility_only_notes:
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
 stale_retired_dispositions:
-- Shared state files are context/mirror lineage, not canonical runtime truth.
+- Shared state files are context lineage, not canonical runtime truth; mirror files are retired (SP-339, DL-270).
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -21795,7 +21801,7 @@ compatibility_only_notes:
 - Rust data model block is plan evidence and must reconcile with canonical storage/runtime owners before implementation.
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
 stale_retired_dispositions:
-- File-backed `AgentCoordinationState` persistence is retired source-lineage unless registered as a debug/export mirror.
+- File-backed `AgentCoordinationState` persistence is retired source-lineage with no mirror (SP-339, DL-270). JSON output comes only from pm export on request.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -21810,8 +21816,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AgentCoordinator construction may preserve the `.puppet-master/state/active-agents.json` path only as a debug/export
-  mirror location, while canonical `register_agent` behavior appends `coordination.agent_registered`, projects by
+  AgentCoordinator construction no longer carries the `.puppet-master/state/active-agents.json` path (amended 2026-10-31,
+  DL-270, SP-339: exports come from pm export), while canonical `register_agent` behavior appends `coordination.agent_registered`, projects by
   agent_id, updates the agent revision/checkpoint, and requires the agent platform field to come from node_config.platform
   rather than a hardcoded platform.
 gui_related: false
@@ -21824,7 +21830,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Registration preserves platform sourcing through node_config.platform and does not hardcode platforms.
-- Registration enters canonical state only through the coordination append API; loading or saving `active-agents.json` is mirror export behavior.
+- Registration enters canonical state only through the coordination append API; loading or saving `active-agents.json` is retired (SP-339, DL-270); exports come from pm export.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -21852,10 +21858,10 @@ negative_constraints:
 - Agent platform must not be hardcoded in registration.
 - "`active-agents.json` must not be used as the canonical registration store."
 compatibility_only_notes:
-- active-agents.json path remains a projection/debug-path token and must not override canonical storage ownership.
+- The active-agents.json path is a retired lineage token (SP-339, DL-270) and must not override canonical storage ownership.
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
 stale_retired_dispositions:
-- Register-by-load/save JSON behavior is retired source-lineage and may exist only as mirror export reconstruction.
+- Register-by-load/save JSON behavior is retired source-lineage; no mirror is written (SP-339, DL-270).
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -22153,7 +22159,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The preserved `load_state` pruning example is source-lineage for optional debug/export mirrors. Canonical stale-agent
+  The preserved `load_state` pruning example is retired source-lineage; no mirror file is written (SP-339, DL-270). Canonical stale-agent
   handling reads redb coordination projections, appends terminal resolution events for expired/crashed agents, and never
   treats a missing JSON file as empty canonical state.
 gui_related: false
@@ -22166,7 +22172,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - Active-agent projection pruning must not retire unresolved blocker or message-board threads.
-- Missing or corrupted mirrors trigger regeneration/quarantine; they do not clear canonical active-agent state.
+- A damaged or missing redb projection is rebuilt from seglog replay and never clears canonical active-agent state. No mirror files exist to regenerate or quarantine (SP-339, DL-270).
 - Crash/expiry cleanup is represented by `coordination.agent_crashed`, `coordination.agent_aborted`, or `coordination.agent_unregistered`.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
@@ -22194,7 +22200,7 @@ negative_constraints:
 - Pruning active-agent projection must not retire unresolved blocker or message-board threads.
 - Do not return an empty canonical coordination state because a mirror file is absent.
 compatibility_only_notes:
-- Projection cleanup is not durable-message retention policy; JSON pruning examples are mirror/source-lineage only.
+- Projection cleanup is not durable-message retention policy; JSON pruning examples are retired source-lineage only (no mirror is written, SP-339, DL-270).
 stale_retired_dispositions:
 - Stale active-agent pruning is projection cleanup only.
 - "`load_state` fallback-empty behavior is retired for canonical state."
@@ -22214,8 +22220,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The preserved `save_state` example creates a state directory, pretty-serializes coordination state, and writes a state
-  file only as optional debug/export mirror evidence. Canonical coordination persistence is the EventRecord append plus
-  redb projection/checkpoint transaction.
+  file. Amended 2026-10-31 (DL-270, SP-339): that example is retired source-lineage and no state file is written. Canonical
+  coordination persistence is the EventRecord append plus redb projection/checkpoint transaction. Coordination projections
+  and the crew board are read through pm inspect and pm export.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend serialization evidence rather than GUI presentation.
@@ -22225,8 +22232,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
-- Serialization/path details are mirror/export evidence and must not be used for scheduling, execution admission, conflict prevention, or prompt authority.
-- Mirror writes occur after projection commit and are recoverable by regenerating from seglog/redb.
+- Serialization/path details are retired lineage and must not be used for scheduling, execution admission, conflict prevention, or prompt authority.
+- No mirror is written; state is recoverable from seglog and redb, and any JSON comes from pm export on request (SP-339, DL-270).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -22250,7 +22257,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not use `save_state` whole-file serialization as canonical coordination persistence.
 compatibility_only_notes:
-- Implementation example only; storage path ownership remains external and mirror-only.
+- Implementation example only; retired lineage (SP-339, DL-270); storage path ownership remains external.
 stale_retired_dispositions:
 - Whole-file state serialization is retired as canonical coordination storage.
 owner_boundary_notes:
@@ -22483,8 +22490,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  All platforms use the canonical coordination projection, optional active-agents.json debug mirror, shared schema,
-  direct-provider runtime path, and the same prompt contract; provider coordination does not permit local CLI bridge reuse or
+  All platforms use the canonical coordination projection, shared schema,
+  direct-provider runtime path, and the same prompt contract (amended 2026-10-31, DL-270, SP-339: the optional
+  active-agents.json debug mirror is removed; pm export is the readable form); provider coordination does not permit local CLI bridge reuse or
   shared SDK threads/sessions.
 gui_related: false
 gui_classification_reason: >-
@@ -22522,7 +22530,7 @@ preserved_exact_tokens:
 negative_constraints:
 - No local CLI bridge or shared SDK sessions/threads.
 compatibility_only_notes:
-- Debug mirror is not the source of truth.
+- The active-agents.json debug mirror is retired (SP-339, DL-270); pm export is the readable form.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Executor/provider boundary owns runtime path details.
@@ -22552,7 +22560,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - Platform-native hooks emit or enrich normalized coordination events; they do not become a second coordination source.
-- active-agents.json and `.puppet-master/state/*.json` files remain compatibility/debug/export mirrors only and cannot drive scheduling, conflict prevention, execution admission, or prompt injection.
+- active-agents.json and `.puppet-master/state/*.json` files are retired (SP-339, DL-270). Stored state is read through pm db dump, pm inspect and pm tail, and exported with pm export on request. No exported file ever drives scheduling, conflict prevention, execution admission or prompt injection.
 - Agent registration, status, operation, file-activity, unregister, crash, abort, and snapshot behavior is represented by named seglog record families plus redb projections.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
@@ -22579,9 +22587,9 @@ negative_constraints:
 - Hooks must not replace canonical seglog/redb coordination state.
 - File-based coordination must not be read as canonical runtime truth.
 compatibility_only_notes:
-- The preserved token "File-based coordination (canonical)" is retired source-lineage from the original span and now means only optional debug/export mirror availability.
+- The preserved token "File-based coordination (canonical)" is retired source-lineage from the original span and now means only that pm export can render a file on request (SP-339, DL-270).
 stale_retired_dispositions:
-- active-agents.json and `.puppet-master/state/*.json` coordination files are non-canonical mirrors.
+- active-agents.json and `.puppet-master/state/*.json` coordination files are retired, not mirrors (SP-339, DL-270).
 owner_boundary_notes:
 - Orchestration and platform adapters share enrichment boundaries; storage owns durable coordination record/projection semantics.
 owner_hints:
@@ -24012,9 +24020,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The communication system example extends coordination state with a message board/queue, preserving `.puppet-master/state/active-agents.json`
-  as an optional debug mirror and `.puppet-master/state/agent-messages.json` as an optional debug or interoperability mirror
-  for agent-to-agent message records.
+  The communication system example extends coordination state with a message board/queue. Amended 2026-10-31 (DL-270, SP-339): both
+  `.puppet-master/state/active-agents.json` and `.puppet-master/state/agent-messages.json` are dropped from the example;
+  agent-to-agent message records are read through pm db dump, pm inspect or pm export.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination-state architecture rather than GUI presentation.
 split_recommended: false
@@ -24051,11 +24059,11 @@ preserved_exact_tokens:
 - agent-messages.json
 - agent-to-agent messages
 negative_constraints:
-- The optional active-agents debug mirror must not become the coordination source of truth.
-- The optional agent-messages mirror must not become the canonical persistence store.
+- The retired active-agents debug mirror ("Optional debug mirror" in the source) must not become the coordination source of truth (SP-339, DL-270).
+- The retired agent-messages mirror must not become the canonical persistence store (SP-339, DL-270).
 compatibility_only_notes:
 - Duplicate message-board architecture example; do not narrow OSI-245.
-- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+- "`.puppet-master/state/agent-messages.json` is retired mirror lineage (SP-339, DL-270): no state file is written."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Storage owns durable schema semantics; orchestrator owns coordination use.
@@ -24074,7 +24082,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The source preserves `AgentMessage` fields including `message_id`, `from_agent_id`, `from_platform`, `to_agent_id`,
   `to_agent_type`, `to_node_id`, `message_type`, `subject`, `content`, `context`, `thread_id`, `in_reply_to`, `created_at`,
-  `read_by`, and `resolved`.
+  `read_by`, and `resolved`. Amended 2026-10-31 (DL-270): the crew.board_message_posted event carries at most 16 KiB of inline
+  `content` (SP-337); longer bodies go to the content-addressed payload store and the record keeps the BLAKE3 reference, and
+  replies, forks and summaries reference the payload instead of copying it.
 gui_related: false
 gui_classification_reason: This unit covers a backend message schema example rather than GUI presentation.
 split_recommended: false
@@ -24834,7 +24844,7 @@ unblocks: []
 acceptance_criteria:
 - Covered placement and path example remains losslessly available for exact-text audit.
 - Implementation module/path tokens remain examples and do not create source files.
-- message_board_file and .puppet-master/state/agent-messages.json remain compatibility-path examples only.
+- message_board_file and .puppet-master/state/agent-messages.json are retired lineage examples only (SP-339, DL-270).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -24866,7 +24876,7 @@ negative_constraints:
 - message_board_file must not become canonical persistence.
 compatibility_only_notes:
 - Rust snippet is evidence only.
-- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+- "`.puppet-master/state/agent-messages.json` is retired mirror lineage (SP-339, DL-270): no state file is written."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Orchestrator owns communication use; storage owns durable record semantics.
@@ -26762,8 +26772,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Optional coordination mirror writes should preserve backup-before-write and retention-policy evidence for recovery of the
-  compatibility state file, while canonical projection writes are redb transactions rebuildable from seglog.
+  Retired 2026-10-31 (DL-270, SP-339, BRS-031): no coordination mirror writes exist, so no backup-before-write or retention
+  policy applies to a compatibility state file. Recovery is seglog replay and redb rebuild; backups copy sealed segments and a
+  redb read snapshot (BRS-031). Canonical projection writes are redb transactions rebuildable from seglog.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination recovery behavior, not GUI presentation.
 split_recommended: false
@@ -26773,7 +26784,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered backup-before-write and retention-policy prose remains losslessly available for exact-text audit.
-- Backup behavior remains scoped to coordination debug/export mirrors unless a storage owner explicitly adopts it.
+- No backup-before-write behavior remains: no mirror writes exist (SP-339, DL-270).
 - Canonical projection recovery is replay/rebuild from seglog plus checkpoint, not timestamped JSON backups.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -26797,7 +26808,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Projection backups must not become canonical storage durability rules by implication.
 compatibility_only_notes:
-- Backup behavior applies to mirror/debug state evidence.
+- Backup-before-write was mirror/debug state evidence only and is retired with the mirrors (SP-339, DL-270).
 stale_retired_dispositions:
 - Backup-before-write of JSON files is retired as canonical coordination durability.
 owner_boundary_notes:
@@ -31512,21 +31523,21 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Active-agent coordination canonical truth is the EventRecord seglog coordination family plus redb projections for agent
-  registration, status, operation, file-activity, unregister/crash/abort, snapshots, and optional debug mirror export.
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are compatibility/debug/export
-  mirrors or retired source-lineage only; they cannot drive scheduling, execution admission, conflict prevention, prompt
-  injection, unregister, crash, or abort decisions.
+  registration, status, operation, file-activity, unregister/crash/abort, and snapshots. Amended 2026-10-31 (DL-270, SP-339):
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are retired and are no longer
+  compatibility mirrors. Coordination state is read through pm db dump, pm inspect, pm tail and pm export (JSON or JSONL on
+  request); no always-on mirror file exists. Exports never drive scheduling, execution admission, conflict prevention,
+  prompt injection, unregister, crash, abort or cleanup decisions.
 gui_related: false
 gui_classification_reason: This unit defines backend coordination storage and projection authority, not GUI presentation.
 depends_on: [OSI-225, OSI-270, OSI-271, CV-309, SP-230]
 unblocks: []
 acceptance_criteria:
-  - "`coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported` are the named coordination event families consumed by Orchestrator."
+  - "`coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported` (no longer emitted: amended 2026-10-31, DL-270, SP-339) are the named coordination event families consumed by Orchestrator."
   - "`coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` are the authoritative coordination read models."
   - Up to 32 active agents across multiple worktrees update coordination through append/CAS boundaries with idempotency keys, expected agent revision or last applied event id, and one redb projection/checkpoint transaction.
   - Lost updates return coordination conflict diagnostics; writers reload projections and append successor events instead of overwriting canonical state.
-  - Canonical coordination forbids read-modify-write of `.puppet-master/state/*.json`; mirror writes occur only after projection commit and are recoverable by regenerating from seglog/redb.
-  - Corrupted, missing, stale, or lagging mirrors are quarantined or overwritten by PM-owned projection/export code and cannot decide scheduling, execution, conflict prevention, prompt injection, unregister, crash, or abort behavior.
+  - Canonical coordination forbids read-modify-write of `.puppet-master/state/*.json` because no such file is written; state is recoverable from seglog and redb, and any JSON is produced by pm export on request (SP-339, DL-270). There is no quarantine or regeneration duty.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
@@ -31558,7 +31569,7 @@ preserved_exact_tokens:
   - "coordination_snapshot_projection.v1"
 negative_constraints:
   - Do not read file-based coordination state as canonical runtime truth.
-  - Do not allow debug/export mirrors to drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, or abort decisions.
+  - Do not allow exports to drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, or abort decisions.
   - Do not use read-modify-write of `.puppet-master/state/*.json` for canonical coordination updates.
   - Do not reinterpret file-activity coordination claims as FileSafe locks or durable exclusive leases.
 owner_hints:

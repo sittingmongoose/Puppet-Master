@@ -5570,6 +5570,486 @@
         "new_action_command_setting_or_error_store": false,
         "URL_or_Remote_Link_grammar_pinned": false
       }
+    },
+    {
+      "name": "DL271.feedback_policy",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": true,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.OpenCode_server_password.provider_API_key_hint",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": true,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.Protect_access.guidance_count_neutral",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": false,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.Unlock.fixed_six_word_format",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": true,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.weak_SSH_key.prior_authorization_or_unlock_bypasses",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": true,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.weak_SSH_key.retained_weak_selection_may_advance_or_install",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": true,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.initial_pairing_wait.answered_run_becomes_initial_waiting",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": true,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": false,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
+    },
+    {
+      "name": "DL271.reject.note_horizontal_reading",
+      "definition": "OnboardingCredentialFeedbackPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-271",
+        "contract_scope": "static_onboarding_credential_feedback_policy_only",
+        "OpenCode_server_password": {
+          "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+          "realm": "OpenCode_server_HTTP_Basic",
+          "provider_API_key_hint": false,
+          "custody": "OS_keychain_on_selected_execution_host",
+          "auth_optional_if_server_needs_none": true,
+          "ordinary_draft_readback_logs_contain_secret": false
+        },
+        "Protect_access": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "guidance_count_neutral": true,
+          "requirements_from_selected_Backup_family_auth_mode": true,
+          "copy_relaxes_required_fields": false
+        },
+        "Unlock": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+          "prompt": "your recovery phrase",
+          "fixed_six_word_format": false,
+          "new_recovery_format_or_crypto": false,
+          "owner_verified_unlock_required": true
+        },
+        "weak_SSH_key": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-042",
+          "setting_id": "code.execution.ssh-keys",
+          "refused_types": [
+            "DSA",
+            "RSA-1024"
+          ],
+          "tag": "Too weak to use",
+          "reason": "Older key type — too weak to use",
+          "prior_authorization_or_unlock_bypasses": false,
+          "retained_weak_selection_may_advance_or_install": false,
+          "private_half_exposed_or_moved": false,
+          "other_keys_follow_existing_owner_checks": true
+        },
+        "initial_pairing_wait": {
+          "owner_ref": "Plans/Server_System.md#SRV-004",
+          "invitation_current_and_live": true,
+          "empty_label": "No requests yet",
+          "action_label": "Check again",
+          "check_approves_or_grants_trust": false,
+          "answered_run_becomes_initial_waiting": false,
+          "fixed_owner_answer_delay": false
+        },
+        "question_note_layout": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "long_tokens_wrap_within_available_width": true,
+          "horizontal_reading_required": true,
+          "vertical_scroll_for_long_notes_retained": true,
+          "visual_wrap_changes_copied_token": false
+        }
+      }
     }
   ],
   "semantic_cases": [
@@ -5694,7 +6174,7 @@
     "pm7_bindings": 483,
     "touch_rows": 715,
     "touch_profiles": 140,
-    "production_wiring_entries": 1269,
+    "production_wiring_entries": 1270,
     "new_production_rows": 11,
     "new_bindings": 61
   },
@@ -8932,5 +9412,60 @@
     "reason_priority_changes_owner_validation_or_authority": false,
     "new_action_command_setting_or_error_store": false,
     "URL_or_Remote_Link_grammar_pinned": false
+  },
+  "onboarding_credential_feedback_policy": {
+    "decision_ref": "Plans/Decision_Log.md#DL-271",
+    "contract_scope": "static_onboarding_credential_feedback_policy_only",
+    "OpenCode_server_password": {
+      "owner_ref": "Plans/Provider_OpenCode.md#PO-009",
+      "realm": "OpenCode_server_HTTP_Basic",
+      "provider_API_key_hint": false,
+      "custody": "OS_keychain_on_selected_execution_host",
+      "auth_optional_if_server_needs_none": true,
+      "ordinary_draft_readback_logs_contain_secret": false
+    },
+    "Protect_access": {
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+      "guidance_count_neutral": true,
+      "requirements_from_selected_Backup_family_auth_mode": true,
+      "copy_relaxes_required_fields": false
+    },
+    "Unlock": {
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+      "prompt": "your recovery phrase",
+      "fixed_six_word_format": false,
+      "new_recovery_format_or_crypto": false,
+      "owner_verified_unlock_required": true
+    },
+    "weak_SSH_key": {
+      "owner_ref": "Plans/Settings_System.md#SSYS-042",
+      "setting_id": "code.execution.ssh-keys",
+      "refused_types": [
+        "DSA",
+        "RSA-1024"
+      ],
+      "tag": "Too weak to use",
+      "reason": "Older key type — too weak to use",
+      "prior_authorization_or_unlock_bypasses": false,
+      "retained_weak_selection_may_advance_or_install": false,
+      "private_half_exposed_or_moved": false,
+      "other_keys_follow_existing_owner_checks": true
+    },
+    "initial_pairing_wait": {
+      "owner_ref": "Plans/Server_System.md#SRV-004",
+      "invitation_current_and_live": true,
+      "empty_label": "No requests yet",
+      "action_label": "Check again",
+      "check_approves_or_grants_trust": false,
+      "answered_run_becomes_initial_waiting": false,
+      "fixed_owner_answer_delay": false
+    },
+    "question_note_layout": {
+      "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+      "long_tokens_wrap_within_available_width": true,
+      "horizontal_reading_required": false,
+      "vertical_scroll_for_long_notes_retained": true,
+      "visual_wrap_changes_copied_token": false
+    }
   }
 }

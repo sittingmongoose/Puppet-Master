@@ -556,7 +556,7 @@ The existing low-level permission engine remains the base contract, while approv
 
 Blocked-action recovery MUST be direct rather than a passive error string for permission policy, FileSafe, unavailable MCP, unavailable providers or services, and headless ask denial. The blocked payload carries `blocked_reason_code` plus ordered `allowed_action_ids[]`; UI surfaces render only those canonical actions, mapping permission blocks to approval or permission settings, FileSafe blocks to approval or FileSafe settings, unavailable MCP to integration authentication or configuration surfaces, unavailable providers to switch provider or `/model` or open Authentication or `/Health`, and headless ask denial to a message that interactive approval was unavailable plus the user action that can resume execution.
 
-Permission prompts, denials, approvals, and blocked outcomes MUST write the same operational evidence to the audit stream and expose it in two complementary user-facing places: concise, collapsible in-thread transparency and a dedicated log/audit inspector for richer search, filtering, drill-down, and on-demand payload reads. Chat transparency must not be the only place to inspect operational history, and the dedicated inspector must not replace lightweight thread transparency.
+Permission prompts, denials, approvals, and blocked outcomes MUST write the same operational evidence to the audit stream and expose it in two complementary user-facing places: concise, collapsible in-thread transparency and a dedicated log/audit inspector for richer search, filtering, drill-down, and on-demand payload reads. Chat transparency must not be the only place to inspect operational history, and the dedicated inspector must not replace lightweight thread transparency. Amended 2026-10-31 (DL-270): the dedicated log/audit inspector is the log and audit inspector of F3-148, and a row will open the record inspector (F3-666) once its own production wiring row lands; pm inspect, pm tail and pm export read the same permission and audit records. On-demand payload reads resolve a payload reference through the payload store (SP-337) under the same redaction profile.
 
 `question`, `todowrite`, `todoread`, and user-facing `task` behavior stays in the tool and child-run owner contracts. The permission layer owns their allow/ask/deny posture, inherited ceilings, blocked/unavailable payloads, and audit visibility; it does not redefine their schemas locally. `todo-tool` availability for delegated task/subagent defaults resolves through the `todowrite` and `todoread` permission posture.
 
@@ -1290,9 +1290,9 @@ Review, diff, export, `/evidence/history`, and provider features distinguish eph
 
 Remote-side-effect receipts include `approval_source`, `executing_subsystem`, and effective account / credential handle. `approval_source` values include `explicit confirm`, `cached permission`, `policy auto-allow`, and `browser fallback`. `executing_subsystem` values include `git`, `GitHub API`, `docker CLI`, `kubectl`, and `SSH remote`. This applies to push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent remote-side-effect actions.
 
-Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile.
+Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile. Amended 2026-10-31 (DL-270): pm export, pm db dump, pm inspect, pm tail and the in-app record inspector (SP-339) apply this same default masking and redaction profile; a fuller view needs the explicit fuller profile.
 
-`/logout/project-delete`, unlink, and project-delete cleanup clear or invalidate non-secret residue that can still identify the user or project: validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.
+`/logout/project-delete`, unlink, and project-delete cleanup clear or invalidate non-secret residue that can still identify the user or project: validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts. Amended 2026-10-31 (DL-270): downloaded scrubbed artifacts and other large bodies are payload-store entries (SP-337), so cleanup releases the project's references and lets reference-counted garbage collection reclaim them, honouring retention holds, legal holds and backups; it never deletes pack files or blobs directly. Project-scoped Parquet archive partitions and Tantivy and DuckDB derived data (SP-341) are dropped or rebuilt without the project.
 
 Session-style privileged operations include `docker exec/attach`, `kubectl exec`, `kubectl port-forward`, remote SCM-over-SSH mutation sessions, and browser/device auth handoffs. Persist bounded metadata only: actor, target, started/ended timestamps, credential realm, transport, local bind address/port when relevant, and requested vs effective state. Do not persist interactive transcript or `stdin` by default.
 
@@ -3547,7 +3547,7 @@ plan_unit_id: PS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector."
+canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector. Amended 2026-10-31 (DL-270): the dedicated log/audit inspector is the log and audit inspector of F3-148, and a row will open the record inspector (F3-666) once its own production wiring row lands; pm inspect, pm tail and pm export read the same permission and audit records. On-demand payload reads resolve a payload reference through the payload store (SP-337) under the same redaction profile."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
 split_recommended: false
@@ -7103,7 +7103,7 @@ plan_unit_id: PS-108
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Sensitive metadata minimization masks remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace and workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts by default unless the user explicitly chooses a fuller export profile."
+canonical_text: "Sensitive metadata minimization masks remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace and workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts by default unless the user explicitly chooses a fuller export profile. Amended 2026-10-31 (DL-270): pm export, pm db dump, pm inspect, pm tail and the in-app record inspector (SP-339) apply this same default masking and redaction profile; a fuller view needs the explicit fuller profile."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
 split_recommended: false
@@ -7158,7 +7158,7 @@ plan_unit_id: PS-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+canonical_text: "/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts. Amended 2026-10-31 (DL-270): cleanup also releases the project's payload-store references (SP-337) through reference-counted garbage collection that honours holds and backups, and drops project-scoped Parquet partitions and Tantivy and DuckDB derived data (SP-341). It does not delete pack files directly."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false

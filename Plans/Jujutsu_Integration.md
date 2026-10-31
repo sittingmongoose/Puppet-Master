@@ -558,7 +558,10 @@ canonical_text: >-
   repository views, commits/trees/conflicts, non-current abandoned/rebased objects needed by retained operations,
   underlying Git/common/
   alternate/shared stores when present, workspace maps and captured dirty files, under one capture barrier and GC/prune/
-  rewrite fence. Restore verification runs on a clean isolated disposable repository, uses read modes that do not create
+  rewrite fence. Amended 2026-10-31 (DL-270): the capture barrier is the brief one BRS-005 and BRS-031 define; it
+  records one consistent point and releases. The GC/prune/rewrite fence after that point only pins the objects of the
+  recorded closure until their background copy is verified; it is not a writer lock and does not block ordinary JJ
+  writes. Captured dirty files are copied at the barrier. Restore verification runs on a clean isolated disposable repository, uses read modes that do not create
   a hidden JJ snapshot, proves a selected historical operation can be inspected and restored, and emits native
   collision/conflict/closure truth before Backup may activate. Restored mutable configuration remains sanitized and
   inactive; credentials and non-secret references require their owners to revalidate/reconnect. Rebind, remote checks,

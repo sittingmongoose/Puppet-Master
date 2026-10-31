@@ -207,6 +207,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | Persistence (events) | seglog | Canonical event ledger for usage, chat, orchestrator events |
 | Search | Tantivy | Full-text search index over seglog projections |
 
+Amended 2026-10-31 (DL-270): storage roles beyond these rows (sealed-segment compression, payload store, render-page store, two redb files, Parquet and DuckDB analytics) are owned by storage-plan SP-335 to SP-345 and are not restated here.
+
 Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel, Slint current stable release, and Leptos current stable release before code work starts; stale PMConcept terminal transcripts, demo version strings, and old audit references are concept/source-lineage fixtures only.
 
 ### 2.2 Native Desktop Renderer Contract
@@ -2776,6 +2778,8 @@ History is the chronological durable story. It presents run, concern, recovery, 
 
 Ledger is exact record inspection. It exposes durable event, projection, receipt, artifact, and source-lineage records with routeable ids and must not flatten them into summary-only history rows.
 
+Amended 2026-10-31 (DL-270, SP-339): the Ledger reads records read-only and routes to canonical records and payload-store references; a Ledger row will open its record in the record inspector (F3-666) through `cmd.storage.open_value` once its own production wiring row lands; until then the Ledger offers no inspector entry. The Ledger lists and routes records and the inspector shows one; the Ledger shows the same records `pm db dump` and `pm inspect` read. Neither reads a JSON or JSONL mirror file.
+
 ### 7.11 Evidence
 
 Evidence presents artifact, receipt, validation, and corroboration references through owner-routed records. It consumes Runtime Artifacts, storage, Contracts, Orchestrator, and FileManager references instead of inventing a GUI-local evidence schema.
@@ -2830,6 +2834,7 @@ Message stream requirements:
 - stable message identity so streaming updates mutate existing rows rather than replacing the full list
 - inline `activity-card` rendering for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts; compact activity cards show 5 lines, expanded cards show 15 lines, and expanded log/detail views cap at 50 lines before routing to the owning surface
 - sticky unread marker, `New messages below`, and a `jump-to-latest` badge when the user is scrolled away from the bottom; `/auto-follow` state controls whether streaming output follows the latest row
+- Amended 2026-10-31 (DL-270): opening a thread reads `thread_head`, the hot tail and the newest 50-item page from the derived render-page store and never replays events (SP-338). Load-older paging is mandatory (ACD-242, F3-667): scrolling near the top loads the next older page by itself, and a `Load 50 older` row stays at the top of the list as the fallback. Rows render from display headers, and a full body loads only when expanded or scrolled to. The first page meets SP-338's gate: 150 ms p95, warm or cold, at most 2 MiB read. Stream-surface page limits elsewhere in this document defer to this bullet for chat.
 
 #### 7.16.2 Composer, commands, and plan mode affordances
 
@@ -2954,6 +2959,7 @@ Inspector requirements:
 - full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs
 - supported interactions include filter by event family, search by tool or operation, time-range queries, drill-down, and export
 - `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances
+- Amended 2026-10-31 (DL-270): the inspector reads seglog and the payload store, never a log file; payload dereference resolves a payload reference through the payload store (SP-337) under the same redaction profile; export matches `pm export` (JSONL or JSON on request); a row's drill-down will open the record inspector (F3-666) once its own production wiring row lands; and the help line names `pm tail` and `pm inspect` (F3-148)
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
 
@@ -3512,7 +3518,7 @@ Hidden views have zero runtime cost. Widget trees are destroyed when the conditi
 ### 14.3 Virtualized Lists
 
 
-Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer, diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`.
+Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer, diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`. Amended 2026-10-31 (DL-270): a chat thread is not held whole in a `VecModel`; its model holds the loaded render pages only (the hot tail, the newest page and any older pages the person has loaded) and grows through the mandatory load-older paging (SP-338, ACD-242, F3-667).
 
 ---
 
@@ -3526,7 +3532,7 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. One atomic value for read/write. Amended 2026-10-31 (DL-270, SP-339, SP-340): it is held as typed fields or MessagePack, not JSON text, within SP-340's 16 KiB value cap; JSON remains only as the read-only migration input already described for the retired Home part. | On change (debounced 300ms) |
 | `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180; amended 2026-10-17, DL-230: saved named layouts moved to `home_named_layouts:v1`) | On each committed change, written and read back before it commits (F3-HOME-004) |
 | `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; the per-board key above was never written, and this key, the old Home widgets' grid, is no board's key (WS-030); no write goes to it now, and it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write frequency in this row is lineage; what storage keeps of the key is `Plans/storage-plan.md`'s | On change (debounced 300ms); lineage, no write now (DL-186) |
 | `widget_layout:v1:<project_id>:<board_id>` | One dashboard board's widgets with their positions, sizes and settings, its own range and scope, and the set it started from; the record and its one-time adoption of an older unscoped key are WS-030's (added 2026-10-10, DL-186) | On each settled change of that board (WS-030) |
@@ -3613,7 +3619,7 @@ Normative mapping notes:
 - `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030), and `widget_layout:v1:dashboard` is no board's key.
 - §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
-- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221).
+- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221). Amended 2026-10-31 (DL-270, SP-337): transcript chunks stay within the 16 KiB inline body cap; scrollback images are decoded to binary at ingest and held in the payload store, and a chunk carries only their BLAKE3 references.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -3622,7 +3628,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 - Usage events (tokens, cost, platform, provider/pricing tier, session, thread_id) appended to seglog; this `tier` is entitlement or pricing metadata and is not decomposition-tier identity
 - Analytics scan jobs produce rollups in redb (5h/7d counters, tool latency, error rates)
 - Usage view and dashboard read from redb rollups, not raw seglog
-- Per-thread usage derived from seglog events filtered by thread_id
+- Per-thread usage is served from redb rollups keyed by thread_id, updated as each usage.event lands (amended 2026-10-31, DL-270, SP-341, UF-108); the Usage page and widgets never scan raw events. Raw events feed the Parquet archive written at segment seal, and a raw-event drill-down is a keyed lookup
 
 ### 15.3 Tantivy Indices
 
@@ -3731,7 +3737,7 @@ Migration is a blocking recovery-shell workflow with the storage-owned phases `p
 - Cancel is available only while `cancellable = true` in preflight. After mutation-capable work begins the shell disables close/cancel/force-cancel and displays: “Keep Puppet Master open. If interrupted, recovery will resume on the next launch.”
 - A failure stays in the recovery shell and reports whether verified target, verified rollback, or neither is proven. Allowed actions are the owner-provided subset of retry recovery, update, choose compatible backup, metadata diagnostics, and quit. Retry reruns admission/recovery checks; it is not byte repair and never auto-resumes the blocked operation that encountered the failure.
 
-The recovery shell exposes the mandatory verified-snapshot boundary without presenting JSON/JSONL export as a backup or an import path. A verified baseline is required before the first mutation-capable startup; additional mandatory snapshots cover the first dirty mutation within five minutes, a dirty store at 24 hours, and clean shutdown while dirty. The snapshot inspector shows verification state, shared-boundary/high-water ref, creation trigger, protected-reference/hold state, and the three-newest baseline policy. If verification or restore fails, the GUI moves to viewer/recovery or blocked posture and discloses the last verified boundary, affected families, and maximum credible loss. It never calls canonical non-rebuildable state reconstructable merely because a projection can rebuild.
+The recovery shell exposes the mandatory verified-snapshot boundary without presenting JSON/JSONL export as a backup or an import path. A verified baseline is required before the first mutation-capable startup; additional mandatory snapshots cover the first dirty mutation within five minutes, a dirty store at 24 hours, and clean shutdown while dirty. The snapshot inspector shows verification state, shared-boundary/high-water ref, creation trigger, protected-reference/hold state, and the three-newest baseline policy. Amended 2026-10-31 (DL-270, BRS-031): the snapshot inspector, the restore confirmation and the recovery shell also show the last verified backup, meaning the newest backup at Structure verified or higher, with its verification level, its time and its last event, and what restoring from it would lose, in the existing `data_loss_risk.class` words with the boundary and family disclosure; a newer backup that has not verified is shown beside it, never instead of it. They add no second loss vocabulary and compute nothing themselves: all read the one backup-status record. Backup capture pauses writers only for a brief capture barrier, copying runs in the background without the writer lock, and derived families are not backed up and rebuild after a restore. If verification or restore fails, the GUI moves to viewer/recovery or blocked posture and discloses the last verified boundary, affected families, and maximum credible loss. It never calls canonical non-rebuildable state reconstructable merely because a projection can rebuild.
 
 #### Canonical-history loss and projection trust
 
@@ -3761,7 +3767,7 @@ An unsafe-primary fallback is one deterministic detached branch carrying `fallba
 
 #### Storage and retention settings, holds, deletion, and quarantine
 
-`cmd.settings.open_storage_retention` opens `Advanced > Storage & Retention`, which displays effective policies, owner minima, next/last janitor evaluation, last maintenance result, storage pressure, reclaimable bytes/percentage, compaction state, the latest-25 terminal-run anchor, and read-only legal-hold/quarantine rows. Users may lengthen or otherwise strengthen only the configurable history, diagnostics, and released-safe-point policies; values below owner minima are rejected before save. Legal-hold set/clear dispatches `cmd.storage.legal_hold.manage`, requires the distinct protected `storage.legal_hold.manage` authorization plus a reason, and never clears automatically. Manual compaction is only the owner-admitted request `cmd.storage.compaction.request`. Settings never invent a general import/export, live repair, salvage, or purge-authority control. Automatic janitor evaluates at startup and every 6 hours with a 10,000-key or 512 MiB pass budget; compaction evaluates every 24 hours and at 20 percent or 1 GiB reclaimable thresholds. These are displayed schedules/limits, not ETAs or proof that maintenance ran.
+`cmd.settings.open_storage_retention` opens `Advanced > Storage & Retention`, which displays effective policies, owner minima, next/last janitor evaluation, last maintenance result, storage pressure, reclaimable bytes/percentage, compaction state, the latest-25 terminal-run anchor, and read-only legal-hold/quarantine rows. Amended 2026-10-31 (DL-270): the page also opens with a read-only storage health block (F3-457, SP-340). For each of the user-facing storage groups that the storage registry names, it shows usage against that group's disk budget, reclaimable bytes, and the last store compaction with its result and time. It also shows the last verified backup and what a restore from it would lose (BRS-031, F3-528). Disk budgets, the fragmentation threshold, the cache size and the compaction schedule are fixed owner values shown here, not settings. The GUI shows these values and dispatches only `cmd.storage.compaction.request`; storage-plan.md SP-340 and Backup_Restore_System.md BRS-031 own the rules. Users may lengthen or otherwise strengthen only the configurable history, diagnostics, and released-safe-point policies; values below owner minima are rejected before save. Legal-hold set/clear dispatches `cmd.storage.legal_hold.manage`, requires the distinct protected `storage.legal_hold.manage` authorization plus a reason, and never clears automatically. Manual compaction is only the owner-admitted request `cmd.storage.compaction.request`. Amended 2026-10-31 (DL-270, SP-340): it is the verified reclaim action, one request for the whole storage instance that runs store compaction (redb `compact()`) under the maintenance lease; its result is shown per storage group as the size before, the size after and the bytes returned, or as the owner's reason, and no second reclaim command exists. Settings never invent a general import/export, live repair, salvage, or purge-authority control. Automatic janitor evaluates at startup and every 6 hours with a 10,000-key or 512 MiB pass budget; compaction evaluates every 24 hours and at 20 percent or 1 GiB reclaimable thresholds. These are displayed schedules/limits, not ETAs or proof that maintenance ran. Amended 2026-10-31 (DL-270, SP-340): that schedule is for retention compaction of source segments; store compaction (redb `compact()`) does not follow it, and runs only while PM is idle and a store's fragmentation passes SP-340's threshold.
 
 The canonical settings inventory contributes exactly these seven Case L rows:
 
@@ -3772,7 +3778,7 @@ The canonical settings inventory contributes exactly these seven Case L rows:
 | `system.advanced.diagnostic-history-days` | Number, default/minimum 30 days; larger values allowed, lower values rejected; cannot shorten fixed authority retention. |
 | `system.advanced.released-safe-point-days` | Number, default/minimum 90 days; larger values allowed, while anchors/references/holds override age. |
 | `system.advanced.preserved-terminal-runs` | Read-only effective latest-25 policy; only the automatic anchor clears at 26th-oldest. |
-| `system.advanced.request-storage-compaction` | Action that dispatches `cmd.storage.compaction.request`; it cannot force maintenance or bypass eligibility/holds/lease. |
+| `system.advanced.request-storage-compaction` | Action that dispatches `cmd.storage.compaction.request`; it cannot force maintenance or bypass eligibility/holds/lease. Amended 2026-10-31 (DL-270): this is the verified reclaim action of the storage health block (SP-340); it runs store compaction under the maintenance lease and shows its result per storage group. The seven Case L rows and their labels are unchanged. |
 | `system.advanced.inspect-holds-quarantine` | Read-only inspection action; cannot mutate holds or export/purge/reset quarantined bytes. |
 
 The visible minimum/effective policy table preserves these owner values:
@@ -3783,7 +3789,7 @@ The visible minimum/effective policy table preserves these owner values:
 | Security and migration/recovery operations | 2555 days |
 | Runtime operational records | 365 days |
 | Assistant Chat canonical conversation | While the thread exists, subject to holds and descendant refs; at 250,000 canonical chat-content events, continue in a linked successor rather than evicting history |
-| Usage | 90 days |
+| Usage | Detailed usage records: 90 days by default, set by the existing Keep usage history for setting (`ai.usage.usage-retention`), in the event log and the Parquet archive alike. Amended 2026-10-31 (DL-270): daily usage totals per account, provider and model are kept whatever it says (SP-341, UF-108). |
 | Appendable seglog source segments | 7 days minimum before compaction eligibility; holds/anchors still win |
 | Coordination records | 180 days |
 | Released safe points | 90 days, 64 per run, and 2048 per project; unresolved/held anchors override expiry |
@@ -3966,9 +3972,27 @@ canonical_text: >-
   protected owners; distinguish project-list removal from data deletion; and secure
   exact invalid bytes before any registered reset, rebuild, migration, replacement,
   or purge while critical authority always fails closed.
+  Amended 2026-10-31 (DL-270, SP-340): the same page opens with a read-only storage health
+  block. For each user-facing storage group that the storage owner's registry names, about
+  eight and not every redb family, it shows usage against that group's disk budget,
+  reclaimable bytes, and the last store compaction with its result and time, drawn with the
+  Usage meter primitive (F3-628, DR-058) and carrying the projection freshness and health of
+  section 15.6. The existing Request storage compaction row is the verified reclaim action.
+  It is one request for the whole storage instance that dispatches
+  `cmd.storage.compaction.request`, shows the owner's maintenance lifecycle and any wait
+  reason, and reports its result per group; it states reclaimed bytes only from the owner's
+  before-and-after measurement of that operation, never from the dispatch receipt. When
+  admission fails it is disabled with the Case L reason (`storage_read_only`,
+  `operation_in_progress` and the rest of the closed list). The block also shows the last
+  verified backup, meaning the newest backup at Structure verified or higher with its level,
+  and what a restore from it would lose; a newer unverified backup is shown beside it
+  (BRS-031, F3-528). Disk budgets, cache sizes, the fragmentation threshold and the
+  compaction schedule are owner values shown here, not Settings rows. The existing Keep
+  usage history for setting keeps its meaning, and daily usage totals are kept whatever it
+  says (SP-341, UF-108).
 gui_related: true
 gui_classification_reason: This unit defines user-visible settings, hold, deletion-status, storage-pressure, and quarantine recovery surfaces.
-depends_on: [SP-237, CV-319, F3-441, UCC-124]
+depends_on: [SP-237, CV-319, F3-441, UCC-124, SP-340, SP-341, BRS-031, F3-528, F3-628]
 unblocks: []
 acceptance_criteria:
   - Settings show every owner retention minimum, latest-25 terminal-run anchor, effective policy, holds, pressure, and compaction state.
@@ -3976,6 +4000,8 @@ acceptance_criteria:
   - cmd.project.remove never claims data deletion; cmd.chat.delete hides immediately and reports the 24-hour active-content and 30-day backup-copy boundaries; cmd.project.delete_data is the separately confirmed data-purge intent.
   - Quarantine fixtures render Q-CRITICAL, Q-RESETTABLE, Q-DERIVED, and Q-MIRROR with exact secured-before-action state.
   - Critical authority, receipts, blocked state, safe points, holds, and audit lineage never reset, cap-evict, or appear repaired.
+  - Storage health shows usage against budget, reclaimable bytes and the last store compaction for each owner-named storage group, and the reclaim row reports bytes returned only from the owner's measurement.
+  - In viewer mode the storage health block is read-only and the reclaim row is disabled with `storage_read_only`.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Case L Final GUI retention, deletion, and quarantine fixture suite
@@ -4191,7 +4217,7 @@ cargo check
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
 | **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |
-| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation: Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show "Load earlier messages" button. |
+| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation (amended 2026-10-31, DL-270): no soft cap and no separate disk archive. Chat opens from the derived render-page store (`thread_head`, hot tail, sealed 50-item pages of at most 256 KiB), the list holds only the loaded pages, and older pages load through the mandatory load-older paging (SP-338, ACD-242, F3-667). CI gates a 100k-event thread's first page at 150 ms at p95, warm or cold. This replaces the former soft cap (e.g., 5000 messages per thread). |
 | **Theme global property update batching** | Low | Switching 20+ theme properties could cause intermediate re-renders. Mitigation: Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback. |
 | **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |
 | **Floating window data sync race conditions** | High | Multiple windows reading/writing the same VecModel can race. Mitigation: All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place. |
@@ -4287,7 +4313,7 @@ These decisions are final and must not be revisited during implementation:
 5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
-8. **redb for layout persistence**, seglog for events, Tantivy for search
+8. **redb for layout persistence**, seglog for events, Tantivy for search. Amended 2026-10-31 (DL-270): the storage stack is owned by storage-plan SP-335 to SP-345: seglog with sealed-segment zstd, a content-addressed payload store, canonical and derived redb in two files, Tantivy, a Parquet archive read by embedded DuckDB, and SQLite banned for PM-owned stores (SP-342).
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
@@ -5584,6 +5610,9 @@ canonical_text: >-
   state, durable outbox state, server continuation, reconnect replay or snapshot progress, buffered-live catch-up,
   and stream-coalescing freshness remain visible without full-detail fanout, duplicate effects, fabricated
   provider activity, or loss of immediate approval, failure, cancellation, completion, security, or lease-loss changes.
+  Amended 2026-10-31 (DL-270): the focused thread's detail opens from the render-page store (`thread_head`, the hot
+  tail and the newest sealed page) with mandatory load-older paging (F3-667), and reconnect replays only the tail.
+  Opening never replays the thread's events.
 gui_related: true
 gui_classification_reason: This unit defines visible thread-list density, focused detail, offline queueing, reconnect, catch-up, and stream presentation.
 depends_on: [ACD-445, SIR-004, SIR-005]
@@ -5594,6 +5623,7 @@ acceptance_criteria:
   - Queued, waiting, retryable, cancelled, rejected-stale, and accepted outbox outcomes do not imply a provider call or invite an idempotency-bypassing resend.
   - Reconnect shows epoch-fenced replay or snapshot plus buffered-live convergence, and coalescing never hides an owner-defined immediate transition.
   - Client loss is shown as loss of observation or control connectivity, not cancellation of admitted server-owned work.
+  - A focused thread opens from its render pages with no event replay, and older items load only through load-older paging.
 validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI thread shell-detail offline-reconnect and coalescing matrix]
 risk_class: gui_thread_projection_fanout_or_reconnect_drift
 reasoning_tier: high
@@ -11301,6 +11331,9 @@ canonical_text: >-
   Chat, Usage, graph, and evidence surfaces consume the object-first route model, preserving
   usage_event and attempt pivots, work-package identity, correlation_id passthroughs, and
   bidirectional evidence/artifact linkage.
+  Amended 2026-10-31 (DL-270): a jump-to-message or search jump into a chat item that is not yet loaded loads
+  the render pages that contain it through load-older paging (SP-338, ACD-242, F3-667) and never replays events.
+  A usage_event pivot is an indexed lookup by usage_event id, never a raw-event scan (UF-108).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible cross-surface pivots, search jumps, and route/open behavior.
@@ -11757,6 +11790,11 @@ canonical_text: >-
   FinalGUISpec exposes storage and usage detail, history, ledger, runtime, and receipt inspector
   entrypoints while storage-plan and usage-feature remain owner docs for storage, usage record
   truth, projection rules, key registration, projector rebuild, and receipt row shape.
+  Amended 2026-10-31 (DL-270): the storage detail entrypoint includes the storage health block (SP-340: usage
+  against budget, reclaimable bytes, last store compaction, verified reclaim action) and the last verified backup
+  with what a restore from it would lose (BRS-031), placed on the page that `cmd.settings.open_storage_retention`
+  opens (F3-457), and the record inspector (F3-666) is the entrypoint for one stored record. Truth stays in
+  storage-plan.md and Backup_Restore_System.md.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible inspector entrypoints and cross-surface routing to owner truths.
@@ -13037,6 +13075,11 @@ canonical_text: >-
   Message stream live behavior uses virtualized stable-identity message rows, inline activity-card
   rendering with compact/expanded/detail line caps, sticky unread and new-message affordances, and
   auto-follow state for streaming output.
+  Amended 2026-10-31 (DL-270): the stream opens on the newest sealed page of SP-338's render-page store plus the hot
+  tail and never replays events. Rows render from display headers, and a full body loads only when its section is
+  expanded or scrolled to. Older 50-item pages load as the person scrolls toward the top, and a `Load 50 older`
+  row stays at the top of the stream as the fallback; load-older paging is mandatory (ACD-242, F3-667). The
+  first-page budgets (150 ms p95, warm or cold, at most 2 MiB read) are SP-338's gate.
 gui_related: true
 gui_classification_reason: This unit defines visible message stream, activity card, and scrolling behavior.
 split_recommended: true
@@ -13800,6 +13843,11 @@ canonical_text: >-
   PM ships lightweight in-thread transparency and a dedicated searchable log/audit inspector with
   compact summary rows, on-demand payload dereference, filtering, search, time-range queries,
   drill-down, export, and explicit logsearch/logread GUI surfacing.
+  Amended 2026-10-31 (DL-270): the inspector reads seglog and the payload store, never a log or mirror file (SP-339).
+  On-demand payload dereference resolves a payload reference through the payload store (SP-337) under the same
+  redaction profile and permissions. Export matches `pm export` (JSONL or JSON on request), a row's drill-down
+  will open the record inspector (F3-666) through `cmd.storage.open_value` once its own production wiring row lands, and the help line names `pm tail` and
+  `pm inspect`.
 gui_related: true
 gui_classification_reason: This unit defines visible log/audit inspector rows and interactions.
 split_recommended: false
@@ -15983,6 +16031,9 @@ canonical_text: >-
   bounded terminal transcript projections, the GUI preserves scroll position unless the user
   is at the bottom; if the user is reviewing history, it holds position and shows a New
   messages below indicator.
+  Amended 2026-10-31 (DL-270): rows prepended by load-older paging (SP-338, ACD-242, F3-667) keep the row at the
+  reading position at the same place in the viewport with no visible jump, and show no New messages below
+  indicator; that indicator counts only items added at the bottom.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible list scroll preservation and new-content indication.
@@ -18619,6 +18670,9 @@ canonical_text: >-
   `panels/file_manager_panel.slint`.
   Amended 2026-10-09 (DL-180): `views/file_editor.slint` is the editor tab kind's body inside a panel (F3-639), and
   `panels/chat_panel.slint` hosts the fixed chat column (F3-637), not a side-panel occupant.
+  Amended 2026-10-31 (DL-270): `views/record_inspector.slint` is the body of the record tab kind's `inspect:` tabs
+  (F3-666). The storage health block, the last-verified-backup line and the `Load 50 older` row (F3-667) are
+  parts of existing files, not new surfaces.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves new Slint page and panel mappings.
@@ -19478,9 +19532,14 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Chat message memory bounds` risk is mitigated as follows: Long chat sessions use a soft
-  cap such as 5000 messages per thread, archive old messages to disk, and expose Load earlier
-  messages.
+  The `Chat message memory bounds` risk is mitigated as follows: Long chat sessions are bounded
+  by SP-338's per-thread render-page store (sealed 50-item pages of at most 256 KiB plus a hot
+  tail), not by a message-count cap. Opening a thread never replays events, the list holds only
+  the pages loaded, and load-older paging is mandatory (ACD-242, F3-667); the first page must
+  arrive within 150 ms at p95, warm or cold.
+  Amended 2026-10-31 (DL-270): this replaces the former mitigation, a soft cap such as
+  5000 messages per thread that would archive oldest messages to disk behind a
+  Load earlier messages button; no such cap and no separate disk archive exist.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -19512,7 +19571,8 @@ preserved_exact_tokens:
 - "Load earlier messages"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): the 5000-message soft cap with an archive to disk is retired; SP-338's render-page store and mandatory load-older paging (ACD-242) replace it."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -25966,6 +26026,8 @@ canonical_text: >-
   Stop from clearing the queue, keep code-block copy always visible, disclose subagents, and
   expose jump-to-latest or jump-to-bottom with unseen-count and auto-follow resume only when
   the user returns to the bottom.
+  Amended 2026-10-31 (DL-270): jump-to-latest returns to the hot tail of the render pages, and its unseen count
+  is unchanged by older pages loading; the load-older row and paging are F3-667.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
@@ -29662,7 +29724,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
+  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate. Amended 2026-10-31 (DL-270): the GUI thread projection's stored form is SP-338's per-thread render-page store (50-item pages of at most 256 KiB, a hot tail), a derived family rebuilt from seglog. This unit keeps the separate-cap and eviction-receipt rule for the other projections.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -29916,7 +29978,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31 (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed lookup, and the Parquet archive is queried only on demand (SP-341). Raw/debug affordances resolve raw_payload_ref through the payload store (SP-337) and will open the record inspector (F3-666) once their own production wiring rows land. This unit adds no retention control: the existing Keep usage history for setting is unchanged, and daily usage totals are kept whatever it says.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -29928,7 +29990,8 @@ acceptance_criteria:
   - Usage widgets hosted on Dashboard either use the same value-state matrix or remain explicitly unavailable as a Dashboard widget; no dashboard widget may use a simplified zero-for-missing model.
   - Runtime Artifact `Show in Usage` and `Show in Ledger` actions land by object_kind = usage_event plus usage_event_ref and secondary refs, not timestamp/run/thread/tier-only filters.
   - Provider/settings and model rows show Antigravity CLI `antigravity_cli`/`agy` usage, quota, credits, statusline, disabled bucket, and G1 credit states without inferring counters from model names or login status.
-  - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content.
+  - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content; a raw_payload_ref resolves through the payload store (SP-337) and will open the record inspector (F3-666) once its own production wiring row lands.
+  - No Usage page, Ledger room, Dashboard-hosted Usage widget or chat context summary scans raw usage events; per-event drill-through is a keyed lookup.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
@@ -36423,7 +36486,7 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
-  - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
+  - "Do not create a second authoritative Assistant, transcript store, context store, or Context Detail Pane. The per-thread render-page store (SP-338, ACD-242) is a derived, rebuildable projection of the one transcript store, not a second authority, and is allowed."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
 stale_retired_dispositions:
@@ -36899,7 +36962,28 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s feedback conveys the same cause.
   These screen/status words stay single in Plain English and Expert (DL-126); only tips/help have two versions. Reason
   priority changes no validation, route identity, readiness, pairing or permission gate and admits no address/Remote
-  Link grammar.'
+  Link grammar. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password
+  field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint
+  states that distinction and identifies credential custody in the OS keychain on the selected execution host, through
+  the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free
+  readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field. DL-271
+  FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action. DL-271 Unlock
+  wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count. The Recovery
+  Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real protected recovery
+  material and its exact source/target binding. The wording admits no new phrase format, key derivation, unlock proof
+  or weaker secret-handling rule. DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key
+  as Too weak to use, but it cannot be selected, used as a default, advanced or installed. The refusal reads Older key
+  type — too weak to use. Check this eligibility before an existing authorization, matching prior profile or passphrase/unlock
+  state; those cannot make a weak key usable. A retained weak selection must be replaced by an owner-eligible key before
+  the flow advances. Other keys keep their existing owner checks, identity binding and custody; the shared list never
+  exposes or moves a private half. DL-271 initial request waiting, 2026-10-31: while the current invitation is live and
+  no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current
+  owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate,
+  approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
+  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37182,6 +37266,30 @@ acceptance_criteria:
   choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English
   and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness,
   pairing or permission gate and admits no address/Remote Link grammar.'
+- 'DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks
+  for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that
+  distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
+  credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
+  and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot
+  be selected, used as a default, advanced or installed. The refusal reads Older key type — too weak to use. Check this
+  eligibility before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make
+  a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other
+  keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves a private
+  half.'
+- 'DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived,
+  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
+  request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
+  retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
+  request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37235,6 +37343,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -37996,19 +38108,22 @@ plan_unit_id: F3-528
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
-  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access
-  connector state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections,
-  routes, currentness, availability, protected handoffs, ObservableWork phases, alerts, focus, and return
-  context without owning provider, source-control, backup, scheduler, encryption/key, connector, auth, Doctor,
-  notification-store, or status truth. Every packet action remains visibly truthful and unavailable until its
-  owner and central runtime integration exist. Amended 2026-10-09 (DL-162): in the left rail the
-  AutomationBinding selector is a field labelled Automation service that opens the chat picker (F3-621), never a
-  native select; picking runs ui.repository_automation.binding.select and changes nothing else. As
-  Forge_Integrations' route unit says, the field shows only when the project has several bindings; with one, the
-  rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30
-  (DL-257): the current family/variant and inventory census supersede earlier counts.
+canonical_text: 'Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
+  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access connector
+  state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections, routes, currentness,
+  availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
+  source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth. Every
+  packet action remains visibly truthful and unavailable until its owner and central runtime integration exist. Amended
+  2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation service that opens
+  the chat picker (F3-621), never a native select; picking runs ui.repository_automation.binding.select and changes nothing
+  else. As Forge_Integrations'' route unit says, the field shows only when the project has several bindings; with one,
+  the rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30 (DL-257):
+  the current family/variant and inventory census supersede earlier counts. Amended 2026-10-31 (DL-270, BRS-031): Data
+  Backup and Retention and RestorePreview also show the last verified backup, meaning the newest backup at Structure
+  verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
+  written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
+  one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
+  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.'
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -38039,8 +38154,9 @@ acceptance_criteria:
   refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback.
   All command, preview, generation, and evidence rules remain Backup-owned.
 - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last
-  complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add
-  Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
+  complete remote backup receipt time, verification/drill state, Recovery Kit status, the last verified backup with its
+  time and last event and what a restore from it would lose (BRS-031, amended 2026-10-31, DL-270), `[Back Up Now] [Restore…]
+  [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
 - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to
   the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities,
   export is disclosed as a non-restore artifact, and none activates or executes a Project.
@@ -39021,7 +39137,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   15. `source-control` (Git defaults, branch rules, worktree policies)
   16. `browser-policy` (Headless browser runtime, security rules)
   17. `containers-registries` (Docker/Podman daemon, container settings)
-  18. `storage-retention-recovery` (Database retention, snapshot pruning)
+  18. `storage-retention-recovery` (Database retention, snapshot pruning, storage health: per-group disk usage against its budget, reclaimable space, last store compaction and the verified reclaim action (SP-340). Amended 2026-10-31 (DL-270): daily usage totals are kept whatever the usage retention setting says (SP-341, UF-108).)
   19. `project-history-artifacts` (Build history, artifact storage)
   20. `settings-transfer` (Export/import settings profiles)
   21. `settings-export-migration` (Schema migration, legacy import)
@@ -42318,8 +42434,10 @@ canonical_text: >-
   behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text
   under masks. The UI Scale setting applies to the whole page through one root-level CSS scale (Contracts_V0
   CV-188). Development and test builds expose the test-build observability of ATS-067. Web animations keep to transform
-  and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
-  kept as page text rather than held in WebAssembly memory. The web terminal draws the same Rust terminal grid as a
+  and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the
+  derived render-page store as sealed 50-item pages with mandatory load-older paging, never replayed on open, the first
+  page reading at most 2 MiB (SP-338, ACD-242, amended 2026-10-31, DL-270); transcripts are not held in WebAssembly
+  memory. The web terminal draws the same Rust terminal grid as a
   fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
   heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
 gui_related: true
@@ -42334,7 +42452,7 @@ acceptance_criteria:
   - "Web text is browser-rendered and selectable with the browser's own selection, with no ClearType guarantee; its readability, selection, and caret behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text under masks."
   - "The web terminal tracks its own selection in the terminal grid's data, not with the browser's selection, and a selection survives scrolling and new output."
   - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
-  - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
+  - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the derived render-page store as 50-item pages with mandatory load-older paging (SP-338)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44348,7 +44466,9 @@ canonical_text: >-
   defaults, Teach, Memory, Schedule Message and Build At), the Wonderer workspace, run cards and run views, the
   Scheduled manager, scheduled-message and sent-message records, the Review report's Plain text view and its Export,
   and the Back Seat Driver session in Context's More Details. Where a record offered its raw data inside Technical
-  details, Show raw data stands on its own. Engine ids, report versions and snapshot hashes stay in the records and
+  details, Show raw data stands on its own. Amended 2026-10-31 (DL-270): Show raw data will open the record inspector
+  (F3-666) once its own production wiring row lands; the inspector is an expert surface reached from that labelled control and never from sentence text, so
+  this unit's rule that no other chat surface shows Technical details is unchanged. Engine ids, report versions and snapshot hashes stay in the records and
   never appear in the reader's text. Settings managers are not chat surfaces and keep their own Advanced disclosures
   (Back_Seat_Driver BSD-028).
 gui_related: true
@@ -45737,7 +45857,9 @@ canonical_text: >-
   the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
   panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
   of its dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate
+  boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget,
+  not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337,
+  SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate
   prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
   panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
   emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
@@ -46528,40 +46650,41 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`,
   `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript (`thread-<agentId>`:
   an agent''s read-only live feed); context (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`,
-  `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>`
-  only for a channel split off with "Open in new tab", showing only that channel); problems (`problems`); ports (`ports`);
-  and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being
-  its view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context and record;
-  terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console are dedicated; a panel
-  holding only tool kinds and terminals has the role tools. Problems, Ports and the Debug Console are one tab each per
-  workspace. Never a kind: the chat''s Goal tab (DL-147), Activity Detail (it stays inside the chat, F3-637), wand setup
-  sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab in the
-  whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is a start-up error.
-  Tab identity is separate from domain identity: the path, terminal_session_id, board id or artifact id a tab shows is
-  its domain reference, and moving, collapsing, maximizing, hiding or restoring a tab never changes it. No internal id
-  (tab, panel, session, nonce) ever appears as text in the interface. Older canon that names one of these surfaces by
-  its former host means the kind here, placed by F3-634: the run view called an editor document (ACD-480, F3-569, F3-576
-  and the 2026-09-03 redesign''s section 10) is a run tab, ACD-485''s subagent transcript a transcript tab, the context-detail
-  editor tab (section 7.16.1, F3-132) a context tab, the Plan card''s "normal artifact viewer" and an artifact opened
-  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297''s editor-tab
-  Browser a browser tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled SVG icon_id,
-  never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and sub-row, how it
-  makes a tab id for an open (the terminal mints a new session), the older id forms it folds into one tab, the rows it
-  adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content minimums:
-  terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript
-  and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab''s body only when the tab is first
-  shown, so a restored background tab costs nothing until it is opened. A kind''s serialized state is at most 16 KB of
-  plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer''s tab
-  state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before a tab closes
-  its kind may ask first: a dirty editor offers to save, and a running terminal says what will stop (F3-640). A tab body
-  is its own box, sized by its panel: it never sizes against the window, only against its own width and height; it is
-  told when they change, with a last call once a divider drag or a layout animation has settled so costly work can wait
-  for it; it is told when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
-  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12): 30 px tall,
-  24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520 px wide and icons with
-  hover tags below that, and the row hidden when the body is under 150 px tall; a kind draws a row of its own only when
-  nothing in the shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus, drag
-  ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one stacking order: panel content,
+  `app:`, `work-record:`, `inspect:<record_ref>`: read-only records; `inspect:` is the record inspector of F3-666, opened
+  through `cmd.storage.open_value`, amended 2026-10-31, DL-270); output (`output`, one Output tab whose channel switches
+  inside it; `output:<channel>` only for a channel split off with "Open in new tab", showing only that channel); problems
+  (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug session,
+  the session shown being its view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript,
+  context and record; terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console
+  are dedicated; a panel holding only tool kinds and terminals has the role tools. Problems, Ports and the Debug Console
+  are one tab each per workspace. Never a kind: the chat''s Goal tab (DL-147), Activity Detail (it stays inside the chat,
+  F3-637), wand setup sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one
+  id is one tab in the whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix
+  is a start-up error. Tab identity is separate from domain identity: the path, terminal_session_id, board id or artifact
+  id a tab shows is its domain reference, and moving, collapsing, maximizing, hiding or restoring a tab never changes
+  it. No internal id (tab, panel, session, nonce) ever appears as text in the interface. Older canon that names one of
+  these surfaces by its former host means the kind here, placed by F3-634: the run view called an editor document (ACD-480,
+  F3-569, F3-576 and the 2026-09-03 redesign''s section 10) is a run tab, ACD-485''s subagent transcript a transcript
+  tab, the context-detail editor tab (section 7.16.1, F3-132) a context tab, the Plan card''s "normal artifact viewer"
+  and an artifact opened from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab,
+  and F3-297''s editor-tab Browser a browser tab. Each kind registers its label, its group name for the "+N" list, its
+  icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+"
+  menu row and sub-row, how it makes a tab id for an open (the terminal mints a new session), the older id forms it folds
+  into one tab, the rows it adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close
+  now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document,
+  artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab''s body only
+  when the tab is first shown, so a restored background tab costs nothing until it is opened. A kind''s serialized state
+  is at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor
+  buffer''s tab state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before
+  a tab closes its kind may ask first: a dirty editor offers to save, and a running terminal says what will stop (F3-640).
+  A tab body is its own box, sized by its panel: it never sizes against the window, only against its own width and height;
+  it is told when they change, with a last call once a divider drag or a layout animation has settled so costly work
+  can wait for it; it is told when it is shown, hidden, focused and blurred and when the look changes, and stops animation
+  while hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12): 30 px
+  tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520 px wide and icons
+  with hover tags below that, and the row hidden when the body is under 150 px tall; a kind draws a row of its own only
+  when nothing in the shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus,
+  drag ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one stacking order: panel content,
   then strips and dividers, then the overlay root, which sits above the status bar and below hover tags and the Guided
   Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use neither and
   there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel''s usual kind, Ctrl+W close the tab,
@@ -47274,62 +47397,64 @@ canonical_text: 'A dashboard is a tab kind (F3-635), not a singleton surface (DL
   list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6).
   A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger
   save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout
-  puts back the boards it kept, and a named layout saved before this applies as before. A board''s first show plays the
-  Usage page''s calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over
-  the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do,
-  and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus
-  goes to the board''s first card in reading order. Details on a widget opens the Usage page at that widget''s room with
-  its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page''s idle
-  rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board
-  that is not on screen does no live work (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard
-  catalogue limit of Appendix C.4 and C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen
-  resize peers (with F3-515''s and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics
-  and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px
-  below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is
-  icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget
-  380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s
-  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR
-  Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode
-  and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above
-  the tab''s foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent
-  fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under
-  Reduced Motion. The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by
-  30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at
-  most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and
-  buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while
-  shown; a filter other than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard
-  plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards
-  by name with their widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest
-  across open tabs, the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards;
-  past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current
-  resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a
-  built-in or another of this project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name
-  clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and
-  the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start
-  from shows the active set''s label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back
-  to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets.
-  An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed
-  revision immediately before that operation. The owner writes and reads that revision''s captured envelope in this project,
-  with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability
-  is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope
-  is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and
-  button''s hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision
-  stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes,
-  Retro and NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5
-  px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation;
-  its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an
-  API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or
-  pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
-  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog;
-  an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project,
-  skipping another project''s envelope; a custom board that the applied layout does not hold keeps its current contents.
-  Amended 2026-10-16 (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from
-  every path, the "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7,
-  PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup
-  and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame,
-  All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock
-  owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31:
-  only real product behavior remains an implementation requirement.'
+  puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270):
+  the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload
+  reference (SP-337, SP-340), and SP-330 owns the stored form. A board''s first show plays the Usage page''s calm reading-order
+  entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out
+  beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from...
+  buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board''s first card in
+  reading order. Details on a widget opens the Usage page at that widget''s room with its inspector open (P8). Live readings
+  apply to dashboards too, each board separately, with the Usage page''s idle rule (F3-628, UF-107): nothing animates
+  at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work
+  (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
+  C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515''s
+  and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics and Monitoring strip of
+  F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width;
+  Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px
+  and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live
+  mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s lavender
+  #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE
+  and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in
+  the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab''s
+  foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined
+  in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion.
+  The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides
+  below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide;
+  its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
+  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other
+  than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the
+  four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards by name with their
+  widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest across open tabs,
+  the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards; past 9999, opening
+  falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home.
+  Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
+  project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset
+  names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are
+  checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start from shows the active set''s
+  label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back
+  to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset
+  widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before
+  that operation. The owner writes and reads that revision''s captured envelope in this project, with one receipt and
+  no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability is checked on a commit
+  that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the
+  board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button''s hover detail
+  give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice
+  is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and
+  NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5 px in the
+  code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track
+  sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
+  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board,
+  pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board
+  whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted
+  tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another
+  project''s envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16
+  (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the
+  "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source
+  alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary
+  over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs
+  you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different
+  agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product
+  behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -50796,7 +50921,18 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
   result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
   recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
-  Motion settlement remain additional to real owner completion.'
+  Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance
+  is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination
+  family, auth method and credential mode determine the actual required fields and validation through their existing
+  owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns
+  incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase,
+  rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the
+  Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The
+  wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31:
+  long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
+  scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
+  including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
+  content version.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50861,6 +50997,18 @@ acceptance_criteria:
   its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
   settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
   rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 FO-14, 2026-10-31: long tokens in an opened question note wrap within its available width, so their full text
+  is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
+  applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
+  adds no second note renderer or per-family content version.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -50890,6 +51038,14 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute
@@ -51122,3 +51278,149 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-249, ContractName:Plans/Comma
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### F3-666 - The Record Inspector
+
+```yaml
+plan_unit_id: F3-666
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL
+  mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>`
+  (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant,
+  window, command family, event or schema. It is reached only from a labelled expert control on the storage page that
+  `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires
+  `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add
+  an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
+  owner's words, its time and place in the record order, and its decoded fields under the owner's typed field
+  names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a
+  bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows
+  as media or as its size, never as base64 or hex. The inspector reads the record as of the high-water mark that
+  `cmd.storage.open_value` captured and says so. In viewer mode (`storage_read_only`) it still opens, from the
+  frozen snapshot. It applies the same redaction profile, permission and FileSafe checks as `pm inspect`, and
+  shows `redaction_status` and the permissioned-unavailable state in place of withheld content (F3-418). It may
+  copy the record it shows, already decoded and redacted, as JSON, under FileSafe's rules; bulk export stays with
+  `pm export`, and the inspector has no export control of its own. `pm db dump`, `pm inspect`, `pm tail` and
+  `pm export` are command-line entry points to the same read paths, not separate dispatchers and not `cmd.*`
+  commands, and the inspector's help line names `pm inspect` and `pm tail`. It has no edit, delete, repair,
+  replay or re-dispatch control. The Technical-details rule of F3-617 is unchanged: the inspector is an expert
+  surface, never part of a plain chat surface's text.
+gui_related: true
+gui_classification_reason: Defines the visible in-app surface that replaces readable JSON and JSONL mirror files.
+split_recommended: false
+depends_on: [SP-337, SP-339, F3-148, F3-418, F3-457, F3-617, F3-634, F3-635, UCC-123]
+unblocks: []
+acceptance_criteria:
+  - "A record from any registered family opens in the inspector with decoded fields, and no JSON or JSONL mirror file is read or written to fill it."
+  - "A payload reference shows size, kind and a bounded preview, and loads the full body only on request; no base64 or hex is shown."
+  - "In viewer mode the inspector opens from the frozen snapshot and says which high-water mark it shows."
+  - "Redaction, permissioned-unavailable and FileSafe outcomes match `pm inspect` for the same record."
+  - "The only copy it offers is the shown, redacted record as JSON under FileSafe's rules; no control edits, deletes, repairs, replays or re-dispatches a record."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: json_mirror_replacement_drift
+reasoning_tier: standard
+context_scope: dl270_storage_profile
+implementation_surfaces:
+  - "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-339"
+preserved_exact_tokens:
+  - "inspect:"
+  - "cmd.storage.open_value"
+  - "pm inspect"
+  - "pm db dump"
+  - "pm tail"
+  - "pm export"
+negative_constraints:
+  - "Do not read or create a JSON or JSONL mirror file to fill the inspector."
+  - "Do not add an Activity Bar occupant, a window, a command or an editing control."
+  - "Do not show encoded bytes, base64 or hex as text."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/FinalGUISpec.md"
+  - "Plans/storage-plan.md"
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/UI_Command_Catalog.md#UCC-123
+
+### F3-667 - Chat Opens From Render Pages And Loads Older
+
+```yaml
+plan_unit_id: F3-667
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat
+  reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display
+  header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and
+  loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the
+  floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging
+  is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by
+  itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the
+  fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name
+  carries the number of items it will add. Both the scroll and the row fetch the page through
+  `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the
+  thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and
+  its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or
+  Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and
+  loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in
+  between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read,
+  the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding
+  or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's
+  canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide.
+  This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread
+  the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB.
+gui_related: true
+gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
+split_recommended: false
+depends_on: [ACD-242, F3-103, F3-368, F3-420, F3-506, F3-648, SP-338, SP-344]
+unblocks: []
+acceptance_criteria:
+  - "Opening a thread paints the newest page and hot tail from display headers and replays no event."
+  - "Scrolling near the top loads the next older page by itself; a Load 50 older row sits above the oldest loaded item until the first item is loaded, is keyboard reachable and is screen-reader named with its count."
+  - "Both the scroll and the row fetch through `cmd.chat.load_older`, and loading a page leaves the reading position unchanged."
+  - "A jump to an unloaded message, search hit or anchor loads only a bounded window around its page, resolved from thread_head, and lands on it with no event replay."
+  - "A page that is rebuilding, stale or unreadable shows its state and reason; history is not reported lost."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: long_chat_open_and_paging_drift
+reasoning_tier: high
+context_scope: dl270_storage_profile
+implementation_surfaces:
+  - "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_presentation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-338"
+  - "Plans/assistant-chat-design.md#ACD-242"
+preserved_exact_tokens:
+  - "thread_head"
+  - "50-item"
+  - "Load 50 older"
+  - "cmd.chat.load_older"
+negative_constraints:
+  - "Do not replay a thread's events to open it or to reach an older item."
+  - "Do not make load-older an optional or settings-gated control."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - "Plans/FinalGUISpec.md"
+  - "Plans/assistant-chat-design.md"
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-338, ContractName:Plans/assistant-chat-design.md#ACD-242

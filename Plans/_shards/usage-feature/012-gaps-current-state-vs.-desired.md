@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L433-L645
+Source lines: L432-L644
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -153,7 +153,7 @@ History inspector deref policy is on-demand only, never eager. History rows comb
 - **Impact**
   - Ledger shows wrong or missing fields; 5h/7d aggregation might miss data or double-count if we add a second reader; bugs when we change one path and forget the other.
 - **Mitigation**
-  - Unify on one canonical write path and one `UsageRecord` schema. If `usage.jsonl` persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+  - Unify on one canonical write path and one `UsageRecord` schema. Amended 2026-10-31 (DL-270): `usage.jsonl` does not persist; it is retired as a live file and no usage JSON mirror is kept (SP-339). `pm export` writes JSONL on request.
   - Document the schema in STATE_FILES and in code; use the same types for write and read where possible.
   - Prefer one projector/reader path for local summaries so Ledger, rollups, and UI projections do not fork into separate attribution models.
 
@@ -193,10 +193,10 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_Syst
 - **Impact**
   - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
 - **Mitigation**
-  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step.
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): for `usage.event` this window is the Keep usage history for setting, `ai.usage.usage-retention` (90 days by default); daily usage totals are kept whatever it says (UF-108).
   - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
   - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
-  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
+  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog. Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file; `pm export` produces it on request (SP-339).
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -213,7 +213,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 ### Problem 7: Multi-project usage
 
 - **Risk**
-  - `usage.jsonl` is per-project (`.puppet-master/usage/`). Users with many projects may expect "total usage across my projects" or get confused whether the view is project-scoped.
+  - `usage.jsonl` is per-project (`.puppet-master/usage/`). Users with many projects may expect "total usage across my projects" or get confused whether the view is project-scoped. Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file (SP-339); usage records live in the stores and roll up per account, provider and model (UF-108).
 - **Impact**
   - Confusion about scope; feature requests for cross-project aggregation before we are ready.
 - **Mitigation**

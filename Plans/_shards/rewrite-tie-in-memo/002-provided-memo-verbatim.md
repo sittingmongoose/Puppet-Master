@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L13-L87
 
-Source SHA256: `d90337f35c544f1a4a65da7bf5aa52ca2017d36c42e07d8331ec8159e2f72066`
+Source SHA256: `3abc641ce316c72a894a8507d216526468d06a9c256ba3e09ea7a9d46cd0d46d`
 
 ---
 
@@ -34,7 +34,7 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - **Renderer decision (locked, amended 2026-10-01 by DL-139):** **winit + Skia** is the only renderer: Skia on the GPU by default, with Skia's own CPU raster (`winit-skia-software`) as the fallback for compatibility, carrying Puppet Master's own Skia renderer extensions; FemtoVG and Slint's separate software renderer are retired. Selection can be controlled via Slint's backend selection mechanisms (e.g., `BackendSelector` and/or `SLINT_BACKEND`). The web GUI is a Rust Leptos client drawn with browser elements and CSS. [web:48][web:149]
 - **Theme behavior (locked):** theme switching will be supported, but it's acceptable to require an app **restart**; we will offer both a "Puppet Master default" look and a "Basic theme."
 - **Storage rewrite (no SQLite):** storage becomes a multi-store design: `seglog` as the canonical append-only event ledger, `redb` for durable KV state/projections/settings, and Tantivy for full-text search over chats/docs/log summaries. [web:88][web:90][web:82]
-- **Search & dashboards:** "fast search for humans + AI" is implemented via Tantivy indexes built from projected events/messages, while heavy analytics scans run off the append-only seglog stream and store rollups into redb. [web:82][web:88][web:90]
+- **Search & dashboards:** "fast search for humans + AI" is implemented via Tantivy indexes built from projected events/messages, while heavy analytics run against the Parquet archive written when a seglog segment is sealed (DuckDB, embedded, on demand, read-only and derived) and store daily rollups into redb. The Usage page and widgets read those redb rollups and never scan raw events (SP-341, UF-108). Amended 2026-10-31 (DL-270). [web:82][web:88][web:90]
 
 ### The core reliability plan (what other features must align with)
 - The system must be reproducible: sessions/runs are replayable from a canonical event stream (seglog), with deterministic projections into redb/Tantivy and checkpointing for resumability after crashes. [web:88][web:90][web:82]

@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12785-L12874
+Source lines: L12798-L12887
 
-Source SHA256: `d16b9cb18b7053ffe1e667aafbb44b7a8b635a960007b796d13117457029972b`
+Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
 
 ---
 
@@ -20,7 +20,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 **`notebook_read` — exact bounded entry read.** Input: `{ notebook_id, entry_id, revision?, range?, include_provenance? }`. Returns the immutable entry revision (or the clearly qualified current object), envelope metadata (author, lifecycle, epistemic kind, freshness), provenance/validity/restriction references, and explicit truncation. Same single range convention rule and bounds as `chatread`. Read-time checks match `notebook_search` exactly.
 
-**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
+**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. Amended 2026-10-31 (DL-270): the 64 KiB cap applies to the request; a stored notebook record keeps at most 16 KiB of body inline (SP-337), and larger bodies are stored as payload-store references. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
 
 **`notebook_supersede` — lifecycle transitions.** Input: `{ notebook_id, entry_id, expected_revision, request_id, operation: supersede | archive | tombstone, supersedes_entry_revision? }`. `request_id` is the mutation idempotency identity per the Working Notebook revision contract (WN-007): retrying the same request returns the original result without a second write. Runs through owner policy (WN-014); current checkpoint dependencies hold retention and cannot be silently purged.
 

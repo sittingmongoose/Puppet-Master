@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5440-L5496
+Source lines: L5457-L5517
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -29,7 +29,10 @@ canonical_text: >-
   states; and a live-only working tick that costs less than a full render. Sound checks render every
   cue of every kit offline: peaks at or under -20 dBFS, cues of the same tier within about 3 dB
   across kits, at most one cue per 120ms, step ticks at most one per 250ms, and nothing before a
-  user gesture.
+  user gesture. Amended 2026-10-31 (DL-270, SP-338, ACD-242): the suite also covers paging. Opening a chat
+  loads its first page from the render-page store with no event replay; load-older paging works and
+  cannot be hidden; a 100k-event thread's first page is p95 150 ms, warm or cold, reading at most
+  2 MiB; and after a restart the chat reopens the same way.
 gui_related: true
 gui_classification_reason: "Defines the tests that gate the chat presentation."
 split_recommended: false
@@ -38,6 +41,7 @@ unblocks: []
 acceptance_criteria:
   - "Each listed behaviour has at least one automated check that reads pixels or measured state."
   - "Sound checks run on offline renders of every cue in every kit."
+  - "Amended 2026-10-31 (DL-270). The paging checks (first page from the render-page store, load-older, the 100k-event first-page budget and the reopen after a restart) read measured state, not dispatch counts."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
