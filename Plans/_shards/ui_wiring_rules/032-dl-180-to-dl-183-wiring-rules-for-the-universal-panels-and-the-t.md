@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L2291-L2968
 
-Source SHA256: `fb062185838175ac694715e03840e83c21958a86fb931c5d5a4ebddf647f74fc`
+Source SHA256: `bee98667da5b59f5f8b412cb6788cf7a7421b716769c06b16d9623fdc7b70a1c`
 
 ---
 
@@ -502,7 +502,8 @@ canonical_text: 'The port''s control census follows UCC-208 and WM-096 (DL-232).
   keeps exact command/local identities and Settings ownership while adding the Pip editor and Processes domain. Shared
   hover/overlay/rig teardown applies; redraw/cheer/preview never creates a second commit or runtime. G1 B (Jared 2026-10-30)
   restores the view-local ui.activity_detail.pin / chat.activity.pin; a pinned thread switch replaces the data and cancels
-  stale subscriptions, while an unpinned switch closes detail.'
+  stale subscriptions, while an unpinned switch closes detail. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -547,7 +548,6 @@ source_lineage:
   SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review:
   shared editor visibility and composer destination gaps; separate run-card visibility passes)'
 preserved_exact_tokens:
-- Demo Studio
 - Keep open
 negative_constraints:
 - Do not turn concept checks into native handler or storage evidence.

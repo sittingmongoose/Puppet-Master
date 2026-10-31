@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32512-L33170
+Source lines: L32505-L33162
 
-Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
+Source SHA256: `7bc051ce8ae0804463a09becf9848a7d00b2e0ceae7c1dcb37bc77f9e76502e4`
 
 ---
 
@@ -665,5 +665,4 @@ owner_boundary_notes:
 - "The F3-042 inventory edit (8 panels to 11) landed in the 2026-07-16 seal; the 2026-07-23 PMConcept7 promotion retires the notifications panel from that inventory. This unit references plain F3-042."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```

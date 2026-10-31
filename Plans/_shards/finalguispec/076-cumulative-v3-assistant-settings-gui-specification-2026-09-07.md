@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38509-L39237
+Source lines: L38500-L39220
 
-Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
+Source SHA256: `7bc051ce8ae0804463a09becf9848a7d00b2e0ceae7c1dcb37bc77f9e76502e4`
 
 ---
 
@@ -109,10 +109,6 @@ Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide 
   button is permitted within the chat composer. Browser automation, scraping, and inspection entry
   points belong to their respective dedicated tools and panel locations. Composer attachments and
   URL citations remain supported without turning the composer into a browser host.
-- **Demo and Product Separation (APR-014):** All concept demonstration launchers, replay fixtures,
-  test harnesses, mock scenarios, and simulation loaders are isolated in a dedicated Demo Gallery.
-  No demo-only action or fixture trigger may be registered in the product wand or as a product
-  command in `Plans/Commands_System.md`.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
 
@@ -477,11 +473,9 @@ plan_unit_id: F3-539
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Assistant wand menu structures commands into compact, organized submenus rather than a single
-  unbounded command list. The chat composer strictly excludes internal-browser launch controls, preserving
-  independent URL and attachment capabilities. All concept demonstration fixtures, replay commands, and
-  sample loaders are isolated within a dedicated Demo Gallery and excluded from product command menus.
+canonical_text: 'The Assistant wand menu structures commands into compact, organized submenus rather than a single unbounded
+  command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
+  attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
 depends_on:
@@ -490,7 +484,6 @@ unblocks: []
 acceptance_criteria:
 - Wand menu uses submenus for logical grouping within viewport bounds.
 - No browser launch button appears in the chat composer.
-- Demo fixtures and replays are located exclusively in the Demo Gallery.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: wand_overflow_or_demo_command_pollution
@@ -510,7 +503,6 @@ source_lineage:
 preserved_exact_tokens:
 - wand
 - submenus
-- Demo Gallery
 negative_constraints:
 - Do not render a browser launcher in the composer.
 - Do not register demo fixtures as product commands.

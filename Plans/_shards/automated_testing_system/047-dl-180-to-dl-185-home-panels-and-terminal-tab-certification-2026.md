@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5950-L6561
+Source lines: L5948-L6547
 
-Source SHA256: `718a143daa9bb41b024fb52dcf2de09ba2733c1f6caf7b2fff5992e79c026c89`
+Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
 
 ---
 
@@ -34,109 +34,99 @@ plan_unit_id: ATS-075
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  The home panels (DL-180) are certified by one matrix that replaces ATS-029's four-panel matrix. Every case
-  drives the visible production control, by pointer and by keyboard where both exist, and asserts the visible
-  outcome: the rendered geometry, the tab and its rendered body, the mark shown, never only a dispatch count or
-  a global marker. Each case records the layout before and after, every command, receipt, event and saved write,
-  and the console and page errors from listeners installed before navigation; a case passes only with zero
-  errors. The cases cover: the split tree and its invariants after every structural change (every leaf a panel,
-  a split with two or more children and never its parent's direction, sizes above 0.02, each tab in exactly one
-  panel, pinned tabs first, one preview tab per panel), the fit rule, the insertion and removal shares, the 0.34
-  share of a panel docked at the centre's edge, the 6 px gaps, the 8 px divider hit target and the divider keys,
-  collapse below half a panel's minimum to its 35 px strip with its state kept, maximize and restore, locked
-  panels, and closing the last tab (Plans/FinalGUISpec.md#F3-630); the tab strip's heights, gaps, widths and
-  shrink order, the active tab's 120 px minimum, pinned tabs, close targets and every mark, with the seated chip
-  as the only active-tab marker in every look (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused
-  silhouette); the "+" menu's rows in their order, the row body, the trailing cell, Alt+click and Alt+Enter,
-  Ctrl+T, and the empty-panel launcher (F3-632); the "+N" list, its search, its grouping by kind and its use as
-  a drop target (F3-633); the opening rules from every caller, the file tree (Plans/FileManager.md#F-090), chat
-  file references, diff views and Changes rows, transcript file records, search results and everything else the
-  chat opens (Plans/assistant-chat-design.md#ACD-500), Ctrl+P, the "+" menu, agents, the terminal's links and
-  the artifact viewer (Plans/Runtime_Artifacts_Panel.md#RAP-065): one id one tab with reveal, preview and keep,
-  placement of document, dedicated and tool kinds including the tools fallback (the last-focused panel holding
-  that tool kind, then the last-focused panel holding a terminal, then the last-focused document panel, then a
-  new panel by the fit rule), locked panels skipped, Alt+click, and an agent's open landing in the background
-  with the hollow square and an announcement without taking focus (F3-634); the narrow ladder at the panels
-  concept's seven measured window widths, 1920, 1680, 1470, 1440, 1280, 1024 and 900 px, each matching F3-636's
-  rail, chat and centre widths with the default rail and chat, its 48 px hysteresis, and none of its states ever
-  saved (F3-636); the chat column's default width, its drag range, the 960 px centre floor, Pop out and its
-  return, and its height from the title bar to the status bar (F3-637); dashboard tabs and their boards
-  (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions, applying one
-  keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved layouts
-  (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
-  hover tag showing the key that works where the app runs (F3-635); the tab kinds: each of F3-635's fifteen
-  kinds registered once with its id prefixes and content minimum (terminal 320 x 120 px, browser 360 x 200,
-  dashboard 320 x 120, run 360 x 200, plan/document/artifact/transcript/context 280 x 160, editor/record/tools
-  280 x 120), an unknown prefix opening no tab, a restored background tab mounted only when it is first shown,
-  and each tab body sized by its own box, never the window (F3-635); the shared header row, 30 px tall with 24
-  px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with hover tags
-  below it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+"
-  menu, the "+N" list, panel menus, drag ghosts and landing previews opening in the one overlay root in its
-  fixed stacking order, with no kind appending an overlay of its own (Plans/DRY_Rules.md#DR-067); the artifact
-  viewer's own behaviour: a subtype per artifact type, the metadata record and owner routes for a type with no
-  subtype, the version list opening or revealing `artifact:<artifact_id>@v<n>`, the unversioned tab following
-  the current version, and the loading, stale, error and retention tombstone states, never an empty tab
-  (RAP-065); the editor tab: the contact-aware strip, the minimap as the code pane's only scrollbar with its
-  change marks, sticky scroll, find and replace, go to line, preview tabs, and the diff side by side when the
-  tab body is wide and inline when it is narrow, decided by the body's own width (Plans/FinalGUISpec.md#F3-639);
-  the migration from `home_workspace_layout.v1` and the Home part of `layout:v1` into the v2 record, converted
-  on first read and never reset, including corrupt and unknown inputs (Plans/storage-plan.md#SP-330); every
-  look, Basic, Friendly, Glass, Retro and NieR in light and dark, with each NieR part installed and absent
-  within NieR (Q22), and Reduced Motion (F3-647); the bans, enforced by a lint that fails the build on a pill (a
-  fully rounded capsule used as a status label, tag, suggestion chip or state badge; action buttons, key caps,
-  switch keys and non-label progress marks are exempt), on a coloured side border or inset side shadow of 2 px
-  or wider, and on an emoji in Puppet Master's chrome (Plans/DRY_Rules.md#DR-069, F3-648); and no internal id,
-  tab, panel, session or nonce, appearing as text anywhere. Command and event truth: a changed release or a
-  structural action dispatches exactly one command of Plans/UI_Command_Catalog.md#UCC-200 and appends exactly
-  one `workspace.layout_changed` naming the change (Plans/Contracts_V0.md#CV-361); a reveal, a `ui.*` view
-  action, opening a menu, hovering and dragging dispatch nothing and append nothing; a cancelled, invalid or
-  unchanged gesture restores the model exactly and dispatches and saves nothing; a rejected commit rolls back.
-  The control census is the closed lists of Plans/UI_Wiring_Rules.md#UIW-040 and #UIW-041 and the wiring is
-  Plans/Wiring_Matrix.md#WM-090's rows: a control with no row fails. Identity fixtures prove that no case
-  duplicates a buffer, browser session, chat identity, terminal session or PTY. The visual matrix is the full
-  cross product of the ten look variants (five families including NieR, each Light/Dark), with retained NieR
-  parts tested installed/absent within NieR (Q22), the four named layouts and the seven measured widths, each
-  capture from a fresh context with seeded storage, look and motion, and a screenshot counts only beside its
-  harness result and error log. Checks run against the panels concept and its harness are concept evidence only:
-  they never certify the native desktop or web client, which needs its own run's receipts naming the revision,
-  platform, toolkit and renderer (ATS-067). This supersedes ATS-029. Amended 2026-10-10 (DL-186, DL-187,
-  DL-188): the matrix also certifies Jared's answers of 2026-10-10. Dashboards (Plans/Widget_System.md#WS-030,
-  F3-638, Plans/Widget_System.md#WS-019): every board but Agents runs on the Usage board engine with the Usage
-  page's grid, size presets, gestures, gravity, Tidy and live previews and no settlement of its own; each board
-  restores from and writes to its project's `widget_layout:v1:<project_id>:<board_id>` with `host_id`
-  `home.dashboard`, a project switch re-keys every open board, an unscoped board key is adopted once, and
-  nothing is converted from or written to `widget_layout:v1:dashboard`; New dashboard opens an empty board named
-  "Dashboard <n>", Rename dashboard... and a tab rename set its stored name, Delete dashboard... asks first and
-  forgets the board, and Home, Metrics, Monitoring and Agents offer neither; Reset widgets and every Start from
-  row dispatch one cmd.widget.reset_layout with the right `set_id`, shown in Start from's four groups in
-  F3-638's order; presets are saved, renamed and deleted with no command, follow the person across projects,
-  never hold the view and apply through set_id `user:<preset_id>`; range and scope are per board and dispatch
-  nothing (ui.widget_board.set_view); Add widget offers every Usage widget by room and no old Home widget; every
-  widget command inside a dashboard tab names its board in `room` and appends no `workspace.layout_changed`; a
-  board's first show plays the reading-order entrance, instant under Reduced Motion, a hidden board does no
-  work, and live readings run per board (the lab-only Play the next hour has no case, UF-107); boards are drawn
-  on Home's tab surface and every look's widget plates are checked on it; Details opens the Usage page at the
-  widget's home room with its inspector open; Agents keeps only its filter; a dashboard a person made that
-  leaves the reopen list while closed loses its key, set-aside copy and name; a named layout restores its
-  boards, and a save over 64 KB keeps the layout without them and says how many bytes it left out. The chat
-  (F3-637, F3-042, Plans/assistant-chat-design.md#ACD-500): a popped-out chat starts back in its column after a
-  restart; the left rail's Chat entry shows or hides the column on every page (cmd.panel.switch); a stored Chat
-  Layout value of Overlay or Detached is ignored and cleared on first read with no pop-out and no notice
-  (Plans/Settings_System.md#SSYS-050); Keep the chat open in narrow windows is on the chat's header menu, not in
-  Settings; and neither the chat's default width nor its drag ever leaves the Usage page's board narrower than
-  400 px. The Debug Console (F3-635, F3-490): one `debug-console` tab whose session sub-tabs switch the session
-  shown as view state, an old per-session tab id folding into it in layouts, the reopen list, named layouts and
-  opens. The "+" menu (F3-632): the Terminal row lists the installed shells inline and the SSH hosts in one "SSH
-  hosts" submenu row, ungrouped sub-rows are not capped, and the empty-panel launcher shows the same. The tour's
-  widget step (Plans/Planning_Wizard.md#PWIZ-035): Upcoming resets added to the Home board and then moved or
-  resized there, never finished by a timer, with Back, Skip and Finish putting the board back. Event truth
-  (DL-188, CV-361): each structural commit appends one `workspace.layout_changed` at family revision 2.0.0 that
-  validates against the 2.0.0 payload, events written at 1.1.0 stay readable and are never rewritten, and
-  cmd.chat.plan.open_version appends the event only when it adds a tab. F3-650/F3-651 replace the compact
-  Appearance check; F3-630 supplies the amended complete-layout fit and drag targets, F3-657 resize feedback and
-  F3-654 the contrast interpretation. ATS-077 adds the campaign cases. Q22, Jared 2026-10-30 (DL-257), replaces
-  the independent NieR dimension; earlier eight-theme captures remain historical.
+canonical_text: 'The home panels (DL-180) are certified by one matrix that replaces ATS-029''s four-panel matrix. Every
+  case drives the visible production control, by pointer and by keyboard where both exist, and asserts the visible outcome:
+  the rendered geometry, the tab and its rendered body, the mark shown, never only a dispatch count or a global marker.
+  Each case records the layout before and after, every command, receipt, event and saved write, and the console and page
+  errors from listeners installed before navigation; a case passes only with zero errors. The cases cover: the split
+  tree and its invariants after every structural change (every leaf a panel, a split with two or more children and never
+  its parent''s direction, sizes above 0.02, each tab in exactly one panel, pinned tabs first, one preview tab per panel),
+  the fit rule, the insertion and removal shares, the 0.34 share of a panel docked at the centre''s edge, the 6 px gaps,
+  the 8 px divider hit target and the divider keys, collapse below half a panel''s minimum to its 35 px strip with its
+  state kept, maximize and restore, locked panels, and closing the last tab (Plans/FinalGUISpec.md#F3-630); the tab strip''s
+  heights, gaps, widths and shrink order, the active tab''s 120 px minimum, pinned tabs, close targets and every mark,
+  with the seated chip as the only active-tab marker in every look (F3-631, DL-214; amended 2026-10-17, DL-228, it read:
+  the fused silhouette); the "+" menu''s rows in their order, the row body, the trailing cell, Alt+click and Alt+Enter,
+  Ctrl+T, and the empty-panel launcher (F3-632); the "+N" list, its search, its grouping by kind and its use as a drop
+  target (F3-633); the opening rules from every caller, the file tree (Plans/FileManager.md#F-090), chat file references,
+  diff views and Changes rows, transcript file records, search results and everything else the chat opens (Plans/assistant-chat-design.md#ACD-500),
+  Ctrl+P, the "+" menu, agents, the terminal''s links and the artifact viewer (Plans/Runtime_Artifacts_Panel.md#RAP-065):
+  one id one tab with reveal, preview and keep, placement of document, dedicated and tool kinds including the tools fallback
+  (the last-focused panel holding that tool kind, then the last-focused panel holding a terminal, then the last-focused
+  document panel, then a new panel by the fit rule), locked panels skipped, Alt+click, and an agent''s open landing in
+  the background with the hollow square and an announcement without taking focus (F3-634); the narrow ladder at the panels
+  concept''s seven measured window widths, 1920, 1680, 1470, 1440, 1280, 1024 and 900 px, each matching F3-636''s rail,
+  chat and centre widths with the default rail and chat, its 48 px hysteresis, and none of its states ever saved (F3-636);
+  the chat column''s default width, its drag range, the 960 px centre floor, Pop out and its return, and its height from
+  the title bar to the status bar (F3-637); dashboard tabs and their boards (Plans/Widget_System.md#WS-030, F3-638);
+  the four named layouts'' exact trees and proportions, applying one keeping every tab with no terminal ended and no
+  unsaved buffer dropped, Restore home layout, and saved layouts (F3-630); the keyboard map in the desktop app and the
+  web-client mapping, with every label, menu shortcut and hover tag showing the key that works where the app runs (F3-635);
+  the tab kinds: each of F3-635''s fifteen kinds registered once with its id prefixes and content minimum (terminal 320
+  x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan/document/artifact/transcript/context 280 x 160,
+  editor/record/tools 280 x 120), an unknown prefix opening no tab, a restored background tab mounted only when it is
+  first shown, and each tab body sized by its own box, never the window (F3-635); the shared header row, 30 px tall with
+  24 px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with hover tags below
+  it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+" menu, the "+N"
+  list, panel menus, drag ghosts and landing previews opening in the one overlay root in its fixed stacking order, with
+  no kind appending an overlay of its own (Plans/DRY_Rules.md#DR-067); the artifact viewer''s own behaviour: a subtype
+  per artifact type, the metadata record and owner routes for a type with no subtype, the version list opening or revealing
+  `artifact:<artifact_id>@v<n>`, the unversioned tab following the current version, and the loading, stale, error and
+  retention tombstone states, never an empty tab (RAP-065); the editor tab: the contact-aware strip, the minimap as the
+  code pane''s only scrollbar with its change marks, sticky scroll, find and replace, go to line, preview tabs, and the
+  diff side by side when the tab body is wide and inline when it is narrow, decided by the body''s own width (Plans/FinalGUISpec.md#F3-639);
+  the migration from `home_workspace_layout.v1` and the Home part of `layout:v1` into the v2 record, converted on first
+  read and never reset, including corrupt and unknown inputs (Plans/storage-plan.md#SP-330); every look, Basic, Friendly,
+  Glass, Retro and NieR in light and dark, with each NieR part installed and absent within NieR (Q22), and Reduced Motion
+  (F3-647); the bans, enforced by a lint that fails the build on a pill (a fully rounded capsule used as a status label,
+  tag, suggestion chip or state badge; action buttons, key caps, switch keys and non-label progress marks are exempt),
+  on a coloured side border or inset side shadow of 2 px or wider, and on an emoji in Puppet Master''s chrome (Plans/DRY_Rules.md#DR-069,
+  F3-648); and no internal id, tab, panel, session or nonce, appearing as text anywhere. Command and event truth: a changed
+  release or a structural action dispatches exactly one command of Plans/UI_Command_Catalog.md#UCC-200 and appends exactly
+  one `workspace.layout_changed` naming the change (Plans/Contracts_V0.md#CV-361); a reveal, a `ui.*` view action, opening
+  a menu, hovering and dragging dispatch nothing and append nothing; a cancelled, invalid or unchanged gesture restores
+  the model exactly and dispatches and saves nothing; a rejected commit rolls back. The control census is the closed
+  lists of Plans/UI_Wiring_Rules.md#UIW-040 and #UIW-041 and the wiring is Plans/Wiring_Matrix.md#WM-090''s rows: a control
+  with no row fails. Identity fixtures prove that no case duplicates a buffer, browser session, chat identity, terminal
+  session or PTY. The visual matrix is the full cross product of the ten look variants (five families including NieR,
+  each Light/Dark), with retained NieR parts tested installed/absent within NieR (Q22), the four named layouts and the
+  seven measured widths, each capture from a fresh context with seeded storage, look and motion, and a screenshot counts
+  only beside its harness result and error log. Checks run against the panels concept and its harness are concept evidence
+  only: they never certify the native desktop or web client, which needs its own run''s receipts naming the revision,
+  platform, toolkit and renderer (ATS-067). This supersedes ATS-029. Amended 2026-10-10 (DL-186, DL-187, DL-188): the
+  matrix also certifies Jared''s answers of 2026-10-10. Dashboards (Plans/Widget_System.md#WS-030, F3-638, Plans/Widget_System.md#WS-019):
+  every board but Agents runs on the Usage board engine with the Usage page''s grid, size presets, gestures, gravity,
+  Tidy and live previews and no settlement of its own; each board restores from and writes to its project''s `widget_layout:v1:<project_id>:<board_id>`
+  with `host_id` `home.dashboard`, a project switch re-keys every open board, an unscoped board key is adopted once,
+  and nothing is converted from or written to `widget_layout:v1:dashboard`; New dashboard opens an empty board named
+  "Dashboard <n>", Rename dashboard... and a tab rename set its stored name, Delete dashboard... asks first and forgets
+  the board, and Home, Metrics, Monitoring and Agents offer neither; Reset widgets and every Start from row dispatch
+  one cmd.widget.reset_layout with the right `set_id`, shown in Start from''s four groups in F3-638''s order; presets
+  are saved, renamed and deleted with no command, follow the person across projects, never hold the view and apply through
+  set_id `user:<preset_id>`; range and scope are per board and dispatch nothing (ui.widget_board.set_view); Add widget
+  offers every Usage widget by room and no old Home widget; every widget command inside a dashboard tab names its board
+  in `room` and appends no `workspace.layout_changed`; a board''s first show plays the reading-order entrance, instant
+  under Reduced Motion, a hidden board does no work, and live readings run per board; boards are drawn on Home''s tab
+  surface and every look''s widget plates are checked on it; Details opens the Usage page at the widget''s home room
+  with its inspector open; Agents keeps only its filter; a dashboard a person made that leaves the reopen list while
+  closed loses its key, set-aside copy and name; a named layout restores its boards, and a save over 64 KB keeps the
+  layout without them and says how many bytes it left out. The chat (F3-637, F3-042, Plans/assistant-chat-design.md#ACD-500):
+  a popped-out chat starts back in its column after a restart; the left rail''s Chat entry shows or hides the column
+  on every page (cmd.panel.switch); a stored Chat Layout value of Overlay or Detached is ignored and cleared on first
+  read with no pop-out and no notice (Plans/Settings_System.md#SSYS-050); Keep the chat open in narrow windows is on
+  the chat''s header menu, not in Settings; and neither the chat''s default width nor its drag ever leaves the Usage
+  page''s board narrower than 400 px. The Debug Console (F3-635, F3-490): one `debug-console` tab whose session sub-tabs
+  switch the session shown as view state, an old per-session tab id folding into it in layouts, the reopen list, named
+  layouts and opens. The "+" menu (F3-632): the Terminal row lists the installed shells inline and the SSH hosts in one
+  "SSH hosts" submenu row, ungrouped sub-rows are not capped, and the empty-panel launcher shows the same. The tour''s
+  widget step (Plans/Planning_Wizard.md#PWIZ-035): Upcoming resets added to the Home board and then moved or resized
+  there, never finished by a timer, with Back, Skip and Finish putting the board back. Event truth (DL-188, CV-361):
+  each structural commit appends one `workspace.layout_changed` at family revision 2.0.0 that validates against the 2.0.0
+  payload, events written at 1.1.0 stay readable and are never rewritten, and cmd.chat.plan.open_version appends the
+  event only when it adds a tab. F3-650/F3-651 replace the compact Appearance check; F3-630 supplies the amended complete-layout
+  fit and drag targets, F3-657 resize feedback and F3-654 the contrast interpretation. ATS-077 adds the campaign cases.
+  Q22, Jared 2026-10-30 (DL-257), replaces the independent NieR dimension; earlier eight-theme captures remain historical.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The certification exercises and captures every visible behaviour of the home panels across looks, widths, layouts, motion and failures.
 split_recommended: false
@@ -244,7 +234,6 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-639, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Automated_Testing_System.md#ATS-029
@@ -616,7 +605,6 @@ stale_retired_dispositions:
   (DL-221), not a new scheduled gate. Deferred glyph surfaces stay unverified.'
 owner_hints:
 - Plans/Automated_Testing_System.md
-
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/FinalGUISpec.md#F3-654

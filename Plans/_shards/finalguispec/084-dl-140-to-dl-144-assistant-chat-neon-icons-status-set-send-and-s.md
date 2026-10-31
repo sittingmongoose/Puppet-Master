@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42072-L42514
+Source lines: L42055-L42504
 
-Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
+Source SHA256: `7bc051ce8ae0804463a09becf9848a7d00b2e0ceae7c1dcb37bc77f9e76502e4`
 
 ---
 
 ## DL-140 to DL-144 — Assistant Chat Neon Icons, Status Set, Send And Stop, And NieR Mode (2026-10-07)
 
-This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks and every measured timing outside these units are not canon.
 
 ### F3-584 — Assistant Chat Neon Icon Grammar
 
@@ -174,7 +174,6 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-141, ContractName:Plans/FinalGUISpec.md#F3-584
@@ -410,11 +409,19 @@ canonical_text: 'NieR Mode (SSYS-043, F3-441) covers every assistant chat surfac
   (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states,
   Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not
   animate; live sheet/onboarding Pip has eyes (X3). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.'
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-144, DL-146, DL-149, SSYS-043, F3-441, F3-584, F3-585, ACD-474]
+depends_on:
+- DL-144
+- DL-146
+- DL-149
+- SSYS-043
+- F3-441
+- F3-584
+- F3-585
 unblocks: []
 acceptance_criteria:
   - "Every chat surface renders under NieR Mode with no glow and with its parts placed as listed."

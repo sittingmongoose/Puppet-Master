@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3447-L4131
+Source lines: L3447-L4129
 
-Source SHA256: `718a143daa9bb41b024fb52dcf2de09ba2733c1f6caf7b2fff5992e79c026c89`
+Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
 
 ---
 
@@ -30,20 +30,19 @@ plan_unit_id: ATS-036
 unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  The canonical Usage GUI fixture suite is rooted at tests/fixtures/usage_gui. Its golden matrix preserves the
-  thirteen UF-088 fixture identities, and companion cases plus room/disclosure, curated-size, content-tier,
-  theme/width, persistence-migration, and interaction-transaction matrices statically represent the recovered
-  Usage contract without treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and
-  source lineage and fail closed for unknown, hidden, disabled, unsupported, partial, redacted, and missing data.
-  Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
-  migration behavior require fresh browser execution, raw receipts, and independent review.
-  For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
-  account of each provider, Use this account, each provider's Auto-switch toggle and switch level and each account's own
-  switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
-  target choice (MA-073), Live / Paused as a remembered view-only choice, every widget kind's size presets and their
-  stored preset_id (WS-017, WS-020), and the single commit of Usage board gravity and Tidy (WS-019). The concept's
-  demo controls take UF-107's lab-only disposition and receive no fixture or gate.
+canonical_text: 'The canonical Usage GUI fixture suite is rooted at tests/fixtures/usage_gui. Its golden matrix preserves
+  the thirteen UF-088 fixture identities, and companion cases plus room/disclosure, curated-size, content-tier, theme/width,
+  persistence-migration, and interaction-transaction matrices statically represent the recovered Usage contract without
+  treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and source lineage and fail closed
+  for unknown, hidden, disabled, unsupported, partial, redacted, and missing data. Fixture presence and `must`/`must_not`
+  lists grant static representation only; runtime, visual, motion, and migration behavior require fresh browser execution,
+  raw receipts, and independent review. For the redesigned Usage page (2026-10-09) the suite also covers the Accounts
+  room acting in place (one row per account of each provider, Use this account, each provider''s Auto-switch toggle and
+  switch level and each account''s own switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control
+  commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and target choice (MA-073), Live / Paused
+  as a remembered view-only choice, every widget kind''s size presets and their stored preset_id (WS-017, WS-020), and
+  the single commit of Usage board gravity and Tidy (WS-019). Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: This unit owns the canonical fixtures for visible Usage behavior across PM surfaces.
 depends_on: [UF-088, F3-514, WS-017, WS-018, WS-019, WS-020, MA-073, SSYS-044, UCC-147]
@@ -80,9 +79,8 @@ source_lineage:
   - Plans/Decision_Log.md#DL-177
 preserved_exact_tokens: [GUI-USG-001, GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, GUI-RAP-001]
 negative_constraints:
-  - "Do not use Concepts/usage-concepts reports as the canonical fixture root."
-  - "Do not let missing or unknown data satisfy a zero-value assertion."
-  - "Do not add a fixture or gate for the concept demo controls UF-107 classes as lab-only, or let a fixture expect a Usage-local write of a provider's auto-switch values."
+- Do not use Concepts/usage-concepts reports as the canonical fixture root.
+- Do not let missing or unknown data satisfy a zero-value assertion.
 owner_hints: [Plans/Automated_Testing_System.md, Plans/usage-feature.md]
 ```
 

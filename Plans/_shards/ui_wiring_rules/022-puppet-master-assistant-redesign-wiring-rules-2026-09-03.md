@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L1405-L1472
 
-Source SHA256: `fb062185838175ac694715e03840e83c21958a86fb931c5d5a4ebddf647f74fc`
+Source SHA256: `bee98667da5b59f5f8b412cb6788cf7a7421b716769c06b16d9623fdc7b70a1c`
 
 ---
 
@@ -16,7 +16,7 @@ The Assistant redesign adds fifty-five production-intent wiring rows under the `
 
 **View-local intents are declared, not disguised.** Three rows carry a view-local or owner-internal effect rather than a user-facing command: composer text entry updating the `ComposerBuffer`, parent To-Do expansion, and Plan view switching between Rich Text and Markdown. Each is declared explicitly as `(view-local intent)` in its wiring row. A view-local intent must not emit a domain event, must not write a `TodoTransition`, and must not be presented in the catalog as a command.
 
-The redesigned Usage page (2026-10-09) is not an Assistant redesign row, but its view-local controls follow the same declaration: Live / Paused is a view-local intent with no catalog command or production wiring row, as `Plans/UI_Command_Catalog.md#UCC-147` records, and the concept's demo controls take the lab-only disposition `Plans/usage-feature.md#UF-107` owns.
+The redesigned Usage page (2026-10-09) is not an Assistant redesign row, but its view-local controls follow the same declaration: Live / Paused is a view-local intent with no catalog command or production wiring row, as `Plans/UI_Command_Catalog.md#UCC-147` records.
 
 **Availability and disabled reason come from the owner.** Every row reads `state.assistant_redesign.<selector>.availability` and `state.assistant_redesign.<selector>.disabled_reason` from its semantic owner before dispatch. A surface that cannot read the owner projection renders the control disabled rather than optimistic, and it announces the exact owner reason rather than a generic one.
 

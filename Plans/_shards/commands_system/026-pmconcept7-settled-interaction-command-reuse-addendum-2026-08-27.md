@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4848-L4977
+Source lines: L4848-L4987
 
-Source SHA256: `94950dd056b0bf6f815b35c86ad97341a368e6506a53d291c00b76c6e95f5b88`
+Source SHA256: `af7b25603b062c6f95d60a4bdae33ba2419b5fd0c23fe167f0afb5d6159e1fa8`
 
 ---
 
@@ -51,42 +51,52 @@ plan_unit_id: CS-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh,
-  object-backed cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail
-  Pane, and cmd.panel.switch authorities. Event-primary Usage callers use usage_event/usage_event_ref;
-  a PMConcept7 Ledger attempt row dispatches the navigation command with usage_attempt/attempt_id and
-  retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel details remain
-  local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost,
-  placeholder, and animation previews are local projection state; exactly one changed semantic
-  release or explicit action dispatches the existing command, while no-change and cancel paths
-  dispatch nothing and write nothing. The concept-only
-  cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
-  after preset resolution and never becomes a primary command. No pointer-preview event,
-  PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
-  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
-  switch level at scope provider and each account's own switch level at scope account (D43, 2026-10-10) reuse
-  the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
-  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
-  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
-  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
-  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
-  Amended 2026-10-10 (DL-186): a dashboard tab's widget commits name the board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019); cmd.widget.reset_layout's optional set_id names the set a dashboard starts from (UCC-200).
+canonical_text: 'PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh, object-backed
+  cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail Pane, and cmd.panel.switch authorities.
+  Event-primary Usage callers use usage_event/usage_event_ref; a PMConcept7 Ledger attempt row dispatches the navigation
+  command with usage_attempt/attempt_id and retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel
+  details remain local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost, placeholder,
+  and animation previews are local projection state; exactly one changed semantic release or explicit action dispatches
+  the existing command, while no-change and cancel paths dispatch nothing and write nothing. The concept-only cmd.workspace_layout.size_surface
+  token normalizes to cmd.workspace_layout.resize_surface after preset resolution and never becomes a primary command.
+  No pointer-preview event, PM7 command family, second Assistant command path, or rejected provider-management command
+  is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its Accounts room''s Use this account
+  reuses cmd.account.select_profile, each provider''s Auto-switch toggle and switch level at scope provider and each
+  account''s own switch level at scope account (D43, 2026-10-10) reuse the Settings owner''s cmd.settings.transaction.preview
+  and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy,
+  detail } for the whole room and Usage board gravity commits inside the action''s own widget command (WS-019), a size
+  preset commits through cmd.widget.resize, Live / Paused is a local view projection. UCC-147 carries the control-by-control
+  census. Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families
+  of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard
+  widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
+  Amended 2026-10-10 (DL-186): a dashboard tab''s widget commits name the board in the payload''s existing room field,
+  not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019);
+  cmd.widget.reset_layout''s optional set_id names the set a dashboard starts from (UCC-200). Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
 depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180, DL-186]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
-  - Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
-  - Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
-  - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
-  - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
-  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level and at scope account for an account's own switch level (D43, 2026-10-10), exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed
+  settled action creates one command receipt and no pointer-preview domain event.
+- Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and
+  reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
+- Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel
+  inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary
+  callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses
+  usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
+- Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context
+  Detail Pane command family; menu open and hover dispatch nothing.
+- Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command,
+  receipt, event, or persistence write.
+- cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- 'Usage reuses cmd.account.select_profile, cmd.settings.transaction.preview/apply at the exact provider/account scope,
+  and one cmd.widget.move with arrange { mode: tidy, detail }; Live/Pause and gravity beyond the causing action dispatch
+  nothing.'
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate

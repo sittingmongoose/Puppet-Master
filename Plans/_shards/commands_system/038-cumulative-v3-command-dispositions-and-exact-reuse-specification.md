@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6366-L6511
+Source lines: L6376-L6514
 
-Source SHA256: `94950dd056b0bf6f815b35c86ad97341a368e6506a53d291c00b76c6e95f5b88`
+Source SHA256: `af7b25603b062c6f95d60a4bdae33ba2419b5fd0c23fe167f0afb5d6159e1fa8`
 
 ---
 
@@ -40,33 +40,27 @@ disposition rules in accordance with APR-014, APR-019, and APR-023, strictly adh
   collapsible sections, plan Rich/Markdown toggle, Activity Detail open/close (G1), and manager tabs—are
   classified as `LOCAL_PRESENTATION`. They utilize local or shared view-state primitives and emit no
   domain command.
-- **Isolation of Demo Fixtures (APR-014):** Test fixtures, replay commands, mock simulations, and
-  sample loaders are classified as `CONCEPT_DEMO_ONLY`. They reside exclusively in the Demo Gallery
-  and are strictly prohibited from registration in the product command catalog or production wiring.
 
 ```yaml
 plan_unit_id: CS-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses
-  cmd.bsd.configure / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure /
-  cmd.collaboration.start; Crew Auto uses cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set;
-  Plan Build uses cmd.chat.plan.build with topology discriminator (prohibiting build_as_goal); Plan
-  schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
-  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set.
-  View toggles are classified as LOCAL_PRESENTATION view state, and test fixtures are classified as
-  CONCEPT_DEMO_ONLY, excluded from product command catalogs.
+canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses cmd.bsd.configure
+  / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start; Crew Auto uses
+  cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build with topology discriminator
+  (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
+  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set. View
+  toggles are classified as LOCAL_PRESENTATION view state. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: false
 gui_classification_reason: Governs command catalog dispositions, canonical ID reuse, and demo separation.
 depends_on: [CS-078]
 unblocks: []
 acceptance_criteria:
-  - Specified operations reuse canonical command IDs without minting parallel commands.
-  - Plan Build uses topology discriminator; build_as_goal is prohibited.
-  - View toggles are classified as LOCAL_PRESENTATION without domain commands.
-  - Demo fixtures are classified as CONCEPT_DEMO_ONLY and excluded from product catalogs.
+- Specified operations reuse canonical command IDs without minting parallel commands.
+- Plan Build uses topology discriminator; build_as_goal is prohibited.
+- View toggles are classified as LOCAL_PRESENTATION without domain commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: command_duplication_or_demo_command_leak
@@ -83,11 +77,10 @@ source_lineage:
   - APR-019
   - APR-023
 preserved_exact_tokens:
-  - "cmd.chat.plan.build"
-  - "cmd.bsd.configure"
-  - "cmd.collaboration.start"
-  - "CONCEPT_DEMO_ONLY"
-  - "LOCAL_PRESENTATION"
+- cmd.chat.plan.build
+- cmd.bsd.configure
+- cmd.collaboration.start
+- LOCAL_PRESENTATION
 negative_constraints:
   - Do not mint cmd.chat.plan.build_as_goal.
   - Do not register demo fixtures in the product command catalog.

@@ -610,7 +610,6 @@
         "pm.settings_migration_preview.v1",
         "pm.settings_appearance_preview.v1",
         "pm.settings_ui_action_projection.v1",
-        "pm.settings_concept_boundary.v1",
         "pm.settings_system_contract_fixtures.v1",
         "pm.settings_transfer_draft_preview_request.v1",
         "pm.settings_transfer_draft_preview.v1",
@@ -623,7 +622,7 @@
         "mode": "not_applicable_nonpersisted",
         "refs": [],
         "hold_rule": "None; a referenced durable result or snapshot is retained by its owner instead.",
-        "expiry_rule": "Discard at request completion, route return, preview invalidation, or concept/test teardown."
+        "expiry_rule": "Discard at request completion, route return, preview invalidation, or test teardown."
       },
       "redaction_transform_ids": [
         "rt.settings_project_snapshot.v1"

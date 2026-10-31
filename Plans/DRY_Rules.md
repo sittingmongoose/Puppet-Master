@@ -241,10 +241,10 @@ Authoritative requirement coverage lives ONLY in:
 
 ContractRef: SchemaID:pm.project-plan-node.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
 
-Inline tags MUST NOT be used as the sole traceability mechanism.  
+Inline tags MUST NOT be used as the sole traceability mechanism.
 ContractRef: SchemaID:pm.project-plan-node.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
 
-If an inline tag and a node's `requirement_refs` conflict, `requirement_refs` MUST be treated as authoritative.  
+If an inline tag and a node's `requirement_refs` conflict, `requirement_refs` MUST be treated as authoritative.
 ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
 
 ---
@@ -3501,13 +3501,12 @@ negative_constraints:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/Decision_Log.md#DL-171, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-466
 
 
-## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)
+## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans And One Opening Module (2026-10-09)
 
 Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces Home's four fixed editor panels, singleton dashboard, bottom terminal zone and movable chat with one universal panel system, rebuilds the terminal as one session per tab, and makes the bans on side stripes, emoji and pills one rule for the whole app. Each piece the redesign shares across surfaces lives in one place, and these seven rules say where. They supersede the per-surface owners of the 2026-08-04 Home owner boundary and its U10 sentence (both amended in place above), and they amend the PMConcept7 SSOT table's Home row and DR-039 for several dashboard tabs, the Guided Tour paragraph of the touch-closure addendum, DR-044's run view, DR-047's Plan footer and DR-057's pill clause, which now reads as the left rail's instance of DR-069. The concept builds are lineage only: no concept class, storage key or script global is a product name here.
 
@@ -3604,7 +3603,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
@@ -3704,21 +3702,22 @@ canonical_text: 'Everything that floats over the home centre opens in one overla
   the "+N" list, tab menus, panel menus, every menu a tab kind opens through the host, drag ghosts and landing previews
   open in that root, and no tab kind appends an overlay layer of its own to the page or the window. The order is fixed,
   bottom to top: panel content, then tab strips and dividers, then the overlay root, which sits above the status bar
-  and below the Demo Studio''s controls (DR-070), the hover tags and the Guided Tour (F3-635). Hover tags belong to the
-  shell''s one hover tag controller (FinalGUISpec F3-523) and the Guided Tour to its own owner; neither joins the overlay
-  root and neither keeps a second stacking order. When the 5.6 Pro chat is ported (ACD-501, D27), its body-portaled popouts
-  (F3-424) and its menus open in the same root and order; the chat keeps no overlay layer and no stacking order of its
-  own. A tab body never draws past its own box except through this root, and Escape closes only the innermost open thing
-  (F3-568). Amended 2026-10-17 (DL-228): above the overlay root the whole window has one order, bottom to top: the notification
-  stage and its inbox (F3-447), the setup resume prompt, the Guided Tour and its page note, the onboarding window with
-  its scrim and the NieR editor panel inside it, then the look cover and the NieR reboot plate and calm cover (F3-077,
-  F3-598), which cover everything. Escape closes only the innermost open thing; the numbers are the rebuild''s. Amended
-  2026-10-29 (PC1, D6/D10, G9; PM7): Work panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner;
-  teardown releases copies/timers. All floating Glass Activity/History/attachment surfaces use the persona/model menu
-  plate token, not new plates. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one
-  original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered
-  background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip
-  path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
+  and below the hover tags and the Guided Tour (F3-635). Hover tags belong to the shell''s one hover tag controller (FinalGUISpec
+  F3-523) and the Guided Tour to its own owner; neither joins the overlay root and neither keeps a second stacking order.
+  When the 5.6 Pro chat is ported (ACD-501, D27), its body-portaled popouts (F3-424) and its menus open in the same root
+  and order; the chat keeps no overlay layer and no stacking order of its own. A tab body never draws past its own box
+  except through this root, and Escape closes only the innermost open thing (F3-568). Amended 2026-10-17 (DL-228): above
+  the overlay root the whole window has one order, bottom to top: the notification stage and its inbox (F3-447), the
+  setup resume prompt, the Guided Tour and its page note, the onboarding window with its scrim and the NieR editor panel
+  inside it, then the look cover and the NieR reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape
+  closes only the innermost open thing; the numbers are the rebuild''s. Amended 2026-10-29 (PC1, D6/D10, G9; PM7): Work
+  panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner; teardown releases copies/timers. All
+  floating Glass Activity/History/attachment surfaces use the persona/model menu plate token, not new plates. QA round
+  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis for the
+  entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots
+  nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds,
+  preserves pre-existing inert nodes and restores focus/input. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Fixes one overlay root and one stacking order for the home centre and the ported chat."
 split_recommended: false
@@ -3728,12 +3727,12 @@ acceptance_criteria:
 - Every menu, list, drag ghost and landing preview over the home centre opens in the one overlay root.
 - No tab kind and, after the port, no part of the 5.6 Pro chat appends its own overlay layer or keeps its own stacking
   order.
-- The order is panel content, then strips and dividers, then the overlay root above the status bar, with the Demo Studio's
-  controls, hover tags and the Guided Tour above it.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis
   for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
   never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
   the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
+- The order is panel content, strips/dividers, the overlay root above the status bar, then shared hover tags and Guided
+  Tour above it.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3887,7 +3886,6 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
   - Plans/storage-plan.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/DRY_Rules.md#DR-056
@@ -3973,68 +3971,49 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-417, ContractName:Plans/FinalGUISpec.md#F3-534, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/DRY_Rules.md#DR-057, ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Decision_Log.md#DL-141
 
-### DR-070 - One Demo Studio For PMConcept7
+### DR-070 - Retired historical identifier
 
 ```yaml
 plan_unit_id: DR-070
-unit_type: invariant
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  PMConcept7 has one Demo Studio (DL-185, D26; Jared: "So that should all just be folded into one demo studio(like 5.6
-  chat's system)."). Every concept surface's demo controls are sections of it: the Guided Tour's and onboarding's,
-  the chat's, the home demos', and later the Orchestrator and Planning Wizard pages'. No surface draws a demo panel,
-  demo bar or demo menu of its own, and when the 5.6 Pro chat is ported its demo controls move into the studio
-  (ACD-501). The studio and everything in it are lab only, in the pattern ACD-474 set for the chat: never a product
-  control, setting, command, wiring row, saved value or test gate, and no canon number comes from a demo control. No
-  product catalog (UI_Command_Catalog, settings_inventory, Wiring_Matrix, touch_closure, storage_value_registry,
-  Automated_Testing_System) names a demo control. Its presentation is F3-649's, and in the concept it sits above the
-  one overlay root (DR-067).
-gui_related: true
-gui_classification_reason: "Fixes one Demo Studio for every PMConcept7 concept surface and keeps it out of the product."
+canonical_text: DR-070 is retired by DL-260, Jared 2026-10-31. The ID remains only for unchanged historical decision
+  references. It defines no active product feature, control, command, setting, schema, wiring, stored state, test obligation
+  or implementation debt.
+gui_related: false
+gui_classification_reason: Historical identifier only; no product UI requirement.
 split_recommended: false
-depends_on: [DL-185]
-unblocks: [ACD-501]
+depends_on: []
+unblocks: []
 acceptance_criteria:
-  - "Every PMConcept7 surface's demo controls are sections of the one Demo Studio; no surface draws a demo panel of its own."
-  - "No command catalog, settings inventory, wiring matrix, touch-closure row, storage registry entry or test gate names a Demo Studio control."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-risk_class: home_panels_terminal_redesign_drift
-reasoning_tier: high
-context_scope: home_panels_terminal
-implementation_surfaces:
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: exact_key_static_dry_gate_only
+  mode: retired_no_product_work
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26, D27)"
+- Plans/Decision_Log.md#DL-260
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "So that should all just be folded into one demo studio(like 5.6 chat's system)."
-  - "ACD-474"
-  - "F3-649"
+- DR-070
+- DL-260
 negative_constraints:
-  - "Do not give a demo control a command, setting, wiring row, saved value or test gate."
-  - "Do not draw a separate demo panel per surface."
+- Do not reactivate this historical identifier as a product requirement.
 owner_hints:
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-649, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-067
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-067
 
 ### DR-071 - One Opening Module For Everything That Opens In A Panel
 
@@ -4284,33 +4263,32 @@ canonical_text: 'The hosted chat uses one owner for each shared behavior (DL-232
   NieR parts, first-paint appearance, hover tags and overlay stacking are the app''s existing owners (DR-050, DR-054,
   DR-056, DR-067, DR-072); the hosted chat neither loads its standalone first-paint theme reader nor owns a theme, scene,
   ground layer or reboot moment. A chat settings sheet and the Settings page edit the same admitted setting through the
-  same Settings transaction; copying a value to a concept renderer is a projection, not another source of truth. The
-  application/project ELI5 default and the active chat''s override remain separate. The History default is a starting
-  value only; History pin, chat width and Keep open remain layout view state, and Activity Detail opens full size until
-  closed (G1/G2). Recipe selectors, arbitrary family takes, motion-voice overrides and guided examples belong only to
-  the concept''s one Demo Studio (DR-070). The port''s class names, DOM roots, JavaScript globals, localStorage keys
-  and build-layer APIs are concept lineage and grant no native API or persistence authority. Integrated concept 59ca2d4382
-  is assembled from the standalone chat''s own module list by pm7-port/tools/chat56_layer.py at opus build step 6b; the
-  port does not maintain a second conversation implementation. Its column layer is div.pm56-frame.pmw-scope#pmw-chat56
-  containing div.pm56-host#pmRoot inside #chatPanel. Its scoped overlays and effects mount in body > div#pm56-layers.pmw-scope
-  under the host stacking order. This actual wrapper is a concept mounting boundary, not evidence of the product''s single
-  overlay root acceptance. Chat CSS is scoped under .pm56-host; column and tab width queries use pm56col and pm56tab
-  containers while app sheets and menus keep window queries. The remaining window-based isPhone helper means full container-based
-  behavior is not yet demonstrated. The hosted build drops the chat''s first-paint reader, theme picker and NieR scripts
-  and follows the host''s existing look and NieR controllers. SSYS-055 records the project-only adapter and session-only
-  ELI5 limit rather than treating every concept control as a persistent application setting. Amended 2026-10-29 (G1–G3,
+  same Settings transaction; renderers consume the owner projection without another writer. The application/project ELI5
+  default and the active chat''s override remain separate. The History default is a starting value only; History pin,
+  chat width and Keep open remain layout view state, and Activity Detail opens full size until closed (G1/G2). One shared
+  conversation implementation serves the column, pop-out and hosted views. Each measures its own container and uses the
+  shared overlay root; mount wrappers grant no second layout, theme or persistence owner. Amended 2026-10-29 (G1–G3,
   S1–S9; PM7): Jared G1 B (2026-10-30) restores the view-local Pin/unpin lifetime contract: pinned detail stays open
   and follows the new thread across switches, while unpinned detail closes on a switch; only the small view is retired.
   History pin remains local layout state. Pip parts read the same Project row/transaction in every host, never a second
-  preference or option registry.'
+  preference or option registry. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
+  requirement.'
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
-depends_on: [DL-232, DR-050, DR-054, DR-056, DR-067, DR-070, DR-072, SSYS-050]
+depends_on:
+- DL-232
+- DR-050
+- DR-054
+- DR-056
+- DR-067
+- DR-072
+- SSYS-050
 unblocks: []
 acceptance_criteria:
-  - "Changing an admitted preference through either visible surface updates one Settings value and both consumers without a feedback loop."
-  - "No hosted theme store, second tab-placement rule, second hover tag system or second Demo Studio is introduced."
+- Changing an admitted preference through either visible surface updates one Settings value and both consumers without
+  a feedback loop.
+- No hosted theme store, second placement rule, second hover system, conversation owner or persistence writer is introduced.
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -4329,8 +4307,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Keep open
 negative_constraints:
   - "Do not promote localStorage keys or bridge globals into product contracts."
 compatibility_only_notes: []

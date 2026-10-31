@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7071-L7603
+Source lines: L7074-L7602
 
-Source SHA256: `94950dd056b0bf6f815b35c86ad97341a368e6506a53d291c00b76c6e95f5b88`
+Source SHA256: `af7b25603b062c6f95d60a4bdae33ba2419b5fd0c23fe167f0afb5d6159e1fa8`
 
 ---
 
@@ -35,28 +35,25 @@ Each control of the redesigned sheets, cards, dock lines and run view is a comma
 - Send now on a held scheduled message: `cmd.chat.schedule_message.update` (SQR-013).
 - Go to message and Open the original message: `cmd.chat.open_thread`.
 
-Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity. Recorded examples and other concept demo controls stay `CONCEPT_DEMO_ONLY` under CS-079.
+Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity.
 
 ```yaml
 plan_unit_id: CDRY-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The wand-module redesign's non-command controls are fixed. View state (LOCAL_PRESENTATION, no
-  command, no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x,
-  Escape and scrim on a collaboration sheet and Keep going; expand, More, tabs, filters, disclosures
-  and Advanced, and Technical details on a setup sheet's Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the
-  Revert preview, See what's blocking it and Leave my files as they are; the Why? on a Back Seat
-  Driver aside. Draft state: every sheet control, stepper, team recipe, specialist and Advanced row,
-  and Bring back, which is never an undo command. Reuse replaces aliases: cmd.collaboration.open for
-  every Open Panel and the dock's Show or Review, cmd.collaboration.export for every download or
-  export, cmd.collaboration.start or cmd.review.run_again for run again,
-  cmd.chat.schedule_message.update for Send now, cmd.chat.open_thread for going to a message. Teach
-  closes through cmd.chat.teach.cancel. The Plan view stays the one document view toggle with a
-  shell_view row, cmd.chat.plan.view.set. Recorded examples and other concept demo controls stay
-  CONCEPT_DEMO_ONLY, and apart from the nine identities of CDRY-022 and CDRY-023 the redesign needs no
-  new command identity.
+canonical_text: 'The wand-module redesign''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
+  no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x, Escape and scrim on a collaboration
+  sheet and Keep going; expand, More, tabs, filters, disclosures and Advanced, and Technical details on a setup sheet''s
+  Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the Revert preview, See
+  what''s blocking it and Leave my files as they are; the Why? on a Back Seat Driver aside. Draft state: every sheet
+  control, stepper, team recipe, specialist and Advanced row, and Bring back, which is never an undo command. Reuse replaces
+  aliases: cmd.collaboration.open for every Open Panel and the dock''s Show or Review, cmd.collaboration.export for every
+  download or export, cmd.collaboration.start or cmd.review.run_again for run again, cmd.chat.schedule_message.update
+  for Send now, cmd.chat.open_thread for going to a message. Teach closes through cmd.chat.teach.cancel. The Plan view
+  stays the one document view toggle with a shell_view row, cmd.chat.plan.view.set. Apart from the nine identities of
+  CDRY-022 and CDRY-023 the redesign needs no new command identity. Amended DL-260, Jared 2026-10-31: only real product
+  behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Classifies visible sheet, card, dock and run-view controls as view state, draft state or command reuse."
 split_recommended: false
@@ -85,16 +82,15 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-07, B-CMD-08"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
-  - "LOCAL_PRESENTATION"
-  - "cmd.chat.plan.view.set"
-  - "shell_view"
-  - "cmd.collaboration.open"
-  - "cmd.collaboration.export"
-  - "cmd.review.run_again"
-  - "cmd.chat.schedule_message.update"
-  - "cmd.chat.open_thread"
-  - "cmd.chat.teach.cancel"
-  - "CONCEPT_DEMO_ONLY"
+- LOCAL_PRESENTATION
+- cmd.chat.plan.view.set
+- shell_view
+- cmd.collaboration.open
+- cmd.collaboration.export
+- cmd.review.run_again
+- cmd.chat.schedule_message.update
+- cmd.chat.open_thread
+- cmd.chat.teach.cancel
 negative_constraints:
   - "Do not register a Review or BrainStorm view-mode command."
   - "Do not register a recipe, Bring back, dock show, Send now, jump-to-message, Revert preview or Revert keep command."

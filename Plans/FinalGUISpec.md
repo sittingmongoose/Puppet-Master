@@ -1963,7 +1963,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+D` | Reserved for Readiness & Doctor (Jared, 2026-10-14, DL-227). Not Demo Studio's, and no longer the Home dashboard reveal. Unbound until that owner registers it. The dashboard still opens from the plus menu (F3-634, F3-638). |
+| `Ctrl+Shift+D` | Reserved for Readiness & Doctor (Jared, 2026-10-14, DL-227). Unbound until that owner registers it. The dashboard still opens from the plus menu (F3-634, F3-638). |
 | `Ctrl+Shift+\` | Detach/re-dock the active detachable side panel; while focus is in the home centre, split the focused panel down (F3-635; terminal sections are retired, amended 2026-10-09, DL-180) |
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
@@ -10255,7 +10255,6 @@ owner_boundary_notes:
 - "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-084 - Custom Font Fallback And Theme Preview
@@ -10367,7 +10366,6 @@ owner_boundary_notes:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7"
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-086 - Views Section Owner Boundary
@@ -30646,7 +30644,6 @@ stale_retired_dispositions:
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-428 - Glass Background Modes
@@ -30705,7 +30702,6 @@ owner_boundary_notes:
 - "Registration of glass_background_mode:v1 in the section 15.1 storage tables is owned by F3-444; this unit consumes the key."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-429 - Glass Alpha Transparency Slider
@@ -30965,7 +30961,6 @@ owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.
@@ -32054,7 +32049,6 @@ owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-439 - Instant Apply Model And Save Exceptions
@@ -32506,7 +32500,6 @@ owner_boundary_notes:
 - "This unit mirrors the F3-217 registration shape; F3-217 remains the owner of the pre-existing shell and layout key list, and Plans/storage-plan.md remains the consumer doc for storage record truth."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ## PMConcept6 Shell Sweep Addendum - 2026-07-16
@@ -33166,7 +33159,6 @@ owner_boundary_notes:
 - "The F3-042 inventory edit (8 panels to 11) landed in the 2026-07-16 seal; the 2026-07-23 PMConcept7 promotion retires the notifications panel from that inventory. This unit references plain F3-042."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ## PMConcept7 Concept Promotion Addendum - 2026-07-23
@@ -33741,7 +33733,6 @@ owner_boundary_notes:
 - "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-466 - Friendly Editor File Tab Shape
@@ -38607,10 +38598,6 @@ Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide 
   button is permitted within the chat composer. Browser automation, scraping, and inspection entry
   points belong to their respective dedicated tools and panel locations. Composer attachments and
   URL citations remain supported without turning the composer into a browser host.
-- **Demo and Product Separation (APR-014):** All concept demonstration launchers, replay fixtures,
-  test harnesses, mock scenarios, and simulation loaders are isolated in a dedicated Demo Gallery.
-  No demo-only action or fixture trigger may be registered in the product wand or as a product
-  command in `Plans/Commands_System.md`.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
 
@@ -38975,11 +38962,9 @@ plan_unit_id: F3-539
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Assistant wand menu structures commands into compact, organized submenus rather than a single
-  unbounded command list. The chat composer strictly excludes internal-browser launch controls, preserving
-  independent URL and attachment capabilities. All concept demonstration fixtures, replay commands, and
-  sample loaders are isolated within a dedicated Demo Gallery and excluded from product command menus.
+canonical_text: 'The Assistant wand menu structures commands into compact, organized submenus rather than a single unbounded
+  command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
+  attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
 depends_on:
@@ -38988,7 +38973,6 @@ unblocks: []
 acceptance_criteria:
 - Wand menu uses submenus for logical grouping within viewport bounds.
 - No browser launch button appears in the chat composer.
-- Demo fixtures and replays are located exclusively in the Demo Gallery.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: wand_overflow_or_demo_command_pollution
@@ -39008,7 +38992,6 @@ source_lineage:
 preserved_exact_tokens:
 - wand
 - submenus
-- Demo Gallery
 negative_constraints:
 - Do not render a browser launcher in the composer.
 - Do not register demo fixtures as product commands.
@@ -40438,30 +40421,31 @@ plan_unit_id: F3-562
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a turn mark
-  and a paint-only spine per assistant turn, seven item families by message type with distinct silhouettes,
-  prose without a container, a neutral right-aligned user bubble (under Retro both drawn as F3-597 states,
-  DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple
-  style, with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering to at
-  most 30 nodes, narration that tucks into the card's caption, and the fold into the strip when the final answer
-  starts. For the transcript and the working activity this supersedes the 2026-09-03 redesign section's
-  binding-by-reference list where it conflicts and Additive Correction v4's statements that Orbit and Step Rail
-  stay exactly as specified and that nothing authorises a broad restyle. That binding-by-reference never
-  includes the concept's lab tools (ACD-474). The narration tuck is a projection of the turn's own progress
-  summary into its card and does not violate the rule that cards do not float out of narrative position. The ten
-  themes keep their tokens; family hues and the accent budget are theme-token roles defined for all eight.
-  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
-  SSYS-043 owns migration and retained Adjust controls.
+canonical_text: 'The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a turn
+  mark and a paint-only spine per assistant turn, seven item families by message type with distinct silhouettes, prose
+  without a container, a neutral right-aligned user bubble (under Retro both drawn as F3-597 states, DL-151), and the
+  accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style, with the behaviour
+  owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering to at most 30 nodes, narration that
+  tucks into the card''s caption, and the fold into the strip when the final answer starts. For the transcript and the
+  working activity this supersedes the 2026-09-03 redesign section''s binding-by-reference list where it conflicts and
+  Additive Correction v4''s statements that Orbit and Step Rail stay exactly as specified and that nothing authorises
+  a broad restyle. The narration tuck is a projection of the turn''s own progress summary into its card and does not
+  violate the rule that cards do not float out of narrative position. The ten themes keep their tokens; family hues and
+  the accent budget are theme-token roles defined for all eight. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR
+  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Amended DL-260,
+  Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Promotes the rebuilt chat transcript and working activity presentation."
 split_recommended: false
-depends_on: [DL-104, DL-105, ACD-469, ACD-473, ACD-474]
+depends_on:
+- DL-104
+- DL-105
+- ACD-469
+- ACD-473
 unblocks: []
 acceptance_criteria:
-  - "The chat transcript renders families, turn marks and the spine per ACD-469 in all ten themes."
-  - "The working activity behaves per ACD-473 in both styles."
-  - "No lab tool listed in ACD-474 appears in a product surface."
+- The chat transcript renders families, turn marks and the spine per ACD-469 in all ten themes.
+- The working activity behaves per ACD-473 in both styles.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -40484,8 +40468,7 @@ preserved_exact_tokens:
   - "Orbit"
   - "Step Rail"
 negative_constraints:
-  - "Do not treat the concept's lab tools as bound by reference."
-  - "Do not restate the family map or the accent rule here; ACD-469 owns them."
+- Do not restate the family map or the accent rule here; ACD-469 owns them.
 stale_retired_dispositions:
   - "Additive Correction v4 wording that Orbit and Step Rail stay exactly as specified and that nothing authorises a broad restyle is superseded for the chat transcript and working activity by DL-104 and DL-105."
 owner_hints:
@@ -40493,7 +40476,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473
 
 ### F3-563 - Composer Busy Send Steer Queue Switch Default And Send Now
 
@@ -42071,7 +42054,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-139, ContractName:Plans/Autom
 
 ## DL-140 to DL-144 — Assistant Chat Neon Icons, Status Set, Send And Stop, And NieR Mode (2026-10-07)
 
-This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks and every measured timing outside these units are not canon.
 
 ### F3-584 — Assistant Chat Neon Icon Grammar
 
@@ -42235,7 +42218,6 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-141, ContractName:Plans/FinalGUISpec.md#F3-584
@@ -42471,11 +42453,19 @@ canonical_text: 'NieR Mode (SSYS-043, F3-441) covers every assistant chat surfac
   (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states,
   Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not
   animate; live sheet/onboarding Pip has eyes (X3). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls.'
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-144, DL-146, DL-149, SSYS-043, F3-441, F3-584, F3-585, ACD-474]
+depends_on:
+- DL-144
+- DL-146
+- DL-149
+- SSYS-043
+- F3-441
+- F3-584
+- F3-585
 unblocks: []
 acceptance_criteria:
   - "Every chat surface renders under NieR Mode with no glow and with its parts placed as listed."
@@ -42515,7 +42505,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-144, ContractName:Plans/Setti
 
 ## DL-145 to DL-151 — Assistant Chat Tweaks: Hover Labels, The Coloured Wand, Activity Detail, Setup Sheets, Puppet Agents, The Ask Card And Retro (2026-10-08)
 
-This addendum compiles the owner decisions DL-145 to DL-151: the sixteen tweaks Jared asked for on 2026-10-07 to the 5.6 Pro assistant chat concept, his answers on that day's eight decision cards, and the lead's rulings on the questions no card covered (recorded in each DL entry). The concept and these units land together (decision card 1). Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-473 (the working activity), ACD-480 (editor documents) and ACD-485 (the subagent live transcript), `Plans/Goal_Runtime_System.md` GRS-055, `Plans/ToDo_Runtime.md` TDR-007 and TDR-011, `Plans/Collaborative_Workflows.md` CWR-018 to CWR-020, `Plans/Scheduling_and_Quota_Resume.md` SQR-002, SQR-013 and SQR-015, the global hover tag of F3-523 and the theme token tables of F3-426. The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+This addendum compiles the owner decisions DL-145 to DL-151: the sixteen tweaks Jared asked for on 2026-10-07 to the 5.6 Pro assistant chat concept, his answers on that day's eight decision cards, and the lead's rulings on the questions no card covered (recorded in each DL entry). The concept and these units land together (decision card 1). Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-473 (the working activity), ACD-480 (editor documents) and ACD-485 (the subagent live transcript), `Plans/Goal_Runtime_System.md` GRS-055, `Plans/ToDo_Runtime.md` TDR-007 and TDR-011, `Plans/Collaborative_Workflows.md` CWR-018 to CWR-020, `Plans/Scheduling_and_Quota_Resume.md` SQR-002, SQR-013 and SQR-015, the global hover tag of F3-523 and the theme token tables of F3-426. The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks and every measured timing outside these units are not canon.
 
 ### F3-590 — Chat Hover Labels Wait For Intent And Activity Previews Dwell
 
@@ -42524,35 +42514,37 @@ plan_unit_id: F3-590
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never through a
-  native title (DL-145). This includes the controls the concept used to title natively: the editor's Return to chat
-  and its tabs, the model picker's provider rail and favourite stars, the history drawer's status marks and resize
-  handle, thread-search result actions, the thread-operation dialog's close, the Schedule Message send-time track, and
-  a To-Do row's full title, assignment and waiting or blocker reason. Every chat tag waits for F3-523's deliberate
+canonical_text: 'Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never
+  through a native title (DL-145). This includes the controls the concept used to title natively: the editor''s Return
+  to chat and its tabs, the model picker''s provider rail and favourite stars, the history drawer''s status marks and
+  resize handle, thread-search result actions, the thread-operation dialog''s close, the Schedule Message send-time track,
+  and a To-Do row''s full title, assignment and waiting or blocker reason. Every chat tag waits for F3-523''s deliberate
   intent, unchanged, with no faster hand-off from one tag to the next, and a press on an anchor closes its tag until
-  the pointer leaves that anchor (F3-523). The owner's request that the chat's hover labels wait longer is met by
-  F3-523's thresholds, which the concept now follows. Activity bar domain previews are interactive hover cards, not
-  tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
-  opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
-  switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
-  measures is a lab value (ACD-474). Previews are the one exception to the hover tag rule (owner decision of 2026-10-09,
-  DL-157): the chat shows one hover surface at a time, so a tag opened inside an open preview would replace the
-  preview card under the pointer, and no control inside an open activity bar domain preview opens a hover tag. Such a
-  control names itself by its visible text or accessible name, and a native title it carries there is the only
-  tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview's rows carry the native title Open
-  followed by the agent's name, the Artifacts preview's rows Open followed by the artifact's title, the Changes
-  preview's rows the file's path and its change summary, and the Crew preview's member rows, drawn while no Crew run
-  is live, the member's name; the Goal preview's controls (Pause or Resume, Edit, whose accessible name stays Edit
-  objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
-  preview's rows and its more-items and blocked-count lines, a collaboration kind's run rows, a live Crew run's rows and every preview's
-  head carry neither a native title nor a tag. The exception covers only controls inside an open preview: the
-  activity bar's domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal panel's Edit
-  objective and a To-Do row in Activity Detail keep their hover tags.
+  the pointer leaves that anchor (F3-523). The owner''s request that the chat''s hover labels wait longer is met by F3-523''s
+  thresholds, which the concept now follows. Activity bar domain previews are interactive hover cards, not tags: a pointer
+  opens one only after a deliberate dwell, long enough that passing between the composer and the bar opens none; keyboard
+  focus on a domain opens its preview at once; moving to another domain while a preview is open switches at once; and
+  a preview closes after the same short departure grace as a tag. Previews are the one exception to the hover tag rule
+  (owner decision of 2026-10-09, DL-157): the chat shows one hover surface at a time, so a tag opened inside an open
+  preview would replace the preview card under the pointer, and no control inside an open activity bar domain preview
+  opens a hover tag. Such a control names itself by its visible text or accessible name, and a native title it carries
+  there is the only tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview''s rows carry the
+  native title Open followed by the agent''s name, the Artifacts preview''s rows Open followed by the artifact''s title,
+  the Changes preview''s rows the file''s path and its change summary, and the Crew preview''s member rows, drawn while
+  no Crew run is live, the member''s name; the Goal preview''s controls (Pause or Resume, Edit, whose accessible name
+  stays Edit objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
+  preview''s rows and its more-items and blocked-count lines, a collaboration kind''s run rows, a live Crew run''s rows
+  and every preview''s head carry neither a native title nor a tag. The exception covers only controls inside an open
+  preview: the activity bar''s domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal
+  panel''s Edit objective and a To-Do row in Activity Detail keep their hover tags. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
 split_recommended: false
-depends_on: [DL-145, F3-523, ACD-474, DL-157]
+depends_on:
+- DL-145
+- F3-523
+- DL-157
 unblocks: []
 acceptance_criteria:
   - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
@@ -42588,13 +42580,12 @@ negative_constraints:
   - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
   - "Do not open an activity preview for a pointer passing through."
 compatibility_only_notes: []
-stale_retired_dispositions:
-  - "The concept's earlier label timings (about 400 ms, then about 1 s with a 120 ms hand-off) and its 220 ms preview dwell are retired; none of them was canon (ACD-474)."
+stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Decision_Log.md#DL-157
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-591 — Opening More Keeps The Message Chrome On Its Row
 
@@ -43556,7 +43547,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/Final
 
 ## DL-158 — The Ask Card Fits Long Answers (2026-10-09)
 
-This addendum compiles the owner decision DL-158, Jared's question of 2026-10-09 about the questions card: what happens when the answers are much longer, and whether the card adjusts its size and still looks good. Behaviour stays with its owner: `Plans/assistant-chat-design.md` section 7.4 (the question card and questionnaire contract, its option and QuestionItem shapes and its draft lifecycle). The unit below owns the presentation only and adds to F3-596's look. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured size outside this unit are not canon.
+This addendum compiles the owner decision DL-158, Jared's question of 2026-10-09 about the questions card: what happens when the answers are much longer, and whether the card adjusts its size and still looks good. Behaviour stays with its owner: `Plans/assistant-chat-design.md` section 7.4 (the question card and questionnaire contract, its option and QuestionItem shapes and its draft lifecycle). The unit below owns the presentation only and adds to F3-596's look. The concept is source lineage only: its class names, keys, harness hooks and every measured size outside this unit are not canon.
 
 ### F3-609 — The Ask Card Fits Long Answers
 
@@ -43565,26 +43556,24 @@ plan_unit_id: F3-609
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The questions card (the Ask Card, F3-596) fits its content at any length (DL-158). It grows and shrinks with what
-  it holds, up to the room above the composer: it stops short of the chat header, leaving a strip of transcript in
-  view, and never pushes the composer out of the chat. Past that height the card's body scrolls inside the card, and
-  neither the page nor the transcript scrolls with it; the close button, the spine and the footer (Back, Skip, and
-  Next or Submit) stay in place and can always be clicked. While the body scrolls, the edge its content runs past
-  fades and a hairline sits above the footer. Each question opens at the top of the body, and choosing an answer
-  keeps the place the user scrolled to. The limit follows the window and the composer's height. Prompts, option
-  labels, descriptions and answers wrap, and a long unbroken word or URL breaks inside its row, so nothing in the card
-  scrolls or is cut off sideways. An option's description (the `description` of an `{id, label, description?}`
-  option, assistant-chat-design section 7.4) shows muted under its label, and a question's own description under the
-  question; a wrapping row keeps its radio or check and its number on its first line. The Something else answer is a
-  field that grows line by line as the user types, and the optional note grows with its text from its resting height,
-  so neither scrolls inside itself. Review shows each answer whole, its line breaks included. The @-file list opens
-  below its field when the body has no room above it. Under NieR Mode a description on the menu cursor takes the
-  cursor's paper colour like its label. A card whose content fits looks and measures exactly as F3-596 describes.
-  This holds in every theme, at every width the chat supports and with reduced motion.
-  Amended 2026-10-17 (DL-228): the fitting invariant, actions always reachable and the body scrolling, applies
-  to whichever questionnaire surface ships; the eight other questionnaire takes are Demo Studio lab options
-  (DL-185) and leave with it.
+canonical_text: 'The questions card (the Ask Card, F3-596) fits its content at any length (DL-158). It grows and shrinks
+  with what it holds, up to the room above the composer: it stops short of the chat header, leaving a strip of transcript
+  in view, and never pushes the composer out of the chat. Past that height the card''s body scrolls inside the card,
+  and neither the page nor the transcript scrolls with it; the close button, the spine and the footer (Back, Skip, and
+  Next or Submit) stay in place and can always be clicked. While the body scrolls, the edge its content runs past fades
+  and a hairline sits above the footer. Each question opens at the top of the body, and choosing an answer keeps the
+  place the user scrolled to. The limit follows the window and the composer''s height. Prompts, option labels, descriptions
+  and answers wrap, and a long unbroken word or URL breaks inside its row, so nothing in the card scrolls or is cut off
+  sideways. An option''s description (the `description` of an `{id, label, description?}` option, assistant-chat-design
+  section 7.4) shows muted under its label, and a question''s own description under the question; a wrapping row keeps
+  its radio or check and its number on its first line. The Something else answer is a field that grows line by line as
+  the user types, and the optional note grows with its text from its resting height, so neither scrolls inside itself.
+  Review shows each answer whole, its line breaks included. The @-file list opens below its field when the body has no
+  room above it. Under NieR Mode a description on the menu cursor takes the cursor''s paper colour like its label. A
+  card whose content fits looks and measures exactly as F3-596 describes. This holds in every theme, at every width the
+  chat supports and with reduced motion. Amended 2026-10-17 (DL-228): the fitting invariant, actions always reachable
+  and the body scrolling, applies to whichever questionnaire surface ships. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how the questions card sizes, scrolls and wraps long content.
 split_recommended: false
@@ -44386,7 +44375,6 @@ owner_boundary_notes:
   - "F3-585 owns the assistant chat's 13 status marks, the run-state subset of F3-658's one vocabulary, and this unit owns how the rail consumes that vocabulary; neither restates the other. Amended 2026-10-17 (DL-228): D44 (DL-201) settled the earlier open question, and the sets no longer differ."
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FileManager.md#F-074, ContractName:Plans/DRY_Rules.md#DR-057
@@ -44712,7 +44700,6 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621
@@ -45241,11 +45228,11 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decis
 
 
 
-## DL-180 to DL-185 — One Universal Panel System, A Fixed Chat Column, Shell-Wide Bans And One Demo Studio (2026-10-09)
+## DL-180 to DL-185 — One Universal Panel System, A Fixed Chat Column, Shell-Wide Bans (2026-10-09)
 
 This addendum compiles the owner decisions DL-180 (the home centre becomes one universal panel system and the chat a
 fixed column on the right), DL-184 (no box with a coloured side, no emoji and no pills, anywhere in Puppet Master),
-DL-185 (one Demo Studio for PMConcept7) and the panel side of DL-181 (a terminal is one tab kind, Split makes a new
+the panel side of DL-181 (a terminal is one tab kind, Split makes a new
 panel beside it, and Terminals 2x2 is a named layout of four panels). The Home model of the 2026-08-04 reconciliation
 addendum (F3-HOME-001 to F3-HOME-005), F3-501 to F3-504, the fixed bottom runtime zone of sections 3.1, 3.2, 5 and
 7.20, and the movable chat did not come from an owner decision: they came from an audit packet of the concept as it
@@ -45576,7 +45563,6 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/UI_Command_Catalog.md
   - Plans/DRY_Rules.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-066
@@ -45756,7 +45742,6 @@ stale_retired_dispositions:
     panel''s rule; the fused plate and silhouette, and Retro''s notch, retire as that mark.'
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-449
@@ -46165,231 +46150,191 @@ plan_unit_id: F3-635
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab id
-  prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal
-  (`terminal:<session>`, one session per tab, the session id minted by the terminal kind; F3-640,
-  SMPFS-180); browser (`browser:<n>`, and `link:` for a page the chat fetched; DevTools docked inside it
-  and the capture toolbar); dashboard (`dashboard:<board_id>`, `dashboard:home` the pinned Home dashboard;
-  F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`; the plan viewer with its
-  sticky Build, Revise and More footer); document (`teach:`, `memory:`, `revert:`, `debug:`,
-  `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory, revert,
-  debug investigation, lens source, wonderer); artifact (`artifact:<artifact_id>`,
-  `artifact:<artifact_id>@v<n>` and the chat's artifact ids; a subtype per artifact kind, versioned;
-  RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`, `review-evidence:`,
-  `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript
-  (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
-  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one
-  Output tab whose channel switches inside it; `output:<channel>` only for a channel split off with "Open
-  in new tab", showing only that channel); problems (`problems`); ports (`ports`); and debug_console
-  (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being its
-  view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context
-  and record; terminal, browser, dashboard and the four tool kinds output, problems, ports and
-  debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools. Problems,
-  Ports and the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147),
-  Activity Detail (it stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup sheets
-  (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab
-  in the whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is
-  a start-up error. Tab identity is separate from domain identity: the path, terminal_session_id, board id
-  or artifact id a tab shows is its domain reference, and moving, collapsing, maximizing, hiding or
-  restoring a tab never changes it. No internal id (tab, panel, session, nonce) ever appears as text in the
-  interface. Older canon that names one of these surfaces by its former host means the kind here, placed by
-  F3-634: the run view called an editor document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's
-  section 10) is a run tab, ACD-485's subagent transcript a transcript tab, the context-detail editor tab
-  (section 7.16.1, F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened
-  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and
-  F3-297's editor-tab Browser a browser tab. Each kind registers its label, its group name for the "+N"
-  list, its icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it
-  is dedicated, its "+" menu row and sub-row, how it makes a tab id for an open (the terminal mints a new
-  session), the older id forms it folds into one tab, the rows it adds to the tab menu (F3-631), how it
-  mounts, what it serializes and whether a tab may close now. Content minimums: terminal 320 x 120 px,
-  browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context
-  280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is
-  first shown, so a restored background tab costs nothing until it is opened. A kind's serialized state is
-  at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an
-  untitled editor buffer's tab state carries only the title, language and edit or read-only state of F3-639
-  (amended 2026-10-10). Before a tab closes its kind may ask first: a dirty editor offers to save, and a
-  running terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never
-  sizes against the window, only against its own width and height; it is told when they change, with a last
-  call once a divider drag or a layout animation has settled so costly work can wait for it; it is told
-  when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
-  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12):
-  30 px tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520
-  px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall; a
-  kind draws a row of its own only when nothing in the shared one fits, and its owner unit says why. Menus,
-  the "+" menu, the "+N" list, panel menus, drag ghosts and landing previews open in one overlay root
-  (Plans/DRY_Rules.md#DR-067), one stacking order: panel content, then strips and dividers, then the
-  overlay root, which sits above the status bar and below the Demo Studio's controls (F3-649), hover tags
-  and the Guided Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so
-  the panels use neither and there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the
-  panel's usual kind, Ctrl+W close the tab, Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and
-  Ctrl+Shift+Tab step through recent tabs across panels and kinds (hold, step, release), Ctrl+Shift+Space
-  the "+" menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file, Ctrl+Shift+A
-  every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and Alt+9 the
-  last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel in
-  that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that
-  direction (splitting that way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels
-  and the chat composer, Ctrl+\ split right, Ctrl+Shift+\ split down, Shift+Escape maximize or restore
-  (Escape also restores while focus is in a strip), Tab to a divider and then the divider keys (F3-630),
-  the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631), and Enter on a panel grip for Move
-  panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape closes only the
-  innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
-  inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys
-  F3-640 lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the
-  chords the browser keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as
-  Alt+T, Alt+W, Alt+Shift+T, Alt+` (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432,
-  keyboard), and every label, menu shortcut and hover tag shows the key that works where the app runs. This
-  supersedes F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which
-  now holds for every kind. The channel shown in `output` is view state, never part of its id (D31). The
-  Output tab is labelled Output and a split-off channel tab Output · <Channel>; opening a channel from
-  anywhere switches `output` to it (F3-634). The Debug Console is one tab, `debug-console`, with a sub-tab
-  for each debug session (D33, DL-187); which session it shows is view state, with no command, saved with
-  the tab (lead ruling F6), and an open that names a session reveals the tab and switches it to that
-  session. An id of the earlier one-tab-per-session form, `debug-console:<session>`, folds into
-  `debug-console` with that session shown wherever it appears: in an open, in a saved layout or a named
-  layout, and in the reopen list. A tab's typing field, including the terminal input and the editor's IME
-  field, passes the panels' navigation keys to the host once the tab declines the key: Alt+1..9,
-  Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the
-  desktop app), Ctrl+P, Ctrl+Shift+A and Alt+W on Windows and Linux. On a Mac, Option+letter and
-  Option+backtick type text in fields and the editor, and never trigger the Alt stand-ins; a Dead key never
-  triggers them on any platform. Keys during IME composition are ignored. F6 is handled before the tab's
-  key claim and reaches the chat composer from every region. Browser and tool measurements: a browser body
-  is at least 360 × 200 px. DevTools docks right at body widths of 900 px or more, otherwise below. Its
-  right width defaults to 340 px, ranging from 240 px to min(60 % of body, body minus 200 px); below, its
-  height defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px with Shift. Capture
-  labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520 px; below
-  480 px Full, Region, Select unless armed, and Forward move into More. The address field is at least 96
-  px. Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms and is off under
-  Reduced Motion. History is capped at 30 entries, 20 saved; captures at 24, 12 saved; capture regions are
-  at least 8 × 8 px. Browser saved view state includes URL, ordinary/protected session choice, DevTools
-  visibility, details/DevTools/captures rail choice, elements/console/network/access tool choice, dock
-  dimensions, history and index, ordinary URL, captures, page title and policy differences only. The
-  agent-access policy has 14 rows: Navigation, Tabs and frames, Page structure and components, Styles,
-  Console, Network, Source maps and files, Performance, Storage and cookies, Screenshots and recording,
-  Form input, Downloads, Viewport and device sizes and Request simulation; rows cycle Off, Ask, On. Agent
-  and browser introspection stay explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092);
-  this unit sets no row's default, which is the browser owner's to set and an open question for the lead
-  until it does (amended 2026-10-10). Browser is the plus menu's order-20 kind, with Ctrl+Shift+B and
-  recent-address sub-rows. The four tools each have a 280 × 120 px minimum and follow in plus order
-  70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end, hides time below 520
-  px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a trailing Open in new
-  tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A split-off tab has a plain
-  channel fact and More's Show in the Output tab. Problems rows are 28 px; source hides below 520 px and
-  line/column and folder below 360 px; saved view state is error/warning/info visibility and collapsed
-  files. Ports columns are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides and actions
-  become icon-only in 108 px; below 480 px rows stack; actions are 32 px and rows at least 44 px. Ports
-  saves added and removed port numbers. Each Debug Console session keeps its own console, capped at 400
-  lines, its own state and its own frame; input history keeps 30 entries, 20 of them saved, and stays per
-  session as F3-490 says; the input row is 34 px, and the tab saves the session shown and the history
-  (amended 2026-10-10, DL-187, D33). Browser and Debug Console fields have one focus ring drawn by the
-  header row, with no second field border, shadow or outline. The source's scripted Output preview begins
-  after 700 ms, adds a line every 260-680 ms and pauses 1.8-5 s; Debug Console preview Continue re-hits at
-  1.9 s and Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings describe preview
-  presentation, not actual process or debugger completion. Plans and documents have 280 × 160 px content
-  minima. The Plan or document... plus row is order 50. A plan's sticky footer uses 32 px controls in one
-  row with 10 px vertical padding, a maximum 960 px inner column, 28 px sides or 16 px below 720 px body
-  width; Revise moves into More below 420 px and the footnote hides below 520 px. Document frames have a
-  maximum 960 px column, 24 px vertical and 28 px horizontal padding at 720 px or wider, 16 px below;
-  titles are 22 px, 18 px below 420 px; body text is 13/20 px, metadata 12/18 px and fine print 11.5/17 px,
-  never below 11 px. Step marks use a 20 px column and 16 px SVG marks; titles are 13/20 px at weight 600,
-  body 12.5/19 px, metadata 12/18 px and code ids 11.5 px; children indent 32 px. Step file rows use the
-  final 32 px reference height and shift left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0
-  vertically/8 px horizontally; Revert file marks and state use 8 px top padding. Tables have a 440 px
-  minimum width, horizontal scroll below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at
-  line height 1.65, a 14 px rail and 6 px state dots, with blank lines between blocks. Embed previews are
-  320 × about 116 px at natural size and scroll sideways below that, with 11 px tick text. Memory panes are
-  side by side from 720 px, with a 300 px list and 28 px gap, stacked with Back below that. Debug phases
-  are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file state move below
-  their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below. Document text
-  actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves rich/markdown mode with
-  separate scroll positions and optional older version, discovery choices and disclosures, and each
-  document's own view/model state, always within 16 KB. The source's scripted Plan build advances a step
-  every 2600 ms while visible and pauses while hidden; checking previews take 1100-1200 ms, 300 ms under
-  Reduced Motion. These scripted delays are preview presentation, not actual workflow completion. Run
-  bodies have a 360 × 200 px minimum. They place a 220 px aside beside the body from 900 px, otherwise
-  below in an auto-fit grid of at least 180 px; at 904 px the grid is 652 px + 32 px gap + 220 px aside, or
-  904 px without an aside. BrainStorm options use 3 columns from 900 px, 2 from 600 px and 1 below; vote
-  tables stack below 640 px. The participant plate is one row from 720 px, or from 1200 px with 5 or more
-  seats; below that the input card has its own row, the plate wraps from 420-719 px and becomes a caption
-  line below 420 px. Chat Room head actions get their own row below 900 px; team outcomes move under names
-  and cost lists hide the model column below 520 px. Puppets are 28 px in the plate, 26 px for the hub and
-  You, 22 px in team rows, 20 px in timelines and 34 px in participant views; state corner marks are 12 px.
-  Five seat hues are blue, magenta, lime, orange and the page accent, all ink in NieR; hub and You are
-  neutral. Run view state saves overview/conversation/team/cost, person and filter;
-  paused/progress/rounds/ticks/promotions are session-only per run. Friendly controls and table-of-
-  contents/back/picker have 6 px radii; choice/seat/team rows cap at 8 px, sorting has 0 and run links 3
-  px. File references are 24 px inline and appear only for files that exist; hover uses the shared tile
-  treatment for seats, row for team rows and quiz choices, and off for the hub. Source preview timing runs
-  only while visible and not paused: Crew ticks every 1 s; Review reader previews finish at 3, 6 and 8 s
-  and the report preview at 10 s; Chat Room reveals 2 words every 60 ms, arriving whole while hidden or
-  under Reduced Motion; Write the plan preview lasts 1400 ms, 400 ms reduced. These scripted times do not
-  set real agent or workflow completion deadlines. Transcript and Context content minima are 280 × 160 px;
-  records are 280 × 120 px. G3: Run-view transcript feeds in centre tabs cap at 760 px; the chat column
-  instead follows F3-637 with no fixed maximum. These centre-tab feeds have padding 18/24/44 px, or
-  14/14/40 below 720 px; the spine is 1 px with 6 px dots and an 8 px live-dot ring. Stretch toggles are at
-  least 30 px; step-rail discs are 16 px with 10 px glyphs, fold after 10 discs into +N, and record-row
-  glyphs are 13 px. Transcript prose is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5
-  px. Follow-bottom threshold is 28 px, elapsed ticks every 1 s for Working, Retrying, Fallback route and
-  Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR blink. Step discs hide below 420 px,
-  model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the lock stays), and agent
-  name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top. The source
-  preview streams at 3400 + ((delivered × 7) modulo 4) × 700 ms, 3.4-5.5 s, and reveals 2 words every 55
-  ms; the new-item slide uses the shared slow motion. Context columns cap at 720 px, 960 px from a 960 px
-  body; Source composition and Context growth appear side by side and start open at that width until the
-  reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles use 3 columns from 360
-  px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows have
-  name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380
-  px. Growth charts are 168 px high; the source's 131,000-token-limit fixture uses an axis to 140,000,
-  gridlines at 0/50K/100K, ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and
-  bad from 90 %. Context saves thread reference, curated/raw view, open sections (null while width decides)
-  and scroll top; sections are tokens, sources, growth, route, limits, caps, cost and compaction. The six
-  categorical colours are dark #3987e5 #d95926 #199e70 #c98500 #d55181 #008300 and light #2a78d6 #eb6834
-  #1baf7a #eda100 #e87ba4 #008300; NieR's charts part uses ink at .92/.72/.56/.42/.30/.20 with hatching on
-  even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
-  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus
-  an ellipsis; MCP uses the tool label, or MCP; records save scroll top. Shared document actions are 32 px
-  and header targets 24 px, with no text below 11 px. Header labels appear at 1100 px for Transcript, 720
-  px for Context and 600 px for Record. Friendly stretch/disclosure rows use the shared row radius, Parent
-  links 6 px and Jump to latest/Source-thread buttons cap at 8 px. Header-row labels default to a 520 px
-  body threshold; kinds may set their own: Browser and Transcript 1100 px, Context 720 px, Record 600 px.
-  Icon-only buttons are 24 px wide. File references are 32 px tall with a 6 px radius and 12 px code face,
-  or 24 px inline with a 4 px radius and 11.5 px code face. Their 240 ms double-click window delays preview
-  so double click can keep the file open; their hover tag says the path and line the reference names
-  (amended 2026-10-17, DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No
-  file to open / This reference names no file. without a path. In-tab view saves coalesce at 250 ms.
-  Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR square 0. Metadata
-  separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug Console's chosen sub-tab and
-  every segmented toggle are filled on their own box, never underlined, with Friendly's, Glass's and
-  Basic's neutral chosen-row surface, never an accent; Glass adds its 1 px top rim, Retro uses reverse
-  video and NieR its ink block (F3-490). Nested Home menu and picker keys consume F3-632: Escape returns
-  one level then closes at the root; a fresh empty-query Backspace returns one level, held erasure never
-  also navigates; Left outside the field returns; Up from the field reaches Back; + toggles the whole menu
-  closed. Back/search/rows remain in that arrow order, with Enter or Space activating Back. These are local
-  navigation, with no structural command or event. Amended 2026-10-17 (DL-228): wherever a panel must be
-  named (the panel menu's title, Move panel and Move to panel rows, the every-tab list's sections, the
-  narrow switcher, announcements), it is named in words by its active tab and its place in the layout
-  (left, right, top, bottom or middle, combined down the tree, or "the only panel"), never by an id or a
-  number other than the switcher's ordinal. Tool tabs' header rows: Output has Follow, Clear ("Clear this
-  channel") and More with Wrap long lines, Copy all, Open as a document (a read-only editor tab titled with
-  the channel, through cmd.panel_tab.open, the route of the terminal's Open output) and Open <channel> in
-  new tab, or Show in the Output tab on a split-off tab; Problems has Filter (errors, warnings or notes)
-  and Check again; Ports has Forward a port; the Debug Console has Continue or Pause, Restart, Stop and
-  Clear ("Clear this session's console"), disabled once its session has ended. Follow, Clear, Wrap, Copy
-  all and Filter are view-local; Check again, Forward a port and the Debug Console's session controls
-  dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a plan's More
-  holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link (pm://plans/<id>@v<n>)
-  and Cancel build, which confirms ("Cancel this build?", "Steps already done stay done.", Cancel the build
-  or Keep building), with Revise moving into More in a narrow tab; an artifact has Versions, Open in new
-  panel and More with Copy link to this version, Copy source, Export as image, Export the data and Open the
-  source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup... (on a Crew
-  disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run again with
-  changes... once finished, Run another review (Review only), Download transcript and Open in new panel; a
-  transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context tab has
-  Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row in its
-  thread or says the message is not available, and Copy. Each row dispatches its content owner's existing
-  command or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain
-  this one owner table. Pip reads them rather than owning another palette; gold crown/hat are role material
-  and do not change the seat or status hue.
+canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab
+  id prefixes: editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal (`terminal:<session>`,
+  one session per tab, the session id minted by the terminal kind; F3-640, SMPFS-180); browser (`browser:<n>`, and `link:`
+  for a page the chat fetched; DevTools docked inside it and the capture toolbar); dashboard (`dashboard:<board_id>`,
+  `dashboard:home` the pinned Home dashboard; F3-638); plan (`plan:<id>`, the plan query form and `deep-discovery:<run>`;
+  the plan viewer with its sticky Build, Revise and More footer); document (`teach:`, `memory:`, `revert:`, `debug:`,
+  `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory, revert, debug investigation,
+  lens source, wonderer); artifact (`artifact:<artifact_id>`, `artifact:<artifact_id>@v<n>` and the chat''s artifact
+  ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`,
+  `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript (`thread-<agentId>`:
+  an agent''s read-only live feed); context (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`,
+  `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>`
+  only for a channel split off with "Open in new tab", showing only that channel); problems (`problems`); ports (`ports`);
+  and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being
+  its view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context and record;
+  terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console are dedicated; a panel
+  holding only tool kinds and terminals has the role tools. Problems, Ports and the Debug Console are one tab each per
+  workspace. Never a kind: the chat''s Goal tab (DL-147), Activity Detail (it stays inside the chat, F3-637), wand setup
+  sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab in the
+  whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is a start-up error.
+  Tab identity is separate from domain identity: the path, terminal_session_id, board id or artifact id a tab shows is
+  its domain reference, and moving, collapsing, maximizing, hiding or restoring a tab never changes it. No internal id
+  (tab, panel, session, nonce) ever appears as text in the interface. Older canon that names one of these surfaces by
+  its former host means the kind here, placed by F3-634: the run view called an editor document (ACD-480, F3-569, F3-576
+  and the 2026-09-03 redesign''s section 10) is a run tab, ACD-485''s subagent transcript a transcript tab, the context-detail
+  editor tab (section 7.16.1, F3-132) a context tab, the Plan card''s "normal artifact viewer" and an artifact opened
+  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297''s editor-tab
+  Browser a browser tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled SVG icon_id,
+  never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and sub-row, how it
+  makes a tab id for an open (the terminal mints a new session), the older id forms it folds into one tab, the rows it
+  adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content minimums:
+  terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript
+  and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab''s body only when the tab is first
+  shown, so a restored background tab costs nothing until it is opened. A kind''s serialized state is at most 16 KB of
+  plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer''s tab
+  state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before a tab closes
+  its kind may ask first: a dirty editor offers to save, and a running terminal says what will stop (F3-640). A tab body
+  is its own box, sized by its panel: it never sizes against the window, only against its own width and height; it is
+  told when they change, with a last call once a divider drag or a layout animation has settled so costly work can wait
+  for it; it is told when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
+  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12): 30 px tall,
+  24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520 px wide and icons with
+  hover tags below that, and the row hidden when the body is under 150 px tall; a kind draws a row of its own only when
+  nothing in the shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus, drag
+  ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one stacking order: panel content,
+  then strips and dividers, then the overlay root, which sits above the status bar and below hover tags and the Guided
+  Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use neither and
+  there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel''s usual kind, Ctrl+W close the tab,
+  Ctrl+Shift+T reopen the last closed tab, Ctrl+Tab and Ctrl+Shift+Tab step through recent tabs across panels and kinds
+  (hold, step, release), Ctrl+Shift+Space the "+" menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P
+  open a file, Ctrl+Shift+A every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N
+  and Alt+9 the last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel
+  in that direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that direction (splitting
+  that way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels and the chat composer, Ctrl+\
+  split right, Ctrl+Shift+\ split down, Shift+Escape maximize or restore (Escape also restores while focus is in a strip),
+  Tab to a divider and then the divider keys (F3-630), the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631),
+  and Enter on a panel grip for Move panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape
+  closes only the innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus
+  is inside a tab body the kind is asked first, a terminal keeps the shell''s keys and gives back the host keys F3-640
+  lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the chords the browser
+  keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as Alt+T, Alt+W, Alt+Shift+T, Alt+`
+  (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432, keyboard), and every label, menu shortcut and
+  hover tag shows the key that works where the app runs. This supersedes F3-HOME-001''s typed surface kinds and F3-152''s
+  terminal-and-browser-only tab identity, which now holds for every kind. The channel shown in `output` is view state,
+  never part of its id (D31). The Output tab is labelled Output and a split-off channel tab Output · <Channel>; opening
+  a channel from anywhere switches `output` to it (F3-634). The Debug Console is one tab, `debug-console`, with a sub-tab
+  for each debug session (D33, DL-187); which session it shows is view state, with no command, saved with the tab (lead
+  ruling F6), and an open that names a session reveals the tab and switches it to that session. An id of the earlier
+  one-tab-per-session form, `debug-console:<session>`, folds into `debug-console` with that session shown wherever it
+  appears: in an open, in a saved layout or a named layout, and in the reopen list. A tab''s typing field, including
+  the terminal input and the editor''s IME field, passes the panels'' navigation keys to the host once the tab declines
+  the key: Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in
+  the desktop app), Ctrl+P, Ctrl+Shift+A and Alt+W on Windows and Linux. On a Mac, Option+letter and Option+backtick
+  type text in fields and the editor, and never trigger the Alt stand-ins; a Dead key never triggers them on any platform.
+  Keys during IME composition are ignored. F6 is handled before the tab''s key claim and reaches the chat composer from
+  every region. Browser and tool measurements: a browser body is at least 360 × 200 px. DevTools docks right at body
+  widths of 900 px or more, otherwise below. Its right width defaults to 340 px, ranging from 240 px to min(60 % of body,
+  body minus 200 px); below, its height defaults to 42 % and ranges from 25-70 %. Keyboard resize moves 8 px, or 48 px
+  with Shift. Capture labels appear at 1100 px and session labels at 620 px; the shared icons-only step is below 520
+  px; below 480 px Full, Region, Select unless armed, and Forward move into More. The address field is at least 96 px.
+  Load-line motion lasts 320 ms, 0 under Reduced Motion; shutter flash lasts 240 ms and is off under Reduced Motion.
+  History is capped at 30 entries, 20 saved; captures at 24, 12 saved; capture regions are at least 8 × 8 px. Browser
+  saved view state includes URL, ordinary/protected session choice, DevTools visibility, details/DevTools/captures rail
+  choice, elements/console/network/access tool choice, dock dimensions, history and index, ordinary URL, captures, page
+  title and policy differences only. The agent-access policy has 14 rows: Navigation, Tabs and frames, Page structure
+  and components, Styles, Console, Network, Source maps and files, Performance, Storage and cookies, Screenshots and
+  recording, Form input, Downloads, Viewport and device sizes and Request simulation; rows cycle Off, Ask, On. Agent
+  and browser introspection stay explicit opt-in (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092); this unit
+  sets no row''s default, which is the browser owner''s to set and an open question for the lead until it does (amended
+  2026-10-10). Browser is the plus menu''s order-20 kind, with Ctrl+Shift+B and recent-address sub-rows. The four tools
+  each have a 280 × 120 px minimum and follow in plus order 70/71/72/73. Output caps at 600 lines, turns Follow off beyond
+  24 px from the end, hides time below 520 px, and saves channel, follow and wrap. Its channel picker is 300 px wide,
+  with a trailing Open in new tab cell; Alt+Enter opens the split-off tab and Alt+click a new panel. A split-off tab
+  has a plain channel fact and More''s Show in the Output tab. Problems rows are 28 px; source hides below 520 px and
+  line/column and folder below 360 px; saved view state is error/warning/info visibility and collapsed files. Ports columns
+  are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides and actions become icon-only in 108 px; below
+  480 px rows stack; actions are 32 px and rows at least 44 px. Ports saves added and removed port numbers. Each Debug
+  Console session keeps its own console, capped at 400 lines, its own state and its own frame; input history keeps 30
+  entries, 20 of them saved, and stays per session as F3-490 says; the input row is 34 px, and the tab saves the session
+  shown and the history (amended 2026-10-10, DL-187, D33). Browser and Debug Console fields have one focus ring drawn
+  by the header row, with no second field border, shadow or outline. Plans and documents have 280 × 160 px content minima.
+  The Plan or document... plus row is order 50. A plan''s sticky footer uses 32 px controls in one row with 10 px vertical
+  padding, a maximum 960 px inner column, 28 px sides or 16 px below 720 px body width; Revise moves into More below
+  420 px and the footnote hides below 520 px. Document frames have a maximum 960 px column, 24 px vertical and 28 px
+  horizontal padding at 720 px or wider, 16 px below; titles are 22 px, 18 px below 420 px; body text is 13/20 px, metadata
+  12/18 px and fine print 11.5/17 px, never below 11 px. Step marks use a 20 px column and 16 px SVG marks; titles are
+  13/20 px at weight 600, body 12.5/19 px, metadata 12/18 px and code ids 11.5 px; children indent 32 px. Step file rows
+  use the final 32 px reference height and shift left 6 px, with top margin 2 px, bottom margin -4 px and gaps 0 vertically/8
+  px horizontally; Revert file marks and state use 8 px top padding. Tables have a 440 px minimum width, horizontal scroll
+  below it, and 7 × 12 px cell padding. Markdown uses 12 px code text at line height 1.65, a 14 px rail and 6 px state
+  dots, with blank lines between blocks. Embed previews are 320 × about 116 px at natural size and scroll sideways below
+  that, with 11 px tick text. Memory panes are side by side from 720 px, with a 300 px list and 28 px gap, stacked with
+  Back below that. Debug phases are 4 columns from 640 px, 2 below and 1 below 340 px; debug arguments and Revert file
+  state move below their primary row below 520 px. Wonderer has an aside from 900 px and a top hairline below. Document
+  text actions are 32 px, 24 px inline; frame button radii cap at 8 px. View state saves rich/markdown mode with separate
+  scroll positions and optional older version, discovery choices and disclosures, and each document''s own view/model
+  state, always within 16 KB. Run bodies have a 360 × 200 px minimum. They place a 220 px aside beside the body from
+  900 px, otherwise below in an auto-fit grid of at least 180 px; at 904 px the grid is 652 px + 32 px gap + 220 px aside,
+  or 904 px without an aside. BrainStorm options use 3 columns from 900 px, 2 from 600 px and 1 below; vote tables stack
+  below 640 px. The participant plate is one row from 720 px, or from 1200 px with 5 or more seats; below that the input
+  card has its own row, the plate wraps from 420-719 px and becomes a caption line below 420 px. Chat Room head actions
+  get their own row below 900 px; team outcomes move under names and cost lists hide the model column below 520 px. Puppets
+  are 28 px in the plate, 26 px for the hub and You, 22 px in team rows, 20 px in timelines and 34 px in participant
+  views; state corner marks are 12 px. Five seat hues are blue, magenta, lime, orange and the page accent, all ink in
+  NieR; hub and You are neutral. Run view state saves overview/conversation/team/cost, person and filter; paused/progress/rounds/ticks/promotions
+  are session-only per run. Friendly controls and table-of- contents/back/picker have 6 px radii; choice/seat/team rows
+  cap at 8 px, sorting has 0 and run links 3 px. File references are 24 px inline and appear only for files that exist;
+  hover uses the shared tile treatment for seats, row for team rows and quiz choices, and off for the hub. Transcript
+  and Context content minima are 280 × 160 px; records are 280 × 120 px. G3: Run-view transcript feeds in centre tabs
+  cap at 760 px; the chat column instead follows F3-637 with no fixed maximum. These centre-tab feeds have padding 18/24/44
+  px, or 14/14/40 below 720 px; the spine is 1 px with 6 px dots and an 8 px live-dot ring. Stretch toggles are at least
+  30 px; step-rail discs are 16 px with 10 px glyphs, fold after 10 discs into +N, and record-row glyphs are 13 px. Transcript
+  prose is 13/21 px, record title 12.5/19 px, detail 12/18 px and time 11.5 px. Follow-bottom threshold is 28 px, elapsed
+  ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR
+  blink. Step discs hide below 420 px, model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the
+  lock stays), and agent name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top.
+  Context columns cap at 720 px, 960 px from a 960 px body; Source composition and Context growth appear side by side
+  and start open at that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
+  use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows
+  have name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380 px. Growth
+  charts are 168 px high; the source''s 131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K,
+  ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
+  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are tokens, sources,
+  growth, route, limits, caps, cost and compaction. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
+  #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100 #e87ba4 #008300; NieR''s charts part uses ink at .92/.72/.56/.42/.30/.20
+  with hatching on even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
+  nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus an ellipsis;
+  MCP uses the tool label, or MCP; records save scroll top. Shared document actions are 32 px and header targets 24 px,
+  with no text below 11 px. Header labels appear at 1100 px for Transcript, 720 px for Context and 600 px for Record.
+  Friendly stretch/disclosure rows use the shared row radius, Parent links 6 px and Jump to latest/Source-thread buttons
+  cap at 8 px. Header-row labels default to a 520 px body threshold; kinds may set their own: Browser and Transcript
+  1100 px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File references are 32 px tall with a 6 px
+  radius and 12 px code face, or 24 px inline with a 4 px radius and 11.5 px code face. Their 240 ms double-click window
+  delays preview so double click can keep the file open; their hover tag says the path and line the reference names (amended
+  2026-10-17, DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No file to open / This
+  reference names no file. without a path. In-tab view saves coalesce at 250 ms. Document action radii are Friendly 8
+  px, Glass 8 px, Basic 6 px and Retro/NieR square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping
+  slack. The Debug Console''s chosen sub-tab and every segmented toggle are filled on their own box, never underlined,
+  with Friendly''s, Glass''s and Basic''s neutral chosen-row surface, never an accent; Glass adds its 1 px top rim, Retro
+  uses reverse video and NieR its ink block (F3-490). Nested Home menu and picker keys consume F3-632: Escape returns
+  one level then closes at the root; a fresh empty-query Backspace returns one level, held erasure never also navigates;
+  Left outside the field returns; Up from the field reaches Back; + toggles the whole menu closed. Back/search/rows remain
+  in that arrow order, with Enter or Space activating Back. These are local navigation, with no structural command or
+  event. Amended 2026-10-17 (DL-228): wherever a panel must be named (the panel menu''s title, Move panel and Move to
+  panel rows, the every-tab list''s sections, the narrow switcher, announcements), it is named in words by its active
+  tab and its place in the layout (left, right, top, bottom or middle, combined down the tree, or "the only panel"),
+  never by an id or a number other than the switcher''s ordinal. Tool tabs'' header rows: Output has Follow, Clear ("Clear
+  this channel") and More with Wrap long lines, Copy all, Open as a document (a read-only editor tab titled with the
+  channel, through cmd.panel_tab.open, the route of the terminal''s Open output) and Open <channel> in new tab, or Show
+  in the Output tab on a split-off tab; Problems has Filter (errors, warnings or notes) and Check again; Ports has Forward
+  a port; the Debug Console has Continue or Pause, Restart, Stop and Clear ("Clear this session''s console"), disabled
+  once its session has ended. Follow, Clear, Wrap, Copy all and Filter are view-local; Check again, Forward a port and
+  the Debug Console''s session controls dispatch their owners'' existing Problems, Ports and Run & Debug commands. Document
+  kinds: a plan''s More holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link (pm://plans/<id>@v<n>)
+  and Cancel build, which confirms ("Cancel this build?", "Steps already done stay done.", Cancel the build or Keep building),
+  with Revise moving into More in a narrow tab; an artifact has Versions, Open in new panel and More with Copy link to
+  this version, Copy source, Export as image, Export the data and Open the source file; a run''s More holds Cancel <run>
+  with a yes or no submenu, Change setup... (on a Crew disabled until it is cancelled: "This Crew builds one plan version.
+  Cancel it first.") or Run again with changes... once finished, Run another review (Review only), Download transcript
+  and Open in new panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a
+  context tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  in its thread or says the message is not available, and Copy. Each row dispatches its content owner''s existing command
+  or is view-local; none adds a command id here. Amended 2026-10-29 (PC5; PM7): Seat hues remain this one owner table.
+  Pip reads them rather than owning another palette; gold crown/hat are role material and do not change the seat or status
+  hue. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header
   row, the overlay order and the panel keyboard.
@@ -46413,34 +46358,32 @@ unblocks:
 - G-030
 - ATS-075
 acceptance_criteria:
-- Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab,
-  Activity Detail, lab-only workspace or setup sheet is a kind.
-- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming
-  one prefix fail at start-up.
-- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab,
-  panel or session id appears as text.
+- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix
+  fail at start-up.
+- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or
+  session id appears as text.
 - Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
 - A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
-- No tab body reads the window's size; each responds to its own width and height and gets a final size call
-  after a drag or animation settles.
-- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label
-  threshold and hide threshold.
-- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends
-  its own overlay.
-- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare
-  letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned
-  chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
-  are created by this unit.
-- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing
-  only that channel.
-- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab
-  dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that
-  session shown.
-- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through
-  its registration.
-- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition
-  respected; F6 reaches the chat composer from every region.
+- No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag
+  or animation settles.
+- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold
+  and hide threshold.
+- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own
+  overlay.
+- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or
+  digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T,
+  Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
+  by this unit.
+- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that
+  channel.
+- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches
+  nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown.
+- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration.
+- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected;
+  F6 reaches the chat composer from every region.
+- Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup
+  sheets are not centre-tab kinds.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -46874,157 +46817,141 @@ plan_unit_id: F3-638
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on
-  the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and
-  Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are
-  built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own
-  redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands'
+canonical_text: 'A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds
+  its own board on the Usage board engine (DL-186): it shows the Usage page''s widget design and can show every Usage
+  widget, and Plans/usage-feature.md#UF-062''s rule that every Usage widget can be hosted on the dashboard now holds.
+  Boards are built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page''s
+  own redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands''
   payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
   Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
-  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
-  Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The
-  old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine
-  after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard
-  kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab
-  (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu;
-  it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in
-  the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab
-  the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage
-  page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never
-  laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes
-  (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's
-  tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project
-  (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are
-  Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that
-  project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored
-  inside the Home layout record, and Home's panels are not widgets.
-  The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings
-  are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range,
-  with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while
-  maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE];
-  NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced
-  Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing
-  <filter>" under a filter) and Show takes the place of Add widget and Board.
-  Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each
-  Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section
-  for each other widget source under its label. Each row's second line names its room or source and what kind of
-  widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this
-  dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it.
-  The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by
-  name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start
-  from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a
-  hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save
-  as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5
-  hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or
-  one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one
-  is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no
-  event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage
-  page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets
-  returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty.
-  Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default),
-  Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second
-  line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field
-  ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's
-  widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the
-  widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3
-  s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch
-  and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo
-  dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
-  being the board's committed layout revision just before that Start from, with one receipt and only while the
-  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since,
-  excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no
-  workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button
-  opens the same list.
-  Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks
-  for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at
-  most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save
-  this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start
-  from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that
-  started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with
-  their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the
-  typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command;
-  using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2).
-  New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard
-  (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty
-  and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename;
-  renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is
-  trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the
-  tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first
-  ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab
-  (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and
-  the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename
-  dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631).
-  A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it
-  leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the
-  boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its
-  boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept,
-  and a named layout saved before this applies as before.
-  A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty
-  board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is
-  empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its
-  Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage
-  page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board
-  separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per
-  applied batch while Live is on, and a board that is not on screen does no live work (P12). Play the next hour, Back
-  to now and the Demo time, which the concept also runs on dashboards, stay the lab-only demo controls UF-107
-  classifies, part of the one Demo Studio (F3-649), never product controls. This supersedes F3-279's exact four-widget
-  catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and
-  Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard,
-  and the dashboard's own Main, Metrics and Monitoring strip of F3-505.
-  Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
-  width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
-  520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
-  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's
-  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
-  diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks,
-  a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px
-  below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in
-  Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The
-  empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below
-  320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its
-  buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
-  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; the concept's
-  working progress gains 1 % every 9 s up to 96 % and moves in 260 ms, stepped in NieR Mode and at once under Reduced
-  Motion; a filter other than All agents is that tab's own state, saved about 250 ms after it changes.
-  The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this
-  project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's
-  number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted
-  unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board
-  opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names
-  collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
-  project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored
-  name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the
-  active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's
-  detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and
-  Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage
-  widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well
-  as Start from; its restore_revision is the committed revision immediately before that operation. The owner
-  writes and reads that revision's captured envelope in this project, with one receipt and no
-  workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on
-  a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the
-  envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and
-  the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never
-  end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding
-  5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass
-  uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing.
-  The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6
-  px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
-  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed
-  on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
-  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and
-  refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only
-  envelopes saved for the current project, skipping another project's envelope; a custom board that the
-  applied layout does not hold keeps its current contents. The lab-only Demo time reads on paint, on each
-  beat and every 2 s while the demo hour plays and the tab is visible; its Board rows remain Play the next
-  hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
-  Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px
-  Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned
-  tab at natural width. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
-  dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary over PM_WORK, the same rows/needs-you
-  set as the platform panel and Agents rail. Its existing frame, All/Working/Needs you/Waiting/Finished filter
-  and short time form stay with this owner; no private AGENTS list or clock owns different agents. DR-078
-  defines subscription teardown and show-time catch-up.
+  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home, Metrics
+  and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The old Home
+  widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine after that
+  page''s redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard kind itself,
+  not by the board engine: one card per agent at work, each opening that agent''s transcript as a kept tab (Alt+click
+  in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu; it has no
+  widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in the same tab
+  strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab the board is
+  the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage page, each settled
+  change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never laying out panels (DR-066).
+  The board lays out on the Usage board''s tracks and width classes (Plans/Widget_System.md#WS-017), measured on the
+  tab''s own width, never the window (F3-635), and it sits on Home''s tab surface, not the Usage page''s background,
+  in every look (P11). Each board''s contents are kept per project (`widget_layout:v1:<project_id>:<board_id>`; the keys,
+  the one-time adoption of an older key and the records are Plans/Widget_System.md#WS-030''s and Plans/storage-plan.md''s),
+  so a project switch shows each dashboard tab with that project''s board and a project lists only its own custom dashboards.
+  A dashboard''s widget layout is never stored inside the Home layout record, and Home''s panels are not widgets. The
+  header row is F3-635''s shared row. Its left side shows the dashboard''s name, the Live mark while Live readings are
+  on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range, with
+  the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while maximized; Shift+Escape).
+  The Live mark is the Usage page''s own indicator in each look''s words (Live; Retro [LIVE]; NieR Mode LIVE) and pulses
+  once for each live change the board applies, never between them and never under Reduced Motion. On Agents the left
+  side counts the agents at work ("N agents · N working · N need you", and "Showing <filter>" under a filter) and Show
+  takes the place of Add widget and Board. Add widget opens a searchable list ("Find a widget") of every widget the board
+  can be given: a section for each Usage room in the Usage page''s room order (F3-514), then the Usage widgets that belong
+  to no room, then one section for each other widget source under its label. Each row''s second line names its room or
+  source and what kind of widget it is in plain words; a widget already on the board is checked and disabled with the
+  reason "Already on this dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it. The
+  Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project''s custom dashboards by name
+  with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start from, Save
+  as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a hairline, Rename
+  dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save as preset... and
+  Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5 hours, Last 24 hours,
+  Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or one provider) belong
+  to each dashboard and change only its board, independent of the Usage page''s (P2); choosing one is the typed local
+  action ui.widget_board.set_view, view state kept in the board''s record with no receipt and no event (lead ruling F1).
+  Live readings is the Usage page''s own Live / Paused choice, one switch shared with the Usage page (Plans/usage-feature.md#UF-107).
+  Tidy and Reset widgets are the board''s own (WS-019, WS-030): Reset widgets returns Home, Metrics and Monitoring to
+  their default sets and a custom dashboard to empty. Start from lists the sets a board can start from in four groups
+  (P4): This dashboard (the board''s own default), Dashboard starter, Usage rooms (the Usage page''s 13 room sets, in
+  its room order) and Your presets. Each row''s second line says what the set holds, a preset adding the day it was saved,
+  and the active set is checked; a filter field ("Find a room or a preset") appears once there are more than three presets.
+  Choosing a set replaces the board''s widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030).
+  Because Start from replaces the widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer
+  or focus is on it and for 3 s after; it ends at the next change to the board''s widgets, on Escape (focus returns to
+  Board), on a project switch and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10
+  (lead ruling): Undo dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision },
+  restore_revision being the board''s committed layout revision just before that Start from, with one receipt and only
+  while the notice is up; it never carries set_id, the owner puts back exactly that revision''s records, a restore is
+  refused without dispatch if any other change was committed on the board since, excluding the preset hold''s own settling
+  resizes, and Undo is disabled with its reason, and it emits no workspace.layout_changed (WS-030, UCC-200). The empty
+  board''s Start from... button opens the same list. Presets are the person''s own, kept across projects and offered
+  on every dashboard (WS-030). Save as preset... asks for a name, starting from the dashboard''s name made unique; a
+  name is trimmed, its spaces collapsed and kept to at most 80 characters, and a preset saved without one is called "Preset
+  <n>". With no presets, Your presets holds "Save this dashboard as a preset..."; with some, its last row, "Rename or
+  delete presets", lists them, each with Start from this preset, Rename preset... and Delete preset... behind a confirm
+  (Delete preset or Keep it). A dashboard that started from a deleted preset keeps its widgets. A preset keeps the widgets
+  shown at each board width class with their sizes and settings, never the board''s own range and scope. Saving, renaming
+  and deleting a preset are the typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete,
+  with no command; using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2). New dashboard, in the
+  Board menu, the "+" menu''s Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard (D35); so does a new
+  tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty and is called "Dashboard
+  <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename; renaming the tab renames the
+  dashboard too, and clearing the tab''s label gives back "Dashboard <n>". A name is trimmed and kept to at most 80 characters,
+  and is kept per project with the board (WS-030). The name shows on the tab, in the header row, in the Board menu, in
+  the "+" menu and in the catalog. Delete dashboard... asks first ("Delete <name>?": Delete dashboard, whose widgets
+  cannot be brought back, or Keep it), then closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets
+  its board and its name; it leaves the "+" menu and the catalog. Home, Metrics, Monitoring and Agents can be reset but
+  never deleted, and show neither Rename dashboard... nor Delete dashboard...; a label the person gives one of their
+  tabs names that tab only (F3-631). A closed custom dashboard keeps its board while it can be reopened from the reopen
+  list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6).
+  A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger
+  save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout
+  puts back the boards it kept, and a named layout saved before this applies as before. A board''s first show plays the
+  Usage page''s calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over
+  the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do,
+  and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus
+  goes to the board''s first card in reading order. Details on a widget opens the Usage page at that widget''s room with
+  its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page''s idle
+  rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board
+  that is not on screen does no live work (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard
+  catalogue limit of Appendix C.4 and C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen
+  resize peers (with F3-515''s and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics
+  and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px
+  below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is
+  icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget
+  380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s
+  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR
+  Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode
+  and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above
+  the tab''s foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent
+  fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under
+  Reduced Motion. The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by
+  30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at
+  most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and
+  buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while
+  shown; a filter other than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard
+  plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards
+  by name with their widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest
+  across open tabs, the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards;
+  past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current
+  resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a
+  built-in or another of this project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name
+  clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and
+  the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start
+  from shows the active set''s label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back
+  to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets.
+  An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed
+  revision immediately before that operation. The owner writes and reads that revision''s captured envelope in this project,
+  with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability
+  is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope
+  is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and
+  button''s hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision
+  stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes,
+  Retro and NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5
+  px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation;
+  its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an
+  API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or
+  pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
+  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog;
+  an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project,
+  skipping another project''s envelope; a custom board that the applied layout does not hold keeps its current contents.
+  Amended 2026-10-16 (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from
+  every path, the "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7,
+  PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup
+  and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame,
+  All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock
+  owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -47293,7 +47220,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/FileManager.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FileManager.md#F-073, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-505
@@ -47467,7 +47393,6 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/FinalGUISpec.md#F3-598
@@ -47581,72 +47506,49 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-585
 
-### F3-649 — One Demo Studio
+### F3-649 — Retired historical identifier
 
 ```yaml
 plan_unit_id: F3-649
-unit_type: requirement
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the rule is
-  Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo controls, the home demos
-  and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of that one studio; no surface
-  draws a demo panel of its own. The Demo Studio and every control in it are lab only, in the pattern of
-  Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command, wiring row, saved value or test
-  gate, never shown in the product's menus or Settings, and no canon number comes from them. In the concept it opens
-  above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
-  looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
-  product unit.
-gui_related: true
-gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
-  the product.
+canonical_text: F3-649 is retired by DL-260, Jared 2026-10-31. The ID remains only for unchanged historical decision
+  references. It defines no active product feature, control, command, setting, schema, wiring, stored state, test obligation
+  or implementation debt.
+gui_related: false
+gui_classification_reason: Historical identifier only; no product UI requirement.
 split_recommended: false
-depends_on:
-- DL-185
-- ACD-474
-unblocks:
-- DR-070
-- ACD-501
+depends_on: []
+unblocks: []
 acceptance_criteria:
-  - "Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws its own demo panel."
-  - "No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or a control in it."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
-risk_class: home_panels_terminal_redesign_drift
-reasoning_tier: high
-context_scope: home_panels_terminal
-implementation_surfaces:
-- Plans/FinalGUISpec.md
-- Plans/DRY_Rules.md
-- Plans/assistant-chat-design.md
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: gui_promotion_contract
+  mode: retired_no_product_work
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26)"
+- Plans/Decision_Log.md#DL-260
 preserved_exact_tokens:
-- Demo Studio
+- F3-649
+- DL-260
 negative_constraints:
-- Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate.
-- Do not draw a separate demo panel per surface.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not reactivate this historical identifier as a product requirement.
 owner_hints:
 - Plans/FinalGUISpec.md
-- Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185
 
 ## DL-181 to DL-183 — The Terminal As A Tab: Chrome, Features, Appearance, Effects, Fonts, Images And Agents (2026-10-09)
 
@@ -48327,7 +48229,6 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
   - Plans/storage-plan.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/UI_Command_Catalog.md#UCC-201
@@ -48693,7 +48594,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Decision_Log.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Decision_Log.md#DL-161, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-639
@@ -49215,116 +49115,104 @@ plan_unit_id: F3-652
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Liquid Glass is the Glass look in Light and Dark, not a new theme family. Jared approved publication after the
-  round-three corrections; the combined concept and wallpaper publication landed on 2026-10-15. That publication
-  is source evidence, not native certification. Sheets read as glass over the chosen wallpaper: a refracting
-  rounded bevel, a frosted readable core, a top-left specular rim and a quieter exit light. Selection lenses
-  enlarge sharp text, carry moving reflections and gently bend their rim; color fringing, tearing letters and
-  opaque flashes are defects. One shared lens grammar serves page selection, rail and panel tabs, Usage,
-  onboarding steps, Orchestrator views, customizer choice rows and, by Jared’s 2026-10-14 direction, the
-  title-bar theme selector. It starts on activation without waiting for content work, never doubles or reverses
-  mid-flight, and keeps its resting glass. Scrubbing is selection, never text selection. Pointer beads travel
-  only between neighbouring controls. Switches use curved ends and a rounded lens knob with slower, settling
-  movement; action buttons may be rounded under F3-648. Menus grow from their invoking control; fields such as
-  Find a scope and Find a panel read as one seamless field; the theme menu has room for its labels. Usage
-  changes are calm, with no full-board sweep or opaque-then-clear flash. Glass Dark’s hover light stays near the
-  shared control scale, about 96 px radius, without veiling text. Jared decided on 2026-10-14 that Glass Light
-  draws its hover light beneath the content, so the text stays readable; the surface-edge glow stays. F3-465
-  owns the reduction of the pointer’s central glow while retaining that edge light. Settings
-  rail/index/sections, onboarding window, tour callout/bar and the Wizard/Orchestrator columns use the same
-  sheet hierarchy; nested cards and controls are fills on sheets, not independent full-scene effects. Dense
-  Customize and notification surfaces use the more opaque menu material needed for F3-654's settled contrast.
-  Moving/leaning sheets carry coherent frost, and wallpaper, refraction and frost change together (F3-653). The
-  renderer may precompute static wallpaper optics and use bounded live optics on small lenses and menus;
-  F3-427's old one-shell-blur and F3-431's blanket Glass restrictions are superseded for this material. It must
-  not create arbitrary nested live blur or redraw idle static sheets every frame. Reduced Motion preserves
-  end-state material, selection and focus without spring, sweep, magnification travel or condensation; a
-  renderer without live-optics capability uses a truthful static readable equivalent. Publication of this look
-  and the wallpaper gallery is one coordinated boundary, including retiring F3-428's old background modes. A
-  standalone selection such as the activity bar or Usage navigation uses accent glass with white ink while the
-  window is focused and grey treatment while unfocused; the whole glass treatment recedes when the window
-  becomes inactive. Press feedback flexes/glows from the press point; a moving lens stretches with speed and
-  settles on arrival, with press-and-drag settling into the nearest available choice. Unavailable, disabled or
-  non-interactive items never capture the lens; onboarding progress moves it only when the selected step
-  changes. Existing selection is placed before the first visible frame on page entry; navigation produces one
-  highlight, with no slow reset, duplicate lens or trailing shadow that lags behind it. Settings chapter changes
-  do not flash the chrome, wallpaper changes keep the chosen print and frost coherent, and ordinary scrolling
-  does not visibly rebuild card edges. Both Settings search bars, in the left rail and centre, have a seamless
-  input field that blends into their containing bar. The shared switcher has one selection authority and one
-  track/lens/label component, adopted through family material tokens. It serves the page tabs, rail tabs, Usage
-  navigation and range, Orchestrator views, Settings chapters, section/index/manager tabs, Wizard work type,
-  theme menu and both Customize screens. Choices in scrolling content (Settings service lists and Home segmented
-  rows/panel tabs) use its material in place without a travelling lens; Settings' segmented choices keep that
-  material in place at rest and show the switcher's chip only while the choice moves, inside the control under
-  its labels, in every look, Retro and NieR stepped per F3-438 (amended 2026-10-16, DL-217, the seg plate lane,
-  main 2b5ed6092d). Adopting the switcher does not enable Glass sheets or optics in another look. A newly shown
-  strip, restored hidden strip or opened theme menu places its selected state before the first visible frame. A
-  title-bar menu never removes the page selection; remeasure a hidden strip on reveal without a visible
-  zero-position reset. The component replaces competing fills, dots, underlines and sliding highlights rather
-  than painting a second selected marker. Glass Settings headers, Home lists, manager tabs, footer/help rows and
-  search results have readable glass beneath their words. The editor and terminal Customize screens share dense
-  menu material; their sticky section bar stays above the lenses of rows scrolling underneath. All consume
-  F3-438 layout and F3-654 contrast. These rules add no primary action or stored switcher state. Amended
-  2026-10-19 (Jared, option 1): selecting either Glass look always uses Liquid Glass over F3-653's wallpaper.
-  There is no material off state or old Glass fallback. The concept's ?lg=off flag, Demo Studio material on/off
-  control and Alt+Shift+L chord are retired. Its former html[data-lg] / window.PM_LG demonstration switch
-  supplies no current setting, command or alternate material mode. A renderer's static readable equivalent
-  remains the capability fallback for this same material, never a user-selectable off state. Amended 2026-10-16
-  (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own material, so every tab,
-  segment and list selection in a look is one component drawn one way. Glass keeps its approved clear lens
-  unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent hairline, a 6 px corner and a
-  faint top catch light, gliding with a little give and a slight label swell. Friendly draws its page tabs' soft
-  mint plate everywhere: a mint tint, hairline and glow, a 10 px corner, never a pill, mint chosen words,
-  gliding as Glass's drop does but softer; the Orchestrator's capsule is gone. Retro draws reverse video: an
-  opaque square phosphor block under the labels, every word, icon and count on it inverted to the screen colour,
-  blooming on Retro dark and a step deeper with a printed hard shadow on Retro light. NieR Mode draws its ink
-  bar: opaque ink under the labels, paper words, square, its hover ink bars, cursor square and brackets
-  unchanged. Retro and NieR keep F3-438's stepped motion (Jared, 2026-10-16), never gliding. Reduced Motion
-  places the chip at once. The same material serves the activity bar's tile, the theme menu's family rows and
-  the project picker's chosen row, in place. A pressed item's words, icons and counts take the chip's ink in the
-  press's own frame, and the item it leaves takes its resting ink in that frame, so no label lags the chip; a
-  hovered resting label stays at 4.5:1 or more on the bare ground. This adds no stored switcher state or
-  command. Amended 2026-10-16 (DL-217, the Glass lane): static optics are prepared off the input path: a sheet's
-  rim is baked in a worker from its size and place read after layout, and arrives a frame or more later. At idle
-  after start-up, paused while the shared busy signal reports a cover or transition, after any input and while
-  the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use GPU programs are
-  compiled before the first page or chapter change rather than during it. A switcher strip defers its sync only
-  under a look's cover and resyncs as the cover begins to lift. Amended 2026-10-17 (DL-222): Glass's warm-up is
-  best effort under ACD-475 and changes no Glass look. The idle gates are ACD-475's, and a switcher strip waits
-  only under a look's cover (amended 2026-10-17, review r1). Amended 2026-10-17 (DL-226): while a widget plate
-  is carried on a board in Glass, the resting plates hold a pre-painted frost instead of live blur. At rest that
-  frost looks the same. Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on,
-  never on a page, tab or room change, and moving items never turn opaque and then clear as they settle (DL-229:
-  Jared's words are about Usage's tab changes, and the concept applies the rule on every page). Tab strip items,
-  segmented choices and rail icons get no press bloom or flex: the lens moving to the pressed item is their
-  press feedback. Settings' floating search results use the dense menu material, near opaque without live
-  optics, so page words never read through them. The terminal Customize screen's choice rows take the travelling
-  lens; the editor Customize screen's in-flow choices take the material in place, without a lens. Glass
-  Transparency (general.visual.glass-transparency, SSYS-010) moves the panel, card and bar tints around the
-  published look, which is its default .55: up to near opaque at 100 %, and down to the mode's floor, where the
-  frost still keeps text at F3-654's floor; menus and dense surfaces keep their own tints, and without live
-  optics the sheets are near opaque. The concept's pre-publication clarity slider is not a product control. What
-  the rebuild honours of the 2026-10-16 Glass-lane amendment is its outcome: static optics are prepared off the
-  input path, a sheet's rim is coherent on arrival (it may arrive a frame later, never wrong), and a first page,
-  chapter or wallpaper change never stalls on first-use drawing work; the worker bake and the near-invisible
-  warm draws are how the concept met it, lineage rather than requirements. Amended 2026-10-17 (DL-230, Jared):
-  no requirement is set for how Glass reads when the operating system asks for reduced transparency or more
-  contrast; the proposed static near-opaque form and near-opaque tints were withdrawn when Jared answered "Don't
-  worry about it", and no Settings row is added. Amended 2026-10-29 (B4, G9; PM7): Project box may wear the
-  shared selected chip while its menu is open even beside a selected page chip; this is a pressed context entry.
-  Glass Activity Detail, all hover/attachment cards and History share the persona/model menu’s near-opaque plate
-  token; no local translucent variant. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only
-  the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles
-  and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its
-  central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is
-  unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro
-  and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds. Q14/H9:
-  Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list,
-  History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its
-  warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so
-  background labels cannot read through; ordinary panes keep their existing material. This is consumer
-  treatment, no global Glass token change or extra backdrop-filter.
+canonical_text: 'Liquid Glass is the Glass look in Light and Dark, not a new theme family. Jared approved publication
+  after the round-three corrections; the combined concept and wallpaper publication landed on 2026-10-15. That publication
+  is source evidence, not native certification. Sheets read as glass over the chosen wallpaper: a refracting rounded
+  bevel, a frosted readable core, a top-left specular rim and a quieter exit light. Selection lenses enlarge sharp text,
+  carry moving reflections and gently bend their rim; color fringing, tearing letters and opaque flashes are defects.
+  One shared lens grammar serves page selection, rail and panel tabs, Usage, onboarding steps, Orchestrator views, customizer
+  choice rows and, by Jared’s 2026-10-14 direction, the title-bar theme selector. It starts on activation without waiting
+  for content work, never doubles or reverses mid-flight, and keeps its resting glass. Scrubbing is selection, never
+  text selection. Pointer beads travel only between neighbouring controls. Switches use curved ends and a rounded lens
+  knob with slower, settling movement; action buttons may be rounded under F3-648. Menus grow from their invoking control;
+  fields such as Find a scope and Find a panel read as one seamless field; the theme menu has room for its labels. Usage
+  changes are calm, with no full-board sweep or opaque-then-clear flash. Glass Dark’s hover light stays near the shared
+  control scale, about 96 px radius, without veiling text. Jared decided on 2026-10-14 that Glass Light draws its hover
+  light beneath the content, so the text stays readable; the surface-edge glow stays. F3-465 owns the reduction of the
+  pointer’s central glow while retaining that edge light. Settings rail/index/sections, onboarding window, tour callout/bar
+  and the Wizard/Orchestrator columns use the same sheet hierarchy; nested cards and controls are fills on sheets, not
+  independent full-scene effects. Dense Customize and notification surfaces use the more opaque menu material needed
+  for F3-654''s settled contrast. Moving/leaning sheets carry coherent frost, and wallpaper, refraction and frost change
+  together (F3-653). The renderer may precompute static wallpaper optics and use bounded live optics on small lenses
+  and menus; F3-427''s old one-shell-blur and F3-431''s blanket Glass restrictions are superseded for this material.
+  It must not create arbitrary nested live blur or redraw idle static sheets every frame. Reduced Motion preserves end-state
+  material, selection and focus without spring, sweep, magnification travel or condensation; a renderer without live-optics
+  capability uses a truthful static readable equivalent. Publication of this look and the wallpaper gallery is one coordinated
+  boundary, including retiring F3-428''s old background modes. A standalone selection such as the activity bar or Usage
+  navigation uses accent glass with white ink while the window is focused and grey treatment while unfocused; the whole
+  glass treatment recedes when the window becomes inactive. Press feedback flexes/glows from the press point; a moving
+  lens stretches with speed and settles on arrival, with press-and-drag settling into the nearest available choice. Unavailable,
+  disabled or non-interactive items never capture the lens; onboarding progress moves it only when the selected step
+  changes. Existing selection is placed before the first visible frame on page entry; navigation produces one highlight,
+  with no slow reset, duplicate lens or trailing shadow that lags behind it. Settings chapter changes do not flash the
+  chrome, wallpaper changes keep the chosen print and frost coherent, and ordinary scrolling does not visibly rebuild
+  card edges. Both Settings search bars, in the left rail and centre, have a seamless input field that blends into their
+  containing bar. The shared switcher has one selection authority and one track/lens/label component, adopted through
+  family material tokens. It serves the page tabs, rail tabs, Usage navigation and range, Orchestrator views, Settings
+  chapters, section/index/manager tabs, Wizard work type, theme menu and both Customize screens. Choices in scrolling
+  content (Settings service lists and Home segmented rows/panel tabs) use its material in place without a travelling
+  lens; Settings'' segmented choices keep that material in place at rest and show the switcher''s chip only while the
+  choice moves, inside the control under its labels, in every look, Retro and NieR stepped per F3-438 (amended 2026-10-16,
+  DL-217, the seg plate lane, main 2b5ed6092d). Adopting the switcher does not enable Glass sheets or optics in another
+  look. A newly shown strip, restored hidden strip or opened theme menu places its selected state before the first visible
+  frame. A title-bar menu never removes the page selection; remeasure a hidden strip on reveal without a visible zero-position
+  reset. The component replaces competing fills, dots, underlines and sliding highlights rather than painting a second
+  selected marker. Glass Settings headers, Home lists, manager tabs, footer/help rows and search results have readable
+  glass beneath their words. The editor and terminal Customize screens share dense menu material; their sticky section
+  bar stays above the lenses of rows scrolling underneath. All consume F3-438 layout and F3-654 contrast. These rules
+  add no primary action or stored switcher state. Amended 2026-10-19 (Jared, option 1): selecting either Glass look always
+  uses Liquid Glass over F3-653''s wallpaper. There is no material off state or old Glass fallback. A renderer''s static
+  readable equivalent remains the capability fallback for this same material, never a user-selectable off state. Amended
+  2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own material, so every tab,
+  segment and list selection in a look is one component drawn one way. Glass keeps its approved clear lens unchanged.
+  Basic draws a precise tinted chip: an accent tint, a crisp accent hairline, a 6 px corner and a faint top catch light,
+  gliding with a little give and a slight label swell. Friendly draws its page tabs'' soft mint plate everywhere: a mint
+  tint, hairline and glow, a 10 px corner, never a pill, mint chosen words, gliding as Glass''s drop does but softer;
+  the Orchestrator''s capsule is gone. Retro draws reverse video: an opaque square phosphor block under the labels, every
+  word, icon and count on it inverted to the screen colour, blooming on Retro dark and a step deeper with a printed hard
+  shadow on Retro light. NieR Mode draws its ink bar: opaque ink under the labels, paper words, square, its hover ink
+  bars, cursor square and brackets unchanged. Retro and NieR keep F3-438''s stepped motion (Jared, 2026-10-16), never
+  gliding. Reduced Motion places the chip at once. The same material serves the activity bar''s tile, the theme menu''s
+  family rows and the project picker''s chosen row, in place. A pressed item''s words, icons and counts take the chip''s
+  ink in the press''s own frame, and the item it leaves takes its resting ink in that frame, so no label lags the chip;
+  a hovered resting label stays at 4.5:1 or more on the bare ground. This adds no stored switcher state or command. Amended
+  2026-10-16 (DL-217, the Glass lane): static optics are prepared off the input path: a sheet''s rim is baked in a worker
+  from its size and place read after layout, and arrives a frame or more later. At idle after start-up, paused while
+  the shared busy signal reports a cover or transition, after any input and while the page is hidden, Glass draws each
+  kind of box once, nearly invisibly, so first-use GPU programs are compiled before the first page or chapter change
+  rather than during it. A switcher strip defers its sync only under a look''s cover and resyncs as the cover begins
+  to lift. Amended 2026-10-17 (DL-222): Glass''s warm-up is best effort under ACD-475 and changes no Glass look. The
+  idle gates are ACD-475''s, and a switcher strip waits only under a look''s cover (amended 2026-10-17, review r1). Amended
+  2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates hold a pre-painted frost
+  instead of live blur. At rest that frost looks the same. Amended 2026-10-17 (DL-228): Glass condenses into place only
+  when Glass is switched on, never on a page, tab or room change, and moving items never turn opaque and then clear as
+  they settle (DL-229: Jared''s words are about Usage''s tab changes, and the concept applies the rule on every page).
+  Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving to the pressed item is
+  their press feedback. Settings'' floating search results use the dense menu material, near opaque without live optics,
+  so page words never read through them. The terminal Customize screen''s choice rows take the travelling lens; the editor
+  Customize screen''s in-flow choices take the material in place, without a lens. Glass Transparency (general.visual.glass-transparency,
+  SSYS-010) moves the panel, card and bar tints around the published look, which is its default .55: up to near opaque
+  at 100 %, and down to the mode''s floor, where the frost still keeps text at F3-654''s floor; menus and dense surfaces
+  keep their own tints, and without live optics the sheets are near opaque. The concept''s pre-publication clarity slider
+  is not a product control. What the rebuild honours of the 2026-10-16 Glass-lane amendment is its outcome: static optics
+  are prepared off the input path, a sheet''s rim is coherent on arrival (it may arrive a frame later, never wrong),
+  and a first page, chapter or wallpaper change never stalls on first-use drawing work; the worker bake and the near-invisible
+  warm draws are how the concept met it, lineage rather than requirements. Amended 2026-10-17 (DL-230, Jared): no requirement
+  is set for how Glass reads when the operating system asks for reduced transparency or more contrast; the proposed static
+  near-opaque form and near-opaque tints were withdrawn when Jared answered "Don''t worry about it", and no Settings
+  row is added. Amended 2026-10-29 (B4, G9; PM7): Project box may wear the shared selected chip while its menu is open
+  even beside a selected page chip; this is a pressed context entry. Glass Activity Detail, all hover/attachment cards
+  and History share the persona/model menu’s near-opaque plate token; no local translucent variant. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects,
+  including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener
+  and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5
+  percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses
+  them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds. Q14/H9:
+  Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and
+  hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that
+  plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot
+  read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change
+  or extra backdrop-filter. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -49411,17 +49299,14 @@ negative_constraints: []
 owner_hints:
 - Plans/FinalGUISpec.md
 stale_retired_dispositions:
-- 'Amended 2026-10-16 (PM7 pass 2): The combined Glass/wallpaper publication hold is closed by ad37be9a23;
-  native implementation evidence is still required.'
-- 'Amended 2026-10-16 (DL-214): the non-Glass consistency pass is adopted; it read: the non-Glass
-  consistency pass remains a separate adoption decision.'
-- 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented
-  choices use the material in place without a travelling lens.'
-- 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
-  before the first page or chapter change rather than during it.'
-- 'Retired 2026-10-19 (Jared, option 1): the concept-only Liquid Glass status-bar toggle,
-  ?lg=off, Demo Studio material on/off control and Alt+Shift+L supplied a demonstration off state;
-  both Glass looks now always use Liquid Glass with the shared Wallpaper.'
+- 'Amended 2026-10-16 (PM7 pass 2): The combined Glass/wallpaper publication hold is closed by ad37be9a23; native implementation
+  evidence is still required.'
+- 'Amended 2026-10-16 (DL-214): the non-Glass consistency pass is adopted; it read: the non-Glass consistency pass remains
+  a separate adoption decision.'
+- 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented choices use
+  the material in place without a travelling lens.'
+- 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled before the
+  first page or chapter change rather than during it.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
@@ -49581,7 +49466,6 @@ stale_retired_dispositions:
   crossfading print and frost together in every case.'
 owner_hints:
 - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-652
@@ -49666,7 +49550,6 @@ preserved_exact_tokens:
 negative_constraints: []
 owner_hints:
 - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/Automated_Testing_System.md#ATS-077
@@ -50017,49 +49900,54 @@ plan_unit_id: F3-659
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Home chat column presents the 5.6 Pro conversation surface in place of the scripted stand-in (DL-232).
-  F3-637 still owns width, History, Keep open, pop-out and the narrow ladder; F3-634/F3-635 still own every
-  opened tab. ACD-504 binds the hosted conversation, and ACD-500/501/502 keep the routing, command card and
-  presentation requirements. The host's look settings reach the chat, its app modals and its hosted tab bodies
-  in Basic, Friendly, Glass and Retro light/dark, under NieR Mode and Reduced Motion. The chat uses PMConcept7's
-  NieR type and existing parts, with no scene, ground, editor or reboot layer of its own. The shared
-  questionnaire controls style Ask Card and Grill Me alike; no pill, emoji or coloured side stripe is admitted
-  (F3-648). Narrow Crew/Room shelf headers, run plates, sticky run-view headers and helper sheets must remain
-  readable without overlaps or clipping at 400-519 px and at the recorded 480 px plate case. Fixes alter styling
-  and layout, preserving the accepted DL-218 behavior and its tests. The host hover controller owns tags, the
-  tab strip owns close and active state, and overlays sit in the host stacking order below the Guided Tour and
-  hover tags. The existing Guided Tour's teaching surface remains while the hosted chat is hidden during that
-  tour; PWIZ-036 records the already accepted later redo. All chat demo recipes, scenarios and family takes are
-  in F3-649's one Demo Studio, and the standalone chat remains a separate reference. SSYS-055 owns preference
-  placement and binding. This is a concept port and a product presentation contract; no browser result is native
-  runtime or governance certification. In integrated concept 59ca2d4382 the chat is a scoped layer inside the
-  existing column. Its header options expose Keep History open, the Keep open row and Pop out / Dock back;
-  History pin uses the existing local action, and only a never-saved project layout reads the Settings History
-  default. Amended 2026-10-23 (DL-233): pinned History is drawn at F3-637's 240 px and the column grows by the
-  drawn width, a dragged width included. Re-measured in Basic dark, a 1920 px window's column grows from 600 to
-  681 px when History is pinned (its pane from 599 to 680 px) while the centre budget holds C at 960 px, so the
-  messages are 440 px; at 2400 px with width_px 759 the column grows from 759 to 999 px and the messages keep
-  their 758 px. These are example measurements, not other width defaults. The scripted stand-in is removed
-  (DL-233). Host appearance, NieR parts, container-query CSS and tour hiding are integrated. The final
-  integration of 2026-10-23 adds the narrow shelf header, plate spacing, helper-sheet chrome and host hover
-  press repairs; its all-look sweep and PMConcept7 films are concept evidence, not completion evidence supplied
-  by this unit. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px
-  and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its
-  hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction
-  while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open
-  the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state
-  is persisted and the saved message minimum, History and Activity Detail rules remain.
+canonical_text: 'The Home chat column presents the 5.6 Pro conversation surface (DL-232). F3-637 still owns width, History,
+  Keep open, pop-out and the narrow ladder; F3-634/F3-635 still own every opened tab. ACD-504 binds the hosted conversation,
+  and ACD-500/501/502 keep the routing, command card and presentation requirements. The host''s look settings reach the
+  chat, its app modals and its hosted tab bodies in Basic, Friendly, Glass and Retro light/dark, in NieR Light/Dark and
+  under Reduced Motion. The chat uses the shared NieR type and existing parts, with no scene, ground, editor or reboot
+  layer of its own. The shared questionnaire controls style Ask Card and Grill Me alike; no pill, emoji or coloured side
+  stripe is admitted (F3-648). Narrow Crew/Room shelf headers, run plates, sticky run-view headers and helper sheets
+  must remain readable without overlaps or clipping at 400-519 px and at the recorded 480 px plate case. Fixes alter
+  styling and layout, preserving the accepted DL-218 behavior and its tests. The host hover controller owns tags, the
+  tab strip owns close and active state, and overlays sit in the host stacking order below the Guided Tour and hover
+  tags. The existing Guided Tour''s teaching surface remains while the hosted chat is hidden during that tour; PWIZ-036
+  records the already accepted later redo. SSYS-055 owns preference placement and binding. This is the product presentation
+  contract. Its header options expose Keep History open, the Keep open row and Pop out / Dock back; History pin uses
+  the existing local action, and only a never-saved project layout reads the Settings History default. Amended 2026-10-23
+  (DL-233): pinned History is drawn at F3-637''s 240 px and the column grows by the drawn width, a dragged width included.
+  Re-measured in Basic dark, a 1920 px window''s column grows from 600 to 681 px when History is pinned (its pane from
+  599 to 680 px) while the centre budget holds C at 960 px, so the messages are 440 px; at 2400 px with width_px 759
+  the column grows from 759 to 999 px and the messages keep their 758 px. These are example measurements, not other width
+  defaults. Host appearance, NieR parts, container sizing and tour isolation use their shared owners. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32
+  px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress
+  the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose
+  a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than
+  a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules
+  remain. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines the hosted chat surface, all-look presentation and narrow layout acceptance.
 split_recommended: false
-depends_on: [DL-232, F3-634, F3-635, F3-637, F3-648, F3-649, ACD-504, SSYS-055, PWIZ-036]
+depends_on:
+- DL-232
+- F3-634
+- F3-635
+- F3-637
+- F3-648
+- ACD-504
+- SSYS-055
+- PWIZ-036
 unblocks: []
 acceptance_criteria:
-  - "The hosted column shows one 5.6 Pro chat, with host-owned appearance, hover and panel routing."
-  - "The carry-over narrow layout cases pass without dropping DL-218 behavior or its regression checks."
-  - "The Guided Tour and one Demo Studio keep their existing ownership boundaries."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain."
+- The hosted column shows one 5.6 Pro chat, with host-owned appearance, hover and panel routing.
+- The carry-over narrow layout cases pass without dropping DL-218 behavior or its regression checks.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat
+  to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek
+  rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible
+  must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width,
+  rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity
+  Detail rules remain.'
+- The accepted Guided Tour retains its owner and teaching surface while the hosted chat is hidden.
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -50079,8 +49967,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-20-wonderer-grill-me-concept/PORT-CARRY-OVER.md, SHA-256 67195793eeda6a463b5e2da60e7ae294ae62ef435a4a89e56fcd3e25587884fa (accepted layout and styling repairs)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Keep open
 negative_constraints:
   - "Do not restore the scripted stand-in as an alternative Settings mode."
 compatibility_only_notes: []

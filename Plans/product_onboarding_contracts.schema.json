@@ -3669,7 +3669,6 @@
             "start",
             "resume",
             "advance",
-            "retry_concept_preview",
             "return",
             "dismiss",
             "skip_product_onboarding",
@@ -4647,8 +4646,7 @@
                 "properties": {
                   "intent": {
                     "enum": [
-                      "advance",
-                      "retry_concept_preview"
+                      "advance"
                     ]
                   }
                 }
@@ -7382,7 +7380,7 @@
     },
     "automatic_preparation_owner_projection": {
       "title": "AutomaticPreparationOwnerProjection",
-      "description": "One closed Product Onboarding projection over owner-owned ObservableWork, result, receipt, and exact currentness. Product Onboarding observes this record; it does not implement, time, cancel, duplicate, or infer the underlying work. Browser concept fixtures are explicitly non-production and cannot carry a production receipt or readiness claim.",
+      "description": "One closed Product Onboarding projection over owner-owned ObservableWork, result, receipt, and exact currentness. Product Onboarding observes this record; it does not implement, time, cancel, duplicate, or infer the underlying work.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -7631,13 +7629,10 @@
           "$ref": "#/$defs/nullable_safe_ref"
         },
         "evidence_class": {
-          "enum": [
-            "production_owner_projection",
-            "browser_concept_fixture_only"
-          ]
+          "const": "production_owner_projection"
         },
         "production_owner_work": {
-          "type": "boolean"
+          "const": true
         },
         "production_readiness": {
           "type": "boolean"
@@ -8014,53 +8009,6 @@
           "if": {
             "properties": {
               "evidence_class": {
-                "const": "browser_concept_fixture_only"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": false
-              },
-              "production_readiness": {
-                "const": false
-              },
-              "native_runtime_exercised": {
-                "const": false
-              },
-              "production_receipt_ref": {
-                "type": "null"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "production_owner_projection"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": true
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
                 "const": "production_owner_projection"
               },
               "work_state": {
@@ -8112,8 +8060,7 @@
         "the accepting adapter compares session, current simple-path selection, exact reviewed_setup_plan_revision, exact approved_setup_plan_sha256, local backend, optional forge, target, expected revision, continuation generation, and exact next projection generation to its active fence rather than trusting currentness booleans",
         "stale or mismatched projections are rejected without replacing the last accepted projection or advancing the stage",
         "close, defer, resume, reload, and view changes preserve owner work and reuse the same owner_operation_id and dedupe_key",
-        "automatic preparation advances only after an accepted current ready projection; timers may settle presentation after readiness but never synthesize work, progress, result, receipt, or readiness",
-        "a browser concept fixture never claims production owner work, production readiness, native runtime execution, or a production receipt"
+        "automatic preparation advances only after an accepted current ready projection; timers may settle presentation after readiness but never synthesize work, progress, result, receipt, or readiness"
       ]
     },
     "onboarding_project_recovery_route_projection": {
@@ -9341,13 +9288,10 @@
           "const": []
         },
         "evidence_class": {
-          "enum": [
-            "production_owner_projection",
-            "browser_concept_fixture_only"
-          ]
+          "const": "production_owner_projection"
         },
         "production_owner_work": {
-          "type": "boolean"
+          "const": true
         },
         "production_readiness": {
           "type": "boolean"
@@ -9508,50 +9452,6 @@
               }
             }
           }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "browser_concept_fixture_only"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": false
-              },
-              "production_readiness": {
-                "const": false
-              },
-              "native_runtime_exercised": {
-                "const": false
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "production_owner_projection"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": true
-              }
-            }
-          }
         }
       ],
       "x-puppet-master-assertions": [
@@ -9563,7 +9463,6 @@
         "authorization work survives refresh and Client loss by owner operation identity, but protected URL or browser content is never embedded and requires a new current authorized handoff on another Client",
         "ordinary browsers are not enrolled by embedded tsnet and still require host-private reachability or an explicit public/reverse-proxy/Remote-Link route",
         "Headscale supports private access but never Funnel",
-        "browser concept fixtures remain simulated and cannot claim production work, readiness, native execution, security proof, or connector runtime",
         "event_family_ids remains empty until Event Authority admits exact connector families; owner receipts and projections remain non-event evidence"
       ]
     },

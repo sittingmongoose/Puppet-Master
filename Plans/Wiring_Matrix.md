@@ -4066,7 +4066,7 @@ owner_hints:
 This addendum records the production wiring absorption of the Cozy Shelves catalog registrations (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27, UCC-127..UCC-138); the contract content lives in `Plans/Wiring_Matrix.production.json`, not in this file, and no markdown wiring tables are added here.
 Thirty-six planned wiring rows were appended to `Plans/Wiring_Matrix.production.json` (`catalog.github_actions_rerun` through `catalog.docker_compose_open_file`) covering the newly registered canonical commands of the eight rail panels, each carrying handler target, `state.cmd_<snake>.enabled` / `state.cmd_<snake>.disabled_reason` projections, receipt-or-event effect, accessibility contract, and the six test-evidence class placeholders from the PMConcept_Control_Reconciliation template.
 Every appended row is future-evidence-only: `handler_status: planned` and `owner_doc_ref` are recorded in each row's `evidence_required` field per the established planned-row convention, because `Plans/Wiring_Matrix.schema.json` forbids additional top-level fields; no row asserts that any handler, runtime, or Slint surface exists.
-`Plans/Wiring_Matrix.production.exclusions.json` gains the `cmd.agents` / `cmd.editor` family roots, the retired or alias prototype tokens adjudicated by the catalog addendum, and the concept_fixture_only demo verbs from the concept shell, keeping the catalog-to-production coverage gate closed in both directions.
+`Plans/Wiring_Matrix.production.exclusions.json` gains the `cmd.agents` / `cmd.editor` family roots, the retired or alias prototype tokens adjudicated by the catalog addendum, keeping the catalog-to-production coverage gate closed in both directions.
 This addendum creates no WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks, and validation runs through `python3 scripts/pm-plans-verify.py run-gates` (validate-wiring-matrix) executed by the orchestrated pipeline after all reconciliation docs land.
 
 ## u11 Prism II Usage Wiring Addendum - 2026-08-18
@@ -4215,44 +4215,56 @@ plan_unit_id: WM-045
 unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  The PMConcept7 production wiring matrix binds every relevant producer to an existing
-  command or view_only disposition, its sole handler/reducer, owner projection/store,
-  settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
-  error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
-  its target footprint and visibly repack only obstructed peers, with Usage board gravity applied at settle and
-  never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every dashboard
-  board previews and settles as the Usage board does, gravity included); one changed
-  pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
-  cmd.workspace_layout.*, and on Usage that one command carries the whole settled room, gravity included. Usage
-  Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
-  cmd.widget.move carrying arrange { mode: tidy, detail } with one receipt, never one move per card, and a
-  size-picker preset commits one cmd.widget.resize. The Usage Accounts room's Use this account reuses the
-  account-select row, and each provider's Auto-switch toggle and switch level at scope provider and each account's
-  own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
-  drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
-  remain local inspectors; Context-ring actions reuse their existing rows; and the same
-  Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180): the
-  chat no longer re-seats inside the window; it is a fixed column whose only move is Pop out into its own window and
-  Dock back, and the same node/store serves both without cloning. Home commits are every panel and tab commit of
-  WM-090 on pm.home_workspace_layout.v2. The concept-only size_surface
-  token is normalized to resize_surface, rejected provider management stays unwired, and
-  no pointer-preview event family is added.
+canonical_text: 'The PMConcept7 production wiring matrix binds every relevant producer to an existing command or view_only
+  disposition, its sole handler/reducer, owner projection/store, settled persistence or declared effect, dispatch receipt,
+  consumer, cancel path, and error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize
+  may locally advance its target footprint and visibly repack only obstructed peers, with Usage board gravity applied
+  at settle and never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every
+  dashboard board previews and settles as the Usage board does, gravity included); one changed pointer release, keyboard
+  reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or cmd.workspace_layout.*, and on Usage
+  that one command carries the whole settled room, gravity included. Usage Tidy commits the whole repacked room as one
+  settled layout transaction through exactly one existing cmd.widget.move carrying arrange { mode: tidy, detail } with
+  one receipt, never one move per card, and a size-picker preset commits one cmd.widget.resize. The Usage Accounts room''s
+  Use this account reuses the account-select row, and each provider''s Auto-switch toggle and switch level at scope provider
+  and each account''s own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live /
+  Paused is view_only. Usage refresh and stable-event drill-through reuse their existing rows while current PMConcept7
+  aggregate provider/account/panel details remain local inspectors; Context-ring actions reuse their existing rows; and
+  the same Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180):
+  the chat no longer re-seats inside the window; it is a fixed column whose only move is Pop out into its own window
+  and Dock back, and the same node/store serves both without cloning. Home commits are every panel and tab commit of
+  WM-090 on pm.home_workspace_layout.v2. The concept-only size_surface token is normalized to resize_surface, rejected
+  provider management stays unwired, and no pointer-preview event family is added. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The wiring contract connects the recovered visible controls, their disabled/error states, and the shared Assistant seating behavior.
 split_recommended: false
 depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250]
 unblocks: [UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt, consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain their pre-recovery bytes and are not counted in that enrichment set.
-  - "Amended 2026-10-09 (DL-180): the counts in the criterion above are the 2026-08-27 recovery's. After DL-180 the Home rows are WM-090's tables: 51 fixed-zone home.* rows retired, five rebuilt on the v2 model, and the chat's rows are show and hide, width, Pop out and Dock back with no re-seat row."
-  - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
-  - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
-  - "A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit."
-  - "The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level, and each account's own switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair, at scope provider for the provider's controls and at scope account for an account's (D43, 2026-10-10), the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
-  - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
-  - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt,
+  consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref,
+  while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route
+  without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate
+  cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery
+  enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and
+  widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain
+  their pre-recovery bytes and are not counted in that enrichment set.
+- 'Amended 2026-10-09 (DL-180): the counts in the criterion above are the 2026-08-27 recovery''s. After DL-180 the Home
+  rows are WM-090''s tables: 51 fixed-zone home.* rows retired, five rebuilt on the v2 model, and the chat''s rows are
+  show and hide, width, Pop out and Dock back with no re-seat row.'
+- Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage
+  writes.
+- Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases
+  produce exactly one existing semantic command and settle only after owner acceptance.
+- A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the
+  resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and
+  one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit.
+- The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
+- No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- Usage account selection, provider/account Auto-switch controls and Tidy reuse catalog.account_select_profile, catalog.settings_transaction_preview/apply
+  and catalog.widget_move at their exact existing scopes; Live/Pause dispatches nothing.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -5969,7 +5981,7 @@ Amended 2026-10-10 (DL-187, D32): a popped-out chat lasts only while the app run
 | Agents > Show > a filter | that tab's own view state (lead ruling F7) | none | view-local, dispatches nothing |
 | Agents > an agent's card; Alt+click | `cmd.agents.open_thread` as a kept transcript tab; Alt+click with `where: panel` | `home.dashboard_tab.agent_card` | `workspace.layout_changed` when a tab is added; none on a reveal |
 
-Play the next hour, Back to now and the Demo time are lab-only demo controls (`Plans/usage-feature.md#UF-107`) with no row. A custom dashboard leaving the reopen list is forgotten by storage housekeeping that dispatches nothing (WS-030). In a panel whose usual kind is the dashboard, Ctrl+T (`home.keys.new_tab`) and a split make a new custom dashboard.
+A custom dashboard leaving the reopen list is forgotten by storage housekeeping that dispatches nothing (WS-030). In a panel whose usual kind is the dashboard, Ctrl+T (`home.keys.new_tab`) and a split make a new custom dashboard.
 
 **Tool tabs** (`Plans/FinalGUISpec.md#F3-635`, `#F3-490`). Added 2026-10-10 (DL-187, D33; lead ruling F6).
 
@@ -6726,54 +6738,44 @@ plan_unit_id: WM-096
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  The hosted 5.6 Pro chat reuses the production-intent rows of its existing commands under UCC-208 and UIW-044
-  (DL-232). catalog.agents_open_thread includes the chat's Activity Detail transcript action, live child card
-  and working-activity child openers; the preview row itself still opens Activity Detail. catalog.terminal_open
-  and catalog.terminal_rerun cover the compact card's Open in Terminal and Rerun in Terminal under ACD-502,
-  preserving exact-session behavior and candidate limits from UCC-201. terminal.mark_menu.open_output also
-  covers the compact card's View output and View output log through the same kept read-only editor-buffer open;
-  its location names both producers. catalog.terminal_show and catalog.terminal_focus keep their existing
-  other-surface producers; neither gains a compact-card control. assistant.redesign.cmd.chat_plan_open_version
-  retains exact-version Plan opening; assistant.redesign.w_051.chat_eli5_set retains only the per-chat override
-  producers, with application/project defaults written by Settings. home.tab.close uses cmd.panel_tab.close,
-  with cmd.editor.close_tab as its alias; host close/activate updates the chat without another dispatch.
-  home.chat.activity_toggle and home.more_options.chat_visibility keep cmd.panel.switch, and home.resizer.chat
-  keeps cmd.workspace_layout.resize_surface. History pin and Keep open stay their existing typed-local
-  exclusions, never duplicate production rows. The port changes producer locations and acceptance checks in
-  Plans/Wiring_Matrix.production.json only; it adds no command, handler, physical storage family, EventRecord or
-  claim of native readiness. Every row's planned-handler and unavailable-candidate boundary remains in force.
-  Settings preferences use the existing Settings transaction rows, not one synthetic row per preference. The
-  hosted surface's boot, body mounting and appearance projection are local presentation with no command or
-  event. Demo Studio is wholly outside production wiring (DR-070), not a wiring disposition. These rows remain
-  product wiring requirements. Integrated concept 59ca2d4382 supplies Home open/close/activate bridges, not
-  native handler evidence. Run-card controls move to the run view only while its tab is active in a panel that
-  is visible, including narrow-switcher and collapsed-panel state. Browser capture must retain the original
-  thread and composer destination; context-tab actions use that tab's thread; attachment viewers retain
-  thread/message/attachment identity. More Info now has the bounded-popover producer required by ACD-500, so the
-  earlier modal gap is closed in the concept. Project ELI5 is persisted through the existing adapter; All chats
-  ELI5 is session-only. The production-intent ELI5 acceptance row records that limitation without claiming its
-  application-scope route is built. Astra's round-2 concept check confirms isolated browser delivery retains its
-  destination, but composer attachment, list and insertion can lose that destination after the origin composer
-  changes. Those paths still require restoring the saved destination or refusing a mismatch before draft
-  mutation; the original thread alone is not sufficient reverse coverage. PM7 W4/W6/W7: hosted chat adds Pip
-  editor producers through the existing Settings pair and the conditional Processes domain through UCC-210.
-  Existing file/terminal/thread routes retain exact identity; no private opener or small Activity Detail
-  returns. G1 B (Jared 2026-10-30) restores the view-local ui.activity_detail.pin / chat.activity.pin contract:
-  pinned detail follows the new thread across switches, and unpinned detail closes on a switch. QA round 2,
-  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
-  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
-  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the
-  same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real
-  partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
-  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
-  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
-  fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size
-  maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an
-  agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one
-  ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and
-  the single Pip primitive retain their existing meaning.
+canonical_text: 'The hosted 5.6 Pro chat reuses the production-intent rows of its existing commands under UCC-208 and
+  UIW-044 (DL-232). catalog.agents_open_thread includes the chat''s Activity Detail transcript action, live child card
+  and working-activity child openers; the preview row itself still opens Activity Detail. catalog.terminal_open and catalog.terminal_rerun
+  cover the compact card''s Open in Terminal and Rerun in Terminal under ACD-502, preserving exact-session behavior and
+  candidate limits from UCC-201. terminal.mark_menu.open_output also covers the compact card''s View output and View
+  output log through the same kept read-only editor-buffer open; its location names both producers. catalog.terminal_show
+  and catalog.terminal_focus keep their existing other-surface producers; neither gains a compact-card control. assistant.redesign.cmd.chat_plan_open_version
+  retains exact-version Plan opening; assistant.redesign.w_051.chat_eli5_set retains only the per-chat override producers,
+  with application/project defaults written by Settings. home.tab.close uses cmd.panel_tab.close, with cmd.editor.close_tab
+  as its alias; host close/activate updates the chat without another dispatch. home.chat.activity_toggle and home.more_options.chat_visibility
+  keep cmd.panel.switch, and home.resizer.chat keeps cmd.workspace_layout.resize_surface. History pin and Keep open stay
+  their existing typed-local exclusions, never duplicate production rows. The port changes producer locations and acceptance
+  checks in Plans/Wiring_Matrix.production.json only; it adds no command, handler, physical storage family, EventRecord
+  or claim of native readiness. Every row''s planned-handler and unavailable-candidate boundary remains in force. Settings
+  preferences use the existing Settings transaction rows, not one synthetic row per preference. The hosted surface''s
+  boot, body mounting and appearance projection are local presentation with no command or event. These rows remain product
+  wiring requirements. Run-card controls move to the run view only while its tab is active in a panel that is visible,
+  including narrow-switcher and collapsed-panel state. Browser capture must retain the original thread and composer destination;
+  context-tab actions use that tab''s thread; attachment viewers retain thread/message/attachment identity. More Info
+  uses ACD-500''s bounded popover. Application/project/current-chat ELI5 writes retain their exact admitted scope. Capture
+  composer attachment, list and insertion restore the saved originating destination or refuse a mismatch before draft
+  mutation; preserving the thread alone is insufficient. PM7 W4/W6/W7: hosted chat adds Pip editor producers through
+  the existing Settings pair and the conditional Processes domain through UCC-210. Existing file/terminal/thread routes
+  retain exact identity; no private opener or small Activity Detail returns. G1 B (Jared 2026-10-30) restores the view-local
+  ui.activity_detail.pin / chat.activity.pin contract: pinned detail follows the new thread across switches, and unpinned
+  detail closes on a switch. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts
+  only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
+  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
+  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
+  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
+  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
+  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone,
+  head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding
+  arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology,
+  not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  agent strings and the single Pip primitive retain their existing meaning. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Binds hosted chat producers to existing wiring rows and their reverse GUI consumers.
 split_recommended: false
@@ -6816,7 +6818,6 @@ source_lineage:
   SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer
   destination gap; corrects the broad integrated capture claim)
 preserved_exact_tokens:
-- Demo Studio
 - Keep open
 negative_constraints:
 - Do not remove DL-218 exclusions or assert native proof from the port.

@@ -302,11 +302,11 @@
       "id": "FF-01",
       "change": "Existing Azure selection binds exact team project/repository",
       "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
-      "wiring": "FGI-013; catalog.forge_repository_create",
-      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "wiring": "FGI-013; catalog.forge_repository_list; catalog.project_add_existing; WM-041",
+      "commands": "cmd.forge.repository.list (selected-source read); cmd.project.add_existing (reviewed commit); CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "companions": "onboarding_setup_plan exact owner/project; FGI-011 account-container list scope; existing project add owner chain",
       "state": "covered_by_current_contract"
     },
     {
@@ -400,29 +400,29 @@
     {
       "id": "FF-10",
       "change": "Review names material online and backup choices",
-      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
-      "wiring": "FGI-013; catalog.forge_repository_create",
-      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "owner": "PWIZ-021; PWIZ-024; FGI-011; BRS-018",
+      "wiring": "UIW-015; WM-041; none additional: Review details/Edit are local navigation",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; no domain mutation from details/Edit",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "companions": "onboarding_setup_plan exact material choices; existing typed navigation/Review fences",
       "state": "covered_by_current_contract"
     },
     {
       "id": "FF-11",
       "change": "Forgejo/Gitea only private/public; reset incompatible service choices",
       "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
-      "wiring": "FGI-013; catalog.forge_repository_create",
-      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "wiring": "UIW-015; WM-041; FGI-013",
+      "commands": "none needed for draft reset: CS-069/UCC-106 local choice boundary; later commit keeps existing Forge owner",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "companions": "onboarding_setup_plan Forgejo/Gitea private/public conditions; selected-source/profile generation fences",
       "state": "covered_by_current_contract"
     },
     {
       "id": "FF-12",
       "change": "Selected auth method matches exact provider instance/profile",
-      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024; MACS-005",
       "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
@@ -456,11 +456,11 @@
       "id": "FF-15",
       "change": "Restore manifest/catalog scope is the exact selected source",
       "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
-      "wiring": "catalog.backup_destination_add; catalog.backup_destination_test; WM-041",
-      "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
+      "wiring": "catalog.backup_destination_discover; catalog.backup_browse; catalog.backup_unlock; catalog.restore_preview; WM-041",
+      "commands": "cmd.backup.destination.discover; cmd.backup.browse; cmd.backup.unlock; cmd.restore.preview",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "companions": "Backup_Restore owner exact locator/repository/snapshot selection and currentness; no cross-place catalog",
       "state": "covered_by_current_contract"
     },
     {
@@ -972,7 +972,7 @@
     {
       "id": "T04",
       "change": "Git or Jujutsu remains required; no no-history onboarding route",
-      "owner": "PWIZ-022; F3-663; DL-126",
+      "owner": "SCS-011; SCS-012; PWIZ-024; PWIZ-022; F3-663; DL-126",
       "wiring": "UIW-015; WM-041",
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
@@ -1421,8 +1421,8 @@
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
-      "sha256": "2b18d8f2b376b79c34362a6c6d2bde7cb6d9192c6c88733861b6a66201c22dab",
-      "state": "consulted snapshot"
+      "sha256": "57dd5fd452fd84f1b1f427ea5f721bdaba6da5409ce1707d92d41dc78a8c4e46",
+      "state": "final report read in full (fe981f3b38); four canon items already DL-259; real FF-01..17/19/20/12b and T04 traced; demo mechanics excluded"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md",
@@ -1452,8 +1452,8 @@
   ],
   "unit_id_check": "pass",
   "pending_sources": [
-    "fields final report",
-    "lead final GUI names/head"
+    "lead final GUI names/head",
+    "onboarding small follow-up (lead signal)"
   ],
   "exclusions": [
     "QA2-Q18",
@@ -1468,5 +1468,33 @@
     "CLOUD-1",
     "DESKTOP-RESTORE-1",
     "REMOTE-CODE-1"
-  ]
+  ],
+  "prototype_cleanup": {
+    "decision": "DL-260",
+    "demo_only_rows_added": 0,
+    "real_product_rows_retained": 126,
+    "retired_units_used_as_active_coverage": false
+  },
+  "fields_final": {
+    "head": "fe981f3b38",
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+    "sha256": "57dd5fd452fd84f1b1f427ea5f721bdaba6da5409ce1707d92d41dc78a8c4e46",
+    "canon_requests_closed_in": "DL-259",
+    "new_product_command_or_setting": false,
+    "mapping_corrections": [
+      "FF-01 selected-source repository.list then project.add_existing, not create",
+      "FF-10 Review disclosure/Edit is local navigation",
+      "FF-11 incompatible choice reset is draft-local",
+      "FF-12 auth owner MACS-005",
+      "FF-15 discover/browse/unlock/preview, not destination add/test",
+      "T04 exact SCS-011/012 and PWIZ-024 required-backend owners"
+    ],
+    "excluded": [
+      "demo hints/sample keys/prefills",
+      "O55 globals/helpers and demo callback APIs",
+      "sandbox/storage demonstrations",
+      "fixture account worlds and timestamps",
+      "browser assertion counts as native evidence"
+    ]
+  }
 }

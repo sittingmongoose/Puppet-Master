@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L25121-L25516
 
-Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
+Source SHA256: `31418308979daf76ebba3677dddd28bf16a09bc24cade1b9ecea120ff1255450`
 
 ---
 
@@ -21,7 +21,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 7. **Composer Browser Launcher Exclusion (`APR-010`)**: The chat composer does not contain an internal-browser launcher button. Product browser navigation belongs to Puppet Master's Browser Program surface. Screenshot capture, component picking, and attachment workflows remain fully supported without creating a competing browser authority.
 8. **Transcript Card Grammar (`APR-011`)**: Non-working transcript cards adhere to a unified presentation grammar: consistent header hierarchy, deliberate group spacing, quiet trailing action rows, and progressive disclosure for technical telemetry. Repetitive nesting and redundant outer cards are eliminated.
 9. **Protected Working Activity (`APR-012`, `APR-046`, `APR-050`, `APR-068`)**: The perfected working activity components (Orbit and Step Rail Simple) and their choreographed animations are protected. Orbit (family 2, variant 1) is the default; Step Rail Simple (family 2, variant 8) is selectable under `general.interaction.working-activity-style`. Reset hook chaining executes each owner handler exactly once without duplicate invocation or late collision. Working DOM identity and timer ownership are preserved across ticks.
-10. **Wand Compact Hierarchy and Demo Separation (`APR-013`, `APR-014`)**: Product actions in the wand are grouped into compact submenus to fit the viewport cleanly. Concept demo loaders, fixture replays, simulations, and test harnesses are moved out of the wand into a dedicated Demo Gallery and are never registered in the product command catalog.
+10. **Wand Compact Hierarchy (`APR-013`, `APR-014`)**: Product actions in the wand are grouped into compact submenus to fit the viewport cleanly.
 11. **Reset and Asynchronous Callback Hygiene (`APR-020`)**: Thread reset, switch, or new conversation invalidates all pending asynchronous callbacks (including delayed title completion, streaming completions, and background analysis). Owner reset chains follow declared chaining where each registered owner executes exactly once.
 12. **Scheduled Message Cards and Receipts (`APR-028`)**: Pending scheduled messages render editable cards in the thread with exact trigger time, timezone, destination, and message preview. Once sent, canceled, or expired, they transition to quiet receipts. Editing reopens the bound message form rather than a generic scheduling dialog. Sent receipts navigate directly to the emitted chat turn.
 13. **Context Lens In-Flow Layout Row (`APR-033`)**: The Context Lens dropdown occupies a layout-participating row between the chat header and the transcript. Expanding the Lens pushes the transcript top downward, preventing top-message occlusion; collapsing the Lens releases the space smoothly. Lens selection, Focus, Mute, and Subcompact semantics remain intact.

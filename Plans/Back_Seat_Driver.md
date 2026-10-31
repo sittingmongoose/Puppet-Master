@@ -2056,11 +2056,7 @@ dispatch exists. Missing registration uses `command_not_registered`; an unavaila
 native implementation uses `owner_unavailable`, under §18's existing closed error vocabulary.
 A declared handler string cannot turn the latter into an enabled control.
 
-A labelled, isolated Demo Studio simulation may exercise these semantics under local fixture
-action IDs. It must not dispatch or report success for an unavailable product command, emit an
-unregistered EventRecord, claim a persisted receipt, or satisfy native acceptance. Product controls
-remain gated by the actual owner. Local evidence records are not an alternate command/event
-registry. Required event registration under §19 remains independently checked against the central
+Product controls remain gated by the actual owner. Required event registration under §19 remains independently checked against the central
 Event Authority registry.
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/event_family_registry.json

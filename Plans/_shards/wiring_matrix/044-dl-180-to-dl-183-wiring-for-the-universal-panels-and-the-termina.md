@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5767-L6545
+Source lines: L5779-L6557
 
-Source SHA256: `159440f0ecb97013211768be4734b2539fd7ca4b98247313676df7c2c7e16b55`
+Source SHA256: `75ffbc19271aa1f882ab1a31d00597beeb35ac6271a0cfa8f2d2f86d5a835a46`
 
 ---
 
@@ -213,7 +213,7 @@ Amended 2026-10-10 (DL-187, D32): a popped-out chat lasts only while the app run
 | Agents > Show > a filter | that tab's own view state (lead ruling F7) | none | view-local, dispatches nothing |
 | Agents > an agent's card; Alt+click | `cmd.agents.open_thread` as a kept transcript tab; Alt+click with `where: panel` | `home.dashboard_tab.agent_card` | `workspace.layout_changed` when a tab is added; none on a reveal |
 
-Play the next hour, Back to now and the Demo time are lab-only demo controls (`Plans/usage-feature.md#UF-107`) with no row. A custom dashboard leaving the reopen list is forgotten by storage housekeeping that dispatches nothing (WS-030). In a panel whose usual kind is the dashboard, Ctrl+T (`home.keys.new_tab`) and a split make a new custom dashboard.
+A custom dashboard leaving the reopen list is forgotten by storage housekeeping that dispatches nothing (WS-030). In a panel whose usual kind is the dashboard, Ctrl+T (`home.keys.new_tab`) and a split make a new custom dashboard.
 
 **Tool tabs** (`Plans/FinalGUISpec.md#F3-635`, `#F3-490`). Added 2026-10-10 (DL-187, D33; lead ruling F6).
 

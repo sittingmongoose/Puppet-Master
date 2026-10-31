@@ -16,8 +16,7 @@
         "target_missing",
         "currentness_expired"
       ],
-      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
-      "concept_simulation_allowed": true
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler"
     },
     "cmd.settings.transaction.preview": {
       "semantic_owner": "Plans/Settings_System.md",
@@ -36,8 +35,7 @@
         "owner_unavailable",
         "owner_contract_missing"
       ],
-      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
-      "concept_simulation_allowed": true
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler"
     },
     "cmd.settings.transaction.apply": {
       "semantic_owner": "Plans/Settings_System.md",
@@ -57,8 +55,7 @@
         "readback_failed",
         "rollback_required"
       ],
-      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
-      "concept_simulation_allowed": true
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler"
     },
     "cmd.settings.transaction.rollback": {
       "semantic_owner": "Plans/Settings_System.md",
@@ -75,8 +72,7 @@
         "readback_failed",
         "rollback_required"
       ],
-      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
-      "concept_simulation_allowed": true
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler"
     },
     "cmd.settings.export": {
       "semantic_owner": "Plans/Settings_System.md",
@@ -92,8 +88,7 @@
         "secret_excluded",
         "owner_unavailable"
       ],
-      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler",
-      "concept_simulation_allowed": true
+      "catalog_obligation": "must_register_same_id_payload_result_selector_and_handler"
     }
   },
   "ui_action_contracts": {
@@ -2770,34 +2765,6 @@
       }
     },
     {
-      "case_id": "valid-concept-boundary",
-      "schema_ref": "#/$defs/settings_concept_boundary",
-      "record": {
-        "record_type": "settings_concept_boundary",
-        "schema_id": "pm.settings_concept_boundary.v1",
-        "schema_version": "1.0.0",
-        "artifact_ref": "Concepts/PMConcept7.html",
-        "evidence_level": "concept_fixture_only",
-        "handlers_simulated": true,
-        "persistence_mode": "fixture_local_non_authoritative",
-        "allowed_claims": [
-          "geometry_demonstration",
-          "content_projection_demonstration",
-          "interaction_prototype"
-        ],
-        "prohibited_claims": [
-          "production_runtime",
-          "production_persistence",
-          "handler_wiring",
-          "visual_acceptance",
-          "performance_acceptance",
-          "accessibility_acceptance",
-          "certification"
-        ],
-        "native_runtime_executed": false
-      }
-    },
-    {
       "case_id": "valid-cross-owner-group-projection",
       "schema_ref": "#/$defs/settings_cross_owner_group_projection",
       "record": {
@@ -3332,17 +3299,6 @@
       "schema_ref": "#/$defs/packet_command_disposition_registry",
       "record": {},
       "expected_keyword": "minProperties"
-    },
-    {
-      "case_id": "invalid-concept-native-runtime-claim",
-      "schema_ref": "#/$defs/settings_concept_boundary",
-      "record": {
-        "record_type": "settings_concept_boundary",
-        "schema_id": "pm.settings_concept_boundary.v1",
-        "schema_version": "1.0.0",
-        "native_runtime_executed": true
-      },
-      "expected_keyword": "required"
     },
     {
       "case_id": "invalid-settings-transfer-draft-cannot-invent-destination-project",

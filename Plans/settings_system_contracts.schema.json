@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json",
   "title": "Puppet Master Settings System contracts",
-  "description": "Strict Plans-only contracts for project Settings snapshots, transaction preview/apply/rollback/export, exact Settings routes and returns, manager/owner projections, Doctor projection boundaries, migration previews, appearance previews, UI action availability, and concept-fixture custody. These schemas and fixtures are not runtime or certification evidence. Includes a read-only exact-ID Settings Transfer draft preview and post-confirmation rebind to a real Project; no Project or Settings mutation is granted by a draft preview. Q22, Jared 2026-10-30 (DL-257): five families and ten variants; the independent NieR setting is retired.",
+  "description": "Strict Plans-only contracts for project Settings snapshots, transaction preview/apply/rollback/export, exact Settings routes and returns, manager/owner projections, Doctor projection boundaries, migration previews, appearance previews, UI action availability. These schemas and fixtures are not runtime or certification evidence. Includes a read-only exact-ID Settings Transfer draft preview and post-confirmation rebind to a real Project; no Project or Settings mutation is granted by a draft preview. Q22, Jared 2026-10-30 (DL-257): five families and ten variants; the independent NieR setting is retired.",
   "oneOf": [
     {
       "$ref": "#/$defs/project_settings_snapshot"
@@ -48,9 +48,6 @@
     },
     {
       "$ref": "#/$defs/settings_ui_action_projection"
-    },
-    {
-      "$ref": "#/$defs/settings_concept_boundary"
     },
     {
       "$ref": "#/$defs/settings_contract_fixture_pack"
@@ -241,7 +238,6 @@
         "rollback_required",
         "route_stale",
         "doctor_projection_stale",
-        "concept_fixture_only",
         "not_applicable"
       ]
     },
@@ -1907,7 +1903,6 @@
           "enum": [
             "legacy_global_snapshot",
             "legacy_singleton_settings",
-            "legacy_browser_concept_fixture",
             "settings_export_v1"
           ]
         },
@@ -2078,88 +2073,6 @@
         },
         "receipt_refs": {
           "$ref": "#/$defs/ref_set"
-        }
-      },
-      "additionalProperties": false
-    },
-    "settings_concept_boundary": {
-      "type": "object",
-      "required": [
-        "record_type",
-        "schema_id",
-        "schema_version",
-        "artifact_ref",
-        "evidence_level",
-        "handlers_simulated",
-        "persistence_mode",
-        "allowed_claims",
-        "prohibited_claims",
-        "native_runtime_executed"
-      ],
-      "properties": {
-        "record_type": {
-          "const": "settings_concept_boundary"
-        },
-        "schema_id": {
-          "const": "pm.settings_concept_boundary.v1"
-        },
-        "schema_version": {
-          "const": "1.0.0"
-        },
-        "artifact_ref": {
-          "const": "Concepts/PMConcept7.html"
-        },
-        "evidence_level": {
-          "const": "concept_fixture_only"
-        },
-        "handlers_simulated": {
-          "const": true
-        },
-        "persistence_mode": {
-          "const": "fixture_local_non_authoritative"
-        },
-        "allowed_claims": {
-          "type": "array",
-          "items": {
-            "enum": [
-              "geometry_demonstration",
-              "content_projection_demonstration",
-              "interaction_prototype"
-            ]
-          },
-          "uniqueItems": true
-        },
-        "prohibited_claims": {
-          "type": "array",
-          "prefixItems": [
-            {
-              "const": "production_runtime"
-            },
-            {
-              "const": "production_persistence"
-            },
-            {
-              "const": "handler_wiring"
-            },
-            {
-              "const": "visual_acceptance"
-            },
-            {
-              "const": "performance_acceptance"
-            },
-            {
-              "const": "accessibility_acceptance"
-            },
-            {
-              "const": "certification"
-            }
-          ],
-          "items": false,
-          "minItems": 7,
-          "maxItems": 7
-        },
-        "native_runtime_executed": {
-          "const": false
         }
       },
       "additionalProperties": false
@@ -2592,8 +2505,7 @@
         "result_schema_ref",
         "availability_selector_ref",
         "disabled_reason_set",
-        "catalog_obligation",
-        "concept_simulation_allowed"
+        "catalog_obligation"
       ],
       "properties": {
         "semantic_owner": {
@@ -2625,9 +2537,6 @@
         },
         "catalog_obligation": {
           "const": "must_register_same_id_payload_result_selector_and_handler"
-        },
-        "concept_simulation_allowed": {
-          "const": true
         }
       },
       "additionalProperties": false

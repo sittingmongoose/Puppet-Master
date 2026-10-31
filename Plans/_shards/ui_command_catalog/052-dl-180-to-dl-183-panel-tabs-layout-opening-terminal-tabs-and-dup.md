@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L15184-L16247
 
-Source SHA256: `5bedc3626f7f376a61defa90b76bfa0b55833a36df82f2fbbc854d1aef06d22b`
+Source SHA256: `3491bf4ac2c3af84873a492558a50a7dfb1a2fab9f0c9eab5859c035297ee24c`
 
 ---
 
@@ -242,7 +242,7 @@ Added 2026-10-10 (DL-186; lead rulings F1, F2 and F7). The controls are `Plans/F
 | Agents > Show > a filter | that tab's own view state, with no command (lead ruling F7) |
 | Agents > an agent's card; Alt+click | `cmd.agents.open_thread` (the open-routes table) as a kept transcript tab; Alt+click with `where: panel` |
 
-Play the next hour, Back to now and the Demo time, which the concept also runs on dashboards, are the lab-only demo controls of `Plans/usage-feature.md#UF-107` in the one Demo Studio (`Plans/FinalGUISpec.md#F3-649`): no row. A custom dashboard closed as a tab keeps its board while it is in the reopen list and is forgotten when it leaves it unless it is open (P6); that forgetting is storage housekeeping that dispatches nothing (WS-030). Renaming a custom dashboard's tab from the tab menu is the same `cmd.panel_tab.rename` and renames the dashboard too.
+A custom dashboard closed as a tab keeps its board while it is in the reopen list and is forgotten when it leaves it unless it is open (P6); that forgetting is storage housekeeping that dispatches nothing (WS-030). Renaming a custom dashboard's tab from the tab menu is the same `cmd.panel_tab.rename` and renames the dashboard too.
 
 ### Home producer dispositions (for the wiring owner)
 

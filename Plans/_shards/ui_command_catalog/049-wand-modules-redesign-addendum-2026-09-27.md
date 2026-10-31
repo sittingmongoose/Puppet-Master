@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13836-L14980
+Source lines: L13838-L14982
 
-Source SHA256: `5bedc3626f7f376a61defa90b76bfa0b55833a36df82f2fbbc854d1aef06d22b`
+Source SHA256: `3491bf4ac2c3af84873a492558a50a7dfb1a2fab9f0c9eab5859c035297ee24c`
 
 ---
 
@@ -194,7 +194,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign initially admitted 188 product controls. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer.
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -516,7 +516,8 @@ canonical_text: 'The wand-module command census classifies all 196 product contr
   No control is Open. The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
   state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with taught_rule_check and obeys
   UCC-172''s empty-composer, source-thread and no-send contract (DL-138). Amended 2026-10-29 (PM7): S5: census now has
-  196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.'
+  196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false
@@ -555,35 +556,34 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-112, #DL-118, #DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-134, #DL-135, #DL-136"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
-  - "cmd.chat_room.next_round"
-  - "set_pause_between_rounds"
-  - "pause_between_rounds"
-  - "DL-138"
-  - "message_chrome"
-  - "taught_rule_check"
-  - "CONCEPT_DEMO_ONLY"
-  - "crew_auto_receipt"
-  - "delivery_mode"
-  - "cmd.chat_room.end"
-  - "cmd.bsd.finding.dismiss"
-  - "cmd.bsd.catch_up.release"
-  - "cmd.chat.teach.revoke"
-  - "cmd.chat.teach.set_lock"
-  - "cmd.chat.memory.export"
-  - "cmd.brainstorm.research_lead"
-  - "cmd.collaboration.configure"
-  - "cmd.review.send_findings_to_agent"
-  - "cmd.chat.eli5.set"
-  - "cmd.chat.eli5.explain_reply"
-  - "cmd.runtime.automation_pause.set"
-  - "eli5_sheet"
-  - "Explain this reply simply"
-  - "general.interaction.eli5-default"
+- cmd.chat_room.next_round
+- set_pause_between_rounds
+- pause_between_rounds
+- DL-138
+- message_chrome
+- taught_rule_check
+- crew_auto_receipt
+- delivery_mode
+- cmd.chat_room.end
+- cmd.bsd.finding.dismiss
+- cmd.bsd.catch_up.release
+- cmd.chat.teach.revoke
+- cmd.chat.teach.set_lock
+- cmd.chat.memory.export
+- cmd.brainstorm.research_lead
+- cmd.collaboration.configure
+- cmd.review.send_findings_to_agent
+- cmd.chat.eli5.set
+- cmd.chat.eli5.explain_reply
+- cmd.runtime.automation_pause.set
+- eli5_sheet
+- Explain this reply simply
+- general.interaction.eli5-default
 negative_constraints:
-  - "Do not give an Open control a command, surface or label before its card or follow-up is answered."
-  - "Do not list or register the concept demo controls."
-  - "Do not treat the census's Surfaces column as adding producer surfaces beyond UCC-169, UCC-171, UCC-172, UCC-174, UCC-175, UCC-205, UCC-206 and UCC-207."
-  - "Do not give the wand's ELI5 row a command; it only opens the ELI5 sheet."
+- Do not give an Open control a command, surface or label before its card or follow-up is answered.
+- Do not treat the census's Surfaces column as adding producer surfaces beyond UCC-169, UCC-171, UCC-172, UCC-174, UCC-175,
+  UCC-205, UCC-206 and UCC-207.
+- Do not give the wand's ELI5 row a command; it only opens the ELI5 sheet.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md

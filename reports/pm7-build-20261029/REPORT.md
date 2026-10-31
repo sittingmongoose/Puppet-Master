@@ -1,3 +1,26 @@
+# DL-260 mainline cleanup — 2026-10-31
+
+**All 17 focused/generation/guard checks PASS.** Jared’s **Q3 B** cleanup is separate from pushed DL-259. **18 owner/index documents, 39 existing units amended/retired, one new DL-260.** Prose preceded companions; no ledger compiled. [DEMO-CLEANUP.md](DEMO-CLEANUP.md) has the requested 14-document table, counts, removals and preserved product rules, plus companion actions.
+
+The original baseline was **14 documents / 115 literal mentions**. Active owner prose now has **zero** Demo Studio mentions. All **38 historical mentions and every pre-DL-260 Decision Log byte remain unchanged**; the new superseding entry has three mentions. F3-649, ACD-474 and DR-070 are retired historical anchors with no GUI/work/dependencies/implementation surfaces. No active unit depends on them and no hidden bridge debt remains. Concepts and historical audits/ledgers are untouched.
+
+**Kept:** Guided Tour and its isolation/owner actions; real shared theme/Adjust and Pip voice/sound; Usage Live/Pause and honest data; exact tab/agent/capture identities; real progress, error, currentness and Ready receipts; shared overlay/hover/conversation ownership; Q13’s 60 s dock lines and all QA2/DL-259 product rulings. No demo-only row was added to the **126-row CHANGE-COVERAGE** table.
+
+**Companions:** removed the Settings prototype root record and two cases, simulation policy on five command contracts, prototype import source/disabled reason, browser-only onboarding projection branches/retry intent and five cases. Nineteen real state/currentness vectors retain owner shapes; Ready still requires an actual owner receipt. Removed hidden bridge source tokens and three lab verb exclusions/catalog obligations. Existing Onboarding inline bundle is materialized. One ordinary Touch source hash was refreshed after the fixture deletion; its initial drift is fixed. No new primary/local command, setting, event or storage family.
+
+**Proof:** onboarding **125 positive / 236 negative**, Settings **29 / 29**, Remote **110 / 107**, Tour **24 / 59**, PM7 **108 schema cases**; canon, QA2, NieR, Touch, wiring, registries, coverage, shards/index and history guards pass. All **500 prior artifact hashes remain unchanged**; **520** retained artifacts now have SHA-256 records in verification.json. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/demo-cleanup-`. Regeneration changes only **17 edited-source groups**.
+
+**Census:** 1010 settings; 483 bindings / 61 source families; 715 Touch rows / 140 profiles; 1269 production entries; 7243 units / 96 indexed docs; 2958 shards / 99 sources. Native runtime, visual/audio acceptance and readiness remain separate.
+
+**Open:** the four report-only Server owner admissions in OWNER-QUESTIONS.md; final GUI name signal, onboarding’s small follow-up and independent coverage audit. No additional scope uncertainty from this cleanup. **No full gates, dry landing, landing, lock, reseal, baseline refresh or protected-governance edit.** Waiter is off under the lead’s direct-wake instruction. Earlier checkpoint sections below are historical and superseded where DL-259/260 amend them.
+
+
+**Fields final report:** `fe981f3b38` read in full. Its four requested canon corrections were already DL-259; six coverage cells now name the precise existing owner routes, including selected-source repository listing/Project add for imports and discover/browse/unlock/preview for Restore. All 126 product rows remain; no hints, sample keys, fixture worlds or O55 helpers become canon.
+
+**Final diff correction:** twelve unrelated whitespace-only owner edits were restored. The repository generator regenerated eleven unchanged metadata groups using committed manifest timestamp seeds; the final diff/guard has no unrelated source group. No generated file was hand-edited. Earlier draft check artifacts remain historical; the current command list uses the corrected outputs.
+
+---
+
 # DL-259 server final-report delta — 2026-10-31
 
 **10 affected focused/generation/guard checks PASS.** Base checked checkpoint `ad73d6fe6d` is pushed to both remotes. The server final report is now read in full and its confirmed product rules are applied, prose first, then companions. Creating no longer executes optional remote setup: a separate view after actual owner settlement remains inside `automatic_preparation`, before the normal provider continuation. Later always finishes without undoing Project/owner effects or inventing Ready. Shell/Settings/status consume actual owner IDs and projections, not setup-plan intent or a concept-global handoff store.

@@ -22152,7 +22152,6 @@ negative_constraints:
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the event moves to payload 2.0.0 once Event Authority admits it, and the selected layout to v2; v1 slot and receipt schemas stay the v1 readers."
 - "Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42, registry revision 2026-10-09.1); the admission condition is met and removed from the canonical text."
-
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Shared_Integration_Runtime.md#SIR-046, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/FinalGUISpec.md#F3-515, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045
@@ -27925,7 +27924,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Settings_System.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/storage-plan.md#SP-222

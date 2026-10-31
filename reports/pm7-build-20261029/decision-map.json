@@ -2109,10 +2109,19 @@
     "bar_binding_ids": [
       "onboarding.interaction.mode",
       "tour.interaction.mode"
+    ]
+  },
+  "prototype_cleanup_2026_10_31": {
+    "decision_unit": "DL-260",
+    "ruling": "Q3 B",
+    "decider": "Jared",
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+    "retired_history_ids": [
+      "F3-649",
+      "ACD-474",
+      "DR-070"
     ],
-    "next_separate_task": {
-      "decision_unit": "DL-260",
-      "ruling": "Q3 B"
-    }
+    "history_rewritten": false,
+    "report": "DEMO-CLEANUP.md"
   }
 }

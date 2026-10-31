@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26831-L27564
+Source lines: L26807-L27538
 
-Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
+Source SHA256: `31418308979daf76ebba3677dddd28bf16a09bc24cade1b9ecea120ff1255450`
 
 ---
 
@@ -48,15 +48,12 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
   their visibility rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
-  Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. The concept
-  work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing view routes; it adds no command.
-  D7, PM7 companion review fix1, 2026-10-30 (Muse3): the concept’s agent work-dock-review adapter finds the Subagents
-  row by title through PM56_DEMO.openActivity. This title lookup is a concept limitation and can be ambiguous for equal/renamed
-  titles. Native owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept
-  is not evidence that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled
-  run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread,
-  work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
+  Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. D7: Native
+  owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept is not evidence
+  that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30;
+  DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run
+  a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
+  identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain
   until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or
   persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript
@@ -64,7 +61,8 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards
   on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs
   and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes
-  keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter.'
+  keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. Amended
+  DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false

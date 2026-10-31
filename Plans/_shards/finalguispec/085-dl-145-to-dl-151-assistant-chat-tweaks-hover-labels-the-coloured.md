@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42516-L43181
+Source lines: L42506-L43172
 
-Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
+Source SHA256: `7bc051ce8ae0804463a09becf9848a7d00b2e0ceae7c1dcb37bc77f9e76502e4`
 
 ---
 
 ## DL-145 to DL-151 — Assistant Chat Tweaks: Hover Labels, The Coloured Wand, Activity Detail, Setup Sheets, Puppet Agents, The Ask Card And Retro (2026-10-08)
 
-This addendum compiles the owner decisions DL-145 to DL-151: the sixteen tweaks Jared asked for on 2026-10-07 to the 5.6 Pro assistant chat concept, his answers on that day's eight decision cards, and the lead's rulings on the questions no card covered (recorded in each DL entry). The concept and these units land together (decision card 1). Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-473 (the working activity), ACD-480 (editor documents) and ACD-485 (the subagent live transcript), `Plans/Goal_Runtime_System.md` GRS-055, `Plans/ToDo_Runtime.md` TDR-007 and TDR-011, `Plans/Collaborative_Workflows.md` CWR-018 to CWR-020, `Plans/Scheduling_and_Quota_Resume.md` SQR-002, SQR-013 and SQR-015, the global hover tag of F3-523 and the theme token tables of F3-426. The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+This addendum compiles the owner decisions DL-145 to DL-151: the sixteen tweaks Jared asked for on 2026-10-07 to the 5.6 Pro assistant chat concept, his answers on that day's eight decision cards, and the lead's rulings on the questions no card covered (recorded in each DL entry). The concept and these units land together (decision card 1). Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-473 (the working activity), ACD-480 (editor documents) and ACD-485 (the subagent live transcript), `Plans/Goal_Runtime_System.md` GRS-055, `Plans/ToDo_Runtime.md` TDR-007 and TDR-011, `Plans/Collaborative_Workflows.md` CWR-018 to CWR-020, `Plans/Scheduling_and_Quota_Resume.md` SQR-002, SQR-013 and SQR-015, the global hover tag of F3-523 and the theme token tables of F3-426. The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks and every measured timing outside these units are not canon.
 
 ### F3-590 — Chat Hover Labels Wait For Intent And Activity Previews Dwell
 
@@ -19,35 +19,37 @@ plan_unit_id: F3-590
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never through a
-  native title (DL-145). This includes the controls the concept used to title natively: the editor's Return to chat
-  and its tabs, the model picker's provider rail and favourite stars, the history drawer's status marks and resize
-  handle, thread-search result actions, the thread-operation dialog's close, the Schedule Message send-time track, and
-  a To-Do row's full title, assignment and waiting or blocker reason. Every chat tag waits for F3-523's deliberate
+canonical_text: 'Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never
+  through a native title (DL-145). This includes the controls the concept used to title natively: the editor''s Return
+  to chat and its tabs, the model picker''s provider rail and favourite stars, the history drawer''s status marks and
+  resize handle, thread-search result actions, the thread-operation dialog''s close, the Schedule Message send-time track,
+  and a To-Do row''s full title, assignment and waiting or blocker reason. Every chat tag waits for F3-523''s deliberate
   intent, unchanged, with no faster hand-off from one tag to the next, and a press on an anchor closes its tag until
-  the pointer leaves that anchor (F3-523). The owner's request that the chat's hover labels wait longer is met by
-  F3-523's thresholds, which the concept now follows. Activity bar domain previews are interactive hover cards, not
-  tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
-  opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
-  switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
-  measures is a lab value (ACD-474). Previews are the one exception to the hover tag rule (owner decision of 2026-10-09,
-  DL-157): the chat shows one hover surface at a time, so a tag opened inside an open preview would replace the
-  preview card under the pointer, and no control inside an open activity bar domain preview opens a hover tag. Such a
-  control names itself by its visible text or accessible name, and a native title it carries there is the only
-  tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview's rows carry the native title Open
-  followed by the agent's name, the Artifacts preview's rows Open followed by the artifact's title, the Changes
-  preview's rows the file's path and its change summary, and the Crew preview's member rows, drawn while no Crew run
-  is live, the member's name; the Goal preview's controls (Pause or Resume, Edit, whose accessible name stays Edit
-  objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
-  preview's rows and its more-items and blocked-count lines, a collaboration kind's run rows, a live Crew run's rows and every preview's
-  head carry neither a native title nor a tag. The exception covers only controls inside an open preview: the
-  activity bar's domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal panel's Edit
-  objective and a To-Do row in Activity Detail keep their hover tags.
+  the pointer leaves that anchor (F3-523). The owner''s request that the chat''s hover labels wait longer is met by F3-523''s
+  thresholds, which the concept now follows. Activity bar domain previews are interactive hover cards, not tags: a pointer
+  opens one only after a deliberate dwell, long enough that passing between the composer and the bar opens none; keyboard
+  focus on a domain opens its preview at once; moving to another domain while a preview is open switches at once; and
+  a preview closes after the same short departure grace as a tag. Previews are the one exception to the hover tag rule
+  (owner decision of 2026-10-09, DL-157): the chat shows one hover surface at a time, so a tag opened inside an open
+  preview would replace the preview card under the pointer, and no control inside an open activity bar domain preview
+  opens a hover tag. Such a control names itself by its visible text or accessible name, and a native title it carries
+  there is the only tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview''s rows carry the
+  native title Open followed by the agent''s name, the Artifacts preview''s rows Open followed by the artifact''s title,
+  the Changes preview''s rows the file''s path and its change summary, and the Crew preview''s member rows, drawn while
+  no Crew run is live, the member''s name; the Goal preview''s controls (Pause or Resume, Edit, whose accessible name
+  stays Edit objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
+  preview''s rows and its more-items and blocked-count lines, a collaboration kind''s run rows, a live Crew run''s rows
+  and every preview''s head carry neither a native title nor a tag. The exception covers only controls inside an open
+  preview: the activity bar''s domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal
+  panel''s Edit objective and a To-Do row in Activity Detail keep their hover tags. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
 split_recommended: false
-depends_on: [DL-145, F3-523, ACD-474, DL-157]
+depends_on:
+- DL-145
+- F3-523
+- DL-157
 unblocks: []
 acceptance_criteria:
   - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
@@ -83,13 +85,12 @@ negative_constraints:
   - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
   - "Do not open an activity preview for a pointer passing through."
 compatibility_only_notes: []
-stale_retired_dispositions:
-  - "The concept's earlier label timings (about 400 ms, then about 1 s with a 120 ms hand-off) and its 220 ms preview dwell are retired; none of them was canon (ACD-474)."
+stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Decision_Log.md#DL-157
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-591 — Opening More Keeps The Message Chrome On Its Row
 

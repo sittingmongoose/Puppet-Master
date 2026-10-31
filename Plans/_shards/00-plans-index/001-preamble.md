@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L22
+Source lines: L1-L25
 
-Source SHA256: `a1201db0c0c21c585d1e661eb99c6e58c25417605fbc711fa55673930acb0546`
+Source SHA256: `593e4b796410d679d98b4f99773d5a65bed43ae037398862aa2ea749cd7f648a`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-260 applies Jared’s Q3 B product-only canon rule to inherited material. Retired lab contracts retain historical IDs only; real Guided Tour, shared chat, Usage Live/Pause and Settings ownership remain. Product companions remove prototype-only admission and acceptance obligations. Historical decision entries remain unchanged.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-260, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/DRY_Rules.md#DR-075
 
 - 2026-10-31: DL-259 server final-report delta: safe private claim/recovery prerequisites, owner-validated Remote Link codes, effective app context from existing owners, and optional remote setup after Creating with Later always finishing. Certificate/private-channel/first-local-claim/code-protocol questions remain report-only; no missing owner operation is fabricated.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/Server_System.md#SRV-013

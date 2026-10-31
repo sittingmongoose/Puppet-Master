@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28094-L28549
+Source lines: L28049-L28473
 
-Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
+Source SHA256: `31418308979daf76ebba3677dddd28bf16a09bc24cade1b9ecea120ff1255450`
 
 ---
 
@@ -112,82 +112,52 @@ plan_unit_id: ACD-504
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in under
-  F3-637 and bound by ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is the column's
-  ui.chat_column.pin_history and its header menu carries the column's Keep open choice. Activity Detail and its
-  bounded hover previews remain inside the chat. The lab header, lab editor pane, lab status bar and chat-local
-  Demo Studio launcher are absent from hosted mode. Booting the chat opens no plan or other panel tab. Every
-  opened body uses the correct host kind and domain identity from ACD-500: exact plan revision and Deep Plan
-  discovery as plan, versioned artifact as artifact, file or diff as editor, child transcript as transcript,
-  collaboration and evidence as run or its owner document, thread detail as context,
-  rules/memory/revert/debug/Lens/Wonderer as document, tool calls as record, addresses as browser, command
-  sessions as terminal. The host owns each body, its strip, deduplication and focus, and reports close and
-  activation so the chat's run card relinquishes or restores its controls. A user open takes focus, an
-  unsolicited agent open stays in the background, and modifier file opens keep F3-634's rules. Wand setup and
-  thread dialogs remain app modals; attachments open their artifact/file owner while More Info remains a
-  popover; Plan Export/PDF remains a print/download and Send to Planning Wizard remains page navigation. The
-  stale Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to the
-  existing terminal and retained-output routes, never draws an interactive shell or adds Explain. Presentation
-  follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR Mode parts and Reduced
-  Motion; container width drives the chat and hosted tab bodies, while app modals use the window. The app's
-  hover controller owns tags and the sheet's keyboard trap exists only while that sheet is open; unmodified chat
-  shortcuts require focus in chat and Escape stops at the innermost surface. Settings preferences follow
-  SSYS-055; a concept adapter exposes renderer projections without making those global names product APIs.
-  DL-218's Wonderer and Grill Me behavior and DL-231's automatic Chat Room rounds remain intact. All
-  demonstration launches and family mixers are sections of F3-649's one Demo Studio. The port's screenshots,
-  fixtures and browser checks remain concept evidence; unmet native requirements stay owed. Amended 2026-10-23
-  (DL-233): the concept's scripted stand-in chat and its Demo Studio swap are removed; the hosted assistant is
-  the column's only conversation surface, and its own controls open the panels. Demo fixture workspaces may use
-  ordinary Home tabs under the concept-only disposition of ACD-500, never native kinds or product routes.
-  Integrated concept 59ca2d4382 implements the id-to-kind table in pm7-port/js/60-surfaces.js: plan aliases
-  converge on one plan tab; deep-discovery is plan; bare and revision artifacts are artifact; thread-<agent> is
-  read-only transcript; collab-run, crew-work, review, room, brainstorm and their evidence are run; teach,
-  memory, revert, debug, lens and wonderer sources are document; search, mcp, app and work-record are record;
-  link is Home Browser; file is the Home editor, with a change opening diff view. goal-artifact opens Activity
-  Detail without a tab. Lab workspace ids are marked lab and open concept-only document bodies; an unknown id
-  falls back to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
-  Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run tab is
-  active in any visible panel; closing, collapsing or hiding that panel restores the card's controls. Browser
-  capture must keep its originating thread and composer destination even after a thread switch; the concept
-  retains the thread and isolated direct delivery preserves the saved destination, but Astra's round-2 check
-  finds that composer attachment/list/insertion paths still lose it when the origin composer's destination
-  changes. Those paths need destination restoration or mismatch refusal before draft mutation. context:<thread>
-  actions target that tab's own thread. Attachment Open uses D7 for a known project file, its existing exact
-  artifact route, or an artifact-kind attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover.
-  Images have a preview; other attachment kinds disclose that the concept has no preview, and browser captures
-  are labelled fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with
-  Open in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
-  button; the simulated shell does not implement every real command. Wand sheets remain window-centred app
-  modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments, and Takes (family
-  takes, recipes and motion voice), plus Show the chat and Reset the chat demo. Start offers chat recipes;
-  Workspace offers layouts and agents opening things, with no stand-in row (DL-233). Snapshot inventory and
-  demo-lane reconciliation remain concept-only lineage in demo-inventory-20261022.md, cited in source_lineage,
-  never product counts or native evidence. Final acceptance remains pending for the hover press defect, Persona
-  clipping, shelf-header and plate-spacing sweep, and films. The window-based isPhone helper and scoped
-  body-level overlay wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055
-  separately records the Thought Stream preference, whose live display streams the concept's recorded reasoning
-  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion. Astra also finds that the
-  shared activeEditor/editorRevealed projection still counts a hidden Home panel after collapse or leaving Home.
-  The separate run-card visibility wrapper passes; fixing that shared editor state remains pending and is not
-  implied by the run-card result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default
-  narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder
-  (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s
-  painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed
-  transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new
-  chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail
-  rules remain.
+canonical_text: 'The shared assistant is the Home column''s only conversation surface (DL-232), under F3-637 and bound
+  by ACD-500/501/502. One History list serves it; History pin is ui.chat_column.pin_history, and its header offers the
+  column''s Keep open choice. Activity Detail and bounded hover previews remain inside chat. Booting chat opens no plan
+  or other panel tab. Every opened body uses the exact domain identity and registered kind in ACD-500: plan revision
+  and discovery as plan, versioned artifact as artifact, file/diff as editor, child feed as transcript, collaboration/evidence
+  as run or owner document, thread detail as context, rules/memory/revert/debug/Lens/Wonderer as document, tool calls
+  as record, addresses as browser and command sessions as terminal. Goal stays in Activity Detail. Unknown IDs grant
+  no kind or route. The host owns body, strip, deduplication and focus, and reports close/activation to chat. A user
+  open takes focus; unsolicited agent opens stay in the background, and file modifiers obey F3-634. Wand setup/thread
+  dialogs are app modals; attachments use their exact artifact/file owner; More Info is a bounded popover; export/print
+  and Send to Planning Wizard keep their existing routes. A run card yields controls only while its run tab is active
+  in a visible panel; close, collapse, narrow hiding or leaving Home restores them and clears shared editor-revealed
+  state. Browser capture retains its original thread and composer destination through thread switches and every attachment/list/insertion
+  path. If the origin destination changed, restore the saved destination or refuse before mutating a draft. Context actions
+  use their own tab''s thread; attachment viewers preserve thread/message/attachment identity. Images have a preview;
+  other kinds state truthfully when no preview exists. The compact command card hands off to the exact terminal or retained
+  output, with Open in Terminal, View output and Rerun in Terminal, no embedded interactive shell, duplicate Show Terminal
+  control or Explain action. All five families'' Light/Dark variants, shared fonts, NieR parts and Reduced Motion reach
+  the column and hosted bodies. Container width governs those bodies; window size governs app modals. The shared hover
+  owner controls tags; a sheet traps keys only while open; unmodified chat shortcuts require chat focus, and Escape closes
+  only the innermost surface. Settings use SSYS-055 and their admitted application/Project/current-chat scopes. DL-218''s
+  Wonderer/Grill Me and DL-231''s automatic Chat Room rounds remain. The accepted Guided Tour keeps its teaching surface
+  while this chat is hidden, under PWIZ-036. These are product requirements; source prototypes and browser results do
+  not certify native completion. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout,
+  900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis
+  and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a
+  descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores
+  the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved
+  message minimum, History and Activity Detail rules remain. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
 depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055, DL-234]
 unblocks: []
 acceptance_criteria:
-  - "One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome."
-  - "Each surface opens through the existing owner and kind; closing or activating a run tab updates its card."
-  - "All admitted preferences use SSYS-055, and concept-only choices remain in the Demo Studio."
-  - "Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain."
+- One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome.
+- Each surface opens through the existing owner and kind; closing or activating a run tab updates its card.
+- Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat
+  to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek
+  rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible
+  must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width,
+  rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity
+  Detail rules remain.'
+- Every admitted preference uses SSYS-055 and its existing Settings transaction owner.
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -211,8 +181,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Keep open
 negative_constraints:
   - "Do not draw a second editor pane, context drawer, browser modal or inline terminal in hosted mode."
   - "Do not weaken ACD-500 when an implementation is incomplete."

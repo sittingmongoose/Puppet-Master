@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11908-L12052
+Source lines: L11905-L12057
 
-Source SHA256: `5bedc3626f7f376a61defa90b76bfa0b55833a36df82f2fbbc854d1aef06d22b`
+Source SHA256: `3491bf4ac2c3af84873a492558a50a7dfb1a2fab9f0c9eab5859c035297ee24c`
 
 ---
 
@@ -37,7 +37,6 @@ census, not a new command family.
 | Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
 | Usage room/scope/range/disclosure/filter selection (the rail's More overflow is retired, UF-093; amended 2026-10-17, review r1) | `view_only` local projection | No command; settled preference persistence remains storage-owned. |
 | Usage Live / Paused (rail head, beside Usage) | `view_only` local projection | No command; holding or applying arriving Usage projection updates is a view choice, and the remembered choice is the storage-owned Usage view preference `live` (`Plans/usage-feature.md#UF-095`). |
-| Usage Play the next hour, Back to now, and the concept feature switches | the lab-only disposition of `Plans/usage-feature.md#UF-107` | No command; UF-107 owns the exclusion. |
 | Context ring popup/hover | `view_only` local projection | No compaction and no detail-open dispatch. |
 | Context ring `Compact Now` | `cmd.chat.compact_context` | Explicit click/choice only; visible result/receipt projection and no fabricated event family. |
 | Context ring `More Details` | `cmd.chat.open_thread_context_details` | Opens or focuses the existing shared thread Context Detail Pane. |
@@ -57,58 +56,68 @@ plan_unit_id: UCC-147
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Every PMConcept7 producer resolves to an existing catalog command or an explicit
-  view_only disposition. Widget commits use cmd.widget.*, Home commits use the existing
-  workspace_layout and panel commands, Usage refresh and subject opens use
-  cmd.usage.refresh and, for Ledger usage-attempt drill-through only, cmd.nav.open_usage_subject.
-  Provider, account, and presentation-panel aggregate details remain local and dispatch
-  nothing; provider setup or management reuses cmd.settings.open. Context-ring explicit actions use
-  cmd.chat.compact_context plus the thread Context Detail Pane family. Local preview,
-  popup, hover, room, scope, range, disclosure, filter, ghost, placeholder, and animation
-  state dispatch nothing. The concept-only semantic preset alias normalizes to
-  cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
-  remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
-  The redesigned Usage page (2026-10-09) adds no command. On its Accounts room the card body and
-  Details stay local, Use this account dispatches cmd.account.select_profile, shown only when
-  supports_manual_set_active holds, each provider's Auto-switch toggle and switch level at scope
-  provider and each account's own switch level at scope account (D43, 2026-10-10) commit through
-  cmd.settings.transaction.preview and then cmd.settings.transaction.apply, with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
-  period are edited. Usage board gravity commits inside the one cmd.widget.move, cmd.widget.resize,
-  cmd.widget.add or cmd.widget.remove of the action that caused it, and Tidy commits the whole
-  repacked room as one settled layout transaction through exactly one existing cmd.widget.move that
-  carries the optional arrange field { mode: tidy, detail }, with one receipt and the repack computed
-  by the owner, never one move per card. A size-picker preset
-  commits one cmd.widget.resize and stores its preset_id; chart type and gear options use
-  cmd.widget.configure; the head Export menu and the Ledger table export use cmd.usage.export with
-  scope snapshot or ledger; alert Acknowledge and Snooze use cmd.alert.acknowledge and
-  cmd.alert.snooze. Live / Paused is view_only with its remembered choice storage-owned, and the
-  concept's demo controls take the lab-only disposition UF-107 owns.
-  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: addressed by board_id).
-  Amended 2026-10-10 (DL-186): those dashboard widget rows name their board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab's own controls are UCC-200's Dashboard tab controls table.
-  Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by its owner: the head's
-  Cards menu (DL-230; a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
-  every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu's Fit rows, one
-  cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits, the
-  same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route
-  through cmd.provider.switch_route and Keep guard through cmd.alert.acknowledge (Allow once is not offered
-  until UF-083's owner admits a command). Refresh and Export are named by the shared hover tag and aria-label,
-  never a native title (UF-089).
+canonical_text: 'Every PMConcept7 producer resolves to an existing catalog command or an explicit view_only disposition.
+  Widget commits use cmd.widget.*, Home commits use the existing workspace_layout and panel commands, Usage refresh and
+  subject opens use cmd.usage.refresh and, for Ledger usage-attempt drill-through only, cmd.nav.open_usage_subject. Provider,
+  account, and presentation-panel aggregate details remain local and dispatch nothing; provider setup or management reuses
+  cmd.settings.open. Context-ring explicit actions use cmd.chat.compact_context plus the thread Context Detail Pane family.
+  Local preview, popup, hover, room, scope, range, disclosure, filter, ghost, placeholder, and animation state dispatch
+  nothing. The concept-only semantic preset alias normalizes to cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
+  remains rejected with no alias, and no PM7-only or duplicate primary command row is created. The redesigned Usage page
+  (2026-10-09) adds no command. On its Accounts room the card body and Details stay local, Use this account dispatches
+  cmd.account.select_profile, shown only when supports_manual_set_active holds, each provider''s Auto-switch toggle and
+  switch level at scope provider and each account''s own switch level at scope account (D43, 2026-10-10) commit through
+  cmd.settings.transaction.preview and then cmd.settings.transaction.apply, with Open in Settings on cmd.settings.open,
+  which is also where the provider''s warning level and rest period are edited. Usage board gravity commits inside the
+  one cmd.widget.move, cmd.widget.resize, cmd.widget.add or cmd.widget.remove of the action that caused it, and Tidy
+  commits the whole repacked room as one settled layout transaction through exactly one existing cmd.widget.move that
+  carries the optional arrange field { mode: tidy, detail }, with one receipt and the repack computed by the owner, never
+  one move per card. A size-picker preset commits one cmd.widget.resize and stores its preset_id; chart type and gear
+  options use cmd.widget.configure; the head Export menu and the Ledger table export use cmd.usage.export with scope
+  snapshot or ledger; alert Acknowledge and Snooze use cmd.alert.acknowledge and cmd.alert.snooze. Live / Paused is view_only
+  with its remembered choice storage-owned. Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and
+  extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard
+  widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field;
+  amended 2026-10-10, DL-186; it read: addressed by board_id). Amended 2026-10-10 (DL-186): those dashboard widget rows
+  name their board in the payload''s existing room field, not a board_id field, and run on the Usage board engine, so
+  gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab''s own controls are UCC-200''s
+  Dashboard tab controls table. Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by
+  its owner: the head''s Cards menu (DL-230; a check per widget through WS-019''s hide and show, Tidy this room, and
+  Reset this room or Reset every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu''s
+  Fit rows, one cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits,
+  the same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route through
+  cmd.provider.switch_route and Keep guard through cmd.alert.acknowledge (Allow once is not offered until UF-083''s owner
+  admits a command). Refresh and Export are named by the shared hover tag and aria-label, never a native title (UF-089).
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false
 depends_on: [CS-068, UCC-060, UCC-144, UCC-146, WS-019, DL-180, DL-186]
 unblocks: [WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate details use stable local identities and dispatch no UICommand.
-  - Resize and move previews dispatch nothing; a changed release dispatches exactly one cmd.widget.resize, cmd.widget.move, cmd.workspace_layout.resize_surface, or cmd.workspace_layout.move_surface command as appropriate.
-  - Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does not route through app-wide Usage.
-  - The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
-  - cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
-  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider, and a change of an account's own switch level the same pair at scope account with the account id (D43, 2026-10-10); opening a card's Details dispatches nothing."
-  - "Usage layout: a Tidy that moves cards dispatches exactly one cmd.widget.move carrying arrange { mode: tidy, detail } and one receipt for the whole repacked room, the owner computing the repack, a Tidy that moves nothing dispatches nothing, gravity adds no command beyond the action that caused it, and a size-picker preset dispatches one cmd.widget.resize whose settled record carries the preset_id."
-  - "Live / Paused and the concept demo controls of UF-107 dispatch no command and have no catalog or production wiring row; export, alert acknowledge and alert snooze reuse cmd.usage.export, cmd.alert.acknowledge and cmd.alert.snooze."
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through
+  uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level
+  attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate
+  details use stable local identities and dispatch no UICommand.
+- Resize and move previews dispatch nothing; a changed release dispatches exactly one cmd.widget.resize, cmd.widget.move,
+  cmd.workspace_layout.resize_surface, or cmd.workspace_layout.move_surface command as appropriate.
+- Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does
+  not route through app-wide Usage.
+- The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
+- cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup
+  or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
+- 'Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active
+  is false; a change of a provider''s Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview
+  and one bound cmd.settings.transaction.apply at scope provider, and a change of an account''s own switch level the
+  same pair at scope account with the account id (D43, 2026-10-10); opening a card''s Details dispatches nothing.'
+- 'Usage layout: a Tidy that moves cards dispatches exactly one cmd.widget.move carrying arrange { mode: tidy, detail
+  } and one receipt for the whole repacked room, the owner computing the repack, a Tidy that moves nothing dispatches
+  nothing, gravity adds no command beyond the action that caused it, and a size-picker preset dispatches one cmd.widget.resize
+  whose settled record carries the preset_id.'
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- Live/Pause dispatches no command or production row; export, alert acknowledge and snooze reuse cmd.usage.export, cmd.alert.acknowledge
+  and cmd.alert.snooze.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -139,13 +148,12 @@ preserved_exact_tokens:
   - Tidy
   - Live / Paused
 negative_constraints:
-  - Do not register commands for popup disclosure, hover, pointer preview, or cancellation.
-  - Do not dispatch cmd.nav.open_usage_subject for provider, account, or presentation-panel aggregate details.
-  - Do not mint a command for Tidy, gravity, size presets, Live / Paused, or the lab-only demo controls, and do not commit Tidy as one move per card.
-  - Do not write a provider's auto-switch values from Usage except through the Settings transaction.
-  - Do not attach OpenSubject to a Usage object route.
-  - Do not create a PM7 command namespace or duplicate primary command row.
-  - Do not revive or alias a rejected provider-management command.
+- Do not register commands for popup disclosure, hover, pointer preview, or cancellation.
+- Do not dispatch cmd.nav.open_usage_subject for provider, account, or presentation-panel aggregate details.
+- Do not write a provider's auto-switch values from Usage except through the Settings transaction.
+- Do not attach OpenSubject to a Usage object route.
+- Do not create a PM7 command namespace or duplicate primary command row.
+- Do not revive or alias a rejected provider-management command.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the Home rows of this census move to UCC-200."
   - "Amended 2026-10-10 (DL-186): dashboard widget rows name their board in room, not board_id, and follow the Usage board's gravity and Tidy."

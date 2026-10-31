@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L3547-L3571
 
-Source SHA256: `3abb1cf569e859bf71410fc96b1de66de1dee6e1465ffb6f739965f2805c403c`
+Source SHA256: `a92e936be3bb00e216d271ae7540f1bc64d8bcd0c091736516699b1cc58b5f84`
 
 ---
 
@@ -26,7 +26,7 @@ Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces the Home model o
 | Home settings rows built on the old model (panel dock, chat layout mode, terminal layout style) | `Plans/settings_inventory.json` | `Plans/Settings_System.md#SSYS-050` and `#SSYS-051` |
 | The Guided Tour's step that moves or docks the chat | PWIZ-023, F3-521 | The tour's workspace chapter (`Plans/Planning_Wizard.md#PWIZ-035`) |
 | Home certification built on four editor panels | ATS-029 | `Plans/Automated_Testing_System.md#ATS-075` (panels) and `#ATS-076` (terminal tab) |
-| One panel and tab grammar, gesture kit, overlay root, terminal appearance model, bans, Demo Studio and opening module | the 2026-08-04 Home owner boundary in `Plans/DRY_Rules.md` | `Plans/DRY_Rules.md#DR-065` to `#DR-071` |
+| One panel and tab grammar, gesture kit, overlay root, terminal appearance model, bans and opening module | the 2026-08-04 Home owner boundary in `Plans/DRY_Rules.md` | `Plans/DRY_Rules.md#DR-065` to `#DR-069` and `#DR-071` |
 | The words: terminal section, terminal tab, terminal pane, panel, tab | G-010 | `Plans/Glossary.md#G-030`, with G-010 amended |
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-640, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/Glossary.md#G-030

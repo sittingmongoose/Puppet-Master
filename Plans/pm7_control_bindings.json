@@ -9140,8 +9140,7 @@
           "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
           "tokens": [
             "work-dock-review",
-            "PM56_PMX.dock.provide(workDock)",
-            "PM56_DEMO.openActivity"
+            "PM56_PMX.dock.provide(workDock)"
           ],
           "concept_only": true
         }
@@ -9155,15 +9154,14 @@
       "action_ids": [],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Concept work-dock-review selects Subagents by {title: it.title}, which can be ambiguous. Native selection uses signed Project/thread/owner_id and generation per CS-106, not title. Ordinary local view selection, no command or runtime effect. QA2 Q13: needs-you agent lines remain until answered; no age-based dispatch or owner mutation.",
+      "payload": "Review selects Activity Detail Subagents by signed Project/thread/owner identity and generation per CS-106; never by a title match. Local view selection has no command or runtime effect. QA2 Q13: needs-you agent lines remain until answered; no age-based dispatch or owner mutation.",
       "no_production_reason": "Ordinary Activity Detail domain/row selection is view state per UCC-210/ACD-476; no product command, new action ID, receipt, runtime or Settings write.",
       "concept_sources": [
         {
           "path": "Concepts/chat-assistant-concepts/5.6 Pro/activity-panel.js",
           "tokens": [
             "work-dock-review",
-            "PM56_PMX.dock.provide(workDock)",
-            "PM56_DEMO.openActivity"
+            "PM56_PMX.dock.provide(workDock)"
           ],
           "concept_only": true
         }

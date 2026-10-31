@@ -25131,7 +25131,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 7. **Composer Browser Launcher Exclusion (`APR-010`)**: The chat composer does not contain an internal-browser launcher button. Product browser navigation belongs to Puppet Master's Browser Program surface. Screenshot capture, component picking, and attachment workflows remain fully supported without creating a competing browser authority.
 8. **Transcript Card Grammar (`APR-011`)**: Non-working transcript cards adhere to a unified presentation grammar: consistent header hierarchy, deliberate group spacing, quiet trailing action rows, and progressive disclosure for technical telemetry. Repetitive nesting and redundant outer cards are eliminated.
 9. **Protected Working Activity (`APR-012`, `APR-046`, `APR-050`, `APR-068`)**: The perfected working activity components (Orbit and Step Rail Simple) and their choreographed animations are protected. Orbit (family 2, variant 1) is the default; Step Rail Simple (family 2, variant 8) is selectable under `general.interaction.working-activity-style`. Reset hook chaining executes each owner handler exactly once without duplicate invocation or late collision. Working DOM identity and timer ownership are preserved across ticks.
-10. **Wand Compact Hierarchy and Demo Separation (`APR-013`, `APR-014`)**: Product actions in the wand are grouped into compact submenus to fit the viewport cleanly. Concept demo loaders, fixture replays, simulations, and test harnesses are moved out of the wand into a dedicated Demo Gallery and are never registered in the product command catalog.
+10. **Wand Compact Hierarchy (`APR-013`, `APR-014`)**: Product actions in the wand are grouped into compact submenus to fit the viewport cleanly.
 11. **Reset and Asynchronous Callback Hygiene (`APR-020`)**: Thread reset, switch, or new conversation invalidates all pending asynchronous callbacks (including delayed title completion, streaming completions, and background analysis). Owner reset chains follow declared chaining where each registered owner executes exactly once.
 12. **Scheduled Message Cards and Receipts (`APR-028`)**: Pending scheduled messages render editable cards in the thread with exact trigger time, timezone, destination, and message preview. Once sent, canceled, or expired, they transition to quiet receipts. Editing reopens the bound message form rather than a generic scheduling dialog. Sent receipts navigate directly to the emitted chat turn.
 13. **Context Lens In-Flow Layout Row (`APR-033`)**: The Context Lens dropdown occupies a layout-participating row between the chat header and the transcript. Expanding the Lens pushes the transcript top downward, preventing top-message occlusion; collapsing the Lens releases the space smoothly. Lens selection, Focus, Mute, and Subcompact semantics remain intact.
@@ -26157,7 +26157,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Ext
 
 ## Chat WOW Turn Presentation Addendum (2026-09-27)
 
-This addendum carries Jared's 2026-09-26/27 decisions on the rebuilt chat transcript (DL-104 through DL-108) into this owner. The 5.6 Pro concept (`Concepts/chat-assistant-concepts/5.6 Pro/`, its `Chat updates.md`) is source lineage only; its lab tools are excluded by ACD-474. Where a unit below supersedes earlier text it says so in `stale_retired_dispositions`; everything it does not name stays as specified. The collaboration, Back Seat Driver, scheduling, memory, ELI5 and revert card internals belong to their own owners; this addendum places those items in the transcript (family, gutter, spine, accent) only.
+This addendum carries Jared's 2026-09-26/27 decisions on the rebuilt chat transcript (DL-104 through DL-108) into this owner. The 5.6 Pro concept (`Concepts/chat-assistant-concepts/5.6 Pro/`, its `Chat updates.md`) is source lineage only; only the accepted product behavior is binding. Where a unit below supersedes earlier text it says so in `stale_retired_dispositions`; everything it does not name stays as specified. The collaboration, Back Seat Driver, scheduling, memory, ELI5 and revert card internals belong to their own owners; this addendum places those items in the transcript (family, gutter, spine, accent) only.
 
 ### ACD-469 - Turn Stage Transcript Rendering Families And Accent Budget
 
@@ -26549,65 +26549,41 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-105, ContractName:Plans/Executor_Protocol.md#EP-128
 
-### ACD-474 - Lab Only Concept Controls Excluded From Canon
+### ACD-474 - Retired historical identifier
 
 ```yaml
 plan_unit_id: ACD-474
-unit_type: requirement
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The binding-by-reference of the 5.6 Pro concept (FinalGUISpec 2026-09-03 redesign section) and
-  every later promotion of it exclude its lab tools, which are never product: Demo Studio and its
-  family and variant indices, the Motion voice picker (production motion follows the theme family,
-  ACD-475), the Live turns demos and thread, the Multi Orbit demo, the working card's demo drawer
-  (play, pause, step, complete, reset, work history), the instant or stream reply switch, the
-  scripted replies, the film clock, and every measured timing recorded in the concept's notes. None
-  of them receives a command, setting, wiring row, persisted key or test gate.
-  Amended 2026-10-09 (DL-185): Demo Studio is now one for all of PMConcept7 (Plans/DRY_Rules.md#DR-070,
-  Plans/FinalGUISpec.md#F3-649): the chat's demo controls, the tour's and onboarding's, the home demos and later the
-  Orchestrator's and the Planning Wizard's are its sections, and it stays lab only under this unit's exclusions.
-gui_related: true
-gui_classification_reason: "Keeps concept lab controls out of product surfaces."
+canonical_text: ACD-474 is retired by DL-260, Jared 2026-10-31. The ID remains only for unchanged historical decision
+  references. It defines no active product feature, control, command, setting, schema, wiring, stored state, test obligation
+  or implementation debt.
+gui_related: false
+gui_classification_reason: Historical identifier only; no product UI requirement.
 split_recommended: false
-depends_on: [DL-106, DL-185, DR-070]
+depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
-  - "The working card offers no play, pause, step, complete, reset or history controls in product."
-  - "The one Demo Studio of PMConcept7 is excluded from every product catalog, setting, wiring row, persisted key and test gate, like the chat's was (DL-185)."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-risk_class: lab_control_leak
-reasoning_tier: high
-context_scope: chat_concept_boundary
-implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
-  - Plans/Settings_System.md
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: owner_exclusion_contract
+  mode: retired_no_product_work
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-106"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-185"
-  - "Plans/DRY_Rules.md#DR-070"
-  - "Plans/FinalGUISpec.md#F3-649"
+- Plans/Decision_Log.md#DL-260
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Motion voice"
-  - "Live turns"
+- DL-260
 negative_constraints:
-  - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
-  - "Do not carry concept family or variant indices into product settings."
-stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185 and DR-070 are in depends_on, and F3-649 stays in source_lineage because F3-649 depends on this unit."
+- Do not reactivate this historical identifier as a product requirement.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-106
@@ -26868,15 +26844,12 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
   their visibility rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
-  Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. The concept
-  work-dock-review adapter uses PM56_DEMO.openActivity only to demonstrate those existing view routes; it adds no command.
-  D7, PM7 companion review fix1, 2026-10-30 (Muse3): the concept’s agent work-dock-review adapter finds the Subagents
-  row by title through PM56_DEMO.openActivity. This title lookup is a concept limitation and can be ambiguous for equal/renamed
-  titles. Native owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept
-  is not evidence that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled
-  run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread,
-  work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
+  Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. D7: Native
+  owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept is not evidence
+  that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30;
+  DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run
+  a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
+  identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain
   until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or
   persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript
@@ -26884,7 +26857,8 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards
   on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs
   and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes
-  keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter.'
+  keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. Amended
+  DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Defines the dock above the composer and the attention items it shows."
 split_recommended: false
@@ -27565,7 +27539,7 @@ ELI5 contracts: `cmd.chat.eli5.set` (`ELI5ThreadOverrideRequest`, on, off or inh
 
 ## Chat Tweaks Addendum (2026-10-08)
 
-This addendum carries DL-147's subagent decision into this owner. What opening a subagent does is ACD-485's; how the live transcript looks is FinalGUISpec F3-593's. The 5.6 Pro concept is source lineage only, and its lab tools stay excluded by ACD-474.
+This addendum carries DL-147's subagent decision into this owner. What opening a subagent does is ACD-485's; how the live transcript looks is FinalGUISpec F3-593's. The 5.6 Pro concept is source lineage only.
 
 ### ACD-485 - A Subagent Opens As A Read-Only Live Child Transcript
 
@@ -27643,7 +27617,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assis
 
 ## DL-180, DL-181 and DL-185 — What The Chat Opens, Its Column, Its Command Card And The Port (2026-10-09)
 
-This addendum carries the universal panels redesign into this owner (`Plans/Decision_Log.md#DL-180`, `#DL-181`, `#DL-185`). The chat no longer brings a workspace of its own: everything it opens lands in the home centre through the one opening module (`Plans/FinalGUISpec.md#F3-634`), its column is the fixed column of `Plans/FinalGUISpec.md#F3-637`, its inline "Shell" box becomes a compact command card, and its terminal cards hand off to terminal tabs. ACD-500 owns what the chat opens where, the chat column as this document reads it, the command card and how Teacher explains commands; ACD-501 owns what the 5.6 Pro chat has to meet when it is ported; ACD-502 re-homes the chat's terminal cards. They supersede the "left editor/document tab system" and the Return to chat control of ACD-455 and v3 item 15 for Home, the "beside the chat" placement of ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, the chat's Goal tab, the terminal card's Detach/Pop-Out (ACD-128) and ACD-211's editor-stack mirroring. ACD-039, ACD-041, ACD-077, ACD-108, ACD-127, ACD-128, ACD-131, ACD-132, ACD-134 to ACD-142, ACD-145, ACD-207, ACD-210, ACD-214, ACD-416, ACD-443, ACD-444, ACD-448, ACD-453, ACD-455, ACD-458, ACD-474, ACD-480 and ACD-485 are amended in place, ACD-211 is superseded, and section 13.1's command card row, sections 13.3 and 22, the thread identity model, the PM7 floating-mount clarification and v3 items 15 and 19 carry dated notes. The 5.6 Pro concept, the panels concept and the terminal concept are source lineage only.
+This addendum carries the universal panels redesign into this owner (`Plans/Decision_Log.md#DL-180`, `#DL-181`, `#DL-185`). The chat no longer brings a workspace of its own: everything it opens lands in the home centre through the one opening module (`Plans/FinalGUISpec.md#F3-634`), its column is the fixed column of `Plans/FinalGUISpec.md#F3-637`, its inline "Shell" box becomes a compact command card, and its terminal cards hand off to terminal tabs. ACD-500 owns what the chat opens where, the chat column as this document reads it, the command card and how Teacher explains commands; ACD-501 owns what the 5.6 Pro chat has to meet when it is ported; ACD-502 re-homes the chat's terminal cards. They supersede the "left editor/document tab system" and the Return to chat control of ACD-455 and v3 item 15 for Home, the "beside the chat" placement of ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, the chat's Goal tab, the terminal card's Detach/Pop-Out (ACD-128) and ACD-211's editor-stack mirroring. ACD-039, ACD-041, ACD-077, ACD-108, ACD-127, ACD-128, ACD-131, ACD-132, ACD-134 to ACD-142, ACD-145, ACD-207, ACD-210, ACD-214, ACD-416, ACD-443, ACD-444, ACD-448, ACD-453, ACD-455, ACD-458, ACD-480 and ACD-485 are amended in place, ACD-211 is superseded, and section 13.1's command card row, sections 13.3 and 22, the thread identity model, the PM7 floating-mount clarification and v3 items 15 and 19 carry dated notes. The 5.6 Pro concept, the panels concept and the terminal concept are source lineage only.
 
 Amended 2026-10-10 (DL-185, DL-187, DL-188): the command card takes the terminal concept's finished words (SPEC section 11 at 01c5e78c42): a stopped command reads "Failed · exited 101", "Done · exited 0" or "Interrupted · exited 130", the lines above the preview are counted at the top as "N earlier lines", Interrupted is muted and still, and the card names who ran it and offers only the actions its session supports (ACD-500, ACD-502). Jared's answers of 2026-10-10 bring a popped-out chat back to its column after a restart and keep the chat as a left-rail entry that shows or hides the column (D32, D40); the Chat Layout setting retires and Keep the chat open in narrow windows lives on the chat's header menu. Every Open plan button opens its exact version through `cmd.chat.plan.open_version` (DL-157, lead ruling F8).
 
@@ -27654,125 +27628,101 @@ plan_unit_id: ACD-500
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Everything the chat and its wizards open lands in the home centre through the one opening module
-  (Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe
-  rule of its own (DL-180, D7, D8). Files open by F3-634's file rules from every place a person clicks
-  one in the chat: a file name or path in a message or card, a diff view, a Changes row of Activity
-  Detail, a transcript file record, and a Read: or Edited: entry of the files-touched strip. A single
-  click opens the panel's one preview tab, with an italic label, which the next single click replaces;
-  a double click, an edit or dragging the tab keeps it; a file already open anywhere is revealed where
-  it is, never opened twice; Alt+click opens it in a new panel. A diff opens the editor in its diff
-  mode at the file and line it names, never a diff drawn by the chat. Everything else the user clicks
-  in the chat opens and takes focus, each as its tab kind (F3-635): a plan revision, a Deep Plan
-  document or its discovery rounds as a plan tab (ACD-455), every Open plan button and a bound Goal's
-  Open exact Plan · Vn opening that exact version through cmd.chat.plan.open_version (DL-157,
-  Plans/UI_Command_Catalog.md#UCC-176), the Plan's own tab while that version is current and its
-  retained read-only document otherwise, never Plan Details; a collaboration run view and its evidence
-  as a run tab (ACD-480); a subagent's or a helper's history as a transcript tab (ACD-485); the
-  thread's More Details as that thread's context tab, one per thread (ACD-448); a fetched page or a
-  link as a browser tab; a search, MCP, app-inspector or work record as a record tab; the rules list,
-  Gist Review, a revert's files, a debug investigation, a lens source and Wonderer results as document
-  tabs; an artifact card's Open, an attachment's Open and an artifact embedded in a plan as the
-  artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065), or the editor for a file; a Mermaid
-  diagram card's Open in editor as an editor buffer tab holding the diagram's source, and its Open
-  detached preview as the artifact viewer tab showing the rendered diagram, never a separate window
-  (section 28); a command's session as its terminal tab (ACD-502). Each open dispatches the route
-  Plans/UI_Command_Catalog.md#UCC-200 lists for the thing opened, with the placement fields of
-  Plans/Contracts_V0.md#CV-360. What an agent opens by itself, for example a Deep Plan document it
-  wrote (ACD-041) or a terminal it started (ACD-502), lands as a background tab with the hollow square
-  and a polite announcement, never takes keyboard focus and never changes the active tab of a panel
-  the user is typing in; files an agent opens open kept, and terminals, browsers, dashboards and the
-  tool tabs go where F3-634's kind affinity puts them. These stay out of the panels: Activity Detail
-  stays inside the chat (D3, F3-637, v3 item 2); the wand's setup sheets, the debug-target prompt and
-  the thread dialogs are app modals in the one overlay root (Plans/DRY_Rules.md#DR-067); Plan Export
-  and PDF are a download or a print window; Send to Planning Wizard goes to the Planning Wizard page;
-  an attachment's More Info stays a popover. The chat's Goal tab is gone (DL-147): View goal shows the
-  Goal panel of Activity Detail. The concept's lab-only workspaces have no product open route
-  (ACD-474). Amended 2026-10-22 (DL-232): only the concept's Demo Studio may mount its example fixture
-  bodies in ordinary Home tabs. Those fixture workspaces are not native tab kinds, domain commands,
-  storage families or product surfaces, and their existence proves no runtime admission. The 5.6 Pro
-  chat's contract with its editor pane maps onto the module this way. Open or focus by a stable
-  identity is the module's one id, one tab rule: the chat names the thing by its domain identity (a
-  plan revision, a run, a child run's thread, a thread's context, a file path, an artifact and its
-  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so a
-  plan's query form and its plan id open one tab. The chat supplies the label of a tab whose body it
-  draws and may change it. It draws into a body the host owns and redraws it when asked; the host owns
-  the strip, the panel and the placement (F3-635's host contract). Closing is cmd.panel_tab.close
-  (cmd.editor.close_tab is its alias), and the host tells the chat when a tab it draws has closed, so
-  a run card gets its controls back. The host tells the chat which tab is active in each panel, so
-  Plans/FinalGUISpec.md#F3-569's run-card rule holds while a run tab is active. Narrow reveal is
-  F3-634's narrow rule and Plans/FinalGUISpec.md#F3-636's panel switcher. The chat is never a tab.
-  Return to chat retires for Home: no tab ever covers the chat, and when the chat has folded to its
-  narrow edge strip that strip opens it again (F3-636). The chat column is F3-637's: fixed on the
-  right from the title bar to the status bar, never a tab, never in the split tree and never moved
-  inside the window; Pop out in the desktop app is its only way to move and Dock back returns it to
-  its column; the web client offers no Pop out and the chat stays in its column (F3-637)
-  (Plans/UI_Command_Catalog.md#UCC-203). A popped-out chat starts back in its column after a restart:
-  the pop-out is never saved (DL-187, D32). Showing and hiding the chat are F3-637's (cmd.panel.switch
-  with chat, UCC-203); the chat stays an entry of the left rail, which shows or hides the column on
-  every page (DL-187, D40). The chat has no layout mode to choose: the Chat Layout setting retires
-  (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag range, the limit that keeps the
-  centre wide enough, the one that keeps the Usage page's board at least 400 px wide, how it eases and
-  folds in narrow windows, and the choice Keep the chat open in narrow windows, which sits on the
-  chat's own header menu and is not a Settings row, are F3-637's and F3-636's; they replace every chat
-  minimum this document stated (ACD-458, ACD-480, v3 item 19). The chat sizes itself by its own
-  column, never by the window (ACD-501). The History list is the 5.6 Pro chat's and the only
-  thread-history list (ACD-444's Chats rail goes when the chat is ported). It opens as a flyout over
-  the chat by default; pinning it widens the column by the list's own width instead of narrowing the
-  messages. The pin is kept in the chat column state of the home layout record
-  (Plans/storage-plan.md#SP-330), and the setting general.interaction.chat-history-list
-  (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity
-  Detail stays inside the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat's
-  inline Shell box is replaced by a compact command card (D27). It shows the command, the folder it
-  ran in, its status as a glyph and words, how long it ran (counting while it runs), the last lines of
-  its output as plain text, and who ran it. Amended 2026-10-10 (DL-185, terminal SPEC section 11 at
-  01c5e78c42): the status words are Running, Needs input, Done, Failed and Interrupted, and canon adds
-  Ended with the earlier session, described below; a stopped command says its exit code in words after
-  its status, "Failed · exited 101", "Done · exited 0", "Interrupted · exited 130", and a failed
-  command with no exit code reads Failed alone, so the exit code is part of the status. Interrupted is
-  muted and still, in the tone of the one status set's Skipped mark (Plans/FinalGUISpec.md#F3-585),
-  with no motion. The elapsed time is set in tabular figures and updated once a second from one timer
-  that every card shares, so the line never shifts. The output is ACD-126's 5-line collapsed and
-  15-line expanded preview of the last lines: the lines above the window are counted at the top as "N
-  earlier lines" ("1 earlier line"), the first row fading into that count; lines keep their spacing,
-  never wrap and scroll sideways, a cut-off line fading at its edge; a line is cut at 1000 characters;
-  a finished command with no output says "No output"; expanded also shows the whole command and
-  folder. Who ran it: "You ran in <folder>", or the terminal gutter's agent mark and "<Agent> ran in
-  <folder>" with the name in the primary ink, from the command record's by
-  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). In a chat 360 px wide the failure line
-  wraps after / and :: so a file:line stays whole, and who and where take a line of their own. Nothing
-  on the card moves on first paint; a status change rolls the status word over while its line slides
-  to its new width, the glyph settles in each look's motion language, and the exit words, the failure
-  line and Rerun in Terminal come in after; new output scrolls the window a row at a time, jumping
-  when more than 3 lines arrive at once; expanding and collapsing grow and shrink from the last line;
-  under Reduced Motion only 120 ms fades remain. Text reaches 4.5:1 and marks 3:1 in every look and
-  mode, hover states included. Its states read the command card states of ACD-146 and are never a
-  second lifecycle: running for starting, running and restoring while the restore is under way; ok
-  (Done) for exited with exit code 0; failed for failed and exited with any other code; interrupted
-  for terminated; waiting (Needs input) for attention_required; ended for disconnected before the
-  command finished and for a restore that did not bring its session back. Ended is honest about what
-  is not known: a command whose session ended while it still ran (the page reloaded, the app restarted
-  or its session disconnected) is neither done nor failed, so the card shows the words Ended with the
-  earlier session, with no exit code, never Running, Done or Failed, as the terminal's own command
-  mark does (SMPFS-180's indeterminate finalisation, Plans/FinalGUISpec.md#F3-641). Its actions are 24
-  px text buttons and follow its session: Open in Terminal, only while the command has a live terminal
-  session, opens or reveals that session's terminal tab through F3-634 (ACD-502); Rerun in Terminal
-  once the command has stopped (ACD-108, ACD-502); View output only when there is no session
-  (ACD-129). View output, and View output log in the card's menu, open the command's retained output
-  as an editor buffer tab: read-only, kept and never a preview, titled with its command line, opened
-  and taking focus through F3-634 by cmd.panel_tab.open with an editor buffer spec, the same tab the
-  terminal's Open output in an editor tab opens (Plans/FinalGUISpec.md#F3-641,
-  Plans/UI_Command_Catalog.md#UCC-201). The chat never draws the output in a viewer of its own. Output
-  lines keep their spacing, never wrap and scroll sideways. The card has no pill, no coloured side
-  stripe and no box nested inside a card, and the chat never draws a terminal of its own. Explaining
-  commands is the Teacher persona's job in the chat (Plans/Personas.md section 11.8, DL-181, D19):
-  when the user asks about a command or its output, Teacher answers as an ordinary reply in the
-  thread. The command card and the terminal carry no Explain action, and Teacher never reads a
-  terminal on its own and never types into one. This supersedes the 5.6 Pro chat's own editor pane as
-  the host of what it opens and its inline Shell box (concept lineage), the left editor/document tab
-  system and Return to chat of ACD-455 and v3 item 15 for Home, the "beside the chat" wording of
-  ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat's Goal tab.
+canonical_text: 'Everything the chat and its wizards open lands in the home centre through the one opening module (Plans/FinalGUISpec.md#F3-634,
+  Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe rule of its own (DL-180, D7, D8). Files open by F3-634''s
+  file rules from every place a person clicks one in the chat: a file name or path in a message or card, a diff view,
+  a Changes row of Activity Detail, a transcript file record, and a Read: or Edited: entry of the files-touched strip.
+  A single click opens the panel''s one preview tab, with an italic label, which the next single click replaces; a double
+  click, an edit or dragging the tab keeps it; a file already open anywhere is revealed where it is, never opened twice;
+  Alt+click opens it in a new panel. A diff opens the editor in its diff mode at the file and line it names, never a
+  diff drawn by the chat. Everything else the user clicks in the chat opens and takes focus, each as its tab kind (F3-635):
+  a plan revision, a Deep Plan document or its discovery rounds as a plan tab (ACD-455), every Open plan button and a
+  bound Goal''s Open exact Plan · Vn opening that exact version through cmd.chat.plan.open_version (DL-157, Plans/UI_Command_Catalog.md#UCC-176),
+  the Plan''s own tab while that version is current and its retained read-only document otherwise, never Plan Details;
+  a collaboration run view and its evidence as a run tab (ACD-480); a subagent''s or a helper''s history as a transcript
+  tab (ACD-485); the thread''s More Details as that thread''s context tab, one per thread (ACD-448); a fetched page or
+  a link as a browser tab; a search, MCP, app-inspector or work record as a record tab; the rules list, Gist Review,
+  a revert''s files, a debug investigation, a lens source and Wonderer results as document tabs; an artifact card''s
+  Open, an attachment''s Open and an artifact embedded in a plan as the artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065),
+  or the editor for a file; a Mermaid diagram card''s Open in editor as an editor buffer tab holding the diagram''s source,
+  and its Open detached preview as the artifact viewer tab showing the rendered diagram, never a separate window (section
+  28); a command''s session as its terminal tab (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200
+  lists for the thing opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself,
+  for example a Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a background tab with
+  the hollow square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel
+  the user is typing in; files an agent opens open kept, and terminals, browsers, dashboards and the tool tabs go where
+  F3-634''s kind affinity puts them. These stay out of the panels: Activity Detail stays inside the chat (D3, F3-637,
+  v3 item 2); the wand''s setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
+  root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to Planning Wizard goes
+  to the Planning Wizard page; an attachment''s More Info stays a popover. The chat''s Goal tab is gone (DL-147): View
+  goal shows the Goal panel of Activity Detail. The 5.6 Pro chat''s contract with its editor pane maps onto the module
+  this way. Open or focus by a stable identity is the module''s one id, one tab rule: the chat names the thing by its
+  domain identity (a plan revision, a run, a child run''s thread, a thread''s context, a file path, an artifact and its
+  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so a plan''s query form
+  and its plan id open one tab. The chat supplies the label of a tab whose body it draws and may change it. It draws
+  into a body the host owns and redraws it when asked; the host owns the strip, the panel and the placement (F3-635''s
+  host contract). Closing is cmd.panel_tab.close (cmd.editor.close_tab is its alias), and the host tells the chat when
+  a tab it draws has closed, so a run card gets its controls back. The host tells the chat which tab is active in each
+  panel, so Plans/FinalGUISpec.md#F3-569''s run-card rule holds while a run tab is active. Narrow reveal is F3-634''s
+  narrow rule and Plans/FinalGUISpec.md#F3-636''s panel switcher. The chat is never a tab. Return to chat retires for
+  Home: no tab ever covers the chat, and when the chat has folded to its narrow edge strip that strip opens it again
+  (F3-636). The chat column is F3-637''s: fixed on the right from the title bar to the status bar, never a tab, never
+  in the split tree and never moved inside the window; Pop out in the desktop app is its only way to move and Dock back
+  returns it to its column; the web client offers no Pop out and the chat stays in its column (F3-637) (Plans/UI_Command_Catalog.md#UCC-203).
+  A popped-out chat starts back in its column after a restart: the pop-out is never saved (DL-187, D32). Showing and
+  hiding the chat are F3-637''s (cmd.panel.switch with chat, UCC-203); the chat stays an entry of the left rail, which
+  shows or hides the column on every page (DL-187, D40). The chat has no layout mode to choose: the Chat Layout setting
+  retires (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag range, the limit that keeps the centre
+  wide enough, the one that keeps the Usage page''s board at least 400 px wide, how it eases and folds in narrow windows,
+  and the choice Keep the chat open in narrow windows, which sits on the chat''s own header menu and is not a Settings
+  row, are F3-637''s and F3-636''s; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19).
+  The chat sizes itself by its own column, never by the window (ACD-501). The History list is the 5.6 Pro chat''s and
+  the only thread-history list (ACD-444''s Chats rail goes when the chat is ported). It opens as a flyout over the chat
+  by default; pinning it widens the column by the list''s own width instead of narrowing the messages. The pin is kept
+  in the chat column state of the home layout record (Plans/storage-plan.md#SP-330), and the setting general.interaction.chat-history-list
+  (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity Detail stays inside
+  the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat''s inline Shell box is replaced by a compact
+  command card (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it ran (counting
+  while it runs), the last lines of its output as plain text, and who ran it. Amended 2026-10-10 (DL-185, terminal SPEC
+  section 11 at 01c5e78c42): the status words are Running, Needs input, Done, Failed and Interrupted, and canon adds
+  Ended with the earlier session, described below; a stopped command says its exit code in words after its status, "Failed
+  · exited 101", "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads Failed alone,
+  so the exit code is part of the status. Interrupted is muted and still, in the tone of the one status set''s Skipped
+  mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is set in tabular figures and updated once a
+  second from one timer that every card shares, so the line never shifts. The output is ACD-126''s 5-line collapsed and
+  15-line expanded preview of the last lines: the lines above the window are counted at the top as "N earlier lines"
+  ("1 earlier line"), the first row fading into that count; lines keep their spacing, never wrap and scroll sideways,
+  a cut-off line fading at its edge; a line is cut at 1000 characters; a finished command with no output says "No output";
+  expanded also shows the whole command and folder. Who ran it: "You ran in <folder>", or the terminal gutter''s agent
+  mark and "<Agent> ran in <folder>" with the name in the primary ink, from the command record''s by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183).
+  In a chat 360 px wide the failure line wraps after / and :: so a file:line stays whole, and who and where take a line
+  of their own. Nothing on the card moves on first paint; a status change rolls the status word over while its line slides
+  to its new width, the glyph settles in each look''s motion language, and the exit words, the failure line and Rerun
+  in Terminal come in after; new output scrolls the window a row at a time, jumping when more than 3 lines arrive at
+  once; expanding and collapsing grow and shrink from the last line; under Reduced Motion only 120 ms fades remain. Text
+  reaches 4.5:1 and marks 3:1 in every look and mode, hover states included. Its states read the command card states
+  of ACD-146 and are never a second lifecycle: running for starting, running and restoring while the restore is under
+  way; ok (Done) for exited with exit code 0; failed for failed and exited with any other code; interrupted for terminated;
+  waiting (Needs input) for attention_required; ended for disconnected before the command finished and for a restore
+  that did not bring its session back. Ended is honest about what is not known: a command whose session ended while it
+  still ran (the page reloaded, the app restarted or its session disconnected) is neither done nor failed, so the card
+  shows the words Ended with the earlier session, with no exit code, never Running, Done or Failed, as the terminal''s
+  own command mark does (SMPFS-180''s indeterminate finalisation, Plans/FinalGUISpec.md#F3-641). Its actions are 24 px
+  text buttons and follow its session: Open in Terminal, only while the command has a live terminal session, opens or
+  reveals that session''s terminal tab through F3-634 (ACD-502); Rerun in Terminal once the command has stopped (ACD-108,
+  ACD-502); View output only when there is no session (ACD-129). View output, and View output log in the card''s menu,
+  open the command''s retained output as an editor buffer tab: read-only, kept and never a preview, titled with its command
+  line, opened and taking focus through F3-634 by cmd.panel_tab.open with an editor buffer spec, the same tab the terminal''s
+  Open output in an editor tab opens (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat never
+  draws the output in a viewer of its own. Output lines keep their spacing, never wrap and scroll sideways. The card
+  has no pill, no coloured side stripe and no box nested inside a card, and the chat never draws a terminal of its own.
+  Explaining commands is the Teacher persona''s job in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the
+  user asks about a command or its output, Teacher answers as an ordinary reply in the thread. The command card and the
+  terminal carry no Explain action, and Teacher never reads a terminal on its own and never types into one. This supersedes
+  the 5.6 Pro chat''s own editor pane as the host of what it opens and its inline Shell box (concept lineage), the left
+  editor/document tab system and Return to chat of ACD-455 and v3 item 15 for Home, the "beside the chat" wording of
+  ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat''s Goal tab. Amended DL-260, Jared
+  2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
@@ -27880,50 +27830,57 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: 'The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27). Colours:
-  its Basic, Friendly and Glass colours are fixed to PMConcept7''s (all five families, their light/dark modes and NieR
-  type follow the host, DL-232); it follows PMConcept7''s one look setting and NieR Mode setting and keeps no theme store
-  of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7''s, so the look settings
-  reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161, Plans/FinalGUISpec.md#F3-426, #F3-430
-  and Plans/DRY_Rules.md#DR-050. Under NieR Mode it follows the rule for new surfaces of DL-152, Plans/Settings_System.md#SSYS-043,
-  Plans/FinalGUISpec.md#F3-598 and DR-056 (existing parts only, colours from the NieR tables, stepped motion), and it
-  draws no NieR scene, ground layer, NieR Mode editor or reboot plate of its own: PMConcept7''s are the only ones. Names:
-  its class names, element ids and token names are namespaced so none of them collides with PMConcept7''s. Size: it sizes
-  itself by its own column, and by its own window when popped out, never by the app window: every width tier, breakpoint
-  and pin rule it has (History, Activity Detail, the composer''s selector row) keys on its own container. Layers: its
-  menus, popouts, sheets, drawers, toasts and drag ghosts open in the page''s one overlay root, in its one stacking order
-  (Plans/DRY_Rules.md#DR-067); it appends no overlay of its own to the page. Hover: PMConcept7''s hover controller owns
-  every hover tag in the chat (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take PMConcept7''s
-  one hover grammar with no hover effect of their own (Plans/DRY_Rules.md#DR-072, Plans/FinalGUISpec.md#F3-465); the
-  chat draws no second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453).
-  Bans: its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648), among
-  them the meta chips, the goal and to-do chips, the Ask Card''s capsule buttons, the attachment chips, the activity
-  bar''s capsule outline, the Read-only marker, the browser''s session tabs, the working card''s left rail in the step
-  colour, the model picker''s active provider tab and the browser''s stale row; selection shows by the surface itself.
-  Openings: its editor pane goes, everything it opened there opens through ACD-500, and its inline Shell box becomes
-  ACD-500''s command card. Demo controls: its Demo Studio, its guided examples and every other demo control fold into
-  the one Demo Studio of PMConcept7 (Plans/DRY_Rules.md#DR-070, Plans/FinalGUISpec.md#F3-649), which stays lab only (ACD-474).
-  Keys: keys the chat answers without a modifier act only while focus is inside the chat, and Escape closes the innermost
-  open thing and stops there (F3-635, F3-568). Start: the ported chat opens no tab at start; the home layout is the layout
-  record''s (SP-330). Pop out keeps the chat''s History and Activity Detail with it (F3-637); the web client offers no
-  Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port''s requirements to the binding-by-reference
-  of the 5.6 Pro concept and supersedes nothing else. Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse
-  host owners. Chat width has no fixed 760 cap; Activity Detail has no small view. G2, Jared follow-up 2026-10-30: widen
-  first; at the column limit dock/squeeze if at least 360 px of messages remain, otherwise cover at full column height.
-  G1 B (Jared 2026-10-30): Pin preserves the full-size view across thread switches while its contents follow the new
-  thread; unpinned detail closes on a switch. History and detail floating plates use one Glass menu token. Amended Q22,
-  Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and
-  retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts
-  only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
-  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
-  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
-  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
-  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
-  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
-  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+  all five families and their Light/Dark modes follow the shared theme owner. The chat follows general.visual.theme and
+  general.visual.theme-mode, with NieR Adjust rows under SSYS-043, and keeps no theme store of its own; its colours,
+  radii, surfaces and code face use the shared tokens so appearance reaches every chat surface. General code text follows
+  Plans/Decision_Log.md#DL-161, Plans/FinalGUISpec.md#F3-426, #F3-430 and Plans/DRY_Rules.md#DR-050. Under NieR Mode
+  it follows the rule for new surfaces of DL-152, Plans/Settings_System.md#SSYS-043, Plans/FinalGUISpec.md#F3-598 and
+  DR-056 (existing parts only, colours from the NieR tables, stepped motion), and it draws no NieR scene, ground layer,
+  NieR Mode editor or reboot plate of its own: the shared application owners are the only ones. Names: its class names,
+  element ids and token names are namespaced so none of them collides with the host''s. Size: it sizes itself by its
+  own column, and by its own window when popped out, never by the app window: every width tier, breakpoint and pin rule
+  it has (History, Activity Detail, the composer''s selector row) keys on its own container. Layers: its menus, popouts,
+  sheets, drawers, toasts and drag ghosts open in the page''s one overlay root, in its one stacking order (Plans/DRY_Rules.md#DR-067);
+  it appends no overlay of its own to the page. Hover: The shared hover controller owns every hover tag in the chat (Plans/FinalGUISpec.md#F3-523),
+  and its cards, rows, tiles and icons take the shared hover grammar with no hover effect of their own (Plans/DRY_Rules.md#DR-072,
+  Plans/FinalGUISpec.md#F3-465); the chat draws no second tag and keeps no native titles, and its Activity Bar previews
+  stay its own bounded previews (ACD-453). Bans: its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648), among them the meta chips, the goal and to-do chips, the Ask Card''s capsule buttons,
+  the attachment chips, the activity bar''s capsule outline, the Read-only marker, the browser''s session tabs, the working
+  card''s left rail in the step colour, the model picker''s active provider tab and the browser''s stale row; selection
+  shows by the surface itself. Openings: its editor pane goes, everything it opened there opens through ACD-500, and
+  its inline Shell box becomes ACD-500''s command card. Keys: keys the chat answers without a modifier act only while
+  focus is inside the chat, and Escape closes the innermost open thing and stops there (F3-635, F3-568). Start: the ported
+  chat opens no tab at start; the home layout is the layout record''s (SP-330). Pop out keeps the chat''s History and
+  Activity Detail with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203).
+  This adds the port''s requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
+  Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity
+  Detail has no small view. G2, Jared follow-up 2026-10-30: widen first; at the column limit dock/squeeze if at least
+  360 px of messages remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size
+  view across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History and
+  detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input,
+  select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
+  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback;
+  a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless
+  rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu
+  head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
+  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its
+  sheet head; do not fork a second wand or fallback icon. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
-gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
+gui_classification_reason: Owns shared chat colors, sizing, layers, hover, controls and keys under the application owners.
 split_recommended: false
-depends_on: [DL-180, DL-185, DR-067, DR-069, DR-070, F3-635, F3-637, F3-648, F3-649, ACD-474, ACD-500]
+depends_on:
+- DL-180
+- DL-185
+- DR-067
+- DR-069
+- F3-635
+- F3-637
+- F3-648
+- ACD-500
 unblocks: [ATS-075]
 acceptance_criteria:
 - The ported chat's Basic, Friendly and Glass colours equal PMConcept7's, and PMConcept7's look settings reach every
@@ -27933,7 +27890,6 @@ acceptance_criteria:
 - Every chat menu, popout, sheet, drawer, toast and drag ghost opens in the page's one overlay root, and every hover
   tag in the chat comes from PMConcept7's hover controller.
 - No pill and no coloured side stripe remains in the chat in any look.
-- Every demo control of the chat is a section of the one Demo Studio and none is a product control.
 - Under NieR Mode the page draws one scene and one ground layer, and the chat adds none.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
   inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
@@ -27965,8 +27921,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
   - "Concepts/chat-assistant-concepts/5.6 Pro/ (concept lineage only)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Basic, Friendly and Glass"
+- Basic, Friendly and Glass
 negative_constraints:
   - "Do not keep a chat theme store, a second NieR scene or ground layer, a second overlay root or a second hover tag system."
   - "Do not size the chat by the app window."
@@ -27982,7 +27937,7 @@ owner_hints:
   - Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/FinalGUISpec.md#F3-649
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/DRY_Rules.md#DR-069
 
 ### ACD-502 - The Chat's Terminal Cards Hand Off To Terminal Tabs
 
@@ -28195,82 +28150,52 @@ plan_unit_id: ACD-504
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The 5.6 Pro chat is the Home column's conversation surface (DL-232), replacing the scripted stand-in under
-  F3-637 and bound by ACD-500, ACD-501 and ACD-502. One History list serves it; History pin is the column's
-  ui.chat_column.pin_history and its header menu carries the column's Keep open choice. Activity Detail and its
-  bounded hover previews remain inside the chat. The lab header, lab editor pane, lab status bar and chat-local
-  Demo Studio launcher are absent from hosted mode. Booting the chat opens no plan or other panel tab. Every
-  opened body uses the correct host kind and domain identity from ACD-500: exact plan revision and Deep Plan
-  discovery as plan, versioned artifact as artifact, file or diff as editor, child transcript as transcript,
-  collaboration and evidence as run or its owner document, thread detail as context,
-  rules/memory/revert/debug/Lens/Wonderer as document, tool calls as record, addresses as browser, command
-  sessions as terminal. The host owns each body, its strip, deduplication and focus, and reports close and
-  activation so the chat's run card relinquishes or restores its controls. A user open takes focus, an
-  unsolicited agent open stays in the background, and modifier file opens keep F3-634's rules. Wand setup and
-  thread dialogs remain app modals; attachments open their artifact/file owner while More Info remains a
-  popover; Plan Export/PDF remains a print/download and Send to Planning Wizard remains page navigation. The
-  stale Goal document never returns: Goal remains in Activity Detail. The compact command card hands off to the
-  existing terminal and retained-output routes, never draws an interactive shell or adds Explain. Presentation
-  follows the app's Basic, Friendly, Glass and Retro light/dark looks, its fonts, NieR Mode parts and Reduced
-  Motion; container width drives the chat and hosted tab bodies, while app modals use the window. The app's
-  hover controller owns tags and the sheet's keyboard trap exists only while that sheet is open; unmodified chat
-  shortcuts require focus in chat and Escape stops at the innermost surface. Settings preferences follow
-  SSYS-055; a concept adapter exposes renderer projections without making those global names product APIs.
-  DL-218's Wonderer and Grill Me behavior and DL-231's automatic Chat Room rounds remain intact. All
-  demonstration launches and family mixers are sections of F3-649's one Demo Studio. The port's screenshots,
-  fixtures and browser checks remain concept evidence; unmet native requirements stay owed. Amended 2026-10-23
-  (DL-233): the concept's scripted stand-in chat and its Demo Studio swap are removed; the hosted assistant is
-  the column's only conversation surface, and its own controls open the panels. Demo fixture workspaces may use
-  ordinary Home tabs under the concept-only disposition of ACD-500, never native kinds or product routes.
-  Integrated concept 59ca2d4382 implements the id-to-kind table in pm7-port/js/60-surfaces.js: plan aliases
-  converge on one plan tab; deep-discovery is plan; bare and revision artifacts are artifact; thread-<agent> is
-  read-only transcript; collab-run, crew-work, review, room, brainstorm and their evidence are run; teach,
-  memory, revert, debug, lens and wonderer sources are document; search, mcp, app and work-record are record;
-  link is Home Browser; file is the Home editor, with a change opening diff view. goal-artifact opens Activity
-  Detail without a tab. Lab workspace ids are marked lab and open concept-only document bodies; an unknown id
-  falls back to document, not a newly admitted product kind. D7 file gestures and D8 background agent opens use
-  Home's opener and narrow rule. A run card says Deciding in the panel beside the chat while its run tab is
-  active in any visible panel; closing, collapsing or hiding that panel restores the card's controls. Browser
-  capture must keep its originating thread and composer destination even after a thread switch; the concept
-  retains the thread and isolated direct delivery preserves the saved destination, but Astra's round-2 check
-  finds that composer attachment/list/insertion paths still lose it when the origin composer's destination
-  changes. Those paths need destination restoration or mismatch refusal before draft mutation. context:<thread>
-  actions target that tab's own thread. Attachment Open uses D7 for a known project file, its existing exact
-  artifact route, or an artifact-kind attachment:<tid>|<mid>|<aid> viewer. More Info is now a bounded popover.
-  Images have a preview; other attachment kinds disclose that the concept has no preview, and browser captures
-  are labelled fixture drawings rather than real screenshots. The Shell slot is the terminal's PMT.card with
-  Open in Terminal, View output for a gone session and Rerun in Terminal, without a separate Show Terminal
-  button; the simulated shell does not implement every real command. Wand sheets remain window-centred app
-  modals. Demo Studio's Chat section follows Workspace and contains Guided examples, Moments, and Takes (family
-  takes, recipes and motion voice), plus Show the chat and Reset the chat demo. Start offers chat recipes;
-  Workspace offers layouts and agents opening things, with no stand-in row (DL-233). Snapshot inventory and
-  demo-lane reconciliation remain concept-only lineage in demo-inventory-20261022.md, cited in source_lineage,
-  never product counts or native evidence. Final acceptance remains pending for the hover press defect, Persona
-  clipping, shelf-header and plate-spacing sweep, and films. The window-based isPhone helper and scoped
-  body-level overlay wrapper do not prove ACD-501's full container and single-root requirements. SSYS-055
-  separately records the Thought Stream preference, whose live display streams the concept's recorded reasoning
-  (ACD-221, DL-234), and session-only All chats ELI5; neither is native completion. Astra also finds that the
-  shared activeEditor/editorRevealed projection still counts a hidden Home panel after collapse or leaving Home.
-  The separate run-card visibility wrapper passes; fixing that shared editor state remains pending and is not
-  implied by the run-card result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default
-  narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder
-  (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s
-  painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed
-  transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new
-  chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail
-  rules remain.
+canonical_text: 'The shared assistant is the Home column''s only conversation surface (DL-232), under F3-637 and bound
+  by ACD-500/501/502. One History list serves it; History pin is ui.chat_column.pin_history, and its header offers the
+  column''s Keep open choice. Activity Detail and bounded hover previews remain inside chat. Booting chat opens no plan
+  or other panel tab. Every opened body uses the exact domain identity and registered kind in ACD-500: plan revision
+  and discovery as plan, versioned artifact as artifact, file/diff as editor, child feed as transcript, collaboration/evidence
+  as run or owner document, thread detail as context, rules/memory/revert/debug/Lens/Wonderer as document, tool calls
+  as record, addresses as browser and command sessions as terminal. Goal stays in Activity Detail. Unknown IDs grant
+  no kind or route. The host owns body, strip, deduplication and focus, and reports close/activation to chat. A user
+  open takes focus; unsolicited agent opens stay in the background, and file modifiers obey F3-634. Wand setup/thread
+  dialogs are app modals; attachments use their exact artifact/file owner; More Info is a bounded popover; export/print
+  and Send to Planning Wizard keep their existing routes. A run card yields controls only while its run tab is active
+  in a visible panel; close, collapse, narrow hiding or leaving Home restores them and clears shared editor-revealed
+  state. Browser capture retains its original thread and composer destination through thread switches and every attachment/list/insertion
+  path. If the origin destination changed, restore the saved destination or refuse before mutating a draft. Context actions
+  use their own tab''s thread; attachment viewers preserve thread/message/attachment identity. Images have a preview;
+  other kinds state truthfully when no preview exists. The compact command card hands off to the exact terminal or retained
+  output, with Open in Terminal, View output and Rerun in Terminal, no embedded interactive shell, duplicate Show Terminal
+  control or Explain action. All five families'' Light/Dark variants, shared fonts, NieR parts and Reduced Motion reach
+  the column and hosted bodies. Container width governs those bodies; window size governs app modals. The shared hover
+  owner controls tags; a sheet traps keys only while open; unmodified chat shortcuts require chat focus, and Escape closes
+  only the innermost surface. Settings use SSYS-055 and their admitted application/Project/current-chat scopes. DL-218''s
+  Wonderer/Grill Me and DL-231''s automatic Chat Room rounds remain. The accepted Guided Tour keeps its teaching surface
+  while this chat is hidden, under PWIZ-036. These are product requirements; source prototypes and browser results do
+  not certify native completion. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout,
+  900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis
+  and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a
+  descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores
+  the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved
+  message minimum, History and Activity Detail rules remain. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines hosted conversation presentation, opened surface kinds, shared preferences and focus behavior.
 split_recommended: false
 depends_on: [DL-232, ACD-500, ACD-501, ACD-502, ACD-503, DR-075, SSYS-055, DL-234]
 unblocks: []
 acceptance_criteria:
-  - "One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome."
-  - "Each surface opens through the existing owner and kind; closing or activating a run tab updates its card."
-  - "All admitted preferences use SSYS-055, and concept-only choices remain in the Demo Studio."
-  - "Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain."
+- One hosted chat replaces the stand-in without seeding a plan tab, duplicate History or lab chrome.
+- Each surface opens through the existing owner and kind; closing or activating a run tab updates its card.
+- Wonderer leads, Grill Me agreement confirmation and Chat Room automatic rounds preserve DL-218 and DL-231.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H6: at the default narrow layout, 900 px and below folds chat
+  to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek
+  rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible
+  must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width,
+  rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity
+  Detail rules remain.'
+- Every admitted preference uses SSYS-055 and its existing Settings transaction owner.
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -28294,8 +28219,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/capture-destination-r2-gap.md, SHA-256 9f8937823eeac12174ab07a023a4c3d5b867bf94b498e99e5b96aeaafb691208 (Astra round-2 verified composer destination gap; corrects the broad integrated capture claim)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/astra-r2-verified-capture-visibility.md, SHA-256 00e29db6dca53bbaeb5f3414acd13be6b36ab5c7af2f61a4ccfdf45e9158bcd7 (frozen partial independent review: shared editor visibility and composer destination gaps; separate run-card visibility passes)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Keep open
 negative_constraints:
   - "Do not draw a second editor pane, context drawer, browser modal or inline terminal in hosted mode."
   - "Do not weaken ACD-500 when an implementation is incomplete."

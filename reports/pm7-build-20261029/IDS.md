@@ -202,7 +202,7 @@ QA2 N1 follow-up at GUI660: `O55.restore.reachKey(S)` and fixture `reachedFor` b
 Final publication join: foundations `12e764ef28` merged with GUI660 and canonical Plans as `833552622c`; `PMConcept7.html` rebuilt from source per PLAN, SHA-256 `66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673`. Existing dependency refresh follows host and Settings commits through one o55SyncDependents owner; no new public names. Published parity passes.
 
 | DL-259 | Product-only onboarding, D1–D8, ELI5, fields audit, free source v0.6.0, Q1/Q2 | Jared, 2026-10-31 |
-| DL-260 | Reserved: remove existing mainline Demo Studio canon after DL-259 | Q3 B, Jared 2026-10-31 |
+| DL-260 | Accepted: product-only canon cleanup after DL-259; F3-649/ACD-474/DR-070 retired historical anchors | Q3 B, Jared 2026-10-31 |
 
 ELI5 bar bindings: `onboarding.interaction.mode`, `tour.interaction.mode`; shared `general.interaction.mode`; labels Plain English / Expert; existing Settings transaction preview/apply.
 

@@ -39,7 +39,7 @@
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 233,
+    "invalid_case_count": 236,
     "valid_setup_plan_count": 17,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
@@ -79,15 +79,14 @@
     "branch_more_ways_choice_crossing_negative_count": 2,
     "skip_intent_scope_choice_crossing_negative_count": 6,
     "valid_automatic_preparation_projection_count": 10,
-    "invalid_automatic_preparation_projection_count": 16,
-    "valid_automatic_preparation_concept_fixture_count": 8,
-    "valid_automatic_preparation_production_projection_count": 2,
-    "automatic_preparation_determinate_count": 1,
-    "automatic_preparation_indeterminate_count": 9,
-    "automatic_preparation_terminal_state_count": 6,
+    "invalid_automatic_preparation_projection_count": 20,
+    "valid_automatic_preparation_production_projection_count": 10,
+    "automatic_preparation_determinate_count": 2,
+    "automatic_preparation_indeterminate_count": 8,
+    "automatic_preparation_terminal_state_count": 5,
     "automatic_preparation_currentness_negative_count": 6,
     "automatic_preparation_progress_negative_count": 2,
-    "automatic_preparation_evidence_boundary_negative_count": 4,
+    "automatic_preparation_evidence_boundary_negative_count": 1,
     "automatic_preparation_state_result_negative_count": 4,
     "durable_setup_state_session_count": 2,
     "durable_setup_state_continuation_snapshot_count": 23,
@@ -100,9 +99,8 @@
     "valid_bootstrap_restore_preflow_count": 2,
     "invalid_bootstrap_restore_preflow_count": 5,
     "valid_connector_owner_projection_count": 2,
-    "invalid_connector_owner_projection_count": 7,
+    "invalid_connector_owner_projection_count": 6,
     "connector_event_family_silent_fixture_count": 4,
-    "browser_connector_concept_simulated_count": 2,
     "phase_boundary_semantic_negative_count": 6,
     "valid_project_recovery_route_projection_count": 8,
     "invalid_project_recovery_route_projection_count": 16,
@@ -2965,7 +2963,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_pending_indeterminate",
+      "name": "valid.automatic_preparation.owner_pending_indeterminate",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3001,8 +2999,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3022,7 +3020,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_waiting_network",
+      "name": "valid.automatic_preparation.owner_waiting_network",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3058,8 +3056,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3079,7 +3077,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_requires_input",
+      "name": "valid.automatic_preparation.owner_requires_input",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3115,8 +3113,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3193,7 +3191,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_blocked",
+      "name": "valid.automatic_preparation.owner_blocked",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3229,8 +3227,8 @@
         "owner_result_ref": null,
         "error_ref": "error:identity-mismatch:1",
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3250,7 +3248,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_failed",
+      "name": "valid.automatic_preparation.owner_failed",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3286,8 +3284,8 @@
         "owner_result_ref": "result:auto:failed:1",
         "error_ref": "error:auto:failed:1",
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3307,7 +3305,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_cancelled",
+      "name": "valid.automatic_preparation.owner_cancelled",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3343,8 +3341,8 @@
         "owner_result_ref": "result:auto:cancelled:1",
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3364,7 +3362,7 @@
       }
     },
     {
-      "name": "valid.automatic_preparation.concept_recovery_required",
+      "name": "valid.automatic_preparation.owner_recovery_required",
       "definition": "automatic_preparation_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
@@ -3400,8 +3398,8 @@
         "owner_result_ref": "result:auto:recovery:1",
         "error_ref": "error:auto:recovery:1",
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -3418,63 +3416,6 @@
         "surface_dismissal_effect": "preserve_owner_work",
         "resume_disposition": "observe_existing_operation_by_dedupe_key",
         "observed_at_utc": "2026-09-01T00:00:07Z"
-      }
-    },
-    {
-      "name": "valid.automatic_preparation.concept_ready_without_production_receipt",
-      "definition": "automatic_preparation_owner_projection",
-      "value": {
-        "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
-        "schema_version": "2.0.0",
-        "automatic_preparation_projection_id": "projection:onboarding:auto:9",
-        "onboarding_session_id": "onboarding:auto:session:1",
-        "stage": "automatic_preparation",
-        "simple_path_selection": "start_on_this_computer",
-        "scm_backend_selection": null,
-        "forge_provider_selection": null,
-        "reviewed_setup_plan_revision": 1,
-        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
-        "target_ref": "target:auto:local",
-        "expected_revision": 3,
-        "continuation_generation": 2,
-        "projection_generation": 9,
-        "owner_domain": "server",
-        "owner_operation_id": "operation:auto:local:1",
-        "observable_work_id": "observable:auto:local:1",
-        "dedupe_key": "dedupe:auto:local:1",
-        "work_state": "ready",
-        "human_phase": "Concept fixture is ready to continue",
-        "wait_reason": null,
-        "input_request_ref": null,
-        "progress_kind": "none",
-        "completed_units": null,
-        "total_units": null,
-        "progress_source": "unknown",
-        "can_cancel": false,
-        "can_background": true,
-        "can_retry": false,
-        "result_status": "succeeded",
-        "owner_result_ref": "concept-result:auto:ready:1",
-        "error_ref": null,
-        "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
-        "production_readiness": false,
-        "native_runtime_exercised": false,
-        "currentness": {
-          "session_match": true,
-          "path_match": true,
-          "reviewed_setup_plan_revision_match": true,
-          "approved_setup_plan_sha256_match": true,
-          "target_match": true,
-          "revision_match": true,
-          "continuation_match": true,
-          "generation_match": true,
-          "disposition": "current"
-        },
-        "surface_dismissal_effect": "preserve_owner_work",
-        "resume_disposition": "observe_existing_operation_by_dedupe_key",
-        "observed_at_utc": "2026-09-01T00:00:08Z"
       }
     },
     {
@@ -4728,7 +4669,7 @@
       }
     },
     {
-      "name": "valid.connector_projection.cached_hosted_pre_review_simulated",
+      "name": "valid.connector_projection.cached_hosted_pre_review_owner_shape",
       "definition": "onboarding_connector_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.connector_owner_projection.v2",
@@ -4758,15 +4699,15 @@
         "external_effect_started_by_onboarding": false,
         "protected_content_embedded": false,
         "event_family_ids": [],
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "observed_at_utc": "2026-09-01T12:02:00Z"
       }
     },
     {
-      "name": "valid.connector_projection.headscale_private_ready_after_review_simulated",
+      "name": "valid.connector_projection.headscale_private_ready_after_review_owner_shape",
       "definition": "onboarding_connector_owner_projection",
       "value": {
         "schema_id": "pm.product_onboarding.connector_owner_projection.v2",
@@ -4796,8 +4737,8 @@
         "external_effect_started_by_onboarding": false,
         "protected_content_embedded": false,
         "event_family_ids": [],
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "observed_at_utc": "2026-09-01T12:03:00Z"
@@ -10491,8 +10432,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10549,8 +10490,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10607,8 +10548,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10665,8 +10606,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10723,8 +10664,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10781,8 +10722,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -10955,8 +10896,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -11013,8 +10954,8 @@
         "owner_result_ref": null,
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -11068,12 +11009,12 @@
         "can_background": true,
         "can_retry": false,
         "result_status": "pending",
-        "owner_result_ref": "concept-result:auto:bad",
+        "owner_result_ref": "owner-result:auto:bad",
         "error_ref": null,
-        "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
-        "production_readiness": false,
+        "production_receipt_ref": "receipt:owner:ready:static-shape",
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
+        "production_readiness": true,
         "native_runtime_exercised": false,
         "currentness": {
           "session_match": true,
@@ -11129,8 +11070,8 @@
         "owner_result_ref": "result:auto:failed:bad",
         "error_ref": null,
         "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
         "production_readiness": false,
         "native_runtime_exercised": false,
         "currentness": {
@@ -11205,180 +11146,6 @@
         "surface_dismissal_effect": "preserve_owner_work",
         "resume_disposition": "observe_existing_operation_by_dedupe_key",
         "observed_at_utc": "2026-09-01T01:00:12Z"
-      }
-    },
-    {
-      "name": "invalid.automatic_preparation.concept_claims_production_work",
-      "definition": "automatic_preparation_owner_projection",
-      "expected_error": "browser concept fixture cannot claim production owner work",
-      "value": {
-        "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
-        "schema_version": "2.0.0",
-        "automatic_preparation_projection_id": "projection:bad:concept-work",
-        "onboarding_session_id": "onboarding:auto:session:1",
-        "stage": "automatic_preparation",
-        "simple_path_selection": "start_on_this_computer",
-        "scm_backend_selection": null,
-        "forge_provider_selection": null,
-        "reviewed_setup_plan_revision": 1,
-        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
-        "target_ref": "target:auto:local",
-        "expected_revision": 3,
-        "continuation_generation": 2,
-        "projection_generation": 1,
-        "owner_domain": "server",
-        "owner_operation_id": "operation:auto:local:1",
-        "observable_work_id": "observable:auto:local:1",
-        "dedupe_key": "dedupe:auto:local:1",
-        "work_state": "pending",
-        "human_phase": "False production work",
-        "wait_reason": null,
-        "input_request_ref": null,
-        "progress_kind": "indeterminate",
-        "completed_units": null,
-        "total_units": null,
-        "progress_source": "unknown",
-        "can_cancel": false,
-        "can_background": true,
-        "can_retry": false,
-        "result_status": "pending",
-        "owner_result_ref": null,
-        "error_ref": null,
-        "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": true,
-        "production_readiness": false,
-        "native_runtime_exercised": false,
-        "currentness": {
-          "session_match": true,
-          "path_match": true,
-          "reviewed_setup_plan_revision_match": true,
-          "approved_setup_plan_sha256_match": true,
-          "target_match": true,
-          "revision_match": true,
-          "continuation_match": true,
-          "generation_match": true,
-          "disposition": "current"
-        },
-        "surface_dismissal_effect": "preserve_owner_work",
-        "resume_disposition": "observe_existing_operation_by_dedupe_key",
-        "observed_at_utc": "2026-09-01T01:00:13Z"
-      }
-    },
-    {
-      "name": "invalid.automatic_preparation.concept_carries_production_receipt",
-      "definition": "automatic_preparation_owner_projection",
-      "expected_error": "browser concept fixture cannot carry a production receipt",
-      "value": {
-        "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
-        "schema_version": "2.0.0",
-        "automatic_preparation_projection_id": "projection:bad:concept-receipt",
-        "onboarding_session_id": "onboarding:auto:session:1",
-        "stage": "automatic_preparation",
-        "simple_path_selection": "start_on_this_computer",
-        "scm_backend_selection": null,
-        "forge_provider_selection": null,
-        "reviewed_setup_plan_revision": 1,
-        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
-        "target_ref": "target:auto:local",
-        "expected_revision": 3,
-        "continuation_generation": 2,
-        "projection_generation": 1,
-        "owner_domain": "server",
-        "owner_operation_id": "operation:auto:local:1",
-        "observable_work_id": "observable:auto:local:1",
-        "dedupe_key": "dedupe:auto:local:1",
-        "work_state": "ready",
-        "human_phase": "False concept receipt",
-        "wait_reason": null,
-        "input_request_ref": null,
-        "progress_kind": "none",
-        "completed_units": null,
-        "total_units": null,
-        "progress_source": "unknown",
-        "can_cancel": false,
-        "can_background": true,
-        "can_retry": false,
-        "result_status": "succeeded",
-        "owner_result_ref": "concept-result:auto:bad",
-        "error_ref": null,
-        "production_receipt_ref": "receipt:auto:fake",
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
-        "production_readiness": false,
-        "native_runtime_exercised": false,
-        "currentness": {
-          "session_match": true,
-          "path_match": true,
-          "reviewed_setup_plan_revision_match": true,
-          "approved_setup_plan_sha256_match": true,
-          "target_match": true,
-          "revision_match": true,
-          "continuation_match": true,
-          "generation_match": true,
-          "disposition": "current"
-        },
-        "surface_dismissal_effect": "preserve_owner_work",
-        "resume_disposition": "observe_existing_operation_by_dedupe_key",
-        "observed_at_utc": "2026-09-01T01:00:14Z"
-      }
-    },
-    {
-      "name": "invalid.automatic_preparation.concept_claims_production_readiness",
-      "definition": "automatic_preparation_owner_projection",
-      "expected_error": "browser concept fixture cannot claim production readiness or native execution",
-      "value": {
-        "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
-        "schema_version": "2.0.0",
-        "automatic_preparation_projection_id": "projection:bad:concept-ready",
-        "onboarding_session_id": "onboarding:auto:session:1",
-        "stage": "automatic_preparation",
-        "simple_path_selection": "start_on_this_computer",
-        "scm_backend_selection": null,
-        "forge_provider_selection": null,
-        "reviewed_setup_plan_revision": 1,
-        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
-        "target_ref": "target:auto:local",
-        "expected_revision": 3,
-        "continuation_generation": 2,
-        "projection_generation": 1,
-        "owner_domain": "server",
-        "owner_operation_id": "operation:auto:local:1",
-        "observable_work_id": "observable:auto:local:1",
-        "dedupe_key": "dedupe:auto:local:1",
-        "work_state": "ready",
-        "human_phase": "False production readiness",
-        "wait_reason": null,
-        "input_request_ref": null,
-        "progress_kind": "none",
-        "completed_units": null,
-        "total_units": null,
-        "progress_source": "unknown",
-        "can_cancel": false,
-        "can_background": true,
-        "can_retry": false,
-        "result_status": "succeeded",
-        "owner_result_ref": "concept-result:auto:bad",
-        "error_ref": null,
-        "production_receipt_ref": null,
-        "evidence_class": "browser_concept_fixture_only",
-        "production_owner_work": false,
-        "production_readiness": true,
-        "native_runtime_exercised": true,
-        "currentness": {
-          "session_match": true,
-          "path_match": true,
-          "reviewed_setup_plan_revision_match": true,
-          "approved_setup_plan_sha256_match": true,
-          "target_match": true,
-          "revision_match": true,
-          "continuation_match": true,
-          "generation_match": true,
-          "disposition": "current"
-        },
-        "surface_dismissal_effect": "preserve_owner_work",
-        "resume_disposition": "observe_existing_operation_by_dedupe_key",
-        "observed_at_utc": "2026-09-01T01:00:15Z"
       }
     },
     {
@@ -11486,7 +11253,7 @@
       "name": "invalid.automatic_preparation.omits_reviewed_setup_plan_revision",
       "definition": "automatic_preparation_owner_projection",
       "expected_error": "automatic preparation projection must bind reviewed_setup_plan_revision",
-      "base_valid": "valid.automatic_preparation.concept_pending_indeterminate",
+      "base_valid": "valid.automatic_preparation.owner_pending_indeterminate",
       "remove": [
         "reviewed_setup_plan_revision"
       ]
@@ -11495,7 +11262,7 @@
       "name": "invalid.automatic_preparation.omits_approved_setup_plan_sha256",
       "definition": "automatic_preparation_owner_projection",
       "expected_error": "automatic preparation projection must bind approved_setup_plan_sha256",
-      "base_valid": "valid.automatic_preparation.concept_pending_indeterminate",
+      "base_valid": "valid.automatic_preparation.owner_pending_indeterminate",
       "remove": [
         "approved_setup_plan_sha256"
       ]
@@ -11504,7 +11271,7 @@
       "name": "invalid.automatic_preparation.reviewed_revision_fence_mismatch",
       "definition": "automatic_preparation_owner_projection",
       "expected_error": "automatic preparation currentness requires reviewed setup plan revision match",
-      "base_valid": "valid.automatic_preparation.concept_pending_indeterminate",
+      "base_valid": "valid.automatic_preparation.owner_pending_indeterminate",
       "patch": {
         "currentness.reviewed_setup_plan_revision_match": false
       }
@@ -11513,7 +11280,7 @@
       "name": "invalid.automatic_preparation.approved_hash_fence_mismatch",
       "definition": "automatic_preparation_owner_projection",
       "expected_error": "automatic preparation currentness requires approved plan SHA-256 match",
-      "base_valid": "valid.automatic_preparation.concept_pending_indeterminate",
+      "base_valid": "valid.automatic_preparation.owner_pending_indeterminate",
       "patch": {
         "currentness.approved_setup_plan_sha256_match": false
       }
@@ -12154,7 +11921,7 @@
       "name": "invalid.connector_projection.cached_pre_review_starts_effect",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "cached pre-Review connector projection cannot start external owner work",
-      "base_valid": "valid.connector_projection.cached_hosted_pre_review_simulated",
+      "base_valid": "valid.connector_projection.cached_hosted_pre_review_owner_shape",
       "patch": {
         "external_effect_started_by_onboarding": true
       }
@@ -12163,7 +11930,7 @@
       "name": "invalid.connector_projection.cached_pre_review_carries_owner_operation",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "cached pre-Review connector projection cannot carry an Onboarding-started owner operation",
-      "base_valid": "valid.connector_projection.cached_hosted_pre_review_simulated",
+      "base_valid": "valid.connector_projection.cached_hosted_pre_review_owner_shape",
       "patch": {
         "owner_operation_ref": "remote-access-operation:forbidden-pre-review"
       }
@@ -12172,7 +11939,7 @@
       "name": "invalid.connector_projection.headscale_claims_funnel_ready",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "Headscale supports private access but never Funnel",
-      "base_valid": "valid.connector_projection.headscale_private_ready_after_review_simulated",
+      "base_valid": "valid.connector_projection.headscale_private_ready_after_review_owner_shape",
       "patch": {
         "funnel_state": "ready",
         "browser_reachability": "funnel_public_route"
@@ -12182,26 +11949,16 @@
       "name": "invalid.connector_projection.trust_without_verified_identity_and_pairing",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "tailnet or connector state cannot substitute for PM identity verification and pairing",
-      "base_valid": "valid.connector_projection.cached_hosted_pre_review_simulated",
+      "base_valid": "valid.connector_projection.cached_hosted_pre_review_owner_shape",
       "patch": {
         "pm_trust_state": "trusted"
-      }
-    },
-    {
-      "name": "invalid.connector_projection.concept_claims_production_readiness",
-      "definition": "onboarding_connector_owner_projection",
-      "expected_error": "browser connector concept remains simulated and cannot claim production readiness",
-      "base_valid": "valid.connector_projection.headscale_private_ready_after_review_simulated",
-      "patch": {
-        "production_readiness": true,
-        "native_runtime_exercised": true
       }
     },
     {
       "name": "invalid.connector_projection.embeds_protected_browser_content",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "connector projection cannot embed authorization URL or protected browser content",
-      "base_valid": "valid.connector_projection.cached_hosted_pre_review_simulated",
+      "base_valid": "valid.connector_projection.cached_hosted_pre_review_owner_shape",
       "patch": {
         "protected_content_embedded": true
       }
@@ -12210,7 +11967,7 @@
       "name": "invalid.connector_projection.emits_unadmitted_event_family",
       "definition": "onboarding_connector_owner_projection",
       "expected_error": "connector event families remain silent until individually admitted by Event Authority",
-      "base_valid": "valid.connector_projection.headscale_private_ready_after_review_simulated",
+      "base_valid": "valid.connector_projection.headscale_private_ready_after_review_owner_shape",
       "patch": {
         "event_family_ids": [
           "remote_access.connector_ready"
@@ -13937,6 +13694,15 @@
         "remote_endpoint": "   "
       },
       "expected_error": "Blank input is invalid; no code grammar is invented"
+    },
+    {
+      "name": "DL260.owner_ready_requires_receipt",
+      "definition": "automatic_preparation_owner_projection",
+      "base_valid": "valid.automatic_preparation.production_ready_with_receipt",
+      "patch": {
+        "production_receipt_ref": null
+      },
+      "expected_error": "Ready requires the real owner receipt"
     }
   ],
   "resolved_owner_inputs": {

@@ -2,15 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26158-L26829
+Source lines: L26158-L26805
 
-Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
+Source SHA256: `31418308979daf76ebba3677dddd28bf16a09bc24cade1b9ecea120ff1255450`
 
 ---
 
 ## Chat WOW Turn Presentation Addendum (2026-09-27)
 
-This addendum carries Jared's 2026-09-26/27 decisions on the rebuilt chat transcript (DL-104 through DL-108) into this owner. The 5.6 Pro concept (`Concepts/chat-assistant-concepts/5.6 Pro/`, its `Chat updates.md`) is source lineage only; its lab tools are excluded by ACD-474. Where a unit below supersedes earlier text it says so in `stale_retired_dispositions`; everything it does not name stays as specified. The collaboration, Back Seat Driver, scheduling, memory, ELI5 and revert card internals belong to their own owners; this addendum places those items in the transcript (family, gutter, spine, accent) only.
+This addendum carries Jared's 2026-09-26/27 decisions on the rebuilt chat transcript (DL-104 through DL-108) into this owner. The 5.6 Pro concept (`Concepts/chat-assistant-concepts/5.6 Pro/`, its `Chat updates.md`) is source lineage only; only the accepted product behavior is binding. Where a unit below supersedes earlier text it says so in `stale_retired_dispositions`; everything it does not name stays as specified. The collaboration, Back Seat Driver, scheduling, memory, ELI5 and revert card internals belong to their own owners; this addendum places those items in the transcript (family, gutter, spine, accent) only.
 
 ### ACD-469 - Turn Stage Transcript Rendering Families And Accent Budget
 
@@ -402,65 +402,41 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-105, ContractName:Plans/Executor_Protocol.md#EP-128
 
-### ACD-474 - Lab Only Concept Controls Excluded From Canon
+### ACD-474 - Retired historical identifier
 
 ```yaml
 plan_unit_id: ACD-474
-unit_type: requirement
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The binding-by-reference of the 5.6 Pro concept (FinalGUISpec 2026-09-03 redesign section) and
-  every later promotion of it exclude its lab tools, which are never product: Demo Studio and its
-  family and variant indices, the Motion voice picker (production motion follows the theme family,
-  ACD-475), the Live turns demos and thread, the Multi Orbit demo, the working card's demo drawer
-  (play, pause, step, complete, reset, work history), the instant or stream reply switch, the
-  scripted replies, the film clock, and every measured timing recorded in the concept's notes. None
-  of them receives a command, setting, wiring row, persisted key or test gate.
-  Amended 2026-10-09 (DL-185): Demo Studio is now one for all of PMConcept7 (Plans/DRY_Rules.md#DR-070,
-  Plans/FinalGUISpec.md#F3-649): the chat's demo controls, the tour's and onboarding's, the home demos and later the
-  Orchestrator's and the Planning Wizard's are its sections, and it stays lab only under this unit's exclusions.
-gui_related: true
-gui_classification_reason: "Keeps concept lab controls out of product surfaces."
+canonical_text: ACD-474 is retired by DL-260, Jared 2026-10-31. The ID remains only for unchanged historical decision
+  references. It defines no active product feature, control, command, setting, schema, wiring, stored state, test obligation
+  or implementation debt.
+gui_related: false
+gui_classification_reason: Historical identifier only; no product UI requirement.
 split_recommended: false
-depends_on: [DL-106, DL-185, DR-070]
+depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
-  - "The working card offers no play, pause, step, complete, reset or history controls in product."
-  - "The one Demo Studio of PMConcept7 is excluded from every product catalog, setting, wiring row, persisted key and test gate, like the chat's was (DL-185)."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-risk_class: lab_control_leak
-reasoning_tier: high
-context_scope: chat_concept_boundary
-implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
-  - Plans/Settings_System.md
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: owner_exclusion_contract
+  mode: retired_no_product_work
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-106"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-185"
-  - "Plans/DRY_Rules.md#DR-070"
-  - "Plans/FinalGUISpec.md#F3-649"
+- Plans/Decision_Log.md#DL-260
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Motion voice"
-  - "Live turns"
+- DL-260
 negative_constraints:
-  - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
-  - "Do not carry concept family or variant indices into product settings."
-stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185 and DR-070 are in depends_on, and F3-649 stays in source_lineage because F3-649 depends on this unit."
+- Do not reactivate this historical identifier as a product requirement.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-106

@@ -4888,42 +4888,52 @@ plan_unit_id: CS-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh,
-  object-backed cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail
-  Pane, and cmd.panel.switch authorities. Event-primary Usage callers use usage_event/usage_event_ref;
-  a PMConcept7 Ledger attempt row dispatches the navigation command with usage_attempt/attempt_id and
-  retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel details remain
-  local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost,
-  placeholder, and animation previews are local projection state; exactly one changed semantic
-  release or explicit action dispatches the existing command, while no-change and cancel paths
-  dispatch nothing and write nothing. The concept-only
-  cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
-  after preset resolution and never becomes a primary command. No pointer-preview event,
-  PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
-  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
-  switch level at scope provider and each account's own switch level at scope account (D43, 2026-10-10) reuse
-  the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
-  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
-  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
-  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
-  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
-  Amended 2026-10-10 (DL-186): a dashboard tab's widget commits name the board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019); cmd.widget.reset_layout's optional set_id names the set a dashboard starts from (UCC-200).
+canonical_text: 'PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh, object-backed
+  cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail Pane, and cmd.panel.switch authorities.
+  Event-primary Usage callers use usage_event/usage_event_ref; a PMConcept7 Ledger attempt row dispatches the navigation
+  command with usage_attempt/attempt_id and retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel
+  details remain local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost, placeholder,
+  and animation previews are local projection state; exactly one changed semantic release or explicit action dispatches
+  the existing command, while no-change and cancel paths dispatch nothing and write nothing. The concept-only cmd.workspace_layout.size_surface
+  token normalizes to cmd.workspace_layout.resize_surface after preset resolution and never becomes a primary command.
+  No pointer-preview event, PM7 command family, second Assistant command path, or rejected provider-management command
+  is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its Accounts room''s Use this account
+  reuses cmd.account.select_profile, each provider''s Auto-switch toggle and switch level at scope provider and each
+  account''s own switch level at scope account (D43, 2026-10-10) reuse the Settings owner''s cmd.settings.transaction.preview
+  and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy,
+  detail } for the whole room and Usage board gravity commits inside the action''s own widget command (WS-019), a size
+  preset commits through cmd.widget.resize, Live / Paused is a local view projection. UCC-147 carries the control-by-control
+  census. Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families
+  of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard
+  widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
+  Amended 2026-10-10 (DL-186): a dashboard tab''s widget commits name the board in the payload''s existing room field,
+  not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019);
+  cmd.widget.reset_layout''s optional set_id names the set a dashboard starts from (UCC-200). Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
 depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180, DL-186]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
-  - Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
-  - Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
-  - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
-  - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
-  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level and at scope account for an account's own switch level (D43, 2026-10-10), exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed
+  settled action creates one command receipt and no pointer-preview domain event.
+- Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and
+  reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
+- Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel
+  inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary
+  callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses
+  usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
+- Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context
+  Detail Pane command family; menu open and hover dispatch nothing.
+- Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command,
+  receipt, event, or persistence write.
+- cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- 'Usage reuses cmd.account.select_profile, cmd.settings.transaction.preview/apply at the exact provider/account scope,
+  and one cmd.widget.move with arrange { mode: tidy, detail }; Live/Pause and gravity beyond the causing action dispatch
+  nothing.'
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -6395,33 +6405,27 @@ disposition rules in accordance with APR-014, APR-019, and APR-023, strictly adh
   collapsible sections, plan Rich/Markdown toggle, Activity Detail open/close (G1), and manager tabs—are
   classified as `LOCAL_PRESENTATION`. They utilize local or shared view-state primitives and emit no
   domain command.
-- **Isolation of Demo Fixtures (APR-014):** Test fixtures, replay commands, mock simulations, and
-  sample loaders are classified as `CONCEPT_DEMO_ONLY`. They reside exclusively in the Demo Gallery
-  and are strictly prohibited from registration in the product command catalog or production wiring.
 
 ```yaml
 plan_unit_id: CS-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses
-  cmd.bsd.configure / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure /
-  cmd.collaboration.start; Crew Auto uses cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set;
-  Plan Build uses cmd.chat.plan.build with topology discriminator (prohibiting build_as_goal); Plan
-  schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
-  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set.
-  View toggles are classified as LOCAL_PRESENTATION view state, and test fixtures are classified as
-  CONCEPT_DEMO_ONLY, excluded from product command catalogs.
+canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses cmd.bsd.configure
+  / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start; Crew Auto uses
+  cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build with topology discriminator
+  (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
+  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set. View
+  toggles are classified as LOCAL_PRESENTATION view state. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: false
 gui_classification_reason: Governs command catalog dispositions, canonical ID reuse, and demo separation.
 depends_on: [CS-078]
 unblocks: []
 acceptance_criteria:
-  - Specified operations reuse canonical command IDs without minting parallel commands.
-  - Plan Build uses topology discriminator; build_as_goal is prohibited.
-  - View toggles are classified as LOCAL_PRESENTATION without domain commands.
-  - Demo fixtures are classified as CONCEPT_DEMO_ONLY and excluded from product catalogs.
+- Specified operations reuse canonical command IDs without minting parallel commands.
+- Plan Build uses topology discriminator; build_as_goal is prohibited.
+- View toggles are classified as LOCAL_PRESENTATION without domain commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: command_duplication_or_demo_command_leak
@@ -6438,11 +6442,10 @@ source_lineage:
   - APR-019
   - APR-023
 preserved_exact_tokens:
-  - "cmd.chat.plan.build"
-  - "cmd.bsd.configure"
-  - "cmd.collaboration.start"
-  - "CONCEPT_DEMO_ONLY"
-  - "LOCAL_PRESENTATION"
+- cmd.chat.plan.build
+- cmd.bsd.configure
+- cmd.collaboration.start
+- LOCAL_PRESENTATION
 negative_constraints:
   - Do not mint cmd.chat.plan.build_as_goal.
   - Do not register demo fixtures in the product command catalog.
@@ -7095,28 +7098,25 @@ Each control of the redesigned sheets, cards, dock lines and run view is a comma
 - Send now on a held scheduled message: `cmd.chat.schedule_message.update` (SQR-013).
 - Go to message and Open the original message: `cmd.chat.open_thread`.
 
-Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity. Recorded examples and other concept demo controls stay `CONCEPT_DEMO_ONLY` under CS-079.
+Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity.
 
 ```yaml
 plan_unit_id: CDRY-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The wand-module redesign's non-command controls are fixed. View state (LOCAL_PRESENTATION, no
-  command, no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x,
-  Escape and scrim on a collaboration sheet and Keep going; expand, More, tabs, filters, disclosures
-  and Advanced, and Technical details on a setup sheet's Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the
-  Revert preview, See what's blocking it and Leave my files as they are; the Why? on a Back Seat
-  Driver aside. Draft state: every sheet control, stepper, team recipe, specialist and Advanced row,
-  and Bring back, which is never an undo command. Reuse replaces aliases: cmd.collaboration.open for
-  every Open Panel and the dock's Show or Review, cmd.collaboration.export for every download or
-  export, cmd.collaboration.start or cmd.review.run_again for run again,
-  cmd.chat.schedule_message.update for Send now, cmd.chat.open_thread for going to a message. Teach
-  closes through cmd.chat.teach.cancel. The Plan view stays the one document view toggle with a
-  shell_view row, cmd.chat.plan.view.set. Recorded examples and other concept demo controls stay
-  CONCEPT_DEMO_ONLY, and apart from the nine identities of CDRY-022 and CDRY-023 the redesign needs no
-  new command identity.
+canonical_text: 'The wand-module redesign''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
+  no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x, Escape and scrim on a collaboration
+  sheet and Keep going; expand, More, tabs, filters, disclosures and Advanced, and Technical details on a setup sheet''s
+  Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the Revert preview, See
+  what''s blocking it and Leave my files as they are; the Why? on a Back Seat Driver aside. Draft state: every sheet
+  control, stepper, team recipe, specialist and Advanced row, and Bring back, which is never an undo command. Reuse replaces
+  aliases: cmd.collaboration.open for every Open Panel and the dock''s Show or Review, cmd.collaboration.export for every
+  download or export, cmd.collaboration.start or cmd.review.run_again for run again, cmd.chat.schedule_message.update
+  for Send now, cmd.chat.open_thread for going to a message. Teach closes through cmd.chat.teach.cancel. The Plan view
+  stays the one document view toggle with a shell_view row, cmd.chat.plan.view.set. Apart from the nine identities of
+  CDRY-022 and CDRY-023 the redesign needs no new command identity. Amended DL-260, Jared 2026-10-31: only real product
+  behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Classifies visible sheet, card, dock and run-view controls as view state, draft state or command reuse."
 split_recommended: false
@@ -7145,16 +7145,15 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-07, B-CMD-08"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
-  - "LOCAL_PRESENTATION"
-  - "cmd.chat.plan.view.set"
-  - "shell_view"
-  - "cmd.collaboration.open"
-  - "cmd.collaboration.export"
-  - "cmd.review.run_again"
-  - "cmd.chat.schedule_message.update"
-  - "cmd.chat.open_thread"
-  - "cmd.chat.teach.cancel"
-  - "CONCEPT_DEMO_ONLY"
+- LOCAL_PRESENTATION
+- cmd.chat.plan.view.set
+- shell_view
+- cmd.collaboration.open
+- cmd.collaboration.export
+- cmd.review.run_again
+- cmd.chat.schedule_message.update
+- cmd.chat.open_thread
+- cmd.chat.teach.cancel
 negative_constraints:
   - "Do not register a Review or BrainStorm view-mode command."
   - "Do not register a recipe, Bring back, dock show, Send now, jump-to-message, Revert preview or Revert keep command."
@@ -7621,29 +7620,25 @@ The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity of its own (U
 
 **Reuse instead of an alias.** Opening a subagent's live transcript is `cmd.agents.open_thread` (UCC-129) with the child run's thread ref, from every opener assistant-chat-design ACD-485 names. There is no chat-local subagent open command or alias. A Subagents preview row routes into Activity Detail as every preview row does.
 
-**Concept demos (`CONCEPT_DEMO_ONLY`, CS-079).** The concept's Demo Studio NieR controls (Plug-in Chips, presets, the background picker and Play reboot moment) and the concept's `nier-*`, `feed-stretch` and `goal-*` action names. NieR Mode itself is a Settings write that the Settings owner owns.
-
 ```yaml
 plan_unit_id: CS-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The 5.6 Pro chat round's non-command controls are fixed. View state (LOCAL_PRESENTATION, no command, no event,
-  no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row's
-  selection and expansion and Close details; Activity Detail's domain tabs; a stretch row's toggle, Expand or
-  Collapse and More details in a subagent's live transcript; message More and its panel; a setup sheet's
-  dropdown trigger pressed again; Technical details on a setup sheet's Advanced page and Show raw data. Hover
-  tags, press-to-close and the activity preview dwell are presentation. The Schedule Message send-time track is
-  draft state. Opening a subagent's live transcript reuses cmd.agents.open_thread from every ACD-485 opener,
-  with no chat-local alias; the transcript's Copy is cmd.chat.copy_message and the Goal preview's Edit objective
-  is cmd.chat.goal.open_editor. The concept's Demo Studio NieR controls and its nier-*, feed-stretch and goal-*
-  action names are concept demos under CS-079; A NieR family selection is an ordinary theme Settings write
-  through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor open/close/replay
-  remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing
-  theme owner; no separate override remains.
+canonical_text: 'The 5.6 Pro chat round''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
+  no event, no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row''s
+  selection and expansion and Close details; Activity Detail''s domain tabs; a stretch row''s toggle, Expand or Collapse
+  and More details in a subagent''s live transcript; message More and its panel; a setup sheet''s dropdown trigger pressed
+  again; Technical details on a setup sheet''s Advanced page and Show raw data. Hover tags, press-to-close and the activity
+  preview dwell are presentation. The Schedule Message send-time track is draft state. Opening a subagent''s live transcript
+  reuses cmd.agents.open_thread from every ACD-485 opener, with no chat-local alias; the transcript''s Copy is cmd.chat.copy_message
+  and the Goal preview''s Edit objective is cmd.chat.goal.open_editor. A NieR family selection is an ordinary theme Settings
+  write through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor open/close/replay
+  remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing theme
+  owner; no separate override remains. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
+  requirement.'
 gui_related: true
-gui_classification_reason: "Keeps the 5.6 Pro round's view, draft and demo controls out of the command catalog."
+gui_classification_reason: Keeps local presentation and draft controls separate from domain commands.
 split_recommended: false
 depends_on: [UCC-188, CDRY-021, CS-079]
 unblocks: []
@@ -7668,9 +7663,8 @@ source_lineage:
   - "Plans/UI_Command_Catalog.md#UCC-188"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
-  - "LOCAL_PRESENTATION"
-  - "CONCEPT_DEMO_ONLY"
-  - "cmd.agents.open_thread"
+- LOCAL_PRESENTATION
+- cmd.agents.open_thread
 negative_constraints:
   - "Do not mint a command for a control listed here as view state, draft state or presentation."
   - "Do not register a concept action name as a command identity."
@@ -8011,50 +8005,40 @@ plan_unit_id: CS-102
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its
-  expected_state_hash guards the editor tab's saved nonstructural state; a mismatch refuses as
-  stale_projection, a replay with the same idempotency key returns the existing receipt, and
-  conflicting reuse refuses. Validation/permission, bounded serialization, write and readback
-  complete before applied is returned; failure retains or restores the earlier state.
-  Plans/editor_appearance.schema.json closes fields and fixed failure reasons; no arbitrary code,
-  path payload or unknown field is accepted. UI_Command_Catalog remains the only command minter.
-  ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token and
-  try_sample are typed local actions, parameterized by editor/terminal and target tab where
-  available; Indentation opens the same editor screen at its indentation group. Scope selection is
-  saved tab view state only when invoked from that tab; Settings' All entry is temporary.
-  ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read (the inbox header's Mark all read,
-  marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and explain_state
-  operate the one shared inbox's presentation/read projection and never resolve its source.
-  Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
-  dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
-  keyboard gallery navigation before selection, change-meter display, drag previews, glow and timer
-  suspension dispatch nothing and write nothing. Choosing a background file returns a validated
-  owner asset reference then uses the selected scope's writer; importing a scheme uses the existing
-  import command. Sample cursor/caret, bell, typing, problem and Step back trials affect only
-  isolated sample state. Committed quick sets, reset, fields and token edits always use UCC-204's
-  writers, never a view-local bypass. The production/exclusion census is WM-093/UIW-043 and
-  Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and
-  cmd.theme.preview; it is not normalized to the internal Settings preview command. The retained
-  scheme-preview local actions belong only to the editor/terminal Customize screens.
-  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
-  ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix.
-  Unlike a transient preview, they persist only SP-331's computer-local preset library, with its
-  validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
-  Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
-  through a local action.
-  Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
-  and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
-  Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5, the left rail review copy's
-  concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200's focus panel N, and no
-  rebuild or fixture inherits the collision. Alt+Shift+L, the former Liquid Glass demonstration
-  toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
-  option 1). Neither a local action nor a command may select a material off state or old Glass
-  fallback; F3-652 always supplies the Glass look's Liquid Glass material.
-  F3-1/F3-5, 2026-10-30: a staged notice card takes no clicks during entry or exit on every page, Usage
-  included. Its existing body/action/dismiss click routes stay inactive, with no queued or duplicate
-  dispatch and no late reactivation of a leaving card. Reduced Motion settles instantly after placement;
-  still-pending placement and exit stay guarded. This transient presentation gate adds no action, command, receipt or domain event.
+canonical_text: 'UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its expected_state_hash
+  guards the editor tab''s saved nonstructural state; a mismatch refuses as stale_projection, a replay with the same
+  idempotency key returns the existing receipt, and conflicting reuse refuses. Validation/permission, bounded serialization,
+  write and readback complete before applied is returned; failure retains or restores the earlier state. Plans/editor_appearance.schema.json
+  closes fields and fixed failure reasons; no arbitrary code, path payload or unknown field is accepted. UI_Command_Catalog
+  remains the only command minter. ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token
+  and try_sample are typed local actions, parameterized by editor/terminal and target tab where available; Indentation
+  opens the same editor screen at its indentation group. Scope selection is saved tab view state only when invoked from
+  that tab; Settings'' All entry is temporary. ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read
+  (the inbox header''s Mark all read, marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and
+  explain_state operate the one shared inbox''s presentation/read projection and never resolve its source. Mark_visible_read
+  names only notices actually shown for the F3-453 dwell. No catalog row, dispatcher receipt or domain event belongs
+  to these ui.* ids. Picker/menu openings, hover, keyboard gallery navigation before selection, change-meter display,
+  drag previews, glow and timer suspension dispatch nothing and write nothing. Choosing a background file returns a validated
+  owner asset reference then uses the selected scope''s writer; importing a scheme uses the existing import command.
+  Sample cursor/caret, bell, typing, problem and Step back trials affect only isolated sample state. Committed quick
+  sets, reset, fields and token edits always use UCC-204''s writers, never a view-local bypass. The production/exclusion
+  census is WM-093/UIW-043 and Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and cmd.theme.preview;
+  it is not normalized to the internal Settings preview command. The retained scheme-preview local actions belong only
+  to the editor/terminal Customize screens. ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete
+  and ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix. Unlike a transient
+  preview, they persist only SP-331''s computer-local preset library, with its validation/readback and no dispatcher
+  receipt or event. Naming/selection/search remain view-local. Applying a preset always uses UCC-204''s existing This
+  or All writer and never writes appearance through a local action. Amended 2026-10-17 (DL-228): background design tiles
+  preview through the same ui.appearance.preview_scheme and cancel_preview as scheme tiles, after the same 110 ms rest
+  (F3-642). ui.terminal.degauss is the Retro Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5,
+  the left rail review copy''s concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200''s focus panel
+  N, and no implementation inherits the collision. Neither a local action nor a command may select a material off state
+  or old Glass fallback; F3-652 always supplies the Glass look''s Liquid Glass material. F3-1/F3-5, 2026-10-30: a staged
+  notice card takes no clicks during entry or exit on every page, Usage included. Its existing body/action/dismiss click
+  routes stay inactive, with no queued or duplicate dispatch and no late reactivation of a leaving card. Reduced Motion
+  settles instantly after placement; still-pending placement and exit stay guarded. This transient presentation gate
+  adds no action, command, receipt or domain event. Amended DL-260, Jared 2026-10-31: only real product behavior remains
+  an implementation requirement.'
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false
@@ -8094,7 +8078,6 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Commands_System.md
-
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Wiring_Matrix.md#WM-093

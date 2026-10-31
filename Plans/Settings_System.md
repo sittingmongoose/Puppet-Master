@@ -886,38 +886,33 @@ plan_unit_id: SSYS-016
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: 'PMConcept7 (Concepts/PMConcept7.html) is the Settings look-and-behaviour reference under the concept_fixture_only
-  boundary; the concept is never the authored production owner. It may demonstrate the K3 geometry, 1010-row projection,
-  later-packet manager additions, project/no-Project defaults, and command previews, but fixture state, local browser
-  storage, simulated receipts, and JavaScript handlers are not runtime proof. Production targets Rust stable and Slint
-  1.17.1 using typed models, host-width layout states, variable-height virtualization, explicit properties and focus
-  state, precomputed theme tokens, native animations, and opaque or pre-blurred known assets where they help performance;
-  blur, backdrop blur, masks, blend modes and filter effects drawn by Puppet Master''s Skia renderer extensions (FinalGUISpec
-  F3-582, DL-139) are no longer excluded for portability. DOM selectors, :has, viewport-width CSS, localStorage, color-mix,
-  arbitrary backdrop blur, and CSS/JS motion in the concept are translation inputs, not production dependencies of the
-  Slint desktop; the Leptos web GUI (F3-583, DL-139) draws Settings with its own DOM and CSS from the shared interface-model
-  crate and design-token source, and the concept HTML is a design reference there, not script to run under Leptos. This
-  direction makes no portability, build, runtime, visual, performance or accessibility claim and no certification claim.
-  Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. QA
-  round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar
-  expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain
-  English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question
-  tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
-  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
-  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
-  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
-  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
-  tour_narration_only tag is retired. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider
-  entry, with API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning
-  team; these remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced
-  optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider
-  entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct
-  from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan
-  retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway.
-  A label change never changes a saved provider/account ID. DL-259 D2 A, Jared 2026-10-31: Settings retains the explicit
-  always-on Server, manual private HTTPS, self-hosted Remote Link gateway, rarer SSH key types, China-region and local-server
-  AI routes, and repository object-format controls; onboarding provides context-correct pointers without exposing those
-  advanced choices.'
+canonical_text: 'Production Settings targets Rust stable and Slint 1.17.1 with typed models, host-width layout states,
+  variable-height virtualization, explicit properties/focus, precomputed theme tokens and native animation. The Skia
+  renderer extensions of F3-582/DL-139 own blur, backdrop blur, masks, blend modes and filter effects; opaque or pre-blurred
+  known assets may help performance. Leptos web Settings (F3-583) uses its DOM/CSS renderer over the same interface-model
+  crate and design-token source. Prototype selectors, browser storage, script handlers and simulated values are not native
+  dependencies or production evidence. Runtime, persistence, wiring, visual, performance and accessibility acceptance
+  each need their own real owner proof. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory
+  census supersede earlier counts. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: DL-259, Jared 2026-10-31: ELI5:
+  the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with
+  values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state.
+  Every opened onboarding question tip and prose help section has useful Plain English and technical versions, including
+  FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy,
+  control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126).
+  A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns
+  the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. DL-259, Jared 2026-10-31, D4/D6:
+  cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its default auth surface. A user key bills
+  that user’s plan and a service-account key its owning team; these remain distinct account/billing identities. cursor_cli
+  keeps browser login as its default and an advanced optional CLI-key path; it does not rename or absorb the SDK entry.
+  alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan, a monthly-credit subscription with its
+  own key and Singapore route identity, distinct from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan
+  is the current label, with MiniMax Coding Plan retained as a former-name/search alias; OpenCode Console replaces the
+  Zen display name and is a pay-as-you-go gateway. A label change never changes a saved provider/account ID. DL-259 D2
+  A, Jared 2026-10-31: Settings retains the explicit always-on Server, manual private HTTPS, self-hosted Remote Link
+  gateway, rarer SSH key types, China-region and local-server AI routes, and repository object-format controls; onboarding
+  provides context-correct pointers without exposing those advanced choices. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: This unit governs the Settings visual reference and future Slint implementation direction.
 depends_on: [SSYS-003, SSYS-010]
@@ -1369,7 +1364,7 @@ Amended 2026-10-16 (SSYS-010, SSYS-054, SP-333): the appearance projection is de
 
 Transfer, Restore Defaults, import, and migration use the same transaction preview. Transfer selector categories resolve once to the exact sorted IDs and never expand during apply. Export is separate: `cmd.settings.export` accepts `pm.settings_export_request.v1` and returns `pm.settings_export_manifest.v1`, a detached exact-ID artifact manifest with source revision, exclusions, format, artifact ref, hash, size, timestamp, receipt, and `credential_material_included=false`.
 
-`pm.settings_migration_preview.v1` permits only `legacy_global_snapshot`, `legacy_singleton_settings`, `legacy_browser_concept_fixture`, or `settings_export_v1` sources. It records source hash, destination Project/revision, detected/mappable/excluded IDs, unmapped keys, normalized theme pair, and transaction-preview ref. `confirmation_required=true`, `auto_apply=false`, and `legacy_source_authoritative=false` are invariant. Discovery, app startup, or concept state cannot overwrite an existing Project.
+`pm.settings_migration_preview.v1` permits only `legacy_global_snapshot`, `legacy_singleton_settings`, or `settings_export_v1` sources. It records source hash, destination Project/revision, detected/mappable/excluded IDs, unmapped keys, normalized theme pair, and transaction-preview ref. `confirmation_required=true`, `auto_apply=false`, and `legacy_source_authoritative=false` are invariant. Discovery or app startup cannot overwrite an existing Project.
 
 ### 3.4 Manager route and summary
 
@@ -1450,8 +1445,6 @@ For every Settings or retained-owner action, `pm.settings_ui_action_projection.v
 ### 4.6 Doctor and concept projection boundaries
 
 `pm.settings_doctor_projection.v1` carries only a cached, currentness-aware N2-151/domain-owner finding: check ID, domain owner, generation, capture/expiry, severity, raw status, evidence refs, dedupe key, and current owner remediation route/availability. Its invariants are `probe_execution_owner=domain_owner_only`, `settings_authority=cached_projection_and_owner_route_only`, and `readiness_claim=false`. Expired or generation-mismatched findings render `doctor_projection_stale`; they cannot enable remediation. `settings.doctor.remediation.open` navigates to `check:{check_id}` and never runs the probe or repair.
-
-`pm.settings_concept_boundary.v1` fixes PMConcept7 at `concept_fixture_only`: handlers are simulated, persistence is fixture-local/non-authoritative, and `native_runtime_executed=false`. It permits geometry/content/interaction demonstration only and explicitly prohibits production runtime, persistence, handler-wiring, visual, performance, accessibility, or certification claims.
 
 ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/Crosswalk.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
@@ -1929,8 +1922,7 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
 - **Canonical Key Identity:** The working activity presentation preference is canonically registered
   under `general.interaction.working-activity-style`. The short key `working-activity-style` is retained
   exclusively as a query and migration alias; the curated duplicate short-key row is retired.
-- **Supported Selections:** The setting offers exactly `Orbit` and `Step Rail Simple` (the concept's
-  Demo Studio family/variant indices are lab-only, ACD-474). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
+- **Supported Selections:** The setting offers exactly `Orbit` and `Step Rail Simple` (the concept's). The legacy value token `Step Rail` maps directly to `Step Rail Simple` as an
   input alias.
 - **Concept-Candidate Roster and Stage Rows (APR-048):** The five concept-candidate inventory keys:
   1. `branching.crew.crew-auto-roster`
@@ -3607,7 +3599,6 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L18): The 2026-10-09 retirement line below keeps its original seven ids; this L18 line records the search retirement."
   - "Amended 2026-10-10 (D30; R35): The prose Rows added table lists twelve rows with Editor Colors and Editor Line Spacing's 1.55 default."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200
@@ -3850,7 +3841,6 @@ stale_retired_dispositions:
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
   - "Amended 2026-10-16 (DL-213): Flicker Amount retires (a stored amount reads once as Flicker on where no Flicker is stored beside it), Bell's Visual retires into Follow look, Picture Desaturation defaults to 0.5 (it read 0.3), Bezel Reflection is four levels from the material's own, and the round-5 visibility and publication holds close."
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/storage-plan.md#SP-332, ContractName:Plans/Settings_System.md#SSYS-028, ContractName:Plans/UI_Command_Catalog.md#UCC-201
@@ -3933,7 +3923,6 @@ preserved_exact_tokens:
 negative_constraints: []
 owner_hints:
 - Plans/Settings_System.md
-
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-050, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-651
@@ -4137,69 +4126,57 @@ plan_unit_id: SSYS-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028,
-  SSYS-040, SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step
-  Rail Simple as the product preference, default Orbit. Other concept family takes and the
-  motion-voice override are Demo Studio controls, never Settings rows.
-  general.interaction.sound-effects is the one master switch, on by default (DL-107); the chat speaker
-  and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep
-  following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default
-  resolves the application default and optional project override; general.interaction.chat-eli5
-  remains a run-scoped chat override, and inherit deletes it. ELI5 changes affect only future replies;
-  the current stream and earlier replies are unchanged. In the product, All chats and Project default
-  in the chat sheet use Settings transactions; the chat's own Standard, Simple and Follow controls use
-  cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another
-  row. ai.models.thread-title-model is the naming policy, with Default, None or an available model id
-  from its live catalog; the sheet and Settings use the same value, preserving manual-name locks and
-  first-message-only naming. general.interaction.assistant-mode changes only how future chats start,
-  never the mode of an existing chat. The sending rows general.interaction.submit-key, queue-behavior,
-  queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior
-  its renderer supports and never claims an unimplemented preference works.
-  general.interaction.chat-history-list remains an admitted row and is shown as History in new
-  workspaces, with Flyout or Pinned and default Flyout. It seeds History only when a workspace has no
-  saved choice; editing it never pins or unpins the current History, resizes the column or writes the
-  Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in
-  narrow windows uses ui.chat_column.keep_open, and chat width uses
-  cmd.workspace_layout.resize_surface. None is a Settings row. Jared G1 B (2026-10-30): Activity Detail starts
-  unpinned; its view-local Pin keeps it open across thread switches with the new thread’s data, while unpinned
-  detail closes on a switch (ACD-453/506). No Activity pin Settings default is added. The host's
-  look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
-  effort or capability selection never becomes a global Settings default merely because the standalone
-  concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a
-  hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply,
-  read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection
-  only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified by Jared
-  on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded
-  (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought
-  Stream choice edit the same row through the Settings transaction. It controls disclosure of
-  reasoning supplied by the model and never changes a reply or invents reasoning. Added the same day
-  by Jared's answer (DL-234: "Default 8, adjustable in settings."):
-  general.interaction.thought-stream-lines is global and display-only, shown as Lines shown while
-  thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8. It
-  sets how many of the latest lines Auto keeps in view while the model thinks and has no effect under
-  Always open. Settings, New chat defaults' second Thought Stream dropdown and the lines list in the
-  composer's Thought Stream menu edit the same row through the Settings transaction, and Settings
-  refuses any other value; as with Thought Stream, its global scope is the product contract, not proof
-  that the project-only adapter supplies global storage. The current-chat
-  ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its
-  general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
-  concept's existing project-only Settings adapter cannot prove separate application and project
-  persistence: the renderer keeps these layers separate and discloses any session-only layer instead
-  of creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382,
-  Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching
-  threads re-projects the appropriate project without copying an unrelated override. All chats ELI5
-  is a separate session-only value; application-scope persistence remains unimplemented in this
-  concept. The Thought Stream row, New chat defaults and composer choice share the stored preference,
-  and replies show the live thinking block it drives (ACD-221, DL-234). Its global inventory scope is the product
-  contract admitted by the lead, not proof that this project-only adapter supplies global storage.
-  History's initial-layout seed is built and preserves a saved false or true. The Settings master
-  sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional
-  layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation.
-  Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no
-  second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without a small
-  view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a switch
-  (ACD-506); History pin remains unchanged.
+canonical_text: 'The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028, SSYS-040,
+  SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step Rail Simple as the product
+  preference, default Orbit. general.interaction.sound-effects is the one master switch, on by default (DL-107); the
+  chat speaker and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep following
+  it. This port adds no chat-only mute or volume row. general.interaction.eli5-default resolves the application default
+  and optional project override; general.interaction.chat-eli5 remains a run-scoped chat override, and inherit deletes
+  it. ELI5 changes affect only future replies; the current stream and earlier replies are unchanged. In the product,
+  All chats and Project default in the chat sheet use Settings transactions; the chat''s own Standard, Simple and Follow
+  controls use cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another row.
+  ai.models.thread-title-model is the naming policy, with Default, None or an available model id from its live catalog;
+  the sheet and Settings use the same value, preserving manual-name locks and first-message-only naming. general.interaction.assistant-mode
+  changes only how future chats start, never the mode of an existing chat. The sending rows general.interaction.submit-key,
+  queue-behavior, queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior its
+  renderer supports and never claims an unimplemented preference works. general.interaction.chat-history-list remains
+  an admitted row and is shown as History in new workspaces, with Flyout or Pinned and default Flyout. It seeds History
+  only when a workspace has no saved choice; editing it never pins or unpins the current History, resizes the column
+  or writes the Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in narrow
+  windows uses ui.chat_column.keep_open, and chat width uses cmd.workspace_layout.resize_surface. None is a Settings
+  row. Jared G1 B (2026-10-30): Activity Detail starts unpinned; its view-local Pin keeps it open across thread switches
+  with the new thread’s data, while unpinned detail closes on a switch (ACD-453/506). No Activity pin Settings default
+  is added. The host''s look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model,
+  effort or capability selection never becomes a global Settings default merely because the standalone concept saved
+  it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a hosted conversation choice or
+  an inventory row. Native Settings scope, validation, preview/apply, read-only refusal and storage requirements remain
+  in force; the HTML bridge is a concept projection only. Added by the lead''s ruling of 2026-10-22 under Jared''s port
+  brief (DL-232), ratified by Jared on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only,
+  Auto (While it thinks) or Expanded (Always open), default Auto; Settings, New chat defaults and the composer capability
+  menu''s Thought Stream choice edit the same row through the Settings transaction. It controls disclosure of reasoning
+  supplied by the model and never changes a reply or invents reasoning. Added the same day by Jared''s answer (DL-234:
+  "Default 8, adjustable in settings."): general.interaction.thought-stream-lines is global and display-only, shown as
+  Lines shown while thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8.
+  It sets how many of the latest lines Auto keeps in view while the model thinks and has no effect under Always open.
+  Settings, New chat defaults'' second Thought Stream dropdown and the lines list in the composer''s Thought Stream menu
+  edit the same row through the Settings transaction, and Settings refuses any other value; as with Thought Stream, its
+  global scope is the product contract, not proof that the project-only adapter supplies global storage. The current-chat
+  ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its general.interaction.chat-eli5
+  inventory identity, run scope and override contract remain. The concept''s existing project-only Settings adapter cannot
+  prove separate application and project persistence: the renderer keeps these layers separate and discloses any session-only
+  layer instead of creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382, Settings
+  persists the host project''s ELI5 default, unscoped chats bind to that project, and switching threads re-projects the
+  appropriate project without copying an unrelated override. All chats ELI5 is a separate session-only value; application-scope
+  persistence remains unimplemented in this concept. The Thought Stream row, New chat defaults and composer choice share
+  the stored preference, and replies show the live thinking block it drives (ACD-221, DL-234). Its global inventory scope
+  is the product contract admitted by the lead, not proof that this project-only adapter supplies global storage. History''s
+  initial-layout seed is built and preserves a saved false or true. The Settings master sound, working style, naming
+  policy and future-chat mode bindings remain as reviewed; no additional layout, Activity pin, stand-in or family-take
+  setting is admitted by final reconciliation. Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for
+  chat/onboarding extras with no second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin
+  without a small view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on
+  a switch (ACD-506); History pin remains unchanged. Amended DL-260, Jared 2026-10-31: only real product behavior remains
+  an implementation requirement.'
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false

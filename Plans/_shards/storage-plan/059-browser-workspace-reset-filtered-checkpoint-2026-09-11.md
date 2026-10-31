@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21377-L22158
+Source lines: L21377-L22157
 
-Source SHA256: `d9cb7985f082b41afc68236fbe822eaf5eb2a7cb51877691dc72446acd1e47d3`
+Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
 
 ---
 
@@ -786,7 +786,6 @@ negative_constraints:
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the event moves to payload 2.0.0 once Event Authority admits it, and the selected layout to v2; v1 slot and receipt schemas stay the v1 readers."
 - "Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42, registry revision 2026-10-09.1); the admission condition is met and removed from the canonical text."
-
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Shared_Integration_Runtime.md#SIR-046, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/FinalGUISpec.md#F3-515, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045
