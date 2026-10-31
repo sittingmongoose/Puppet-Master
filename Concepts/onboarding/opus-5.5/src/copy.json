@@ -218,7 +218,8 @@
       "confirmTitle": "How do you want to confirm?",
       "approve": {
         "title": "Approve from another device",
-        "sub": "{device} will show a request"
+        "sub": "{device} will show a request",
+        "subAny": "A device that already uses {name} will show a request"
       },
       "code": {
         "title": "Enter the code it shows",
@@ -239,17 +240,32 @@
         "approve": "Waiting for approval on {device}",
         "code": "Checking the code",
         "qr": "Reading the QR code",
-        "trust": "Pairing this device"
+        "trust": "Pairing this device",
+        "approveAny": "Waiting for approval on a device that already uses {name}"
       },
       "approved": "Approved on {device}",
-      "resend": "Didn't get a request? Send it again",
+      "resend": "Didn't get a request? Send a new one",
       "codeLabel": "Code from {name}",
       "codeHint": "8 letters and numbers, like A7K9-M2Q4",
       "codeWrong": "That code doesn't match. Check it on {name} and try again.",
       "qrAim": "Point your camera at the QR code on {name}",
       "expired": "The request expired.",
       "done": "This device is paired with {name}",
-      "check": "Check code"
+      "check": "Check code",
+      "fail": {
+        "unreachable": "Couldn't reach {name}. Check that it is turned on and connected, then try again. Nothing was connected.",
+        "denied": "The request was turned down on the other device. Nothing was connected.",
+        "expired": "The request ran out before anyone approved it. Nothing was connected.",
+        "identity_mismatch": "The computer that answered is not {name}: its picture and ID are different. Nothing was connected.",
+        "protocol_mismatch": "{name} runs a different version of Puppet Master. Update the older one, then try again. Nothing was connected.",
+        "retry": "Try again",
+        "otherWay": "Choose another way",
+        "askAgain": "Ask again",
+        "useCode": "Use a code instead",
+        "newRequest": "Send a new request",
+        "toList": "Back to the list",
+        "reason": "Pairing didn't finish. Choose what to do next."
+      }
     },
     "ready": {
       "eyebrow": "Connected",

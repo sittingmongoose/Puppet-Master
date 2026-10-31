@@ -71,3 +71,12 @@ test('the old guard is what lost Qwen Token Plan (control)', () => {
   const { store } = loadStore(true);
   assert.equal(Object.keys(store.scrub(session(), 'onboarding').ai.accounts).includes('qwen-token'), true);
 });
+
+test("the pairing code srv drops at its two places is still dropped (SCR-02), and nowhere else", () => {
+  const { store } = loadStore(true);
+  const out = store.scrub({ connect: { code: 'A7K9-M2Q4', server: 'pm:home' }, nas: { code: '482 913' }, ui: { code: 'kept' } }, 'onboarding');
+  assert.equal('code' in out.connect, false);
+  assert.equal('code' in out.nas, false);
+  assert.equal(out.connect.server, 'pm:home');
+  assert.equal(out.ui.code, 'kept');
+});
