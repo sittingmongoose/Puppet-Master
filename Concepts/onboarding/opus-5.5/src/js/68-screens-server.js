@@ -12,7 +12,24 @@
   const PLATFORMS = { nas: ['truenas', 'unraid', 'synology', 'qnap'], cloud: ['linux'], pc: ['windows', 'macos', 'linux'] };
   /* the computer being set up: a rented cloud computer is reached by its address, never found on the home network */
   const cloud = (S) => (S.sess.server.kind || 'nas') === 'cloud';
-  const unclaimed = (S) => (cloud(S) ? S.env.unclaimedCloud : S.env.unclaimed);
+  /* A rented computer is set up only over a private network until it is yours (RAS-007: unclaimed setup stays
+     local/private; SCR-14): it is reached at the address it has on the person's VPN or Tailscale network, never at its
+     public internet address. (The fixture's computer has one there.) */
+  const CLOUD_PRIVATE = '100.88.12.34';
+  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { address: S.env.unclaimedCloud.privateAddress || CLOUD_PRIVATE, name: S.env.unclaimedCloud.privateAddress || CLOUD_PRIVATE }) : S.env.unclaimed);
+  /* a private address: a home or VPN range, the 100.64/10 range Tailscale uses, or a local name; anything else faces the internet */
+  function privateAddress(v) {
+    const a = String(v || '').trim().toLowerCase().replace(/^\[|\]$/g, '');
+    if (!a) return true;
+    const m = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.exec(a);
+    if (m) { const [x, y] = [+m[1], +m[2]]; return x === 10 || x === 127 || (x === 172 && y >= 16 && y <= 31) || (x === 192 && y === 168) || (x === 100 && y >= 64 && y <= 127) || (x === 169 && y === 254); }
+    if (a.includes(':')) return /^(fc|fd|fe8|fe9|fea|feb|::1$)/.test(a);
+    return !a.includes('.') || /\.(local|lan|home\.arpa|internal|ts\.net|vpn)$/.test(a);
+  }
+  /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
+     from the name the person gives it) */
+  const reachedAt = (S) => unclaimed(S).address;
+  O55.serverSetup = { address: (S) => (S.sess.server.claimed ? reachedAt(S) : '') };
   /* names that fit the kind of computer (a cloud computer is not a Home NAS) */
   /* names already on this network (the NAS found there, other Puppet Masters) are never suggested for a new Server: a
      second "Home NAS" beside the first made every later screen ambiguous (logic crawl). A taken name gets a " 2". */
@@ -119,11 +136,13 @@
       inner += `<ol class="o55-steps" data-key="steps-${plat}">` + (Array.isArray(steps) ? steps : []).map((st) => `<li>${U.esc(st)}</li>`).join('') + '</ol>';
       if (plat === 'linux') inner += `<div class="o55-codeline" data-key="cmd"><code>${U.esc(T('server.install.command'))}</code>${F.copyBtn(T('server.install.command'), 'install')}</div>${F.copyNote('install')}`;
       inner += `<div class="o55-sublinks" data-key="guide">${C.link(T('server.install.guide'), 'guide', plat, { tip: 'group:guide' })}</div>`;
+      /* what keeps a Server's work, before anyone installs it (SCR-12): behind a disclosure, so the steps stay short */
+      if (kind === 'nas') inner += C.details(S, 'nasbefore', T('server.wait.before.title'), `<ul class="o55-will">${['models', 'data', 'address'].map((k) => `<li>${C.small(k === 'models' ? 'server' : k === 'data' ? 'vault' : 'globe', 14)}<span>${U.esc(T('server.wait.before.' + k, { brand: PLATFORM_NAMES[plat] || '' }))}</span></li>`).join('')}</ul>`);
       let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
       if (sv.manual) {
-        const hit = String(sv.addr || '').trim().toLowerCase() === u.address;
-        if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
-        out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
+        const typed = String(sv.addr || '').trim().toLowerCase(), hit = typed === u.address, pub = kind === 'cloud' && !!typed && !privateAddress(typed);
+        if (kind === 'cloud') out += C.note(T('server.wait.cloudPrivate'), 'info', 'lock');
+        out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudPrivateLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : pub ? '' : T(kind === 'cloud' ? 'server.wait.cloudHint' : 'connect.route.addressHint'), error: pub ? T('server.wait.cloudPublic') : '', invalid: pub, valid: hit });
       } else if (!unclaimedFound(S)) {
         out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
@@ -401,7 +420,7 @@
     body(S) {
       // Adopt before drawing. refresh() calls mounted(), so mounted must never refresh this screen itself.
       pollGuestRun(S);
-      const sv = S.sess.server, t = F.countdown(sv.pairUntil || Date.now()), link = 'https://' + U.slug(sv.displayName || 'home-nas') + '.local:7443/pair';
+      const sv = S.sess.server, t = F.countdown(sv.pairUntil || Date.now()), link = 'https://' + reachedAt(S) + '/pair';
       const code = (EPH() && EPH().getInvite(sv.pairGen)) || '';
       let card = `<div class="o55-paircard" data-key="pair"><div class="o55-qrbox">${code ? F.qr('pair-' + code, 132) : ''}</div><div class="o55-pairinfo">`
         + `<span class="o55-pairtitle">${U.esc(T('server.ready.pairTitle'))}</span><span class="o55-paircode">${U.esc(code || T('server.ready.codeMissing'))}</span>`

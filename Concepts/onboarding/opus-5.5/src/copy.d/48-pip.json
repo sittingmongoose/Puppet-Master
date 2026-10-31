@@ -375,8 +375,8 @@
         },
         "kind:cloud": {
           "title": "A cloud computer",
-          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from.",
-          "expert": "A rented cloud VM (VPS) running the Server: always on and reachable from anywhere, billed monthly by the host."
+          "text": "A computer you rent online. It is always on and costs a monthly fee. It is set up over a private network, like a VPN or Tailscale, so its setup page never faces the internet.",
+          "expert": "A rented cloud VM running the Server. Claim and setup happen over a private path (VPN/tailnet); public access is a separate, later choice."
         },
         "kind:pc": {
           "title": "Another computer",
@@ -407,8 +407,8 @@
         },
         "field:addr": {
           "title": "Its address",
-          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed.",
-          "expert": "The Server's hostname or IP. A cloud VM isn't discoverable on your LAN: use the address its setup printed."
+          "text": "Where to reach it. A rented computer is set up over a private network only: put it on your VPN or Tailscale network and type the address it has there.",
+          "expert": "The Server's hostname or IP. An unclaimed cloud VM is claimed only over a private path (VPN or tailnet address), never its public IP (RAS-007)."
         },
         "manualOn": {
           "title": "Enter its address instead",
@@ -445,8 +445,8 @@
         },
         "copy:pairlink": {
           "title": "Copy the link",
-          "text": "Copies a link another device on your network can open to join.",
-          "expert": "Copies the invite link another device on your network can open to request pairing."
+          "text": "Copies the link to this Server at the address it was found at, for another device on the same network to open and ask to join.",
+          "expert": "Copies the pairing URL at the Server's reached address; the joining device still needs your approval."
         },
         "group:approve": {
           "title": "Approve",

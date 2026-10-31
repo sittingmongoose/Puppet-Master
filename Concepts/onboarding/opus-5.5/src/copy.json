@@ -345,9 +345,17 @@
       "notSetUp": "Not set up yet",
       "choose": "Set up this one",
       "address": "Enter its address instead",
-      "cloudNote": "A cloud computer does not show up on your home network. Enter the address its setup printed.",
-      "cloudLabel": "Its address",
-      "scan": "Look on this network instead"
+      "scan": "Look on this network instead",
+      "cloudPrivate": "A rented computer is set up privately: until it is yours, its setup page only answers on a private network. Put it on your VPN or Tailscale network first, then type the address it has there.",
+      "cloudPrivateLabel": "Its private address (VPN or Tailscale)",
+      "cloudHint": "Like 100.88.12.34 or cloud-box.tail1234.ts.net",
+      "cloudPublic": "That's a public internet address. Use the address it has on your VPN or Tailscale network, so its setup page never faces the internet.",
+      "before": {
+        "title": "Before you start",
+        "models": "Check that your model is listed in the install guide: not every {brand} model can run Puppet Master.",
+        "data": "Give Puppet Master a folder of its own for its data, on a disk that is kept. Your work lives there, so updating or reinstalling the app never loses it. The guide shows where to set it.",
+        "address": "Once it starts, it shows up here by itself, with the address your other devices use to reach it."
+      }
     },
     "confirm": {
       "eyebrow": "New Server",
@@ -402,7 +410,7 @@
       "lead": "Other devices can join with this code. You can also do it later.",
       "pairTitle": "Add another device",
       "pairSub": "On the other device choose Connect this device, then scan this or enter the code.",
-      "link": "Local link",
+      "link": "Link for other devices",
       "waiting": "{name} wants to join",
       "waitingHint": "Compare the words with what {name} shows, then approve.",
       "approve": "Approve",
