@@ -143,9 +143,9 @@
      opens its page without the concept naming an address, and a self-managed service uses the address the person typed.
      A device code (Browser didn't open?) is offered only where the service has a device sign-in, on its hosted edition. */
   const OFFICIAL = {
-    provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login' },
+    provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login', muse: 'https://dev.meta.ai/login', 'cursor:alt': 'https://cursor.com/login' },
     /* a device sign-in's page, where the concept knows it (the code itself comes from the vendor) */
-    device: { copilot: 'github.com/login/device' },
+    device: { copilot: 'github.com/login/device', codex: 'auth.openai.com/codex/device', grok: 'accounts.x.ai/device' },
     signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
     forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com', forgejo: 'https://codeberg.org/user/login' },
     forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },

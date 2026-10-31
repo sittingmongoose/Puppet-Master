@@ -237,20 +237,33 @@
     if (p.auth !== 'server') out += `<div class="o55-inline" data-key="add-${p.id}">${btnIn(T('ai.addAnother', { name: pname(p) }), 'addAnother', p.id)}</div>`;
     return out;
   }
-  /* Browser didn't open? Where the vendor supports it: a device code typed on its page (device), or the code its page
-     shows pasted back here (paste); otherwise the sign-in link to copy. Protected input is read from its field once
-     and cleared; it is never saved. */
+  /* Browser didn't open? Every way names its page (Astra RV-1): a device code typed on the vendor's page (device), the
+     code its page shows pasted back here (paste), or its sign-in page to open on any device (link). Each shows the
+     address with Open the page as its one main action, and Copy. Protected input is read from its field once and
+     cleared; it is never saved. Concept addresses: the fixture's (OFFICIAL.device / OFFICIAL.provider). */
+  const signinUrl = (p, r) => O55.fixtures.OFFICIAL.provider[p.id + (r && r.method === 'alt' ? ':alt' : '')] || null;
+  const pageOf = (p, r) => (r.remote === 'code' ? O55.fixtures.OFFICIAL.device[p.id] || null : signinUrl(p, r));
+  const bare = (u) => String(u || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+  /* the page's own two actions under the sentence that names it: Open the page (the main one) and Copy address */
+  function addressRow(p, r) {
+    if (!pageOf(p, r)) return '';
+    return `<div class="o55-inline" data-key="addr-${p.id}">` + btnIn(T('ai.remote.open'), 'openSigninPage', p.id, 'primary') + btnIn(T('ai.remote.copy'), 'copySigninPage', p.id) + `</div>`;
+  }
+  const fullUrl = (u) => (u && !/^https?:/.test(u) ? 'https://' + u : u);
   function remoteHtml(S, p, r) {
     const links = `<div class="o55-sublinks" data-key="nob-${p.id}">${r.remote ? '' : C.link(T('online.signin.noBrowser'), 'noBrowser', p.id, { tip: false })}${C.link(T('ai.cancel'), 'cancelSignin', p.id, { tip: false })}</div>`;
     if (r.remote === 'code') {
-      const t = F.countdown(r.codeUntil || Date.now()), url = O55.fixtures.OFFICIAL.device[p.id] || null;
-      return `<div class="o55-devicecode" data-key="dc-${p.id}"><span class="o55-hint">${U.esc(url ? T('online.signin.codeLead', { url }) : T('ai.deviceLead', { vendor: p.vendor }))}</span><span class="o55-paircode">${U.esc(r.code || 'WDJB-MJHT')}</span>`
-        + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span><span class="o55-pairbtns">${F.copyBtn(r.code || 'WDJB-MJHT', 'dcode-' + p.id)}</span></div>` + F.copyNote('dcode-' + p.id) + links;
+      const t = F.countdown(r.codeUntil || Date.now()), url = pageOf(p, r);
+      return `<div class="o55-devicecode" data-key="dc-${p.id}"><span class="o55-hint">${U.esc(T('ai.remote.codeLead', { url: bare(url) }))}</span>`
+        + `<div class="o55-inline" data-key="dcode-row-${p.id}"><span class="o55-paircode">${U.esc(r.code || 'WDJB-MJHT')}</span>${F.copyBtn(r.code || 'WDJB-MJHT', 'dcode-' + p.id)}</div>${F.copyNote('dcode-' + p.id)}`
+        + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>${addressRow(p, r)}</div>` + links;
+    }
+    if (r.remote === 'link') {
+      return `<div class="o55-devicecode" data-key="dl-${p.id}"><span class="o55-hint">${U.esc(T('ai.remote.linkLead', { url: bare(pageOf(p, r)) }))}</span>${addressRow(p, r)}</div>` + links;
     }
     if (r.remote === 'paste') {
       const cs = F.state(S, 'code:' + p.id + ':' + (r.attempt || 0)), failed = cs && cs.state === 'failed';
-      return `<p class="o55-hint" data-key="pl-${p.id}">${U.esc(T('ai.pasteLead'))}</p>`
-        + `<div class="o55-inline" data-key="cl-${p.id}">${btnIn(T('ai.copyLink'), 'copySigninLink', p.id)}</div>`
+      return `<div class="o55-devicecode" data-key="pl-${p.id}"><span class="o55-hint">${U.esc(T('ai.pasteLead', { url: bare(pageOf(p, r)) }))}</span>${addressRow(p, r)}</div>`
         + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, typed: !!r.pasteTyped, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
         + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
         + `<div class="o55-inline" data-key="pb-${p.id}">${btnIn(T('ai.pasteGo'), 'submitCode', p.id, 'secondary', { disabled: !r.pasteTyped || (cs && cs.state === 'running'), reason: T('ai.pasteLabel') })}</div>` + links;
@@ -350,7 +363,7 @@
         const p = prov(id), r = R(S, id), w = way(p, r), h = host(S);
         Object.assign(r, { state: 'signingIn', remote: null, dup: null, manage: false });
         r.attempt = (r.attempt || 0) + 1; S.save();
-        O55.official.open(S, { name: p.vendor, url: r.method === 'alt' ? null : O55.fixtures.OFFICIAL.provider[p.id] || null });
+        O55.official.open(S, { name: p.vendor, url: signinUrl(p, r) });
         O55.ui.refresh();
         const attempt = r.attempt, offline = offlineNow(S), fails = !offline && O55.fixtures.signinFails(S.env, id);
         r.failCode = null;
@@ -369,7 +382,7 @@
       },
       noBrowser(S, id) {
         const p = prov(id), r = R(S, id);
-        if (p.remote === 'device') {
+        if (p.remote === 'device' && r.method !== 'alt') {
           r.attempt = (r.attempt || 0) + 1; Object.assign(r, { remote: 'code', code: 'WDJB-MJHT', codeUntil: Date.now() + 900000 }); S.save(); O55.ui.refresh(); O55.sound.play('reveal');
           const attempt = r.attempt; tickCode(S);
           F.op(S, 'signin:' + id + ':' + attempt, 'cmd.auth_profile.sign_in', [{ key: 'device', ms: 7000 }, { key: 'verify', ms: 600 }], { quiet: true, sound: { fail: 'warn' },
@@ -377,10 +390,16 @@
             onDone: () => { if (r.attempt === attempt && r.state === 'signingIn') signedIn(S, p); } });
           return;
         }
-        if (p.remote === 'paste') { r.attempt = (r.attempt || 0) + 1; r.remote = 'paste'; r.pasteTyped = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); return; }
-        O55.screens.defs.ai.do.copySigninLink(S, id);
+        if (p.remote === 'paste' && r.method !== 'alt') { r.attempt = (r.attempt || 0) + 1; r.remote = 'paste'; r.pasteTyped = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); return; }
+        /* a sign-in with no code: its page, to open on any device; this row carries on once it is done there */
+        r.attempt = (r.attempt || 0) + 1; r.remote = 'link'; S.save(); O55.ui.refresh(); O55.sound.play('reveal');
+        const attempt = r.attempt;
+        F.op(S, 'signin:' + id + ':' + attempt, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: 7000 }, { key: 'verify', ms: 600 }], { quiet: true, sound: { fail: 'warn' },
+          payload: { provider_entry_id: p.settings, flow: 'browser_elsewhere', host_id: host(S).id, client_id: S.env.client.id },
+          onDone: () => { if (r.attempt === attempt && r.state === 'signingIn') signedIn(S, p); } });
       },
-      copySigninLink(S, id) { const url = O55.fixtures.OFFICIAL.provider[id]; if (url) { U.copyText(url); O55.sound.play('copy'); } O55.ui.toast(url ? T('online.signin.linkCopied', { url: url.replace(/^https:\/\//, '') }) : T('online.signin.linkCopiedNone')); },
+      openSigninPage(S, id) { const p = prov(id), r = R(S, id); O55.official.open(S, { name: p.vendor, url: fullUrl(pageOf(p, r)) }); },
+      copySigninPage(S, id) { const p = prov(id), r = R(S, id), url = fullUrl(pageOf(p, r)); if (!url) return; U.copyText(url); O55.sound.play('copy'); O55.ui.toast(T('ai.remote.copied', { url: bare(url) })); },
       submitCode(S, id) {
         const p = prov(id), r = R(S, id), i = S.root.querySelector('#o55f-paste-' + id), v = i ? i.value.trim() : '';
         if (i) i.value = ''; r.pasteTyped = false; S.save(); O55.ui.refresh();
