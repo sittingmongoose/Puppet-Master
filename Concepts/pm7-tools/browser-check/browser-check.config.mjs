@@ -26,7 +26,7 @@ export default (ctx) => {
 		failedRequests: { fail: false },
 		helpers: {
 			// Load the page fresh: cache-buster, onboarding off unless asked, settled
-			async open(t, { onboarding = false, query = '', settleMs = 3000 } = {}) {
+			async open(t, { onboarding = false, query = '', settleMs = 300 } = {}) {
 				const sep = url.includes('?') ? '&' : '?';
 				await t.goto(`${url}${sep}cb=${Date.now()}-${++cb}${onboarding ? '' : '&o55=off'}${query ? '&' + query : ''}`, { settleMs });
 				return t.until('page ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 30000, hard: true });
