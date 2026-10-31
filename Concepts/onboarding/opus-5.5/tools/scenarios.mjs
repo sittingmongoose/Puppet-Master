@@ -1040,6 +1040,30 @@ def('pr46', 'fresh+serverNoWords', "Situation serverNoWords: a device's request 
   await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
   await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'its words compared, it pairs');
 });
+/* the census's two branches, reached by the full flow (final-onb SOURCE-EXCEPTIONS: a weak key, s-ready's Check again) */
+def('srv1', 'fresh+oldKey', "Situation oldKey: Existing Project on Home NAS reaches Choose a key, where the old DSA key is too weak to use and can't be chosen", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  const st = await d.state(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"][data-arg="k-old"]'); return b && { dis: b.getAttribute('aria-disabled'), tag: (b.querySelector('.o55-tag') || {}).textContent || '', reason: b.getAttribute('data-disabled-reason') }; });
+  A.ok(!!st && st.dis === 'true' && /Too weak to use/i.test(st.tag) && /too weak to use/.test(st.reason), 'the old key is listed as too weak to use and refused');
+  /* (this driver presses enabled controls only; the refused press itself is the browser kit's reach-states check) */
+  A.ok(await d.state(() => (window.O55.S.sess.nas || {}).key !== 'k-old'), 'it is not the chosen key');
+});
+def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary(); await d.untilScreen('s-ready', 15000);
+  A.ok(/No requests yet/.test(await layerText(d)) && await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-key="checkrun"] [data-o55-do="checkRun"]')), 'no requests yet, with Check again');
+  await d.act('checkRun');
+  A.ok(await d.state(() => !(window.O55.S.sess.server.candidates || []).some((c) => c.state === 'waiting')), 'Check again early finds none');
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting')", "the device's request", 25000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting').id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'it arrives by itself and pairs');
+});
 def('pr47', 'fresh+githubUnclear', "Situation githubUnclear: GitHub's first answer can't say whether the copy was made; Check again reads the next and the Project is made", async (d, A) => {
   await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();
   await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
