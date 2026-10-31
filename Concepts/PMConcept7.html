@@ -27261,7 +27261,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
   color: var(--text-secondary); font: 400 13.5px/1.5 var(--body-font); }
 .o55-explainer-pip { flex: none; width: 26px; height: 26px; }
 .o55-explainer-pip svg { display: block; width: 26px; height: 26px; }
-.o55-explainer-t { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.o55-explainer-t { flex: 1; min-width: 0; display: grid; gap: 2px; overflow-wrap: anywhere; } /* (a long token wraps: FO-14) */
 .o55-explainer-h { color: var(--text-primary); font: 650 13.5px/1.35 var(--body-font); }
 .o55-explainer-x { flex: none; height: 26px; min-width: 26px; padding: 0; margin: -4px 0 0; border: 0; }
 .o55-tw-off { visibility: hidden; }
@@ -31997,7 +31997,10 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 /* A note never runs off the stage: its height is held to the stage's room (--tipmax, 58-rig.js placeTip) and its words
    scroll inside it when they must (the pattern review: an Expert note was cut off under the Back bar) */
 #pm-o55-onboarding .pst-tip { max-height: var(--tipmax, none); grid-template-rows: auto auto minmax(0, 1fr); }
-#pm-o55-onboarding .pst-tip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+/* a long token (an environment variable, an address) wraps instead of widening the text: with overflow-y auto the box would
+   scroll sideways and hide the token's end (final run FO-14: OPENCODE_SERVER_PASSWORD in Glass Dark's Expert note) */
+#pm-o55-onboarding .pst-tip .pst-tip-t { min-height: 0; min-width: 0; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; scrollbar-width: thin; }
+#pm-o55-onboarding .pst-tip .pst-tip-h, #pm-o55-onboarding .pst-ntip .pst-tip-h { min-width: 0; overflow-wrap: anywhere; }
 #pm-o55-onboarding .pst-tip { position: absolute; left: 0; top: 0; display: grid; gap: 3px; width: max-content; max-width: min(58%, 226px); padding: 7px 9px 8px 11px;
   font: 500 12.5px/1.42 var(--pst-font, 'Poppins', system-ui, sans-serif); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; pointer-events: none; will-change: transform; }
 #pm-o55-onboarding .pst-tip.on { opacity: 1; visibility: visible; transition: opacity .3s; pointer-events: auto; }
@@ -32047,7 +32050,7 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 #pm-o55-onboarding .pst-ntip .pst-tip-t { padding: 3px 8px 7px; font-size: 11.5px; line-height: 1.45; }
 /* (NieR's note too stays on the stage, its words scrolling inside it when they must) */
 #pm-o55-onboarding .pst-ntip { max-height: calc(100% - 34px); grid-template-rows: auto auto minmax(0, 1fr); }
-#pm-o55-onboarding .pst-ntip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+#pm-o55-onboarding .pst-ntip .pst-tip-t { min-height: 0; min-width: 0; overflow-y: auto; overflow-wrap: anywhere; overscroll-behavior: contain; scrollbar-width: thin; }
 #pm-o55-onboarding .pst[data-fam="nier"]:not([data-layout="portrait"]) .pst-ntip { display: none; }
 
 /* Pip parts (Settings > Pip parts): the world's own life held, the strings hidden */
