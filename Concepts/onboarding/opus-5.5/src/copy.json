@@ -312,24 +312,23 @@
     },
     "install": {
       "truenas": [
-        "Open TrueNAS and go to Apps",
-        "Search for Puppet Master and choose Install",
-        "Keep the suggested settings"
+        "Open TrueNAS on that computer",
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "unraid": [
-        "Open Unraid and go to Apps",
-        "Search for Puppet Master and choose Install"
+        "Open Unraid on that computer",
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "synology": [
         "Open Container Manager on the Synology",
-        "Add the Puppet Master image and start it"
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "qnap": [
         "Open Container Station on the QNAP",
-        "Add the Puppet Master image and start it"
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "linux": [
-        "Open a terminal on it",
+        "Open a terminal on it: the window where you type commands",
         "Paste this line and press Enter"
       ],
       "windows": [
@@ -479,7 +478,7 @@
       "lead": "Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "leadAt": "The backup on {where} is locked. Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "label": "Recovery phrase",
-      "hint": "Six words, like: river candle orbit maple quiet lantern",
+      "hint": "Like: river candle orbit maple quiet lantern",
       "wrong": "That phrase doesn't unlock this backup."
     },
     "pick": {
@@ -497,9 +496,11 @@
       "projects": "{n} Projects with their history",
       "accounts": "{n} AI accounts (you sign in again)",
       "settings": "Your settings and look",
-      "never": "Passwords and keys never come back from a backup. You sign in again where needed.",
+      "never": "This restore doesn't bring back sign-ins. You sign in again where needed.",
       "button": "Restore",
       "away": "Then {how} is set up for away from home, as its own step",
+      "failed": "The restore stopped before it finished. Nothing on this computer was replaced. Try again.",
+      "retry": "Try again",
       "ontoServer": "Comes back onto {name}, the Server you just set up",
       "ontoHere": "Comes back onto this computer, {name}",
       "paused": "Everything comes back paused: no Goals run, no schedules start and nothing opens to the internet until you turn it on",
@@ -766,9 +767,9 @@
   "safe": {
     "eyebrow": "Keeping it safe",
     "title": "Keep your work safe",
-    "lead": "Every version is saved on this computer. Online copies and backups are optional.",
+    "lead": "Saved versions stay with your Project. An online copy and a backup are separate, and both are optional.",
     "history": {
-      "title": "Every version saved on this computer",
+      "title": "Saved versions of your Project",
       "sub": "Safe History — go back to an earlier saved version",
       "subExisting": "Keeps the folder's own history",
       "git": "Git",
@@ -838,6 +839,7 @@
       "own": "My own certificate",
       "kind": "Which proxy",
       "detail": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I already have one.",
+      "detailExpert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is used as an existing external proxy.",
       "ownNext": "After you confirm, you choose the certificate on {name}. It and its key stay there.",
       "existingNext": "Puppet Master checks that this address reaches {name} and that its certificate is right before using it.",
       "public": "This puts {name}'s sign-in page on the internet, where anyone can find it. Only devices you pair can use it. If only your own devices need it, Tailscale is the private way.",
@@ -848,8 +850,7 @@
         "cgnat": "Some internet plans share one address between many homes. Then a web address can't reach you; Tailscale and Remote Link still can."
       },
       "consent": "I understand {name} will be reachable from the internet at this address",
-      "consentMissing": "Tick the box to say you understand this puts your Server on the internet",
-      "detailExpert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is used as an existing external proxy."
+      "consentMissing": "Tick the box to say you understand this puts your Server on the internet"
     },
     "link": {
       "title": "Puppet Master Remote Link",
@@ -1346,9 +1347,7 @@
       "selfNot": "The key isn't on {name} yet. Check that the whole line was added, then check again.",
       "selfTitle": "Add your key to {name} yourself",
       "selfTop": "Puppet Master checks it right after. No password needed.",
-      "selfOff": "Add it for me with my password instead",
-      "hintAny": "any password",
-      "hintRefused": "A password it refuses"
+      "selfOff": "Add it for me with my password instead"
     },
     "install": {
       "eyebrow": "Secure connection",
@@ -1406,12 +1405,12 @@
         "mount": "Opening the shared folder",
         "read": "Checking it can be read"
       },
+      "wrong": "That username and password weren't accepted. Check them and try again.",
       "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
       "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
       "more": "More sign-in options",
       "domain": "Domain or workgroup",
-      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise.",
-      "wrong": "That username and password weren't accepted. Check them and try again."
+      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise."
     },
     "nfs": {
       "eyebrow": "NFS share",
@@ -1786,6 +1785,17 @@
       "Query: This unit could not match “{q}” to a known task.",
       "Proposal: Ask about plans, builds, usage, history or settings."
     ]
+  },
+  "demoHint": {
+    "label": "Try it in this demo:",
+    "outcome": {
+      "works": "works",
+      "wrong": "wrong",
+      "noAnswer": "no answer",
+      "refused": "refused",
+      "taken": "taken",
+      "expired": "runs out"
+    }
   },
   "endpoint": {
     "spaces": "An address has no spaces in it.",

@@ -1167,6 +1167,8 @@
   /* shared actions any screen can use */
   O55.actions = {
     skip() { close('skip'); },
+    /* a demo hint's ready choice (O55.flow.hint) */
+    demoHint(S2, arg) { if (O55.flow.hintPick(arg)) O55.sound.play('tap'); },
     'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
     details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
     /* A ? (ui.onboarding.open_details, toggle_choice_explanation; O55.tips): one explainer at a time, for this screen

@@ -153,6 +153,57 @@
       try { if (typeof window !== 'undefined' && window.__O55_OWNER_HOST__) return true; } catch (_) {}
       return false;
     }
+    /* The concept owner host (the lead's ruling, 2026-10-30, from Jared's "selections work and continue to the correct
+       flow" and "Every flow, including branches"). The published page has no Server, Settings or Kit host, so a person
+       stopped for good at "Waiting for the Server's answer", at Creating with a new GitHub copy and at Protect's kit
+       steps. With no real host (window.__O55_OWNER_HOST__) and nothing injected for a request, the concept host answers
+       a request it saw begun with the owner-shaped result a host would give, after a believable wait: bound to that
+       request (operation, targets, generation, nonce), with its own result and postcondition evidence ids, and marked
+       concept. It reaches no real service. A real host or an injected result wins; the scenario harness turns it off
+       (window.__O55_CONCEPT_HOST_OFF__) where it tests the pending gate itself. */
+    const begun = {};
+    const conceptOn = () => { try { return !hostAvailable() && !window.__O55_CONCEPT_HOST_OFF__; } catch (_) { return false; } };
+    /* (the believable wait is each request's own transport phases, shown on screen before its answer is read: claiming,
+       setting up, reaching, creating, saving; the concept host adds none, so a person never has to press Check again) */
+    const hex64 = (str) => { let out = ''; for (let r = 0; r < 8; r++) { let h = 2166136261 ^ r; for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619) >>> 0; out += ('00000000' + h.toString(16)).slice(-8); } return out; };
+    function conceptResult(req) {
+      const S = window.O55 && window.O55.S, ref = 'concept:' + req.id;
+      const res = Object.assign({}, req, { id: ref + ':result', requestId: req.id, outcome: 'ok', concept: true, postcondition: { ok: true, evidence: ref + ':postcondition' } });
+      if (req.operation === 'cmd.client.pair.start') {
+        res.pairing_run = { id: ref + ':pairing-run', state: 'waiting', server: req.server, candidate: req.candidate, generation: req.generation, expires_at: Date.now() + 120000 };
+        let words = 'river candle orbit';
+        try { const w = window.O55.art.identity(String(req.server) + ':' + String(req.candidate)).words; if (w && w.length) words = w.slice(0, 3).join(' '); } catch (_) {}
+        res.identity = { words };
+      } else if (req.operation === 'cmd.client.pair.approve') {
+        res.trust = { id: ref + ':trust', server: req.server, client: req.client, candidate: req.candidate, run_id: req.run_id };
+      } else if (req.operation === 'cmd.project.new_github_repo') {
+        if (!S) return null;
+        const draft = S.sess.drafts.main, projectId = S.sess.commit && S.sess.commit.fixtureProjectId, f = S.env.failures || {};
+        /* the situations' one-shot failures (a taken name, a dropped connection) happen here as an owner would report them */
+        const failure = f.online_copy || null; if (failure) f.online_copy = null;
+        Object.assign(res, { remote_effect: failure ? 'failed_before_effect' : 'verified_created', recovery_id: ref + ':recovery',
+          reviewed_setup_binding: { project_draft_ref: draft.project_draft_ref, project_draft_revision: draft.project_draft_revision },
+          terminal_result_ref: ref + ':terminal', terminal_result_sha256: hex64(ref + ':terminal:' + !!failure),
+          composition_revision: 1, composition_sha256: hex64(ref + ':composition'), settled_effects: {} });
+        if (failure) res.failure_reason = failure;
+        else {
+          Object.assign(res, { accepted: true, listed_project_id: projectId, forge_create_result_ref: ref + ':forge-result', forge_create_receipt_ref: ref + ':forge-receipt',
+            repository_binding: { provider: 'github', normalized_host: 'github.com', account_id: 'concept:account', provider_repository_id: ref + ':repository' } });
+          ['remote_repository_create', 'source_preparation', 'clone_connect', 'history_init', 'settings_rebind_apply', 'registry_publication'].forEach((e) => {
+            res.settled_effects[e] = e === 'remote_repository_create' ? { result_ref: res.forge_create_result_ref, receipt_ref: res.forge_create_receipt_ref } : { result_ref: ref + ':' + e + ':result', receipt_ref: ref + ':' + e + ':receipt' };
+          });
+        }
+      } else if (req.operation.startsWith('cmd.backup.recovery_key.')) {
+        const now = Date.now();
+        res.stepup = { outcome: 'verified', request_id: req.id, nonce: req.nonce, client: req.client, server: req.server, project: req.project, recovery_set_id: req.recovery_set_id,
+          recovery_generation: req.recovery_generation, audience: 'initiating_human_client', one_time: true, evidence_ref: ref + ':stepup', issued_at: now, expires_at: now + 60000 };
+        Object.assign(res.postcondition, req.operation.endsWith('.export') ? { delivery: 'verified', savedAck: true } : { unlock: 'verified', scratch: 'verified' });
+      } else if (req.operation === 'cmd.backup.policy.update') res.postcondition.policy = 'on';
+      /* (a recovery after a partial creation, which the concept never produces: resume, delete) */
+      else if (req.operation === 'cmd.project.resume_creation' || req.operation === 'cmd.forge.repository.delete') return null;
+      /* every other request (a Server's claim and setup) takes the generic owner result */
+      return res;
+    }
     function begin(operation, sel) {
       sel = sel || {};
       seq += 1;
@@ -164,6 +215,7 @@
         recovery_set_id: sel.recovery_set_id || null, recovery_generation: sel.recovery_generation != null ? sel.recovery_generation : null,
         nonce: sel.nonce || ('n' + seq + '-' + Math.floor(Math.random() * 1e9)), at: Date.now() };
     }
+    function beginSeen(operation, sel) { const req = begin(operation, sel); begun[req.id] = { req }; return req; }
     /* Test-only injection: stores an owner-shaped fixture for one request id. UI never calls this. */
     function inject(res) {
       if (!res || !res.requestId) return false;
@@ -171,12 +223,19 @@
       fixtures[res.requestId] = res;
       return true;
     }
-    function take(requestId) { return (requestId && fixtures[requestId]) || null; }
+    function take(requestId) {
+      if (!requestId) return null;
+      if (fixtures[requestId]) return fixtures[requestId];
+      const b = begun[requestId];
+      if (!b || !conceptOn()) return null;
+      if (b.res === undefined) b.res = conceptResult(b.req);
+      return b.res;
+    }
     function adopt(req, res, cur) {
       cur = cur || {};
       if (!req || !res) return { ok: false, reason: 'pending_no_result' };
       if (res.fixture && !res.injected) return { ok: false, reason: 'fixture_not_injected' };
-      if (!hostAvailable() && !(res.fixture && res.injected)) return { ok: false, reason: 'host_unavailable' };
+      if (!hostAvailable() && !(res.fixture && res.injected) && !(res.concept && conceptOn() && begun[res.requestId])) return { ok: false, reason: 'host_unavailable' };
       if (typeof res.id !== 'string' || !res.id.trim()) return { ok: false, reason: 'result_identity_missing' };
       if (res.id && adoptedIds[res.id]) return { ok: false, reason: 'duplicate_replay' };
       if (res.operation !== req.operation) return { ok: false, reason: 'wrong_operation' };
@@ -220,13 +279,18 @@
       if (res.id) adoptedIds[res.id] = true;
       return { ok: true };
     }
-    function reset() { Object.keys(adoptedIds).forEach((k) => { delete adoptedIds[k]; }); Object.keys(fixtures).forEach((k) => { delete fixtures[k]; }); seq = 0; }
+    function reset() { Object.keys(adoptedIds).forEach((k) => { delete adoptedIds[k]; }); Object.keys(fixtures).forEach((k) => { delete fixtures[k]; }); Object.keys(begun).forEach((k) => { delete begun[k]; }); seq = 0; }
     function protectedContext(project) {
+      /* the concept host's own protected context for this page's Project (never where a real or injected one is) */
+      if (!window.__O55_OWNER_CONTEXT__ && conceptOn() && project && window.O55 && window.O55.S) {
+        const S = window.O55.S;
+        return { project, client: S.env.client.id, server: S.sess.drafts.main.server_ref || 'concept:server:this-device', recovery_set_id: 'concept:recovery-set:' + project, recovery_generation: 1 };
+      }
       const c = window.__O55_OWNER_CONTEXT__;
       if (!c || c.project !== project || !c.client || !c.server || !c.recovery_set_id || !Number.isInteger(c.recovery_generation)) return null;
       return { project, client: c.client, server: c.server, recovery_set_id: c.recovery_set_id, recovery_generation: c.recovery_generation };
     }
-    return { begin, inject, take, adopt, reset, hostAvailable, protectedContext };
+    return { begin: beginSeen, inject, take, adopt, reset, hostAvailable, protectedContext, conceptOn };
   })();
 
   /* Ephemeral memory-only store for pairing invite codes and candidate identity words. Never persisted:

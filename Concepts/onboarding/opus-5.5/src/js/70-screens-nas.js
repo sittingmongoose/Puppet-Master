@@ -359,7 +359,8 @@
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
-      out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · ' + T('nas.signin.hintAny'), outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: T('nas.signin.hintRefused'), outcome: 'wrong', act: ['demoRefused'] }], { when: !n.pwTyped });
+      const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
+      out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · correct horse', outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: (d.user || 'jared') + ' · ' + wrongPw, outcome: 'refused', fills: [['user', d.user || 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped });
       out += `<div class="o55-sublinks" data-key="self">${C.link(T('nas.signin.self'), 'selfOn')}</div>`;
       return out;
     },
@@ -370,8 +371,6 @@
       return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
     },
     do: {
-      /* (demo: the device refuses the next password once, as the wrongPassword situation does; the fields are filled) */
-      demoRefused(S) { const d = dev(S); S.env.failures = S.env.failures || {}; S.env.failures.nas_password_once = true; N(S).pwFailedOnce = false; O55.ui.fill('user', (d && d.user) || 'jared'); O55.ui.fill('pw', 'correct horse'); },
       selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); makeIfNeeded(S); },
       selfOff(S) { N(S).self = false; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('unsheet'); }, /* the public-key line folds away */
       /* The person adds the line on the device themselves. The concept's device receives it at this click (the demo's
@@ -385,7 +384,8 @@
       add(S) {
         const i = S.root.querySelector('#o55f-pw'), pw = i ? i.value : '';
         if (i) i.value = '';
-        N(S).pwTyped = false; N(S).pwOnce = !!pw; S.save();
+        /* (the demo's wrong password is refused like any wrong one; the password itself is never kept) */
+        N(S).pwTyped = false; N(S).pwOnce = !!pw; N(S).pwWrong = pw === O55.fixtures.DEMO.wrongPassword; S.save();
         O55.ui.go('nas-install', { password: !!pw });
       }
     },
@@ -468,6 +468,7 @@
     const failFor = {
       add: () => {
         if (!n.pwOnce) return 'wrong_password';
+        if (n.pwWrong) { n.pwWrong = false; S.save(); return 'wrong_password'; }
         if (S.env.failures.nas_password_once && !n.pwFailedOnce) { n.pwFailedOnce = true; S.save(); return 'wrong_password'; }
         if ((d.sshDisallowed || []).includes(sshUser(S))) return 'not_allowed';
         return null;
@@ -726,7 +727,8 @@
       const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
       /* (the computer that opens the share keeps its sign-in, as for any shared folder: not the SSH key's one-time password) */
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
-      out += H('nas-smb:signin', [{ label: 'jared · ' + T('nas.signin.hintAny'), outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: T('nas.signin.hintRefused'), outcome: 'wrong', act: ['demoRefused'] }], { when: !n.pwTyped && !(st && st.state === 'done') });
+      const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
+      out += H('nas-smb:signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + wrongPw, outcome: 'refused', fills: [['user', 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
       out += C.details(S, 'smbdomain', T('nas.smb.more'), C.field({ bind: 'domain', label: T('nas.smb.domain'), value: n.domain || '', hint: T('nas.smb.domainHint'), autocomplete: 'off' }));
       if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
@@ -742,8 +744,6 @@
         F.reset(S, key);
         F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
       },
-      /* (demo: the share refuses the next password once, the smbWrong situation's own flag; the fields are filled) */
-      demoRefused(S) { S.env.failures = S.env.failures || {}; S.env.failures.smb_password_once = true; O55.ui.fill('user', 'jared'); O55.ui.fill('pw', 'correct horse'); },
       use(S) { const n = N(S), sh = shareOf(S), prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: {

@@ -653,6 +653,8 @@
     body(S) {
       const r = R(S);
       return C.field({ bind: 'phrase', type: 'password', protected: true, label: T('restore.unlock.label'), value: '', placeholder: '', hint: r.bad ? '' : T('restore.unlock.hint'), error: r.bad ? T('restore.unlock.wrong') : '', invalid: r.bad, autocomplete: 'off' })
+        /* (demo hint: the kit's recovery key, and a wrong one) */
+        + F.hint('r-unlock:phrase', [{ label: S.env.recoveryPhrase, outcome: 'works', fills: [['phrase', S.env.recoveryPhrase]] }, { label: O55.fixtures.DEMO.wrongPhrase, outcome: 'wrong', fills: [['phrase', O55.fixtures.DEMO.wrongPhrase]] }], { when: !r.unlocked && !r.typed })
         + (r.unlocked ? C.note(T('chrome.alreadyDone'), 'ok', 'check') : '');
     },
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'unlock', disabled: !R(S).unlocked && !R(S).typed, reason: T('restore.unlock.label') } }),
