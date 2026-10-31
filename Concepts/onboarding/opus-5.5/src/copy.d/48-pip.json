@@ -472,173 +472,212 @@
       "r-source": {
         "source:kit": {
           "title": "A Recovery Kit file",
-          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start."
+          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start.",
+          "expert": "The Recovery Kit file from your backup setup: the destination hints and the Backup Recovery Key for its backup repository. Opening it points to the backup and unlocks it; it holds no NAS, cloud or other service credential."
         },
         "group:kit": {
           "title": "Which Recovery Kit",
-          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back."
+          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back.",
+          "expert": "Recovery Kit files found in the usual places on this computer (Downloads, Documents, the Desktop)."
         },
         "group:bfolder": {
           "title": "Which folder",
-          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup."
+          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup.",
+          "expert": "Folders on this computer or a mounted drive that contain a Puppet Master backup repository."
         },
         "field:bpath": {
           "title": "Where the backup folder is",
-          "text": "The folder's full location, as your file browser shows it."
+          "text": "The folder's full location, as your file browser shows it.",
+          "expert": "The backup repository's folder path, as your file manager shows it."
         },
         "source:folder": {
           "title": "A folder on this computer",
-          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it."
+          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it.",
+          "expert": "A backup repository in a local folder or on a mounted drive. You point to the folder next; the Backup Recovery Key from your Recovery Kit unlocks it."
         },
         "source:nas": {
           "title": "A NAS or another computer",
-          "text": "A backup kept on a NAS or another computer. Puppet Master reaches it over a secure connection (SSH)."
+          "text": "A backup kept on a NAS or another computer. Puppet Master reaches it over a secure connection (SSH).",
+          "expert": "A backup repository on a NAS or another computer, reached over SSH (host identity check, then a key)."
         },
         "source:cloud": {
           "title": "A cloud account",
-          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket."
+          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket.",
+          "expert": "A backup repository in Google Drive, OneDrive, or an S3-compatible bucket (Amazon S3, Backblaze B2)."
         },
         "group:device": {
           "title": "Which device",
-          "text": "Devices on your network that can be reached securely. Pick the one that keeps the backup."
+          "text": "Devices on your network that can be reached securely. Pick the one that keeps the backup.",
+          "expert": "Devices on your network with SSH enabled. Pick the one holding the backup repository."
         },
         "cloud:gdrive": {
           "title": "Google Drive",
-          "text": "You sign in to Google on its own page next. Puppet Master only reads the backup."
+          "text": "You sign in to Google on its own page next. Puppet Master only reads the backup.",
+          "expert": "Google Drive through Google's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:onedrive": {
           "title": "OneDrive",
-          "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup."
+          "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup.",
+          "expert": "OneDrive through Microsoft's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:s3": {
           "title": "S3 or B2",
-          "text": "A cloud storage bucket. Fill in its three access details below to reach it."
+          "text": "A cloud storage bucket. Fill in its three access details below to reach it.",
+          "expert": "An S3-compatible bucket: the bucket, access key ID and secret access key below are checked before the restore reads it."
         }
       },
       "r-unlock": {
         "field:phrase": {
           "title": "Recovery phrase",
-          "text": "The six words in your Recovery Kit, like river candle orbit maple quiet lantern. Used once and never saved."
+          "text": "The recovery key written in your Recovery Kit, like river candle orbit maple quiet lantern. It unlocks this backup. It's used once and never saved.",
+          "expert": "The Backup Recovery Key from your Recovery Kit. It decrypts this backup repository; it's used for this restore and not stored."
         }
       },
       "r-pick": {
         "group:pick": {
           "title": "Choose what to bring back",
-          "text": "Each copy is a moment the backup was taken. The newest is usually the right one."
+          "text": "Each copy is a moment the backup was taken. The newest is usually the right one.",
+          "expert": "Each entry is a snapshot of the backup repository at the time it was taken. The newest is usually the one you want."
         }
       },
       "r-done": {
         "group:pickProject": {
           "title": "Your Projects",
-          "text": "Everything that came back. Pick the one to open first."
+          "text": "Everything that came back. Pick the one to open first.",
+          "expert": "The restored Projects; the one you pick opens first."
         },
         "createNew": {
           "title": "Create a new Project",
-          "text": "Starts something new instead. Your restored Projects are all still there."
+          "text": "Starts something new instead. Your restored Projects are all still there.",
+          "expert": "Starts a new Project draft instead; the restored Projects stay as they are."
         }
       },
       "begin": {
         "pick:new": {
           "title": "New Project",
-          "text": "Puppet Master makes an empty folder for it and saves every version from the very first file."
+          "text": "Puppet Master makes an empty folder for it and keeps saved versions from the start, so you can go back to earlier work.",
+          "expert": "A new, empty Project folder with local version control (Git or Jujutsu) from the start."
         },
         "pick:existing": {
           "title": "Existing work",
-          "text": "A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project."
+          "text": "A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project.",
+          "expert": "Import existing work: a local folder, a remote repository on an online service, or files on another device (SSH, SMB, NFS or a mounted drive). Read only until the Project is created."
         },
         "pick:restore": {
           "title": "Restore",
-          "text": "Brings a Project back from one of your backups."
+          "text": "Brings a Project back from one of your backups.",
+          "expert": "Restore a Project from a backup repository."
         },
         "sub:folder": {
           "title": "A folder on this computer",
-          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project."
+          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project.",
+          "expert": "A local folder on the machine doing the work; read only until the Project is created."
         },
         "sub:online": {
           "title": "A Project stored online",
-          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live."
+          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live.",
+          "expert": "Clone a remote repository from an online service; the next steps say where the working copy will live."
         },
         "sub:device": {
           "title": "Files on another device",
-          "text": "Work on a NAS, a network drive or another computer. Puppet Master works on it right where it is."
+          "text": "Work on a NAS, a network drive or another computer. Puppet Master works on it right where it is.",
+          "expert": "Files on a NAS, a network share or another computer, used where they are (SSH/SFTP, SMB, NFS or a mounted drive)."
         },
         "later": {
           "title": "Set up a Project later",
-          "text": "No Project is created now; make one whenever you like. Setup finishes without one."
+          "text": "No Project is created now; make one whenever you like. Setup finishes without one.",
+          "expert": "No Project draft is created now; setup finishes without one, and you can create one later."
         }
       },
       "ex-folder": {
         "group:pick": {
           "title": "Recent folders",
-          "text": "Folders you used lately. Puppet Master reads the one you pick but changes nothing until you create the Project."
+          "text": "Folders you used lately. Puppet Master reads the one you pick but changes nothing until you create the Project.",
+          "expert": "Recently used folders. The one you pick is read only until the Project is created."
         },
         "browse": {
           "title": "Browse",
-          "text": "Look through your folders and choose any one, if it is not in the list."
+          "text": "Look through your folders and choose any one, if it is not in the list.",
+          "expert": "Browse the file system for any folder."
         },
         "group:treeGo": {
           "title": "Choose a folder",
-          "text": "Open folders to look inside. When you are in the right one, use Choose this folder."
+          "text": "Open folders to look inside. When you are in the right one, use Choose this folder.",
+          "expert": "Navigate into a folder, then Choose this folder."
         }
       },
       "name": {
         "field:name": {
           "title": "Project name",
-          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place."
+          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place.",
+          "expert": "The Project's display name. For a new Project it also names the folder; an existing folder keeps its own name and path."
         },
         "group:suggest": {
           "title": "Suggestions",
-          "text": "A few example names to start from. Pick one, then change any word you like."
+          "text": "A few example names to start from. Pick one, then change any word you like.",
+          "expert": "Example names; pick one and edit it."
         },
         "change": {
           "title": "Where its files live",
-          "text": "Shows where the folder will be kept. Change picks another folder here, or a network drive."
+          "text": "Shows where the folder will be kept. Change picks another folder here, or a network drive.",
+          "expert": "Where the Project folder is created: the default location, another folder, or a network location."
         },
         "loc:auto": {
           "title": "On this computer",
-          "text": "In Puppet Master's own folder in Documents. Easy to find, and right for most people."
+          "text": "In Puppet Master's own folder in Documents. Easy to find, and right for most people.",
+          "expert": "The default location: Puppet Master's folder in Documents."
         },
         "loc:custom": {
           "title": "Another folder on this computer",
-          "text": "Keep it in a folder you choose, like one you already use for this kind of work."
+          "text": "Keep it in a folder you choose, like one you already use for this kind of work.",
+          "expert": "A folder path you choose on this computer."
         },
         "loc:network": {
           "title": "A network drive or NAS",
-          "text": "Keep the files on a storage device on your network. Uses a secure connection (SSH) by default."
+          "text": "Keep the files on a storage device on your network. Uses a secure connection (SSH) by default.",
+          "expert": "A network location (a NAS or share), reached over SSH by default."
         },
         "field:custom": {
           "title": "Choose a folder",
-          "text": "The folder path to use, like ~/Documents/Clubs. The ~ means your own home folder."
+          "text": "The folder path to use, like ~/Documents/Clubs. The ~ means your own home folder.",
+          "expert": "The folder path, like ~/Documents/Clubs (~ is your home folder)."
         },
         "storage:with_server": {
           "title": "On your Server",
-          "text": "Recommended. The Server keeps the files next to the work, so nothing waits on this device."
+          "text": "Recommended. The Server keeps the files next to the work, so nothing waits on this device.",
+          "expert": "The Project's files live on the Server's own storage, next to the agent runs. Recommended."
         },
         "storage:this_device": {
           "title": "On this device",
-          "text": "Files stay on this device and the Server reaches them over the network. This device needs to be on while it works."
+          "text": "Files stay on this device and the Server reaches them over the network. This device needs to be on while it works.",
+          "expert": "The files stay on this device and the Server reaches them over the network; this device must stay on and reachable while the Server works."
         },
         "storage:network_location": {
           "title": "A network drive",
-          "text": "A NAS or shared folder on your network keeps the files, and the Server works on them there."
+          "text": "A NAS or shared folder on your network keeps the files, and the Server works on them there.",
+          "expert": "A NAS or network share holds the files and the Server works on them there (SSH, SMB or NFS)."
         }
       },
       "like": {
         "pick:fresh": {
           "title": "Start fresh",
-          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start."
+          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start.",
+          "expert": "Puppet Master's default settings for a new Project."
         },
         "group:pick": {
           "title": "Like another Project",
-          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans."
+          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans.",
+          "expert": "Copies the chosen Project's settings into the new one. Never copied: credentials and keys, files, history, Goals and Plans."
         },
         "choose": {
           "title": "Choose settings",
-          "text": "Pick which groups of settings come along, like look, notifications or AI accounts."
+          "text": "Pick which groups of settings come along, like look, notifications or AI accounts.",
+          "expert": "Choose which settings categories are copied."
         },
         "group:cat": {
           "title": "Settings to copy",
-          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it."
+          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it.",
+          "expert": "A settings category from the source Project; switch it off to keep the defaults for it."
         }
       },
       "online-service": {
@@ -712,115 +751,142 @@
       "online-signin": {
         "group:useKnown": {
           "title": "Use this account",
-          "text": "This computer is already signed in to it. Puppet Master only asks for access to the Project you choose."
+          "text": "This computer is already signed in to this account. What it allows depends on the service and on what you approved when you signed in.",
+          "expert": "An account this computer is already signed in to for this service; the token or grant it has is reused. The permissions it gives depend on the service and how it was approved."
         },
         "another": {
           "title": "Use a different account",
-          "text": "Sign in with another account instead, like a work one."
+          "text": "Sign in with another account instead, like a work one.",
+          "expert": "Sign in with a different account on this service instead."
         },
         "signIn": {
           "title": "Sign in",
-          "text": "Opens its sign-in page in your browser. Sign in there, then come back; nothing else to type here."
+          "text": "Opens its sign-in page in your browser. Sign in there and check the access it asks for before you approve, then come back.",
+          "expert": "Opens the service's own sign-in page in your browser (OAuth); you approve the access it asks for there. Nothing to type here."
         },
         "create": {
           "title": "Create account",
-          "text": "No account yet? Opens its sign-up page. Make the account there, then sign in here."
+          "text": "No account yet? Opens its sign-up page. Make the account there, then sign in here.",
+          "expert": "Opens the service's sign-up page; sign in here once the account exists."
         },
         "tokenOn": {
           "title": "Use an access token instead",
-          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in."
+          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in.",
+          "expert": "Sign in with a personal access token instead of the browser, where the service supports it."
         },
         "field:token": {
           "title": "Access token",
-          "text": "Make one on your server under Settings › Applications. It stays in your computer's password store, never in Puppet Master's files."
+          "text": "A token is a long password made for apps. Make one in your account on that service; where it is depends on the service. It stays in your computer's password store, never in Puppet Master's files.",
+          "expert": "A personal access token for this service. Stored in the OS keychain, never in Puppet Master's files. Where to make one depends on the service."
         },
         "code": {
           "title": "Browser didn't open?",
-          "text": "Shows a short code instead. Open the address it gives on any device and type the code there."
+          "text": "Shows a short code instead. Open the address it gives on any device and type the code there.",
+          "expert": "Device-code sign-in: open the address shown on any device and enter the code there."
         },
         "copyLink": {
           "title": "Browser didn't open?",
-          "text": "Copies the sign-in link, so you can paste it into your browser yourself."
+          "text": "Copies the sign-in link, so you can paste it into your browser yourself.",
+          "expert": "Copies the sign-in URL to open in a browser yourself."
         },
         "copy:dcode": {
           "title": "Copy the code",
-          "text": "Copies this sign-in code. Paste it on the page named above."
+          "text": "Copies this sign-in code. Paste it on the page named above.",
+          "expert": "Copies the device code for the page named above."
         },
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes."
+          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes.",
+          "expert": "Issues a new device code; each lasts 15 minutes."
         },
         "signupBack": {
           "title": "Back to sign in",
-          "text": "Made your account on its page? Choose this, then sign in with it."
+          "text": "Made your account on its page? Choose this, then sign in with it.",
+          "expert": "Return to sign-in once the new account exists."
         }
       },
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy appears there. The suggestion is fine; letters, numbers and dashes work best."
+          "text": "How the online copy is named on the service. The suggestion is fine; letters, numbers and dashes work best.",
+          "expert": "The remote repository's name on the service: letters, numbers and dashes are safest."
         },
         "group:owner": {
           "title": "Whose account keeps it",
-          "text": "Your own account, or an organization you belong to. Pick an organization when the Project belongs to a team."
+          "text": "Your own account, or an organisation you belong to: a group the service uses for a team's work. Pick the organisation when the Project belongs to a team.",
+          "expert": "The namespace that owns the repository: your personal account or an organisation (a workspace or group on some services)."
         },
         "group:azOrg": {
           "title": "Organization",
-          "text": "The Azure DevOps organization the Project belongs to."
+          "text": "The Azure DevOps organization the Project belongs to.",
+          "expert": "The Azure DevOps organisation that will own the repository."
         },
         "group:azProject": {
           "title": "Team project",
-          "text": "Azure DevOps groups work into team projects. Pick one marked Git, the kind used for code. This is separate from your Puppet Master Project."
+          "text": "Azure DevOps groups work into team projects. Pick one marked Git. It's Azure DevOps' own grouping, separate from your Puppet Master Project.",
+          "expert": "The Azure DevOps team project that will hold the Git repository (Azure Repos); separate from your Puppet Master Project."
         },
         "azRefresh": {
           "title": "Refresh projects",
-          "text": "Looks again for team projects, like one you just made on Azure DevOps."
+          "text": "Looks again for team projects, like one you just made on Azure DevOps.",
+          "expert": "Lists the organisation's team projects again, like one you just created."
         },
         "azCreateTeamProject": {
           "title": "Create a team project",
-          "text": "Opens Azure DevOps to make a new team project there. Come back and refresh to pick it."
+          "text": "Opens Azure DevOps to make a new team project there. Come back and refresh to pick it.",
+          "expert": "Opens Azure DevOps to create a team project there; refresh here to pick it."
         },
         "vis:private": {
           "title": "Only you",
-          "text": "Only you, and people you invite, can see it. Right for most Projects."
+          "text": "Only you, and people you invite, can see it. Right for most Projects.",
+          "expert": "Private repository: visible to you and the collaborators you add."
         },
         "vis:public": {
           "title": "Everyone",
-          "text": "Anyone on the internet can see it; only you and people you invite can change it. Pick it for work you want to share."
+          "text": "Anyone on the internet can see it and copy it; only you and people you invite can change it. Pick it only for work you mean to share.",
+          "expert": "Public repository: anyone can read and clone it; only collaborators can push."
         },
         "vis:internal": {
           "title": "Everyone in your organization",
-          "text": "People in your organization can see it; nobody outside can."
+          "text": "People in your organization can see it; nobody outside can.",
+          "expert": "Internal repository: visible to members of the owning organisation or enterprise only."
         },
         "field:desc": {
           "title": "Description",
-          "text": "A sentence about the Project, shown on its online page. Optional."
+          "text": "A sentence about the Project, shown on its online page. Optional.",
+          "expert": "The repository description shown on the service. Optional."
         },
         "field:branch": {
           "title": "Main branch name",
-          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name."
+          "text": "A branch is a separate line of work, and this is the main one. Keep main unless your team asks for another name.",
+          "expert": "The default branch name; usually main. Keep it unless your team uses another."
         },
         "readme": {
           "title": "Add a README file",
-          "text": "A short page that says what the Project is. It is the first thing people see online."
+          "text": "Adds a short page that says what the Project is: the first thing people see online.",
+          "expert": "Initialises the repository with a README.md."
         },
         "group:gitignore": {
           "title": "Files to leave out",
-          "text": "Some files, like temporary ones, should never be copied online. Chosen for you works for nearly everyone."
+          "text": "Skips common temporary files when saving versions. Keep Chosen for you if unsure. It doesn't guarantee that private information stays out of your saved versions.",
+          "expert": "A .gitignore template: patterns Git won't track, like build output and temporary files. It isn't a secrets filter."
         },
         "group:license": {
           "title": "License",
-          "text": "Says what others may do with your work if you share it. No license keeps all rights with you."
+          "text": "Sets the terms for reusing work you share. No license keeps all rights with you. Leave it unchanged if unsure, and read a license's terms before you publish with it.",
+          "expert": "The LICENSE file added to the repository: the terms for reusing the code. No license reserves all rights."
         }
       },
       "ex-repos": {
         "field:q": {
           "title": "Search your Projects",
-          "text": "Type part of a name to find it quickly."
+          "text": "Type part of a name to find it quickly.",
+          "expert": "Filter your repositories by name."
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the Project you pick is copied. The line below shows where the working copy will be kept."
+          "text": "Only the Project you pick is copied to this computer. The line below shows where your working copy will be kept.",
+          "expert": "The repository to clone; only the one you pick is cloned. The line below shows where the working copy goes."
         }
       },
       "safe": {
@@ -1272,7 +1338,7 @@
         "enter": "Where shall we do the work?",
         "pick:this": "Right here works great.",
         "pick:connect": "Let's tie your devices together.",
-        "pick:server": "A server never sleeps. Lucky thing.",
+        "pick:server": "A Server that stays on can work while you're away.",
         "checking": "Just checking this computer…",
         "checked": "Plenty of room. All good!",
         "offline": "No internet? Local work still works."
@@ -1283,7 +1349,7 @@
         "group:pickServer": "That one? I'll string us together.",
         "route:local_or_vpn": "Same network. Nice and close.",
         "route:tailscale": "Tailscale reaches it from anywhere.",
-        "route:reverse_proxy": "Your own web address. Fancy.",
+        "route:reverse_proxy": "Your own web address, then.",
         "route:remote_link": "A Remote Link? Paste it in.",
         "typing": "Type it in. I'll go and knock."
       },
@@ -1309,8 +1375,8 @@
       },
       "s-kind": {
         "enter": "What kind of computer will it be?",
-        "kind:nas": "A NAS! It never takes a nap.",
-        "kind:cloud": "A computer in the clouds. Ooh.",
+        "kind:nas": "A NAS that stays on. A good home.",
+        "kind:cloud": "A computer you rent online.",
         "kind:pc": "Another computer that stays on. Handy."
       },
       "s-wait": {
@@ -1384,7 +1450,7 @@
         "group:suggest": "Ooh, good one.",
         "loc:auto": "In Documents. Easy to find.",
         "loc:custom": "Somewhere else? Show me where.",
-        "loc:network": "On the network drive. Fancy.",
+        "loc:network": "On the network drive, then.",
         "storage:with_server": "Right next to the work. Smart.",
         "storage:this_device": "Kept here, worked on there.",
         "storage:network_location": "On a shared drive. Got it."
@@ -1397,9 +1463,9 @@
       "online-service": {
         "enter": "Where should the copy live?",
         "enterSource": "Where is it kept online?",
-        "pick:github": "GitHub. Free and very popular.",
+        "pick:github": "GitHub. Free and widely used.",
         "pick:gitlab": "GitLab. A good home for it.",
-        "pick:azure_devops": "Azure DevOps. Very proper.",
+        "pick:azure_devops": "Azure DevOps, then.",
         "pick:bitbucket_cloud": "Bitbucket. In it goes.",
         "pick:forgejo": "Forgejo. Where shall we find yours?",
         "pick:gitea": "Gitea. Small and tidy.",
@@ -1420,9 +1486,9 @@
         "enter": "This is its name online.",
         "typing": "Ooh, a name for the copy.",
         "available": "That name's free. Lovely.",
-        "vis:private": "Just you, and who you invite.",
-        "vis:public": "Everyone can see this copy.",
-        "vis:internal": "Only your organization. Cosy."
+        "vis:private": "Only you? Then just you, and who you invite.",
+        "vis:public": "Everyone? Then anyone online can see it.",
+        "vis:internal": "Your organisation? Then only its people see it."
       },
       "ex-repos": {
         "enter": "Which Project shall I fetch?",
@@ -1443,9 +1509,9 @@
         "backup": "A backup box. Sensible.",
         "bdest:nas": "On your home NAS. Close by.",
         "bdest:gdrive": "Google Drive. Up it goes.",
-        "bdest:onedrive": "OneDrive. Safe in the cloud.",
-        "bdest:s3": "A bucket! I love a bucket.",
-        "bdest:sftp": "Another server. Very safe.",
+        "bdest:onedrive": "OneDrive, then.",
+        "bdest:s3": "A bucket you rent. Its details come later.",
+        "bdest:sftp": "Another server you can reach.",
         "bdest:none": "Not now? Later's fine.",
         "sync": "Your other devices will see it too."
       },
@@ -1455,7 +1521,7 @@
         "pick:anywhere": "I'll come with you. Anywhere.",
         "route:headscale": "Your own Headscale. Very handy.",
         "route:reverse_proxy": "Your own web address. Smart.",
-        "route:remote_link": "A private link through the relay.",
+        "route:remote_link": "A Remote Link, then.",
         "typing": "Ooh, an address. Type away."
       },
       "review": {

@@ -446,7 +446,7 @@
       "lead": "Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "leadAt": "The backup on {where} is locked. Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "label": "Recovery phrase",
-      "hint": "Six words, like: river candle orbit maple quiet lantern",
+      "hint": "Like: river candle orbit maple quiet lantern",
       "wrong": "That phrase doesn't unlock this backup."
     },
     "pick": {
@@ -728,9 +728,9 @@
   "safe": {
     "eyebrow": "Keeping it safe",
     "title": "Keep your work safe",
-    "lead": "Every version is saved on this computer. Online copies and backups are optional.",
+    "lead": "Saved versions stay with your Project. An online copy and a backup are separate, and both are optional.",
     "history": {
-      "title": "Every version saved on this computer",
+      "title": "Saved versions of your Project",
       "sub": "Safe History — go back to an earlier saved version",
       "subExisting": "Keeps the folder's own history",
       "git": "Git",
