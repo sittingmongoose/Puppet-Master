@@ -95,9 +95,11 @@
       Object.assign(d, { include_vpn_networks: false, tailscale_control: null, tailscale_account_action: null, headscale_url: '', remote_endpoint: '' });
       if (d.journey === 'connect_existing') Object.assign(d, { server_connection_mode: 'manual', proxy_kind: null, proxy_hosting: null, proxy_tls: null });
       else if (d.proxy_hosting === 'existing_proxy') { /* an address someone already runs: nothing to generate here */ }
-      /* Puppet Master makes settings for Caddy (the default), NGINX and Traefik; Nginx Proxy Manager is used as a proxy
-         the person already runs (Jared, D3 A, 2026-10-31) */
-      else { if (!['caddy', 'nginx', 'traefik'].includes(d.proxy_kind)) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
+      /* Puppet Master makes the settings file for Caddy (the default), NGINX or Traefik and the person puts it on their
+         proxy; Nginx Proxy Manager is a proxy the person already runs (Jared, D3 A). Certificates stay on their side, so
+         none is chosen here (Jared, C1, 2026-10-31) */
+      else { if (!['caddy', 'nginx', 'traefik'].includes(d.proxy_kind)) d.proxy_kind = 'caddy'; d.proxy_hosting = 'generate_only'; }
+      if (d.journey !== 'connect_existing') d.proxy_tls = null;
     } else if (d.remote_mode === 'remote_link') {
       clearRemote(); Object.assign(d, { server_connection_mode: 'manual', include_vpn_networks: false });
       /* (a short code the Server shows is kept too: it was cleared for not starting with a letter, SCR-05) */

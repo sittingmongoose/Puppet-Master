@@ -1054,15 +1054,14 @@ def('a2', 'fresh', 'Connect to a Server with no Projects: Create a new Project l
   A.eq((await d.primaryInfo()).label, 'Create a new Project', 'Create a new Project leads');
   await d.primary(); A.eq(await d.screen(), 'begin', 'the second draft begins');
 });
-def('a3', 'fresh', 'A cloud computer is reached by its address and is not called Home NAS', async (d, A) => {
+def('a3', 'fresh', 'A cloud computer is claimed with the code from its provider\'s console and is not called Home NAS', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
   await d.act('kind', 'cloud'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting');
-  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]')), 'no home-network scan; its address is asked');
-  /* (set up over its private address only: a public one is refused, SCR-14) */
-  await d.type('addr', '203.0.113.24');
-  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:cloud"]')), 'a public address is refused');
-  await d.type('addr', '100.88.12.34'); await d.act('pick', 'pm:cloud'); await d.primary();
+  /* (no home-network scan and no address: its one-time setup code comes from the provider's console, Jared C2 A) */
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]') && /console/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'no scan, no address; the console code is explained');
+  await d.primary();
   A.eq(await d.screen(), 's-confirm', 'confirm');
+  A.ok(await d.state(() => /console/.test(document.querySelector('#pm-o55-onboarding [data-key="field-code"]').textContent)), 'the code is the one from the console');
   A.eq(await d.state(() => document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]').value), 'Cloud server', 'named for what it is');
 });
 def('a4', 'fresh', 'On a new Server an existing folder is on the Server, keeps its place and keeps its online copy', async (d, A) => {
