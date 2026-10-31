@@ -224,7 +224,11 @@ canonical_text: 'Every standalone Windows, macOS, and Linux Server provides auth
   this protected native authority. Claim then separate cmd.server.bootstrap.start must complete for the actual local
   Server, its durable roots/mounts and immutable execution baseline before cmd.restore.server_full. Backup maintenance/recovery
   authority, exact-target verification, paused restore and separate pairing/remote activation remain required. Reuse
-  current verified prerequisites when already satisfied; dormant capability alone is never a claim or bootstrap receipt.'
+  current verified prerequisites when already satisfied; dormant capability alone is never a claim or bootstrap receipt.
+  DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the provider-console/local-bootstrap
+  one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
+  unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
+  still gate claim; no public unclaimed setup is exposed.'
 gui_related: true
 gui_classification_reason: Native/web parity, disconnected/currentness state, explicit lifecycle controls, and responsive Client behavior are visible product behavior.
 depends_on: [SRV-004, SIR-004, SIR-005]
@@ -253,6 +257,10 @@ acceptance_criteria:
   Backup maintenance/recovery authority, exact-target verification, paused restore and separate pairing/remote activation
   remain required. Reuse current verified prerequisites when already satisfied; dormant capability alone is never a claim
   or bootstrap receipt.'
+- 'DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the provider-console/local-bootstrap
+  one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
+  unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
+  still gate claim; no public unclaimed setup is exposed.'
 validation_surfaces: [future multi-Client cursor convergence tests, future native web parity tests, future GUI-close continuation tests]
 risk_class: client_lifetime_becoming_server_lifetime
 reasoning_tier: high

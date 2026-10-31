@@ -475,7 +475,7 @@
       }
     },
     "authentication_handoff_policy": {
-      "description": "Current command policy. The RAS-015 exception is selected only by the broker-resolved hosted-Tailscale owner, never by trusting a caller's policy/provider label. All other protected-provider flows retain initiating-active-Client-only behavior. Predecessor Tailscale requests require owner reauthorization and may not dispatch unchanged.",
+      "description": "DL-259 D7 B: the RAS-015 Server-owned hosted-Tailscale exception uses server_owned_authorized_client_handoff only when the broker resolves the exact Server owner and current protected handoff. A native-Client-owned connector uses initiating_active_client_only for that stable native installation. Caller provider/policy labels confer no owner authority; keys and return generations remain isolated. Other protected providers retain their existing policy. Predecessor Tailscale requests require owner reauthorization.",
       "type": "object",
       "required": ["client_handoff_policy"],
       "properties": {
@@ -1580,5 +1580,17 @@
         }
       ]
     }
+  },
+  "x-tailnet-auth-owner-policy": {
+    "owner_ref": "Plans/Shared_Integration_Runtime.md#SIR-032",
+    "connector_owner_roles": [
+      "server",
+      "native_client"
+    ],
+    "server_policy": "server_owned_authorized_client_handoff",
+    "native_client_policy": "initiating_active_client_only",
+    "native_Client_listener_or_Funnel": false,
+    "native_Client_arbitrary_proxy": false,
+    "plain_browser_embedded_connection": false
   }
 }

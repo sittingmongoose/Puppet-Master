@@ -2504,5 +2504,14 @@
     "provider_caveats_in_wizard": false,
     "codex_device_auth_prerequisite": "ChatGPT_security_settings_or_workspace_admin_permission",
     "pre_build_verification_owner_ref": "Plans/Decision_Log.md#DL-259"
+  },
+  "x-provider-key-acquisition": {
+    "owner_ref": "Plans/Multi-Account.md#MA-040",
+    "command_id": "cmd.auth_profile.open_official_page",
+    "production_entry": "catalog.auth_profile_open_official_page",
+    "exact_provider_official_console_or_guide": true,
+    "key_not_password": true,
+    "initiating_active_Client_bound": true,
+    "return_proves_readiness": false
   }
 }

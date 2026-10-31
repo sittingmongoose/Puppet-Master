@@ -163,15 +163,31 @@ plan_unit_id: MACS-003
 unit_type: command_binding
 status: accepted
 owner_doc: Plans/Multi-Account_Connection_Spec.md
-canonical_text: cmd.auth_profile.open_official_page has exactly one planned Multi-Account route, handlers::multi_account::open_official_page, which preserves the human-only exact-Client protected-auth boundary and the existing owner-DRY auth-profile contracts.
+canonical_text: 'cmd.auth_profile.open_official_page has exactly one planned Multi-Account route, handlers::multi_account::open_official_page,
+  which preserves the human-only exact-Client protected-auth boundary and the existing owner-DRY auth-profile contracts.
+  DL-259 P10, 2026-10-31: every provider API-key row explains that the input is a key rather than the person’s password
+  and offers Get a key through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 gui_related: true
 gui_classification_reason: Authentication handoff, Product Onboarding owner handoff, Settings Integrations, Doctor remediation, and palette consumers expose the action and exact disabled reason.
 depends_on: [MACS-001, MACS-002]
 unblocks: []
 acceptance_criteria:
-  - Central catalog and production-intent wiring name exactly handlers::multi_account::open_official_page and the existing AuthProfile request/result schema pointers.
-  - The request/result contain only non-secret identities and redacted lifecycle/proof refs; raw URL and protected content remain structurally absent.
-  - Missing executable handler or exact initiating active Client keeps the action disabled and never falls back to another Client.
+- Central catalog and production-intent wiring name exactly handlers::multi_account::open_official_page and the existing
+  AuthProfile request/result schema pointers.
+- The request/result contain only non-secret identities and redacted lifecycle/proof refs; raw URL and protected content
+  remain structurally absent.
+- Missing executable handler or exact initiating active Client keeps the action disabled and never falls back to another
+  Client.
+- 'DL-259 P10, 2026-10-31: every provider API-key row explains that the input is a key rather than the person’s password
+  and offers Get a key through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 validation_surfaces: [Plans/multi_account_contracts.schema.json, Plans/multi_account_contract_fixtures.json, Plans/protected_auth_browser_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 risk_class: protected_auth_handoff_phantom_handler_or_content_escape
 reasoning_tier: high

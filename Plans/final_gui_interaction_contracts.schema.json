@@ -409,7 +409,7 @@
           "additionalProperties": false,
           "required": [
             "component",
-            "target_id",
+            "target_binding",
             "max_visible",
             "control_relation",
             "active_description_relation",
@@ -419,9 +419,6 @@
           "properties": {
             "component": {
               "const": "shared_anchored_explainer"
-            },
-            "target_id": {
-              "const": "pm7ob-explainer"
             },
             "max_visible": {
               "const": 1
@@ -437,8 +434,12 @@
             },
             "expands_peer_sections": {
               "const": false
+            },
+            "target_binding": {
+              "const": "single_current_option_note"
             }
-          }
+          },
+          "x-source-lineage": "DL-260: pm7ob-explainer was the concept DOM id. Product accessibility binds the one current shared option note; no fixed DOM/native id is prescribed."
         },
         "review_apply": {
           "type": "object",

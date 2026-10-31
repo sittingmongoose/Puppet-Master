@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L28049-L28473
 
-Source SHA256: `31418308979daf76ebba3677dddd28bf16a09bc24cade1b9ecea120ff1255450`
+Source SHA256: `e7220edd0866b63cc8dbcc96ddeeb464626c05030c33176c35751d179009ded6`
 
 ---
 
@@ -358,22 +358,19 @@ canonical_text: 'PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent pr
   happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes step;
   live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled
   state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement
-  stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7 Step4, 2026-10-30: the joined adapters are
-  PM56_PIP and PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet hosts, face
-  lists and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds hosted chat mute to
-  the same sound owner. The concept’s press helper acknowledges in the first painted frame and runs the existing action
-  in the next task without replaying a click; native ≤100 ms acknowledgment and one-commit acceptance are unchanged.
-  PMX kept-subtree slots preserve loader owner attributes while the transcript reconciles; they do not admit a replacement
-  observer or private loader. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head
-  and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
-  or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
-  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
-  agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same
-  registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper
-  cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second
-  wand or fallback icon. DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35
-  (Glass 0.30, NieR 0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture
-  gates still apply.'
+  stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, DL-260: sheet hosts, face lists and Orbit consume
+  the shared Pip kit; chat mute gates that same sound owner. Existing controls acknowledge within 100 ms and commit once
+  without replaying activation. Transcript reconciliation preserves the shared loader’s owner identity and attributes,
+  never a replacement observer or private loader. Source adapter and scheduling helper spellings remain lineage only.
+  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
+  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
+  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. DL-259
+  Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR 0.16), no
+  stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -394,11 +391,11 @@ acceptance_criteria:
 - All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
-  retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
-  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
-  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
+  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
+  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
 - 'DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
   0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
 validation_surfaces:
@@ -420,6 +417,9 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
+- 'DL-260 implementation lineage only: PM56_PIP, PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn,
+  O55.sound.pip.chatMute, PMX kept-subtree slots, ppYou/PX_YOU/pnYou and the press helper are source adapters, not native
+  product APIs.'
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

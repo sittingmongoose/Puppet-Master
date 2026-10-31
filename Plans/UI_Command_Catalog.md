@@ -7798,11 +7798,15 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   from onboarding. The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts
   available in this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A:
   generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only:
-  it can be selected as an existing proxy but never sent to a generation/install/export operation. New-Server managed
-  setup, export-only and existing-proxy validation are separate owner continuations; generating a file does not prove
-  installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind
-  is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch
-  may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  it can be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv
+  C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports Caddy,
+  NGINX or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection
+  checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
+  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
   a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
   host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
   Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
@@ -7836,11 +7840,11 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement, a
   separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before
   the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
-  new Remote Link output, and managed/export/existing proxy steps use their existing domain owners, approvals and truthful
-  results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for optional setup,
-  certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the
-  owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing whole-session
-  ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
+  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
+  domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
+  it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
+  any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
+  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
@@ -7883,49 +7887,54 @@ acceptance_criteria:
   The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
   setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings
   support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected
-  as an existing proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only
-  and existing-proxy validation are separate owner continuations; generating a file does not prove installation, public
-  consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy,
-  nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager
-  but never emits a generated-configuration record; neither branch silently substitutes a family. D6 A: the human signs
-  in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and
-  private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential
-  store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
-  never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
-  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
-  has a distinct identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows,
-  macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner,
-  with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process.
-  A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable
-  client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
-  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
-  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server
-  public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
-  write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch
-  expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline,
-  failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective
-  guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the
-  wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values
-  ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every
-  opened onboarding question tip and prose help section has useful Plain English and technical versions, including FileSafe,
-  service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control
-  labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode
-  change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the
-  preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
+  as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31:
+  onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik
+  configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection checks;
+  Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
+  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
+  host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
+  Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
+  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are
+  bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
+  invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former
+  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale
+  connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same
+  signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id;
+  a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
+  and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state
+  references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream
+  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic
+  private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
+  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded
+  Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection.
+  It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A:
+  onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write
+  safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration,
+  never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization
+  or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with
+  a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global
+  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert,
+  and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section
+  has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and
+  AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt
+  data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
+  chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
+  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
+  tag is retired.'
 - 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
   Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
-  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
-  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
-  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
-  semantics supply this exit without a new mutation command.'
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -7941,22 +7950,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
 source_atom_ids: [atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
@@ -12173,7 +12184,7 @@ For every record, preconditions additionally require central registration, execu
 
 | Exact primary command | Label | Description | Preconditions | Owner / PlanUnit | Sole future handler target | Contracts | Intended consumers / exact return |
 |---|---|---|---|---|---|---|---|
-| `cmd.auth_profile.open_official_page` | Open Official Page | Begin the owner-verified human-only official-page handoff. | Human GUI/palette invocation; exact initiating active Client; current official-source/domain-policy proof and protected-auth permission. | `Plans/Multi-Account_Connection_Spec.md#MACS-003` | `handlers::multi_account::open_official_page` | request `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest`; result `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult`; error `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError`; availability `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability`; permission `Plans/multi_account_contracts.schema.json#/$defs/AuthProfilePermissionDecision` | Doctor remediation; Product Onboarding explicit selected-source owner handoff; Settings > Integrations; authentication handoff surface; human palette; exact owner return settlement. |
+| `cmd.auth_profile.open_official_page` | Open Official Page | Begin the owner-verified human-only official-page handoff. | Human GUI/palette invocation; exact initiating active Client; current official-source/domain-policy proof and protected-auth permission. | `Plans/Multi-Account_Connection_Spec.md#MACS-003` | `handlers::multi_account::open_official_page` | request `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest`; result `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult`; error `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError`; availability `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability`; permission `Plans/multi_account_contracts.schema.json#/$defs/AuthProfilePermissionDecision` | Doctor remediation; Product Onboarding explicit selected-source owner handoff; Settings > Integrations; authentication handoff surface; human palette; exact owner return settlement.; provider API-key rows > Get a key in Onboarding and Settings (DL-259 P10). |
 | `cmd.integration.connection.add` | Add Connection Draft | Create the persisted inactive connection draft and optional opaque auth continuation. | Current identity/topology/generations and permission; validated non-secret configuration; no preexisting authenticated profile required. | `Plans/Shared_Integration_Runtime.md#SIR-035` | `handlers::integration_connection::add` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings integration/destination rows; Product Onboarding owner setup; Doctor deep links/remediation; connection managers; palette/API; exact owner return settlement. |
 | `cmd.integration.connection.update` | Update Connection | Apply the owner-bounded connection patch. | Current connection/topology generations, permission snapshot and bounded patch reference. | `Plans/Shared_Integration_Runtime.md#SIR-019` | `handlers::integration_connection::update` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings integration/destination rows; Product Onboarding owner setup; Doctor deep links/remediation; connection managers; palette/API; exact owner return settlement. |
 | `cmd.integration.connection.test` | Test Connection | Run the bounded non-destructive connection probe with separate currentness and probe evidence. | Current exact connection scope, generations and permission; probe-policy and capability-requirement references; no write probe. | `Plans/Shared_Integration_Runtime.md#SIR-019` | `handlers::integration_connection::test` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings > Integrations/Credentials and destination rows; Product Onboarding owner setup; Doctor deep links/remediation; Project copy/move readiness; connection managers; palette/API; exact owner return settlement. |

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L6669-L6982
+Source lines: L6679-L6995
 
-Source SHA256: `ff3936f909754a73f034d56e0ca32b0943c90c93ec9f88382be9667121d3103c`
+Source SHA256: `b21a57b9cdea7200278d09fa59bb646371fc30b6005228545e375d42408e39fd`
 
 ---
 
@@ -213,10 +213,10 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling
   a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable
   owner navigation says why. Each new PM7 binding carries concept_sources path/token anchors for its actual GUI adapter.
-  Sources use PM_PROJECT_BOX/PM_TB_DENSITY for project controls, PM7_WORK_UI/PM_WORK for work, PM_PIP_EDITOR and the
-  shared parts registry for Pip, and the existing Settings reveal route for System status owner links. No JavaScript
-  adapter is native command/effect proof. W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting
-  maps to pending with Restarting words, and its clearFinished platform/thread:<id> views map to the invoking view. canSendInput/answer
+  DL-260: project controls, Work surfaces and the Pip editor consume their shared product owners; System status owner
+  links use the existing Settings reveal route. Source adapter names are lineage only. No JavaScript adapter is native
+  command/effect proof. W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting maps to pending
+  with Restarting words, and its clearFinished platform/thread:<id> views map to the invoking view. canSendInput/answer
   are concept projections of current prompt eligibility and owner answers; native process identity, generation, permission,
   yes/no-only stdin and read-only-service gates remain unchanged. D2/D7, PM7 Step4 final-source alignment, 2026-10-30
   (integration e9b15abc64): chat.work_dock.process_open maps Review/Show to existing pm7.processes_open / cmd.chat.processes.open.
@@ -308,7 +308,10 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- 'DL-260 implementation lineage only: Sources use PM_PROJECT_BOX/PM_TB_DENSITY for project controls, PM7_WORK_UI/PM_WORK
+  for work, PM_PIP_EDITOR and the shared parts registry for Pip, and the existing Settings reveal route for System status
+  owner links.'
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

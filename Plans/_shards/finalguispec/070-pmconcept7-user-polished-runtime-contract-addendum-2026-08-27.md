@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36103-L36577
+Source lines: L36103-L36582
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -45,11 +45,16 @@ split_recommended: false
 depends_on: [F3-425, F3-426, F3-500]
 unblocks: [F3-514, F3-516, F3-517, ATS-037, ATS-038]
 acceptance_criteria:
-  - "Every required appearance and interaction is stated in its canonical owner and validated against the whole-application contract; a concept-only change is not product acceptance."
-  - "All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel, and status bar retain the recovered semantic and presentation contract."
-  - "All eight theme families preserve their intended font, palette, shape, inactive-state contrast, first-paint background, and family-specific composition."
-  - "Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or uniform-frame flashes."
-  - "This contract creates no WorkNodes, NodeSeeds, executable queues, implementation tasks, production code, or accessibility acceptance expansion."
+- Every required appearance and interaction is stated in its canonical owner and validated against the whole-application
+  contract; a concept-only change is not product acceptance.
+- All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel,
+  and status bar retain the recovered semantic and presentation contract.
+- 'DL-257/Q22: all five theme families and ten variants preserve their intended font, palette, shape, inactive-state
+  contrast, first-paint background, and family-specific composition.'
+- Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or
+  uniform-frame flashes.
+- This contract creates no WorkNodes, NodeSeeds, executable queues, implementation tasks, production code, or accessibility
+  acceptance expansion.
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"

@@ -13,6 +13,13 @@ ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / 'Plans'
 BLOCK = re.compile(r'^```yaml\n(.*?)^```', re.M | re.S)
 RETIRED = {'F3-649', 'ACD-474', 'DR-070'}
+SOURCE_API = re.compile(
+    r'\bO55\.|\bpm7ob-explainer\b|\bC\.cards\b|'
+    r'\bo55-(?:under|card-parent|pip-editor)\b|\bPMLogo\.look\(\)|'
+    r'\bhandOff\(\)|\bhandingOff\b|\bPM56_PIP\b|'
+    r'\bPM56_SHELL\.pmx(?:Pip|StatusFace|Empty)|'
+    r'\bPM_PIP_(?:PARTS_STORE|EDITOR)\b|\bpip-settings-open\b|'
+    r'\bdata-o55-(?:nier|nier-scene)\b')
 
 
 def read(name):
@@ -21,6 +28,7 @@ def read(name):
 
 def check(history_base=None):
     failures, units = [], {}
+    active_api_fields_checked = 0
 
     def require(ok, message):
         if not ok:
@@ -54,6 +62,13 @@ def check(history_base=None):
             continue
         require(not RETIRED.intersection(unit.get('depends_on', []) + unit.get('unblocks', [])),
                 uid + ': active dependency on retired feature')
+        for field in ('canonical_text', 'acceptance_criteria', 'preserved_exact_tokens',
+                      'negative_constraints', 'owner_boundary_notes', 'node_compile_hint'):
+            if field not in unit:
+                continue
+            active_api_fields_checked += 1
+            require(not SOURCE_API.search(json.dumps(unit[field])),
+                    uid + '.' + field + ': concept API belongs in source_lineage')
     require(units['DL-260']['status'] == 'accepted' and 'Q3 B' in units['DL-260']['canonical_text'],
             'DL-260 lacks Jared authority')
     if history_base:
@@ -90,8 +105,28 @@ def check(history_base=None):
     exclusions = read('Wiring_Matrix.production.exclusions.json')['excluded_tokens']
     require(not {'page.go', 'demo.toast', 'demo.reason'}.intersection(exclusions),
             'Removed prototype verbs remain command-catalog obligations')
+
+    # Source evidence may name the implementation. Active requirements, schema
+    # constants and fixtures must express the product rule without pinning it.
+    def inspect_json(value, location):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key not in ('concept_sources', 'x-source-lineage'):
+                    inspect_json(child, location + '/' + key)
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                inspect_json(child, location + '/' + str(index))
+        elif isinstance(value, str):
+            require(not SOURCE_API.search(value), location + ': concept API is active')
+
+    for name in ('pm7_build_contracts.schema.json', 'pm7_build_contracts.fixtures.json',
+                 'final_gui_interaction_contracts.schema.json',
+                 'final_gui_interaction_contract_fixtures.json', 'pm7_control_bindings.json',
+                 'Wiring_Matrix.production.json'):
+        inspect_json(read(name), name)
     print(json.dumps({'check': 'pm7-demo-canon', 'status': 'fail' if failures else 'pass',
                       'retired_history_anchors': sorted(RETIRED), 'history_base': history_base,
+                      'active_api_fields_checked': active_api_fields_checked,
                       'claim': 'static_product_canon_boundary_only', 'failures': failures}, indent=2))
     return bool(failures)
 

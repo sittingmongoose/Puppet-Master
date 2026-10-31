@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45346-L47666
+Source lines: L45457-L47776
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -2082,20 +2082,19 @@ split_recommended: false
 depends_on: [DL-180, DL-152, SSYS-043, F3-598, F3-465, F3-631, F3-632, F3-633]
 unblocks: [ATS-075]
 acceptance_criteria:
-- Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with
-  the treatments stated.
+- Each panel surface listed here renders in all ten built-in variants across five families (DL-257/Q22) and Reduced Motion
+  with the treatments stated.
 - Retro shows reverse-video tabs, the seated reverse-video chip, bracket glyphs, box-drawn menus and dividers and kind
   glyphs of at most two cells, and its motion snaps.
-- With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed,
-  every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used.
+- With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed, every colour
+  resolves to NieR or repainted theme tokens, and no glow, filter or blur is used.
 - Under Reduced Motion every panel and tab duration is 0 and drags still show landing previews.
 - Small controls use F3-465 without card magnet; dividers use F3-657.
 - Glass panels and strips use F3-652 since the 2026-10-15 publication; the old closed blur budget is superseded.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build
-  tasks are created by this unit.
-- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor
-  Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor
-  stores no copy.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
+  by this unit.
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber
+  follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

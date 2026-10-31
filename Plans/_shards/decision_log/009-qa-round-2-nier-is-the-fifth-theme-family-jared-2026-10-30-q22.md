@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L18594-L19208
+Source lines: L18594-L19237
 
-Source SHA256: `3a2afdc079ddca38f5165aca56fa8bb6f29ec1b95c05029ffa0da10a05525339`
+Source SHA256: `4936295e89588932f8861abbc3aa972ce4f9c497e69d79fe78fbb67bcae3e349`
 
 ---
 
@@ -296,109 +296,114 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   wizard says AI accounts available in this setup, not every AI. Existing Settings routes and owners retain the advanced
   capabilities. D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy
   Manager is existing-only: it can be selected as an existing proxy but never sent to a generation/install/export operation.
-  New-Server managed setup, export-only and existing-proxy validation are separate owner continuations; generating a
-  file does not prove installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation,
-  onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
-  existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
-  silently substitutes a family. D4: confirm provider admission and executable conformance immediately before building
-  Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats.
-  This scheduling decision does not change per-account authentication, entitlement, health or quota truth: Ready is the
-  shared account owner’s current usable result, not merely signed in. D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models
-  v0.6.0, read 2026-10-31; the June v0.5.39 inspection remains historical lineage. Onboarding and Settings show OpenRouter
-  free models (sign-in), Groq free plan (key) and NVIDIA free models (key) up front. Other currently eligible free providers
-  from the same Free Models catalog appear behind one closed-by-default advanced control in each surface. That list is
-  catalog-driven, never a pinned list or count, and still applies the Models owner’s supported/free/readiness filters.
-  GitHub Models retired on 2026-07-30 and has no active setup/catalog/routing action; saved choices remain No longer
-  available and never become Copilot. Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication,
-  billing class and currently usable account/model identity remain separate; catalog labels do not prove a route is free.
-  No changing limits or prices are frozen in onboarding prose. D6 A: the human signs in on the initiating active device
-  while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that
-  tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings,
-  model selection and Usage share stable account/profile/host/environment references, never provider-name booleans or
-  copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution
-  host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct
-  identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
-  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
-  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
-  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
-  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
-  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
-  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
-  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
-  write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch
-  expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline,
-  failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective
-  guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the
-  wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values
-  ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every
-  opened onboarding question tip and prose help section has useful Plain English and technical versions, including FileSafe,
-  service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control
-  labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode
-  change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the
-  preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
-  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. Q1 B, Jared 2026-10-31: the shared
-  Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30
-  and NieR 0.16. Each look uses its one per-look kit room, registered before the first shared voice in every host, with
-  no stacked rooms. These restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing
-  preference, gesture and sound owner still gates playback. Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay
-  below the open bell inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox
-  theme-menu resting-top placement and entry/exit click guards remain. DL-259, Jared 2026-10-31: D2 A: onboarding offers
-  NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining their
-  exact owner family/profile/locator identity. Azure Blob, Google Cloud Storage and REST-server destinations remain available
-  in Settings > Backup & Restore, with a clear pointer. The Backup owner still supports all eleven registered families.
-  D2 A: repository object-format selection and its permanence acknowledgement belong in Settings, not onboarding. Existing-repository
-  format observation, unknown/capability handling and the Source Control owner’s safeguards remain unchanged. DL-259,
-  Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its default auth
-  surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct account/billing
-  identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it does not rename
-  or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan, a monthly-credit
-  subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and DashScope pay-as-you-go.
-  MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search alias; OpenCode Console
-  replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes a saved provider/account
-  ID. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
-  identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
-  provider-conformance checklist, not a wizard warning, badge or disabled choice. DL-259 D6, Jared 2026-10-31: the Codex
-  remote/headless device-code alternative requires enabling device-code login in ChatGPT security settings first, or
-  the corresponding workspace permission by its administrator. This remains an alternative inside Sign in with ChatGPT,
-  not another top-level auth family. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration;
-  the person handles certificates and signing on their own systems. PM does not select, hold, validate, issue or sign
-  those certificates, and admits no certificate-profile field or selector command. No certificate selection/validation
-  is a prerequisite to configuration generation, route activation or Ready. Generation proves only that the configuration
-  artifact was produced. Route Ready reports the actual PM-owner checks performed: endpoint reachability, protocol/API
-  compatibility, expected Server identity and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link
-  and callback checks. It never claims that a certificate is valid. Existing secure-transport, public-exposure consent,
-  identity and reachability requirements remain; missing or failed actual route checks cannot be called successful. DL-259
-  CLOUD-1 A, Jared 2026-10-31: the person uses an explicit cloud-provider console or local-bootstrap handoff and its
-  one-time Server setup code to claim a new cloud computer. The Server owner checks and consumes the code through the
-  protected local/private bootstrap handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id,
-  pairing_session_id and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation
-  fences. The tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are
-  not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public
-  unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
-  remains separate after successful claim. DL-259 DESKTOP-RESTORE-1 A, Jared 2026-10-31: the native desktop performs
-  the first owner claim of its dormant local Server through a protected direct local handoff, with no code for the person
-  to type. The Server owner binds that initial owner-claim authorization to its discovery_observation_id, pairing_session_id
-  and identity_fingerprint for the existing cmd.server.claim request and exact current permission/generations. Ordinary
-  Clients, browser state and loopback reachability cannot manufacture this protected native authority. Claim then separate
-  cmd.server.bootstrap.start must complete for the actual local Server, its durable roots/mounts and immutable execution
-  baseline before cmd.restore.server_full. Backup maintenance/recovery authority, exact-target verification, paused restore
-  and separate pairing/remote activation remain required. Reuse current verified prerequisites when already satisfied;
-  dormant capability alone is never a claim or bootstrap receipt. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote
-  Link owner issues and checks its protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case
-  behavior, expiry/abuse policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build
-  checks; no grammar or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input,
-  and treat nonblank text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted
-  owner validates/resolves it before the existing open and Server identity/pairing continuation. Unknown, expired or
-  unresolvable input fails closed without another-Server fallback. This accepted pre-build verification point is not
-  an unanswered product choice or a wizard caveat. DL-259 srv final, 2026-10-31: Creating observes only the reviewed
-  Project creation/open/restore result and its actual prerequisites. It does not run optional remote-access configuration.
-  After that owner settlement, a separate postcommit remote-setup view inside automatic_preparation runs any requested
-  Remote Access continuation, before the normal provider/Free Models continuation; the eleven-stage graph is unchanged.
-  Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing proxy steps use their existing
+  DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first
+  generates/exports Caddy, NGINX or Traefik configuration for the person to add on their own system before the owner’s
+  DNS, reachability and live-connection checks; Caddy is the default. The second only checks the existing proxy route
+  and live connection, with nothing generated. Set it up for me is removed: Puppet Master does not install or host the
+  proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy branch
+  and keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor consent,
+  identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik
+  and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but
+  never emits a generated-configuration record; neither branch silently substitutes a family. D4: confirm provider admission
+  and executable conformance immediately before building Puppet Master. The wizard lists its provider choices without
+  unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account authentication,
+  entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not merely signed in.
+  D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models v0.6.0, read 2026-10-31; the June v0.5.39
+  inspection remains historical lineage. Onboarding and Settings show OpenRouter free models (sign-in), Groq free plan
+  (key) and NVIDIA free models (key) up front. Other currently eligible free providers from the same Free Models catalog
+  appear behind one closed-by-default advanced control in each surface. That list is catalog-driven, never a pinned list
+  or count, and still applies the Models owner’s supported/free/readiness filters. GitHub Models retired on 2026-07-30
+  and has no active setup/catalog/routing action; saved choices remain No longer available and never become Copilot.
+  Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication, billing class and currently
+  usable account/model identity remain separate; catalog labels do not prove a route is free. No changing limits or prices
+  are frozen in onboarding prose. D6 A: the human signs in on the initiating active device while the AI/tool runs on
+  the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct
+  API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and
+  Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected
+  returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account,
+  host or route invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes
+  the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in
+  Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install.
+  The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per
+  stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects,
+  windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
+  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
+  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
+  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
+  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
+  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
+  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
+  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
+  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
+  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
+  a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and
+  Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert,
+  labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding
+  question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
+  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
+  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
+  tour_narration_only tag is retired. Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks,
+  sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look
+  kit room, registered before the first shared voice in every host, with no stacked rooms. These restore the old voice’s
+  own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates
+  playback. Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through the existing
+  --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit
+  click guards remain. DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze
+  B2, S3-compatible, SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure
+  Blob, Google Cloud Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear
+  pointer. The Backup owner still supports all eleven registered families. D2 A: repository object-format selection and
+  its permanence acknowledgement belong in Settings, not onboarding. Existing-repository format observation, unknown/capability
+  handling and the Source Control owner’s safeguards remain unchanged. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is
+  the separate Cursor SDK direct-provider entry, with API key as its default auth surface. A user key bills that user’s
+  plan and a service-account key its owning team; these remain distinct account/billing identities. cursor_cli keeps
+  browser login as its default and an advanced optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan
+  is a separate direct-provider entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore
+  route identity, distinct from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label,
+  with MiniMax Coding Plan retained as a former-name/search alias; OpenCode Console replaces the Zen display name and
+  is a pay-as-you-go gateway. A label change never changes a saved provider/account ID. DL-259 D4, Jared 2026-10-31:
+  immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session identity, OpenCode Go’s
+  client/session identity and Muse’s Muse-only subscription credential. This is the pre-build provider-conformance checklist,
+  not a wizard warning, badge or disabled choice. DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code
+  alternative requires enabling device-code login in ChatGPT security settings first, or the corresponding workspace
+  permission by its administrator. This remains an alternative inside Sign in with ChatGPT, not another top-level auth
+  family. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful. DL-259 CLOUD-1 A, Jared 2026-10-31: the
+  person uses an explicit cloud-provider console or local-bootstrap handoff and its one-time Server setup code to claim
+  a new cloud computer. The Server owner checks and consumes the code through the protected local/private bootstrap handoff.
+  Its initial owner-claim authorization is bound to the existing discovery_observation_id, pairing_session_id and identity_fingerprint
+  handed to cmd.server.claim, with the command’s current permission and generation fences. The tuple references owner-verified
+  authority; guessed IDs, an address or a caller-provided success flag are not proof. Raw setup code never enters the
+  ordinary command payload, stored setup plan, logs or receipts. No public unclaimed setup, automated provider-console/SSH
+  provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start remains separate after successful
+  claim. DL-259 DESKTOP-RESTORE-1 A, Jared 2026-10-31: the native desktop performs the first owner claim of its dormant
+  local Server through a protected direct local handoff, with no code for the person to type. The Server owner binds
+  that initial owner-claim authorization to its discovery_observation_id, pairing_session_id and identity_fingerprint
+  for the existing cmd.server.claim request and exact current permission/generations. Ordinary Clients, browser state
+  and loopback reachability cannot manufacture this protected native authority. Claim then separate cmd.server.bootstrap.start
+  must complete for the actual local Server, its durable roots/mounts and immutable execution baseline before cmd.restore.server_full.
+  Backup maintenance/recovery authority, exact-target verification, paused restore and separate pairing/remote activation
+  remain required. Reuse current verified prerequisites when already satisfied; dormant capability alone is never a claim
+  or bootstrap receipt. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and checks its protected
+  HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior, expiry/abuse policy and
+  raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks; no grammar or sample
+  code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat nonblank text as
+  unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it
+  before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed
+  without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice or
+  a wizard caveat. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result
+  and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement, a
+  separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before
+  the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
+  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
   domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
   it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
   any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
@@ -413,7 +418,15 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   conf for them? They deal with signing and certs on their own systems." CLOUD-1 A selects the console one-time setup-code
   handoff. DESKTOP-RESTORE-1 A selects protected native local handoff with no typed code. REMOTE-CODE-1 A places protocol
   verification immediately before the product build. These decisions supersede the earlier tentative safeguards and close
-  all four owner questions; the existing command IDs and typed claim tuple remain.'
+  all four owner questions; the existing command IDs and typed claim tuple remain. Coverage-audit follow-up, 2026-10-31:
+  accepted QA2 product rules include Auto retaining its mode while the Theme word follows the current family/OS scheme
+  through the existing Settings writer; semantic technical-tooltip candidacy excluding internal container/render keys;
+  focus-independent inner-overlay Escape; five equally prominent bounded look choices; readable settled-stage help notes
+  without a separate tail; ordinary props visibly above the floor except Creating blocks; and No account yet retaining
+  its category on return. Provider key rows use the exact official key console/guide through the existing protected official-page
+  command and explain key versus password. Grouped First Project criteria, D7 shared consumers and five-family/ten-variant
+  acceptance are reconciled in their owners. Concept API spellings move to source lineage under DL-260; they add no product
+  request, persisted state or authority.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -437,11 +450,15 @@ acceptance_criteria:
   from onboarding. The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts
   available in this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities.'
 - 'D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only:
-  it can be selected as an existing proxy but never sent to a generation/install/export operation. New-Server managed
-  setup, export-only and existing-proxy validation are separate owner continuations; generating a file does not prove
-  installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind
-  is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch
-  may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  it can be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv
+  C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports Caddy,
+  NGINX or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection
+  checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
+  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
   a family.'
 - 'D4: confirm provider admission and executable conformance immediately before building Puppet Master. The wizard lists
   its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not
@@ -550,11 +567,11 @@ acceptance_criteria:
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
   Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
-  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
-  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
-  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
-  semantics supply this exit without a new mutation command.'
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 - 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
   Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
   owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
@@ -566,6 +583,14 @@ acceptance_criteria:
   the console one-time setup-code handoff. DESKTOP-RESTORE-1 A selects protected native local handoff with no typed code.
   REMOTE-CODE-1 A places protocol verification immediately before the product build. These decisions supersede the earlier
   tentative safeguards and close all four owner questions; the existing command IDs and typed claim tuple remain.'
+- 'Coverage-audit follow-up, 2026-10-31: accepted QA2 product rules include Auto retaining its mode while the Theme word
+  follows the current family/OS scheme through the existing Settings writer; semantic technical-tooltip candidacy excluding
+  internal container/render keys; focus-independent inner-overlay Escape; five equally prominent bounded look choices;
+  readable settled-stage help notes without a separate tail; ordinary props visibly above the floor except Creating blocks;
+  and No account yet retaining its category on return. Provider key rows use the exact official key console/guide through
+  the existing protected official-page command and explain key versus password. Grouped First Project criteria, D7 shared
+  consumers and five-family/ten-variant acceptance are reconciled in their owners. Concept API spellings move to source
+  lineage under DL-260; they add no product request, persisted state or authority.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py
@@ -595,6 +620,10 @@ source_lineage:
 - https://developers.openai.com/codex/auth/
 - user-ruling:2026-10-31-shared-Pip-room-sends-0.35-Glass-0.30-NieR-0.16
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md — confirmed M1–M7, F1/F2, C1–C3
+  and D1; source coverage only, no native proof.
 preserved_exact_tokens:
 - D1 A
 - D2 A

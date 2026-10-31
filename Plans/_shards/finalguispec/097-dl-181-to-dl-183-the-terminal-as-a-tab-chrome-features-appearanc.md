@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47668-L50828
+Source lines: L47778-L50955
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -2775,21 +2775,21 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   steps. Gaze keeps the last known pointer position; thinking dots/squares and sleep never track. A bubble reserves its
   whole line then types at the voice pace, coalescing faster changes; decorative bubble is aria-hidden, headings/choices
   convey meaning. Every choice/field/option (about 203, not only the concept’s 23) has a right-edge ? with beginner-safe
-  words. ui.onboarding.open_details/toggle_choice_explanation owns the single pm7ob-explainer with aria-controls/aria-describedby.
-  It is Friendly stitched note, Glass frosted, Basic dashed annotation, Retro Dark terminal box, Retro Light NOTE, NieR
-  TIPS on every page; narrow puts it under its exact choice. One at a time; filled/ringed open ?, chosen NieR ink stops
-  before ?. Close by ? again, Esc, close or navigation and restore focus. Long notes lift Pip and move its bubble without
-  clipping. Radio circles align with or without Recommended. Props: laptop/phone/server, page/folder/restore, adaptive
-  name sign (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard, Creating
-  blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code, Recovery Kit, lock, settings
-  copy, forge services and free models. Blocks slow into place level, squash on touchdown, give below, unhook strings
-  and rest on floor; each follows its owner phase. O12 B (Jared 2026-10-30): Continue and Ready wait for the last block
-  to land as well as the owner phases to finish; Reduced Motion places every block instantly. Empty, long or taken names,
-  wrong or expired pairing, NAS, credential and Creating failures use their real owner validation and recoverable errors.
-  The Cursor route uses its admitted API-key owner and current credential validation, with API key for Cursor / Check
-  key labels; no OpenAI-compatible capability is inferred. Six original sound kits (Retro split) retain the approved
-  music/no re-key. Eight-bar tunes follow chapter I/IV/V/vi/high-I and motif grows to Ready; no hum/drone, near-unison
-  beating, gated buzz, moaning selection or deep NieR thump. Voice/music live synthesis passes the one Notifications
+  words. ui.onboarding.open_details/toggle_choice_explanation owns the single shared explanatory note with aria-controls/aria-describedby
+  (DL-260). It is Friendly stitched note, Glass frosted, Basic dashed annotation, Retro Dark terminal box, Retro Light
+  NOTE, NieR TIPS on every page; narrow puts it under its exact choice. One at a time; filled/ringed open ?, chosen NieR
+  ink stops before ?. Close by ? again, Esc, close or navigation and restore focus. Long notes lift Pip and move its
+  bubble without clipping. Radio circles align with or without Recommended. Props: laptop/phone/server, page/folder/restore,
+  adaptive name sign (one large line then 2–3 lines then ellipsis), vault/cloud/backup, house/globe, review clipboard,
+  Creating blocks, AI orbs, Ready charms/crew; expanded routes add NAS, key, identity card, QR/code, Recovery Kit, lock,
+  settings copy, forge services and free models. Blocks slow into place level, squash on touchdown, give below, unhook
+  strings and rest on floor; each follows its owner phase. O12 B (Jared 2026-10-30): Continue and Ready wait for the
+  last block to land as well as the owner phases to finish; Reduced Motion places every block instantly. Empty, long
+  or taken names, wrong or expired pairing, NAS, credential and Creating failures use their real owner validation and
+  recoverable errors. The Cursor route uses its admitted API-key owner and current credential validation, with API key
+  for Cursor / Check key labels; no OpenAI-compatible capability is inferred. Six original sound kits (Retro split) retain
+  the approved music/no re-key. Eight-bar tunes follow chapter I/IV/V/vi/high-I and motif grows to Ready; no hum/drone,
+  near-unison beating, gated buzz, moaning selection or deep NieR thump. Voice/music live synthesis passes the one Notifications
   & Sounds player/gesture gate/master general.interaction.sound-effects and header speaker, with recipe/source/licence/version
   metadata in the existing sound tools/library. Setup voice/music are Pip parts, app chirps default off; Reduced Motion
   never mutes. O6 (Jared 2026-10-30): look-tile hover changes neither sound nor theme; click or keyboard activation changes
@@ -2833,19 +2833,20 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   completion only: it neither dispatches owner work nor manufactures a completed phase. Other choices and recovery controls
   remain responsive during Creating. O6/O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
   silent look hover includes the Pip voice and NieR cursor tick; click/keyboard selection may speak its selected line.
-  Ready’s handOff() lift is drawn before O55.finish({tour:true}); the joined adapter returns about 560 ms scaled by Animation
-  speed, 0 under Reduced Motion, and ignores a second press while handing off. Pip and its line lift on the connected
-  strings toward the window from which the first callout appears. This is the Ready handoff, not a redesign of the deferred
-  Tour. Creating blocks cue once at touchdown through F3-599, finished chapter beads carry their check in every look,
-  and the resume chip’s hover tag includes its existing tip. Q22 visible copy is Adjust NieR, or Adjust NieR… in the
-  title-bar menu (foundations source confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Q4/Q10: there is one progress string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s
-  feet; Pip replaces the current bead and the current bead occupies no extra width. A highlight surrounds the name without
-  covering Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible
-  diamond; NieR keeps its no-tail treatment. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the
-  current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and
-  What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections:
-  More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints
+  Ready’s existing ui.onboarding.finish tour intent draws Pip’s connected lift before opening the first Tour callout,
+  using the reference approximately 560 ms scaled by Animation speed and 0 under Reduced Motion. One current handoff
+  guard ignores a second press and settles exactly once (DL-260). Pip and its line lift on the connected strings toward
+  the window from which the first callout appears. This is the Ready handoff, not a redesign of the deferred Tour. Creating
+  blocks cue once at touchdown through F3-599, finished chapter beads carry their check in every look, and the resume
+  chip’s hover tag includes its existing tip. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu
+  (foundations source confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q4/Q10: there
+  is one progress string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip
+  replaces the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering
+  Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond;
+  NieR keeps its no-tail treatment. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current
+  look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does
+  Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections: More
+  about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints
   and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain;
   Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its
   never-saved hint for SMB. DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global
@@ -2864,7 +2865,12 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   selectors. The progress beads and Pip share one rail/string; Pip replaces the current bead and the current label remains
   on its own line without covering Pip. Speech bubbles have one continuous fill/border silhouette and joined tail, never
   an exposed diamond; NieR keeps no tail. These are presentation changes to existing controls and stage state, with no
-  new action, setting or validation rule.'
+  new action, setting or validation rule. DL-259 QA2 M5, 2026-10-31: the explanatory note uses the settled, untransformed
+  stage bounds in both Plain English and Expert. Long notes stay within the available stage room and scroll their own
+  text when needed, including in short windows and NieR. The note is labelled as Pip’s and has no separate decorative
+  tail. This is the option-help note, distinct from the spoken bubble’s single-silhouette tail rule. DL-259 QA2 M6, 2026-10-31:
+  ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s stacked blocks retain their
+  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2915,6 +2921,13 @@ acceptance_criteria:
   label remains on its own line without covering Pip. Speech bubbles have one continuous fill/border silhouette and joined
   tail, never an exposed diamond; NieR keeps no tail. These are presentation changes to existing controls and stage state,
   with no new action, setting or validation rule.'
+- 'DL-259 QA2 M5, 2026-10-31: the explanatory note uses the settled, untransformed stage bounds in both Plain English
+  and Expert. Long notes stay within the available stage room and scroll their own text when needed, including in short
+  windows and NieR. The note is labelled as Pip’s and has no separate decorative tail. This is the option-help note,
+  distinct from the spoken bubble’s single-silhouette tail rule.'
+- 'DL-259 QA2 M6, 2026-10-31: ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s
+  stacked blocks retain their intentional floor contact. The clearance is a presentation invariant, not a new owner phase
+  or completion signal.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2935,9 +2948,13 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 - Concepts/onboarding/opus-5.5-pip/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- 'DL-260 implementation lineage only: pm7ob-explainer, handOff(), O55.finish({tour:true}) and the joined adapter are
+  concept source spellings; production uses the existing typed action and shared note/stage owners.'
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — Pattern review long-note and prop fixes
+  (QA2 M5/M6). Six layout units is source geometry only; settled/untransformed measurement and internal note scrolling
+  preserve product readability.
 preserved_exact_tokens:
-- pm7ob-explainer
 - ui.onboarding.open_details
 - Sound on — click to mute
 - Sound off — click to turn on

@@ -3400,7 +3400,13 @@ canonical_text: 'Provider/account setup flows distinguish authentication from re
   and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
   has a distinct identity. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule,
   Kimi Code’s client/session identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential.
-  This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.'
+  This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice. DL-259 P10, 2026-10-31:
+  every provider API-key row explains that the input is a key rather than the person’s password and offers Get a key
+  through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 gui_related: true
 gui_classification_reason: The unit defines user-visible setup/readiness states and GUI state machine labels.
 split_recommended: true
@@ -3427,6 +3433,12 @@ acceptance_criteria:
 - 'DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
   identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
   provider-conformance checklist, not a wizard warning, badge or disabled choice.'
+- 'DL-259 P10, 2026-10-31: every provider API-key row explains that the input is a key rather than the person’s password
+  and offers Get a key through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3440,6 +3452,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0027
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md P10 — exact official key acquisition and
+  category return; product-only source, no hints/sample keys.
 preserved_exact_tokens:
 - Logged out
 - Logged Out

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1321
+Source lines: L1024-L1336
 
-Source SHA256: `93649c8df06bcc1c916a241f2e27286e1dcaf7b97bf99f7b6c015cee7f485a13`
+Source SHA256: `725dc022d5120a2d2045672a9c078530aa3b62e531ae560774065754796fd2fd`
 
 ---
 
@@ -95,11 +95,12 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected
   secret handling and actual restore/Project commit boundaries remain mandatory; only a verified Backup owner result
   proves unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card,
-  before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across
-  all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping
-  lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own
-  choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work
-  origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service
+  before sibling alternatives. One shared joined-choice component owns the join, indentation and line from the parent
+  mark across all twelve affected screens (DL-258; source mechanics stay lineage under DL-260). The parent opens into
+  the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent
+  question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question
+  control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings
+  copy, remote route and proxy-configuration choices (certificate choices removed by CERT-1 / srv C1), online service
   kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source,
   rather than an empty local-location field. H5: the onboarding owner holds one original inert-state basis for the entire
   open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots
@@ -121,46 +122,50 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
   tour_narration_only tag is retired. D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the
   default. Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but never sent to a generation/install/export
-  operation. New-Server managed setup, export-only and existing-proxy validation are separate owner continuations; generating
-  a file does not prove installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation,
-  onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
-  existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
-  silently substitutes a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the
-  selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct
-  API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and
-  Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected
-  returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account,
-  host or route invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes
-  the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in
-  Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install.
-  The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per
-  stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects,
-  windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
-  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
-  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
-  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
-  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
-  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
-  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
-  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
-  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
-  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
-  a refused change stays refused with a clear reason. No failure silently turns a guard off. DL-259 srv final, 2026-10-31:
-  Creating observes only the reviewed Project creation/open/restore result and its actual prerequisites. It does not
-  run optional remote-access configuration. After that owner settlement, a separate postcommit remote-setup view inside
-  automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free Models continuation;
-  the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing
-  proxy steps use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
-  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects or invent
-  readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background rules,
-  and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply
-  this exit without a new mutation command. DL-259 srv final, 2026-10-31: what the person actually set up is what the
-  app shows. Enter/finish binds the shell, Settings and status views to the stable Client, Server, Execution Host, route
-  and Project identities supplied by current owner results and registries, with their actual readiness/deferred state.
-  Display names never become IDs, and the reviewed setup plan is intent rather than effective state. Onboarding creates
-  no second account/server/Project registry or durable handoff writer; its initial context is a non-authoritative join
-  of existing owner receipts/projections, followed by their normal updates. No concept-global object, event or store
+  operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already.
+  The first generates/exports Caddy, NGINX or Traefik configuration for the person to add on their own system before
+  the owner’s DNS, reachability and live-connection checks; Caddy is the default. The second only checks the existing
+  proxy route and live connection, with nothing generated. Set it up for me is removed: Puppet Master does not install
+  or host the proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy
+  branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor
+  consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly caddy, nginx
+  or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager
+  but never emits a generated-configuration record; neither branch silently substitutes a family. D6 A: the human signs
+  in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and
+  private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential
+  store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
+  never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows,
+  macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner,
+  with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process.
+  A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable
+  client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
+  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
+  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server
+  public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
+  write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch
+  expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline,
+  failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective
+  guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off. DL-259
+  srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual prerequisites.
+  It does not run optional remote-access configuration. After that owner settlement, a separate postcommit remote-setup
+  view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free Models
+  continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output, and configuration-file/export
+  or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals and truthful results. Later
+  always finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it,
+  undo owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command. DL-259 srv final, 2026-10-31: what the person actually set
+  up is what the app shows. Enter/finish binds the shell, Settings and status views to the stable Client, Server, Execution
+  Host, route and Project identities supplied by current owner results and registries, with their actual readiness/deferred
+  state. Display names never become IDs, and the reviewed setup plan is intent rather than effective state. Onboarding
+  creates no second account/server/Project registry or durable handoff writer; its initial context is a non-authoritative
+  join of existing owner receipts/projections, followed by their normal updates. No concept-global object, event or store
   key is a product contract. DL-259 owner answers, Jared 2026-10-31: CERT-1 removes PM certificate administration and
   every certificate-selection/validation gate; configuration generation and actual PM route checks report only their
   own result, never certificate validity. CLOUD-1 uses the protected console one-time-code handoff; DESKTOP-RESTORE-1
@@ -210,16 +215,17 @@ acceptance_criteria:
   its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and
   snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
   boundaries remain mandatory; only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s
-  follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns
-  the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray
-  in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
-  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control
-  never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy,
-  remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and
-  Review display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding
-  owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires
-  only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert.
-  Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
+  follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice
+  component owns the join, indentation and line from the parent mark across all twelve affected screens (DL-258; source
+  mechanics stay lineage under DL-260). The parent opens into the tray in every look, with matching edges, no gap or
+  overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in
+  their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work
+  origins, work computer checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate
+  choices removed by CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review
+  display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding owner
+  holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly
+  encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip
+  path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
 - 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device,
   not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old
   reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result
@@ -237,41 +243,46 @@ acceptance_criteria:
   owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
   setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
   Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
-  proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only and existing-proxy
-  validation are separate owner continuations; generating a file does not prove installation, public consent, DNS/TLS,
-  endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and
-  maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never
-  emits a generated-configuration record; neither branch silently substitutes a family. D6 A: the human signs in on the
-  initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private
-  account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store
-  on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
-  never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
-  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
-  has a distinct identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows,
-  macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner,
-  with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process.
-  A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable
-  client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
-  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
-  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server
-  public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
-  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
-  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
-  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
-  Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
-  write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch
-  expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline,
-  failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective
-  guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off.'
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
+  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
+  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
+  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
+  host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
+  Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
+  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are
+  bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
+  invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former
+  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale
+  connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same
+  signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id;
+  a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
+  and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state
+  references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream
+  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic
+  private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
+  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded
+  Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection.
+  It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A:
+  onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write
+  safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration,
+  never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization
+  or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with
+  a clear reason. No failure silently turns a guard off.'
 - 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
   Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
-  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
-  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
-  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
-  semantics supply this exit without a new mutation command.'
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 - 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
   Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
   owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
@@ -296,6 +307,10 @@ source_lineage:
 - Plans/Planning_Wizard.md#PWIZ-021
 - Plans/product_onboarding_contracts.schema.json
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
+- 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
+  joined-choice tray; these source APIs/classes are not native product contracts.'
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

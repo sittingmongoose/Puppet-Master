@@ -20,3 +20,5 @@ The named **initial owner-claim authorization** uses the existing closed claim t
 | Remote Link code protocol, with no grammar pinned now | RAS-014 / REMOTE-CODE-1 |
 
 The common checklist is recorded under DL-259 and in multi_account_contracts.schema.json’s existing pre_build_verification annotation. Onboarding and Remote Access point to it; no provider or protocol warning is added to the wizard. Existing post-Creating remote setup, Later always finishing and effective app state from owner records remain.
+
+**Server C1–C4 source alignment:** C1 removes Set it up for me, admits only proxy_hosting generate_only/existing_proxy and keeps proxy_tls null in the onboarding draft. The person installs the generated file and handles certificates; existing proxies only run route/live checks. C2’s cloud claim asks for the console setup code without Server address/discovery; C3 and C4 retain their accepted rulings above. These are resolved product rules, not new questions. No demo hint or code sample is canon.

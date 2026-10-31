@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2532-L2834
+Source lines: L2552-L2861
 
-Source SHA256: `a5390795dc1716e18462d2f25043b5e21e3b800cbd55886b46fe89f8bc2cc60d`
+Source SHA256: `9035764f79b6060e2ea552a02a0683fd957726c255b1fd32aa9ab9afbc8bfc36`
 
 ---
 
@@ -83,26 +83,26 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   only the reviewed Project creation/open/restore result and its actual prerequisites. It does not run optional remote-access
   configuration. After that owner settlement, a separate postcommit remote-setup view inside automatic_preparation runs
   any requested Remote Access continuation, before the normal provider/Free Models continuation; the eleven-stage graph
-  is unchanged. Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing proxy steps use
-  their existing domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed
-  Project intact: it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted
-  setup is deferred; any already-started work obeys the owner’s existing cancel/background rules, and the app shows its
-  actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without
-  a new mutation command. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person
-  handles certificates and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates,
-  and admits no certificate-profile field or selector command. No certificate selection/validation is a prerequisite
-  to configuration generation, route activation or Ready. Generation proves only that the configuration artifact was
-  produced. Route Ready reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility,
-  expected Server identity and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks.
-  It never claims that a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability
-  requirements remain; missing or failed actual route checks cannot be called successful. DL-259 CLOUD-1 A, Jared 2026-10-31:
-  the person uses an explicit cloud-provider console or local-bootstrap handoff and its one-time Server setup code to
-  claim a new cloud computer. The Server owner checks and consumes the code through the protected local/private bootstrap
-  handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id, pairing_session_id
-  and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation fences. The
-  tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are not proof.
-  Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public unclaimed
-  setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
+  is unchanged. Tailscale/Headscale authorization, new Remote Link output, and configuration-file/export or existing-proxy
+  checks (CERT-1 / srv C1) use their existing domain owners, approvals and truthful results. Later always finishes onboarding
+  and leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects or invent
+  readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background rules,
+  and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply
+  this exit without a new mutation command. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration;
+  the person handles certificates and signing on their own systems. PM does not select, hold, validate, issue or sign
+  those certificates, and admits no certificate-profile field or selector command. No certificate selection/validation
+  is a prerequisite to configuration generation, route activation or Ready. Generation proves only that the configuration
+  artifact was produced. Route Ready reports the actual PM-owner checks performed: endpoint reachability, protocol/API
+  compatibility, expected Server identity and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link
+  and callback checks. It never claims that a certificate is valid. Existing secure-transport, public-exposure consent,
+  identity and reachability requirements remain; missing or failed actual route checks cannot be called successful. DL-259
+  CLOUD-1 A, Jared 2026-10-31: the person uses an explicit cloud-provider console or local-bootstrap handoff and its
+  one-time Server setup code to claim a new cloud computer. The Server owner checks and consumes the code through the
+  protected local/private bootstrap handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id,
+  pairing_session_id and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation
+  fences. The tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are
+  not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public
+  unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
   remains separate after successful claim. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and
   checks its protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior,
   expiry/abuse policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks;
@@ -110,7 +110,10 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   nonblank text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
   it before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
   closed without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice
-  or a wizard caveat.'
+  or a wizard caveat. DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the
+  provider-console/local-bootstrap one-time setup-code handoff. That initial claim route asks for the code, not a Server
+  address, and does not discover unclaimed cloud computers over the network. The Server owner’s protected authorization
+  and existing exact proof tuple still gate claim; no public unclaimed setup is exposed.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -220,11 +223,11 @@ acceptance_criteria:
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
   Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
-  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
-  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
-  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
-  semantics supply this exit without a new mutation command.'
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 - 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
   and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
   no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
@@ -248,6 +251,10 @@ acceptance_criteria:
   identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it before the existing open and
   Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed without another-Server fallback.
   This accepted pre-build verification point is not an unanswered product choice or a wizard caveat.'
+- 'DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the provider-console/local-bootstrap
+  one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
+  unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
+  still gate claim; no public unclaimed setup is exposed.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

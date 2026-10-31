@@ -2,15 +2,15 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2386-L2530
+Source lines: L2404-L2550
 
-Source SHA256: `a5390795dc1716e18462d2f25043b5e21e3b800cbd55886b46fe89f8bc2cc60d`
+Source SHA256: `9035764f79b6060e2ea552a02a0683fd957726c255b1fd32aa9ab9afbc8bfc36`
 
 ---
 
 ## Product Onboarding route-and-review correction addendum - 2026-09-01
 
-PWIZ-024 retains the September 1 four-route and independent-placement correction. PWIZ-021 now applies the September 3 draft/copy/late-commit and postcommit provider phases; the six-stage connect-existing shortcut, the typed local actions (fourteen since DL-153) and existing owner boundaries remain intact.
+PWIZ-024 retains the four semantic source intents and independent placement; DL-259 H2/FF-20 supplies the current New/Existing/Restore grouped presentation. PWIZ-021 now applies the September 3 draft/copy/late-commit and postcommit provider phases; the six-stage connect-existing shortcut, the typed local actions (fourteen since DL-153) and existing owner boundaries remain intact.
 
 ### PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft
 
@@ -60,8 +60,10 @@ depends_on:
 - RAS-014
 unblocks: []
 acceptance_criteria:
-- The First Project stage shows four equal, aligned, keyboard-reachable routes at once — `new`, `existing_local`, `existing_online`,
-  and `restore`; no More/Other Project Choices disclosure hides any route.
+- 'DL-259 H2/FF-20: the First Project stage shows New, Existing and Restore as three aligned, keyboard-reachable groups.
+  Selecting Existing reveals its local/online/device choices in the joined tray before sibling alternatives. The four
+  semantic intents new/existing_local/existing_online/restore remain reachable, with no unrelated More/Other Project
+  Choices disclosure hiding a route.'
 - Open a folder here supports a local folder, an OS-mounted SMB/NFS location, or Advanced SSH transport; Restore a backup
   uses its own backup source and transport and never reuses the ordinary folder path by implication.
 - Server (where work runs), Storage (where files live), and Client (the device in hand) remain independent selections;

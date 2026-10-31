@@ -14929,7 +14929,6 @@
                 "oneOf": [
                   {
                     "enum": [
-                      "generate_for_server",
                       "generate_only",
                       "existing_proxy"
                     ]
@@ -14937,23 +14936,15 @@
                   {
                     "type": "null"
                   }
-                ]
+                ],
+                "description": "DL-259 CERT-1 / srv C1: write/export the file for the person to install, or check their existing proxy. PM-managed proxy hosting is removed."
               },
               "proxy_hostname": {
                 "$ref": "#/$defs/onboarding__bounded_nonsecret_string"
               },
               "proxy_tls": {
-                "oneOf": [
-                  {
-                    "enum": [
-                      "lets_encrypt",
-                      "existing_certificate"
-                    ]
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "null",
+                "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
               },
               "source_more": {
                 "type": "boolean"
@@ -15942,7 +15933,6 @@
                   "properties": {
                     "proxy_hosting": {
                       "enum": [
-                        "generate_for_server",
                         "generate_only"
                       ]
                     }
@@ -15983,6 +15973,32 @@
                     "remote_endpoint": {
                       "type": "string",
                       "pattern": "\\S"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "journey": {
+                      "const": "new_or_local"
+                    },
+                    "remote_mode": {
+                      "const": "reverse_proxy"
+                    }
+                  },
+                  "required": [
+                    "journey",
+                    "remote_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "proxy_hosting": {
+                      "enum": [
+                        "generate_only",
+                        "existing_proxy"
+                      ]
                     }
                   }
                 }

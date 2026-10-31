@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """DL-259 static onboarding, credential and connector contract checks."""
 from pathlib import Path
+from copy import deepcopy
 import json
 import re
 import runpy
@@ -154,6 +155,48 @@ def check():
             code['grammar_pinned'] is False and code['wizard_caveat'] is False,
             'REMOTE-CODE-1 is pinned or presented as a wizard caveat')
     counts['owner_answer_policy_checks'] = 5
+    draft = read('product_onboarding_contracts.schema.json')['$defs']['onboarding_setup_plan']
+    require(draft['properties']['proxy_hosting']['oneOf'][0]['enum'] ==
+            ['generate_only', 'existing_proxy'] and
+            draft['properties']['proxy_tls'].get('type') == 'null' and
+            postcommit['proxy_hosting_choices'] == ['generate_only', 'existing_proxy'] and
+            postcommit['proxy_tls'] is None and
+            not postcommit['PM_installs_or_hosts_proxy'] and
+            not postcommit['existing_proxy_generates_configuration'] and
+            not postcommit['cloud_claim_address_input'] and
+            not postcommit['cloud_unclaimed_network_discovery'],
+            'srv C1/C2 regained managed proxy hosting, certificate input or cloud discovery')
+    counts['srv_C1_C4_source_alignment'] = 4
+
+    # This contract's note identity is semantic. A concept DOM id is not an API.
+    gui_schema = read('final_gui_interaction_contracts.schema.json')
+    gui_fixtures = read('final_gui_interaction_contract_fixtures.json')
+    gui_validator = verifier['validator_for'](gui_schema, gui_schema, registry)
+    positive = gui_fixtures['positive_instance']
+    require(gui_validator.is_valid(positive), 'Final GUI interaction positive is invalid')
+    for case in gui_fixtures['negative_mutations']:
+        mutated = deepcopy(positive)
+        tokens = [token.replace('~1', '/').replace('~0', '~')
+                  for token in case['json_pointer'].split('/')[1:]]
+        cursor = mutated
+        for token in tokens[:-1]:
+            cursor = cursor[int(token)] if isinstance(cursor, list) else cursor[token]
+        last = int(tokens[-1]) if isinstance(cursor, list) else tokens[-1]
+        cursor[last] = case['replacement']
+        require(not gui_validator.is_valid(mutated), 'Final GUI negative accepted ' + case['case_id'])
+    counts['final_GUI_interaction'] = {'positive': 1,
+                                     'negative': len(gui_fixtures['negative_mutations'])}
+
+    shared = read('shared_runtime_command_contracts.schema.json')
+    jsonschema.Draft202012Validator.check_schema(shared)
+    shared_policy = shared['x-tailnet-auth-owner-policy']
+    require(shared_policy['connector_owner_roles'] == ['server', 'native_client'] and
+            shared_policy['server_policy'] == 'server_owned_authorized_client_handoff' and
+            shared_policy['native_client_policy'] == 'initiating_active_client_only' and
+            not any(shared_policy[key] for key in ('native_Client_listener_or_Funnel',
+                'native_Client_arbitrary_proxy', 'plain_browser_embedded_connection')),
+            'Shared D7 owner policy collapses native Client into Server or browser authority')
+    counts['shared_tailnet_owner_policy'] = 1
     account_schema = read('multi_account_contracts.schema.json')
     jsonschema.Draft202012Validator.check_schema(account_schema)
     provider = account_schema['x-provider-entry-amendments']

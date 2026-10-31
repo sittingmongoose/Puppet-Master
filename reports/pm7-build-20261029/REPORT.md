@@ -1,3 +1,28 @@
+# Plans lane — coverage audit and Server C1–C4 correction, 2026-10-31
+
+**Complete and ready for the lead’s independent re-check.** Branch `t3/plans/pm7-plans-canon`; parent `a447a7c7e0`. The resulting full head is mailed after push. All 13 Astra findings are confirmed and fixed under DL-259, DL-257/Q22 and DL-260. [COVERAGE-AUDIT-RESPONSE.md](COVERAGE-AUDIT-RESPONSE.md) records every finding and all four Server deltas.
+
+| Result | Evidence |
+|---|---|
+| **Owners** | 33 existing units in 17 source documents corrected; no new PlanUnit, command, handler, control or setting ID. Prose precedes companions. No ledger compiled, so no compile witness applies. |
+| **Coverage** | 133 real product rows, 665 required cells; seven missing rows added. Q12 uses the exact Work show/local Resources routes; P10 uses the existing official-page handoff. 118 unit references, 27 registered commands and 24 catalog entries resolve. |
+| **Contradictions** | Three grouped source choices/four semantic intents; owner-qualified Server/native Client D7; five theme families/ten variants and no independent checkbox. |
+| **Source boundary** | Concept APIs/classes move to source_lineage; shared Pip, note, voice/mute, editor, joined tray and one guarded Ready handoff remain. Active schema/fixture descriptors carry semantic owners. 36,516 unit fields pass the extended boundary check. |
+| **Server C1–C4** | Configuration-file/export or existing-proxy checks only; no managed hosting, proxy_tls null, external certificate custody. Cloud initial claim uses console code without address/discovery; desktop protected local claim precedes bootstrap/full restore; Remote Link protocol is decided before build. Four answered owner questions remain closed. |
+| **Focused proof** | **14/14 PASS.** PM7 125 schema cases; Onboarding 129 positive / 241 negative; Tour 24/59; Remote Access 110/109; Server 89/52; Final GUI 1/160; provider policy 2/2. Canon, API boundary, Touch, wiring and inline onboarding storage agree. |
+| **Derived files** | Shards/index generation and checks pass: 99 configured sources, 2,958 shards, 96 indexed documents, 7,243 PlanUnits. Exactly 15 regenerated source groups correspond to edited sources. Index still reports runtime certification incomplete; this pass grants no runtime readiness. |
+| **Preservation** | All 553 prior artifacts and every historical Decision Log byte outside authorized DL-259 are unchanged. Source hashes and scope are pinned in coverage-fix-guard-final.json. Protected governance paths are untouched. |
+
+**Inventory and registries:** 1,010 settings, 22 status keys, 25 Pip parts, 483 control bindings, 715 Touch rows / 140 profiles, 1,269 production rows. Theme Mode’s help clarifies Auto; identities/count pins remain unchanged. No new runtime request field, event, storage family, certificate selector or authority flag is admitted. Static descriptors are not runtime records or native proof.
+
+**Source delta:** latest Server report head `1e39e57820` and Astra’s GUI audit source `8b57af9ecc` are source evidence; no new GUI merge occurred in this correction. Final merged GUI names/head and onboarding’s small follow-up still follow the lead’s signal. Demo hints, samples, prefills and concept hosts remain outside product canon. Astra’s zero-lost-rule conclusion is its 43-removal sample; this lane does not claim a new exhaustive deletion audit.
+
+**Verification manifest:** `/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/verification.json`, SHA-256 `2127eee90f9020f122f269e63173c607cb50c213e2014e2a8786ad1a4167c354`; 569 immutable artifact records, including 16 new files under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-*`. Every command, exact path and SHA-256 is in that manifest. The two raw check helpers are retained for reproduction.
+
+**Remaining:** independent re-check by the lead; final GUI/onboarding source delta; full gates/dry only when the lead authorizes them. No full gates, dry landing, landing, lock, baseline refresh or reseal ran. Governance staleness is left for the assigned reseal/landing workflow. Mailbox remains armed.
+
+---
+
 # DL-259 — Jared’s four owner rulings, 2026-10-31
 
 **All 13 focused/generation/guard checks PASS. All four owner questions are answered.** Nine owner/index documents and twelve unit bodies apply Jared’s ruling, prose first, then companions. [OWNER-QUESTIONS.md](OWNER-QUESTIONS.md) now records the rulings; [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) retains 126 real-product rows with the affected cells updated. No ledger was compiled.

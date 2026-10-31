@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43289-L43661
+Source lines: L43390-L43772
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -99,7 +99,11 @@ canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable th
   1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. DL-259 QA2 Q5/Q21,
   Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed. Highlight plates
   fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing editor action. The
-  five-family order and ten variants stay DL-257’s.'
+  five-family order and ten variants stay DL-257’s. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser
+  gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and
+  reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices
+  and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the
+  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.'
 gui_related: true
 gui_classification_reason: Defines fifth-family NieR selection and how onboarding and the Guided Tour look (Q22)
   under it.
@@ -118,9 +122,9 @@ unblocks: []
 acceptance_criteria:
 - The title-bar selector, onboarding welcome and both Look menus offer five ordered families including NieR and ten variants,
   with the retained Adjust NieR editor and no independent checkbox (Q22).
-- The checkbox and the button are keyboard reachable and the checkbox exposes its checked state; the editor opens as
-  a popup dialog over the application or as a panel inside the onboarding window, closes on Escape and returns focus
-  to the button.
+- 'DL-257/Q22: each family choice and its Adjust control are keyboard reachable, selection is exposed accessibly, and
+  no independent NieR checkbox is rendered. The one editor opens as a popup dialog over the application or as a panel
+  inside onboarding, closes on Escape and returns focus to its opener.'
 - Before a verified current Project exists no NieR choice writes a setting; committing the look writes the theme pair
   and two retained NieR Adjust rows (Q22) with the theme pair to that Project, and closing setup first leaves the stored
   values in place.
@@ -140,14 +144,19 @@ acceptance_criteria:
 - A key or a press during a NieR performance snaps that performance to its end state, and input never waits on it.
 - Reduced Motion, the Still and Colors only presets and low resource show each of these moments in its end state, and
   Quiet drops the Pod beats.
-- No settings key, NieR part, theme variant, command id, route or tour action is added; onboarding's look controls use
-  ui.onboarding.choose_look, the editor's open, close and replay ui.settings.nier_editor.*, and the live controls the
-  Settings transaction pair (DL-153).
+- Q22 adds two variants in the fifth family without a new settings key, NieR part, command id, route or tour action;
+  onboarding's look controls use ui.onboarding.choose_look, the editor's open, close and replay ui.settings.nier_editor.*,
+  and the live controls the Settings transaction pair (DL-153).
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
   by this unit.
 - 'DL-259 QA2 Q5/Q21, Jared 2026-10-31: look menus fit the available window/viewport with bounded scrolling where needed.
   Highlight plates fit their family/scheme rows; Customize Pip has its own clearly grouped entry through the existing
   editor action. The five-family order and ten variants stay DL-257’s.'
+- 'DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic, Friendly, Glass, Retro and NieR equal
+  choice prominence. Each tile has an accessible family label and reachable question/Adjust controls where applicable.
+  At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping
+  or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click
+  or keyboard activation selects; silent hover does not select.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -168,17 +177,18 @@ source_lineage:
 - Plans/Decision_Log.md#DL-152
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)
-- /home/sittingmongoose/pm-scratch/nier-onb-20261007/design/puppets-final/spec.md (the unit marionette design,
-  concept lineage only)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md, SHA-256
-  8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and the A4, A11,
-  A13 and B9 findings; source lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
-  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16
-  ~12:10Z; decision lineage)
+- /home/sittingmongoose/pm-scratch/nier-onb-20261007/design/puppets-final/spec.md (the unit marionette design, concept
+  lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md, SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9
+  (the global acceptance bar and the A4, A11, A13 and B9 findings; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md, SHA-256
+  a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z; decision
+  lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
-  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and
-  B5; source lineage)
+  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3 and B5; source
+  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
+  grid geometry is source evidence only.
 preserved_exact_tokens:
 - NieR Mode
 - Adjust NieR look

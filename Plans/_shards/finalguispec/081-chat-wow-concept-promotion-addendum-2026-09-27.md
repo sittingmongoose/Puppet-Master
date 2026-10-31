@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40528-L40755
+Source lines: L40629-L40856
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -29,9 +29,9 @@ canonical_text: 'The assistant chat transcript renders in the Turn Stage present
   Additive Correction v4''s statements that Orbit and Step Rail stay exactly as specified and that nothing authorises
   a broad restyle. The narration tuck is a projection of the turn''s own progress summary into its card and does not
   violate the rule that cards do not float out of narrative position. The ten themes keep their tokens; family hues and
-  the accent budget are theme-token roles defined for all eight. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR
-  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Amended DL-260,
-  Jared 2026-10-31: only real product behavior remains an implementation requirement.'
+  the accent budget are theme-token roles defined for all ten variants (DL-257/Q22). Amended Q22, Jared 2026-10-30 (DL-257):
+  the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Promotes the rebuilt chat transcript and working activity presentation."
 split_recommended: false

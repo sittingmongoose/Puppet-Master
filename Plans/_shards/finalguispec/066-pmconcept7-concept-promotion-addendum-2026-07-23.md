@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33164-L34018
+Source lines: L33160-L34018
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -707,12 +707,16 @@ split_recommended: false
 depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
-- "Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets settle."
-- "The first frame of an ordinary open is the look stored for the Project the application opens on, in each of the eight family variants and in NieR Mode light and dark; no default look shows before it, and with NieR's boot log coming the page shows only the log's paper before the log (DL-153)."
-- "The pre-paint reads the Project's stored Settings and writes no theme anywhere: no global or cross-Project theme key exists (DL-153)."
-- "Fonts load non-blocking via preload then swap."
-- "Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets
+  settle.
+- The first frame of an ordinary open is the look stored for the Project the application opens on, in all ten built-in
+  variants across five families, including NieR Light and NieR Dark (DL-257/Q22); no default look shows before it, and
+  with NieR's boot log coming the page shows only the log's paper before the log (DL-153).
+- 'The pre-paint reads the Project''s stored Settings and writes no theme anywhere: no global or cross-Project theme
+  key exists (DL-153).'
+- Fonts load non-blocking via preload then swap.
+- Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

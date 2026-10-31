@@ -4628,22 +4628,22 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs
-  immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join,
-  indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in
-  every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
-  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control
-  never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings
-  copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes.
-  Naming and Review display the same selected mounted/network source, rather than an empty local-location field.
-  Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only
-  disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key);
-  put their information in the shared option tips. Keep functional sections: More about keeping versions contains
-  FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts
-  are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain; Puppet Master stores
-  no password. The SSH add-key password remains a separate one-use protected flow; never reuse its never-saved hint
-  for SMB. One component renders the option question affordance, its expanded note and joined tray in every family;
-  no screen appends a second tray, disclosure grammar, pointer engine or sibling-level follow-up. Source API C.cards
-  accepts under; source classes o55-under/o55-card-parent are presentation only.'
+  immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the
+  join, indentation and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage
+  under DL-260). The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring;
+  narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the
+  option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer
+  checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by
+  CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same
+  selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer
+  hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the
+  Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared
+  option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
+  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating
+  system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
+  protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question
+  affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer
+  engine or sibling-level follow-up. Source API/class names remain lineage only.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -4654,10 +4654,10 @@ depends_on:
 - DL-258
 unblocks: []
 acceptance_criteria:
-- All twelve joined-tray screens use one C.cards under owner; parent edges join with no gap, lower ring or corner
-  overlap in all ten looks.
-- A narrow parent note is the first line of the tray; keyboard arrows stay in their own list and question controls
-  do not overlap inputs.
+- 'DL-260: all twelve joined-tray screens use the one shared joined-choice owner; parent edges join with no gap, lower
+  ring or corner overlap in all ten looks.'
+- A narrow parent note is the first line of the tray; keyboard arrows stay in their own list and question controls do
+  not overlap inputs.
 - Functional sections and data remain; explanation-only duplicates use the shared tips.
 - No new setting, command, local action, persisted field or permission is created.
 validation_surfaces:
@@ -4677,11 +4677,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md Q7
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md QA round 2
 - Concepts/onboarding/opus-5.5/src/js/61-components.js at 7d586bad18
-preserved_exact_tokens:
-- C.cards
-- under
-- o55-under
-- o55-card-parent
+- 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
+  joined-choice tray; these source APIs/classes are not native product contracts.'
+preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.
 - Do not remove FileSafe/proxy selectors or identity/receipt data as if they were explanation-only tips.

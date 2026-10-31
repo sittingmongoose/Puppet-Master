@@ -126,12 +126,12 @@
       "id": "QA2-Q12",
       "change": "Resources immediately samples shared computer/services under every Project",
       "owner": "F3-664; SIR-054; DL-251",
-      "wiring": "UIW-045; WM-097",
-      "commands": "CS-105; UCC-209; cmd.work.open",
+      "wiring": "UIW-045; WM-097; pm7.work_panel_show; work.panel.resources",
+      "commands": "CS-106; UCC-210; cmd.agents_and_processes.show (entrance tab=resources); ui.work_panel.select_tab (in-panel value=resources)",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-078",
-      "companions": "QA2PresentationPolicy.resources; resource scope cases",
-      "state": "covered_by_current_contract"
+      "companions": "work_panel_show_request.tab; local_action_request select_tab; work.panel.resources; QA2PresentationPolicy.resources",
+      "state": "corrected_Astra_F1_exact_existing_routes"
     },
     {
       "id": "QA2-Q13",
@@ -213,18 +213,18 @@
     {
       "id": "QA2-Q22",
       "change": "NieR is fifth family, ten variants; retained Adjust; old override migrates",
-      "owner": "DL-257; F3-425; F3-598; SSYS-043",
+      "owner": "DL-257; F3-425; F3-598; SSYS-043; SSYS-010; F3-513; SSYS-026",
       "wiring": "UIW-015; shell.theme.family; onboarding.theme.family; tour.theme.family",
       "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply",
       "settings": "general.visual.theme; general.visual.nier-parts; general.visual.nier-background; retired general.visual.nier-mode",
       "dry": "DR-056",
-      "companions": "nier_theme_contract; Settings/onboarding/GUI schemas; 3 non_dispatch checkbox tombstones",
+      "companions": "nier_theme_contract; Settings/onboarding/GUI schemas; 3 non_dispatch checkbox tombstones; five-family/ten-variant acceptance and checkbox retirement reconciled",
       "state": "covered_by_current_contract"
     },
     {
       "id": "H2",
       "change": "Existing-work subchoices join Existing above Restore",
-      "owner": "PWIZ-024; DR-080",
+      "owner": "PWIZ-024; DR-080; F3-520",
       "wiring": "UIW-015; WM-041",
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
@@ -510,7 +510,7 @@
     {
       "id": "FF-20",
       "change": "M1a grouped New/Existing/Restore presentation preserves execution intents",
-      "owner": "PWIZ-024; PWIZ-025; SCS-011",
+      "owner": "PWIZ-024; PWIZ-025; SCS-011; F3-520",
       "wiring": "UIW-015; WM-041",
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
@@ -576,12 +576,12 @@
     {
       "id": "SCR-04",
       "change": "Native app built-in Tailscale; protected phases, approval and recovery; browser distinction",
-      "owner": "PWIZ-025; RAS-015",
+      "owner": "PWIZ-025; RAS-015; SIR-032; Crosswalk.md connector-owner row",
       "wiring": "catalog.remote_access_tailscale_setup_start; UIW-017",
       "commands": "cmd.remote_access.tailscale.setup.start",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness; shared auth Server/native owner policy (native uses initiating_active_client_only)",
       "state": "covered_by_current_contract"
     },
     {
@@ -619,14 +619,14 @@
     },
     {
       "id": "SCR-08",
-      "change": "Proxy hosting keeps managed/export/existing validation distinct",
-      "owner": "RAS-005; PWIZ-025",
-      "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "change": "srv C1 / CERT-1: configuration-file/export or existing-proxy checks only; managed hosting removed, proxy_tls null",
+      "owner": "RAS-005; PWIZ-025; CS-069; UCC-106; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_generate; catalog.remote_access_proxy_export; catalog.remote_access_proxy_test; catalog.remote_access_route_test",
+      "commands": "cmd.remote_access.proxy.generate; cmd.remote_access.proxy.export; cmd.remote_access.proxy.test; cmd.remote_access.route.test (existing owner continuations; no installation/hosting action)",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
-      "state": "covered_by_current_contract"
+      "companions": "onboarding_setup_plan.proxy_hosting generate_only|existing_proxy; proxy_tls null; PostcommitRemoteSetupPolicy; C1 draft positive/negative cases",
+      "state": "aligned_latest_srv_C1"
     },
     {
       "id": "SCR-09",
@@ -839,14 +839,14 @@
     },
     {
       "id": "P10",
-      "change": "Key setup uses exact official acquisition source/purpose",
-      "owner": "MA-012; MA-040; MA-043; CBP-028",
-      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
-      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "change": "Every key row explains key versus password and opens its exact official key console/guide",
+      "owner": "MA-040; MACS-003; MACS-004",
+      "wiring": "catalog.auth_profile_open_official_page; MACS-003; MACS-004",
+      "commands": "cmd.auth_profile.open_official_page (existing exact Client-bound official-page handoff)",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
-      "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
-      "state": "covered_by_current_contract"
+      "dry": "DR-005; DR-037",
+      "companions": "x-provider-key-acquisition; AuthProfileCommandRequest/Result unchanged; QA2CoverageAuditPolicy.key_acquisition",
+      "state": "corrected_Astra_F2_exact_official_key_acquisition"
     },
     {
       "id": "P11",
@@ -1192,12 +1192,12 @@
     {
       "id": "ONB-D7",
       "change": "Native apps own built-in connection; browser has none; Server/Client contexts remain isolated",
-      "owner": "RAS-015; PWIZ-025; SP-254",
+      "owner": "RAS-015; PWIZ-025; SP-254; SIR-032; Crosswalk.md connector-owner row",
       "wiring": "UIW-017; UCC-152; catalog.remote_access_tailscale_setup_start",
       "commands": "cmd.remote_access.tailscale.setup.start; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives; shared auth Server/native owner policy (native uses initiating_active_client_only)",
       "state": "covered_by_current_contract"
     },
     {
@@ -1312,7 +1312,7 @@
     },
     {
       "id": "SRV-CERT",
-      "change": "No PM certificate administration/gate or certificate-validity Ready claim",
+      "change": "srv C1 / CERT-1: PM only writes proxy configuration; no certificate administration/gate or validity Ready claim",
       "owner": "RAS-005; PWIZ-025",
       "wiring": "catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
       "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; no certificate selector admitted",
@@ -1323,18 +1323,18 @@
     },
     {
       "id": "SRV-CLOUD",
-      "change": "Cloud first claim uses protected console/local-bootstrap one-time setup code",
+      "change": "srv C2 / CLOUD-1: protected console setup-code initial claim, no address/discovery or public unclaimed setup",
       "owner": "RAS-007; SRV-005; SRV-007; PWIZ-025; DL-259",
       "wiring": "catalog.server_claim; catalog.server_bootstrap_start; UIW-015; WM-041",
       "commands": "cmd.server.claim; cmd.server.bootstrap.start; CS-074; UCC-152",
       "settings": "none needed: bootstrap path is not a preference",
       "dry": "DR-005",
-      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup",
+      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup; PostcommitRemoteSetupPolicy cloud address/discovery false",
       "state": "covered_by_Jared_CLOUD-1"
     },
     {
       "id": "SRV-DESKTOP-RESTORE",
-      "change": "Protected native local first claim without typed code, then bootstrap/maintenance before full restore",
+      "change": "srv C3 / DESKTOP-RESTORE-1: protected native first local claim without code, then bootstrap/maintenance before full restore",
       "owner": "PWIZ-025; SRV-013",
       "wiring": "catalog.server_claim; catalog.server_bootstrap_start; catalog.restore_server_full; UIW-015; WM-041",
       "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; CS-074; UCC-152",
@@ -1345,7 +1345,7 @@
     },
     {
       "id": "SRV-CODE",
-      "change": "Owner issues/checks opaque Remote Link code; protocol verified immediately before build",
+      "change": "srv C4 / REMOTE-CODE-1: owner issues/checks opaque code; protocol decided immediately before build",
       "owner": "RAS-014",
       "wiring": "UIW-015; catalog.remote_access_remote_link_open",
       "commands": "cmd.remote_access.remote_link.open consumes owner-resolved address; no resolver command invented",
@@ -1386,6 +1386,83 @@
       "dry": "DR-005",
       "companions": "PostcommitRemoteSetupPolicy; Later/Creating negatives",
       "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-M1",
+      "change": "Auto Theme word follows the current family and effective OS scheme while mode remains Auto",
+      "owner": "SSYS-010; SSYS-009; DL-259",
+      "wiring": "shell.theme.mode; shell.theme.family; catalog.settings_transaction_preview; catalog.settings_transaction_apply",
+      "commands": "cmd.settings.transaction.preview; cmd.settings.transaction.apply (existing Project writer and refusal/currentness fences)",
+      "settings": "general.visual.theme; general.visual.theme-mode (existing rows, clarified Auto help)",
+      "dry": "DR-075; DR-005",
+      "companions": "QA2CoverageAuditPolicy.theme_auto; existing bindings/transaction acceptance; no new setting",
+      "state": "covered_Astra_M1"
+    },
+    {
+      "id": "QA2-M2",
+      "change": "Technical hover candidacy excludes internal container/render/scroll keys; explicit declarations remain eligible",
+      "owner": "F3-523; DL-259",
+      "wiring": "none needed: same shared hover controller and census, no owner route",
+      "commands": "none needed: tooltip candidacy is presentation only",
+      "settings": "general.interaction.show-tooltips (existing gate; no new row)",
+      "dry": "DR-043; DR-076",
+      "companions": "QA2CoverageAuditPolicy.technical_hover; source attributes remain source_lineage",
+      "state": "covered_Astra_M2"
+    },
+    {
+      "id": "QA2-M3",
+      "change": "System status and Stop/Quit Escape work without focus entering; innermost overlay closes first",
+      "owner": "F3-665; CS-106; DL-259",
+      "wiring": "system_status.close; work.quit.cancel; UIW-045; WM-097",
+      "commands": "ui.system_status.close; ui.work_quit.cancel (existing local actions; no owner dispatch)",
+      "settings": "none needed: fixed keyboard/focus behavior",
+      "dry": "DR-067",
+      "companions": "QA2CoverageAuditPolicy.inner_escape; existing local_action_request and bindings; owner rule was already explicit",
+      "state": "covered_Astra_M3"
+    },
+    {
+      "id": "QA2-M4",
+      "change": "Welcome offers five equal look choices with accessible labels, reachable tips/Adjust and bounded short/narrow fit",
+      "owner": "F3-520; F3-598; DL-257; DL-259",
+      "wiring": "onboarding.theme.family; UIW-015; WM-041",
+      "commands": "ui.onboarding.choose_look (existing local preview and commit boundary)",
+      "settings": "general.visual.theme; general.visual.theme-mode (existing pair; no new row)",
+      "dry": "DR-079; DR-076",
+      "companions": "QA2CoverageAuditPolicy.welcome_looks; existing closed look_choice; CSS mechanics remain lineage",
+      "state": "covered_Astra_M4"
+    },
+    {
+      "id": "QA2-M5",
+      "change": "Plain English/Expert option notes use settled stage bounds, scroll long text internally and have no separate tail",
+      "owner": "F3-663; PWIZ-022; DL-259",
+      "wiring": "none needed: existing shared option-note owner and local Details action",
+      "commands": "ui.onboarding.open_details (existing toggle_choice_explanation intent; no new action)",
+      "settings": "general.interaction.mode (existing tips/help choice)",
+      "dry": "DR-080; DR-076",
+      "companions": "QA2CoverageAuditPolicy.stage_note; onboarding_motion.choice_help target_binding; no DOM id pinned",
+      "state": "covered_Astra_M5"
+    },
+    {
+      "id": "QA2-M6",
+      "change": "Ordinary resting stage props visibly clear floor and edge; Creating blocks intentionally rest on floor",
+      "owner": "F3-663; DL-259",
+      "wiring": "none needed: shared stage layout invariant",
+      "commands": "none needed: no semantic action or owner phase",
+      "settings": "none needed: fixed presentation geometry",
+      "dry": "DR-076",
+      "companions": "QA2CoverageAuditPolicy.resting_props; coordinate-specific six-unit source margin is not pinned",
+      "state": "covered_Astra_M6"
+    },
+    {
+      "id": "QA2-M7",
+      "change": "No account yet retains its chosen provider category and puts those providers first on return",
+      "owner": "PWIZ-021; PWIZ-022; DL-259",
+      "wiring": "none needed: existing reversible local AI-navigation context",
+      "commands": "none needed: category return changes no provider/account owner state",
+      "settings": "none needed: local navigation/draft state, not a persisted preference",
+      "dry": "DR-005; DR-037",
+      "companions": "x-product-rulings.provider_category_return; QA2CoverageAuditPolicy.provider_category_return",
+      "state": "covered_Astra_M7"
     }
   ],
   "sources": [
@@ -1411,8 +1488,8 @@
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
-      "sha256": "bdb248be8b5f3b8e10d5f88ce4b253d9271b17daac03add652f91766518a920a",
-      "state": "final report read in full and minimum rules applied; four explicit owner questions"
+      "sha256": "2883ce8c1dbf81a41d3412cdf5de4f97fb97fb8960229961f313100c0f6647f5",
+      "state": "latest C1–C4 owner-answer report read in full; C1 draft/hosting aligned; C2 code-only UI aligned; C3/C4 accepted owner rules retained"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md",
@@ -1448,6 +1525,11 @@
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/title/REPORT.md",
       "sha256": "30056426caad0de4c2ef8ed51c634a9fc4d1ffb18b746f275e09fa1bcb0a5517",
       "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md",
+      "sha256": "81349f1031004a812e2e70c07a6897331b4ab5e94fc89a09b2262e8f85515a91",
+      "state": "all 13 findings confirmed and corrected; independent re-check follows"
     }
   ],
   "unit_id_check": "pass",
@@ -1467,7 +1549,7 @@
   "prototype_cleanup": {
     "decision": "DL-260",
     "demo_only_rows_added": 0,
-    "real_product_rows_retained": 126,
+    "real_product_rows_retained": 133,
     "retired_units_used_as_active_coverage": false
   },
   "fields_final": {
@@ -1517,5 +1599,52 @@
     "source_sha256": "ddd22aeb386d3df6d7db89e643c787954d4d105e1e98fb96e82b45697dd40f73",
     "pre_build_detail": "REMOTE-CODE-1",
     "new_command_or_payload_field": false
+  },
+  "coverage_audit_resolution": {
+    "base": "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+    "audit_canon": "b0c1a23758",
+    "confirmed": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "F1",
+      "F2",
+      "C1",
+      "C2",
+      "C3",
+      "D1"
+    ],
+    "new_product_rows": 7,
+    "source_API_names": "source_lineage_only",
+    "owner_questions_remaining": 0,
+    "independent_recheck": "requested_by_lead_after_push"
+  },
+  "srv_C1_C4": {
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+    "row_map": {
+      "C1": [
+        "SCR-08",
+        "SRV-CERT"
+      ],
+      "C2": [
+        "SRV-CLOUD"
+      ],
+      "C3": [
+        "SRV-DESKTOP-RESTORE"
+      ],
+      "C4": [
+        "SRV-CODE"
+      ]
+    },
+    "C1_proxy_hosting": [
+      "generate_only",
+      "existing_proxy"
+    ],
+    "C1_proxy_tls": null,
+    "demo_mechanics_added": false
   }
 }

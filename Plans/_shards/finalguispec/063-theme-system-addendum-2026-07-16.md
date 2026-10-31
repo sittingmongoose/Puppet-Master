@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30421-L31534
+Source lines: L30421-L31530
 
-Source SHA256: `43fcadcf86fb0c1b83c8ed2c749c7340ab6c6a25c6e3b7c9a6b793c27db3e967`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -19,25 +19,23 @@ plan_unit_id: F3-425
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The built-in theme set is exactly ten variants across five families, ordered Basic, Friendly, Glass, Retro and
-  NieR: basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark,
-  retro-light, nier-dark and nier-light. Basic Dark is the factory seed only for an untouched first open or a
-  genuinely fresh Project without a committed snapshot. Existing explicit saved Project selections and detached
-  copied snapshots survive startup and Project switches. Light, Dark and Auto remain the presentation-mode
-  dimension; Auto follows OS appearance live, including for family nier. The existing Project-scoped theme:v1
-  carries family, presentation mode and resolved variant; no new identity key is added. general.visual.nier-mode
-  is a retired migration-only key, removed from the active inventory. On load, stored true selects the NieR
-  theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through the OS), preserving parts
-  and background; false or absent preserves the existing family/mode. The old boolean is then cleared, and
-  repeating migration has no further effect. No second underlying family is saved to restore later. Rendering
-  reuses Basic CSS via data-theme='basic-<scheme>' plus html[data-o55-nier='on']; that marker is derived only
-  from family nier, never an independent override. PMLogo.look() returns nier-<scheme>. NieR uses its existing
-  precomputed palette and local fonts; its accent/font ownership while selected is unchanged, and stored general
-  appearance overrides resume where applicable after another family is selected. Amended Q22, Jared 2026-10-30
-  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
-  Adjust controls. Retained historical/source tokens (not active overrides): prefers-color-scheme, Light, Dark,
-  Auto.
+canonical_text: 'The built-in theme set is exactly ten variants across five families, ordered Basic, Friendly, Glass,
+  Retro and NieR: basic-dark, basic-light, friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light,
+  nier-dark and nier-light. Basic Dark is the factory seed only for an untouched first open or a genuinely fresh Project
+  without a committed snapshot. Existing explicit saved Project selections and detached copied snapshots survive startup
+  and Project switches. Light, Dark and Auto remain the presentation-mode dimension; Auto follows OS appearance live,
+  including for family nier. The existing Project-scoped theme:v1 carries family, presentation mode and resolved variant;
+  no new identity key is added. general.visual.nier-mode is a retired migration-only key, removed from the active inventory.
+  On load, stored true selects the NieR theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through
+  the OS), preserving parts and background; false or absent preserves the existing family/mode. The old boolean is then
+  cleared, and repeating migration has no further effect. No second underlying family is saved to restore later. The
+  selected NieR family resolves to nier-light or nier-dark and one corresponding precomputed palette; the shared brand
+  kit consumes that resolved family/scheme. Implementation paint markers are source lineage, never an independent appearance
+  state (DL-257/Q22; DL-260). NieR uses its existing precomputed palette and local fonts; its accent/font ownership while
+  selected is unchanged, and stored general appearance overrides resume where applicable after another family is selected.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
+  migration and retained Adjust controls. Retained historical/source tokens (not active overrides): prefers-color-scheme,
+  Light, Dark, Auto.'
 gui_related: true
 gui_classification_reason: This unit defines the user-visible built-in theme set and the default theme selection.
 split_recommended: false
@@ -57,16 +55,19 @@ context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
 node_compile_hint:
-  mode: eight_built_in_themes_and_basic_dark_factory_default
+  mode: ten_built_in_variants_five_families_basic_dark_factory_default
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:166"
-- "Plans/FinalGUISpec.md:177"
-- "Plans/FinalGUISpec.md:964"
-- "Plans/FinalGUISpec.md:1035"
-- "Plans/FinalGUISpec.md:2632"
-- "Plans/FinalGUISpec.md:7441"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:166
+- Plans/FinalGUISpec.md:177
+- Plans/FinalGUISpec.md:964
+- Plans/FinalGUISpec.md:1035
+- Plans/FinalGUISpec.md:2632
+- Plans/FinalGUISpec.md:7441
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- 'DL-257/Q22 paint implementation lineage only: data-theme=''basic-<scheme>'' plus html[data-o55-nier=''on''] derives
+  from family nier; PMLogo.look() returns nier-<scheme>. These CSS/JavaScript names are not product identity, storage
+  or native API contracts (DL-260).'
 preserved_exact_tokens:
 - "friendly-dark"
 - "friendly-light"
@@ -147,17 +148,12 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "The concept's runtime color-mix() and calc()-alpha token derivation is demo technique only; canon carries precomputed per-variant values."
 owner_boundary_notes:
-- "The section 6.2 table remains the Retro/Basic variant matrix; the Friendly and Glass variant tables and the full eight-variant spec data live in this addendum."
+- "The section 6.2 table remains the Retro/Basic variant matrix; the Friendly and Glass variant tables and the original eight-variant spec data live in this addendum, extended to five families and ten variants by DL-257/Q22."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-Amended 2026-09-28 (user-approved inventory wave, see F3-441): NieR Mode adds no table to the eight. Its light and dark
-tables are literal precomputed constants, transcribed from the NieR: Automata theme file named in
-`Plans/Settings_System.md` section 4.4, and are painted over the Basic variant while the switch is on; the eight
-built-in variants of F3-425 and their tables are unchanged, and no NieR value is derived at runtime. A NieR preview
-drawn while the switch is off, such as the onboarding look choice's NieR thumbnail, paints the same constants inside
-its own bounds and changes nothing else (DL-152, F3-598).
+Amended Q22, Jared 2026-10-30 (DL-257; superseding the 2026-09-28 override model): F3-425 owns ten variants in five families. NieR Light and NieR Dark retain their literal precomputed constants from the source theme file named in `Plans/Settings_System.md` section 4.4; no NieR value is derived at runtime. The shared brand and appearance owners consume the selected NieR family and resolved scheme. A chooser thumbnail paints those same constants within its own bounds and changes no selected or stored theme (F3-598). Source CSS layering is lineage only (DL-260).
 
 Amended 2026-10-08 (DL-151, the 5.6 Pro chat tweaks): the retro-dark and retro-light tables take PMConcept7's final
 retro values from `Concepts/PMConcept7.html`, as measured in

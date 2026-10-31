@@ -8412,7 +8412,8 @@
         "Read state.commands.auth_profile_open_official_page.availability and state.commands.auth_profile_open_official_page.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
-        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup."
+        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup.",
+        "DL-259 P10: Get a key opens the exact selected provider/account route’s owner-verified official key console/guide under MACS-003; key is not password. Preserve initiating active Client/protected official-source handoff and exact return; returning never proves a created key, sign-in or Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_open_official_page.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8467,7 +8468,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.open_official_page",
       "ui_element_id": "catalog.auth_profile_open_official_page",
-      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route"
+      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route; provider API-key row > Get a key (Onboarding and Settings)"
     },
     "catalog.auth_profile_rename": {
       "acceptance_checks": [
@@ -46851,7 +46852,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_export.availability and state.commands.remote_access_proxy_export.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_export.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -46910,7 +46912,8 @@
         "Read state.commands.remote_access_proxy_generate.availability and state.commands.remote_access_proxy_generate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
-        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent."
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_generate.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47027,7 +47030,8 @@
         "Read state.commands.remote_access_proxy_preview.availability and state.commands.remote_access_proxy_preview.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
-        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent."
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_preview.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47201,7 +47205,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_test.availability and state.commands.remote_access_proxy_test.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1 / srv C1: onboarding existing_proxy checks the exact existing route and live connection, with no generated file or PM hosting. generate_only generates/exports configuration for the person to install before these checks. No certificate selection/validation gate or certificate-validity assurance is admitted; actual secure reachability, public consent and Server identity/pairing remain required."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47955,7 +47960,8 @@
         "Validate the exact request/result pair Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and reject unknown, stale, conflicting, or authority-widening fields.",
         "Read state.commands.remote_access_route_test.availability and state.commands.remote_access_route_test.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
-        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
+        "DL-259 CERT-1 / srv C1: onboarding existing_proxy checks the exact existing route and live connection, with no generated file or PM hosting. generate_only generates/exports configuration for the person to install before these checks. No certificate selection/validation gate or certificate-validity assurance is admitted; actual secure reachability, public consent and Server identity/pairing remain required."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_route_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -56021,7 +56027,8 @@
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
         "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
         "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key.",
-        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event."
+        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event.",
+        "DL-259 QA2 M1: selecting Auto atomically writes mode Auto and the current family/effective OS scheme. OS changes and Project reopen reconcile only Theme while retaining Auto via the same Project Settings writer, current revision and read-only/refusal gates; no rendering-side or shadow-store write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56094,7 +56101,8 @@
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
         "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
         "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key.",
-        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event."
+        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event.",
+        "DL-259 QA2 M1: selecting Auto atomically writes mode Auto and the current family/effective OS scheme. OS changes and Project reopen reconcile only Theme while retaining Auto via the same Project Settings writer, current revision and read-only/refusal gates; no rendering-side or shadow-store write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -76181,7 +76189,8 @@
         "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
         "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
         "Select agents/processes/resources in the one shared panel; repeat activation of the already-open status item closes it.",
-        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added."
+        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added.",
+        "DL-259 QA2 Q12: opening Resources uses tab=resources through this existing show request; in-panel switching is ui.work_panel.select_tab, not another command. Shared computer/services remain read-only and owner-scoped under F3-664/SIR-054."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
       "state_selector": "state.pm7.work_panel_show.availability",

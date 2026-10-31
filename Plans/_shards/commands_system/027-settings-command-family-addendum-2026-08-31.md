@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4989-L5124
+Source lines: L4989-L5135
 
-Source SHA256: `6338c9e86ca474a2f54e81043d69f41dc6cc19bbb114428d022c8efd0e6ce84a`
+Source SHA256: `e5441e9674a932b2ef647a474c816f795128574b7e2ee9e31666e8f08de3ae4c`
 
 ---
 
@@ -48,31 +48,35 @@ canonical_text: 'Exactly five canonical cmd.settings commands are centrally regi
   owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
   setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
   Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
-  proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only and existing-proxy
-  validation are separate owner continuations; generating a file does not prove installation, public consent, DNS/TLS,
-  endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and
-  maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never
-  emits a generated-configuration record; neither branch silently substitutes a family. D7 B supersedes the former no-per-Client-node
-  restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and
-  sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned
-  Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native
-  Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and
-  Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
-  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
-  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
-  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
-  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
-  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. DL-259
-  srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual prerequisites.
-  It does not run optional remote-access configuration. After that owner settlement, a separate postcommit remote-setup
-  view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free Models
-  continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing
-  proxy steps use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
-  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects or invent
-  readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background rules,
-  and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply
-  this exit without a new mutation command.'
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
+  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
+  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
+  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
+  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
+  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
+  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
+  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore
+  result and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
+  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
+  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
+  domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
+  it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
+  any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
+  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
@@ -101,31 +105,36 @@ acceptance_criteria:
   owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
   setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
   Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
-  proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only and existing-proxy
-  validation are separate owner continuations; generating a file does not prove installation, public consent, DNS/TLS,
-  endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and
-  maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never
-  emits a generated-configuration record; neither branch silently substitutes a family. D7 B supersedes the former no-per-Client-node
-  restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and
-  sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned
-  Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native
-  Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and
-  Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
-  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
-  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
-  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
-  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
-  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged.'
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
+  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
+  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
+  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
+  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
+  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
+  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
+  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged.'
 - 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
   Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
-  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
-  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
-  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
-  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
-  semantics supply this exit without a new mutation command.'
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high
@@ -133,9 +142,11 @@ context_scope: settings_command_family
 implementation_surfaces: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: settings_command_family_registration, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Settings_System.md#SSYS-018
-  - Plans/Settings_System.md#SSYS-019
-  - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+- Plans/Settings_System.md#SSYS-018
+- Plans/Settings_System.md#SSYS-019
+- source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
 preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
 negative_constraints:
   - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.

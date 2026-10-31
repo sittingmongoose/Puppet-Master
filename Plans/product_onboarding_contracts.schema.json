@@ -1149,7 +1149,6 @@
           "oneOf": [
             {
               "enum": [
-                "generate_for_server",
                 "generate_only",
                 "existing_proxy"
               ]
@@ -1157,23 +1156,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "DL-259 CERT-1 / srv C1: write/export the file for the person to install, or check their existing proxy. PM-managed proxy hosting is removed."
         },
         "proxy_hostname": {
           "$ref": "#/$defs/bounded_nonsecret_string"
         },
         "proxy_tls": {
-          "oneOf": [
-            {
-              "enum": [
-                "lets_encrypt",
-                "existing_certificate"
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "null",
+          "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
         },
         "source_more": {
           "type": "boolean"
@@ -2162,7 +2153,6 @@
             "properties": {
               "proxy_hosting": {
                 "enum": [
-                  "generate_for_server",
                   "generate_only"
                 ]
               }
@@ -2203,6 +2193,32 @@
               "remote_endpoint": {
                 "type": "string",
                 "pattern": "\\S"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "journey": {
+                "const": "new_or_local"
+              },
+              "remote_mode": {
+                "const": "reverse_proxy"
+              }
+            },
+            "required": [
+              "journey",
+              "remote_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "proxy_hosting": {
+                "enum": [
+                  "generate_only",
+                  "existing_proxy"
+                ]
               }
             }
           }
@@ -10209,7 +10225,24 @@
       "DESKTOP-RESTORE-1": "protected_native_local_handoff_no_typed_code",
       "REMOTE-CODE-1": "owner_protocol_verified_immediately_before_build"
     },
-    "pre_build_verification_ref": "Plans/multi_account_contracts.schema.json#/x-provider-entry-amendments/pre_build_verification"
+    "pre_build_verification_ref": "Plans/multi_account_contracts.schema.json#/x-provider-entry-amendments/pre_build_verification",
+    "proxy_hosting": {
+      "proxy_hosting_choices": [
+        "generate_only",
+        "existing_proxy"
+      ],
+      "proxy_tls": null,
+      "PM_installs_or_hosts_proxy": false,
+      "generated_file_requires_person_install": true,
+      "existing_proxy_generates_configuration": false
+    },
+    "provider_category_return": {
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
+      "retain_chosen_category": true,
+      "chosen_category_providers_first": true,
+      "scope": "local_navigation_draft",
+      "new_persisted_preference": false
+    }
   },
   "x-postcommit-remote-setup-policy": {
     "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
@@ -10245,6 +10278,16 @@
       "identity_fingerprint"
     ],
     "public_unclaimed_setup": false,
-    "code_protocol_verification": "immediately_before_product_build"
+    "code_protocol_verification": "immediately_before_product_build",
+    "proxy_hosting_choices": [
+      "generate_only",
+      "existing_proxy"
+    ],
+    "proxy_tls": null,
+    "PM_installs_or_hosts_proxy": false,
+    "generated_file_requires_person_install": true,
+    "existing_proxy_generates_configuration": false,
+    "cloud_claim_address_input": false,
+    "cloud_unclaimed_network_discovery": false
   }
 }

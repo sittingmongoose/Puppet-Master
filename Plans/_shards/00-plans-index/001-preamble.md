@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L31
+Source lines: L1-L34
 
-Source SHA256: `4171dafb7ed54a4548a09391238f3859a157613046211eb87a1f466f4c8ada3c`
+Source SHA256: `f24741b1ec3a3ed72ac6bbc0122d561b0195f07d95646c1e4044a7a9204ec25d`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-259 coverage-audit amendment resolves grouped First Project choices, shared D7 Server/native-Client boundaries, Auto Theme-word synchronization, exact key-acquisition/category return, equal five-family look choices and bounded note/prop geometry; DL-257 acceptance now consistently requires five families/ten variants. DL-260 moves concept API spellings into source lineage while retaining shared product owners. Server C1 offers configuration-file/export or existing-proxy checks only, with proxy_tls null; C2–C4 retain the accepted protected claim and pre-build decisions.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Decision_Log.md#DL-260, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/Shared_Integration_Runtime.md#SIR-032
 
 - 2026-10-31: DL-259 applies Jared’s CERT-1, CLOUD-1, DESKTOP-RESTORE-1 and REMOTE-CODE-1 answers. PM generates proxy configuration while the person handles certificates; no certificate gate or validity assurance. Cloud initial claim uses a protected one-time console-code handoff; native desktop local claim uses protected direct handoff without a typed code. Existing claim tuple/permission/generation fences and separate bootstrap/full restore remain. Remote Link code protocol joins D4’s pre-build verification list, with no grammar pinned.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Remote_Access_System.md#RAS-005, ContractName:Plans/Server_System.md#SRV-007, ContractName:Plans/Planning_Wizard.md#PWIZ-025

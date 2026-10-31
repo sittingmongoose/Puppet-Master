@@ -141,12 +141,12 @@
         },
         "choice_help": {
           "component": "shared_anchored_explainer",
-          "target_id": "pm7ob-explainer",
           "max_visible": 1,
           "control_relation": "aria-controls",
           "active_description_relation": "aria-describedby",
           "replaces_previous": true,
-          "expands_peer_sections": false
+          "expands_peer_sections": false,
+          "target_binding": "single_current_option_note"
         },
         "review_apply": {
           "review_stage": "review_setup_plan",
@@ -1406,8 +1406,8 @@
     },
     {
       "case_id": "onboarding_choice_help_hidden_copy_target",
-      "json_pointer": "/contracts/1/choice_help/target_id",
-      "replacement": "pm7ob-help-forgejo",
+      "json_pointer": "/contracts/1/choice_help/target_binding",
+      "replacement": "separate_hidden_copy_per_option",
       "expected": "rejected"
     },
     {

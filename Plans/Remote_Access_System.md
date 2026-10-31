@@ -232,19 +232,23 @@ canonical_text: 'Custom Domain is a first-class route with a dedicated-hostname 
   not solve CGNAT. Existing VPN/private and manual HTTPS/WSS routes are identity/protocol/API/WebSocket/stream/file-transfer
   tested and paired, while Puppet Master does not install or administer the VPN. DL-259, Jared 2026-10-31: D3 A: generated
   proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can
-  be selected as an existing proxy but never sent to a generation/install/export operation. New-Server managed setup,
-  export-only and existing-proxy validation are separate owner continuations; generating a file does not prove installation,
-  public consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly
-  caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record
-  nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes a family.
-  DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates and
-  signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits no certificate-profile
-  field or selector command. No certificate selection/validation is a prerequisite to configuration generation, route
-  activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready reports the actual
-  PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity and pairing/auth,
-  and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that a certificate is
-  valid. Existing secure-transport, public-exposure consent, identity and reachability requirements remain; missing or
-  failed actual route checks cannot be called successful.'
+  be selected as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared
+  2026-10-31: onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX
+  or Traefik configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection
+  checks; Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
+  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
 gui_related: true
 gui_classification_reason: Proxy preview/generation/export, external origin, trusted proxies, tests, warnings, and manual endpoint actions are visible workflows.
 depends_on: [RAS-002, RAS-007]
@@ -255,11 +259,15 @@ acceptance_criteria:
 - Manual or VPN endpoints cannot activate until Server identity and pairing are verified.
 - 'DL-259, Jared 2026-10-31: D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default.
   Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but never sent to a generation/install/export
-  operation. New-Server managed setup, export-only and existing-proxy validation are separate owner continuations; generating
-  a file does not prove installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation,
-  onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
-  existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
-  silently substitutes a family.'
+  operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make the settings file or I have one already.
+  The first generates/exports Caddy, NGINX or Traefik configuration for the person to add on their own system before
+  the owner’s DNS, reachability and live-connection checks; Caddy is the default. The second only checks the existing
+  proxy route and live connection, with nothing generated. Set it up for me is removed: Puppet Master does not install
+  or host the proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy for this new-Server proxy
+  branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves neither installation nor
+  consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind is exactly caddy, nginx
+  or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager
+  but never emits a generated-configuration record; neither branch silently substitutes a family.'
 - 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
   and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
   no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
@@ -278,6 +286,8 @@ source_lineage:
 - source_ref:normalized-register:server-first-2026-08-31:R08-R10
 - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
 preserved_exact_tokens: [Custom Domain, NGINX, Traefik, dedicated hostname, trusted proxy CIDRs, CGNAT, HTTPS, WSS]
 negative_constraints: [Do not promise arbitrary subpath hosting., Do not trust forwarded headers from unknown peers., Do not administer a user VPN.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Containers_Registry_and_Unraid.md]
@@ -345,7 +355,10 @@ canonical_text: 'Every public route enforces Puppet Master auth and authorizatio
   tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are not proof.
   Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public unclaimed
   setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
-  remains separate after successful claim.'
+  remains separate after successful claim. DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud
+  computer through the provider-console/local-bootstrap one-time setup-code handoff. That initial claim route asks for
+  the code, not a Server address, and does not discover unclaimed cloud computers over the network. The Server owner’s
+  protected authorization and existing exact proof tuple still gate claim; no public unclaimed setup is exposed.'
 gui_related: true
 gui_classification_reason: Security warnings, callback continuation, human-action-required state, version mismatch, and re-pairing are user-visible.
 depends_on: [RAS-001, SRV-004]
@@ -365,6 +378,10 @@ acceptance_criteria:
   not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public
   unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
   remains separate after successful claim.'
+- 'DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the provider-console/local-bootstrap
+  one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
+  unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
+  still gate claim; no public unclaimed setup is exposed.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, Plans/protected_auth_browser_contract_fixtures.json, future callback tunnel tests]
 risk_class: public_auth_callback_or_protected_session_bypass
 reasoning_tier: high
