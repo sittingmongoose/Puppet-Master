@@ -57,6 +57,18 @@
     if (!req || !OR() || !OR().take || !OR().adopt) return { ok: false, reason: 'host_unavailable' };
     return OR().adopt(req, OR().take(req.id), curGen != null ? { generation: curGen } : {});
   };
+  /* The claim chain belongs to the computer it was started for (sv.chainFor). Choosing another kind of computer after
+     Back is another Server: what was started or adopted for the old one ends here (its operations are cancelled, its
+     results are not adopted for the new one, and a Server set up before is no longer the one this draft names). The
+     same fence every completion below passes (SCR-01's class, the pm7-srv sweep). */
+  const chainHere = (S, id) => S.sess.server.chainFor === (id || unclaimed(S).id);
+  function retarget(S) {
+    const sv = S.sess.server, old = sv.chainFor; if (!old) return;
+    ['claim:', 'bootstrap:', 'selfpair:', 'selfapprove:'].forEach((k) => { O55.owners.cancelOp(k + old); F.reset(S, k + old); });
+    setupCodes.delete(old); if (EPH()) EPH().clearWords('self:' + old);
+    Object.assign(sv, { chainFor: null, confirmed: false, orClaimReq: null, orClaimOk: false, orClaimErr: null, orBootReq: null, orBootOk: false, orBootErr: null, orRunReq: null, orRunOk: false, orRunErr: null, selfRun: null, selfConfirmed: false, orApproveReq: null, orApproveErr: null });
+    if (sv.claimed) { Object.assign(sv, { claimed: false, id: null, displayName: null, selfTrustId: null }); O55.draft.set(md(S), { server_ref: '', server_trust_confirmed: false }); }
+  }
   const pendingCopy = (reason) => {
     if (reason === 'host_unavailable' || reason === 'pending_no_result' || reason === 'fixture_not_injected') return T('server.confirm.pendingHost');
     if (reason === 'stale_generation' || reason === 'stale_nonce') return T('server.ready.staleAdopt');
@@ -85,7 +97,7 @@
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
-      kind(S, v, el) { const sv = S.sess.server; if (sv.kind !== v) { sv.target = null; sv.manual = v === 'cloud'; sv.addr = ''; } sv.kind = v; sv.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
+      kind(S, v, el) { const sv = S.sess.server; if (sv.kind !== v) { sv.target = null; sv.manual = v === 'cloud'; sv.addr = ''; retarget(S); } sv.kind = v; sv.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
       next(S) { const sv = S.sess.server; if (!sv.kind) { sv.kind = 'nas'; sv.platform = 'truenas'; } if (sv.kind === 'cloud') sv.manual = true; S.save(); O55.ui.go('s-wait'); }
     }
   });
@@ -148,6 +160,7 @@
      failed, refused, stale, or wrong-target result keeps setup pending with retry and never advances. */
   function adoptClaim(S) {
     const sv = S.sess.server, u = unclaimed(S);
+    if (!chainHere(S)) return;
     const v = tryAdopt(sv.orClaimReq);
     if (!v.ok) { sv.orClaimErr = v.reason; S.save(); O55.ui.refresh(); adoptRefused(v.reason); return; }
     sv.orClaimOk = true; sv.orClaimErr = null;
@@ -158,12 +171,13 @@
     F.reset(S, 'bootstrap:' + u.id);
     F.op(S, 'bootstrap:' + u.id, 'cmd.server.bootstrap.start', [{ key: 'roots', ms: 800 }, { key: 'baseline', ms: 700 }, { key: 'ready', ms: 500 }], {
       payload: { server: u.id, name, execution_form: form }, sound: ADOPT_SOUND,
-      onDone: () => { adoptBoot(S); }
+      onDone: () => { if (chainHere(S, u.id)) adoptBoot(S); }
     });
     O55.ui.refresh();
   }
   function adoptBoot(S) {
     const sv = S.sess.server, u = unclaimed(S);
+    if (!chainHere(S)) return;
     const v = tryAdopt(sv.orBootReq);
     if (!v.ok) { sv.orBootErr = v.reason; S.save(); O55.ui.refresh(); adoptRefused(v.reason); return; }
     sv.orBootOk = true; sv.orBootErr = null;
@@ -173,12 +187,13 @@
     F.reset(S, 'selfpair:' + u.id);
     F.op(S, 'selfpair:' + u.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], {
       payload: { server: u.id, pairing_candidate_id: selfCandidate(S), method: 'setup_code' }, sound: ADOPT_SOUND,
-      onDone: () => { adoptSelfRun(S); }
+      onDone: () => { if (chainHere(S, u.id)) adoptSelfRun(S); }
     });
     O55.ui.refresh();
   }
   function adoptSelfRun(S) {
     const sv = S.sess.server, u = unclaimed(S);
+    if (!chainHere(S)) return;
     const res = OR().take(sv.orRunReq && sv.orRunReq.id);
     const v = tryAdopt(sv.orRunReq);
     if (!v.ok) { sv.orRunErr = v.reason; S.save(); O55.ui.refresh(); adoptRefused(v.reason); return; }
@@ -189,6 +204,7 @@
   }
   function adoptSelfApprove(S) {
     const sv = S.sess.server, u = unclaimed(S);
+    if (!chainHere(S)) return;
     if (!sv.orApproveReq) { sv.orApproveErr = 'pending_no_result'; S.save(); O55.ui.refresh(); return; }
     if (!sv.selfConfirmed || !sv.selfRun || sv.selfRun.generation !== sv.selfPairGen || sv.selfRun.expires_at <= Date.now() || !(EPH() && EPH().getWords('self:' + u.id))) { sv.orApproveErr = 'waiting_pairing_identity_missing'; S.save(); O55.ui.refresh(); adoptRefused(sv.orApproveErr); return; }
     const res = OR().take(sv.orApproveReq.id);
@@ -276,14 +292,14 @@
         sv.orClaimReq = OR().begin('cmd.server.claim', { server: u.id });
         sv.orClaimOk = false; sv.orClaimErr = null; sv.orBootReq = null; sv.orBootOk = false; sv.orBootErr = null;
         sv.orRunReq = null; sv.orRunOk = false; sv.orRunErr = null; sv.selfConfirmed = false;
-        sv.orApproveReq = null; sv.orApproveErr = null; sv.confirmed = true; S.save();
+        sv.orApproveReq = null; sv.orApproveErr = null; sv.confirmed = true; sv.chainFor = u.id; S.save();
         O55.sound.play('commit', SND.claim); /* Set up Server is this preflow's one commitment; the phase list appears with it */
         F.reset(S, 'claim:' + u.id);
         F.op(S, 'claim:' + u.id, 'cmd.server.claim', [{ key: 'claim', ms: 900, fail: () => (ok ? null : 'setup_code_mismatch') }], {
           payload: { server: u.id, name }, sound: ADOPT_SOUND,
-          onFail: () => { sv.confirmed = false; sv.orClaimErr = 'setup_code_mismatch'; S.save(); O55.ui.refresh(); },
+          onFail: () => { if (!chainHere(S, u.id)) return; sv.confirmed = false; sv.orClaimErr = 'setup_code_mismatch'; S.save(); O55.ui.refresh(); },
           /* Transport done is not a claim: adoption of a matching owner result is still required. */
-          onDone: () => { adoptClaim(S); }
+          onDone: () => { if (chainHere(S, u.id)) adoptClaim(S); }
         });
       },
       retry(S) {
@@ -304,7 +320,7 @@
         F.reset(S, 'selfapprove:' + u.id);
         F.op(S, 'selfapprove:' + u.id, 'cmd.client.pair.approve', [{ key: 'approve', ms: 800 }], {
           payload: { server: u.id, pairing_candidate_id: selfCandidate(S), client: S.env.client.id }, sound: ADOPT_SOUND,
-          onDone: () => { adoptSelfApprove(S); }
+          onDone: () => { if (chainHere(S, u.id)) adoptSelfApprove(S); }
         });
       },
       next(S) { O55.ui.go('s-ready'); }
@@ -507,7 +523,7 @@
   O55.restore = { afterReach, placeOf, whereOf, reachKey };
   /* choosing another backup drops what was reached, unlocked and picked for the last one, the bucket's access details
      and the bucket check (a finished check never runs again under the same key) */
-  const repoint = (S) => { const r = R(S); r.reachedFor = null; r.unlocked = false; r.pick = null; r.access = {}; F.reset(S, 'restore-s3'); };
+  const repoint = (S) => { const r = R(S); r.reachedFor = null; r.unlocked = false; r.pick = null; r.done = false; r.confirmed = false; r.access = {}; r.reachGen = (r.reachGen || 0) + 1; O55.owners.cancelOp('restore-s3'); F.reset(S, 'restore-s3'); };
   def('r-source', {
     chapter: 'computer', stage: 'first_project',
     chapterFor: (S) => restoreChapter(S),
@@ -588,8 +604,9 @@
         }
         if (place === 'cloud' && r.cloud === 's3' && !reached(S)) {
           if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* the secret field was empty: Continue waits for it */
+          const gen = r.reachGen || 0; /* (a check for access details the person has since replaced counts for nothing) */
           return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: 's3', method: 'access_key', credential_ref: 'credential:restore:s3' },
-            onDone: () => { r.reachedFor = 'cloud:s3'; S.save(); if (reachKey(S) === 'cloud:s3' && S.sess.screen === 'r-source') O55.ui.go(afterReach(S), { silent: true }); } }); /* (not if the person has chosen another place meanwhile) */ /* like every cloud source; the sign-in's own sound carries the screen change */
+            onDone: () => { if ((r.reachGen || 0) !== gen || R(S) !== r) return; r.reachedFor = 'cloud:s3'; S.save(); if (reachKey(S) === 'cloud:s3' && S.sess.screen === 'r-source') O55.ui.go(afterReach(S), { silent: true }); } }); /* (not if the person has chosen another place meanwhile) */ /* like every cloud source; the sign-in's own sound carries the screen change */
         }
         if (place === 'cloud' && !reached(S)) return O55.official.signIn(S, { service: r.cloud, name: T('safe.backup.' + r.cloud), kind: 'cloud', then: afterReach(S), done: 'restoreCloud' });
         S.save(); O55.ui.go(afterReach(S));
@@ -647,7 +664,7 @@
     },
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !R(S).pick, reason: T('missing.backup') } }),
     do: {
-      pick(S, v) { R(S).pick = v; S.save(); O55.ui.refresh(); },
+      pick(S, v) { const r = R(S); if (r.pick !== v) { r.done = false; r.confirmed = false; } r.pick = v; S.save(); O55.ui.refresh(); },
       next(S) {
         const r = R(S);
         if (r.scope === 'project') {
@@ -692,7 +709,7 @@
     },
     do: {
       apply(S) {
-        const r = R(S);
+        const r = R(S), pick = r.pick;
         r.confirmed = true; /* the Restore button is the restore preflow's own confirmation */
         S.save();
         O55.sound.play('commit', SND.restore);
@@ -701,7 +718,8 @@
         if (remote) O55.owners.dispatch(d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup', { draft: d.project_draft_ref, restore: r.pick }, Object.assign(S.ctx(), { reviewConfirmed: true }), () => ({ ok: true }));
         F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }].concat(remote ? [{ key: 'remote', ms: 900 }] : []), {
           payload: { scope: r.scope, backup: r.pick, remote_mode: remote ? d.remote_mode : null }, sound: { intensity: 0.9 },
-          onDone: () => { r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview') O55.ui.go('r-done'); }); }
+          /* (a restore finished for a copy the person has since turned away from is not this one: SCR-01's class) */
+          onDone: () => { if (R(S) !== r || r.pick !== pick) return; r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview' && R(S).pick === pick) O55.ui.go('r-done'); }); }
         });
       },
       done(S) { O55.ui.go('r-done'); }

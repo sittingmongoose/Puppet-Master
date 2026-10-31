@@ -106,8 +106,9 @@
   function endRun(S, reason) {
     const c = S.sess.connect, r = c.run; if (!r) return;
     PARTS.forEach((part) => { O55.owners.cancelOp(runKey(r, part)); F.reset(S, runKey(r, part)); });
-    /* the requesting device's own abort before trust is issued (never a rejection, which is the approver's) */
-    if (live.has(r.id) && !trustOf(S, r.server)) O55.owners.dispatch('cmd.client.pair.cancel', { server: r.server, pairing_run: r.id, generation: r.gen, reason }, S.ctx());
+    /* the requesting device's own abort before trust is issued (never a rejection, which is the approver's); a request
+       from before a reload is cancelled by its id too, so the Server stops waiting on it */
+    if (!trustOf(S, r.server)) O55.owners.dispatch('cmd.client.pair.cancel', { server: r.server, pairing_run: r.id, generation: r.gen, reason }, S.ctx());
     live.delete(r.id); typed.delete(r.id); c.run = null; c.fail = null; S.save();
   }
   /* the fence every completion passes: the run is still the current one, for the Server, route and way on screen */

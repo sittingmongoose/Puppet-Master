@@ -330,7 +330,8 @@
     const n = N(S), d = dev(S);
     if (n.key !== 'new') return;
     F.op(S, 'sshmake:' + d.id, 'cmd.ssh_connection.key.install', [{ key: 'make', ms: 700 }], { payload: { device: d.id, key: 'new', makeOnly: true, publicOnly: true },
-      onDone: () => { makeNewKey(S); S.save(); } });
+      /* (made for this device and a new key: if the person has since chosen another device or key, it is not theirs now) */
+      onDone: () => { const cur = N(S); if (cur !== n || cur.device !== d.id || cur.key !== 'new') return; makeNewKey(S); S.save(); } });
   }
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
@@ -396,9 +397,14 @@
       verify: () => (n.verifyOnly && !d.authorized.includes(n.key) ? 'not_added' : d.homePermsOpen ? 'refused' : null)
     };
     const ms = { make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
+    /* the result belongs to the device, key and attempt it ran for: after Back and another device or key it is dropped
+       (it marked the newly chosen key as added; SCR-01's class, the pm7-srv sweep) */
+    const at = { device: n.device, key: n.key, op: installKey(S) };
+    const still = () => { const cur = N(S); return cur === n && cur.device === at.device && cur.opKey === at.op && (cur.key === at.key || (at.key === 'new' && cur.key === 'k-pm')); };
     F.op(S, installKey(S), 'cmd.ssh_connection.key.install', order.map((k) => ({ key: k, ms: ms[k], fail: failFor[k] })), {
       payload: { device: d.id, key: n.key, publicOnly: true }, sound: { fail: 'warn', intensity: 0.8 }, /* every failure here offers its fix */
       onDone: () => {
+        if (!still()) return;
         if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); }
         n.installed = true;
         const dd = md(S);
