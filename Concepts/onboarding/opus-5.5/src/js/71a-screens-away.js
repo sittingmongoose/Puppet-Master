@@ -244,7 +244,7 @@
   /* Creating (72) and a Server's restore (68) hand over here when the chosen way in needs setting up; o.ask: the
      step asks first (a restore's preview listed it, but no Review confirmed it) */
   O55.away = {
-    needed: needsSetup,
+    needed: needsSetup, seedServer,
     start(S, then, o) { if (!needsSetup(S)) return O55.ui.go(then); begin(S, then, o); S.save(); return O55.ui.go('away-setup'); },
     state: (S) => A(S)
   };

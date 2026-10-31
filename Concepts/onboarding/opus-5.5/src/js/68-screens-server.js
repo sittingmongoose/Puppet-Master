@@ -390,6 +390,8 @@
     if (showing('s-ready')) O55.sound.play('success', SND.approved); /* the device moves into the paired list */
   }
   def('s-ready', {
+    /* opened straight (Demo Studio): a new Server set up and this computer trusted, as Set up the Server leaves it */
+    seed: (S) => { if (O55.away) O55.away.seedServer(S); },
     chapter: 'computer', stage: 'server_storage_client',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.ready.eyebrow'),
