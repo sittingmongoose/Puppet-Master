@@ -56,19 +56,12 @@ export const tests = {
 	// P01, P02, P03, P04: the Free Models list
 	async 'free models: nothing closed or paid is called free; each route sets up through its own provider'(t) {
 		const W = await open(t, 'free');
+		await W.frame.waitForSelector(`${ROOT} :is([data-key="fr-free-openrouter"], [data-key="row-free-openrouter"])`, { timeout: 10000 }).catch(() => {});
 		await W.frame.waitForTimeout(600);
-		const listText = (await W.$('.o55-body, .o55-form, .o55-main').innerText().catch(() => '')) || (await W.frame.locator(ROOT).innerText());
+		const listText = ((await W.frame.locator(ROOT).innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
 		await t.check('P01: GitHub Models (retired 2026-07-30) is not offered', !/GitHub Models/.test(listText), listText.slice(0, 300));
-		await t.check('P02/P03: no "free tier" wording and no paid route on the free list', !/Cerebras free tier|Hugging Face/.test(listText.split('Trial or paid credit')[0]), listText.slice(0, 400));
-		const more = W.frame.locator(`${ROOT} [data-o55-do="details"]`).filter({ hasText: 'Trial or paid credit' }).first();
-		await t.check('P02/P03: trials and paid credit sit behind their own disclosure', (await more.count()) === 1, 'no "Trial or paid credit" disclosure');
-		if (await more.count()) {
-			await more.click(); await screenDone(W);
-			const fr = await W.frame.locator(`${ROOT} [data-key="fr-free-cerebras"]`).innerText().catch(() => '');
-			await t.check('P02: Cerebras is a trial that needs a payment method', /Cerebras trial/.test(fr) && /payment method/.test(fr), fr);
-			const hf = await W.frame.locator(`${ROOT} [data-key="fr-free-hf"]`).innerText().catch(() => '');
-			await t.check('P03: Hugging Face needs bought credit or a paid plan', /credit you buy|paid plan/.test(hf), hf);
-		}
+		await t.check('P02/P03 (D5): Cerebras and Hugging Face are not offered as free', !/Cerebras|Hugging Face/.test(listText), listText.slice(0, 400));
+		await t.check('D5: the free list is OpenRouter, Groq and NVIDIA (free-coding-models v0.6.0)', /OpenRouter free models/.test(listText) && /Groq free plan/.test(listText) && /NVIDIA free models/.test(listText), listText.slice(0, 400));
 		// P04: Groq's Set up asks for Groq's own key, says where to get it, refuses a short one, and a limit is Retry now
 		const groq = freeBox(W, 'free-groq');
 		await groq.locator('[data-o55-do="route"]').click();
@@ -90,7 +83,7 @@ export const tests = {
 		await t.check('P04: Retry now reaches Ready', /Ready/.test(g), g);
 		const saved = await W.frame.evaluate(() => JSON.stringify(window.O55.store.scrub(window.O55.S.sess, 'onboarding')));
 		await t.check('no typed key in the saved session', !saved.includes(FAKE_KEY) && !saved.includes('short'), 'key text found in the saved record');
-		await t.shot('free-models', 'Free Models: free routes first, Trial or paid credit opened, Groq set up through its key');
+		await t.shot('free-models', 'Free Models: OpenRouter, Groq and NVIDIA; Groq set up through its key and back from its limit');
 	},
 
 	// P05, P14, P15: All providers grouped by what pays; gated Z.AI; current names
@@ -101,8 +94,10 @@ export const tests = {
 		await t.check('P05: Token Plan (a monthly-credit subscription) is with the plans', plans.includes('qwen-token') && !use.includes('qwen-token'), JSON.stringify(groups));
 		await t.check('P05: Cursor (bills the user\'s plan) is with the plans', plans.includes('cursor'), JSON.stringify(groups));
 		await t.check('P07: OpenCode server is not with the monthly plans', !plans.includes('opencode-runtime'), JSON.stringify(groups));
+		const allText = await W.frame.locator(ROOT).innerText();
+		await t.check('D4/T15: no "Not confirmed" and no extra-usage wording', !/Not confirmed|Extra use|extra use can cost/i.test(allText), allText.slice(0, 300));
 		const z = await rowText(W, 'zai');
-		await t.check('P14: Z.AI says what is known and offers no key entry', /Not confirmed yet/.test(z) && (await act(W, 'zai', 'key').count()) === 0, z);
+		await t.check('D4: Z.AI gets ordinary key setup, with no caveat', !/Not confirmed/.test(z) && (await act(W, 'zai', 'key').count()) === 1, z);
 		await t.check('P15: MiniMax shows its current name, M Plan', /MiniMax M Plan/.test(await rowText(W, 'minimax')), await rowText(W, 'minimax'));
 		await typeInto(W, '#o55f-q', 'Zen');
 		await W.frame.waitForTimeout(400);
@@ -111,7 +106,7 @@ export const tests = {
 		await W.frame.waitForTimeout(400);
 		await t.check('P15: searching Qwen finds the Alibaba Coding Plan', /Alibaba Coding Plan/.test(await rowText(W, 'qwen-coding')), await rowText(W, 'qwen-coding'));
 		await typeInto(W, '#o55f-q', '');
-		await t.shot('all-providers', 'All providers: plans with included usage, pay for what you use, your own setup; Z.AI Not confirmed yet');
+		await t.shot('all-providers', 'All providers: plans with included usage, pay for what you use, your own setup; Z.AI with ordinary key setup');
 	},
 
 	// P06, P08, P10, P16: Codex's two families, a second account, the right key, truthful billing line
@@ -193,11 +188,10 @@ export const tests = {
 		await W.$('[data-o55-do="entity"][data-arg="copilot|book-club-crew"]').click();
 		await waitRow(t, W, 'copilot', /(?=.*Ready)(?=.*through book-club-crew)/, 'P09: Ready with the chosen billing entity');
 		await act(W, 'qwen-coding', 'key').click(); await screenDone(W);
-		await t.text(row(W, 'qwen-coding'), /Where your plan is/, 'P09: a regional plan asks its region');
-		await W.$('[data-o55-do="region"][data-arg="qwen-coding|china"]').click(); await screenDone(W);
+		await t.check('D2: no China-region choice in the wizard (Settings has it)', (await W.$('[data-key="pv-qwen-coding"] [data-o55-do="region"]').count()) === 0, 'region control found');
 		await typeInto(W, '#o55f-key-qwen-coding', FAKE_KEY);
 		await act(W, 'qwen-coding', 'keyCheck').click();
-		await waitRow(t, W, 'qwen-coding', /(?=.*Ready)(?=.*China)/, 'P09: Ready on the China route');
+		await waitRow(t, W, 'qwen-coding', /(?=.*Ready)(?=.*Alibaba Coding Plan)/, 'Alibaba Coding Plan Ready with its key');
 		await act(W, 'anthropic-api', 'key').click(); await screenDone(W);
 		await typeInto(W, '#o55f-key-anthropic-api', FAKE_KEY);
 		await act(W, 'anthropic-api', 'keyCheck').click();
@@ -240,7 +234,7 @@ export const tests = {
 		await waitRow(t, W, 'claude', /Not installed|Not signed in/, 'AI screen ready');
 		await W.$('.o55-sublinks [data-o55-do="none"]').click(); await W.frame.waitForTimeout(1200);
 		const txt = await W.frame.locator(ROOT).innerText();
-		await t.check('P16: a monthly plan is not sold as one price', !/One price each month/.test(txt) && /included usage/.test(txt), txt.slice(0, 400));
+		await t.check('P16: a monthly plan is not sold as one price', !/One price each month/.test(txt) && /A plan you subscribe to/.test(txt), txt.slice(0, 400));
 		await W.$('[data-o55-do="pick"][data-arg="api"]').click(); await screenDone(W);
 		await W.$('.o55-foot .o55-primary').click(); await W.frame.waitForTimeout(1200);
 		const first = await W.frame.evaluate(() => Array.from(document.querySelectorAll('#pm-o55-onboarding [data-key^="pv-"]')).slice(0, 2).map((r) => r.getAttribute('data-key')));

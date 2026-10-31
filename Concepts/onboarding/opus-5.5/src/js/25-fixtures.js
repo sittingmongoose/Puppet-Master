@@ -14,14 +14,13 @@
        browser sign-in through its CLI). Settings offers the same pair.
      - keyFrom: where the right key is made: an exact console, or the vendor's own guide where the concept is not sure of
        the console address (P10). guide: true opens it as a guide.
-     - regions: a plan sold per region with different keys and addresses (MA-062; Global and China are separate routes).
+     (Plans sold for China use other keys and addresses; those routes are set up in Settings, not here: Jared's D2.)
      - context: what the account still needs after sign-in before it is Ready (MA §9.3: Logged in is not Ready):
        billing (Copilot: whose Copilot plan), workspace (an Anthropic key that works in more than one), project (Vertex).
      - remote: how a sign-in comes back when the browser is on another device than the AI (MACS §4): device (a code the
        person types on the vendor's page), paste (the vendor's page shows a code the person pastes here), or none known.
      - custody: cli (the vendor program keeps its own sign-in on the AI computer, MA-070), store (Puppet Master keeps
        it in that computer's keychain), server (OpenCode keeps its model accounts itself).
-     - gate: admission not established (P14): the row says what is known and offers no setup.
      - who / plan: what this fixture's sign-in reports back (the account and, where the vendor reports it, its plan).
      - aka: former or familiar names, matched by search (P15). */
   const PROVIDERS = [
@@ -42,15 +41,15 @@
     { id: 'copilot', settings: 'github-copilot', name: 'GitHub Copilot', product: 'Copilot plan', bill: 'plan', auth: 'signin', cli: null, vendor: 'GitHub',
       remote: 'device', custody: 'store', context: 'billing', who: ['jared-p', 'jared-studio'] },
     { id: 'qwen-coding', settings: 'qwen-coding', name: 'Alibaba Coding Plan', aka: 'Qwen Coding Plan', product: 'Alibaba Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
-      custody: 'store', regions: ['global', 'china'], keyFrom: { name: "Alibaba Cloud's Coding Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/coding-plan', guide: true } },
+      custody: 'store', keyFrom: { name: "Alibaba Cloud's Coding Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/coding-plan', guide: true } },
     { id: 'qwen-token', settings: 'qwen-token', name: 'Alibaba Token Plan', aka: 'Qwen Token Plan', product: 'Alibaba Token Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
       custody: 'store', keyFrom: { name: "Alibaba Cloud's Token Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/token-plan-overview', guide: true } },
     { id: 'zai', settings: 'zai-coding', name: 'Z.AI Coding Plan', aka: 'GLM Coding Plan Zhipu', product: 'Z.AI Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Z.AI',
-      custody: 'store', gate: 'unverified', gateUrl: 'https://docs.z.ai/devpack/tool/others' },
+      custody: 'store', keyFrom: { name: 'your Z.AI API keys page', url: 'https://z.ai/manage-apikey/apikey-list' } },
     { id: 'kimi', settings: 'kimi-coding', name: 'Kimi Code', product: 'Kimi Code plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Moonshot',
       custody: 'store', keyFrom: { name: 'the Kimi Code console', url: 'https://www.kimi.com/code/console' } },
     { id: 'minimax', settings: 'minimax-coding', name: 'MiniMax M Plan', aka: 'MiniMax Coding Plan', product: 'MiniMax M Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'MiniMax', canon: true,
-      custody: 'store', regions: ['global', 'china'], keyFrom: { name: "MiniMax's M Plan guide", url: 'https://platform.minimax.io/docs/m-plan/intro', guide: true } },
+      custody: 'store', keyFrom: { name: "MiniMax's M Plan guide", url: 'https://platform.minimax.io/docs/m-plan/intro', guide: true } },
     { id: 'opencode-go', settings: 'opencode-go', name: 'OpenCode Go', product: 'OpenCode Go plan', bill: 'plan', auth: 'key', cli: null, vendor: 'OpenCode',
       custody: 'store', keyFrom: { name: 'the OpenCode Console', url: 'https://opencode.ai/console/' } },
     { id: 'opencode-zen', settings: 'opencode-zen', name: 'OpenCode Console', aka: 'OpenCode Zen', product: 'OpenCode Console', bill: 'use', auth: 'key', cli: null, vendor: 'OpenCode',
@@ -62,7 +61,8 @@
     { id: 'opencode-runtime', settings: 'opencode', name: 'OpenCode server', product: 'OpenCode server', bill: 'own', auth: 'server', cli: 'opencode', vendor: 'OpenCode', custody: 'server' },
     { id: 'anthropic-api', settings: 'anthropic-api', name: 'Anthropic API', product: 'Anthropic API', bill: 'use', auth: 'key', cli: null, pair: 'claude', vendor: 'Anthropic',
       custody: 'store', context: 'workspace', workspaces: ['Default workspace', 'Side projects'], keyFrom: { name: 'the Claude Console', url: 'https://platform.claude.com/settings/keys' } },
-    { id: 'gemini-api', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
+    /* (freeLimits: AI Studio keys have free limits until billing is on, so a Ready line never says "billed by use") */
+    { id: 'gemini-api', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', freeLimits: true, auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
       custody: 'store', keyFrom: { name: 'Google AI Studio', url: 'https://aistudio.google.com/api-keys' } },
     { id: 'vertex', settings: 'vertex', name: 'Vertex AI', product: 'Google Cloud', bill: 'use', auth: 'key', cli: null, vendor: 'Google',
       custody: 'store', context: 'project', keyFrom: { name: "Google Cloud's API key guide", url: 'https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/start/api-keys', guide: true } },
@@ -98,22 +98,19 @@
   };
 
   /* Free Models routes (Models System MS-118; mirrors the app's Settings freeRoutes; Free Models owns no credential
-     store, MA-064). Each route is set up through its own provider's account, shown on the row before and after.
-     tier says what a new account actually gets today (official pages read 2026-10-31; provider-login audit P02, P03):
-     free (free with limits), trial (needs a payment method and ends), paid (needs bought credit or a paid plan).
-     FREE_TIERS decides where each tier is offered: 'list' on the screen, 'more' behind its own disclosure, 'hide' not
-     at all (Jared's D5 may move trial and paid to 'hide'). retired: closed by its vendor; never offered, and a choice
-     saved before it closed shows as No longer available (MS-118). */
+     store, MA-064), from the community list free-coding-models (v0.6.0, read 2026-10-31) and each vendor's own page:
+     only routes a new account gets free today, and a short list. Each is set up through its own provider's account,
+     shown on the row before and after. retired: closed by its vendor; never offered, and a choice saved before it closed
+     shows as No longer available (MS-118). Cerebras (a payment-method trial) and Hugging Face (no free credit) are not
+     free, and Ollama Cloud's own page sells use by the token, so they are not here (Jared's D5). */
   const FREE_ROUTES = [
-    { id: 'free-openrouter', name: 'OpenRouter free models', provider: 'OpenRouter', tier: 'free', needs: 'signin', who: 'jared@example.com' },
-    { id: 'free-groq', name: 'Groq free plan', provider: 'Groq', tier: 'free', needs: 'key', keyFrom: { name: "Groq's console", url: 'https://console.groq.com/keys' },
+    { id: 'free-openrouter', name: 'OpenRouter free models', provider: 'OpenRouter', needs: 'signin', who: 'jared@example.com' },
+    { id: 'free-groq', name: 'Groq free plan', provider: 'Groq', needs: 'key', keyFrom: { name: "Groq's console", url: 'https://console.groq.com/keys' },
       /* the key works, and this account is at its limit when it is first checked: Retry now, never a reconnect */
       limitedOnce: true },
-    { id: 'free-cerebras', name: 'Cerebras trial', provider: 'Cerebras', tier: 'trial', needs: 'key', keyFrom: { name: "Cerebras's console", url: 'https://cloud.cerebras.ai' } },
-    { id: 'free-hf', name: 'Hugging Face Inference', provider: 'Hugging Face', tier: 'paid', needs: 'key', keyFrom: { name: 'your Hugging Face token settings', url: 'https://huggingface.co/settings/tokens' } },
+    { id: 'free-nvidia', name: 'NVIDIA free models', provider: 'NVIDIA', needs: 'key', keyFrom: { name: "NVIDIA's API catalog", url: 'https://build.nvidia.com' } },
     { id: 'free-github-models', name: 'GitHub Models', provider: 'GitHub', retired: true }
   ];
-  const FREE_TIERS = { free: 'list', trial: 'more', paid: 'more' };
 
   function folders() {
     return {
@@ -251,7 +248,7 @@
   };
 
   O55.fixtures = {
-    PROVIDERS, FORGES, FREE_ROUTES, FREE_TIERS, SCENARIOS, OFFICIAL, folders,
+    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders,
     make(scenario) {
       const e = base();
       const ids = String(scenario || 'fresh').split('+');

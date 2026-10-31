@@ -3,6 +3,7 @@
    row offers its own way in — Install (only where a vendor program is required), Sign In, Enter API Key, a choice of
    two ways (Codex: ChatGPT or an OpenAI API key; Cursor: a key or its browser sign-in), or a server profile (OpenCode)
    — and an account is Ready only once it is checked and has what it needs (Multi-Account §9.3: Logged in is not Ready).
+   Steps that need a real service (a key, an address, a code) carry the demo's hint with values that work and fail.
    Every connected account is its own record with a stable id, the identity it reports and the computer it is kept on,
    so a second account of one provider, or the wrong one, can be added or removed (provider-login audit P08). Skip is
    allowed and says what it limits; Set Up Free Models is offered either way, and a usable free route counts as an AI
@@ -63,7 +64,7 @@
     const same = (a.list || []).filter((e) => e.provider === p.id && e.method === w.auth && (e.family || null) === (w.family || null)).length;
     return { id: 'acct-' + p.id + '-' + a.seq, provider: p.id, settings: p.settings, method: w.auth, family: w.family || null, product: w.product,
       who: o.who || null, plan: o.plan || null, n: same + 1, bill: w.bill, custody: w.custody || p.custody, host: h.id, hostName: h.name, hostRole: h.role,
-      region: o.region || null, workspace: o.workspace || null, entity: o.entity || null, mode: o.mode || null, endpoint: o.endpoint || null,
+      workspace: o.workspace || null, entity: o.entity || null, mode: o.mode || null, endpoint: o.endpoint || null,
       via: o.via, at: new Date().toISOString(), state: 'ready' };
   }
   function addAccount(S, p, o) {
@@ -98,15 +99,13 @@
     const cp = copiedFrom(S), ids = [];
     (A(S).wanted || []).forEach((id) => ids.includes(id) || ids.push(id));
     (cp ? cp.providers : []).forEach((id) => ids.includes(id) || ids.push(id));
-    PROV().filter((p) => !p.gate && detected(S, p)).forEach((p) => ids.includes(p.id) || ids.push(p.id));
+    PROV().filter((p) => detected(S, p)).forEach((p) => ids.includes(p.id) || ids.push(p.id));
     PROV().filter((p) => p.likely).sort((a, b) => a.likely - b.likely).forEach((p) => ids.includes(p.id) || ids.push(p.id));
     readyIds(S).forEach((id) => ids.includes(id) || ids.push(id));
     return ids.slice(0, Math.max(4, readyIds(S).length)).map(prov).filter(Boolean);
   }
-  /* Row state: an admission gate first, then what the person is doing, then their accounts, then detection (cached
-     per computer), then the way in. */
+  /* Row state: what the person is doing, then their accounts, then detection (cached per computer), then the way in. */
   function state(S, p) {
-    if (p.gate) return 'gated';
     const r = A(S).accounts[p.id];
     if (r && r.state && r.state !== 'ready') return r.state;
     if (accts(S, p).length) return 'ready';
@@ -122,7 +121,6 @@
   function autoReady(S) {
     /* verified credentials connect automatically — no Connect button (packet 03); one the person removed stays removed */
     PROV().forEach((p) => {
-      if (p.gate) return;
       const d = detected(S, p), r = R(S, p.id), h = host(S).id;
       if (!d || !d.installed || !d.signedIn || (r.dismissed || []).includes(h) || A(S).list.some((e) => e.provider === p.id && e.host === h && e.via === 'detected')) return;
       A(S).list.push(record(S, p, { via: 'detected', who: d.account || null, plan: d.plan || null }));
@@ -136,11 +134,11 @@
   /* an account's name: who it is; a key has none, so its number (or, for a provider's second way, which key it is) */
   const accLabel = (e) => e.who || (e.method === 'server' ? T('ai.acct.server') : e.family === 'api_key' && e.n === 1 ? T('ai.acct.altKey', { product: e.product }) : T('ai.acct.key', { n: e.n || 1 }));
   function billLine(S, e) {
-    const extra = [e.region ? T('ai.region.' + e.region) : '', e.workspace || '', e.entity ? T('ai.ctx.billing.via', { who: e.entity }) : ''].filter(Boolean);
+    const extra = [e.workspace || '', e.entity ? T('ai.ctx.billing.via', { who: e.entity }) : ''].filter(Boolean);
     let b;
     if (e.method === 'server') b = e.mode === 'attached' ? T('ai.bill.attached', { address: e.endpoint || '' }) : T('ai.bill.managed', { host: e.hostRole === 'this_device' ? T('where.this.title').toLowerCase() : e.hostName });
     else if (e.plan) b = e.plan;
-    else if (e.bill === 'use') b = T('ai.bill.use', { product: e.product });
+    else if (e.bill === 'use') b = (prov(e.provider) || {}).freeLimits ? e.product : T('ai.bill.use', { product: e.product });
     else b = T('ai.bill.plan', { product: e.product });
     return [b].concat(extra).join(' · ');
   }
@@ -153,11 +151,15 @@
 
   /* the key field of a provider (or of a Free Models route's own provider): what kind of key, where it is made, where
      it is kept; a refused key says what to check */
+  /* the demo's hint (O55.flow.hint, concept only): values that take each branch, filled as typing does */
+  const DEMO_KEY = 'demo-key-0000-1111-2222', DEMO_BAD = 'short-key';
+  const hint = (id, items, when) => (F.hint ? F.hint(id, items, { when }) : '');
   function keyArea(S, o) {
     const ks = F.state(S, o.op), failed = ks && ks.state === 'failed';
     const why = failed ? (ks.code === 'offline' ? T('ai.offline') : T('ai.keyBad', { name: o.name })) : '';
     let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, label: T('ai.keyLabel', { name: o.name }), value: '',
       hint: T('ai.keyHint', { where: keychain(S) }), error: why, invalid: failed, tip: 'field:key' });
+    out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
     out += `<div class="o55-inline" data-key="kb-${U.esc(o.key)}">` + btnIn(T('ai.verify'), o.check, o.arg, 'secondary', { disabled: !o.typed || o.checking, reason: T('ai.keyLabel', { name: o.name }) })
       + (o.from ? C.link(T('ai.keyFrom', { name: o.from.name }), o.fromDo, o.arg, { tip: false }) : '') + (o.cancel ? C.link(T('ai.cancel'), o.cancel, o.arg, { tip: false }) : '') + '</div>';
@@ -171,7 +173,6 @@
     let pill = null, action = null, extra = '';
     const ex = (k, html) => `<div class="o55-rowextra" data-key="${k}-${p.id}">${html}</div>`;
     if (st === 'checking') pill = ['wait', T('ai.checking')];
-    if (st === 'gated') { pill = ['needs', T('ai.gated')]; meta = T('ai.gatedMeta', { vendor: p.vendor }); action = { label: T('ai.gatedAction', { vendor: p.vendor }), do: 'gateInfo', arg: p.id }; }
     if (st === 'ready') {
       pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = { label: T('ai.manage'), do: 'manage', arg: p.id };
       if (r.dup) extra = ex('dup', C.note(T('ai.dup', { who: r.dup }), 'info'));
@@ -187,7 +188,7 @@
     if (st === 'server') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); action = { label: T('ai.setUp'), do: 'server', arg: p.id }; }
     if (fromCopy && st !== 'ready') meta = T('ai.unavailable', { project: cp.name, host: hostName(S) });
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
-    else if (d && d.installed && !['ready', 'gated', 'server'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
+    else if (d && d.installed && !['ready', 'server'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
     if (r.confirmInstall) extra = ex('ask', `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`);
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = ex('ph', F.phases(S, 'install:' + p.id + (r.method === 'alt' ? ':alt' : ''), ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })); }
@@ -199,9 +200,8 @@
     if (st === 'signinFailed') { pill = ['fail', T('ai.signinFail.title')]; meta = T('ai.signinFail.body', { vendor: p.vendor }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'keyEntry' || st === 'keyChecking') {
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : null;
-      const regions = p.regions ? `<div class="o55-inline" data-key="rg-${p.id}"><span class="o55-hint">${U.esc(T('ai.regionLabel'))}</span>${C.segmented({ do: 'region', value: p.id + '|' + (r.region || p.regions[0]), label: T('ai.regionLabel'), options: p.regions.map((v) => ({ v: p.id + '|' + v, label: T('ai.region.' + v) })) })}</div>` : '';
       const project = p.context === 'project' ? C.field({ bind: 'project:' + p.id, id: 'o55f-project-' + p.id, label: T('ai.ctx.project.label'), value: r.project || '', placeholder: 'my-project', hint: T('ai.ctx.project.hint'), tip: 'field:project' }) : '';
-      extra = ex('key', regions + keyArea(S, { bind: 'key:' + p.id, key: p.id, arg: p.id, op: 'key:' + p.id + ':' + (r.attempt || 0), name: w.auth === 'key' && r.method === 'alt' ? w.product : pname(p),
+      extra = ex('key', keyArea(S, { bind: 'key:' + p.id, key: p.id, arg: p.id, op: 'key:' + p.id + ':' + (r.attempt || 0), name: w.auth === 'key' && r.method === 'alt' ? w.product : pname(p),
         typed: r.keyTyped, checking: st === 'keyChecking', check: 'keyCheck', from: w.keyFrom || p.keyFrom, fromDo: 'keyFrom', more: project, cancel: r.adding ? 'cancelAdd' : null }));
     }
     if (st === 'context' || st === 'contextChecking') { pill = st === 'contextChecking' ? ['wait', T('ai.checking')] : ['needs', T('ai.needsChoice')]; extra = ex('ctx', contextHtml(S, p, r)); }
@@ -243,6 +243,7 @@
       return `<p class="o55-hint" data-key="pl-${p.id}">${U.esc(T('ai.pasteLead'))}</p>`
         + `<div class="o55-inline" data-key="cl-${p.id}">${btnIn(T('ai.copyLink'), 'copySigninLink', p.id)}</div>`
         + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
+        + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
         + `<div class="o55-inline" data-key="pb-${p.id}">${btnIn(T('ai.pasteGo'), 'submitCode', p.id, 'secondary', { disabled: !r.pasteTyped || (cs && cs.state === 'running'), reason: T('ai.pasteLabel') })}</div>` + links;
     }
     return links;
@@ -267,6 +268,7 @@
     const managed = inst ? `<div class="o55-inline">${btnIn(T('ai.oc.start', { host: hostName(S) }), 'ocStart', p.id, 'primary')}</div>`
       : `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`;
     const attached = C.field({ bind: 'ocAddr:' + p.id, id: 'o55f-ocaddr', label: T('ai.oc.addr'), value: r.endpoint || '', placeholder: 'http://127.0.0.1:4096', hint: T('ai.oc.addrHint'), tip: 'field:ocAddr' })
+      + hint('ocAddr', [{ label: 'http://127.0.0.1:4096', outcome: 'works', fills: [['ocAddr:' + p.id, 'http://127.0.0.1:4096']] }, { label: 'http://192.168.1.99:4096', outcome: 'noAnswer', fills: [['ocAddr:' + p.id, 'http://192.168.1.99:4096']] }], !ok)
       + C.field({ bind: 'ocUser:' + p.id, id: 'o55f-ocuser', label: T('ai.oc.user'), value: r.user || '', placeholder: 'opencode', tip: 'field:ocUser' })
       + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
       + `<div class="o55-inline">${btnIn(T('ai.oc.connect'), 'ocConnect', p.id, 'primary', { disabled: !ok, reason: T('ai.oc.addr') })}</div>`;
@@ -311,7 +313,6 @@
       return { back: false, secondary: [{ label: T('ai.skip'), do: 'skip', cls: 'o55-ghost' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('ai.skipNote') } };
     },
     do: {
-      gateInfo(S, id) { const p = prov(id); O55.official.open(S, { kind: 'page', name: p.vendor, url: p.gateUrl || null }); },
       choose(S, id) { R(S, id).state = 'choosing'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       way(S, v) {
         const [id, m] = String(v).split('|'), p = prov(id), r = R(S, id);
@@ -388,16 +389,15 @@
         /* a late result of an older try never overwrites a newer one (pm7-srv's sweep) */
         const offline = !S.env.here.internet, at = r.attempt, current = () => r.attempt === at && r.state === 'keyChecking';
         F.op(S, 'key:' + id + ':' + r.attempt, 'cmd.integration.connection.test', [{ key: 'verify', ms: 900, fail: () => (offline ? 'offline' : v.length >= 12 ? null : 'key_rejected') }], {
-          payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', region: r.region || (p.regions ? p.regions[0] : null), host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
+          payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
           onDone: () => {
             if (!current()) return;
             if (p.context === 'workspace' && (p.workspaces || []).length > 1) { r.state = 'context'; r.ctx = { via: 'key' }; S.save(); O55.ui.refresh(); return; }
-            addAccount(S, p, { via: 'key', region: p.regions ? r.region || p.regions[0] : null, workspace: p.context === 'project' && r.project ? T('ai.ctx.project.named', { project: r.project }) : null });
+            addAccount(S, p, { via: 'key', workspace: p.context === 'project' && r.project ? T('ai.ctx.project.named', { project: r.project }) : null });
           },
           onFail: () => { if (!current()) return; r.state = 'keyEntry'; S.save(); O55.ui.refresh(); }
         });
       },
-      region(S, v) { const [id, reg] = String(v).split('|'); R(S, id).region = reg; S.save(); O55.ui.refresh(); },
       entity(S, v) { pickContext(S, v, 'entity'); },
       workspace(S, v) { pickContext(S, v, 'workspace'); },
       manage(S, id) { const r = R(S, id); r.manage = !r.manage; r.removing = null; r.dup = null; S.save(); O55.ui.refresh(); },
@@ -434,7 +434,9 @@
         const p = prov(id), r = R(S, id), pass = S.root.querySelector('#o55f-ocpass'), endpoint = String(r.endpoint || '').trim();
         if (pass) pass.value = '';
         r.state = 'connecting'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('tap');
-        const reachable = /^https?:\/\/[^\s/?#]+(?::\d+)?\/?$/.test(endpoint) && S.env.here.internet !== false;
+        /* in this demo an OpenCode server answers on this computer or on a device the fixture knows (Home NAS) */
+        let where = ''; try { where = new URL(endpoint).hostname; } catch (_) {}
+        const reachable = /^https?:\/\/[^\s/?#]+(?::\d+)?\/?$/.test(endpoint) && ['127.0.0.1', 'localhost'].concat(S.env.devices.map((d) => d.address), S.env.pmServers.map((x) => x.address)).includes(where);
         F.op(S, 'oc:' + id + ':' + r.attempt, 'cmd.integration.connection.add', [{ key: 'connect', ms: 1000, fail: () => (reachable ? null : 'unreachable') }, { key: 'health', ms: 700 }, { key: 'discover', ms: 900 }], {
           payload: { provider_entry_id: p.settings, profile_mode: 'attach_existing_server', endpoint_label: endpoint, server_auth: r.user ? 'basic' : 'none' }, sound: { fail: 'warn' },
           onDone: () => { if (r.state === 'connecting') addAccount(S, p, { via: 'server', mode: 'attached', endpoint: endpoint.replace(/\/$/, '') }); },
@@ -541,10 +543,9 @@
 
   /* ------------------------------------------------------------------ Free Models */
   /* Each route is set up through its own provider's account (MA-064): its row names that provider and its state before
-     and after, and the key field is that provider's. Nothing here is called free that a new account doesn't get free
-     today (FREE_ROUTES tier); a route its vendor closed is never offered (P01). */
+     and after, and the key field is that provider's. Only routes a new account gets free today are listed; a route its
+     vendor closed is never offered (P01). */
   const FR = () => O55.fixtures.FREE_ROUTES;
-  const tierOf = (r) => O55.fixtures.FREE_TIERS[r.tier] || 'list';
   function freeState(S, r) {
     const f = A(S).freeRoutes, rec = A(S).freeRows[r.id] || {};
     if (r.retired) return f[r.id] ? 'retired' : null;
@@ -556,7 +557,6 @@
     const st = freeState(S, r); if (!st) return '';
     const rec = A(S).freeRows[r.id] || {}, acct = A(S).freeAccounts[r.id];
     let meta = acct ? T('free.via', { provider: r.provider, who: acct }) : st === 'needs' || st === 'keyEntry' || st === 'keyChecking' ? T('free.notConnected', { provider: r.provider }) : r.provider;
-    if (r.tier !== 'free' && st === 'needs') meta += ' · ' + T('free.tier.' + r.tier);
     let pill = ['needs', r.needs === 'signin' ? T('free.needsSignin') : T('free.needsSetup')], action = { label: r.needs === 'signin' ? T('free.signIn') : T('free.setup'), do: 'route', arg: r.id }, extra = '';
     if (st === 'ready') { pill = ['ready', T('free.ready')]; action = null; }
     if (st === 'working') { pill = ['wait', T('chrome.working')]; action = null; }
@@ -577,10 +577,7 @@
     lead: () => T('free.lead'),
     body(S) {
       A(S);
-      let out = FR().filter((r) => r.retired || tierOf(r) === 'list').map((r) => freeRow(S, r)).join('');
-      const more = FR().filter((r) => !r.retired && tierOf(r) === 'more');
-      /* trials and paid credit: not free, so behind their own disclosure, never on the free list itself */
-      if (more.length) out += C.details(S, 'freeMore', T('free.more'), C.note(T('free.moreNote'), 'info') + more.map((r) => freeRow(S, r)).join(''));
+      let out = FR().map((r) => freeRow(S, r)).join('');
       if (readyIds(S).length) out += C.note(T('free.paidFirst'), 'info', 'spark');
       out += `<div class="o55-sublinks" data-key="attr">${C.link(T('free.attribution'), 'attribution')}</div>`;
       return out;
@@ -632,13 +629,13 @@
       account_id: e.id, provider_entry_id: e.settings, onboarding_provider_id: e.provider, display_name: accLabel(e), display_identity: e.who || null,
       auth_method: e.method === 'key' ? 'api_key' : e.method === 'server' ? 'server_profile' : 'oauth', auth_family: e.family || null,
       custody: CUSTODY[e.custody] || 'os_keychain', host: { id: e.host, name: e.hostName, role: e.hostRole }, billing: e.bill, plan_label: e.plan || null,
-      region: e.region, workspace: e.workspace, billing_entity: e.entity, profile_mode: e.mode === 'managed' ? 'managed_server' : e.mode === 'attached' ? 'attach_existing_server' : null,
+      workspace: e.workspace, billing_entity: e.entity, profile_mode: e.mode === 'managed' ? 'managed_server' : e.mode === 'attached' ? 'attach_existing_server' : null,
       endpoint_label: e.endpoint, state: 'Ready', status: 'active', via: e.via, connected_at: e.at }));
   }
   function freePart(S) {
     const a = A(S);
     return FR().filter((r) => !r.retired || a.freeRoutes[r.id]).map((r) => ({
-      route_id: r.id, name: r.name, tier: r.retired ? null : r.tier, underlying_provider: r.provider, underlying_account: a.freeAccounts[r.id] || null,
+      route_id: r.id, name: r.name, underlying_provider: r.provider, underlying_account: a.freeAccounts[r.id] || null,
       state: r.retired ? 'no_longer_available' : a.freeRoutes[r.id] === 'ready' ? 'ready' : a.freeRoutes[r.id] === 'limited' ? 'limit_reached' : 'not_set_up' }));
   }
   /* the vendor programs found or installed on the computer that does the work (Settings: installed, still to sign in) */

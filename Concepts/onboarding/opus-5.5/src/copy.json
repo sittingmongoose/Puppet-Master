@@ -1019,9 +1019,9 @@
     "seeAll": "See all providers",
     "allTitle": "All providers",
     "subs": "Plans with included usage",
-    "subsSub": "A plan you pay for covers the use. Extra use can cost more, depending on the plan.",
+    "subsSub": "A plan you already pay for",
     "apis": "Pay for what you use",
-    "apisSub": "Billed by how much you use, through a key from the company.",
+    "apisSub": "Billed by what you use",
     "none": "I don't have any of these",
     "skip": "Skip for now",
     "skipNote": "Puppet Master can't plan or work until an AI is added.",
@@ -1036,7 +1036,7 @@
       "cursor": "A Cursor API key, or Cursor's browser sign-in",
       "copilot": "The Copilot plan on your GitHub account",
       "qwen-coding": "Qwen and other models, with the plan's own key",
-      "qwen-token": "Monthly credits, not the Coding Plan",
+      "qwen-token": "A monthly plan, not the Coding Plan",
       "kimi": "Kimi Code's own key, not Kimi Open Platform",
       "minimax": "Formerly the MiniMax Coding Plan",
       "anthropic-api": "Billed by use, separate from a Claude plan",
@@ -1067,9 +1067,6 @@
     "signinWaitPill": "Waiting for you",
     "own": "Your own setup",
     "ownSub": "A server you run, or one Puppet Master runs for you.",
-    "gated": "Not confirmed yet",
-    "gatedMeta": "{vendor} limits this plan to the tools it lists. Puppet Master isn't on that list yet, so it can't be set up here.",
-    "gatedAction": "See {vendor}'s list",
     "manage": "Change",
     "acct": {
       "key": "Key {n}",
@@ -1083,11 +1080,6 @@
       "managed": "Run by Puppet Master on {host}",
       "attached": "Your server at {address}"
     },
-    "region": {
-      "global": "Global",
-      "china": "China"
-    },
-    "regionLabel": "Where your plan is",
     "addAnother": "Add another {name} account",
     "remove": "Remove",
     "removeAsk": "Remove {who} from Puppet Master? Your {vendor} account itself stays as it is.",
@@ -1159,7 +1151,7 @@
     "lead": "Puppet Master needs one AI to plan and work. Pick the kind that suits you.",
     "sub": {
       "title": "A monthly plan",
-      "sub": "Like Claude or ChatGPT. A plan with included usage; extra use can cost more."
+      "sub": "Like Claude or ChatGPT. A plan you subscribe to."
     },
     "api": {
       "title": "Pay as you go",
@@ -1190,12 +1182,6 @@
     "via": "{provider} · {who}",
     "notConnected": "{provider} · no account connected yet",
     "keyAccount": "key added",
-    "tier": {
-      "trial": "A trial: needs a payment method, and ends",
-      "paid": "Needs credit you buy, or a paid plan"
-    },
-    "more": "Trial or paid credit",
-    "moreNote": "These aren't free: a trial needs a payment method and ends; paid credit is bought from the company.",
     "retired": "No longer available",
     "retiredMeta": "{provider} closed this service. Choose another."
   },

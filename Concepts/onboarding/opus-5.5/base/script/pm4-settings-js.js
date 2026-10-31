@@ -1312,9 +1312,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
   const freeRoutes = [
     { id: 'free-openrouter', name: 'OpenRouter Free Models', provider: 'OpenRouter', enabled: true, status: 'active', signIn: 'Uses configured OpenRouter key', models: ['Free coder route', 'Free general route'], priority: 1, limit: 'Provider-defined availability', terms: 'Models and limits can change without notice.' },
-    { id: 'free-cerebras', name: 'Cerebras Trial', provider: 'Cerebras', enabled: false, status: 'disabled', signIn: 'Not set up', models: ['Fast coding model'], priority: null, limit: 'Trial credit that ends', terms: 'A trial, not a free plan: it needs a payment method and ends. Cerebras doesn\'t charge unless you buy more.' },
     { id: 'free-groq', name: 'Groq Free Plan', provider: 'Groq', enabled: true, status: 'active', signIn: 'API key healthy', models: ['Fast general model'], priority: 4, limit: 'Rate-limited', terms: 'Free plan limits apply; a reached limit waits for its reset.' },
-    { id: 'free-hf', name: 'Hugging Face Inference', provider: 'Hugging Face', enabled: false, status: 'disabled', signIn: 'Not configured', models: [], priority: null, limit: 'Varies by model', terms: 'Needs credit you buy, or a PRO plan: a free account gets no included credit.' },
+    { id: 'free-nvidia', name: 'NVIDIA Free Models', provider: 'NVIDIA', enabled: false, status: 'disabled', signIn: 'Not set up', models: ['Free coding model'], priority: null, limit: 'Rate-limited', terms: 'Free models from NVIDIA\'s API catalog; limits apply.' },
   ];
 
   const webRoutes = [
@@ -10104,7 +10103,7 @@ window.PM51 = PM51;
   const byId = id => all().find(p => p.id === id) || current();
   const routes = () => (state.freeRoutes || []).filter(r => r.id !== 'free-community');
   const routeById = id => routes().find(r => r.id === id) || routes()[0];
-  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free', 'free-cerebras': 'Cerebras trial', 'free-groq': 'Groq', 'free-hf': 'Hugging Face' };
+  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free', 'free-groq': 'Groq', 'free-nvidia': 'NVIDIA' };
   const routeName = r => ROUTE_NAMES[r.id] || r.name;
   const HOW = { 'claude-code': 'Command-line tool', 'openai-codex': 'ChatGPT sign-in', antigravity: 'Google sign-in', 'gemini-direct': 'API key', 'cursor-cli': 'Command-line tool', 'github-copilot': 'GitHub sign-in', opencode: 'Server', 'kimi-coding': 'Coding plan', 'minimax-coding': 'Coding plan', 'zai-coding': 'Coding plan', 'qwen-coding': 'Coding plan', 'free-models': 'Free routes', 'local-endpoint': 'Network address' };
   const KIND_HOW = { CLI: 'Command-line tool', Account: 'Sign in', API: 'API key', Server: 'Server', URL: 'Network address', 'Grouped routes': 'Free routes' };

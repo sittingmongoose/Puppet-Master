@@ -17,7 +17,7 @@
   const KEY = 'providers-accounts-models';
   const TABS = [{ id: 'services', label: 'Services' }, { id: 'models', label: 'Models' }, { id: 'limits', label: 'Limits & switching' }, { id: 'usage', label: 'Usage & budgets' }];
   const GROUPS = [
-    { id: 'plan', label: 'Subscriptions and plans', help: 'A plan covers the use; extra use can cost more, depending on the plan' },
+    { id: 'plan', label: 'Subscriptions and plans', help: 'A plan you already pay for' },
     { id: 'use', label: 'Pay as you go', help: 'Billed by what you use' },
     { id: 'own', label: 'Free and your own', help: 'Free routes, and models you run yourself' }
   ];
@@ -26,11 +26,11 @@
   const byId = id => all().find(p => p.id === id) || current();
   const find = id => all().find(p => p.id === id);
   /* (GitHub Models, closed by GitHub on 2026-07-30, is never offered, even from a saved list: MS-118) */
-  const routes = () => (state.freeRoutes || []).filter(r => r.id !== 'free-community' && r.id !== 'free-github-models');
+  const routes = () => (state.freeRoutes || []).filter(r => !['free-community', 'free-github-models', 'free-cerebras', 'free-hf'].includes(r.id));
   const routeById = id => routes().find(r => r.id === id) || routes()[0];
-  /* Names that stay true (provider-login audit P01-P03, read 2026-10-31): GitHub closed GitHub Models on 2026-07-30;
-     Cerebras offers a payment-method trial, not a free tier; Hugging Face gives a free account no included credit. */
-  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free models', 'free-github-models': 'GitHub Models (closed)', 'free-cerebras': 'Cerebras trial', 'free-groq': 'Groq free plan', 'free-hf': 'Hugging Face (paid credit)' };
+  /* The free routes onboarding offers, from free-coding-models v0.6.0 and each vendor's page (read 2026-10-31): GitHub
+     closed GitHub Models on 2026-07-30; Cerebras (a payment-method trial) and Hugging Face (no free credit) aren't free. */
+  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free models', 'free-groq': 'Groq free plan', 'free-nvidia': 'NVIDIA free models' };
   const routeName = r => ROUTE_NAMES[r.id] || r.name;
   const RUNS_OUT = {
     'next-account': ['Try my next account', 'Then another service, if that is allowed under Limits & switching.'],
@@ -71,9 +71,6 @@
 
   /* ---------- derived state ---------------------------------------------- */
   function plain(p) {
-    /* a route whose vendor hasn't admitted Puppet Master (Z.AI lists the tools its Coding Plan works in): it says so and
-       offers no key entry, as onboarding does (provider-login audit P14) */
-    if (p.gate) return 'Not confirmed yet';
     if (p.status === 'disabled') return 'Off';
     if (p.status === 'not-installed') return 'Not installed';
     if (p.status === 'active') return 'Ready';
@@ -178,7 +175,7 @@
      boundary" become one "When it runs out" choice, services the fixture has and the saved list lacks are added in
      fixture order, and the fixture's names and groups replace the old ones. Runs at load and inside ensureStateShape. */
   const OLD_EXHAUSTION = { 'Try next eligible account, then fallback route': 'next-account', 'Use fallback route': 'next-service', 'Try the next free route': 'next-route', 'Stop and ask me': 'ask' };
-  const DESCRIBE = ['name', 'product', 'connect', 'bill', 'vendor', 'pair', 'pairNote', 'key', 'keyOnlyFor', 'app', 'gcp', 'overage', 'regions', 'help', 'gate'];
+  const DESCRIBE = ['name', 'product', 'connect', 'bill', 'vendor', 'pair', 'pairNote', 'key', 'keyOnlyFor', 'app', 'gcp', 'overage', 'regions', 'help'];
   function migrateAccount(p, acc) {
     if (!acc || typeof acc !== 'object') return;
     if (!acc.usage || typeof acc.usage !== 'object' || Array.isArray(acc.usage)) acc.usage = { text: typeof acc.usage === 'string' ? acc.usage : '', windows: {} };
@@ -294,7 +291,6 @@
   /* ---------- pieces ------------------------------------------------------ */
   function primaryFor(p) {
     const data = { provider: p.id };
-    if (p.gate) return { label: `See ${p.vendor}'s list`, icon: 'link', action: 'pm51-providers-gate', data };
     if (p.status === 'disabled') return { label: 'Turn on', icon: 'play', action: 'pm51-providers-turn-on', data };
     switch (p.nextAction) {
       case 'install': return { label: 'Install', icon: 'download', action: 'pm51-providers-install', data };
@@ -1377,7 +1373,6 @@
   PM51.on('providers-apikey', el => { const [p, acc] = acct(el); apiKeyPanel(p, acc); });
   PM51.on('providers-address', el => addressPanel(prov(el)));
   PM51.on('providers-turn-on', el => turnOn(prov(el)));
-  PM51.on('providers-gate', el => { const p = prov(el); example(`${p.vendor}'s list of supported tools`, p.gate === 'unverified' ? `${p.vendor} limits this plan to the tools it lists. Puppet Master isn't on that list yet, so it can't be set up here.` : undefined); });
   PM51.on('providers-check', el => checkPanel(prov(el)));
   PM51.on('providers-routes', () => PM51.panel({
     title: 'Free routes', subtitle: 'Turn routes on or off. They are tried in this order.', icon: 'route',

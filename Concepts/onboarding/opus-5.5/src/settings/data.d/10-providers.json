@@ -826,9 +826,7 @@
    "regions": [
     "Global (Z.AI)",
     "China (Zhipu)"
-   ],
-   "gate": "unverified",
-   "help": "Z.AI limits its Coding Plan to the tools it lists. Puppet Master isn't on that list yet, so it can't be set up here."
+   ]
   },
   {
    "id": "kimi-coding",
@@ -1052,7 +1050,7 @@
    "bill": "plan",
    "vendor": "OpenCode",
    "pair": "opencode-zen",
-   "pairNote": "OpenCode's monthly plan. With Extra Usage on, use past its limits is paid from your Console balance. Not the OpenCode server."
+   "pairNote": "OpenCode's monthly plan. Not the OpenCode server."
   },
   {
    "id": "anthropic-api",
@@ -1430,8 +1428,7 @@
    "vendor": "Cursor",
    "key": "ai.accounts.cursor-api-key",
    "app": "system.advanced.cli-path-cursor",
-   "overage": true,
-   "pairNote": "A personal key uses your Cursor plan; a team's key bills the team."
+   "overage": true
   },
   {
    "id": "qwen-token",
@@ -1488,7 +1485,7 @@
    "bill": "plan",
    "vendor": "Alibaba",
    "pair": "qwen-coding",
-   "pairNote": "A monthly plan with usage credits, separate from the Coding Plan."
+   "pairNote": "A monthly plan, separate from the Coding Plan."
   },
   {
    "id": "opencode-zen",

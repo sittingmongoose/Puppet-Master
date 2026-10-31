@@ -19,8 +19,8 @@
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Paste an API key from your Cursor dashboard. Use on your own key counts against your Cursor plan; a team's key bills the team.",
-          "expert": "Cursor SDK route: a user API key (billed to that user's plan) or a service-account key (billed to its team); Team Admin keys aren't accepted. Browser sign-in through cursor-agent is the other way in."
+          "text": "Paste an API key from your Cursor dashboard. It uses your Cursor plan.",
+          "expert": "Cursor SDK route with a user or service-account API key from the Cursor dashboard; Team Admin keys aren't accepted. Browser sign-in through cursor-agent is the other way in."
         },
         "provider:grok": {
           "title": "Grok Build",
@@ -39,18 +39,18 @@
         },
         "provider:qwen-coding": {
           "title": "Alibaba Coding Plan",
-          "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key, and the region your plan is in.",
-          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) and its Global or China endpoint; not interchangeable with DashScope pay-as-you-go keys."
+          "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key. A plan bought for China is set up in Settings.",
+          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with DashScope pay-as-you-go keys. The China route is in Settings."
         },
         "provider:qwen-token": {
           "title": "Alibaba Token Plan",
-          "text": "Alibaba Cloud's Token Plan: a monthly plan with usage credits. It has its own key, separate from the Coding Plan.",
-          "expert": "Alibaba Model Studio Token Plan: a subscription billed in monthly Credits (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
+          "text": "Alibaba Cloud's Token Plan, a monthly plan. It has its own key, separate from the Coding Plan.",
+          "expert": "Alibaba Model Studio Token Plan: a subscription (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI says its Coding Plan works only in the tools it lists. Puppet Master isn't one of them yet, so it can't be set up here.",
-          "expert": "GLM Coding Plan use is limited to Z.AI's supported-tool list, which doesn't include Puppet Master, so setup is gated; Puppet Master never presents itself as another tool. Zhipu's China plan is a separate route."
+          "text": "Z.AI's monthly plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
+          "expert": "Z.AI GLM Coding Plan with an API key on the coding endpoint. Zhipu's China plan is a separate route, in Settings."
         },
         "provider:kimi": {
           "title": "Kimi Code",
@@ -59,13 +59,13 @@
         },
         "provider:minimax": {
           "title": "MiniMax M Plan",
-          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key and the region your plan is in.",
-          "expert": "MiniMax M Plan (formerly Coding Plan): plan key with the Global (minimax.io) or China (minimaxi.com) endpoint; a pay-as-you-go MiniMax key isn't plan access."
+          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
+          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; a pay-as-you-go MiniMax key isn't plan access. The China route is in Settings."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console. If Extra Usage is on, use past the plan's limits is paid from your Console balance.",
-          "expert": "OpenCode Go subscription key from the OpenCode Console. With Extra Usage on (the default for Go Teams), requests past the limits draw on pay-as-you-go balance. Not the OpenCode server."
+          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console.",
+          "expert": "OpenCode Go subscription key from the OpenCode Console. Not the OpenCode server."
         },
         "provider:opencode-zen": {
           "title": "OpenCode Console",
@@ -80,12 +80,12 @@
         "provider:anthropic-api": {
           "title": "Anthropic API",
           "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
-          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace pays."
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
-          "text": "Google's Gemini through a key from Google AI Studio. Keys have free limits, or are billed by use once billing is on.",
-          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides the free or paid tier and quota. Separate from Antigravity."
+          "text": "Google's Gemini through a key from Google AI Studio. Separate from Antigravity.",
+          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides its free or paid tier and quota. Separate from Antigravity."
         },
         "provider:vertex": {
           "title": "Vertex AI",
@@ -213,11 +213,6 @@
           "title": "Password",
           "text": "Only if your OpenCode server has a password. It's the server's own password, not a key from an AI company.",
           "expert": "HTTP Basic password (OPENCODE_SERVER_PASSWORD); kept in the OS keychain, separate from model-provider keys."
-        },
-        "group:region": {
-          "title": "Where your plan is",
-          "text": "Plans bought for China use different keys and addresses from global ones. Pick the one your plan is for.",
-          "expert": "Global and China routes are separate provider entries with their own endpoints and keys."
         },
         "group:entity": {
           "title": "Whose Copilot plan",
@@ -1089,8 +1084,8 @@
       "ai": {
         "all": {
           "title": "See all providers",
-          "text": "The full list, grouped by what pays: plans with included usage, keys you pay for by use, and your own server. An AI provider is the company your assistant uses.",
-          "expert": "All providers in this concept, grouped by billing class: subscriptions, API billing, and self-run servers."
+          "text": "The full list, in three groups: plans you pay for, keys billed by what you use, and your own server. An AI provider is the company your assistant uses.",
+          "expert": "All providers in this concept, grouped as subscriptions, API billing, and self-run servers."
         },
         "none": {
           "title": "I don't have any of these",
@@ -1104,7 +1099,7 @@
         },
         "free": {
           "title": "Set Up Free Models",
-          "text": "Adds free options with limits for suitable tasks. Limits, and what's free, can change. Your paid accounts are used first by default; change that in Settings.",
+          "text": "Adds free options with limits for suitable tasks. Their limits can change. Your paid accounts are used first by default; change that in Settings.",
           "expert": "Adds Free Models routes, each set up through its own provider's account. Paid accounts are preferred by default; the priorities are in Settings."
         },
         "group:install": {
@@ -1123,8 +1118,8 @@
       "ai-none": {
         "pick:sub": {
           "title": "A monthly plan",
-          "text": "Like Claude or ChatGPT. A plan with included usage. Extra use can cost more, depending on the plan's settings.",
-          "expert": "A subscription with included usage; any overage or extra-usage charge depends on the provider and the account's settings."
+          "text": "A plan you subscribe to, like Claude or ChatGPT.",
+          "expert": "A subscription account (Claude, ChatGPT and others)."
         },
         "pick:api": {
           "title": "Pay as you go",
@@ -1153,25 +1148,20 @@
           "text": "GitHub closed this service. Choose another route.",
           "expert": "GitHub Models was fully retired on July 30, 2026; shown only as No longer available for a saved choice."
         },
-        "route:free-cerebras": {
-          "title": "Cerebras trial",
-          "text": "Not a free plan: a trial that starts once you add a payment method, and ends. Cerebras doesn't charge unless you buy more.",
-          "expert": "Cerebras Free Trial: trial credit after adding a verified payment method, with an expiry; no permanently free tier and no automatic paid enrollment."
-        },
         "route:free-groq": {
           "title": "Groq free plan",
           "text": "Groq's free plan, with limits. Get a key from Groq's console. When a limit is reached, it waits for it to reset.",
           "expert": "Groq Free plan with a Groq API key; a 429 carries retry-after and reset headers. Retry now, never a reconnect."
         },
-        "route:free-hf": {
-          "title": "Hugging Face Inference",
-          "text": "Not free for a new free account: Hugging Face needs credit you buy, or a PRO plan. It uses a token from your Hugging Face settings.",
-          "expert": "Inference Providers: free accounts get no included credits; needs purchased credit or PRO, and a fine-grained token with Inference Providers permission."
-        },
         "attribution": {
           "title": "Where this list comes from",
           "text": "The free model list is based on a community list. Opens it in your browser.",
           "expert": "The free route list is based on a community-maintained list; opens it in your browser."
+        },
+        "route:free-nvidia": {
+          "title": "NVIDIA free models",
+          "text": "Free AI models from NVIDIA, with limits. Get a key from NVIDIA's API catalog.",
+          "expert": "NVIDIA API catalog (NIM) endpoints with free inference for listed models; an NVIDIA API key; rate limits apply."
         }
       },
       "ready": {
