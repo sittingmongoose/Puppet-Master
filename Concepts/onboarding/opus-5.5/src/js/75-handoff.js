@@ -63,7 +63,8 @@
     if (mode === 'local_or_vpn') { base.via = 'lan'; base.state = server(S) ? 'in_use' : 'not_set_up'; return base; }
     const a = S.sess.awaySetup || {};
     base.state = a.mode === mode && a.state === 'done' ? 'ready' : a.mode === mode && a.state === 'later' ? 'set_up_later'
-      : a.mode === mode && (a.state === 'running' || a.state === 'waiting') ? 'waiting' : a.mode === mode && a.state === 'failed' ? 'needs_attention' : 'not_set_up';
+      : a.mode === mode && ['running', 'waiting', 'pending', 'idle'].includes(a.state) && a.confirmed ? 'waiting' : a.mode === mode && a.state === 'failed' ? 'needs_attention' : 'not_set_up';
+    if (mode === 'remote_link') base.endpoint_label = a.mode === mode && a.link ? a.link : '';
     return base;
   }
 

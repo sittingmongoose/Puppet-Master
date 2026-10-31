@@ -692,14 +692,16 @@
     lead: () => T('restore.preview.lead'),
     body(S) {
       const r = R(S), b = S.env.fullBackups.find((x) => x.id === r.pick) || S.env.fullBackups[0];
-      let out = `<ul class="o55-will" data-key="what">`
-        + [['stack', T('restore.preview.projects', { n: b.projects })], ['spark', T('restore.preview.accounts', { n: b.accounts })], ['history', T('restore.preview.settings')]]
-          /* on a new Server, the access chosen away from home is part of what Restore confirms */
-          .concat(awayOf(S) ? [['globe', T('restore.preview.away', { how: awayOf(S) === 'tailscale' ? 'Tailscale' : awayOf(S) === 'reverse_proxy' ? md(S).proxy_hostname : T('away.link.title') })]] : []).map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('') + '</ul>';
+      /* where it comes back to, and that it comes back safe: paused, and paired again (SCR-13, SRV-013, PWIZ-025) */
+      const onto = r.scope === 'server' ? T('restore.preview.ontoServer', { name: S.sess.server.displayName || '' }) : T('restore.preview.ontoHere', { name: S.env.client.name });
+      let out = `<p class="o55-locline" data-key="onto">${C.small(r.scope === 'server' ? 'server' : 'computer', 16)}<span>${U.esc(onto)}</span></p>`;
+      out += `<ul class="o55-will" data-key="what">`
+        + [['stack', T('restore.preview.projects', { n: b.projects })], ['spark', T('restore.preview.accounts', { n: b.accounts })], ['history', T('restore.preview.settings')], ['power', T('restore.preview.paused')], ['phone', T('restore.preview.repair', { name: r.scope === 'server' ? S.sess.server.displayName || '' : S.env.client.name })]]
+          /* a new Server's way in from away is set up after the restore, as its own step (SCR-13) */
+          .concat(awayOf(S) ? [['globe', T('restore.preview.away', { how: awayOf(S) === 'tailscale' ? (md(S).tailscale_control === 'headscale' ? 'Headscale' : 'Tailscale') : awayOf(S) === 'reverse_proxy' ? String(md(S).proxy_hostname || '').replace(/^https:\/\//, '') : T('away.link.title') })]] : []).map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('') + '</ul>';
       out += C.note(T('restore.preview.never'), 'info', 'lock');
       const st = F.state(S, 'restore:' + r.pick);
-      const rp = (st && st.phases || []).some((x) => x.key === 'remote') ? ['remote'] : [];
-      if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings'].concat(rp), { remote: T('restore.apply.phases.remote'), fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings') });
+      if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings', 'paused'], { fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings'), paused: T('restore.apply.phases.paused') });
       return out;
     },
     foot(S) {
@@ -713,18 +715,21 @@
         r.confirmed = true; /* the Restore button is the restore preflow's own confirmation */
         S.save();
         O55.sound.play('commit', SND.restore);
-        const d = md(S), remote = r.scope === 'server' && d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
-        /* the Restore button stands in for Review on this path: the preview listed the access being set up */
-        if (remote) O55.owners.dispatch(d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup', { draft: d.project_draft_ref, restore: r.pick }, Object.assign(S.ctx(), { reviewConfirmed: true }), () => ({ ok: true }));
-        F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }].concat(remote ? [{ key: 'remote', ms: 900 }] : []), {
-          payload: { scope: r.scope, backup: r.pick, remote_mode: remote ? d.remote_mode : null }, sound: { intensity: 0.9 },
+        /* the Backup owner's own restore of a whole Server (DL-228), into a paused, recovery-safe state; a new Server's
+           way in from away is not set up inside it: it waits for the restore and asks for itself (SCR-13) */
+        F.op(S, 'restore:' + r.pick, 'cmd.restore.server_full', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }, { key: 'paused', ms: 500 }], {
+          payload: { scope: r.scope, backup: r.pick, target: r.scope === 'server' ? S.sess.server.id || null : S.env.here.id, recovery_safe: true }, sound: { intensity: 0.9 },
           /* (a restore finished for a copy the person has since turned away from is not this one: SCR-01's class) */
-          onDone: () => { if (R(S) !== r || r.pick !== pick) return; r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview' && R(S).pick === pick) O55.ui.go('r-done'); }); }
+          onDone: () => { if (R(S) !== r || r.pick !== pick) return; r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview' && R(S).pick === pick) afterRestore(S); }); }
         });
       },
-      done(S) { O55.ui.go('r-done'); }
-    }
+      done(S) { afterRestore(S); }
+    },
+    /* the Backup owner's read-only look at what this backup holds, once per copy picked */
+    mounted(S) { const r = R(S); if (r.pick) F.op(S, 'restore-preview:' + r.pick, 'cmd.restore.preview', [{ key: 'look', ms: 400 }], { quiet: true, sound: { done: false }, payload: { scope: r.scope, backup: r.pick } }); }
   });
+  /* after a restore: a new Server's way in from away, as its own confirmed step (or later), then Restored */
+  function afterRestore(S) { if (awayOf(S) && O55.away) return O55.away.start(S, 'r-done', { ask: true }); O55.ui.go('r-done'); }
 
   /* the restored Project opened goes to the app by its own name, never its id as a name (SCR-18's class) */
   function restoredOpen(S) {
@@ -741,6 +746,8 @@
       const r = R(S), b = S.env.fullBackups.find((x) => x.id === r.pick) || S.env.fullBackups[0], projects = b.projectList.map((name) => ({ id: U.slug(name), name }));
       let out = C.group(T('ready.project'), C.cards('pickProject', projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name })), r.open || projects[0].id));
       out += O55.tips.opt('createNew', `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-o55-sound="self" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('restore.done.create'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
+      /* (it came back paused: recovery-safe, SCR-13) */
+      out += C.note(T('restore.done.paused'), 'info', 'power');
       return out;
     },
     foot(S) {

@@ -50,8 +50,9 @@
     const v = String(value || '').trim().toLowerCase();
     if (!v) return null;
     if (kind === 'address') return allServers(S).find((s) => s.address.toLowerCase() === v || (s.id === 'pm:home' && v === '192.168.1.20')) || null;
-    if (kind === 'proxy') return F.isHttps(v) ? S.env.pmServers[0] : null;
-    if (kind === 'link') return /^[a-z][a-z0-9._:/#-]*$/.test(v) && v.length > 8 ? S.env.pmServers[0] : null;
+    /* (only an address the endpoint check accepts is looked up: SCR-09; a link or the short code its Server shows) */
+    if (kind === 'proxy') return O55.endpoint.check(v, 'proxy').ok ? S.env.pmServers[0] : null;
+    if (kind === 'link') return O55.endpoint.checkLink(v).ok ? S.env.pmServers[0] : null;
     return null;
   }
   /* A different Server ends what was started for the one before: its pairing request (cancelled with the owner), the
@@ -197,15 +198,16 @@
       let under = '';
       if (mode === 'tailscale') {
         under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
-        if (d.tailscale_control === 'headscale') under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
+        if (d.tailscale_control === 'headscale') { const res = O55.endpoint.check(d.headscale_url, 'headscale'), w = O55.endpoint.hint(res, 'https://…'); under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok }); }
         under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale', quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
       } else if (mode === 'reverse_proxy') {
-        const hit = resolveAddress(S, d.proxy_hostname, 'proxy');
-        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
+        const hit = resolveAddress(S, d.proxy_hostname, 'proxy'), w = O55.endpoint.hint(O55.endpoint.check(d.proxy_hostname, 'proxy'), 'https://…');
+        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
         /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
       } else if (mode === 'remote_link') {
-        const hit = resolveAddress(S, d.remote_endpoint, 'link');
-        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
+        /* the link it shows, or its short code (RAS-014); where the Server shows them is said under the field */
+        const hit = resolveAddress(S, d.remote_endpoint, 'link'), w = O55.endpoint.hint(O55.endpoint.checkLink(d.remote_endpoint), T('connect.route.link.where'));
+        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
       }
       const opts = [
         { v: 'local_or_vpn', glyph: 'link', title: T('connect.route.local'), quiet: true },
@@ -241,7 +243,14 @@
       },
       /* another control server is another way in: a request sent the other way ends and the review asks again */
       tsControl(S, v) { if (cd(S).tailscale_control !== v) { endRun(S, 'route_changed'); unconfirm(S); } O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },
-      next(S) { O55.ui.go('c-review'); }
+      /* an address is kept as typed while the person types; the one it will use (https:// in front) goes on (SCR-09) */
+      next(S) {
+        const d = cd(S), E = O55.endpoint, patch = {};
+        if (d.remote_mode === 'reverse_proxy' && E.check(d.proxy_hostname, 'proxy').ok) patch.proxy_hostname = E.check(d.proxy_hostname, 'proxy').url;
+        if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && E.check(d.headscale_url, 'headscale').ok) patch.headscale_url = E.check(d.headscale_url, 'headscale').url;
+        if (Object.keys(patch).length) { O55.draft.set(d, patch); S.save(); }
+        O55.ui.go('c-review');
+      }
     },
     bind: {
       addr(S, v) { S.sess.connect.addr = v; const was = cd(S).server_ref, hit = resolveAddress(S, v, 'address'); choose(S, hit, { server_connection_mode: 'manual' }); O55.ui.refresh(); foundIf(was, hit); },

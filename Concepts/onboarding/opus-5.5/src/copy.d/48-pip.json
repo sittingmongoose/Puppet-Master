@@ -338,9 +338,9 @@
           "expert": "The reverse proxy's https URL for the Server, like https://pm.example.com."
         },
         "field:link": {
-          "title": "Remote Link",
-          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access.",
-          "expert": "The Remote Link string the Server issued (pm-remote-link:…), shown in its Settings › Access."
+          "title": "Remote Link or its code",
+          "text": "The link your Server made, or the short code it shows. Your Server shows them in Settings › Server & Project Location › Away From Home.",
+          "expert": "The Server-issued Remote Link (or its short code) from Settings › Server & Project Location › Away From Home; pairing still follows."
         }
       },
       "c-pair": {
@@ -883,55 +883,68 @@
       "away": {
         "pick:home": {
           "title": "Only at home",
-          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN."
+          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN. Nothing is opened to the internet.",
+          "expert": "LAN or an existing VPN only; no remote route is configured and nothing is exposed publicly."
         },
         "pick:anywhere": {
           "title": "Away from home",
-          "text": "Tailscale connects your devices through a private network. Sign in once to reach your Server while you are away from home."
+          "text": "Tailscale is a private network for your own devices, built into Puppet Master. After you confirm, you sign in to Tailscale; each device you use away from home needs to be on the same Tailscale network.",
+          "expert": "Hosted Tailscale through Puppet Master's built-in connector on the Server (no Tailscale app on the Server). Authorization and device approval happen after Review; Clients need tailnet reach."
         },
         "route:headscale": {
           "title": "My own Headscale server",
-          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale."
+          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale. Whoever runs it approves your Server.",
+          "expert": "Self-hosted Headscale control server; the connector enrolls after Review by interactive approval or a one-time key. No Funnel."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "Puts it on a web address you own, like pm.example.com. Puppet Master sets up Caddy with a free certificate."
+          "text": "Puts your Server at a web address you own, like pm.example.com, on the internet. Anyone can find its sign-in page; only devices you pair can use it.",
+          "expert": "Public custom-domain route through a reverse proxy (dedicated hostname). Requires DNS, inbound HTTPS and explicit consent; preflight and tests run after Review."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "Puppet Master carries the connection between your devices. Use its private link without changing your network settings."
+          "text": "Your Server makes a link for your other devices. No account, web address or router changes. Each device still needs your approval.",
+          "expert": "Accountless outbound rendezvous (direct or relayed). The Server creates the link after Review; pairing is still required."
         },
         "field:proxy": {
           "title": "Web address",
-          "text": "The address you own and want to use, starting with https://, like https://pm.example.com."
+          "text": "The address you own, like https://pm.example.com. It needs a name of its own, with nothing after it.",
+          "expert": "Dedicated https origin for the proxy; no subpath, credentials, query or fragment."
         },
         "hosting:generate_for_server": {
           "title": "Puppet Master sets it up",
-          "text": "Puppet Master sets up the proxy (the program that answers on that address) for you. The easiest way."
+          "text": "Puppet Master sets up the program that answers on that address (the proxy) on your Server and checks it works. The easiest way.",
+          "expert": "Generate and activate an NGINX or Traefik configuration on the Server, then run the owner's DNS, reach, TLS and live-connection tests."
         },
         "hosting:generate_only": {
           "title": "Only make the settings file",
-          "text": "You get the file to use with a proxy you set up yourself. For people who manage their own."
+          "text": "You get a settings file to add to a proxy you run yourself. Puppet Master checks it works once you have added it.",
+          "expert": "Export the NGINX or Traefik configuration; activation waits until you install it and the tests pass."
         },
         "hosting:existing_proxy": {
           "title": "I already have one",
-          "text": "Your address already points at a proxy you run. Puppet Master just uses it."
+          "text": "Your address already points at a proxy you run, such as Caddy or Nginx Proxy Manager. Puppet Master checks it reaches your Server and uses it.",
+          "expert": "Existing external proxy: validate its origin, certificate and live connection against the Server's identity; nothing is generated."
         },
         "tls:lets_encrypt": {
           "title": "A free certificate",
-          "text": "The certificate makes the address safe to use (the padlock in your browser). A free one renews by itself."
+          "text": "A certificate lets browsers check they reached your address and protects the connection. A free one is fetched and renewed by itself.",
+          "expert": "Managed ACME certificate (HTTP-01 needs port 80; TLS-ALPN uses 443). Encryption doesn't make the route private."
         },
         "tls:existing_certificate": {
           "title": "My own certificate",
-          "text": "Use a certificate you already have for that address."
+          "text": "Use a certificate you already have for that address. You choose it on the Server after you confirm; it never passes through this window.",
+          "expert": "Bring-your-own certificate and key, selected on the Server through its secure store after Review; validated for the hostname and chain."
         },
         "group:kind": {
           "title": "Which proxy",
-          "text": "Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported. Pick the one you already use."
+          "text": "Puppet Master makes settings for NGINX or Traefik. Pick the one you use. Using Caddy or Nginx Proxy Manager? Choose I already have one.",
+          "expert": "Generation targets NGINX or Traefik (the owner's tested families). Other proxies are supported as an existing external proxy."
         },
-        "field:link": {
-          "title": "Remote Link",
-          "text": "Paste the Remote Link here. Your Server shows it under Settings › Access."
+        "field:headscale": {
+          "title": "Headscale address",
+          "text": "The https:// address of your Headscale server, like https://headscale.example.com.",
+          "expert": "Headscale control URL (https)."
         }
       },
       "review": {
@@ -1247,6 +1260,33 @@
         "group:volume": {
           "title": "Choose the drive",
           "text": "Drives this computer already shows in its file browser. Pick the one that holds the Project."
+        }
+      },
+      "away-setup": {
+        "start": {
+          "title": "Set it up",
+          "text": "Starts setting up the way you chose to reach your Server away from home. Each step says what it is doing.",
+          "expert": "Starts the Remote Access owner's setup for the reviewed route; each step is a separate owner command."
+        },
+        "later": {
+          "title": "Do this later",
+          "text": "Stops here without setting it up. Everything else keeps working at home. Finish it any time in Settings.",
+          "expert": "Leaves the route not set up; Settings › Server & Project Location › Away From Home resumes it."
+        },
+        "person:tsSignIn": {
+          "title": "Sign in to Tailscale",
+          "text": "Opens Tailscale's own sign-in page. Your Tailscale password is never typed into Puppet Master.",
+          "expert": "Opens Tailscale's protected authorization page; Puppet Master never sees the credentials."
+        },
+        "person:hsApproved": {
+          "title": "It's approved",
+          "text": "Press this once whoever runs your Headscale server has let your Server in.",
+          "expert": "Continue after the Headscale administrator approves the node registration."
+        },
+        "person:installed": {
+          "title": "I've added it",
+          "text": "Press this once the settings file is in your proxy. Puppet Master then checks it works.",
+          "expert": "Continue to the reach, certificate and live-connection tests after installing the exported configuration."
         }
       }
     },

@@ -35,6 +35,8 @@
     'cmd.client.pair.cancel': { owner: 'Server', phase: 'server_setup', selectedSource: true },
     'cmd.restore.preview': { owner: 'Backup', phase: 'read_only_preflight' },
     'cmd.restore.apply': { owner: 'Backup', phase: 'restore_preflow', canonical: false },
+    /* the Backup owner's own restore of a whole Server, which the concept's restore.apply stands for (DL-228) */
+    'cmd.restore.server_full': { owner: 'Backup', phase: 'restore_preflow' },
     /* the one reviewed commit and its child owners */
     'cmd.project.new_local': { owner: 'Project', phase: 'project_commit' },
     // Contracted owner routes; this HTML has no native implementation.
@@ -49,6 +51,15 @@
     'cmd.remote_access.tailscale.setup.start': { owner: 'RemoteAccess', phase: 'project_commit' },
     'cmd.remote_access.proxy.generate': { owner: 'RemoteAccess', phase: 'project_commit' },
     'cmd.remote_access.remote_link.setup': { owner: 'RemoteAccess', phase: 'project_commit' },
+    /* Remote Access's own steps after the commit, one command each (RAS-009/RAS-015 census; 71a away-setup) */
+    'cmd.remote_access.tailscale.login.start': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.tailscale.connector.check': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.tailscale.test': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.tailscale.headscale.start': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.route.test': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.proxy.export': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.proxy.test': { owner: 'RemoteAccess', phase: 'project_commit' },
+    'cmd.remote_access.remote_link.test': { owner: 'RemoteAccess', phase: 'project_commit' },
     /* after commit */
     'cmd.backup.destination.add': { owner: 'Backup', phase: 'postcommit_backup' },
     'cmd.backup.destination.test': { owner: 'Backup', phase: 'postcommit_backup' },
