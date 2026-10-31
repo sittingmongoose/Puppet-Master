@@ -490,7 +490,7 @@
     if (oops) lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null }; else if (!pending) lastOops = null;
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
-    if (cheer) { cheering = { text: O55.t('pip.cheer.' + cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
