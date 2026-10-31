@@ -109,7 +109,7 @@ const O55_NIER_PARTS = Object.freeze([
 ].map(([group, label, key, name]) => Object.freeze({ key, label, group, name: name || label })));
 const o55NierByLabel = new Map(O55_NIER_PARTS.map(p => [p.label, p.key]));
 const o55NierByKey = new Map(O55_NIER_PARTS.map(p => [p.key, p.label]));
-const O55_NIER_LABEL = 'NieR: Automata';
+const O55_NIER_LABEL = 'NieR';   /* the family's own name (Q22): the title bar's theme button reads "NieR", as its menu does */
 /* general.visual.nier-background's options, in canon order (Plans/settings_inventory.json) */
 const O55_NIER_BACKGROUNDS = Object.freeze(['Parchment', 'City Ruins', 'The Bunker', 'Desert', 'Forest Castle', 'Amusement Park', 'Flooded City', 'Follow the page']);
 /* copy: read when it is used (the copy table loads after the Settings scripts) */
