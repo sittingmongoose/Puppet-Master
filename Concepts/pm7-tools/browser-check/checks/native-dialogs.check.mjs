@@ -36,6 +36,38 @@ async function oldTerminalOutOfReach(t, f, tag) {
 	await t.check(`${tag}: PM_TERMINAL_DEMO exposes no close or rename`, r.api.length === 0, r.api.join(', '));
 }
 
+// The chat's Plan export, as a person reaches it: the Plan card's title opens its details, More, Export, PDF. The thread
+// that holds the Plan ("query", Query performance) is opened through the chat's own switch, as its thread list does.
+async function exportPdf(t, f, tag, sandboxed) {
+	const ctx = t.page.context(), pagesBefore = ctx.pages().length;
+	if (!sandboxed) {
+		// a real print dialog would hold the test: the window's print() is replaced by a marker on a normal page
+		await f.evaluate(() => {
+			window.__fx1Printed = 0;
+			const real = window.open;
+			window.open = function () { const w = real.apply(this, arguments); if (w) w.print = () => { window.__fx1Printed++; }; return w; };
+		});
+	}
+	await f.evaluate(() => window.PM56_EXT.ctx().switchThread('query'));
+	await f.locator('[data-action="pd-info"][data-id="ap-index"]').first().click();
+	await f.locator('[data-action="pd-more-actions"]').first().click();
+	await f.locator('[data-action="pd-export"][data-id="ap-index"]').first().click();
+	await f.locator('[data-action="pd-export-do"][data-format="pdf"]').first().click();
+	await f.waitForTimeout(1500);
+	const receipt = await f.evaluate(() => { const r = window.PM56_PLANS.get('ap-index'); const e = r && r.exports && r.exports[r.exports.length - 1]; return e ? e.result : ''; });
+	const note = await f.evaluate(() => [...document.querySelectorAll('.toast, [class*="toast"]')].map((e) => e.textContent.trim()).join(' | '));
+	const pagesAfter = ctx.pages().length;
+	if (sandboxed) {
+		await t.check(`${tag}: the PDF export says the preview blocks printing`, /blocks the print dialog/.test(receipt) && /no PDF was produced/.test(receipt), `receipt: ${receipt}`);
+		await t.check(`${tag}: and a note says so`, /Print unavailable here/.test(note), `notes: ${note.slice(0, 200)}`);
+		await t.check(`${tag}: no empty print window is left open`, pagesAfter === pagesBefore, `${pagesBefore} -> ${pagesAfter} pages`);
+	} else {
+		const printed = await f.evaluate(() => window.__fx1Printed);
+		await t.check(`${tag}: the PDF export opens the print window and prints`, printed === 1 && /opened the browser print pipeline/.test(receipt), `printed ${printed}, receipt: ${receipt}`);
+		for (const p of ctx.pages()) if (p !== t.page) await p.close().catch(() => {});
+	}
+}
+
 export default async function (t) {
 	for (const where of ['normal page', 'sandboxed preview']) {
 		let f;
@@ -44,6 +76,7 @@ export default async function (t) {
 		await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1', null, { timeout: 60000 });
 		await watchNative(f);
 		await oldTerminalOutOfReach(t, f, where);
+		await exportPdf(t, f, where, where === 'sandboxed preview');
 		const calls = await nativeCalls(f);
 		await t.check(`${where}: no native dialog was called`, calls.length === 0, `called: ${calls.join(', ')}`);
 	}

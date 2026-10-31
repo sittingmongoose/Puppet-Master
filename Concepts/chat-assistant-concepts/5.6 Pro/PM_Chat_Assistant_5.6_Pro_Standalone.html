@@ -48168,13 +48168,17 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         var w=null;
         try{ w=window.open('', '_blank'); }catch(e){}
         if(w){
-          w.document.write(printDocument(r));
-          w.document.close();
-          /* FX-1: a sandboxed preview without allow-modals (T3's file preview) ignores print() at once, and the window it
-             opened is sandboxed too, so it stayed open with no print dialog. A page with no storage whose print() comes
-             straight back is that case: the window closes and the receipt and a note say no PDF was made. */
+          /* FX-1: in a sandboxed preview (T3's file preview: no allow-same-origin, no allow-modals) the window it opens is
+             sandboxed too and gets its own opaque origin, so writing its document throws, and print() is ignored at once;
+             either way it was left open and blank. A write that throws, or a page with no storage whose print() comes
+             straight back, is that case: the window closes and the receipt and a note say no PDF was made. */
           var t0=Date.now(), threw=false;
-          try{ w.print(); }catch(e){ threw=true; }
+          try{
+            w.document.write(printDocument(r));
+            w.document.close();
+            t0=Date.now();
+            w.print();
+          }catch(e){ threw=true; }
           var noStorage=(function(){ try{ localStorage.getItem('pm56-print'); return false; }catch(e){ return true; } })();
           if(threw||(noStorage&&Date.now()-t0<150)){
             try{ w.close(); }catch(e){}
