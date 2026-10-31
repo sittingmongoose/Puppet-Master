@@ -265,3 +265,11 @@ html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; paddi
 .o55-lookmodes button.o55-on { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 #pm-o55-onboarding[data-family="retro"] .o55-lookmenu, .o55t-root[data-family="retro"] .o55-lookmenu { border-radius: 0; border: 2px solid var(--text-primary); animation-timing-function: steps(3, end); }
 #pm-o55-onboarding[data-family="retro"] .o55-lookopt, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes button { border-radius: 0; }
+/* A row is one unit (QA2 review m1): the option and its ? share one highlight, hovered or chosen, so the chosen look's
+   box never stops short of its own ?. Inside a row the option draws none of its own; the chosen row carries o55-opt-on
+   (63-look-menu.js). */
+.o55-lookmenu .o55-opt-menu { border-radius: 10px; padding-right: 6px; }
+.o55-lookmenu .o55-opt-menu > .o55-lookopt, .o55-lookmenu .o55-opt-menu > .o55-lookopt:hover, .o55-lookmenu .o55-opt-menu > .o55-lookopt.o55-on { border-color: transparent; background: transparent; box-shadow: none; }
+.o55-lookmenu .o55-opt-menu:not(.o55-lookmoderow):hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.o55-lookmenu .o55-opt-menu.o55-opt-on { background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 12%, transparent); box-shadow: inset 0 0 0 1px var(--o55-accent, var(--accent-blue)); }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] .o55-lookmenu .o55-opt-menu { border-radius: 0; }

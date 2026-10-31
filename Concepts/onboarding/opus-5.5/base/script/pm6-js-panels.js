@@ -319,7 +319,7 @@
      prefers-color-scheme and re-resolves live on scheme change.
      data-theme on <html> ALWAYS carries one of the 8 resolved slugs, so every
      [data-theme…] CSS block and the /-light$/ glass-alpha clamps keep working. */
-  var PM_THEME_FAMILIES = { friendly: 'Friendly', glass: 'Glass', retro: 'Retro', basic: 'Basic', nier: 'NieR' };
+  var PM_THEME_FAMILIES = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
   var PM_THEME_MODES = ['light', 'dark', 'auto'];
   var PM_THEME_SLUGS = {
     'friendly-dark': 'Friendly Dark',

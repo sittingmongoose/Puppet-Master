@@ -34,7 +34,7 @@
       const nier = th.chosen === 'nier' && !!O55.nierLook;
       const ids = FAMILIES.map((f) => 'lookFamily:' + f).concat(['lookMode:light', 'lookMode:dark']).concat(nier ? ['lookNierAdjust:nier-adjust'] : []);
       const notes = tips ? ids.map((id) => O55.tips.explainer(id)).join('') : '';
-      return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map((f) => `<span class="o55-opt o55-opt-menu">${opt(f)}${tq('lookFamily:' + f)}</span>`).join('')}</div>`
+      return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map((f) => `<span class="o55-opt o55-opt-menu${f === th.chosen ? ' o55-opt-on' : ''}">${opt(f)}${tq('lookFamily:' + f)}</span>`).join('')}</div>`
         + `<div class="o55-opt o55-opt-menu o55-lookmoderow"><div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div>${tq('lookMode:' + th.mode)}</div>`
         + (nier ? this.adjustRow(attr, tq) : '') + notes + '</div>';
     },

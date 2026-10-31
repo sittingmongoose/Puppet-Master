@@ -635,7 +635,7 @@
   };
 
   /* ---- looks ---- */
-  const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'];
+  const LOOKS = ['basic', 'friendly', 'glass', 'retro', 'nier'];   /* canon's order (Q22, DL-257) */
   const tome = () => W('PM7_SETTINGS_TOME');
   function lookNow() {
     const th = O55.theme(), P = W('PM_THEME');
