@@ -276,11 +276,18 @@
     /* a browser sign-in closed before it finished: the row says so and offers it again (ai.signinFail,
        online.signin.fail); the second try works */
     antigravityOnce: { label: 'Antigravity sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { antigravity: true }); } },
-    githubSigninOnce: { label: 'GitHub sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { github: true }); } }
+    githubSigninOnce: { label: 'GitHub sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { github: true }); } },
+    /* the three failures a first-time person can meet that had no way to happen here (the lead, 2026-10-30) */
+    smbWrong: { label: 'Shared folder refuses the first password', apply(e) { e.failures.smb_password_once = true; } },
+    restoreFails: { label: 'A restore stops part-way once', apply(e) { e.failures.restore_once = true; } },
+    /* (the Server lane's pairing outcomes, SCR-15: failures.pair_once fires once at the approval step) */
+    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } }
   };
 
+  /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
+  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
   O55.fixtures = {
-    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders,
+    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders, DEMO,
     make(scenario) {
       const e = base();
       const ids = String(scenario || 'fresh').split('+');
