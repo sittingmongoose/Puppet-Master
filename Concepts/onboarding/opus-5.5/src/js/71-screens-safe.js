@@ -526,7 +526,8 @@
   const subOf = (S, dest) => (S.sess.backup && S.sess.backup.dest === dest ? S.sess.backup.sub : null);
   const backupLabel = (S, dest, sub) => (dest === 'nas' ? (backupNas(S) || { name: T('safe.backup.nas') }).name : SUBS[dest] ? T('safe.backup.family.' + family(dest, sub || subOf(S, dest))) : T('safe.backup.' + dest));
   /* the sub-choice under its card (the bucket's service, the server's protocol) */
-  const subChoice = (dest, sub, action) => (SUBS[dest] ? C.segmented({ do: action, value: family(dest, sub), label: T('safe.backup.subLabel.' + dest), options: SUBS[dest].map((v) => ({ v, label: T('safe.backup.family.' + v) })) }) : '');
+  /* (short names, so the choice and its ? fit under the card at every width) */
+  const subChoice = (dest, sub, action) => (SUBS[dest] ? C.segmented({ do: action, value: family(dest, sub), label: T('safe.backup.subLabel.' + dest), options: SUBS[dest].map((v) => ({ v, label: O55.tx('safe.backup.short.' + v) || T('safe.backup.family.' + v) })) }) : '');
   /* A bucket or a server connects with access details, not a browser sign-in, each checked by its service's own rule
      before Continue: an Amazon bucket's name (Puppet Master finds its region itself, and temporary keys bring their
      session token), Backblaze B2's S3 address and an application key (B2's master key does not work there), another
@@ -710,4 +711,36 @@
   });
 
   O55.safe = { forgeName, visCopy, hostOf };
+
+  /* ================================================================== handed to the app at the end (O55.handoff) */
+  /* What the person chose for keeping the work safe, as plain non-secret facts the app shows: how versions are kept,
+     the online copy (service, server, account, where it lives, its name, who can see it, branch and first files, how
+     Puppet Master signs in there) and the backup (its family and exact place). Each says only what really happened:
+     an online copy is `created` or `linked` once the reviewed commit finished it, `skipped` when the person went on
+     without it, and `not_created` otherwise; a backup is `on` only once every protection step is done. */
+  const HANDOFF = {
+    source_control(S) {
+      const d = md(S), cm = S.sess.commit || {}, fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null;
+      const committed = cm.state === 'done' || (S.ctx && S.ctx().committed);
+      const out = { history: { backend: fi && fi.history ? fi.history : d.history_backend, kept_existing: !!(fi && fi.history), filesafe: !!d.filesafe }, online: null };
+      if (d.online_mode === 'none') { if (cm.skipOnline) out.online = { state: 'skipped' }; return out; }
+      const o = RULES().ownerOf(S.env, d), p = RULES().projectOf(S.env, d);
+      out.online = { mode: d.online_mode, service: d.forge, variant: d.forge_provider_variant, service_label: forgeName(d.forge, d.forge_provider_variant), address: d.forge_instance_url,
+        account: accountFor(S, d.forge) || null, owner: o ? { scope: o.scope, id: o.id || null, kind: RULES().ownerNoun(d), name: o.name || null } : null,
+        project: p ? { id: p.id || p.key, name: p.name || p.key } : null, name: d.repository_name, visibility: d.repository_visibility,
+        visibility_label: d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility ? visCopy(d, d.repository_visibility, o).title : null,
+        default_branch: d.online_mode === 'new' ? d.repository_default_branch : null,
+        first_files: d.online_mode === 'new' ? { readme: !!d.repository_initialize_readme, ignore: d.repository_gitignore, license: d.repository_license } : null,
+        sign_in: d.forge_auth_method === 'token' ? 'access_token' : 'browser',
+        state: !committed ? 'not_created' : d.online_mode === 'existing' ? 'linked' : 'created' };
+      return out;
+    },
+    backup(S) {
+      const b = S.sess.backup || {}; if (!b.dest) return null;
+      return { family: family(b.dest, b.sub), label: backupLabel(S, b.dest, b.sub), place: whereLine(S, b.dest, b.sub, b.access, b.account), locator: b.dest === 'nas' ? null : locator(S, b.dest, b.sub, b.access, b.account),
+        state: b.state === 'done' ? 'on' : b.state === 'later' ? 'set_up_later' : (b.done || []).length ? 'partly_set_up' : 'not_set_up', steps_done: (b.done || []).slice() };
+    }
+  };
+  /* (75-handoff.js loads after this file: the parts are handed over once every file has run) */
+  setTimeout(() => { if (O55.handoff && O55.handoff.part) Object.keys(HANDOFF).forEach((k) => O55.handoff.part(k, HANDOFF[k])); }, 0);
 })();

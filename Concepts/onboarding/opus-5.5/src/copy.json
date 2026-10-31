@@ -467,7 +467,8 @@
       "full": "Everything from {label}",
       "project": "{project} from {where}",
       "none": "No Puppet Master backup was found on {where}.",
-      "elsewhere": "Look somewhere else"
+      "elsewhere": "Look somewhere else",
+      "leadNone": "Puppet Master looked on {where}."
     },
     "preview": {
       "eyebrow": "Restore",
@@ -927,7 +928,14 @@
         "s3": "Which service",
         "sftp": "How it connects"
       },
-      "more": "Azure Blob Storage, Google Cloud Storage and a backup server of your own can be added later, in Settings › Backup & Restore."
+      "more": "Azure Blob Storage, Google Cloud Storage and a backup server of your own can be added later, in Settings › Backup & Restore.",
+      "short": {
+        "aws_s3": "Amazon S3",
+        "backblaze_b2": "Backblaze B2",
+        "s3_compatible": "Other",
+        "sftp": "SFTP",
+        "webdav": "WebDAV"
+      }
     },
     "sync": "Your other Puppet Master devices see this Project automatically.",
     "notNow": "Not now"

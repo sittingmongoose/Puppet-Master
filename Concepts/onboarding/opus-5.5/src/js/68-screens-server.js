@@ -650,7 +650,8 @@
     scene: () => ({ id: 'begin', beat: 'restore' }),
     eyebrow: () => T('restore.pick.eyebrow'),
     title: () => T('restore.pick.title'),
-    lead: (S) => (whereOf(S) ? T('restore.pick.leadAt', { where: whereOf(S) }) : T('restore.pick.lead')),
+    /* (where nothing was found there, the lead says only where it looked) */
+    lead: (S) => { const r = R(S), w = whereOf(S), found = (r.scope === 'project' ? S.env.backups : S.env.fullBackups).some((b) => atPlace(S, b)); return !found ? T('restore.pick.leadNone', { where: w }) : w ? T('restore.pick.leadAt', { where: w }) : T('restore.pick.lead'); },
     body(S) {
       const r = R(S);
       /* only the copies kept where the person pointed; none there is said plainly, with the way back to choose again */
