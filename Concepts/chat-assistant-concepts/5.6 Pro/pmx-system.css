@@ -291,14 +291,20 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 
 /* ================================================================ 6.6 hover-to-light
    pmx-system.js writes data-pmx-focus="{parts}" on #pmOverlayRoot while a
-   control carrying data-pmx-affects is hovered or keyboard-focused. Unrelated
-   plate parts dim to 35 %, the lit part turns accent, the read-back phrase gets
-   the wash. No re-render, no caret risk. The per-part rules (four per part)
-   are generated at load from the one vocabulary, PM56_PMX.PARTS. */
-.pmx-plate [data-pmx-part]{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-plate [data-pmx-part] .pmx-p-lab, .pmx-plate [data-pmx-part] .pmx-p-note, .pmx-plate [data-pmx-part] .pmx-p-sub{transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
+   control carrying data-pmx-affects is hovered or keyboard-focused. The lit
+   part is emphasised and nothing dims (FS-1, lead ruling 2026-10-31: the cast
+   went grey as the pointer moved): every part keeps its full colour, the lit
+   part's marks take the look's accent outline (--pmx-lit-outline: a crisp
+   one-pixel accent ring, with a soft glow in Glass and in NieR's ink), its
+   lines and the job card's edge turn accent, the read-back phrase gets the
+   wash. No re-render, no layout change, no caret risk. The per-part rules are
+   generated at load from the one vocabulary, PM56_PMX.PARTS. */
+.pmx-plate, .pmx-sched-mgr{--pmx-lit:var(--accent);--pmx-lit-outline:drop-shadow(1px 0 0 var(--pmx-lit)) drop-shadow(-1px 0 0 var(--pmx-lit)) drop-shadow(0 1px 0 var(--pmx-lit)) drop-shadow(0 -1px 0 var(--pmx-lit));}
+body[data-theme^="glass"] :is(.pmx-plate, .pmx-sched-mgr){--pmx-lit-outline:drop-shadow(1px 0 0 var(--pmx-lit)) drop-shadow(-1px 0 0 var(--pmx-lit)) drop-shadow(0 1px 0 var(--pmx-lit)) drop-shadow(0 -1px 0 var(--pmx-lit)) drop-shadow(0 0 3px var(--pmx-lit));}
+html[data-o55-nier="on"] :is(.pmx-plate, .pmx-sched-mgr){--pmx-lit:var(--o55-nier-ink, var(--accent));}
+.pmx-plate .pmx-p-mark, .pmx-sched-mgr .pmx-sched-mark{transition:filter var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-plate .pmx-p-paper{transition:stroke var(--pmx-t-light) var(--pmx-ease-linear),stroke-width var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-readback .pmx-rb{transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);border-radius:3px;}
-#pmOverlayRoot[data-pmx-focus] .pmx-plate [data-pmx-part]{opacity:.35;}
 
 /* ================================================================ 7.10 living beside ordinary replies */
 .transcript[data-variant] .message:has(.pmx-run){display:block;border-left:0;padding-left:0;}

@@ -2180,17 +2180,16 @@
       '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it off.' : '') + '</p>' + legend + '</div>';
   }
   /* a row and its plate mark light each other (CSS :has, one rule per record; nothing is written from JS) */
-  /* a row and its mark light each other: hovering one dims the plate's other marks and lights its partner. Only a row
-     whose mark the plate draws does it (QA round 2, the Q17 sweep: a row with no mark in the 48 hours dimmed every mark
-     and lit none) */
+  /* a row and its mark light each other: hovering one gives its partner the accent and the look's accent outline
+     (pmx-system.css --pmx-lit-outline); nothing dims (FS-1). Only a row whose mark the plate draws does it */
   function linkStyle(ids, plate) {
     ids = ids.filter(function (id) { return plate.indexOf('data-sched-mark="' + id + '"') >= 0; });
     if (!ids.length) return '';
     var r = '#pmOverlayRoot .pmx-sched-mgr';
     return '<style data-k="sched-mgr-link">' + ids.map(function (id) {
       var row = r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) ', mark = r + ':has([data-sched-mark="' + id + '"]:hover) ';
-      return row + '[data-sched-mark]{opacity:.35;}' + row + '[data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
-        mark + '[data-sched-mark]{opacity:.35;}' + mark + '[data-sched-mark="' + id + '"]{opacity:1;}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
+      return row + '[data-sched-mark="' + id + '"]{--pmx-sched-mark-ink:var(--accent);filter:var(--pmx-lit-outline);}' +
+        mark + '[data-sched-mark="' + id + '"]{filter:var(--pmx-lit-outline);}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
     }).join('') + '</style>';
   }
 
