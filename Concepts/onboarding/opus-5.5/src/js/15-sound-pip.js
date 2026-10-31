@@ -1129,7 +1129,9 @@
     KITS.forEach((kn) => {
       const events = {};
       Object.keys(KIT[kn].ev).forEach((name) => { if (!WINDOW_OWNS.has(name)) events[name] = (ctx, out, t0, opts) => into(ctx, out, kn, name, opts || {}, t0); });
-      pip.registerKit(kn, { events, trim: Object.assign({}, TRIM[kn] || {}) });
+      /* room: the look's room, which Pip's voice in the one player sends to as well (one room per look; a render
+         passes its own destination as the bus) */
+      pip.registerKit(kn, { events, trim: Object.assign({}, TRIM[kn] || {}), room: (c, bus) => roomOf(c, kn, bus || tails(c)) });
       pip.registerMusic('pip-' + kn, tune(kn));
     });
     registered = true;
@@ -1215,6 +1217,9 @@
     Object.keys(P.want).forEach((n) => applyLoop(n, P.want[n]));
   }
   register();
+  /* this file can run before 15-sound.js in the page: register once every script has run, so the kits and their rooms
+     (which Pip's voice uses everywhere it speaks, the chat included) are there before the first sound */
+  if (!registered && document.readyState === 'loading') document.addEventListener('DOMContentLoaded', register, { once: true });
   /* the music asked for before the first click or key (the window opens on its own) starts with that gesture */
   const wake = () => { const pip = API(); if (!pip || !(P.want.bed > 0.001) || !part('setup-music')) return; const pl = pip.playing(); if (!pl || pl.music !== 'pip-' + P.kit) pip.music('pip-' + P.kit); };
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => setTimeout(wake, 0), { capture: true, passive: true }));
