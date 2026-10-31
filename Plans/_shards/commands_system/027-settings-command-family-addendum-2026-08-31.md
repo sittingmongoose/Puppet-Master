@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4989-L5151
+Source lines: L4989-L5158
 
-Source SHA256: `801b99b34f303270e5a9b068bd83a2c81a146ef82c28f8680c79a5e734debda2`
+Source SHA256: `8b453470b6d81a82e0b6e88c0edb1047048762f4c681b47e7ee3a67631504e86`
 
 ---
 
@@ -81,7 +81,10 @@ canonical_text: 'Exactly five canonical cmd.settings commands are centrally regi
   result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged.'
+  fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
+  pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
@@ -145,6 +148,10 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing create no
+  new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high

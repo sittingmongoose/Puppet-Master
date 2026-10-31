@@ -1,3 +1,28 @@
+# Plans lane — final text delta at 44d0d3a1b1, 2026-10-31
+
+**Complete for the current source delta. 15/15 focused/regeneration/guard checks PASS.** Branch `t3/plans/pm7-plans-canon`; integration `44d0d3a1b11166dbec82de1cba9c09eb72993b59` merged by fast-forward. The full resulting head is mailed after push. No WIP commit is merged. Coverage is **147 real product rows / 735 required cells**; ten rows add FO-4–9, FS-1 and the three plate observations. The independent GLM result remains pinned to its earlier reviewed canon, not an exhaustive audit of this delta.
+
+| Product rule | Owner and companion result |
+|---|---|
+| **FO-4 / FO-5** | Provider rows keep category/product/account identity without payment explanations. Selected/hovered/focused cards keep visible question help, including NieR. PWIZ-021, F3-520/F3-663, DR-080/081 and static policy/source checks. |
+| **FO-6** | Protected same-field input survives redraw/help/mode changes, clears on consumption or explicit leave/recreate/target/reset, never enters ordinary saved state and is re-read on submit. PWIZ-022, UIW-015/WM-041, CS-069/UCC-106, DR-080; eight actual morph-function cases. |
+| **FO-7** | Exact approved/rejected pairing request is answered; refresh cannot turn its consumed result into a false warning. New requests retain generation, identity, permission, expiry and replay fences. SRV-004/PWIZ-025 and three existing production entries; four actual poll/end-state cases. |
+| **FO-8** | Copy success holds a full interval through redraw; repeat renews it and old timeout cannot clear the new acknowledgment. F3-182 and DR-080; six actual clipboard-feedback source cases. |
+| **FO-9** | Partial GitHub Creating checks/blocks share verified owner effects; unexecuted/unproven phases remain pending. PWIZ-021/F3-520 and existing command/wiring consumers. Owner invariant covered; final implementation/merge/checks of b75da99bef still awaited. |
+| **FS-1** | Active Q17 dimming is replaced everywhere by accent-only emphasis. Pip body/seat/label colours and unrelated parts stay intact; genuine owner-state quiet remains. F3-566/F3-595/ACD-501, command/wiring consumers, DR-044, feedback policy and four actual generated-CSS/partner checks. Historical DL-258 remains unchanged; DL-259 supersedes it. |
+| **FS-2** | Paper fixed words fit actual inner text boxes; BrainStorm's last chapter stays clear of You after offsets. Compact intentionally omits model lines, including Retro; full retains one. F3-595/DR-044; no second sizing engine or new mode. |
+| **FX-1 boundary** | Lead confirms Terminal/workgroup paths are dead code and will be reverted. No Terminal/workgroup rule or row is added; existing panel-tab rename/inline close and DL-181/UCC-201 retirement stay exact. PDF awaits foundations' final source and has no new delta row yet. |
+
+**Coverage and preservation:** 129 distinct unit references, 30 registered commands, 27 catalog entries and seven local actions resolve. Twenty-one existing units in eleven documents change, with ten regenerated source groups, all from edited owners. Inventory remains 1,010 settings, 22 status keys, 25 Pip parts, 483 bindings, 715 Touch rows / 140 profiles and 1,269 production entries. No new setting, command, handler, control, event, stored family, runtime request field or owner authority.
+
+**Checks:** PM7 **144 schema cases**; the isolated final source probe passes **24** checks/cases. Onboarding129/241, Tour24/59, Remote110/109, Server89/52 and FinalGUI1/160 pass. Canon, product/source boundary, Touch, wiring, inline onboarding storage and coverage checks pass. Shards generate/check at **2,958 / 99 sources**; index generate/validate at **7,243 units / 96 documents / 29,079 acceptance units**, with runtime certification still incomplete. These are static/source-helper checks, not browser/native/pixel/audio acceptance.
+
+**Evidence:** all **586** previous artifact hashes and historical Decision Log bytes outside DL-259 are unchanged. Manifest now records **603 immutable artifacts** (17 new text files): shared `lanes/plans/verification.json`, SHA-256 `f73f4b90b573e2b7ed88006d79d42577a044ebd9f2b0a7084ecc220d6df4870c`. Exact commands, statuses, paths and hashes are recorded there; `final-44d0-guard.txt` pins current Plans/script bytes. The portable guard/coverage helpers are retained. [FINAL-DELTA.md](FINAL-DELTA.md) records each source decision and pending boundary.
+
+**Pending finals:** FO-9 on `t3/a5d8f094`; FX-1 PDF on foundations. Preview/T3 mechanics, hints and prefilled values stay out of product canon. No browsers, full gates, dry landing, landing, lock, baseline refresh or reseal. No ledger compiled. T3 mailbox ringing is registered; no waiter is required.
+
+---
+
 # Plans lane — integration cf0ae92b9a and four late product rules, 2026-10-31
 
 **Complete and verified.** Branch `t3/plans/pm7-plans-canon`; merged GUI baseline `cf0ae92b9acffe4b80203e9c147ac7073cb2224b` by fast-forward. The resulting full head is mailed after push. GLM independently closed all 13 earlier coverage findings at `17e87e52e0`, with zero new blockers; it sampled 32/133 rows and ran the shard check. That review applies to its pinned canon, not a new exhaustive audit of these later changes.

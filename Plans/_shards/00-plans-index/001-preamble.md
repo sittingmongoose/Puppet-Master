@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L37
+Source lines: L1-L40
 
-Source SHA256: `ac9394be2df86ca0cd5e4f7a238597b689f5628a760574448010a91396956d9b`
+Source SHA256: `eab4c07dbbf19c9fa39399eed05bf118781554f200a443fedc1784c2f97c1da4`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-259 final product delta preserves provider identity-only rows, selected-card help visibility, same-screen protected input, answered pairing, full Copy acknowledgment and verified partial Creating phases. FS-1 supersedes cast dimming with accent-only emphasis; FS-2 preserves readable paper/chapter labels and intentional names-only compact plates.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/Server_System.md#SRV-004, ContractName:Plans/FinalGUISpec.md#F3-182, ContractName:Plans/FinalGUISpec.md#F3-595
 
 - 2026-10-31: DL-259 late integration cf0ae92b9a preserves truthful unnamed destination previews, service/variant-scoped address drafts, immediate AI phase-skip feedback and one current choice/validation result across view, Continue availability and activation. GLM’s re-check closes all 13 earlier coverage findings at 17e87e52e0. Existing commands, Settings counts and owner admission/commit remain unchanged.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-024, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-020

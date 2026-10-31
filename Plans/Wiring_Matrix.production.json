@@ -18543,7 +18543,8 @@
         "The row remains disabled with handler_unavailable until native proof exists.",
         "Approval requires explicit identity confirmation, a current waiting pairing generation, and trusted approver authority before least-privilege trust issuance.",
         "Approval is distinct from start, rejection, cancellation, or discovery and returns to the exact request detail.",
-        "No EventRecord is admitted by this static row."
+        "No EventRecord is admitted by this static row.",
+        "DL-259 FO-7 / SRV-004: accepted approval/rejection is terminal for the exact pairing request/generation in the view. Refresh clears obsolete used-answer warnings without re-adopting a consumed result; a new invitation starts a new generation. Genuine replay/expiry/currentness/identity/permission refusal remains. Later rejection does not revoke an already-approved Client. No extra command or trust is created by the view."
       ],
       "evidence_required": "Native approval dispatcher/handler, identity/current-generation/permission/least-privilege/replay fixtures, exact return, accessibility, and fresh runtime receipts.",
       "state_selector": "state.commands.client_pair_approve.availability",
@@ -18657,7 +18658,8 @@
         "The row remains disabled with handler_unavailable until native proof exists.",
         "Rejection is the trusted approver's terminal refusal for the exact current pairing generation and reason.",
         "Rejection grants no trust and remains distinct from requester cancellation.",
-        "No EventRecord is admitted by this static row."
+        "No EventRecord is admitted by this static row.",
+        "DL-259 FO-7 / SRV-004: accepted approval/rejection is terminal for the exact pairing request/generation in the view. Refresh clears obsolete used-answer warnings without re-adopting a consumed result; a new invitation starts a new generation. Genuine replay/expiry/currentness/identity/permission refusal remains. Later rejection does not revoke an already-approved Client. No extra command or trust is created by the view."
       ],
       "evidence_required": "Native rejection dispatcher/handler, currentness/permission/replay/cleanup fixtures, exact return, accessibility, and fresh runtime receipts.",
       "state_selector": "state.commands.client_pair_reject.availability",
@@ -18714,7 +18716,8 @@
         "The row is production intent only and remains disabled with handler_unavailable until a native pairing handler exists.",
         "One generation-fenced PairingRun starts for an explicit candidate and LAN, QR, short-code, manual, or trusted-Client-approval method without granting trust.",
         "Raw pairing values and process-local handles never persist; durable evidence contains only the permitted SHA-256 binding and safe metadata.",
-        "QR import and peer selection are typed inputs, not separate commands, and all consumers return to the exact invoking focus."
+        "QR import and peer selection are typed inputs, not separate commands, and all consumers return to the exact invoking focus.",
+        "DL-259 FO-7 / SRV-004: accepted approval/rejection is terminal for the exact pairing request/generation in the view. Refresh clears obsolete used-answer warnings without re-adopting a consumed result; a new invitation starts a new generation. Genuine replay/expiry/currentness/identity/permission refusal remains. Later rejection does not revoke an already-approved Client. No extra command or trust is created by the view."
       ],
       "evidence_required": "Native pairing dispatcher/handler, ephemeral-secret lifetime, candidate/method/currentness/trust/restart/cancel fixtures, exact return, accessibility, and fresh runtime receipts.",
       "state_selector": "state.commands.client_pair_start.availability",

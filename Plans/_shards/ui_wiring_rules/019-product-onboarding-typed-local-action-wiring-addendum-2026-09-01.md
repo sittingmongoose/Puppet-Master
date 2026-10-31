@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1351
+Source lines: L1024-L1360
 
-Source SHA256: `3daa032fca5f273b5c258c758f33249f982824ddc887ad16384493c0793caeab`
+Source SHA256: `c6491b28e83b20a8a7f662eb8eedf1d1511a3d6a7186d6c941957f0b8bc70ebf`
 
 ---
 
@@ -176,7 +176,11 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   current resolved service/variant/address and validation result for the online-copy/import view, its Continue availability/reason
   and activation. Recheck Protect Connect and restore Continue prerequisites through the same existing owners at activation.
   Invalid or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
-  protected auth, permission and return fences remain unchanged.'
+  protected auth, permission and return fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy
+  feedback and answered pairing are local view state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s
+  protected-field lifetime, SRV-004’s terminal pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s
+  verified Creating phases. Existing typed local actions and domain approval/recovery/export routes remain; refresh never
+  resubmits a consumed result or marks an unexecuted phase complete.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -305,6 +309,11 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view state, not extra
+  onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal pairing-result
+  handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
+  domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
+  complete.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high

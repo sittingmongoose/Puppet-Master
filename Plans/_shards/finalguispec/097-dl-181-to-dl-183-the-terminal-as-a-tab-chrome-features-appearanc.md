@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47809-L50986
+Source lines: L47893-L51076
 
-Source SHA256: `adb38593194fb49cd9cbcbc9e02affc60eb29403654dfd8c46b3ae7cd43ef023`
+Source SHA256: `d3b7ff7fb0b512c5fe7512b279719d162f1292a086dc68fc3f60d91b7afa8753`
 
 ---
 
@@ -2870,7 +2870,10 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   text when needed, including in short windows and NieR. The note is labelled as Pip’s and has no separate decorative
   tail. This is the option-help note, distinct from the spoken bubble’s single-silhouette tail rule. DL-259 QA2 M6, 2026-10-31:
   ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s stacked blocks retain their
-  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal.'
+  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259
+  FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
+  or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
+  ink there, without hiding the question, radio or selected state.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2928,6 +2931,9 @@ acceptance_criteria:
 - 'DL-259 QA2 M6, 2026-10-31: ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s
   stacked blocks retain their intentional floor contact. The clearance is a presentation invariant, not a new owner phase
   or completion signal.'
+- 'DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected,
+  hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting
+  inverse ink there, without hiding the question, radio or selected state.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4102
+Source lines: L3496-L4111
 
-Source SHA256: `b4528e0898f2d8ebf3281f3d90e2c6f0e8fc991a36ff49a78d2830fe795bb86d`
+Source SHA256: `17335054063d81b7403f812fafc39f815adf6ad17f45be85c2b8eeaa553f3757`
 
 ---
 
@@ -175,7 +175,11 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and restore
   Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing and
   dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return fences
-  remain unchanged.'
+  remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view
+  state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal
+  pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local
+  actions and domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted
+  phase complete.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -371,6 +375,11 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view state, not extra
+  onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal pairing-result
+  handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
+  domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
+  complete.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json

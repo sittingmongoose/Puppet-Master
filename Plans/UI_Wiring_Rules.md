@@ -1189,7 +1189,11 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   current resolved service/variant/address and validation result for the online-copy/import view, its Continue availability/reason
   and activation. Recheck Protect Connect and restore Continue prerequisites through the same existing owners at activation.
   Invalid or stale input advances nothing and dispatches no owner action. Existing local onboarding IDs, reviewed commit,
-  protected auth, permission and return fences remain unchanged.'
+  protected auth, permission and return fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy
+  feedback and answered pairing are local view state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s
+  protected-field lifetime, SRV-004’s terminal pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s
+  verified Creating phases. Existing typed local actions and domain approval/recovery/export routes remain; refresh never
+  resubmits a consumed result or marks an unexecuted phase complete.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -1318,6 +1322,11 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: redraw/Copy feedback and answered pairing are local view state, not extra
+  onboarding commands or owner transitions. Follow PWIZ-022’s protected-field lifetime, SRV-004’s terminal pairing-result
+  handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
+  domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
+  complete.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -2935,14 +2944,17 @@ canonical_text: 'W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097
   is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
   show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
   s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
-  read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from
-  an actual control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider semantics).
-  Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
-  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its
-  plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.
-  DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
-  and entry/exit click guards remain.'
+  read scope creates no Stop/Restart/Stop all or service-control authority. DL-259 FS-1, 2026-10-31, supersedes Q17’s
+  dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate control;
+  plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with
+  the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked
+  read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat
+  or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled
+  emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis,
+  Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner
+  serves every sheet; there is no per-sheet hover engine. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31
+  that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling, not an unresolved
+  lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2970,12 +2982,15 @@ acceptance_criteria:
   is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
   show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
   s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
-  read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from
-  an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
-  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
-  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
-  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
-  with no per-sheet hover engine.'
+  read scope creates no Stop/Restart/Stop all or service-control authority. DL-259 FS-1, 2026-10-31, supersedes Q17’s
+  dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate control;
+  plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with
+  the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked
+  read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat
+  or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled
+  emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis,
+  Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner
+  serves every sheet; there is no per-sheet hover engine.'
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
   the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
@@ -2996,7 +3011,9 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

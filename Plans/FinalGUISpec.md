@@ -15599,9 +15599,12 @@ plan_unit_id: F3-182
 unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Clipboard actions provide lightweight success feedback for non-obvious values and never copy
-  redacted or hidden-secret placeholders as though they were the real value.
+canonical_text: 'Clipboard actions provide lightweight success feedback for non-obvious values and never copy redacted
+  or hidden-secret placeholders as though they were the real value. DL-259 FO-8, 2026-10-31: after actual clipboard success,
+  Copy’s transient Copied acknowledgment holds for its full feedback interval across redraws of that same control, including
+  countdown updates. Another successful copy starts a fresh full interval; an older timeout cannot clear its newer acknowledgment.
+  Failure reports no success. Feedback is local presentation state and does not retain the copied protected value or
+  become a saved preference, owner receipt or proof of any other operation.'
 gui_related: true
 gui_classification_reason: >-
   This unit constrains visible clipboard feedback and secret redaction behavior despite the
@@ -15610,10 +15613,16 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259 FO-8, 2026-10-31: after actual clipboard success, Copy’s transient Copied acknowledgment holds for its full
+  feedback interval across redraws of that same control, including countdown updates. Another successful copy starts
+  a fresh full interval; an older timeout cannot clear its newer acknowledgment. Failure reports no success. Feedback
+  is local presentation state and does not retain the copied protected value or become a saved preference, owner receipt
+  or proof of any other operation.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -15626,7 +15635,9 @@ node_compile_hint:
   mode: clipboard_safety_feedback
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0120"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0120
+- 'PM7 final FO-8: 62-flow.js per-control Copied deadline (source timing 1400 ms); source names/timer implementation
+  are not native APIs.'
 preserved_exact_tokens:
 - "Clipboard actions"
 - "lightweight success feedback"
@@ -36863,7 +36874,22 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
   Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
   current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
-  Skip. Reduced Motion reveals the feedback in its settled position.'
+  Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows
+  and connected-account summaries show the category and concise product/account identity without billing explanations,
+  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
+  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
+  FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity, including
+  typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone must not
+  erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
+  or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
+  in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
+  submission reads the current protected value and rechecks its existing owner requirements. DL-259 FO-9, 2026-10-31:
+  Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When GitHub creation only
+  partly settles, show only verified completed phases as checked or landed blocks; the phase proven to have failed may
+  show failure and unexecuted/unproven phases remain pending. Transport completion and animation never prove the later
+  registration, settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same
+  current owner result; O12’s last-block landing condition is additional to owner completion, never a replacement for
+  it.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37121,6 +37147,21 @@ acceptance_criteria:
   available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free
   account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion
   reveals the feedback in its settled position.'
+- 'DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
+  identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
+  account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
+  account identity or credential custody. DL-259 FO-6, 2026-10-31: a protected field keeps its typed value through redraws
+  of the same screen and field identity, including typing in another field, opening help and changing Plain English/Expert.
+  A blank rendering template alone must not erase it. The action clears the field when it consumes the input; leaving/recreating
+  the screen, changing its service/method/target or explicit cancel/reset clears it too. Keep that input only in the
+  protected entry control until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked
+  flag is not a credential or validation proof; submission reads the current protected value and rechecks its existing
+  owner requirements. DL-259 FO-9, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect
+  projection. When GitHub creation only partly settles, show only verified completed phases as checked or landed blocks;
+  the phase proven to have failed may show failure and unexecuted/unproven phases remain pending. Transport completion
+  and animation never prove the later registration, settings or connection steps. The recovery banner/actions, Continue
+  availability and Ready use that same current owner result; O12’s last-block landing condition is additional to owner
+  completion, never a replacement for it.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -40897,96 +40938,105 @@ plan_unit_id: F3-566
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules' surfaces only, this
-  contract supersedes the presentation clauses of the 2026-09-03 redesign section's section 10 (one shared modal
-  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'
-  layout), and Additive Correction v4's statement that nothing authorises a broad restyle. Every behaviour
-  clause stays and applies to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY,
-  the current themes and their tokens. Every configuration popup is a configuration sheet with one anatomy. The
-  head has the module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
-  lead sentence and the close control, and no header pill. The hero is the most important input, first and
-  focused. Then a plate, a flat drawing of who is involved and where the result goes (in the four collaboration
-  kinds, the cast plate of F3-595, DL-149), over the roster or the module's equivalent; then the questions,
-  numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to 3 in Crew Auto), each
-  number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying what won't
-  happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry that
-  opens as a page inside the same sheet. Every control has a visible label and one helper line; options with
-  descriptions use the preserved dropdown trigger, and each description names the real difference between the
-  options (for example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
-  and BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot
-  holds the read-back sentence, always true for the current settings, the estimate line (never $0.00), Cancel
-  and one primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and a
-  refused Start replaces the read-back with the refusal and a route to the control that fixes it. A sheet whose
-  changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is
-  frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia
-  CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never
-  blurred, and F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115):
-  each theme family moves with its own motion personality, aligned with the transcript's motion voices of
-  ACD-475 (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
-  in-chat card's changes take their family's personality. Where a card takes part in a transcript beat (its
-  family entrance, the fold), ACD-475 governs and the voice changes only path, easing and texture, never timing
-  or order. This contract states the principle only: the per-family duration and easing values are the design
-  foundation's tokens, recorded at the concept's closing step, and are not canon values. Reduce Motion lands
-  every change at its end state instantly in every family. Sizes are fixed per sheet: wide 1120 x 780 (the
-  collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back Seat Driver,
-  Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert, ELI5 and the
-  small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most its width
-  less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
-  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that
-  fits and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its
-  width (F3-601, DL-154), and grows into spare height when the column is short; the roster scrolls in its own
-  region only once its rows no longer fit beside the plate's floor, with Add a helper kept visible; the side
-  column scrolls only below 1280 x 800; the hero field scrolls inside itself past three lines; below a 900 px
-  sheet width the body becomes one column that scrolls inside the sheet with head and foot fixed, the plate
-  staying at the top of that column while its question is on screen (F3-601); nothing overflows sideways.
-  Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims the others,
-  with no re-render. Kinds are told apart by a kind mark drawn by shape, and each participant by its puppet,
-  which replaced the cast mark (F3-594, DL-149): a role prop, the theme family's material and a puppet-drawn
-  state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
-  block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji. Typography (J-1):
-  every wand-module surface uses the theme's own font with no separate display face; the voice roles
-  (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only by size, weight and
-  colour, and a quote is marked by quotation marks and the muted colour, never a different face. Spacing (J-2)
-  is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below it (6 px
-  inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container's side edge;
-  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall;
-  adjacent controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on
-  its line; a secondary line under a row sits at least 6 px below it and 12 px above what follows; roster rows
-  are at least 52 px tall; body and helper text keep a line height of at least 1.45 and headlines 1.25. When
-  space runs short, text wraps or ellipsizes or a secondary element drops; padding and gaps never compress.
-  DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript entrances
-  retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance do not acquire a
-  second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the
-  kind sign on a third string, 10 px lower than the first concept and level with Close. Existing
-  title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
-  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
-  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
-  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
-  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
-  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
-  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
-  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
-  fallback icon.
+canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules'' surfaces only,
+  this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s section 10 (one shared modal
+  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'' layout),
+  and Additive Correction v4''s statement that nothing authorises a broad restyle. Every behaviour clause stays and applies
+  to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens.
+  Every configuration popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile,
+  no box), a sentence-case title with the canonical name inside, one lead sentence and the close control, and no header
+  pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of who is involved and
+  where the result goes (in the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module''s
+  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to
+  3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying
+  what won''t happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry
+  that opens as a page inside the same sheet. Every control has a visible label and one helper line; options with descriptions
+  use the preserved dropdown trigger, and each description names the real difference between the options (for example
+  Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and BrainStorm; BrainStorm
+  has no Quick strategy); a disabled control prints its reason in words. The foot holds the read-back sentence, always
+  true for the current settings, the estimate line (never $0.00), Cancel and one primary naming a verb, the canonical
+  name and a count; a disabled primary prints its reason, and a refused Start replaces the read-back with the refusal
+  and a route to the control that fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over
+  a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
+  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel.
+  The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113,
+  DL-115): each theme family moves with its own motion personality, aligned with the transcript''s motion voices of ACD-475
+  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet''s opening and closing and an in-chat card''s changes
+  take their family''s personality. Where a card takes part in a transcript beat (its family entrance, the fold), ACD-475
+  governs and the voice changes only path, easing and texture, never timing or order. This contract states the principle
+  only: the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s closing
+  step, and are not canon values. Reduce Motion lands every change at its end state instantly in every family. Sizes
+  are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled and Automations manager, Memory), standard
+  900 x 720 (Back Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert,
+  ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most
+  its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
+  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that fits
+  and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its width (F3-601,
+  DL-154), and grows into spare height when the column is short; the roster scrolls in its own region only once its rows
+  no longer fit beside the plate''s floor, with Add a helper kept visible; the side column scrolls only below 1280 x
+  800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one column
+  that scrolls inside the sheet with head and foot fixed, the plate staying at the top of that column while its question
+  is on screen (F3-601); nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and
+  read-back phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds are
+  told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the cast mark (F3-594,
+  DL-149): a role prop, the theme family''s material and a puppet-drawn state, never initials or letters. Nothing draws
+  pills or capsules, side strips or vertical rules beside a block (columns are separated by space only), nested boxes,
+  uppercase micro-labels or emoji. Typography (J-1): every wand-module surface uses the theme''s own font with no separate
+  display face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only
+  by size, weight and colour, and a quote is marked by quotation marks and the muted colour, never a different face.
+  Spacing (J-2) is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
+  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s side edge;
+  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall; adjacent
+  controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on its line; a secondary
+  line under a row sits at least 6 px below it and 12 px above what follows; roster rows are at least 52 px tall; body
+  and helper text keep a line height of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes
+  or a secondary element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
+  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards that opt out
+  of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet
+  header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close.
+  Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
+  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
+  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
+  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
+  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
+  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
+  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
+  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
+  sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
 depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, DL-148, DL-149, ACD-475, F3-431, F3-531, F3-534, F3-582]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
-  - "Theme timing never overrides the shared timing or order of a transcript entrance."
-  - "Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may have no hero or questions, and its foot shows only Done."
-  - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
-  - "No kind or participant is drawn with initials or letters."
-  - "Every wand-module surface uses the theme's own font and no separate display face."
-  - "Every surface meets the J-2 minimums in all ten themes."
-  - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
-  - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
-  - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
+- Theme timing never overrides the shared timing or order of a transcript entrance.
+- Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy
+  with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may
+  have no hero or questions, and its foot shows only Done.
+- No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open.
+- No kind or participant is drawn with initials or letters.
+- Every wand-module surface uses the theme's own font and no separate display face.
+- Every surface meets the J-2 minimums in all ten themes.
+- A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses
+  a backdrop blur in any theme.
+- Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats
+  keep ACD-475's shared timing and order.
+- With Reduce Motion on, every sheet and card change lands at its end state instantly in every family.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -41002,13 +41052,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6"
-  - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
-  - "Plans/Decision_Log.md#DL-109"
-  - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
-  - "Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)"
-  - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6
+- IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)
+- Plans/Decision_Log.md#DL-109
+- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)
+- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)
+- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the
+  token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
   - "DL-138"
   - "configuration sheet"
@@ -43183,57 +43237,83 @@ plan_unit_id: F3-595
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  One cast plate grammar draws every collaboration graph, in the four kinds' setup sheets and at the head of
-  each run view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the
-  job, the topic, or Review's snapshot locked at Start) to who runs it: the Coordinator's or the Moderator's
-  puppet on the bar, or Review's junction, where the snapshot goes down to the reviewers and their notes come
-  back up to be compared. It ends in one accent edge to You (one checked result, one report, one plan, or pick
-  what to keep). BrainStorm's bar is its seven chapters ending at You, and its team hangs from a bar of its own
-  under the chapter names. The cast hangs under the bar on straight vertical and horizontal strings only, never
-  diagonals or curves; every seat stands on one baseline at one pitch and is always named, and the full mode
-  adds the model on a second line. A queued helper hangs on a slack string, and "waits its turn" is written once
-  under the group. Review and BrainStorm stand a short screen between seats, because the helpers cannot see each
-  other, said once in a note line. The Wonderer stands in a wing on the right after a dotted rule in every kind
-  that has it, and nothing routes under or through the wing; Grill Me has no seat and shows only as the kettle
-  grill at the Coordinator's or Moderator's seat (DL-218). Chat Room's turn policy and rounds are one note line
-  built from its settings, never arcs or a table. State shows on the seats only. The plate shows its richest
-  mode that fits: full, then compact (names only), then a one-row strip, then the wrap (the strip's seats on two
-  or three rows, F3-601), then one caption sentence, with BrainStorm adding a lean mode between compact and
-  strip that keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its strip
-  and the caption that keeps every name whole. It skips any mode whose seats would sit closer than its minimum
-  pitch, is never scaled to fit a sheet, never yields past the leanest drawing that fits its width (the caption
-  is only for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet
-  control lights the plate parts it affects (F3-566). Every run view heads with the run's plate, its seats in
-  their live states (working, waits, needs you, done or failed); a run that has not started shows everyone idle,
-  never "waits its turn", and the Coordinator is done when the run is. The Crew view hangs a short after arrow
-  from the helper a seat waits for, the BrainStorm view lights the chapter it is on, and the Chat Room's room
-  document and a recorded Review report have a plate too. Run cards and run views show no Technical details,
-  neither as a control nor as fine print; a collaboration setup sheet keeps its Technical details as the last
-  row of its Advanced page (DL-149, decision card 8). Amended 2026-10-29 (PC5, S1/S9; PM7): Cast agents are the
-  single Pip primitive. Strings remain solved/straight when enabled; the optional chat strings part may hide
-  them without restoring a second puppet. Role props use F3-594, including glasses and gold crown/hat. QA round
-  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a
-  cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet
-  strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
-  agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts
-  only from an actual control inside its affects region (button, input, select, textarea, label or
-  switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture do not dim the
-  cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible.
-  Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One
-  affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.
+canonical_text: 'One cast plate grammar draws every collaboration graph, in the four kinds'' setup sheets and at the
+  head of each run view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the
+  job, the topic, or Review''s snapshot locked at Start) to who runs it: the Coordinator''s or the Moderator''s puppet
+  on the bar, or Review''s junction, where the snapshot goes down to the reviewers and their notes come back up to be
+  compared. It ends in one accent edge to You (one checked result, one report, one plan, or pick what to keep). BrainStorm''s
+  bar is its seven chapters ending at You, and its team hangs from a bar of its own under the chapter names. The cast
+  hangs under the bar on straight vertical and horizontal strings only, never diagonals or curves; every seat stands
+  on one baseline at one pitch and is always named, and the full mode adds the model on a second line. A queued helper
+  hangs on a slack string, and "waits its turn" is written once under the group. Review and BrainStorm stand a short
+  screen between seats, because the helpers cannot see each other, said once in a note line. The Wonderer stands in a
+  wing on the right after a dotted rule in every kind that has it, and nothing routes under or through the wing; Grill
+  Me has no seat and shows only as the kettle grill at the Coordinator''s or Moderator''s seat (DL-218). Chat Room''s
+  turn policy and rounds are one note line built from its settings, never arcs or a table. State shows on the seats only.
+  The plate shows its richest mode that fits: full, then compact (names only), then a one-row strip, then the wrap (the
+  strip''s seats on two or three rows, F3-601), then one caption sentence, with BrainStorm adding a lean mode between
+  compact and strip that keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its
+  strip and the caption that keeps every name whole. It skips any mode whose seats would sit closer than its minimum
+  pitch, is never scaled to fit a sheet, never yields past the leanest drawing that fits its width (the caption is only
+  for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet control lights
+  the plate parts it affects (F3-566). Every run view heads with the run''s plate, its seats in their live states (working,
+  waits, needs you, done or failed); a run that has not started shows everyone idle, never "waits its turn", and the
+  Coordinator is done when the run is. The Crew view hangs a short after arrow from the helper a seat waits for, the
+  BrainStorm view lights the chapter it is on, and the Chat Room''s room document and a recorded Review report have a
+  plate too. Run cards and run views show no Technical details, neither as a control nor as fine print; a collaboration
+  setup sheet keeps its Technical details as the last row of its Advanced page (DL-149, decision card 8). Amended 2026-10-29
+  (PC5, S1/S9; PM7): Cast agents are the single Pip primitive. Strings remain solved/straight when enabled; the optional
+  chat strings part may hide them without restoring a second puppet. Role props use F3-594, including glasses and gold
+  crown/hat. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in
+  each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection
+  to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
+  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
+  and the single Pip primitive retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
+  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
+  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
+  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
+  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
+  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
+  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
+  sheet; there is no per-sheet hover engine. DL-259 FS-2 / plate text, 2026-10-31: the input paper’s fixed label and
+  supporting fixed words (including The job and Your latest changes) fit their actual inner text box in each family,
+  counting its padding/insets before sizing or fitting text. User-supplied job text retains the existing bounded fit.
+  BrainStorm’s final chapter name keeps a visible gap from You after all placement offsets; labels never run together.
+  Preserve the richest-mode-that-fits and no-scale/no-scroll yield rules: compact means names only and intentionally
+  omits model lines, including Retro; full mode retains its model line. This adds no new plate mode, glyph, status or
+  model-selection behavior.'
 gui_related: true
 gui_classification_reason: Defines the collaboration graphs in sheets and run views and the removal of Technical details from run surfaces.
 split_recommended: false
 depends_on: [DL-149, F3-594, F3-566, F3-569, CWR-020]
 unblocks: [F3-601]
 acceptance_criteria:
-  - "Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every seat named in every mode."
-  - "In a sheet the plate is never scaled to fit; it changes mode instead."
-  - "No run card or run view renders Technical details as a control or as fine print."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
+- Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every
+  seat named in every mode.
+- In a sheet the plate is never scaled to fit; it changes mode instead.
+- No run card or run view renders Technical details as a control or as fine print.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
+  by this unit.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
+  at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
+  alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
+  NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus
+  never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours.
+  Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner
+  and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover
+  engine.'
+- 'DL-259 FS-2 / plate text, 2026-10-31: the input paper’s fixed label and supporting fixed words (including The job
+  and Your latest changes) fit their actual inner text box in each family, counting its padding/insets before sizing
+  or fitting text. User-supplied job text retains the existing bounded fit. BrainStorm’s final chapter name keeps a visible
+  gap from You after all placement offsets; labels never run together. Preserve the richest-mode-that-fits and no-scale/no-scroll
+  yield rules: compact means names only and intentionally omits model lines, including Retro; full mode retains its model
+  line. This adds no new plate mode, glyph, status or model-selection behavior.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43247,12 +43327,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-218"
-  - "Plans/Decision_Log.md#DL-149"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+- Plans/Decision_Log.md#DL-218
+- Plans/Decision_Log.md#DL-149
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- 'PM7 chatpip 0aa3f27ca3 / deliverable d57665c467: paper inset/width and BrainStorm You offset corrections; PAPER_IN/YOU_SHIFT
+  remain source-only.'
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
   - "cast plate"
   - "waits its turn"
@@ -50668,7 +50752,10 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   text when needed, including in short windows and NieR. The note is labelled as Pip’s and has no separate decorative
   tail. This is the option-help note, distinct from the spoken bubble’s single-silhouette tail rule. DL-259 QA2 M6, 2026-10-31:
   ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s stacked blocks retain their
-  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal.'
+  intentional floor contact. The clearance is a presentation invariant, not a new owner phase or completion signal. DL-259
+  FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected, hovered
+  or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting inverse
+  ink there, without hiding the question, radio or selected state.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50726,6 +50813,9 @@ acceptance_criteria:
 - 'DL-259 QA2 M6, 2026-10-31: ordinary resting slot props remain visibly clear of the stage floor and edge. Creating’s
   stacked blocks retain their intentional floor contact. The clearance is a presentation invariant, not a new owner phase
   or completion signal.'
+- 'DL-259 FO-5, 2026-10-31: a choice’s question control stays visible, readable and reachable when its card is selected,
+  hovered or keyboard-focused in every family. NieR’s selected/cursor ink stops before the help region or uses contrasting
+  inverse ink there, without hiding the question, radio or selected state.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

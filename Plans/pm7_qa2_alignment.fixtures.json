@@ -1141,5 +1141,113 @@
     "restore_reach": "selected_service_family_and_bucket",
     "SSH_unlock": "selected_key_under_current_account_scope",
     "claim": "source_helper_conformance_only_not_native_or_rendering_proof"
-  }
+  },
+  "protected_redraw_cases": [
+    {
+      "name": "unfocused_secret_same_screen",
+      "protected": true,
+      "typed": true,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": "typed_input"
+    },
+    {
+      "name": "help_redraw_same_field",
+      "protected": true,
+      "typed": true,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": "typed_input"
+    },
+    {
+      "name": "mode_redraw_same_field",
+      "protected": true,
+      "typed": true,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": "typed_input"
+    },
+    {
+      "name": "explicit_target_reset",
+      "protected": true,
+      "typed": false,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": ""
+    },
+    {
+      "name": "consumed_input_reset",
+      "protected": true,
+      "typed": false,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": ""
+    },
+    {
+      "name": "passphrase_no_filled_flag",
+      "protected": true,
+      "typed": null,
+      "focused": false,
+      "value": "typed_input",
+      "template": "",
+      "expected": "typed_input"
+    },
+    {
+      "name": "ordinary_input_updates",
+      "protected": false,
+      "typed": null,
+      "focused": false,
+      "value": "old_text",
+      "template": "new_text",
+      "expected": "new_text"
+    },
+    {
+      "name": "focused_live_input_stays",
+      "protected": true,
+      "typed": true,
+      "focused": true,
+      "value": "typed_input",
+      "template": "",
+      "expected": "typed_input"
+    }
+  ],
+  "answered_pairing_cases": [
+    {
+      "name": "approved_same_generation",
+      "done": "approved",
+      "done_generation": 3,
+      "current_generation": 3,
+      "expected_owner_reads": 0,
+      "expected_error": null
+    },
+    {
+      "name": "rejected_same_generation",
+      "done": "denied",
+      "done_generation": 3,
+      "current_generation": 3,
+      "expected_owner_reads": 0,
+      "expected_error": null
+    },
+    {
+      "name": "fresh_generation_still_checked",
+      "done": "approved",
+      "done_generation": 3,
+      "current_generation": 4,
+      "expected_owner_reads": 1,
+      "expected_error": "stale_generation"
+    },
+    {
+      "name": "new_replay_still_refused",
+      "done": null,
+      "done_generation": 3,
+      "current_generation": 3,
+      "expected_owner_reads": 1,
+      "expected_error": "duplicate_consumption"
+    }
+  ]
 }

@@ -179,14 +179,14 @@
     },
     {
       "id": "QA2-Q17",
-      "change": "Only controls/focus start plate feedback; schedule rows require a real paired mark",
+      "change": "Actual-control hover/focus gives accent-only emphasis; no cast dimming or Pip-body recolouring (FS-1 supersedes original Q17)",
       "owner": "F3-465; ACD-507",
       "wiring": "none needed: presentation uses existing route",
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-072",
-      "companions": "QA2PresentationPolicy.feedback; control-feedback and schedule-pair cases",
-      "state": "covered_by_current_contract"
+      "companions": "QA2PresentationPolicy.feedback; FinalReviewPolicy.cast_emphasis; actual generated-CSS/partner checks",
+      "state": "covered_as_amended_by_FS1"
     },
     {
       "id": "QA2-Q20",
@@ -1507,6 +1507,116 @@
       "dry": "DR-020; DR-005; DR-037",
       "companions": "LateOnboardingPolicy.continue_validation; four product areas, six refusal vectors; source services regression from fields lane",
       "state": "covered_late_integration_cf0ae92b9a"
+    },
+    {
+      "id": "FO-4",
+      "change": "Provider rows/ready summaries retain category/product/account identity without payment explanations",
+      "owner": "PWIZ-021; F3-520; DL-259",
+      "wiring": "none needed: existing action unchanged; local presentation only",
+      "commands": "none needed: existing action unchanged; local presentation only",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-081 (shared provider/account catalog); DR-080 (shared presentation)",
+      "companions": "FinalReviewPolicy.provider_rows; current provider copy source check",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-5",
+      "change": "Selected/hovered/focused NieR card retains visible, contrasting, reachable question help",
+      "owner": "F3-663; F3-520; DL-259",
+      "wiring": "none needed: existing action unchanged; local presentation only",
+      "commands": "none needed: existing action unchanged; local presentation only",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-080",
+      "companions": "FinalReviewPolicy.choice_help; current NieR help-strip source check",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-6",
+      "change": "Protected live input survives same-field redraw/help/mode changes; consumption/leave/target-reset clears it without ordinary persistence",
+      "owner": "PWIZ-022; F3-520; DL-259",
+      "wiring": "UIW-015; WM-041 (existing onboarding routes, protected-entry lifetime)",
+      "commands": "CS-069; UCC-106 (existing typed actions; submit reads live protected value)",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-080",
+      "companions": "FinalReviewPolicy.protected_entry; 8 actual patchAttributes source-function cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-7",
+      "change": "Approved/rejected pairing request is answered; refresh clears obsolete used-answer warning and does not re-adopt consumed result",
+      "owner": "SRV-004; PWIZ-025; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "CS-070; UCC-148; cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-080 (one onboarding state projection); DR-020 (Server owner keeps trust/replay authority)",
+      "companions": "FinalReviewPolicy.answered_pairing; 4 actual terminal-generation/new-replay source cases; exact production acceptance checks",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-8",
+      "change": "Copy success acknowledgment holds a full interval through redraw; repeated success renews it and old deadline cannot clear it",
+      "owner": "F3-182; DL-259",
+      "wiring": "UIW-015; WM-041 (existing transient Copy route, no owner resubmission)",
+      "commands": "CS-069; UCC-106 (no new command, receipt or event)",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-080",
+      "companions": "FinalReviewPolicy.copy_feedback; 6 actual success/redraw/repeat/failure source-function checks",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-9",
+      "change": "Partial GitHub Creating checks/blocks show verified owner effects only; unexecuted/unproven phases stay pending",
+      "owner": "PWIZ-021; F3-520; DL-259",
+      "wiring": "UIW-015; WM-041 (existing owner effect/recovery projection)",
+      "commands": "CS-069; UCC-106 (existing recovery handoffs, no new phase command)",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-080",
+      "companions": "FinalReviewPolicy.partial_Creating; b75da99bef reviewed as WIP, not merged or accepted",
+      "state": "owner_rule_covered_pending_final_FO9_source"
+    },
+    {
+      "id": "FS-1",
+      "change": "Control/partner hover never dims cast or recolours Pip bodies; affected ring/lines/read-back only, instant under Reduced Motion",
+      "owner": "F3-566; F3-595; ACD-501; DL-259",
+      "wiring": "UIW-045; WM-096 (view feedback only)",
+      "commands": "CS-104; UCC-208 (existing module commands unchanged)",
+      "settings": "none needed: follows existing look and OS Reduced Motion; no preference",
+      "dry": "DR-044",
+      "companions": "QA2PresentationPolicy.feedback; FinalReviewPolicy.cast_emphasis; 4 actual generated-CSS/partner checks",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FS-2-PAPER",
+      "change": "Fixed paper labels including The job and Your latest changes fit the true inner text box in Retro and other looks",
+      "owner": "F3-595; DL-259",
+      "wiring": "none needed: existing action unchanged; local presentation only",
+      "commands": "none needed: existing action unchanged; local presentation only",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-044",
+      "companions": "FinalReviewPolicy.plate_text; source 0aa3f27ca3; sizing constants remain lineage only",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FS-2-CHAPTER",
+      "change": "BrainStorm final chapter name remains visibly separate from You after all placement offsets",
+      "owner": "F3-595; DL-259",
+      "wiring": "none needed: existing action unchanged; local presentation only",
+      "commands": "none needed: existing action unchanged; local presentation only",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-044",
+      "companions": "FinalReviewPolicy.plate_text; source 0aa3f27ca3; no new glyph or plate mode",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FS-2-COMPACT",
+      "change": "Compact plate intentionally has names only and no model lines, including Retro; full mode retains the model line",
+      "owner": "F3-595; DL-259",
+      "wiring": "none needed: existing action unchanged; local presentation only",
+      "commands": "none needed: existing action unchanged; local presentation only",
+      "settings": "none needed: temporary presentation/entry state, no preference",
+      "dry": "DR-044",
+      "companions": "FinalReviewPolicy.plate_text; existing richest-mode/no-scale/yield grammar",
+      "state": "existing_design_confirmed_no_behavior_change"
     }
   ],
   "sources": [
@@ -1727,5 +1837,63 @@
     ],
     "demo_rules_added": false,
     "FS_FO_numbered_findings_posted": false
+  },
+  "final_review_delta": {
+    "merged_GUI_head": "44d0d3a1b11166dbec82de1cba9c09eb72993b59",
+    "decision_ref": "DL-259",
+    "new_rows": [
+      "FO-4",
+      "FO-5",
+      "FO-6",
+      "FO-7",
+      "FO-8",
+      "FO-9",
+      "FS-1",
+      "FS-2-PAPER",
+      "FS-2-CHAPTER",
+      "FS-2-COMPACT"
+    ],
+    "rows": 147,
+    "required_cells": 735,
+    "pending_final_sources": {
+      "FO-9": {
+        "wip_head": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
+        "branch": "t3/a5d8f094",
+        "state": "owner invariant covered; implementation final/merge/checks awaited"
+      },
+      "FX-1_PDF": {
+        "superseded_WIP": "229cbf9eae706e60baf9dc371c5976c8b27ec6ce",
+        "state": "await foundations final source; no PDF delta row yet"
+      }
+    },
+    "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
+    "demo_mechanics_added": false,
+    "browser_or_native_acceptance_claim": false,
+    "sources": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
+        "sha256": "892569b3688fc679ca7392422855b5220cdce5b44eec991dd958422ff9dd966b"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+        "sha256": "7a8977741173779f2d90b22c7535a80fc6ad7ebe8e510a584d27f65a545a8e9a"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+        "sha256": "033cf21287599881ce1491f409619421ba888d8903d7daf392d1fa7ab77540ec"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
+        "sha256": "f12657e93622f28e57258bccaa04e7d50f426a1f64eb66b1123916c28e11faaf"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md",
+        "sha256": "55d4354b3511bf45764d0b72537df4d6f253658d188045051da6e601a4fa05d1"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md",
+        "sha256": "7e6f1ad1cf3f2ae614dc8d9b080224c0c01c21204754d60a5f793003e2778a80"
+      }
+    ]
   }
 }

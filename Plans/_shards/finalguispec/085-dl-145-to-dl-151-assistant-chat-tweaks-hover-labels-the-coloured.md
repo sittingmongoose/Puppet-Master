@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42753-L43419
+Source lines: L42807-L43503
 
-Source SHA256: `adb38593194fb49cd9cbcbc9e02affc60eb29403654dfd8c46b3ae7cd43ef023`
+Source SHA256: `d3b7ff7fb0b512c5fe7512b279719d162f1292a086dc68fc3f60d91b7afa8753`
 
 ---
 
@@ -441,57 +441,83 @@ plan_unit_id: F3-595
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  One cast plate grammar draws every collaboration graph, in the four kinds' setup sheets and at the head of
-  each run view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the
-  job, the topic, or Review's snapshot locked at Start) to who runs it: the Coordinator's or the Moderator's
-  puppet on the bar, or Review's junction, where the snapshot goes down to the reviewers and their notes come
-  back up to be compared. It ends in one accent edge to You (one checked result, one report, one plan, or pick
-  what to keep). BrainStorm's bar is its seven chapters ending at You, and its team hangs from a bar of its own
-  under the chapter names. The cast hangs under the bar on straight vertical and horizontal strings only, never
-  diagonals or curves; every seat stands on one baseline at one pitch and is always named, and the full mode
-  adds the model on a second line. A queued helper hangs on a slack string, and "waits its turn" is written once
-  under the group. Review and BrainStorm stand a short screen between seats, because the helpers cannot see each
-  other, said once in a note line. The Wonderer stands in a wing on the right after a dotted rule in every kind
-  that has it, and nothing routes under or through the wing; Grill Me has no seat and shows only as the kettle
-  grill at the Coordinator's or Moderator's seat (DL-218). Chat Room's turn policy and rounds are one note line
-  built from its settings, never arcs or a table. State shows on the seats only. The plate shows its richest
-  mode that fits: full, then compact (names only), then a one-row strip, then the wrap (the strip's seats on two
-  or three rows, F3-601), then one caption sentence, with BrainStorm adding a lean mode between compact and
-  strip that keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its strip
-  and the caption that keeps every name whole. It skips any mode whose seats would sit closer than its minimum
-  pitch, is never scaled to fit a sheet, never yields past the leanest drawing that fits its width (the caption
-  is only for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet
-  control lights the plate parts it affects (F3-566). Every run view heads with the run's plate, its seats in
-  their live states (working, waits, needs you, done or failed); a run that has not started shows everyone idle,
-  never "waits its turn", and the Coordinator is done when the run is. The Crew view hangs a short after arrow
-  from the helper a seat waits for, the BrainStorm view lights the chapter it is on, and the Chat Room's room
-  document and a recorded Review report have a plate too. Run cards and run views show no Technical details,
-  neither as a control nor as fine print; a collaboration setup sheet keeps its Technical details as the last
-  row of its Advanced page (DL-149, decision card 8). Amended 2026-10-29 (PC5, S1/S9; PM7): Cast agents are the
-  single Pip primitive. Strings remain solved/straight when enabled; the optional chat strings part may hide
-  them without restoring a second puppet. Role props use F3-594, including glasses and gold crown/hat. QA round
-  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a
-  cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet
-  strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
-  agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts
-  only from an actual control inside its affects region (button, input, select, textarea, label or
-  switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture do not dim the
-  cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible.
-  Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One
-  affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.
+canonical_text: 'One cast plate grammar draws every collaboration graph, in the four kinds'' setup sheets and at the
+  head of each run view (DL-149); each kind only describes its cast. A bar across the top reads from what goes in (the
+  job, the topic, or Review''s snapshot locked at Start) to who runs it: the Coordinator''s or the Moderator''s puppet
+  on the bar, or Review''s junction, where the snapshot goes down to the reviewers and their notes come back up to be
+  compared. It ends in one accent edge to You (one checked result, one report, one plan, or pick what to keep). BrainStorm''s
+  bar is its seven chapters ending at You, and its team hangs from a bar of its own under the chapter names. The cast
+  hangs under the bar on straight vertical and horizontal strings only, never diagonals or curves; every seat stands
+  on one baseline at one pitch and is always named, and the full mode adds the model on a second line. A queued helper
+  hangs on a slack string, and "waits its turn" is written once under the group. Review and BrainStorm stand a short
+  screen between seats, because the helpers cannot see each other, said once in a note line. The Wonderer stands in a
+  wing on the right after a dotted rule in every kind that has it, and nothing routes under or through the wing; Grill
+  Me has no seat and shows only as the kettle grill at the Coordinator''s or Moderator''s seat (DL-218). Chat Room''s
+  turn policy and rounds are one note line built from its settings, never arcs or a table. State shows on the seats only.
+  The plate shows its richest mode that fits: full, then compact (names only), then a one-row strip, then the wrap (the
+  strip''s seats on two or three rows, F3-601), then one caption sentence, with BrainStorm adding a lean mode between
+  compact and strip that keeps its chapters and Chat Room, whose slot is the shortest, adding a lean line between its
+  strip and the caption that keeps every name whole. It skips any mode whose seats would sit closer than its minimum
+  pitch, is never scaled to fit a sheet, never yields past the leanest drawing that fits its width (the caption is only
+  for a slot no drawing fits; F3-601, DL-154), and grows into spare height. Hovering or focusing a sheet control lights
+  the plate parts it affects (F3-566). Every run view heads with the run''s plate, its seats in their live states (working,
+  waits, needs you, done or failed); a run that has not started shows everyone idle, never "waits its turn", and the
+  Coordinator is done when the run is. The Crew view hangs a short after arrow from the helper a seat waits for, the
+  BrainStorm view lights the chapter it is on, and the Chat Room''s room document and a recorded Review report have a
+  plate too. Run cards and run views show no Technical details, neither as a control nor as fine print; a collaboration
+  setup sheet keeps its Technical details as the last row of its Advanced page (DL-149, decision card 8). Amended 2026-10-29
+  (PC5, S1/S9; PM7): Cast agents are the single Pip primitive. Strings remain solved/straight when enabled; the optional
+  chat strings part may hide them without restoring a second puppet. Role props use F3-594, including glasses and gold
+  crown/hat. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in
+  each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection
+  to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
+  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
+  and the single Pip primitive retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
+  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
+  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
+  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
+  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
+  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
+  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
+  sheet; there is no per-sheet hover engine. DL-259 FS-2 / plate text, 2026-10-31: the input paper’s fixed label and
+  supporting fixed words (including The job and Your latest changes) fit their actual inner text box in each family,
+  counting its padding/insets before sizing or fitting text. User-supplied job text retains the existing bounded fit.
+  BrainStorm’s final chapter name keeps a visible gap from You after all placement offsets; labels never run together.
+  Preserve the richest-mode-that-fits and no-scale/no-scroll yield rules: compact means names only and intentionally
+  omits model lines, including Retro; full mode retains its model line. This adds no new plate mode, glyph, status or
+  model-selection behavior.'
 gui_related: true
 gui_classification_reason: Defines the collaboration graphs in sheets and run views and the removal of Technical details from run surfaces.
 split_recommended: false
 depends_on: [DL-149, F3-594, F3-566, F3-569, CWR-020]
 unblocks: [F3-601]
 acceptance_criteria:
-  - "Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every seat named in every mode."
-  - "In a sheet the plate is never scaled to fit; it changes mode instead."
-  - "No run card or run view renders Technical details as a control or as fine print."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
+- Every collaboration sheet and run view draws its graph in the cast plate grammar with straight strings only and every
+  seat named in every mode.
+- In a sheet the plate is never scaled to fit; it changes mode instead.
+- No run card or run view renders Technical details as a control or as fine print.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
+  by this unit.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
+  at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
+  alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
+  NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus
+  never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours.
+  Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner
+  and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover
+  engine.'
+- 'DL-259 FS-2 / plate text, 2026-10-31: the input paper’s fixed label and supporting fixed words (including The job
+  and Your latest changes) fit their actual inner text box in each family, counting its padding/insets before sizing
+  or fitting text. User-supplied job text retains the existing bounded fit. BrainStorm’s final chapter name keeps a visible
+  gap from You after all placement offsets; labels never run together. Preserve the richest-mode-that-fits and no-scale/no-scroll
+  yield rules: compact means names only and intentionally omits model lines, including Retro; full mode retains its model
+  line. This adds no new plate mode, glyph, status or model-selection behavior.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -505,12 +531,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-218"
-  - "Plans/Decision_Log.md#DL-149"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+- Plans/Decision_Log.md#DL-218
+- Plans/Decision_Log.md#DL-149
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- 'PM7 chatpip 0aa3f27ca3 / deliverable d57665c467: paper inset/width and BrainStorm You offset corrections; PAPER_IN/YOU_SHIFT
+  remain source-only.'
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
   - "cast plate"
   - "waits its turn"

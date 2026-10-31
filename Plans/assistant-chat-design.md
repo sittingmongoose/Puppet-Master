@@ -27859,16 +27859,18 @@ canonical_text: 'The 5.6 Pro chat follows these shared presentation and behavior
   360 px of messages remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size
   view across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History and
   detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258;
-  GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input,
-  select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
-  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback;
-  a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless
-  rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu
-  head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
-  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its
-  sheet head; do not fork a second wand or fallback icon. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes
+  Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate
+  control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring,
+  with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the
+  linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body,
+  seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled
+  emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis,
+  Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner
+  serves every sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with
+  the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback
+  icon. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Owns shared chat colors, sizing, layers, hover, controls and keys under the application owners.
 split_recommended: false
@@ -27891,14 +27893,17 @@ acceptance_criteria:
   tag in the chat comes from PMConcept7's hover controller.
 - No pill and no coloured side stripe remains in the chat in any look.
 - Under NieR Mode the page draws one scene and one ground layer, and the chat adds none.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
-  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
-  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
-  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
-  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
-  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
-  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
-  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27914,12 +27919,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26, D27, D28)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 5, 6, 8 and 10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/ (concept lineage only)"
+- Plans/Decision_Log.md#DL-185
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D26, D27, D28)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
+  (sections 5, 6, 8 and 10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md,
+  SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728
+- Concepts/chat-assistant-concepts/5.6 Pro/ (concept lineage only)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
 - Basic, Friendly and Glass
 negative_constraints:
