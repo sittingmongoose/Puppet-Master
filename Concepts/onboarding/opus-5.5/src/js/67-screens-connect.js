@@ -136,12 +136,15 @@
   function kick(S, r) {
     const s = server(S); if (!s) return;
     const payload = { server: r.server, method: r.method, pairing_run: r.id, generation: r.gen, route: r.route };
+    /* (a demo answer chosen from the hint row comes at once: turned down and ran out answer at the approval step, which
+       otherwise waits 2.8 s, so the hint looked like it did nothing; GLM review, major 2) */
+    const quick = !!(S.env.failures || {}).pair_once, ms = (n) => (quick ? 200 : n);
     if (r.method === 'code') {
-      F.op(S, runKey(r, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => failOnce(S, 'reach') }], { payload, sound: CODE_SOUND, onFail: (S2, st) => failed(S, r, st.code) });
+      F.op(S, runKey(r, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => failOnce(S, 'reach') }], { payload, sound: CODE_SOUND, onFail: (S2, st) => failed(S, r, st.code) });
       return;
     }
-    const mid = r.method === 'qr' ? { key: 'qr', ms: 1900, fail: () => failOnce(S, 'qr') } : { key: 'approve', ms: 2800, fail: () => failOnce(S, 'approve') };
-    F.op(S, runKey(r), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => failOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }],
+    const mid = r.method === 'qr' ? { key: 'qr', ms: ms(1900), fail: () => failOnce(S, 'qr') } : { key: 'approve', ms: ms(2800), fail: () => failOnce(S, 'approve') };
+    F.op(S, runKey(r), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => failOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }],
       { payload, sound: PAIR_SOUND, onDone: () => adopt(S, r), onFail: (S2, st) => failed(S, r, st.code) });
   }
   /* c-pair on arrival: the current run, or a new one when there is none (first arrival, after a reload, after Back) */

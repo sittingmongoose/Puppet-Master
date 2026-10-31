@@ -560,10 +560,12 @@
     const at = { id: tryId(S), purpose: n.purpose };
     const payload = { server: p.id, method: m, scope: 'selected_source_read', purpose: n.purpose, pairing_run: 'pairingrun:' + at.id };
     const onFail = (S2, st) => { if (stillThis(S, at)) { N(S).pairFail = st.code; S.save(); O55.ui.refresh(); } };
-    if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => pmFailOnce(S, 'reach') }], { payload, ctx, sound: { fail: 'warn' }, onFail });
-    const mid = m === 'qr' ? { key: 'qr', ms: 1900, fail: () => pmFailOnce(S, 'qr') } : { key: 'approve', ms: 2800, fail: () => pmFailOnce(S, 'approve') };
+    /* (a demo answer chosen from the hint row comes at once, as on Connect) */
+    const quick = !!(S.env.failures || {}).pair_once, ms = (n) => (quick ? 200 : n);
+    if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => pmFailOnce(S, 'reach') }], { payload, ctx, sound: { fail: 'warn' }, onFail });
+    const mid = m === 'qr' ? { key: 'qr', ms: ms(1900), fail: () => pmFailOnce(S, 'qr') } : { key: 'approve', ms: ms(2800), fail: () => pmFailOnce(S, 'approve') };
     /* the approval on the other device (or the QR read) is a finding; trust done is the pairing's success */
-    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700, fail: () => pmFailOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S, at), onFail });
+    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: ms(700), fail: () => pmFailOnce(S, 'reach') }, mid, { key: 'trust', ms: 800 }], { payload, ctx, sound: { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 }, onDone: () => pairDone(S, at), onFail });
   }
   const PM_FAIL_ACTIONS = {
     unreachable: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'nas.pmpair.useSsh', do: 'useSsh' }],
