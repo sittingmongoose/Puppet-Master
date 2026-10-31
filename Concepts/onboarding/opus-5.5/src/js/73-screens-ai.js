@@ -149,7 +149,8 @@
   }
   function readyMeta(S, p) {
     const list = accts(S, p);
-    if (list.length === 1) return accLabel(list[0]) + ' · ' + billLine(S, list[0]);
+    /* an account's name, then what it uses where that adds something (an OpenAI API key needs no "OpenAI API" after it) */
+    if (list.length === 1) { const lab = accLabel(list[0]), bl = billLine(S, list[0]); return bl && !lab.includes(bl) ? lab + ' · ' + bl : lab; }
     return T('ai.acct.many', { n: list.length }) + ': ' + list.map(accLabel).join(', ');
   }
   const btnIn = (label, act, arg, kind, o) => O55.ui.btn(Object.assign({ label, do: act, arg, cls: 'o55-small', tip: false }, o || {}), kind === 'primary' ? 'o55-primary' : 'o55-secondary');
@@ -230,7 +231,8 @@
         return `<div class="o55-inline" data-key="rm-${U.esc(e.id)}"><span class="o55-hint">${U.esc(T('ai.removeAsk', { who: accLabel(e), vendor: p.vendor }))}</span>`
           + btnIn(T('ai.removeGo'), 'removeGo', e.id, 'primary') + C.link(T('ai.keep'), 'removeNo', p.id, { tip: false }) + '</div>';
       }
-      return `<div class="o55-inline" data-key="ac-${U.esc(e.id)}"><span class="o55-hint">${U.esc(accLabel(e) + ' · ' + billLine(S, e))}</span>${C.link(T('ai.remove'), 'remove', e.id, { tip: false })}</div>`;
+      const lab = accLabel(e), bl = billLine(S, e);
+      return `<div class="o55-inline" data-key="ac-${U.esc(e.id)}"><span class="o55-hint">${U.esc(bl && !lab.includes(bl) ? lab + ' · ' + bl : lab)}</span>${C.link(T('ai.remove'), 'remove', e.id, { tip: false })}</div>`;
     }).join('');
     if (p.auth !== 'server') out += `<div class="o55-inline" data-key="add-${p.id}">${btnIn(T('ai.addAnother', { name: pname(p) }), 'addAnother', p.id)}</div>`;
     return out;
@@ -508,7 +510,9 @@
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="where">${C.small('server', 18)}<span>${U.esc(T('ai.where', { host: host(S).name }))}</span></div>`;
       GROUPS.forEach(([bill, k]) => {
         const rows = PROV().filter((p) => p.bill === bill && match(p));
-        if (rows.length) out += C.group(T('ai.' + k), `<p class="o55-hint">${U.esc(T('ai.' + k + 'Sub'))}</p>` + rows.map((p) => rowHtml(S, p)).join(''));
+        /* the group's name organizes the list; only a group whose name needs a word more carries one (no payment lines: FO-4) */
+        const sub = O55.tx('ai.' + k + 'Sub');
+        if (rows.length) out += C.group(T('ai.' + k), (sub ? `<p class="o55-hint">${U.esc(sub)}</p>` : '') + rows.map((p) => rowHtml(S, p)).join(''));
       });
       return out;
     },

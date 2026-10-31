@@ -4,7 +4,7 @@
       "common": {
         "provider:claude": {
           "title": "Claude",
-          "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate, pay-as-you-go choice.",
+          "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate choice.",
           "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider."
         },
         "provider:codex": {
@@ -24,7 +24,7 @@
         },
         "provider:grok": {
           "title": "Grok Build",
-          "text": "Uses Grok Build, signed in through xAI's own app on the computer that does the work. The xAI API is a separate, pay-as-you-go choice.",
+          "text": "Uses Grok Build, signed in through xAI's own app on the computer that does the work. The xAI API is a separate choice.",
           "expert": "Grok Build CLI (grok) with xAI browser sign-in, or a device code when the browser is on another device; the CLI keeps its sign-in. The xAI API is a separate provider."
         },
         "provider:muse": {
@@ -40,37 +40,37 @@
         "provider:qwen-coding": {
           "title": "Alibaba Coding Plan",
           "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key. A plan bought for China is set up in Settings.",
-          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with DashScope pay-as-you-go keys. The China route is in Settings."
+          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with ordinary DashScope keys. The China route is in Settings."
         },
         "provider:qwen-token": {
           "title": "Alibaba Token Plan",
-          "text": "Alibaba Cloud's Token Plan, a monthly plan. It has its own key, separate from the Coding Plan.",
-          "expert": "Alibaba Model Studio Token Plan: a subscription (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
+          "text": "Alibaba Cloud's Token Plan. It has its own key, separate from the Coding Plan.",
+          "expert": "Alibaba Model Studio Token Plan (Personal or Team edition) with its own key; separate from Coding Plan and from ordinary DashScope keys."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI's monthly plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
+          "text": "Z.AI's plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
           "expert": "Z.AI GLM Coding Plan with an API key on the coding endpoint. Zhipu's China plan is a separate route, in Settings."
         },
         "provider:kimi": {
           "title": "Kimi Code",
-          "text": "Kimi Code's monthly plan. Get the key from the Kimi Code console; a Kimi Open Platform key is a different, pay-as-you-go account.",
+          "text": "Kimi Code's plan. Get the key from the Kimi Code console; a Kimi Open Platform key won't work here.",
           "expert": "Kimi For Coding direct route with a Kimi Code console key, separate from Moonshot Open Platform keys; Puppet Master sends its own client identity."
         },
         "provider:minimax": {
           "title": "MiniMax M Plan",
-          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
-          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; a pay-as-you-go MiniMax key isn't plan access. The China route is in Settings."
+          "text": "MiniMax's plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
+          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; an ordinary MiniMax API key isn't plan access. The China route is in Settings."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console.",
+          "text": "OpenCode's plan, used with a key from the OpenCode Console.",
           "expert": "OpenCode Go subscription key from the OpenCode Console. Not the OpenCode server."
         },
         "provider:opencode-zen": {
           "title": "OpenCode Console",
-          "text": "OpenCode's pay-as-you-go service, which used to be called Zen. You buy credit in the OpenCode Console, then use its key.",
-          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway with an API key; not the OpenCode server connection."
+          "text": "OpenCode's service that used to be called Zen. It uses a key from the OpenCode Console.",
+          "expert": "OpenCode Console (formerly Zen): a gateway with an API key; not the OpenCode server connection."
         },
         "provider:opencode-runtime": {
           "title": "OpenCode server",
@@ -79,7 +79,7 @@
         },
         "provider:anthropic-api": {
           "title": "Anthropic API",
-          "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
+          "text": "Anthropic's API, with a key from the Claude Console. Separate from a Claude plan.",
           "expert": "Anthropic API key (sk-ant-…) from the Claude Console. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
@@ -94,12 +94,12 @@
         },
         "provider:xai-api": {
           "title": "xAI API",
-          "text": "Pay as you go with xAI, using a key from the xAI Console. Separate from a Grok Build plan.",
+          "text": "xAI's API, with a key from the xAI Console. Separate from a Grok Build plan.",
           "expert": "xAI API key from the xAI Console. Separate from Grok Build."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
-          "text": "Pay as you go with Meta's models, using a key from Meta's developer site. A Muse Code plan's sign-in is different.",
+          "text": "Meta's models through their API, with a key from Meta's developer site. A Muse Code plan's sign-in is different.",
           "expert": "Meta Model API key from dev.meta.ai. The Muse Code subscription credential works only in Muse Code."
         },
         "pairing:approval": {
@@ -1292,12 +1292,12 @@
         },
         "pick:api": {
           "title": "Pay as you go",
-          "text": "Like the Anthropic or Gemini API. You pay for what you use, so the cost goes up and down with how much you use it.",
+          "text": "Like the Anthropic or Gemini API, with a key from the company.",
           "expert": "A pay-as-you-go API account (Anthropic API, Gemini API) with an API key."
         },
         "pick:free": {
           "title": "Free Models",
-          "text": "Free options with limits. Good for trying things out before you pay for anything.",
+          "text": "Free options with limits. Good for trying things out.",
           "expert": "Free model routes with rate limits and changing availability; useful to try things out."
         },
         "group:signup": {
@@ -1851,7 +1851,7 @@
       "ai-none": {
         "enter": "No AI yet? That's fine.",
         "pick:sub": "A plan with included use. Simple.",
-        "pick:api": "Pay for what you use. Fair.",
+        "pick:api": "API keys. Handy.",
         "pick:free": "Free! With a few limits."
       },
       "free": {
