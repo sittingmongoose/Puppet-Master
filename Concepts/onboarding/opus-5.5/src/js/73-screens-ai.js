@@ -258,7 +258,7 @@
   function contextHtml(S, p, r) {
     const c = r.ctx || {};
     if (p.context === 'billing') {
-      const orgs = (S.env.forges.github && S.env.forges.github.orgs) || [];
+      const orgs = ghOrgs(S);
       return `<p class="o55-hint" data-key="ctxq-${p.id}">${U.esc(T('ai.ctx.billing.title'))}</p>` + C.cards('entity', [{ v: p.id + '|' + c.who, glyph: 'person', title: T('ai.ctx.billing.me', { who: c.who }) }]
         .concat(orgs.map((o) => ({ v: p.id + '|' + o, glyph: 'globe', title: T('ai.ctx.billing.org', { org: o }) }))), null, { label: T('ai.ctx.billing.title') });
     }
@@ -296,9 +296,11 @@
       let out = '';
       /* which computer does what (P11): the AI works on the Server; sign-ins open on this device and are kept there */
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="where">${C.small('server', 18)}<span>${U.esc(T('ai.where', { host: host(S).name }))}</span></div>`;
+      /* Skip for now answers on its own press: what skipping means, at the top where the press brings it into view
+         (GLM review: it used to land under the list, out of sight) */
+      if (a.skipped && !readyIds(S).length && !freeReady(S)) out += `<div data-key="skipped">${C.note(T('ai.skipped') + ' ' + T('ai.skipNote'), 'warn', 'spark')}</div>`;
       out += `<div class="o55-providers" data-key="list">${shortlist(S).map((p) => rowHtml(S, p)).join('')}</div>`;
       out += `<div class="o55-sublinks" data-key="links">${C.link(T('ai.seeAll'), 'all')}${readyIds(S).length ? '' : C.link(T('ai.none'), 'none')}</div>`;
-      if (a.skipped && !readyIds(S).length && !freeReady(S)) out += C.note(T('ai.skipNote'), 'warn', 'spark');
       if (readyIds(S).length || a.skipped) {
         out += O55.tips.opt('free', `<button type="button" class="o55-card o55-card-link" data-o55-do="free" data-o55-sound="self" data-pm-hover-exempt="true" data-key="free">${C.glyph('stack')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('ai.free.title'))}</span><span class="o55-cardsub">${U.esc(freeReady(S) ? T('ai.free.some', { n: freeReady(S) }) : T('ai.free.sub'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
       }
@@ -451,7 +453,10 @@
       },
       all(S) { O55.ui.go('ai-all'); },
       none(S) { O55.ui.go('ai-none'); },
-      skip(S) { A(S).skipped = true; S.save(); O55.ui.refresh(); },
+      skip(S) {
+        A(S).skipped = true; S.save(); O55.ui.refresh();
+        requestAnimationFrame(() => { const el = S.root && S.root.querySelector('[data-key="skipped"]'); if (el) el.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' }); });
+      },
       free(S) { O55.ui.go('free'); },
       next(S) { O55.ui.go('ready'); }
     },
@@ -466,12 +471,14 @@
     onBack: () => false
   });
 
+  /* the GitHub organizations a Copilot plan can come from (the forge fixture names them owners; older ones orgs) */
+  const ghOrgs = (S) => { const g = (S.env.forges && S.env.forges.github) || {}; return (g.owners || []).map((o) => o.name || o.id).concat(g.orgs || []).filter((x, i, a) => x && a.indexOf(x) === i); };
   /* a sign-in came back: an account that still needs a choice asks for it; the same account twice is said so */
   function signedIn(S, p) {
     const r = R(S, p.id), w = way(p, r), who = nextWho(S, p);
     r.recovered = !!r.failed; r.failed = false; r.remote = null;
     if (accts(S, p).some((e) => e.who === who && (e.family || null) === (w.family || null))) { Object.assign(r, { state: 'ready', adding: false, dup: who }); S.save(); O55.ui.refresh(); return; }
-    if (p.context === 'billing' && ((S.env.forges.github && S.env.forges.github.orgs) || []).length) { r.state = 'context'; r.ctx = { via: 'signin', who }; S.save(); O55.ui.refresh(); return; }
+    if (p.context === 'billing' && ghOrgs(S).length) { r.state = 'context'; r.ctx = { via: 'signin', who }; S.save(); O55.ui.refresh(); return; }
     addAccount(S, p, { via: 'signin', who, plan: w === p ? p.plan || null : null, entity: p.context === 'billing' ? who : null });
   }
   function pickContext(S, v, kind) {

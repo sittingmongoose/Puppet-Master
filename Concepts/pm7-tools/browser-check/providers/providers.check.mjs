@@ -345,5 +345,21 @@ export const tests = {
 		await t.check('a key route set up with the sample key reaches Ready (Pollinations)', /Ready/.test(g), g);
 		await t.viewport(1920, 1080);
 	}
+	,
+	// GLM review: Skip for now must answer visibly on its own press, and the refused-key message reads for any name
+	async 'skip for now answers visibly; a refused key names the provider without a/an slips'(t) {
+		const W = await open(t, 'ai');
+		await waitRow(t, W, 'claude', /Not installed|Not signed in/, 'detection done');
+		await W.$('.o55-foot [data-o55-do="skip"]').click(); await W.frame.waitForTimeout(700);
+		await t.shot('skip-after', 'right after pressing Skip for now'); await t.visible(W.frame.locator(`${ROOT} :is([data-key="skipped"], .o55-body .o55-note-warn, .o55-form .o55-note-warn)`).first(), 'Skip for now: a note on screen says what skipping means, without scrolling', { fully: true, scroll: false });
+		await t.check('Skip for now: Continue is enabled at once', (await W.$('.o55-foot .o55-primary[aria-disabled="true"]').count()) === 0, 'Continue still disabled');
+		
+		await W.$('.o55-sublinks [data-o55-do="all"]').click(); await W.frame.waitForTimeout(1200);
+		await act(W, 'anthropic-api', 'key').click(); await screenDone(W);
+		await typeInto(W, '#o55f-key-anthropic-api', 'short');
+		await act(W, 'anthropic-api', 'keyCheck').click(); await W.frame.waitForTimeout(1600);
+		const msg = await rowText(W, 'anthropic-api');
+		await t.check('refused key: no "a Anthropic" (a/an)', /wasn't accepted/.test(msg) && !/\ba (?:[AEIOU])/.test(msg), msg);
+	}
 };
 
