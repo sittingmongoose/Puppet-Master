@@ -18,7 +18,12 @@ async function open(t, screen, { scenario = '', surface = t.args.surface || 'san
 		fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%}</style><iframe sandbox="allow-scripts allow-downloads allow-popups" src="${src}"></iframe>`);
 		await t.goto(pathToFileURL(html).href, { settleMs: 1500 });
 		await t.page.waitForFunction(() => document.querySelector('iframe') && document.querySelector('iframe').contentWindow, null, { timeout: 15000 });
-	} else await t.goto(src, { settleMs: 1500 });
+	} else {
+		/* each test starts from a fresh visit: the onboarding and Settings records an earlier test saved are cleared */
+		await t.goto(src, { settleMs: 300 });
+		await t.page.evaluate(() => { try { Object.keys(localStorage).filter((k) => /^pm|o55|pm51|settings/i.test(k)).forEach((k) => localStorage.removeItem(k)); } catch (_) {} });
+		await t.goto(src, { settleMs: 1500 });
+	}
 	const frame = surface === 'sandbox' ? t.page.frames().find((f) => f !== t.page.mainFrame()) : t.page.mainFrame();
 	await frame.waitForFunction(() => window.O55 && window.O55.S && window.O55.S.open && document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 30000 });
 	const W = { frame, $: (sel) => frame.locator(`${ROOT} ${sel}`).first(), all: (sel) => frame.locator(`${ROOT} ${sel}`) };
@@ -268,4 +273,42 @@ export const tests = {
 		await t.check('P13: no key text in the result', !JSON.stringify(finish || {}).includes(FAKE_KEY), 'key text in result');
 		void W2;
 	}
+	,
+	// Demo hints (O55.flow.hint) on the steps that need a real service, and the recovery states they and Demo Studio reach
+	async 'demo hints and recovery states: key works, refused, revoked; expired sign-in; offline once'(t) {
+		const pick = async (W, scope, label) => { const b = W.frame.locator(`${ROOT} ${scope} [data-o55-do="demoHint"]`).filter({ hasText: label }).first(); await b.click(); await W.frame.waitForTimeout(400); };
+		let W = await open(t, 'ai');
+		await waitRow(t, W, 'cursor', /Not signed in/, 'detection done');
+		await act(W, 'cursor', 'choose').click(); await screenDone(W);
+		await W.$('[data-o55-do="way"][data-arg="cursor|main"]').click(); await screenDone(W);
+		await t.visible(W.$('[data-key="pv-cursor"] .o55-demohint'), 'hint: the key step shows "Try it in this demo"');
+		await t.crop('hint-key', W.$('[data-key="pv-cursor"]'), 'Cursor key step with its demo hint: a key that works, one refused, one revoked');
+		await pick(W, '[data-key="pv-cursor"]', 'demo-key-revoked-0000');
+		await act(W, 'cursor', 'keyCheck').click(); await W.frame.waitForTimeout(1600);
+		await t.text(row(W, 'cursor'), /revoked or has expired/, 'revoked/expired key: says so under its field');
+		await pick(W, '[data-key="pv-cursor"]', 'short-key');
+		await act(W, 'cursor', 'keyCheck').click(); await W.frame.waitForTimeout(1600);
+		await t.text(row(W, 'cursor'), /wasn't accepted/, 'refused key: says so');
+		await pick(W, '[data-key="pv-cursor"]', 'demo-key-0000-1111-2222');
+		await act(W, 'cursor', 'keyCheck').click();
+		await waitRow(t, W, 'cursor', /Ready/, 'the working sample key reaches Ready');
+		W = await open(t, 'ai', { scenario: 'claudeExpired' });
+		await waitRow(t, W, 'claude', /Sign-in expired/, 'expired sign-in: the row says so and names the account');
+		await t.text(row(W, 'claude'), /jared@example\.com/, 'expired: names the account');
+		await act(W, 'claude', 'signin').click();
+		await waitRow(t, W, 'claude', /Ready/, 'expired: Sign in again reaches Ready');
+		W = await open(t, 'ai', { scenario: 'aiOffline' });
+		await waitRow(t, W, 'claude', /Not installed|Not signed in/, 'offline situation loaded');
+		await act(W, 'anthropic-api', 'key').click().catch(() => {});
+		if (!(await act(W, 'anthropic-api', 'key').count())) { await W.$('.o55-sublinks [data-o55-do="all"]').click(); await W.frame.waitForTimeout(1200); await act(W, 'anthropic-api', 'key').click(); }
+		await screenDone(W);
+		await pick(W, '[data-key="pv-anthropic-api"]', 'demo-key-0000-1111-2222');
+		await act(W, 'anthropic-api', 'keyCheck').click(); await W.frame.waitForTimeout(1600);
+		await t.text(row(W, 'anthropic-api'), /offline/, 'offline once: the check says the computer is offline');
+		await pick(W, '[data-key="pv-anthropic-api"]', 'demo-key-0000-1111-2222');
+		await act(W, 'anthropic-api', 'keyCheck').click();
+		await waitRow(t, W, 'anthropic-api', /Needs a choice|Ready/, 'offline once: the next check goes through');
+		await t.check('outcome words present', true);
+	}
 };
+

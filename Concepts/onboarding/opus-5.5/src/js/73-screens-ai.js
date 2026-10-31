@@ -36,6 +36,8 @@
   const DETECT_FOUND = { done: 'found', intensity: 0.55 };
   const DETECT_QUIET = { done: 'phase', intensity: 0.55 };
   const detKey = (S) => 'detect:' + host(S).id;
+  /* this computer has no connection: the fixture's own (where.check.offline), or the one-shot drop of the aiOffline situation */
+  const offlineNow = (S) => !S.env.here.internet || O55.fixtures.offlineOnce(S.env);
 
   /* ------------------------------------------------------------------ session records
      sess.ai.accounts[providerId]: that provider row's setup in progress (its state, the way chosen, attempts); the
@@ -114,6 +116,7 @@
     if (p.auth === 'server') return 'server';
     if (p.alt && !(r && r.method)) return 'choose';
     const w = way(p, r), d = detected(S, p);
+    if (d && d.installed && d.expired && !(r && r.attempt)) return 'expired';
     if (w.cli && !installed(S, p, r)) return 'install';
     return w.auth === 'key' ? 'key' : 'signin';
   }
@@ -152,14 +155,16 @@
   /* the key field of a provider (or of a Free Models route's own provider): what kind of key, where it is made, where
      it is kept; a refused key says what to check */
   /* the demo's hint (O55.flow.hint, concept only): values that take each branch, filled as typing does */
-  const DEMO_KEY = 'demo-key-0000-1111-2222', DEMO_BAD = 'short-key';
+  const DEMO_KEY = 'demo-key-0000-1111-2222', DEMO_BAD = 'short-key', DEMO_REVOKED = 'demo-key-revoked-0000';
+  /* the fixture's answer to a key: no connection, too short to be a key, one the vendor revoked (or that expired), or works */
+  const keyVerdict = (v, offline) => (offline ? 'offline' : v.length < 12 ? 'key_rejected' : /revoked/i.test(v) ? 'key_revoked' : null);
   const hint = (id, items, when) => (F.hint ? F.hint(id, items, { when }) : '');
   function keyArea(S, o) {
     const ks = F.state(S, o.op), failed = ks && ks.state === 'failed';
-    const why = failed ? (ks.code === 'offline' ? T('ai.offline') : T('ai.keyBad', { name: o.name })) : '';
+    const why = failed ? (ks.code === 'offline' ? T('ai.offline') : ks.code === 'key_revoked' ? T('ai.keyRevoked') : T('ai.keyBad', { name: o.name })) : '';
     let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, label: T('ai.keyLabel', { name: o.name }), value: '',
       hint: T('ai.keyHint', { where: keychain(S) }), error: why, invalid: failed, tip: 'field:key' });
-    out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }], !o.typed && !o.checking);
+    out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }, { label: DEMO_REVOKED, outcome: 'revoked', fills: [[o.bind, DEMO_REVOKED]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
     out += `<div class="o55-inline" data-key="kb-${U.esc(o.key)}">` + btnIn(T('ai.verify'), o.check, o.arg, 'secondary', { disabled: !o.typed || o.checking, reason: T('ai.keyLabel', { name: o.name }) })
       + (o.from ? C.link(T('ai.keyFrom', { name: o.from.name }), o.fromDo, o.arg, { tip: false }) : '') + (o.cancel ? C.link(T('ai.cancel'), o.cancel, o.arg, { tip: false }) : '') + '</div>';
@@ -183,12 +188,13 @@
       + (r.adding ? `<div class="o55-sublinks">${C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false })}</div>` : ''));
     if (st === 'choosing') { pill = ['needs', T('ai.notReady')]; }
     if (st === 'install') { pill = ['needs', T('ai.notInstalled')]; action = { label: onServer(S) ? T('ai.installOn', { host: host(S).name }) : T('ai.install'), do: 'install', arg: p.id }; }
+    if (st === 'expired') { pill = ['fail', T('ai.expired.title')]; meta = T('ai.expired.body', { who: d.account || pname(p) }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'signin') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.signIn'), do: 'signin', arg: p.id }; if (r.adding) extra = ex('add', `<div class="o55-sublinks">${C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false })}</div>`); }
     if (st === 'key') { action = { label: T('ai.key'), do: 'key', arg: p.id }; }
     if (st === 'server') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); action = { label: T('ai.setUp'), do: 'server', arg: p.id }; }
     if (fromCopy && st !== 'ready') meta = T('ai.unavailable', { project: cp.name, host: hostName(S) });
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
-    else if (d && d.installed && !['ready', 'server'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
+    else if (d && d.installed && !['ready', 'server', 'expired'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
     if (r.confirmInstall) extra = ex('ask', `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`);
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = ex('ph', F.phases(S, 'install:' + p.id + (r.method === 'alt' ? ':alt' : ''), ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })); }
@@ -197,7 +203,7 @@
       extra = ex('wait', remoteHtml(S, p, r));
     }
     /* a browser sign-in that did not finish (the page was closed, or never completed): nothing connected; ask again */
-    if (st === 'signinFailed') { pill = ['fail', T('ai.signinFail.title')]; meta = T('ai.signinFail.body', { vendor: p.vendor }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
+    if (st === 'signinFailed') { pill = ['fail', T('ai.signinFail.title')]; meta = r.failCode === 'offline' ? T('ai.offline') : T('ai.signinFail.body', { vendor: p.vendor }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'keyEntry' || st === 'keyChecking') {
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : null;
       const project = p.context === 'project' ? C.field({ bind: 'project:' + p.id, id: 'o55f-project-' + p.id, label: T('ai.ctx.project.label'), value: r.project || '', placeholder: 'my-project', hint: T('ai.ctx.project.hint'), tip: 'field:project' }) : '';
@@ -343,12 +349,13 @@
         r.attempt = (r.attempt || 0) + 1; S.save();
         O55.official.open(S, { name: p.vendor, url: r.method === 'alt' ? null : O55.fixtures.OFFICIAL.provider[p.id] || null });
         O55.ui.refresh();
-        const attempt = r.attempt, fails = O55.fixtures.signinFails(S.env, id);
-        F.op(S, 'signin:' + id + ':' + attempt, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: fails ? 1800 : 2400, fail: () => (fails ? 'signin_incomplete' : null) }, { key: 'verify', ms: 600 }], {
+        const attempt = r.attempt, offline = offlineNow(S), fails = !offline && O55.fixtures.signinFails(S.env, id);
+        r.failCode = null;
+        F.op(S, 'signin:' + id + ':' + attempt, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: offline ? 900 : fails ? 1800 : 2400, fail: () => (offline ? 'offline' : fails ? 'signin_incomplete' : null) }, { key: 'verify', ms: 600 }], {
           quiet: true, sound: { fail: 'warn' },
           payload: { provider_entry_id: p.settings, auth_family: w.family || w.auth, account_ref: null, host_id: h.id, host_role: h.role, client_id: S.env.client.id, return_context: 'onboarding:' + S.sess.screen },
           onDone: () => { if (r.attempt === attempt && r.state === 'signingIn' && !r.remote) signedIn(S, p); },
-          onFail: () => { if (r.attempt !== attempt || r.state !== 'signingIn') return; r.state = 'signinFailed'; r.failed = true; S.save(); O55.ui.refresh(); }
+          onFail: (S2, st) => { if (r.attempt !== attempt || r.state !== 'signingIn') return; r.state = 'signinFailed'; r.failed = true; r.failCode = st && st.code; S.save(); O55.ui.refresh(); }
         });
       },
       /* Cancel a sign-in under way: the wait is dropped (its late result is ignored) and nothing is connected */
@@ -387,8 +394,8 @@
         if (i) i.value = '';
         r.keyTyped = false; r.state = 'keyChecking'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh();
         /* a late result of an older try never overwrites a newer one (pm7-srv's sweep) */
-        const offline = !S.env.here.internet, at = r.attempt, current = () => r.attempt === at && r.state === 'keyChecking';
-        F.op(S, 'key:' + id + ':' + r.attempt, 'cmd.integration.connection.test', [{ key: 'verify', ms: 900, fail: () => (offline ? 'offline' : v.length >= 12 ? null : 'key_rejected') }], {
+        const offline = offlineNow(S), at = r.attempt, current = () => r.attempt === at && r.state === 'keyChecking';
+        F.op(S, 'key:' + id + ':' + r.attempt, 'cmd.integration.connection.test', [{ key: 'verify', ms: 900, fail: () => keyVerdict(v, offline) }], {
           payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
           onDone: () => {
             if (!current()) return;
@@ -436,7 +443,7 @@
         r.state = 'connecting'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('tap');
         /* in this demo an OpenCode server answers on this computer or on a device the fixture knows (Home NAS) */
         let where = ''; try { where = new URL(endpoint).hostname; } catch (_) {}
-        const reachable = /^https?:\/\/[^\s/?#]+(?::\d+)?\/?$/.test(endpoint) && ['127.0.0.1', 'localhost'].concat(S.env.devices.map((d) => d.address), S.env.pmServers.map((x) => x.address)).includes(where);
+        const reachable = /^https?:\/\/[^\s/?#]+(?::\d+)?\/?$/.test(endpoint) && !(where !== '127.0.0.1' && where !== 'localhost' && offlineNow(S)) && ['127.0.0.1', 'localhost'].concat(S.env.devices.map((d) => d.address), S.env.pmServers.map((x) => x.address)).includes(where);
         F.op(S, 'oc:' + id + ':' + r.attempt, 'cmd.integration.connection.add', [{ key: 'connect', ms: 1000, fail: () => (reachable ? null : 'unreachable') }, { key: 'health', ms: 700 }, { key: 'discover', ms: 900 }], {
           payload: { provider_entry_id: p.settings, profile_mode: 'attach_existing_server', endpoint_label: endpoint, server_auth: r.user ? 'basic' : 'none' }, sound: { fail: 'warn' },
           onDone: () => { if (r.state === 'connecting') addAccount(S, p, { via: 'server', mode: 'attached', endpoint: endpoint.replace(/\/$/, '') }); },
@@ -598,8 +605,8 @@
         const r = FR().find((x) => x.id === id), a = A(S), rec = a.freeRows[id] = a.freeRows[id] || {}, i = S.root.querySelector('#o55f-fkey-' + id), v = i ? i.value.trim() : '';
         if (i) i.value = '';
         rec.keyTyped = false; rec.state = 'keyChecking'; rec.attempt = (rec.attempt || 0) + 1; S.save(); O55.ui.refresh();
-        const offline = !S.env.here.internet, at = rec.attempt, current = () => rec.attempt === at && rec.state === 'keyChecking';
-        F.op(S, 'fkey:' + id + ':' + rec.attempt, 'cmd.free_models.route.enable', [{ key: 'verify', ms: 900, fail: () => (offline ? 'offline' : v.length >= 12 ? null : 'key_rejected') }, { key: 'enable', ms: 600 }], {
+        const offline = offlineNow(S), at = rec.attempt, current = () => rec.attempt === at && rec.state === 'keyChecking';
+        F.op(S, 'fkey:' + id + ':' + rec.attempt, 'cmd.free_models.route.enable', [{ key: 'verify', ms: 900, fail: () => keyVerdict(v, offline) }, { key: 'enable', ms: 600 }], {
           payload: { route: id, underlying_provider: r.provider, setup: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' },
           onDone: () => { if (!current()) return; rec.state = null; a.freeRoutes[id] = r.limitedOnce && !rec.retried ? 'limited' : 'ready'; a.freeAccounts[id] = T('free.keyAccount'); a.free = 'setup'; S.save(); O55.ui.refresh(); },
           onFail: () => { if (!current()) return; rec.state = 'keyEntry'; S.save(); O55.ui.refresh(); } });

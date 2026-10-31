@@ -249,7 +249,11 @@
     smbWrong: { label: 'Shared folder refuses the first password', apply(e) { e.failures.smb_password_once = true; } },
     restoreFails: { label: 'A restore stops part-way once', apply(e) { e.failures.restore_once = true; } },
     /* (the Server lane's pairing outcomes, SCR-15: failures.pair_once fires once at the approval step) */
-    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } }
+    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } },
+    /* the AI step's recovery states (provider-login audit P12): a sign-in that has expired since it was made (Sign in
+       again), and the connection dropping during AI setup once (the first check says so; the next one works) */
+    claudeExpired: { label: 'Claude sign-in expired', apply(e) { e.here.providers.claude = { installed: true, version: '2.4.1', signedIn: false, expired: true, account: 'jared@example.com' }; } },
+    aiOffline: { label: 'Offline once during AI setup', apply(e) { e.failures.ai_offline_once = true; } }
   };
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
@@ -267,6 +271,8 @@
     provider: (id) => PROVIDERS.find((p) => p.id === id),
     forge: (id) => FORGES.find((f) => f.id === id),
     /* a one-shot sign-in failure, used up by the try it fails (signin_once) */
+    /* the connection drops once during AI setup (aiOffline), used up by the check it fails */
+    offlineOnce(e) { const f = e && e.failures; if (!f || !f.ai_offline_once) return false; f.ai_offline_once = false; return true; },
     signinFails(e, id) { const f = e && e.failures && e.failures.signin_once; if (!f || !f[id]) return false; f[id] = false; return true; }
   };
 })();

@@ -1145,7 +1145,12 @@
       },
       "failTitle": "Couldn't connect",
       "fail": "No OpenCode server answered at that address. Check it's running, then try again."
-    }
+    },
+    "expired": {
+      "title": "Sign-in expired",
+      "body": "{who} · that sign-in has expired. Sign in again to keep using it."
+    },
+    "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here."
   },
   "aiNone": {
     "eyebrow": "AI",
@@ -1736,7 +1741,8 @@
       "wrong": "wrong",
       "noAnswer": "no answer",
       "refused": "refused",
-      "taken": "taken"
+      "taken": "taken",
+      "revoked": "revoked"
     }
   }
 }
