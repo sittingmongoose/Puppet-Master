@@ -2020,9 +2020,6 @@
           "replayAdopt": "That answer was used already.",
           "codeMissing": "We need a new code first.",
           "wordsMissing": "I can't see its words. Ask again?"
-        },
-        "wait": {
-          "cloudPublic": "Not the public address, please!"
         }
       },
       "restore": {
@@ -2152,7 +2149,6 @@
             "hsUnreachable": "Headscale isn't answering.",
             "unreachable": "The internet can't reach it yet.",
             "dns": "That name doesn't point here yet.",
-            "cert": "The certificate didn't take.",
             "live": "Live updates are blocked there.",
             "relay": "The Remote Link isn't answering."
           }
@@ -2220,9 +2216,6 @@
           "replayAdopt": "All sorted.",
           "codeMissing": "Fresh code. Go!",
           "wordsMissing": "There are the words."
-        },
-        "wait": {
-          "cloudPublic": "A private address. Safer!"
         }
       },
       "restore": {
@@ -2352,7 +2345,6 @@
             "hsUnreachable": "Headscale answered!",
             "unreachable": "Reachable now. Hooray!",
             "dns": "The name points home now!",
-            "cert": "Certificate in place!",
             "live": "Live updates flow now!",
             "relay": "Remote Link is up!"
           }
