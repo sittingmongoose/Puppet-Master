@@ -788,7 +788,8 @@
           S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
           S.save(); return O55.ui.go(O55.nas.entry(S));
         }
-        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, famOf(S), acc(S))) { O55.sound.play('warn'); O55.ui.refresh(); return; } /* a secret field was empty */
+        /* the same check as the button's: every field filled and accepted by its service's rule, then the secrets read */
+        if (next === 'signin' && ACCESSED(b.dest) && (!O55.backup.accessReady(famOf(S), acc(S)) || !O55.backup.accessTake(S, famOf(S), acc(S)))) { O55.sound.play('warn'); O55.ui.refresh(); return; }
         press();
         if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
         const fam = famOf(S), cloudDrive = b.dest === 'gdrive' || b.dest === 'onedrive';
