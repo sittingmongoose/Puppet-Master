@@ -1116,7 +1116,7 @@ def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own li
   A.ok(/^ssh-ed25519 AAAA\S+ puppet-master@MacBook-Pro$/.test(line), 'the line is the new key\'s public half (' + line.slice(0, 40) + '...)');
   A.ok(await paneFits(d), 'the line and its Copy button fit inside the window');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-pm']||{}).state === 'done'", 'checked with the key', 9000);
-  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-pm')), 'the device now has the key');
+  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-pm' || k.endsWith(':k-pm'))), 'the device now has the key (for the account it signs in as: SCR-10)');
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'on to the folder');
 });
 def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: the check says so and nothing goes on", async (d, A) => {
@@ -1126,7 +1126,7 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
   A.ok(await d.state(() => /isn't on Home NAS yet/.test(document.body.textContent)), 'it says the key is not on Home NAS yet');
-  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
+  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-ed' || k.endsWith(':k-ed')))), 'the check did not add the key itself');
   await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
 });

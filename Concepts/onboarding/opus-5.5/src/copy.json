@@ -1405,7 +1405,7 @@
         "mount": "Opening the shared folder",
         "read": "Checking it can be read"
       },
-      "wrong": "That username and password weren't accepted. Check them and try again.",
+      "wrong": "The shared folder didn't accept that username and password.",
       "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
       "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
       "more": "More sign-in options",
