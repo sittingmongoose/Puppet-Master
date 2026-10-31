@@ -57,6 +57,15 @@
     if (kind === 'link') return O55.endpoint.checkLink(v).ok ? S.env.pmServers[0] : null;
     return null;
   }
+  /* Why Continue waits, in words this route can act on (FO-10). Where the route's own address finds the Puppet Master
+     (a web address, a Remote Link, an address typed instead of the list), what that address still needs comes first:
+     "Choose your Puppet Master" there would name a list the screen does not show. */
+  function routeReason(S) {
+    const d = cd(S), miss = O55.draft.missing(d), own = { reverse_proxy: 'proxy_hostname', remote_link: 'remote_endpoint' }[d.remote_mode];
+    const m = (own && miss.find((x) => x.field === own)) || miss[0];
+    if (m && m.field === 'server_ref' && d.remote_mode === 'local_or_vpn' && S.sess.connect.manual) return T(String(S.sess.connect.addr || '').trim() ? 'connect.route.addrNoAnswer' : 'connect.route.addrMissing');
+    return m ? T(m.key) : '';
+  }
   /* A different Server ends what was started for the one before: its pairing request (cancelled with the owner), the
      review's confirmation and this device's trust in the draft. A trust record already issued by a Server stays with
      that Server (picking it again finds it), but it never carries over to another one (SCR-01). */
@@ -229,8 +238,8 @@
     },
     mounted(S) { if (cd(S).remote_mode === 'local_or_vpn' && !S.sess.connect.manual) scan(S); },
     foot(S) {
-      const miss = O55.draft.missing(cd(S))[0];
-      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !!miss, reason: miss ? T(miss.key) : '' } };
+      const reason = routeReason(S);
+      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !!reason, reason } };
     },
     do: {
       pickServer(S, id, el) { const s = server(S, id); choose(S, s, { server_connection_mode: 'discover' }); O55.ui.refresh(); O55.ui.charm(el, s.name, 'server'); },

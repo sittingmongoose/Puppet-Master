@@ -219,7 +219,9 @@
         "where": "Your Server shows it in Settings › Server & Project Location › Away From Home"
       },
       "local": "On this network",
-      "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well."
+      "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well.",
+      "addrMissing": "Enter its address first.",
+      "addrNoAnswer": "No Puppet Master answers at that address. Check it, or go back to the list."
     },
     "review": {
       "eyebrow": "Connect this device",
