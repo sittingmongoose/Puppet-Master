@@ -3,7 +3,9 @@
 
   python3 tools/sound_board.py SOUND_DIR [--events e1,e2,...] [--name NAME]
   python3 tools/sound_board.py SOUND_DIR --pip         Pip's kits (lane onb) from the same render (sound_render.mjs `pip`):
-                                                     board-pip-<kit>.wav, spectrum-pip-<kit>.png and board-pip.html
+                                                     board-pip-<kit>.wav, spectrum-pip-<kit>.png and board-pip.html;
+                                                     and Pip's voice dry, then in its look's room (`voice`):
+                                                     board-pip-voice-<voice>.wav and its spectrum
   python3 tools/sound_board.py --pip-page OUT.html     Pip's listening page (SND1): every Pip sound in every look, live
                                                      through the product's own player (15-sound.js with O55.sound.pip)
 
@@ -226,7 +228,33 @@ def pip_board(d):
         s = os.path.join(d, f'spectrum-pip-{kit}.png')
         spectrum(b, s, max(200, int(dur * PX_PER_S)))
         rows.append((kit, s, dur, marks, sr))
-    sheet(rows, os.path.join(d, 'board-pip.html'), "Pip's kits - every stage event and loop")
+    # Pip's voice in its look's room (Q1 B): per voice, a line and two vocals, each dry and then in the room, so the
+    # room can be heard against the voice as it was (sound_render.mjs `voice`, <d>/pip-voice/<voice>/<key>-dry|room.wav)
+    voice = json.load(open(os.path.join(d, 'sound.json'))).get('voice')
+    if voice:
+        vbase, order = os.path.join(d, 'pip-voice'), []
+        for r in voice['rows']:
+            if r['voice'] not in order:
+                order.append(r['voice'])
+        for v in order:
+            items, marks, lengths, at, sr = [], [], [], 0.0, 48000
+            for key in ('say', 'happy', 'wake'):
+                for side in ('dry', 'room'):
+                    f = f'{key}-{side}.wav'
+                    if not os.path.exists(os.path.join(vbase, v, f)):
+                        continue
+                    secs, sr = trimmed_seconds(os.path.join(vbase, v, f))
+                    items.append(f); lengths.append(secs); marks.append((f'{key} {side}', at)); at += secs + 0.3
+            if not items:
+                continue
+            b = os.path.join(d, f'board-pip-voice-{v}.wav')
+            board(vbase, v, items, b, lengths)
+            boards.append(b)
+            dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', b], capture_output=True, text=True).stdout.strip())
+            sp = os.path.join(d, f'spectrum-pip-voice-{v}.png')
+            spectrum(b, sp, max(200, int(dur * PX_PER_S)))
+            rows.append(('voice ' + v, sp, dur, marks, sr))
+    sheet(rows, os.path.join(d, 'board-pip.html'), "Pip's kits - every stage event and loop, and Pip's voice dry and in its room")
     print(json.dumps({'boards': boards, 'sheet': os.path.join(d, 'board-pip.html')}))
 
 

@@ -4,103 +4,103 @@
       "common": {
         "provider:claude": {
           "title": "Claude",
-          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice.",
-          "expert": "Claude Code CLI signed in with your Claude subscription (OAuth); usage counts against the plan's limits. The Anthropic API (per-token billing, API key) is a separate provider."
+          "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate, pay-as-you-go choice.",
+          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider billed per token."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
-          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT.",
-          "expert": "OpenAI Codex CLI signed in with your ChatGPT subscription (OAuth); usage counts against the plan's limits."
+          "text": "Two ways in: sign in with ChatGPT to use your plan's limits, or use an OpenAI API key, billed separately by use. Each one is its own account here.",
+          "expert": "Direct provider with two auth families: ChatGPT OAuth (plan-backed usage) or an OpenAI API key (API billing). Separate account rows; their usage and cooldowns never merge."
         },
         "provider:antigravity": {
           "title": "Google Antigravity",
-          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice.",
-          "expert": "Google Antigravity signed in with its plan; the Gemini API (per-token billing, API key) is a separate provider."
+          "text": "Uses your Google Antigravity account, through Google's own app on the computer that does the work. The Gemini API is a separate choice.",
+          "expert": "Antigravity CLI (agy) with Google sign-in; the CLI keeps its sign-in on the execution host, and on a remote host uses its sign-in link and returned code. Gemini API is a separate provider."
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again.",
-          "expert": "Cursor through an API key from your Cursor account, checked before it is saved; the key is stored in the OS keychain and never shown again."
+          "text": "Paste an API key from your Cursor dashboard. It uses your Cursor plan.",
+          "expert": "Cursor SDK route with a user or service-account API key from the Cursor dashboard; Team Admin keys aren't accepted. Browser sign-in through cursor-agent is the other way in."
         },
         "provider:grok": {
           "title": "Grok Build",
-          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice.",
-          "expert": "Grok Build subscription; the xAI API (per-token billing, API key) is a separate provider."
+          "text": "Uses Grok Build, signed in through xAI's own app on the computer that does the work. The xAI API is a separate, pay-as-you-go choice.",
+          "expert": "Grok Build CLI (grok) with xAI browser sign-in, or a device code when the browser is on another device; the CLI keeps its sign-in. The xAI API is a separate provider."
         },
         "provider:muse": {
           "title": "Muse Code",
-          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice.",
-          "expert": "Muse Code subscription; the Meta Model API (per-token billing, API key) is a separate provider."
+          "text": "Uses Muse Code, signed in through Meta's own app. That sign-in works only in Muse Code; other Meta keys are billed separately.",
+          "expert": "Muse Code CLI (muse) with its own sign-in; the subscription credential is limited to Muse Code, and an API key set in Muse takes precedence over it. The Meta Model API is separate."
         },
         "provider:copilot": {
           "title": "GitHub Copilot",
-          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot.",
-          "expert": "GitHub Copilot through your GitHub account's Copilot subscription (GitHub OAuth)."
+          "text": "Signs in with your GitHub account, then asks whose Copilot plan to use: yours or an organization's. It doesn't change where your code is kept.",
+          "expert": "GitHub Copilot direct hosted API: GitHub OAuth, then entitlement and billing-entity selection before Ready. Separate from the GitHub account used for repositories."
         },
         "provider:qwen-coding": {
-          "title": "Qwen Coding Plan",
-          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account.",
-          "expert": "Alibaba Cloud's Qwen Coding Plan, a monthly subscription; authenticates with an API key from your Alibaba Cloud account."
+          "title": "Alibaba Coding Plan",
+          "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key. A plan bought for China is set up in Settings.",
+          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with DashScope pay-as-you-go keys. The China route is in Settings."
         },
         "provider:qwen-token": {
-          "title": "Qwen Token Plan",
-          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account.",
-          "expert": "Alibaba Cloud's Qwen Token Plan, billed per token; authenticates with an API key."
+          "title": "Alibaba Token Plan",
+          "text": "Alibaba Cloud's Token Plan, a monthly plan. It has its own key, separate from the Coding Plan.",
+          "expert": "Alibaba Model Studio Token Plan: a subscription (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account.",
-          "expert": "Z.AI Coding Plan, a monthly subscription (GLM models); authenticates with an API key."
+          "text": "Z.AI's monthly plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
+          "expert": "Z.AI GLM Coding Plan with an API key on the coding endpoint. Zhipu's China plan is a separate route, in Settings."
         },
         "provider:kimi": {
           "title": "Kimi Code",
-          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account.",
-          "expert": "Moonshot's Kimi Code subscription; authenticates with an API key."
+          "text": "Kimi Code's monthly plan. Get the key from the Kimi Code console; a Kimi Open Platform key is a different, pay-as-you-go account.",
+          "expert": "Kimi For Coding direct route with a Kimi Code console key, separate from Moonshot Open Platform keys; Puppet Master sends its own client identity."
         },
         "provider:minimax": {
-          "title": "MiniMax Coding Plan",
-          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account.",
-          "expert": "MiniMax Coding Plan, a monthly subscription; authenticates with an API key."
+          "title": "MiniMax M Plan",
+          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
+          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; a pay-as-you-go MiniMax key isn't plan access. The China route is in Settings."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account.",
-          "expert": "OpenCode Go, a monthly subscription; authenticates with an API key from OpenCode."
+          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console.",
+          "expert": "OpenCode Go subscription key from the OpenCode Console. Not the OpenCode server."
         },
         "provider:opencode-zen": {
-          "title": "OpenCode Zen",
-          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account.",
-          "expert": "OpenCode Zen, billed per token; authenticates with an API key from OpenCode."
+          "title": "OpenCode Console",
+          "text": "OpenCode's pay-as-you-go service, which used to be called Zen. You buy credit in the OpenCode Console, then use its key.",
+          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway funded by Console credit, with an API key; not the OpenCode server connection."
         },
         "provider:opencode-runtime": {
-          "title": "OpenCode on your computer",
-          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today.",
-          "expert": "Your own OpenCode install, used as it is configured: its providers, models and credentials stay its own."
+          "title": "OpenCode server",
+          "text": "Uses OpenCode itself as a server. Puppet Master can run it for you, or connect to one you already run. Its own model accounts stay in OpenCode.",
+          "expert": "OpenCode server profile: Managed Server (launched on the execution host) or Attach to Existing Server (endpoint plus optional HTTP Basic auth). Upstream auth stays in OpenCode."
         },
         "provider:anthropic-api": {
           "title": "Anthropic API",
-          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key.",
-          "expert": "The Anthropic API, billed per token; authenticates with an API key. Separate from a Claude subscription."
+          "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
-          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key.",
-          "expert": "The Gemini API (Google AI Studio), billed per token; authenticates with an API key. Separate from an Antigravity plan."
+          "text": "Google's Gemini through a key from Google AI Studio. Separate from Antigravity.",
+          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides its free or paid tier and quota. Separate from Antigravity."
         },
         "provider:vertex": {
           "title": "Vertex AI",
-          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud.",
-          "expert": "Gemini and partner models through Vertex AI on Google Cloud, billed to your Google Cloud project; authenticates with your Google Cloud credentials."
+          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already uses Google Cloud.",
+          "expert": "Vertex AI with a Google Cloud API key, in express mode or tied to a project; billing and quota follow that project."
         },
         "provider:xai-api": {
           "title": "xAI API",
-          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key.",
-          "expert": "The xAI API, billed per token; authenticates with an API key. Separate from a Grok Build plan."
+          "text": "Pay as you go with xAI, using a key from the xAI Console. Separate from a Grok Build plan.",
+          "expert": "xAI API key from the xAI Console, billed per request. Separate from Grok Build."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
-          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key.",
-          "expert": "The Meta Model API, billed per token; authenticates with an API key. Separate from a Muse Code plan."
+          "text": "Pay as you go with Meta's models, using a key from Meta's developer site. A Muse Code plan's sign-in is different.",
+          "expert": "Meta Model API key from dev.meta.ai, billed by use. The Muse Code subscription credential works only in Muse Code."
         },
         "pairing:approval": {
           "title": "Approve from another device",
@@ -124,23 +124,23 @@
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company.",
-          "expert": "The S3-compatible bucket (Amazon S3 or Backblaze B2) the backup repository lives in, like s3://my-backups."
+          "text": "The bucket's name, and a folder in it if you like, such as my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
+          "expert": "The bucket, optionally /prefix, checked with the chosen service's bucket-name rule (Amazon and Backblaze differ)."
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password.",
-          "expert": "The access key ID of an S3-compatible key with access to that bucket; the secret access key is its password."
+          "text": "The ID half of the key made for the bucket. Copy it from your storage account; the secret below is its password.",
+          "expert": "The access key ID (Backblaze: application key ID) of a key scoped to that bucket."
         },
         "field:acc-secret": {
-          "title": "Secret access key",
-          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files.",
-          "expert": "The secret access key. Stored in the OS keychain, never in Puppet Master's files or logs."
+          "title": "Secret",
+          "text": "The private half of that key. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The secret access key (Backblaze: application key). Stored in the OS keychain, never in Puppet Master's files or logs."
         },
         "field:acc-address": {
           "title": "Server address",
-          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV.",
-          "expert": "The backup server's URL: sftp:// for SFTP, https:// for WebDAV."
+          "text": "Where the backup goes on that server: start it with sftp:// for SFTP, or https:// for WebDAV, then the folder.",
+          "expert": "The server's URL with the backup path: sftp:// for SFTP, https:// for WebDAV, matching the protocol chosen above."
         },
         "field:acc-user": {
           "title": "Username",
@@ -154,8 +154,8 @@
         },
         "field:key": {
           "title": "API key",
-          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store.",
-          "expert": "The provider's API key. Checked against the provider before it is saved, then stored in the OS keychain."
+          "text": "A long secret code from the AI company, not your password. Paste it, then choose Check key. It's kept in the keychain on the computer that does the work.",
+          "expert": "The route's own API key, checked against the provider before it is saved; stored in the OS keychain on the execution host, never in Puppet Master's files."
         },
         "tour": {
           "title": "Take the Guided Tour",
@@ -168,6 +168,91 @@
         "startOver": {
           "title": "Start over",
           "text": "Clears the choices from last time and begins setup again from the first page."
+        },
+        "way:codex|main": {
+          "title": "Sign in with ChatGPT",
+          "text": "Uses your ChatGPT plan. Codex use counts against that plan's limits.",
+          "expert": "ChatGPT OAuth account row; plan-backed usage bucket."
+        },
+        "way:codex|alt": {
+          "title": "Use an OpenAI API key",
+          "text": "A key from the OpenAI API dashboard. Billed by use, separately from any ChatGPT plan.",
+          "expert": "API-key account row at standard API pricing, separate from ChatGPT plan usage."
+        },
+        "way:cursor|main": {
+          "title": "Use a Cursor API key",
+          "text": "Make a key in your Cursor dashboard under API Keys, then paste it here.",
+          "expert": "Cursor SDK with a user or service-account API key; no CLI needed."
+        },
+        "way:cursor|alt": {
+          "title": "Sign in in the browser instead",
+          "text": "Installs Cursor's command-line tool on the computer that does the work, then you sign in to Cursor in your browser.",
+          "expert": "cursor-agent login in a Puppet Master profile root on the execution host; needs the CLI installed."
+        },
+        "field:paste": {
+          "title": "Code from the page",
+          "text": "After you sign in on the company's page, it shows a code. Paste it here so the sign-in reaches the computer that does the work.",
+          "expert": "One-use return code for the sign-in on the execution host; read once, never saved."
+        },
+        "field:project": {
+          "title": "Google Cloud project ID",
+          "text": "The project your key belongs to, if it belongs to one. It decides which Google Cloud bill pays.",
+          "expert": "Optional project ID for billing and quota; leave empty for an express-mode key."
+        },
+        "field:ocAddr": {
+          "title": "Server address",
+          "text": "The web address your OpenCode server answers on. On the same computer it's often http://127.0.0.1:4096.",
+          "expert": "Base URL of the running opencode serve (default 127.0.0.1:4096)."
+        },
+        "field:ocUser": {
+          "title": "Username",
+          "text": "Only if your OpenCode server asks for one. It's usually opencode.",
+          "expert": "HTTP Basic username (OPENCODE_SERVER_USERNAME, default opencode)."
+        },
+        "field:ocPass": {
+          "title": "Password",
+          "text": "Only if your OpenCode server has a password. It's the server's own password, not a key from an AI company.",
+          "expert": "HTTP Basic password (OPENCODE_SERVER_PASSWORD); kept in the OS keychain, separate from model-provider keys."
+        },
+        "group:entity": {
+          "title": "Whose Copilot plan",
+          "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one that should pay.",
+          "expert": "Copilot billing entity; entitlement and premium-request limits follow it."
+        },
+        "group:workspace": {
+          "title": "Workspace",
+          "text": "Anthropic bills each workspace separately. Pick the one this key's use should go to.",
+          "expert": "Workspace context for a key that isn't scoped to one workspace."
+        },
+        "ocMode:managed": {
+          "title": "Let Puppet Master run it",
+          "text": "Puppet Master installs OpenCode if needed, starts it and keeps it running on the computer that does the work.",
+          "expert": "Managed Server profile: Puppet Master owns launch, config root, reconnect and shutdown."
+        },
+        "ocMode:attached": {
+          "title": "Use a server I already run",
+          "text": "For an OpenCode server you started yourself. Puppet Master connects to it and leaves its settings to you.",
+          "expert": "Attach to Existing Server: Puppet Master owns the endpoint, its auth and health checks only; the server's own settings stay External / Not Managed."
+        },
+        "field:acc-session": {
+          "title": "Session token",
+          "text": "Only for temporary keys: the third part they come with. Kept in your computer's password store.",
+          "expert": "The STS session token that temporary AWS credentials require. Stored with the secret, never in files or logs."
+        },
+        "field:acc-b2host": {
+          "title": "S3 address",
+          "text": "The bucket's S3 address, shown on its page in Backblaze, like s3.us-west-004.backblazeb2.com.",
+          "expert": "Backblaze B2's regional S3 address, s3.<region>.backblazeb2.com."
+        },
+        "field:acc-server": {
+          "title": "Service address",
+          "text": "The S3 address your storage service gives you, starting with https://.",
+          "expert": "The S3-compatible service's base URL (https)."
+        },
+        "field:acc-region": {
+          "title": "Region",
+          "text": "Only if your storage service asks for one. Leave it empty otherwise.",
+          "expert": "The signing region, for services that require one; empty uses the service's default."
         }
       },
       "chrome": {
@@ -267,8 +352,8 @@
       "where": {
         "pick:this": {
           "title": "This computer",
-          "text": "Puppet Master does the work on this computer, and your Projects are kept here. The AI answers from its own company's computers, and an online copy or backup goes where you choose next. You can add a Server later.",
-          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, any online copy and any backup are still the services you choose."
+          "text": "Puppet Master does the work on this computer. The AI, an online copy and a backup are separate choices, made next.",
+          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, online copies and backups are the services you choose."
         },
         "pick:connect": {
           "title": "Connect this device",
@@ -309,8 +394,8 @@
         },
         "route:tailscale": {
           "title": "Tailscale",
-          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Both this device and your Puppet Master need Tailscale and the same account. Pick it when you are away from home.",
-          "expert": "Reach the Server over a Tailscale tailnet (WireGuard); both devices must be signed in to the same tailnet."
+          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. It's built into Puppet Master: sign in once.",
+          "expert": "Tailscale is built into Puppet Master's apps: sign in once with your Tailscale account. A plain browser tab reaches it with a Remote Link, or with the device's own Tailscale."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
@@ -503,8 +588,8 @@
         },
         "source:cloud": {
           "title": "A cloud account",
-          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket.",
-          "expert": "A backup repository in Google Drive, OneDrive, or an S3-compatible bucket (Amazon S3, Backblaze B2)."
+          "text": "A backup kept in Google Drive, OneDrive or a storage bucket. Only backups kept there are shown next.",
+          "expert": "Google Drive, OneDrive or an S3-family bucket; the snapshot list is scoped to the exact service, account and bucket reached."
         },
         "group:device": {
           "title": "Which device",
@@ -522,9 +607,24 @@
           "expert": "OneDrive through Microsoft's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket. Fill in its three access details below to reach it.",
-          "expert": "An S3-compatible bucket: the bucket, access key ID and secret access key below are checked before the restore reads it."
+          "title": "A storage bucket",
+          "text": "A bucket on Amazon S3, Backblaze B2 or another S3-compatible service. Pick which, then fill in its access details below.",
+          "expert": "An S3-family bucket (aws_s3, backblaze_b2 or s3_compatible) reached with its own access details; only backups in that exact bucket are listed next."
+        },
+        "rsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "rsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "rsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
         }
       },
       "r-unlock": {
@@ -539,6 +639,11 @@
           "title": "Choose what to bring back",
           "text": "Each copy is a moment the backup was taken. The newest is usually the right one.",
           "expert": "Each entry is a snapshot of the backup repository at the time it was taken. The newest is usually the one you want."
+        },
+        "elsewhere": {
+          "title": "Look somewhere else",
+          "text": "Go back and point to another place the backup might be.",
+          "expert": "Return to the source step; the reached place, unlock and pick are dropped when another place is chosen."
         }
       },
       "r-done": {
@@ -704,13 +809,13 @@
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service people run on their own server, or use at Codeberg. Pick it if you already have an account on one.",
-          "expert": "Forgejo, self-hosted or Codeberg: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A free service people run on their own servers. Codeberg is the best-known one. Pick it if you have an account on Codeberg or another Forgejo server.",
+          "expert": "Codeberg (browser sign-in or a token) or another Forgejo instance at its https address (a personal access token)."
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service people run on their own server, or use as Gitea Cloud. Pick it if you already have one.",
-          "expert": "Gitea, self-hosted or Gitea Cloud: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
+          "expert": "Gitea Cloud at your team's own address (browser sign-in or a token), or a self-hosted Gitea at its https address (a personal access token)."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
@@ -729,13 +834,13 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run either by the company itself or by your organisation on its own server. Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it) or self-managed / data center (your organisation runs it at its own https address)."
+          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where your organisation's own copy of the service lives, starting with https://, like https://git.example.com.",
-          "expert": "The instance's base URL (https only), used for its sign-in and API."
+          "text": "Where that server lives, starting with https://, like https://git.example.com. For Gitea Cloud, the address your team was given.",
+          "expert": "The instance's base URL (https only, a path such as /git is kept), used for its sign-in and API. Never filled in for you."
         },
         "group:pick": {
           "title": "Which online service",
@@ -772,13 +877,13 @@
         },
         "tokenOn": {
           "title": "Use an access token instead",
-          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in.",
-          "expert": "Sign in with a personal access token instead of the browser, where the service supports it."
+          "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
+          "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
         "field:token": {
           "title": "Access token",
-          "text": "A token is a long password made for apps. Make one in your account on that service; where it is depends on the service. It stays in your computer's password store, never in Puppet Master's files.",
-          "expert": "A personal access token for this service. Stored in the OS keychain, never in Puppet Master's files. Where to make one depends on the service."
+          "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
+          "expert": "A PAT with the least scopes for this purpose, kept by the credential owner; the plan records only that a token is used."
         },
         "code": {
           "title": "Browser didn't open?",
@@ -809,13 +914,13 @@
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy is named on the service. The suggestion is fine; letters, numbers and dashes work best.",
-          "expert": "The remote repository's name on the service: letters, numbers and dashes are safest."
+          "text": "How the online copy is named there. If a name won't work on that service, the line under the box says why.",
+          "expert": "Checked with the provider's own rule (GitHub, GitLab path, Azure DevOps, Bitbucket slug, Forgejo/Gitea), not one shared pattern."
         },
         "group:owner": {
-          "title": "Whose account keeps it",
-          "text": "Your own account, or an organisation you belong to: a group the service uses for a team's work. Pick the organisation when the Project belongs to a team.",
-          "expert": "The namespace that owns the repository: your personal account or an organisation (a workspace or group on some services)."
+          "title": "Where it lives",
+          "text": "Your own account, or a place you share with others: an organization, group, workspace or project. Pick the one the Project belongs to.",
+          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key, Origin team."
         },
         "group:azOrg": {
           "title": "Organization",
@@ -839,8 +944,8 @@
         },
         "vis:private": {
           "title": "Only you",
-          "text": "Only you, and people you invite, can see it. Right for most Projects.",
-          "expert": "Private repository: visible to you and the collaborators you add."
+          "text": "Only you, and people you give access, can see it. Right for most Projects.",
+          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
@@ -848,9 +953,9 @@
           "expert": "Public repository: anyone can read and clone it; only collaborators can push."
         },
         "vis:internal": {
-          "title": "Everyone in your organization",
-          "text": "People in your organization can see it; nobody outside can.",
-          "expert": "Internal repository: visible to members of the owning organisation or enterprise only."
+          "title": "A wider group",
+          "text": "More people than just you, but nobody outside: your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
+          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com); Origin team members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
@@ -859,8 +964,8 @@
         },
         "field:branch": {
           "title": "Main branch name",
-          "text": "A branch is a separate line of work, and this is the main one. Keep main unless your team asks for another name.",
-          "expert": "The default branch name; usually main. Keep it unless your team uses another."
+          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name. No spaces.",
+          "expert": "The default branch, checked as git check-ref-format --branch does (no .., @{, spaces, ~ ^ : ? * [ \\, leading -, trailing / or .)."
         },
         "readme": {
           "title": "Add a README file",
@@ -876,6 +981,11 @@
           "title": "License",
           "text": "Sets the terms for reusing work you share. No license keeps all rights with you. Leave it unchanged if unsure, and read a license's terms before you publish with it.",
           "expert": "The LICENSE file added to the repository: the terms for reusing the code. No license reserves all rights."
+        },
+        "group:bbProject": {
+          "title": "Project",
+          "text": "Bitbucket keeps every copy in one of the workspace's projects. A private project holds only private copies.",
+          "expert": "Bitbucket Cloud project key, chosen explicitly (the API would otherwise use the workspace's oldest project). Private projects hold only private repositories."
         }
       },
       "ex-repos": {
@@ -886,15 +996,15 @@
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the Project you pick is copied to this computer. The line below shows where your working copy will be kept.",
-          "expert": "The repository to clone; only the one you pick is cloned. The line below shows where the working copy goes."
+          "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
+          "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
         }
       },
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git.",
-          "expert": "The local version-control backend. Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git is the usual choice; pick it if you're not sure. Jujutsu can also undo any step. One of them is always on: 'Not now' below is only about an online copy.",
+          "expert": "Local version control, always Git or Jujutsu for a Project made here. Jujutsu runs colocated with Git, so any Git remote works with either, and its operation log makes every step undoable (jj undo)."
         },
         "backend:git": {
           "title": "Git",
@@ -908,13 +1018,13 @@
         },
         "filesafe": {
           "title": "FileSafe",
-          "text": "A safety guard for when the AI works on your Project. It stops commands that could wipe or damage files, keeps the AI's changes inside this Project, keeps passwords and keys out of what it reads, and keeps a copy of a file before changing it. Leave it on unless you know you need it off.",
-          "expert": "FileSafe is the guard layer for agent runs: a command blocklist that stops destructive shell commands before they run, a write scope that keeps writes to the run's allowed files, a security filter that keeps secrets and sensitive files out of tool access and the compiled prompt, and a recoverable pre-write safe point before an existing file is overwritten. Every block and override is logged. On by default."
+          "text": "Guards your files while the AI works: it stops risky commands, keeps changes inside this Project, keeps passwords out, and copies a file before changing it. This one switch covers all of it; Settings has each part on its own. Leave it on.",
+          "expert": "The guard layer for agent runs: command blocklist, write scope, security filter, and pre-write safe points before a file is overwritten; blocks are logged. This switch turns all of them on or off together; each has its own setting in Settings."
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy of your Project on a website such as GitHub: a second copy, a way to work from another computer, and a way to share it if you choose. Only you can see it unless you share it. Puppet Master only asks for access to the Project you pick.",
-          "expert": "A remote repository on the service you choose, pushed from your local history. Visibility (private, internal, public) is set when it is created. Access is scoped to that repository where the service allows it."
+          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. Only you see it unless you share it.",
+          "expert": "A remote repository on the service you choose, pushed from your local history; its visibility is set when it is created."
         },
         "backup": {
           "title": "Backup",
@@ -937,19 +1047,44 @@
           "expert": "An encrypted backup repository in your OneDrive, through Microsoft's sign-in (OAuth) after the Project is created."
         },
         "bdest:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket you rent. Good if you already have one; you add its access details after your Project is created.",
-          "expert": "An encrypted backup repository in an S3-compatible bucket (Amazon S3, Backblaze B2); you add the bucket and its access key after the Project is created."
+          "title": "A storage bucket",
+          "text": "Cloud storage you rent, like Amazon S3 or Backblaze B2. Pick the service under the card; you add its access details after your Project is created.",
+          "expert": "Object storage: Amazon S3, Backblaze B2 (its S3 API, regional address, application key) or another S3 service at its own address. Keys are added after the Project is created."
         },
         "bdest:sftp": {
           "title": "Another server",
-          "text": "A server you can reach over SFTP or WebDAV keeps the backup, like one at work or a friend's.",
-          "expert": "An encrypted backup repository on a server you reach over SFTP or WebDAV."
+          "text": "A server you can reach over SFTP or WebDAV, like one at work or a friend's. Pick which under the card.",
+          "expert": "sftp (SSH file transfer at sftp://host/path; its host key is checked) or webdav (HTTPS, https://host/path, e.g. Nextcloud). Recorded as its own family."
         },
         "bdest:none": {
           "title": "Not now",
           "text": "No separate backup for now. Earlier versions stay on this computer with Safe History, so if this computer is lost, the Project is lost too unless it has an online copy. You can add a backup later in Settings.",
           "expert": "No backup destination. Local history and any remote stay as they are; nothing protects against losing this computer except a remote. Add a destination later in Settings."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
         }
       },
       "away": {
@@ -1118,13 +1253,43 @@
           "title": "Do this later",
           "text": "Your Project is ready either way. Backups stay off until you finish these steps.",
           "expert": "The Project is ready either way; the backup stays off until these steps are finished."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
+        },
+        "accTemp": {
+          "title": "Temporary keys",
+          "text": "Keys that expire, such as ones from a company sign-in, come with a session token. Add it if yours has one.",
+          "expert": "AWS STS temporary credentials: access key ID, secret access key and session token, all three sent through the credential owner."
         }
       },
       "ai": {
         "all": {
           "title": "See all providers",
-          "text": "Every AI Puppet Master works with, in two groups: monthly plans and pay-as-you-go accounts. An AI provider is the company your assistant uses; a model is one of its AI options.",
-          "expert": "Every supported provider, grouped as subscriptions and pay-as-you-go API accounts."
+          "text": "The full list, in three groups: plans you pay for, keys billed by what you use, and your own server. An AI provider is the company your assistant uses.",
+          "expert": "All providers in this concept, grouped as subscriptions, API billing, and self-run servers."
         },
         "none": {
           "title": "I don't have any of these",
@@ -1138,13 +1303,13 @@
         },
         "free": {
           "title": "Set Up Free Models",
-          "text": "Adds free options for suitable tasks. Their limits vary and can change. Your paid accounts are preferred by default; you can change that order in Settings.",
-          "expert": "Adds free model routes for suitable tasks. Availability and limits vary; paid accounts are preferred by default, and you can change the priorities in Settings."
+          "text": "Adds free options with limits for suitable tasks. Their limits can change. Your paid accounts are used first by default; change that in Settings.",
+          "expert": "Adds Free Models routes, each set up through its own provider's account. Paid accounts are preferred by default; the priorities are in Settings."
         },
         "group:install": {
           "title": "Install",
-          "text": "This AI needs its own app on the computer that does the work. Puppet Master uses the maker's official installer.",
-          "expert": "Installs the provider's CLI on the work computer with the vendor's official installer."
+          "text": "This AI needs its own app on the computer that does the work. Puppet Master installs it with the maker's official installer, only when you choose Install.",
+          "expert": "Explicit, consented install of the vendor CLI on the exact execution host from its official source; the CLI then owns its sign-in there."
         }
       },
       "ai-all": {
@@ -1157,8 +1322,8 @@
       "ai-none": {
         "pick:sub": {
           "title": "A monthly plan",
-          "text": "Like Claude or ChatGPT. A monthly price with usage limits: the simplest place to start.",
-          "expert": "A subscription (Claude, ChatGPT and others): a monthly price with usage limits; the provider's CLI signs in with it."
+          "text": "A plan you subscribe to, like Claude or ChatGPT.",
+          "expert": "A subscription account (Claude, ChatGPT and others)."
         },
         "pick:api": {
           "title": "Pay as you go",
@@ -1172,47 +1337,47 @@
         },
         "group:signup": {
           "title": "Sign-up pages",
-          "text": "Opens that company's own sign-up page in your browser. Come back here once you have an account.",
-          "expert": "Opens the provider's own sign-up page; come back once the account exists."
+          "text": "Opens that company's own sign-up page in your browser. When you come back, it's at the top of the list.",
+          "expert": "Opens the provider's sign-up page; on return the AI step lists that provider first."
         }
       },
       "free": {
         "route:free-openrouter": {
           "title": "OpenRouter free models",
-          "text": "A site that offers several AI models for free, with limits. You sign in on its page.",
-          "expert": "OpenRouter's free model variants, rate-limited; you sign in on OpenRouter."
+          "text": "OpenRouter's free models: free to use, with a small daily limit. You sign in on OpenRouter's page.",
+          "expert": "OpenRouter :free model variants through OpenRouter sign-in; per-minute and per-day request limits depend on credit bought."
         },
         "route:free-github-models": {
           "title": "GitHub Models",
-          "text": "Free AI from GitHub, with limits. It uses your GitHub account; Puppet Master checks which models your account can use.",
-          "expert": "GitHub Models through your GitHub account; Puppet Master checks which models your account can use and their limits before it is ready."
-        },
-        "route:free-cerebras": {
-          "title": "Cerebras free tier",
-          "text": "Cerebras's free option, known for quick answers. Limits apply.",
-          "expert": "Cerebras's free tier, rate-limited."
+          "text": "GitHub closed this service. Choose another route.",
+          "expert": "GitHub Models was fully retired on July 30, 2026; shown only as No longer available for a saved choice."
         },
         "route:free-groq": {
-          "title": "Groq free tier",
-          "text": "Groq's free option. Limits apply, and when one is reached it waits until it resets.",
-          "expert": "Groq's free tier, rate-limited; when a limit is reached it waits until it resets."
-        },
-        "route:free-hf": {
-          "title": "Hugging Face Inference",
-          "text": "Free AI from Hugging Face, a big library of models. Limits apply.",
-          "expert": "Hugging Face Inference Providers' free allowance, rate-limited."
+          "title": "Groq free plan",
+          "text": "Groq's free plan, with limits. Get a key from Groq's console. When a limit is reached, it waits for it to reset.",
+          "expert": "Groq Free plan with a Groq API key; a 429 carries retry-after and reset headers. Retry now, never a reconnect."
         },
         "attribution": {
           "title": "Where this list comes from",
           "text": "The free model list is based on a community list. Opens it in your browser.",
           "expert": "The free route list is based on a community-maintained list; opens it in your browser."
+        },
+        "route:free-nvidia": {
+          "title": "NVIDIA free models",
+          "text": "Free AI models from NVIDIA, with limits. Get a key from NVIDIA's API catalog.",
+          "expert": "NVIDIA API catalog (NIM) endpoints with free inference for listed models; an NVIDIA API key; rate limits apply."
+        },
+        "group:route": {
+          "title": "Free option",
+          "text": "A free option from the community list. Set it up with that company's key or sign-in, or just turn it on where none is needed.",
+          "expert": "A free route from free-coding-models (v0.6.0), set up through its own provider's key, sign-in, or no credential; limits are the provider's."
         }
       },
       "ready": {
         "summary:free": {
           "title": "Free Models",
-          "text": "Free options with limits, good for trying things out. Your paid accounts are preferred by default; you can change that in Settings.",
-          "expert": "Free model routes with rate limits. Paid accounts are preferred by default; change the priorities in Settings."
+          "text": "Free options with limits, good for trying things out.",
+          "expert": "Free model routes with rate limits."
         },
         "summary:backup": {
           "title": "Backup",
@@ -1312,8 +1477,8 @@
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. Choose a key marked Already works if there is one; otherwise make a new key just for Puppet Master. Only the public half of a key is read, and a private key never leaves where it is.",
-          "expert": "SSH keys on the computer that will connect (files under ~/.ssh and keys from an SSH agent), each tested. Only public keys are read; private keys never leave where they are."
+          "text": "A key lets Puppet Master connect without a password. Pick one marked Already works, or make a new key. Only the safe-to-share half of a key is read.",
+          "expert": "SSH keys on the computer that will connect (~/.ssh files and agent keys), each tested; only public keys are read."
         },
         "pick:new": {
           "title": "Make a new key",
@@ -1715,12 +1880,12 @@
         "free": "Free models? Good for a start."
       },
       "ai-all": {
-        "enter": "Every AI I can work with.",
+        "enter": "Here's everyone I know. Find yours.",
         "typing": "Ooh, who are we looking for?"
       },
       "ai-none": {
         "enter": "No AI yet? That's fine.",
-        "pick:sub": "One price a month. Simple.",
+        "pick:sub": "A plan with included use. Simple.",
         "pick:api": "Pay for what you use. Fair.",
         "pick:free": "Free! With a few limits."
       },
@@ -2103,7 +2268,7 @@
         "unavailable": "Signed in. All set!"
       },
       "free": {
-        "limited": "Reconnected. Ready!"
+        "limited": "Its limit reset. Ready!"
       }
     },
     "oopsAny": {

@@ -31,7 +31,7 @@
     { id: 'computer', ids: ['lowResource', 'noKeys'] },
     { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'readOnly'] },
     { id: 'online', ids: ['nameTaken', 'flaky'], one: true },
-    { id: 'ai', ids: ['cliMissing', 'signedOut', 'copiedUnavailable', 'remoteAi', 'noAi'], one: true },
+    { id: 'ai', ids: ['cliMissing', 'signedOut', 'claudeExpired', 'copiedUnavailable', 'remoteAi', 'noAi', 'aiOffline'], one: true },
     /* Pip's rough moments (W3): a browser sign-in that does not finish the first time; the second try works. They stack
        with every other group (the fixtures' signin_once) */
     { id: 'pip', ids: ['antigravityOnce', 'githubSigninOnce'] }
