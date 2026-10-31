@@ -622,7 +622,7 @@
   },
   {
    "id": "qwen-coding",
-   "name": "Qwen Coding Plan",
+   "name": "Alibaba Coding Plan",
    "kind": "Account",
    "connect": "API key from your coding plan",
    "status": "active",
@@ -769,7 +769,7 @@
    "bill": "plan",
    "vendor": "Alibaba",
    "pair": "qwen-token",
-   "pairNote": "The coding plan, not the Qwen Token Plan."
+   "pairNote": "Qwen and other models, with the plan's own key. Not the Alibaba Token Plan."
   },
   {
    "id": "zai-coding",
@@ -936,7 +936,7 @@
   },
   {
    "id": "minimax-coding",
-   "name": "MiniMax Coding Plan",
+   "name": "MiniMax M Plan",
    "kind": "Account",
    "connect": "API key from your coding plan",
    "status": "setup",
@@ -946,7 +946,7 @@
    "version": "Direct",
    "installSource": "No install needed",
    "defaultAccount": "",
-   "product": "MiniMax Coding Plan",
+   "product": "MiniMax M Plan",
    "nextAction": "apikey",
    "regions": [
     "Global",
@@ -992,7 +992,8 @@
    },
    "bill": "plan",
    "vendor": "MiniMax",
-   "key": "ai.accounts.minimax-api-key"
+   "key": "ai.accounts.minimax-api-key",
+   "pairNote": "Formerly the MiniMax Coding Plan."
   },
   {
    "id": "opencode-go",
@@ -1049,7 +1050,7 @@
    "bill": "plan",
    "vendor": "OpenCode",
    "pair": "opencode-zen",
-   "pairNote": "OpenCode's monthly plan. Not the OpenCode server on your computer."
+   "pairNote": "OpenCode's monthly plan. Not the OpenCode server."
   },
   {
    "id": "anthropic-api",
@@ -1381,7 +1382,7 @@
    "version": "Direct",
    "installSource": "No install needed",
    "defaultAccount": "",
-   "product": "Cursor account",
+   "product": "Cursor plan",
    "nextAction": "apikey",
    "signIn": [
     [
@@ -1423,7 +1424,7 @@
    },
    "diagnostics": [],
    "windows": {},
-   "bill": "use",
+   "bill": "plan",
    "vendor": "Cursor",
    "key": "ai.accounts.cursor-api-key",
    "app": "system.advanced.cli-path-cursor",
@@ -1431,9 +1432,9 @@
   },
   {
    "id": "qwen-token",
-   "name": "Qwen Token Plan",
-   "kind": "API",
-   "connect": "API key from Alibaba Cloud",
+   "name": "Alibaba Token Plan",
+   "kind": "Account",
+   "connect": "Its own key from your Token Plan",
    "status": "setup",
    "statusLabel": "Not set up",
    "installed": true,
@@ -1481,16 +1482,16 @@
    "windows": {
     "monthly": "Monthly spend"
    },
-   "bill": "use",
+   "bill": "plan",
    "vendor": "Alibaba",
    "pair": "qwen-coding",
-   "pairNote": "Pay by the token, separate from the Qwen Coding Plan."
+   "pairNote": "A monthly plan, separate from the Coding Plan."
   },
   {
    "id": "opencode-zen",
-   "name": "OpenCode Zen",
+   "name": "OpenCode Console",
    "kind": "API",
-   "connect": "API key from OpenCode Zen",
+   "connect": "API key from the OpenCode Console",
    "status": "setup",
    "statusLabel": "Not set up",
    "installed": true,
@@ -1498,7 +1499,7 @@
    "version": "Direct",
    "installSource": "No install needed",
    "defaultAccount": "",
-   "product": "OpenCode Zen (pay as you go)",
+   "product": "OpenCode Console (pay as you go)",
    "nextAction": "apikey",
    "signIn": [
     [
@@ -1541,7 +1542,7 @@
    "bill": "use",
    "vendor": "OpenCode",
    "pair": "opencode-go",
-   "pairNote": "OpenCode pay as you go. Not the OpenCode server on your computer."
+   "pairNote": "Billed by use from credit you buy. Formerly OpenCode Zen. Not the OpenCode server."
   },
   {
    "id": "free-models",
@@ -1605,7 +1606,7 @@
   },
   {
    "id": "opencode",
-   "name": "OpenCode on your computer",
+   "name": "OpenCode server",
    "kind": "Server",
    "connect": "A server Puppet Master runs, or one you already run",
    "status": "setup",
@@ -1646,7 +1647,7 @@
    "windows": {},
    "bill": "own",
    "vendor": "OpenCode",
-   "pairNote": "Runs OpenCode itself. OpenCode Go and OpenCode Zen are model plans, listed above."
+   "pairNote": "Runs OpenCode itself. OpenCode Go and OpenCode Console are model plans, listed above."
   },
   {
    "id": "local-endpoint",

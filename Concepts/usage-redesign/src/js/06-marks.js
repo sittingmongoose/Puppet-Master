@@ -139,7 +139,12 @@
     "meta model api": "meta",
     "cursor": "cursor",
     "qwen token plan": "qwen",
-    "opencode on your computer": "opencode"
+    "opencode on your computer": "opencode",
+    "alibaba coding plan": "qwen",
+    "alibaba token plan": "qwen",
+    "minimax m plan": "minimax",
+    "opencode console": "opencode",
+    "opencode server": "opencode"
   };
   var UI = {
     "ui-free": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M5 12v8h14v-8\"/><path d=\"M12 8v12\"/><path d=\"M12 8c-1.6-3.6-5-3.9-5-1.6C7 8 10.2 8 12 8zM12 8c1.6-3.6 5-3.9 5-1.6C17 8 13.8 8 12 8z\"/></svg>",

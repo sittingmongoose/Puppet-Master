@@ -69,6 +69,12 @@
     'cmd.tool_product.install': { owner: 'Providers', phase: 'postcommit_provider', canonical: false },
     'cmd.integration.connection.add': { owner: 'Providers', phase: 'postcommit_provider' },
     'cmd.integration.connection.test': { owner: 'Providers', phase: 'postcommit_provider' },
+    /* the rest of an AI account's sign-in lifecycle (Multi-Account_Connection_Spec §2): cancel a sign-in under way, the
+       code a vendor's page shows pasted back, whose plan or which workspace, a wrong account removed from Puppet Master */
+    'cmd.auth_profile.cancel': { owner: 'Auth', phase: 'postcommit_provider' },
+    'cmd.auth_profile.submit_code': { owner: 'Auth', phase: 'postcommit_provider' },
+    'cmd.auth_profile.select': { owner: 'Auth', phase: 'postcommit_provider' },
+    'cmd.auth_profile.sign_out': { owner: 'Auth', phase: 'postcommit_provider' },
     'cmd.free_models.route.enable': { owner: 'Models', phase: 'postcommit_free_models', canonical: false },
     /* shell and tour (local UI) */
     'cmd.panel.switch': { owner: 'Shell', phase: 'tour_local' }, 'cmd.persona.select': { owner: 'Chat', phase: 'tour_local' },
