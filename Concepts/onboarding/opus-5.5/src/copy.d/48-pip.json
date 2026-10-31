@@ -1957,7 +1957,9 @@
       },
       "connect": {
         "route": {
-          "none": "Hmm, I can't find it yet."
+          "none": "Hmm, I can't find it yet.",
+          "addrMissing": "I need its address first.",
+          "addrNoAnswer": "Hmm, nobody answers at that address."
         },
         "pair": {
           "codeWrong": "Hmm, that code doesn't match.",
@@ -2118,6 +2120,18 @@
             "relay": "The Remote Link isn't answering."
           }
         }
+      },
+      "endpoint": {
+        "spaces": "No spaces in an address, please.",
+        "scheme": "It has to start with https://.",
+        "credentials": "Leave the password out of it.",
+        "port": "That port number won't work.",
+        "host": "That doesn't look like an address yet.",
+        "hostname": "I need a name there, not a number.",
+        "path": "Just the address, nothing after it.",
+        "query": "Nothing after a ? or a #, please.",
+        "short": "That's too short for a Remote Link.",
+        "long": "That's too long for a Remote Link."
       }
     },
     "cheer": {
