@@ -177,8 +177,11 @@
     window.setTimeout(() => { live.textContent = text; }, 30);
   };
 
+  /* A page whose permissions policy blocks the clipboard (a sandboxed preview, T3's file preview) logs a policy
+     violation on every writeText even though the rejection is caught: there it goes straight to the fallback */
+  const clipboardBlocked = () => { try { const p = document.permissionsPolicy || document.featurePolicy; return !!p && typeof p.allowsFeature === 'function' && !p.allowsFeature('clipboard-write'); } catch (_) { return false; } };
   U.copyText = async function copyText(text) {
-    try { await navigator.clipboard.writeText(text); return true; } catch (_) {
+    try { if (clipboardBlocked() || !navigator.clipboard) throw new Error('blocked'); await navigator.clipboard.writeText(text); return true; } catch (_) {
       const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (_) {} ta.remove(); return ok;
     }
