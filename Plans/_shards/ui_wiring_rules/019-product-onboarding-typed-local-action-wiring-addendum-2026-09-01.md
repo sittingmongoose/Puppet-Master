@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1375
+Source lines: L1024-L1387
 
-Source SHA256: `87cbd5886e12079c7d4fe44d0c86204989b28b13e5981a25a561c0adf684cf0d`
+Source SHA256: `b902ea54962263f3671ac4b1c77ac48163090c7d0ed7b639bd1e3f693243cbb1`
 
 ---
 
@@ -186,7 +186,11 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   applicable current owner observation/recovery result; neither action nor refresh may mark unexecuted phases complete
   or manufacture Project publication. Checklist, block count and stage progress agree on verified settled effects. Existing
   fourteen local actions, exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery
-  command is admitted.'
+  command is admitted. DL-259 FO-10 final, 2026-10-31: Connect’s existing ui.onboarding.next control consumes PWIZ-025’s
+  current-route reason projection. A visible web-address/Remote Link field or typed-address alternative gets its own
+  actionable reason before a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled
+  feedback and Pip use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and
+  validation/permission/currentness gates remain unchanged; no new action or dispatch is added.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -326,6 +330,11 @@ acceptance_criteria:
   neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
   count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
   and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
+- 'DL-259 FO-10 final, 2026-10-31: Connect’s existing ui.onboarding.next control consumes PWIZ-025’s current-route reason
+  projection. A visible web-address/Remote Link field or typed-address alternative gets its own actionable reason before
+  a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip
+  use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness
+  gates remain unchanged; no new action or dispatch is added.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -350,6 +359,9 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4125
+Source lines: L3496-L4138
 
-Source SHA256: `d58aef1449505371162df5763142a47b85f7ffad23767fdf3ca2678bfab64811`
+Source SHA256: `ca006564234b7c0dea8ee96561e44f5437daf08bb666f3e0dcda30ad7aa8b367`
 
 ---
 
@@ -184,7 +184,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
   neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
   count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
-  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted. DL-259 FO-10 final,
+  2026-10-31: Connect’s existing ui.onboarding.next control consumes PWIZ-025’s current-route reason projection. A visible
+  web-address/Remote Link field or typed-address alternative gets its own actionable reason before a hidden Server-list
+  prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip use the same cause and
+  common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness gates
+  remain unchanged; no new action or dispatch is added.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -391,6 +396,11 @@ acceptance_criteria:
   neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
   count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
   and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
+- 'DL-259 FO-10 final, 2026-10-31: Connect’s existing ui.onboarding.next control consumes PWIZ-025’s current-route reason
+  projection. A visible web-address/Remote Link field or typed-address alternative gets its own actionable reason before
+  a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip
+  use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness
+  gates remain unchanged; no new action or dispatch is added.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -439,6 +449,9 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

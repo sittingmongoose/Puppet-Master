@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L1996
+Source lines: L265-L2008
 
-Source SHA256: `02d0c78e441f2adcddd8bf49da0aa460eb3f78212a2af22e3481786ae5475189`
+Source SHA256: `93145b08570f8d45c2cd48fab76318b3c7aaa7d213fccc6195d7c264566fed4f`
 
 ---
 
@@ -906,7 +906,11 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is
   not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful
   PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback
-  rule, not a new export command, receipt family or platform-detection mechanism.'
+  rule, not a new export command, receipt family or platform-detection mechanism. DL-259 FO-10 final, 2026-10-31: Connect
+  selects the actionable current-route reason from the same validation results that govern its existing Continue. One
+  reason projection serves disabled feedback and Pip; a screen never adds a second validator or error store merely to
+  reorder missing fields. Prefer the selected visible address input’s reason over an unresolved choice on a hidden list
+  (PWIZ-025). Displaying a better reason cannot grant connection, pairing, Ready or work authority.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -927,6 +931,11 @@ acceptance_criteria:
   flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
   claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
   an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+- 'DL-259 FO-10 final, 2026-10-31: Connect selects the actionable current-route reason from the same validation results
+  that govern its existing Continue. One reason projection serves disabled feedback and Pip; a screen never adds a second
+  validator or error store merely to reorder missing fields. Prefer the selected visible address input’s reason over
+  an unresolved choice on a hidden list (PWIZ-025). Displaying a better reason cannot grant connection, pairing, Ready
+  or work authority.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -948,6 +957,9 @@ source_lineage:
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L18594-L19368
+Source lines: L18594-L19385
 
-Source SHA256: `f41c5ef6f3877fd08510c827e11cce289bfd6412c374f50da2db34fdf0a740b5`
+Source SHA256: `4799cbe5514520b5d56e6933bf371f7c3fb47e464f99b4b7694250b4c90a288c`
 
 ---
 
@@ -480,7 +480,14 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone
   is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a
   successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback
-  rule, not a new export command, receipt family or platform-detection mechanism.'
+  rule, not a new export command, receipt family or platform-detection mechanism. DL-259 FO-10 final, 2026-10-31: on
+  Connect’s route screen, disabled Continue gives an actionable reason for the selected route’s visible input before
+  an unresolved Server-choice reason. Web address and Remote Link use that field’s current missing/invalid-address result;
+  an address typed instead of the found list asks for the address when empty and explains when no Puppet Master answers,
+  with a route back to the list. Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s
+  feedback conveys the same cause. These screen/status words stay single in Plain English and Expert (DL-126); only tips/help
+  have two versions. Reason priority changes no validation, route identity, readiness, pairing or permission gate and
+  admits no address/Remote Link grammar.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -708,6 +715,13 @@ acceptance_criteria:
   flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
   claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
   an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+- 'DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled Continue gives an actionable reason for the selected
+  route’s visible input before an unresolved Server-choice reason. Web address and Remote Link use that field’s current
+  missing/invalid-address result; an address typed instead of the found list asks for the address when empty and explains
+  when no Puppet Master answers, with a route back to the list. Say Choose your Puppet Master only while the found-Server
+  choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English
+  and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness,
+  pairing or permission gate and admits no address/Remote Link grammar.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py
@@ -755,6 +769,9 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 preserved_exact_tokens:
 - D1 A
 - D2 A

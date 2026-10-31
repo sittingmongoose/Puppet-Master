@@ -1628,6 +1628,17 @@
       "dry": "DR-020 (one artifact owner and result truth)",
       "companions": "PDFExportReceiptPolicy; 3 schema cases; foundations final source d8df03ac18 read; no browser acceptance claimed",
       "state": "covered_by_current_contract_final_source_read"
+    },
+    {
+      "id": "FO-10",
+      "change": "Connect disabled Continue names the selected visible route address requirement before hidden Server-choice guidance; found-list prompt only with that list",
+      "owner": "PWIZ-025; F3-520; DL-259",
+      "wiring": "UIW-015; WM-041 (existing current-route reason and disabled-feedback projection)",
+      "commands": "CS-069; UCC-106; ui.onboarding.next (existing typed local action; no command-contract change)",
+      "settings": "none needed: address-validation feedback is not a preference",
+      "dry": "DR-020 (one validation/reason projection, shared with Pip)",
+      "companions": "ConnectRouteReasonPolicy; 4 schema cases; 12 actual missing/reason/Continue/Pip source vectors; final 03a02a178b merged at 619cd29955",
+      "state": "covered_by_current_contract_final_source_merged"
     }
   ],
   "sources": [
@@ -1850,7 +1861,7 @@
     "FS_FO_numbered_findings_posted": false
   },
   "final_review_delta": {
-    "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+    "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
     "decision_ref": "DL-259",
     "new_rows": [
       "FO-4",
@@ -1863,10 +1874,11 @@
       "FS-2-PAPER",
       "FS-2-CHAPTER",
       "FS-2-COMPACT",
-      "FX-1-PDF"
+      "FX-1-PDF",
+      "FO-10"
     ],
-    "rows": 148,
-    "required_cells": 740,
+    "rows": 149,
+    "required_cells": 745,
     "pending_final_sources": {},
     "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
     "demo_mechanics_added": false,
@@ -1874,11 +1886,11 @@
     "sources": [
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
-        "sha256": "892569b3688fc679ca7392422855b5220cdce5b44eec991dd958422ff9dd966b"
+        "sha256": "0c8bcb0c0be540b4088cd011d54543a549494bd8a40a9c8d256368f47ea7f8f2"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
-        "sha256": "7a8977741173779f2d90b22c7535a80fc6ad7ebe8e510a584d27f65a545a8e9a"
+        "sha256": "f5839e96c7707579607a56fa1e821c80af0f2da2aa988f81cc26629a93a1b7e7"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
@@ -1913,6 +1925,12 @@
         "completes_WIP": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
         "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
         "state": "final source merged and isolated phase/scene checks pass; browser/native acceptance not claimed"
+      },
+      "FO-10": {
+        "head": "03a02a178b1c386488b4a6f7865f9172cca7990c",
+        "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
+        "source": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+        "state": "current-route reason rule and 12 isolated source vectors; no native/browser acceptance or grammar admission"
       }
     }
   }

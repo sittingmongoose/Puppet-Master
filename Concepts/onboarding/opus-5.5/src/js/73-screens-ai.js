@@ -279,7 +279,7 @@
     const attached = C.field({ bind: 'ocAddr:' + p.id, id: 'o55f-ocaddr', label: T('ai.oc.addr'), value: r.endpoint || '', placeholder: 'http://127.0.0.1:4096', hint: T('ai.oc.addrHint'), tip: 'field:ocAddr' })
       + hint('ocAddr', [{ label: 'http://127.0.0.1:4096', outcome: 'works', fills: [['ocAddr:' + p.id, 'http://127.0.0.1:4096']] }, { label: 'http://192.168.1.99:4096', outcome: 'noAnswer', fills: [['ocAddr:' + p.id, 'http://192.168.1.99:4096']] }], !ok)
       + C.field({ bind: 'ocUser:' + p.id, id: 'o55f-ocuser', label: T('ai.oc.user'), value: r.user || '', placeholder: 'opencode', tip: 'field:ocUser' })
-      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, typed: !!r.secretTyped, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
+      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, typed: !!r.secretTyped, label: T('ai.oc.pass'), value: '', hint: T('ai.oc.passHint', { where: keychain(S) }), tip: 'field:ocPass' })
       + `<div class="o55-inline">${btnIn(T('ai.oc.connect'), 'ocConnect', p.id, 'primary', { disabled: !ok, reason: T('ai.oc.addr') })}</div>`;
     return C.cards('ocMode', [
       { v: 'managed', glyph: 'server', title: T('ai.oc.managed'), sub: T('ai.oc.managedSub', { host: hostName(S) }), under: r.mode === 'managed' ? managed : '' },

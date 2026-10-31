@@ -146,6 +146,8 @@ export const tests = {
 		await t.check('P07: Managed and Attach choices, as Settings has them', /Let Puppet Master run it/.test(txt) && /Use a server I already run/.test(txt) && !/opencode\.ai/.test(txt), txt);
 		await W.$('[data-o55-do="ocMode"][data-arg="attached"]').click(); await screenDone(W);
 		await typeInto(W, '#o55f-ocaddr', 'http://127.0.0.1:4096');
+		const passHint = ((await W.$('[data-key="field-ocPass:opencode-runtime"]').innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
+		await t.check("FO-11: the server password field says it's the server's own password, not 'not your password'", /server's own password/.test(passHint) && !/not your password/.test(passHint), passHint);
 		await typeInto(W, '#o55f-ocpass', 'TEST-SERVER-PASSWORD');
 		await W.$('[data-o55-do="ocConnect"]').click();
 		await waitRow(t, W, 'opencode-runtime', /(?=.*Ready)(?=.*Your server at http:\/\/127\.0\.0\.1:4096)/, 'P07: attached server Ready by its address');

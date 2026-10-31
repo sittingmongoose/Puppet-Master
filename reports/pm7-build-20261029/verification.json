@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+  "source_commit": "619cd29955942cb418f6a42deffd02b0587e5b4a",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-31T18:03:54.651194+00:00",
+  "recorded_at_utc": "2026-10-31T18:55:26.599911+00:00",
   "native_runtime_certification": false,
   "step4": "GUI5abe_toast_followups_10_focused_pass",
   "counts": {
@@ -43,115 +43,94 @@
     "pm7_bindings": 483,
     "pm7_source_families": 61,
     "shard_sources": 99,
-    "coverage_rows": 148,
-    "coverage_required_cells": 740,
-    "acceptance_units": 29090
+    "coverage_rows": 149,
+    "coverage_required_cells": 745,
+    "acceptance_units": 29096
   },
   "commands": [
     {
-      "command": "python3 scripts/pm7-build-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-build.txt",
-      "seconds": 1.9,
-      "recorded_at_utc": "2026-10-31T18:00:38.987302+00:00"
-    },
-    {
-      "command": "python3 scripts/pm7-demo-canon-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-boundary.txt",
-      "seconds": 10.08,
-      "recorded_at_utc": "2026-10-31T18:00:47.167607+00:00"
-    },
-    {
-      "command": "python3 scripts/pm7-canon-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-canon.txt",
-      "seconds": 10.63,
-      "recorded_at_utc": "2026-10-31T18:00:47.702661+00:00"
-    },
-    {
       "command": "node scripts/pm7-final-review-source-probe.cjs",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-source.txt",
-      "seconds": 0.12,
-      "recorded_at_utc": "2026-10-31T18:00:53.860507+00:00"
-    },
-    {
-      "command": "python3 scripts/pm-onboarding-contracts.py --check",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-storage.txt",
-      "seconds": 0.73,
-      "recorded_at_utc": "2026-10-31T18:00:54.473822+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-source.txt",
+      "seconds": 0.19,
+      "recorded_at_utc": "2026-10-31T18:51:35.368223+00:00"
     },
     {
       "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-wiring.txt",
-      "seconds": 1.0,
-      "recorded_at_utc": "2026-10-31T18:00:54.730162+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-wiring.txt",
+      "seconds": 0.92,
+      "recorded_at_utc": "2026-10-31T18:51:36.084442+00:00"
     },
     {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-check-coverage.py",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-check-coverage.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-coverage.txt",
-      "seconds": 1.08,
-      "recorded_at_utc": "2026-10-31T18:00:54.825440+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-coverage.txt",
+      "seconds": 1.12,
+      "recorded_at_utc": "2026-10-31T18:51:36.319402+00:00"
     },
     {
-      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-touch.txt",
-      "seconds": 2.24,
-      "recorded_at_utc": "2026-10-31T18:00:55.959355+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-build.txt",
+      "seconds": 2.12,
+      "recorded_at_utc": "2026-10-31T18:51:37.279802+00:00"
     },
     {
-      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "command": "python3 scripts/pm7-demo-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-rulings.txt",
-      "seconds": 22.95,
-      "recorded_at_utc": "2026-10-31T18:01:00.052676+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-boundary.txt",
+      "seconds": 9.42,
+      "recorded_at_utc": "2026-10-31T18:51:44.598331+00:00"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-canon.txt",
+      "seconds": 11.96,
+      "recorded_at_utc": "2026-10-31T18:51:47.154749+00:00"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-shards-generate.txt",
-      "seconds": 2.62,
-      "recorded_at_utc": "2026-10-31T18:01:24.228470+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-shards-generate.txt",
+      "seconds": 2.56,
+      "recorded_at_utc": "2026-10-31T18:52:01.200572+00:00"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-index-generate.txt",
-      "seconds": 33.56,
-      "recorded_at_utc": "2026-10-31T18:02:08.601503+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-index-generate.txt",
+      "seconds": 35.69,
+      "recorded_at_utc": "2026-10-31T18:53:25.521295+00:00"
     },
     {
       "command": "git diff --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-diff-check.txt",
-      "seconds": 1.04,
-      "recorded_at_utc": "2026-10-31T18:02:42.519349+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-diff-check.txt",
+      "seconds": 0.97,
+      "recorded_at_utc": "2026-10-31T18:53:54.533275+00:00"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-guard.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-guard.txt",
+      "seconds": 14.99,
+      "recorded_at_utc": "2026-10-31T18:54:08.532705+00:00"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-shards-check.txt",
-      "seconds": 15.95,
-      "recorded_at_utc": "2026-10-31T18:02:57.446604+00:00"
-    },
-    {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.txt",
-      "seconds": 17.19,
-      "recorded_at_utc": "2026-10-31T18:02:58.682748+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-shards-check.txt",
+      "seconds": 16.58,
+      "recorded_at_utc": "2026-10-31T18:54:10.136088+00:00"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-index-validate.txt",
-      "seconds": 36.92,
-      "recorded_at_utc": "2026-10-31T18:03:18.416545+00:00"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-index-validate.txt",
+      "seconds": 35.94,
+      "recorded_at_utc": "2026-10-31T18:54:29.511588+00:00"
     }
   ],
   "dry": {
@@ -3367,6 +3346,76 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-wiring.txt",
       "sha256": "bb51067706f08befe870f5e6a3811d2e4ee2cfb7ec9adc97c78b7af0f75368c3",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-boundary.txt",
+      "sha256": "3dff680e48f9dc34cf4a101ce6dac79afe41618a4f4ae46ba55042eafe4b4724",
+      "bytes": 259
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-build.txt",
+      "sha256": "269c6a0e9dc1f6110f4f80ebff09a4148d906f67805b1b759772e70aee14e322",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-canon.txt",
+      "sha256": "413a4c42efdac53b7aa0bf029816db26acf0960679b896fdc39ef0a5201067a6",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-check-coverage.py",
+      "sha256": "41d8affb992292ccf64c4882caae5ae8e411d9e8e74d5e8870aeedc7934488d6",
+      "bytes": 5235
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-coverage.txt",
+      "sha256": "7d49ea2a8eb13c099b61854053d28984d89714186e15104dd1a32341bf91655f",
+      "bytes": 465
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-guard.py",
+      "sha256": "177e4097f50ea15edeed3f2ca0d873caedb3863915d31831e09b96f951e6a74b",
+      "bytes": 5248
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-guard.txt",
+      "sha256": "0b9368a36ea9b3bd8fd219b9bcb737047867fcba50bc4eae61ed411770bd7caa",
+      "bytes": 3012
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-index-generate.txt",
+      "sha256": "197018b38b07a3ad9f284026c4acaa1f9508d78e76c6b374d62ba7e5954d0dca",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-index-validate.txt",
+      "sha256": "6101ed19f8f9c5220af57b21111f80a9f65ce12f3d30ed05170339399d028643",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-shards-check.txt",
+      "sha256": "ded8bfd344bbabb1236ee77e64cdea77fe463441543a23926629d048dfcef4b0",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-shards-generate.txt",
+      "sha256": "6076ab41497ba9e1e0b982d67c8c83e83c281f1849dccd23747b3978c9f702a7",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-source.txt",
+      "sha256": "c32d34ab8cc73652ce534dca60c67c0c25eb61c0ca21461cabb5d31da400206c",
+      "bytes": 670
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-wiring.txt",
+      "sha256": "b2e94e2dee8c7c95667960f5c32fd22f135e8890ffe04a8a14760ed9b8b62516",
+      "bytes": 691
     }
   ],
   "reviews": [
@@ -3424,9 +3473,10 @@
     "mail_waiter": "armed under refreshed AGENTS",
     "final_44d0": "No browser, dev server or waiter started. Temporary editing/runner scratch removed after push; 17 cited text artifacts retained, including the two portable guard/coverage helpers.",
     "FX1_final": "No browser, dev server or waiter started; temporary editing/runner scratch removed after push. Thirteen cited text artifacts including two portable guard/coverage helpers retained.",
-    "FO9_final": "No browser, dev server or waiter started. Temporary editing/runner scratch removed after push; 17 cited text artifacts including two portable guard/coverage helpers retained."
+    "FO9_final": "No browser, dev server or waiter started. Temporary editing/runner scratch removed after push; 17 cited text artifacts including two portable guard/coverage helpers retained.",
+    "FO10_final": "No browser, dev server or waiter started; temporary editing/runner scratch removed after push. Fourteen cited text artifacts including two portable guard/coverage helpers retained."
   },
-  "latest_amendment": "DL259_FO9_final_integration_d5a370fc98_20261031",
+  "latest_amendment": "DL259_FO10_current_route_reason_20261031",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -4771,7 +4821,7 @@
     "future_full_check_owner": "lead landing check",
     "evidence_repair": "Interim manifest write replaced this pass wiring log; read-only wiring check rerun passed; manifest rebuilt and every retained hash verified. Product source unchanged."
   },
-  "latest_GUI_input": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+  "latest_GUI_input": "619cd29955942cb418f6a42deffd02b0587e5b4a",
   "historical_GUI5abe_commands": [
     {
       "argv": [
@@ -5752,7 +5802,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+  "canonical_source_commit": "619cd29955942cb418f6a42deffd02b0587e5b4a",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": false,
   "dry_landing_run_for_QA2": false,
@@ -5764,9 +5814,9 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "verified_count": 633,
-    "prior_616_unchanged": true,
-    "recorded_at_utc": "2026-10-31T18:03:54.651194+00:00"
+    "verified_count": 647,
+    "prior_633_unchanged": true,
+    "recorded_at_utc": "2026-10-31T18:55:26.599911+00:00"
   },
   "historical_pre_DL259_commands": [
     {
@@ -6099,7 +6149,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "Merged integration/immutable base for the FO-9 final amendment. Final canon head is mailed after push; current edited Plans/script bytes are pinned by fo9-final-guard.txt.",
+  "source_commit_role": "Merged integration/immutable base for the FO-10 reason amendment. Final canon head is mailed after push; fo10-final-guard.txt pins current changed Plans/script bytes.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -6862,7 +6912,7 @@
     }
   ],
   "final_review_delta": {
-    "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+    "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
     "decision_ref": "DL-259",
     "new_rows": [
       "FO-4",
@@ -6875,10 +6925,11 @@
       "FS-2-PAPER",
       "FS-2-CHAPTER",
       "FS-2-COMPACT",
-      "FX-1-PDF"
+      "FX-1-PDF",
+      "FO-10"
     ],
-    "rows": 148,
-    "required_cells": 740,
+    "rows": 149,
+    "required_cells": 745,
     "pending_final_sources": {},
     "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
     "demo_mechanics_added": false,
@@ -6886,11 +6937,11 @@
     "sources": [
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
-        "sha256": "892569b3688fc679ca7392422855b5220cdce5b44eec991dd958422ff9dd966b"
+        "sha256": "0c8bcb0c0be540b4088cd011d54543a549494bd8a40a9c8d256368f47ea7f8f2"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
-        "sha256": "7a8977741173779f2d90b22c7535a80fc6ad7ebe8e510a584d27f65a545a8e9a"
+        "sha256": "f5839e96c7707579607a56fa1e821c80af0f2da2aa988f81cc26629a93a1b7e7"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
@@ -6909,9 +6960,9 @@
         "sha256": "7e6f1ad1cf3f2ae614dc8d9b080224c0c01c21204754d60a5f793003e2778a80"
       }
     ],
-    "focused_checks_passed": 15,
-    "focused_checks_total": 15,
-    "schema_cases": 149,
+    "focused_checks_passed": 12,
+    "focused_checks_total": 12,
+    "schema_cases": 153,
     "isolated_source_cases": {
       "protected_redraw": 8,
       "answered_pairing": 4,
@@ -6919,37 +6970,34 @@
       "cast_emphasis": 4,
       "provider_copy_and_help": 2,
       "Creating_phase_vectors": 8,
-      "Creating_resume": 1
+      "Creating_resume": 1,
+      "Connect_route_reason_vectors": 12
     },
     "source_documents_changed": [
       "Plans/00-plans-index.md",
-      "Plans/Commands_System.md",
       "Plans/DRY_Rules.md",
       "Plans/Decision_Log.md",
       "Plans/FinalGUISpec.md",
       "Plans/Planning_Wizard.md",
-      "Plans/UI_Command_Catalog.md",
       "Plans/UI_Wiring_Rules.md",
       "Plans/Wiring_Matrix.md"
     ],
-    "changed_units": 9,
+    "changed_units": 6,
     "regenerated_source_groups": [
       "00-plans-index",
-      "commands_system",
       "decision_log",
       "dry_rules",
       "finalguispec",
       "planning_wizard",
-      "ui_command_catalog",
       "ui_wiring_rules",
       "wiring_matrix"
     ],
     "historical_decisions_outside_DL259_unchanged": true,
-    "prior_artifacts_unchanged": 616,
+    "prior_artifacts_unchanged": 633,
     "new_command_handler_control_setting_ids": 0,
     "native_browser_pixel_audio_acceptance_claim": false,
     "mail_delivery": "T3 thread ringing registered; no waiter required",
-    "source_fingerprints": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.txt",
+    "source_fingerprints": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo10-final-guard.txt",
     "historical_44d0_source_fingerprints": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-44d0-guard.txt",
     "resolved_final_sources": {
       "FX-1_PDF": {
@@ -6967,9 +7015,15 @@
         "completes_WIP": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
         "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
         "state": "final source merged and isolated phase/scene checks pass; browser/native acceptance not claimed"
+      },
+      "FO-10": {
+        "head": "03a02a178b1c386488b4a6f7865f9172cca7990c",
+        "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
+        "source": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+        "state": "current-route reason rule and 12 isolated source vectors; no native/browser acceptance or grammar admission"
       }
     },
-    "focused_check_scope": "FO-9 final on merged integration d5a370fc98; no full gates/browser/native certification"
+    "focused_check_scope": "FO-10 affected checks and regeneration only; unchanged native request/storage packs retain their prior proof"
   },
   "historical_final_44d0_commands": [
     {
@@ -7396,5 +7450,239 @@
     "resume_owner": "cmd.project.resume_creation",
     "new_command_handler_setting_control_event_receipt_storage_family": false,
     "native_browser_pixel_audio_acceptance_claim": false
+  },
+  "historical_FO9_final_commands": [
+    {
+      "command": "python3 scripts/pm7-build-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-build.txt",
+      "seconds": 1.9,
+      "recorded_at_utc": "2026-10-31T18:00:38.987302+00:00"
+    },
+    {
+      "command": "python3 scripts/pm7-demo-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-boundary.txt",
+      "seconds": 10.08,
+      "recorded_at_utc": "2026-10-31T18:00:47.167607+00:00"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-canon.txt",
+      "seconds": 10.63,
+      "recorded_at_utc": "2026-10-31T18:00:47.702661+00:00"
+    },
+    {
+      "command": "node scripts/pm7-final-review-source-probe.cjs",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-source.txt",
+      "seconds": 0.12,
+      "recorded_at_utc": "2026-10-31T18:00:53.860507+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-onboarding-contracts.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-storage.txt",
+      "seconds": 0.73,
+      "recorded_at_utc": "2026-10-31T18:00:54.473822+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-wiring.txt",
+      "seconds": 1.0,
+      "recorded_at_utc": "2026-10-31T18:00:54.730162+00:00"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-check-coverage.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-coverage.txt",
+      "seconds": 1.08,
+      "recorded_at_utc": "2026-10-31T18:00:54.825440+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-touch.txt",
+      "seconds": 2.24,
+      "recorded_at_utc": "2026-10-31T18:00:55.959355+00:00"
+    },
+    {
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-rulings.txt",
+      "seconds": 22.95,
+      "recorded_at_utc": "2026-10-31T18:01:00.052676+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-shards-generate.txt",
+      "seconds": 2.62,
+      "recorded_at_utc": "2026-10-31T18:01:24.228470+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-index-generate.txt",
+      "seconds": 33.56,
+      "recorded_at_utc": "2026-10-31T18:02:08.601503+00:00"
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-diff-check.txt",
+      "seconds": 1.04,
+      "recorded_at_utc": "2026-10-31T18:02:42.519349+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-shards-check.txt",
+      "seconds": 15.95,
+      "recorded_at_utc": "2026-10-31T18:02:57.446604+00:00"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.txt",
+      "seconds": 17.19,
+      "recorded_at_utc": "2026-10-31T18:02:58.682748+00:00"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-index-validate.txt",
+      "seconds": 36.92,
+      "recorded_at_utc": "2026-10-31T18:03:18.416545+00:00"
+    }
+  ],
+  "historical_FO9_final_delta": {
+    "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+    "decision_ref": "DL-259",
+    "new_rows": [
+      "FO-4",
+      "FO-5",
+      "FO-6",
+      "FO-7",
+      "FO-8",
+      "FO-9",
+      "FS-1",
+      "FS-2-PAPER",
+      "FS-2-CHAPTER",
+      "FS-2-COMPACT",
+      "FX-1-PDF"
+    ],
+    "rows": 148,
+    "required_cells": 740,
+    "pending_final_sources": {},
+    "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
+    "demo_mechanics_added": false,
+    "browser_or_native_acceptance_claim": false,
+    "sources": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
+        "sha256": "892569b3688fc679ca7392422855b5220cdce5b44eec991dd958422ff9dd966b"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+        "sha256": "7a8977741173779f2d90b22c7535a80fc6ad7ebe8e510a584d27f65a545a8e9a"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+        "sha256": "d05cf6ced63c1d32b93d1bda1777e2886d8975fe1d62a5a8723c506d54ea4841"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
+        "sha256": "f12657e93622f28e57258bccaa04e7d50f426a1f64eb66b1123916c28e11faaf"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md",
+        "sha256": "a31de45916dcc77411d51ff6ecf4e19f6f406cedfdf4c3963c184da84188f77f"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md",
+        "sha256": "7e6f1ad1cf3f2ae614dc8d9b080224c0c01c21204754d60a5f793003e2778a80"
+      }
+    ],
+    "focused_checks_passed": 15,
+    "focused_checks_total": 15,
+    "schema_cases": 149,
+    "isolated_source_cases": {
+      "protected_redraw": 8,
+      "answered_pairing": 4,
+      "copy_acknowledgment": 6,
+      "cast_emphasis": 4,
+      "provider_copy_and_help": 2,
+      "Creating_phase_vectors": 8,
+      "Creating_resume": 1
+    },
+    "source_documents_changed": [
+      "Plans/00-plans-index.md",
+      "Plans/Commands_System.md",
+      "Plans/DRY_Rules.md",
+      "Plans/Decision_Log.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Planning_Wizard.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/UI_Wiring_Rules.md",
+      "Plans/Wiring_Matrix.md"
+    ],
+    "changed_units": 9,
+    "regenerated_source_groups": [
+      "00-plans-index",
+      "commands_system",
+      "decision_log",
+      "dry_rules",
+      "finalguispec",
+      "planning_wizard",
+      "ui_command_catalog",
+      "ui_wiring_rules",
+      "wiring_matrix"
+    ],
+    "historical_decisions_outside_DL259_unchanged": true,
+    "prior_artifacts_unchanged": 616,
+    "new_command_handler_control_setting_ids": 0,
+    "native_browser_pixel_audio_acceptance_claim": false,
+    "mail_delivery": "T3 thread ringing registered; no waiter required",
+    "source_fingerprints": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/fo9-final-guard.txt",
+    "historical_44d0_source_fingerprints": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-44d0-guard.txt",
+    "resolved_final_sources": {
+      "FX-1_PDF": {
+        "head": "d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b",
+        "source": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
+        "rule": "actual artifact outcome, no false PDF receipt; preview mechanisms excluded",
+        "merged_into_plans_GUI_input": true
+      },
+      "FO-9": {
+        "head": "503368802df57c9d35660d0a89dea15df01afc53",
+        "source": [
+          "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "Concepts/onboarding/opus-5.5/src/js/55-scenes.js"
+        ],
+        "completes_WIP": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
+        "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+        "state": "final source merged and isolated phase/scene checks pass; browser/native acceptance not claimed"
+      }
+    },
+    "focused_check_scope": "FO-9 final on merged integration d5a370fc98; no full gates/browser/native certification"
+  },
+  "FO10_final": {
+    "source_head": "03a02a178b1c386488b4a6f7865f9172cca7990c",
+    "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
+    "lead_mail": "1031184303-22ee",
+    "coverage_row": "FO-10",
+    "rows_added": 1,
+    "coverage_rows": 149,
+    "owner_rule_exists": "PWIZ-025/F3-520/UIW-015 current Connect validation/availability",
+    "reason_selection_only": true,
+    "grammar_pinned": false,
+    "owner_validation_authority_changed": false,
+    "screen_copy_single_Plain_English_Expert": true,
+    "existing_local_action": "ui.onboarding.next",
+    "new_command_setting_control_handler_event_storage_receipt": false,
+    "native_browser_pixel_audio_acceptance_claim": false,
+    "pending_final_sources": []
   }
 }
