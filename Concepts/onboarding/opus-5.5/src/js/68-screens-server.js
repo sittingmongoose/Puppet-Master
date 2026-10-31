@@ -669,7 +669,9 @@
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !R(S).pick, reason: T('missing.backup') } }),
     do: {
       pick(S, v) { R(S).pick = v; S.save(); O55.ui.refresh(); },
-      elsewhere(S) { O55.ui.go('r-source', { dir: 'back' }); },
+      /* nothing there: back to where the backup is, with the place no longer counted as reached (a bucket's fields come
+         back, filled as they were, to try another one) */
+      elsewhere(S) { const r = R(S); r.reachedFor = null; r.unlocked = false; r.pick = null; F.reset(S, 'restore-s3'); S.save(); O55.ui.go('r-source', { dir: 'back' }); },
       next(S) {
         const r = R(S);
         if (r.scope === 'project') {

@@ -376,7 +376,7 @@
   const ownerArg = (d) => (d.repository_container ? 'org:' + d.repository_container : 'personal');
   function detailDefaults(S) {
     const d = md(S), row = RULES().row(d.forge) || {}, w = world(S), patch = {};
-    if (!d.repository_name) patch.repository_name = RULES().spell(d.forge, d.project_name) || 'new-project';
+    if (!d.repository_name) patch.repository_name = U.slug(d.project_name) || 'new-project';
     if (!row.personal && !d.repository_container && w.owners.length === 1) Object.assign(patch, { repository_container: w.owners[0].id, repository_owner_scope: w.owners[0].scope || 'organization' });
     if (Object.keys(patch).length) O55.draft.set(d, patch);
     const o = RULES().ownerOf(S.env, d);
@@ -405,7 +405,7 @@
       let out = C.field({ bind: 'repo', label: T('online.details.nameLabel', { name: svc }), value: d.repository_name, prefix: path,
         hint: [spelled || slug, ok ? T('online.details.available') : ''].filter(Boolean).join(' · '), valid: ok,
         error: err || (taken ? T('online.details.taken', { owner: (o && o.id) || account }) : ''), invalid: !!err || taken });
-      const tk = takenExample(S), fine = RULES().spell(d.forge, d.project_name) || 'book-club-site';
+      const tk = takenExample(S), fine = U.slug(d.project_name) || 'book-club-site';
       out += demo('online-details:name', [tk && { label: tk, outcome: 'taken', fills: [['repo', tk]] }, { label: 'bad/name?', outcome: 'wrong', fills: [['repo', 'bad/name?']] }, { label: fine, outcome: 'works', fills: [['repo', fine]] }], true);
       /* 2. where it lives: the person's own account where the service has one, and the places the account belongs to;
          the project inside the chosen one sits under its card (QA round 2, Q7) */
@@ -572,7 +572,7 @@
     return C.field({ bind: 'acc-' + k, type, protected: type === 'password', label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
       hint: O55.tx(key + 'Hint') || '', error: bad(f, st) ? T(key + 'Bad') : '', invalid: bad(f, st), autocomplete: type === 'password' ? 'off' : undefined }); }).join('')
     + (kind === 'aws_s3' ? `<div class="o55-sublinks" data-key="acc-temp">${C.link(T(st.temp ? 'access.aws_s3.tempOff' : 'access.aws_s3.tempOn'), 'accTemp')}</div>` : '')
-    + demo('access:' + kind, (DEMO_ACCESS[kind] || []).filter(([outcome]) => outcome !== 'nothingThere' || (o && o.restore)).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, fills })), !accessReady(kind, st));
+    + demo('access:' + kind, (DEMO_ACCESS[kind] || []).filter(([outcome]) => outcome !== 'nothingThere' || (o && o.restore)).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, fills: fills.map(([k, v]) => ['acc-' + k, v]) })), !accessReady(kind, st));
   /* demo values that take each branch: one that works, one each service refuses (and, for a restore, a bucket with
      nothing in it); they agree with the fixtures (a B2 bucket jared-pm-backups holds Harbor's backup) */
   const KEYS = [['keyId', 'demo-access-key-id'], ['secret', 'demo-secret-access-key']], B2KEYS = [['keyId', 'demo-b2-key-id'], ['secret', 'demo-b2-application-key']];
