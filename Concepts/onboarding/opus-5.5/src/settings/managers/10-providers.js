@@ -17,7 +17,7 @@
   const KEY = 'providers-accounts-models';
   const TABS = [{ id: 'services', label: 'Services' }, { id: 'models', label: 'Models' }, { id: 'limits', label: 'Limits & switching' }, { id: 'usage', label: 'Usage & budgets' }];
   const GROUPS = [
-    { id: 'plan', label: 'Subscriptions and plans', help: 'A monthly plan you already pay for' },
+    { id: 'plan', label: 'Subscriptions and plans', help: 'A plan covers the use; extra use can cost more, depending on the plan' },
     { id: 'use', label: 'Pay as you go', help: 'Billed by what you use' },
     { id: 'own', label: 'Free and your own', help: 'Free routes, and models you run yourself' }
   ];
@@ -25,9 +25,12 @@
   const current = () => all().find(p => p.id === state.selectedProvider) || all()[0];
   const byId = id => all().find(p => p.id === id) || current();
   const find = id => all().find(p => p.id === id);
-  const routes = () => (state.freeRoutes || []).filter(r => r.id !== 'free-community');
+  /* (GitHub Models, closed by GitHub on 2026-07-30, is never offered, even from a saved list: MS-118) */
+  const routes = () => (state.freeRoutes || []).filter(r => r.id !== 'free-community' && r.id !== 'free-github-models');
   const routeById = id => routes().find(r => r.id === id) || routes()[0];
-  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free models', 'free-github-models': 'GitHub Models', 'free-cerebras': 'Cerebras free tier', 'free-groq': 'Groq free tier', 'free-hf': 'Hugging Face' };
+  /* Names that stay true (provider-login audit P01-P03, read 2026-10-31): GitHub closed GitHub Models on 2026-07-30;
+     Cerebras offers a payment-method trial, not a free tier; Hugging Face gives a free account no included credit. */
+  const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free models', 'free-github-models': 'GitHub Models (closed)', 'free-cerebras': 'Cerebras trial', 'free-groq': 'Groq free plan', 'free-hf': 'Hugging Face (paid credit)' };
   const routeName = r => ROUTE_NAMES[r.id] || r.name;
   const RUNS_OUT = {
     'next-account': ['Try my next account', 'Then another service, if that is allowed under Limits & switching.'],
@@ -68,6 +71,9 @@
 
   /* ---------- derived state ---------------------------------------------- */
   function plain(p) {
+    /* a route whose vendor hasn't admitted Puppet Master (Z.AI lists the tools its Coding Plan works in): it says so and
+       offers no key entry, as onboarding does (provider-login audit P14) */
+    if (p.gate) return 'Not confirmed yet';
     if (p.status === 'disabled') return 'Off';
     if (p.status === 'not-installed') return 'Not installed';
     if (p.status === 'active') return 'Ready';
@@ -111,6 +117,9 @@
   /* An account that signs in with a key (a plan credential or a pay-as-you-go key), not a browser sign-in. */
   const isKeyAccount = (p, acc) => p.keyOnlyFor ? PM51.scopedValue(acc, 'ai.accounts.codex-auth-family') === p.keyOnlyFor : (keyOnly(p) || /key|credential/i.test(String(acc.method || '')));
   const accKeySetting = (p, acc) => p.key && isKeyAccount(p, acc) ? p.key : '';
+  /* where keys are kept: the keychain on the computer that does the work, named from onboarding's record when there is
+     one (this computer, or the Server such as Home NAS), the same words the wizard uses (provider-login audit P11) */
+  const keychainHome = () => { const r = window.PM_ONBOARDING_RESULT, hst = r && r.host; return !hst ? 'the keychain on the computer that does the work' : hst.role === 'this_device' ? "this computer's keychain" : `the keychain on ${hst.name}`; };
   const opencodeOn = () => PM51.value('ai.accounts.opencode-enable') === true || PM51.value('ai.accounts.opencode-enable') === 'on';
 
   function statusLabelFor(p) {
@@ -169,7 +178,7 @@
      boundary" become one "When it runs out" choice, services the fixture has and the saved list lacks are added in
      fixture order, and the fixture's names and groups replace the old ones. Runs at load and inside ensureStateShape. */
   const OLD_EXHAUSTION = { 'Try next eligible account, then fallback route': 'next-account', 'Use fallback route': 'next-service', 'Try the next free route': 'next-route', 'Stop and ask me': 'ask' };
-  const DESCRIBE = ['name', 'product', 'connect', 'bill', 'vendor', 'pair', 'pairNote', 'key', 'keyOnlyFor', 'app', 'gcp', 'overage', 'regions', 'help'];
+  const DESCRIBE = ['name', 'product', 'connect', 'bill', 'vendor', 'pair', 'pairNote', 'key', 'keyOnlyFor', 'app', 'gcp', 'overage', 'regions', 'help', 'gate'];
   function migrateAccount(p, acc) {
     if (!acc || typeof acc !== 'object') return;
     if (!acc.usage || typeof acc.usage !== 'object' || Array.isArray(acc.usage)) acc.usage = { text: typeof acc.usage === 'string' ? acc.usage : '', windows: {} };
@@ -226,7 +235,53 @@
        id never comes back from storage */
     if (carried.length) { try { holdCarried(); } catch (e) { /* at first load: holdCarried() runs after the policy block */ } }
     if (accountsCarried) { try { saveState(); } catch (e) { /* the next save writes it */ } }
+    try { if (adoptOnboarding()) saveState(); } catch (e) { /* never block boot on the onboarding record */ }
   }
+  /* ---------- what onboarding connected (provider-login audit P13) -------------------------------------------
+     Onboarding hands the app one record (pm.onboarding.result.v1, O55.handoff) whose accounts carry this list's
+     provider ids. For the Project onboarding made, this roster is what onboarding connected: each account with its
+     identity, how it signs in, its auth family, region and billing entity; a vendor program onboarding found or
+     installed counts as installed; the rest waits for its sign-in; Free Models routes are on where onboarding set them
+     up. With ONB_REPLACES_EXAMPLES the demo's example accounts are not shown for that Project (other Projects keep
+     theirs). Adopted once per result; what the person changes here afterwards wins. Ids, labels and states only. */
+  const ONB_REPLACES_EXAMPLES = true;
+  function adoptOnboarding(res) {
+    res = res || window.PM_ONBOARDING_RESULT;
+    if (!res || !Array.isArray(res.accounts) || !res.project || !Array.isArray(state.providers)) return false;
+    if (typeof window.PM_ACTIVE_PROJECT_ID !== 'string' || res.project.id !== window.PM_ACTIVE_PROJECT_ID || state.onboardingAdopted === res.finished_at) return false;
+    state.onboardingAdopted = res.finished_at;
+    const installed = new Set(res.installed_tools || []);
+    all().forEach(p => {
+      if (p.id === 'free-models' || p.kind === 'URL') return;
+      if (ONB_REPLACES_EXAMPLES) p.accounts = [];
+      if (p.kind === 'CLI') { p.installed = installed.has(p.id); (p.readiness = p.readiness || {}).installed = p.installed; }
+    });
+    res.accounts.forEach(a => {
+      const p = find(a.provider_entry_id); if (!p) return;
+      const acc = { id: 'onb-' + String(a.account_id).replace(/[^A-Za-z0-9-]/g, '-'), nickname: a.display_name, identity: a.display_identity || a.display_name, active: true, default: false,
+        method: a.auth_method === 'api_key' ? (p.keyOnlyFor ? 'API key' : 'Plan credential') : a.auth_method === 'server_profile' ? (a.profile_mode === 'attach_existing_server' ? 'Attached server' : 'Managed server') : p.kind === 'CLI' ? 'Provider CLI sign-in' : `${p.name.split(' /')[0]} sign-in`,
+        health: 'Healthy', usage: { text: '', windows: {} }, props: {} };
+      if (p.keyOnlyFor) acc.props['ai.accounts.codex-auth-family'] = a.auth_family === 'api_key' ? 'api_key' : 'chatgpt';
+      if (a.billing_entity) acc.props['ai.accounts.billing-entity'] = a.billing_entity;
+      if (a.region && p.regions) acc.region = p.regions[a.region === 'china' ? 1 : 0];
+      if (p.kind === 'CLI' || p.kind === 'Server') { p.installed = true; (p.readiness = p.readiness || {}).installed = true; }
+      if (p.id === 'opencode' && !opencodeOn()) { try { commitSettingValue('ai.accounts.opencode-enable', true); } catch (e) { /* the row stays off */ } }
+      (p.accounts = p.accounts || []).push(acc); migrateAccount(p, acc);
+    });
+    (res.free_routes || []).forEach(fr => {
+      const r = (state.freeRoutes || []).find(x => x.id === fr.route_id); if (!r) return;
+      if (fr.state === 'no_longer_available') { r.enabled = false; r.status = 'disabled'; r.signIn = 'No longer available'; return; }
+      r.enabled = fr.state === 'ready' || fr.state === 'limit_reached';
+      r.status = fr.state === 'ready' ? 'active' : fr.state === 'limit_reached' ? 'attention' : 'disabled';
+      r.signIn = fr.state === 'not_set_up' ? 'Not set up' : fr.underlying_account ? `${fr.underlying_provider} · ${fr.underlying_account}` : fr.underlying_provider;
+      if (fr.state === 'limit_reached') r.signIn = 'Limit reached; used again once it resets';
+    });
+    all().forEach(p => { if (p.id !== 'free-models') recompute(p); });
+    syncFree();
+    return true;
+  }
+  /* the record also arrives while the page runs (onboarding's Enter): adopt it then */
+  window.addEventListener('pm:onboarding-result', e => { try { if (adoptOnboarding(e.detail)) save(); } catch (err) { /* left as it was */ } });
   const pm51ProvidersEnsureStateShape = ensureStateShape;
   ensureStateShape = function () { const r = pm51ProvidersEnsureStateShape.apply(this, arguments); try { migrate(); } catch (e) { /* never block boot on a fixture shape */ } return r; };
   migrate();
@@ -239,6 +294,7 @@
   /* ---------- pieces ------------------------------------------------------ */
   function primaryFor(p) {
     const data = { provider: p.id };
+    if (p.gate) return { label: `See ${p.vendor}'s list`, icon: 'link', action: 'pm51-providers-gate', data };
     if (p.status === 'disabled') return { label: 'Turn on', icon: 'play', action: 'pm51-providers-turn-on', data };
     switch (p.nextAction) {
       case 'install': return { label: 'Install', icon: 'download', action: 'pm51-providers-install', data };
@@ -295,7 +351,7 @@
       : 'Nothing to install.';
     const signInDesc = url ? (r.signedIn ? `Reaches ${p.address || 'the endpoint'}.` : 'Enter the address of the model server on your network.')
       : r.signedIn ? `Signed in${acc ? ' as ' + acc.identity : ''}.`
-      : keyOnly(p) ? 'Paste a key from the provider\'s website. It is kept in your server\'s keychain.'
+      : keyOnly(p) ? `Paste a key from the provider's website. It is kept in ${keychainHome()}.`
       : signInWays.length > 1 ? `${signInWays.slice(0, -1).join(', ')}, or ${signInWays.slice(-1)[0].toLowerCase()}.` : `${signInWays[0] || 'Sign in'}.`;
     const accountDesc = url ? 'No account needed.'
       : r.accountChosen && acc ? `${acc.nickname} is used first.${active.length > 1 ? ' The others take over when it runs out.' : ''}`
@@ -387,7 +443,7 @@
   function keyLine(p, acc) {
     const id = accKeySetting(p, acc);
     return `<div class="setting-row o55-row o55-scoped o55-keyrow"${id ? ` data-setting-id="${a(id)}"` : ''}>
-      <div class="setting-copy"><div class="setting-label">API key</div><div class="setting-description">Kept in your server's keychain. Never shown again.</div></div>
+      <div class="setting-copy"><div class="setting-label">API key</div><div class="setting-description">Kept in ${h(keychainHome())}. Never shown again.</div></div>
       <div class="setting-control"><span class="o55-key is-saved"><span class="o55-key-state">${icon('lock')}<span>Saved</span></span><button type="button" class="btn small" data-action="pm51-providers-apikey" data-provider="${a(p.id)}" data-account="${a(acc.id)}">${icon('refresh')}<span>Replace key</span></button></span></div>
       ${id ? `<button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="About the API key">${icon('help')}</button>` : '<span></span>'}
     </div>`;
@@ -461,7 +517,7 @@
        key), else on the empty note under the header's Enter API Key. */
     const needKeyHome = !!p.key && !accs.some(acc => accKeySetting(p, acc));
     const keyButton = needKeyHome && items.length && keyWays(p).length
-      ? `<div class="o55-empty-key" data-setting-id="${a(p.key)}">${PM51.btn({ label: keyWays(p)[0][1], icon: 'key', small: true, action: 'pm51-providers-apikey', data })}<span class="o55-empty-key-text">A separate account with its own bill. The key is kept in your server's keychain and never shown again.</span></div>` : '';
+      ? `<div class="o55-empty-key" data-setting-id="${a(p.key)}">${PM51.btn({ label: keyWays(p)[0][1], icon: 'key', small: true, action: 'pm51-providers-apikey', data })}<span class="o55-empty-key-text">A separate account with its own bill. The key is kept in ${h(keychainHome())} and never shown again.</span></div>` : '';
     const note = PM51.note(p.readiness.installed ? (keyOnly(p) ? 'No accounts yet. Enter API Key at the top adds the first one.' : 'No accounts yet. Signing in adds the first one.') : 'Accounts appear here after you install and sign in.');
     const body = items.length ? PM51.home('ai.accounts.account-priority', PM51.accordion(items, { cls: 'pm51-providers-acc' })) + keyButton : (needKeyHome ? PM51.home(p.key, note) : note);
     const help = items.length > 1 ? 'Tried from the top. When the first runs out, the next one takes over. Use the arrows to change the order.' : items.length === 1 ? 'Add another account to keep working when this one runs out.' : undefined;
@@ -1141,7 +1197,7 @@
       });
       case 'attach-server': return PM51.panel({
         title: label, subtitle: `${p.name} · a server you already run`, icon: 'server',
-        body: PM51.panelSection('Server', PM51.field('Server address', PM51.input(PM51.value('ai.accounts.opencode-endpoint') || '', { placeholder: 'http://192.168.1.20:4096', label: 'Server address', cls: 'o55-oc-addr' })) + PM51.field('Server password', PM51.input('', { placeholder: 'Only if the server asks for one', type: 'password', label: 'Server password' }), 'Kept in your server\'s keychain. Never shown again.')),
+        body: PM51.panelSection('Server', PM51.field('Server address', PM51.input(PM51.value('ai.accounts.opencode-endpoint') || '', { placeholder: 'http://192.168.1.20:4096', label: 'Server address', cls: 'o55-oc-addr' })) + PM51.field('Server password', PM51.input('', { placeholder: 'Only if the server asks for one', type: 'password', label: 'Server password' }), `Kept in ${keychainHome()}. Never shown again.`)),
         primaryLabel: 'Connect', onPrimary: wrap => { const v = wrap.querySelector('.o55-oc-addr')?.value.trim(); if (!v) { PM51.toast('Enter the server address first', 'Puppet Master needs to know where the server is.', 'info'); return false; } if (commitSettingValue('ai.accounts.opencode-endpoint', v)) { saveState(); refreshSettingRow('ai.accounts.opencode-endpoint'); } example('Connect requested', 'Address saved. Example data only. No connection was made in this preview.'); }
       });
       case 'signin-chatgpt': return browserPanel(p, label, 'ChatGPT');
@@ -1163,7 +1219,7 @@
   /* The one place a key is typed. Only a flag that a key exists is kept; the key itself never reaches settings. */
   function apiKeyPanel(p, acc) {
     const where = { 'anthropic-api': 'the Anthropic Console', 'gemini-direct': 'Google AI Studio', vertex: 'the Google Cloud console', 'xai-api': 'the xAI console', 'meta-api': 'Meta\'s developer site', 'cursor-cli': 'your Cursor dashboard', 'openai-codex': 'the OpenAI platform' }[p.id] || `${p.name}'s website`;
-    const body = PM51.panelSection(acc ? `A new key for ${acc.nickname}` : 'API key', PM51.field('API key', PM51.input('', { placeholder: 'Paste your key', type: 'password', label: 'API key', cls: 'pm51-providers-key' }), `Copy it from ${where}. It is kept in your server's keychain, never in settings files, and never shown again.`)
+    const body = PM51.panelSection(acc ? `A new key for ${acc.nickname}` : 'API key', PM51.field('API key', PM51.input('', { placeholder: 'Paste your key', type: 'password', label: 'API key', cls: 'pm51-providers-key' }), `Copy it from ${where}. It is kept in ${keychainHome()}, never in settings files, and never shown again.`)
       + (p.regions && !acc ? PM51.field('Region', PM51.select(p.regions[0], p.regions, { label: 'Region', cls: 'pm51-providers-region' }), 'Where your plan was bought.') : '')
       + (p.gcp && !acc ? PM51.field('Google Cloud project', PM51.input('', { placeholder: 'e.g. my-project-123', label: 'Google Cloud project', cls: 'pm51-providers-gcp' }), p.id === 'vertex' ? 'Vertex AI bills this project.' : 'Only for paid tiers.') : ''))
       + PM51.note('Puppet Master checks the key with one small request before it is used.');
@@ -1321,6 +1377,7 @@
   PM51.on('providers-apikey', el => { const [p, acc] = acct(el); apiKeyPanel(p, acc); });
   PM51.on('providers-address', el => addressPanel(prov(el)));
   PM51.on('providers-turn-on', el => turnOn(prov(el)));
+  PM51.on('providers-gate', el => { const p = prov(el); example(`${p.vendor}'s list of supported tools`, p.gate === 'unverified' ? `${p.vendor} limits this plan to the tools it lists. Puppet Master isn't on that list yet, so it can't be set up here.` : undefined); });
   PM51.on('providers-check', el => checkPanel(prov(el)));
   PM51.on('providers-routes', () => PM51.panel({
     title: 'Free routes', subtitle: 'Turn routes on or off. They are tried in this order.', icon: 'route',

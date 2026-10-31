@@ -641,7 +641,9 @@
       route_id: r.id, name: r.name, tier: r.retired ? null : r.tier, underlying_provider: r.provider, underlying_account: a.freeAccounts[r.id] || null,
       state: r.retired ? 'no_longer_available' : a.freeRoutes[r.id] === 'ready' ? 'ready' : a.freeRoutes[r.id] === 'limited' ? 'limit_reached' : 'not_set_up' }));
   }
-  const register = () => { if (O55.handoff && O55.handoff.part) { O55.handoff.part('accounts', accountsPart); O55.handoff.part('free_routes', freePart); } };
+  /* the vendor programs found or installed on the computer that does the work (Settings: installed, still to sign in) */
+  const installedPart = (S) => PROV().filter((p) => p.cli && (A(S).accounts[p.id] || {}).installed || (p.cli && (detected(S, p) || {}).installed)).map((p) => p.settings);
+  const register = () => { if (O55.handoff && O55.handoff.part) { O55.handoff.part('accounts', accountsPart); O55.handoff.part('free_routes', freePart); O55.handoff.part('installed_tools', installedPart); } };
   if (O55.handoff) register(); else Promise.resolve().then(register);
 
   O55.ai = { readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host };
