@@ -174009,6 +174009,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const key = t ? t.title + '\n' + t.text : '';
       if (key === (this.tipKey || '')) return;
       if (this.tipW) this.tipW.cancel();
+      /* a new note takes its own place at once, not the last one's (it used to ease up from there and hang past the
+         stage's bottom for half a second: tools/tip_fit.mjs) */
+      if (!t || !this.tipData || this.tipData.id !== t.id) this.tipXY = null;
       this.tipKey = key; this.tipData = t || null; this.tipLook = 0;
       const el = this.tipEl();
       this.kick();
@@ -174073,6 +174076,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, top, Math.max(top, by - h - foot))];
       if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
+      /* (and never past the stage's edges while it eases after Pip) */
+      this.tipXY[1] = clamp(this.tipXY[1], top, Math.max(top, by - h - foot)); this.tipXY[0] = clamp(this.tipXY[0], 8, Math.max(8, bx - w - 8));
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
       el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
     }
