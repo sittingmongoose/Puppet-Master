@@ -39,7 +39,9 @@ for (const [w, h] of sizes) {
           await sleep(1300);
           const res = await page.evaluate(async (s) => {
             const sleep2 = (ms) => new Promise((r) => setTimeout(r, ms));
-            const root = document.getElementById('pm-o55-onboarding'), layout = root.getAttribute('data-o55-layout');
+            const root = document.getElementById('pm-o55-onboarding');
+            if (!root) return { missing: true, why: 'no onboarding window' };
+            const layout = root.getAttribute('data-o55-layout');
             const L = root.querySelector(`.o55-pane > .o55-layer[data-screen="${s}"]:not(.o55-out)`);
             if (!L) return { missing: true };
             const ids = Array.from(new Set(Array.from(L.querySelectorAll('[data-o55-do="tip"]')).filter((b) => b.offsetParent).map((b) => b.getAttribute('data-arg'))));
@@ -59,7 +61,7 @@ for (const [w, h] of sizes) {
             }
             return { layout, got };
           }, screen);
-          if (res.missing) { rows.push({ look, size: `${w}x${h}`, mode, screen, missing: true }); continue; }
+          if (res.missing) { rows.push({ look, size: `${w}x${h}`, mode, screen, missing: true, why: res.why || 'no layer' }); continue; }
           for (const g of res.got) { rows.push(Object.assign({ look, size: `${w}x${h}`, mode, screen, layout: res.layout }, g)); if (g.out) leaves++; }
         }
       }
@@ -68,5 +70,6 @@ for (const [w, h] of sizes) {
 }
 const scrolls = rows.filter((r) => r.scrolls), outs = rows.filter((r) => r.out);
 writeFileSync(out, JSON.stringify({ notes: rows.length, leaves: outs.length, scrolls: scrolls.length, outs, scrolls_list: scrolls, rows }, null, 1));
-console.log(JSON.stringify({ out, notes: rows.length, leave_the_window: outs.length, scroll_inside: scrolls.length, missing: rows.filter((r) => r.missing).length }));
+const miss = rows.filter((r) => r.missing);
+console.log(JSON.stringify({ out, notes: rows.length - miss.length, leave_the_window: outs.length, scroll_inside: scrolls.length, missing: miss.length, missing_screens: Array.from(new Set(miss.map((r) => r.screen + ' (' + r.why + ')'))) }));
 process.exit(leaves ? 1 : 0);

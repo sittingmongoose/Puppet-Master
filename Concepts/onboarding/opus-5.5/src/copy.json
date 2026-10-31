@@ -145,7 +145,17 @@
     "azureProject": "Choose the Azure DevOps project first.",
     "remoteLink": "Paste the Remote Link first.",
     "proxyAddress": "Enter your web address first.",
-    "headscale": "Enter your Headscale address first."
+    "headscale": "Enter your Headscale address first.",
+    "instance": "Enter the server's address first.",
+    "azOrg": "Choose the Azure DevOps organization first.",
+    "collection": "Choose the collection first.",
+    "workspace": "Choose the workspace first.",
+    "dcProject": "Choose the project it goes in first.",
+    "teamProject": "Choose the team project first.",
+    "bbProject": "Choose the Bitbucket project first.",
+    "visibility": "Choose who can see it first.",
+    "repoName": "Fix the name first: the service won't accept it as it is.",
+    "branch": "Fix the main branch name first."
   },
   "art": {
     "hero": "A marionette control bar with three helpers on strings",
@@ -352,17 +362,17 @@
       "choose": "Set up this one",
       "address": "Enter its address instead",
       "scan": "Look on this network instead",
-      "cloudPrivate": "A rented computer is set up privately: until it is yours, its setup page only answers on a private network. Put it on your VPN or Tailscale network first, then type the address it has there.",
-      "cloudPrivateLabel": "Its private address (VPN or Tailscale)",
-      "cloudHint": "Like 100.88.12.34 or cloud-box.tail1234.ts.net",
-      "cloudPublic": "That's a public internet address. Use the address it has on your VPN or Tailscale network, so its setup page never faces the internet.",
       "before": {
         "title": "Before you start",
         "models": "Check that your model is listed in the install guide: not every {brand} model can run Puppet Master.",
         "data": "Give Puppet Master a folder of its own for its data, on a disk that is kept. Your work lives there, so updating or reinstalling the app never loses it. The guide shows where to set it.",
         "address": "Once it starts, it shows up here by itself, with the address your other devices use to reach it."
       },
-      "leadCloud": "Install Puppet Master on it, then type the address it has on your private network."
+      "leadCloud": "Install Puppet Master on it from your cloud provider's console.",
+      "cloudName": "your cloud computer",
+      "cloudCode": "Once it is installed, your cloud provider's console shows a one-time setup code. You type it on the next screen. Nothing is set up over the open internet.",
+      "cloudNext": "I have the code",
+      "titleCloud": "Install it on your cloud computer"
     },
     "confirm": {
       "eyebrow": "New Server",
@@ -409,7 +419,8 @@
         "Studio PC",
         "Office computer",
         "Home server"
-      ]
+      ],
+      "codeHintCloud": "The one-time code your cloud provider's console shows, like 482 913"
     },
     "ready": {
       "eyebrow": "New Server",
@@ -469,7 +480,7 @@
       },
       "cloud": {
         "title": "A cloud account",
-        "sub": "Google Drive, OneDrive, S3 or B2"
+        "sub": "Google Drive, OneDrive or a storage bucket"
       }
     },
     "unlock": {
@@ -487,7 +498,10 @@
       "lead": "Pick the copy you want.",
       "leadAt": "Found on {where}. Pick the copy you want.",
       "full": "Everything from {label}",
-      "project": "{project} from {where}"
+      "project": "{project} from {where}",
+      "none": "No Puppet Master backup was found on {where}.",
+      "elsewhere": "Look somewhere else",
+      "leadNone": "Puppet Master looked on {where}."
     },
     "preview": {
       "eyebrow": "Restore",
@@ -504,7 +518,8 @@
       "ontoServer": "Comes back onto {name}, the Server you just set up",
       "ontoHere": "Comes back onto this computer, {name}",
       "paused": "Everything comes back paused: no Goals run, no schedules start and nothing opens to the internet until you turn it on",
-      "repair": "Devices that used the old computer pair again with {name}"
+      "repair": "Devices that used the old computer pair again with {name}",
+      "claimHere": "Puppet Master on this computer becomes yours first: the app hands it over, nothing to type."
     },
     "apply": {
       "phases": {
@@ -512,7 +527,8 @@
         "check": "Checking it is complete",
         "projects": "Bringing back Projects",
         "settings": "Bringing back settings",
-        "paused": "Keeping work, schedules and outside access paused"
+        "paused": "Keeping work, schedules and outside access paused",
+        "claimHere": "Making Puppet Master on this computer yours"
       }
     },
     "done": {
@@ -613,7 +629,10 @@
       "bbDc": "Bitbucket Data Center",
       "forgejoCloud": "Codeberg (hosted Forgejo)",
       "giteaCloud": "Gitea Cloud",
-      "ownServer": "My own server"
+      "ownServer": "My own server",
+      "otherServer": "Another server",
+      "tenantLabel": "Your Gitea Cloud address",
+      "tenantHint": "The https address your team's Gitea Cloud has"
     },
     "signin": {
       "eyebrow": "Online copy",
@@ -644,7 +663,59 @@
       "simEmail": "Email",
       "simButton": "Create account",
       "linkCopied": "Sign-in link copied: {url}. Paste it into your browser.",
-      "linkCopiedNone": "Open your browser and sign in there, then come back."
+      "linkCopiedNone": "Open your browser and sign in there, then come back.",
+      "tokenLead": "{host} signs in with an access token you make there. Paste it below.",
+      "createOn": "No account on {host} yet? Create one",
+      "tokenHow": {
+        "forgejo": "Make one on {host} under Settings › Applications.",
+        "gitea": "Make one on {host} under Settings › Applications.",
+        "bitbucket_data_center": "Make one on {host} under your profile › Manage account › HTTP access tokens.",
+        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens.",
+        "gitlab": "Make one on {host} under Preferences › Access tokens.",
+        "azure_devops": "Make one on {host} under User settings › Personal access tokens."
+      },
+      "scopes": {
+        "forgejo": {
+          "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
+          "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
+          "detailExisting": "Allow it Read and write for repository, and Read for user.",
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+        },
+        "gitea": {
+          "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
+          "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
+          "detailExisting": "Allow it Read and write for repository, and Read for user.",
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+        },
+        "bitbucket_data_center": {
+          "detailNew": "Give it Admin for both Project and Repository: only that level can make a new copy.",
+          "detailNewExpert": "Project admin and repository admin: the only HTTP access token level that can create a repository.",
+          "detailExisting": "Give it Read for Project and Write for Repository.",
+          "detailExistingExpert": "Project read and repository write: clone and push."
+        },
+        "github": {
+          "detailNew": "Tick the repo box.",
+          "detailNewExpert": "A classic token with the repo scope, or a fine-grained token with Administration and Contents set to read and write.",
+          "detailExisting": "Tick the repo box.",
+          "detailExistingExpert": "A classic token with the repo scope, or a fine-grained token with Contents set to read and write."
+        },
+        "gitlab": {
+          "detailNew": "Tick api and write_repository.",
+          "detailNewExpert": "Scopes api (create the project) and write_repository (push over HTTPS).",
+          "detailExisting": "Tick read_api and write_repository.",
+          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS)."
+        },
+        "azure_devops": {
+          "detailNew": "Under Code, choose Read, write, & manage.",
+          "detailNewExpert": "Scope vso.code_manage (Code: read, write and manage).",
+          "detailExisting": "Under Code, choose Read & write.",
+          "detailExistingExpert": "Scope vso.code_write (Code: read and write)."
+        }
+      },
+      "demo": {
+        "good": "Demo token",
+        "bad": "abc"
+      }
     },
     "details": {
       "eyebrow": "Online copy",
@@ -687,6 +758,87 @@
         "mit": "MIT",
         "apache_2": "Apache 2.0",
         "gpl_3": "GPL 3.0"
+      },
+      "nameReserved": "{name} keeps that name for itself. Choose another.",
+      "nameRule": {
+        "github": "Use letters, numbers, - . or _ only, up to 100.",
+        "gitlab": "Use letters, numbers, - . or _, starting and ending with a letter or number, and no two symbols together.",
+        "azure_devops": "Up to 64 characters, not starting with _ or . and without \\ / : * ? \" < > | ; # $ { } , + = [ ] or &.",
+        "bitbucket_cloud": "Use letters or numbers: its web address keeps them, turns the rest into dashes, and holds up to 62.",
+        "bitbucket_data_center": "Start with a letter or number; then letters, numbers, spaces, - . or _.",
+        "forgejo": "Use letters, numbers, - . or _ only, up to 100.",
+        "gitea": "Use letters, numbers, - . or _ only, up to 100.",
+        "cursor_origin": "Use letters, numbers, - . or _ only, up to 100."
+      },
+      "branchRule": "A branch name can't have spaces, two dots in a row or ~ ^ : ? * [ \\, can't start with - and can't end with / or a dot.",
+      "spelled": "Saved as {name}",
+      "slug": "Its web address ends in /{slug}",
+      "ownerOf": {
+        "organization": "Whose account keeps it?",
+        "group": "Where does it live?",
+        "azOrg": "Organization",
+        "collection": "Collection",
+        "workspace": "Workspace",
+        "dcProject": "Which project keeps it?",
+        "team": "Whose account keeps it?"
+      },
+      "kind": {
+        "organization": "Organization",
+        "group": "Group",
+        "subgroup": "Subgroup",
+        "azOrg": "Organization",
+        "collection": "Collection on this server",
+        "workspace": "Workspace",
+        "dcProject": "Project",
+        "personal": "Your personal project",
+        "team": "Team codebase",
+        "profile": {
+          "limited": "seen only by signed-in people",
+          "private": "seen only by its members"
+        }
+      },
+      "bbProject": "Project",
+      "bb": {
+        "private": "Private project · {key}",
+        "public": "Public project · {key}"
+      },
+      "cap": {
+        "gitlab": "{org} is a private group, so copies in it are private too.",
+        "gitlabInternal": "{org} is an internal group, so copies in it can be private or internal, not public.",
+        "bitbucket": "{project} is a private project, so copies in it are private.",
+        "origin": "Copies in your own account are always private. Choose your team to share it with them.",
+        "profileLimited": "{org} is seen only by people signed in to {host}, so even an Everyone copy is seen only by them.",
+        "profilePrivate": "{org} is seen only by its members, so even an Everyone copy is seen only by them."
+      },
+      "vis": {
+        "github": {
+          "internal": {
+            "title": "Everyone in your company",
+            "sub": "Members of the enterprise {org} belongs to"
+          }
+        },
+        "gitlab": {
+          "internal": {
+            "title": "Everyone signed in to {host}",
+            "sub": "Anyone with an account on this server"
+          }
+        },
+        "cursor_origin": {
+          "internal": {
+            "title": "Everyone in {org}",
+            "sub": "People on your team with access to its codebase"
+          }
+        },
+        "bitbucket_data_center": {
+          "private": {
+            "title": "People with access to {org}",
+            "sub": "The project's permissions decide"
+          },
+          "public": {
+            "title": "Anyone who can reach {host}",
+            "sub": "No sign-in needed to read it"
+          }
+        }
       }
     },
     "repos": {
@@ -698,7 +850,8 @@
       "private": "Private",
       "public": "Public",
       "empty": "No Projects found in this account.",
-      "copyToServer": "The copy is kept on {name}. You can choose another place on the next page."
+      "copyToServer": "The copy is kept on {name}. You can choose another place on the next page.",
+      "noMatch": "No Project matches that search."
     }
   },
   "name": {
@@ -804,11 +957,31 @@
       "nasSub": "Over your home network",
       "gdrive": "Google Drive",
       "onedrive": "OneDrive",
-      "s3": "S3 or B2",
-      "s3Sub": "A cloud storage bucket",
-      "sftp": "Another server (SFTP or WebDAV)",
+      "s3": "A storage bucket",
+      "s3Sub": "Amazon S3, Backblaze B2 or another S3-compatible service",
+      "sftp": "Another server",
       "none": "Not now",
-      "nasSame": "Your Project's files are on {name}, so a backup there would not survive losing it. Choose another place."
+      "nasSame": "Your Project's files are on {name}, so a backup there would not survive losing it. Choose another place.",
+      "sftpSub": "Over SFTP or WebDAV",
+      "family": {
+        "aws_s3": "Amazon S3",
+        "backblaze_b2": "Backblaze B2",
+        "s3_compatible": "S3-compatible storage",
+        "sftp": "SFTP server",
+        "webdav": "WebDAV server"
+      },
+      "subLabel": {
+        "s3": "Which service",
+        "sftp": "How it connects"
+      },
+      "more": "Azure Blob Storage, Google Cloud Storage and a backup server of your own can be added later, in Settings › Backup & Restore.",
+      "short": {
+        "aws_s3": "Amazon S3",
+        "backblaze_b2": "Backblaze B2",
+        "s3_compatible": "Other",
+        "sftp": "SFTP",
+        "webdav": "WebDAV"
+      }
     },
     "sync": "Your other Puppet Master devices see this Project automatically.",
     "notNow": "Not now"
@@ -831,26 +1004,22 @@
       "sub": "Puts your Server at a web address you own, on the internet",
       "label": "Web address",
       "hosting": "Who runs it?",
-      "pm": "Set it up for me",
-      "generate": "Settings file only",
+      "generate": "Make the settings file",
       "existing": "I have one already",
-      "tls": "Certificate",
-      "free": "A free certificate",
-      "own": "My own certificate",
       "kind": "Which proxy",
-      "detail": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
-      "detailExpert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is used as an existing external proxy.",
-      "ownNext": "After you confirm, you choose the certificate on {name}. It and its key stay there.",
-      "existingNext": "Puppet Master checks that this address reaches {name} and that its certificate is right before using it.",
+      "detail": "Puppet Master writes the settings file for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
+      "detailExpert": "Configuration generated for Caddy (default, automatic HTTPS), NGINX or Traefik (the file marks the certificate and key paths). Nginx Proxy Manager is used as an existing external proxy.",
+      "existingNext": "Puppet Master checks that this address reaches {name} before using it.",
       "public": "This puts {name}'s sign-in page on the internet, where anyone can find it. Only devices you pair can use it. If only your own devices need it, Tailscale is the private way.",
       "needsTitle": "What has to be true for this to work",
       "needs": {
         "dns": "{host} has to point to the network {name} is on.",
-        "ports": "That network has to let web traffic in: usually port 443, and port 80 too for a free certificate. Your router or cloud firewall decides this.",
+        "ports": "That network has to let web traffic in: usually port 443, and port 80 too if your proxy gets its own certificate. Your router or cloud firewall decides this.",
         "cgnat": "Some internet plans share one address between many homes. Then a web address can't reach you; Tailscale and Remote Link still can."
       },
       "consent": "I understand {name} will be reachable from the internet at this address",
-      "consentMissing": "Tick the box to say you understand this puts your Server on the internet"
+      "consentMissing": "Tick the box to say you understand this puts your Server on the internet",
+      "certNote": "Certificates stay on your side: Caddy gets one by itself, and for NGINX or Traefik the file shows where yours goes."
     },
     "link": {
       "title": "Puppet Master Remote Link",
@@ -894,17 +1063,12 @@
         "approveWait": "Whoever runs your Headscale server approves {name} there. Press It's approved when they have."
       },
       "px": {
-        "config": "Making the {kind} settings on {name}",
         "file": "Making the {kind} settings file",
         "install": "Waiting for you to add the settings to {kind}",
-        "installWait": "The settings file is ready: download it from Settings › Server & Project Location › Away From Home, add it to your {kind}, then press I've added it.",
+        "installWait": "The settings file is ready: download it from Settings › Server & Project Location › Away From Home, add it to your {kind}, then press I've added it. Certificates stay with your proxy.",
         "dns": "Checking {host} points to {name}",
         "reach": "Checking it can be reached from the internet",
         "reaches": "Checking {host} reaches {name}",
-        "freeCert": "Getting a free certificate",
-        "theirCert": "Checking its certificate",
-        "ownCert": "Using your certificate on {name}",
-        "ownCertWait": "Choose the certificate on {name}: Puppet Master there asks for it, and it never leaves {name}. Until then this web address isn't finished. You can finish it later in Settings › Server & Project Location › Away From Home.",
         "test": "Testing sign-in, the app and the live connection"
       },
       "rl": {
@@ -921,7 +1085,6 @@
         "hsUnreachable": "Your Headscale server didn't answer. Check its address and that it is running, then try again.",
         "unreachable": "{host} can't be reached from the internet. Your router or cloud firewall may need to let web traffic in, or your internet plan may share its address. Tailscale works without any of this.",
         "dns": "{host} doesn't point to {name} yet. Change its address record where you bought the name, then try again. Changes can take a while.",
-        "cert": "The certificate couldn't be set up for {host}. Check that {host} points here and that web traffic can get in, then try again.",
         "live": "The page opens, but live updates are blocked. Your proxy has to pass live connections through (WebSockets). Try again after fixing it.",
         "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later."
       },
@@ -934,7 +1097,6 @@
         "hs_unreachable": "Headscale can't be reached",
         "dns_mismatch": "Address points elsewhere",
         "unreachable": "Can't be reached",
-        "certificate_failed": "No certificate",
         "live_failed": "Live updates blocked",
         "relay_unavailable": "Link service down"
       }
@@ -963,7 +1125,8 @@
       "history": "Every version",
       "online": "Online copy",
       "backup": "Backup",
-      "remote": "Away from home"
+      "remote": "Away from home",
+      "privacy": "Who can see it"
     },
     "begins": {
       "new": "A new, empty Project",
@@ -984,7 +1147,7 @@
       "history": "Safe History starts saving every version",
       "clone": "The Project is copied from {service}",
       "restore": "The backup is brought back",
-      "online": "A private copy is made on {service}",
+      "online": "An online copy is made on {service} · {privacy}",
       "settings": "Settings from {project} are applied",
       "remote": "Next, access away from home is set up, step by step (or later)",
       "server": "The Project lives on {server}",
@@ -1000,7 +1163,22 @@
     "edit": "Edit",
     "leadLaterAccess": "No Project will be created now. Access to {name} from away is set up so it is ready when you are.",
     "savedExisting": "Keeps its {kind} history",
-    "backupDropped": "Backup to {name} was taken off: your Project's files are on {name}. Choose another place for backups."
+    "backupDropped": "Backup to {name} was taken off: your Project's files are on {name}. Choose another place for backups.",
+    "plan": {
+      "label": "Everything for the online copy",
+      "service": "Service",
+      "server": "Address",
+      "account": "Account",
+      "name": "Name",
+      "none": "None",
+      "yes": "Yes",
+      "no": "No",
+      "signin": "Signs in with",
+      "byToken": "An access token",
+      "byBrowser": "Its sign-in page"
+    },
+    "fix": "Fix this",
+    "backupLater": "connected right after"
   },
   "creating": {
     "eyebrow": "Creating",
@@ -1048,7 +1226,7 @@
       "failedLead": "Nothing was created yet.",
       "freshAttempt": "A new reviewed attempt starts a fresh request. The old one is never reused.",
       "deleteConfirm": "Delete {repo} on {service}?",
-      "deleteWarn": "This deletes the online copy only, and can't be undone. Setup still needs its own answer.",
+      "deleteWarn": "This deletes only the online copy, and it can't be undone. Nothing on this computer is removed.",
       "deleteYes": "Delete the online copy",
       "deleteNo": "Keep it",
       "reasons": {
@@ -1062,7 +1240,7 @@
         "mismatch": "That answer didn't match this setup. Nothing changed.",
         "pending": "Waiting for the setup answer.",
         "armed": "Watching for the setup answer.",
-        "deleted": "The online copy was deleted separately. Setup still needs its own answer.",
+        "deleted": "{repo} is deleted from {service}. Review the setup to start again.",
         "confirmFirst": "Confirm the exact online copy first.",
         "openUnavailable": "Opening isn't available in this preview.",
         "other": "That isn't available right now. Nothing changed."
@@ -1095,7 +1273,7 @@
     "nasFlow": "Puppet Master sets up a secure connection to {name} with a key. You sign in to it once.",
     "nasPath": "Backups go to {path} on {name}.",
     "connect": "Connect",
-    "accessMissing": "Fill in all three to connect.",
+    "accessMissing": "Fill in the access details to connect.",
     "nasReusePaired": "Uses the pairing with Puppet Master on {name}. Nothing more to approve.",
     "nasFlowPaired": "{name} runs Puppet Master, so this computer pairs with it: you approve it once. No key or password.",
     "pendingHost": "The protected handoff isn't available in this preview, so this step stays waiting. Nothing is saved yet. Try again when a host is available.",
@@ -1103,7 +1281,12 @@
     "stepUp": "Confirm it's you",
     "stepUpDone": "Confirmed it's you",
     "stepUpHint": "The kit is shown only to you, once, on this device.",
-    "ownerFail": "The handoff didn't finish. Nothing was saved or switched on. Try again."
+    "ownerFail": "The handoff didn't finish. Nothing was saved or switched on. Try again.",
+    "willGo": "Backups will go to: {where}",
+    "goesTo": "Backups go to: {where}",
+    "accountKind": {
+      "personal": "for home"
+    }
   },
   "ai": {
     "eyebrow": "AI",
@@ -1827,10 +2010,42 @@
     "page": "Your browser opened {name}"
   },
   "access": {
-    "s3": {
+    "aws_s3": {
       "bucket": "Bucket",
-      "bucketPh": "s3://my-backups",
-      "bucketHint": "An S3 or B2 bucket made for backups.",
+      "bucketPh": "my-backups or my-backups/puppet-master",
+      "bucketHint": "Its name, and a folder in it if you like. Puppet Master finds its region.",
+      "bucketBad": "Amazon bucket names have 3 to 63 lowercase letters, numbers, dots or dashes, and start and end with a letter or number.",
+      "keyId": "Access key ID",
+      "secret": "Secret access key",
+      "secretHint": "Kept in your computer's password store, never in Puppet Master's files.",
+      "session": "Session token",
+      "sessionHint": "Temporary keys come with one. Kept in your computer's password store, never in Puppet Master's files.",
+      "tempOn": "Using temporary keys?",
+      "tempOff": "Not using temporary keys"
+    },
+    "backblaze_b2": {
+      "b2host": "S3 address",
+      "b2hostPh": "s3.us-west-004.backblazeb2.com",
+      "b2hostHint": "Shown on the bucket's page in Backblaze.",
+      "b2hostBad": "It looks like s3.us-west-004.backblazeb2.com.",
+      "bucket": "Bucket",
+      "bucketPh": "my-backups",
+      "bucketHint": "Its name, and a folder in it if you like.",
+      "bucketBad": "B2 bucket names have 6 to 63 letters, numbers, dashes or dots, and don't start with b2-.",
+      "keyId": "Application key ID",
+      "secret": "Application key",
+      "secretHint": "A key made for this bucket: Backblaze's master key doesn't work here. Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "s3_compatible": {
+      "server": "Service address",
+      "serverPh": "https://s3.example.com",
+      "serverHint": "The S3 address your storage service gives you.",
+      "serverBad": "It starts with https://.",
+      "region": "Region, if the service asks for one",
+      "bucket": "Bucket",
+      "bucketPh": "my-backups",
+      "bucketHint": "Its name, and a folder in it if you like.",
+      "bucketBad": "Bucket names have 3 to 63 letters, numbers, dots, dashes or underscores.",
       "keyId": "Access key ID",
       "secret": "Secret access key",
       "secretHint": "Kept in your computer's password store, never in Puppet Master's files."
@@ -1838,7 +2053,17 @@
     "sftp": {
       "address": "Server address",
       "addressPh": "sftp://backup.example.com/puppet-master",
-      "addressHint": "sftp:// for SFTP, https:// for WebDAV.",
+      "addressHint": "The server and the folder for backups.",
+      "addressBad": "It starts with sftp://. An https:// address is WebDAV: choose WebDAV above.",
+      "user": "Username",
+      "password": "Password",
+      "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "webdav": {
+      "address": "WebDAV address",
+      "addressPh": "https://dav.example.com/puppet-master",
+      "addressHint": "The folder's https address, as your server gives it.",
+      "addressBad": "It starts with https://.",
       "user": "Username",
       "password": "Password",
       "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."
@@ -1901,6 +2126,7 @@
       "noAnswer": "no answer",
       "refused": "refused",
       "taken": "taken",
+      "nothingThere": "nothing there",
       "expired": "runs out",
       "revoked": "revoked"
     }

@@ -124,23 +124,23 @@
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company.",
-          "expert": "The S3-compatible bucket (Amazon S3 or Backblaze B2) the backup repository lives in, like s3://my-backups."
+          "text": "The bucket's name, and a folder in it if you like, such as my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
+          "expert": "The bucket, optionally /prefix, checked with the chosen service's bucket-name rule (Amazon and Backblaze differ)."
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password.",
-          "expert": "The access key ID of an S3-compatible key with access to that bucket; the secret access key is its password."
+          "text": "The ID half of the key made for the bucket. Copy it from your storage account; the secret below is its password.",
+          "expert": "The access key ID (Backblaze: application key ID) of a key scoped to that bucket."
         },
         "field:acc-secret": {
-          "title": "Secret access key",
-          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files.",
-          "expert": "The secret access key. Stored in the OS keychain, never in Puppet Master's files or logs."
+          "title": "Secret",
+          "text": "The private half of that key. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The secret access key (Backblaze: application key). Stored in the OS keychain, never in Puppet Master's files or logs."
         },
         "field:acc-address": {
           "title": "Server address",
-          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV.",
-          "expert": "The backup server's URL: sftp:// for SFTP, https:// for WebDAV."
+          "text": "Where the backup goes on that server: start it with sftp:// for SFTP, or https:// for WebDAV, then the folder.",
+          "expert": "The server's URL with the backup path: sftp:// for SFTP, https:// for WebDAV, matching the protocol chosen above."
         },
         "field:acc-user": {
           "title": "Username",
@@ -233,6 +233,26 @@
           "title": "Use a server I already run",
           "text": "For an OpenCode server you started yourself. Puppet Master connects to it and leaves its settings to you.",
           "expert": "Attach to Existing Server: Puppet Master owns the endpoint, its auth and health checks only; the server's own settings stay External / Not Managed."
+        },
+        "field:acc-session": {
+          "title": "Session token",
+          "text": "Only for temporary keys: the third part they come with. Kept in your computer's password store.",
+          "expert": "The STS session token that temporary AWS credentials require. Stored with the secret, never in files or logs."
+        },
+        "field:acc-b2host": {
+          "title": "S3 address",
+          "text": "The bucket's S3 address, shown on its page in Backblaze, like s3.us-west-004.backblazeb2.com.",
+          "expert": "Backblaze B2's regional S3 address, s3.<region>.backblazeb2.com."
+        },
+        "field:acc-server": {
+          "title": "Service address",
+          "text": "The S3 address your storage service gives you, starting with https://.",
+          "expert": "The S3-compatible service's base URL (https)."
+        },
+        "field:acc-region": {
+          "title": "Region",
+          "text": "Only if your storage service asks for one. Leave it empty otherwise.",
+          "expert": "The signing region, for services that require one; empty uses the service's default."
         }
       },
       "chrome": {
@@ -440,8 +460,8 @@
         },
         "kind:cloud": {
           "title": "A cloud computer",
-          "text": "A computer you rent online. It is always on and costs a monthly fee. It is set up over a private network, like a VPN or Tailscale, so its setup page never faces the internet.",
-          "expert": "A rented cloud VM running the Server. Claim and setup happen over a private path (VPN/tailnet); public access is a separate, later choice."
+          "text": "A computer you rent online. It is always on and costs a monthly fee. You make it yours with a one-time code from your cloud provider's console, so nothing is set up over the open internet.",
+          "expert": "A rented cloud VM running the Server, claimed with the one-time setup code from the provider console; no public setup endpoint. Public access is a separate, later choice."
         },
         "kind:pc": {
           "title": "Another computer",
@@ -472,8 +492,8 @@
         },
         "field:addr": {
           "title": "Its address",
-          "text": "Where to reach it. A rented computer is set up over a private network only: put it on your VPN or Tailscale network and type the address it has there.",
-          "expert": "The Server's hostname or IP. An unclaimed cloud VM is claimed only over a private path (VPN or tailnet address), never its public IP (RAS-007)."
+          "text": "Where to reach it, if it doesn't show up by itself. A cloud computer needs no address: you use the setup code from your provider's console.",
+          "expert": "The Server's hostname or IP on your network. A cloud VM is claimed with the one-time code its provider console shows, not by address."
         },
         "manualOn": {
           "title": "Enter its address instead",
@@ -494,8 +514,8 @@
         },
         "field:code": {
           "title": "Setup code",
-          "text": "The number shown on the Server's own setup page, like 482 913. It proves the computer is yours.",
-          "expert": "The one-time setup code from the Server's own setup page; it proves physical access before the claim."
+          "text": "The one-time number shown on the Server's own setup page, or for a cloud computer in your provider's console, like 482 913. It proves the computer is yours.",
+          "expert": "The one-time setup code from the Server's setup page (a cloud VM: the provider console); it proves physical or console access before the claim."
         },
         "selfMatch": {
           "title": "The words match",
@@ -568,8 +588,8 @@
         },
         "source:cloud": {
           "title": "A cloud account",
-          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket.",
-          "expert": "A backup repository in Google Drive, OneDrive, or an S3-compatible bucket (Amazon S3, Backblaze B2)."
+          "text": "A backup kept in Google Drive, OneDrive or a storage bucket. Only backups kept there are shown next.",
+          "expert": "Google Drive, OneDrive or an S3-family bucket; the snapshot list is scoped to the exact service, account and bucket reached."
         },
         "group:device": {
           "title": "Which device",
@@ -587,9 +607,24 @@
           "expert": "OneDrive through Microsoft's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket. Fill in its three access details below to reach it.",
-          "expert": "An S3-compatible bucket: the bucket, access key ID and secret access key below are checked before the restore reads it."
+          "title": "A storage bucket",
+          "text": "A bucket on Amazon S3, Backblaze B2 or another S3-compatible service. Pick which, then fill in its access details below.",
+          "expert": "An S3-family bucket (aws_s3, backblaze_b2 or s3_compatible) reached with its own access details; only backups in that exact bucket are listed next."
+        },
+        "rsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "rsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "rsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
         }
       },
       "r-unlock": {
@@ -604,6 +639,11 @@
           "title": "Choose what to bring back",
           "text": "Each copy is a moment the backup was taken. The newest is usually the right one.",
           "expert": "Each entry is a snapshot of the backup repository at the time it was taken. The newest is usually the one you want."
+        },
+        "elsewhere": {
+          "title": "Look somewhere else",
+          "text": "Go back and point to another place the backup might be.",
+          "expert": "Return to the source step; the reached place, unlock and pick are dropped when another place is chosen."
         }
       },
       "r-done": {
@@ -769,13 +809,13 @@
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service people run on their own server, or use at Codeberg. Pick it if you already have an account on one.",
-          "expert": "Forgejo, self-hosted or Codeberg: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A free service people run on their own servers. Codeberg is the best-known one. Pick it if you have an account on Codeberg or another Forgejo server.",
+          "expert": "Codeberg (browser sign-in or a token) or another Forgejo instance at its https address (a personal access token)."
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service people run on their own server, or use as Gitea Cloud. Pick it if you already have one.",
-          "expert": "Gitea, self-hosted or Gitea Cloud: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
+          "expert": "Gitea Cloud at your team's own address (browser sign-in or a token), or a self-hosted Gitea at its https address (a personal access token)."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
@@ -794,13 +834,13 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run either by the company itself or by your organisation on its own server. Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it) or self-managed / data center (your organisation runs it at its own https address)."
+          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where your organisation's own copy of the service lives, starting with https://, like https://git.example.com.",
-          "expert": "The instance's base URL (https only), used for its sign-in and API."
+          "text": "Where that server lives, starting with https://, like https://git.example.com. For Gitea Cloud, the address your team was given.",
+          "expert": "The instance's base URL (https only, a path such as /git is kept), used for its sign-in and API. Never filled in for you."
         },
         "group:pick": {
           "title": "Which online service",
@@ -837,13 +877,13 @@
         },
         "tokenOn": {
           "title": "Use an access token instead",
-          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in.",
-          "expert": "Sign in with a personal access token instead of the browser, where the service supports it."
+          "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
+          "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
         "field:token": {
           "title": "Access token",
-          "text": "A token is a long password made for apps. Make one in your account on that service; where it is depends on the service. It stays in your computer's password store, never in Puppet Master's files.",
-          "expert": "A personal access token for this service. Stored in the OS keychain, never in Puppet Master's files. Where to make one depends on the service."
+          "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
+          "expert": "A PAT with the least scopes for this purpose, kept by the credential owner; the plan records only that a token is used."
         },
         "code": {
           "title": "Browser didn't open?",
@@ -874,13 +914,13 @@
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy is named on the service. The suggestion is fine; letters, numbers and dashes work best.",
-          "expert": "The remote repository's name on the service: letters, numbers and dashes are safest."
+          "text": "How the online copy is named there. If a name won't work on that service, the line under the box says why.",
+          "expert": "Checked with the provider's own rule (GitHub, GitLab path, Azure DevOps, Bitbucket slug, Forgejo/Gitea), not one shared pattern."
         },
         "group:owner": {
-          "title": "Whose account keeps it",
-          "text": "Your own account, or an organisation you belong to: a group the service uses for a team's work. Pick the organisation when the Project belongs to a team.",
-          "expert": "The namespace that owns the repository: your personal account or an organisation (a workspace or group on some services)."
+          "title": "Where it lives",
+          "text": "Your own account, or a place you share with others: an organization, group, workspace or project. Pick the one the Project belongs to.",
+          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key, Origin team."
         },
         "group:azOrg": {
           "title": "Organization",
@@ -904,8 +944,8 @@
         },
         "vis:private": {
           "title": "Only you",
-          "text": "Only you, and people you invite, can see it. Right for most Projects.",
-          "expert": "Private repository: visible to you and the collaborators you add."
+          "text": "Only you, and people you give access, can see it. Right for most Projects.",
+          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
@@ -913,9 +953,9 @@
           "expert": "Public repository: anyone can read and clone it; only collaborators can push."
         },
         "vis:internal": {
-          "title": "Everyone in your organization",
-          "text": "People in your organization can see it; nobody outside can.",
-          "expert": "Internal repository: visible to members of the owning organisation or enterprise only."
+          "title": "A wider group",
+          "text": "More people than just you, but nobody outside: your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
+          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com); Origin team members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
@@ -924,8 +964,8 @@
         },
         "field:branch": {
           "title": "Main branch name",
-          "text": "A branch is a separate line of work, and this is the main one. Keep main unless your team asks for another name.",
-          "expert": "The default branch name; usually main. Keep it unless your team uses another."
+          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name. No spaces.",
+          "expert": "The default branch, checked as git check-ref-format --branch does (no .., @{, spaces, ~ ^ : ? * [ \\, leading -, trailing / or .)."
         },
         "readme": {
           "title": "Add a README file",
@@ -941,6 +981,11 @@
           "title": "License",
           "text": "Sets the terms for reusing work you share. No license keeps all rights with you. Leave it unchanged if unsure, and read a license's terms before you publish with it.",
           "expert": "The LICENSE file added to the repository: the terms for reusing the code. No license reserves all rights."
+        },
+        "group:bbProject": {
+          "title": "Project",
+          "text": "Bitbucket keeps every copy in one of the workspace's projects. A private project holds only private copies.",
+          "expert": "Bitbucket Cloud project key, chosen explicitly (the API would otherwise use the workspace's oldest project). Private projects hold only private repositories."
         }
       },
       "ex-repos": {
@@ -951,15 +996,15 @@
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the Project you pick is copied to this computer. The line below shows where your working copy will be kept.",
-          "expert": "The repository to clone; only the one you pick is cloned. The line below shows where the working copy goes."
+          "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
+          "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
         }
       },
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep earlier versions of your Project, with no account. Git is the usual choice and works everywhere. Jujutsu also lets you undo any step. If you're not sure, pick Git.",
-          "expert": "The local version-control backend. Git: commits, branches, the index; the default everywhere. Jujutsu: the working copy is a commit, with an operation log you can undo (jj undo, jj op restore); colocated with Git, so Git remotes work."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git is the usual choice; pick it if you're not sure. Jujutsu can also undo any step. One of them is always on: 'Not now' below is only about an online copy.",
+          "expert": "Local version control, always Git or Jujutsu for a Project made here. Jujutsu runs colocated with Git, so any Git remote works with either, and its operation log makes every step undoable (jj undo)."
         },
         "backend:git": {
           "title": "Git",
@@ -1002,19 +1047,44 @@
           "expert": "An encrypted backup repository in your OneDrive, through Microsoft's sign-in (OAuth) after the Project is created."
         },
         "bdest:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket you rent. Good if you already have one; you add its access details after your Project is created.",
-          "expert": "An encrypted backup repository in an S3-compatible bucket (Amazon S3, Backblaze B2); you add the bucket and its access key after the Project is created."
+          "title": "A storage bucket",
+          "text": "Cloud storage you rent, like Amazon S3 or Backblaze B2. Pick the service under the card; you add its access details after your Project is created.",
+          "expert": "Object storage: Amazon S3, Backblaze B2 (its S3 API, regional address, application key) or another S3 service at its own address. Keys are added after the Project is created."
         },
         "bdest:sftp": {
           "title": "Another server",
-          "text": "A server you can reach over SFTP or WebDAV keeps the backup, like one at work or a friend's.",
-          "expert": "An encrypted backup repository on a server you reach over SFTP or WebDAV."
+          "text": "A server you can reach over SFTP or WebDAV, like one at work or a friend's. Pick which under the card.",
+          "expert": "sftp (SSH file transfer at sftp://host/path; its host key is checked) or webdav (HTTPS, https://host/path, e.g. Nextcloud). Recorded as its own family."
         },
         "bdest:none": {
           "title": "Not now",
           "text": "No separate backup for now. Earlier versions stay on this computer with Safe History, so if this computer is lost, the Project is lost too unless it has an online copy. You can add a backup later in Settings.",
           "expert": "No backup destination. Local history and any remote stay as they are; nothing protects against losing this computer except a remote. Add a destination later in Settings."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
         }
       },
       "away": {
@@ -1035,8 +1105,8 @@
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "Puts your Server at a web address you own, like pm.example.com, on the internet. Anyone can find its sign-in page; only devices you pair can use it.",
-          "expert": "Public custom-domain route through a reverse proxy (dedicated hostname). Requires DNS, inbound HTTPS and explicit consent; preflight and tests run after Review."
+          "text": "Puts your Server at a web address you own, like pm.example.com, on the internet. Anyone can find its sign-in page; only devices you pair can use it. Puppet Master writes the settings for your proxy.",
+          "expert": "Public custom-domain route through your reverse proxy (dedicated hostname). Puppet Master generates the proxy configuration; DNS, inbound HTTPS and certificates are yours. Explicit consent; route tests run after Review."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
@@ -1048,35 +1118,20 @@
           "text": "The address you own, like https://pm.example.com. It needs a name of its own, with nothing after it.",
           "expert": "Dedicated https origin for the proxy; no subpath, credentials, query or fragment."
         },
-        "hosting:generate_for_server": {
-          "title": "Set it up for me",
-          "text": "Puppet Master sets up the program that answers on that address (the proxy) on your Server and checks it works. The easiest way.",
-          "expert": "Generate and activate a Caddy, NGINX or Traefik configuration on the Server, then run DNS, reach, TLS and live-connection tests."
-        },
         "hosting:generate_only": {
-          "title": "Settings file only",
-          "text": "You get a settings file to add to a proxy you run yourself. Puppet Master checks it works once you have added it.",
-          "expert": "Export the Caddy, NGINX or Traefik configuration; activation waits until you install it and the tests pass."
+          "title": "Make the settings file",
+          "text": "Puppet Master writes the settings file for your proxy, the program that answers on your web address. You add it to your proxy; certificates stay on your side.",
+          "expert": "Exports a Caddy, NGINX or Traefik configuration for this origin; you install it. TLS stays with your proxy (Caddy's automatic HTTPS, or your certificate where the file marks it)."
         },
         "hosting:existing_proxy": {
           "title": "I have one already",
-          "text": "Your address already points at a proxy you run, such as Nginx Proxy Manager. Puppet Master checks it reaches your Server and uses it.",
-          "expert": "Existing external proxy: validate its origin, certificate and live connection against the Server's identity; nothing is generated."
-        },
-        "tls:lets_encrypt": {
-          "title": "A free certificate",
-          "text": "A certificate lets browsers check they reached your address and protects the connection. A free one is fetched and renewed by itself.",
-          "expert": "Managed ACME certificate (HTTP-01 needs port 80; TLS-ALPN uses 443). Encryption doesn't make the route private."
-        },
-        "tls:existing_certificate": {
-          "title": "My own certificate",
-          "text": "Use a certificate you already have for that address. You choose it on the Server after you confirm; it never passes through this window.",
-          "expert": "Bring-your-own certificate and key, selected on the Server through its secure store after Review; validated for the hostname and chain."
+          "text": "Your address already points at a proxy you run, such as Nginx Proxy Manager. Puppet Master checks it reaches your Server.",
+          "expert": "Existing external proxy: Puppet Master tests the route to the Server; nothing is generated and certificates stay yours."
         },
         "group:kind": {
           "title": "Which proxy",
-          "text": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
-          "expert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is treated as an existing external proxy."
+          "text": "Which proxy the settings file is for. Caddy is the default and gets its certificate by itself. Using Nginx Proxy Manager? Choose I have one already.",
+          "expert": "Configuration target: Caddy (default, automatic HTTPS), NGINX or Traefik (the file marks the certificate and key paths). Nginx Proxy Manager is an existing proxy."
         },
         "field:headscale": {
           "title": "Headscale address",
@@ -1183,6 +1238,36 @@
           "title": "Do this later",
           "text": "Your Project is ready either way. Backups stay off until you finish these steps.",
           "expert": "The Project is ready either way; the backup stays off until these steps are finished."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
+        },
+        "accTemp": {
+          "title": "Temporary keys",
+          "text": "Keys that expire, such as ones from a company sign-in, come with a session token. Add it if yours has one.",
+          "expert": "AWS STS temporary credentials: access key ID, secret access key and session token, all three sent through the credential owner."
         }
       },
       "ai": {
@@ -1878,7 +1963,17 @@
         "azureProject": "Pick the Azure DevOps project first.",
         "remoteLink": "I need the Remote Link first.",
         "proxyAddress": "I need your web address first.",
-        "headscale": "I need the Headscale address."
+        "headscale": "I need the Headscale address.",
+        "instance": "Which server? I need its address.",
+        "azOrg": "Pick the organization first.",
+        "collection": "Which collection? Pick one first.",
+        "workspace": "Which workspace? Pick one first.",
+        "dcProject": "Which project does it go in?",
+        "bbProject": "Pick the Bitbucket project first.",
+        "teamProject": "Pick the team project first.",
+        "visibility": "Who can see it? Pick one first.",
+        "branch": "That branch name won't do yet.",
+        "repoName": "The service won't take that name."
       },
       "connect": {
         "route": {
@@ -1886,7 +1981,14 @@
         },
         "pair": {
           "codeWrong": "Hmm, that code doesn't match.",
-          "expired": "Oh, that request ran out of time."
+          "expired": "Oh, that request ran out of time.",
+          "fail": {
+            "unreachable": "I can't reach it. Is it on?",
+            "denied": "Oh. They said no over there.",
+            "expired": "Oh, that request ran out of time.",
+            "identity_mismatch": "Wait! That's not the right computer.",
+            "protocol_mismatch": "We speak different versions."
+          }
         }
       },
       "server": {
@@ -1922,14 +2024,20 @@
       "nas": {
         "find": {
           "noAnswer": "Nobody answered at that address.",
-          "stillOff": "SSH is still switched off there."
+          "stillOff": "SSH is still switched off there.",
+          "portBad": "That port number won't work.",
+          "shareBad": {
+            "smb": "Hmm, that folder address looks off.",
+            "nfs": "Hmm, that export address looks off."
+          }
         },
         "identity": {
           "changedTitle": "Wait! Its ID has changed."
         },
         "key": {
           "passEmpty": "I need the passphrase first.",
-          "old": "That key is too old. Choose another."
+          "old": "That key is too old. Choose another.",
+          "accountNeeded": "Which account should it use there?"
         },
         "signin": {
           "wrong": "It didn't take that sign-in.",
@@ -2006,13 +2114,30 @@
         "keyBad": "Hmm, that key didn't work.",
         "signinFail": "Oh no. That sign-in didn't go through.",
         "skipNote": "No AI yet, so I'll nap. Add one later.",
-        "unavailable": "That account isn't here. Sign in again?"
+        "unavailable": "That account isn't here. Sign in again?",
+        "pasteBad": "Hmm, that code didn't take."
       },
       "like": {
         "unavailable": "That account isn't on this computer."
       },
       "free": {
         "limited": "That one's reached its limit for now."
+      },
+      "away": {
+        "setup": {
+          "fail": {
+            "denied": "Tailscale said no to that.",
+            "expired": "The sign-in ran out of time.",
+            "deviceApproval": "It needs an admin's OK first.",
+            "routeFailed": "It answered, but the line dropped.",
+            "hsDenied": "Headscale didn't let it in.",
+            "hsUnreachable": "Headscale isn't answering.",
+            "unreachable": "The internet can't reach it yet.",
+            "dns": "That name doesn't point here yet.",
+            "live": "Live updates are blocked there.",
+            "relay": "The Remote Link isn't answering."
+          }
+        }
       }
     },
     "cheer": {
@@ -2034,7 +2159,17 @@
         "azureProject": "Project picked!",
         "remoteLink": "Link in. Thank you!",
         "proxyAddress": "Address in. Lovely.",
-        "headscale": "Got it. Thank you!"
+        "headscale": "Got it. Thank you!",
+        "instance": "Address in. Let's go!",
+        "azOrg": "Organization picked!",
+        "collection": "Collection picked!",
+        "workspace": "Workspace picked!",
+        "dcProject": "Project picked!",
+        "bbProject": "Project picked!",
+        "teamProject": "Team project picked!",
+        "visibility": "Got it. That's settled.",
+        "branch": "Good branch name!",
+        "repoName": "That name works!"
       },
       "connect": {
         "route": {
@@ -2042,7 +2177,14 @@
         },
         "pair": {
           "codeWrong": "That's the one. Paired!",
-          "expired": "Fresh request. Try now!"
+          "expired": "Fresh request. Try now!",
+          "fail": {
+            "unreachable": "Reached it! Hello there.",
+            "denied": "Approved this time!",
+            "expired": "Fresh request. Approved!",
+            "identity_mismatch": "The right one this time.",
+            "protocol_mismatch": "Same version now. Paired!"
+          }
         }
       },
       "server": {
@@ -2078,14 +2220,20 @@
       "nas": {
         "find": {
           "noAnswer": "Someone's home!",
-          "stillOff": "SSH is on! Off we go."
+          "stillOff": "SSH is on! Off we go.",
+          "portBad": "Good port!",
+          "shareBad": {
+            "smb": "That's a proper address!",
+            "nfs": "That's a proper address!"
+          }
         },
         "identity": {
           "changedTitle": "New ID trusted. Carry on."
         },
         "key": {
           "passEmpty": "Unlocked. Thank you!",
-          "old": "A newer key. Good."
+          "old": "A newer key. Good.",
+          "accountNeeded": "Account named. Thanks!"
         },
         "signin": {
           "wrong": "In we go!",
@@ -2162,13 +2310,30 @@
         "keyBad": "That key works. Power!",
         "signinFail": "Signed in! Second time lucky.",
         "skipNote": "Power! I can think now.",
-        "unavailable": "Signed in here too. Good."
+        "unavailable": "Signed in here too. Good.",
+        "pasteBad": "Code accepted!"
       },
       "like": {
         "unavailable": "Signed in. All set!"
       },
       "free": {
         "limited": "Its limit reset. Ready!"
+      },
+      "away": {
+        "setup": {
+          "fail": {
+            "denied": "Tailscale let us in!",
+            "expired": "Signed in. Onward!",
+            "deviceApproval": "Approved! Thank you.",
+            "routeFailed": "Connected for real now!",
+            "hsDenied": "Headscale let it in!",
+            "hsUnreachable": "Headscale answered!",
+            "unreachable": "Reachable now. Hooray!",
+            "dns": "The name points home now!",
+            "live": "Live updates flow now!",
+            "relay": "Remote Link is up!"
+          }
+        }
       }
     },
     "oopsAny": {

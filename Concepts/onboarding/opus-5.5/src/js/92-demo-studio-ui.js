@@ -172,7 +172,7 @@
     const runs = `<div class="pmds-runbar"><div class="pmds-runtext"><span class="pmds-runkicker">${esc(T('studio.onboarding.will'))}</span><span class="pmds-runsit" data-pmds-live="pick">${esc(M.situationLong(M.joinSituation(p)))}</span><span class="pmds-runstate">${esc(stateLine)}</span></div>`
       + `<div class="pmds-runacts">${st.kind === 'closed' ? btn(T('studio.onboarding.continue'), { do: 'onboarding-continue', icon: 'back' }) : ''}${btn(T('studio.onboarding.run'), { do: 'run-pick', kind: 'primary', icon: 'play', off: !M.onboarding.avail() })}</div></div>`;
     const base = `<div class="pmds-choices pmds-choices-base" role="radiogroup" aria-label="${esc(T('studio.onboarding.startAs'))}">` + M.BASES.map((b) => choice(b, p.base === b, 'radio', 'pick-base')).join('') + '</div>';
-    const twists = M.GROUPS.map((g) => `<div class="pmds-twistgroup"><h5 class="pmds-gtitle">${ico({ computer: 'computer', nas: 'nas', online: 'cloud', pip: 'pip' }[g.id] || 'spark', 14)}<span>${esc(T(`studio.onboarding.groups.${g.id}`))}</span></h5><div class="pmds-choices">`
+    const twists = M.GROUPS.map((g) => `<div class="pmds-twistgroup"><h5 class="pmds-gtitle">${ico({ computer: 'computer', nas: 'nas', online: 'cloud', pip: 'pip', restore: 'reset', pairing: 'link' }[g.id] || 'spark', 14)}<span>${esc(T(`studio.onboarding.groups.${g.id}`))}</span></h5><div class="pmds-choices">`
       + g.ids.map((id) => choice(id, p.twists.includes(id), 'checkbox', 'pick-twist')).join('') + '</div></div>').join('');
     const screens = '<div class="pmds-screens">' + M.SCREEN_CHAPTERS.map(([ch, ids]) => `<div class="pmds-scgroup"><h5 class="pmds-gtitle"><span>${esc(T(`studio.onboarding.chapters.${ch}`))}</span><span class="pmds-count">${ids.length}</span></h5><div class="pmds-sclist">`
       + ids.map((id) => `<button type="button"${at({ class: 'pmds-scrow', 'data-pmds-do': 'open-screen', 'data-arg': id, 'data-key': `open-screen:${id}`, 'data-pmh': M.hasScreen(id) && M.onboarding.avail() ? 'row' : null, 'aria-disabled': M.hasScreen(id) && M.onboarding.avail() ? null : 'true' })}><span>${esc(T(`studio.onboarding.screens.${id}`))}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
@@ -921,6 +921,67 @@
   /* a Studio button wearing the system loader for a short wait (PM_PIP_LOADER.busy: aria-busy and the loader on it) */
   function busyFor(el) { if (!el || !M.pip.busy(el, true)) return; real.setTimeout(() => { M.pip.busy(el, false); }, 2400); }
   function launch(fn) { close({ launch: true, focus: false }); real.setTimeout(() => { try { Promise.resolve(fn()).then(renderEntry, renderEntry); } catch (e) { console.error('[demo studio]', e); } }, 90); }
+  /* QA2 review N3: an entry that opens something the person is meant to use (a sheet, a dialog, a menu, a drawer, a side
+     panel, a notice that asks for something, role alert, such as a permission request) where the Studio stands steps the Studio aside, as launch() does; an entry
+     that only changes what is shown behind it (a message, a card, a tab, a page, a look) keeps it open. What opened is
+     counted by name rather than by node, since the chat renders its overlays whole each time: a name shown more times
+     than before the press is new (a burst of notices repeats one name; a panel drawn again is not new). Something that
+     cannot be used (no pointer events, not shown) is not counted. It is covered when the
+     Studio takes one of its controls' clicks (a hit test at the control's middle lands on the Studio) or, for a sheet,
+     dialog, menu or panel, when any hit test inside it does; for a notice that asks for something, when any of its
+     words are under the Studio, at every width, since a person has to read what they are asked (the lead, N3
+     follow-up). A status notice (role status: a toast that only reports, a terminal's restored banner) is read, not
+     used, so it never moves the Studio. */
+  const OPENED = '#pmOverlayRoot > *, [role="dialog"], [role="alertdialog"], [aria-modal="true"], dialog[open], [role="menu"], [role="listbox"], :popover-open, aside[role="region"], [role="alert"]';
+  const QUIET = '.demo-dialog, [data-overlay="hover"], [role="tooltip"]';
+  const LIVE = '[role="alert"]';
+  const CONTROLS = 'button, a[href], input, select, textarea, [role="button"], [role="menuitem"], [role="option"]';
+  const sigOf = (n) => `${n.tagName}|${typeof n.className === 'string' ? n.className : ''}|${n.getAttribute('role') || ''}|${n.getAttribute('aria-label') || ''}`;
+  function surfaces() {
+    return [...document.querySelectorAll(OPENED)].filter((n) => {
+      if (n === ST.sheet || ST.sheet.contains(n) || n.matches(QUIET) || !n.getClientRects().length) return false;
+      const cs = getComputedStyle(n);
+      return cs.pointerEvents !== 'none' && cs.visibility !== 'hidden' && Number(cs.opacity) > 0.05;
+    });
+  }
+  const tally = (list) => list.reduce((m, n) => { const k = sigOf(n); m.set(k, (m.get(k) || 0) + 1); return m; }, new Map());
+  const onStudio = (x, y) => { if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) return false; const h = document.elementFromPoint(x, y); return !!h && ST.sheet.contains(h); };
+  /* any line of its text: hit tests at the start, middle and end of each line box */
+  function wordsUnder(n) {
+    const w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT), range = document.createRange();
+    for (let t = w.nextNode(); t; t = w.nextNode()) {
+      if (!t.nodeValue.trim()) continue;
+      range.selectNodeContents(t);
+      for (const q of range.getClientRects()) {
+        if (!q.width || !q.height) continue;
+        const y = q.top + q.height / 2;
+        if (onStudio(q.left + 2, y) || onStudio(q.left + q.width / 2, y) || onStudio(q.right - 2, y)) return true;
+      }
+    }
+    return false;
+  }
+  function covers(n) {
+    for (const c of n.querySelectorAll(CONTROLS)) { const r = c.getBoundingClientRect(); if (r.width && r.height && onStudio(r.left + r.width / 2, r.top + r.height / 2)) return true; }
+    if (n.matches(LIVE)) return wordsUnder(n);
+    const r = n.getBoundingClientRect(), s = ST.sheet.getBoundingClientRect();
+    const x0 = Math.max(r.left, s.left), x1 = Math.min(r.right, s.right), y0 = Math.max(r.top, s.top), y1 = Math.min(r.bottom, s.bottom);
+    if (x1 - x0 < 8 || y1 - y0 < 8) return false;
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) if (onStudio(x0 + (i + 0.5) * (x1 - x0) / 4, y0 + (j + 0.5) * (y1 - y0) / 4)) return true;
+    return false;
+  }
+  /* checked after two frames and again as late openers land (the chat brings its column on screen first; a burst of
+     notices takes two seconds) */
+  function stepAsideFor(before) {
+    const at = [0, 160, 420, 900, 1600, 2600]; let k = 0;
+    const check = () => {
+      if (!ST.open || !ST.sheet) return;
+      const now = surfaces(), count = tally(now);
+      for (const n of now) { const k = sigOf(n); if (count.get(k) > (before.get(k) || 0) && covers(n)) { close({ launch: true, focus: false }); return; } }
+      if (++k < at.length) real.setTimeout(check, at[k] - at[k - 1]);
+    };
+    real.raf(() => real.raf(check));
+  }
+  const STAYS = ['close', 'put-back', 'go', 'chat-view', 'find-reset', 'find-situation', 'pick-base', 'pick-twist'];
   const A = {
     close: () => close(),
     'put-back': () => { putBack(); real.raf(() => { const g = ST.sheet.querySelector('.pmds-grip'); if (g) g.focus({ preventScroll: true }); }); },
@@ -946,7 +1007,8 @@
     'chat-view': (arg) => { if (!CHAT_VIEWS.includes(arg)) return; ST.chatView = arg; renderMain('stay'); ST.sheet.querySelector('.pmds-main').scrollTop = 0; focusKey(`chat-view:${arg}`); },
     /* a recorded example plays on its own and uses the whole workspace, so the Studio steps aside (like onboarding) */
     'chat-guided': (arg) => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); launch(() => M.chat.runGuided(arg)); },
-    /* a moment stays: the Studio is open beside the chat, so moments can be stepped through */
+    /* a moment stays: the Studio is open beside the chat, so moments can be stepped through, unless the moment opens a
+       sheet, dialog or panel the Studio stands over (stepAsideFor, N3) */
     'chat-moment': (arg) => { const i = String(arg).indexOf(':'); const r = M.chat.avail() ? M.chat.run(arg.slice(0, i), arg.slice(i + 1)) : { ok: false }; if (!r.ok) say(T('studio.toast.unavailable')); real.setTimeout(refresh, 400); },
     'chat-take': (arg) => { const [f, i] = String(arg).split(':'); if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.setTake(f, Number(i)); real.setTimeout(refresh, 60); },
     'chat-recipe': (arg) => { if (!M.chat.avail()) return say(T('studio.toast.unavailable')); M.chat.setRecipe(Number(arg)); real.setTimeout(refresh, 60); },
@@ -1058,7 +1120,9 @@
     const fn = A[what];
     if (!fn) return;
     if (O55.sound && !['close', 'go', 'pip-play', 'pip-say', 'pip-loop'].includes(what)) O55.sound.play('select');
+    const before = STAYS.includes(what) ? null : tally(surfaces());
     try { fn(arg, b); } catch (err) { console.error('[demo studio]', what, err); say(T('studio.toast.unavailable')); }
+    if (before) stepAsideFor(before);
   }
   function onInput(e) {
     if (e.target.classList.contains('pmds-sayq')) { ST.pipSay = e.target.value; return; }

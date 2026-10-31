@@ -127,7 +127,7 @@
     /* a usable free route is an AI too: free-only is not "can't plan" (provider-login audit P18) */
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : free ? T('ready.aiFreeOnly') : T('ready.noAi'), ai.length > 0 || free > 0);
     out += row('free', free ? free + ' ' + T('free.ready').toLowerCase() : T('ready.noFree'), free > 0);
-    out += row('backup', b.dest ? T('safe.backup.' + b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
+    out += row('backup', b.dest ? O55.backup.label(S, b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
     return out;
   }
   def('ready', {
