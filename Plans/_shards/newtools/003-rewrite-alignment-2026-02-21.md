@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L16-L33
+Source lines: L16-L34
 
-Source SHA256: `886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6`
+Source SHA256: `6d165d29d4c0d35a196f03b7b4e296c3a6939e9f141e59fc520747154f6549e0`
 
 ---
 
@@ -14,6 +14,7 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - tool discovery, permissions, and validation live in the **central tool registry + policy engine** (not per-provider special cases)
 - tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
 - tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
+  - Amended 2026-10-31 (DL-270): tool latency and errors update redb rollups at event time (SP-341, UF-108); dashboards and widgets read those rollups and never scan raw events. Deeper analysis reads the Parquet archive through on-demand, read-only DuckDB.
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
 - auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording and Gemini CLI (`gemini_cli`) active-provider wording are retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) plus Antigravity CLI as the active Google-owned CLI-runtime route, with requested/effective auth/account identity kept consistent with the shared provider runtime
 - for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required

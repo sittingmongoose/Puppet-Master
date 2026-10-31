@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L1140-L6213
+Source lines: L1140-L6217
 
-Source SHA256: `418bc32eb7b2528e2e8654f6573ff22898801fe0881483bd4b3c18cc9a4115a4`
+Source SHA256: `bc4d54be39448384803b538a3ebf2b300d792a86f2f10e33117fbb9bffa29dab`
 
 ---
 
@@ -1465,7 +1465,7 @@ plan_unit_id: MGAC-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Generated media artifacts are written to deterministic request directories with a durable manifest.json that includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, and usage; implementations write artifact files first, hash final bytes, and only then write the manifest without inline data_uri returns.
+canonical_text: Generated media outputs are stored as BLAKE3-addressed payloads in append-only pack files and referenced from the seglog result record, which includes schema_version, request_id, kind, engine, generated_at_utc, artifacts, and usage (SP-337, SP-336); payload bytes are made durable before the referencing record is acknowledged, hashes come from the final bytes, and no per-request directory, manifest.json file or inline data_uri is required or returned.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1503,11 +1503,12 @@ preserved_exact_tokens:
 - MUST NOT leave a manifest claiming success
 - No inline `data_uri`
 negative_constraints:
-- Implementations MUST write artifact files before manifest.json.
-- A failed or partial request MUST NOT leave a manifest claiming success for missing artifacts.
+- Implementations MUST make payload bytes durable before the result record that references them is acknowledged.
+- A failed or partial request MUST NOT leave a result record claiming success for missing payloads.
 - No inline data_uri is returned.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-31 (DL-270, SP-337, SP-336): the request directory .puppet-master/artifacts/media/<request_id>/output_000.<ext> and the per-request manifest.json are retired as live files. The former rule was "write artifact files first", "compute hashes/bytes from the final bytes on disk" and "only then write `manifest.json`", with "MUST NOT leave a manifest claiming success" for missing artifacts; the same guard now applies to the seglog result record.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -1578,7 +1579,7 @@ plan_unit_id: MGAC-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Concurrent media.generate calls are allowed only when each uses its own request_id directory, no request appends into another request directory, and retry behavior allocates a new request_id rather than mutating a prior manifest.
+canonical_text: Concurrent media.generate calls are allowed only when each uses its own request_id, no request writes into another request's result record or payload refs, and retry behavior allocates a new request_id rather than mutating a prior result record; identical output bytes are stored once and reference-counted by the payload store (SP-337).
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1610,9 +1611,10 @@ preserved_exact_tokens:
 - Retry behavior MUST allocate a new `request_id`
 - rather than mutating a previous manifest in place
 negative_constraints:
-- Retries must allocate a new request_id and must not mutate a previous manifest in place.
+- Retries must allocate a new request_id and must not mutate a previous result record in place.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-31 (DL-270, SP-337): per-request directories are retired. The former wording was "own `request_id` directory", "No request may append into another request''s directory" and "rather than mutating a previous manifest in place"; isolation is now by request_id and payload refs.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -4401,7 +4403,7 @@ plan_unit_id: MGAC-082
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED14 requires media.generate artifacts to be written under .puppet-master/artifacts/media/<request_id>/output_000.<ext>, with co-located manifest.json artifact fields and no inline data_uri response field.
+canonical_text: AC-MED14 requires media.generate artifacts to be stored as BLAKE3-addressed payloads in the payload store (SP-337), returned as artifact:// refs with artifact_id, kind, mime, sha256, bytes and meta, with no per-request directory or manifest.json required and no inline data_uri response field; generated media keeps its exact bytes.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4443,7 +4445,8 @@ preserved_exact_tokens:
 negative_constraints:
 - No inline data_uri field is permitted in the response.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-31 (DL-270, SP-337): the files under .puppet-master/artifacts/media/<request_id>/output_000.<ext> and the co-located manifest.json are retired as live files; artifact fields now sit in the seglog result record beside the payload ref.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4566,7 +4569,7 @@ plan_unit_id: MGAC-085
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED17 requires successful media.generate calls to write artifact files before manifest.json, include required manifest fields, include usage when available, and avoid manifests that claim unwritten artifacts after failed or partial requests.
+canonical_text: AC-MED17 requires successful media.generate calls to make payload bytes durable no later than the seglog result record that references them (SP-336, SP-337), include the required record fields and usage when available, and never leave a record referencing an unwritten payload after a failed or partial request.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4603,9 +4606,10 @@ preserved_exact_tokens:
 - usage
 - failed or partial request
 negative_constraints:
-- A failed or partial request MUST NOT leave behind a manifest that claims artifacts that were not durably written.
+- A failed or partial request MUST NOT leave behind a record that references a payload that was not durably written.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-31 (DL-270, SP-336, SP-337): the former order of artifact files before `manifest.json` is retired; a failed or partial request still must not leave a claim of success for data that was not durably written.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:

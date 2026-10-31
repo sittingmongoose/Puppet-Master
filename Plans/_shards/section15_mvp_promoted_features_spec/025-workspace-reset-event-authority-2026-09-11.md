@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11875-L12089
+Source lines: L11880-L12094
 
-Source SHA256: `50aad96d4a9209f611db50d2787118771b8dd98679f14fefa7e47137b2b2c55e`
+Source SHA256: `8943e15242dacc0c8b0e6d9d78298004f9d502ed5dcb33966b4493a991a54b4e`
 
 ---
 
@@ -74,7 +74,7 @@ changed the existing workspace when event append fails. The owner first commits
 the actual new generation and fences old projections, then submits the original
 bounded reset fact through the existing barrier EventRecord append. Publish
 successful command completion and the event-dependent read projection only after
-the synced frame/manifest AppendReceipt. This is ordered owner-effect/seglog
+the AppendReceipt for the barrier append, issued after SP-336's full flush of the segment's durable watermark (no per-append manifest sync). This is ordered owner-effect/seglog
 coordination, **not** an invented atomic cross-store transaction or rollback.
 
 Pre-dispatch rejection, unavailable handler, acceptance-only and proven no-change

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44512-L46905
+Source lines: L44585-L46983
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
 
 ---
 
@@ -150,7 +150,9 @@ canonical_text: >-
   the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
   panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
   of its dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate
+  boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget,
+  not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337,
+  SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate
   prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
   panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
   emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
@@ -946,7 +948,8 @@ canonical_text: >-
   `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and
   their evidence); transcript (`thread-<agentId>`: an agent's read-only live feed); context
   (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`, `app:`,
-  `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside
+  `work-record:`, `inspect:<record_ref>`: read-only records; `inspect:` is the record inspector of F3-666, opened
+  through `cmd.storage.open_value`, amended 2026-10-31, DL-270); output (`output`, one Output tab whose channel switches inside
   it; `output:<channel>` only for a channel split off with "Open in new tab", showing only that
   channel); problems (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug
   Console tab with a sub-tab per debug session, the session shown being its view state; F3-490). The
@@ -1716,7 +1719,9 @@ canonical_text: >-
   leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the
   boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its
   boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept,
-  and a named layout saved before this applies as before.
+  and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270): the 64 KB per named layout is
+  a payload budget; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337, SP-340),
+  and SP-330 owns the stored form.
   A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty
   board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is
   empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its

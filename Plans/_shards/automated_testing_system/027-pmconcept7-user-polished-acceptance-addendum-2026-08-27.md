@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3447-L4130
+Source lines: L3459-L4145
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f`
 
 ---
 
@@ -38,6 +38,9 @@ canonical_text: >-
   source lineage and fail closed for unknown, hidden, disabled, unsupported, partial, redacted, and missing data.
   Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
   migration behavior require fresh browser execution, raw receipts, and independent review.
+  Amended 2026-10-31 (DL-270): the suite also covers that the Usage page and every widget read redb rollups with
+  no raw-event scan, and that daily usage totals per account, provider and model are kept whatever Keep usage
+  history for says while detailed usage records follow that setting (UF-108, SP-341).
   For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
   account of each provider, Use this account, each provider's Auto-switch toggle and switch level and each account's own
   switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L35-L94
+Source lines: L35-L93
 
-Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71`
+Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
 
 ---
 
@@ -15,27 +15,26 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
 | Dependency | Purpose for Usage |
 |------------|-------------------|
 | **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |
-| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. |
-| **Projector pipeline** | seglog → JSONL mirror (human-readable), seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), projector checkpoints in redb. |
-| **Analytics scan jobs** | Scan seglog (or JSONL mirror) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in redb for fast dashboard/Usage queries. |
+| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. |
+| **Projector pipeline** | seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), a Parquet archive at segment seal (SP-341), projector checkpoints in redb. No always-on JSONL mirror is emitted (SP-339); JSONL is produced only by `pm export` on request. |
+| **Analytics scan jobs** | Scan seglog or the sealed Parquet archive (SP-341) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in the derived redb file for fast dashboard/Usage queries. |
 
-**Implementation checklist** (from Plans/storage-plan.md; complete before Usage can rely on redb rollups):
+**Implementation checklist** (from Plans/storage-plan.md; complete before Usage can rely on redb rollups): Amended 2026-10-31 (DL-270): this checklist is a copy; the storage stack rules are owned by Plans/storage-plan.md SP-335..SP-345 and win where this list differs. The JSONL mirror step that was listed here is retired (SP-339).
 
 - [ ] Implement seglog writer for canonical event stream.
 - [ ] Implement redb schema + migrations for settings/sessions/runs/checkpoints.
 - [ ] Implement projector pipeline:
-  - seglog → JSONL mirror (human-readable)
   - seglog → Tantivy indices (chat/docs/log summaries)
   - persist projector checkpoints in redb
 - [ ] Implement "analytics scan" jobs:
   - scan seglog for counters (tool latency distributions, error rates)
   - store rollups in redb for fast dashboard queries
 
-Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
+Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` is retired as a live file (SP-339, UF-108): a one-time legacy import may read it, and `pm export` writes JSONL on request. It is never a rollup source.
 
 ### Usage storage and routing clarifications
 
-- Usage storage-doc dependencies are `Plans/storage-plan.md` and `Plans/FinalGUISpec.md`: seglog owns the append-only event source, redb owns durable KV `/settings/state`, checkpoints, projections, and rollups, Tantivy owns search indices, and any JSONL or `usage.jsonl` output is a projector mirror rather than canonical truth.
+- Usage storage-doc dependencies are `Plans/storage-plan.md` and `Plans/FinalGUISpec.md`: seglog owns the append-only event source, redb owns durable KV `/settings/state`, checkpoints, projections, and rollups, Tantivy owns search indices, and no JSONL or `usage.jsonl` mirror is written (SP-339); `pm export` produces JSONL or JSON on request, and people read stored usage records through `pm inspect` and the in-app record inspector.
 - Usage `/runtime/storage` paths and artifacts are scoped per-project, per-run, per-package, and per-lane; old tier/workspace-only layouts remain migration inputs and must not replace canonical project/run/package/lane identity.
 - Usage owns the cross-surface `/quota/alerts/analytics/product-shape`, usage-tracking, and `/runtime/event/GUI` product contract while storage and FinalGUISpec continue to own the persistence stack and shell presentation rules.
 - Settings and help surfaces such as `/help/project-status`, `/event/alert`, blocked-sequence, startup-recovery, and DAE policy outcomes must preserve ownership, severity, persistence, and follow-through rather than becoming loose usage warnings.

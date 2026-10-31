@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5594-L27157
+Source lines: L5620-L27219
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
 
 ---
 
@@ -33,6 +33,9 @@ canonical_text: >-
   state, durable outbox state, server continuation, reconnect replay or snapshot progress, buffered-live catch-up,
   and stream-coalescing freshness remain visible without full-detail fanout, duplicate effects, fabricated
   provider activity, or loss of immediate approval, failure, cancellation, completion, security, or lease-loss changes.
+  Amended 2026-10-31 (DL-270): the focused thread's detail opens from the render-page store (`thread_head`, the hot
+  tail and the newest sealed page) with mandatory load-older paging (F3-667), and reconnect replays only the tail.
+  Opening never replays the thread's events.
 gui_related: true
 gui_classification_reason: This unit defines visible thread-list density, focused detail, offline queueing, reconnect, catch-up, and stream presentation.
 depends_on: [ACD-445, SIR-004, SIR-005]
@@ -43,6 +46,7 @@ acceptance_criteria:
   - Queued, waiting, retryable, cancelled, rejected-stale, and accepted outbox outcomes do not imply a provider call or invite an idempotency-bypassing resend.
   - Reconnect shows epoch-fenced replay or snapshot plus buffered-live convergence, and coalescing never hides an owner-defined immediate transition.
   - Client loss is shown as loss of observation or control connectivity, not cancellation of admitted server-owned work.
+  - A focused thread opens from its render pages with no event replay, and older items load only through load-older paging.
 validation_surfaces: [python3 scripts/pm-plan-index.py validate, future GUI thread shell-detail offline-reconnect and coalescing matrix]
 risk_class: gui_thread_projection_fanout_or_reconnect_drift
 reasoning_tier: high
@@ -5737,6 +5741,9 @@ canonical_text: >-
   Chat, Usage, graph, and evidence surfaces consume the object-first route model, preserving
   usage_event and attempt pivots, work-package identity, correlation_id passthroughs, and
   bidirectional evidence/artifact linkage.
+  Amended 2026-10-31 (DL-270): a jump-to-message or search jump into a chat item that is not yet loaded loads
+  the render pages that contain it through load-older paging (SP-338, ACD-242, F3-667) and never replays events.
+  A usage_event pivot is an indexed lookup by usage_event id, never a raw-event scan (UF-108).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible cross-surface pivots, search jumps, and route/open behavior.
@@ -6193,6 +6200,11 @@ canonical_text: >-
   FinalGUISpec exposes storage and usage detail, history, ledger, runtime, and receipt inspector
   entrypoints while storage-plan and usage-feature remain owner docs for storage, usage record
   truth, projection rules, key registration, projector rebuild, and receipt row shape.
+  Amended 2026-10-31 (DL-270): the storage detail entrypoint includes the storage health block (SP-340: usage
+  against budget, reclaimable bytes, last store compaction, verified reclaim action) and the last verified backup
+  with what a restore from it would lose (BRS-031), placed on the page that `cmd.settings.open_storage_retention`
+  opens (F3-457), and the record inspector (F3-666) is the entrypoint for one stored record. Truth stays in
+  storage-plan.md and Backup_Restore_System.md.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible inspector entrypoints and cross-surface routing to owner truths.
@@ -7473,6 +7485,11 @@ canonical_text: >-
   Message stream live behavior uses virtualized stable-identity message rows, inline activity-card
   rendering with compact/expanded/detail line caps, sticky unread and new-message affordances, and
   auto-follow state for streaming output.
+  Amended 2026-10-31 (DL-270): the stream opens on the newest sealed page of SP-338's render-page store plus the hot
+  tail and never replays events. Rows render from display headers, and a full body loads only when its section is
+  expanded or scrolled to. Older 50-item pages load as the person scrolls toward the top, and a `Load 50 older`
+  row stays at the top of the stream as the fallback; load-older paging is mandatory (ACD-242, F3-667). The
+  first-page budgets (150 ms p95 warm, 500 ms cold, at most 2 MiB read) are SP-338's gate.
 gui_related: true
 gui_classification_reason: This unit defines visible message stream, activity card, and scrolling behavior.
 split_recommended: true
@@ -8236,6 +8253,11 @@ canonical_text: >-
   PM ships lightweight in-thread transparency and a dedicated searchable log/audit inspector with
   compact summary rows, on-demand payload dereference, filtering, search, time-range queries,
   drill-down, export, and explicit logsearch/logread GUI surfacing.
+  Amended 2026-10-31 (DL-270): the inspector reads seglog and the payload store, never a log or mirror file (SP-339).
+  On-demand payload dereference resolves a payload reference through the payload store (SP-337) under the same
+  redaction profile and permissions. Export matches `pm export` (JSONL or JSON on request), a row's drill-down
+  opens the record inspector (F3-666) through `cmd.storage.open_value`, and the help line names `pm tail` and
+  `pm inspect`.
 gui_related: true
 gui_classification_reason: This unit defines visible log/audit inspector rows and interactions.
 split_recommended: false
@@ -10405,6 +10427,9 @@ canonical_text: >-
   bounded terminal transcript projections, the GUI preserves scroll position unless the user
   is at the bottom; if the user is reviewing history, it holds position and shows a New
   messages below indicator.
+  Amended 2026-10-31 (DL-270): rows prepended by load-older paging (SP-338, ACD-242, F3-667) keep the row at the
+  reading position at the same place in the viewport with no visible jump, and show no New messages below
+  indicator; that indicator counts only items added at the bottom.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible list scroll preservation and new-content indication.
@@ -13041,6 +13066,9 @@ canonical_text: >-
   `panels/file_manager_panel.slint`.
   Amended 2026-10-09 (DL-180): `views/file_editor.slint` is the editor tab kind's body inside a panel (F3-639), and
   `panels/chat_panel.slint` hosts the fixed chat column (F3-637), not a side-panel occupant.
+  Amended 2026-10-31 (DL-270): `views/record_inspector.slint` is the body of the record tab kind's `inspect:` tabs
+  (F3-666). The storage health block, the last-verified-backup line and the `Load 50 older` row (F3-667) are
+  parts of existing files, not new surfaces.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves new Slint page and panel mappings.
@@ -13900,9 +13928,14 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Chat message memory bounds` risk is mitigated as follows: Long chat sessions use a soft
-  cap such as 5000 messages per thread, archive old messages to disk, and expose Load earlier
-  messages.
+  The `Chat message memory bounds` risk is mitigated as follows: Long chat sessions are bounded
+  by SP-338's per-thread render-page store (sealed 50-item pages of at most 256 KiB plus a hot
+  tail), not by a message-count cap. Opening a thread never replays events, the list holds only
+  the pages loaded, and load-older paging is mandatory (ACD-242, F3-667); the first page must
+  arrive within 150 ms p95 warm and 500 ms cold.
+  Amended 2026-10-31 (DL-270): this replaces the former mitigation, a soft cap such as
+  5000 messages per thread that would archive oldest messages to disk behind a
+  Load earlier messages button; no such cap and no separate disk archive exist.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -13934,7 +13967,8 @@ preserved_exact_tokens:
 - "Load earlier messages"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): the 5000-message soft cap with an archive to disk is retired; SP-338's render-page store and mandatory load-older paging (ACD-242) replace it."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -20387,6 +20421,8 @@ canonical_text: >-
   Stop from clearing the queue, keep code-block copy always visible, disclose subagents, and
   expose jump-to-latest or jump-to-bottom with unseen-count and auto-follow resume only when
   the user returns to the bottom.
+  Amended 2026-10-31 (DL-270): jump-to-latest returns to the hot tail of the render pages, and its unseen count
+  is unchanged by older pages loading; the load-older row and paging are F3-667.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.

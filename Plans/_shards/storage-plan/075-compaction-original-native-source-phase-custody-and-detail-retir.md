@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24133-L24340
+Source lines: L24152-L24359
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -71,7 +71,7 @@ The builder fixes the exact retained EventRecord core in original order and pres
 
 An ordinary live manifest has one selected entry. Staged snapshot manifests have the exact captured source entry plus one `staged_prefix` target entry, and remain nonselected artifacts. Their candidate ordinal is separate from live manifest revision. After the original commit_pending receipt, the source carrier is sealed without rewriting bytes, preserving its exact historical frontier and issued group. The original final publisher prepares a complete dual-entry live manifest: the original source selection with its sealed carrier/namespace, plus a complete `sealed_target` selection containing fixed core and the same whole carrier, with no target active sink yet. The latest issued group remains unchanged. Final target index/shadow and pending candidate bind that complete manifest; the original live manifest publisher alone allocates the next revision under exact preimage CAS.
 
-Publish and synchronize/read back the exact final manifest at the single manifest path before replacing CURRENT. Source CURRENT continues to select its source entry. Then atomically replace and synchronize CURRENT to the exact target value; this alone changes visibility. The target wins immediately, even while redb activation remains incomplete. One original redb transaction activates the target index/generation, changes both actual current pointers, retires the old node once and clears pending. Finalization creates the original target active segment through namespace authority and updates the target entry. Once retained original source snapshot custody is secure, the live manifest may become one target entry through its original control transition. Physical old-source deletion remains separately gated and is not an effect of detail retirement or terminal settlement.
+Publish and synchronize/read back the exact final manifest at the single manifest path before replacing CURRENT. Source CURRENT continues to select its source entry. Then atomically replace and synchronize CURRENT to the exact target value; this alone changes visibility. The target wins immediately, even while redb activation remains incomplete. One original redb transaction activates the target index/generation, changes both actual current pointers, retires the old node once and clears pending. Finalization creates the original target active segment through namespace authority and updates the target entry. Once retained original source snapshot custody is secure, the live manifest may become one target entry through its original control transition. Physical old-source deletion remains separately gated and is not an effect of detail retirement or terminal settlement. Amended 2026-10-31 (DL-270): under SP-340 the derived index generation and the canonical pending and pointer rows live in separate redb files, so this cannot be one transaction. Commit the derived index activation first, then the canonical pointer change and pending clear; a crash between leaves a derived orphan that is rebuilt or discarded. Recovery rule is a companion of SP-340.
 
 CURRENT does not contain a mutable manifest hash and is stable across ordinary append. Selection resolves by exact instance/selection ID/generation, never entry order, mtime or filename. A `staged_prefix` entry is never selectable. Source CURRENT plus the exact dual-entry manifest still selects source; target CURRENT plus exact dual-entry/finalized target manifest always selects target. Missing, unsupported, duplicate, unreadable or third-state control joins fence both sides. Proven pending absence is valid before pending creation and after original atomic activation/clear; it alone proves neither nonpublication nor activation. Replacing a manifest with an old entry cannot override target visibility.
 

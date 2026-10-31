@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2290-L2406
+Source lines: L2293-L2409
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4`
 
 ---
 
@@ -94,7 +94,7 @@ Legacy audit closure note: `LF-004` and `LF-008` identify the old same-file cont
 
 Spending-limit enforcement reads the canonical usage_record stream and its legacy `/record` review marker through the same attribution tuple. Pre-dispatch checks that exceed budget emit `kill.budget_exceeded`; post-response `/post` recording that discovers an overrun emits `done.budget_exceeded` and persists overrun evidence rather than rewriting prior usage.
 
-The canonical usage pipeline is `seglog -> analytics scan -> redb rollups -> UI`. Rollups preserve per-run, per-session, and per-tool attribution, including `parent_run_id`, `cache_hit?`, and `cache_strategy?`, so helper calls and subagent work remain explainable without collapsing child usage into display-only parent totals.
+The canonical usage pipeline is `seglog -> analytics scan -> redb rollups -> UI`. Amended 2026-10-31 (DL-270): the analytics scan runs as events land and at segment seal, where a Parquet archive is also written (derived, read only by on-demand embedded DuckDB, SP-341). The Usage page and widgets read only redb rollups and never scan raw events. Detailed usage records follow the Keep usage history for setting (`ai.usage.usage-retention`, 90 days by default) and daily totals per account, provider and model are kept whatever it says (UF-108). Rollups preserve per-run, per-session, and per-tool attribution, including `parent_run_id`, `cache_hit?`, and `cache_strategy?`, so helper calls and subagent work remain explainable without collapsing child usage into display-only parent totals.
 
 CLI bridge consumers stay aligned with `Plans/CLI_Bridged_Providers.md` owner sections named `### HTTP/status to failure-class mapping`, `### Normalized usage event minimum fields`, and `### Stream cancellation and replay safety`. For bridge-side consumer-field projections, `402 / quota_exceeded` is no-retry and upgrade-facing, `429 / rate limit` remains a distinct rate-limited class, and transient circuit-breaker windows preserve the owner value such as `2 minutes` instead of redefining it in this contract.
 

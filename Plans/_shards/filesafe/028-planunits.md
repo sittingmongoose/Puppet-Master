@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2943-L13294
+Source lines: L2943-L13298
 
-Source SHA256: `ece47700f08bfab6ed483e3649d3c6201fc47ae8736dbe5bdc70c828a1dc13b6`
+Source SHA256: `4b3d85b690bb307a70c79bb4c063184e045339ae0af6da11095bfcbb11e0d62e`
 
 ---
 
@@ -3018,7 +3018,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "PM MUST NOT maintain a second authoritative FileSafe append log alongside seglog, and recovery logic MUST NOT prefer a FileSafe-only mirror over the canonical event stream."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 no `filesafe-events.jsonl` mirror or projector exists; FileSafe events live only in the seglog EventRecord stream, and JSONL is produced only by pm export on request. The file name stays in preserved_exact_tokens as a retired name."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
@@ -7006,7 +7007,8 @@ negative_constraints:
 - "Fallback to unresolved paths is prohibited for FileSafe-managed code paths."
 - "FileSafe-only event log mirrors are not authoritative."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 BaseRunner logs guard errors only into the canonical seglog stream and writes no `filesafe-events.jsonl` mirror; they are read through pm inspect, pm tail or the record inspector."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md"
 owner_hints:
@@ -7640,7 +7642,8 @@ preserved_exact_tokens:
 - "Save Changes per tab or global"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row opens the record inspector (F3-666) (SP-339). No JSONL file is its source."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"
@@ -7864,7 +7867,8 @@ preserved_exact_tokens:
 - "diagnostic mirrors"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 filesafe-events.jsonl is retired and is no longer a derived projection. Seglog is the only FileSafe history; JSON output is an on-request pm export."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
 - "FileSafe event history ownership remains with canonical seglog."

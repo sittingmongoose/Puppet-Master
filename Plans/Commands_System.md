@@ -123,6 +123,8 @@ The approved MVP has no generic user- or support-invocable live verify/repair/sa
 
 Retention/compaction is likewise owner-routed. Commands cannot infer expiry or destructive eligibility from prefix, key, path, filename, mtime, UI sort order, or focus. An unknown `retention_policy_ref` is indefinite/no-count-eviction and `materially_incomplete`, not permission to clean up. Storage & Retention settings may request only owner-admitted windows at or above owner minima. Legal-hold set/clear remains the protected `storage.legal_hold.manage` action with actor, reason, and durable receipt; manual compaction remains an owner-routed maintenance request. Neither can bypass holds, recovery/recent-run/live/backup/rollback/maintenance refs, the maintenance lease, or the storage access gate, and neither is a User Command ID registered by this document.
 
+Amended 2026-10-31 (DL-270): the verified reclaim action in storage health (SP-340) is the existing `cmd.storage.compaction.request`, one owner-routed maintenance request for the whole storage instance under the maintenance lease, with results shown per storage group; it adds no new command ID here. Here "store compaction" means redb `compact()`, which the owner also runs on its own schedule with no command. No retention window applies to `usage.event` detail through this path (SP-341, UF-108). Per-group disk budgets are owned by SP-340. `pm db dump`, `pm inspect`, `pm tail` and `pm export` (SP-339) are command-line reads, not User Commands, and mint no command ID in this document (CS-107).
+
 Command discoverability and registration never substitute for machine storage-family materialization. Safe-point restore, restore-point create/branch/delete, migration history, retention/anchor/maintenance, quarantine, and deletion actions remain unavailable when their required `Plans/storage_value_registry.json` family/value schema is absent, deferred, ambiguous, or unsupported. Compatibility aliases are coordinator-owned read/copy-forward inputs only; ordinary command handling cannot lazily rewrite them or route one family into another.
 
 #### Safe-point restore, retry, Chat revert, and SCM consequences
@@ -4095,7 +4097,7 @@ Until Event Authority individually admits a producer family, these commands have
 | `cmd.authentication.cancel` | `AuthenticationCommandRequest{action=cancel, authentication_operation_id, expected_auth_revision}` -> `AuthenticationCommandResult` | current cancellable auth operation; `auth_state_mismatch`, `already_in_state`, `stale_projection`, `permission_required` | `handlers::authentication::cancel` | cancellation receipt/projection; never deletes provider-owned credentials without a separate owner action |
 | `cmd.authentication.resume` | `AuthenticationCommandRequest{action=resume, authentication_operation_id, expected_auth_revision, continuation_ref}` -> `AuthenticationCommandResult` | same nonterminal operation and authority binding; `auth_state_mismatch`, `stale_projection`, `deadline_expired`, `topology_unavailable`, `permission_required`, `policy_denied` | `handlers::authentication::resume` | resumes the same auth operation; never rotates account/route/host silently |
 | `cmd.eval.session.start` | `EvalSessionCommandRequest{action=start, eval_session_id, language, sandbox_policy_ref, limits_ref, variable_scope_ref}` -> `EvalSessionCommandResult` | supported exact-target adapter and no conflicting lease; `unsupported`, `capability_unavailable`, `resource_blocked`, `lease_conflict`, `topology_unavailable`, `permission_required`, `policy_denied` | `handlers::eval_session::start` | `EvalSessionRecord`, lease, `ObservableWork`, artifact refs; no hidden global kernel |
-| `cmd.eval.session.execute` | `EvalSessionCommandRequest{action=execute, eval_session_id, execution_id, expected_session_generation, code_artifact_ref, selected_tool_refs[]}` -> `EvalSessionCommandResult` | live current session; `session_state_mismatch`, `stale_projection`, `deadline_expired`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::eval_session::execute` | bounded output plus redacted spill artifact; nested calls keep independent policy/admission |
+| `cmd.eval.session.execute` | `EvalSessionCommandRequest{action=execute, eval_session_id, execution_id, expected_session_generation, code_artifact_ref, selected_tool_refs[]}` -> `EvalSessionCommandResult` | live current session; `session_state_mismatch`, `stale_projection`, `deadline_expired`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::eval_session::execute` | bounded output; output over 16 KiB is redacted and stored in the content-addressed payload store (SP-337) and returned as a payload ref, never a standalone file per execution; nested calls keep independent policy/admission |
 | `cmd.eval.session.stop` | `EvalSessionCommandRequest{action=stop, eval_session_id, expected_session_generation, variable_disposition, cleanup_policy_ref}` -> `EvalSessionCommandResult` | live/recoverable session; `session_state_mismatch`, `stale_projection`, `operation_in_progress`, `permission_required` | `handlers::eval_session::stop` | explicit cleanup and variable/artifact disposition; no EventRecord pending authority |
 | `cmd.mcp.server.connect` | `McpServerLifecycleCommandRequest{action=connect, server_id, expected_config_epoch, expected_runtime_generation}` -> `McpServerLifecycleCommandResult` | enabled valid server; `stale_projection`, `already_in_state`, `operation_in_progress`, `capability_unavailable`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::mcp::connect_server` | component-state projection, lease and work refs; no EventRecord pending authority |
 | `cmd.mcp.server.reconnect` | `McpServerLifecycleCommandRequest{action=reconnect, server_id, expected_config_epoch, expected_runtime_generation, reason}` -> `McpServerLifecycleCommandResult` | configured server and breaker admits/join; connect reasons plus `breaker_open`, `auth_state_mismatch` | `handlers::mcp::reconnect_server` | joins the one generation-scoped reconnect; does not erase failure history or add invoke retries |
@@ -4238,7 +4240,7 @@ canonical_text: >-
   protected hold and manual-compaction requests stay owner-routed; and affected actions remain
   unavailable until their exact machine storage families and value schemas are materialized.
 gui_related: true
-gui_classification_reason: Compatibility blocks, migration interruption, retention settings, legal holds, compaction, diagnostics, and unavailable actions are visible command states.
+gui_classification_reason: Compatibility blocks, migration interruption, retention settings, legal holds, compaction, the verified reclaim action and its disabled states, storage health usage, per-group budget, reclaimable bytes and last compaction (SP-340, F3-457, DL-270), diagnostics, and unavailable actions are visible command states.
 split_recommended: false
 depends_on: [CS-054, CS-056, CS-057, SP-235, SP-237, SP-243]
 unblocks: []
@@ -8146,3 +8148,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Wiring_Matrix.md#WM-096
+
+### CS-107 - DL-270 Storage Profile Command Boundary
+
+DL-270 (Plans/Decision_Log.md#DL-270, 2026-10-31) adds one User Command, `cmd.chat.load_older`, and no reserved prefix. It also rules what the command layer says about three other things, so no surface invents a second route.
+
+**Command-line reads.** `pm db dump`, `pm inspect`, `pm tail` and `pm export` (JSON or JSONL on request; optional `pm export --sqlite`, Plans/storage-plan.md#SP-339) are command-line reads of the product. They are not User Commands or UICommands and mint no `cmd.*` id, catalog row or production-wiring row, because no UI control dispatches them. UCC-212 holds their disposition table. The storage command gate above governs UICommand dispatch; these verbs sit outside it, so SP-339 owns their read semantics. The in-app record inspector is a read-only `record` tab opened through the existing `cmd.storage.open_value`; DL-270 adds no in-app export control and no new command for it.
+
+**Reclaim.** The reclaim action in storage health (Plans/storage-plan.md#SP-340) is the existing `cmd.storage.compaction.request`: one owner-routed maintenance request for the whole storage instance, with results shown per storage group. Writer posture, permission and the maintenance lease are required, and dispatch never compacts inline. There is no `cmd.storage.reclaim`. "Store compaction" is redb `compact()`, "segment repack" is seglog's seal-time repack, and "conversation compaction" is summaries and context; this unit uses those words only. Per-group disk budgets are owned by SP-340 and add no command here.
+
+**Load older.** `cmd.chat.load_older` is registered in Plans/UI_Command_Catalog.md#UCC-212 as a `shell_view` command with the sole handler `handlers::chat::load_older`, arguments `thread_id` and `before_page_ref`, and the disabled reasons `stale_projection` and `degraded`. One request reads the next older sealed 50-item page of one thread from the render-page store (Plans/assistant-chat-design.md#ACD-242, Plans/storage-plan.md#SP-338). It writes nothing and records a no-persist command receipt. Scrolling near the top dispatches it by itself, and a "Load 50 older" row stays as the fallback. Opening a thread never replays its events and is not this command. There is no `ui.chat_thread.*` prefix.
+
+**Usage detail retention.** No retention window and no `cmd.storage.compaction.request` removes `usage.event` records beyond the Keep usage history for setting (`ai.usage.usage-retention`); daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age.
+
+```yaml
+plan_unit_id: CS-107
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads, not User
+  Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read semantics.
+  The record inspector is a read-only record tab opened through the existing cmd.storage.open_value. The SP-340
+  verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance request for the
+  whole storage instance under writer posture, permission and the maintenance lease, with results shown per
+  storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as a shell_view
+  command with the sole handler handlers::chat::load_older that reads one older sealed 50-item page of a thread
+  from the render-page store with no write; scrolling near the top dispatches it and a Load 50 older row
+  stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and daily usage
+  totals are kept whatever it says (UF-108).
+gui_related: true
+gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the record inspector's command route.
+split_recommended: false
+depends_on: [CS-059, SP-338, SP-339, SP-340, SP-341]
+unblocks: []
+acceptance_criteria:
+  - No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
+  - Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
+  - cmd.chat.load_older has one handler, writes nothing and never replays events.
+  - No command prunes usage.event beyond ai.usage.usage-retention.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_command_boundary_drift
+reasoning_tier: high
+context_scope: dl270_storage_profile_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-270
+  - Plans/storage-plan.md#SP-338
+  - Plans/storage-plan.md#SP-339
+  - Plans/storage-plan.md#SP-340
+preserved_exact_tokens:
+  - cmd.chat.load_older
+  - cmd.storage.compaction.request
+  - cmd.storage.open_value
+  - usage.event
+negative_constraints:
+  - Do not mint a cmd.* id for a command-line verb.
+  - Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
+  - Do not add a standalone verify, repair or salvage command.
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212

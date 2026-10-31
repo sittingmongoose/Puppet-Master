@@ -1047,7 +1047,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget.
+  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget. Amended 2026-10-31 (DL-270, UF-108): a Usage widget reads the redb rollups that update as each usage.event lands and never scans raw usage events; Dashboard and Usage share those rollups.
 gui_related: true
 gui_classification_reason: Dashboard widgets and Add Widget catalog behavior are visible GUI surfaces.
 depends_on: [WS-013, F3-418, UF-087]
@@ -1057,6 +1057,7 @@ acceptance_criteria:
   - Usage widget fixtures cover no-double-count behavior for cache and reasoning inclusive/exclusive semantics.
   - Add Widget catalog either exposes a named Usage widget with this contract or marks Usage widget hostability unavailable with a reason; it must not expose an unowned placeholder widget.
   - Dashboard widget rollups use usage_event_ref or UsageRecord aggregation refs and never timestamp/run/thread/tier-only joins for accounting identity.
+  - No Usage widget on Dashboard or the Usage page scans raw usage events or shows a usage retention window; each reads redb rollups per account, provider and model.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -1867,7 +1868,11 @@ canonical_text: >-
   command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361).
   Presets (D35, Jared: "With savable presets."): a person can save a board's arrangement as their own preset, rename
   it and delete it. Presets belong to the person, not the project: they are kept in the per-user family
-  `widget_presets:v1` and shown in Start from on every dashboard of every project. A preset holds its id, its name,
+  `widget_presets:v1` and shown in Start from on every dashboard of every project. Amended 2026-10-31 (DL-270):
+  `widget_presets:v1` and the per-board widget-layout envelope are redb families under SP-340, each with a declared
+  maximum value of 16 KiB, a typed or MessagePack encoding (SP-339) and a disk budget. Each preset is its own value,
+  not one record holding every preset; a save whose name (80 characters) and layouts do not fit the cap is refused
+  with a reason. A preset holds its id, its name,
   when it was saved, the board it was saved from, the layout of the widgets shown at each board class (S, M, L and XL,
   WS-017), each widget's size preset and each widget's configuration; it never holds the board's view. A name is
   trimmed, with runs of white space made one, at most 80 characters; the save offers the dashboard's name made
@@ -1903,7 +1908,10 @@ canonical_text: >-
   dashboard tabs it holds: saving it snapshots each board's envelope, or none, and applying it restores them, while a
   named layout saved before this applies as it did. The snapshot is capped at 64 KB per named layout (lead ruling F3):
   a bigger save keeps the layout without its boards, records how many bytes it left out and says so;
-  Plans/storage-plan.md#SP-330 owns that record. The Guided Tour's snapshots take the Home board's widgets with the
+  Plans/storage-plan.md#SP-330 owns that record. Amended 2026-10-31 (DL-270): the 64 KB cap stays as the per-layout
+  budget for saved boards, but no single stored value passes 16 KiB (SP-340, SP-337). The snapshot is held as one value
+  per board envelope, or as a content-addressed payload-store reference when a board's envelope is larger than 16 KiB,
+  and the named layout record lists those references; the skip rule and boards_skipped_bytes are unchanged. The Guided Tour's snapshots take the Home board's widgets with the
   panels, per project (Plans/Planning_Wizard.md#PWIZ-035).
   This supersedes WS-009's one Dashboard namespace and WS-013's limit to some Usage widgets, both amended in place,
   and amends the Home Workspace boundary addendum's sentences that assume one dashboard. DL-186 retires the panels

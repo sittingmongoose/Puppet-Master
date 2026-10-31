@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19729-L19873
+Source lines: L19746-L19890
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -46,7 +46,7 @@ Define **new physical checkpoint family** `run_started_index_checkpoint`, value 
 
 `storage_instance_id` is the actual Storage UUID, not a run-derived ID. The scope partition is the reversible project encoding above. This one key covers all retained `run.started` rows for that project at the declared full-index boundary; it is not a checkpoint per run or a renamed global checkpoint. A missing checkpoint has no implicit zero/current value and starts a verified rebuild.
 
-The closed value fixes projector ID/version, event type, index value schema ID/version and its own schema version. It records the actual storage instance/project/scope, full-index checkpoint ref, CURRENT selection digest, first retained sequence, verified index-through sequence, filter-complete flag and State. Its closed survivor cursor contains exactly `manifest_generation`, `recovery_epoch`, `segment_generation`, `segment_name`, `byte_offset`, `last_sequence_id`, `last_event_id`, `survivor_prefix_sha256`, and `projector_schema_version`. `byte_offset` identifies the last fully examined frame; restart rereads that frame inclusively, cross-checks identity/digest, then continues. An inclusive reread is idempotent and never repeats a consumer effect. Timestamp is observation metadata only.
+The closed value fixes projector ID/version, event type, index value schema ID/version and its own schema version. It records the actual storage instance/project/scope, full-index checkpoint ref, CURRENT selection digest, first retained sequence, verified index-through sequence, filter-complete flag and State. Its closed survivor cursor contains exactly `manifest_generation`, `recovery_epoch`, `segment_generation`, `segment_name`, `byte_offset`, `last_sequence_id`, `last_event_id`, `survivor_prefix_sha256`, and `projector_schema_version`. `byte_offset` identifies the last fully examined frame; restart rereads that frame inclusively, cross-checks identity/digest, then continues. An inclusive reread is idempotent and never repeats a consumer effect. Timestamp is observation metadata only. Amended 2026-10-31 (DL-270): byte_offset addresses a frame position in an uncompressed segment only. After SP-335 repacks a sealed segment into seekable zstd blocks, restart resolves the cursor through last_sequence_id and the segment's sequence index to the block, then rereads that frame inclusively; the cursor field set and idempotent reread rule are unchanged.
 
 `source_cursor.last_sequence_id == index_through_sequence_id`; first-retained sequence is no greater than that bound. The CURRENT digest, manifest/recovery identity, actual full-index checkpoint and survivor prefix must match live Storage authority. `state=current` requires `filter_complete=true`, `health=healthy` and a fully verified declared range. `degraded` may describe verified survivors with explicit owner loss evidence, but it is never current/healthy or mutation authority. `withdrawn` permits no new reader publication or checkpoint advancement. Invalid combinations fail validation.
 

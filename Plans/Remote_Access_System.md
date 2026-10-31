@@ -1017,8 +1017,10 @@ canonical_text: >-
   DL-270 card 10. PM's own remote clients negotiate a zstd stream for event and transcript traffic at level 3 with
   a 1 MiB window; plain browsers fall back to brotli or permessage-deflate; the in-app UI uses no compression.
   Negotiation never changes what is authenticated, authorized or exposed under RAS-015 and the existing route
-  rules. Measured: zstd compressed 4.53 times at 162 MB/s, against permessage-deflate's 3.62 times at 31 MB/s, the
-  scheme T3 Code uses.
+  rules. Compression applies to plaintext before end-to-end encryption, never to ciphertext, and a stream that
+  mixes secrets with content an outside party can influence is not compressed, so sizes cannot leak secrets.
+  Measured: zstd compressed 4.53 times at 162 MB/s, against permessage-deflate's 3.62 times at 31 MB/s, the scheme
+  T3 Code uses.
 gui_related: false
 gui_classification_reason: "Transport encoding only; no visible surface."
 split_recommended: false
@@ -1027,7 +1029,7 @@ unblocks: []
 acceptance_criteria:
   - "A PM client and server that both support zstd use it at level 3 with a 1 MiB window."
   - "A browser without zstd support still connects, using brotli or permessage-deflate."
-  - "Compression negotiation adds no route, credential or exposure."
+  - "Compression negotiation adds no route, credential or exposure, no ciphertext is compressed, and secret-bearing streams with outside-influenced content stay uncompressed."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

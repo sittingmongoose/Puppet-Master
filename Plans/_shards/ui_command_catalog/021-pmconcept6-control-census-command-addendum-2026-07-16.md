@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8427-L8617
 
-Source SHA256: `c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876`
+Source SHA256: `f70670e29e0201fb6370a9f8d22f35864afe18785c88ea804087eabc8d1d3abe`
 
 ---
 
@@ -145,7 +145,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0
 |------------|-------|-------------|----------------|--------------|
 | `cmd.chat.web.cancel` | Cancel Web Operation | Cancels an in-flight web operation (research/crawl/fetch card) by `web_operation_id`, preserving provenance. | `web_operation_in_flight` | `domain_action` |
 | `cmd.chat.web.request_again` | Request Web Operation Again | Re-requests a declined or cancelled web operation with the same payload; re-entry passes through the approval gate and never bypasses it. | `web_operation_terminal` | `domain_action` |
-| `cmd.chat.switch_thread` | Switch Chat Thread | Focuses an existing chat thread from the thread list by `thread_id`; no thread mutation. | `thread_exists` | `navigation_wrapper` |
+| `cmd.chat.switch_thread` | Switch Chat Thread | Focuses an existing chat thread from the thread list by `thread_id`; no thread mutation. Amended 2026-10-31 (DL-270): opening the thread reads thread_head, the hot tail and the newest page and never replays its events (ACD-242, SP-338); older pages load only through `cmd.chat.load_older` (UCC-212). | `thread_exists` | `navigation_wrapper` |
 | `cmd.chat.queue.remove` | Remove Queued Message | Removes a queued, not-yet-dispatched composer message from the send queue; dispatched messages are unaffected. | `queued_message_exists` | `domain_action` |
 | `cmd.chat.platform` | Set Requested Platform | Sets the requested platform for the thread from the assistant chat surface; applies next turn. No status-bar chip and no standalone chat-header platform dropdown. | `platform_registry_loaded` | `domain_action` |
 | `cmd.chat.plan_thoroughness` | Set Plan Thoroughness | Sets Plan Thoroughness (Light, Balanced, Comprehensive) for Plan and Deep Plan; applies next turn. | `plan_mode_selected` | `domain_action` |

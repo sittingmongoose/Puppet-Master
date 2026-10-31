@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4276
+Source lines: L3454-L4277
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `e4584075a30666f2f4e102afd1e3ed62225b2eacc8c370219c24f4e63efe43f4`
 
 ---
 
@@ -539,7 +539,7 @@ canonical_text: >-
   field set (DL-180, D7, D8; Jared: "Files referenced in chat or in the diff panel(or anywhere else in the chat wizards
   stuff) open the same way as the rules you stated for the file tree."). The callers are all of them: the left rail's
   file tree (F-090); file references, diff views, Changes rows and transcript file records in the chat (ACD-500);
-  search results; Ctrl+P; the "+" menu and the empty-panel launcher (F3-632); agents; and the terminal's path:line:col
+  search results; Ctrl+P; the record inspector (DR-083); the "+" menu and the empty-panel launcher (F3-632); agents; and the terminal's path:line:col
   links and command marks (F3-641). Each passes its request with CV-360's placement fields (where, mode, by and
   background) and gets back the tab it opened or revealed; which panel, the preview tab, kind affinity,
   reveal-if-open and agents' background opens are F3-634's alone. No caller keeps its own routing, target panel,

@@ -4,7 +4,7 @@ Source: `Plans/Project_Output_Artifacts.md`
 
 Source lines: L142-L250
 
-Source SHA256: `f26aaf82474af8d25a284a9515fae5789162c320bc40129358312da00915367d`
+Source SHA256: `1e299088a3d0037ce0196eb4ed10991ab66deb43a6e7b8a7412fbe5b54facd7b`
 
 ---
 
@@ -69,7 +69,7 @@ Rule: Puppet Master MUST store Attempt Journal and Parent Summary artifacts in t
 ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
 
 Reserved runtime subtree note:
-- `.puppet-master/state/**` is reserved for project-local runtime state such as optional local seglog/mirror/backups when enabled by `Plans/storage-plan.md`.
+- `.puppet-master/state/**` is reserved for project-local runtime state such as optional local seglog, redb files and recovery manifests (index_meta.json, seglog CURRENT and manifest), and backups, when enabled by `Plans/storage-plan.md`. Amended 2026-10-31 (DL-270): no JSON or JSONL mirror files of state live there (SP-339).
 - `.puppet-master/project/**` remains the canonical staged Project Plan Package tree.
 - `.puppet-master/workspace/**` remains the non-canonical execution sidecar and MUST NOT be repurposed as canonical storage.
 

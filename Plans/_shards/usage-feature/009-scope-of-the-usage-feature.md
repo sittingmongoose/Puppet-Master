@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L129-L373
+Source lines: L128-L372
 
-Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71`
+Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
 
 ---
 
@@ -34,7 +34,7 @@ Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71
 
 - **Aggregated view:** Over time, support an analytics view that aggregates usage by time window, platform, project, or tier (as in newfeatures §7). Can be a separate page or a section under Usage.
 - **Cost tracking and attribution:** Where data is available (from platform APIs), show cost breakdowns by model, project, and date (see [openclaudecto](https://github.com/josharsh/openclaudecto), [yume analytics](https://aofp.github.io/yume/)).
-- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.
+- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views. Amended 2026-10-31 (DL-270): detailed usage records follow the existing Keep usage history for setting, `ai.usage.usage-retention` (90 days by default), in the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever, whatever the setting says (UF-108, SP-341).
 
 ### 5. Per-thread usage in Chat (OpenCode-style)
 

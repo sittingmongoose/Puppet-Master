@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19876-L20457
+Source lines: L19879-L20461
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4`
 
 ---
 
@@ -336,8 +336,9 @@ canonical_text: >-
   `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
   `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
   `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export
-  mirrors only and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are retired as live files
+  (SP-339, amended 2026-10-31, DL-270), JSON state exists only as on-request `pm export` output, and neither it nor any
+  export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
   abort, receipt, or validation decisions.
 gui_related: false
 gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
@@ -348,7 +349,7 @@ acceptance_criteria:
   - Coordination payloads preserve project/run/thread/agent lineage, platform, revision/checkpoint/idempotency fields, and relevant operation/file/mirror metadata.
   - File-activity events are coordination claims only and do not create FileSafe locks or durable exclusive leases.
   - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.
-  - JSON side files remain compatibility/debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
+  - Amended 2026-10-31 (DL-270, SP-339) - the JSON side files named in CV-294 are retired as live files. JSON state exists only as on-request `pm export` output, and neither it nor any export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness

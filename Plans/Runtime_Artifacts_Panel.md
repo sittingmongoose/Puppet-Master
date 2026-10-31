@@ -756,6 +756,8 @@ negative_constraints:
 owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md]
 ```
 
+Amended 2026-10-31 (DL-270): `artifacts_index.v1` is a derived, rebuildable family and lives in the derived redb file, separate from the canonical file (SP-340). Each row declares a maximum value size of at most 16 KiB. Long ref lists, previews and any larger body are payload-store references (SP-337), not inline row content.
+
 ## Ledger Compile Addendum - pldg-20260616-002
 
 ### RAP-027 - Goal Runtime Receipt And Verification Evidence Projection
@@ -2022,6 +2024,8 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
+Amended 2026-10-31 (DL-270): the Raw view resolves `raw_payload_ref` through the payload store (SP-337) and may open the record inspector (F3-666), whose command-line form is `pm inspect`. It never reads a JSON mirror file.
+
 ## Case L Durable-State Consumer Addendum - 2026-07-17
 
 This addendum is the Runtime Artifacts consumer propagation for approved Case L findings `L-013`, `L-022`, and `L-027`. It consumes the owner contracts in `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FileSafe.md`, and `Plans/assistant-chat-design.md`; it does not create a second EventRecord envelope, storage recovery algorithm, restore engine, restore-point lifecycle, retention policy, permission rule, or storage-access state machine. The approved source is `PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/CASE_L_APPROVAL_2026-07-17.md`, including Bundles B, C, D, E, and F. This documentation propagation creates no runtime implementation, WorkNodes, NodeSeeds, executable queues, generated governance artifacts, build tasks, or completeness evidence.
@@ -2056,6 +2060,8 @@ Artifact browsing consumes storage-owned `storage_instance_id`, `root_generation
 In compatible lock-conflict viewer mode, Runtime Artifacts is a frozen, manually refreshable read snapshot. It may inspect/copy/export only within FileSafe and permission policy; view-local changes are visibly ephemeral. Apply, restore, retry, delete, retention/hold mutation, settings/history persistence, dispatch, provider calls requiring receipts, and every other durable/runtime/external mutation remain discoverable where useful but disabled with `storage_read_only`. Permission approval cannot widen this storage gate. Promotion is never automatic and the panel only reflects the storage-owned full-revalidation result. A newer-format store exposes metadata-only compatibility diagnostics, not the Runtime Artifacts viewer. `root_mismatch`, `root_unavailable`, `fallback_diverged`, or inability to prove a coherent snapshot yields the owner viewer/blocked posture and never an apparently empty artifact list.
 
 Runtime Artifacts diagnostics do not create a generic verify, repair, salvage, force-open, or `try_anyway` action. `Retry storage` is an owner admission probe only; it neither repairs bytes nor automatically resumes a blocked artifact action.
+
+Amended 2026-10-31 (DL-270): per-group usage, disk budget, reclaimable bytes, last compaction and the verified reclaim action are storage-owned (SP-340), shown on the page that `cmd.settings.open_storage_retention` opens (F3-457), and the last verified backup is backup-owned (BRS-031). Runtime Artifacts links to that page and shows none of it panel-locally.
 
 Permission-denied artifact actions consume the permission-owned blocked payload (`blocked_family`, `blocked_reason_code`, ordered `allowed_action_ids[]`, `permission_snapshot_id?`, `approval_scope_key?`, `executed: false`) and do not collapse denial, approval required, storage read-only, integrity block, or preflight drift into generic failure.
 
@@ -2649,6 +2655,8 @@ owner_hints:
   - Plans/Runtime_Artifacts_Panel.md
   - Plans/storage-plan.md
 ```
+
+Amended 2026-10-31 (DL-270): `runtime_artifact.cost_usage` rows and their `usage_event_ref` are not bounded-retention rows. They show no expires-in line and never become tombstones. Detailed usage records follow the existing `ai.usage.usage-retention` setting (90 days by default, selectable shorter or longer), and daily usage totals are kept whatever it says (SP-341, UF-108). The usage totals, windows and charts a cost_usage row links to read those rollups.
 
 ## Run & Debug Revival Addendum - 2026-07-27
 

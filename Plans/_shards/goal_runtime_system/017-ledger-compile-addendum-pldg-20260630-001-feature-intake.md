@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L931-L2612
 
-Source SHA256: `735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af`
+Source SHA256: `330751dd992857de46503fb4e28371689feafad50c381e37004042f8d2aa9299`
 
 ---
 
@@ -346,7 +346,7 @@ unblocks: []
 acceptance_criteria:
   - A resumed goal can reconstruct objective, constraints, tasks, status, child goals, evidence, and receipt state.
   - Concurrent or stale goal updates are rejected or reconciled through revision checks.
-  - Storage substrate remains selectable later without weakening required state fields.
+  - 'Amended 2026-10-31 (DL-270): the storage substrate is fixed. Goal records and the append-only goal event log persist in the canonical seglog and redb families (SP-335, SP-336, SP-340). SQLite and SQLite-format engines are not options (SP-342) and there is no always-on JSONL copy (SP-339); people read goal events through pm tail and pm export (SP-339). Required state fields are unchanged.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future goal-state persistence tests
@@ -1654,7 +1654,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Goal visual styling binds to owner-doc UI contracts before certification.
-- Persistence substrate selection binds to durable state and event-log contracts before certification.
+- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270): the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means checking the binding against those units.'
 - Provider defaults bind to separate worker/verifier-adjudicator policy and strong-certification blocking rules before certification.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

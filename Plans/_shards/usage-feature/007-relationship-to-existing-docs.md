@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L100-L117
+Source lines: L99-L116
 
-Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71`
+Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
 
 ---
 
@@ -22,7 +22,7 @@ Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71
 | **Plans/Progression_Gates.md + Plans/evidence.schema.json** | Validation contract for the storage stack (seglog + redb + Tantivy + projectors + analytics scan) through deterministic verifier gates and evidence requirements. |
 
 **Current app state (for context):**
-- **Ledger** page: Event-level log from `.puppet-master/usage/usage.jsonl` (platform, tokens in/out, cost per request). No 5h/7d quota view.
+- **Ledger** page: Event-level log from `.puppet-master/usage/usage.jsonl` (platform, tokens in/out, cost per request). No 5h/7d quota view. Amended 2026-10-31 (DL-270): the Ledger now pages through usage records by index from the stores, not from `usage.jsonl`, which is retired as a live file (SP-339, UF-108).
 - **Metrics** page: Post-run execution metrics (platform/subtask stats).
 - **Dashboard**: Budget/usage percent per platform (from budget config).
-- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage.
+- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage. Amended 2026-10-31 (DL-270): `UsageRecord` is persisted as `usage.event` in the event log with redb rollups, not to `usage.jsonl` (SP-339, UF-108).

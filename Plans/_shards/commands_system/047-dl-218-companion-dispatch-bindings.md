@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7999-L8148
+Source lines: L8001-L8222
 
-Source SHA256: `49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34`
+Source SHA256: `3e0e4494a8c7b306f843b8d32ceb1cc5bc2ab442b5a6a495669be42b65fa2c58`
 
 ---
 
@@ -158,3 +158,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-208, ContractName:Plans/Wiring_Matrix.md#WM-096
+
+### CS-107 - DL-270 Storage Profile Command Boundary
+
+DL-270 (Plans/Decision_Log.md#DL-270, 2026-10-31) adds one User Command, `cmd.chat.load_older`, and no reserved prefix. It also rules what the command layer says about three other things, so no surface invents a second route.
+
+**Command-line reads.** `pm db dump`, `pm inspect`, `pm tail` and `pm export` (JSON or JSONL on request; optional `pm export --sqlite`, Plans/storage-plan.md#SP-339) are command-line reads of the product. They are not User Commands or UICommands and mint no `cmd.*` id, catalog row or production-wiring row, because no UI control dispatches them. UCC-212 holds their disposition table. The storage command gate above governs UICommand dispatch; these verbs sit outside it, so SP-339 owns their read semantics. The in-app record inspector is a read-only `record` tab opened through the existing `cmd.storage.open_value`; DL-270 adds no in-app export control and no new command for it.
+
+**Reclaim.** The reclaim action in storage health (Plans/storage-plan.md#SP-340) is the existing `cmd.storage.compaction.request`: one owner-routed maintenance request for the whole storage instance, with results shown per storage group. Writer posture, permission and the maintenance lease are required, and dispatch never compacts inline. There is no `cmd.storage.reclaim`. "Store compaction" is redb `compact()`, "segment repack" is seglog's seal-time repack, and "conversation compaction" is summaries and context; this unit uses those words only. Per-group disk budgets are owned by SP-340 and add no command here.
+
+**Load older.** `cmd.chat.load_older` is registered in Plans/UI_Command_Catalog.md#UCC-212 as a `shell_view` command with the sole handler `handlers::chat::load_older`, arguments `thread_id` and `before_page_ref`, and the disabled reasons `stale_projection` and `degraded`. One request reads the next older sealed 50-item page of one thread from the render-page store (Plans/assistant-chat-design.md#ACD-242, Plans/storage-plan.md#SP-338). It writes nothing and records a no-persist command receipt. Scrolling near the top dispatches it by itself, and a "Load 50 older" row stays as the fallback. Opening a thread never replays its events and is not this command. There is no `ui.chat_thread.*` prefix.
+
+**Usage detail retention.** No retention window and no `cmd.storage.compaction.request` removes `usage.event` records beyond the Keep usage history for setting (`ai.usage.usage-retention`); daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age.
+
+```yaml
+plan_unit_id: CS-107
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  DL-270 commands part. pm db dump, pm inspect, pm tail and pm export are command-line reads, not User
+  Commands or UICommands, and mint no cmd.* id, catalog row or wiring row; SP-339 owns their read semantics.
+  The record inspector is a read-only record tab opened through the existing cmd.storage.open_value. The SP-340
+  verified reclaim is the existing cmd.storage.compaction.request, one owner-routed maintenance request for the
+  whole storage instance under writer posture, permission and the maintenance lease, with results shown per
+  storage group; there is no cmd.storage.reclaim. cmd.chat.load_older is registered in UCC-212 as a shell_view
+  command with the sole handler handlers::chat::load_older that reads one older sealed 50-item page of a thread
+  from the render-page store with no write; scrolling near the top dispatches it and a Load 50 older row
+  stays as the fallback. Detail usage.event records are governed by ai.usage.usage-retention and daily usage
+  totals are kept whatever it says (UF-108).
+gui_related: true
+gui_classification_reason: Rules the reclaim action in storage health, the chat's load-older control and the record inspector's command route.
+split_recommended: false
+depends_on: [CS-059, SP-338, SP-339, SP-340, SP-341]
+unblocks: []
+acceptance_criteria:
+  - No catalog row, wiring row or cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
+  - Reclaim dispatches cmd.storage.compaction.request and never compacts inline; no cmd.storage.reclaim exists.
+  - cmd.chat.load_older has one handler, writes nothing and never replays events.
+  - No command prunes usage.event beyond ai.usage.usage-retention.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_command_boundary_drift
+reasoning_tier: high
+context_scope: dl270_storage_profile_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-270
+  - Plans/storage-plan.md#SP-338
+  - Plans/storage-plan.md#SP-339
+  - Plans/storage-plan.md#SP-340
+preserved_exact_tokens:
+  - cmd.chat.load_older
+  - cmd.storage.compaction.request
+  - cmd.storage.open_value
+  - usage.event
+negative_constraints:
+  - Do not mint a cmd.* id for a command-line verb.
+  - Do not add a cmd.storage.reclaim command or a ui.chat_thread.* prefix.
+  - Do not add a standalone verify, repair or salvage command.
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212

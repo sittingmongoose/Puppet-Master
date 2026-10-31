@@ -1923,6 +1923,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+- "Amended 2026-10-31 (DL-270). Soak also covers compression negotiation (RAS-016): PM clients negotiate zstd level 3 with a 1 MiB window, browsers fall back to brotli or permessage-deflate, and the in-app UI path stays uncompressed."
 - Terminal retry fixtures assert exact session, invocation/block, and card identities for explicit same-session rerun, replacement execution, failed/retried attachment and movement reconciliation; recovery never replays a command or duplicates its invocation card. The oracle consumes ACD-108 and UCC-067.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -2075,7 +2076,8 @@ Each Case L fixture manifest and linked receipt records the exact fixture ID, ow
 | `FX-L003-CORRUPT-META` | Continuity evidence plus missing meta is never first run and never reinitializes the store. |
 | `FX-L003-CORRUPT-FAMILY` | Each canonical non-rebuildable family routes to verified backup and exact loss disclosure. For `executor_intake_report` and `attempt_receipt`, exact canonical records and a durable verified Storage recovery boundary are required before ordinary Executor revalidation may admit completion or dispatch; EventRecords, runtime/audit projections, UI state, summaries, and worker/controller claims cannot reconstruct success, and unavailable or corrupt authority remains blocked or unknown. |
 | `FX-L003-FRESH-BASELINE` | Verified baseline exists before first mutation-capable startup; baseline failure blocks mutation. |
-| `FX-L016-ACTIVE-WRITE` | Quiesced active-load backup restores one manifest boundary with exact hashes, consistent redb/seglog/checkpoints, and rebuilt disposable projections. |
+| `FX-L003-CREATE-CRASH` | Kill at each step of store creation (build in `<name>.creating/`, sync, rename, parent-directory sync) for seglog, redb and payload-pack stores; no partial store opens and no acknowledged record is lost (SP-336, SP-344). |
+| `FX-L016-ACTIVE-WRITE` | Active-load backup, with writers still running, is captured at a brief capture barrier (at most 250 ms at p99) and restores one consistent point with exact hashes, consistent redb/seglog/checkpoints, and rebuilt disposable projections; sealed segments and payload packs copy in the background, redb copies from a read snapshot, and no writer lock is held during the copy (BRS-031). |
 | `FX-L016-NEWER-BACKUP` | Newer-version backup is refused before mutation and current bytes remain unchanged. |
 | `FX-L016-KILL-RESTORE` | Kill at every store-promotion boundary; restart converges to the fully original or fully restored verified store set, never a mixed ordinary-open state. |
 | `FX-L025-PREV-MAJOR-ALIAS` | N-1 alias copy-forwards once, proves semantic equality, removes the live residual only after verification, and is idempotent on rerun. |
@@ -2086,15 +2088,17 @@ Each Case L fixture manifest and linked receipt records the exact fixture ID, ow
 
 ### Seglog durability and restart convergence
 
-The exact fixture inventory is `SEG-FX-001`, `SEG-FX-002`, `SEG-FX-003`, `SEG-FX-004`, `SEG-FX-005`, `SEG-FX-006`, `SEG-FX-007`, `SEG-FX-008`, `SEG-FX-009`, `SEG-FX-010`, `SEG-FX-011`, `SEG-FX-012`, `SEG-FX-013`, `SEG-FX-014`, `SEG-FX-015`, `SEG-FX-016`, `SEG-FX-017`, and `SEG-FX-018`. The exact global-oracle inventory is `SEG-OR-001`, `SEG-OR-002`, `SEG-OR-003`, `SEG-OR-004`, `SEG-OR-005`, `SEG-OR-006`, `SEG-OR-007`, `SEG-OR-008`, `SEG-OR-009`, `SEG-OR-010`, `SEG-OR-011`, and `SEG-OR-012`. They are required without renaming or weakening. The suite covers payload/framing/header bit flips; active and closed segments; valid/unprovable resynchronization; acknowledged watermark loss; frame/segment/manifest/directory barrier faults; mutation-gating safe-point/checkpoint/approval power cuts; sequence-lease crash boundaries; checkpoint/survivor reconciliation; rotation/truncation/compaction/janitor restart cuts; disclosure precision; and stale checklist/pointer rejection.
+The exact fixture inventory is `SEG-FX-001`, `SEG-FX-002`, `SEG-FX-003`, `SEG-FX-004`, `SEG-FX-005`, `SEG-FX-006`, `SEG-FX-007`, `SEG-FX-008`, `SEG-FX-009`, `SEG-FX-010`, `SEG-FX-011`, `SEG-FX-012`, `SEG-FX-013`, `SEG-FX-014`, `SEG-FX-015`, `SEG-FX-016`, `SEG-FX-017`, and `SEG-FX-018`. The exact global-oracle inventory is `SEG-OR-001`, `SEG-OR-002`, `SEG-OR-003`, `SEG-OR-004`, `SEG-OR-005`, `SEG-OR-006`, `SEG-OR-007`, `SEG-OR-008`, `SEG-OR-009`, `SEG-OR-010`, `SEG-OR-011`, and `SEG-OR-012`. They are required without renaming or weakening. The suite covers payload/framing/header bit flips; active and closed segments; valid/unprovable resynchronization; acknowledged watermark loss; frame faults, one-group data-sync faults, barrier-class full-flush faults (F_FULLFSYNC, FlushFileBuffers, fdatasync), F_BARRIERFSYNC ordinary-group faults on macOS, and manifest and directory faults at segment creation, rotation and structural change only (SP-336); mutation-gating safe-point/checkpoint/approval power cuts; sequence-lease crash boundaries; checkpoint/survivor reconciliation; rotation/truncation/compaction/janitor restart cuts; disclosure precision; and stale checklist/pointer rejection.
 
-The global result must prove deterministic survivors and recovery IDs, no success before both append barriers plus directory durability, no mutation without a surviving synced prerequisite receipt, no sequence reuse, exactly one manifest-selected active generation after recovery, unchanged closed-source hashes, sequence/event rather than timestamp checkpoint truth, degraded projection health when canon has a hole, idempotent recovery events, exact/bounded/unknown disclosure fidelity, and live pointer/checklist fidelity.
+The global result must prove deterministic survivors and recovery IDs, no success before one data sync of the segment per ordinary commit group (the durable watermark is read from the segment itself, manifest and directory durability are required only at segment creation, rotation and structural change, and barrier-class events such as approvals, safe points and receipts the UI waits on get a full flush, SP-336), no mutation without a surviving synced prerequisite receipt, no sequence reuse, exactly one manifest-selected active generation after recovery, unchanged closed-source decoded canonical digests (SP-335), sequence/event rather than timestamp checkpoint truth, degraded projection health when canon has a hole, idempotent recovery events, exact/bounded/unknown disclosure fidelity, and live pointer/checklist fidelity.
+
+Amended 2026-10-31 (DL-270): closed-source identity is the decoded canonical digest, not the stored bytes, because SP-335's seal-time segment repack changes the stored form; the durability oracles follow SP-336's one-sync commit group, with a full flush only for barrier-class events.
 
 ### Storage I/O, aggregate lock/viewer, root continuity, and fallback
 
 | Fixture | Required oracle |
 | --- | --- |
-| `STIO-001-CLOSED-CLASS` | Inject every closed storage-I/O class at seglog, redb, checkpoint, safe-point, rotation, migration/backup, JSONL, and Tantivy writes; observe the exact class, retry count, and final access mode. |
+| `STIO-001-CLOSED-CLASS` | Inject every closed storage-I/O class at seglog, redb, checkpoint, safe-point, rotation, migration/backup, payload-pack, Parquet-archive (at segment seal) and Tantivy writes, and JSONL only as an on-request `pm export` (SP-339, SP-341, SP-337); observe the exact class, retry count, and final access mode. |
 | `STIO-002-SAFEPOINT-ENOSPC` | ENOSPC during the pre-attempt safe point causes no project mutation, external side effect, or attempt dispatch. |
 | `STIO-003-CHECKPOINT-ENOSPC` | ENOSPC after projection/before checkpoint keeps the old checkpoint; restart replays deterministically and no false freshness is acknowledged. |
 | `STIO-004-APPEND-ENOSPC` | Failed seglog append is not acknowledged, later appends are rejected, existing verified records remain readable, and no memory-buffered event appears after recovery. |
@@ -2174,7 +2178,7 @@ Every oracle in this subsection is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. It i
 
 `seglog.event_appended` planned/static oracle set:
 
-- `SEA-P01` — After the referenced canonical frame and manifest watermark are synchronized, one observability payload with non-negative matching sequence, exact matching event type, resolvable event/segment refs, valid time, optional non-empty writer, and inherited scope validates against the schema and append receipt.
+- `SEA-P01` — After the referenced canonical frame is durable and the in-segment durable watermark covers its sequence (SP-336), one observability payload with non-negative matching sequence, exact matching event type, resolvable event/segment refs, valid time, optional non-empty writer, and inherited scope validates against the schema and append receipt.
 - `SEA-P02` — Retention resolves exactly to `RP-SEGLOG-7D@1.0.0`: creation anchor, 604,800 seconds, 500,000/instance, oldest-eligible eviction, hold protection, and compact expiry.
 - `SEA-N01` — Negative/non-integer sequence, invalid type grammar, empty/unresolved ref, invalid time, empty writer, extra field, or secret rejects/quarantines without observability append or checkpoint movement.
 - `SEA-N02` — Type/sequence/segment receipt mismatch or inherited-scope mismatch rejects; no partition is fabricated.
@@ -2238,6 +2242,7 @@ The exact restore inventory is `RSP-ATOMIC-001`, `RSP-ATOMIC-002`, `RSP-ATOMIC-0
 ### Retention, anchors, compaction, deletion, quarantine, and maintenance exclusion
 
 - `RET-001-expiry-boundary`, `RET-002-cardinality-tie`, `RET-003-hold-set-clear`, `RET-004-unknown-policy`, `RET-005-janitor-resume`, and `RET-006-settings-minimum` prove inclusive expiry, deterministic count ties, hold set/clear, fail-safe unknown policy, journal restart cursor, and reject-not-clamp settings minima.
+- `RET-007-usage-detail-follows-setting`, `RET-008-usage-daily-totals-kept`, and `RET-009-usage-rollup-reads` (DL-270, UF-108, SP-341) prove that detailed usage records follow the Keep usage history for setting (`ai.usage.usage-retention`, 90 days by default) in the event log and the Parquet archive, that daily usage totals per account, provider and model are kept whatever that setting says, and that usage totals, windows and charts read redb rollups with no raw-event scan while the Ledger's list pages through usage records by index.
 - `ANCHOR-001-old-open-block`, `ANCHOR-002-release`, `ANCHOR-003-multiple-anchors`, `ANCHOR-004-snapshot-missing`, and `ANCHOR-005-atomic-publish` prove blocked recovery survival, exact release conditions, unioned anchors, truthful `recovery_unavailable`, and no half-published blocked episode/anchor.
 - `CMP-001-retained-set`, `CMP-002-index-checkpoint`, `CMP-003-projection-rebuild`, `CMP-004-crash-phases`, `CMP-005-maintenance-exclusion`, and `CMP-006-backup-pin` prove the exact retained set and unchanged semantic IDs, index/checkpoint translation, shadow projection swap, phase-driven crash recovery with one `CURRENT` generation, maintenance-lease exclusion, and pre-migration backup pinning.
 
@@ -2249,7 +2254,7 @@ Every `K37-CMP-P01..P13` and `K37-CMP-N01..N15` oracle is `NOT_EXECUTABLE_UNDER_
 - `K37-CMP-P02` — Mismatch or unprovable translation selects `invalidate_and_rebuild`; affected rows invalidate and rebuild from the nearest matching survivor checkpoint or first retained event, with no interim advance.
 - `K37-CMP-P03` — Complete verified target shadow plus synchronized target `CURRENT` selects `activate_verified_target_shadow`; target generation activates once and pending state clears once.
 - `K37-CMP-P04` — Unprovable/nonexistent shadow selects `rebuild_from_survivors`; affected derived state is discarded and rebuilt over the authoritative target survivor set before publication or checkpoint advance.
-- `K37-CMP-P05` — Each action member traverses exactly `preparing -> building -> verified -> commit_pending -> committed -> finalized` with every predecessor postcondition, target proof, survivor/removal map, and action/phase join established and closed-source hashes unchanged.
+- `K37-CMP-P05` — Each action member traverses exactly `preparing -> building -> verified -> commit_pending -> committed -> finalized` with every predecessor postcondition, target proof, survivor/removal map, and action/phase join established and closed-source decoded canonical digests unchanged (a verified stored-form repack under SP-335 is recorded as a separate receipt field).
 - `K37-CMP-P06` — Failure from `preparing|building|verified|commit_pending` with unchanged source `CURRENT` reaches only `failed`, carries non-empty reason, preserves source authority, and publishes no target/checkpoint/projection.
 - `K37-CMP-P07` — Publication ambiguity from each nonterminal ordinary phase reaches `recovery_required`, carries non-empty reason, preserves both sides, and keeps mutation/maintenance/projector/checkpoint fences active.
 - `K37-CMP-P08` — Crash after target `CURRENT` and before activation/finalization converges on the same identity through `recovery_required -> committed -> finalized` with one target and no duplicate physical/event effect.
@@ -2265,7 +2270,7 @@ Every `K37-CMP-P01..P13` and `K37-CMP-N01..N15` oracle is `NOT_EXECUTABLE_UNDER_
 - `K37-CMP-N05` — Reject `failed` without proven unchanged pre-`CURRENT` source authority; ambiguous or possibly post-`CURRENT` failure is `recovery_required`.
 - `K37-CMP-N06` — Reject recovery egress without exact source-failure or verified-target-commit proof and reject fence clearing while unresolved.
 - `K37-CMP-N07` — Reject missing/empty/null exceptional reason, reason on an ordinary phase, or a new evidence field.
-- `K37-CMP-N08` — Reject source mutation, active-segment inclusion, wrong target generation, changed semantic bytes/identity/order/hash/gaps, early source deletion, or retired physical refs.
+- `K37-CMP-N08` — Reject mutation of a closed source's decoded semantic bytes, order or gaps, active-segment inclusion, wrong target generation, changed semantic bytes/identity/order/hash/gaps, early source deletion, or retired physical refs. A verified stored-form repack into zstd blocks with the canonical digest recorded is permitted (SP-335).
 - `K37-CMP-N09` — Reject mtime, filename, newest-looking directory, advisory index, projection freshness, or event order as visibility authority; synchronized `CURRENT` alone selects.
 - `K37-CMP-N10` — Reject stale policy revision/hash, unresolved refs, ineligible held/live/backup/rollback source, missing lock/lease, or competing owner; no success append.
 - `K37-CMP-N11` — Different digest for one identity returns `idempotency_conflict`; unavailable proof returns `dedupe_unavailable`; neither appends, projects, advances, dispatches, or mutates.
@@ -2334,7 +2339,9 @@ Migration, compaction, store restore, salvage, and backup-boundary capture must 
 
 ### Mandatory negative acceptance
 
-No Case L suite passes if any of the following occurs: incompatible/preflight refusal mutates target bytes; a half-migrated or mixed-restored store ordinary-opens; a canonical redb family is reported recovered by projection rebuild; a committed migration lacks verification/receipt read-back; a future EventRecord is skipped or rewritten; legacy normalization appends or changes source bytes; replay-only causes external/canonical side effects; `restored_clean` lacks target equality; `restore_failed` lacks rollback equality; exact restore emits `restored_with_conflicts`; a third-party SCM state is overwritten; a moving/abbreviated ref substitutes for an immutable OID; cleanup deletes held/anchored/referenced authority; compaction rewrites closed source bytes or selects by mtime; Executor accepts completion or dispatch from EventRecords, projections, UI state, summaries, or worker/controller claims while `executor_intake_report` or `attempt_receipt` is corrupt, unavailable, or not restored behind a durable verified Storage recovery boundary; a conversation restore-point create/apply/delete path creates or reuses an Executor attempt, successor attempt, runtime safe point, worktree/file/repository/index mutation, worker/scheduler dispatch, or Executor-owned retention timer; or schema/plan/fixture registration is reported as executed runtime proof.
+No Case L suite passes if any of the following occurs: incompatible/preflight refusal mutates target bytes; a half-migrated or mixed-restored store ordinary-opens; a canonical redb family is reported recovered by projection rebuild; a committed migration lacks verification/receipt read-back; a future EventRecord is skipped or rewritten; legacy normalization appends or changes source bytes; replay-only causes external/canonical side effects; `restored_clean` lacks target equality; `restore_failed` lacks rollback equality; exact restore emits `restored_with_conflicts`; a third-party SCM state is overwritten; a moving/abbreviated ref substitutes for an immutable OID; cleanup deletes held/anchored/referenced authority; compaction changes a closed source's decoded sequence, event identity or semantic digest, or selects by mtime (a verified repack into zstd blocks that records the canonical digest is allowed, SP-335); Executor accepts completion or dispatch from EventRecords, projections, UI state, summaries, or worker/controller claims while `executor_intake_report` or `attempt_receipt` is corrupt, unavailable, or not restored behind a durable verified Storage recovery boundary; a conversation restore-point create/apply/delete path creates or reuses an Executor attempt, successor attempt, runtime safe point, worktree/file/repository/index mutation, worker/scheduler dispatch, or Executor-owned retention timer; or schema/plan/fixture registration is reported as executed runtime proof.
+
+Amended 2026-10-31 (DL-270): a closed source is identified by its decoded canonical digest, so SP-335's verified seal-time segment repack is not a rewrite of closed source bytes. Store compaction (redb compact()) and conversation compaction are separate; this rule is about segment compaction and repack.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Release_Supply_Chain.md, DecisionID:PD-RSP-01, DecisionID:PD-RSP-07, DecisionID:PD-L015-03
 
@@ -2351,7 +2358,9 @@ canonical_text: >-
   exact-replace restore, SCM-baseline, retention/anchor/compaction/deletion/quarantine, and
   maintenance-exclusion fixtures against their canonical owners. Every positive outcome and negative
   no-mutation/no-false-success oracle is receipt-backed; fixture registration, schema validity,
-  skipped/inconclusive results, and owner prose never substitute for execution.
+  skipped/inconclusive results, and owner prose never substitute for execution. Amended 2026-10-31 (DL-270):
+  ATS-024 also owns the SP-344 release-gate fixtures, which run on Windows, macOS and Linux and fail the build
+  (see the acceptance criteria); a blocked or skipped run cannot satisfy them.
 gui_related: false
 gui_classification_reason: This unit owns automated backend durability, compatibility, fault-injection, and receipt evidence rather than presentation.
 depends_on: [ATS-001, ATS-003, ATS-004]
@@ -2360,10 +2369,13 @@ acceptance_criteria:
   - FX-L001-*, FX-L002-*, FX-L003-*, FX-L016-*, FX-L025-*, and FX-L032-* prove exact refusal, migration, receipt, backup, restore, compatibility, and disk/progress outcomes with byte-digest evidence.
   - Migration command-inventory evidence proves diagnostics/retry are read-only gates and exposes no generic live repair/salvage/Doctor mutation, bypass, post-preflight force-cancel, or try-anyway path.
   - SEG-FX-001..018 plus SEG-OR-001..012 prove barrier durability, survivor determinism, sequence nonreuse, crash convergence, closed immutability, checkpoint/projection truth, and disclosure fidelity.
+  - "Amended 2026-10-31 (DL-270). Payload fixtures prove that output over 16 KiB is one BLAKE3 pack reference with no inline base64 and that identical outputs are stored once (SP-337). Seal-time repack fixtures prove that the zstd copy decodes to the same bytes, sequence and order before the original is retired, and that the active segment stays uncompressed (flags=0) (SP-335)."
+  - "Amended 2026-10-31 (DL-270). SP-344 release-gate fixtures run 20 producer streams with 100k-event thread paging, a backup and maintenance on Windows, macOS and Linux, and prove first page p95 at most 150 ms warm and 500 ms cold, commit p99 at most 50 ms, no storage-caused UI stall over 50 ms, no lost, duplicated or corrupted acknowledged event after kill -9, power cuts, torn writes and store-creation crashes (FX-L003-CREATE-CRASH), and disk budgets enforced. Blocked or skipped runs cannot satisfy them."
   - STIO, LOCK, ROOT, and FALLBACK fixtures prove exact retry/failure posture, one OS-authoritative writer, mutation-proof viewer behavior, continuity/relocation recovery, and no automatic divergent-store merge or overwrite.
   - EventRecord 2.0 fixtures prove closed scope pairs, exact v2 lookup keys, byte-identical in-memory-only legacy normalization, lifetime dedupe/catch-up, strict V1/V2 reader compatibility, and replay-only side-effect isolation.
   - RSP fixture families prove exact target/rollback equality, truthful restore envelopes, restart fencing, canonical safe-point identity, SCM baseline effects, source preservation, and Chat parity.
   - RET, ANCHOR, CMP, DEL, and Q fixtures consume the named K37 retained-inline owner-oracle subsections and prove both compaction action domains, the complete ordinary/exceptional graph, exactly one CURRENT-selected generation, retention/hold/cleanup behavior, deletion aftermath, quarantine custody, envelope/scope joins, replay idempotency, and the no-append/zero-effect posture with owner-backed evidence.
+  - "Amended 2026-10-31 (DL-270). RET-007 to RET-009 prove that detailed usage records follow the Keep usage history for setting, that daily usage totals persist whatever it says, and that usage reads are served from redb rollups with no raw-event scan (UF-108, SP-341)."
   - REGISTRY-MVP fixtures prove complete machine routing for every required family and reject missing, deferred, bundled, or false recovery/retention authority.
   - Missing, blocked, skipped, inconclusive, stale, or merely schema-valid evidence cannot satisfy a required oracle or release gate.
 validation_surfaces:
@@ -3474,6 +3486,9 @@ canonical_text: >-
   source lineage and fail closed for unknown, hidden, disabled, unsupported, partial, redacted, and missing data.
   Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
   migration behavior require fresh browser execution, raw receipts, and independent review.
+  Amended 2026-10-31 (DL-270): the suite also covers that the Usage page and every widget read redb rollups with
+  no raw-event scan, and that daily usage totals per account, provider and model are kept whatever Keep usage
+  history for says while detailed usage records follow that setting (UF-108, SP-341).
   For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
   account of each provider, Use this account, each provider's Auto-switch toggle and switch level and each account's own
   switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
@@ -4542,6 +4557,7 @@ typed result. Payload-schema IDs are unique, but these event families are not
 registered. Candidate payloads are inline,
 limited to 65,536 UTF-8 bytes, ordinary metadata only, and `no_secrets`; raw frames,
 DOM, credentials and unadmitted migration/legacy extensions fail closed.
+Amended 2026-10-31 (DL-270): the 65,536-byte admission limit above stands; within it, a candidate payload larger than 16 KiB is stored in the payload store and referenced by its BLAKE3 id rather than held inline (SP-337), so `Plans/testing_session_event_admission.json`, Contracts_V0 and GitHub_Integration keep the same 65,536 figure.
 
 Every attempted EventRecord append or replay is quarantined without consuming an
 event ID, dedupe identity or generation, projecting facts, or advancing a checkpoint.
@@ -5239,7 +5255,9 @@ acceptance_criteria:
   mandatory original custody; restore optional derived root/generation/dataset coherently after holds/deletion/permissions
   and current-source checks. Negative: Reject certified-indefinite copy of expired Start, full-body archive, rebuilt
   authority, partial backup generation, deleted source resurrection or holds bypass. Evidence: Exact unchanged 27
-  policy values/285 rows and whole backup/source witnesses; real restore native execution NOT_RUN.'
+  policy values/285 rows and whole backup/source witnesses; real restore native execution NOT_RUN. Amended 2026-10-31 (DL-270): backups carry canonical families, sealed
+  segments and payload packs only; derived roots, generations and datasets are rebuilt after restore and are not
+  restore-verified artifacts (BRS-031).'
 validation_surfaces:
 - Plans/goal_certified_event_coordinator_contracts/protocol.md
 - Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json
@@ -5321,7 +5339,7 @@ Every family also shares `COORD-RETRY-01`, `COORD-UNCERTAIN-01`, `COORD-CAS-01`,
 | `COORD-READER-01` | A scheduler or prompt-context read while the checkpoint is not current, coverage is short or the publication changed | Typed unavailable; the scheduler treats it as `coordination_conflict` and neither schedules nor injects context |
 | `COORD-WITHDRAW-01` | Withdrawal of one admitted family | Writer admission cut off, current core withdrawn, projector and readers fenced, governed rebuild from kept seglog records; no seglog deletion |
 | `COORD-RETENTION-01` | Coordination records of a Run whose terminal canonical record has not resolved | Not eligible for expiry under `RP-COORDINATION-180D` |
-| `COORD-MIRROR-01` | A stale or corrupt `.puppet-master/state` mirror | Never authority for scheduling, prompts, unregister, crash, abort, receipt or validation decisions |
+| `COORD-MIRROR-01` | Any exported or retired-mirror copy of coordination state (`pm export` output, a leftover `.puppet-master/state` file) | Never authority for scheduling, prompts, unregister, crash, abort, receipt or validation decisions (SP-339 retires the state mirror files) |
 
 ```yaml
 plan_unit_id: ATS-058
@@ -5459,7 +5477,10 @@ canonical_text: >-
   states; and a live-only working tick that costs less than a full render. Sound checks render every
   cue of every kit offline: peaks at or under -20 dBFS, cues of the same tier within about 3 dB
   across kits, at most one cue per 120ms, step ticks at most one per 250ms, and nothing before a
-  user gesture.
+  user gesture. Amended 2026-10-31 (DL-270, SP-338, ACD-242): the suite also covers paging. Opening a chat
+  loads its first page from the render-page store with no event replay; load-older paging works and
+  cannot be hidden; a 100k-event thread's first page is p95 150 ms warm and 500 ms cold, reading at most
+  2 MiB; and after a restart the chat reopens the same way.
 gui_related: true
 gui_classification_reason: "Defines the tests that gate the chat presentation."
 split_recommended: false
@@ -5468,6 +5489,7 @@ unblocks: []
 acceptance_criteria:
   - "Each listed behaviour has at least one automated check that reads pixels or measured state."
   - "Sound checks run on offline renders of every cue in every kit."
+  - "Amended 2026-10-31 (DL-270). The paging checks (first page from the render-page store, load-older, the 100k-event first-page budget and the reopen after a restart) read measured state, not dispatch counts."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6058,7 +6080,10 @@ canonical_text: >-
   tab surface and every look's widget plates are checked on it; Details opens the Usage page at the widget's
   home room with its inspector open; Agents keeps only its filter; a dashboard a person made that leaves the
   reopen list while closed loses its key, set-aside copy and name; a named layout restores its boards, and a
-  save over 64 KB keeps the layout without them and says how many bytes it left out. The chat (F3-637, F3-042,
+  save over 64 KB keeps the layout without them and says how many bytes it left out (Amended 2026-10-31
+  (DL-270): a redb value is at most 16 KiB (SP-340), so a layout snapshot over that size is stored per board or
+  in the payload store (SP-337) by the stored form SP-330 gives; the case keeps the trimmed-bytes notice and
+  asserts that stored form). The chat (F3-637, F3-042,
   Plans/assistant-chat-design.md#ACD-500): a popped-out chat starts back in its column after a restart; the left
   rail's Chat entry shows or hides the column on every page (cmd.panel.switch); a stored Chat Layout value of
   Overlay or Detached is ignored and cleared on first read with no pop-out and no notice

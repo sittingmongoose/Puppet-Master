@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L2029-L2090
+Source lines: L2029-L2098
 
-Source SHA256: `64e858a20c01af8b263735faeb050f2102a9d5328ae964cd5f4c4ebf53a1469d`
+Source SHA256: `6dea8884b18183c84a5e54bdbf2fab67d36b3dd3daeadfdccfb04bf0a2b71f08`
 
 ---
 
@@ -29,8 +29,13 @@ into `PASS`.
 | `GUI-SRT-009` | MCP exposes requested/effective availability and independent transport/init/capability/auth/epoch/retry/subscription/rollback state without fabricating readiness. | `Plans/MCP_Integration.md`; `Plans/FinalGUISpec.md` F3-509 | future GUI MCP reconnect/retry/subscription rollback matrix | pending | `NOT_RUN` |
 | `GUI-SRT-010` | Ordinary browser views are PM-native and show controller lease, observer state, and `PageGeneration`; protected `AuthBrowserSession` content and controls exist only in the human-only foreground surface, with every agent/tool/BSD/awareness/capture consumer denied visibility. | `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-142 through SMPFS-145; `Plans/FinalGUISpec.md` F3-509 | future GUI Browser controller-race and protected-session negative matrix | pending | `NOT_RUN` |
 | `GUI-SRT-011` | Every runtime mutation control has canonical Commands and production Wiring coverage or is disabled/omitted with owner reason; the GUI invents no look-alike command, event, receipt, or state. | `Plans/Commands_System.md`; `Plans/UI_Command_Catalog.md`; `Plans/UI_Wiring_Rules.md`; `Plans/Wiring_Matrix.production.json` | future GUI command/wiring fail-closure census | pending | `NOT_RUN` |
+| `GUI-SRT-012` | Storage health shows, for each owner-named group, usage against disk budget, reclaimable bytes and the last compaction; the reclaim row dispatches only `cmd.storage.compaction.request`, shows the owner lifecycle, reports bytes returned only from the owner's before-and-after measurement, and is disabled with the Case L reason in viewer mode. | `Plans/storage-plan.md` SP-340, SP-344; `Plans/FinalGUISpec.md` F3-457 | future GUI storage-health and verified-reclaim matrix | pending | `NOT_RUN` |
+| `GUI-SRT-013` | The last verified backup, with its time and last event, and what a restore from it would lose appear on Data Backup and Retention, the restore preview, the recovery shell and Storage & Retention from one Backup-owned projection, in the existing `data_loss_risk.class` words; derived families are stated as not backed up. | `Plans/Backup_Restore_System.md` BRS-031; `Plans/FinalGUISpec.md` F3-528, F3-457 | future GUI backup-status and restore-loss matrix | pending | `NOT_RUN` |
+| `GUI-SRT-014` | A 100k-event chat opens on its first page within 150 ms p95 warm and 500 ms p95 cold, reading at most 2 MiB and replaying no event; scrolling near the top loads the next older page by itself with the reading position held, and the Load 50 older row stays as the fallback; a jump to an unloaded message pages it in; the row is keyboard reachable. | `Plans/storage-plan.md` SP-338, SP-344; `Plans/assistant-chat-design.md` ACD-242; `Plans/FinalGUISpec.md` F3-667, F3-506 | future GUI 100k-event open, paging and jump matrix | pending | `NOT_RUN` |
+| `GUI-SRT-015` | The record inspector opens a record from the Ledger, the log and audit inspector, Raw views and Show raw data through `cmd.storage.open_value`, shows decoded fields, resolves payload references on demand under redaction, reads the same record as `pm inspect`, opens in viewer mode, and reads no JSON or JSONL mirror file. | `Plans/storage-plan.md` SP-339, SP-337; `Plans/FinalGUISpec.md` F3-666 | future GUI record-inspector parity matrix | pending | `NOT_RUN` |
+| `GUI-SRT-016` | The Usage page, its Ledger room and every Usage widget read redb rollups and scan no raw usage event; usage totals, windows and charts come from rollups while the Keep usage history for setting governs only detailed records; a per-event drill-through is a keyed lookup. | `Plans/usage-feature.md` UF-108; `Plans/storage-plan.md` SP-341; `Plans/FinalGUISpec.md` F3-418; `Plans/Widget_System.md` WS-015 | future GUI usage rollup-only read census | pending | `NOT_RUN` |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Automated_Testing_System.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/usage-feature.md
 
 ### GRRC-032 - Shared Runtime GUI Projection Checklist Gate
 
@@ -40,17 +45,19 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/GUI_Rebuild_Requirements_Checklist.md
 canonical_text: >-
-  The GUI rebuild is not shared-runtime complete until GUI-SRT-001 through GUI-SRT-011 prove bounded thread
+  The GUI rebuild is not shared-runtime complete until GUI-SRT-001 through GUI-SRT-016 prove bounded thread
   shell/detail projection, durable offline/reconnect/coalescing truth, ObservableWork, separate installation/auth/readiness,
   lease and awareness conflicts, evidence drill-through, BSD, typed Debug/Eval/MCP/Browser state, protected
-  AuthBrowserSession isolation, and command/wiring fail closure. The checklist consumes owner truth and does not
+  AuthBrowserSession isolation, command/wiring fail closure, storage health with verified reclaim, the last verified
+  backup with restore loss, the chat first-page open with load-older paging, the record inspector, and rollup-only
+  Usage reads (DL-270, amended 2026-10-31). The checklist consumes owner truth and does not
   create lifecycle, command, event, receipt, schema, or persistence authority.
 gui_related: true
-gui_classification_reason: This unit gates user-visible runtime projections and protected-session presentation in the rebuilt GUI.
-depends_on: [F3-506, F3-507, F3-508, F3-509, ACD-445, ACD-446, ATS-030, ATS-031, ATS-032, ATS-033, ATS-034, ATS-035]
+gui_classification_reason: This unit gates user-visible runtime projections, storage, backup and chat-open projections, and protected-session presentation in the rebuilt GUI.
+depends_on: [F3-418, F3-457, F3-528, F3-666, F3-667, ACD-242, SP-338, SP-339, SP-340, BRS-031, UF-108, F3-506, F3-507, F3-508, F3-509, ACD-445, ACD-446, ATS-030, ATS-031, ATS-032, ATS-033, ATS-034, ATS-035]
 unblocks: []
 acceptance_criteria:
-  - GUI-SRT-001 through GUI-SRT-011 each carry a harness, durable evidence ref, owner ref, and PASS before shared-runtime GUI completion is claimed.
+  - GUI-SRT-001 through GUI-SRT-016 each carry a harness, durable evidence ref, owner ref, and PASS before shared-runtime GUI completion is claimed.
   - Plan validation or screenshot-only evidence cannot satisfy functional, restart, race, poor-network, pressure, or protected-boundary rows.
   - No row treats stale projection, awareness, lease possession, authentication, process exit, or a dispatch receipt as mutation or success authority.
   - Protected AuthBrowserSession content and controls remain human-only and absent from every prohibited consumer.
@@ -66,6 +73,7 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+  - Plans/Decision_Log.md#DL-270
 preserved_exact_tokens: [ThreadShell, ThreadDetail, ObservableWork, Off, Auto, On, DebugSession, EvalSession, AuthBrowserSession, human-only]
 negative_constraints: [Do not let the checklist become implementation authority., Do not claim PASS from plan or screenshot evidence., Do not expose protected authentication content., Do not invent commands, events, receipts, or state.]
 owner_hints: [Plans/GUI_Rebuild_Requirements_Checklist.md, Plans/FinalGUISpec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]

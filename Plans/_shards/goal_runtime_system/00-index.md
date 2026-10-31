@@ -1,54 +1,54 @@
 # Shard Index: Plans/Goal_Runtime_System.md
 
-Generated: 2026-10-19T00:58:45Z
+Generated: 2026-10-31T20:35:29Z
 
-Source SHA256: `735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af`
+Source SHA256: `330751dd992857de46503fb4e28371689feafad50c381e37004042f8d2aa9299`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `e51de3a248cd508a4c0ac1a0f865ad8c2652aa62005977b75301cb5e5ec51139`
-- [002 - 0. Scope](002-0.-scope.md) L7-L17 `fce9cb5aba2b304ba3dd7f5bbe04b5fea80f322779b65058766ef8d12cfc291f`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L19-L56 `6bc836b20ae9f459fe3673a892c5ba2756e18759cbba641f65e9a423a9032348`
-- [004 - Goal V2 record and retired fields](004-goal-v2-record-and-retired-fields.md) L58-L121 `16e45b4663d847730b435f08e0c744a7b7e0cda320a97554d22d5729dd27ca55`
-- [005 - Durable host continuation](005-durable-host-continuation.md) L123-L159 `099292f650d7af606c6eac26408cc7c945b6315076247a24c77ff4ba9f165f54`
-- [006 - Goal change authority](006-goal-change-authority.md) L161-L175 `28f2bb91e05740c3a460a81168d1556edb7fc8105d8ba119a9fcdebc0abb4f87`
-- [007 - Goal Activity domain surface](007-goal-activity-domain-surface.md) L177-L207 `e4cb9d79b139024c0e3288a10004f730f431d7347a89dc1f27e386c386454c47`
-- [008 - Internal workflow use of Goal V2](008-internal-workflow-use-of-goal-v2.md) L209-L232 `012e4e7ee2e72facb2b7902c59ed580b7a531598580ccd117eaff0f02b3f8dae`
-- [009 - Retired Goal structure and negative ownership](009-retired-goal-structure-and-negative-ownership.md) L234-L248 `f2b4120befa21aa3f1a8f6370a1f0c2876050b4a9a598fea645e912cf4c85bfe`
-- [010 - Goal V2 exact commands and required result boundaries](010-goal-v2-exact-commands-and-required-result-boundaries.md) L250-L268 `d7ad64c97767241d6c19a5cd542e288cebbf602ec74fcd4b9390dacd9e202a46`
-- [011 - Goal V2 events](011-goal-v2-events.md) L270-L280 `310653ee30d22a530afb8b58e2a277e6d703b677f0582e4b8c559ac1d5dc4779`
-- [012 - Goal V1 to V2 migration](012-goal-v1-to-v2-migration.md) L282-L295 `ba00a6493f91d392768baff36e1a8d312103af89c5951c46f76b8a04842bd58a`
-- [013 - Goal V2 verification](013-goal-v2-verification.md) L297-L307 `f538ce793f5d910703a8c965328f7ba967c326648ae23faab46703d8b9511347`
-- [014 - 2. Canonical PlanUnits](014-2.-canonical-planunits.md) L309-L770 `3a78cf8f0c11b70c4159ea1677b45e5efd4b5ff5709a7c0cd1f59988e0e5183a`
-- [015 - Server command-gap owner closure - Goal handoff family (2026-09-01)](015-server-command-gap-owner-closure-goal-handoff-family-2026-09-01.md) L772-L845 `d2a17f95d2e696355d4b0b3b2b277a3563271aeb951ba0d2d46ee467738fe662`
-- [016 - Remaining runtime integration addendum (2026-08-13)](016-remaining-runtime-integration-addendum-2026-08-13.md) L847-L929 `34083ca56d7bed74fb6a487dd51446f7386d3572cf06297f640ca90fd1edb30e`
-- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L931-L2612 `412bb0d9d77500ec0662ddc87d8767c7eb65e135ab555f35ff794330bebecc1d`
-- [018 - 3. Contracts, Schemas, Events, Or Data Shapes](018-3.-contracts-schemas-events-or-data-shapes.md) L2614-L3826 `a21b17f116461b18f6506df01ea19e0e8142dccfbd3a63793e7e57a721ba14c7`
-- [019 - 4. Integration Surfaces](019-4.-integration-surfaces.md) L3828-L3836 `6a17f19c314bb23d76dc0b3ac5bc0c7c82a973ee619414070251049ff60f22e4`
-- [020 - 5. Validation And Acceptance](020-5.-validation-and-acceptance.md) L3838-L3851 `9efadf06920088dea85a3a23b14c2a48ccefa6b668c02d7ae11cc359852f2e5b`
-- [021 - 6. Plan-To-Node Readiness](021-6.-plan-to-node-readiness.md) L3853-L3857 `40ba7bd46377254b4dfa9c2b622ade0308a6ef41091bf66f9eb34a8e3effa81f`
-- [022 - 7. Deferred, Retired, Compatibility, And Non-Goals](022-7.-deferred-retired-compatibility-and-non-goals.md) L3859-L3878 `6e1ef20b9fcd63b507c68d14436b99474353b0c9bd119d0fec9250220215922a`
-- [023 - 8. Source Lineage And Governance](023-8.-source-lineage-and-governance.md) L3880-L3898 `8ec0f2213524c20e805724cedf11c7a50315ed297e36a86bb4ff3a2d8c77601c`
-- [024 - Ledger Compile Addendum - pldg-20260616-002](024-ledger-compile-addendum-pldg-20260616-002.md) L3900-L4094 `5fe00f84f08eae3aaede9e6858b335d55b2f89eae715484752b339f5ae55369b`
-- [025 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](025-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L4096-L4265 `19d80cf41038f51ea8e1198468b13be3cd58a41cfb835fda0447be1a97863aba`
-- [026 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](026-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4268-L4407 `18a4f47a6bcc1f341d10a72ad776a267657905e69f64bca3c51ad26cd10bef8b`
-- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4409-L5228 `9c525e9065c3d1e9fb9ade09ecf38af78d662f2de1784464fdf4fac298f6de49`
-- [028 - Case L Durable Goal Recovery Consumer Addendum - 2026-07-17](028-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md) L5230-L5369 `4380f0c63b639363224614711987e3a34cdbcfb577139fd24d8c57713ca08339`
-- [029 - Additive Correction v4 — Goal Replay Lineage, Completion Guards, And Bound Plan Runs (2026-09-03)](029-additive-correction-v4-goal-replay-lineage-completion-guards-and.md) L5371-L5468 `03b980380f2c93fc634eddd76398ee11b59e9d31202f3303f1cebcc1c8cab561`
-- [030 - Working Notebook Authority Boundary Addendum (2026-09-05)](030-working-notebook-authority-boundary-addendum-2026-09-05.md) L5470-L5507 `7931ec4a0ac21495b47d5b5fa8b808fee6b5e40c06abf1e4a6e2a7af8eae4280`
-- [031 - Cumulative v3 Goal Activity Detail and Plan Binding Specification (2026-09-07)](031-cumulative-v3-goal-activity-detail-and-plan-binding-specificatio.md) L5509-L5904 `21ec903a239d24aec339d860b2a5ac9197855950ad8a02f2e70b10249ce56ce9`
-- [032 - Goal body currentness and history](032-goal-body-currentness-and-history.md) L5907-L5993 `1a06f42927e3158fdffbc4953ae6dc30fa899b7422668df8bde64ae78b7599bb`
-- [033 - Current creation consumers and canonical Goal state](033-current-creation-consumers-and-canonical-goal-state.md) L5995-L6005 `dc065cd74cd2f6144bed03088bff7fe939886706d5463899b32cd5176bd90b0f`
-- [034 - Current update consumers and accepted Goal state](034-current-update-consumers-and-accepted-goal-state.md) L6007-L6099 `bf4e0616e489489692531e8aae7982897e2bd8babdaacc7db4451049af6aa9ed`
-- [035 - Original Standard certification receipt](035-original-standard-certification-receipt.md) L6101-L6178 `cbc8d5c3381e7f10441323bb350a99451371659adea39c2058ea7dae60b694f2`
-- [036 - Original Goal creation command settlement](036-original-goal-creation-command-settlement.md) L6180-L6192 `1cbaa3819c77267af981ebbe45ac0f457f2ed7c375142e24b219c2b718a39180`
-- [037 - GRS-066 - Original Goal creation command settlement](037-grs-066-original-goal-creation-command-settlement.md) L6194-L6257 `50294f7a5550e051f6fe65208096b4d3993aafe274ec132636c465b6dc32a8f7`
-- [038 - Passive original Goal creation observation](038-passive-original-goal-creation-observation.md) L6258-L6331 `1fdb77467b71eafd095cf83d76bab4504c98fd1e3a28694f3edf31960912a9de`
-- [039 - Original Goal objective update acceptance and settlement](039-original-goal-objective-update-acceptance-and-settlement.md) L6332-L6984 `5353b55340cf55aedd983aff33c1c34bb4b0581a87670da06809d6bf985b63a2`
-- [040 - Current Workflow activation and certification child scope](040-current-workflow-activation-and-certification-child-scope.md) L6987-L7677 `670444ba60f74ff46fdbb7392bd466aa387b615f4a225c40abf10532e6c2671e`
-- [041 - GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)](041-grs-082-fresh-standard-workflow-certification-original-source-20.md) L7680-L7774 `a732626c86a052fc7d7195f732bab827dcf9b0fd607d7b107cd1e92fbbb8fcd8`
-- [042 - GRS-083 — Original certified producer composition and source-only authority (2026-09-21)](042-grs-083-original-certified-producer-composition-and-source-only-.md) L7777-L7834 `d2f1ec482212d928c3d0ac03f516a1d0060b9b40ae05274491310965ff1238a4`
-- [043 - GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)](043-grs-084-whole-certified-v3-event-identity-released-custody-nativ.md) L7837-L7906 `65f38a33cec1203e32612d0ab28f75f197116bfe6f08a55a2b9b39961322e5b8`
-- [044 - GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)](044-grs-085-mandatory-started-cancelled-certified-prefix-projection-.md) L7909-L7976 `d014eb973848cb754ccdc14d688310d0ca965bbd67b47883c49eebc101454db4`
+- [001 - Preamble](001-preamble.md) L1-L5 `e4acbcdef385a34bfde1d83f530efad8e2a3a371b6a6029eadf73ecf091a3bcc`
+- [002 - 0. Scope](002-0.-scope.md) L7-L17 `d0828b9449e25977b6530153ca549c155815dcb2e41f998042f0bb71c179671c`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L19-L56 `7be361e75aa8f9bd50c186b1d578a6c75a028a7090b519d7c908e317c1b07c0a`
+- [004 - Goal V2 record and retired fields](004-goal-v2-record-and-retired-fields.md) L58-L121 `43ba03b01d8a79ba0585693a03bf3ca43da586dfc10d4ae58742497754421f7b`
+- [005 - Durable host continuation](005-durable-host-continuation.md) L123-L159 `668f4bc8c26962de8ea70d1db699bf007150edd436c1ad6d3b226ad334d0dbb5`
+- [006 - Goal change authority](006-goal-change-authority.md) L161-L175 `ec1720913c53881dfc5d917dac3059326b8a72fa6b80d9e6ac16c3898ea934a3`
+- [007 - Goal Activity domain surface](007-goal-activity-domain-surface.md) L177-L207 `eb29df308b71c1d9d9408d1d08096fba252cefc5c56c6a0f43e54f6a98ec5bb6`
+- [008 - Internal workflow use of Goal V2](008-internal-workflow-use-of-goal-v2.md) L209-L232 `ae1bd434e2de8f223ba65207a0e793c9b4301e3b97b6437b454d487f4612fdb2`
+- [009 - Retired Goal structure and negative ownership](009-retired-goal-structure-and-negative-ownership.md) L234-L248 `5b1ad01e66d1e7a3d1f178e59a3efb24713c265b714d5e66cf9a2790420e4732`
+- [010 - Goal V2 exact commands and required result boundaries](010-goal-v2-exact-commands-and-required-result-boundaries.md) L250-L268 `f6e4f52ce59a76b881a672cd317c57d815468c6c5e0e6458d018f828a87da0fb`
+- [011 - Goal V2 events](011-goal-v2-events.md) L270-L280 `d9183f652d1a91ddc01f0aa71bcb1323163e88c635b0e2eba96c284e752281a6`
+- [012 - Goal V1 to V2 migration](012-goal-v1-to-v2-migration.md) L282-L295 `b2dfd7b7551d14d60201f1abd45fc1e3e3d6c258bf5d949e5fa6ca8cc7698962`
+- [013 - Goal V2 verification](013-goal-v2-verification.md) L297-L307 `b8350b32a3962062a16f44a9293651c448bad95eb33267a5804770eea01aefc7`
+- [014 - 2. Canonical PlanUnits](014-2.-canonical-planunits.md) L309-L770 `1f458c6a4865a055f160aae63c928896cfbae5f33ce78fa487bb2d0336faab97`
+- [015 - Server command-gap owner closure - Goal handoff family (2026-09-01)](015-server-command-gap-owner-closure-goal-handoff-family-2026-09-01.md) L772-L845 `75c143d32234d1067343f313d93eba7b614b410221aaa3082fc916008247b17d`
+- [016 - Remaining runtime integration addendum (2026-08-13)](016-remaining-runtime-integration-addendum-2026-08-13.md) L847-L929 `233f8c2f41ec3a043ca8a116386a308b143fe70a850ee98aa259b2ab39d5eec4`
+- [017 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L931-L2612 `227270a2ab711db69f4af686b1a3001b22f82ca8283b9b000a019a412fc1d1a4`
+- [018 - 3. Contracts, Schemas, Events, Or Data Shapes](018-3.-contracts-schemas-events-or-data-shapes.md) L2614-L3826 `3b2b359b68e01c0320ab4745280c044a569c2a7226f79fdfd07bc93d825ffa8b`
+- [019 - 4. Integration Surfaces](019-4.-integration-surfaces.md) L3828-L3836 `73c61e4d39b559355981c55bd7c2f3a1c3178be4d0bc8c176658c009e7e77c0d`
+- [020 - 5. Validation And Acceptance](020-5.-validation-and-acceptance.md) L3838-L3851 `b7e9119601550301a65b0a4869ebdc48cafc0ea819d7f90f74dfb6625920b82d`
+- [021 - 6. Plan-To-Node Readiness](021-6.-plan-to-node-readiness.md) L3853-L3857 `8c8c5bedf00068178380ecf6ea49888034014c0b1e52c0b49e09469aa301ac9a`
+- [022 - 7. Deferred, Retired, Compatibility, And Non-Goals](022-7.-deferred-retired-compatibility-and-non-goals.md) L3859-L3878 `fc8da3ff925815be78feaa4d36e4c34e202e7de5a17895919bb273ee7cb04cb7`
+- [023 - 8. Source Lineage And Governance](023-8.-source-lineage-and-governance.md) L3880-L3898 `ad44241ceb7a685c660b4133e416450f2dd2a3e9a74b2129bb8a6a296a45944f`
+- [024 - Ledger Compile Addendum - pldg-20260616-002](024-ledger-compile-addendum-pldg-20260616-002.md) L3900-L4094 `d7a7a4c0ee35728f16c73caa6dfaa0c79ba8149f22119ab556d0e3486da9e645`
+- [025 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](025-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L4096-L4265 `5c4f67054149932238cf5078a74b4f1f6bf6c978d2dcb348d25c79c49f2e182d`
+- [026 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](026-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4268-L4407 `cf24525823ef7cbc0876580b1e28f0bbad3e0b584a24c19a347ec974ee66ba5e`
+- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4409-L5228 `9cf94d300c86ddc7968a613a4957d1618309bd98bf10ffc30ccc7f43d9c2404f`
+- [028 - Case L Durable Goal Recovery Consumer Addendum - 2026-07-17](028-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md) L5230-L5369 `6f2f98f40a5aff00433d795cb80ff2f87a22c04a16d67ba697d72a3f78175b7c`
+- [029 - Additive Correction v4 — Goal Replay Lineage, Completion Guards, And Bound Plan Runs (2026-09-03)](029-additive-correction-v4-goal-replay-lineage-completion-guards-and.md) L5371-L5468 `783f5e37c36e9249d861551fb0099d2ed872ff973fbf2044bf5ec5f651565eb5`
+- [030 - Working Notebook Authority Boundary Addendum (2026-09-05)](030-working-notebook-authority-boundary-addendum-2026-09-05.md) L5470-L5507 `f74968d29ee8c8b5b32a9ed7be5769268942aca9c4e575ec3b056fb2d0e22b7e`
+- [031 - Cumulative v3 Goal Activity Detail and Plan Binding Specification (2026-09-07)](031-cumulative-v3-goal-activity-detail-and-plan-binding-specificatio.md) L5509-L5904 `99f5c741cf35d6791d03262a083dd2e19950a319d19fa8cb531ca130ca3c7257`
+- [032 - Goal body currentness and history](032-goal-body-currentness-and-history.md) L5907-L5997 `8cb25e267e54cd799d472693c8c2f5b8a4d134a101121e0c3ca7996561c12645`
+- [033 - Current creation consumers and canonical Goal state](033-current-creation-consumers-and-canonical-goal-state.md) L5999-L6009 `5435c5c54d8ccdca08efa0ebefdea1bfff463d25534493547fb3095df5d2e084`
+- [034 - Current update consumers and accepted Goal state](034-current-update-consumers-and-accepted-goal-state.md) L6011-L6103 `573d55fdc216a5ed8141a99885363af92c3eee6d582616228c43af1f852fd37b`
+- [035 - Original Standard certification receipt](035-original-standard-certification-receipt.md) L6105-L6182 `542aaf1f27a6ea50fe0d00cd31e6dab6fd1281f7972a7a53f531220d607935bc`
+- [036 - Original Goal creation command settlement](036-original-goal-creation-command-settlement.md) L6184-L6196 `31d4a19ce08416436125e21285673110d6b59a4c0ce0c38e396598e60b62994d`
+- [037 - GRS-066 - Original Goal creation command settlement](037-grs-066-original-goal-creation-command-settlement.md) L6198-L6261 `64a4259a928120d9a4eae0b7f5423924e2f0e3e10e6f79e4c3ea7cd4192630b2`
+- [038 - Passive original Goal creation observation](038-passive-original-goal-creation-observation.md) L6262-L6335 `05152379d2c3454f6a103f94966227d9cbcb0622abff20f1fabc3068eaeab42c`
+- [039 - Original Goal objective update acceptance and settlement](039-original-goal-objective-update-acceptance-and-settlement.md) L6336-L6988 `6e8f3e43288ed9a34ce31545f011a8dbf2634f76162721bac25948667899486d`
+- [040 - Current Workflow activation and certification child scope](040-current-workflow-activation-and-certification-child-scope.md) L6991-L7681 `d2ec9c50af83ef18ed53600ff8afb5a86787ade740af14562a85e45d22b6ef32`
+- [041 - GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)](041-grs-082-fresh-standard-workflow-certification-original-source-20.md) L7684-L7778 `6d2d1ce2d95b969a6f59de61c73659eb586386f8f21a80208ecc3ec2694074df`
+- [042 - GRS-083 — Original certified producer composition and source-only authority (2026-09-21)](042-grs-083-original-certified-producer-composition-and-source-only-.md) L7781-L7838 `1614ea4655d4bea60742fdc20d4cc31bcd307a11c1f7829846391c5e792a6025`
+- [043 - GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)](043-grs-084-whole-certified-v3-event-identity-released-custody-nativ.md) L7841-L7910 `d2287b6c2881b7d8abfaae9ca7ccc7c8db1b5514f1a00ed9af733e2d1761641f`
+- [044 - GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)](044-grs-085-mandatory-started-cancelled-certified-prefix-projection-.md) L7913-L7980 `2422be7c7bed19a9a880672e321ac97ddf3104298215638ddfe60578b0ebcbcf`

@@ -474,7 +474,7 @@ ContractRef: ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum
 
 - a conversation branch starts only from an immutable Assistant Chat restore point stored as the materialized `restore_point_record` family at `rp:{project_id}:{restore_point_id}` with schema `pm.storage_value.restore_point_record.v1`; a runtime `safe_point_record`, FileSafe snapshot, runtime artifact projection, or generic “equivalent preserved state boundary” is not a substitute
 - the restore point freezes one inclusive source message boundary with source thread, conversation branch, context/provenance, attachment/citation refs, `record_sha256`, and optional `safe_point_id`; it contains no workspace file bodies, and the optional safe-point identity is lineage only
-- applying an `available` restore point verifies the expected record hash and materializes the frozen conversation boundary into a new `thread_id` and conversation `branch_id`; the source thread, source conversation branch, source worktree, repository, branch, index, and files remain unchanged, and successful application does not consume the restore point
+- applying an `available` restore point verifies the expected record hash and materializes the frozen conversation boundary into a new `thread_id` and conversation `branch_id` (Amended 2026-10-31 (DL-270, SP-337): materializing creates the new thread and branch records only; they reference the frozen messages and attachment payloads by record id and BLAKE3 payload id and copy no message or payload content); the source thread, source conversation branch, source worktree, repository, branch, index, and files remain unchanged, and successful application does not consume the restore point
 - the lifecycle is immutable `available -> expired | deleted | corrupt`; application result is closed to `branched | refused | failed`, and only `branched` creates the new identities and `restore_point.applied` evidence
 - storage policy is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`; the cap is `2,048` per project and count pressure selects only the oldest eligible record; eligible expiry retains the required hash summary. Descendant branch, application, explicit preserve, legal-hold, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until owner-defined release evidence is durable. Section 15 consumes this policy and does not invent a timer, infer the release boundary, clear a ref, or redefine the owner-governed `expired` lifecycle transition
 - deleting the source thread does not resurrect, modify, or silently restore it. If the immutable restore-point record and all required frozen boundary refs remain `available`, a later branch keeps the source hidden and creates only a new thread/branch labeled as new, not undo. If deletion/retention purged required boundary content, the action is `refused` with unavailable reason `source_deleted_content_unavailable`, creates nothing, does not reconstruct from a tombstone or backup projection, and leaves the record/status unchanged
@@ -544,6 +544,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usa
 ### 3.11 Virtualized Conversation or Log List
 
 - long chat and runtime lists must use virtualization without losing keyboard navigation, focus recovery, or anchor-to-message behavior
+- Amended 2026-10-31 (DL-270, SP-338, ACD-242): chat threads page older items from the derived render-page store; load-older paging is mandatory and opening a chat never replays its events. An anchor or search jump to an unloaded item loads its page first. The first page meets SP-338's 150 ms warm and 500 ms cold p95 budget, reading at most 2 MiB. SMPFS-052 carries the same rule.
 - virtualization cannot break sticky status elements, selection, or search results navigation
 
 ### 3.12 Know Where Your Tokens Go (Analytics Framing)
@@ -572,7 +573,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.
 - **Ports** owns discovered or declared service endpoints, watches, and open-port affordances linked to the owning dev session.
 - Surface-boundary labels stay explicit: terminal-run is PTY-backed; Output may own non-interactive `/run/test/task` and `/linter/test/build` summaries; Problems owns `/errors/warnings` with `/line/code`; Debug Console keeps debug-console-specific evaluator semantics; terminal-derived diagnostics and `/diff` render checks link back to the originating terminal or dev session; Ports owns `/listening/forwarded` endpoints and URL actions.
 - Cross-surface feature patterns are canonical only when they preserve origin: Output and `/Run` views support channels or per-task tabs, filter and `/search`, pin or `/preserve`, follow-vs-pause for live logs, rerun, and `/reveal-origin`; Problems supports grouping by file, `/tool/severity`, dedupe, filters such as `/current` file or current tool, and code plus originating run or session links; Debug Console separates REPL and `/evaluation` from stdout or `/stderr`, retains expression and `/commands` history, and renders richer `/objects`; Ports and `/Services` support `/endpoint` auto-discovery, process or `/service` labels, open and `/copy` URL actions, and route back to the originating `/session` or dev-service context.
-- Debug and run surfaces are part of the broader workbench story, not a free-floating panel: remote run/debug follows remote-edit MVP requested/effective disclosure, only hand-authored plan contracts can promote derived shard hints into shipped behavior, and JSONL mirrors or logsearch-style retrieval remain future `/diagnostics` hints until reconciled into owner docs.
+- Debug and run surfaces are part of the broader workbench story, not a free-floating panel: remote run/debug follows remote-edit MVP requested/effective disclosure, only hand-authored plan contracts can promote derived shard hints into shipped behavior, and logsearch-style retrieval remains a future `/diagnostics` hint until reconciled into owner docs. Amended 2026-10-31 (DL-270, SP-339): there is no JSONL mirror, now or later; diagnostics read stored state through pm tail, pm inspect and pm db dump, and pm export writes JSONL or JSON on request.
 - Process, test, and dev-server debug correlation prefers `dev_session_id`, including `/test/dev-server` loops; `terminal_session_id` remains exact shell continuity, while `browser_session_id` and `session_class` remain the browser evidence identity.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
@@ -4144,7 +4145,7 @@ plan_unit_id: SMPFS-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Long chat and runtime lists use virtualization while preserving keyboard navigation, focus recovery, anchor-to-message behavior, sticky status elements, selection, and search result navigation.
+canonical_text: Long chat and runtime lists use virtualization while preserving keyboard navigation, focus recovery, anchor-to-message behavior, sticky status elements, selection, and search result navigation. Chat threads page older items from SP-338's derived render-page store with mandatory load-older paging (ACD-242); opening a chat never replays events, and an anchor or search jump to an unloaded item loads its page first.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -4604,7 +4605,11 @@ plan_unit_id: SMPFS-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Debug and run surfaces are part of the broader workbench story; remote run/debug follows requested/effective disclosure, derived shard hints cannot become shipped behavior without owner-doc contracts, and JSONL/logsearch diagnostics remain future hints until reconciled.
+canonical_text: >-
+  Debug and run surfaces are part of the broader workbench story; remote run/debug follows requested/effective
+  disclosure, derived shard hints cannot become shipped behavior without owner-doc contracts, and logsearch
+  diagnostics remain a future hint until reconciled. Amended 2026-10-31 (DL-270, SP-339): no JSONL mirror is kept;
+  diagnostics read stored state through pm tail, pm inspect, pm db dump and on-request pm export.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -11663,7 +11668,7 @@ second workspace. A prepared runtime resource is not exposed to a controller,
 navigation, agent, viewer or command-result consumer before the creation commit.
 The owner verifies the actual isolated resource and exact assigned generation,
 then submits its bounded creation fact to the existing barrier EventRecord append.
-The synced frame/manifest AppendReceipt is the logical creation commit; only then
+The AppendReceipt for the barrier EventRecord append is the logical creation commit. Under SP-336 it is issued after the barrier-class full flush of the segment, which carries the durable watermark; the manifest is not synced per append. Only then
 may the owner publish success and make the prepared workspace available through
 the ordinary independently checked action path. This is an ordered runtime/seglog
 barrier, not a cross-store transaction or admission of a Browser session/profile
@@ -11938,7 +11943,7 @@ changed the existing workspace when event append fails. The owner first commits
 the actual new generation and fences old projections, then submits the original
 bounded reset fact through the existing barrier EventRecord append. Publish
 successful command completion and the event-dependent read projection only after
-the synced frame/manifest AppendReceipt. This is ordered owner-effect/seglog
+the AppendReceipt for the barrier append, issued after SP-336's full flush of the segment's durable watermark (no per-append manifest sync). This is ordered owner-effect/seglog
 coordination, **not** an invented atomic cross-store transaction or rollback.
 
 Pre-dispatch rejection, unavailable handler, acceptance-only and proven no-change
@@ -12579,7 +12584,7 @@ canonical_text: >-
   is treated the same. An evicted image's cells show a dashed hairline box with `[<name> <W>×<H> · not kept]`,
   where the name is the file name (kitty file transfer, iTerm2 `name=`) or `kitty image`, `sixel image` or `inline
   image`; a Unicode-placeholder run shows the label in its first cell. Saved images are stored as PNG, one record
-  per frame, written once and reused by later saves. Placeholder cells on restored lines resolve only to restored
+  per frame, written once and reused by later saves. Amended 2026-10-31 (DL-270, SP-337): each saved frame's PNG bytes are kept as is, since SP-337 stores already-compressed media unchanged, but as a payload-store entry referenced by BLAKE3 id, so identical frames are stored once and the scrollback record holds only the reference; SP-332 still owns the quota and the backup exclusion, and the storage owner must give saved-scrollback payloads a class that backups skip. Placeholder cells on restored lines resolve only to restored
   images, so a program in the new session that reuses an image id never paints into the old scrollback. Saved
   images follow the saved scrollback's own storage, retention and backup rules (SP-332): they stay on this machine
   and are excluded from backups, exports and sync; they are part of the bounded `best_effort_durable` transcript

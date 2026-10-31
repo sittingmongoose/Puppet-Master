@@ -139,7 +139,7 @@ Each OpenCode row in PM is a `Server Profile` with one of two modes:
 
 This profile model replaces the older single-instance connection assumption. PM may track multiple OpenCode server profiles at once, and every request freezes the chosen `connection_profile_id` before execution.
 
-Profile roots may be represented as `/profiles/<connection_profile_id>/` or a concrete provider-root `.../profiles/<connection_profile_id>/`; each profile is a per-unit runtime surface with PM sidecar state under `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+Profile roots may be represented as `/profiles/<connection_profile_id>/` or a concrete provider-root `.../profiles/<connection_profile_id>/`; each profile is a per-unit runtime surface whose PM sidecar state is held as typed fields or MessagePack in the canonical redb family; `pm/state.json` is only the lineage name of the retired per-profile JSON state file (SP-339), and `pm/logs/`, `pm/projections/` and `pm/backups/` are derived exports or backup output. People read profile state through `pm db dump`, `pm inspect` or `pm export`. Amended 2026-10-31 (DL-270, SP-339).
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
@@ -987,7 +987,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints.
+  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints. Amended 2026-10-31 (DL-270, SP-339): per-profile sidecar state is typed or MessagePack in the canonical redb family; `pm/state.json` stays here only as the lineage name of the retired JSON state file.
 gui_related: false
 gui_classification_reason: This unit defines server profile connection data and ownership rather than visual presentation.
 split_recommended: false

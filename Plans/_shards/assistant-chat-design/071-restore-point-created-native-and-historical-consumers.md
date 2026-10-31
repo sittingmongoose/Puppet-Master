@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25733-L25907
+Source lines: L25746-L25921
 
-Source SHA256: `44c7177b629ed6e31da9f1403de68c166d89f9924b95cfb744731d033adc541f`
+Source SHA256: `6b03276d73d6ddb048cfd254baf1269de151168db6fc99c7b51ac599bda94953`
 
 ---
 
@@ -28,6 +28,7 @@ The minimal new custody family is `restore_point_creation_commit@1.0.0`, key `re
 
 - exact original five-field command request (command ID, project, thread, source message and idempotency key) plus canonical request digest;
 - complete frozen producer append input, including the exact category-separated payload and every EventRecord field except the two writer-assigned fields `sequence_id` and `persisted_at_utc`, plus canonical input digest;
+- Amended 2026-10-31 (DL-270): the `restore_point_creation_commit` row declares a maximum value size of at most 16 KiB (SP-340) and stays in the canonical redb file. Its frozen input is stored as typed MessagePack fields (SP-339, registry encoding messagepack_canonical); canonical JSON remains only the digest recipe, never a stored value. Any payload body over 16 KiB is a BLAKE3 reference into the payload store (SP-337), not an inline copy.
 - immutable project/restore identity, canonical record ref/hash and capture time;
 - state `pending_append | committed`, nullable synced `AppendReceipt` and nullable commit time; pending requires both null, committed requires both nonnull.
 
@@ -40,7 +41,7 @@ New first executions use this deterministic identity lookup to find the companio
 #### Enforceable three-barrier producer protocol
 
 1. **Admission and redb capture.** Under existing aggregate writer/maintenance authority, perform current registry/schema, permission, original command identity, dedupe and source-boundary/ref/hold checks. Commit the immutable `rp` record and its complete `pending_append` companion in **one redb transaction**, with required lineage refs durable before publication. Either both rows commit or neither commits. No successful creation result is published yet. The existing in-flight/required-source-lineage rules protect this pending point; no new permanent hold is introduced.
-2. **Canonical seglog append.** Read the durable frozen input, validate all joins/digests, and pass it unchanged to the existing append API. Use barrier durability because it is a prerequisite for action publication. The writer supplies sequence/persisted time and returns only a matching synced `AppendReceipt` after its frame and manifest/watermark barriers. Seglog and redb are not one transaction. If crash occurs here, the pending companion retains every original payload category, actor, correlation, occurrence/observation time and command identity. Retry/restart never recaptures from changed live conversation state.
+2. **Canonical seglog append.** Read the durable frozen input, validate all joins/digests, and pass it unchanged to the existing append API. Use barrier durability because it is a prerequisite for action publication. The writer supplies sequence/persisted time and returns only a matching synced `AppendReceipt` after the frame's data sync with a full flush (F_FULLFSYNC, FlushFileBuffers or fdatasync), because the UI waits on this receipt; the durable watermark is carried in the segment and the manifest is synced only at creation, rotation and structural changes (SP-336). SP-286 first-receipt custody keeps its own durability. The three barriers are protocol steps, not three syncs. Seglog and redb are not one transaction. If crash occurs here, the pending companion retains every original payload category, actor, correlation, occurrence/observation time and command identity. Retry/restart never recaptures from changed live conversation state.
 3. **Commit marker.** Under the same owner gate, prove the exact source event is durable and matches the frozen input, canonical record and dedupe identity. In a second redb transaction CAS the same pending companion to committed, retaining every frozen field and storing the exact synced receipt/commit time. Only after this transaction may creation return success or a reader publish completed creation. A commit marker is an accelerator, not independent evidence; all reads/recovery still verify the matching canonical source through the receipt/index/manifest.
 
 Ordinary crash recovery preserves committed custody and remains subject to genuine original-receipt availability: before barrier1 neither row exists; after barrier1 retry has complete frozen input and appends at most once; after barrier2-before3 recovery validates the durable event/dedupe and genuine exact first eleven-field AppendReceipt through the explicitly adopted SP-286 append-owner protocol before marking committed with no reappend; unresolved first-receipt custody remains recovery-required rather than being filled from the four-field dedupe locator; after barrier3-before-reply it returns the original result. A lost append acknowledgement first runs Storage recovery and checks dedupe/source proof; it never assumes the append failed. Valid unacknowledged frames follow existing Case L recovery. Changed storage/permission posture fences reconciliation until existing authority permits it. Missing/corrupt companion/input/record or unprovable identity is a disclosed recovery failure requiring canonical backup/owner recovery, distinct from an ordinary intact-custody crash.

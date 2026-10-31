@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L133-L1157
 
-Source SHA256: `c14181f8a6fbc45bf628a3dd7404309ebd191fbec9962524c46d8f1d77bf8876`
+Source SHA256: `f70670e29e0201fb6370a9f8d22f35864afe18785c88ea804087eabc8d1d3abe`
 
 ---
 
@@ -606,7 +606,7 @@ The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denot
 |---|---|---|---|
 | `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |
 | `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |
-| `cmd.chat.delete` | Delete Thread | After explicit thread-delete confirmation, persists the content-free deletion/tombstone authority, removes the thread immediately from ordinary navigation/search/context/export, and requests physical content purge within 24 hours unless a legal hold delays purge; it does not delete a message or silently release worktree/recovery holds. | `thread_selected && delete_confirmed && !active_run_in_thread && deletion_family_available` |
+| `cmd.chat.delete` | Delete Thread | After explicit thread-delete confirmation, persists the content-free deletion/tombstone authority, removes the thread immediately from ordinary navigation/search/context/export, and requests physical content purge within 24 hours unless a legal hold delays purge; it does not delete a message or silently release worktree/recovery holds. Amended 2026-10-31 (DL-270, SP-337): the 24-hour purge removes the thread's records and releases its payload references. A payload's bytes are freed only when garbage collection finds no live record, retention hold, legal hold or backup still reaching it, so a payload shared with another record stays while that record needs it. Backup bytes keep the 30-day limit stated in the Case L section. | `thread_selected && delete_confirmed && !active_run_in_thread && deletion_family_available` |
 | `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |
 | `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |
 | `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |

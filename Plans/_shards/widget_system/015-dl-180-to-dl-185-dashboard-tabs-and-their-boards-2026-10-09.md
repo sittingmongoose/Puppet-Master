@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1759-L2065
+Source lines: L1760-L2073
 
-Source SHA256: `db30f1ae130c83d289a9fb65d96b33a32fa853b3bcd321c3d0d1334857432214`
+Source SHA256: `97bab96419d57fc13243d842f82f6a34d755afec9d118ea4df5dbc6490218523`
 
 ---
 
@@ -119,7 +119,11 @@ canonical_text: >-
   command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361).
   Presets (D35, Jared: "With savable presets."): a person can save a board's arrangement as their own preset, rename
   it and delete it. Presets belong to the person, not the project: they are kept in the per-user family
-  `widget_presets:v1` and shown in Start from on every dashboard of every project. A preset holds its id, its name,
+  `widget_presets:v1` and shown in Start from on every dashboard of every project. Amended 2026-10-31 (DL-270):
+  `widget_presets:v1` and the per-board widget-layout envelope are redb families under SP-340, each with a declared
+  maximum value of 16 KiB, a typed or MessagePack encoding (SP-339) and a disk budget. Each preset is its own value,
+  not one record holding every preset; a save whose name (80 characters) and layouts do not fit the cap is refused
+  with a reason. A preset holds its id, its name,
   when it was saved, the board it was saved from, the layout of the widgets shown at each board class (S, M, L and XL,
   WS-017), each widget's size preset and each widget's configuration; it never holds the board's view. A name is
   trimmed, with runs of white space made one, at most 80 characters; the save offers the dashboard's name made
@@ -155,7 +159,10 @@ canonical_text: >-
   dashboard tabs it holds: saving it snapshots each board's envelope, or none, and applying it restores them, while a
   named layout saved before this applies as it did. The snapshot is capped at 64 KB per named layout (lead ruling F3):
   a bigger save keeps the layout without its boards, records how many bytes it left out and says so;
-  Plans/storage-plan.md#SP-330 owns that record. The Guided Tour's snapshots take the Home board's widgets with the
+  Plans/storage-plan.md#SP-330 owns that record. Amended 2026-10-31 (DL-270): the 64 KB cap stays as the per-layout
+  budget for saved boards, but no single stored value passes 16 KiB (SP-340, SP-337). The snapshot is held as one value
+  per board envelope, or as a content-addressed payload-store reference when a board's envelope is larger than 16 KiB,
+  and the named layout record lists those references; the skip rule and boards_skipped_bytes are unchanged. The Guided Tour's snapshots take the Home board's widgets with the
   panels, per project (Plans/Planning_Wizard.md#PWIZ-035).
   This supersedes WS-009's one Dashboard namespace and WS-013's limit to some Usage widgets, both amended in place,
   and amends the Home Workspace boundary addendum's sentences that assume one dashboard. DL-186 retires the panels

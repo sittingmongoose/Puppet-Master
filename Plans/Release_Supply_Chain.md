@@ -1004,6 +1004,8 @@ By explicit user approval on 2026-09-09, Release consumes the `Plans/FinalGUISpe
 
 Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
 
+Amended 2026-10-31 (DL-270): release acceptance also consumes the storage gate receipts that SP-344 defines, run on Windows, macOS and Linux: 20 producer streams with 100k-event paging, a backup and maintenance; first page p95 at most 150 ms warm and 500 ms cold; commit p99 at most 50 ms; no storage-caused UI stall over 50 ms; no acknowledged event lost, duplicated or corrupted after kill -9, simulated power cuts, torn writes and store-creation crashes; every family within its disk budget. A skipped or missing storage gate on any OS is not_run and blocks the release; SP-344 owns the thresholds.
+
 ### Commands, events, and reverse coverage
 
 Release introduces no new UI command or EventRecord family here. Plugin lifecycle candidate commands remain owned by `Plans/Plugins_System.md` and unavailable until central registration. Release supplies `PluginPackageSupplyChainProof` and update/rollback admission refs to the eventual typed command receipt. New package lifecycle effects remain receipt-only pending Event Authority; existing admitted release events are unaffected, while the historical `plugin.*` identifiers remain non-emitting individual candidates because the live registry contains no `plugin.*` row.
@@ -1083,6 +1085,7 @@ acceptance_criteria:
   - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia on the GPU as the compiled default, then Winit plus Skia CPU raster (winit-skia-software) selection, including the CPU raster always used when the GPU adapter is a software implementation, even over an explicit GPU choice, with a no-GPU warning, with the Skia renderer extensions present on both paths and no FemtoVG or separate software renderer packaged, without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
+  - Release evidence includes the SP-344 storage gate receipts (20 producer streams with 100k-event paging, first-page p95, commit p99, UI stall, kill -9, power-cut, torn-write and store-creation-crash convergence, disk budgets) on Windows, macOS and Linux; a storage gate not run on any of the three OSes blocks the release.
 validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
 risk_class: release_platform_or_performance_false_claim
 reasoning_tier: high

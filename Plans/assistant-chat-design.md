@@ -33,7 +33,7 @@ These requirements are canonical live specification text for this owner document
 This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md` with the following reconciled assumptions:
 
 - **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
-- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
+- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack. Amended 2026-10-31 (DL-270): there is no JSONL mirror; storage/jsonl is retired (SP-339). People read stored state through pm db dump, pm inspect, pm tail and pm export, which writes JSONL or JSON on request only.
 - **UI:** Rust + Slint (Skia renderer) remain the intended native desktop shell implementation; the web GUI is the Rust Leptos client (`Plans/FinalGUISpec.md` F3-583, DL-139). The behavior and data contracts in this plan apply to both frontends.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
 - **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.
@@ -1073,6 +1073,7 @@ To guarantee **project-only search** and keep performance stable as threads grow
   - `storage/tantivy/projects/{project_id}/chat`
   - `storage/tantivy/projects/{project_id}/code`
   - `storage/tantivy/projects/{project_id}/logs`
+- Amended 2026-10-31 (DL-270): these paths are relative to the store root, which SP-345 places inside a directory ending .noindex on macOS, under AppData on Windows and in the XDG data directory on Linux. Nothing relies on .metadata_never_index or the not-content-indexed flag.
 - This enables fast queries in long-lived projects, supports clean retention/cleanup per project, and does not block future cross-project search (future enhancement: query multiple project indices and merge top-K).
 
 ContractRef: ContractName:Plans/storage-plan.md
@@ -1125,7 +1126,7 @@ Allowed transitions:
 | `suspended` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
 | `archived` | `deleted` | `cmd.chat.thread.delete` or retention policy | Terminal for ordinary navigation. |
 
-No transition restores `deleted` to another lifecycle state. Deletion immediately writes the storage-owned content-free tombstone/deletion record and hides the thread from ordinary navigation, search, context assembly, and export projections. Active canonical transcript, message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours unless a legal, preserve, restore-point source-lineage, descendant, or in-flight application hold protects the referenced bytes. A hold delays physical purge only: it does not unhide the thread, re-enable `cmd.chat.thread.restore`, or turn a restore-point branch into thread undo.
+No transition restores `deleted` to another lifecycle state. Deletion immediately writes the storage-owned content-free tombstone/deletion record and hides the thread from ordinary navigation, search, context assembly, and export projections. Active canonical transcript, message, attachment, search, and derived content (including the thread's render-page store, SP-338) is purged within 24 hours unless a legal, preserve, restore-point source-lineage, descendant, or in-flight application hold protects the referenced bytes. Amended 2026-10-31 (DL-270): attachment and blob bytes live in the shared payload store (SP-337), so the 24-hour bound applies to releasing the thread's references, and pack bytes are reclaimed by reference-counted garbage collection that honours holds and backups; there is no mirror to purge (SP-339). A hold delays physical purge only: it does not unhide the thread, re-enable `cmd.chat.thread.restore`, or turn a restore-point branch into thread undo.
 
 The content-free deletion tombstone remains indefinitely. Backups may retain deleted bytes for at most 30 days unless held and MUST replay the tombstone before exposing any restored thread projection. Delete confirmation and completion copy MUST NOT promise an undo window: deleted threads have no ordinary restore transition, and a separately retained conversation restore point can create only a new thread/branch under the restore-point contract below; it never resurrects the deleted source `thread_id`.
 
@@ -1286,6 +1287,7 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpe
 - `Breakdown` shows the context usage bar, token buckets, and grouped breakdowns by role, tools, provider, and model when available
 - `Messages` shows one expandable row per message with role, worker type, mode, model, time or duration, total tokens, and cost
 - `Raw` shows an accordion list of messages; expanding a message exposes the full serialized payload for that message, plus related `tool-part` payloads, provider metadata blobs, and path/runtime data needed for debugging
+- Amended 2026-10-31 (DL-270): `Raw` rows resolve payload references through the payload store (SP-337) and the record inspector (F3-666), show a bounded preview, and load the full body only on demand.
 
 **Required Context Detail Pane breakdown:**
 - system and instruction blocks
@@ -1299,6 +1301,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipel
 
 Rules:
 - the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
+- Amended 2026-10-31 (DL-270): thread usage totals and widgets read the redb usage rollups and never scan raw `usage.event` records (UF-108, SP-341). Raw `usage.event` reads are limited to the on-demand per-turn drill-down in the Raw view.
 - hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
 - truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
 
@@ -2319,8 +2322,8 @@ This section addresses **long chat threads**: keeping them performant, using **v
 ### 24.3 Additional performance measures
 
 - **Lazy content for collapsed sections:** When a section is **collapsed** (thought stream, bash output, diff, web links), the full content need not be **rendered** until the user expands it. Store full content in the thread model for persistence and search; for the virtual list, collapsed items can render only the summary line (e.g. "Thought stream (expand)", "Ran: `cargo test`") so layout and paint are cheap.
-- **Pagination or "load older" (optional):** For very long threads, consider **loading older messages on demand** (e.g. "Load 50 older" or load when user scrolls near the top). The virtual list then has a bounded "window" of loaded items that grows as the user scrolls up. Full history remains in storage (§11); the UI layer fetches a slice. This is an enhancement if virtualization alone is insufficient for extreme thread lengths. Amended 2026-10-31 (DL-270): load-older paging is mandatory, over SP-338's render pages; opening a thread never replays its events (ACD-242).
-- **Bounded in-memory size for "current thread":** Even with virtualization, avoid holding the entire thread's message blobs in hot memory if the thread is huge. Stream or page message content from storage (seglog/redb/projection per rewrite-tie-in-memo) into the visible window. In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand. Config: `ui.chat.in_memory_cap_messages` (default `200`), `ui.chat.in_memory_cap_bytes` (default `8388608`).
+- **Load-older paging (mandatory, DL-270):** Every thread opens from SP-338's thread_head, hot tail and newest sealed page, and a "Load 50 older" control or scroll near the top fetches older 50-item render pages on demand. The virtual list then has a bounded "window" of loaded items that grows as the user scrolls up. Full history remains in storage (§11); the UI layer fetches a slice. Paging is required for every thread, not an enhancement; the 100k-event first-page gate (150 ms p95 warm, 500 ms cold, at most 2 MiB read) applies. Opening a thread never replays its events (ACD-242).
+- **Bounded in-memory size for "current thread":** Even with virtualization, avoid holding the entire thread's message blobs in hot memory if the thread is huge. Stream or page message content from storage (seglog/redb/projection per rewrite-tie-in-memo) into the visible window. In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand. Config: `ui.chat.in_memory_cap_messages` (default `200`), `ui.chat.in_memory_cap_bytes` (default `8388608`). Amended 2026-10-31 (DL-270): paging fills the visible window from the thread's derived render-page store (SP-338), not by replaying seglog events. The 200-message and 8 MB caps remain the client hot-memory bound over loaded pages; ACD-243 reads the same way. Page size (50) and page byte cap (256 KiB) are fixed by SP-338, not settings.
 
 ### 24.4 Enhancements (MVP -- fleshed out)
 
@@ -2345,7 +2348,7 @@ These enhancements are **MVP** requirements. They must integrate with virtualiza
 | **Expand/collapse and virtual list** | Expanding a block changes its height; the list must reflow and possibly adjust scroll. | Recompute visible slice and scroll offset after expand/collapse; preserve "anchor" (e.g. first visible item id) so the list doesn't jump arbitrarily. Consider keeping expanded height in a cache so re-expand is instant. |
 | **Scroll position restore** | When user switches threads and back, or reopens app, restore scroll position. | Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint. |
 | **Streaming at bottom** | While streaming, user expects to see the tail. If virtual list only has a fixed window, the "tail" might be off-screen. | Keep the **currently streaming** message in the visible window (e.g. scroll to bottom when streaming starts, or ensure the last item is always in the overscan). When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom. |
-| **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and mandatory "load older" (DL-270; it was optional before) keep the UI bounded. Document that threads with 10k+ messages may need pagination or load-older in addition to virtualization. |
+| **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and mandatory "load older" (DL-270; it was optional before) keep the UI bounded. Document that load-older paging over SP-338 render pages is required for all threads, not only 10k+ message ones, and is bounded by the 100k-event first-page gate (150 ms p95 warm, 500 ms cold, at most 2 MiB read). |
 
 ---
 
@@ -2966,7 +2969,7 @@ Thread-to-worktree binding is durable, explicit, and identity-bearing.
 
 **New redb key family:**
 - Key: `thread_state:{thread_id}:worktree_binding`
-- Value (JSON):
+- Value (typed fields or MessagePack; Amended 2026-10-31 (DL-270, SP-339): no redb family stores JSON text). The fields below keep their names and are shown as JSON only for illustration. The family sits in the canonical redb file with a maximum value size of 16 KiB (SP-340).
 ```json
 {
   "worktree_id": "wt-abc123",
@@ -3540,9 +3543,9 @@ Cross-doc parity references are `Plans/assistant-chat-design.md`, `/assistant-ch
 
 Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. `always`, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; `Permissions_System.md` / `Permissions_System` default-deny hints for `todoread` and `todowrite` must narrow by execution-entity, actor-scoped context, and `/member/lane/account-bounded` permissions.
 
-Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed`, which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
+Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed` (answered 2026-10-31, DL-270, SP-339: handoff and /retry records are typed redb or MessagePack records with no JSONL backing; JSONL appears only as on-demand pm export output), which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
 
-`History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
+`History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. Amended 2026-10-31 (DL-270): load-older paging is mandatory, not one option among jump controls. History opens from the thread's render-page store (thread_head, hot tail, newest sealed 50-item page) and loads older pages on demand (SP-338, ACD-242); jump controls are additional. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
 
 Graph and history consumers use viewport culling with overscan, table virtualization, per-generation layout caching, incremental row `/item` updates, and frame-cadence burst throttling; when rectangle-based rendering falls below target performance, the fallback is canvas-style rendering.
 
@@ -4800,7 +4803,9 @@ plan_unit_id: ACD-024
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+canonical_text: >-
+  Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+  Amended 2026-10-31 (DL-270): an attachment record carries at most 16 KiB inline; bodies and images above that are BLAKE3 payload references (digest, byte size, media type) into the payload store, base64 is decoded to binary at ingest, and inline base64 is an admission error (SP-337).
 gui_related: false
 gui_classification_reason: Attachment payload persistence and field shape are storage/schema behavior, not GUI implementation.
 depends_on: [ACD-023]
@@ -7172,7 +7177,7 @@ acceptance_criteria:
   - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
   - Suspended and archived states prune only the allowed transient state.
   - Deletion immediately removes the thread from normal user-visible chat surfaces and active context/export projections.
-  - Unheld canonical message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours.
+  - Unheld canonical message, attachment, search, and derived content (including the render-page store) is purged within 24 hours; payload-store references are released within that bound and the bytes are reclaimed by reference-counted garbage collection that honours holds and backups (SP-337). No mirror exists (SP-339).
   - The content-free tombstone remains indefinitely, backups retain deleted bytes for no more than 30 days unless held, and restore replays tombstones before visibility.
   - Legal, preserve, restore-point source-lineage, descendant, and in-flight application holds delay byte purge without restoring the source thread.
 validation_surfaces:
@@ -8094,6 +8099,8 @@ canonical_text: >-
   source-class inspectable, and truncation, redaction, and
   context-serialization state remain visible so omitted context is never
   presented as serialized.
+  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
+  raw usage.event reads are limited to the per-turn Context Detail drill-down.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
@@ -14328,7 +14335,9 @@ plan_unit_id: ACD-224
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Long-thread lag and flicker risk is mitigated by section 24 virtualization, stable IDs, incremental updates, and no full rebuild on stream.
+canonical_text: >-
+  Long-thread lag and flicker risk is mitigated by section 24 virtualization, stable IDs, incremental updates, and no full rebuild on stream.
+  Amended 2026-10-31 (DL-270): the mitigation also includes mandatory load-older paging over SP-338's render-page store; a chat opens from thread_head and the newest page without replaying events, and a CI gate holds the first page at 150 ms p95 warm and 500 ms cold (ACD-242).
 gui_related: true
 gui_classification_reason: Long-thread lag, flicker, virtualization, and streaming updates are visible chat UI performance behavior.
 depends_on: []
@@ -15055,16 +15064,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+  Load-older pagination bounds extreme thread display while preserving full history in storage.
   Amended 2026-10-31 (DL-270): load-older paging is mandatory, not optional: the chat opens from SP-338's
   thread_head, hot tail and newest page and fetches older 50-item pages on demand, and a CI gate holds a
   100k-event thread's first page within 150 ms p95 warm and 500 ms cold.
+  Scrolling near the top loads the next older page by itself, and a Load 50 older row stays as the fallback;
+  both fetch pages through cmd.chat.load_older (DL-270).
 gui_related: true
 gui_classification_reason: Load older pagination is visible long-thread UI behavior.
 depends_on: [ACD-236]
 unblocks: [ACD-250]
 acceptance_criteria:
-  - Load older pagination is available as an optional enhancement if virtualization alone is insufficient.
+  - Load-older paging is mandatory for every thread; the chat opens from thread_head, hot tail and newest page and loads older 50-item pages on demand (SP-338). Opening a thread never replays its events.
   - Full history remains in storage.
   - UI can fetch older slices on demand.
 validation_surfaces:
@@ -15077,13 +15088,13 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
 node_compile_hint:
-  mode: load_older_optional
+  mode: load_older_mandatory
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
 preserved_exact_tokens:
   - "Load 50 older"
-  - "optional"
+  - "mandatory"
   - "Full history remains in storage"
 negative_constraints: []
 owner_hints:
@@ -15383,7 +15394,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Streaming tail remains visible only when the user is already at bottom;
   persistence has no hard limit while display relies on virtualization and
-  optional load-older for 10k+ message threads.
+  mandatory load-older paging of 50-item render pages for all threads (SP-338, ACD-242).
 gui_related: true
 gui_classification_reason: Streaming tail behavior and long-thread display limits are visible chat UI behavior.
 depends_on: [ACD-242]
@@ -15392,7 +15403,7 @@ acceptance_criteria:
   - Streaming auto-scrolls only when already at bottom.
   - User scroll-up during stream is respected.
   - Persistence has no hard thread length limit.
-  - Display uses virtualization and optional load-older for very long threads.
+  - Display uses virtualization and mandatory load-older paging for all threads, loading older 50-item pages on demand from the render-page store.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18735,7 +18746,7 @@ gui_classification_reason: Thread worktree binding storage is persistence/data-c
 depends_on: [ACD-318]
 unblocks: [ACD-327, ACD-328, ACD-329, ACD-335]
 acceptance_criteria:
-  - Thread worktree binding uses the specified redb key family and JSON fields.
+  - Thread worktree binding uses the specified redb key family with typed fields or MessagePack values, not JSON text (SP-339). The thread_state and worktree_binding_reverse families live in the canonical redb file with a maximum value size of 16 KiB each and a declared disk budget (SP-340).
   - UI display uses `branch_name`; `temp_branch_name` is internal bookkeeping.
   - Worktree filesystem paths use `.puppet-master/worktrees/thread-{short_id}` with suffixes when needed.
 validation_surfaces:
@@ -22241,7 +22252,9 @@ plan_unit_id: ACD-408
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
+canonical_text: >-
+  Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
+  Amended 2026-10-31 (DL-270): the backing is one canonical redb family with typed fields or MessagePack values, not a JSONL file or JSONL mirror (SP-339). The family declares a maximum value size of at most 16 KiB; larger bodies are payload-store references (SP-337, SP-340). The preserved token /JSONL/redb-backed records the original question only.
 gui_related: false
 gui_classification_reason: Worker handoff/retry memory records are runtime/storage behavior.
 depends_on: []
@@ -25634,7 +25647,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
-**Consumers and presentation.** Define consumer ID `assistant_chat.focused_thread_detail.compaction.v1`, binding version `1.0.0`, and projector ID `assistant_chat.focused_thread_projector.v1`, version `1.0.0`, as the compaction binding of the existing Assistant Chat focused-thread projector. On a validated live or replayed completion, the projector adds the stable `event:<event_id>` reference once to the existing bounded/windowed `thread_detail_projection.agent_activity_refs` view, preserves transcript/tool/artifact refs, and advances the existing applied/published cursors only under SIR-038 and SP-259. The view may resolve that content-free event and a still-authorized detailed receipt. Evicting an old reference from the hot detail window preserves the permanent EventRecord and its on-demand audit lookup; it does not accumulate indefinite history in one projection. Unfocused threads replay on demand through the same binding; they do not need a second event consumer. Compaction completion never sends a chat message, invokes a tool, bills Usage, schedules a helper, or produces another event during replay. AgentChatHistorySearch continues to query retained transcript authority under ACD-062; its search capability is unchanged and is not an extra completion-event subscription.
+**Consumers and presentation.** Define consumer ID `assistant_chat.focused_thread_detail.compaction.v1`, binding version `1.0.0`, and projector ID `assistant_chat.focused_thread_projector.v1`, version `1.0.0`, as the compaction binding of the existing Assistant Chat focused-thread projector. On a validated live or replayed completion, the projector adds the stable `event:<event_id>` reference once to the existing bounded/windowed `thread_detail_projection.agent_activity_refs` view, preserves transcript/tool/artifact refs, and advances the existing applied/published cursors only under SIR-038 and SP-259. The view may resolve that content-free event and a still-authorized detailed receipt. Evicting an old reference from the hot detail window preserves the permanent EventRecord and its on-demand audit lookup; it does not accumulate indefinite history in one projection. Unfocused threads open from their render-page store (thread_head, hot tail and newest sealed page, SP-338) and never replay their events to open. The projector replays this event only to repair or rebuild the derived store, through the same binding; they do not need a second event consumer. Compaction completion never sends a chat message, invokes a tool, bills Usage, schedules a helper, or produces another event during replay. AgentChatHistorySearch continues to query retained transcript authority under ACD-062; its search capability is unchanged and is not an extra completion-event subscription.
 
 **Deletion, compatibility and withdrawal.** Archive preserves identity and existing read rules. Logical deletion immediately suppresses the thread and its completion activity from ordinary Chat/search/detail even if an old projection survives. The permanent EventRecord is available only through already-authorized content-free audit access. A deleted or expired receipt resolves to a typed unavailable/tombstoned result; it never recreates a thread, head, content, artifact or search document. Existing legal holds and deletion deadlines remain unchanged. There is no accepted legacy event alias, extension, or synthesized backfill: historical command/local receipts are not automatically durable completion events. Version 1 readers reject unknown payload fields/versions. Any successor schema or withdrawal needs owner migration and a separately reviewed registry revision; malformed or unknown-family inputs follow Storage quarantine rules without checkpoint advance. An otherwise valid unsupported future-version record remains untouched; the consumer halts with `unsupported_schema_version` and preserves its last supported sequence until a compatible reader is available. Withdrawal stops new append first, retains existing indefinite audit bytes and identity records, fences dependent publication, and requires an owner-validated compatible read/replay path before resumption; it never turns old completion bytes into started/failed events.
 
@@ -25750,6 +25763,7 @@ The minimal new custody family is `restore_point_creation_commit@1.0.0`, key `re
 
 - exact original five-field command request (command ID, project, thread, source message and idempotency key) plus canonical request digest;
 - complete frozen producer append input, including the exact category-separated payload and every EventRecord field except the two writer-assigned fields `sequence_id` and `persisted_at_utc`, plus canonical input digest;
+- Amended 2026-10-31 (DL-270): the `restore_point_creation_commit` row declares a maximum value size of at most 16 KiB (SP-340) and stays in the canonical redb file. Its frozen input is stored as typed MessagePack fields (SP-339, registry encoding messagepack_canonical); canonical JSON remains only the digest recipe, never a stored value. Any payload body over 16 KiB is a BLAKE3 reference into the payload store (SP-337), not an inline copy.
 - immutable project/restore identity, canonical record ref/hash and capture time;
 - state `pending_append | committed`, nullable synced `AppendReceipt` and nullable commit time; pending requires both null, committed requires both nonnull.
 
@@ -25762,7 +25776,7 @@ New first executions use this deterministic identity lookup to find the companio
 #### Enforceable three-barrier producer protocol
 
 1. **Admission and redb capture.** Under existing aggregate writer/maintenance authority, perform current registry/schema, permission, original command identity, dedupe and source-boundary/ref/hold checks. Commit the immutable `rp` record and its complete `pending_append` companion in **one redb transaction**, with required lineage refs durable before publication. Either both rows commit or neither commits. No successful creation result is published yet. The existing in-flight/required-source-lineage rules protect this pending point; no new permanent hold is introduced.
-2. **Canonical seglog append.** Read the durable frozen input, validate all joins/digests, and pass it unchanged to the existing append API. Use barrier durability because it is a prerequisite for action publication. The writer supplies sequence/persisted time and returns only a matching synced `AppendReceipt` after its frame and manifest/watermark barriers. Seglog and redb are not one transaction. If crash occurs here, the pending companion retains every original payload category, actor, correlation, occurrence/observation time and command identity. Retry/restart never recaptures from changed live conversation state.
+2. **Canonical seglog append.** Read the durable frozen input, validate all joins/digests, and pass it unchanged to the existing append API. Use barrier durability because it is a prerequisite for action publication. The writer supplies sequence/persisted time and returns only a matching synced `AppendReceipt` after the frame's data sync with a full flush (F_FULLFSYNC, FlushFileBuffers or fdatasync), because the UI waits on this receipt; the durable watermark is carried in the segment and the manifest is synced only at creation, rotation and structural changes (SP-336). SP-286 first-receipt custody keeps its own durability. The three barriers are protocol steps, not three syncs. Seglog and redb are not one transaction. If crash occurs here, the pending companion retains every original payload category, actor, correlation, occurrence/observation time and command identity. Retry/restart never recaptures from changed live conversation state.
 3. **Commit marker.** Under the same owner gate, prove the exact source event is durable and matches the frozen input, canonical record and dedupe identity. In a second redb transaction CAS the same pending companion to committed, retaining every frozen field and storing the exact synced receipt/commit time. Only after this transaction may creation return success or a reader publish completed creation. A commit marker is an accelerator, not independent evidence; all reads/recovery still verify the matching canonical source through the receipt/index/manifest.
 
 Ordinary crash recovery preserves committed custody and remains subject to genuine original-receipt availability: before barrier1 neither row exists; after barrier1 retry has complete frozen input and appends at most once; after barrier2-before3 recovery validates the durable event/dedupe and genuine exact first eleven-field AppendReceipt through the explicitly adopted SP-286 append-owner protocol before marking committed with no reappend; unresolved first-receipt custody remains recovery-required rather than being filled from the four-field dedupe locator; after barrier3-before-reply it returns the original result. A lost append acknowledgement first runs Storage recovery and checks dedupe/source proof; it never assumes the append failed. Valid unacknowledged frames follow existing Case L recovery. Changed storage/permission posture fences reconciliation until existing authority permits it. Missing/corrupt companion/input/record or unprovable identity is a disclosed recovery failure requiring canonical backup/owner recovery, distinct from an ordinary intact-custody crash.

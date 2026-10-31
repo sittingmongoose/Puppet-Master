@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-15T18:53:26Z",
+  "generated_at_utc": "2026-10-31T20:39:56Z",
   "index_path": "Plans/_shards/multi-account/00-index.md",
-  "index_sha256": "bf3604c4ce0425d05d86ac4b12fe1c368e0dc857ae5df2b8c50f7ebce0147da0",
+  "index_sha256": "2654de822cb09c38d1106b0136aba251034e6b810184dc283d71f03575e19b06",
   "manifest_path": "Plans/_shards/multi-account/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/multi-account/001-preamble.md",
-      "sha256": "692581d8c143e49a363ea67b73c16d8606db39f4e9d79f1157a20040a868638c",
+      "sha256": "dfd9fd0b53e30805abb9a66086efbb7a52a02a40cfa5ad2b4e47ef8042636f8e",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/multi-account/002-canonical-owner-section-requirements.md",
-      "sha256": "76399fb376efc03885cd330839e419a1ba218455e7053437fe988934f30609fc",
+      "sha256": "d7edc935aab121e680ff71e7e2ac37117f70e586a649e92251ba92ec6e9fa852",
       "shard_id": "002",
       "source_line_end": 19,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Purpose and scope",
       "path": "Plans/_shards/multi-account/003-1.-purpose-and-scope.md",
-      "sha256": "27c29fce12171d6d72124ebb32bf1b0101212100a73587623ea4102eb6d154a3",
+      "sha256": "63ec765b5160bf27e18620f19a29e36ed482b9952dc6b43004d84a6b733df9a4",
       "shard_id": "003",
       "source_line_end": 65,
       "source_line_start": 21,
@@ -35,7 +35,7 @@
     {
       "heading": "2. References",
       "path": "Plans/_shards/multi-account/004-2.-references.md",
-      "sha256": "649eb59b5895f7a5d408dab3e12e281f33b156ccf51dcbbe55f4d5d396763241",
+      "sha256": "e1228487ef0fe355e6a334a62f26b5959b6f92250248eaecc2344a5fa3d772b1",
       "shard_id": "004",
       "source_line_end": 78,
       "source_line_start": 66,
@@ -44,7 +44,7 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md",
-      "sha256": "f23da78e24ac112ca407056de93ff424f48be3eccfb3468cc15775f7cdba9f54",
+      "sha256": "24be0c672141344ee0012e25004f3bac802f308b4b2615bd8fadba07cadae141",
       "shard_id": "005",
       "source_line_end": 107,
       "source_line_start": 80,
@@ -53,7 +53,7 @@
     {
       "heading": "3. Assessment: what we have and gaps (filled)",
       "path": "Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md",
-      "sha256": "e476b3b2a794e17179e65e1436a89ca6befa0ccf31768348c7311f8c68127d9f",
+      "sha256": "31afb82f01453b485af669aeccaa33a9bab15397fe6f94338e52dfd4e7f51fb9",
       "shard_id": "006",
       "source_line_end": 354,
       "source_line_start": 109,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Auto-rotation",
       "path": "Plans/_shards/multi-account/007-5.-auto-rotation.md",
-      "sha256": "d74bc1c584049110a9adfcc2d4d6ee5fab03afc5e6cf6466bdf58e7bc5d9b2eb",
+      "sha256": "98646a7d4b5002e71a7fa300878643d8c8516eeee85897eb1ae1b9adf1498a0c",
       "shard_id": "007",
       "source_line_end": 420,
       "source_line_start": 355,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Provider-specific behavior",
       "path": "Plans/_shards/multi-account/008-6.-provider-specific-behavior.md",
-      "sha256": "b4ccd60c0f0fe3c37acb6e919cb634e719fdc8cf579caee45e232e4304a6c6ad",
+      "sha256": "4a960bad3f5612d330b5404a6a5e3ec8e691821603d6a93fef607432979a24d4",
       "shard_id": "008",
       "source_line_end": 482,
       "source_line_start": 421,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Runner / orchestration contract",
       "path": "Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md",
-      "sha256": "d6a0493d0d50ab8faf5d6c8baa411d7541599aa77e9f9c0abd099ade0ade5596",
+      "sha256": "2e66b4d650d1282a240b4982ba7c59b44e1dae098f6e9a8027679b22d7ce9fc5",
       "shard_id": "009",
       "source_line_end": 519,
       "source_line_start": 483,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Usage and pick-best",
       "path": "Plans/_shards/multi-account/010-8.-usage-and-pick-best.md",
-      "sha256": "6a8a9ede832749d5a9bfda284d20aad15859d92453f582f69c987d21efafaf9b",
+      "sha256": "e302cc3fc6763d2e14b48e546489d197ac48322a8da436b1bb55c11cd064d77d",
       "shard_id": "010",
       "source_line_end": 542,
       "source_line_start": 520,
@@ -98,7 +98,7 @@
     {
       "heading": "9. GUI requirements (UX only)",
       "path": "Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md",
-      "sha256": "9cdab4107dd4fb560776c31c6dd15936eadfc7ddf73300273e665ec3c6f361e9",
+      "sha256": "24b65777a8b5d153b08796928c78b5d20aab018e15cead4e7fb14f0dc1080b73",
       "shard_id": "011",
       "source_line_end": 733,
       "source_line_start": 543,
@@ -107,7 +107,7 @@
     {
       "heading": "10. Phase 2 (native auth) -- when available",
       "path": "Plans/_shards/multi-account/012-10.-phase-2-native-auth-when-available.md",
-      "sha256": "18c20de5ac69dcb26ddc6123bb3546b03f031d0c85b1ae1c9c4b54094e1f6ed0",
+      "sha256": "4029c599c030a92b10a6e1e33c1487869cc00294a290073efda969014b1d84e1",
       "shard_id": "012",
       "source_line_end": 743,
       "source_line_start": 734,
@@ -116,7 +116,7 @@
     {
       "heading": "11. Open points for implementer",
       "path": "Plans/_shards/multi-account/013-11.-open-points-for-implementer.md",
-      "sha256": "9cafdd7851fcc24346b830fbad1bdfa978876f47945c689f9570230053e5c354",
+      "sha256": "2876591efda75a498a5fd5a73660bc3678f5ef8871ad135c12731f5e0ec939b2",
       "shard_id": "013",
       "source_line_end": 750,
       "source_line_start": 745,
@@ -125,7 +125,7 @@
     {
       "heading": "Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)",
       "path": "Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md",
-      "sha256": "d7c9d275313bd2b713a8eb467f6b32ae45e76c4effd7bd62fbbdd8ac826886f9",
+      "sha256": "d33dfbf54ee6b78f0babcdf3d41de20d1c9b0299cce06d4bd4a4cb9fdaa73880",
       "shard_id": "014",
       "source_line_end": 765,
       "source_line_start": 751,
@@ -134,7 +134,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/multi-account/015-owner-consumer-map.md",
-      "sha256": "745175f74b83b55fa5858775a7e4973ac926ab7016dc59100a2366bd9fd3e32c",
+      "sha256": "4f3f10d4fd0fe772f1db2f27291aec9a6df97acb8258c1ea711c0c1ab172fa78",
       "shard_id": "015",
       "source_line_end": 771,
       "source_line_start": 767,
@@ -143,7 +143,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/multi-account/016-planunits.md",
-      "sha256": "881f80d8fe1598af9aaab0ff80f4042d08a845c5794f8d83c4fe7124cb3eafed",
+      "sha256": "29d7bdd0af2c4914a3617530cdda5cab276287e1c34c2281b035a03f452d3673",
       "shard_id": "016",
       "source_line_end": 832,
       "source_line_start": 773,
@@ -152,133 +152,133 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/multi-account/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "e1d11fb01b7d12db577ba7905cfcd19127e15e9f5f6d4bf2e2391f92ac29619f",
+      "sha256": "317a55f39134904ee81557baa0ff1bdb0674cf8afa5129b899048438dc931b07",
       "shard_id": "017",
-      "source_line_end": 4684,
+      "source_line_end": 4683,
       "source_line_start": 834,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/multi-account/018-migration-coverage.md",
-      "sha256": "1bb6288dbe42f4caf420dd0ec370165aca93a50698e05680964f82c2c363bfa2",
+      "sha256": "f806857036b203980954fc2ab262510703452402570b15cdf7f1d2fca39fe0fb",
       "shard_id": "018",
-      "source_line_end": 4696,
-      "source_line_start": 4686,
+      "source_line_end": 4695,
+      "source_line_start": 4685,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/multi-account/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "155f31dd6e9c3dc763a5c09e39d96989565c42d8a0c3c233dee5f9031d9d54f6",
+      "sha256": "e42249ae5f4cb5626f1f39e98e526e01dce0907bad99f606b6d7980405aba73c",
       "shard_id": "019",
-      "source_line_end": 4751,
-      "source_line_start": 4699,
+      "source_line_end": 4750,
+      "source_line_start": 4698,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/multi-account/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "fef9829a7e95f27ce96394f795ab2443c21aa646301945b41e35cc9d6e46e6a2",
+      "sha256": "3af650670031c0ed321ec1099cc4f03cc68563ded730db22ef62b1b331b34fd6",
       "shard_id": "020",
-      "source_line_end": 4868,
-      "source_line_start": 4753,
+      "source_line_end": 4867,
+      "source_line_start": 4752,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260701-001-feature-intake",
       "path": "Plans/_shards/multi-account/021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
-      "sha256": "1b771775080890e778ad9384ef500ff9df6dc30cec8edf6885c5dad7dd03fbab",
+      "sha256": "5f606445e47896ebc0da4c772b10cbcc3e9f4e1cfbcb452458bda5dce856f9da",
       "shard_id": "021",
-      "source_line_end": 4954,
-      "source_line_start": 4870,
+      "source_line_end": 4953,
+      "source_line_start": 4869,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/multi-account/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "96484e209a7a2527118766663cbe1db5b7c8f181c38d50896e945c246b5ffeb8",
+      "sha256": "ba95dbdac2140aca3337ca4be657a81e42538b606cc85a0ab05e055a00e102bb",
       "shard_id": "022",
-      "source_line_end": 5025,
-      "source_line_start": 4956,
+      "source_line_end": 5024,
+      "source_line_start": 4955,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Residual Multi-Account Contract Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/multi-account/023-fable-residual-multi-account-contract-cleanup-addendum-2026-07-0.md",
-      "sha256": "0508664b2ff5e441bfe1126c81534840126813ef6782f423f326607214d05cc3",
+      "sha256": "35397fada73ccaab185192275588e5f8e48126a429143dbfdd1fa4eea1cd6b0b",
       "shard_id": "023",
-      "source_line_end": 5088,
-      "source_line_start": 5027,
+      "source_line_end": 5087,
+      "source_line_start": 5026,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/multi-account/024-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "cefe9566b4f18ea718722f134d94c303e9bf6d67fdd467def7f8c4c02e92c731",
+      "sha256": "a90ccd7585da490aaa0ef146e8bb73b9a4b4358c5316a46227493bfd4ed26834",
       "shard_id": "024",
-      "source_line_end": 5094,
-      "source_line_start": 5090,
+      "source_line_end": 5093,
+      "source_line_start": 5089,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/multi-account/025-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "78c2809d9e922f8595bfffd991f7a56ab700a7302ae5509ec21d3895eff8c8df",
+      "sha256": "2efd20a27ec632c34c932caab5c76d9e057db888405350d5be9b919b9a9cff7f",
       "shard_id": "025",
-      "source_line_end": 5165,
-      "source_line_start": 5096,
+      "source_line_end": 5164,
+      "source_line_start": 5095,
       "split_rule": "heading-##"
     },
     {
       "heading": "`run.started` Multi-Account owner join",
       "path": "Plans/_shards/multi-account/026-run.started-multi-account-owner-join.md",
-      "sha256": "09eecfda8c2f9e4f80f49390e08231e3256b2e425f129cddad4fda79d4cd9087",
+      "sha256": "b5ff27b0f892b8970939e534e03cc0df9ce8a41c808c092eb60233da979a212f",
       "shard_id": "026",
-      "source_line_end": 5174,
-      "source_line_start": 5168,
+      "source_line_end": 5173,
+      "source_line_start": 5167,
       "split_rule": "heading-##"
     },
     {
       "heading": "Remaining Runtime Integration Addendum - Provider Installation And Credential Custody (2026-08-13)",
       "path": "Plans/_shards/multi-account/027-remaining-runtime-integration-addendum-provider-installation-and.md",
-      "sha256": "ded78f9d09059bff5cd030990d78df4e72c2399b1a557be0e9ef5be811a9f2a9",
+      "sha256": "839851f25ad12730e2bfb40230629455e849dd7e61c811cdd7c9944b1ca7de24",
       "shard_id": "027",
-      "source_line_end": 5297,
-      "source_line_start": 5176,
+      "source_line_end": 5296,
+      "source_line_start": 5175,
       "split_rule": "heading-##"
     },
     {
       "heading": "Server command-gap owner closure - authentication-profile management (2026-09-01)",
       "path": "Plans/_shards/multi-account/028-server-command-gap-owner-closure-authentication-profile-manageme.md",
-      "sha256": "85674252a8184588a207bf67dfdd3819dae5fa7a1b0ad831cdf79852d0bcdecc",
+      "sha256": "c251d28a3eb6e176b0d3f576ee05c52adfe99c43517042d0928f7e53e0df627f",
       "shard_id": "028",
-      "source_line_end": 5339,
-      "source_line_start": 5299,
+      "source_line_end": 5338,
+      "source_line_start": 5298,
       "split_rule": "heading-##"
     },
     {
       "heading": "Notebook Account Boundary Addendum (2026-09-05)",
       "path": "Plans/_shards/multi-account/029-notebook-account-boundary-addendum-2026-09-05.md",
-      "sha256": "4dc18c047cf60d9f65c0cf630b9ce3312d37e85218b08f6d90e365b3a239c2ac",
+      "sha256": "7471798e30ce38ff1623fc6b07ae90c2cbe64d2481a36a71c4386a8811fbbf7d",
       "shard_id": "029",
-      "source_line_end": 5375,
-      "source_line_start": 5341,
+      "source_line_end": 5374,
+      "source_line_start": 5340,
       "split_rule": "heading-##"
     },
     {
       "heading": "Per-Provider Auto-Switch Addendum (2026-10-09)",
       "path": "Plans/_shards/multi-account/030-per-provider-auto-switch-addendum-2026-10-09.md",
-      "sha256": "e1ebc754383c24f17231ccde7902843b462b131f41b5c33a701c491e022d5d74",
+      "sha256": "d8e875eaa25546539663c6e4929ec5a536640701219e1c7d658f0266fe4427bb",
       "shard_id": "030",
-      "source_line_end": 5516,
-      "source_line_start": 5377,
+      "source_line_end": 5515,
+      "source_line_start": 5376,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 5516,
+    "line_count": 5515,
     "path": "Plans/Multi-Account.md",
-    "sha256": "181b1cea7944f86544de9675e1c5d25d6becae40f626900d1f8a64f82be2240e"
+    "sha256": "54dbff995ab89178a29785c136fa5254f53c7a5c8d52255c77d9902d84b3ca14"
   }
 }

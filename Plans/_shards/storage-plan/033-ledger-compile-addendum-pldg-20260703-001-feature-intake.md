@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16383-L16862
+Source lines: L16397-L16879
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -437,7 +437,10 @@ canonical_text: >-
   authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and
   optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and
   `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination
-  truth.
+  truth. Amended 2026-10-31 (DL-270, SP-339): `active-agents.json`, `agent-messages.json` and the
+  `.puppet-master/state/*.json` files are retired as live files. Coordination state is read through `pm db dump`,
+  `pm inspect`, `pm tail` and `pm export`, which write JSON only on request. The `coordination.debug_mirror_exported`
+  event records such an export, not a continuous mirror.
 gui_related: false
 gui_classification_reason: This unit defines backend storage records and mirror/export boundaries, not GUI presentation.
 depends_on: [SP-230, SP-231, CV-309, OSI-432]
@@ -447,8 +450,8 @@ acceptance_criteria:
   - The authoritative projection families are `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}`.
   - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.
   - Stale writes fail with coordination conflict diagnostics rather than overwriting canonical state.
-  - "`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are registered or retired as debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
-  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`.
+  - "`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are registered or retired as debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Amended 2026-10-31 (DL-270, SP-339): those four files are retired as live files and cannot drive any decision; JSON for them is produced only on request by `pm export` and recorded with `coordination.debug_mirror_exported`."
+  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`. Amended 2026-10-31 (DL-270, SP-339): no always-on mirror exists, so an absent or stale export needs no quarantine or regeneration; the next `pm export` reads seglog and redb.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness

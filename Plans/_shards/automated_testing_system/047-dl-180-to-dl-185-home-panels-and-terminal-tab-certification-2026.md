@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5949-L6595
+Source lines: L5971-L6620
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f`
 
 ---
 
@@ -120,7 +120,10 @@ canonical_text: >-
   tab surface and every look's widget plates are checked on it; Details opens the Usage page at the widget's
   home room with its inspector open; Agents keeps only its filter; a dashboard a person made that leaves the
   reopen list while closed loses its key, set-aside copy and name; a named layout restores its boards, and a
-  save over 64 KB keeps the layout without them and says how many bytes it left out. The chat (F3-637, F3-042,
+  save over 64 KB keeps the layout without them and says how many bytes it left out (Amended 2026-10-31
+  (DL-270): a redb value is at most 16 KiB (SP-340), so a layout snapshot over that size is stored per board or
+  in the payload store (SP-337) by the stored form SP-330 gives; the case keeps the trimmed-bytes notice and
+  asserts that stored form). The chat (F3-637, F3-042,
   Plans/assistant-chat-design.md#ACD-500): a popped-out chat starts back in its column after a restart; the left
   rail's Chat entry shows or hides the column on every page (cmd.panel.switch); a stored Chat Layout value of
   Overlay or Detached is ignored and cleared on first read with no pop-out and no notice

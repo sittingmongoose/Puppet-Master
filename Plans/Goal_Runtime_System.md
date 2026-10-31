@@ -1266,7 +1266,7 @@ unblocks: []
 acceptance_criteria:
   - A resumed goal can reconstruct objective, constraints, tasks, status, child goals, evidence, and receipt state.
   - Concurrent or stale goal updates are rejected or reconciled through revision checks.
-  - Storage substrate remains selectable later without weakening required state fields.
+  - 'Amended 2026-10-31 (DL-270): the storage substrate is fixed. Goal records and the append-only goal event log persist in the canonical seglog and redb families (SP-335, SP-336, SP-340). SQLite and SQLite-format engines are not options (SP-342) and there is no always-on JSONL copy (SP-339); people read goal events through pm tail and pm export (SP-339). Required state fields are unchanged.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future goal-state persistence tests
@@ -2574,7 +2574,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Goal visual styling binds to owner-doc UI contracts before certification.
-- Persistence substrate selection binds to durable state and event-log contracts before certification.
+- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270): the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means checking the binding against those units.'
 - Provider defaults bind to separate worker/verifier-adjudicator policy and strong-certification blocking rules before certification.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -5924,6 +5924,8 @@ The Goal remains text, not a title, phase, plan, child tree, budget, attachment 
 
 The local qualification `pm.goal.canonical_json.v1` uses the existing registry encoding `json_canonical` without adding or redefining a global encoding enum. Encode UTF-8 JSON with ASCII property names in ascending order, compact `,` and `:` separators and no insignificant whitespace. Arrays preserve order. Strings preserve exact Unicode scalar values and whitespace without normalization, trimming, case folding or translation. Escape quote and backslash; use the JSON short escapes `\b`, `\f`, `\n`, `\r`, `\t` for those control characters and lowercase four-hex-digit `\u00xx` for the remaining U+0000–U+001F controls. Other scalar characters remain literal UTF-8. Booleans/null are lowercase JSON literals. Integer values use exact canonical decimal spelling, with no leading zeroes, plus sign, fractional part, exponent or negative zero. Schema constraints still apply to each integer field. Integers are mathematically exact with no binary64 rounding or additional fixed-width ceiling.
 
+Amended 2026-10-31 (DL-270): `pm.goal.canonical_json.v1` is the hash-input and semantic-record codec only. Stored redb values of the Goal families registered as `json_canonical` move to MessagePack or typed fields, because no redb family may store JSON text (SP-339). Readers decode the stored value to the semantic record and re-encode it as canonical JSON for equality and hash checks. Hash recipes and values do not change, since they target semantic record bytes, not the stored wrapper. The registry encoding change is a `storage_value_registry.json` companion for the storage owner.
+
 Reject duplicate keys, extra fields, malformed UTF-8, surrogate code points, non-integer numbers and noncanonical serialized alternatives. Decoding includes exact canonical re-encoding equality; syntactically valid but differently escaped/ordered/spaced bytes are not this codec. All property names in these closed records are ASCII. This restricted codec is not general JCS, MessagePack or an alternate EventRecord digest.
 
 Use lowercase SHA-256 for the following NEW Goal semantic hashes. Domain suffix `\n` below denotes one actual LF byte, not the two literal characters backslash and n:
@@ -5939,6 +5941,8 @@ Use lowercase SHA-256 for the following NEW Goal semantic hashes. Domain suffix 
 These recipes target semantic `record` bytes, never the enclosing physical storage wrapper. Physical wrapper bytes/schema/version/origin are separately verified by SP-287. Pending intent is immutable for one reservation; recovery cannot refresh its captured fields under the same digest. Existing EventRecord/producer/receipt digest recipes remain unchanged. Pre-existing currentness/revision strings need explicit codec migration/adoption; readers do not reinterpret them as the new hashes.
 
 The objective writer limit is exactly 4,000 Unicode scalar values, implementing the existing approximately 4,000-character convention. Preserve every accepted scalar and whitespace; overflow uses existing `objective_too_long`, never truncation. Surrogates reject. An oversized source record quarantines for owner review during migration. The existing field type remains string; this contract adds no nonempty-text requirement.
+
+Amended 2026-10-31 (DL-270): SP-337 and SP-340 cap one inline body and one redb value at 16 KiB. 4,000 scalars can reach 16,000 UTF-8 bytes before the other record fields, so a worst-case objective can overrun the cap. The registry must set a stored byte cap for `goal_body_record` and `goal_objective_revision` that the whole record fits. Objective text above it is rejected with `objective_too_long`, never truncated, or held in the payload store by content hash (SP-337). The owner picks one.
 
 ### One shared native mutation owner
 

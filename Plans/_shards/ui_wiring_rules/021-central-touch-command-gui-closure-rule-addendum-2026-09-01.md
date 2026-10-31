@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1180-L1215
+Source lines: L1180-L1218
 
-Source SHA256: `f65180635056fced8a33a2eed8098b926680f2be03a755f3b98c7564720a370c`
+Source SHA256: `c1f99a4f0621a9c484f30c7de45b21095732ffa87a5e1ac08b2253a6591ff893`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `f65180635056fced8a33a2eed8098b926680f2be03a755f3b98c7564720a370c
 For every non-blocked Touch primary command, the closure gate resolves the primary row through its Touch profile and production entries, requires at least one entry, and requires all entries for that command to name one identical handler. An alias must normalize before permission and dispatch and must have no peer production entry. A blocked false-inventory token must have neither a handler nor a production entry. GUI coverage means an exact intended route, typed availability/disabled reason, accessible action semantics, result/error settlement, and deterministic return; it does not require inventing a synthetic visible control where no user route is intended.
 
 The September 1 closure preserves the same dispatch rule while changing the machine census to 425 primaries (424 actionable plus one blocked false inventory), 55 aliases, 101 typed local actions, seven presentation rows, 588 Touch rows, 87 profiles, and 1065 production entries. Forge adds nine event-silent primaries, Backup/Restore adds sixteen, and Remote Access replaces four component/Serve primaries with three built-in-connector primaries plus four compatibility-only aliases. Those aliases have no peer control, state selector, handler, production row, persistence, or EventRecord.
+
+Amended 2026-10-31 (DL-270): these counts are the September 1 census and do not yet include the DL-270 surfaces: storage health with its verified reclaim action (SP-340, F3-457), the last verified backup and what a restore from it would lose (BRS-031, F3-528), and the record inspector (SP-339, F3-666). Each needs a Touch primary or typed local action with a production entry, projection source, readback check and disabled reason. The load-older control (F3-667) is wired by the single command cmd.chat.load_older (ACD-242). The registry rows and the revised totals are companions of DL-270 and are not yet written.
 
 ### UIW-017 - Exact Touch Command/GUI/Handler Closure
 
@@ -24,6 +26,7 @@ owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
   Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
   UIW-017 owns Plans/touch_closure_action_sources.json, the bounded static product action census used by Touch discovery independently of the Touch crosswalk and production wiring. Its system-local, Guided Tour, and required Home layout action lists reference the existing semantic owners. The census is not a command catalog, concept build input, native execution evidence, or readiness admission.
+  Amended 2026-10-31 (DL-270): the system-local action list is to gain entries for storage health and reclaim (SP-340, F3-457), the last verified backup and restore-loss display (BRS-031, F3-528) and the record inspector (SP-339, F3-666; opens through cmd.storage.open_value). Reclaim resolves to the existing cmd.storage.compaction.request. pm db dump, pm inspect, pm tail and pm export are command-line entry points that wire to the same handlers as the inspector, not separate dispatchers. The file has none of these entries yet.
 gui_related: true
 gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
 depends_on: [UIW-016, CS-074, UCC-152, WM-051]

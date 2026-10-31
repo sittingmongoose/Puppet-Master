@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5907-L5993
+Source lines: L5907-L5997
 
-Source SHA256: `735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af`
+Source SHA256: `330751dd992857de46503fb4e28371689feafad50c381e37004042f8d2aa9299`
 
 ---
 
@@ -28,6 +28,8 @@ The Goal remains text, not a title, phase, plan, child tree, budget, attachment 
 
 The local qualification `pm.goal.canonical_json.v1` uses the existing registry encoding `json_canonical` without adding or redefining a global encoding enum. Encode UTF-8 JSON with ASCII property names in ascending order, compact `,` and `:` separators and no insignificant whitespace. Arrays preserve order. Strings preserve exact Unicode scalar values and whitespace without normalization, trimming, case folding or translation. Escape quote and backslash; use the JSON short escapes `\b`, `\f`, `\n`, `\r`, `\t` for those control characters and lowercase four-hex-digit `\u00xx` for the remaining U+0000–U+001F controls. Other scalar characters remain literal UTF-8. Booleans/null are lowercase JSON literals. Integer values use exact canonical decimal spelling, with no leading zeroes, plus sign, fractional part, exponent or negative zero. Schema constraints still apply to each integer field. Integers are mathematically exact with no binary64 rounding or additional fixed-width ceiling.
 
+Amended 2026-10-31 (DL-270): `pm.goal.canonical_json.v1` is the hash-input and semantic-record codec only. Stored redb values of the Goal families registered as `json_canonical` move to MessagePack or typed fields, because no redb family may store JSON text (SP-339). Readers decode the stored value to the semantic record and re-encode it as canonical JSON for equality and hash checks. Hash recipes and values do not change, since they target semantic record bytes, not the stored wrapper. The registry encoding change is a `storage_value_registry.json` companion for the storage owner.
+
 Reject duplicate keys, extra fields, malformed UTF-8, surrogate code points, non-integer numbers and noncanonical serialized alternatives. Decoding includes exact canonical re-encoding equality; syntactically valid but differently escaped/ordered/spaced bytes are not this codec. All property names in these closed records are ASCII. This restricted codec is not general JCS, MessagePack or an alternate EventRecord digest.
 
 Use lowercase SHA-256 for the following NEW Goal semantic hashes. Domain suffix `\n` below denotes one actual LF byte, not the two literal characters backslash and n:
@@ -43,6 +45,8 @@ Use lowercase SHA-256 for the following NEW Goal semantic hashes. Domain suffix 
 These recipes target semantic `record` bytes, never the enclosing physical storage wrapper. Physical wrapper bytes/schema/version/origin are separately verified by SP-287. Pending intent is immutable for one reservation; recovery cannot refresh its captured fields under the same digest. Existing EventRecord/producer/receipt digest recipes remain unchanged. Pre-existing currentness/revision strings need explicit codec migration/adoption; readers do not reinterpret them as the new hashes.
 
 The objective writer limit is exactly 4,000 Unicode scalar values, implementing the existing approximately 4,000-character convention. Preserve every accepted scalar and whitespace; overflow uses existing `objective_too_long`, never truncation. Surrogates reject. An oversized source record quarantines for owner review during migration. The existing field type remains string; this contract adds no nonempty-text requirement.
+
+Amended 2026-10-31 (DL-270): SP-337 and SP-340 cap one inline body and one redb value at 16 KiB. 4,000 scalars can reach 16,000 UTF-8 bytes before the other record fields, so a worst-case objective can overrun the cap. The registry must set a stored byte cap for `goal_body_record` and `goal_objective_revision` that the whole record fits. Objective text above it is rejected with `objective_too_long`, never truncated, or held in the payload store by content hash (SP-337). The owner picks one.
 
 ### One shared native mutation owner
 

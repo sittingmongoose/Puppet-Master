@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19251-L19373
+Source lines: L19268-L19390
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -23,7 +23,7 @@ The registry (Plans/storage_value_registry.json) gains four `deferred_not_build_
 | `notebook_checkpoint_record` | `notebook_checkpoint.v1:{project_id}:{checkpoint_id}` | RP-AUTHORITY-INDEFINITE |
 | `context_transition_record` | `context_transition.v1:{project_id}:{transition_id}` | RP-RUNTIME-365D |
 
-**Checkpoint commit barrier.** Before a context-transition checkpoint publishes as `committed`, every referenced required note revision and every referenced workflow checkpoint is durably available: required note/entry writes and workflow checkpoint writes run as `durability_class = barrier` appends inside the existing two-barrier protocol (frame durability, then atomic manifest watermark promotion), and the committed checkpoint record publishes only after its commit manifest names their receipts. Where the notebook store and a workflow store differ, the existing commit-manifest/outbox protocol applies; no distributed atomic transaction is asserted. A failed partial write never exposes a committed checkpoint projection, a note file alone is never a side-effect checkpoint or a replacement for pending tool receipts, and replaying a committed checkpoint request returns the original checkpoint without a second write.
+**Checkpoint commit barrier.** Before a context-transition checkpoint publishes as `committed`, every referenced required note revision and every referenced workflow checkpoint is durably available: required note/entry writes and workflow checkpoint writes run as `durability_class = barrier` appends, which commit immediately and get the SP-336 full flush, with the watermark in the segment and no per-append manifest watermark promotion (Amended 2026-10-31, DL-270), and the committed checkpoint record publishes only after its commit manifest names their receipts. Where the notebook store and a workflow store differ, the existing commit-manifest/outbox protocol applies; no distributed atomic transaction is asserted. A failed partial write never exposes a committed checkpoint projection, a note file alone is never a side-effect checkpoint or a replacement for pending tool receipts, and replaying a committed checkpoint request returns the original checkpoint without a second write.
 
 **Read-after-commit and index lag.** Committed notebook writes are directly readable from the authoritative records regardless of projection state. Notebook search indexes are rebuildable scoped projections with explicit watermarks; readers that require authority verify checkpoint/watermark coverage, lag is disclosed as lag (typed `notebook_index_lag`) and never as authoritative absence, and index failure never loses canonical note state. Fallback scan/recovery stays bounded and never loads an entire notebook.
 
@@ -68,7 +68,7 @@ plan_unit_id: SP-256
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The notebook checkpoint commit barrier uses the existing two-barrier durability protocol. Every referenced required note revision and workflow checkpoint is durably available (durability_class = barrier appends with synced receipts) before the notebook_checkpoint_record publishes as committed with a commit manifest naming their receipts; differing stores use the existing commit-manifest/outbox protocol rather than an undesigned distributed transaction. A partial write never exposes a committed checkpoint; replay of a committed checkpoint request returns the original checkpoint; a note file alone is never a side-effect checkpoint or a tool-receipt replacement. Required checkpoint write failure produces typed failure/deferral with recovery material preserved, never a misleading saved state.
+canonical_text: The notebook checkpoint commit barrier, formerly the two-barrier protocol, uses SP-336's durability (barrier-class appends commit immediately with a full flush, the watermark lives in the segment, and no manifest promotion happens per checkpoint), as amended 2026-10-31 by DL-270. Every referenced required note revision and workflow checkpoint is durably available (durability_class = barrier appends with synced receipts) before the notebook_checkpoint_record publishes as committed with a commit manifest naming their receipts; differing stores use the existing commit-manifest/outbox protocol rather than an undesigned distributed transaction. A partial write never exposes a committed checkpoint; replay of a committed checkpoint request returns the original checkpoint; a note file alone is never a side-effect checkpoint or a tool-receipt replacement. Required checkpoint write failure produces typed failure/deferral with recovery material preserved, never a misleading saved state.
 gui_related: false
 gui_classification_reason: Durability protocol is storage behavior, not GUI work.
 depends_on: [SP-255]

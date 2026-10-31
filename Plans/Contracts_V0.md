@@ -1016,7 +1016,7 @@ Field contract:
 | `sequence_id`, `producer_sequence_id` | Required monotonic ordering fields. `sequence_id` is the storage-assigned canonical replay sequence; `producer_sequence_id` is nullable and may preserve an upstream monotonic source sequence. |
 | `correlation_id`, `causation_event_id`, `parent_event_id` | Required causality/correlation fields; nullable causality fields remain present when no parent or cause exists. |
 | `idempotency_key` | Required duplicate-delivery key. Replay and append paths MUST use it with `event_id` according to `replay_policy` instead of inventing timestamp-based dedupe. |
-| `payload_schema_id`, `payload`, `payload_ref` | Required payload dispatch fields. `payload_schema_id` selects the registered event-type payload schema, `payload` carries the bounded in-envelope value, and `payload_ref` points to external blob/detail storage when the payload is too large or separately governed. |
+| `payload_schema_id`, `payload`, `payload_ref` | Required payload dispatch fields. `payload_schema_id` selects the registered event-type payload schema, `payload` carries the bounded in-envelope value, and `payload_ref` points to external blob/detail storage when the payload is too large or separately governed. Amended 2026-10-31 (DL-270): `payload` carries at most 16 KiB of inline body per record. A larger body is replaced by a `payload_ref` holding a BLAKE3 id, byte size and media type that points into the content-addressed payload pack store, and a base64 body inline in a record is an admission error. SP-337 in Plans/storage-plan.md owns the mechanics. |
 | `redaction_profile` | Required enum: `no_secrets`, `redacted`, or `secret_refs_only`. Raw secrets are never valid EventRecord content. |
 | `replay_policy` | Required enum: `append_once`, `dedupe_by_event_id`, `dedupe_by_idempotency_key`, or `projector_replay_only`. |
 | `migration` | Required closed object carrying nullable `migrated_from_schema_id`, `migrated_from_schema_version`, `migration_id`, and `compatibility_event_type`. |
@@ -1024,7 +1024,7 @@ Field contract:
 Rules:
 - `Plans/Contracts_V0.md` owns the EventRecord envelope and cross-cutting event identity, causality, idempotency, redaction, replay, and versioning rules.
 - `Plans/storage-plan.md` owns seglog/redb persistence mechanics, replay ordering, retention/compaction, migration execution, and the concrete persisted event-type payload schema registry.
-- The first native seglog writer encodes the complete EventRecord using Storage Case L-2 / SP-026 / SP-236: its exact SeglogFrameV2 profile, eight-element header, uncompressed canonical MessagePack payload, and three CRCs. Required-present nulls and every envelope field survive. Wire representation does not change schema numeric domains, payload meaning, producer-semantic/legacy/receipt digest recipes, or grant native durability or integrity-producer admission.
+- The first native seglog writer encodes the complete EventRecord using Storage Case L-2 / SP-026 / SP-236: its exact SeglogFrameV2 profile, eight-element header, uncompressed canonical MessagePack payload, and three CRCs. Amended 2026-10-31 (DL-270): this profile describes the active segment, which stays uncompressed (flags=0). Sealed segments are repacked in the background (segment repack) into zstd level 3 blocks, and cold ones into level 9, and SeglogFrameV2 admits a compression flag, codec id and dictionary id (SP-335). Decoded frame content, and so every envelope field, is unchanged. Required-present nulls and every envelope field survive. Wire representation does not change schema numeric domains, payload meaning, producer-semantic/legacy/receipt digest recipes, or grant native durability or integrity-producer admission.
 - Producer docs own event semantics and payload meaning, but they MUST reference `Contracts_V0.md#EventRecord` and MUST NOT define local EventRecord field lists.
 - Payload schemas MAY close event-specific fields independently; the top-level EventRecord envelope stays closed while `payload` remains the dispatch region for the selected schema.
 - `event_id` is globally unique across application and project scopes for the lifetime of the app data root. For policies that select the idempotency key, its identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime, where `scope_partition` is `app` or the storage-owned reversible project partition. Same identity plus the same producer semantic digest returns the original result; the same identity plus a different digest is `idempotency_conflict` and never appends.
@@ -2099,6 +2099,9 @@ Exactly one selector is required:
 - `server_endpoint`
 - `remote_route`
 - `remote_connector`
+- `storage_record`
+
+Amended 2026-10-31 (DL-270): `storage_record` names one record in a registered store family, keyed by `store_family_id` and `value_key_ref`, and is the object the read-only record inspector opens through `cmd.storage.open_value` (F3-666, SP-339). It is a stored-state subject, not a project or thread object.
 
 Terminal-focused `/open` and reveal contracts use the terminal object kinds above with the matching focus identifiers. A route that targets a terminal tab, session, or dev session MUST stay in `route_target` object identity instead of inventing panel-local terminal routing semantics; a legacy section or pane target resolves to the terminal tab of its session.
 
@@ -2373,7 +2376,7 @@ Legacy audit closure note: `LF-004` and `LF-008` identify the old same-file cont
 
 Spending-limit enforcement reads the canonical usage_record stream and its legacy `/record` review marker through the same attribution tuple. Pre-dispatch checks that exceed budget emit `kill.budget_exceeded`; post-response `/post` recording that discovers an overrun emits `done.budget_exceeded` and persists overrun evidence rather than rewriting prior usage.
 
-The canonical usage pipeline is `seglog -> analytics scan -> redb rollups -> UI`. Rollups preserve per-run, per-session, and per-tool attribution, including `parent_run_id`, `cache_hit?`, and `cache_strategy?`, so helper calls and subagent work remain explainable without collapsing child usage into display-only parent totals.
+The canonical usage pipeline is `seglog -> analytics scan -> redb rollups -> UI`. Amended 2026-10-31 (DL-270): the analytics scan runs as events land and at segment seal, where a Parquet archive is also written (derived, read only by on-demand embedded DuckDB, SP-341). The Usage page and widgets read only redb rollups and never scan raw events. Detailed usage records follow the Keep usage history for setting (`ai.usage.usage-retention`, 90 days by default) and daily totals per account, provider and model are kept whatever it says (UF-108). Rollups preserve per-run, per-session, and per-tool attribution, including `parent_run_id`, `cache_hit?`, and `cache_strategy?`, so helper calls and subagent work remain explainable without collapsing child usage into display-only parent totals.
 
 CLI bridge consumers stay aligned with `Plans/CLI_Bridged_Providers.md` owner sections named `### HTTP/status to failure-class mapping`, `### Normalized usage event minimum fields`, and `### Stream cancellation and replay safety`. For bridge-side consumer-field projections, `402 / quota_exceeded` is no-retry and upgrade-facing, `429 / rate limit` remains a distinct rate-limited class, and transient circuit-breaker windows preserve the owner value such as `2 minutes` instead of redefining it in this contract.
 
@@ -3014,7 +3017,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 #### Stable active-agent coordination event families
 
-Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; side files such as `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only and do not stand beside the EventRecord/projection model as runtime truth.
+Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; the side files `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are retired as live files and do not stand beside the EventRecord/projection model as runtime truth. Amended 2026-10-31 (DL-270): nothing writes them during normal runs (SP-339). People read coordination state through `pm db dump`, `pm inspect`, `pm tail` and `pm export`, which writes JSON or JSONL only on request. The redb coordination projections stay the only runtime copy.
 
 For every `coordination.*` event below, the payload MUST preserve the PM lineage envelope:
 - `project_id`
@@ -20201,8 +20204,9 @@ canonical_text: >-
   `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
   `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
   `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export
-  mirrors only and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are retired as live files
+  (SP-339, amended 2026-10-31, DL-270), JSON state exists only as on-request `pm export` output, and neither it nor any
+  export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
   abort, receipt, or validation decisions.
 gui_related: false
 gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
@@ -20213,7 +20217,7 @@ acceptance_criteria:
   - Coordination payloads preserve project/run/thread/agent lineage, platform, revision/checkpoint/idempotency fields, and relevant operation/file/mirror metadata.
   - File-activity events are coordination claims only and do not create FileSafe locks or durable exclusive leases.
   - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.
-  - JSON side files remain compatibility/debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
+  - Amended 2026-10-31 (DL-270, SP-339) - the JSON side files named in CV-294 are retired as live files. JSON state exists only as on-request `pm export` output, and neither it nor any export can drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
@@ -20750,7 +20754,7 @@ This addendum is the Contracts-owner portion of the approved Case L repair packa
 
 ### Durable append receipt and storage recovery events
 
-`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the storage-owned frame and manifest/watermark durability barriers complete and SP-286/CV-339 first-receipt custody is durably committed before exposure. `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
+`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the group's single data sync of its segment bytes completes, with the durable watermark carried inside the segment, and SP-286/CV-339 first-receipt custody is durably committed before exposure. Amended 2026-10-31 (DL-270): the manifest is synced only at segment creation, rotation and structural changes, not once per group, and a barrier-class event (approvals, safe points, receipts the UI waits on) is valid only after a full flush (SP-336). `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
 
 Contracts registers these `application_only` EventRecord families; storage owns their exact payload schemas and recovery behavior:
 
@@ -20910,7 +20914,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  AppendReceipt proves a synced frame-plus-manifest durability boundary with
+  AppendReceipt proves a synced frame-plus-in-segment-watermark durability boundary (one data sync per ordinary group, full flush for barrier-class events, SP-336) with
   SP-286/CV-339 durable first-receipt custody before exposure, and
   application-scoped storage.integrity_detected, storage.recovery_applied, and
   storage.boot_recovery payloads carry deterministic recovery identity, proven
@@ -20921,7 +20925,7 @@ gui_classification_reason: Defines shared durability and recovery payloads; GUI 
 depends_on: [CV-309, CV-317, SP-230]
 unblocks: []
 acceptance_criteria:
-  - AppendReceipt success is possible only with durability_state synced after both storage barriers and SP-286/CV-339 durable first-receipt custody before exposure.
+  - AppendReceipt success is possible only with durability_state synced after the group's single data sync (a full flush for barrier-class events, SP-336) and SP-286/CV-339 durable first-receipt custody before exposure.
   - Recovery events are application-scoped, deterministic, idempotent, and carry only proven impact identities.
   - persisted_at_utc without a matching synced AppendReceipt is not successful persistence evidence.
 validation_surfaces:
@@ -21713,7 +21717,7 @@ unblocks: []
 acceptance_criteria:
   - Validate the central envelope, registered payload schema ID and event_type pair, payload, project scope, and parity for project, thread, Run, and attempt where applicable before checkpoint advance.
   - Require exact Home Server, Execution Host, Environment, Source Location and row-specific workspace, session, page/generation, program, segment, ProgramWorkspace or routine context; pre-allocation identities remain null only where the selected transition permits them.
-  - Payloads are at most 65536 UTF-8 JSON bytes with at most 64 artifact refs and closed typed facts; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
+  - Payloads are at most 16384 UTF-8 JSON bytes (16 KiB inline body, SP-337) with at most 64 artifact refs and closed typed facts, a larger body is carried by BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
   - Application-scope, mismatched scope, unknown family, stale generation, protected-auth content, unhandled inline data, mismatched schema identity and oversized payloads fail closed without checkpoint advance.
   - App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest; a matching retry returns the original with zero effects while conflicting identity is quarantined.
   - Storage-assigned sequence and observation/persistence times do not change producer-semantic digest; producer sequence and correlation retain their existing meaning.
@@ -22253,7 +22257,7 @@ ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Pla
 
 CV-339 defines the shared first-receipt shapes, byte semantics and caller interfaces. SP-286 owns physical custody, durability, exclusion, restore, migration and withdrawal. The successful `AppendReceipt` remains exactly the existing eleven fields: `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, `acknowledged_at_utc`. `durability_class = ordinary | barrier`; `durability_state = synced`. The existing four-field `original_append_result` remains `event_id`, `sequence_id`, `segment_ref`, `byte_offset`. Neither gains a pending state, origin flag, replacement ID or new field.
 
-Both source durability barriers remain required. SP-286 then requires durable canonical all-member first-receipt issuance before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the selected successful first issuance time, not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
+Amended 2026-10-31 (DL-270): one data sync of the group's segment bytes is required for an ordinary group, and a full flush for a barrier-class event (SP-336). The manifest is not a per-group barrier. SP-286 then requires durable canonical all-member first-receipt issuance before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the selected successful first issuance time, not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
 
 ### Exact closed schema routes
 
@@ -22353,7 +22357,7 @@ The four existing operation roles now have explicit `2.0.0` bindings; the additi
 
 | Binding | Inputs and successful result | Required refusal boundary |
 |---|---|---|
-| `storage.first_append_receipt.issue.v2` | The existing writer's authenticated selected source/manifest, complete protected group, normal append-class/identity admission, both actual durability barriers and held canonical store/gate. Storage derives and durably commits the complete group once; only then may the unchanged receipts be exposed. | Caller row, mapping, acknowledgement timestamp or index assertion cannot supply authority. Changed gate/source/dedupe/segment/restore controls, prior issuance loss or partial custody fences; no partial successful group. |
+| `storage.first_append_receipt.issue.v2` | The existing writer's authenticated selected source/manifest, complete protected group, normal append-class/identity admission, the group's actual durability sync (one data sync for an ordinary group, full flush for a barrier-class event, SP-336) and held canonical store/gate. Storage derives and durably commits the complete group once; only then may the unchanged receipts be exposed. | Caller row, mapping, acknowledgement timestamp or index assertion cannot supply authority. Changed gate/source/dedupe/segment/restore controls, prior issuance loss or partial custody fences; no partial successful group. |
 | `storage.first_append_receipt.resolve.v2` | An incoming EventRecord identity/semantic request under its existing replay policy; Storage resolves retained original global/scoped identity and actual canonical custody, then returns the exact original eleven-field receipt. | The request cannot override source, group, locator, custody row or retained mapping. Missing/conflicting custody/identity returns unavailable/fenced behavior under existing caller failure contracts, without append or domain effects. |
 | `storage.first_append_receipt.group_gate.v2` | Existing writer/recovery/maintenance operation against actual current Storage/generation/lease; complete immutable current-group custody is authenticated before advance, replacement or retirement is released. | A phase marker or stale dedupe state is insufficient. Every operation that could lose/replace an unissued group remains excluded, including a recovery event append. |
 | `storage.first_append_receipt.backup_gate.v2` | Existing coherent backup/restore operation and actual selected canonical boundary; settle current issuance, capture/verify all required receipt authority with source/manifest/store identity, and restore covered exact receipts through existing coordinator. | Pending authority backup, partial/missing required custody, epoch skew, changed confirmed selection or unsupported state cannot produce successful authority restoration or a replacement first receipt. |
@@ -22363,7 +22367,7 @@ NEW explicit compatibility entrypoints, installed with the actual SP-286 v2 owne
 
 These are semantic caller contracts around existing Storage owners, not a new generic dispatch/authentication service or a prescribed fixture API. No new result/error vocabulary is introduced. Callers use their existing refusal/recovery contracts when original receipt authority is unavailable and must not treat absence as success.
 
-First issuance validates full original frame/source/group, current dedupe checkpoint and actual global/scoped identity values, Storage instance and both barriers under the held gate. Replay instead validates retained global/scoped schemas, exact key/raw/original-result identities, custody scope/type/idempotency/semantic digest and original receipt/result. A matching scoped alternate incoming event ID resolves the retained original event ID. Replay never reassigns first time, group/generation, original segment ref or coordinates, and does not require retired frames, historical redb snapshots or old owner requests. It provides append evidence only; current event availability and downstream mutation permission remain independent.
+First issuance validates full original frame/source/group, current dedupe checkpoint and actual global/scoped identity values, Storage instance and the group's durability sync (a full flush for barrier-class events, SP-336) under the held gate. Replay instead validates retained global/scoped schemas, exact key/raw/original-result identities, custody scope/type/idempotency/semantic digest and original receipt/result. A matching scoped alternate incoming event ID resolves the retained original event ID. Replay never reassigns first time, group/generation, original segment ref or coordinates, and does not require retired frames, historical redb snapshots or old owner requests. It provides append evidence only; current event availability and downstream mutation permission remain independent.
 
 ### Restore caller protocol and crash handoff
 
@@ -22384,7 +22388,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Preserve the exact existing eleven-field AppendReceipt and four-field original append result.
-  SP-286 durable first-receipt custody follows both source barriers and precedes exposure.
+  SP-286 durable first-receipt custody follows the group's durability sync (full flush for barrier-class events, SP-336) and precedes exposure.
   The First append receipt shared contract defines exact closed current v2 protected-group,
   compact restore-admission and issued-only custody shapes, strict ordered MessagePack digest
   bytes, versioned Storage caller interfaces, immutable retained replay and the distinct
@@ -22527,7 +22531,7 @@ owner_hints:
 
 The active payload is `pm.goal_runtime_event.goal_created.schema.v3`, with the exact twelve required content-free fields in `Plans/event_payloads/goal_runtime/goal_created.schema.json`. Revision and accepted objective revision are both 1. The entire prior v2 root, including its own ID and all local definitions, remains under `#/$defs/legacy_v2_reader`; retained decoding selects that whole resource explicitly. There is no shape-based fallback, v2-to-v3 reinterpretation, implicit legacy backfill, old structured-objective writer or extension of the event census. An active-v3 writer and a whole-v2 retained decoder are separate installation roles. A package unable to supply required actual roles is unavailable for that operation; a declaration does not prove native dispatch or mixed-version traversal.
 
-The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged.
+The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged. Amended 2026-10-31 (DL-270): SP-339 moves redb values stored as JSON text to MessagePack in the family's canonical encoding, or to typed fields, so the stored `goal_start_command.v1` row is not JSON text. RFC 8785 canonical JSON stays only as the source-hash and transient API recipe named here (SP-339, SP-340).
 
 The physical key is `goal_start_command.v1:{P}:{T}:{C}`, where each component is lowercase hexadecimal of the exact UTF-8 `project_id`, `thread_id` and `command_instance_id`, respectively. The outer record's values must equal the decoded key, original operation/owner scope and original source identity. A logical member reference `<key>#/owner_result` resolves to `/record/owner_result` in the authenticated wrapped row; `<key>#/creation_receipt` resolves to `/record/owner_result/creation_receipt`. These are named owner-resolved members, not raw JSON Pointers at the wrapper root. Missing/null/unsettled members are unavailable and never synthesized. The result schema reference is exactly `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2`, schema identity `pm.goal.start.result.v2`. The resolver checks current audit authority and the exact original row/body/shared evidence before returning a member; traversal of an event is a separate consumer facet.
 

@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1307-L7533
 
-Source SHA256: `268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582`
+Source SHA256: `575359e7ec9810c790caafb09df5fcf79e3608d5e3a2ffbbc5b303d403f00478`
 
 ---
 
@@ -2251,7 +2251,7 @@ plan_unit_id: PS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector."
+canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector. Amended 2026-10-31 (DL-270): the dedicated log/audit inspector is the log and audit inspector of F3-148, and a row opens the record inspector (F3-666); pm inspect, pm tail and pm export read the same permission and audit records. On-demand payload reads resolve a payload reference through the payload store (SP-337) under the same redaction profile."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
 split_recommended: false
@@ -5807,7 +5807,7 @@ plan_unit_id: PS-108
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Sensitive metadata minimization masks remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace and workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts by default unless the user explicitly chooses a fuller export profile."
+canonical_text: "Sensitive metadata minimization masks remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace and workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts by default unless the user explicitly chooses a fuller export profile. Amended 2026-10-31 (DL-270): pm export, pm db dump, pm inspect, pm tail and the in-app record inspector (SP-339) apply this same default masking and redaction profile; a fuller view needs the explicit fuller profile."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
 split_recommended: false
@@ -5862,7 +5862,7 @@ plan_unit_id: PS-109
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+canonical_text: "/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts. Amended 2026-10-31 (DL-270): cleanup also releases the project's payload-store references (SP-337) through reference-counted garbage collection that honours holds and backups, and drops project-scoped Parquet partitions and Tantivy and DuckDB derived data (SP-341). It does not delete pack files directly."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false

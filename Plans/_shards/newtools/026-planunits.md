@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1306-L8593
+Source lines: L1308-L8598
 
-Source SHA256: `886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6`
+Source SHA256: `6d165d29d4c0d35a196f03b7b4e296c3a6939e9f141e59fc520747154f6549e0`
 
 ---
 
@@ -3571,6 +3571,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md'
 ```
 
+Amended 2026-10-31 (DL-270): GUI-automation screenshots and traces are evidence-class (SP-343) and keep their exact captured bytes, so the manifest sha256 stays valid; no lossless-WebP transcode applies to them. Recordings use hardware AV1 or HEVC (WebM or MP4 containers) with a thumbnail named beside poster_path; the mp4 fallback is not a second codec path. All bytes live in the payload store (SP-337).
+
 ### N2-079 - GUI Automation Evidence Run Layout
 
 ```yaml
@@ -3588,6 +3590,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- "Amended 2026-10-31 (DL-270): the run folder is the evidence bundle exported for the run (an exported deliverable under SP-339), not a live state mirror. Run state is held as typed records; screenshots, recordings and traces are payload-store entries referenced by BLAKE3 id (SP-337), not one loose file each. manifest.json and timeline.jsonl are written when the bundle is exported."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18540-L18739
+Source lines: L18555-L18756
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -63,6 +63,8 @@ canonical_text: >-
   entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is
   retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
   storage key is admitted by this rule.
+  Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that
+  is split per key or stored by reference.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]

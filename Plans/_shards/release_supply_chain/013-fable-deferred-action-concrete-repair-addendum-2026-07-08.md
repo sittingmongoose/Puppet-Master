@@ -4,7 +4,7 @@ Source: `Plans/Release_Supply_Chain.md`
 
 Source lines: L812-L821
 
-Source SHA256: `8baf0c26f092afc0d51d69c8ca4342b41d97bf0d1ade74af8632f544df46d428`
+Source SHA256: `840f30800f245ba0708b658f22687bda4740c206dd03b3ec1dd18fd7cca88d6a`
 
 ---
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L14230-L14497
+Source lines: L14234-L14503
 
-Source SHA256: `ece47700f08bfab6ed483e3649d3c6201fc47ae8736dbe5bdc70c828a1dc13b6`
+Source SHA256: `4b3d85b690bb307a70c79bb4c063184e045339ae0af6da11095bfcbb11e0d62e`
 
 ---
 
@@ -63,6 +63,8 @@ negative_constraints:
   - Do not use git status, mtime, or path count as the equality authority.
   - Do not keep snapshot bodies in the worktree or silently move remote custody local.
   - Do not write a new compatibility alias as a primary safe-point key.
+stale_retired_dispositions:
+  - "Amended 2026-10-31 (DL-270): blob bodies live in the SP-337 payload store; the one-file layout snapshots/blobs/<sha256> is retired. Restore equality stays the SHA-256 of the canonical manifest. Remote custody on the authorized host is unchanged."
 owner_hints: [Plans/FileSafe.md]
 ```
 

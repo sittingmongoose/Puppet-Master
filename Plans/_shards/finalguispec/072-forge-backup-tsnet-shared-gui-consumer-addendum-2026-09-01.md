@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37278-L37368
+Source lines: L37341-L37437
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
 
 ---
 
@@ -34,6 +34,12 @@ canonical_text: >-
   ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
   field shows only when the project has several bindings; with one, the rail names the service as a fact beside
   the revision (owner, 2026-10-10).
+  Amended 2026-10-31 (DL-270, BRS-031): Data Backup and Retention and RestorePreview also show the last verified
+  backup, meaning the newest backup at Structure verified or higher with its level, its time and its last event, and
+  say plainly what a restore from it would lose (everything written after its capture point), with a newer
+  unverified backup shown beside it. The line and the loss statement are one backup-status record that the Backup
+  manager, the restore preview, the recovery shell (section 15.6) and Storage & Retention (F3-457) read; no surface
+  computes them. Derived families are not backed up and rebuild on restore.
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -47,7 +53,7 @@ acceptance_criteria:
   - Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates `Origin Actions`.
   - Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`, `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
   - Restore progress renders the BRS-023 phase-local evidence without inventing future receipts. Only the existing human permission/confirmation flow may display the exact-target emergency alternative after verified recovery-point unavailability; refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback. All command, preview, generation, and evidence rules remain Backup-owned.
-  - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
+  - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last complete remote backup receipt time, verification/drill state, Recovery Kit status, the last verified backup with its time and last event and what a restore from it would lose (BRS-031, amended 2026-10-31, DL-270), `[Back Up Now] [Restore…] [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
   - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities, export is disclosed as a non-restore artifact, and none activates or executes a Project.
   - Archive retrieval presents capability, wait, possible fee/cost without a hard-coded price, explicit human consent, external-effect/indeterminate outcome, phase-based ObservableWork, cancellation/recovery truth, and exact reverse focus. No billable action starts from visibility or stale projection.
   - RecoveryKitHandoff is human-only, step-up protected, no-store, initiating-Client bound, non-recordable, and absent from agent/NL/API automation, Doctor, screenshots, recordings, ordinary clipboard history, logs, Chat, Usage, and concept fixtures. It shows masked/non-secret state and never Recovery Key/Kit bytes.

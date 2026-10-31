@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18251-L18425
+Source lines: L18266-L18440
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -76,7 +76,7 @@ these families. The mandatory order is:
 6. validate counts, canonical encodings, hashes, identity joins, FileSafe and
    permission refs, no-raw-secret rejection, and derived-source coverage;
 7. write the new store schema stamp last, reopen, replay/catch up derived
-   projections, and rebuild Tantivy/JSONL only from authoritative sources;
+   projections, and rebuild Tantivy only from authoritative sources (JSONL is written only as an export on request, DL-270, SP-339);
 8. append the sole existing `migration_receipt` after read-back proof. On
    interruption, journal evidence selects completion, one automatic verified
    restore, quarantine, or `manual_recovery_required`; absence of evidence is

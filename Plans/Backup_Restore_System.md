@@ -363,7 +363,7 @@ canonical_text: >-
   ObservableWork, one sole handler, admitted event or explicit receipt-only effect, production wiring, accessibility and
   focus return, native/web parity, and regression evidence. Normal Data Backup and Retention shows Automatic Backups,
   explicit Server/Project scope, protected data, destination cards, Encryption enabled, Last complete remote backup,
-  verification level/time, Recovery Kit status, Back Up Now, Restore, and Add Destination. History/Browse, Destinations,
+  verification level/time, Recovery Kit status, Back Up Now, Restore, and Add Destination. Amended 2026-10-31 (DL-270): section 4.2 owns the exact overview list, which also shows the last verified backup and what a restore from it would lose (BRS-031); this unit's list is a summary and adds no fields. History/Browse, Destinations,
   Schedule/Retention/Holds, Recovery and Keys, and Advanced/Diagnostics own detailed work. Missing executable
   contracts disable the affected action without reverting accepted scope.
 gui_related: true
@@ -780,7 +780,7 @@ Normal Data Backup and Retention overview is exactly:
 - `Automatic Backups On / Off`
 - explicit `Server` or `Project:{id}` scope and `Protected data` summary;
 - destination cards and `Encryption enabled`;
-- `Last complete remote backup <receipt time>`, verification level/time, and Recovery Kit status; and
+- `Last complete remote backup <receipt time>`, verification level/time, Recovery Kit status, and (BRS-031, DL-270) the last verified backup with its time and last event plus what a restore from it would lose; and
 - `[Back Up Now] [Restore…] [Add Destination]`.
 
 Detail areas are History and Browse; Destinations; Schedule/Retention/Holds; Recovery and Keys; and Advanced/Diagnostics. They contain destination capability/auth and independent decrypt readiness, selected Projects/data/source coverage, schedule and retention, encryption and portable-secret selection, Recovery Kit custody, verification/test restore, history/failures/storage use, manifest/receipt drill-through, quarantine, rollback, and diagnostics. Project cards remain compact and show only relevant last-complete/attention state.
@@ -836,7 +836,7 @@ All BRS PlanUnits are Plans-only. They create no WorkNodes, NodeSeeds, executabl
 
 - The eleven destination families and the new-policy daily 7/4/6 seed are fixed here. Exact engine/transport version selection, provider-specific proven capability state, schedule widget vocabulary, RPO/RTO product claims, optional test-restore cadence, OAuth approvals/registrations, and crypto-suite release admission remain downstream implementation/security/release-owner integrations. The schema uses stable adapter, auth-owner, release-gate, and security-profile refs rather than inventing provider readiness.
 - Internal `backup:{backup_id}`, `recovery/`, `restore-points/`, Sync bundles, Settings snapshots, storage `MigrationReceipt`, JSON/JSONL export, and concept fixtures are not Full Server Backup or Project Backup.
-- Raw OS keychain/Credential Manager bytes, default CLI-profile payloads, cookies, machine-bound identities, live runtime, device geometry, and rebuildable indexes remain excluded by default. BRS-021 permits explicitly selected captured Jujutsu history indexes only as optional speed aids; correctness-critical rebuild in the isolated drill and complete native closure proof remain mandatory.
+- Raw OS keychain/Credential Manager bytes, default CLI-profile payloads, cookies, machine-bound identities, live runtime, device geometry, and rebuildable indexes remain excluded by default. Derived indexes, Jujutsu history indexes included, are never captured in a backup (BRS-031, DL-270); BRS-021 rebuilds them from native history on restore, and correctness-critical rebuild in the isolated drill and complete native closure proof remain mandatory.
 - Restore does not silently install tools, authenticate profiles, administer external secret systems, choose new source paths, or claim unavailable integrations Ready.
 - Automatic writable multi-Server failover and live-database replication are rejected.
 - Static schemas/fixtures and Plans do not authorize production deletion, restore, key rotation, backup retention, or governance seal.
@@ -1197,8 +1197,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
 canonical_text: Correctness-critical Jujutsu history indexes are rebuilt from retained native history in the isolated
-  restore drill. Captured indexes may be retained only as an optional speed aid with consistent capture and version
-  compatibility checks; they are neither recovery authority nor a substitute for verified object and retained-operation
+  restore drill. Amended 2026-10-31 (DL-270, BRS-031), Jujutsu history indexes are derived and are not backed up; no optional capture or speed-aid copy exists. They are rebuilt from retained native history on restore, as the isolated drill already requires, and are neither recovery authority nor a substitute for verified object and retained-operation
   closure. This is the DL-043 policy, not an optional verification feature. Backup consumes JJI-008 native closure
   and isolated historical-operation verification, while Storage owns disposable material custody and native index rebuild execution remains with the Jujutsu owner through the PM-owned internal adapter service.
 gui_related: false
@@ -1594,7 +1593,7 @@ The complete StorageProjection contains full original typed started Event conten
 
 Checkpoint loss, corrupt row/dataset binding or incomplete generation invalidates projection coverage and triggers rebuild only from the actual complete current generic source and genuine retained native custody. Actual retention-owner gap decisions must agree with the whole SP278 selection/frontier; empty survivor scan does not prove never-started. Rebuild stages an isolated fresh generation, validates every global prefix record and native cause, and atomically cuts over row/dataset/root under the complete original Storage final fence. Unsupported relevant events halt before their row; missing expected original source yields unavailable. Never rebuild the original Event, receipt, native state, origin or capability from the projection. Original missing non-rebuildable authority retains BRS-025 data-loss/unavailable disclosure rather than being mislabeled a disposable projection loss.
 
-If derived rows/checkpoints are included in a backup image, capture them as a coherent optional root/generation/dataset unit with exact physical keys, codecs, full values, immutable anchors, advancing frontier, lifecycle facts and actual hold references. Their restore does not assert currentness: after current tombstones/deletion/permission/holds are applied, independently revalidate original source availability, actual generic selection/frontier, native owner/custody and source registrations. A stale/incomplete derivative unit is refused or lawfully rebuilt; it never overlays newer native controls, invents old bodies or recreates authority. Original protected backup cannot extend current retention or resurrect tombstoned Event content. Each actual backup, restore, janitor and passive disclosure owner independently obtains whole applicable sources before helpers and repeats the full pure predicate after all helpers with no gap to mutation/release.
+Amended 2026-10-31 (DL-270, BRS-031): the StorageProjection and CombinedStorageProjection rows, checkpoints and generations are derived and are never backed up; they rebuild from retained original sources on restore. The source-lifetime, tombstone, hold, currentness and restore-ordering checks that follow stay in force for that rebuild. Their rebuild does not assert currentness: after current tombstones/deletion/permission/holds are applied, independently revalidate original source availability, actual generic selection/frontier, native owner/custody and source registrations. A stale/incomplete derivative unit is refused or lawfully rebuilt; it never overlays newer native controls, invents old bodies or recreates authority. Original protected backup cannot extend current retention or resurrect tombstoned Event content. Each actual backup, restore, janitor and passive disclosure owner independently obtains whole applicable sources before helpers and repeats the full pure predicate after all helpers with no gap to mutation/release.
 
 Historical read returns full original facts only while its actual sources remain retained and current disclosure permitted. Current projected running read also requires the full fresh native and separate Goal controls and complete current global frontier; advanced native/D06 state is unavailable to that bounded view. Backup/restore, Event depth, real native custody, concurrency/crash/TTL/hold behavior and deterministic replay remain NOT_RUN until independently qualified. No governance seal, current runtime admission or action capability follows from these source definitions.
 
@@ -1643,7 +1642,7 @@ source_atom_ids: []
 
 ### BRS-028 - Whole original cancellation source retention and combined projection recovery
 
-Original non-rebuildable D06/D05/D01/Start/Goal/Storage/effect authority keeps its existing exact family keys, full schemas, native provenance and mandatory backup/disclosure rules under BRS025 and its original owners. The new two combined projection/checkpoint families are disposable derived state with optional coherent derivative backup. Their registration does not make original source backup optional, enlarge an authority or require a historical mutable Workflow/Goal-body archive. All 27 retention-policy objects remain exact.
+Original non-rebuildable D06/D05/D01/Start/Goal/Storage/effect authority keeps its existing exact family keys, full schemas, native provenance and mandatory backup/disclosure rules under BRS025 and its original owners. The new two combined projection/checkpoint families are disposable derived state and are not backed up (BRS-031, DL-270); they rebuild on restore. Their registration does not make original source backup optional, enlarge an authority or require a historical mutable Workflow/Goal-body archive. All 27 retention-policy objects remain exact.
 
 Original started remains RP-RUNTIME-365D@1.0.0: 31,536,000 seconds from run completion with original 1,000,000/run and 5,000,000/project caps, roll_successor, holds and compaction. Original cancelled remains RP-AUTHORITY-INDEFINITE@1.0.0 with actual original deletion/hold/backup controls. Every original native/Goal/Start compact record, process record, FileSafe journal and raw artifact retains its separate source lifetime. Indefinite cancelled retention or a projection hold does not extend another source, recreate a disposed full journal or retain raw files indefinitely.
 
@@ -1653,7 +1652,7 @@ The cancelled branch carries original Start metadata selectors, not a duplicate 
 
 The existing RP-PROJECTION-3GEN@1.0.0 governs exactly the new generation lifecycle: maximum three including staged/current/retired; current no TTL; original retirement plus 604800 seconds subject to authentic holds/references; immutable first preparation/activation/retirement/successor facts; governed rebuild on expiry/overflow. Whole root/dataset binding, generation anchor and advancing frontier must remain coherent. Checkpoint loss permits only a new isolated derived rebuild from actual complete generic retained source and authentic original causal records, never original Event/native/receipt/origin/capability repair. Actual source retention gaps require the full Storage owner proof; an empty survivor scan is not never-started or never-cancelled. Unsupported relevant events halt before the row and incomplete staged coverage cannot cut over as current.
 
-If backed up, optional derived root/generation/dataset values form one coherent unit with exact physical names, complete bytes/codecs, anchors/frontiers, lifecycle facts and actual hold references. Restore first honors current tombstones, deletion, permissions and holds, then independently revalidates actual generic source/current frontier, original custody and source availability. Stale or incomplete derivative state is refused or rebuilt; it cannot overwrite native/Goal controls, claim currentness from an old root, revive source content or substitute for missing mandatory authority. Original authority loss keeps its owner data-loss/unavailable disclosure; disposable projection loss is a different condition.
+Amended 2026-10-31 (DL-270, BRS-031): derived root, generation and dataset values are never backed up; restore rebuilds them from the actual generic source and original custody, then revalidates currentness. Restore first honors current tombstones, deletion, permissions and holds, then independently revalidates actual generic source/current frontier, original custody and source availability. Stale or incomplete derivative state is refused or rebuilt; it cannot overwrite native/Goal controls, claim currentness from an old root, revive source content or substitute for missing mandatory authority. Original authority loss keeps its owner data-loss/unavailable disclosure; disposable projection loss is a different condition.
 
 Each actual backup, restore, janitor, retained-custody and passive disclosure helper independently obtains complete applicable real source/candidate/controls before helpers and reevaluates the entire pure final predicate after every helper and immediately before its effect/release with no interleaving gap. Token/hash equality or caller checks alone are insufficient. Full current cancelled disclosure additionally requires complete fresh positive native/D05/Start and separate Goal controls at the held read boundary; historical reads assert no current state and never reconstruct historical mutable bodies. Native codec/atomicity/crash/retention/hold/backup/restore execution and Event-depth qualification remain NOT_RUN. This source adoption changes no policy, validator, runtime admission or governance lock.
 
@@ -1715,8 +1714,7 @@ canonical_text: Mandatory backup preserves complete original native and compact 
   actual phase, including authentic original issuance and whole all-member Event append group, native/D01 commit
   and release. A partial restore is unavailable and mutation-fenced; generic Event-index rebuildability never makes
   original compact receipt/certification custody reconstructible. Preserve existing original source lifetimes and
-  exact policies. Optional derived backup is one coherent checkpoint/root/generation/dataset unit, never independently
-  selected rows or checkpoints. Apply authentic deletion/tombstone, permission, hold and source-lifetime controls
+  exact policies. Derived checkpoint, root, generation and dataset families are not backed up (BRS-031, DL-270); they are rebuilt from authentic original sources on restore. Apply authentic deletion/tombstone, permission, hold and source-lifetime controls
   before admission, then validate complete original sources, current owner graphs and actual generic/replay frontier
   before current disclosure or cutover. Rebuild derives only from surviving authentic original authorities; it cannot
   recreate missing native bodies, producer source arguments, expired Start events, original operation origins or
@@ -1841,11 +1839,14 @@ status: accepted
 owner_doc: Plans/Backup_Restore_System.md
 canonical_text: >-
   DL-270 card 8. BRS-005's capture barrier is brief: it records a consistent point across the stores, the seglog
-  sequence, the redb read snapshots and the payload references, and then releases, well under a second. Sealed
+  sequence, the redb read snapshots and the payload references, and then releases, within 250 ms at p99. Sealed
   segments and payload packs are immutable and copy in the background, incrementally, while PM keeps running; redb
   copies from a read snapshot; derived families are not backed up and rebuild on restore. No backup holds the
-  writer lock for its copy. PM shows the last verified backup and what a restore from it would lose: its time and
-  its last event. A test proves the captured point is consistent across every store.
+  writer lock for its copy. PM keeps one backup-status record, which every surface that shows backup state reads:
+  the last complete backup, its verification level, and what a restore from the newest backup at Structure
+  verified or higher would lose, its time and its last event. A newer backup that has not verified is shown beside
+  it, never instead of it. Where each surface shows it belongs to that surface's owner. A test proves the captured
+  point is consistent across every store.
 gui_related: true
 gui_classification_reason: "Shows the last verified backup and what a restore would lose."
 split_recommended: false
@@ -1853,8 +1854,8 @@ depends_on: [BRS-005]
 unblocks: []
 acceptance_criteria:
   - "A backup never holds the writer lock while it copies."
-  - "The capture barrier records one consistent point across all stores."
-  - "The user can see the last verified backup and what a restore would lose."
+  - "The capture barrier records one consistent point across all stores within 250 ms at p99."
+  - "Every surface that shows backup state reads the one backup-status record, including the last verified backup and what a restore from it would lose."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

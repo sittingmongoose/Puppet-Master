@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38029-L38730
+Source lines: L38098-L38799
 
-Source SHA256: `6ebe4cda849d74b52cf52e96d1a698879b7392aa2544b765bdd8d6757e599184`
+Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
 
 ---
 
@@ -224,7 +224,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   15. `source-control` (Git defaults, branch rules, worktree policies)
   16. `browser-policy` (Headless browser runtime, security rules)
   17. `containers-registries` (Docker/Podman daemon, container settings)
-  18. `storage-retention-recovery` (Database retention, snapshot pruning)
+  18. `storage-retention-recovery` (Database retention, snapshot pruning, storage health: per-group disk usage against its budget, reclaimable space, last store compaction and the verified reclaim action (SP-340). Amended 2026-10-31 (DL-270): daily usage totals are kept whatever the usage retention setting says (SP-341, UF-108).)
   19. `project-history-artifacts` (Build history, artifact storage)
   20. `settings-transfer` (Export/import settings profiles)
   21. `settings-export-migration` (Schema migration, legacy import)

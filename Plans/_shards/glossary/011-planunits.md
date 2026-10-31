@@ -4,7 +4,7 @@ Source: `Plans/Glossary.md`
 
 Source lines: L367-L1695
 
-Source SHA256: `416d1491a66af54d9902841aebae61034a446c4af9a232b6b1d26a1c08b2d15a`
+Source SHA256: `b03b5355b54fa0ae3150e96f1399007fe08bd4597678386f0128909868260541`
 
 ---
 
@@ -1029,7 +1029,7 @@ plan_unit_id: G-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/JSONL/search state; replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
+canonical_text: SessionStore vocabulary distinguishes the canonical seglog event ledger, canonical_non_rebuildable and canonical_dual_homed redb state, derived_rebuildable redb/index/checkpoint families, and derived Tantivy/Parquet/search state (SP-341; no always-on JSONL mirror, SP-339); replay rebuilds only declared derived families from materialized retained sources and never reconstructs missing canonical state as success.
 gui_related: false
 gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
 split_recommended: false

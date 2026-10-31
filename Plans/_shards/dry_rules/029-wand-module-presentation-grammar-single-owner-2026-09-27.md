@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2720-L2788
+Source lines: L2720-L2789
 
-Source SHA256: `bccd54e33ea58b285a0e6ea9aafae3a46a5bf8dc437d5e2828ed313de3dd286c`
+Source SHA256: `e4584075a30666f2f4e102afd1e3ed62225b2eacc8c370219c24f4e63efe43f4`
 
 ---
 
@@ -27,7 +27,7 @@ canonical_text: >-
   reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or
   restyles a primitive. Every module's finished trace uses the one receipt grammar, and time,
-  cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
+  cost, token and byte-size phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
   implementation for the app. Behaviour stays with the module owners (Collaborative_Workflows,
   Back_Seat_Driver, Scheduling_and_Quota_Resume, assistant-memory-subsystem, assistant-chat-design).
   DR-043's owners stand: the transcript family map is ACD-469's and the accent budget is a
@@ -57,6 +57,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-270 (storage health and the backup loss window show sizes and times)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.0, 4.3 (A2-14), 7.14"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/COORDINATION.md (SHA-256 0bbcd8a1649f0e90dd93a5a18966c7a344442a8a99d1bb714afe91f8d168f076)"
   - "CANON-PLAN coordination item DR-044"

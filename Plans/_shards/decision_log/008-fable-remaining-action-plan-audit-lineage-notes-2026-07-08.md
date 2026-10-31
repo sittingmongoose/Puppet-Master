@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L17302
+Source lines: L14505-L17309
 
-Source SHA256: `9044c35a4807b1b1cadeb756608b97cb7788de709d48e1657f9007b3aa9f6e84`
+Source SHA256: `e3a954bef36a9021ae59895e409765aafe10d46e5b15a20942d707b69047a620`
 
 ---
 
@@ -2755,15 +2755,20 @@ canonical_text: >-
   "Keep Spotlight, Windows Search and Defender off PM's data": "Put data where indexers don't look, in few files".
   On card 7 he added, verbatim: "Do we need to tie the usage data to this?  In my work on AAC, the usage data
   takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make
-  sure that is accounted for." The reply he received, that usage loads from rollups and that every usage record
-  and daily totals are kept, is adopted here. His reasons for the SQLite ban, 2026-10-30, verbatim: "I banned
-  sqlite because it is slow, has serious contention and lock issues, and I have seen them corrupt frequently. I
-  have used so many programs that have been completely ruined because they use sqlite. For example, plex is very
-  very held back by its DB." On JSON files, 2026-10-30, verbatim: "We also should likely not be using a bunch of
-  json files, that seems worse than a well structured DB." Owners: SP-335 to SP-345 in Plans/storage-plan.md for
-  the storage rules; ACD-242 for mandatory load-older paging; UF-108 for usage history; BRS-031 for backup
-  capture; RAS-016 for remote transport. Where earlier text conflicts, DL-270 and those units win. Still pending:
-  the sweep of remaining mentions in Contracts_V0, Architecture_Invariants and other documents, SeglogFrameV2's
+  sure that is accounted for." The reply he received, that usage loads from rollups and that usage history and
+  daily totals are kept, is adopted as refined by his follow-up answer the same evening on the Keep usage history
+  for setting, verbatim: "Defualt to 90 days, selectable to longer or shorter time periods." So
+  ai.usage.usage-retention stays as it is, 90 days by default, and governs detailed usage records, while daily
+  usage totals are kept whatever it says. His reasons for the SQLite ban, 2026-10-30, verbatim: "I banned sqlite
+  because it is slow, has serious contention and lock issues, and I have seen them corrupt frequently. I have used
+  so many programs that have been completely ruined because they use sqlite. For example, plex is very very held
+  back by its DB." On JSON files, 2026-10-30, verbatim: "We also should likely not be using a bunch of json files,
+  that seems worse than a well structured DB." Owners: SP-335 to SP-345 in Plans/storage-plan.md for the storage
+  rules; ACD-242 for mandatory load-older paging; UF-108 for usage history; BRS-031 for backup capture; RAS-016
+  for remote transport. Where earlier text conflicts, DL-270 and those units win. A sweep of every plan document
+  by a reading wave, with verification, brought the other owners into line in the same landing, including the
+  commands, settings, GUI, wiring and DRY companions. DL-270 adds no settings row: budgets, thresholds and cache
+  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Still pending: SeglogFrameV2's
   exact codec and dictionary byte fields, the data-root paths, and the registry, schema and fixture companions.
   Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four requirements,
   thresholds and mechanics are the review's reading, not Jared's words.
@@ -2795,10 +2800,12 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-followup-2026-10-31.md, SHA-256 003852e3672c98db0f5daef0876829cebb44985779579ce0a889800442f73cae (Jared's follow-up answer on the usage setting)"
 preserved_exact_tokens:
   - "Do we need to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make sure that is accounted for."
   - "I banned sqlite because it is slow, has serious contention and lock issues, and I have seen them corrupt frequently. I have used so many programs that have been completely ruined because they use sqlite. For example, plex is very very held back by its DB."
   - "We also should likely not be using a bunch of json files, that seems worse than a well structured DB."
+  - "Defualt to 90 days, selectable to longer or shorter time periods."
 negative_constraints:
   - "Do not read the review's thresholds and mechanics as Jared's words."
 owner_hints:

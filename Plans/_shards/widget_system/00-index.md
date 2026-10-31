@@ -1,25 +1,25 @@
 # Shard Index: Plans/Widget_System.md
 
-Generated: 2026-10-19T00:58:45Z
+Generated: 2026-10-31T20:35:29Z
 
-Source SHA256: `db30f1ae130c83d289a9fb65d96b33a32fa853b3bcd321c3d0d1334857432214`
+Source SHA256: `97bab96419d57fc13243d842f82f6a34d755afec9d118ea4df5dbc6490218523`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `c90138ab28fc4c1d1cb5e4d9403c89c102a60c94d20770fdcf2b6c909be6a949`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `02829f5c5c9286b6486df58735c3f3a2b37e29ad4d50eff9a05f8eeb92a0dbb1`
-- [003 - 1. Scope and non-scope](003-1.-scope-and-non-scope.md) L12-L29 `991f1f66ddd02d2239743ba6c471fc57d1f573932bbd68efe4e90af3dea1b748`
-- [004 - 2. Hostability and data contracts](004-2.-hostability-and-data-contracts.md) L30-L76 `b7d2f86640544c357aa9e18b33101c9c43475d16aa29cb86ffcacddc77869adc`
-- [005 - 3. Layout persistence](005-3.-layout-persistence.md) L78-L91 `58ac42f3b338011e51c62aa8c155340596d04c4533830fafbb79ee6b09cd21d5`
-- [006 - 4. Orchestrator Progress widget scope and catalog linkage](006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md) L93-L132 `1da1f0f2571fc25ff854f708633afd973ce54c8affcd47c350e900eaaf76689c`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L134-L138 `376b93235f4f0a36619d6defbde7e9d0f7fc0aece58ec6a91572fe4218f57030`
-- [008 - PlanUnits](008-planunits.md) L140-L1036 `decc8d80f37a3a370e49587bd0b32ada482799830a70a879b33181d07c7a2d03`
-- [009 - Usage GUI Propagation Addendum - 2026-07-09](009-usage-gui-propagation-addendum-2026-07-09.md) L1038-L1098 `b10b5cbef2ad43dbfca37693175090938e1b7489158ae33d7453d7b3bfbd1ae1`
-- [010 - Migration Coverage](010-migration-coverage.md) L1100-L1110 `3df7416148627665908d078ab299720a254110dcfcc5338438f531e959bd44ca`
-- [011 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1112-L1112 `a02228b7a3774f7f0826197390c5f6fb078280edbae1ac2ed5415aa121f2721d`
-- [012 - PMConcept7 Home Workspace boundary clarification — 2026-08-04](012-pmconcept7-home-workspace-boundary-clarification-2026-08-04.md) L1114-L1177 `5566b890bd67505c10d1becd9b7915edaa794b4373e13ee99d28284cb0b2b75a`
-- [013 - u11 Prism II Usage Widget Disclosure Addendum - 2026-08-18](013-u11-prism-ii-usage-widget-disclosure-addendum-2026-08-18.md) L1179-L1248 `ccb9a620b2a588263f333e8bad97429be3120b469f4be227bbb3b5f6ed30eef0`
-- [014 - PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27](014-pmconcept7-recovery-canonical-integration-addendum-2026-08-27.md) L1250-L1756 `4b83b37c6581fe76231cb4bf8f1cef5c8b4a8c227031f73e9e676f4b4a736d4c`
-- [015 - DL-180 to DL-185 — Dashboard Tabs And Their Boards (2026-10-09)](015-dl-180-to-dl-185-dashboard-tabs-and-their-boards-2026-10-09.md) L1759-L2065 `f1459165a11ea4d97c58a728f83efd7b1575170a89318567e308f817c78b2e51`
+- [001 - Preamble](001-preamble.md) L1-L1 `c7579a204abaf26c6c383712730bf5fe0a2e1a9c4eeaa7078572d3bca3b0a885`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `68ab449644a564710ce9e1d0c558714e759c524a357e7f76459f0f71fa920840`
+- [003 - 1. Scope and non-scope](003-1.-scope-and-non-scope.md) L12-L29 `97415f4a8b91e5ff4375adb1661286a7f9f9698b8e5959a0299b418da269e17a`
+- [004 - 2. Hostability and data contracts](004-2.-hostability-and-data-contracts.md) L30-L76 `f8647214661b22c028ac330a7ed67f8c6cb1155b914449c967e2c803186aecb0`
+- [005 - 3. Layout persistence](005-3.-layout-persistence.md) L78-L91 `9ddd24fac2b3645c4682a957b57087e7c6fc14b2274332270566c6a4490dbc4b`
+- [006 - 4. Orchestrator Progress widget scope and catalog linkage](006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md) L93-L132 `f865f960662f74e3c02e78edef597076bf037deaec53d40d64f5f79c61c82f11`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L134-L138 `e4e2b01e8a2445e586e90a419f8c79b1514043052594369a84b54c095db3711c`
+- [008 - PlanUnits](008-planunits.md) L140-L1036 `625973ec99946c76e69ed524a55e06c3d84493113bdc49bfaafa1c563397122f`
+- [009 - Usage GUI Propagation Addendum - 2026-07-09](009-usage-gui-propagation-addendum-2026-07-09.md) L1038-L1099 `f844669f2ed448268cf63d864a7268495f14b902dc4684a957bc627b05996d01`
+- [010 - Migration Coverage](010-migration-coverage.md) L1101-L1111 `15178d50cf18a475d3bc4dce3be650a7d2f28d44e94512a3e4815c8903c42cb7`
+- [011 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1113-L1113 `9f2f5a8ca52c2416a62d498ad0fd73416cb7d218a4a0bb1767b203b03dab6b67`
+- [012 - PMConcept7 Home Workspace boundary clarification — 2026-08-04](012-pmconcept7-home-workspace-boundary-clarification-2026-08-04.md) L1115-L1178 `ce30d2e1b941c8d989e2b11b76a7b7f2da7d42d46aa33bd63dc1f48afc46b859`
+- [013 - u11 Prism II Usage Widget Disclosure Addendum - 2026-08-18](013-u11-prism-ii-usage-widget-disclosure-addendum-2026-08-18.md) L1180-L1249 `9737212d9a9753e399ce7d3e9c1e47cc149294233843f0d3370866e03aa11512`
+- [014 - PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27](014-pmconcept7-recovery-canonical-integration-addendum-2026-08-27.md) L1251-L1757 `5f325ff10c5677195b3bd8dcec69f0c274d24d599e7e775bd2363758171c2071`
+- [015 - DL-180 to DL-185 — Dashboard Tabs And Their Boards (2026-10-09)](015-dl-180-to-dl-185-dashboard-tabs-and-their-boards-2026-10-09.md) L1760-L2073 `a4b049fee62b9d17952059a5b0b3f29d5c19ba136d3f981153f74098988faad2`

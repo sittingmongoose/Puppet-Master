@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2387-L15102
+Source lines: L2393-L15116
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -869,7 +869,7 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local."
+canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The exact macOS and project-local paths are still to be fixed in this unit."
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false
@@ -914,7 +914,10 @@ preserved_contractrefs:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
 - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "storage/jsonl/ retired 2026-10-31 (DL-270, SP-339): no always-on JSONL mirror exists; JSON or JSONL is written only on request by pm export."
+- "The plain ~/Library/Application Support/puppet-master path is not a valid macOS store location (DL-270, SP-345): stores sit inside a directory ending .noindex."
+- "storage/blobs/ holds payload pack files (DL-270, SP-337)."
 owner_hints:
 - "Plans/storage-plan.md"
 ```
@@ -1256,7 +1259,7 @@ plan_unit_id: SP-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Disk-usage reporting shows local and remote project cache sizes, including separate remote index and Git portions."
+canonical_text: "Disk-usage reporting shows local and remote project cache sizes, including separate remote index and Git portions. Amended 2026-10-31 (DL-270): disk-usage reporting is part of the read-only storage health section of Settings > Advanced > Storage & Retention (SP-340, F3-457). For each storage group it shows usage against its disk budget, reclaimable bytes and the last store compaction, and offers one reclaim action, the existing cmd.storage.compaction.request, whose result is verified and shown per group. The same view surfaces disk and storage errors (SP-180)."
 gui_related: true
 gui_classification_reason: "This unit preserves user-visible disk-usage reporting text."
 split_recommended: false
@@ -1630,7 +1633,7 @@ plan_unit_id: SP-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Seglog rotation is deterministic and generation-aware with one active segment, canonical active and closed segment path formats, immutable closed segments, and lexicographic projector consumption."
+canonical_text: "Seglog rotation is deterministic and generation-aware with one active segment, canonical active and closed segment path formats, immutable closed segments, and lexicographic projector consumption. Amended 2026-10-31 (DL-270): the one exception is SP-335's background segment repack. It writes a new compressed file beside the sealed segment, verifies that it decodes to the same EventRecord bytes, sequence ids and order, then atomically replaces the sealed file. The repack never edits the old bytes in place, and the active segment is never repacked."
 gui_related: false
 gui_classification_reason: "This unit preserves backend seglog segment lifecycle and rotation requirements."
 split_recommended: false
@@ -1681,7 +1684,7 @@ plan_unit_id: SP-028
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Replay and rebuild keep seglog authoritative over redb projections, JSONL mirrors, and Tantivy indices, resume from stable checkpoints, truncate only corrupt tails after the last verified record, and preserve sequence_id ordering."
+canonical_text: "Replay and rebuild keep seglog authoritative over redb projections and Tantivy indices, resume from stable checkpoints, truncate only corrupt tails after the last verified record, and preserve sequence_id ordering."
 gui_related: false
 gui_classification_reason: "This unit preserves backend replay, rebuild, and source-of-truth ordering requirements."
 split_recommended: false
@@ -1722,11 +1725,12 @@ preserved_exact_tokens:
 - "sequence_id ordering"
 - "semantic event order"
 negative_constraints:
-- "redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority."
+- "redb projections and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority. JSONL mirror files no longer exist (DL-270, SP-339); a pm export output is not a projection and needs no rebuild rule."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "JSONL mirror files retired 2026-10-31 (DL-270, SP-339): no always-on JSONL mirror exists to rebuild; the preserved token stays as lineage."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/Architecture_Invariants.md"
@@ -5256,7 +5260,7 @@ plan_unit_id: SP-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates.
+canonical_text: "Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates. Amended 2026-10-31 (DL-270): each family listed here, and in SP-042, also declares in the storage registry (SP-340) a maximum value size of at most 16 KiB, whether it lives in the canonical or the derived redb file, and a disk budget. Values are MessagePack or typed fields, never JSON text (SP-339); larger values go to the payload store (SP-337). Changing a shipped family's encoding follows the SP-099 versioning rule."
 gui_related: false
 gui_classification_reason: This unit preserves backend runtime/project/provider key families.
 split_recommended: false
@@ -6057,7 +6061,7 @@ plan_unit_id: SP-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: composer_prep_state.v1:{thread_id} preserves chat-side draft text, attachments, mode overlay, requested/effective persona, selection source, override owner, and saved_at for handoff continuity.
+canonical_text: "composer_prep_state.v1:{thread_id} preserves chat-side draft text, attachments, mode overlay, requested/effective persona, selection source, override owner, and saved_at for handoff continuity. Amended 2026-10-31 (DL-270): attachment bodies and images are stored in the payload store (SP-337); this value holds only payload references (BLAKE3 id, size, media type) and metadata. The value stays at or under the family's 16 KiB limit (SP-340); a draft text longer than that is stored as a payload and referenced."
 gui_related: true
 gui_classification_reason: This unit preserves visible composer draft, attachment, mode, and persona handoff state.
 split_recommended: false
@@ -7676,7 +7680,7 @@ plan_unit_id: SP-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage-root selection prefers explicit configured roots, valid PUPPET_MASTER_DATA_DIR overrides, project-scoped durable roots, app-level durable roots, and session temp roots only for temporary data; durable state survives process restart unless the owning contract says otherwise.
+canonical_text: "Storage-root selection prefers explicit configured roots, valid PUPPET_MASTER_DATA_DIR overrides, project-scoped durable roots, app-level durable roots, and session temp roots only for temporary data; durable state survives process restart unless the owning contract says otherwise. Amended 2026-10-31 (DL-270): every candidate root that holds stores is a store location and follows SP-345: on macOS inside a directory ending .noindex, on Windows under AppData, on Linux in the XDG data directory. A project-scoped durable root is PM's own app data and follows the same rule; PM never writes a .noindex directory or any other marker into a user's project folder. PM never relies on .metadata_never_index or FILE_ATTRIBUTE_NOT_CONTENT_INDEXED and never changes Defender, Spotlight or Windows Search settings. How an explicit override outside these locations is treated is not settled here."
 gui_related: false
 gui_classification_reason: This unit preserves backend storage-root selection and durable authority rules.
 split_recommended: false
@@ -7849,7 +7853,7 @@ plan_unit_id: SP-135
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants.
+canonical_text: "Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants. Amended 2026-10-31 (DL-270): detailed usage.event records carry the ai.usage.usage-retention window (90 days by default) and no count cap, and the daily usage totals per account, provider and model are exempt from TTL and cardinality bounds because they are kept whatever that setting says (SP-341, UF-108). Their size is controlled by the cold tier and per-group disk budgets, not by count eviction."
 gui_related: false
 gui_classification_reason: This unit preserves backend bounded collection retention contracts.
 split_recommended: false
@@ -7966,16 +7970,16 @@ owner_hints:
 - Plans/storage-plan.md
 ```
 
-### SP-137 - Projector Consumption Order And JSONL Mirror Policy
+### SP-137 - Projector Consumption Order And No-Mirror Policy
 
 ```yaml
 plan_unit_id: SP-137
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Projectors advance in canonical seglog order from redb checkpoints, write only owned projections, commit checkpoints after durable writes, and maintain JSONL mirrors as derived, rebuildable, sequence-ordered files that never backfill seglog.
+canonical_text: "Projectors advance in canonical seglog order from redb checkpoints, write only owned projections, commit checkpoints after durable writes, and write no always-on JSONL mirror (SP-339); stored state is read through pm db dump, pm inspect, pm tail and pm export, and nothing ever backfills seglog from an export."
 gui_related: false
-gui_classification_reason: This unit preserves backend projector consumption ordering and JSONL mirror policy.
+gui_classification_reason: This unit preserves backend projector consumption ordering and the retired JSONL mirror policy.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -8023,7 +8027,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md'
 compatibility_only_notes: []
 stale_retired_dispositions:
-- A missing or stale mirror file is repaired by replaying the corresponding seglog range.
+- "A missing or stale mirror file is repaired by replaying the corresponding seglog range. Retired 2026-10-31 (DL-270, SP-339): no mirror file exists to repair; a pm export of a range is built from seglog on request and needs no repair rule. The negative constraint \"PM MUST NOT backfill seglog from JSONL\" stays for imported or exported files."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -8217,7 +8221,7 @@ plan_unit_id: SP-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Analytics scans read seglog or JSONL mirror in sequence order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint sequence plus survivor identity idempotently; timestamps filter windows but never resume replay.
+canonical_text: "Analytics scans read the Parquet archive of sealed segments and the unsealed seglog tail (SP-341) in sequence order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint sequence plus survivor identity idempotently; timestamps filter windows but never resume replay. Amended 2026-10-31 (DL-270): usage rollups in redb update as each usage.event lands, and these scans never feed the Usage page (UF-108)."
 gui_related: false
 gui_classification_reason: This unit preserves backend analytics scan, computation, and checkpoint semantics.
 split_recommended: false
@@ -8527,7 +8531,7 @@ plan_unit_id: SP-146
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The checklist preserves projector requirements for JSONL mirror, Tantivy, redb checkpoints, runtime checkpoint-marker events before mutation or restore, and analytics rollups including tool_usage.{window}.
+canonical_text: "The checklist preserves projector requirements for Tantivy and redb checkpoints (the JSONL mirror is retired, SP-339), runtime checkpoint-marker events before mutation or restore, and analytics rollups including tool_usage.{window}."
 gui_related: false
 gui_classification_reason: This unit preserves backend projector, checkpoint-marker, and analytics checklist readiness.
 split_recommended: false
@@ -8571,7 +8575,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The preserved token \"seglog -> JSONL mirror\" is retired 2026-10-31 (DL-270, SP-339): no JSONL mirror projector exists."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -10773,7 +10778,7 @@ plan_unit_id: SP-182
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild JSONL/Tantivy disposable projections instead of treating them as authoritative.
+canonical_text: "Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild Tantivy and other disposable projections instead of treating them as authoritative. Amended 2026-10-31 (DL-270): backup follows BRS-031: a brief capture barrier (at most 250 ms at p99) records one consistent point; sealed segments and payload packs copy in the background; redb copies from a read snapshot; derived families are not backed up; no writer lock is held while copying; one backup-status record shows the newest backup at Structure verified or higher and what a restore from it would lose. There is no JSONL projection to rebuild (SP-339). SP-335's segment repack is the only rewrite of sealed bytes."
 gui_related: false
 gui_classification_reason: This unit preserves backend compaction and backup/restore authority rules.
 split_recommended: false
@@ -10820,7 +10825,8 @@ negative_constraints:
 - Backup/restore must rebuild disposable projections after restore rather than treating them as authoritative.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The JSONL half of the preserved token \"JSONL/Tantivy\" is retired 2026-10-31 (DL-270, SP-339): only Tantivy and other derived stores rebuild after restore."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -10832,7 +10838,7 @@ plan_unit_id: SP-183
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Enhancement coverage preserves export from seglog or JSONL mirror, embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries.
+canonical_text: "Enhancement coverage preserves export from seglog and redb through pm export (JSONL or JSON on request, plus optional pm export --sqlite) and pm db dump (SP-339, SP-342), embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries."
 gui_related: false
 gui_classification_reason: This unit preserves backend enhancement routing and owner boundaries.
 split_recommended: false
@@ -10885,7 +10891,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The preserved token \"JSONL mirror\" is retired 2026-10-31 (DL-270, SP-339): exports are produced on request from the stores."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -10897,7 +10904,7 @@ plan_unit_id: SP-184
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The implementation order heading and phases 1-4 remain PlanUnit readiness metadata for seglog foundation, redb/schema, JSONL mirror, and Tantivy chat index build phases, with storage directories, namespaces, checkpoints, and exit criteria preserved without creating WorkNodes.
+canonical_text: "The implementation order heading and phases 1-4 remain PlanUnit readiness metadata for seglog foundation, redb/schema, projector framework (no JSONL mirror, SP-339), and Tantivy chat index build phases, with storage directories, namespaces, checkpoints, and exit criteria preserved without creating WorkNodes. Amended 2026-10-31 (DL-270): phase 3 no longer builds a JSONL mirror projector (SP-339 retires storage/jsonl). It builds the projector framework and the on-demand readers pm tail, pm inspect, pm db dump and pm export, which write JSONL or JSON only on request. The projector checkpoint stays in redb. The phase 3 exact tokens remain as lineage."
 gui_related: false
 gui_classification_reason: This unit preserves backend phased implementation order as readiness metadata only.
 split_recommended: true
@@ -10960,7 +10967,8 @@ negative_constraints:
 - Phased implementation order is PlanUnit readiness metadata, not WorkNodes or executable build tasks.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "The preserved tokens \"storage/jsonl\", \"Phase 3 -- projector: seglog → JSONL mirror\" and \"JSONL mirror\" are retired 2026-10-31 (DL-270, SP-339)."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -11349,7 +11357,7 @@ plan_unit_id: SP-191
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: First-run storage initialization creates missing storage directories, creates the first seglog segment on append, initializes redb schema_version/meta namespace, treats missing projector checkpoints as start-from-beginning, and leaves empty seglog projectors with no work.
+canonical_text: "First-run storage initialization creates missing storage directories, creates the first seglog segment on append, initializes redb schema_version/meta namespace, treats missing projector checkpoints as start-from-beginning, and leaves empty seglog projectors with no work. Amended 2026-10-31 (DL-270): first run creates every store atomically in <name>.creating/, syncs it, renames it into place and syncs the parent directory (SP-336), so a crash leaves no store or a complete one. redb is created as two separate files, canonical and derived, opened with quick repair and an explicit cache size (SP-340)."
 gui_related: false
 gui_classification_reason: This unit preserves backend first-run initialization behavior.
 split_recommended: true
@@ -11463,7 +11471,7 @@ plan_unit_id: SP-193
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The testing strategy preserves phase-specific unit and integration verification for data root resolution, seglog append/readback, redb namespaces, JSONL mirror, Tantivy chat index, analytics rollups, and end-to-end chat/editor/Usage flow as PlanUnit validation metadata only.
+canonical_text: "The testing strategy preserves phase-specific unit and integration verification for data root resolution, seglog append/readback, redb namespaces, JSONL mirror, Tantivy chat index, analytics rollups, and end-to-end chat/editor/Usage flow as PlanUnit validation metadata only. Amended 2026-10-31 (DL-270): the phase 3 test \"mirror append\" and any JSONL projector integration test are replaced by readback tests: append N events, then pm tail, pm inspect and pm export (JSONL or JSON on request) return the same N records, and a restarted reader resumes without duplicates (SP-339). No test expects a continuous mirror file."
 gui_related: false
 gui_classification_reason: This unit preserves backend verification strategy without creating executable tasks.
 split_recommended: false
@@ -11530,7 +11538,7 @@ plan_unit_id: SP-194
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Backend acceptance criteria preserve phase 1-5 success conditions for storage dirs, seglog readback, redb schema/migrations, JSONL projector resume, Tantivy search, and analytics rollups readable from redb.
+canonical_text: "Backend acceptance criteria preserve phase 1-5 success conditions for storage dirs, seglog readback, redb schema/migrations, pm tail and pm export resume from a checkpoint, Tantivy search, and analytics rollups readable from redb. Amended 2026-10-31 (DL-270): \"JSONL projector tails seglog\" is replaced by pm tail and pm export resuming from a checkpoint without duplicating or skipping events (SP-339). Backend acceptance also includes the SP-344 release gates on Windows, macOS and Linux: first page p95 at most 150 ms warm and 500 ms cold, commit confirmation p99 at most 50 ms, no storage-caused UI stall over 50 ms, and no acknowledged event lost, duplicated or corrupted after kill -9, power cuts, torn writes or store-creation crashes."
 gui_related: false
 gui_classification_reason: This unit preserves backend phase acceptance criteria.
 split_recommended: true

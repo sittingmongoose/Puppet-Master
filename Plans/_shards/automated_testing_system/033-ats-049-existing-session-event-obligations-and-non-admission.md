@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4491-L4911
+Source lines: L4506-L4927
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f`
 
 ---
 
@@ -62,6 +62,7 @@ typed result. Payload-schema IDs are unique, but these event families are not
 registered. Candidate payloads are inline,
 limited to 65,536 UTF-8 bytes, ordinary metadata only, and `no_secrets`; raw frames,
 DOM, credentials and unadmitted migration/legacy extensions fail closed.
+Amended 2026-10-31 (DL-270): the 65,536-byte admission limit above stands; within it, a candidate payload larger than 16 KiB is stored in the payload store and referenced by its BLAKE3 id rather than held inline (SP-337), so `Plans/testing_session_event_admission.json`, Contracts_V0 and GitHub_Integration keep the same 65,536 figure.
 
 Every attempted EventRecord append or replay is quarantined without consuming an
 event ID, dedupe identity or generation, projecting facts, or advancing a checkpoint.

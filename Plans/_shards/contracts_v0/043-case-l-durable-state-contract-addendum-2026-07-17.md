@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20747-L21154
+Source lines: L20751-L21158
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4`
 
 ---
 
@@ -14,7 +14,7 @@ This addendum is the Contracts-owner portion of the approved Case L repair packa
 
 ### Durable append receipt and storage recovery events
 
-`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the storage-owned frame and manifest/watermark durability barriers complete and SP-286/CV-339 first-receipt custody is durably committed before exposure. `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
+`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the group's single data sync of its segment bytes completes, with the durable watermark carried inside the segment, and SP-286/CV-339 first-receipt custody is durably committed before exposure. Amended 2026-10-31 (DL-270): the manifest is synced only at segment creation, rotation and structural changes, not once per group, and a barrier-class event (approvals, safe points, receipts the UI waits on) is valid only after a full flush (SP-336). `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
 
 Contracts registers these `application_only` EventRecord families; storage owns their exact payload schemas and recovery behavior:
 
@@ -174,7 +174,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  AppendReceipt proves a synced frame-plus-manifest durability boundary with
+  AppendReceipt proves a synced frame-plus-in-segment-watermark durability boundary (one data sync per ordinary group, full flush for barrier-class events, SP-336) with
   SP-286/CV-339 durable first-receipt custody before exposure, and
   application-scoped storage.integrity_detected, storage.recovery_applied, and
   storage.boot_recovery payloads carry deterministic recovery identity, proven
@@ -185,7 +185,7 @@ gui_classification_reason: Defines shared durability and recovery payloads; GUI 
 depends_on: [CV-309, CV-317, SP-230]
 unblocks: []
 acceptance_criteria:
-  - AppendReceipt success is possible only with durability_state synced after both storage barriers and SP-286/CV-339 durable first-receipt custody before exposure.
+  - AppendReceipt success is possible only with durability_state synced after the group's single data sync (a full flush for barrier-class events, SP-336) and SP-286/CV-339 durable first-receipt custody before exposure.
   - Recovery events are application-scoped, deterministic, idempotent, and carry only proven impact identities.
   - persisted_at_utc without a matching synced AppendReceipt is not successful persistence evidence.
 validation_surfaces:

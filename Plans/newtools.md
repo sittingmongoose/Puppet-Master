@@ -19,6 +19,7 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - tool discovery, permissions, and validation live in the **central tool registry + policy engine** (not per-provider special cases)
 - tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
 - tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
+  - Amended 2026-10-31 (DL-270): tool latency and errors update redb rollups at event time (SP-341, UF-108); dashboards and widgets read those rollups and never scan raw events. Deeper analysis reads the Parquet archive through on-demand, read-only DuckDB.
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
 - auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording and Gemini CLI (`gemini_cli`) active-provider wording are retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) plus Antigravity CLI as the active Google-owned CLI-runtime route, with requested/effective auth/account identity kept consistent with the shared provider runtime
 - for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required
@@ -176,6 +177,7 @@ Introduce a **single source of truth** for "GUI framework → available tools" s
   - `GuiToolCatalog` is composed of:
     1. **Base catalog** shipped with Puppet Master (curated defaults; DRY:DATA in code).
     2. **User overlay catalog** persisted in app settings (**non‑secret**; redb settings store) and editable via UI; export/import as JSON.
+       - Amended 2026-10-31 (DL-270): the overlay is a canonical redb family under SP-340: one entry per stable ID, each at most 16 KiB, stored in the canonical redb file with a per-family disk budget. Export/import as JSON stays an on-request export (SP-339), not a live mirror.
   - Merge precedence: **overlay wins** by stable IDs (`framework_id`, `tool_id`).
   - Research-populated entries are written to the **overlay** (never to the base catalog).
   ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2, PolicyRule:no_secrets_in_storage
@@ -4866,6 +4868,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md'
 ```
 
+Amended 2026-10-31 (DL-270): GUI-automation screenshots and traces are evidence-class (SP-343) and keep their exact captured bytes, so the manifest sha256 stays valid; no lossless-WebP transcode applies to them. Recordings use hardware AV1 or HEVC (WebM or MP4 containers) with a thumbnail named beside poster_path; the mp4 fallback is not a second codec path. All bytes live in the payload store (SP-337).
+
 ### N2-079 - GUI Automation Evidence Run Layout
 
 ```yaml
@@ -4883,6 +4887,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- "Amended 2026-10-31 (DL-270): the run folder is the evidence bundle exported for the run (an exported deliverable under SP-339), not a live state mirror. Run state is held as typed records; screenshots, recordings and traces are payload-store entries referenced by BLAKE3 id (SP-337), not one loose file each. manifest.json and timeline.jsonl are written when the bundle is exported."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -8748,6 +8753,8 @@ Doctor may open, refresh, run a bounded check, reveal bounded evidence, or navig
 
 The exact owner-local UI action IDs are `ui.doctor.open`, `ui.doctor.refresh_visible`, `ui.doctor.run_check`, `ui.doctor.open_details`, `ui.doctor.open_logs`, `ui.doctor.open_receipt`, and `ui.doctor.open_remediation`. They are typed UI actions, not central command registrations. `ui.doctor.open_remediation` carries `check_id`, finding revision, owner route/action ID, exact target identity, return route, expected owner generation, and idempotency key. Central command/wiring owners must either map the typed action to one canonical command or record it as route-only; Doctor cannot mint a peer command.
 
+Amended 2026-10-31 (DL-270): storage findings (budget pressure, fragmentation, reclaimable bytes) appear as read-only findings and route to the reclaim action (`cmd.storage.compaction.request`) on the page that `cmd.settings.open_storage_retention` opens (F3-457). Doctor itself never compacts or reclaims.
+
 ### Settings GUI projection, motion, and accessibility
 
 Doctor is an ongoing full Settings destination, separate from Product Onboarding. Its canonical surface is a calm health overview with cached groups, one primary `Check now` action for the current scope, optional filters, and progressive disclosure into Details/Logs/Receipt. The surface is a projection of this registry; it does not own Settings geometry or domain operations. Normal entry must remain useful offline and under partial failure.
@@ -8960,6 +8967,7 @@ acceptance_criteria:
   - Headscale Funnel is inapplicable rather than unhealthy. A missing optional backup destination, disabled optional route, intentionally disabled WSL, or unconfigured Funnel does not degrade unrelated product health.
   - Remediation routes only to exact Backup or Remote Access owner actions. Protected unlock/key operations are never Doctor actions; connector identity reset is destructive, previewed, confirmed, generation-fenced, and unavailable without its owner command.
   - Cached, stale, migrated, static, or concept state is never called a fresh check. Close/detach leaves owner ObservableWork alive and re-entry rejoins it; fresh owner results alone replace findings.
+  - "Amended 2026-10-31 (DL-270): backup repository and snapshot findings also project the last verified backup and what a restore from it would lose (its time and last event), read from the BRS-031 owner. Writer/lock health means repository-side locks only; a backup never holds PM's writer lock while copying (BRS-031)."
   - Doctor admits no semantic-domain EventRecord and no packet command family. Owner commands consumed from remediation stay handler_unavailable and event-silent with expected_event_types=[] until separately integrated and admitted.
 validation_surfaces:
   - Plans/doctor_contracts.schema.json

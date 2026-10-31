@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28194-L28848
+Source lines: L28215-L28889
 
-Source SHA256: `ca68ac358108653694afff0c685514c0b2d893fd5edc0e7344b19960a4d384b6`
+Source SHA256: `f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828`
 
 ---
 
@@ -158,11 +158,13 @@ canonical_text: >-
   and media type. Base64 payloads are decoded to binary at ingest, and a base64 body inline in a record is an
   admission error. Payloads live in append-only pack files, not one file per payload. Identical payloads are
   stored once and reference-counted; garbage collection honours retention holds, legal holds and backups. Forks,
-  summaries and compaction point at the parent's records and payloads instead of copying them. Text payloads are
-  compressed with zstd level 3; already-compressed media is stored as is. Content-defined chunking is used only
-  for large files that change and for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB.
-  Evidence: images were 1.4 GB, 46% of one T3 Code user's database within a week; six Codex subagent files reached
-  62.8 GB, 97.8% of it repeated records; base64 was 53-67% of session bytes in this machine's samples.
+  summaries and conversation compaction point at the parent's records and payloads instead of copying them, and
+  moving a thread to another project or scope re-points its references and writes a lineage record, without
+  copying stored events or payloads or rewriting their history. Text payloads are compressed with zstd level 3;
+  already-compressed media is stored as is. Content-defined chunking is used only for large files that change and
+  for safe-point snapshots. This sets SP-227's ManagedOutputRef cap at 16 KiB. Evidence: images were 1.4 GB, 46%
+  of one T3 Code user's database within a week; six Codex subagent files reached 62.8 GB, 97.8% of it repeated
+  records; base64 was 53-67% of session bytes in this machine's samples.
 gui_related: false
 gui_classification_reason: "Defines payload storage and references; no visible surface."
 split_recommended: false
@@ -215,12 +217,13 @@ canonical_text: >-
   and a hot tail of unsealed items. Each item in a page carries a display header: role, kind, timestamps, a short
   summary, summaries of collapsed sections, and references to attachments and payloads. The chat renders from
   headers and loads full bodies from the event log or payload store only when they are expanded or scrolled to.
-  Opening a thread reads thread_head, the hot tail and the newest page, and never replays the thread's events. The
-  pages are a registry-declared derived family rebuilt from seglog when their format changes. ACD-242 makes
-  load-older paging mandatory over these pages. A CI benchmark that fails the build gates the open path on a
-  100k-event thread: first page p95 at most 150 ms warm and 500 ms cold, reading at most 2 MiB. Measured: a
-  prototype opened the newest 50 of 100k real Codex events in 5.9-6.7 ms, reading about 200 KB, against 2.3 s to
-  replay; full records in place of display headers overflowed 99 of 2,000 pages.
+  Opening a thread reads thread_head, the hot tail and the newest page, and never replays the thread's events. Run
+  views and agent transcripts that show a thread's items read the same pages. The pages are a registry-declared
+  derived family rebuilt from seglog when their format changes. ACD-242 makes load-older paging mandatory over
+  these pages. A CI benchmark that fails the build gates the open path on a 100k-event thread: first page p95 at
+  most 150 ms warm and 500 ms cold, reading at most 2 MiB. Measured: a prototype opened the newest 50 of 100k real
+  Codex events in 5.9-6.7 ms, reading about 200 KB, against 2.3 s to replay; full records in place of display
+  headers overflowed 99 of 2,000 pages.
 gui_related: true
 gui_classification_reason: "Determines how fast a long chat opens and how older messages page in."
 split_recommended: false
@@ -275,13 +278,17 @@ canonical_text: >-
   active-agents.json, agent-messages.json, filesafe-events.jsonl, usage.jsonl and Scout's one file per item are
   retired as live files. redb families whose values are JSON text move to MessagePack or typed fields. People read
   stored state through commands, pm db dump, pm inspect, pm tail and pm export (JSONL or JSON on request), and an
-  in-app record inspector. These stay files: interop and configuration that people or other tools edit, such as
-  plugin manifests, .mcp.json and user-editable settings; git-committed project deliverables; bootstrap and
-  recovery manifests such as index_meta.json and the seglog CURRENT and manifest; storage integrity findings,
-  which must be writable when the main store is broken; and exports. Measured: 5,000 small JSON files took 64
-  times the write time and 2.3 times the space of one appended file, and on Windows Defender added 4.2-5.4 ms to
-  the first read of every new file. Jared, 2026-10-30: "We also should likely not be using a bunch of json files,
-  that seems worse than a well structured DB."
+  in-app record inspector. SP-339 owns the pm verbs and what they read: they never write, they mask sensitive
+  metadata unless asked for a fuller profile, and while PM runs they ask the running server instead of opening its
+  stores; Release_Supply_Chain packages the pm program, and the command catalog records that they are not cmd.*
+  commands. The in-app inspector opens a record through cmd.storage.open_value, can copy the shown, redacted
+  record as JSON, and leaves bulk export to pm export. These stay files: interop and configuration that people or
+  other tools edit, such as plugin manifests, .mcp.json and user-editable settings; git-committed project
+  deliverables; bootstrap and recovery manifests such as index_meta.json and the seglog CURRENT and manifest;
+  storage integrity findings, which must be writable when the main store is broken; and exports. Measured: 5,000
+  small JSON files took 64 times the write time and 2.3 times the space of one appended file, and on Windows
+  Defender added 4.2-5.4 ms to the first read of every new file. Jared, 2026-10-30: "We also should likely not be
+  using a bunch of json files, that seems worse than a well structured DB."
 gui_related: true
 gui_classification_reason: "Removes mirror files people could open and adds the inspect, dump, tail and export commands and an in-app inspector."
 split_recommended: false
@@ -334,13 +341,21 @@ canonical_text: >-
   DL-270 card 6. Every redb family declares a maximum value size, at most 16 KiB; larger values go to the payload
   store (SP-337). Canonical, non-rebuildable families and derived, rebuildable families live in two separate redb
   files, so the derived file can be deleted and rebuilt without touching canonical state. Each database sets an
-  explicit cache size and opens with quick repair on. New stores are created atomically (SP-336). A maintenance
-  job under the maintenance lease runs compact() when PM is idle and when fragmentation telemetry, file bytes
-  against live bytes, passes a threshold. Each storage family has a disk budget, and storage health shows usage,
-  budget, reclaimable bytes and the last compaction, with a verified reclaim action. Measured: 128-130 of 301 redb
-  families stored JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store returned no
-  space until compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk, against 109.6 s
-  and 4.71 GB of extra disk for SQLite VACUUM.
+  explicit cache size and opens with quick repair on. New stores are created atomically (SP-336). Store compaction
+  runs under the maintenance lease when fragmentation telemetry, file bytes against live bytes, passes a
+  threshold, and only while PM is idle. redb's compact() needs exclusive access, so it never runs on a busy store:
+  a derived file is rebuilt instead, and a canonical file is compacted by copying its live records into a new file
+  that is swapped in during a brief pause within SP-342's limits. Families that keep a whole document under one
+  key, such as settings:v1 and config:v1, split it into per-key rows or store it by reference; the storage
+  registry records which. Each storage family has a disk budget. Budgets, the fragmentation threshold and cache
+  sizes are fixed owner values, shown read-only, not settings. Storage health (F3-457) shows usage, budget,
+  reclaimable bytes and the last store compaction, with a verified reclaim action that sends the existing
+  cmd.storage.compaction.request with the current retention policy reference. A family at or over its budget
+  raises a notice and offers reclaim; PM never refuses a write or prunes canonical history because of a budget,
+  while derived families may be evicted and rebuilt. Measured: 128-130 of 301 redb families stored JSON text; redb
+  held 1-8 KiB values at 1.56 times their size; deleting half a store returned no space until compact();
+  compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk, against 109.6 s and 4.71 GB of extra
+  disk for SQLite VACUUM.
 gui_related: true
 gui_classification_reason: "Storage health shows usage, budgets, reclaimable bytes and a reclaim action."
 split_recommended: false
@@ -349,7 +364,7 @@ unblocks: []
 acceptance_criteria:
   - "Writing a redb value over its family's declared limit fails."
   - "Deleting the derived redb file and restarting rebuilds it with no canonical loss."
-  - "Compaction runs only under the maintenance lease and reports the space it returned."
+  - "Store compaction runs only under the maintenance lease while PM is idle, never stalls commits beyond SP-342's limits, and reports the space it returned."
   - "Storage health shows each family's usage against its budget and its reclaimable bytes."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
@@ -372,7 +387,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-crash-REPORT.md, SHA-256 8b0b9d24c5351baf9fb19f4c64ea4ea44f6483a22b3afe3e424c9c307a83c0cd"
 preserved_exact_tokens:
   - "compact()"
-  - "quick repair"
+  - "cmd.storage.compaction.request"
 negative_constraints:
   - "Do not let canonical and derived families share one redb file."
 owner_hints:
@@ -391,11 +406,12 @@ canonical_text: >-
   month, an analytics archive. DuckDB runs embedded, on demand and read-only over that archive for ad-hoc SQL over
   the user's own history, offline. The archive and anything DuckDB builds are derived from seglog and never
   authoritative. Scout's fetched pages go to the payload store, stored once across plans; passages and judgments
-  go to Parquet plus Tantivy, with no file per item. Usage, per Jared's note: the Usage page and widgets keep
-  reading redb rollups updated as each usage.event lands, and never scan raw history. usage.event records are
-  exempt from raw-event pruning: they stay in seglog's cold tier and in the Parquet archive, and daily usage
-  totals per account, provider and model are kept forever. UF-108 amends usage-feature's 90-day raw-event window
-  to match. The Scout pilot had already reached 12-13k JSON files.
+  go to Parquet plus Tantivy, with no file per item. Usage, per Jared's note and his follow-up answer: the Usage
+  page and widgets read redb rollups updated as each usage.event lands, and their totals, windows and charts never
+  scan raw history. Detailed usage records follow the existing Keep usage history for setting,
+  ai.usage.usage-retention (90 days by default), in the event log and the Parquet archive alike, and daily usage
+  totals per account, provider and model are kept whatever it says (UF-108). The Scout pilot had already reached
+  12-13k JSON files.
 gui_related: true
 gui_classification_reason: "Adds SQL over the user's history and keeps usage history fast and complete."
 split_recommended: false
@@ -404,7 +420,7 @@ unblocks: []
 acceptance_criteria:
   - "The Parquet archive and DuckDB state rebuild from seglog with no canonical loss."
   - "The Usage page and widgets read rollups and never scan raw events."
-  - "No usage.event is pruned, and daily usage totals are kept forever."
+  - "Detailed usage records follow ai.usage.usage-retention in the event log and the archive, and daily usage totals are never pruned."
   - "Scout stores no file per item."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
@@ -428,10 +444,10 @@ source_lineage:
 preserved_exact_tokens:
   - "Parquet"
   - "DuckDB"
-  - "usage.event"
+  - "ai.usage.usage-retention"
 negative_constraints:
   - "Do not make the Parquet archive or DuckDB authoritative."
-  - "Do not prune usage.event records."
+  - "Do not prune daily usage totals."
 owner_hints:
   - "Plans/storage-plan.md"
   - "Plans/usage-feature.md"
@@ -452,16 +468,17 @@ canonical_text: >-
   never wait for the writer, maintenance that never holds the writer lock for long, and no storage-caused UI stall
   over 50 ms. No corruption: no lost, duplicated or corrupted acknowledged event after kill -9, simulated power
   cuts, torn writes or a crash while a store is created, with bounded recovery. No bloat: space comes back on
-  purpose, under budgets, without an exclusive rewrite that blocks PM or needs a second full copy of the data.
-  SP-344 turns them into release gates. SQLite and SQLite-format engines such as libSQL and Turso stay banned for
-  PM-owned stores. Measured: SQLite checkpoint stalls of 48-78 ms p99 on the commit path; VACUUM of a 3 GB store
-  took 109.6 s and 4.71 GB of extra disk; Turso 0.8.3 was slower than SQLite on every measure, with BEGIN
-  CONCURRENT commits stalling 1.35-1.81 s at p99. Two narrow exceptions: PM may read other tools' SQLite files,
-  such as Codex, T3 Code, Cursor and OpenCode history, for import, only through a read-only connection or a copy,
-  never writing to them; and a user may run an optional pm export --sqlite. Spec_Lock's forbid_sqlite is
-  unchanged. Jared, 2026-10-30: "I banned sqlite because it is slow, has serious contention and lock issues, and I
-  have seen them corrupt frequently. I have used so many programs that have been completely ruined because they
-  use sqlite. For example, plex is very very held back by its DB."
+  purpose, under budgets, without blocking PM: store compaction runs while idle, rebuilds derived files or copies
+  live records into a new file, and never rewrites a busy store exclusively. SP-344 turns them into release gates.
+  SQLite and SQLite-format engines such as libSQL and Turso stay banned for PM-owned stores. Measured: SQLite
+  checkpoint stalls of 48-78 ms p99 on the commit path; VACUUM of a 3 GB store took 109.6 s and 4.71 GB of extra
+  disk; Turso 0.8.3 was slower than SQLite on every measure, with BEGIN CONCURRENT commits stalling 1.35-1.81 s at
+  p99. Two narrow exceptions: PM may read other tools' SQLite files, such as Codex, T3 Code, Cursor and OpenCode
+  history, for import, only through a read-only connection or a copy, never writing to them; and a user may run an
+  optional pm export --sqlite. Spec_Lock's forbid_sqlite is unchanged. Jared, 2026-10-30: "I banned sqlite because
+  it is slow, has serious contention and lock issues, and I have seen them corrupt frequently. I have used so many
+  programs that have been completely ruined because they use sqlite. For example, plex is very very held back by
+  its DB."
 gui_related: false
 gui_classification_reason: "States engine policy and its requirements; no visible surface."
 split_recommended: false
@@ -512,11 +529,11 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   DL-270 card 11. Screenshots are stored as lossless WebP, transcoded in the background after capture; a transcode
-  is kept only when its pixels match the original exactly, otherwise the original stays. Evidence-class media
-  keeps its exact original bytes. Recordings use hardware AV1 or HEVC encoding, with thumbnails for lists. All of
-  it lives in the payload store (SP-337). Measured on 80 real screenshots: lossless WebP was 1.79 times smaller
-  than PNG (median 2.01), pixel-identical, decoding in 17 ms; lossless JPEG XL reached 1.51 times at 220 ms to
-  decode; lossless AVIF came out larger than PNG.
+  is kept only when its pixels match the original exactly, otherwise the original stays. Evidence-class media, any
+  capture cited by a receipt, Goal evidence or a test run, keeps its exact original bytes. Recordings use hardware
+  AV1 or HEVC encoding, with thumbnails for lists. All of it lives in the payload store (SP-337). Measured on 80
+  real screenshots: lossless WebP was 1.79 times smaller than PNG (median 2.01), pixel-identical, decoding in 17
+  ms; lossless JPEG XL reached 1.51 times at 220 ms to decode; lossless AVIF came out larger than PNG.
 gui_related: false
 gui_classification_reason: "Defines how images and recordings are stored; no visible change."
 split_recommended: false
@@ -620,17 +637,20 @@ canonical_text: >-
   may still be set, but nothing relies on them: measured, Spotlight indexed 5,000 of 5,000 files despite
   .metadata_never_index, using 19 CPU seconds, and a .noindex folder cut that to 0; Windows Search used 33 CPU
   seconds per 5,000 files with or without the flag; Defender added 4.2-5.4 ms to the first read of every new file.
-  PM changes no system setting and asks for no Defender exclusion. The exact paths are a companion change in
-  SP-015 and the documents that name them.
+  This covers PM's app data root. Project-scoped state under a workspace's .puppet-master/ directory keeps its
+  place (SP-015), and PM adds no .noindex directory or marker inside a user's project folder; whether that state
+  moves into the app data root is open with SP-015's paths. PM changes no system setting and asks for no Defender
+  exclusion. The exact paths are a companion change in SP-015 and the documents that name them.
 gui_related: false
 gui_classification_reason: "Defines where data is stored; no visible surface."
 split_recommended: false
 depends_on: [SP-015, SP-023]
 unblocks: []
 acceptance_criteria:
-  - "On macOS no PM store directory is outside a directory ending in .noindex."
-  - "On Windows PM data is under the user's AppData."
+  - "On macOS no store under the app data root sits outside a directory ending in .noindex."
+  - "On Windows the app data root is under the user's AppData."
   - "PM never changes Defender, Spotlight or Windows Search settings."
+  - "PM adds no .noindex directory or other marker inside a user's project folder."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

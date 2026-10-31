@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L374-L414
+Source lines: L373-L413
 
-Source SHA256: `046c8e1a0293d770e19de008e04f677efcf86daee6e414639c1ef4ba0d415d71`
+Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
 
 ---
 
@@ -36,7 +36,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
 - **Primary input:** canonical usage projections and redb rollups derived from the seglog pipeline.
 - **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
-- **Compatibility input:** `usage.jsonl` may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+- **Compatibility input:** `usage.jsonl` is retired as a live file (SP-339): a one-time legacy import is the only read, and `pm export` writes it on request. It is never a 5h/7d rollup source.
 - **Retired subagent side files:** In `Plans/usage-feature.md` (`/usage-feature.md`), `active-subagents.json` and other active-subagents `side-file` / `live-state` mirrors are compatibility projections only; they must not be presented as canonical or endorsed usage enrichment sources after side-file retirement.
 - Thread-scoped plan `/todo` state used by Usage and Context Detail views comes from storage-backed revision/status history, not from an ad hoc usage-side TODO store.
 - Web change-tracking usage rows preserve `change_status: "new"` when no previous version exists and compare against the most recent cached version of the same normalized `URL`.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4044-L4283
+Source lines: L4046-L4285
 
-Source SHA256: `49e1a349a19e411aca0f69c9f226a8ab132a687ebe6a4a4676193f6169025c34`
+Source SHA256: `3e0e4494a8c7b306f843b8d32ceb1cc5bc2ab442b5a6a495669be42b65fa2c58`
 
 ---
 
@@ -62,7 +62,7 @@ Until Event Authority individually admits a producer family, these commands have
 | `cmd.authentication.cancel` | `AuthenticationCommandRequest{action=cancel, authentication_operation_id, expected_auth_revision}` -> `AuthenticationCommandResult` | current cancellable auth operation; `auth_state_mismatch`, `already_in_state`, `stale_projection`, `permission_required` | `handlers::authentication::cancel` | cancellation receipt/projection; never deletes provider-owned credentials without a separate owner action |
 | `cmd.authentication.resume` | `AuthenticationCommandRequest{action=resume, authentication_operation_id, expected_auth_revision, continuation_ref}` -> `AuthenticationCommandResult` | same nonterminal operation and authority binding; `auth_state_mismatch`, `stale_projection`, `deadline_expired`, `topology_unavailable`, `permission_required`, `policy_denied` | `handlers::authentication::resume` | resumes the same auth operation; never rotates account/route/host silently |
 | `cmd.eval.session.start` | `EvalSessionCommandRequest{action=start, eval_session_id, language, sandbox_policy_ref, limits_ref, variable_scope_ref}` -> `EvalSessionCommandResult` | supported exact-target adapter and no conflicting lease; `unsupported`, `capability_unavailable`, `resource_blocked`, `lease_conflict`, `topology_unavailable`, `permission_required`, `policy_denied` | `handlers::eval_session::start` | `EvalSessionRecord`, lease, `ObservableWork`, artifact refs; no hidden global kernel |
-| `cmd.eval.session.execute` | `EvalSessionCommandRequest{action=execute, eval_session_id, execution_id, expected_session_generation, code_artifact_ref, selected_tool_refs[]}` -> `EvalSessionCommandResult` | live current session; `session_state_mismatch`, `stale_projection`, `deadline_expired`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::eval_session::execute` | bounded output plus redacted spill artifact; nested calls keep independent policy/admission |
+| `cmd.eval.session.execute` | `EvalSessionCommandRequest{action=execute, eval_session_id, execution_id, expected_session_generation, code_artifact_ref, selected_tool_refs[]}` -> `EvalSessionCommandResult` | live current session; `session_state_mismatch`, `stale_projection`, `deadline_expired`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::eval_session::execute` | bounded output; output over 16 KiB is redacted and stored in the content-addressed payload store (SP-337) and returned as a payload ref, never a standalone file per execution; nested calls keep independent policy/admission |
 | `cmd.eval.session.stop` | `EvalSessionCommandRequest{action=stop, eval_session_id, expected_session_generation, variable_disposition, cleanup_policy_ref}` -> `EvalSessionCommandResult` | live/recoverable session; `session_state_mismatch`, `stale_projection`, `operation_in_progress`, `permission_required` | `handlers::eval_session::stop` | explicit cleanup and variable/artifact disposition; no EventRecord pending authority |
 | `cmd.mcp.server.connect` | `McpServerLifecycleCommandRequest{action=connect, server_id, expected_config_epoch, expected_runtime_generation}` -> `McpServerLifecycleCommandResult` | enabled valid server; `stale_projection`, `already_in_state`, `operation_in_progress`, `capability_unavailable`, `resource_blocked`, `permission_required`, `policy_denied` | `handlers::mcp::connect_server` | component-state projection, lease and work refs; no EventRecord pending authority |
 | `cmd.mcp.server.reconnect` | `McpServerLifecycleCommandRequest{action=reconnect, server_id, expected_config_epoch, expected_runtime_generation, reason}` -> `McpServerLifecycleCommandResult` | configured server and breaker admits/join; connect reasons plus `breaker_open`, `auth_state_mismatch` | `handlers::mcp::reconnect_server` | joins the one generation-scoped reconnect; does not erase failure history or add invoke retries |
@@ -205,7 +205,7 @@ canonical_text: >-
   protected hold and manual-compaction requests stay owner-routed; and affected actions remain
   unavailable until their exact machine storage families and value schemas are materialized.
 gui_related: true
-gui_classification_reason: Compatibility blocks, migration interruption, retention settings, legal holds, compaction, diagnostics, and unavailable actions are visible command states.
+gui_classification_reason: Compatibility blocks, migration interruption, retention settings, legal holds, compaction, the verified reclaim action and its disabled states, storage health usage, per-group budget, reclaimable bytes and last compaction (SP-340, F3-457, DL-270), diagnostics, and unavailable actions are visible command states.
 split_recommended: false
 depends_on: [CS-054, CS-056, CS-057, SP-235, SP-237, SP-243]
 unblocks: []

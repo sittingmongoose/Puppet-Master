@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-17T20:22:31Z",
+  "generated_at_utc": "2026-10-31T20:35:29Z",
   "index_path": "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
-  "index_sha256": "e76bd7063c5432b43ad6a605d75184b72d84d636a07ce97996faf606940de66e",
+  "index_sha256": "fc196c40498a3d0ef425e92b0c62379ec55912c5d71a8fb93dc4c2de903ad372",
   "manifest_path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/001-preamble.md",
-      "sha256": "952a2e6c12538975a8d7319afcbf8b43f42a4d5f9fdee8d573ce88d7f021c6af",
+      "sha256": "38694cb1c750ff0421ef2315920cfbcaaf7d28088969e827ba2616ee3918678f",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/002-canonical-owner-section-requirements.md",
-      "sha256": "1c7e2aaa0732c3c41a39189117baca308c6c62fd4991e6bc2d6f318daf334e01",
+      "sha256": "dbfde6756f87d95e1392aaea36e1e8be76973a161e419a5452932a51410d8bda",
       "shard_id": "002",
       "source_line_end": 18,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/003-purpose.md",
-      "sha256": "ffde1ec1bcccee8293145f21946c9aaef6e23b39f5c205e22b998f88355996c1",
+      "sha256": "7f07dab51ce0ff676e69d4cf0be0fbdeeac13f5bf7395d82466935a1c492bb0f",
       "shard_id": "003",
       "source_line_end": 22,
       "source_line_start": 20,
@@ -35,7 +35,7 @@
     {
       "heading": "Concern lifecycle verification checklist",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/004-concern-lifecycle-verification-checklist.md",
-      "sha256": "8b7ba2cc6a5c79970afba3744d2f08e497941df37b0197f0c67b6aaa547d1bd5",
+      "sha256": "52a4d9256c0ae634a43fa62d83f887fd884adefa611a36eceeae2d6bc64af4b0",
       "shard_id": "004",
       "source_line_end": 56,
       "source_line_start": 24,
@@ -44,7 +44,7 @@
     {
       "heading": "Verification Table",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/005-verification-table.md",
-      "sha256": "b662f5bf79d4ad827885fa2786186ba78d3dc16977c4b6cbd0d2f0a64d09a082",
+      "sha256": "e703f50c555b21ba044f2a206a855c23c2d2d2601fa21568c5e04de58facc8ed",
       "shard_id": "005",
       "source_line_end": 74,
       "source_line_start": 58,
@@ -53,7 +53,7 @@
     {
       "heading": "Command Catalog Coverage Check",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/006-command-catalog-coverage-check.md",
-      "sha256": "75575a23fee55b0f48dceafae7b0557df20d8e87c72d2db02fd7141aa18feaf1",
+      "sha256": "0df7851c8377f4c899383556dc39ae3e86396e238090c060c9bc375bc4515011",
       "shard_id": "006",
       "source_line_end": 91,
       "source_line_start": 75,
@@ -62,7 +62,7 @@
     {
       "heading": "Completion Criteria",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/007-completion-criteria.md",
-      "sha256": "fa5bfc38860740956c650b62b4d76d2a88c3e8036d3a5aee4c2095738576261b",
+      "sha256": "9104845c4198d47032f82c64a63870e4bd99fe5de6cd7d7519a6e964953c24fa",
       "shard_id": "007",
       "source_line_end": 97,
       "source_line_start": 93,
@@ -71,7 +71,7 @@
     {
       "heading": "2026-03-07 addendum \u2014 DockerHub / Unraid GUI requirements",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/008-2026-03-07-addendum-dockerhub-unraid-gui-requirements.md",
-      "sha256": "8995b28dd2fda2de2f72180d1d75e6d78533f58433b91157bf5ab3a203e73466",
+      "sha256": "f1e833bffc2d7b4e1e75b799b494ecdadd9ca396d8ea865e04d18cbb53f4097e",
       "shard_id": "008",
       "source_line_end": 118,
       "source_line_start": 99,
@@ -80,7 +80,7 @@
     {
       "heading": "Derived evidence regeneration",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/009-derived-evidence-regeneration.md",
-      "sha256": "9a49b692373711164605de0d677cc6462c22eda9e7a1b88104404632298f5458",
+      "sha256": "84f77006b97a25cb6323be5d7112bc606c143a282f63ceebd237e4e8c7e78c11",
       "shard_id": "009",
       "source_line_end": 122,
       "source_line_start": 120,
@@ -89,7 +89,7 @@
     {
       "heading": "2026-03-09 addendum \u2014 Artifacts panel and Usage/Ledger linkage",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/010-2026-03-09-addendum-artifacts-panel-and-usage-ledger-linkage.md",
-      "sha256": "b819a6207ec07980471db4c458f337c04828305a49bcab080f2660e3a1185edb",
+      "sha256": "3e0b811a4df93f0f0a7335cb09a747a97689961ddf2bc671f78d42a3be47f728",
       "shard_id": "010",
       "source_line_end": 129,
       "source_line_start": 124,
@@ -98,7 +98,7 @@
     {
       "heading": "Concern lifecycle verification checklist",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/011-concern-lifecycle-verification-checklist.md",
-      "sha256": "ab8805560301810c501afa8fc515447e6b5552799a585dfa1a1e38e91af2a21c",
+      "sha256": "4b9ad0f436504a76424f8f472ee1a5b3ee1c40035bd354ad0bf5f3365401aaa6",
       "shard_id": "011",
       "source_line_end": 171,
       "source_line_start": 131,
@@ -107,7 +107,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/012-owner-consumer-map.md",
-      "sha256": "4c34e6b74e1c04bd8e3f6e26613d9fcef7e0d3e385ec3f870a038a72a0a5acc2",
+      "sha256": "627782c4b78d1246447bb90a8e5ab2a9ae16770785e100246e91882a493246ea",
       "shard_id": "012",
       "source_line_end": 177,
       "source_line_start": 173,
@@ -116,7 +116,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/013-planunits.md",
-      "sha256": "5d464d7f4fd9f19df778c2539f9e376d2fab94f864e318e95413fd53befcea1e",
+      "sha256": "a11a5a677e411da685ca5f03a53151bd540d1409d08cdec55ceefe2a6eeab85d",
       "shard_id": "013",
       "source_line_end": 1784,
       "source_line_start": 179,
@@ -125,7 +125,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/014-migration-coverage.md",
-      "sha256": "852045406191c14d3beb2bb4fc3e74bdb366db03f9ddb3ee3049f628f23fce9d",
+      "sha256": "0a639bd62b2694a3075b9a5d25bfa7e8e5560259290160a3e89b4cd10ab53135",
       "shard_id": "014",
       "source_line_end": 1796,
       "source_line_start": 1786,
@@ -134,7 +134,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/015-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "fd94699874e000ca417348c87b0d45f5aee8ff8ee91311137c1c6dffcef8901f",
+      "sha256": "e34ff177dd99c92c9e694f790bf6fe5863b02f8a918391a0b3af500b4fc507c2",
       "shard_id": "015",
       "source_line_end": 1905,
       "source_line_start": 1798,
@@ -143,7 +143,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/016-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "2cd2e9fcd651e31c5a5117d68cfd75374aaf84cffebbbb6cd576e9cdb9a7785b",
+      "sha256": "4935334ece26643b46dbb406d99c1d1c3a34b0c4dbaf7b5394e4f91ba4b3601a",
       "shard_id": "016",
       "source_line_end": 1912,
       "source_line_start": 1907,
@@ -152,7 +152,7 @@
     {
       "heading": "PMConcept7 Home Workspace checklist \u2014 2026-08-04",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/017-pmconcept7-home-workspace-checklist-2026-08-04.md",
-      "sha256": "4b3e179f952fcbbaea4de7cfb784d58eac1fab68381537b5eb22da4404a5422d",
+      "sha256": "bcc0a4b77000793ae58f68a32799d098d41bce49a72f17c1f3d751a4cce4515f",
       "shard_id": "017",
       "source_line_end": 2027,
       "source_line_start": 1914,
@@ -161,25 +161,25 @@
     {
       "heading": "Shared Runtime GUI Projection Verification Addendum - 2026-08-13",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/018-shared-runtime-gui-projection-verification-addendum-2026-08-13.md",
-      "sha256": "a1562166c4965df818648a785c8f3a71209c3743d105bebd981d50fa086c5388",
+      "sha256": "2e2fc8be885d40bc888b6cb3455fd9a5c9ba03c00da81f2f08a86c0629c4a6cf",
       "shard_id": "018",
-      "source_line_end": 2090,
+      "source_line_end": 2098,
       "source_line_start": 2029,
       "split_rule": "heading-##"
     },
     {
       "heading": "DL-180 to DL-185 \u2014 Universal Panels And Terminal Tab Checklist (2026-10-09)",
       "path": "Plans/_shards/gui_rebuild_requirements_checklist/019-dl-180-to-dl-185-universal-panels-and-terminal-tab-checklist-202.md",
-      "sha256": "507f2e2df26fc8f38a7c5fd8518d5ef47ea5b5ca6792147f001f8a259c5cc98a",
+      "sha256": "e8067ac3a2e967bd7f0fb89e55c9b306b7ea076fbfbcfcdcd1dce483455fe9c6",
       "shard_id": "019",
-      "source_line_end": 2277,
-      "source_line_start": 2092,
+      "source_line_end": 2285,
+      "source_line_start": 2100,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2277,
+    "line_count": 2285,
     "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
-    "sha256": "64e858a20c01af8b263735faeb050f2102a9d5328ae964cd5f4c4ebf53a1469d"
+    "sha256": "6dea8884b18183c84a5e54bdbf2fab67d36b3dd3daeadfdccfb04bf0a2b71f08"
   }
 }

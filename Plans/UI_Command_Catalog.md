@@ -728,7 +728,7 @@ The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denot
 |---|---|---|---|
 | `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |
 | `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |
-| `cmd.chat.delete` | Delete Thread | After explicit thread-delete confirmation, persists the content-free deletion/tombstone authority, removes the thread immediately from ordinary navigation/search/context/export, and requests physical content purge within 24 hours unless a legal hold delays purge; it does not delete a message or silently release worktree/recovery holds. | `thread_selected && delete_confirmed && !active_run_in_thread && deletion_family_available` |
+| `cmd.chat.delete` | Delete Thread | After explicit thread-delete confirmation, persists the content-free deletion/tombstone authority, removes the thread immediately from ordinary navigation/search/context/export, and requests physical content purge within 24 hours unless a legal hold delays purge; it does not delete a message or silently release worktree/recovery holds. Amended 2026-10-31 (DL-270, SP-337): the 24-hour purge removes the thread's records and releases its payload references. A payload's bytes are freed only when garbage collection finds no live record, retention hold, legal hold or backup still reaching it, so a payload shared with another record stays while that record needs it. Backup bytes keep the 30-day limit stated in the Case L section. | `thread_selected && delete_confirmed && !active_run_in_thread && deletion_family_available` |
 | `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |
 | `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |
 | `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |
@@ -8561,7 +8561,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0
 |------------|-------|-------------|----------------|--------------|
 | `cmd.chat.web.cancel` | Cancel Web Operation | Cancels an in-flight web operation (research/crawl/fetch card) by `web_operation_id`, preserving provenance. | `web_operation_in_flight` | `domain_action` |
 | `cmd.chat.web.request_again` | Request Web Operation Again | Re-requests a declined or cancelled web operation with the same payload; re-entry passes through the approval gate and never bypasses it. | `web_operation_terminal` | `domain_action` |
-| `cmd.chat.switch_thread` | Switch Chat Thread | Focuses an existing chat thread from the thread list by `thread_id`; no thread mutation. | `thread_exists` | `navigation_wrapper` |
+| `cmd.chat.switch_thread` | Switch Chat Thread | Focuses an existing chat thread from the thread list by `thread_id`; no thread mutation. Amended 2026-10-31 (DL-270): opening the thread reads thread_head, the hot tail and the newest page and never replays its events (ACD-242, SP-338); older pages load only through `cmd.chat.load_older` (UCC-212). | `thread_exists` | `navigation_wrapper` |
 | `cmd.chat.queue.remove` | Remove Queued Message | Removes a queued, not-yet-dispatched composer message from the send queue; dispatched messages are unaffected. | `queued_message_exists` | `domain_action` |
 | `cmd.chat.platform` | Set Requested Platform | Sets the requested platform for the thread from the assistant chat surface; applies next turn. No status-bar chip and no standalone chat-header platform dropdown. | `platform_registry_loaded` | `domain_action` |
 | `cmd.chat.plan_thoroughness` | Set Plan Thoroughness | Sets Plan Thoroughness (Light, Balanced, Comprehensive) for Plan and Deep Plan; applies next turn. | `plan_mode_selected` | `domain_action` |
@@ -8641,11 +8641,11 @@ These are the seventeen stable Case L IDs forced by approved controls. `storage.
 | `cmd.storage.fallback.keep_logical_root` | Closed `StorageFallbackDispositionRequest` keep variant: common fields only, with `command_id = "cmd.storage.fallback.keep_logical_root"` and `confirmation = "retain_fallback_and_select_logical"`; direct recovery-shell action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "retain_fallback_and_select_logical" && !operation_in_progress` | Dispatches only `handlers::storage::fallback_keep_logical_root`; consumes `StorageFallbackDispositionResult`, retains both roots, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
 | `cmd.storage.fallback.fork_new_instance` | Closed `StorageFallbackDispositionRequest` fork variant: common fields only, with `command_id = "cmd.storage.fallback.fork_new_instance"` and `confirmation = "create_inactive_candidate_without_switch"`; direct recovery-shell action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "create_inactive_candidate_without_switch" && !operation_in_progress` | Dispatches only `handlers::storage::fallback_fork_new_instance`; consumes `StorageFallbackDispositionResult`, returns only the inactive candidate binding without changing active bootstrap selection, retains both roots, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
 | `cmd.storage.fallback.export_both` | Closed `StorageFallbackDispositionRequest` export variant: common fields plus only `destination_ref` and `encryption_key_ref`, with `command_id = "cmd.storage.fallback.export_both"` and `confirmation = "encrypt_exact_bytes_and_retain_sources"`; direct recovery-shell export action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "encrypt_exact_bytes_and_retain_sources" && destination_available && encryption_key_available && !operation_in_progress` | Dispatches only `handlers::storage::fallback_export_both`; consumes `StorageFallbackDispositionResult`, returns output `export_custody` for the encrypted exact-byte package, retains both roots until separate cleanup, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
-| `cmd.storage.open_value` | `{ storage_instance_id, root_generation, store_family_id, value_key_ref, route_target, open_subject }`; normalizes to `route_target`/`OpenSubject` | compatible captured value is readable under ordinary read/export permission | Opens exact redacted owner-resolved identity at the captured high-water mark; raw path is never authority and no state changes. | `navigation_wrapper` |
+| `cmd.storage.open_value` | `{ storage_instance_id, root_generation, store_family_id, value_key_ref, route_target, open_subject }`; normalizes to `route_target`/`OpenSubject` | compatible captured value is readable under ordinary read/export permission | Opens exact redacted owner-resolved identity at the captured high-water mark; raw path is never authority and no state changes. Amended 2026-10-31 (DL-270): this row is also the entry to the record inspector (F3-666, SP-339): a read-only `record` tab that shows one stored record, redacted. It may copy the shown, redacted record as JSON under FileSafe's rules; bulk export stays with `pm export`. It is the one in-app reader of stored state, since no JSON mirror file exists to open, and it adds no command. | `navigation_wrapper` |
 | `cmd.storage.open_root` | `{ storage_instance_id, root_generation, root_kind, root_ref, route_target, open_subject }`, where `root_kind = logical_root | active_root | relocation_source | fallback_recovery_copy`; normalizes to `route_target`/`OpenSubject` | exact retained root identity is safely revealable under ordinary read/export permission | Reveals/navigates to the exact target only; it cannot select authority, promote writer mode, initialize, relocate, clear a hold, or fall back to an empty surface. | `navigation_wrapper` |
 | `cmd.storage.legal_hold.manage` | `{ scope_kind, project_id?, hold_id, action, semantic_scope_ref, reason, expected_hold_sha256? }`, `action = set | clear` | `storage_access_mode == writer && permission(storage.legal_hold.manage) && reason_present && retention_hold_record_available` | SP-288 owner `storage.legal_hold_transition.v2` returns the committed `pm.storage.legal_hold_result.v1` OwnerResult and same-row receipt plus `storage.retention_hold_changed` EventRecord 2.0. SIR-047 binds actual pending/terminal custody through `owner.sir.storage_legal_hold_pending_custody@1.0.0`; CV-333 publishes the joined response only after complete commit/readback. Pending stays protective; application/project scope is exact, holds compose by union and never clear automatically. | `domain_action` |
-| `cmd.storage.compaction.request` | `{ storage_instance_id, retention_policy_ref, reason? }`; owner-admitted maintenance request only | `storage_access_mode == writer && permission_allowed && storage_maintenance_operation_available && maintenance_lease_available` | Requests owner evaluation; it never directly compacts or bypasses holds/anchors/refs. Accepted lifecycle uses application-scoped `storage.compaction_lifecycle_changed` EventRecord 2.0 and the `storage_maintenance_operation` row. | `domain_action` |
-| `cmd.settings.open_storage_retention` | `{ project_id?, route_target, open_subject }`; navigation to `Advanced > Storage & Retention` | settings inventory and route target are available | Opens the owner-backed Settings surface. Individual settings remain registry-owned/non-command values; this command changes no retention value and emits no domain event. | `navigation_wrapper` |
+| `cmd.storage.compaction.request` | `{ storage_instance_id, retention_policy_ref, reason? }`; owner-admitted maintenance request only | `storage_access_mode == writer && permission_allowed && storage_maintenance_operation_available && maintenance_lease_available` | Requests owner evaluation; it never directly compacts or bypasses holds/anchors/refs. Accepted lifecycle uses application-scoped `storage.compaction_lifecycle_changed` EventRecord 2.0 and the `storage_maintenance_operation` row. Amended 2026-10-31 (DL-270, SP-340): the Reclaim action in storage health (F3-457) sends this same request, once for the whole storage instance, and no second reclaim id exists. The owner runs store compaction (redb `compact()`) only under the maintenance lease while PM is idle; the result lists, per storage group, the bytes before, the bytes after and the bytes returned, measured again after the run, so the screen shows a verified reclaim and never a promise. Holds, anchors and payload references (SP-337) still block it, and the request fields are unchanged. | `domain_action` |
+| `cmd.settings.open_storage_retention` | `{ project_id?, route_target, open_subject }`; navigation to `Advanced > Storage & Retention` | settings inventory and route target are available | Opens the owner-backed Settings surface. Individual settings remain registry-owned/non-command values; this command changes no retention value and emits no domain event. Amended 2026-10-31 (DL-270): the Storage & Retention page this opens also shows storage health (SP-340, F3-457): about eight storage groups, each with its usage against one disk budget, its reclaimable bytes, the last store compaction, and the Reclaim action (`cmd.storage.compaction.request`). Budgets, the redb cache size, the fragmentation threshold and the compaction schedule are fixed owner values shown read-only, not settings and not commands. No new open command is added. | `navigation_wrapper` |
 | `cmd.project.delete_data` | `{ project_id, expected_project_data_sha256, confirmation_strength: "strong", reason? }`; destructive project-data intent, distinct from `cmd.project.remove` | `storage_access_mode == writer && project_data_enumerated && strong_confirmation_complete && permission_allowed && storage_deletion_record_available` | Persists the project-scoped `storage_deletion_record` and `storage.deletion_lifecycle_changed` EventRecord 2.0, removes project content only through owner compaction, and blocks on ambiguous/cross-project reachability or holds. It never means Remove project from list. | `domain_action` |
 
 `cmd.chat.delete` remains the sole catalog thread-delete ID; the planning alternate spelling is not a second registration. It requires explicit confirmation of immediate logical removal, purge within 24 hours unless held, indefinite content-free tombstone, and backup-byte retention up to 30 days unless held. It binds to project-scoped `storage_deletion_record` and `storage.deletion_lifecycle_changed`; message-level delete remains unsupported. `cmd.project.remove` remains list-only, while `cmd.project.delete_data` is the separately confirmed data-purge intent.
@@ -8663,6 +8663,8 @@ The catalog consumes the owner enums without aliases: `storage_access_mode = wri
 Closed Case L storage dispatch reasons consumed by these rows are the owner tokens `storage_read_only | storage_io_exhausted | unsupported_store_version | root_mismatch | root_unavailable | fallback_diverged | permission_denied | operation_in_progress | state_changed | integrity_failure | invalid_path`. A missing/deferred/ambiguous/unsupported required machine family returns `required_family_unavailable`. Root-binding/hash or captured-generation change returns `state_changed`. Unknown/malformed command or owner state blocks without mutation. Recovery-shell exceptions admit only the exact state named in their row; they do not weaken the global write gate.
 
 No catalog ID exists for generic verify, repair, salvage, Doctor mutation, force-open, `try_anyway`, force-cancel, rollback-now, skip-step, arbitrary retry, automatic merge/overwrite, in-place downgrade, or live newer-store viewing. `cmd.storage.compaction.request` is not direct compaction, and no retention command infers destructive eligibility from prefix, key, path, filename, mtime, ordering, or focus.
+
+Amended 2026-10-31 (DL-270): the Reclaim action of storage health is `cmd.storage.compaction.request` (UCC-124) and is neither verify, repair nor salvage; its verification is part of its own result. `pm db dump`, `pm inspect`, `pm tail` and `pm export` (SP-339, SP-342) are command-line reads with no catalog ID (UCC-212), and the in-app record inspector opens a stored value through `cmd.storage.open_value`. The chat load-older control is the one new DL-270 command, `cmd.chat.load_older` (UCC-212).
 
 ContractRef: ContractName:Plans/storage-plan.md#Case-L-3, ContractName:Plans/storage-plan.md#Case-L-4, ContractName:Plans/Commands_System.md#0.3, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage_value_registry.json, ContractName:Plans/UI_Wiring_Rules.md#UIW-002, ContractName:Plans/UI_Wiring_Rules.md#UIW-003
 
@@ -10026,7 +10028,7 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 ### File Manager, editor, and chat navigation rows
 
-`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
+`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged. Amended 2026-10-31 (DL-270): opening a thread through `cmd.chat.open_thread` reads thread_head, the hot tail and the newest page and never replays the thread's events (ACD-242, SP-338); older pages load only through `cmd.chat.load_older` (UCC-212).
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -11113,6 +11115,8 @@ and receipt/projection-only effects with an empty EventRecord set.
 | `cmd.client.pair.reject` | Reject Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::reject` | Settings pairing-request detail; Product Onboarding exact owner return |
 | `cmd.client.pair.cancel` | Cancel Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::cancel` | Settings pairing-progress detail; Product Onboarding exact owner return |
 | `cmd.client.revoke` | Revoke Client Trust | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_trust::revoke` | Settings paired-client detail; Doctor trust remediation route |
+
+Amended 2026-10-31 (DL-270, BRS-031): the `cmd.restore.preview` result also carries the last verified backup from the one backup-status record (its time, its verification level and its last event) and what restoring from it would lose; a newer backup that has not verified is shown beside it, never instead of it. The Settings Backup/Restore manager and the Doctor recovery route show these before the user confirms (F3-528, FinalGUISpec section 15.6); neither computes them. The typed result shape stays with Contracts_V0 and the backup schema.
 
 The three existing Project rows now bind exactly to
 `Plans/project_system_contracts.schema.json#/$defs/project_action_request` and
@@ -15029,7 +15033,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
-| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added. Amended 2026-10-17 (DL-230, Jared): the saved layout belongs to the person and is written to `home_named_layouts:v1`, offered in every project; the command still advances the v2 record's revision by one, with its receipt and its one `workspace.layout_changed` (`named_layout_saved`, `Plans/Contracts_V0.md#CV-361`), and the v2 record keeps no copy; outside the project it was saved in, its boards, a null board included, are skipped | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added. Amended 2026-10-17 (DL-230, Jared): the saved layout belongs to the person and is written to `home_named_layouts:v1`, offered in every project; the command still advances the v2 record's revision by one, with its receipt and its one `workspace.layout_changed` (`named_layout_saved`, `Plans/Contracts_V0.md#CV-361`), and the v2 record keeps no copy; outside the project it was saved in, its boards, a null board included, are skipped. Amended 2026-10-31 (DL-270): SP-340 caps every redb value at 16 KiB, so a layout with up to 64 KB of boards cannot sit inline in `home_named_layouts:v1`; boards past the family's declared value limit are kept as payload-store references (SP-337), and the 64 KB per-layout limit is unchanged. The same holds for the v2 layout record. The stored form is MessagePack or typed fields, not JSON text (SP-339). `Plans/storage-plan.md#SP-330` owns where the boards live | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.restore` | Restore a captured layout | `snapshot_ref` (a layout snapshot its caller captured, its dashboard boards included as a saved named layout keeps them, SP-330), `source` (`guided_tour_restore` or `guided_tour_back`) | `always`; a snapshot of another project or workspace is refused as `stale_projection`; a failed write says "Your layout could not be saved." and keeps the earlier layout | `shell_view` | `workspace.layout_changed` (change `layout_restored`, CV-361) | none: the Guided Tour's Back, Skip and Finish with Restore (PWIZ-035); a project switch loads that project's own record and dispatches nothing (added 2026-10-17, DL-228) |
 
@@ -16411,3 +16415,79 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-104, ContractName:Plans/Wiring_Matrix.md#WM-096, ContractName:Plans/UI_Wiring_Rules.md#UIW-044, ContractName:Plans/Settings_System.md#SSYS-055
+
+### UCC-212 - DL-270 Chat Load-Older Command And Storage Dispositions
+
+```yaml
+plan_unit_id: UCC-212
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  DL-270 registers one new UICommand, cmd.chat.load_older (ACD-242, SP-338). It is a shell_view, receipt-only
+  read: one request fetches the next older sealed 50-item page of a thread's render pages, given thread_id and
+  before_page_ref, and appends it above the loaded window. Scrolling near the top of the history sends it by
+  itself, and the visible Load 50 older row (ACD-242) stays as the fallback;
+  both send the same command, and no UI surface reads the page store directly (UIW-002). Opening a thread is not
+  this command: it reads thread_head, the hot tail and the newest page and never replays events. The Reclaim
+  action of storage health is the existing cmd.storage.compaction.request (UCC-124) and gets no second id. The
+  record inspector opens through the existing cmd.storage.open_value (UCC-123). pm db dump, pm inspect, pm tail
+  and pm export (SP-339, SP-342) are command-line reads and get no cmd.* id; this unit holds their disposition.
+  The Case L seventeen-ID count is unchanged: this unit is a separate DL-270 registration.
+gui_related: true
+gui_classification_reason: Registers the chat load-older control and dispositions the storage health, record inspector and export controls.
+split_recommended: false
+depends_on: [CS-107, SP-337, SP-338, SP-339, SP-340, ACD-242, UCC-123, UCC-124]
+unblocks: []
+acceptance_criteria:
+  - cmd.chat.load_older has exactly one catalog row, one production wiring entry and one handler, handlers::chat::load_older.
+  - Scroll-near-top and the Load 50 older control send the same cmd.chat.load_older request, and neither reads the page store directly.
+  - No cmd.* id exists for pm db dump, pm inspect, pm tail or pm export.
+  - The storage health Reclaim action sends cmd.storage.compaction.request and has no second command id.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: storage_command_registry_drift
+reasoning_tier: high
+context_scope: dl270_storage_profile_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-270
+  - Plans/storage-plan.md#SP-338
+  - Plans/assistant-chat-design.md#ACD-242
+preserved_exact_tokens:
+  - cmd.chat.load_older
+  - cmd.storage.compaction.request
+  - cmd.storage.open_value
+negative_constraints:
+  - Do not mint ids for command-line verbs.
+  - Do not add a second reclaim command or a local action for load-older.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+## DL-270 command entries (2026-10-31)
+
+| Command ID | Label | Args | command_kind | Availability | Confirmation | Disabled reasons | Owner | Sole future handler | Result |
+|---|---|---|---|---|---|---|---|---|---|
+| `cmd.chat.load_older` | Load 50 older | `{ thread_id, before_page_ref }` | `shell_view` | selection (`older_pages_present`) | none | `stale_projection`, `degraded` | chat | `handlers::chat::load_older` | One sealed page of at most 50 items and 256 KiB, appended above the loaded window; `loaded`, `no_older_pages` or `unavailable`. Read-only: no thread mutation and no persisted event, only a no-persist command receipt. A missing or rebuilding page store shows the degraded state; it never falls back to replaying events. |
+
+Command-line dispositions (no catalog ID; SP-339 owns the verbs and their read semantics, Release_Supply_Chain owns packaging):
+
+| Verb | Disposition | In-app counterpart |
+|---|---|---|
+| `pm db dump` | Command-line read of a store family from a read-only snapshot | Record inspector via `cmd.storage.open_value` |
+| `pm inspect` | Command-line read of one record or value | Record inspector via `cmd.storage.open_value` |
+| `pm tail` | Command-line follow of appended records | None required |
+| `pm export` (JSONL or JSON on request; optional `--sqlite`, SP-342) | Command-line read; writes only the output it names | None; `cmd.chat.export`, `cmd.usage.export` and the backup commands keep their own rows |
+
+All four apply the Permissions_System default masking and redaction profile. Flag names and exit codes are SP-339's to fix.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-338, ContractName:Plans/storage-plan.md#SP-339, ContractName:Plans/assistant-chat-design.md#ACD-242, ContractName:Plans/Commands_System.md#CS-107

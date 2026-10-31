@@ -28,7 +28,7 @@ These requirements are canonical live specification text for this owner document
 
 ## Rewrite alignment (2026-02-21)
 
-The rewrite described in `Plans/rewrite-tie-in-memo.md` reinforces this plan's intent: Usage should be implemented as **projections/rollups** over the canonical event ledger (seglog), with durable KV state in redb and fast search in Tantivy--without changing the UX requirements in this document. 5h/7d and dashboard numbers are served from **redb rollups** produced by **analytics scan jobs** that aggregate over the seglog (and any JSONL mirror); the Usage view reads these rollups rather than scanning the ledger on demand.
+The rewrite described in `Plans/rewrite-tie-in-memo.md` reinforces this plan's intent: Usage should be implemented as **projections/rollups** over the canonical event ledger (seglog), with durable KV state in redb and fast search in Tantivy--without changing the UX requirements in this document. 5h/7d and dashboard numbers are served from **redb rollups** produced by **analytics scan jobs** that aggregate over the seglog segments and the Parquet archive written at segment seal (SP-341); the Usage view reads these rollups rather than scanning the ledger on demand. No JSONL mirror is a source (SP-339).
 
 **ELI5/Expert copy alignment:** Authored usage tooltip/help text in this plan (for example context-circle status-module copy and explanatory hints) must provide both Expert and ELI5 variants and follow the authoritative checklist in `Plans/FinalGUISpec.md` §7.4.0.
 
@@ -39,27 +39,26 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
 | Dependency | Purpose for Usage |
 |------------|-------------------|
 | **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |
-| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. |
-| **Projector pipeline** | seglog → JSONL mirror (human-readable), seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), projector checkpoints in redb. |
-| **Analytics scan jobs** | Scan seglog (or JSONL mirror) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in redb for fast dashboard/Usage queries. |
+| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. |
+| **Projector pipeline** | seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), a Parquet archive at segment seal (SP-341), projector checkpoints in redb. No always-on JSONL mirror is emitted (SP-339); JSONL is produced only by `pm export` on request. |
+| **Analytics scan jobs** | Scan seglog or the sealed Parquet archive (SP-341) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in the derived redb file for fast dashboard/Usage queries. |
 
-**Implementation checklist** (from Plans/storage-plan.md; complete before Usage can rely on redb rollups):
+**Implementation checklist** (from Plans/storage-plan.md; complete before Usage can rely on redb rollups): Amended 2026-10-31 (DL-270): this checklist is a copy; the storage stack rules are owned by Plans/storage-plan.md SP-335..SP-345 and win where this list differs. The JSONL mirror step that was listed here is retired (SP-339).
 
 - [ ] Implement seglog writer for canonical event stream.
 - [ ] Implement redb schema + migrations for settings/sessions/runs/checkpoints.
 - [ ] Implement projector pipeline:
-  - seglog → JSONL mirror (human-readable)
   - seglog → Tantivy indices (chat/docs/log summaries)
   - persist projector checkpoints in redb
 - [ ] Implement "analytics scan" jobs:
   - scan seglog for counters (tool latency distributions, error rates)
   - store rollups in redb for fast dashboard queries
 
-Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
+Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` is retired as a live file (SP-339, UF-108): a one-time legacy import may read it, and `pm export` writes JSONL on request. It is never a rollup source.
 
 ### Usage storage and routing clarifications
 
-- Usage storage-doc dependencies are `Plans/storage-plan.md` and `Plans/FinalGUISpec.md`: seglog owns the append-only event source, redb owns durable KV `/settings/state`, checkpoints, projections, and rollups, Tantivy owns search indices, and any JSONL or `usage.jsonl` output is a projector mirror rather than canonical truth.
+- Usage storage-doc dependencies are `Plans/storage-plan.md` and `Plans/FinalGUISpec.md`: seglog owns the append-only event source, redb owns durable KV `/settings/state`, checkpoints, projections, and rollups, Tantivy owns search indices, and no JSONL or `usage.jsonl` mirror is written (SP-339); `pm export` produces JSONL or JSON on request, and people read stored usage records through `pm inspect` and the in-app record inspector.
 - Usage `/runtime/storage` paths and artifacts are scoped per-project, per-run, per-package, and per-lane; old tier/workspace-only layouts remain migration inputs and must not replace canonical project/run/package/lane identity.
 - Usage owns the cross-surface `/quota/alerts/analytics/product-shape`, usage-tracking, and `/runtime/event/GUI` product contract while storage and FinalGUISpec continue to own the persistence stack and shell presentation rules.
 - Settings and help surfaces such as `/help/project-status`, `/event/alert`, blocked-sequence, startup-recovery, and DAE policy outcomes must preserve ownership, severity, persistence, and follow-through rather than becoming loose usage warnings.
@@ -111,10 +110,10 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 | **Plans/Progression_Gates.md + Plans/evidence.schema.json** | Validation contract for the storage stack (seglog + redb + Tantivy + projectors + analytics scan) through deterministic verifier gates and evidence requirements. |
 
 **Current app state (for context):**
-- **Ledger** page: Event-level log from `.puppet-master/usage/usage.jsonl` (platform, tokens in/out, cost per request). No 5h/7d quota view.
+- **Ledger** page: Event-level log from `.puppet-master/usage/usage.jsonl` (platform, tokens in/out, cost per request). No 5h/7d quota view. Amended 2026-10-31 (DL-270): the Ledger now pages through usage records by index from the stores, not from `usage.jsonl`, which is retired as a live file (SP-339, UF-108).
 - **Metrics** page: Post-run execution metrics (platform/subtask stats).
 - **Dashboard**: Budget/usage percent per platform (from budget config).
-- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage.
+- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage. Amended 2026-10-31 (DL-270): `UsageRecord` is persisted as `usage.event` in the event log with redb rollups, not to `usage.jsonl` (SP-339, UF-108).
 
 ## External References (Competitive & Ecosystem)
 
@@ -152,7 +151,7 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 
 - **Aggregated view:** Over time, support an analytics view that aggregates usage by time window, platform, project, or tier (as in newfeatures §7). Can be a separate page or a section under Usage.
 - **Cost tracking and attribution:** Where data is available (from platform APIs), show cost breakdowns by model, project, and date (see [openclaudecto](https://github.com/josharsh/openclaudecto), [yume analytics](https://aofp.github.io/yume/)).
-- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.
+- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views. Amended 2026-10-31 (DL-270): detailed usage records follow the existing Keep usage history for setting, `ai.usage.usage-retention` (90 days by default), in the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever, whatever the setting says (UF-108, SP-341).
 
 ### 5. Per-thread usage in Chat (OpenCode-style)
 
@@ -399,7 +398,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
 - **Primary input:** canonical usage projections and redb rollups derived from the seglog pipeline.
 - **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
-- **Compatibility input:** `usage.jsonl` may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+- **Compatibility input:** `usage.jsonl` is retired as a live file (SP-339): a one-time legacy import is the only read, and `pm export` writes it on request. It is never a 5h/7d rollup source.
 - **Retired subagent side files:** In `Plans/usage-feature.md` (`/usage-feature.md`), `active-subagents.json` and other active-subagents `side-file` / `live-state` mirrors are compatibility projections only; they must not be presented as canonical or endorsed usage enrichment sources after side-file retirement.
 - Thread-scoped plan `/todo` state used by Usage and Context Detail views comes from storage-backed revision/status history, not from an ad hoc usage-side TODO store.
 - Web change-tracking usage rows preserve `change_status: "new"` when no previous version exists and compare against the most recent cached version of the same normalized `URL`.
@@ -575,7 +574,7 @@ History inspector deref policy is on-demand only, never eager. History rows comb
 - **Impact**
   - Ledger shows wrong or missing fields; 5h/7d aggregation might miss data or double-count if we add a second reader; bugs when we change one path and forget the other.
 - **Mitigation**
-  - Unify on one canonical write path and one `UsageRecord` schema. If `usage.jsonl` persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+  - Unify on one canonical write path and one `UsageRecord` schema. Amended 2026-10-31 (DL-270): `usage.jsonl` does not persist; it is retired as a live file and no usage JSON mirror is kept (SP-339). `pm export` writes JSONL on request.
   - Document the schema in STATE_FILES and in code; use the same types for write and read where possible.
   - Prefer one projector/reader path for local summaries so Ledger, rollups, and UI projections do not fork into separate attribution models.
 
@@ -615,7 +614,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_Syst
 - **Impact**
   - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
 - **Mitigation**
-  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): this window does not apply to `usage.event`, which is never pruned; daily usage totals are kept forever (UF-108).
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step. Amended 2026-10-31 (DL-270): for `usage.event` this window is the Keep usage history for setting, `ai.usage.usage-retention` (90 days by default); daily usage totals are kept whatever it says (UF-108).
   - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
   - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
   - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog. Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file; `pm export` produces it on request (SP-339).
@@ -635,7 +634,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 ### Problem 7: Multi-project usage
 
 - **Risk**
-  - `usage.jsonl` is per-project (`.puppet-master/usage/`). Users with many projects may expect "total usage across my projects" or get confused whether the view is project-scoped.
+  - `usage.jsonl` is per-project (`.puppet-master/usage/`). Users with many projects may expect "total usage across my projects" or get confused whether the view is project-scoped. Amended 2026-10-31 (DL-270): `usage.jsonl` is retired as a live file (SP-339); usage records live in the stores and roll up per account, provider and model (UF-108).
 - **Impact**
   - Confusion about scope; feature requests for cross-project aggregation before we are ready.
 - **Mitigation**
@@ -716,7 +715,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - **Benefit**
   - Log when we showed "approaching limit" or "quota exhausted"; user can review "I was warned at 14:00" for debugging or awareness.
 - **Notes**
-  - Optional; store in a small log or append to a file under `.puppet-master/usage/` (e.g. `alerts.jsonl`). Display in Usage or Settings.
+  - Optional; store alert history as typed records in the store (seglog events with a redb index), not as a new JSON or JSONL file (SP-339). Display in Usage or Settings; people read the raw records through `pm inspect` and the record inspector.
 - **Phase**
   - Post-v1.
 
@@ -988,7 +987,7 @@ plan_unit_id: UF-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage reads 5h/7d, dashboard, and analytics values from redb rollups produced by analytics scan jobs over the canonical seglog pipeline, with Tantivy search/projector support where applicable; usage.jsonl remains a human-readable mirror or compatibility input, not the canonical rollup source.
+canonical_text: Usage reads 5h/7d, dashboard, and analytics values from redb rollups produced by analytics scan jobs over the canonical seglog pipeline, with Tantivy search/projector support where applicable; usage.jsonl is retired as a live file (SP-339); a one-time legacy import may read it, and pm export writes JSONL on request. Rollups come from seglog and the Parquet archive (SP-341), per DL-270 (amended 2026-10-31).
 gui_related: true
 gui_classification_reason: The unit supports user-visible Usage numbers but primarily preserves storage-backed projection requirements.
 split_recommended: true
@@ -1030,7 +1029,7 @@ negative_constraints:
 - 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans.
 preserved_contractrefs: []
 compatibility_only_notes:
-- usage.jsonl may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
+- usage.jsonl is retired as a live file (SP-339, UF-108); only a one-time legacy import may read it, and it is never the canonical rollup source.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -2312,7 +2311,7 @@ plan_unit_id: UF-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage backend inputs follow a hierarchy of canonical usage projections and redb rollups over seglog first, supported provider/runtime outputs second, and compatibility mirrors such as usage.jsonl or retired side files only as noncanonical migration/debug inputs.
+canonical_text: Usage backend inputs follow a hierarchy of canonical usage projections and redb rollups over seglog first, supported provider/runtime outputs second, and compatibility mirrors such as usage.jsonl or retired side files only as noncanonical migration/debug inputs. Amended 2026-10-31 (DL-270), usage.jsonl is retired (SP-339); only a one-time legacy import reads it, and it is not a debug input. Retired side files stay noncanonical migration inputs.
 gui_related: false
 gui_classification_reason: The unit preserves backend storage/input hierarchy and source attribution rather than visual presentation.
 split_recommended: true
@@ -2357,7 +2356,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md'
 - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md\xA72"
 compatibility_only_notes:
-- usage.jsonl may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+- usage.jsonl is retired (SP-339) and is read only by a one-time legacy import; it is never the canonical 5h/7d rollup source.
 stale_retired_dispositions:
 - Retired subagent side files remain compatibility projections only.
 owner_hints:
@@ -3064,7 +3063,7 @@ negative_constraints:
 - Ledger, rollups, and UI projections must not fork into separate attribution models.
 preserved_contractrefs: []
 compatibility_only_notes:
-- If usage.jsonl persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+- usage.jsonl is retired as a live file (SP-339); no usage JSON mirror is kept, and pm export writes JSONL on request.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -3175,7 +3174,7 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes:
-- usage.jsonl follows the same retention policy as seglog if retained for debugging.
+- usage.jsonl is retired as a live file (SP-339); pm export writes JSONL on request, so no retention policy applies to it.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -3595,7 +3594,7 @@ plan_unit_id: UF-051
 unit_type: deferred_enhancement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage may log approaching-limit or quota-exhausted alerts in a small log such as alerts.jsonl and display them in Usage or Settings; phase label is Post-v1.
+canonical_text: Usage may log approaching-limit or quota-exhausted alerts as typed store records (not an alerts.jsonl file, SP-339) and display them in Usage or Settings, readable through pm inspect and the record inspector; phase label is Post-v1.
 gui_related: false
 gui_classification_reason: The unit preserves future alert history persistence rather than current GUI layout.
 split_recommended: false
@@ -5818,7 +5817,7 @@ This addendum repairs non-runtime usage rows without creating WorkNodes, impleme
 
 - Repairs `sfk-f5e4f21174c14fb661692c70`: legacy `UnifiedUsageRecord` import fields such as `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version` are source-lineage/migration inputs only; active persistence, aggregation, GUI projection, and route/open drill-through normalize them to UF-085 UsageRecord fields, source_class/source_confidence/source_authority, settlement, cost, quota, and refs packets before use.
 - Repairs `sfk-08907092c21fff88a8b7c871`: `UsageAnomalyGuard` computes `current_window_cost / max(median_previous_7_windows_cost, 1)` over a default 1-hour window. Default spike ratio threshold is `3.0`; confidence is `min(1.0, observed_samples / 7.0)`.
-- Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion.
+- Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion. Amended 2026-10-31 (DL-270): that key reads as `ai.usage.usage-retention` and bounds detailed usage records only; daily usage totals per account, provider and model are kept forever, whatever it says (UF-108).
 
 ### UF-080 - P0-CACHE-USAGE-ENVELOPE
 
@@ -6206,6 +6205,9 @@ canonical_text: >-
   key named elsewhere reads as that row), and the background refresh cadence is the Usage service's own
   configuration (`usage.refresh_interval_seconds`), not a Settings row; the concept's "Next refresh 40s" and
   "retention 90d" are fixture text.
+  Amended 2026-10-31 (DL-270, UF-108): ai.usage.usage-retention stays the retention figure, now bounding detailed
+  usage records only; daily usage totals per account, provider and model are kept whatever it says, so a head or
+  room that states the history kept does not imply those totals expire.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage page head, where its Live control sits, and the icon-only Refresh and Export presentation.
 split_recommended: false
@@ -7540,7 +7542,7 @@ owner_hints: [Plans/usage-feature.md, Plans/Multi-Account.md, Plans/FinalGUISpec
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-174, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/DRY_Rules.md#DR-038, ContractName:Plans/FinalGUISpec.md#F3-628
 
-### UF-108 - Usage History Is Kept And Loads From Rollups
+### UF-108 - Usage Loads From Rollups And Keeps Its Daily Totals
 
 ```yaml
 plan_unit_id: UF-108
@@ -7548,22 +7550,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  DL-270, Jared's card 7 note. The Usage page and every usage widget read redb rollups that update as each
-  usage.event lands; nothing on them scans raw events. usage.event records are exempt from raw-event pruning: they
-  stay in seglog's cold tier and in SP-341's Parquet archive, where SQL can query them. Daily usage totals per
-  account, provider and model are kept forever. This amends Problem 5's 90-day raw-event window, which no longer
-  applies to usage.event. usage.jsonl is retired as a live file (SP-339). Jared, 2026-10-31, verbatim: "Do we need
-  to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its
-  data, I know there is a lot of data there so just want to make sure that is accounted for."
+  DL-270, Jared's card 7 note and his follow-up answer. The Usage page and every usage widget read redb rollups
+  that update as each usage.event lands: totals, windows and charts never scan raw events, and the Ledger's list
+  pages through usage records by index. Detailed usage records follow the existing Keep usage history for setting,
+  ai.usage.usage-retention (30 days, 90 days by default, 180 days, 1 year or unlimited), in the event log and in
+  SP-341's Parquet archive alike, where SQL can query them. Daily usage totals per account, provider and model,
+  plus any further keys the usage owner rolls up such as purpose, are kept whatever the setting says. Problem 5's
+  raw-event window is that setting for usage.event. usage.jsonl is retired as a live file (SP-339). Jared,
+  2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on AAC, the usage data
+  takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make
+  sure that is accounted for."
 gui_related: true
 gui_classification_reason: "Usage loads from rollups and keeps its full history."
 split_recommended: false
 depends_on: [UF-107, SP-339, SP-341]
 unblocks: []
 acceptance_criteria:
-  - "No usage view or widget scans raw usage events."
-  - "No usage.event is pruned."
-  - "Daily usage totals per account, provider and model are kept forever."
+  - "No usage total, window or chart scans raw usage events; the Ledger pages through records by index."
+  - "Detailed usage records older than the selected ai.usage.usage-retention are pruned from the event log and the archive."
+  - "Daily usage totals per account, provider and model are never pruned."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -7583,13 +7588,14 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-followup-2026-10-31.md, SHA-256 003852e3672c98db0f5daef0876829cebb44985779579ce0a889800442f73cae (Jared's follow-up answer on the usage setting)"
 preserved_exact_tokens:
   - "usage.event"
-  - "usage.jsonl"
+  - "ai.usage.usage-retention"
   - "Do we need to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make sure that is accounted for."
 negative_constraints:
-  - "Do not prune usage.event records."
-  - "Do not serve usage windows from raw scans."
+  - "Do not prune daily usage totals."
+  - "Do not serve usage totals or windows from raw scans."
 owner_hints:
   - "Plans/usage-feature.md"
 ```
