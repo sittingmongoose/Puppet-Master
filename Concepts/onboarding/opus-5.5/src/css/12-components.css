@@ -56,6 +56,8 @@ html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding .o55-under { border-c
 .o55-row-wait .o55-spin { margin: 0 6px; color: var(--o55-accent); }
 
 /* disclosure ("Other ways to connect", "More options") */
+.o55-morehead { display: flex; align-items: center; gap: 8px; }
+.o55-morehead > .o55-morebtn { width: auto; }
 .o55-more { border-radius: var(--o55-card-r); }
 .o55-morebtn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 2px; background: none; border: 0; color: var(--text-secondary); font: 650 13.5px/1.3 var(--body-font); cursor: pointer; text-align: left; }
 .o55-morebtn svg { transition: transform 220ms var(--o55-ui-ease); }
@@ -263,3 +265,25 @@ html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; paddi
 .o55-lookmodes button.o55-on { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 #pm-o55-onboarding[data-family="retro"] .o55-lookmenu, .o55t-root[data-family="retro"] .o55-lookmenu { border-radius: 0; border: 2px solid var(--text-primary); animation-timing-function: steps(3, end); }
 #pm-o55-onboarding[data-family="retro"] .o55-lookopt, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes button { border-radius: 0; }
+/* A row is one unit (QA2 review m1): the option and its ? share one highlight, hovered or chosen, so the chosen look's
+   box never stops short of its own ?. Inside a row the option draws none of its own; the chosen row carries o55-opt-on
+   (63-look-menu.js). */
+.o55-lookmenu .o55-opt-menu { border-radius: 10px; padding-right: 6px; }
+.o55-lookmenu .o55-opt-menu > .o55-lookopt, .o55-lookmenu .o55-opt-menu > .o55-lookopt:hover, .o55-lookmenu .o55-opt-menu > .o55-lookopt.o55-on { border-color: transparent; background: transparent; box-shadow: none; }
+.o55-lookmenu .o55-opt-menu:not(.o55-lookmoderow):hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.o55-lookmenu .o55-opt-menu.o55-opt-on { background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 12%, transparent); box-shadow: inset 0 0 0 1px var(--o55-accent, var(--accent-blue)); }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"] .o55-lookmenu .o55-opt-menu { border-radius: 0; }
+
+/* Demo hints (62-flow.js O55.flow.hint): a quiet row of ready choices that try a step this demo can't reach for real.
+   Dashed, small and muted, so it never reads as one of the step's own choices; one row, wrapping on a narrow window. */
+.o55-demohint { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: -2px; font: 500 12px/1.3 var(--body-font); color: var(--text-muted); }
+.o55-demohint-k { white-space: nowrap; }
+#pm-o55-onboarding .o55-demohint-c { display: inline-flex; align-items: baseline; gap: 6px; min-height: 26px; padding: 3px 9px; border: 1px dashed color-mix(in srgb, var(--text-primary) 30%, transparent);
+  border-radius: var(--pm-ctl-r, 7px); background: transparent; color: var(--text-secondary); font: inherit; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
+#pm-o55-onboarding .o55-demohint-c:is(:hover, :focus-visible) { border-color: var(--o55-accent); color: var(--text-primary); background: color-mix(in srgb, var(--o55-accent) 8%, transparent); }
+.o55-demohint-v { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11.5px; }
+.o55-demohint-o { font-size: 11px; color: var(--text-muted); }
+#pm-o55-onboarding[data-family="retro"] .o55-demohint-c { border-radius: 0; }
+#pm-o55-onboarding[data-family="retro"] .o55-demohint-k, #pm-o55-onboarding[data-family="retro"] .o55-demohint-o { font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10.5px; }
+#pm-o55-onboarding[data-family="glass"] .o55-demohint-c { border-color: rgba(255, 255, 255, 0.28); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-demohint-c { border-color: rgba(70, 60, 120, 0.28); }

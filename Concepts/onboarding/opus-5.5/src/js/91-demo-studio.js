@@ -31,7 +31,7 @@
     { id: 'computer', ids: ['lowResource', 'noKeys'] },
     { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'readOnly', 'smbWrong'] },
     { id: 'online', ids: ['nameTaken', 'flaky'], one: true },
-    { id: 'ai', ids: ['cliMissing', 'signedOut', 'copiedUnavailable', 'remoteAi', 'noAi'], one: true },
+    { id: 'ai', ids: ['cliMissing', 'signedOut', 'claudeExpired', 'copiedUnavailable', 'remoteAi', 'noAi', 'aiOffline'], one: true },
     /* Pip's rough moments (W3): a browser sign-in that does not finish the first time; the second try works. They stack
        with every other group (the fixtures' signin_once) */
     { id: 'pip', ids: ['antigravityOnce', 'githubSigninOnce'] },
@@ -642,7 +642,7 @@
   };
 
   /* ---- looks ---- */
-  const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'];
+  const LOOKS = ['basic', 'friendly', 'glass', 'retro', 'nier'];   /* canon's order (Q22, DL-257) */
   const tome = () => W('PM7_SETTINGS_TOME');
   function lookNow() {
     const th = O55.theme(), P = W('PM_THEME');

@@ -223,9 +223,9 @@ def('c1', 'fresh', 'Connect this device, then Create a new Project on it', async
 def('c2', 'fresh', 'Connect by code, with a wrong code first', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:home\"]')", 'found', 6000); await d.act('pickServer', 'pm:home'); await d.primary();
-  await d.act('pairing', 'code'); await d.primary(); await until(d, "(window.O55.S.sess.ops['pairreach:pm:home']||{}).state === 'done'", 'reached', 5000);
+  await d.act('pairing', 'code'); await d.primary(); await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^pairreach:pm:home:/.test(k) && window.O55.S.sess.ops[k].state === 'done')", 'reached', 5000);
   await d.type('code', 'AAAA-BBBB'); await d.act('checkCode', null);
-  await until(d, "(window.O55.S.sess.ops['paircode:pm:home']||{}).state === 'failed'", 'wrong pairing code rejected', 8000);
+  await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^paircode:pm:home:/.test(k) && window.O55.S.sess.ops[k].state === 'failed')", 'wrong pairing code rejected', 8000);
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong code explained');
   await d.type('code', 'A7K9-M2Q4'); await d.act('checkCode', null);
   await until(d, 'window.O55.S.sess.connect.paired', 'paired by code', 8000); A.ok(await d.state(() => window.O55.S.sess.connect.paired), 'paired by code');
@@ -317,7 +317,7 @@ def('n6', 'homeNasPm', 'NAS already runs Puppet Master: identity first, then app
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'folder browser');
   await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
   A.eq(await d.screen(), 'name', 'name'); const dr = await d.draft('main');
-  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home-nas\//.test(dr.project_source_ref), 'non-secret device-and-path reference');
+  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home\//.test(dr.project_source_ref), 'non-secret Server-and-path reference (by the paired Server, never its display name: SCR-10)');
   A.ok(dr.source_access_authorization_refs.includes('pairing:home-nas:source-read'), 'pairing result bound'); A.eq(dr.server_mode, 'this_device', 'work still runs here');
   A.ok(dr.server_ref !== 'pm:home', 'the NAS does not become the Server');
   A.capture('n6 paired source', dr);
@@ -810,6 +810,121 @@ def('pr28', 'fresh', 'QA2 hunter H1: a screen opened straight has what the scree
     A.ok(r.body > 10, id + ': the screen is not empty (' + r.body + ' characters)');
   }
 });
+def('pr29', 'fresh', 'QA2 review N1: a sign-in reaches the cloud service it was for; another service after Back is reached again', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('restoreAll');
+  A.eq(await d.screen(), 'r-source', 'Where is the backup?');
+  await d.act('source', 'cloud'); await d.primary();
+  A.eq(await d.screen(), 'online-signin', 'Google Drive signs in first'); await d.act('signIn');
+  await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  A.eq(await d.screen(), 'r-unlock', 'then the phrase');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  A.eq(await d.screen(), 'r-source', 'back at Where is the backup?');
+  await d.act('cloud', 'onedrive'); await d.primary();
+  A.eq(await d.screen(), 'online-signin', 'OneDrive signs in too: Google Drive\'s sign-in is not OneDrive\'s');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  await d.act('cloud', 's3');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="acc-secret"]')), 'S3 shows its bucket and key fields');
+  A.ok((await d.primaryInfo()).disabled, 'and Continue waits for them');
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret'); await d.primary();
+  await d.untilScreen('r-unlock', 8000); A.ok(true, 'the phrase comes after the bucket is reached');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'r-source'; i++) await d.back();
+  await d.act('cloud', 'gdrive'); await d.act('cloud', 's3');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="acc-secret"]')), 'after another service, S3 asks for its details again');
+});
+def('pr30', 'fresh', 'QA2 review N1 sweep: a Remote Link leaves the plan when another way to reach the Server is chosen', async (d, A) => {
+  await d.openOnboarding();
+  /* (a new Server makes its own link after the commit, SCR-05: nothing is typed on Away, so nothing can linger) */
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'away' }));
+  await d.untilScreen('away', 12000);
+  await d.act('more'); await d.act('route', 'remote_link');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-bind="link"]')), 'a new Server: no Remote Link to type');
+  A.eq((await d.draft('main')).remote_endpoint || '', '', 'a new Server: no Remote Link in the plan');
+  /* Connect, where the link is typed: another way in drops it */
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-route' }));
+  await d.untilScreen('c-route', 12000);
+  await d.act('more'); await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K');
+  A.eq((await d.draft('connect')).remote_endpoint, 'pm-remote-link:home-nas/7Q2K', 'the Remote Link is in the plan');
+  await d.act('route', 'local_or_vpn');
+  A.eq((await d.draft('connect')).remote_endpoint || '', '', 'On this network: the Remote Link has left the plan');
+  await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K'); await d.act('route', 'tailscale');
+  A.eq((await d.draft('connect')).remote_endpoint || '', '', 'Tailscale: the Remote Link has left the plan');
+});
+def('pr31', 'fresh', "QA2 review N1 sweep: a key's passphrase is asked for that key, and once", async (d, A) => {
+  await toNasKey(d);
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  await d.act('pick', 'k-rsa'); await d.primary();
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-sheet[data-open="true"] [data-o55-bind="pass"]')), 'its passphrase is asked');
+  await d.type('pass', 'correct horse'); await d.act('passOk');
+  const after = await d.screen(); A.ok(after !== 'nas-key', 'then the step goes on (' + after + ')');
+  for (let i = 0; i < 3 && (await d.screen()) !== 'nas-key'; i++) await d.back();
+  A.eq(await d.screen(), 'nas-key', 'back at Choose a key');
+  await d.act('pick', 'k-rsa'); await d.primary();
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-sheet[data-open="true"] [data-o55-bind="pass"]')), 'the same key is not asked again');
+  A.eq(await d.state(() => window.O55.S.sess.nas.unlocked), 'k-rsa', 'unlocked names the key it was for');
+});
+/* The lead's ruling (2026-10-30): every route runs to its real end by clicks in the published page. The concept owner
+   host answers where no real host is (30-owners.js); these turn it on, which the harness otherwise keeps off. */
+const conceptOn = (d) => d.state(() => { window.__O55_CONCEPT_HOST_OFF__ = false; });
+def('pr32', 'fresh', 'A new Server is set up by clicks alone: claim, setup, reach and approval answered by the concept host', async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found the new Server', 6000); await d.act('pick', 'pm:new'); await d.primary();
+  await d.type('code', '482 913'); await d.primary();
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
+  A.ok(await d.state(() => !window.O55.S.sess.server.claimed), 'no trust before the person confirms the words');
+  await d.act('selfMatch'); await d.primary();
+  await d.untilScreen('s-ready', 15000);
+  A.ok(await d.state(() => !!window.O55.S.sess.server.selfTrustId && window.O55.S.sess.drafts.main.server_trust_confirmed), 'the approval answered: this device is trusted');
+  /* (a device asking to join now shows here with its own Approve: Continue is pressed by its action) */
+  await d.act('next'); A.eq(await d.screen(), 'begin', 'then a Project on the new Server');
+});
+def('pr33', 'fresh', 'A new Project with a new GitHub copy is created by clicks alone (the concept host answers the creation)', async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  A.eq(await d.screen(), 'online-details', 'name on GitHub'); await d.primary(); await d.primary();
+  await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'created', 20000);
+  A.ok(await d.state(() => !!window.O55.S.sess.commit.projectId), 'the Project is published');
+  await readyPrimary(d); await d.primary(); A.ok(['protect', 'ai'].includes(await d.screen()), 'then on past Creating (' + await d.screen() + ')');
+});
+def('pr34', 'fresh', "Protect's kit, kit test and schedule finish by clicks alone (the concept host answers)", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('backup'); await d.act('bdest', 's3'); await d.act('sheet-close'); await d.primary();
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
+  await readyPrimary(d); await d.primary(); A.eq(await d.screen(), 'protect', 'Finish protecting your work');
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret');
+  for (let i = 0; i < 12 && !(await d.state(() => window.O55.S.sess.backup.state === 'done')); i++) {
+    const info = await d.primaryInfo();
+    if (info && !info.disabled) { await d.primary({ settle: true }); }
+    await sleep(1200);
+  }
+  A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'backups are on');
+  A.ok(await d.state(() => ['kit', 'kitTest', 'policy'].every((s) => window.O55.S.sess.backup.done.includes(s))), 'kit, kit test and schedule all done');
+});
+def('pr35', 'fresh+smbWrong', 'Situation smbWrong: the shared folder refuses the first password, the second works', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await d.act('method', 'smb'); await d.act('share', 'smb-home'); await d.primary();
+  A.eq(await d.screen(), 'nas-smb', 'Sign in to the shared folder');
+  await d.type('user', 'jared'); await d.type('pw', 'not-right'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['smb:smb-home']||{}).state === 'failed'", 'refused', 6000);
+  A.ok(await d.state(() => /didn't accept that username and password/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says so under the password');
+  await d.type('pw', 'right-this-time'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['smb:smb-home']||{}).state === 'done'", 'opened', 6000);
+  await d.primary(); A.eq(await d.screen(), 'name', 'then Name your Project');
+});
+def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore stops part-way, Try again finishes it', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('restoreAll');
+  await d.act('source', 'kit'); await d.act('kit', 'kit-laptop'); await d.primary();
+  await d.act('pick', 'full-1'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'preview');
+  await d.primary();
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('restore:') && v.state === 'failed')", 'stopped', 8000);
+  A.ok(await d.state(() => /stopped before it finished/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says nothing was replaced');
+  A.eq((await d.primaryInfo()).label, 'Try again', 'Try again');
+  await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
+});
+/* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
@@ -918,9 +1033,12 @@ def('a1', 'fresh', 'A Project later on a new Server still sets up its access, an
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'review', 'review');
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-key="rv-remote"]')), 'Review shows the access');
   A.ok(await d.state(() => /No Project is created/.test((document.querySelector('#pm-o55-onboarding .o55-will') || {}).textContent || '')), 'Review says no Project is created');
-  await d.primary(); A.eq(await d.screen(), 'creating', 'the access is prepared');
-  await until(d, "window.O55.S.sess.commit.state === 'done'", 'prepared', 12000);
-  A.eq(await d.state(() => (window.O55.S.sess.ops[window.O55.S.sess.commit.key].phases || []).map((p) => p.key).join()), 'remote,check', 'only the access and a check run');
+  /* (the way in is its own step after Review: Tailscale's own steps, the sign-in the person's, SCR-04) */
+  await d.primary(); A.eq(await d.screen(), 'away-setup', 'the access is prepared');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'waiting'", 'waits for the Tailscale sign-in', 12000);
+  await d.act('person', 'tsSignIn');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'done'", 'prepared', 20000);
+  A.eq(await d.state(() => window.O55.S.sess.commit.state), 'later', 'only the access ran');
   A.ok(await d.state(() => !window.O55.S.sess.commit.projectId && !document.querySelector('#projectMenu [data-project^="p-"]')), 'no Project record anywhere');
   await d.primary(); A.eq(await d.screen(), 'ready', 'ready');
   A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-do="tour"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-do="createNow"]')), 'no tour without a Project; Create a Project now instead');
@@ -936,12 +1054,14 @@ def('a2', 'fresh', 'Connect to a Server with no Projects: Create a new Project l
   A.eq((await d.primaryInfo()).label, 'Create a new Project', 'Create a new Project leads');
   await d.primary(); A.eq(await d.screen(), 'begin', 'the second draft begins');
 });
-def('a3', 'fresh', 'A cloud computer is reached by its address and is not called Home NAS', async (d, A) => {
+def('a3', 'fresh', 'A cloud computer is claimed with the code from its provider\'s console and is not called Home NAS', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
   await d.act('kind', 'cloud'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting');
-  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]')), 'no home-network scan; its address is asked');
-  await d.type('addr', '203.0.113.24'); await d.act('pick', 'pm:cloud'); await d.primary();
+  /* (no home-network scan and no address: its one-time setup code comes from the provider's console, Jared C2 A) */
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]') && /console/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'no scan, no address; the console code is explained');
+  await d.primary();
   A.eq(await d.screen(), 's-confirm', 'confirm');
+  A.ok(await d.state(() => /console/.test(document.querySelector('#pm-o55-onboarding [data-key="field-code"]').textContent)), 'the code is the one from the console');
   A.eq(await d.state(() => document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]').value), 'Cloud server', 'named for what it is');
 });
 def('a4', 'fresh', 'On a new Server an existing folder is on the Server, keeps its place and keeps its online copy', async (d, A) => {
@@ -995,7 +1115,7 @@ def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own li
   A.ok(/^ssh-ed25519 AAAA\S+ puppet-master@MacBook-Pro$/.test(line), 'the line is the new key\'s public half (' + line.slice(0, 40) + '...)');
   A.ok(await paneFits(d), 'the line and its Copy button fit inside the window');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-pm']||{}).state === 'done'", 'checked with the key', 9000);
-  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-pm')), 'the device now has the key');
+  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-pm' || k.endsWith(':k-pm'))), 'the device now has the key (for the account it signs in as: SCR-10)');
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'on to the folder');
 });
 def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: the check says so and nothing goes on", async (d, A) => {
@@ -1005,7 +1125,7 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
   A.ok(await d.state(() => /isn't on Home NAS yet/.test(document.body.textContent)), 'it says the key is not on Home NAS yet');
-  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
+  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-ed' || k.endsWith(':k-ed')))), 'the check did not add the key itself');
   await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
 });

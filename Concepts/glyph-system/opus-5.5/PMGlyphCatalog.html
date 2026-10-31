@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="0c6821a86bd7">
+<meta name="pmg-build" content="04836361b61e">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -1023,8 +1023,11 @@ html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="
  * exactly as the chat's Activity bar icon does: the tube breathes on the bar's 2200 ms beat (ab-breathe's curve) and
  * the glyph's parts loop on the same beat (the cursor types in, the antenna blinks). A host that stands for live work
  * wears .pmg-beat around the glyph it draws (PMG.icon('robot' | 'processes', size, 'nx-r-concept nx-lit')): the status
- * bar's two items and the panel's tab and column heads. Row marks never wear it (lists keep their marks still, the
- * loop budget). Drags hold it; Reduced Motion shows the lit rest pose, still. */
+ * bar's two items and the panel's tab and column heads. Row marks never wear it. Rows move by their own state instead
+ * (Jared, QA round 2, 2026-10-30, answer B; this replaces DL-253's "row marks stay still"): in the panel, the rail and
+ * Home's board, a working agent's Pip thinks (the system loader) and a running process's status mark loops, only while
+ * the row is on screen (onboarding 48-work.js); finished, stopped, waiting, blocked and scheduled rows stay still.
+ * Drags hold it; Reduced Motion shows the lit rest pose, still. */
 @keyframes pmg-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 .pmg-beat > svg.nx { animation: pmg-breathe 2200ms ease-in-out infinite; }
 .pmg-beat > svg.nx .nx-p { animation: var(--kl) 2200ms var(--nx-le) infinite; animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms); }

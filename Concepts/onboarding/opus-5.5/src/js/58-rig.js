@@ -201,7 +201,7 @@
       keep.forEach((p) => { if (p.state !== 'out') this.addProp(p.spec, true); });
       this.ghosts = [];
       this.syncDefs();
-      this.measure();
+      this.measure(); this.remeasureAt = now() + 0.9; /* (and once the window's opening has settled) */
       if (this.tube) this.powerOn();
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
@@ -422,8 +422,11 @@
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
-      const Lay = this.L, [x, y] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
+      const Lay = this.L, [x, y0] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
       const tieY = pr.ties.reduce((m, t) => Math.min(m, t[1]), 0);
+      /* a prop at rest hangs whole above the floor, never sunk into it or cut by the stage's edge (Muse m3: the server on
+         Where is the backup? sat in the floor line); Creating's blocks stack on the floor by design */
+      const y = pr.spec.stack == null && !pr.spec.at && pr.foot != null ? Math.min(y0, Lay.ground - 6 - pr.foot * sc) : y0;
       let len = (y + tieY * sc) - Lay.anchorY;
       if (pr.spec.preview) len -= 26 * Lay.propScale;
       if (pr.state === 'out') len = -10;
@@ -543,6 +546,9 @@
       const key = t ? t.title + '\n' + t.text : '';
       if (key === (this.tipKey || '')) return;
       if (this.tipW) this.tipW.cancel();
+      /* a new note takes its own place at once, not the last one's (it used to ease up from there and hang past the
+         stage's bottom for half a second: tools/tip_fit.mjs) */
+      if (!t || !this.tipData || this.tipData.id !== t.id) this.tipXY = null;
       this.tipKey = key; this.tipData = t || null; this.tipLook = 0;
       const el = this.tipEl();
       this.kick();
@@ -601,16 +607,24 @@
       const short = restY + 12 + h - (by - foot), room = Math.max(0, headTop - top - 4);
       this.ps.liftT = clamp(short, 0, room) / mk;
       this.bubble.classList.toggle('pst-hush', this.ps.liftT * mk > 18);
-      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, 8, by - h - foot)];
+      /* the note's height is held to the stage's room, its words scrolling inside it, so it is always whole on the stage */
+      const room0 = Math.max(60, by - foot - top - 8);
+      if (el._tipmax !== room0) { el._tipmax = room0; el.style.setProperty('--tipmax', room0 + 'px'); }
+      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, top, Math.max(top, by - h - foot))];
       if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
+      /* (and never past the stage's edges while it eases after Pip) */
+      this.tipXY[1] = clamp(this.tipXY[1], top, Math.max(top, by - h - foot)); this.tipXY[0] = clamp(this.tipXY[0], 8, Math.max(8, bx - w - 8));
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
       el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
     }
     /* --------------------------------------------------------- geometry */
+    /* in the stage's own, untransformed size: the window's opening scales it, and a box measured then kept the larger
+       size once it settled, so a note was allowed below the window's bottom (the pattern review; the rail's F1-3) */
     measure() {
-      const r = this.screen.getBoundingClientRect(), Lay = this.L;
-      this.box = r;
+      const r0 = this.screen.getBoundingClientRect(), Lay = this.L;
+      const w = this.screen.offsetWidth || r0.width, h = this.screen.offsetHeight || r0.height;
+      const r = this.box = { left: r0.left + (r0.width - w) / 2, top: r0.top + (r0.height - h) / 2, width: w, height: h, right: r0.left + (r0.width + w) / 2, bottom: r0.top + (r0.height + h) / 2 };
       const k = this.tube ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
       this.headTo();
@@ -625,6 +639,7 @@
       /* paused while the window is shut or held, the page hidden, a drag under way (body.pm-resizing) or the stage
          gone; a still stage (Reduced Motion, a low-resource computer) is drawn only when something changed */
       if (!this.live()) { this.park(); return; }
+      if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
       this.dirty = false;
       this.raf = requestAnimationFrame(this.loop);
@@ -1012,7 +1027,8 @@
     if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
-    const W = rail.W, y0 = 9, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
+    /* (the string sits where the concept has it, clear of the window's top edge with Pip's bar under it: Muse M3) */
+    const W = rail.W, y0 = 14, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
     if (rail.x == null || red) { rail.x = tx; rail.v = 0; rail.dip = weight; rail.dv = 0; rail.ang = 0; rail.av = 0; }
     const M2 = SPRING[fam] || SPRING.basic, ax = M2[0] * (tx - rail.x) - M2[1] * rail.v;
     rail.v += ax * dt; rail.x += rail.v * dt;

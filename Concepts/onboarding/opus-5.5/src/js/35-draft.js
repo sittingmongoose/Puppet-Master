@@ -21,7 +21,8 @@
     'source_more', 'review_confirmed', 'project_draft_ref', 'project_draft_revision', 'settings_transfer', 'preflight_result_refs',
     'source_access_authorization_refs', 'project_created'];
 
-  const FORGE_URL = { github: 'https://github.com', gitlab: 'https://gitlab.com', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org', cursor_origin: 'https://origin.cursor.com' };
+  /* the account's world the plan is read against (the concept's fixtures; none while the page boots) */
+  const envOf = () => (O55.S && O55.S.env) || null;
 
   function create(journey, theme) {
     const th = theme || O55.theme();
@@ -61,56 +62,72 @@
       const variants = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed', 'forgejo_cloud'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] }[d.forge];
       if (!variants.includes(d.forge_provider_variant)) d.forge_provider_variant = variants[0];
       if (d.forge === 'cursor_origin') d.forge_instance_url = 'https://origin.cursor.com';
-      if (!/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url)) d.forge_instance_url = FORGE_URL[d.forge] || 'https://git.example.org';
+      /* a hosted variant's own address; a server the person names is never filled in for them (FF-08: no example host) */
+      if (!/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url)) d.forge_instance_url = O55.fixtures.hostedUrl(d.forge, d.forge_provider_variant);
       if (!d.forge_account_action) d.forge_account_action = 'sign_in_during_setup';
       if (!d.repository_name) d.repository_name = U.slug(d.project_name) || 'new-project';
       const vis = allowedVisibility(d);
+      /* a visibility the owner no longer allows (Internal after a switch to a personal account, FF-02) falls back to
+         the most private one, never to a wider one */
       if (d.forge === 'azure_devops') d.repository_visibility = null;
-      else if (d.forge === 'bitbucket_data_center') { if (d.repository_visibility && !vis.includes(d.repository_visibility)) d.repository_visibility = null; }
       else if (!vis.includes(d.repository_visibility)) d.repository_visibility = vis[0] || 'private';
-      if ((d.forge === 'forgejo' || d.forge === 'gitea') && !d.forge_instance_profile) d.forge_instance_profile = instanceProfile(d);
-      if (d.forge !== 'forgejo' && d.forge !== 'gitea') d.forge_instance_profile = null;
+      /* a Forgejo or Gitea server's profile follows its address and the sign-in actually used (FF-12) */
+      if ((d.forge === 'forgejo' || d.forge === 'gitea') && d.forge_instance_url) {
+        const p = instanceProfile(d), was = d.forge_instance_profile;
+        if (was && was.instance_id === p.instance_id && was.auth_method === p.auth_method) p.credential_ref = was.credential_ref;
+        d.forge_instance_profile = p;
+      } else d.forge_instance_profile = null;
     }
     /* remote access (#16-#23) */
     const clearRemote = () => Object.assign(d, { tailscale_control: null, tailscale_account_action: null, headscale_url: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
     if (d.remote_mode === 'none') { clearRemote(); d.include_vpn_networks = false; d.remote_endpoint = ''; }
-    else if (d.remote_mode === 'local_or_vpn') { clearRemote(); }
+    /* (a Remote Link belongs to its own route: it left the draft for none, not for these two, so one typed before
+       Back and a change of route stayed in the plan; QA2 review N1's sweep) */
+    else if (d.remote_mode === 'local_or_vpn') { clearRemote(); d.remote_endpoint = ''; }
     else if (d.remote_mode === 'tailscale') {
-      Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
+      Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null, remote_endpoint: '' });
       if (!d.tailscale_control) d.tailscale_control = 'hosted';
       d.tailscale_account_action = d.tailscale_control === 'hosted' ? 'check_existing_then_sign_in_once' : 'headscale_enrollment';
-      if (d.tailscale_control === 'hosted') d.headscale_url = ''; else if (d.headscale_url && !/^https:\/\//.test(d.headscale_url)) d.headscale_url = 'https://' + d.headscale_url.replace(/^[a-z]+:\/\//i, '');
+      /* (an address is kept as typed: O55.endpoint checks it, and the screen's Continue stores the address it will use;
+         another scheme is never quietly rewritten into https, SCR-09) */
+      if (d.tailscale_control === 'hosted') d.headscale_url = '';
     } else if (d.remote_mode === 'reverse_proxy') {
       Object.assign(d, { include_vpn_networks: false, tailscale_control: null, tailscale_account_action: null, headscale_url: '', remote_endpoint: '' });
-      if (d.proxy_hostname && !/^https:\/\//.test(d.proxy_hostname)) d.proxy_hostname = 'https://' + d.proxy_hostname.replace(/^[a-z]+:\/\//i, '');
       if (d.journey === 'connect_existing') Object.assign(d, { server_connection_mode: 'manual', proxy_kind: null, proxy_hosting: null, proxy_tls: null });
       else if (d.proxy_hosting === 'existing_proxy') { /* an address someone already runs: nothing to generate here */ }
-      else { if (!d.proxy_kind) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
+      /* Puppet Master makes the settings file for Caddy (the default), NGINX or Traefik and the person puts it on their
+         proxy; Nginx Proxy Manager is a proxy the person already runs (Jared, D3 A). Certificates stay on their side, so
+         none is chosen here (Jared, C1, 2026-10-31) */
+      else { if (!['caddy', 'nginx', 'traefik'].includes(d.proxy_kind)) d.proxy_kind = 'caddy'; d.proxy_hosting = 'generate_only'; }
+      if (d.journey !== 'connect_existing') d.proxy_tls = null;
     } else if (d.remote_mode === 'remote_link') {
       clearRemote(); Object.assign(d, { server_connection_mode: 'manual', include_vpn_networks: false });
-      if (d.remote_endpoint && !/^[A-Za-z][A-Za-z0-9._:/#-]*$/.test(d.remote_endpoint)) d.remote_endpoint = '';
+      /* (a short code the Server shows is kept too: it was cleared for not starting with a letter, SCR-05) */
+      /* a new Server's link is made after the commit and shown then: nothing is typed for it here */
+      if (d.server_mode === 'new_server') d.remote_endpoint = '';
     }
     return d;
   }
 
-  function allowedVisibility(d) {
-    const f = O55.fixtures.forge(d.forge); if (!f) return ['private'];
-    if (Array.isArray(f.visibility)) return f.visibility;
-    return f.visibility[d.forge_provider_variant] || ['private', 'public'];
-  }
+  /* what the service allows for the chosen owner and project (O55.forgeRules: one row per service) */
+  function allowedVisibility(d) { return O55.forgeRules.visibility(envOf(), d); }
 
-  /* Hosted Forgejo/Gitea services ship a registered sign-in app (OAuth with PKCE); a self-managed server usually does
-     not, so its default is an access token the person creates on their server (kept by the credential owner). */
+  /* The sign-in a server offers decides the profile's method: a hosted service with a sign-in app registered for Puppet
+     Master (Codeberg, Gitea Cloud) signs in in the browser (OAuth with PKCE); another server, with none, by an access
+     token the person makes there (kept by the credential owner). The method actually used is saved (forge_auth_method).
+     A server installed under a path (https://example.org/git) keeps it; the API and SSH details are the usual ones until
+     the Forge owner's probe after sign-in (probe_performed false). */
   function instanceProfile(d) {
-    const host = (d.forge_instance_url || 'https://git.example.org').replace(/^https:\/\//, '').replace(/\/.*$/, '');
-    const cloud = /_cloud$/.test(d.forge_provider_variant || '');
-    const auth = d.forge_auth_method === 'token' ? 'pat_ref' : d.forge_auth_method === 'oauth' || cloud ? 'oauth_pkce' : 'pat_ref';
+    let host = '', path = '';
+    try { const u = new URL(d.forge_instance_url); host = u.host.toLowerCase(); path = u.pathname.replace(/\/+$/, ''); } catch (_) { /* (address checked before) */ }
+    const web = 'https://' + host + path, methods = O55.forgeRules.auth(d.forge, d.forge_provider_variant);
+    const auth = d.forge_auth_method === 'token' ? 'pat_ref' : d.forge_auth_method === 'oauth' ? 'oauth_pkce' : methods[0] === 'browser' ? 'oauth_pkce' : 'pat_ref';
     return {
-      provider: d.forge, provider_variant: d.forge_provider_variant, instance_id: 'forge-instance:' + U.slug(host), web_base_url: 'https://' + host,
-      api_root: 'https://' + host + '/api', api_base_path: '/api/v1', ssh_url: 'ssh://git@' + host + ':22', ssh_port: 22, private_ca_ref: null,
-      known_host_proof_ref: 'known-host:' + U.slug(host), detected_product: d.forge, product_version_ref: null, api_schema_ref: null, api_state_ref: null,
+      provider: d.forge, provider_variant: d.forge_provider_variant, instance_id: 'forge-instance:' + U.slug(host + path), web_base_url: web,
+      api_root: web + '/api', api_base_path: '/api/v1', ssh_url: 'ssh://git@' + host.replace(/:\d+$/, '') + ':22', ssh_port: 22, private_ca_ref: null,
+      known_host_proof_ref: 'known-host:' + U.slug(host.replace(/:\d+$/, '')), detected_product: d.forge, product_version_ref: null, api_schema_ref: null, api_state_ref: null,
       git_transport_state_ref: null, actions_state_ref: null, actions_capability_ref: null, auth_method: auth,
-      oauth_registration_ref: auth === 'oauth_pkce' ? 'oauth-registration:' + U.slug(host) : null, credential_ref: null, automation_binding_ref: null, currentness_ref: null, probe_performed: false,
+      oauth_registration_ref: auth === 'oauth_pkce' ? 'oauth-registration:' + U.slug(host + path) : null, credential_ref: null, automation_binding_ref: null, currentness_ref: null, probe_performed: false,
       redirect_credential_policy: 'strip_authorization_on_origin_change', restricted_network_target_policy: 'deny_localhost_and_metadata_unless_explicitly_approved'
     };
   }
@@ -129,9 +146,7 @@
     const r = [];
     if (d.journey === 'connect_existing') {
       if (!d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
-      if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
-      if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
-      if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+      remoteMissing(d, r);
       return r;
     }
     if (d.server_mode !== 'this_device' && !d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
@@ -141,12 +156,28 @@
     if (d.project_mode === 'restore' && !d.backup_source_ref) r.push({ field: 'backup_source_ref', key: 'missing.backup' });
     if (d.storage_mode === 'network_location' && !d.storage_location) r.push({ field: 'storage_location', key: 'missing.storage' });
     if (d.online_mode !== 'none' && !d.forge_account_ref) r.push({ field: 'forge_account_ref', key: 'missing.signin' });
-    if (d.online_mode !== 'none' && d.forge === 'azure_devops' && !d.repository_project) r.push({ field: 'repository_project', key: 'missing.azureProject' });
     if (d.online_mode === 'existing' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
-    if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
-    if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
-    if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+    /* the service's own needs: its address, owner, project, a visibility valid there, a name and branch it accepts */
+    O55.forgeRules.needs(envOf(), d).forEach((m) => { if (!r.some((x) => x.field === m.field)) r.push(m); });
+    remoteMissing(d, r);
     return r;
+  }
+  /* an address for the way in: present, and one the endpoint check accepts (SCR-09); a new Server's Remote Link is
+     made after the commit, so nothing is asked for it */
+  function remoteMissing(d, r) {
+    const E = O55.endpoint, bad = (res) => !!(res && !res.ok && !res.empty);
+    if (d.remote_mode === 'remote_link' && d.server_mode !== 'new_server') {
+      if (!d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
+      else if (E && bad(E.checkLink(d.remote_endpoint))) r.push({ field: 'remote_endpoint', key: 'endpoint.' + E.checkLink(d.remote_endpoint).error });
+    }
+    if (d.remote_mode === 'reverse_proxy') {
+      if (!d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
+      else if (E && bad(E.check(d.proxy_hostname, 'proxy'))) r.push({ field: 'proxy_hostname', key: 'endpoint.' + E.check(d.proxy_hostname, 'proxy').error });
+    }
+    if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale') {
+      if (!d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+      else if (E && bad(E.check(d.headscale_url, 'headscale'))) r.push({ field: 'headscale_url', key: 'endpoint.' + E.check(d.headscale_url, 'headscale').error });
+    }
   }
 
   O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility };

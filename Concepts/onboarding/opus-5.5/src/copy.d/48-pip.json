@@ -4,127 +4,158 @@
       "common": {
         "provider:claude": {
           "title": "Claude",
-          "text": "Uses the Claude plan you already pay for each month. Paying as you go with the Anthropic API is a separate choice."
+          "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate, pay-as-you-go choice.",
+          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider billed per token."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
-          "text": "Signs in with your ChatGPT plan, the one you pay for each month. Pick it if you already use ChatGPT."
+          "text": "Two ways in: sign in with ChatGPT to use your plan's limits, or use an OpenAI API key, billed separately by use. Each one is its own account here.",
+          "expert": "Direct provider with two auth families: ChatGPT OAuth (plan-backed usage) or an OpenAI API key (API billing). Separate account rows; their usage and cooldowns never merge."
         },
         "provider:antigravity": {
           "title": "Google Antigravity",
-          "text": "Uses your Antigravity plan. The Gemini API, billed by what you use, is a separate choice."
+          "text": "Uses your Google Antigravity account, through Google's own app on the computer that does the work. The Gemini API is a separate choice.",
+          "expert": "Antigravity CLI (agy) with Google sign-in; the CLI keeps its sign-in on the execution host, and on a remote host uses its sign-in link and returned code. Gemini API is a separate provider."
         },
         "provider:cursor": {
           "title": "Cursor",
-          "text": "Connects with an API key from your Cursor account: paste it into API key for Cursor, then choose Check key. The key stays in your computer's password store, never shown again."
+          "text": "Paste an API key from your Cursor dashboard. It uses your Cursor plan.",
+          "expert": "Cursor SDK route with a user or service-account API key from the Cursor dashboard; Team Admin keys aren't accepted. Browser sign-in through cursor-agent is the other way in."
         },
         "provider:grok": {
           "title": "Grok Build",
-          "text": "Uses the Grok Build plan you pay for each month. The xAI API, billed by what you use, is a separate choice."
+          "text": "Uses Grok Build, signed in through xAI's own app on the computer that does the work. The xAI API is a separate, pay-as-you-go choice.",
+          "expert": "Grok Build CLI (grok) with xAI browser sign-in, or a device code when the browser is on another device; the CLI keeps its sign-in. The xAI API is a separate provider."
         },
         "provider:muse": {
           "title": "Muse Code",
-          "text": "Uses the Muse Code plan you pay for each month. The Meta Model API, billed by what you use, is a separate choice."
+          "text": "Uses Muse Code, signed in through Meta's own app. That sign-in works only in Muse Code; other Meta keys are billed separately.",
+          "expert": "Muse Code CLI (muse) with its own sign-in; the subscription credential is limited to Muse Code, and an API key set in Muse takes precedence over it. The Meta Model API is separate."
         },
         "provider:copilot": {
           "title": "GitHub Copilot",
-          "text": "Signs in with the Copilot plan on your GitHub account. Pick it if you already pay for GitHub Copilot."
+          "text": "Signs in with your GitHub account, then asks whose Copilot plan to use: yours or an organization's. It doesn't change where your code is kept.",
+          "expert": "GitHub Copilot direct hosted API: GitHub OAuth, then entitlement and billing-entity selection before Ready. Separate from the GitHub account used for repositories."
         },
         "provider:qwen-coding": {
-          "title": "Qwen Coding Plan",
-          "text": "Alibaba's monthly plan for coding with Qwen. It connects with a key from your Alibaba account."
+          "title": "Alibaba Coding Plan",
+          "text": "Alibaba Cloud's Coding Plan, with Qwen and other models. It needs the plan's own key, not an ordinary Alibaba Cloud key. A plan bought for China is set up in Settings.",
+          "expert": "Alibaba Coding Plan: dedicated plan key (sk-sp-…) on the global endpoint; not interchangeable with DashScope pay-as-you-go keys. The China route is in Settings."
         },
         "provider:qwen-token": {
-          "title": "Qwen Token Plan",
-          "text": "Alibaba's Qwen plan that is billed by what you use, not by the month. It connects with a key from your Alibaba account."
+          "title": "Alibaba Token Plan",
+          "text": "Alibaba Cloud's Token Plan, a monthly plan. It has its own key, separate from the Coding Plan.",
+          "expert": "Alibaba Model Studio Token Plan: a subscription (Personal or Team edition) with its own key; separate from Coding Plan and from pay-as-you-go."
         },
         "provider:zai": {
           "title": "Z.AI Coding Plan",
-          "text": "Z.AI's monthly plan for coding. It connects with a key from your Z.AI account."
+          "text": "Z.AI's monthly plan for coding, with GLM models. It connects with a key from your Z.AI account. A plan bought for China (Zhipu) is set up in Settings.",
+          "expert": "Z.AI GLM Coding Plan with an API key on the coding endpoint. Zhipu's China plan is a separate route, in Settings."
         },
         "provider:kimi": {
           "title": "Kimi Code",
-          "text": "Moonshot's monthly Kimi Code plan. It connects with a key from your Kimi account."
+          "text": "Kimi Code's monthly plan. Get the key from the Kimi Code console; a Kimi Open Platform key is a different, pay-as-you-go account.",
+          "expert": "Kimi For Coding direct route with a Kimi Code console key, separate from Moonshot Open Platform keys; Puppet Master sends its own client identity."
         },
         "provider:minimax": {
-          "title": "MiniMax Coding Plan",
-          "text": "MiniMax's monthly plan for coding. It connects with a key from your MiniMax account."
+          "title": "MiniMax M Plan",
+          "text": "MiniMax's monthly plan, now called M Plan (it was the Coding Plan). It needs the plan's own key. A plan bought for China is set up in Settings.",
+          "expert": "MiniMax M Plan (formerly Coding Plan): plan key on the global (minimax.io) endpoint; a pay-as-you-go MiniMax key isn't plan access. The China route is in Settings."
         },
         "provider:opencode-go": {
           "title": "OpenCode Go",
-          "text": "OpenCode's monthly plan. It connects with a key from your OpenCode account."
+          "text": "OpenCode's monthly plan, used with a key from the OpenCode Console.",
+          "expert": "OpenCode Go subscription key from the OpenCode Console. Not the OpenCode server."
         },
         "provider:opencode-zen": {
-          "title": "OpenCode Zen",
-          "text": "OpenCode's pay-as-you-go option, billed by what you use. It connects with a key from your OpenCode account."
+          "title": "OpenCode Console",
+          "text": "OpenCode's pay-as-you-go service, which used to be called Zen. You buy credit in the OpenCode Console, then use its key.",
+          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway funded by Console credit, with an API key; not the OpenCode server connection."
         },
         "provider:opencode-runtime": {
-          "title": "OpenCode on your computer",
-          "text": "Uses the OpenCode you already installed and set up yourself, with the accounts it already has. Pick it if OpenCode is how you work today."
+          "title": "OpenCode server",
+          "text": "Uses OpenCode itself as a server. Puppet Master can run it for you, or connect to one you already run. Its own model accounts stay in OpenCode.",
+          "expert": "OpenCode server profile: Managed Server (launched on the execution host) or Attach to Existing Server (endpoint plus optional HTTP Basic auth). Upstream auth stays in OpenCode."
         },
         "provider:anthropic-api": {
           "title": "Anthropic API",
-          "text": "Pay as you go with Anthropic, billed by what you use. It is separate from a Claude plan and connects with a key."
+          "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
-          "text": "Pay as you go with Google's Gemini, billed by what you use. It is separate from an Antigravity plan and connects with a key."
+          "text": "Google's Gemini through a key from Google AI Studio. Separate from Antigravity.",
+          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides its free or paid tier and quota. Separate from Antigravity."
         },
         "provider:vertex": {
           "title": "Vertex AI",
-          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already pays for Google Cloud."
+          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already uses Google Cloud.",
+          "expert": "Vertex AI with a Google Cloud API key, in express mode or tied to a project; billing and quota follow that project."
         },
         "provider:xai-api": {
           "title": "xAI API",
-          "text": "Pay as you go with xAI, billed by what you use. It is separate from a Grok Build plan and connects with a key."
+          "text": "Pay as you go with xAI, using a key from the xAI Console. Separate from a Grok Build plan.",
+          "expert": "xAI API key from the xAI Console, billed per request. Separate from Grok Build."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
-          "text": "Pay as you go with Meta's models, billed by what you use. It is separate from a Muse Code plan and connects with a key."
+          "text": "Pay as you go with Meta's models, using a key from Meta's developer site. A Muse Code plan's sign-in is different.",
+          "expert": "Meta Model API key from dev.meta.ai, billed by use. The Muse Code subscription credential works only in Muse Code."
         },
         "pairing:approval": {
           "title": "Approve from another device",
-          "text": "A device you already use with it shows a request, and you approve it there. The quickest way when that device is with you."
+          "text": "A device you already use with it shows a request, and you approve it there. The quickest way when that device is with you.",
+          "expert": "Pairing by approval: an already trusted device receives the request and approves it; this device is then trusted by the Server."
         },
         "pairing:code": {
           "title": "Enter the code it shows",
-          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand."
+          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand.",
+          "expert": "Pairing by code: the Server's page shows a short one-time code; entering it here proves this device is with you before it is trusted."
         },
         "pairing:qr": {
           "title": "Scan its QR code",
-          "text": "Point this device's camera at the square code on the other screen. Handy on a phone or tablet."
+          "text": "Point this device's camera at the square code on the other screen. Handy on a phone or tablet.",
+          "expert": "Pairing by QR code: the camera reads the one-time pairing code from the other screen."
         },
         "field:headscale": {
           "title": "Headscale address",
-          "text": "The web address of your own Headscale server, starting with https://. Only for people who run Headscale instead of using a Tailscale account."
+          "text": "The web address of your own Headscale server, starting with https://. Only for people who run Headscale instead of using a Tailscale account.",
+          "expert": "The https URL of your Headscale control server (a self-hosted Tailscale control plane). Leave it to Tailscale accounts unless you run Headscale."
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company."
+          "text": "The bucket's name, and a folder in it if you like, such as my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
+          "expert": "The bucket, optionally /prefix, checked with the chosen service's bucket-name rule (Amazon and Backblaze differ)."
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password."
+          "text": "The ID half of the key made for the bucket. Copy it from your storage account; the secret below is its password.",
+          "expert": "The access key ID (Backblaze: application key ID) of a key scoped to that bucket."
         },
         "field:acc-secret": {
-          "title": "Secret access key",
-          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files."
+          "title": "Secret",
+          "text": "The private half of that key. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The secret access key (Backblaze: application key). Stored in the OS keychain, never in Puppet Master's files or logs."
         },
         "field:acc-address": {
           "title": "Server address",
-          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV."
+          "text": "Where the backup goes on that server: start it with sftp:// for SFTP, or https:// for WebDAV, then the folder.",
+          "expert": "The server's URL with the backup path: sftp:// for SFTP, https:// for WebDAV, matching the protocol chosen above."
         },
         "field:acc-user": {
           "title": "Username",
-          "text": "The name you sign in with on that backup server."
+          "text": "The name you sign in with on that backup server.",
+          "expert": "The account name on the SFTP or WebDAV server."
         },
         "field:acc-password": {
           "title": "Password",
-          "text": "The password for that backup server. Kept in your computer's password store, never in Puppet Master's files."
+          "text": "The password for that backup server. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The account's password on that server. Stored in the OS keychain, never in Puppet Master's files."
         },
         "field:key": {
           "title": "API key",
-          "text": "A long secret code from the AI company that lets Puppet Master use your account. Paste it, then choose Check key. It stays in your computer's password store."
+          "text": "A long secret code from the AI company, not your password. Paste it, then choose Check key. It's kept in the keychain on the computer that does the work.",
+          "expert": "The route's own API key, checked against the provider before it is saved; stored in the OS keychain on the execution host, never in Puppet Master's files."
         },
         "tour": {
           "title": "Take the Guided Tour",
@@ -137,6 +168,91 @@
         "startOver": {
           "title": "Start over",
           "text": "Clears the choices from last time and begins setup again from the first page."
+        },
+        "way:codex|main": {
+          "title": "Sign in with ChatGPT",
+          "text": "Uses your ChatGPT plan. Codex use counts against that plan's limits.",
+          "expert": "ChatGPT OAuth account row; plan-backed usage bucket."
+        },
+        "way:codex|alt": {
+          "title": "Use an OpenAI API key",
+          "text": "A key from the OpenAI API dashboard. Billed by use, separately from any ChatGPT plan.",
+          "expert": "API-key account row at standard API pricing, separate from ChatGPT plan usage."
+        },
+        "way:cursor|main": {
+          "title": "Use a Cursor API key",
+          "text": "Make a key in your Cursor dashboard under API Keys, then paste it here.",
+          "expert": "Cursor SDK with a user or service-account API key; no CLI needed."
+        },
+        "way:cursor|alt": {
+          "title": "Sign in in the browser instead",
+          "text": "Installs Cursor's command-line tool on the computer that does the work, then you sign in to Cursor in your browser.",
+          "expert": "cursor-agent login in a Puppet Master profile root on the execution host; needs the CLI installed."
+        },
+        "field:paste": {
+          "title": "Code from the page",
+          "text": "After you sign in on the company's page, it shows a code. Paste it here so the sign-in reaches the computer that does the work.",
+          "expert": "One-use return code for the sign-in on the execution host; read once, never saved."
+        },
+        "field:project": {
+          "title": "Google Cloud project ID",
+          "text": "The project your key belongs to, if it belongs to one. It decides which Google Cloud bill pays.",
+          "expert": "Optional project ID for billing and quota; leave empty for an express-mode key."
+        },
+        "field:ocAddr": {
+          "title": "Server address",
+          "text": "The web address your OpenCode server answers on. On the same computer it's often http://127.0.0.1:4096.",
+          "expert": "Base URL of the running opencode serve (default 127.0.0.1:4096)."
+        },
+        "field:ocUser": {
+          "title": "Username",
+          "text": "Only if your OpenCode server asks for one. It's usually opencode.",
+          "expert": "HTTP Basic username (OPENCODE_SERVER_USERNAME, default opencode)."
+        },
+        "field:ocPass": {
+          "title": "Password",
+          "text": "Only if your OpenCode server has a password. It's the server's own password, not a key from an AI company.",
+          "expert": "HTTP Basic password (OPENCODE_SERVER_PASSWORD); kept in the OS keychain, separate from model-provider keys."
+        },
+        "group:entity": {
+          "title": "Whose Copilot plan",
+          "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one that should pay.",
+          "expert": "Copilot billing entity; entitlement and premium-request limits follow it."
+        },
+        "group:workspace": {
+          "title": "Workspace",
+          "text": "Anthropic bills each workspace separately. Pick the one this key's use should go to.",
+          "expert": "Workspace context for a key that isn't scoped to one workspace."
+        },
+        "ocMode:managed": {
+          "title": "Let Puppet Master run it",
+          "text": "Puppet Master installs OpenCode if needed, starts it and keeps it running on the computer that does the work.",
+          "expert": "Managed Server profile: Puppet Master owns launch, config root, reconnect and shutdown."
+        },
+        "ocMode:attached": {
+          "title": "Use a server I already run",
+          "text": "For an OpenCode server you started yourself. Puppet Master connects to it and leaves its settings to you.",
+          "expert": "Attach to Existing Server: Puppet Master owns the endpoint, its auth and health checks only; the server's own settings stay External / Not Managed."
+        },
+        "field:acc-session": {
+          "title": "Session token",
+          "text": "Only for temporary keys: the third part they come with. Kept in your computer's password store.",
+          "expert": "The STS session token that temporary AWS credentials require. Stored with the secret, never in files or logs."
+        },
+        "field:acc-b2host": {
+          "title": "S3 address",
+          "text": "The bucket's S3 address, shown on its page in Backblaze, like s3.us-west-004.backblazeb2.com.",
+          "expert": "Backblaze B2's regional S3 address, s3.<region>.backblazeb2.com."
+        },
+        "field:acc-server": {
+          "title": "Service address",
+          "text": "The S3 address your storage service gives you, starting with https://.",
+          "expert": "The S3-compatible service's base URL (https)."
+        },
+        "field:acc-region": {
+          "title": "Region",
+          "text": "Only if your storage service asks for one. Leave it empty otherwise.",
+          "expert": "The signing region, for services that require one; empty uses the service's default."
         }
       },
       "chrome": {
@@ -158,11 +274,11 @@
         },
         "lookFamily:basic": {
           "title": "Basic",
-          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four."
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look."
         },
         "lookFamily:friendly": {
           "title": "Friendly",
-          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest of the four."
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look."
         },
         "lookFamily:glass": {
           "title": "Glass",
@@ -170,7 +286,7 @@
         },
         "lookFamily:retro": {
           "title": "Retro",
-          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper."
         },
         "lookFamily:nier": {
           "title": "NieR",
@@ -202,11 +318,11 @@
       "look": {
         "pickFamily:basic": {
           "title": "Basic",
-          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest of the four."
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look."
         },
         "pickFamily:friendly": {
           "title": "Friendly",
-          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest of the four."
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look."
         },
         "pickFamily:glass": {
           "title": "Glass",
@@ -214,7 +330,7 @@
         },
         "pickFamily:retro": {
           "title": "Retro",
-          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light is printed on paper by a teletype."
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper."
         },
         "pickFamily:nier": {
           "title": "NieR",
@@ -236,919 +352,1262 @@
       "where": {
         "pick:this": {
           "title": "This computer",
-          "text": "Puppet Master does the work on this computer. You choose where its files and backups go in the next steps, and can add a Server later."
+          "text": "Puppet Master does the work on this computer. The AI, an online copy and a backup are separate choices, made next.",
+          "expert": "Puppet Master runs on this computer: Projects, local history and agent runs are here. AI providers, online copies and backups are the services you choose."
         },
         "pick:connect": {
           "title": "Connect this device",
-          "text": "Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once."
+          "text": "Already use Puppet Master on another computer? This device joins it and uses its Projects and AI. You confirm it is really you, once.",
+          "expert": "This device becomes a client of an existing Puppet Master Server: it uses that Server's Projects, runs and AI accounts after a one-time pairing."
         },
         "pick:server": {
           "title": "Server",
-          "text": "The computer that does the work is called a Server. One that stays on, like a NAS, can keep working while your laptop sleeps."
+          "text": "A Server is a separate computer that stays switched on and does the work, like a NAS or a rented cloud computer. Your laptop and other devices connect to it, and it can keep working while they sleep.",
+          "expert": "A Server is a separate, always-on machine (a NAS, a rented cloud machine or a spare computer) that runs Puppet Master and its agent runs; this computer and your other devices pair with it as clients."
         },
         "restoreAll": {
           "title": "Restore everything",
-          "text": "For moving from an old computer: brings back your Projects, settings and look from a backup. Nothing here is replaced without asking."
+          "text": "For moving from an old computer: brings back your Projects, settings and look from a backup. Nothing here is replaced without asking.",
+          "expert": "Restores a full backup (Projects, settings, look) from a Recovery Kit or a backup destination onto this computer, with a preview before anything changes."
         }
       },
       "c-route": {
         "group:pickServer": {
           "title": "Found on your network",
-          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has."
+          "text": "Puppet Masters already running on your network. Pick the one this device should use. You'll see its Projects once this device is paired with it.",
+          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to. Discovery shows only a name, an address and an ID; Project details come after pairing."
         },
         "field:addr": {
           "title": "Its address",
-          "text": "The name or number other devices use to reach it, like home-nas.local or 192.168.1.20. Use it when yours is not in the list."
+          "text": "The name or number other devices use to reach it, like home-nas.local or 192.168.1.20. Use it when yours is not in the list.",
+          "expert": "The Server's hostname or IP address on your network, like home-nas.local or 192.168.1.20."
         },
         "manualOn": {
           "title": "Enter an address instead",
-          "text": "Type the address yourself when your Puppet Master does not show up on its own."
+          "text": "Type the address yourself when your Puppet Master does not show up on its own.",
+          "expert": "Enter the Server's hostname or IP address yourself when discovery doesn't find it."
         },
         "route:local_or_vpn": {
           "title": "On this network",
-          "text": "Finds it on the network you are on now. You can connect through a VPN too: Puppet Masters there show up as well."
+          "text": "Finds it on the network you are on now. You can connect through a VPN too: Puppet Masters there show up as well.",
+          "expert": "Local network or an already connected VPN: discovery on the LAN, and on the VPN's networks."
         },
         "route:tailscale": {
           "title": "Tailscale",
-          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. Pick it when you are away from home."
+          "text": "Reach it from anywhere with Tailscale, a private network for your own devices. It's built into Puppet Master: sign in once.",
+          "expert": "Tailscale is built into Puppet Master's apps: sign in once with your Tailscale account. A plain browser tab reaches it with a Remote Link, or with the device's own Tailscale."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "For a Server its owner already put on a web address, like pm.example.com. Pick it only if you were given one."
+          "text": "For a Server its owner already put on a web address, like pm.example.com. Pick it only if you were given one.",
+          "expert": "The Server behind a reverse proxy on an https domain its owner set up (DNS and a TLS certificate). The certificate protects the connection; it doesn't vouch for who runs the address."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "A private link your Server can make for you. Paste the link it gave you; nothing else to set up."
+          "text": "A private link your Server can make for you. Paste the link it gave you; nothing else to set up.",
+          "expert": "A Puppet Master Remote Link the Server issues for reaching it from outside your network; paste it here. Nothing to set up on your side: no DNS, ports or certificates."
         },
         "tsControl:hosted": {
           "title": "Tailscale account",
-          "text": "Sign in with an ordinary Tailscale account. Right for nearly everyone."
+          "text": "Sign in with an ordinary Tailscale account. Right for nearly everyone.",
+          "expert": "Tailscale's hosted coordination server with an ordinary Tailscale account."
         },
         "tsControl:headscale": {
           "title": "My own Headscale server",
-          "text": "Headscale is a version of Tailscale you run yourself. Pick it only if you already have one."
+          "text": "Headscale is a version of Tailscale you run yourself. Pick it only if you already have one.",
+          "expert": "A self-hosted Headscale control server instead of Tailscale's; you'll give its https URL."
         },
         "field:proxy": {
           "title": "Web address",
-          "text": "The https:// address the Server owner set up, like https://pm.example.com."
+          "text": "The https:// address the Server owner set up, like https://pm.example.com.",
+          "expert": "The reverse proxy's https URL for the Server, like https://pm.example.com."
         },
         "field:link": {
-          "title": "Remote Link",
-          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access."
+          "title": "Remote Link or its code",
+          "text": "The link your Server made, or the short code it shows. Your Server shows them in Settings › Server & Project Location › Away From Home.",
+          "expert": "The Server-issued Remote Link (or its short code) from Settings › Server & Project Location › Away From Home; pairing still follows."
         }
       },
       "c-pair": {
         "field:code": {
           "title": "Code from your Puppet Master",
-          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you."
+          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you.",
+          "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks the other device to show the request again, if you missed it or it went away."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "c-ready": {
         "createNew": {
           "title": "Create a new Project",
-          "text": "Starts a new Project on your Puppet Master, so it lives next to the work."
+          "text": "Starts a new Project on your Puppet Master, so it lives next to the work.",
+          "expert": "Starts a new Project draft on the connected Server; its files and runs live on the Server."
         },
         "group:pickProject": {
           "title": "Projects on your Puppet Master",
-          "text": "Projects it already has. Pick one to open first; every one of them is there for you later too."
+          "text": "Projects it already has. Pick one to open first; every one of them is there for you later too.",
+          "expert": "The Server's existing Projects; the one you pick opens first."
         }
       },
       "s-kind": {
         "kind:nas": {
           "title": "A NAS or home server",
-          "text": "A storage box or home server that stays on, like Synology, TrueNAS, Unraid or QNAP. A good home for a Server."
+          "text": "A storage box or home server that stays on, like Synology, TrueNAS, Unraid or QNAP. A good home for a Server.",
+          "expert": "A NAS or home server (Synology, TrueNAS, Unraid, QNAP) running Puppet Master's Server; always on, on your LAN."
         },
         "kind:cloud": {
           "title": "A cloud computer",
-          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from."
+          "text": "A computer you rent online. It is always on and costs a monthly fee. You make it yours with a one-time code from your cloud provider's console, so nothing is set up over the open internet.",
+          "expert": "A rented cloud VM running the Server, claimed with the one-time setup code from the provider console; no public setup endpoint. Public access is a separate, later choice."
         },
         "kind:pc": {
           "title": "Another computer",
-          "text": "A Windows, Mac or Linux computer you leave switched on. Fine if it does not sleep."
+          "text": "A Windows, Mac or Linux computer you leave switched on. Fine if it does not sleep.",
+          "expert": "A Windows, macOS or Linux machine running the Server; it must stay on and not sleep."
         }
       },
       "s-wait": {
         "group:platform": {
           "title": "Install Puppet Master on it",
-          "text": "Pick what that computer runs, and follow its steps there. It shows up here by itself once it is running."
+          "text": "Pick what that computer runs, and follow its steps there. It shows up here by itself once it is running.",
+          "expert": "Install the Server package for that machine's platform; it shows up here by itself once it is running."
         },
         "copy:install": {
           "title": "Copy the install line",
-          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands."
+          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands.",
+          "expert": "Copies the install command for that machine's terminal (shell)."
         },
         "group:guide": {
           "title": "Open the install guide",
-          "text": "Opens the step-by-step guide for that system in your browser."
+          "text": "Opens the step-by-step guide for that system in your browser.",
+          "expert": "Opens the official install guide for that platform."
         },
         "group:pick": {
           "title": "Waiting to be set up",
-          "text": "A computer on your network running Puppet Master that is not set up yet. Choose it to make it your Server."
+          "text": "A computer on your network running Puppet Master that is not set up yet. Choose it to make it your Server.",
+          "expert": "An unclaimed Puppet Master Server found on your network; choosing it starts the claim."
         },
         "field:addr": {
           "title": "Its address",
-          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed."
+          "text": "Where to reach it, if it doesn't show up by itself. A cloud computer needs no address: you use the setup code from your provider's console.",
+          "expert": "The Server's hostname or IP on your network. A cloud VM is claimed with the one-time code its provider console shows, not by address."
         },
         "manualOn": {
           "title": "Enter its address instead",
-          "text": "Type its address yourself if it does not appear on its own."
+          "text": "Type its address yourself if it does not appear on its own.",
+          "expert": "Enter the Server's hostname or IP address yourself."
         }
       },
       "s-confirm": {
         "field:name": {
           "title": "Name",
-          "text": "What you'll call this Server everywhere in Puppet Master, like Home NAS. Pick a name you'll recognise."
+          "text": "What you'll call this Server everywhere in Puppet Master, like Home NAS. Pick a name you'll recognise.",
+          "expert": "The Server's display name across your devices."
         },
         "group:suggest": {
           "title": "Suggested names",
-          "text": "A few names that fit this kind of computer. Pick one, or type your own."
+          "text": "A few names that fit this kind of computer. Pick one, or type your own.",
+          "expert": "Suggested display names for this kind of machine; pick one or type your own."
         },
         "field:code": {
           "title": "Setup code",
-          "text": "The number shown on the Server's own setup page, like 482 913. It proves the computer is yours."
+          "text": "The one-time number shown on the Server's own setup page, or for a cloud computer in your provider's console, like 482 913. It proves the computer is yours.",
+          "expert": "The one-time setup code from the Server's setup page (a cloud VM: the provider console); it proves physical or console access before the claim."
         },
         "selfMatch": {
           "title": "The words match",
-          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve."
+          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve.",
+          "expert": "Confirms the identity words shown here match this device's, so the pairing goes to the right device."
         }
       },
       "s-ready": {
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code for adding a device. Devices already paired stay paired."
+          "text": "Makes a fresh code for adding a device. Devices already paired stay paired.",
+          "expert": "Rotates the device invite code; already paired devices keep their trust."
         },
         "copy:pairlink": {
           "title": "Copy the link",
-          "text": "Copies a link another device on your network can open to join."
+          "text": "Copies the link to this Server at the address it was found at, for another device on the same network to open and ask to join.",
+          "expert": "Copies the pairing URL at the Server's reached address; the joining device still needs your approval."
         },
         "group:approve": {
           "title": "Approve",
-          "text": "Lets that device use your Server. Approve only once its words match what the device shows."
+          "text": "Lets that device use your Server. Approve only once its words match what the device shows.",
+          "expert": "Approves the device's pairing request after its identity words match: it becomes a trusted client."
         },
         "group:deny": {
           "title": "Deny",
-          "text": "Turns the request down. Nothing is shared with that device."
+          "text": "Turns the request down. Nothing is shared with that device.",
+          "expert": "Rejects the pairing request; no trust or data is shared."
         },
         "group:match": {
           "title": "The words match",
-          "text": "Compare the words with what the other device shows, then tick this. It unlocks Approve."
+          "text": "Compare the words with what the other device shows, then tick this. It unlocks Approve.",
+          "expert": "Confirms the device's identity words match; required before Approve."
         },
         "restore": {
           "title": "Bring back old data",
-          "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup."
+          "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup.",
+          "expert": "Restores Projects onto this new Server from a Recovery Kit or a backup destination."
         }
       },
       "r-source": {
         "source:kit": {
           "title": "A Recovery Kit file",
-          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start."
+          "text": "The file you saved when you set up backups. It is not a place: it says where your backup is kept and holds the key that unlocks it, so there is no phrase to type. It never holds a NAS or cloud sign-in. The best place to start.",
+          "expert": "The Recovery Kit file from your backup setup: the destination hints and the Backup Recovery Key for its backup repository. Opening it points to the backup and unlocks it; it holds no NAS, cloud or other service credential."
         },
         "group:kit": {
           "title": "Which Recovery Kit",
-          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back."
+          "text": "Recovery Kit files found on this computer. Pick the one for the backup you want back.",
+          "expert": "Recovery Kit files found in the usual places on this computer (Downloads, Documents, the Desktop)."
         },
         "group:bfolder": {
           "title": "Which folder",
-          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup."
+          "text": "Folders on this computer or a plugged-in drive that hold a Puppet Master backup.",
+          "expert": "Folders on this computer or a mounted drive that contain a Puppet Master backup repository."
         },
         "field:bpath": {
           "title": "Where the backup folder is",
-          "text": "The folder's full location, as your file browser shows it."
+          "text": "The folder's full location, as your file browser shows it.",
+          "expert": "The backup repository's folder path, as your file manager shows it."
         },
         "source:folder": {
           "title": "A folder on this computer",
-          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it."
+          "text": "A backup kept on this computer, or on a drive you plugged in. You point to the folder next; the recovery phrase from your Recovery Kit unlocks it.",
+          "expert": "A backup repository in a local folder or on a mounted drive. You point to the folder next; the Backup Recovery Key from your Recovery Kit unlocks it."
         },
         "source:nas": {
           "title": "A NAS or another computer",
-          "text": "A backup kept on a NAS or another computer. Puppet Master reaches it over a secure connection (SSH)."
+          "text": "A backup kept on a NAS or another computer. Puppet Master reaches it over a secure connection (SSH).",
+          "expert": "A backup repository on a NAS or another computer, reached over SSH (host identity check, then a key)."
         },
         "source:cloud": {
           "title": "A cloud account",
-          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket."
+          "text": "A backup kept in Google Drive, OneDrive or a storage bucket. Only backups kept there are shown next.",
+          "expert": "Google Drive, OneDrive or an S3-family bucket; the snapshot list is scoped to the exact service, account and bucket reached."
         },
         "group:device": {
           "title": "Which device",
-          "text": "Devices on your network that can be reached securely. Pick the one that keeps the backup."
+          "text": "Devices on your network that can be reached securely. Pick the one that keeps the backup.",
+          "expert": "Devices on your network with SSH enabled. Pick the one holding the backup repository."
         },
         "cloud:gdrive": {
           "title": "Google Drive",
-          "text": "You sign in to Google on its own page next. Puppet Master only reads the backup."
+          "text": "You sign in to Google on its own page next. Puppet Master only reads the backup.",
+          "expert": "Google Drive through Google's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:onedrive": {
           "title": "OneDrive",
-          "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup."
+          "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup.",
+          "expert": "OneDrive through Microsoft's own sign-in (OAuth), read-only for the restore."
         },
         "cloud:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket. Fill in its three access details below to reach it."
+          "title": "A storage bucket",
+          "text": "A bucket on Amazon S3, Backblaze B2 or another S3-compatible service. Pick which, then fill in its access details below.",
+          "expert": "An S3-family bucket (aws_s3, backblaze_b2 or s3_compatible) reached with its own access details; only backups in that exact bucket are listed next."
+        },
+        "rsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "rsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "rsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
         }
       },
       "r-unlock": {
         "field:phrase": {
           "title": "Recovery phrase",
-          "text": "The six words in your Recovery Kit, like river candle orbit maple quiet lantern. Used once and never saved."
+          "text": "The recovery key written in your Recovery Kit, like river candle orbit maple quiet lantern. It unlocks this backup. It's used once and never saved.",
+          "expert": "The Backup Recovery Key from your Recovery Kit. It decrypts this backup repository; it's used for this restore and not stored."
         }
       },
       "r-pick": {
         "group:pick": {
           "title": "Choose what to bring back",
-          "text": "Each copy is a moment the backup was taken. The newest is usually the right one."
+          "text": "Each copy is a moment the backup was taken. The newest is usually the right one.",
+          "expert": "Each entry is a snapshot of the backup repository at the time it was taken. The newest is usually the one you want."
+        },
+        "elsewhere": {
+          "title": "Look somewhere else",
+          "text": "Go back and point to another place the backup might be.",
+          "expert": "Return to the source step; the reached place, unlock and pick are dropped when another place is chosen."
         }
       },
       "r-done": {
         "group:pickProject": {
           "title": "Your Projects",
-          "text": "Everything that came back. Pick the one to open first."
+          "text": "Everything that came back. Pick the one to open first.",
+          "expert": "The restored Projects; the one you pick opens first."
         },
         "createNew": {
           "title": "Create a new Project",
-          "text": "Starts something new instead. Your restored Projects are all still there."
+          "text": "Starts something new instead. Your restored Projects are all still there.",
+          "expert": "Starts a new Project draft instead; the restored Projects stay as they are."
         }
       },
       "begin": {
         "pick:new": {
           "title": "New Project",
-          "text": "Puppet Master makes an empty folder for it and saves every version from the very first file."
+          "text": "Puppet Master makes an empty folder for it and keeps saved versions from the start, so you can go back to earlier work.",
+          "expert": "A new, empty Project folder with local version control (Git or Jujutsu) from the start."
         },
         "pick:existing": {
           "title": "Existing work",
-          "text": "A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project."
+          "text": "A folder on this computer, a Project stored online like GitHub, or files on another device. Puppet Master reads it but changes nothing until you create the Project.",
+          "expert": "Import existing work: a local folder, a remote repository on an online service, or files on another device (SSH, SMB, NFS or a mounted drive). Read only until the Project is created."
         },
         "pick:restore": {
           "title": "Restore",
-          "text": "Brings a Project back from one of your backups."
+          "text": "Brings a Project back from one of your backups.",
+          "expert": "Restore a Project from a backup repository."
         },
         "sub:folder": {
           "title": "A folder on this computer",
-          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project."
+          "text": "Work already in a folder on the computer doing the work. Pick the folder next; it is only read until you create the Project.",
+          "expert": "A local folder on the machine doing the work; read only until the Project is created."
         },
         "sub:online": {
           "title": "A Project stored online",
-          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live."
+          "text": "Work kept on a website like GitHub or GitLab. Sign in and pick it; the next steps show where your working copy will live.",
+          "expert": "Clone a remote repository from an online service; the next steps say where the working copy will live."
         },
         "sub:device": {
           "title": "Files on another device",
-          "text": "Work on a NAS, a network drive or another computer. Puppet Master works on it right where it is."
+          "text": "Work on a NAS, a network drive or another computer. Puppet Master works on it right where it is.",
+          "expert": "Files on a NAS, a network share or another computer, used where they are (SSH/SFTP, SMB, NFS or a mounted drive)."
         },
         "later": {
           "title": "Set up a Project later",
-          "text": "No Project is created now; make one whenever you like. Setup finishes without one."
+          "text": "No Project is created now; make one whenever you like. Setup finishes without one.",
+          "expert": "No Project draft is created now; setup finishes without one, and you can create one later."
         }
       },
       "ex-folder": {
         "group:pick": {
           "title": "Recent folders",
-          "text": "Folders you used lately. Puppet Master reads the one you pick but changes nothing until you create the Project."
+          "text": "Folders you used lately. Puppet Master reads the one you pick but changes nothing until you create the Project.",
+          "expert": "Recently used folders. The one you pick is read only until the Project is created."
         },
         "browse": {
           "title": "Browse",
-          "text": "Look through your folders and choose any one, if it is not in the list."
+          "text": "Look through your folders and choose any one, if it is not in the list.",
+          "expert": "Browse the file system for any folder."
         },
         "group:treeGo": {
           "title": "Choose a folder",
-          "text": "Open folders to look inside. When you are in the right one, use Choose this folder."
+          "text": "Open folders to look inside. When you are in the right one, use Choose this folder.",
+          "expert": "Navigate into a folder, then Choose this folder."
         }
       },
       "name": {
         "field:name": {
           "title": "Project name",
-          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place."
+          "text": "The name shown for this Project in Puppet Master. For a new Project it also names its folder. An existing folder keeps its own name and place.",
+          "expert": "The Project's display name. For a new Project it also names the folder; an existing folder keeps its own name and path."
         },
         "group:suggest": {
           "title": "Suggestions",
-          "text": "A few example names to start from. Pick one, then change any word you like."
+          "text": "A few example names to start from. Pick one, then change any word you like.",
+          "expert": "Example names; pick one and edit it."
         },
         "change": {
           "title": "Where its files live",
-          "text": "Shows where the folder will be kept. Change picks another folder here, or a network drive."
+          "text": "Shows where the folder will be kept. Change picks another folder here, or a network drive.",
+          "expert": "Where the Project folder is created: the default location, another folder, or a network location."
         },
         "loc:auto": {
           "title": "On this computer",
-          "text": "In Puppet Master's own folder in Documents. Easy to find, and right for most people."
+          "text": "In Puppet Master's own folder in Documents. Easy to find, and right for most people.",
+          "expert": "The default location: Puppet Master's folder in Documents."
         },
         "loc:custom": {
           "title": "Another folder on this computer",
-          "text": "Keep it in a folder you choose, like one you already use for this kind of work."
+          "text": "Keep it in a folder you choose, like one you already use for this kind of work.",
+          "expert": "A folder path you choose on this computer."
         },
         "loc:network": {
           "title": "A network drive or NAS",
-          "text": "Keep the files on a storage device on your network. Uses a secure connection (SSH) by default."
+          "text": "Keep the files on a storage device on your network. Uses a secure connection (SSH) by default.",
+          "expert": "A network location (a NAS or share), reached over SSH by default."
         },
         "field:custom": {
           "title": "Choose a folder",
-          "text": "The folder path to use, like ~/Documents/Clubs. The ~ means your own home folder."
+          "text": "The folder path to use, like ~/Documents/Clubs. The ~ means your own home folder.",
+          "expert": "The folder path, like ~/Documents/Clubs (~ is your home folder)."
         },
         "storage:with_server": {
           "title": "On your Server",
-          "text": "Recommended. The Server keeps the files next to the work, so nothing waits on this device."
+          "text": "Recommended. The Server keeps the files next to the work, so nothing waits on this device.",
+          "expert": "The Project's files live on the Server's own storage, next to the agent runs. Recommended."
         },
         "storage:this_device": {
           "title": "On this device",
-          "text": "Files stay on this device and the Server reaches them over the network. This device needs to be on while it works."
+          "text": "Files stay on this device and the Server reaches them over the network. This device needs to be on while it works.",
+          "expert": "The files stay on this device and the Server reaches them over the network; this device must stay on and reachable while the Server works."
         },
         "storage:network_location": {
           "title": "A network drive",
-          "text": "A NAS or shared folder on your network keeps the files, and the Server works on them there."
+          "text": "A NAS or shared folder on your network keeps the files, and the Server works on them there.",
+          "expert": "A NAS or network share holds the files and the Server works on them there (SSH, SMB or NFS)."
         }
       },
       "like": {
         "pick:fresh": {
           "title": "Start fresh",
-          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start."
+          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start.",
+          "expert": "Puppet Master's default settings for a new Project."
         },
         "group:pick": {
           "title": "Like another Project",
-          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans."
+          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans.",
+          "expert": "Copies the chosen Project's settings into the new one. Never copied: credentials and keys, files, history, Goals and Plans."
         },
         "choose": {
           "title": "Choose settings",
-          "text": "Pick which groups of settings come along, like look, notifications or AI accounts."
+          "text": "Pick which groups of settings come along, like look, notifications or AI accounts.",
+          "expert": "Choose which settings categories are copied."
         },
         "group:cat": {
           "title": "Settings to copy",
-          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it."
+          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it.",
+          "expert": "A settings category from the source Project; switch it off to keep the defaults for it."
         }
       },
       "online-service": {
         "pick:github": {
           "title": "GitHub",
-          "text": "GitHub is a free website that keeps an online copy of your work. The most popular, and free for private Projects."
+          "text": "The most used website for keeping projects online, free for private Projects. Pick it if you're not sure.",
+          "expert": "GitHub.com: hosted Git remote, private repositories on free plans, browser sign-in. The default service."
         },
         "pick:gitlab": {
           "title": "GitLab",
-          "text": "A website like GitHub. Pick it if you or your team already use GitLab, on gitlab.com or your own server."
+          "text": "A website like GitHub. Pick it if you or your team already use GitLab, on gitlab.com or on your own server.",
+          "expert": "GitLab.com or a self-managed GitLab: a Git remote with projects in groups; a self-managed instance needs its https address."
         },
         "pick:azure_devops": {
           "title": "Azure DevOps",
-          "text": "Microsoft's service for teams. Pick it if your work already keeps Projects in Azure DevOps."
+          "text": "Microsoft's service for teams at work. Pick it if your workplace keeps its projects there.",
+          "expert": "Azure DevOps Services (dev.azure.com) or Azure DevOps Server: Git repositories (Azure Repos) inside an organisation and a team project, chosen on the next screen."
         },
         "pick:bitbucket_cloud": {
           "title": "Bitbucket",
-          "text": "Atlassian's website for keeping work online. Pick it if your team uses Bitbucket."
+          "text": "Atlassian's website for keeping projects online, often used alongside Jira. Pick it if your team uses Bitbucket.",
+          "expert": "Bitbucket Cloud (workspaces) or Bitbucket Data Center (self-hosted, needs its address): a Git remote."
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service you can run on your own server, or use on Codeberg. Pick it if you already have one."
+          "text": "A free service people run on their own servers. Codeberg is the best-known one. Pick it if you have an account on Codeberg or another Forgejo server.",
+          "expert": "Codeberg (browser sign-in or a token) or another Forgejo instance at its https address (a personal access token)."
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service you can run on your own server, or use as Gitea Cloud. Pick it if you already have one."
+          "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
+          "expert": "Gitea Cloud at your team's own address (browser sign-in or a token), or a self-hosted Gitea at its https address (a personal access token)."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
-          "text": "GitHub run on your company's own server. Pick it if your company gave you its address."
+          "text": "GitHub run by your company on its own server. Pick it if your company gave you its address.",
+          "expert": "GitHub Enterprise Server (self-managed): needs its https address; you sign in on that server."
         },
         "pick:cursor_origin": {
           "title": "Cursor Origin",
-          "text": "Cursor's own service for keeping work online. It is still a preview, so expect changes."
+          "text": "Cursor's own service for keeping projects online. It is still a preview, so it may change.",
+          "expert": "Cursor Origin (preview): a Git remote hosted by Cursor. Expect changes while it is a preview."
         },
         "notNow": {
           "title": "Not now",
-          "text": "Leaves out the online copy for now. Safe History still keeps your versions; add an online copy later."
+          "text": "No online copy for now. Earlier versions stay on this computer with Safe History, and you can add an online copy later in Settings.",
+          "expert": "No remote: the repository stays local. Add a remote later in Settings."
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run by the company itself or on your own server. Pick the one your account is on."
+          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where your own copy of the service lives, starting with https://, like https://git.example.com."
+          "text": "Where that server lives, starting with https://, like https://git.example.com. For Gitea Cloud, the address your team was given.",
+          "expert": "The instance's base URL (https only, a path such as /git is kept), used for its sign-in and API. Never filled in for you."
+        },
+        "group:pick": {
+          "title": "Which online service",
+          "text": "These websites keep an online copy of your Project. They all keep it the same way, so the choice is about where you or your team already have an account. If you don't have one, pick GitHub: it's free for private Projects.",
+          "expert": "The forge that hosts the remote repository and its access. Local history (Git or Jujutsu) is separate; every forge here takes a Git push. Sign-in is per service: a browser sign-in on most, a personal access token on Forgejo and Gitea."
+        },
+        "others": {
+          "title": "Which service to pick",
+          "text": "These websites keep an online copy of your Project, and they all keep it the same way. The difference is where you or your team already have an account. If you don't have one, GitHub is the safe choice: it's free for private Projects.",
+          "expert": "Every service here hosts a Git remote for your local history (Git or Jujutsu). Choose by where your account, organisation or self-managed instance already is. Sign-in differs: a browser sign-in on most, a personal access token on Forgejo and Gitea. Without a reason to pick another, use GitHub.com.",
+          "expertTitle": "Choosing a service"
         }
       },
       "online-signin": {
         "group:useKnown": {
           "title": "Use this account",
-          "text": "This computer is already signed in to it. Puppet Master only asks for access to the Project you choose."
+          "text": "This computer is already signed in to this account. What it allows depends on the service and on what you approved when you signed in.",
+          "expert": "An account this computer is already signed in to for this service; the token or grant it has is reused. The permissions it gives depend on the service and how it was approved."
         },
         "another": {
           "title": "Use a different account",
-          "text": "Sign in with another account instead, like a work one."
+          "text": "Sign in with another account instead, like a work one.",
+          "expert": "Sign in with a different account on this service instead."
         },
         "signIn": {
           "title": "Sign in",
-          "text": "Opens its sign-in page in your browser. Sign in there, then come back; nothing else to type here."
+          "text": "Opens its sign-in page in your browser. Sign in there and check the access it asks for before you approve, then come back.",
+          "expert": "Opens the service's own sign-in page in your browser (OAuth); you approve the access it asks for there. Nothing to type here."
         },
         "create": {
           "title": "Create account",
-          "text": "No account yet? Opens its sign-up page. Make the account there, then sign in here."
+          "text": "No account yet? Opens its sign-up page. Make the account there, then sign in here.",
+          "expert": "Opens the service's sign-up page; sign in here once the account exists."
         },
         "tokenOn": {
           "title": "Use an access token instead",
-          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in."
+          "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
+          "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
         "field:token": {
           "title": "Access token",
-          "text": "Make one on your server under Settings › Applications. It stays in your computer's password store, never in Puppet Master's files."
+          "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
+          "expert": "A PAT with the least scopes for this purpose, kept by the credential owner; the plan records only that a token is used."
         },
         "code": {
           "title": "Browser didn't open?",
-          "text": "Shows a short code instead. Open the address it gives on any device and type the code there."
+          "text": "Shows a short code instead. Open the address it gives on any device and type the code there.",
+          "expert": "Device-code sign-in: open the address shown on any device and enter the code there."
         },
         "copyLink": {
           "title": "Browser didn't open?",
-          "text": "Copies the sign-in link, so you can paste it into your browser yourself."
+          "text": "Copies the sign-in link, so you can paste it into your browser yourself.",
+          "expert": "Copies the sign-in URL to open in a browser yourself."
         },
         "copy:dcode": {
           "title": "Copy the code",
-          "text": "Copies this sign-in code. Paste it on the page named above."
+          "text": "Copies this sign-in code. Paste it on the page named above.",
+          "expert": "Copies the device code for the page named above."
         },
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes."
+          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes.",
+          "expert": "Issues a new device code; each lasts 15 minutes."
         },
         "signupBack": {
           "title": "Back to sign in",
-          "text": "Made your account on its page? Choose this, then sign in with it."
+          "text": "Made your account on its page? Choose this, then sign in with it.",
+          "expert": "Return to sign-in once the new account exists."
         }
       },
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy appears there. The suggestion is fine; letters, numbers and dashes work best."
+          "text": "How the online copy is named there. If a name won't work on that service, the line under the box says why.",
+          "expert": "Checked with the provider's own rule (GitHub, GitLab path, Azure DevOps, Bitbucket slug, Forgejo/Gitea), not one shared pattern."
         },
         "group:owner": {
-          "title": "Whose account keeps it",
-          "text": "Your own account, or an organization you belong to. Pick an organization when the Project belongs to a team."
+          "title": "Where it lives",
+          "text": "Your own account, or a place you share with others: an organization, group, workspace or project. Pick the one the Project belongs to.",
+          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key, Origin team."
         },
         "group:azOrg": {
           "title": "Organization",
-          "text": "The Azure DevOps organization the Project belongs to."
+          "text": "The Azure DevOps organization the Project belongs to.",
+          "expert": "The Azure DevOps organisation that will own the repository."
         },
         "group:azProject": {
           "title": "Team project",
-          "text": "Azure DevOps groups work into team projects. Pick one marked Git, the kind used for code. This is separate from your Puppet Master Project."
+          "text": "Azure DevOps groups work into team projects. Pick one marked Git. It's Azure DevOps' own grouping, separate from your Puppet Master Project.",
+          "expert": "The Azure DevOps team project that will hold the Git repository (Azure Repos); separate from your Puppet Master Project."
         },
         "azRefresh": {
           "title": "Refresh projects",
-          "text": "Looks again for team projects, like one you just made on Azure DevOps."
+          "text": "Looks again for team projects, like one you just made on Azure DevOps.",
+          "expert": "Lists the organisation's team projects again, like one you just created."
         },
         "azCreateTeamProject": {
           "title": "Create a team project",
-          "text": "Opens Azure DevOps to make a new team project there. Come back and refresh to pick it."
+          "text": "Opens Azure DevOps to make a new team project there. Come back and refresh to pick it.",
+          "expert": "Opens Azure DevOps to create a team project there; refresh here to pick it."
         },
         "vis:private": {
           "title": "Only you",
-          "text": "Only you, and people you invite, can see it. Right for most Projects."
+          "text": "Only you, and people you give access, can see it. Right for most Projects.",
+          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
-          "text": "Anyone on the internet can see it; only you and people you invite can change it. Pick it for work you want to share."
+          "text": "Anyone on the internet can see it and copy it; only you and people you invite can change it. Pick it only for work you mean to share.",
+          "expert": "Public repository: anyone can read and clone it; only collaborators can push."
         },
         "vis:internal": {
-          "title": "Everyone in your organization",
-          "text": "People in your organization can see it; nobody outside can."
+          "title": "A wider group",
+          "text": "More people than just you, but nobody outside: your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
+          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com); Origin team members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
-          "text": "A sentence about the Project, shown on its online page. Optional."
+          "text": "A sentence about the Project, shown on its online page. Optional.",
+          "expert": "The repository description shown on the service. Optional."
         },
         "field:branch": {
           "title": "Main branch name",
-          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name."
+          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name. No spaces.",
+          "expert": "The default branch, checked as git check-ref-format --branch does (no .., @{, spaces, ~ ^ : ? * [ \\, leading -, trailing / or .)."
         },
         "readme": {
           "title": "Add a README file",
-          "text": "A short page that says what the Project is. It is the first thing people see online."
+          "text": "Adds a short page that says what the Project is: the first thing people see online.",
+          "expert": "Initialises the repository with a README.md."
         },
         "group:gitignore": {
           "title": "Files to leave out",
-          "text": "Some files, like temporary ones, should never be copied online. Chosen for you works for nearly everyone."
+          "text": "Skips common temporary files when saving versions. Keep Chosen for you if unsure. It doesn't guarantee that private information stays out of your saved versions.",
+          "expert": "A .gitignore template: patterns Git won't track, like build output and temporary files. It isn't a secrets filter."
         },
         "group:license": {
           "title": "License",
-          "text": "Says what others may do with your work if you share it. No license keeps all rights with you."
+          "text": "Sets the terms for reusing work you share. No license keeps all rights with you. Leave it unchanged if unsure, and read a license's terms before you publish with it.",
+          "expert": "The LICENSE file added to the repository: the terms for reusing the code. No license reserves all rights."
+        },
+        "group:bbProject": {
+          "title": "Project",
+          "text": "Bitbucket keeps every copy in one of the workspace's projects. A private project holds only private copies.",
+          "expert": "Bitbucket Cloud project key, chosen explicitly (the API would otherwise use the workspace's oldest project). Private projects hold only private repositories."
         }
       },
       "ex-repos": {
         "field:q": {
           "title": "Search your Projects",
-          "text": "Type part of a name to find it quickly."
+          "text": "Type part of a name to find it quickly.",
+          "expert": "Filter your repositories by name."
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the Project you pick is copied. The line below shows where the working copy will be kept."
+          "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
+          "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
         }
       },
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep saved versions of your Project without an account. Git is the usual choice; Jujutsu works with Git and makes mistakes easier to undo."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git is the usual choice; pick it if you're not sure. Jujutsu can also undo any step. One of them is always on: 'Not now' below is only about an online copy.",
+          "expert": "Local version control, always Git or Jujutsu for a Project made here. Jujutsu runs colocated with Git, so any Git remote works with either, and its operation log makes every step undoable (jj undo)."
         },
         "backend:git": {
           "title": "Git",
-          "text": "Git is the most common way to keep versions. Recommended. Works with GitHub and every other online service."
+          "text": "The usual way to keep versions. Every online service and most tools work with it. Pick it if you're not sure.",
+          "expert": "Git: commits, branches and the staging index. Pushes to every supported service. The default backend."
         },
         "backend:jujutsu": {
           "title": "Jujutsu",
-          "text": "A newer tool built on Git. Mistakes are easier to undo, and it still works with GitHub and the others."
+          "text": "Records every change as you go and can undo any step, even an undo. It saves in Git's format, so GitHub and the other services still work. Pick it if you like trying things and stepping back.",
+          "expert": "Jujutsu (jj): working-copy-as-a-commit, stable change IDs, bookmarks for branches, and an operation log with jj undo and jj op restore. Colocated with .git, so Git remotes and tools keep working."
         },
         "filesafe": {
           "title": "FileSafe",
-          "text": "Keeps a safety copy of each file before big changes. An extra layer on top of Safe History."
+          "text": "Guards your files while the AI works: it stops risky commands, keeps changes inside this Project, keeps passwords out, and copies a file before changing it. This one switch covers all of it; Settings has each part on its own. Leave it on.",
+          "expert": "The guard layer for agent runs: command blocklist, write scope, security filter, and pre-write safe points before a file is overwritten; blocks are logged. This switch turns all of them on or off together; each has its own setting in Settings."
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy on a website like GitHub. You choose who can see it. Puppet Master only asks for access to the Project you choose."
+          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. Only you see it unless you share it.",
+          "expert": "A remote repository on the service you choose, pushed from your local history; its visibility is set when it is created."
         },
         "backup": {
           "title": "Backup",
-          "text": "A full copy you can restore from, kept somewhere else: a Home NAS over your home network, Google Drive, OneDrive, or another server."
+          "text": "A separate full copy of your Project kept somewhere else, so you can bring it back if this computer is lost or broken. Your Recovery Kit file opens it, so keep that file somewhere other than this computer.",
+          "expert": "An independent, encrypted backup repository at the destination you pick (a NAS over SSH, Google Drive, OneDrive, an S3 or B2 bucket, SFTP or WebDAV), restorable with the Recovery Kit. It is separate from the online copy and from local history."
         },
         "bdest:nas": {
           "title": "Home NAS",
-          "text": "A storage box on your home network keeps the backup. Close by and quick."
+          "text": "A storage box on your home network keeps the backup. Close by and quick, but at home: it doesn't help if your home is the problem.",
+          "expert": "A backup repository on your NAS, reached over SSH (or through its Puppet Master when it runs one). Encrypted before it leaves the work computer."
         },
         "bdest:gdrive": {
           "title": "Google Drive",
-          "text": "Keeps the backup in your Google account. You'll sign in right after your Project is created."
+          "text": "Keeps the backup in your Google account. You'll sign in right after your Project is created.",
+          "expert": "An encrypted backup repository in your Google Drive, through Google's sign-in (OAuth) after the Project is created."
         },
         "bdest:onedrive": {
           "title": "OneDrive",
-          "text": "Keeps the backup in your Microsoft account. You'll sign in right after your Project is created."
+          "text": "Keeps the backup in your Microsoft account. You'll sign in right after your Project is created.",
+          "expert": "An encrypted backup repository in your OneDrive, through Microsoft's sign-in (OAuth) after the Project is created."
         },
         "bdest:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket you rent. Good if you already have one; you add its access details after your Project is created."
+          "title": "A storage bucket",
+          "text": "Cloud storage you rent, like Amazon S3 or Backblaze B2. Pick the service under the card; you add its access details after your Project is created.",
+          "expert": "Object storage: Amazon S3, Backblaze B2 (its S3 API, regional address, application key) or another S3 service at its own address. Keys are added after the Project is created."
         },
         "bdest:sftp": {
           "title": "Another server",
-          "text": "A server you can reach over SFTP or WebDAV keeps the backup, like one at work or a friend's."
+          "text": "A server you can reach over SFTP or WebDAV, like one at work or a friend's. Pick which under the card.",
+          "expert": "sftp (SSH file transfer at sftp://host/path; its host key is checked) or webdav (HTTPS, https://host/path, e.g. Nextcloud). Recorded as its own family."
         },
         "bdest:none": {
           "title": "Not now",
-          "text": "No separate backup for now. Safe History still keeps versions with your Project; add a backup later in Settings."
+          "text": "No separate backup for now. Earlier versions stay on this computer with Safe History, so if this computer is lost, the Project is lost too unless it has an online copy. You can add a backup later in Settings.",
+          "expert": "No backup destination. Local history and any remote stay as they are; nothing protects against losing this computer except a remote. Add a destination later in Settings."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
         }
       },
       "away": {
         "pick:home": {
           "title": "Only at home",
-          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN."
+          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN. Nothing is opened to the internet.",
+          "expert": "LAN or an existing VPN only; no remote route is configured and nothing is exposed publicly."
         },
         "pick:anywhere": {
           "title": "Away from home",
-          "text": "Tailscale connects your devices through a private network. Sign in once to reach your Server while you are away from home."
+          "text": "Tailscale is a private network for your own devices, built into Puppet Master. Sign in once, after you confirm, and the Puppet Master app on your other devices can use it. In a plain web browser, use Remote Link or that device's own Tailscale.",
+          "expert": "Built-in Tailscale connector on the Server and in Puppet Master's own apps; sign in once after Review. A plain browser tab needs Remote Link or the device's own Tailscale."
         },
         "route:headscale": {
           "title": "My own Headscale server",
-          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale."
+          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale. Whoever runs it approves your Server.",
+          "expert": "Self-hosted Headscale control server; the connector enrolls after Review by interactive approval or a one-time key. No Funnel."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "Puts it on a web address you own, like pm.example.com. Puppet Master sets up Caddy with a free certificate."
+          "text": "Puts your Server at a web address you own, like pm.example.com, on the internet. Anyone can find its sign-in page; only devices you pair can use it. Puppet Master writes the settings for your proxy.",
+          "expert": "Public custom-domain route through your reverse proxy (dedicated hostname). Puppet Master generates the proxy configuration; DNS, inbound HTTPS and certificates are yours. Explicit consent; route tests run after Review."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "Puppet Master carries the connection between your devices. Use its private link without changing your network settings."
+          "text": "Your Server makes a link for your other devices. No account, web address or router changes. Each device still needs your approval.",
+          "expert": "Accountless outbound rendezvous (direct or relayed). The Server creates the link after Review; pairing is still required."
         },
         "field:proxy": {
           "title": "Web address",
-          "text": "The address you own and want to use, starting with https://, like https://pm.example.com."
-        },
-        "hosting:generate_for_server": {
-          "title": "Puppet Master sets it up",
-          "text": "Puppet Master sets up the proxy (the program that answers on that address) for you. The easiest way."
+          "text": "The address you own, like https://pm.example.com. It needs a name of its own, with nothing after it.",
+          "expert": "Dedicated https origin for the proxy; no subpath, credentials, query or fragment."
         },
         "hosting:generate_only": {
-          "title": "Only make the settings file",
-          "text": "You get the file to use with a proxy you set up yourself. For people who manage their own."
+          "title": "Make the settings file",
+          "text": "Puppet Master writes the settings file for your proxy, the program that answers on your web address. You add it to your proxy; certificates stay on your side.",
+          "expert": "Exports a Caddy, NGINX or Traefik configuration for this origin; you install it. TLS stays with your proxy (Caddy's automatic HTTPS, or your certificate where the file marks it)."
         },
         "hosting:existing_proxy": {
-          "title": "I already have one",
-          "text": "Your address already points at a proxy you run. Puppet Master just uses it."
-        },
-        "tls:lets_encrypt": {
-          "title": "A free certificate",
-          "text": "The certificate makes the address safe to use (the padlock in your browser). A free one renews by itself."
-        },
-        "tls:existing_certificate": {
-          "title": "My own certificate",
-          "text": "Use a certificate you already have for that address."
+          "title": "I have one already",
+          "text": "Your address already points at a proxy you run, such as Nginx Proxy Manager. Puppet Master checks it reaches your Server.",
+          "expert": "Existing external proxy: Puppet Master tests the route to the Server; nothing is generated and certificates stay yours."
         },
         "group:kind": {
           "title": "Which proxy",
-          "text": "Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported. Pick the one you already use."
+          "text": "Which proxy the settings file is for. Caddy is the default and gets its certificate by itself. Using Nginx Proxy Manager? Choose I have one already.",
+          "expert": "Configuration target: Caddy (default, automatic HTTPS), NGINX or Traefik (the file marks the certificate and key paths). Nginx Proxy Manager is an existing proxy."
         },
-        "field:link": {
-          "title": "Remote Link",
-          "text": "Paste the Remote Link here. Your Server shows it under Settings › Access."
+        "field:headscale": {
+          "title": "Headscale address",
+          "text": "The https:// address of your Headscale server, like https://headscale.example.com.",
+          "expert": "Headscale control URL (https)."
         }
       },
       "review": {
         "group:edit": {
           "title": "Edit",
-          "text": "Goes back to change this choice. Your Project hasn't been created yet."
+          "text": "Goes back to change this choice. Your Project hasn't been created yet.",
+          "expert": "Returns to that step to change it; nothing has been created yet."
         }
       },
       "creating": {
         "retry": {
           "title": "Try again",
-          "text": "Tries the unfinished step again. Work that already finished is kept."
+          "text": "Tries the unfinished step again. Work that already finished is kept.",
+          "expert": "Retries the failed step with the same attempt; completed steps aren't repeated."
         },
         "rename": {
           "title": "Change the name",
-          "text": "Pick another name for the online copy, since that one is already used there."
+          "text": "Pick another name for the online copy, since that one is already used there.",
+          "expert": "The repository name is taken on the service: choose another name and the attempt resumes."
         },
         "skipOnline": {
           "title": "Skip the online copy",
-          "text": "Finish without the online copy. You can add one later from Settings."
+          "text": "Finish without the online copy. You can add one later from Settings.",
+          "expert": "Finishes without creating the remote repository; add a remote later in Settings."
         },
         "askSkip": {
           "title": "Skip the online copy",
-          "text": "Finish without the online copy. You can add one later from Settings."
+          "text": "Finish without the online copy. You can add one later from Settings.",
+          "expert": "Finishes without creating the remote repository; add a remote later in Settings."
         },
         "confirmDelete": {
           "title": "Delete the online copy",
-          "text": "Deletes only the online copy named here. This can't be undone; your files here are kept."
+          "text": "Deletes only the online copy named here. This can't be undone; your files here are kept.",
+          "expert": "Deletes only the remote repository named here, on the service. Irreversible; local files are kept."
         },
         "cancelDelete": {
           "title": "Keep it",
-          "text": "Keeps the online copy and returns to the recovery choices."
+          "text": "Keeps the online copy and returns to the recovery choices.",
+          "expert": "Keeps the remote repository and returns to the recovery choices."
         },
         "continueSetup": {
           "title": "Continue Setup",
-          "text": "Picks up the setup where it stopped, using the online copy that was already made."
+          "text": "Picks up the setup where it stopped, using the online copy that was already made.",
+          "expert": "Resumes the setup from where it stopped, binding the remote repository that was already created."
         },
         "openRepo": {
           "title": "Open the online copy",
-          "text": "Opens the online copy on its website, so you can see what was made."
+          "text": "Opens the online copy on its website, so you can see what was made.",
+          "expert": "Opens the created remote repository on the service."
         },
         "deleteRepo": {
           "title": "Delete the online copy",
-          "text": "Deletes only the online copy, and can't be undone. Your files here are not touched."
+          "text": "Deletes only the online copy, and can't be undone. Your files here are not touched.",
+          "expert": "Deletes only the remote repository on the service; irreversible. Local files are not touched."
         },
         "checkAgain": {
           "title": "Check again",
-          "text": "Asks the service again how the setup went. Nothing is retried or deleted on its own."
+          "text": "Asks the service again how the setup went. Nothing is retried or deleted on its own.",
+          "expert": "Asks the service again for the outcome of the setup; nothing is retried or deleted on its own."
         },
         "reviewAgain": {
           "title": "Review setup again",
-          "text": "Goes back to the review to start a fresh attempt. The old one is never reused."
+          "text": "Goes back to the review to start a fresh attempt. The old one is never reused.",
+          "expert": "Back to Review for a fresh attempt with a new idempotency key; the old attempt is never reused."
         }
       },
       "protect": {
         "step:signin": {
           "title": "Sign in or connect",
-          "text": "Lets Puppet Master reach the place your backups go. You do it once."
+          "text": "Lets Puppet Master reach the place your backups go. You do it once.",
+          "expert": "Authenticates to the backup destination once: SSH to the NAS, the service's sign-in, or the bucket's access key."
         },
         "step:test": {
           "title": "Run a quick test",
-          "text": "Makes a small backup and reads it back, to prove it works before you rely on it."
+          "text": "Makes a small backup and reads it back, to prove it works before you rely on it.",
+          "expert": "Writes a small test backup to the destination and reads it back before anything relies on it."
         },
         "step:kit": {
           "title": "Save your Recovery Kit",
-          "text": "The Recovery Kit is the only way back in if this computer is lost. Keep it somewhere safe, like a password manager."
+          "text": "Your Recovery Kit holds the key that unlocks your backups, not the backup itself. Keep a copy somewhere you can reach if this computer is lost, like a password manager. Anyone with the kit and the backup can open it. If every copy is lost, Puppet Master can't open the backup.",
+          "expert": "Delivers the Backup Recovery Key in your Recovery Kit (save, copy or print), once. There is no escrow: if every copy of the key is lost, the backups can't be decrypted. Keep it off the computer it protects."
         },
         "step:kitTest": {
           "title": "Check your Recovery Kit",
-          "text": "Opens the backup with the kit you saved, so you know it is the right one before you need it."
+          "text": "Opens the backup with the kit you saved, so you know it is the right one before you need it.",
+          "expert": "Proves the saved kit unlocks the backup repository read-only before you need it."
         },
         "step:policy": {
           "title": "Turn on daily backups",
-          "text": "Turns on an automatic backup each night, while the computer doing the work and the backup place are available."
+          "text": "Turns on automatic backups on a schedule, run while the computer doing the work and the backup place can be reached.",
+          "expert": "Enables the backup schedule for this Project; runs happen while the work computer and the destination are reachable."
         },
         "stepUp": {
           "title": "Confirm it's you",
-          "text": "The kit is shown only to you, once, on this device. This makes sure it is really you asking."
+          "text": "The kit is shown only to you, once, on this device. This makes sure it is really you asking.",
+          "expert": "A step-up confirmation before the Recovery Kit is shown: it is shown once, on this device, only to you."
         },
         "later": {
           "title": "Do this later",
-          "text": "Your Project is ready either way. Backups wait until you finish these steps."
+          "text": "Your Project is ready either way. Backups stay off until you finish these steps.",
+          "expert": "The Project is ready either way; the backup stays off until these steps are finished."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
+        },
+        "accTemp": {
+          "title": "Temporary keys",
+          "text": "Keys that expire, such as ones from a company sign-in, come with a session token. Add it if yours has one.",
+          "expert": "AWS STS temporary credentials: access key ID, secret access key and session token, all three sent through the credential owner."
         }
       },
       "ai": {
         "all": {
           "title": "See all providers",
-          "text": "Every AI Puppet Master works with, in two groups: monthly plans and pay-as-you-go accounts."
+          "text": "The full list, in three groups: plans you pay for, keys billed by what you use, and your own server. An AI provider is the company your assistant uses.",
+          "expert": "All providers in this concept, grouped as subscriptions, API billing, and self-run servers."
         },
         "none": {
           "title": "I don't have any of these",
-          "text": "No AI account yet? Shows the kinds there are, so you can pick one that suits you."
+          "text": "No AI account yet? Shows the kinds there are, so you can pick one that suits you.",
+          "expert": "Help choosing a first provider: a subscription, an API account, or free models."
         },
         "skip": {
           "title": "Skip for now",
-          "text": "Puppet Master can't plan or work until an AI is added. Add one any time from Settings."
+          "text": "Puppet Master can't plan or work until an AI is added. Add one any time from Settings.",
+          "expert": "Continues without a provider; planning and agent runs need one. Add it later in Settings."
         },
         "free": {
           "title": "Set Up Free Models",
-          "text": "Add free options for suitable tasks. Availability and limits can vary, and your paid accounts are used first."
+          "text": "Adds free options with limits for suitable tasks. Their limits can change. Your paid accounts are used first by default; change that in Settings.",
+          "expert": "Adds Free Models routes, each set up through its own provider's account. Paid accounts are preferred by default; the priorities are in Settings."
         },
         "group:install": {
           "title": "Install",
-          "text": "This AI needs its own app on the computer that does the work. Puppet Master uses the maker's official installer."
+          "text": "This AI needs its own app on the computer that does the work. Puppet Master installs it with the maker's official installer, only when you choose Install.",
+          "expert": "Explicit, consented install of the vendor CLI on the exact execution host from its official source; the CLI then owns its sign-in there."
         }
       },
       "ai-all": {
         "field:q": {
           "title": "Search",
-          "text": "Type a name, like Claude, Gemini or OpenCode, to find it quickly."
+          "text": "Type a name, like Claude, Gemini or OpenCode, to find it quickly.",
+          "expert": "Filter providers by name."
         }
       },
       "ai-none": {
         "pick:sub": {
           "title": "A monthly plan",
-          "text": "Like Claude or ChatGPT. One price each month, and the simplest place to start."
+          "text": "A plan you subscribe to, like Claude or ChatGPT.",
+          "expert": "A subscription account (Claude, ChatGPT and others)."
         },
         "pick:api": {
           "title": "Pay as you go",
-          "text": "Like the Anthropic or Gemini API. You pay for what you use, which suits light or occasional use."
+          "text": "Like the Anthropic or Gemini API. You pay for what you use, so the cost goes up and down with how much you use it.",
+          "expert": "A pay-as-you-go API account (Anthropic API, Gemini API): billed per token, authenticated with an API key."
         },
         "pick:free": {
           "title": "Free Models",
-          "text": "Free options with limits. Good for trying things out before you pay for anything."
+          "text": "Free options with limits. Good for trying things out before you pay for anything.",
+          "expert": "Free model routes with rate limits and changing availability; useful to try things out."
         },
         "group:signup": {
           "title": "Sign-up pages",
-          "text": "Opens that company's own sign-up page in your browser. Come back here once you have an account."
+          "text": "Opens that company's own sign-up page in your browser. When you come back, it's at the top of the list.",
+          "expert": "Opens the provider's sign-up page; on return the AI step lists that provider first."
         }
       },
       "free": {
         "route:free-openrouter": {
           "title": "OpenRouter free models",
-          "text": "A site that offers several AI models for free, with limits. You sign in on its page."
+          "text": "OpenRouter's free models: free to use, with a small daily limit. You sign in on OpenRouter's page.",
+          "expert": "OpenRouter :free model variants through OpenRouter sign-in; per-minute and per-day request limits depend on credit bought."
         },
         "route:free-github-models": {
           "title": "GitHub Models",
-          "text": "Free AI from GitHub, with limits. Uses your GitHub account, so it is ready by itself once you sign in to GitHub here."
-        },
-        "route:free-cerebras": {
-          "title": "Cerebras free tier",
-          "text": "Cerebras's free option, known for quick answers. Limits apply."
+          "text": "GitHub closed this service. Choose another route.",
+          "expert": "GitHub Models was fully retired on July 30, 2026; shown only as No longer available for a saved choice."
         },
         "route:free-groq": {
-          "title": "Groq free tier",
-          "text": "Groq's free option. It is popular, so it can be busy for a while."
-        },
-        "route:free-hf": {
-          "title": "Hugging Face Inference",
-          "text": "Free AI from Hugging Face, a big library of models. Limits apply."
+          "title": "Groq free plan",
+          "text": "Groq's free plan, with limits. Get a key from Groq's console. When a limit is reached, it waits for it to reset.",
+          "expert": "Groq Free plan with a Groq API key; a 429 carries retry-after and reset headers. Retry now, never a reconnect."
         },
         "attribution": {
           "title": "Where this list comes from",
-          "text": "The free model list is based on a community list. Opens it in your browser."
+          "text": "The free model list is based on a community list. Opens it in your browser.",
+          "expert": "The free route list is based on a community-maintained list; opens it in your browser."
+        },
+        "route:free-nvidia": {
+          "title": "NVIDIA free models",
+          "text": "Free AI models from NVIDIA, with limits. Get a key from NVIDIA's API catalog.",
+          "expert": "NVIDIA API catalog (NIM) endpoints with free inference for listed models; an NVIDIA API key; rate limits apply."
+        },
+        "group:route": {
+          "title": "Free option",
+          "text": "A free option from the community list. Set it up with that company's key or sign-in, or just turn it on where none is needed.",
+          "expert": "A free route from free-coding-models (v0.6.0), set up through its own provider's key, sign-in, or no credential; limits are the provider's."
         }
       },
       "ready": {
         "summary:free": {
           "title": "Free Models",
-          "text": "Free options with limits, good for trying things out. Your paid accounts are always used first."
+          "text": "Free options with limits, good for trying things out.",
+          "expert": "Free model routes with rate limits."
         },
         "summary:backup": {
           "title": "Backup",
-          "text": "A full copy of your Project kept somewhere else. Not set up yet? Add one any time in Settings."
+          "text": "A separate copy of your Project kept somewhere else, so you can get it back if this computer is lost. Saved versions on the same computer can be lost with it. Not set up yet? Add one in Settings.",
+          "expert": "An encrypted backup repository at another destination. Not set up yet? Add one in Settings."
         },
         "createNow": {
           "title": "Create a Project now",
-          "text": "Goes back to make your first Project now. What you already set up stays as it is."
+          "text": "Goes back to make your first Project now. What you already set up stays as it is.",
+          "expert": "Returns to Begin to create the first Project now; what's already set up is kept."
         }
       },
       "nas-find": {
         "method:ssh": {
           "title": "SSH",
-          "text": "Recommended. A secure way to reach the device. Puppet Master uses a key, so no password is kept."
+          "text": "Recommended. A secure way to reach the device. Puppet Master uses a key, so no password is kept.",
+          "expert": "SSH (SFTP for files), with a key; host identity checked first. Recommended."
         },
         "method:smb": {
           "title": "SMB",
-          "text": "Windows and Mac file sharing. Pick it for a shared folder you already open from your computer."
+          "text": "Windows and Mac file sharing. Pick it for a shared folder you already open from your computer.",
+          "expert": "SMB (CIFS) file sharing, as Windows and macOS mount it."
         },
         "method:nfs": {
           "title": "NFS",
-          "text": "File sharing many NAS devices and Linux computers use. Pick it if your device shares that way."
+          "text": "File sharing many NAS devices and Linux computers use. Pick it if your device shares that way.",
+          "expert": "An NFS export from the NAS or a Linux machine."
         },
         "method:mounted": {
           "title": "Already connected",
-          "text": "A drive this computer already shows in its file browser. Nothing more to connect."
+          "text": "A drive the computer doing the work already has connected. Nothing more to connect.",
+          "expert": "An existing OS mount on the computer that does the work (this computer, or the Server); no new credentials."
         },
         "group:device": {
           "title": "Choose a device",
-          "text": "Devices Puppet Master found on your network. Nothing is changed by looking."
+          "text": "Devices Puppet Master found on your network. Nothing is changed by looking.",
+          "expert": "Devices found on your network by read-only discovery."
         },
         "field:addr": {
           "title": "Address",
-          "text": "Where to reach the device, like 192.168.1.20 or nas.local."
+          "text": "Where to reach the device, like 192.168.1.20 or nas.local.",
+          "expert": "The device's hostname or IP address, like 192.168.1.20 or nas.local."
         },
         "field:port": {
           "title": "Port",
-          "text": "The door number SSH answers on. Leave it at 22 unless whoever set up the device changed it."
+          "text": "The door number SSH answers on, from 1 to 65535. Leave it at 22 unless whoever set up the device changed it.",
+          "expert": "SSH TCP port, 1–65535 (default 22). Changing it means the device's identity is checked again."
         },
         "manualOn": {
           "title": "Type an address instead",
-          "text": "Enter its address yourself if the device does not show up."
+          "text": "Enter its address yourself if the device does not show up.",
+          "expert": "Enter the device's hostname or IP address yourself."
         },
         "group:share": {
           "title": "Shared folders found",
-          "text": "Folders the device shares on your network. Pick the one with the files."
+          "text": "Folders the device shares on your network. Pick the one with the files.",
+          "expert": "SMB or NFS shares the device exports."
         },
         "group:volume": {
           "title": "Connected drives",
-          "text": "Drives this computer already shows in its file browser."
+          "text": "Drives the computer doing the work already has connected. Pick the one with the files.",
+          "expert": "Existing mounts on the connecting computer (this computer, or the Server); the next step checks it can read them."
+        },
+        "field:shareText": {
+          "title": "Shared folder address",
+          "text": "Type where the shared folder is if it wasn't found: //computer/folder for a shared folder, or computer:/path for NFS.",
+          "expert": "SMB UNC path (//host/share) or NFS export (host:/path), opened from the computer that does the work."
+        },
+        "shareManual:on": {
+          "title": "Type its address instead",
+          "text": "For a shared folder that didn't show up in the list.",
+          "expert": "Enter an SMB share or NFS export that discovery didn't list."
+        },
+        "shareManual:off": {
+          "title": "Show the shares found",
+          "text": "Back to the shared folders Puppet Master found on your network.",
+          "expert": "Return to the discovered shares."
         }
       },
       "nas-identity": {
         "trust": {
           "title": "Yes, this is my device",
-          "text": "Every device has its own picture. Choose this when it matches what your device shows in its settings."
+          "text": "Check this device's identity using information you already trust, like its own settings or whoever set it up. Choose this only when they match. If you can't confirm it, stop.",
+          "expert": "Trusts this SSH host key after you compare its fingerprint (shown as a picture and words) with one you already trust, like the device's own settings or its owner."
         },
         "trustNew": {
           "title": "Trust the new ID",
-          "text": "Only if you reset the device yourself. Otherwise something may be pretending to be it, so stop."
+          "text": "Only if you reset the device yourself. Otherwise something may be pretending to be it, so stop.",
+          "expert": "Accepts a changed host key. Only after a reset or reinstall you made yourself; otherwise this may be a man-in-the-middle."
         },
         "stop": {
           "title": "Stop",
-          "text": "Stops here and connects to nothing. The safe choice when you didn't reset the device."
+          "text": "Stops here and connects to nothing. The safe choice when you didn't reset the device.",
+          "expert": "Stops without connecting; nothing is trusted."
         }
       },
       "nas-key": {
         "group:pick": {
           "title": "Choose a key",
-          "text": "A key lets Puppet Master connect without a password. These are on the computer that will connect. Only the public half of each key is read: a private key is never read, copied or stored, and stays where it is."
+          "text": "A key lets Puppet Master connect without a password. Pick one marked Already works, or make a new key. Only the safe-to-share half of a key is read.",
+          "expert": "SSH keys on the computer that will connect (~/.ssh files and agent keys), each tested; only public keys are read."
         },
         "pick:new": {
           "title": "Make a new key",
-          "text": "A key just for Puppet Master. Easy to remove later, and it doesn't touch your other keys."
+          "text": "A key just for Puppet Master. Easy to remove later, and it doesn't touch your other keys.",
+          "expert": "Generates an ed25519 key pair just for Puppet Master; easy to revoke, and other keys are untouched."
         },
         "field:pass": {
           "title": "Passphrase",
-          "text": "The password that locks this key. It unlocks the key on this computer and isn't saved."
+          "text": "The password that locks this key. It unlocks the key on this computer and isn't saved.",
+          "expert": "The key's passphrase, to decrypt the private key on this computer; not stored."
+        },
+        "field:sshUser": {
+          "title": "Account",
+          "text": "The account on the device that Puppet Master signs in to, usually your own. A key works for one account.",
+          "expert": "Remote SSH user. Keys are tested and added for this account; another account is another connection."
+        },
+        "userEdit": {
+          "title": "Change the account",
+          "text": "Sign in to the device as a different account. The keys are tested again for it.",
+          "expert": "Change the SSH user; key tests rerun for the new user@host:port."
         }
       },
       "nas-signin": {
         "field:user": {
           "title": "Username",
-          "text": "The name you use for the device's web page."
+          "text": "The account allowed to connect to this device with SSH. It can be different from the one for the device's web page; ask its owner if you don't know it.",
+          "expert": "The SSH account on the device (it can differ from its web login)."
         },
         "field:pw": {
           "title": "Password",
-          "text": "Used once to add your key. Never saved. After this, no password is needed."
+          "text": "Used once to add your key. Never saved. After this, no password is needed.",
+          "expert": "The account's password, used once to install the public key into ~/.ssh/authorized_keys; not stored."
         },
         "selfOn": {
           "title": "I'll add the key myself",
-          "text": "Shows the line to add to the device yourself, so you never type your password here."
+          "text": "Shows the line to add to the device yourself, so you never type your password here.",
+          "expert": "Shows the public key line to append to ~/.ssh/authorized_keys on the device yourself."
         },
         "selfOff": {
           "title": "Add it for me",
-          "text": "Puppet Master adds the key for you with your password, used once and never saved."
+          "text": "Puppet Master adds the key for you with your password, used once and never saved.",
+          "expert": "Puppet Master installs the public key for you, using the password once."
         },
         "copy:pub": {
           "title": "Copy the key line",
-          "text": "Copies the public half of your key, the part that is safe to share, to add on the device."
+          "text": "Copies the public half of your key, the part that is safe to share, to add on the device.",
+          "expert": "Copies the public key line (safe to share)."
         }
       },
       "nas-install": {
         "fixPerms": {
           "title": "Fix the folder permissions",
-          "text": "The device refused the key because its home folder is shared too widely. This tightens it so the key works."
+          "text": "The device refused the key because its home folder is shared too widely. This tightens it so the key works.",
+          "expert": "sshd refused the key because the home directory is group- or world-writable (StrictModes); this tightens those permissions."
         }
       },
       "nas-pmpair": {
         "useSsh": {
           "title": "Use SSH instead",
-          "text": "Connect with a key instead of pairing. Only needed if you would rather not pair with its Puppet Master."
+          "text": "Connect with a key instead of pairing. Only needed if you would rather not pair with its Puppet Master.",
+          "expert": "Use SSH with a key instead of pairing with the device's Puppet Master."
         },
         "another": {
           "title": "Choose another way",
-          "text": "Pick a different way to approve this computer, like a code instead of a request."
+          "text": "Pick a different way to approve this computer, like a code instead of a request.",
+          "expert": "Choose another pairing method (code or QR instead of approval)."
         },
         "field:pmcode": {
           "title": "Code from the device",
-          "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4."
+          "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4.",
+          "expert": "The one-time pairing code the device's Puppet Master shows (8 characters)."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks for the request to be shown again, if you missed it."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "nas-folder": {
         "group:cd": {
           "title": "Choose a folder",
-          "text": "Open folders to find the right one. Read-only folders cannot hold a Project."
+          "text": "Open folders to find the right one. Read-only folders cannot hold a Project.",
+          "expert": "Browse the device's folders over SFTP; a folder must be writable by the SSH account to hold a Project."
         },
         "adding": {
           "title": "New folder",
-          "text": "Makes a fresh folder for the Project. It is made when you create the Project."
+          "text": "Makes a fresh folder for the Project. It is made when you create the Project.",
+          "expert": "Creates a new folder for the Project when the Project is created."
         },
         "field:newName": {
           "title": "Folder name",
-          "text": "A name for the new folder, like the Project name."
+          "text": "A name for the new folder, like the Project name.",
+          "expert": "The new folder's name."
         }
       },
       "nas-smb": {
         "field:user": {
           "title": "Username",
-          "text": "The name you use for the shared folder. Your sign-in stays in your computer's password store."
+          "text": "The name you use for the shared folder. The computer doing the work keeps the sign-in in its own password store.",
+          "expert": "SMB account on the share; the credential is held by the connecting computer's keychain or credential store."
         },
         "field:pw": {
           "title": "Password",
-          "text": "The password for the shared folder. It stays in your computer's password store, not in Puppet Master."
+          "text": "The password for the shared folder. The computer doing the work keeps it in its own password store, not Puppet Master.",
+          "expert": "SMB password, handed to the connecting computer's credential store; never saved by Puppet Master."
+        },
+        "field:domain": {
+          "title": "Domain or workgroup",
+          "text": "Only on some work networks. Leave it empty at home.",
+          "expert": "Optional SMB domain/workgroup for the account (DOMAIN\\user)."
         }
       },
       "nas-mounted": {
-        "group:volume": {
-          "title": "Choose the drive",
-          "text": "Drives this computer already shows in its file browser. Pick the one that holds the Project."
+        "other": {
+          "title": "Choose another drive",
+          "text": "Go back and pick a different connected drive.",
+          "expert": "Return to the drive list."
+        }
+      },
+      "away-setup": {
+        "start": {
+          "title": "Set it up",
+          "text": "Starts setting up the way you chose to reach your Server away from home. Each step says what it is doing.",
+          "expert": "Starts the Remote Access owner's setup for the reviewed route; each step is a separate owner command."
+        },
+        "later": {
+          "title": "Do this later",
+          "text": "Stops here without setting it up. Everything else keeps working at home. Finish it any time in Settings.",
+          "expert": "Leaves the route not set up; Settings › Server & Project Location › Away From Home resumes it."
+        },
+        "person:tsSignIn": {
+          "title": "Sign in to Tailscale",
+          "text": "Opens Tailscale's own sign-in page. Your Tailscale password is never typed into Puppet Master.",
+          "expert": "Opens Tailscale's protected authorization page; Puppet Master never sees the credentials."
+        },
+        "person:hsApproved": {
+          "title": "It's approved",
+          "text": "Press this once whoever runs your Headscale server has let your Server in.",
+          "expert": "Continue after the Headscale administrator approves the node registration."
+        },
+        "person:installed": {
+          "title": "I've added it",
+          "text": "Press this once the settings file is in your proxy. Puppet Master then checks it works.",
+          "expert": "Continue to the reach, certificate and live-connection tests after installing the exported configuration."
         }
       }
     },
@@ -1175,7 +1634,7 @@
         "enter": "Where shall we do the work?",
         "pick:this": "Right here works great.",
         "pick:connect": "Let's tie your devices together.",
-        "pick:server": "A server never sleeps. Lucky thing.",
+        "pick:server": "A Server that stays on can work while you're away.",
         "checking": "Just checking this computer…",
         "checked": "Plenty of room. All good!",
         "offline": "No internet? Local work still works."
@@ -1186,7 +1645,7 @@
         "group:pickServer": "That one? I'll string us together.",
         "route:local_or_vpn": "Same network. Nice and close.",
         "route:tailscale": "Tailscale reaches it from anywhere.",
-        "route:reverse_proxy": "Your own web address. Fancy.",
+        "route:reverse_proxy": "Your own web address, then.",
         "route:remote_link": "A Remote Link? Paste it in.",
         "typing": "Type it in. I'll go and knock."
       },
@@ -1212,8 +1671,8 @@
       },
       "s-kind": {
         "enter": "What kind of computer will it be?",
-        "kind:nas": "A NAS! It never takes a nap.",
-        "kind:cloud": "A computer in the clouds. Ooh.",
+        "kind:nas": "A NAS that stays on. A good home.",
+        "kind:cloud": "A computer you rent online.",
         "kind:pc": "Another computer that stays on. Handy."
       },
       "s-wait": {
@@ -1287,7 +1746,7 @@
         "group:suggest": "Ooh, good one.",
         "loc:auto": "In Documents. Easy to find.",
         "loc:custom": "Somewhere else? Show me where.",
-        "loc:network": "On the network drive. Fancy.",
+        "loc:network": "On the network drive, then.",
         "storage:with_server": "Right next to the work. Smart.",
         "storage:this_device": "Kept here, worked on there.",
         "storage:network_location": "On a shared drive. Got it."
@@ -1300,9 +1759,9 @@
       "online-service": {
         "enter": "Where should the copy live?",
         "enterSource": "Where is it kept online?",
-        "pick:github": "GitHub. Free and very popular.",
+        "pick:github": "GitHub. Free and widely used.",
         "pick:gitlab": "GitLab. A good home for it.",
-        "pick:azure_devops": "Azure DevOps. Very proper.",
+        "pick:azure_devops": "Azure DevOps, then.",
         "pick:bitbucket_cloud": "Bitbucket. In it goes.",
         "pick:forgejo": "Forgejo. Where shall we find yours?",
         "pick:gitea": "Gitea. Small and tidy.",
@@ -1323,9 +1782,9 @@
         "enter": "This is its name online.",
         "typing": "Ooh, a name for the copy.",
         "available": "That name's free. Lovely.",
-        "vis:private": "Just you, and who you invite.",
-        "vis:public": "Everyone can see this copy.",
-        "vis:internal": "Only your organization. Cosy."
+        "vis:private": "Only you? Then just you, and who you invite.",
+        "vis:public": "Everyone? Then anyone online can see it.",
+        "vis:internal": "Your organisation? Then only its people see it."
       },
       "ex-repos": {
         "enter": "Which Project shall I fetch?",
@@ -1346,9 +1805,9 @@
         "backup": "A backup box. Sensible.",
         "bdest:nas": "On your home NAS. Close by.",
         "bdest:gdrive": "Google Drive. Up it goes.",
-        "bdest:onedrive": "OneDrive. Safe in the cloud.",
-        "bdest:s3": "A bucket! I love a bucket.",
-        "bdest:sftp": "Another server. Very safe.",
+        "bdest:onedrive": "OneDrive, then.",
+        "bdest:s3": "A bucket you rent. Its details come later.",
+        "bdest:sftp": "Another server you can reach.",
         "bdest:none": "Not now? Later's fine.",
         "sync": "Your other devices will see it too."
       },
@@ -1358,7 +1817,7 @@
         "pick:anywhere": "I'll come with you. Anywhere.",
         "route:headscale": "Your own Headscale. Very handy.",
         "route:reverse_proxy": "Your own web address. Smart.",
-        "route:remote_link": "A private link through the relay.",
+        "route:remote_link": "A Remote Link, then.",
         "typing": "Ooh, an address. Type away."
       },
       "review": {
@@ -1406,12 +1865,12 @@
         "free": "Free models? Good for a start."
       },
       "ai-all": {
-        "enter": "Every AI I can work with.",
+        "enter": "Here's everyone I know. Find yours.",
         "typing": "Ooh, who are we looking for?"
       },
       "ai-none": {
         "enter": "No AI yet? That's fine.",
-        "pick:sub": "One price a month. Simple.",
+        "pick:sub": "A plan with included use. Simple.",
         "pick:api": "Pay for what you use. Fair.",
         "pick:free": "Free! With a few limits."
       },
@@ -1496,6 +1955,8 @@
         "folder": "Which folder? Pick one first.",
         "repository": "Pick the online Project first.",
         "backup": "Which backup? Pick one first.",
+        "kit": "Which Recovery Kit? Pick it and I'll read it.",
+        "backupFolder": "Which folder is the backup in?",
         "storage": "Where should the files go?",
         "signin": "Sign in first, then on we go.",
         "server": "Pick your Puppet Master first.",
@@ -1532,6 +1993,9 @@
       "restore": {
         "unlock": {
           "wrong": "Hmm, those words don't unlock it."
+        },
+        "preview": {
+          "failed": "Oh. It stopped. Nothing was changed."
         }
       },
       "protect": {
@@ -1568,6 +2032,9 @@
         },
         "folder": {
           "readOnly": "I can't write in that folder."
+        },
+        "smb": {
+          "wrong": "Hmm, it didn't take that password."
         }
       },
       "online": {
@@ -1630,7 +2097,7 @@
         "unavailable": "That account isn't on this computer."
       },
       "free": {
-        "limited": "That one's busy right now. Too popular!"
+        "limited": "That one's reached its limit for now."
       }
     },
     "cheer": {
@@ -1644,6 +2111,8 @@
         "folder": "Got the folder!",
         "repository": "That's the one!",
         "backup": "Found the backup!",
+        "kit": "Got the kit! It knows the way.",
+        "backupFolder": "That folder? Let's look inside.",
         "storage": "A good home for them.",
         "signin": "Signed in. Onward!",
         "server": "That's the one!",
@@ -1680,6 +2149,9 @@
       "restore": {
         "unlock": {
           "wrong": "Unlocked! Well remembered."
+        },
+        "preview": {
+          "failed": "All back this time!"
         }
       },
       "protect": {
@@ -1716,6 +2188,9 @@
         },
         "folder": {
           "readOnly": "This one's writable. Good."
+        },
+        "smb": {
+          "wrong": "In! The folder opened."
         }
       },
       "online": {
@@ -1778,7 +2253,7 @@
         "unavailable": "Signed in. All set!"
       },
       "free": {
-        "limited": "Reconnected. Ready!"
+        "limited": "Its limit reset. Ready!"
       }
     },
     "oopsAny": {

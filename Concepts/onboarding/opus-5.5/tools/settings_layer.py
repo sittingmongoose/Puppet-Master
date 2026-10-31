@@ -251,6 +251,22 @@ def web_font_checks(src: Path) -> list[str]:
     return problems
 
 
+def check_retire_ids(retired: set, active: set, inventory_doc: dict, row_ids: set, need) -> None:
+    """A retired id (placement `retire_ids`) names either a row the reference holds (active), or an input the canonical
+    inventory lists at its root as `retired_input_ids`: migration-only metadata outside its active `settings` rows, read
+    once and never written (Q22: `general.visual.nier-mode`). Such an input has no active inventory row and no row
+    decision here (o55/rows.d), so nothing draws or writes it. Any other id is refused, as before. Builds both with an
+    inventory that still holds the row and has no root key, and with one that lists the id at its root instead."""
+    retired_inputs = set(inventory_doc.get('retired_input_ids') or [])
+    canon_rows = {r['id'] for r in inventory_doc.get('settings', []) if isinstance(r, dict) and 'id' in r}
+    for rid in sorted(retired_inputs):
+        need(rid not in canon_rows, f'O55 placement: retired input {rid} is still an active inventory row')
+    for rid in sorted(retired):
+        need(rid in active or rid in retired_inputs, f'O55 placement: retire_ids names unknown id {rid}')
+        if rid in retired_inputs and rid not in active:
+            need(rid not in row_ids, f'O55 placement: retired input {rid} still has a row decision in o55/rows.d')
+
+
 def validate(merged: dict, engine: str, t50, need) -> dict:
     """The kit resolves every canonical id first-match-wins (hand-rendered, then the first override rule that names or
     globs it, then its subgroup, then its page default); a placement.d patch's rules come first, so it can re-home ids a
@@ -288,8 +304,9 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
     hand = set(t50.HAND_CANONICAL_RE.findall(engine))
     rules = merged.get('overrides', [])
     retired = set(merged.get('retire_ids', []))
+    inventory_doc = json.loads(inventory.read_text(encoding='utf-8')) if inventory.exists() else {}
+    check_retire_ids(retired, set(by_id), inventory_doc, set(o55_data()['rows']['rows']), need)
     for rid in sorted(retired):
-        need(rid in by_id, f'O55 placement: retire_ids names unknown id {rid}')
         need(rid not in hand, f'O55 placement: retired id {rid} is drawn by a hand page')
         need(not any(rid in r.get('ids', []) for r in rules), f'O55 placement: retired id {rid} is still named by a rule')
     wins = [0] * len(rules)
@@ -428,7 +445,7 @@ def apply(doc: str, need) -> tuple[str, dict]:
 
     # The explicit demo fixture supplies the same atomic restore transaction that a connected owner must supply.
     # Keep it inside the existing adapter: no second settings store and no mock production registry.
-    reset_anchor = '  function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}'
+    reset_anchor = '  function reset(){var k=key();if(k)try{projectStore.removeItem(k);}catch(_e){}}'
     need(js.count(reset_anchor) == 1, 'O55 settings: demo restore adapter anchor drift')
     js = js.replace(reset_anchor, (PKG / 'tools' / 'settings_restore.js').read_text(encoding='utf-8') + '\n' + reset_anchor, 1)
     band_js = lambda value: json.dumps(value, ensure_ascii=False, indent=2)

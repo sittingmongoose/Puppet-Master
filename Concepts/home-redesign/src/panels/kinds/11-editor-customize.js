@@ -1178,7 +1178,7 @@ function open(opts) {
     if (focusRow && row) row.focus({ preventScroll: true });
   }
   /* the name a token colour belongs to: the scheme's, or the look's own colours under Follow look ('Basic dark') */
-  var LOOK_NAME = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR Mode' };
+  var LOOK_NAME = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
   function tokOwner(I) {
     var m = /^look:([a-z]+)-(light|dark)$/.exec(I.key);
     return m ? { name: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2], own: 'The look’s own', lead: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2] + '’s own colours' } : { name: I.scheme, own: 'The scheme’s own', lead: I.scheme };

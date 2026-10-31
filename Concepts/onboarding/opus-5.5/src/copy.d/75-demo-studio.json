@@ -103,8 +103,8 @@
         "sub": "Agents open things, notices arrive and Usage plays the next hour."
       },
       "nierTour": {
-        "title": "The tour in NieR Mode",
-        "sub": "NieR Mode on, then the Guided Tour with Pod 042."
+        "title": "The tour in NieR",
+        "sub": "The NieR theme, then the Guided Tour with Pod 042."
       },
       "chatWork": {
         "title": "Watch the assistant work",
@@ -285,6 +285,14 @@
         "noAi": {
           "title": "No AI account anywhere",
           "sub": "Nothing signed in on this computer or the Server."
+        },
+        "claudeExpired": {
+          "title": "Claude sign-in expired",
+          "sub": "Claude was signed in here before; that sign-in has expired, so it asks to sign in again."
+        },
+        "aiOffline": {
+          "title": "Offline once during AI setup",
+          "sub": "The first sign-in or key check finds no connection and says so; the next try works."
         },
         "antigravityOnce": {
           "title": "Antigravity sign-in fails once",

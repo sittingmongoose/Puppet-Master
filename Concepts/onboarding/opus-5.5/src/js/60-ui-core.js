@@ -43,7 +43,7 @@
       + `<div class="o55-win" role="dialog" aria-modal="true" aria-labelledby="o55-h">`
       + `<header class="o55-head"><div class="o55-brand" aria-hidden="true">${logo()}<span>${U.esc(T('chrome.brand'))}</span></div>`
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
-      + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
+      + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-talkslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint') + (O55.tips && O55.tips.of('close', 'chrome') ? '\n' + O55.tips.of('close', 'chrome').text : ''))}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
@@ -503,7 +503,8 @@
     if (cheer) st.cheer(spec.target, { mood: 'happy', hold: 1800 });
     /* the ? note on the stage, when the stage can hold it (a wide window); otherwise it opens in the form */
     const t = S.tip && holdsTip() ? O55.tips.of(S.tip.id) : null;
-    st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null);
+    /* (a switch of Plain English and Expert puts the other version in place at once: no retyping, no jump) */
+    st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
   O55.pipStage.holdsTip = holdsTip;
@@ -683,12 +684,22 @@
     slot.innerHTML = html;
     if (had) { const el = had === 'btn' ? slot.querySelector('.o55-lookbtn') : slot.querySelector(`[data-arg="${had}"]`); if (el) el.focus({ preventScroll: true }); }
   }
+  /* Plain English or Expert changed (here, in the tour or in Settings): the window's tips and help sections are drawn
+     again in the other version, an open note in place */
+  window.addEventListener('o55:talk', () => {
+    if (!S.open || !S.root) return;
+    S.talkSwitch = true;
+    try { refresh(); } finally { S.talkSwitch = false; }
+  });
   function renderSound() {
     renderLook();
     const slot = S.root.querySelector('.o55-soundslot');
     /* (the header's buttons have no room for a ?: their tips are their hover tags, Muse m3) */
     const tip = O55.tips && O55.tips.of('sound'), html = O55.sound.buttonHtml('o55-iconbtn', tip ? tip.text : '');
     if (slot.innerHTML !== html) slot.innerHTML = html;
+    /* how the app talks to me (Plain English or Expert), beside the look menu and the sound (21-talk.js) */
+    const ts = S.root.querySelector('.o55-talkslot');
+    if (ts && O55.talk) { const th = O55.talk.buttonHtml('o55-iconbtn'); if (ts.innerHTML !== th) ts.innerHTML = th; }
   }
 
   /* ---------------------------------------------------------------- navigation */
@@ -780,6 +791,7 @@
     if (action === 'close') return close('close');
     if (action === 'back') return back();
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
+    if (action === 'talk') { if (O55.talk.toggle('onboarding')) O55.sound.play('select'); return; }
     /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
     if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'sheet' : 'unsheet'); renderLook(); return; }
     if (action === 'lookFamily') { applyLook(arg, O55.theme().mode, t); return; }
@@ -1032,6 +1044,7 @@
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
+    if (O55.talk) O55.talk.refresh(); /* (a Project chosen since, or a mode set in Settings, is read again) */
     r.setAttribute('data-o55-ambient', 'on');
     r.classList.remove('o55-closing'); r.classList.add('o55-opening', 'o55-scrim-lit');
     /* the whole window waits, unseen, through the frame that styles it and restyles the now inert app beneath; the
@@ -1154,6 +1167,8 @@
   /* shared actions any screen can use */
   O55.actions = {
     skip() { close('skip'); },
+    /* a demo hint's ready choice (O55.flow.hint) */
+    demoHint(S2, arg) { if (O55.flow.hintPick(arg)) O55.sound.play('tap'); },
     'sheet-close'(S2, arg, el) { const sh = el.closest('.o55-sheet'); if (sh) { sh.setAttribute('data-open', 'false'); S.sess.ui.sheet = null; S.save(); refresh(); O55.sound.play('unsheet'); } },
     details(S2, arg, el) { const k = 'details:' + (arg || S.sess.screen); S.sess.ui[k] = !S.sess.ui[k]; S.save(); refresh(); O55.sound.play(S.sess.ui[k] ? 'reveal' : 'unsheet'); },
     /* A ? (ui.onboarding.open_details, toggle_choice_explanation; O55.tips): one explainer at a time, for this screen

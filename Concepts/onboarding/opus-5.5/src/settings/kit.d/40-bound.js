@@ -134,3 +134,21 @@ o55Changed = function (setting, raw) { const r = o55BoundChanged.apply(this, arg
 /* One word for the one disclosure in each view: "More options" (a few managers said Advanced, others More options). */
 const o55AdvancedKit = PM51.advanced;
 PM51.advanced = (body, opts = {}) => o55AdvancedKit(body, Object.assign({}, opts, { label: opts.label && !/^advanced$/i.test(opts.label) ? opts.label : 'More options' }));
+
+/* A `when` row follows every write of the setting it depends on, whoever writes it: Settings' own rows and managers
+   (o55Notify), and also the title-bar theme menu and other surfaces that write through the host path
+   (PM12_KIMI.setSettingFromHost). Before, a theme picked from the title-bar menu left Glass's transparency row (and every
+   other theme-dependent row) as it was drawn, shown or hidden, until the page was drawn again (QA round 2 sweep).
+   The sync is idempotent, so a write that also notifies changes nothing twice. */
+const o55BoundCommit = commitSettingValue;
+commitSettingValue = function (id) {
+  const ok = o55BoundCommit.apply(this, arguments);
+  if (ok && o55DepsOf[id]) o55SyncDependents(id);
+  return ok;
+};
+const o55BoundCommitMany = commitSettingValues;
+commitSettingValues = function (values) {
+  const ok = o55BoundCommitMany.apply(this, arguments);
+  if (ok && values && typeof values === 'object') Object.keys(values).forEach(id => { if (o55DepsOf[id]) o55SyncDependents(id); });
+  return ok;
+};

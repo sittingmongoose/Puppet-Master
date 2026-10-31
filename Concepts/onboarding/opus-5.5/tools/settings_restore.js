@@ -1,12 +1,13 @@
 /* Inserted inside the existing project Settings adapter by settings_layer.py. The demo uses the same projection
-   key as ordinary edits. Defaults, history and the rollback snapshot are one atomic localStorage replacement. */
+   key as ordinary edits. Defaults, history and the rollback snapshot are one atomic replacement in the adapter's
+   Project store (projectStore: localStorage, or memory for the visit on a page with no storage at all). */
 function restoreProjectDefaults(request) {
   var p = projectRecord(), k = key();
   if (window.PM_SETTINGS_REGISTRY || !CONCEPT_FIXTURE_MODE) return { ok: false, reason: 'The attached Settings owner must restore this project.' };
   if (!p || !k || !request || request.project_id !== p.id) return { ok: false, reason: 'Select the project whose defaults you want to restore.' };
   if (window.PM_SETTINGS_PROJECT_SNAPSHOTS && window.PM_SETTINGS_PROJECT_SNAPSHOTS[p.id]) return { ok: false, reason: 'This supplied project snapshot is read only.' };
   try {
-    var before = scrubCredentialSettings(JSON.parse(localStorage.getItem(k) || '{}'));
+    var before = scrubCredentialSettings(JSON.parse(projectStore.getItem(k) || '{}'));
     var next = clone(before), receipt = 'settings-restore-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(16).slice(2));
     next.schema_version = 'pm7.settings.project_projection.v1';
     next.settings = {}; next.changed = {};
@@ -17,8 +18,8 @@ function restoreProjectDefaults(request) {
       result: 'Project settings restored. Saved sign-ins and project history were kept.',
       receipt_id: receipt, rollback_ref: receipt, rollback_available: true, fixture_mode: true });
     var bytes = JSON.stringify(next);
-    localStorage.setItem(k, bytes);
-    if (localStorage.getItem(k) !== bytes) return { ok: false, reason: 'The saved defaults could not be verified.' };
+    projectStore.setItem(k, bytes);
+    if (projectStore.getItem(k) !== bytes) return { ok: false, reason: 'The saved defaults could not be verified.' };
     return { ok: true, receipt_id: receipt, rollback_ref: receipt };
   } catch (error) {
     return { ok: false, reason: 'The project settings could not be saved. Check that browser storage is available and try again.' };
@@ -50,13 +51,13 @@ function writeProjectWallpaper(request) {
       if (!result || result.ok === false || typeof result.then === 'function') return { ok: false, reason: 'The Settings owner has not accepted this wallpaper change.' };
     } else {
       if (!CONCEPT_FIXTURE_MODE || (window.PM_SETTINGS_PROJECT_SNAPSHOTS && window.PM_SETTINGS_PROJECT_SNAPSHOTS[p.id])) return { ok: false, reason: 'This supplied Project snapshot is read only.' };
-      written = scrubCredentialSettings(JSON.parse(localStorage.getItem(k) || '{}'));
+      written = scrubCredentialSettings(JSON.parse(projectStore.getItem(k) || '{}'));
       written.schema_version = 'pm7.settings.project_projection.v1';
       written.settings = written.settings || {}; written.changed = written.changed || {};
       written.settings[id] = request.value; written.changed[id] = true;
       var bytes = JSON.stringify(written);
-      localStorage.setItem(k, bytes);
-      if (localStorage.getItem(k) !== bytes) return { ok: false, reason: 'The saved wallpaper could not be verified.' };
+      projectStore.setItem(k, bytes);
+      if (projectStore.getItem(k) !== bytes) return { ok: false, reason: 'The saved wallpaper could not be verified.' };
     }
     var current = projectRecord(), readback = projectSnapshot(p.id);
     if (!current || current.id !== p.id || !readback || !readback.settings || readback.settings[id] !== request.value) return { ok: false, reason: 'The Project wallpaper readback did not match.' };
@@ -66,18 +67,18 @@ function writeProjectWallpaper(request) {
     if (pending && !owner) {
       var retained = null, cleanupWritten = false;
       try {
-        retained = localStorage.getItem(k);
+        retained = projectStore.getItem(k);
         var latest = JSON.parse(retained || 'null');
         if (latest && latest.settings && latest.settings[id] === request.value) {
           delete latest.settings[legacy]; if (latest.changed) delete latest.changed[legacy];
           var cleaned = JSON.stringify(latest);
-          localStorage.setItem(k, cleaned); cleanupWritten = true;
-          pending = localStorage.getItem(k) !== cleaned;
+          projectStore.setItem(k, cleaned); cleanupWritten = true;
+          pending = projectStore.getItem(k) !== cleaned;
           if (!pending) projection = latest;
         }
       } catch (cleanupError) { pending = true; }
       /* Keep the accepted value and compatibility input if cleanup cannot be verified. */
-      if (pending && cleanupWritten) try { localStorage.setItem(k, retained); } catch (cleanupError) {}
+      if (pending && cleanupWritten) try { projectStore.setItem(k, retained); } catch (cleanupError) {}
     }
     if (window.PM12_KIMI && typeof window.PM12_KIMI.syncWallpaperProjection === 'function') window.PM12_KIMI.syncWallpaperProjection({ project_id: p.id, snapshot: projection });
     return { ok: true, value: request.value, cleanup_pending: pending };
@@ -104,7 +105,9 @@ function migrateGlassWallpaper(preference) {
     pendingWallpaperSeed.verified = true;
     /* Consume only after owner acceptance/readback, so later Projects use their own default. */
     var key = 'pm-lg-wallpaper';
-    try {
+    /* a page with no storage has no old browser-wide preference to retire */
+    if (!projectStore.persistent) pendingWallpaperSeed = null;
+    else try {
       localStorage.removeItem(key);
       if (localStorage.getItem(key) !== null) throw new Error('Legacy wallpaper cleanup was not verified.');
       pendingWallpaperSeed = null;

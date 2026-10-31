@@ -73,6 +73,8 @@
 
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
+    /* how the app talks to me goes with the person into the app (general.interaction.mode, 21-talk.js) */
+    if (O55.talk) O55.talk.carry();
     o = o || {};
     /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
        its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a
@@ -87,7 +89,10 @@
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
-    if (projectId) O55.shell.selectProject(projectId, name);
+    /* what was set up goes to the app first (Server, route, this device, the Project: O55.handoff), so the Settings
+       reload that selecting the Project starts already finds it (SCR-03) */
+    if (O55.handoff) O55.handoff.publish(S, Object.assign({}, o, { project: projectId || null, projectName: name || null }));
+    if (projectId) O55.shell.selectProject(projectId, name, o.projectInfo);
     S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
     const tour = !!(o.tour && O55.tour && O55.tour.start);
     /* the tour path: the window becomes the tour's first callout (a morph from its rectangle; under NieR Mode one ink
@@ -114,14 +119,15 @@
   };
 
   function summary(S) {
-    const d = md(S), cm = S.sess.commit || {}, ai = O55.ai ? O55.ai.readyIds(S) : [], free = Object.values(S.sess.ai.freeRoutes || {}).filter((x) => x === 'ready').length, b = S.sess.backup;
+    const d = md(S), cm = S.sess.commit || {}, ai = O55.ai ? O55.ai.readyIds(S) : [], free = O55.ai ? O55.ai.freeReady(S) : 0, b = S.sess.backup;
     /* Free Models and Backup have a ? beside their name (summary:<row>), the note under the summary */
     const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"${O55.tips.described('summary:' + k)}><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
-    out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : T('ready.noAi'), ai.length > 0);
+    /* a usable free route is an AI too: free-only is not "can't plan" (provider-login audit P18) */
+    out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : free ? T('ready.aiFreeOnly') : T('ready.noAi'), ai.length > 0 || free > 0);
     out += row('free', free ? free + ' ' + T('free.ready').toLowerCase() : T('ready.noFree'), free > 0);
-    out += row('backup', b.dest ? T('safe.backup.' + b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
+    out += row('backup', b.dest ? O55.backup.label(S, b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
     return out;
   }
   def('ready', {

@@ -255,6 +255,10 @@
 #pm-o55-onboarding .pst[data-reduced="1"] *, #pm-o55-onboarding .pst[data-reduced="1"]::before, #pm-o55-onboarding .pst[data-reduced="1"]::after { animation: none !important; transition: none !important; }
 /* ------------------------------------------------------ Pip's tip */
 /* asked for with a ? beside a choice: a note that hangs under Pip, its tail pointing up at it, written out as you watch */
+/* A note never runs off the stage: its height is held to the stage's room (--tipmax, 58-rig.js placeTip) and its words
+   scroll inside it when they must (the pattern review: an Expert note was cut off under the Back bar) */
+#pm-o55-onboarding .pst-tip { max-height: var(--tipmax, none); grid-template-rows: auto auto minmax(0, 1fr); }
+#pm-o55-onboarding .pst-tip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 #pm-o55-onboarding .pst-tip { position: absolute; left: 0; top: 0; display: grid; gap: 3px; width: max-content; max-width: min(58%, 226px); padding: 7px 9px 8px 11px;
   font: 500 12.5px/1.42 var(--pst-font, 'Poppins', system-ui, sans-serif); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; pointer-events: none; will-change: transform; }
 #pm-o55-onboarding .pst-tip.on { opacity: 1; visibility: visible; transition: opacity .3s; pointer-events: auto; }
@@ -263,7 +267,8 @@
 #pm-o55-onboarding .pst-tip-x:hover, #pm-o55-onboarding .pst-tip-x:focus-visible { opacity: 1; }
 #pm-o55-onboarding .pst-tip-x:focus-visible { outline: 1.5px solid currentColor; outline-offset: 1px; }
 #pm-o55-onboarding .pst-tip-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-#pm-o55-onboarding .pst-tip::after { content: ''; position: absolute; left: var(--tx, 30px); top: -5px; width: 9px; height: 9px; translate: -50% 0; rotate: 45deg; background: inherit; border: inherit; border-right: 0; border-bottom: 0; }
+/* (no tail: the note is labelled as Pip's and sits under Pip; its separate diamond was the shape Jared asked to lose,
+   QA round 2 Q10 and the pattern review) */
 #pm-o55-onboarding .pst-tip-k { display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 #pm-o55-onboarding .pst-tip .pst-tip-k::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 2.5px color-mix(in srgb, currentColor 22%, transparent); }
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-tip { display: none; }
@@ -300,6 +305,9 @@
 #pm-o55-onboarding .pst-ntip .pst-tip-x { font-size: 13px; opacity: .8; }
 #pm-o55-onboarding .pst-ntip .pst-tip-h { padding: 6px 8px 0; font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
 #pm-o55-onboarding .pst-ntip .pst-tip-t { padding: 3px 8px 7px; font-size: 11.5px; line-height: 1.45; }
+/* (NieR's note too stays on the stage, its words scrolling inside it when they must) */
+#pm-o55-onboarding .pst-ntip { max-height: calc(100% - 34px); grid-template-rows: auto auto minmax(0, 1fr); }
+#pm-o55-onboarding .pst-ntip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 #pm-o55-onboarding .pst[data-fam="nier"]:not([data-layout="portrait"]) .pst-ntip { display: none; }
 
 /* Pip parts (Settings > Pip parts): the world's own life held, the strings hidden */

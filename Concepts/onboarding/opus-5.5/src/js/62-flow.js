@@ -107,10 +107,39 @@
     const gid = 'group:' + action;
     return `<div class="o55-suggest" role="group">` + values.map((v) => `<button type="button" class="o55-suggestchip${v === current ? ' o55-on' : ''}" data-o55-do="${U.esc(action)}" data-arg="${U.esc(v)}"${O55.tips.described(gid)} data-pm-hover-exempt="true" data-key="sg-${U.esc(U.slug(v))}">${U.esc(v)}</button>`).join('') + O55.tips.q(gid) + '</div>' + O55.tips.explainer(gid);
   };
+  /* Demo hints, O55.flow.hint(id, items, o) (Jared 2026-10-31: "Demos should have a hint to progress ... The hint
+     provides ways to get the different steps out ... prefilled selections that allow the user to try it that way").
+     On a step a person couldn't finish without a real service, one quiet row of ready choices under the field or the
+     choice it serves. Each fills its field or fields (O55.ui.fill, exactly as typing does) or presses its choice
+     (O55.ui.act), so the screen takes that branch, failures included; the fixtures and the concept owner host
+     (30-owners.js) answer it as they answer a person. It is shown only while useful (o.when), never in place of the
+     real control, and the same in Plain English and Expert. items: [{ label, outcome, fills: [[bind, value], ...] } or
+     { label, outcome, act: [action, arg] }]; outcome names the branch (demoHint.outcome.<word>: works, wrong, noAnswer,
+     refused, taken). Other screens add theirs with the same call. */
+  const HINTS = {};
+  F.hint = function hint(id, items, o) {
+    o = o || {};
+    if (o.when === false || !items || !items.length) return '';
+    HINTS[id] = items;
+    const lab = T('demoHint.label');
+    return `<div class="o55-demohint" role="group" aria-label="${U.esc(lab)}" data-key="dh-${U.esc(id)}"><span class="o55-demohint-k">${U.esc(lab)}</span>`
+      + items.map((it, i) => `<button type="button" class="o55-demohint-c" data-o55-do="demoHint" data-arg="${U.esc(id)}|${i}" data-pm-hover-exempt="true">`
+        + `<span class="o55-demohint-v">${U.esc(it.label)}</span>${it.outcome ? `<span class="o55-demohint-o">${U.esc(T('demoHint.outcome.' + it.outcome))}</span>` : ''}</button>`).join('') + '</div>';
+  };
+  F.hintPick = function hintPick(arg) {
+    const [id, i] = String(arg || '').split('|'), it = (HINTS[id] || [])[+i];
+    if (!it) return false;
+    (it.fills || []).forEach(([bind, value]) => O55.ui.fill(bind, value));
+    if (it.act) O55.ui.act(it.act[0], it.act[1]);
+    return true;
+  };
   /* A disclosure row that reveals more choices in place (source_more / remote_more); never a nested dialog. */
+  /* (a disclosure whose action has a tip of its own, such as which online service to pick, carries its ? beside it) */
   F.more = function more(open, label, action, body, key) {
-    return `<div class="o55-more${open ? ' o55-open' : ''}" data-key="more-${U.esc(key || action)}"><button type="button" class="o55-morebtn" data-o55-do="${U.esc(action)}" aria-expanded="${open}" data-pm-hover-exempt="true">`
-      + `<span>${U.esc(label)}</span>${U.nx('chevron-down', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'}</button>`
+    const qh = O55.tips.exact(action) ? O55.tips.q(action) : '';
+    const btn = `<button type="button" class="o55-morebtn" data-o55-do="${U.esc(action)}" aria-expanded="${open}" data-pm-hover-exempt="true"${qh ? O55.tips.described(action) : ''}>`
+      + `<span>${U.esc(label)}</span>${U.nx('chevron-down', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'}</button>`;
+    return `<div class="o55-more${open ? ' o55-open' : ''}" data-key="more-${U.esc(key || action)}">` + (qh ? `<div class="o55-morehead">${btn}${qh}</div>${O55.tips.explainer(action)}` : btn)
       + (open ? `<div class="o55-morebody">${body}</div>` : '') + '</div>';
   };
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */

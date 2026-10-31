@@ -117,19 +117,26 @@ Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are
 - Every clone and worktree created before 2026-09-10 is stale and must not push. Recreate it from a fresh clone, or run `git fetch origin && git reset --hard origin/main` in the shared checkout and make a new worktree.
 
 <!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
-## GPU browser testing and recording
+## Browser testing and recording
 
-Use `agent-browser` for browser tests and test videos: each agent gets its own Chrome on the GPU. The Ubuntu VM, the Mac and the Windows PC all have it, with the same commands and their own limits; read `/mnt/Cursor/Agent-Guides/gpu-recording.md` before your first one.
-
-- Record: `agent-browser start --record /abs/path.mp4 --url <url>`, drive it with Playwright `connectOverCDP(cdp_endpoint)` on the page whose URL does not start with `recorder_url`, finish with `agent-browser stop <id>`.
-- Headless: `agent-browser start --url <url>`. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
-- Nas1 (`ubuntu-agent-nas1`, DHCP `192.168.50.136`) has its Intel UHD630 passed through (since 2026-10-25) and runs `agent-browser` with the same commands: at most 3 recordings (2 while Jared streams with Moonlight), 4 browsers in all while anything records, 4 headless otherwise. Recordings there are H.264; an HEVC one must run alone. It is much weaker than the P1000: use the P1000 VM (`192.168.50.179`) or Windows for more recordings, 4K/120 or GPU-heavy pages.
+Use `browser-check` for browser tests and test videos (GPU Chrome, short pass/fail summary, logs in a run folder). `browser-check slots` shows free browser and recording slots on all four machines. Read `Agent-Guides/browser-check.md` on the Cursor share before your first run. Never use Playwright `recordVideo`, CPU screen recorders, `--disable-gpu` or SwiftShader.
 
 ## Extra worker agents
 
-For easy, spec-driven work you may start OMP or Muse workers on the VM: recipe in `/mnt/Cursor/Agent-Guides/extra-workers.md`.
+For easy, spec-driven work you may start OMP or Muse workers on the VM: recipe in `Agent-Guides/extra-workers.md` on the Cursor share.
 
 ## Thread mailbox
 
 Coordinate with other agents through `pm-mail`, as your global CLAUDE.md or AGENTS.md describes (`pm-mail guide` prints the recipe).
 <!-- agent-rules: end -->
+
+<!-- browser-check: start -->
+## Browser checks
+
+Kit and project rules: `Concepts/pm7-tools/browser-check/README.md`. Tool rules: `browser-check guide`. Free browser and recording slots on all four machines: `browser-check slots`.
+
+- **Run:** `browser-check run Concepts/pm7-tools/browser-check/checks --set page=<build>.html`. Build with `python3 Concepts/onboarding/opus-5.5/tools/build.py --out <scratch>.html`. Without `--set page` it tests the committed page, which moves only at milestones.
+- **Provider logins:** run `Concepts/pm7-tools/browser-check/providers` separately.
+- **Per lane:** at most 2 browsers and 1 recording unless the lead gives you more. One kit run is one browser.
+- **Other machines:** the page loads as `file://`, so `--host` can't open it. Use ssh and a checkout of the branch there. The Mac and Nas1 clones sit on `main`, so check out the integration branch first.
+<!-- browser-check: end -->

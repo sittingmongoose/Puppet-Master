@@ -51,10 +51,19 @@
   const MOVING = { working: 1, reviewing: 1, recovering: 1 };
   const moving = (it) => !!it && !it.stopping && !!MOVING[it.state];
   let moveIo = null;
+  /* a hidden tab holds them too, as the loader holds Pip (QA round 2 review, Astra: hidden, the marks went on advancing):
+     paused where they are and resumed from there, so a mark goes on from its own pose, in step with the others it
+     paused with, with no jump */
+  const hiddenNow = () => doc.visibilityState === 'hidden';
+  doc.addEventListener('visibilitychange', () => {
+    const h = hiddenNow();
+    doc.querySelectorAll('.wk-row.wk-moving').forEach((r) => r.classList.toggle('wk-hid', h));
+  });
   function watchMoving(root) {
     if (!root) return;
     const rows = root.querySelectorAll('.wk-row.wk-moving');
     if (!rows.length) return;
+    if (hiddenNow()) rows.forEach((r) => r.classList.add('wk-hid'));
     if (typeof IntersectionObserver !== 'function') { rows.forEach((r) => r.classList.remove('wk-off')); return; }
     if (!moveIo) moveIo = new IntersectionObserver((es) => es.forEach((e) => {
       const r = e.target;
@@ -963,6 +972,13 @@
     const it = sysItem(); if (it) it.setAttribute('aria-expanded', 'false');
     if (refocus !== false && sysBack && sysBack.isConnected) sysBack.focus({ preventScroll: true });
   }
+  /* the Server this device uses and how it reaches it, from what onboarding set up (window.PM_ONBOARDING_RESULT, SCR-03) */
+  function serverLine() {
+    const r = window.PM_ONBOARDING_RESULT; if (!r || !r.host) return '';
+    if (r.host.role === 'this_device' || !r.server) return '<p class="wk-dim wk-sys-server">' + esc(T('sys.serverHere')) + '</p>';
+    const m = r.route || {}, how = T('sys.route.' + (m.mode === 'local_or_vpn' ? (m.via === 'vpn' ? 'vpn' : 'lan') : m.mode || 'lan'));
+    return '<p class="wk-dim wk-sys-server">' + esc(T(m.state === 'in_use' ? 'sys.server' : 'sys.serverRoute', { name: r.host.name || '', how })) + '</p>';
+  }
   function systemStatus() {
     if (sys) { closeSystem(); return; }
     const w = W(); if (!w) return;
@@ -971,7 +987,7 @@
     sys = doc.createElement('div');
     sys.id = 'pm7-work-system'; sys.setAttribute('role', 'dialog'); sys.setAttribute('aria-labelledby', 'pm7-work-system-title');
     sys.innerHTML = '<header class="wk-head"><strong id="pm7-work-system-title">' + T('sys.title') + '</strong><span class="wk-head-sum">' + esc(T('sys.sum', { n: list.length })) + '</span><span class="wk-grow"></span>' +
-      '<button type="button" class="wk-ib" data-sys-x data-ui-action-id="ui.system_status.close" aria-label="' + esc(T('close')) + '" data-pm-hover-label="' + esc(T('close')) + '">' + icon('close', 13) + '</button></header>' +
+      '<button type="button" class="wk-ib" data-sys-x data-ui-action-id="ui.system_status.close" aria-label="' + esc(T('close')) + '" data-pm-hover-label="' + esc(T('close')) + '">' + icon('close', 13) + '</button></header>' + serverLine() +
       '<ul class="wk-sys-list">' + list.map((it) => '<li data-tone="' + tone(it) + '">' + st(w.key(it), 12) +
         '<span class="wk-copy"><strong>' + esc(it.title) + '</strong><span class="wk-sub">' + esc(it.where || '') + '</span></span><b data-tone="' + tone(it) + '">' + esc(word(it)) + '</b>' +
         (SERVICE_SETTING[it.role] ? '<button type="button" class="wk-link" data-sys-open="' + esc(SERVICE_SETTING[it.role]) + '" data-binding-id="system_status.service.open_settings" aria-label="' + esc(T('sys.openLabel', { where: it.where || it.title })) + '">' + T('sys.open') + '</button>' : '') +

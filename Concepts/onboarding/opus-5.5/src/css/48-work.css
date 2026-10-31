@@ -77,6 +77,7 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-
 #pm7-work-system [data-tone="working"] { --wk-t: var(--wk-work); }
 #pm7-work-system [data-tone="attention"] { --wk-t: var(--wk-attn); }
 #pm7-work-system :is([data-tone="idle"], [data-tone="paused"]) { --wk-t: var(--wk-idle); }
+.wk-sys-server { margin: 0; padding: 8px 12px 2px; }
 .wk-sys-list { list-style: none; margin: 0; padding: 4px 6px; }
 .wk-sys-list > li { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; padding: 6px 6px; border-radius: 7px; }
 .wk-sys-list > li + li { border-top: 1px solid var(--wk-line2); border-radius: 0; }
@@ -158,8 +159,9 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-
 .wk-right b[data-tone] { color: var(--wk-t); font-weight: 600; }
 .wk-right i { font-style: normal; color: var(--wk-small); font-variant-numeric: tabular-nums; }
 /* Q11 (B): a running process's status mark moves only while its row is on screen (.wk-off holds it, 48-work.js
-   watchMoving) and holds in drags with the beat (pm7-beat.css); a working agent's Pip is the loader, which holds itself */
-.wk-row.wk-off .wk-lead .nx-st *,
+   watchMoving) and the tab is shown (.wk-hid), and holds in drags with the beat (pm7-beat.css); a working agent's Pip is
+   the loader, which holds itself */
+.wk-row:is(.wk-off, .wk-hid) .wk-lead .nx-st *,
 body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) .wk-row.wk-moving .wk-lead :is(svg.nx, .nx-p) { animation-play-state: paused !important; }
 
 /* ---- the detail block (also the chat's Processes view) ----
