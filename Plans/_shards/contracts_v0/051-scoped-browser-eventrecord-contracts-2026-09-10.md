@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21694-L21773
+Source lines: L21698-L21777
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e`
 
 ---
 
@@ -30,7 +30,7 @@ unblocks: []
 acceptance_criteria:
   - Validate the central envelope, registered payload schema ID and event_type pair, payload, project scope, and parity for project, thread, Run, and attempt where applicable before checkpoint advance.
   - Require exact Home Server, Execution Host, Environment, Source Location and row-specific workspace, session, page/generation, program, segment, ProgramWorkspace or routine context; pre-allocation identities remain null only where the selected transition permits them.
-  - Payloads are at most 65536 UTF-8 JSON bytes with at most 64 artifact refs and closed typed facts; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
+  - Payloads are at most 16384 UTF-8 JSON bytes (16 KiB inline body, SP-337) with at most 64 artifact refs and closed typed facts, a larger body is carried by BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
   - Application-scope, mismatched scope, unknown family, stale generation, protected-auth content, unhandled inline data, mismatched schema identity and oversized payloads fail closed without checkpoint advance.
   - App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest; a matching retry returns the original with zero effects while conflicting identity is quarantined.
   - Storage-assigned sequence and observation/persistence times do not change producer-semantic digest; producer sequence and correlation retain their existing meaning.

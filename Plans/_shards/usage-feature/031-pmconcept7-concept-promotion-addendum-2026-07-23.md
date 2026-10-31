@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6182-L6261
+Source lines: L6186-L6268
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -35,6 +35,9 @@ canonical_text: >-
   key named elsewhere reads as that row), and the background refresh cadence is the Usage service's own
   configuration (`usage.refresh_interval_seconds`), not a Settings row; the concept's "Next refresh 40s" and
   "retention 90d" are fixture text.
+  Amended 2026-10-31 (DL-270, UF-108): ai.usage.usage-retention stays the retention figure, now bounding detailed
+  usage records only; daily usage totals per account, provider and model are kept whatever it says, so a head or
+  room that states the history kept does not imply those totals expire.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage page head, where its Live control sits, and the icon-only Refresh and Export presentation.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22697-L22898
+Source lines: L22732-L22933
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -121,7 +121,7 @@ E1 resolves the exact canonical record and companion keys and Storage/project/pa
 
 The original eligibility snapshot resolves the exact Storage/project/partition/point/input and selected before-record bytes; installed unchanged policy object/version; every original hold-class evaluation; actual writer identity/revision; actual maintenance lease held for that E1 transaction; selection time and reference-release source records. Every release ref resolves its full original owner value and byte digest, project/point/release ID/time and closed-ref-set digest. These new transient source adapters do not redefine any existing durable hash recipe. Actual source serialization, complete hold enumeration, provenance, writer CAS and lease exclusion remain native obligations.
 
-E2 resolves the complete original eleven-field AppendReceipt from the actual append owner, including commit_group_id and acknowledged_at_utc. Its original source group contains the event/sequence and exact manifest/segment/offset/durable-end acknowledgement, with matching frozen append input and producer semantics. Full frame/manifest/watermark/directory barriers precede a successful acknowledged group. This source selection and group remain original facts when the current generic index relocates or advances. Current location fields cannot rewrite the original acknowledgement. Contracts_V0.md's Durable append receipt and storage recovery events section is the receipt owner; no CV-338 inference is used.
+E2 resolves the complete original eleven-field AppendReceipt from the actual append owner, including commit_group_id and acknowledged_at_utc. Its original source group contains the event/sequence and exact manifest/segment/offset/durable-end acknowledgement, with matching frozen append input and producer semantics. One data sync of the group, with the watermark in the segment, precedes a successful acknowledged group (SP-336); barrier-class groups need the full flush. Manifest and directory syncs apply only to creation, rotation and structural changes (Amended 2026-10-31, DL-270). This source selection and group remain original facts when the current generic index relocates or advances. Current location fields cannot rewrite the original acknowledgement. Contracts_V0.md's Durable append receipt and storage recovery events section is the receipt owner; no CV-338 inference is used.
 
 E3 resolves the exact pending-to-committed companion transaction, preserving the original E1/E2 references and unchanged point. The entire actual committed operation includes the actual original receipt and complete original expiry result. The E3 point snapshot may contain independently admitted post-E1 holds; E3 itself writes only the companion. Its value-byte digests and commit timestamp agree with the independently resolved original transaction and current canonical owner read under the selected current source fence. E1, acknowledgement and E3 have the required operation ordering. There is no new maximum pending age, wall-clock cutoff or future-time rejection: a legitimately late E3 remains lawful when all original/current custody, source and owner joins hold. Replacing committed_at_utc or acknowledgement time without the actual corresponding owner record fails.
 

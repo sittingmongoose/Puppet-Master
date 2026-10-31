@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45647-L47977
+Source lines: L45718-L48053
 
-Source SHA256: `781852ffff2fb8fb72d415e56aaac417ed9194477fd0ccf171c7185a82f4527b`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -150,7 +150,9 @@ canonical_text: >-
   the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
   panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
   of its dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate
+  boards_skipped_bytes and says so (SP-330). Amended 2026-10-31 (DL-270): the 64 KB figure is a payload budget,
+  not a stored value size; board contents larger than the 16 KiB value cap are kept by payload reference (SP-337,
+  SP-340), and the boards_skipped_bytes rule is unchanged. The guide responds immediately while a stable-intent gate
   prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
   panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
   emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
@@ -941,40 +943,41 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`,
   `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence); transcript (`thread-<agentId>`:
   an agent''s read-only live feed); context (`context:<threadId>`: thread-keyed context detail); record (`search:`, `mcp:`,
-  `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>`
-  only for a channel split off with "Open in new tab", showing only that channel); problems (`problems`); ports (`ports`);
-  and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug session, the session shown being
-  its view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript, context and record;
-  terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console are dedicated; a panel
-  holding only tool kinds and terminals has the role tools. Problems, Ports and the Debug Console are one tab each per
-  workspace. Never a kind: the chat''s Goal tab (DL-147), Activity Detail (it stays inside the chat, F3-637), wand setup
-  sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one id is one tab in the
-  whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix is a start-up error.
-  Tab identity is separate from domain identity: the path, terminal_session_id, board id or artifact id a tab shows is
-  its domain reference, and moving, collapsing, maximizing, hiding or restoring a tab never changes it. No internal id
-  (tab, panel, session, nonce) ever appears as text in the interface. Older canon that names one of these surfaces by
-  its former host means the kind here, placed by F3-634: the run view called an editor document (ACD-480, F3-569, F3-576
-  and the 2026-09-03 redesign''s section 10) is a run tab, ACD-485''s subagent transcript a transcript tab, the context-detail
-  editor tab (section 7.16.1, F3-132) a context tab, the Plan card''s "normal artifact viewer" and an artifact opened
-  from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297''s editor-tab
-  Browser a browser tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled SVG icon_id,
-  never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and sub-row, how it
-  makes a tab id for an open (the terminal mints a new session), the older id forms it folds into one tab, the rows it
-  adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content minimums:
-  terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript
-  and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab''s body only when the tab is first
-  shown, so a restored background tab costs nothing until it is opened. A kind''s serialized state is at most 16 KB of
-  plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer''s tab
-  state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before a tab closes
-  its kind may ask first: a dirty editor offers to save, and a running terminal says what will stop (F3-640). A tab body
-  is its own box, sized by its panel: it never sizes against the window, only against its own width and height; it is
-  told when they change, with a last call once a divider drag or a layout animation has settled so costly work can wait
-  for it; it is told when it is shown, hidden, focused and blurred and when the look changes, and stops animation while
-  hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12): 30 px tall,
-  24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520 px wide and icons with
-  hover tags below that, and the row hidden when the body is under 150 px tall; a kind draws a row of its own only when
-  nothing in the shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus, drag
-  ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one stacking order: panel content,
+  `app:`, `work-record:`, `inspect:<record_ref>`: read-only records; `inspect:` is the record inspector of F3-666, opened
+  through `cmd.storage.open_value`, amended 2026-10-31, DL-270); output (`output`, one Output tab whose channel switches
+  inside it; `output:<channel>` only for a channel split off with "Open in new tab", showing only that channel); problems
+  (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug session,
+  the session shown being its view state; F3-490). The document kinds are editor, plan, document, artifact, run, transcript,
+  context and record; terminal, browser, dashboard and the four tool kinds output, problems, ports and debug_console
+  are dedicated; a panel holding only tool kinds and terminals has the role tools. Problems, Ports and the Debug Console
+  are one tab each per workspace. Never a kind: the chat''s Goal tab (DL-147), Activity Detail (it stays inside the chat,
+  F3-637), wand setup sheets (they stay app modals). A tab id is opaque and stable, its prefix names its kind, and one
+  id is one tab in the whole workspace; an id with an unknown prefix opens nothing, and two kinds claiming one prefix
+  is a start-up error. Tab identity is separate from domain identity: the path, terminal_session_id, board id or artifact
+  id a tab shows is its domain reference, and moving, collapsing, maximizing, hiding or restoring a tab never changes
+  it. No internal id (tab, panel, session, nonce) ever appears as text in the interface. Older canon that names one of
+  these surfaces by its former host means the kind here, placed by F3-634: the run view called an editor document (ACD-480,
+  F3-569, F3-576 and the 2026-09-03 redesign''s section 10) is a run tab, ACD-485''s subagent transcript a transcript
+  tab, the context-detail editor tab (section 7.16.1, F3-132) a context tab, the Plan card''s "normal artifact viewer"
+  and an artifact opened from section 7.12 an artifact tab (RAP-065), the Your rules document (F3-579) a document tab,
+  and F3-297''s editor-tab Browser a browser tab. Each kind registers its label, its group name for the "+N" list, its
+  icon (a bundled SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+"
+  menu row and sub-row, how it makes a tab id for an open (the terminal mints a new session), the older id forms it folds
+  into one tab, the rows it adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close
+  now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document,
+  artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab''s body only
+  when the tab is first shown, so a restored background tab costs nothing until it is opened. A kind''s serialized state
+  is at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor
+  buffer''s tab state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before
+  a tab closes its kind may ask first: a dirty editor offers to save, and a running terminal says what will stop (F3-640).
+  A tab body is its own box, sized by its panel: it never sizes against the window, only against its own width and height;
+  it is told when they change, with a last call once a divider drag or a layout animation has settled so costly work
+  can wait for it; it is told when it is shown, hidden, focused and blurred and when the look changes, and stops animation
+  while hidden. Every kind that needs a row of controls above its content uses the one shared header row (D12): 30 px
+  tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the body is at least 520 px wide and icons
+  with hover tags below that, and the row hidden when the body is under 150 px tall; a kind draws a row of its own only
+  when nothing in the shared one fits, and its owner unit says why. Menus, the "+" menu, the "+N" list, panel menus,
+  drag ghosts and landing previews open in one overlay root (Plans/DRY_Rules.md#DR-067), one stacking order: panel content,
   then strips and dividers, then the overlay root, which sits above the status bar and below hover tags and the Guided
   Tour; no kind appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use neither and
   there are no Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel''s usual kind, Ctrl+W close the tab,
@@ -1687,62 +1690,64 @@ canonical_text: 'A dashboard is a tab kind (F3-635), not a singleton surface (DL
   list and is forgotten when it leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6).
   A saved named layout keeps the boards of the dashboards it holds, at most 64 KB of them per named layout; a larger
   save keeps the layout without its boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout
-  puts back the boards it kept, and a named layout saved before this applies as before. A board''s first show plays the
-  Usage page''s calm reading-order entrance, and none under Reduced Motion (P7). An empty board shows an invitation over
-  the board, which stays laid out beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do,
-  and Add widget and Start from... buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus
-  goes to the board''s first card in reading order. Details on a widget opens the Usage page at that widget''s room with
-  its inspector open (P8). Live readings apply to dashboards too, each board separately, with the Usage page''s idle
-  rule (F3-628, UF-107): nothing animates at idle except one live change per applied batch while Live is on, and a board
-  that is not on screen does no live work (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard
-  catalogue limit of Appendix C.4 and C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen
-  resize peers (with F3-515''s and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics
-  and Monitoring strip of F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px
-  below 420 px of width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is
-  icon-only below 520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget
-  380 px. The Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s
-  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR
-  Mode LIVE and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode
-  and, in the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above
-  the tab''s foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent
-  fill (outlined in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under
-  Reduced Motion. The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by
-  30 px rows hides below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at
-  most 360 px wide; its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and
-  buttons follow from 160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while
-  shown; a filter other than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard
-  plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards
-  by name with their widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest
-  across open tabs, the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards;
-  past 9999, opening falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current
-  resolves to dashboard:home. Custom names collapse whitespace before trimming, at most 80 characters; a clash with a
-  built-in or another of this project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name
-  clears the stored name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and
-  the active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start
-  from shows the active set''s label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back
-  to its default widgets or Back to an empty dashboard. Add widget labels the Usage widgets without a room More widgets.
-  An Undo notice follows a Reset widgets that changed anything as well as Start from; its restore_revision is the committed
-  revision immediately before that operation. The owner writes and reads that revision''s captured envelope in this project,
-  with one receipt and no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability
-  is checked on a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope
-  is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and
-  button''s hover detail give the reason. Preset-hold resizes settle the set and never end the notice or make its revision
-  stale. The notice is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes,
-  Retro and NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5
-  px in the code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation;
-  its three-track sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an
-  API move or resize returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or
-  pointed on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
-  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog;
-  an unmounted tab writes to its prior project. A named layout restores only envelopes saved for the current project,
-  skipping another project''s envelope; a custom board that the applied layout does not hold keeps its current contents.
-  Amended 2026-10-16 (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from
-  every path, the "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7,
-  PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup
-  and agentSummary over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame,
-  All/Working/Needs you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock
-  owns different agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31:
-  only real product behavior remains an implementation requirement.'
+  puts back the boards it kept, and a named layout saved before this applies as before. Amended 2026-10-31 (DL-270):
+  the 64 KB per named layout is a payload budget; board contents larger than the 16 KiB value cap are kept by payload
+  reference (SP-337, SP-340), and SP-330 owns the stored form. A board''s first show plays the Usage page''s calm reading-order
+  entrance, and none under Reduced Motion (P7). An empty board shows an invitation over the board, which stays laid out
+  beneath it: a small sketch of a board, "<Name> is empty", one line saying what to do, and Add widget and Start from...
+  buttons; a new, empty dashboard puts focus on its Add widget, and otherwise focus goes to the board''s first card in
+  reading order. Details on a widget opens the Usage page at that widget''s room with its inspector open (P8). Live readings
+  apply to dashboards too, each board separately, with the Usage page''s idle rule (F3-628, UF-107): nothing animates
+  at idle except one live change per applied batch while Live is on, and a board that is not on screen does no live work
+  (P12). This supersedes F3-279''s exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
+  C.4.1, F3-517''s "distinct tab models" for Home and Dashboard and its Dashboard-frozen resize peers (with F3-515''s
+  and F3-518''s), section 7.2''s singleton dashboard, and the dashboard''s own Main, Metrics and Monitoring strip of
+  F3-505. Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of width;
+  Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below 520 px
+  and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The Live
+  mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly''s lavender
+  #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE
+  and a 6 px ink diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in
+  the other looks, a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab''s
+  foot (10 px below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined
+  in Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion.
+  The empty board''s invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides
+  below 320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide;
+  its buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
+  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; a filter other
+  than All agents is that tab''s own state, saved about 250 ms after it changes. The Dashboard plus sub-row keeps the
+  four built-ins and New dashboard inline; Your dashboards opens this project''s custom dashboards by name with their
+  widget counts and search above 7 (F3-632). A custom board''s number is one more than the largest across open tabs,
+  the reopen list, this project''s stores, unadopted unscoped board stores, names and live boards; past 9999, opening
+  falls back to Home. An unknown board opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home.
+  Custom names collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
+  project''s dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored name. Preset
+  names use the same uniqueness rule among presets. The current dashboard in Board and the active set in Start from are
+  checked and focused. Board shows Empty for a zero-widget custom board''s detail; Start from shows the active set''s
+  label, Save as preset... says Reuse these widgets anywhere, and Reset widgets says Back to its default widgets or Back
+  to an empty dashboard. Add widget labels the Usage widgets without a room More widgets. An Undo notice follows a Reset
+  widgets that changed anything as well as Start from; its restore_revision is the committed revision immediately before
+  that operation. The owner writes and reads that revision''s captured envelope in this project, with one receipt and
+  no workspace.layout_changed, and restore_revision never accompanies set_id. Undo''s availability is checked on a commit
+  that leaves the notice up, on pointer or focus entering it and on its click; if stale, the envelope is invalid or the
+  board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and the notice text and button''s hover detail
+  give the reason. Preset-hold resizes settle the set and never end the notice or make its revision stale. The notice
+  is at most the body width minus 24 px, with padding 5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and
+  NieR''s Undo reverses on hover, and Glass uses a 30 px blur at saturation 1.5. NieR''s Live word is 11.5 px in the
+  code face with 0.08 em spacing. The empty board stays laid out but is visually hidden under its invitation; its three-track
+  sketch has 6 px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
+  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed on a board,
+  pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds every mounted board
+  whose tab the new layout keeps, hidden ones included, reloads custom names and refreshes the catalog; an unmounted
+  tab writes to its prior project. A named layout restores only envelopes saved for the current project, skipping another
+  project''s envelope; a custom board that the applied layout does not hold keeps its current contents. Amended 2026-10-16
+  (DL-214; Jared''s 2026-10-15 panel item 1): the Home board opens as the pinned 36 px Home tab from every path, the
+  "+" menu, the Board menu and a page''s subtab, never as a second, unpinned tab at natural width. D7, PM7 Step4 final-source
+  alignment, 2026-10-30 (integration e9b15abc64): dashboard:agents uses PM7_WORK_UI.list, agentGroup and agentSummary
+  over PM_WORK, the same rows/needs-you set as the platform panel and Agents rail. Its existing frame, All/Working/Needs
+  you/Waiting/Finished filter and short time form stay with this owner; no private AGENTS list or clock owns different
+  agents. DR-078 defines subscription teardown and show-time catch-up. Amended DL-260, Jared 2026-10-31: only real product
+  behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false

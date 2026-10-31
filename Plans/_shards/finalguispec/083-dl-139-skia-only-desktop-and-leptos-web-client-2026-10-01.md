@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42262-L42429
+Source lines: L42329-L42498
 
-Source SHA256: `781852ffff2fb8fb72d415e56aaac417ed9194477fd0ccf171c7185a82f4527b`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -116,8 +116,10 @@ canonical_text: >-
   behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text
   under masks. The UI Scale setting applies to the whole page through one root-level CSS scale (Contracts_V0
   CV-188). Development and test builds expose the test-build observability of ATS-067. Web animations keep to transform
-  and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or
-  kept as page text rather than held in WebAssembly memory. The web terminal draws the same Rust terminal grid as a
+  and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the
+  derived render-page store as sealed 50-item pages with mandatory load-older paging, never replayed on open, the first
+  page reading at most 2 MiB (SP-338, ACD-242, amended 2026-10-31, DL-270); transcripts are not held in WebAssembly
+  memory. The web terminal draws the same Rust terminal grid as a
   fixed, reused set of visible page-text rows updated by diff (the SMPFS-072 web exception) and ships only after the
   heavy-output speed tests. The Slint/WASM canvas web GUI is retired.
 gui_related: true
@@ -132,7 +134,7 @@ acceptance_criteria:
   - "Web text is browser-rendered and selectable with the browser's own selection, with no ClearType guarantee; its readability, selection, and caret behavior are checked on Windows at the expected display scaling, at rest and during transitions, including text under masks."
   - "The web terminal tracks its own selection in the terminal grid's data, not with the browser's selection, and a selection survives scrolling and new output."
   - "The web terminal renders only its visible rows as reused page-text rows from the Rust terminal grid and passes the heavy-output speed tests before it ships."
-  - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts are trimmed or kept as page text."
+  - "Web animations keep to transform and opacity where the design allows, long lists render only their visible rows, and long transcripts render from the derived render-page store as 50-item pages with mandatory load-older paging (SP-338)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1444-L1499
+Source lines: L1444-L1506
 
-Source SHA256: `a153f8c2e3ec8a96012c4a77bed34f368d0cbcb929d8c8a355bc917a4ee304d9`
+Source SHA256: `bf85fac4055a8edc70399ddc80f3d071d210eba1c16e1e89e966e5c3a787cd09`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `a153f8c2e3ec8a96012c4a77bed34f368d0cbcb929d8c8a355bc917a4ee304d9
 For every non-blocked Touch primary command, the closure gate resolves the primary row through its Touch profile and production entries, requires at least one entry, and requires all entries for that command to name one identical handler. An alias must normalize before permission and dispatch and must have no peer production entry. A blocked false-inventory token must have neither a handler nor a production entry. GUI coverage means an exact intended route, typed availability/disabled reason, accessible action semantics, result/error settlement, and deterministic return; it does not require inventing a synthetic visible control where no user route is intended.
 
 The September 1 closure preserves the same dispatch rule while changing the machine census to 425 primaries (424 actionable plus one blocked false inventory), 55 aliases, 101 typed local actions, seven presentation rows, 588 Touch rows, 87 profiles, and 1065 production entries. Forge adds nine event-silent primaries, Backup/Restore adds sixteen, and Remote Access replaces four component/Serve primaries with three built-in-connector primaries plus four compatibility-only aliases. Those aliases have no peer control, state selector, handler, production row, persistence, or EventRecord.
+
+Amended 2026-10-31 (DL-270): these counts are the September 1 census and do not yet include the DL-270 surfaces: storage health with its verified reclaim action (SP-340, F3-457), the last verified backup and what a restore from it would lose (BRS-031, F3-528), and the record inspector (SP-339, F3-666). Storage health and the backup-status lines are projections and get no row (UIW-046); the reclaim action and the record inspector use the existing rows settings.storage_retention.compaction_request and storage.value.open; and load-older adds one production row, assistant.chat.history.load_older for cmd.chat.load_older (WM-098). The next census counts that row.
 
 ### UIW-017 - Exact Touch Command/GUI/Handler Closure
 
@@ -33,7 +35,12 @@ canonical_text: 'Every actionable Touch primary command must have production wir
   generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed.
   Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse
   the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser
-  tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists.'
+  tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists. Amended
+  2026-10-31 (DL-270): the system-local action list is to gain entries for storage health and reclaim (SP-340, F3-457),
+  the last verified backup and restore-loss display (BRS-031, F3-528) and the record inspector (SP-339, F3-666; opens
+  through cmd.storage.open_value). Reclaim resolves to the existing cmd.storage.compaction.request. pm db dump, pm inspect,
+  pm tail and pm export are command-line entry points that wire to the same handlers as the inspector, not separate dispatchers.
+  The file has none of these entries yet.'
 gui_related: true
 gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
 depends_on: [UIW-016, CS-074, UCC-152, WM-051]

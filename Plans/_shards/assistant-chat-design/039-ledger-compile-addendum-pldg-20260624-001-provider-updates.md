@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L2858-L3500
+Source lines: L2861-L3503
 
-Source SHA256: `f844135b97b3285cd88b3f0e377906be3dc72329a13056057c7b0e966720a041`
+Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
 
 ---
 
@@ -119,7 +119,7 @@ Thread-to-worktree binding is durable, explicit, and identity-bearing.
 
 **New redb key family:**
 - Key: `thread_state:{thread_id}:worktree_binding`
-- Value (JSON):
+- Value (typed fields or MessagePack; Amended 2026-10-31 (DL-270, SP-339): no redb family stores JSON text). The fields below keep their names and are shown as JSON only for illustration. The family sits in the canonical redb file with a maximum value size of 16 KiB (SP-340).
 ```json
 {
   "worktree_id": "wt-abc123",

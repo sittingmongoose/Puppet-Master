@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18238-L18412
+Source lines: L18266-L18440
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -22,7 +22,7 @@ Shared runtime uses the existing storage stack and creates no peer database:
 | Search | Tantivy derived indexes over redacted labels, summaries, and stable refs only; raw catalogs, logs, paths, request bytes, secrets, and inventories are excluded. |
 | Diagnostics/export | JSON/JSONL only; import-only legacy lineage is never live authority. |
 
-SQLite is prohibited as Puppet Master storage. Provider dispatch evidence stores
+SQLite is prohibited as Puppet Master storage (Amended 2026-10-31 (DL-270): the reasons are Jared's four requirements in SP-342, which also allows read-only import of other tools' SQLite files and an optional `pm export --sqlite`). Provider dispatch evidence stores
 the finalized request and structured attachment-manifest SHA-256 values plus
 artifact/decision/resource-admission/lineage refs, never their raw bytes. Opaque provider-owned SQLite files
 remain outside Puppet Master authority and are neither imported nor queried.
@@ -76,7 +76,7 @@ these families. The mandatory order is:
 6. validate counts, canonical encodings, hashes, identity joins, FileSafe and
    permission refs, no-raw-secret rejection, and derived-source coverage;
 7. write the new store schema stamp last, reopen, replay/catch up derived
-   projections, and rebuild Tantivy/JSONL only from authoritative sources;
+   projections, and rebuild Tantivy only from authoritative sources (JSONL is written only as an export on request, DL-270, SP-339);
 8. append the sole existing `migration_receipt` after read-back proof. On
    interruption, journal evidence selects completion, one automatic verified
    restore, quarantine, or `manual_recovery_required`; absence of evidence is

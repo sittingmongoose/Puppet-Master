@@ -1569,8 +1569,10 @@ acceptance_criteria:
   destination, repository, immutable snapshot/capture set, RecoverySet public record, policy/preview, generation, continuation,
   and focus when applicable.
 - The normal Backup overview shows Automatic Backups, Protected data, destination cards, Encryption enabled, Last complete
-  remote backup receipt time, independent verification/drill state, Recovery Kit status, and `[Back Up Now] [Restore…]
-  [Add Destination]`; it never exposes engine binaries, object keys, raw OAuth configuration, or secret bytes.
+  remote backup receipt time, the newest verified backup with its verification level and what a restore from it would
+  lose (its time and its last event, projected from the one backup-status record of BRS-031; a newer unverified backup
+  is shown beside it), independent verification/drill state, Recovery Kit status, and `[Back Up Now] [Restore…] [Add
+  Destination]`; it never exposes engine binaries, object keys, raw OAuth configuration, or secret bytes.
 - Destination, History and Browse, Schedule/Retention/Holds, Recovery and Keys, and Advanced/Diagnostics details route
   owner-admitted operations only. Discovery and destination test are bounded/non-destructive; retention preview is read-only;
   prune requires current preview/hash/lease/human confirmation and is never a Doctor action.
@@ -2699,8 +2701,12 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 | Built-in browser | Built-in browser; Signing in to websites; Screenshots and developer tools |
 | Notifications & Sounds | The master switch at the top of every tab; Destinations; Events (with Which alerts reach you under the event list); Sounds (play sounds, volume and also-while-using-the-app first); Quiet hours; History |
 | Permissions | Profiles (Profiles, and inside the selected profile What it may do without asking, as one answer each for changing files, running commands, using the internet and publishing, then Rules in that profile; New runs and chats; More options: Who runs the tools); Rules (View and scope; Rules for this project, in order, with the rules the profile in use brings shown beside them; Answers for each tool; More options: Rule details); Protected Files (File protection; Dangerous commands; Folders outside the project; Hide secrets; More options: Exceptions during checks); Approvals (When a run stops to ask; Always ask first; When you're asked; More options: Strictness and records); Limits (Stop runaway work; Limits for one run; More options: Finer limits) |
-| History | Timeline (What the timeline shows, in the filter bar; More options: Export and import); Sessions; Artifacts; Cleanup (Chats; Run records and logs; More options: Index and storage tools) |
+| History | Timeline (What the timeline shows, in the filter bar; More options: Export and import); Sessions; Artifacts; Cleanup (Chats; Run records and logs; Storage health; More options: Index and storage tools) |
 | Server & Project Location; Settings Transfer; Readiness & Doctor; Updates | Servers tab: Servers (each server's details, including how it signs in); SSH computers; SSH keys (every key Puppet Master knows, where it is kept and what uses it); Setting up tools on servers. Away From Home: how you reach the server now, and the ways in, in the order they are tried. Move & Copy: moving, copying or importing a workspace, and what was moved. Settings Transfer: Copy, load or save, one guided set-up, and the transfer history (More options: File format and older versions). Readiness & Doctor: Last checkup; Automatic checkups; What you see around the app; Setup and tour (More options: For support). Updates: Puppet Master; Content and catalogs (More options: How often and which releases) |
+
+Amended 2026-10-31 (DL-270): Storage health is an everyday, read-only group on the Advanced > Storage & Retention page that `cmd.settings.open_storage_retention` opens (F3-457). It shows each storage group's usage against its budget, its reclaimable bytes and the last compaction, and its free-up-space action dispatches the existing `cmd.storage.compaction.request` (SP-340) and shows the result per group. The `storage-retention-recovery` descriptor carries the same projection. Budgets, the fragmentation threshold, the redb cache size and the compaction schedule are fixed owner values in the storage registry, shown read only; Settings owns no budget value, no compaction and no new setting row (SSYS-058).
+
+Amended 2026-10-31 (DL-270): in the Usage & budgets page above, `ai.usage.usage-retention` (Keep usage history for: 30d, 90d by default, 180d, 1y, unlimited) stays as it is; Jared answered "Defualt to 90 days, selectable to longer or shorter time periods." It governs the detailed usage records in the event log and the Parquet archive. Daily usage totals are kept whatever it says, and the Usage page and its charts read those totals (UF-108, SP-341).
 
 ### 2. Canonical-id moves between pages
 
@@ -3365,7 +3371,7 @@ SSYS-051's twelve (eleven live, and `code.terminal.search`, retired since):
 | `code.terminal.rendering-mode` | Rendering Mode (was Terminal Look & Feel Preset) | Keeps the render modes of the Section15 terminal (Interactive Rich, Plain, Minimal) and says it never sets colours, fonts, backgrounds or effects: those are the Terminal look rows. |
 | `code.terminal.shell-integration` | Shell Integration (was Shell Integration Status) | A switch, as its type always was: on, the shell's prompts and commands are marked (each mark carrying the terminal's secret, SMPFS-183); off, the shell runs as it is, with no command marks, sticky command header or command jumps. |
 | `code.terminal.search` | Search in Terminal | Superseded 2026-10-10 by its retirement (lead ruling L18; Rows retired above): the row renders nowhere. Before that: Find is in every terminal (Ctrl+Shift+F, Cmd+F on a Mac, F3-641; the old Ctrl+F is corrected), so the switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value. |
-| `code.terminal.transcript-retention` | Saved Terminal Output (was Keep Terminal History For) | Bound to the terminal's saved scrollback (`Plans/storage-plan.md#SP-332`), which restore brings back: Keep Saved Scrollback (default, was Session Only) keeps it by SP-332's rule, and Session Only saves none, so a restored or reopened terminal starts without its earlier output. The 24 Hours, 7 Days, 30 Days and Forever choices, the 7 Days recommendation and the adjudication badge go, because SP-332's quota and closed-tab limit replace them. Amended 2026-10-10 (DL-187; D36, D37): Keep Saved Scrollback also leaves well-known secrets out of the saved copy, the live screen keeping them, and keeps saved scrollback within a total of 512 MiB across every terminal, the oldest going first, beside each terminal's 64 MiB (SP-332). The scrub and the 512 MiB total are fixed, not choices (lead ruling F4). |
+| `code.terminal.transcript-retention` | Saved Terminal Output (was Keep Terminal History For) | Bound to the terminal's saved scrollback (`Plans/storage-plan.md#SP-332`), which restore brings back: Keep Saved Scrollback (default, was Session Only) keeps it by SP-332's rule, and Session Only saves none, so a restored or reopened terminal starts without its earlier output. The 24 Hours, 7 Days, 30 Days and Forever choices, the 7 Days recommendation and the adjudication badge go, because SP-332's quota and closed-tab limit replace them. Amended 2026-10-10 (DL-187; D36, D37): Keep Saved Scrollback also leaves well-known secrets out of the saved copy, the live screen keeping them, and keeps saved scrollback within a total of 512 MiB across every terminal, the oldest going first, beside each terminal's 64 MiB (SP-332). The scrub and the 512 MiB total are fixed, not choices (lead ruling F4). Storage health lists this family with its fixed 512 MiB total and 64 MiB per-terminal budgets (SSYS-058). |
 
 ### Rows added
 
@@ -4458,3 +4464,59 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-244, ContractName:Plans/Setti
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### SSYS-058 - Storage Health, Free Up Space And Backup Status In Settings
+
+```yaml
+plan_unit_id: SSYS-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  DL-270, Jared 2026-10-31. Settings adds no ordinary row for the storage profile; it shows what
+  Plans/storage-plan.md owns and routes the one action. Storage health: the storage-retention-recovery
+  descriptor's owner projection, on the Advanced > Storage & Retention page that cmd.settings.open_storage_retention
+  opens, shows about eight storage groups, each with its usage, its one budget, its reclaimable bytes and the last
+  compaction, exactly as the storage owner reports them (SP-340). Settings holds no budget, cache size,
+  fragmentation threshold or compaction schedule: they are fixed owner values in the storage registry, shown read
+  only. A group whose size is already a Settings row shows that row's value as its budget (web.fetch.cache-size);
+  saved terminal output shows its fixed 512 MiB total and 64 MiB each (SSYS-051). Free up space dispatches only the
+  existing cmd.storage.compaction.request, one action for the whole storage instance, and shows the owner's result
+  per group: the sizes before and after and the bytes returned, or the owner's reason. Usage history:
+  ai.usage.usage-retention is unchanged (default 90 days, selectable longer or shorter); it governs detailed usage
+  records and daily usage totals are kept whatever it says (UF-108). Backup status: the Data Backup and Retention
+  overview shows the newest verified backup with its level, what a restore from it would lose and any newer
+  unverified backup, all read from the one backup-status record (BRS-031); Settings computes none of it. Fixed, not
+  choices: compression levels and tiers, sync mode, the 16 KiB inline cap, render-page size, redb cache size,
+  transport compression, screenshot format and where stores are placed.
+gui_related: true
+gui_classification_reason: Defines the storage health display, the free-up-space result and the backup status that people see in Settings.
+split_recommended: false
+depends_on: [SSYS-021, SSYS-026, SSYS-051, SP-340, SP-341, SP-345, BRS-031, UF-108]
+unblocks: []
+acceptance_criteria:
+- A census of Plans/settings_inventory.json after DL-270 finds the same number of unique ids as before it, and no id for a disk budget, cache size, fragmentation threshold, compaction schedule, compression level, sync mode, payload cap, page size, transport compression, screenshot format or store location.
+- The storage-retention-recovery projection shows each group's usage, budget, reclaimable bytes and last compaction from the owner's record, and Settings stores none of those figures.
+- The free-up-space action dispatches only cmd.storage.compaction.request and renders the owner's result per group, including the bytes returned or the owner's reason.
+- ai.usage.usage-retention keeps its 90-day default and its longer and shorter choices.
+- The Data Backup and Retention overview shows the newest verified backup with its level and what a restore from it would lose, and a newer unverified backup beside it, or says no verified backup exists.
+validation_surfaces: [Plans/settings_inventory.json, python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json]
+risk_class: storage_truth_duplicated_or_invented_in_settings
+reasoning_tier: high
+context_scope: dl270_settings_companions
+implementation_surfaces: [Plans/Settings_System.md, Plans/storage-plan.md, Plans/Backup_Restore_System.md]
+node_compile_hint: {mode: owner_presentation_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-340"
+  - "Plans/usage-feature.md#UF-108"
+  - "Plans/Backup_Restore_System.md#BRS-031"
+preserved_exact_tokens: [cmd.storage.compaction.request, cmd.settings.open_storage_retention, ai.usage.usage-retention, web.fetch.cache-size, 16 KiB]
+negative_constraints:
+  - "Do not add a setting for a disk budget, cache size, compaction schedule or threshold, compression level, sync mode, page size, transport compression or screenshot format."
+  - "Do not retire or re-scope ai.usage.usage-retention."
+  - "Do not hold a copy of storage or backup figures in Settings."
+owner_hints: [Plans/Settings_System.md, Plans/storage-plan.md, Plans/Backup_Restore_System.md]
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/usage-feature.md#UF-108, ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Settings_System.md#SSYS-026

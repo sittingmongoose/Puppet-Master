@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22522-L22534
+Source lines: L22526-L22538
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e`
 
 ---
 
@@ -16,7 +16,7 @@ Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0
 
 The active payload is `pm.goal_runtime_event.goal_created.schema.v3`, with the exact twelve required content-free fields in `Plans/event_payloads/goal_runtime/goal_created.schema.json`. Revision and accepted objective revision are both 1. The entire prior v2 root, including its own ID and all local definitions, remains under `#/$defs/legacy_v2_reader`; retained decoding selects that whole resource explicitly. There is no shape-based fallback, v2-to-v3 reinterpretation, implicit legacy backfill, old structured-objective writer or extension of the event census. An active-v3 writer and a whole-v2 retained decoder are separate installation roles. A package unable to supply required actual roles is unavailable for that operation; a declaration does not prove native dispatch or mixed-version traversal.
 
-The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged.
+The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged. Amended 2026-10-31 (DL-270): SP-339 moves redb values stored as JSON text to MessagePack in the family's canonical encoding, or to typed fields, so the stored `goal_start_command.v1` row is not JSON text. RFC 8785 canonical JSON stays only as the source-hash and transient API recipe named here (SP-339, SP-340).
 
 The physical key is `goal_start_command.v1:{P}:{T}:{C}`, where each component is lowercase hexadecimal of the exact UTF-8 `project_id`, `thread_id` and `command_instance_id`, respectively. The outer record's values must equal the decoded key, original operation/owner scope and original source identity. A logical member reference `<key>#/owner_result` resolves to `/record/owner_result` in the authenticated wrapped row; `<key>#/creation_receipt` resolves to `/record/owner_result/creation_receipt`. These are named owner-resolved members, not raw JSON Pointers at the wrapper root. Missing/null/unsettled members are unavailable and never synthesized. The result schema reference is exactly `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2`, schema identity `pm.goal.start.result.v2`. The resolver checks current audit authority and the exact original row/body/shared evidence before returning a member; traversal of an event is a separate consumer facet.
 

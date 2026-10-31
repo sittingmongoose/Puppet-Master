@@ -108,7 +108,7 @@ The expanded inline card shows participant rows, one line per lane for at most t
 
 ### 4.2 Full panel
 
-The full panel is the run view: one editor-pane document per run with a kind-specific overview tab and the shared Conversation, Team and Cost tabs. It shows the full transcript, the participant list with clickable transcripts, assignments and questions and research and tool activity, artifacts and findings and votes, Usage with requested/effective identity, and history, recovery, and output actions. Opening it focuses the run's existing document and never duplicates it, and it must never hide the main composer destination state. Its document identity, tabs, narrow-width behavior and the one-control-set rule are specified by CWR-020 (2026-09-27).
+The full panel is the run view: one editor-pane document per run with a kind-specific overview tab and the shared Conversation, Team and Cost tabs. It shows the full transcript, the participant list with clickable transcripts, assignments and questions and research and tool activity, artifacts and findings and votes, Usage with requested/effective identity, and history, recovery, and output actions. Opening it focuses the run's existing document and never duplicates it, and it must never hide the main composer destination state. Its document identity, tabs, narrow-width behavior and the one-control-set rule are specified by CWR-020 (2026-09-27). Amended 2026-10-31 (DL-270): "full transcript" means the complete history reachable by paging, not one load. The Conversation tab opens on the newest 50-item page and loads older pages on demand, and opening it never replays the run's events (SP-338, ACD-242, placed in CWR-020).
 
 ### 4.3 Participant rows and participant transcripts
 
@@ -1751,7 +1751,10 @@ canonical_text: >-
   controls and finding selections are replaced by one line saying the choice is made in the run
   view, and they return when it closes or another tab becomes active. Decisions owned by the approval
   owner stay in the card; the run view shows the same decision as a sentence with
-  "Answer in the chat card".
+  "Answer in the chat card". Amended 2026-10-31 (DL-270): the Conversation tab and the participant
+  transcripts never load a whole transcript. They open on the newest 50-item render page and load
+  older 50-item pages on demand, with load-older mandatory (SP-338, ACD-242). Opening a run view
+  never replays the run's events.
 gui_related: true
 gui_classification_reason: This unit replaces the full panel with an editor-pane document and fixes where run controls render.
 depends_on: [CWR-003]
@@ -1762,6 +1765,7 @@ acceptance_criteria:
   - The composer destination stays visible while the run view is open.
   - A run-changing control is never actionable in the card and the run view at once.
   - Approval decisions are taken only in the card.
+  - The Conversation tab opens on the newest 50-item page and loads older pages on demand without replaying events.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: duplicate_run_controls_or_hidden_destination

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L784-L804
+Source lines: L787-L808
 
-Source SHA256: `32b0a0b158c1a01abd5c6005f411893f53c98a3b0e11d5369d651ff88b17d60f`
+Source SHA256: `18beb1ce4384e6d95e4879828eb26a3bec9021fead28ad787abb2188b6d264e0`
 
 ---
 
@@ -20,6 +20,7 @@ The highest-risk duplication hotspots for this planning set are now:
 - requested/effective runtime surface and effort language
 - blocked/awaiting-parent versus older denial or recovery aliases
 - Context Lens UI wording versus command and wiring ownership
+- storage-profile numbers and retention windows repeated across SP-335..SP-345, RAS-016, UF-108 and BRS-031 (single owners in DR-082)
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 

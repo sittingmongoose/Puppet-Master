@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L445-L4531
+Source lines: L445-L4532
 
-Source SHA256: `6ce7f74c2d708b8bdc9358c3f7e41354630e681db5985087d30bd42654a39c7b`
+Source SHA256: `aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e`
 
 ---
 
@@ -1174,6 +1174,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Pre-aggregation or collapsing at the storage or event layer is prohibited.
 - Provider records that AGGREGATES into fewer persisted DB fields are non-canonical.
+- Amended 2026-10-31 (DL-270, SP-341, UF-108) - daily usage totals are canonical redb records, backed up and never rebuilt from expired usage.event records, and never replace bucket-level records; this constraint covers bucket fields inside usage.event records.
 - Legacy token names must not be presented as canonical UsageRecord fields.
 compatibility_only_notes: []
 stale_retired_dispositions: []

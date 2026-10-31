@@ -4,7 +4,7 @@ Source: `Plans/Provider_OpenCode.md`
 
 Source lines: L761-L3441
 
-Source SHA256: `4d19a9e229069e37e121ce7cba0030348c73c6337264823503c85e33dea6d782`
+Source SHA256: `54574da3179ac453e0f6d6918bae52cf2dbc7a1b7f808d132bf9f5a8c53cc406`
 
 ---
 
@@ -237,7 +237,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints.
+  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints. Amended 2026-10-31 (DL-270, SP-339): per-profile sidecar state is typed or MessagePack in the canonical redb family; `pm/state.json` stays here only as the lineage name of the retired JSON state file.
 gui_related: false
 gui_classification_reason: This unit defines server profile connection data and ownership rather than visual presentation.
 split_recommended: false

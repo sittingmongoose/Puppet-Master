@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12380-L12552
+Source lines: L12391-L12565
 
-Source SHA256: `d16b9cb18b7053ffe1e667aafbb44b7a8b635a960007b796d13117457029972b`
+Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
 
 ---
 
@@ -82,7 +82,9 @@ owner_doc: Plans/Tools.md
 canonical_text: >-
   ToolRecoveryEnvelope gives every partial, failed, truncated, or recoverable attempt typed failure, retry,
   verification, cwd, match-diagnostic, and final-outcome evidence. Complete redacted large output spills to a canonical
-  artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited.
+  artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
+  (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
+  exists for large output.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]

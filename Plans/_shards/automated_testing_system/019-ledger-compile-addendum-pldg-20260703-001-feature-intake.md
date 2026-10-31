@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1905-L2051
+Source lines: L1905-L2052
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -29,6 +29,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+- "Amended 2026-10-31 (DL-270). Soak also covers compression negotiation (RAS-016): PM clients negotiate zstd level 3 with a 1 MiB window, browsers fall back to brotli or permessage-deflate, and the in-app UI path stays uncompressed."
 - Terminal retry fixtures assert exact session, invocation/block, and card identities for explicit same-session rerun, replacement execution, failed/retried attachment and movement reconciliation; recovery never replays a command or duplicates its invocation card. The oracle consumes ACD-108 and UCC-067.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:

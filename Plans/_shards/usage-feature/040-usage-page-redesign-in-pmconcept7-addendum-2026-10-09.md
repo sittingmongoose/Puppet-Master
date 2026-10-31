@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L7313-L7557
+Source lines: L7320-L7627
 
-Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
+Source SHA256: `e07fbe5506fcc6e1da8d3ada4ddd38e31c6fc11cf6511534c5f15af5a35a6607`
 
 ---
 
@@ -253,3 +253,66 @@ owner_hints: [Plans/usage-feature.md, Plans/Multi-Account.md, Plans/FinalGUISpec
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-174, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/DRY_Rules.md#DR-038, ContractName:Plans/FinalGUISpec.md#F3-628
+
+### UF-108 - Usage Loads From Rollups And Keeps Its Daily Totals
+
+```yaml
+plan_unit_id: UF-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  DL-270, Jared's card 7 note and his follow-up answer. The Usage page and every usage widget read redb rollups
+  that update as each usage.event lands: totals, windows and charts never scan raw events, and the Ledger's list
+  pages through usage records by index. Detailed usage records follow the existing Keep usage history for setting,
+  ai.usage.usage-retention (30 days, 90 days by default, 180 days, 1 year or unlimited), in the event log and in
+  SP-341's Parquet archive alike, where SQL can query them. Daily usage totals per account, provider and model,
+  plus any further keys the usage owner rolls up such as purpose, are canonical records in the canonical redb
+  file: they are written before the detailed records they summarize expire, are backed up, are never rebuilt from
+  events, and are kept whatever the setting says. The derived rollups cover the retention window and take older
+  days from them. Problem 5's raw-event window is that setting for usage.event. usage.jsonl is retired as a live
+  file (SP-339). Jared, 2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on
+  AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so
+  just want to make sure that is accounted for."
+gui_related: true
+gui_classification_reason: "Usage loads from rollups and keeps its full history."
+split_recommended: false
+depends_on: [UF-107, SP-339, SP-341]
+unblocks: []
+acceptance_criteria:
+  - "No usage total, window or chart scans raw usage events; the Ledger pages through records by index."
+  - "Detailed usage records older than the selected ai.usage.usage-retention are pruned from the event log and the archive."
+  - "Daily usage totals per account, provider and model are never pruned."
+  - "Deleting the derived file after detailed records expire keeps every daily total, and a restore keeps every daily total its backup covers and says that totals written after the backup's capture point are lost."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: usage_history_loss_or_slow_load
+reasoning_tier: high
+context_scope: dl270_usage_history
+implementation_surfaces:
+  - "Plans/usage-feature.md"
+  - "Plans/storage-plan.md"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-followup-2026-10-31.md, SHA-256 003852e3672c98db0f5daef0876829cebb44985779579ce0a889800442f73cae (Jared's follow-up answer on the usage setting)"
+preserved_exact_tokens:
+  - "usage.event"
+  - "ai.usage.usage-retention"
+  - "Do we need to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make sure that is accounted for."
+negative_constraints:
+  - "Do not prune daily usage totals."
+  - "Do not serve usage totals or windows from raw scans."
+owner_hints:
+  - "Plans/usage-feature.md"
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-341, ContractName:Plans/storage-plan.md#SP-339

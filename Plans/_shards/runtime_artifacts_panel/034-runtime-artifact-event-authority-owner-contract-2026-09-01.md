@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2481-L2651
+Source lines: L2487-L2659
 
-Source SHA256: `e7aa2b010c748593bb7c5f4615faa78dac656603b0f0a9d14793cbff7d5eefce`
+Source SHA256: `fe048767cd39d62ee7e90db30eefc91a6c7a6d35a4e06679ac041404fe28a050`
 
 ---
 
@@ -179,3 +179,5 @@ owner_hints:
   - Plans/Runtime_Artifacts_Panel.md
   - Plans/storage-plan.md
 ```
+
+Amended 2026-10-31 (DL-270): `runtime_artifact.cost_usage` rows and their `usage_event_ref` are not bounded-retention rows. They show no expires-in line and never become tombstones. Detailed usage records follow the existing `ai.usage.usage-retention` setting (90 days by default, selectable shorter or longer), and daily usage totals are kept whatever it says (SP-341, UF-108). The usage totals, windows and charts a cost_usage row links to read those rollups.

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23664-L23794
+Source lines: L23699-L23829
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -18,7 +18,7 @@ Register the independent redb family `platform_capability_decision` in table `pl
 
 The closed definitions are owned by `Plans/platform_capability_decision_contracts.schema.json`. The row is the exact closed 14-field `decision` definition, schema_id `pm.storage_value.platform_capability_decision.v1`, schema_version `1.0.0`. The original request is the closed 11-field `evaluation_request`, schema_id `pm.platform_capability_evaluation_request.v1`, schema_version `1.0.0`. The passive selector is exactly four fields. No alternate tags, extra fields, coercion or old external shape are allowed. Preserve all nested schema fields, nullability, enum and semantic joins. In particular, preserve original request and hash, selected catalog revision/entry, zero-to-three minimal source-owner facts, frozen input and hash, pending/committed state, exact Storage assignment custody, original eleven-field receipt and committed time. Source facts contain the original decision/provenance needed to explain the choice, never raw probe bodies, provider responses, credentials, account content, old transaction controls or source-service history.
 
-The restricted JSON codec uses UTF-8; Unicode scalar key ordering; no insignificant whitespace or Unicode normalization; lowercase literals; base-10 integers without redundant zeros; and exactly the following escaping: quote and backslash escaped, U+0008/0009/000A/000C/000D use b/t/n/f/r escapes, remaining U+0000–001F use lowercase `u00hh`. All other scalars, including solidus, DEL, U+2028/U+2029, are literal UTF-8. Reject floats/nonfinite values, lone surrogates, non-string keys and foreign types. Decode rejects duplicate keys and any bytes unequal to exact re-encoding. SHA-256 is over these exact bytes, lowercase hex. EventRecord/shared append codecs remain separate and unchanged. Chronology compares exact RFC3339 instants with arbitrary decimal fractional precision while preserving original timestamp strings; do not lexically compare or normalize original receipts.
+The restricted JSON codec uses UTF-8; Unicode scalar key ordering; no insignificant whitespace or Unicode normalization; lowercase literals; base-10 integers without redundant zeros; and exactly the following escaping: quote and backslash escaped, U+0008/0009/000A/000C/000D use b/t/n/f/r escapes, remaining U+0000–001F use lowercase `u00hh`. All other scalars, including solidus, DEL, U+2028/U+2029, are literal UTF-8. Reject floats/nonfinite values, lone surrogates, non-string keys and foreign types. Decode rejects duplicate keys and any bytes unequal to exact re-encoding. SHA-256 is over these exact bytes, lowercase hex. EventRecord/shared append codecs remain separate and unchanged. Chronology compares exact RFC3339 instants with arbitrary decimal fractional precision while preserving original timestamp strings; do not lexically compare or normalize original receipts. Amended 2026-10-31 (DL-270): platform_capability_decision is stored as canonical MessagePack or typed fields (SP-339), not restricted JSON; this codec stays only for the evaluation identity hash, finding files and exports. Registration also declares a maximum value size of 16 KiB or less, canonical file placement and a disk budget (SP-340), and Plans/storage_value_registry.json is updated to match.
 
 Actual Storage registration, installed writer/reader/codec, migration, origin, permission, quarantine and coherent backup/current-source authority must be available before admission. StorageMigrationCoordinator owns source/target version installation; this first canonical schema has no deployed proposal predecessor, guessed store version, lazy conversion or fabricated original custody. Missing/corrupt custody is canonical loss requiring mandatory backup and truthful mutation/history fences; schema/hash equality alone cannot authenticate imports.
 

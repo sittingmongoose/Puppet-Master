@@ -218,6 +218,6 @@ DR-081: one Free Models catalog and matching advanced disclosure. New local cont
 
 | ID | Purpose | Authority |
 |---|---|---|
-| DL-271 | FO-11/FO-12, recovery-phrase wording, unconditional weak-key refusal and initial request-waiting state | Lead1031214952-2d19; checked free on branch and origin/main808de86f4d |
+| DL-271 | FO-11/FO-12, recovery-phrase wording, unconditional weak-key refusal and initial request-waiting state | Lead1031214952-2d19; checked free on branch and storage main683e603ac1; allocated above DL-270 |
 
-DL-270 and SP-335 onward remain reserved to the storage work. No new SP, ACD, UF, RAS or BRS unit ID is allocated by this batch. Main is read for collision checks only and remains unmerged.
+Storage main683e603ac1 brings DL-270, SP-335..345, UF-108, BRS-031, RAS-016, CS-107, UCC-212, F3-666/667, WM-098, UIW-046, DR-082/083 and SSYS-058, plus its named requirement/fixture IDs. This batch allocates DL-271 only and none collides. The active settings union is 1010; retired general.visual.nier-mode stays migration-only. Production wiring is 1270 with assistant.chat.history.load_older; Touch remains 715 rows / 140 profiles.

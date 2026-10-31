@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11686-L11920
+Source lines: L11691-L11925
 
-Source SHA256: `54280821ea1b3d8c648e6af69123fae7b415edcc5c536e7f58aac106408d4674`
+Source SHA256: `6036b30a812233edbf0bef2b245d12421f646cdbda6669ab390587c28def4e7d`
 
 ---
 
@@ -35,7 +35,7 @@ second workspace. A prepared runtime resource is not exposed to a controller,
 navigation, agent, viewer or command-result consumer before the creation commit.
 The owner verifies the actual isolated resource and exact assigned generation,
 then submits its bounded creation fact to the existing barrier EventRecord append.
-The synced frame/manifest AppendReceipt is the logical creation commit; only then
+The AppendReceipt for the barrier EventRecord append is the logical creation commit. Under SP-336 it is issued after the barrier-class full flush of the segment, which carries the durable watermark; the manifest is not synced per append. Only then
 may the owner publish success and make the prepared workspace available through
 the ordinary independently checked action path. This is an ordered runtime/seglog
 barrier, not a cross-store transaction or admission of a Browser session/profile

@@ -2022,12 +2022,8 @@
       "INITIAL-REQUEST-WAIT",
       "FO-14"
     ],
-    "reserved_not_allocated": [
-      "DL-270",
-      "SP-335_and_up"
-    ],
     "main_read_only_ref": "808de86f4d607dd5386b6f26cd6d1703ba7248ad",
-    "main_merged": false,
+    "main_merged": true,
     "new_SP_ACD_UF_RAS_BRS_units": 0,
     "excluded": [
       "FO-13 translation lookup/build-key census implementation",
@@ -2052,6 +2048,23 @@
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
         "sha256": "2dc0d290daeb518c5b8f74d96a9c293357f1bff9d308d47845ca44b9ae838c1d"
       }
-    ]
+    ],
+    "main_merged_ref": "683e603ac13b150dfc5f7a7e957355c666731fe6",
+    "reserved_not_allocated_by_feedback_batch": [
+      "DL-270",
+      "SP-335_and_up"
+    ],
+    "storage_integration": {
+      "decision_ref": "DL-270",
+      "settings_active": 1010,
+      "settings_raw_union": 1011,
+      "retired_excluded": "general.visual.nier-mode",
+      "touch_rows": 715,
+      "touch_profiles": 140,
+      "production_wiring_entries": 1270,
+      "main_only_production_row": "assistant.chat.history.load_older",
+      "glass_resolution_sha256": "023ac451ee3adf6e8b54831f624d5b927cdaeaab099669fe271af16d67f40132",
+      "baseline_and_migration_refreshed": false
+    }
   }
 }

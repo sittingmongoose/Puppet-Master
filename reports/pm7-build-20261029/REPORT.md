@@ -1,3 +1,13 @@
+# Plans lane — storage main merge checkpoint, 2026-10-31
+
+**Storage main `683e603ac1` reconciled with checkpoint `69d974d555`.** Both canon sets remain; [STORAGE-MERGE.md](STORAGE-MERGE.md) records every overlapping owner and the union proof. Main's reserved IDs are retained; the feedback decision is DL-271. Counts: **1010 active settings; 715 Touch rows / 140 profiles; 1270 production rows; 155 PM7 coverage rows / 775 cells**.
+
+Page publish/check, shard/index generation, PM7 schemas, product boundary, onboarding rulings, Touch, wiring and shard/index validation pass. The initial canon/source check still reports the known weak-key source paths. The lead has now supplied integration `ed1f82fed7` / srv `d1abe18d58`; merge and source re-check follow as the next step. An initial preservation-guard assertion used the wrong literal for the existing Touch fence; the corrected guard checks the actual fence and retains the failed diagnostic.
+
+All 653 prior evidence fingerprints remain exact. The supplied Glass file is exact. Main's protected governance/current migration/baseline are unchanged. No browser, full gates, dry, landing, lock or reseal. This is a merge checkpoint, not final acceptance.
+
+---
+
 # Plans lane — storage-main merge in progress, 2026-10-31
 
 Checkpointing DL-271 before the requested merge of main683e603ac1. The uncommitted DL-261 allocation was renumbered to DL-271 to follow the new main ceiling; no committed decision history changed. Main's DL-270/SP-335..345/other reserved unit IDs do not collide; GUI-SRT/RET/FX requirement ids are absent on our side. Full source and conflict reconciliation follows the checkpoint.

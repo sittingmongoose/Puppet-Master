@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5268-L5396
+Source lines: L5285-L5413
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -63,7 +63,7 @@ Every family also shares `COORD-RETRY-01`, `COORD-UNCERTAIN-01`, `COORD-CAS-01`,
 | `COORD-READER-01` | A scheduler or prompt-context read while the checkpoint is not current, coverage is short or the publication changed | Typed unavailable; the scheduler treats it as `coordination_conflict` and neither schedules nor injects context |
 | `COORD-WITHDRAW-01` | Withdrawal of one admitted family | Writer admission cut off, current core withdrawn, projector and readers fenced, governed rebuild from kept seglog records; no seglog deletion |
 | `COORD-RETENTION-01` | Coordination records of a Run whose terminal canonical record has not resolved | Not eligible for expiry under `RP-COORDINATION-180D` |
-| `COORD-MIRROR-01` | A stale or corrupt `.puppet-master/state` mirror | Never authority for scheduling, prompts, unregister, crash, abort, receipt or validation decisions |
+| `COORD-MIRROR-01` | Any exported or retired-mirror copy of coordination state (`pm export` output, a leftover `.puppet-master/state` file) | Never authority for scheduling, prompts, unregister, crash, abort, receipt or validation decisions (SP-339 retires the state mirror files) |
 
 ```yaml
 plan_unit_id: ATS-058

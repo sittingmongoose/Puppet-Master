@@ -334,24 +334,32 @@
      they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
   var heldTargets = new Map(), heldScopes = [], heldTimer = 0, heldBox = false;
   function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
+  function flushHeld() {
+    heldTimer = 0;
+    if (dragHeld()) { flushHeldSoon(); return; }
+    var targets = heldTargets, scopes = heldScopes, box = heldBox;
+    heldTargets = new Map(); heldScopes = []; heldBox = false;
+    /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
+       lazySync, with the tab ink under it (Muse review m4) */
+    if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
+    scopes.forEach(function (s) { dirtyScope(s); });
+    if (targets.size) mountMeasured(targets);
+    if (targets.size || scopes.length) lazySync(false);
+    scheduleBakes();
+    /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
+       no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
+    liftFlat();
+  }
   function flushHeldSoon() {
     if (heldTimer) return;
-    heldTimer = setTimeout(function () {
-      heldTimer = 0;
-      if (dragHeld()) { flushHeldSoon(); return; }
-      var targets = heldTargets, scopes = heldScopes, box = heldBox;
-      heldTargets = new Map(); heldScopes = []; heldBox = false;
-      /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
-         lazySync, with the tab ink under it (Muse review m4) */
-      if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
-      scopes.forEach(function (s) { dirtyScope(s); });
-      if (targets.size) mountMeasured(targets);
-      if (targets.size || scopes.length) lazySync(false);
-      scheduleBakes();
-      /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
-         no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
-      liftFlat();
-    }, 160);
+    heldTimer = setTimeout(flushHeld, 160);
+  }
+  /* The shell dispatches PM_DRAGEND after it drops pm-resizing and commits the drag; flushing there
+     instead of waiting out the poll returns the rims up to 160ms sooner. The timer stays as the
+     fallback for hosts without the shell registry and for any end path that skips dispatch. */
+  function flushHeldNow() {
+    if (heldTimer) { clearTimeout(heldTimer); heldTimer = 0; }
+    flushHeld();
   }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     if (!isGlass()) return;
@@ -2868,6 +2876,7 @@
   }
   function start() {
     ensureDefs(); viewportVars(); knobFilter(); readSwitch();
+    if (window.PM_ON_DRAGEND) window.PM_ON_DRAGEND(flushHeldNow);
     window.addEventListener('resize', viewportVars);
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
