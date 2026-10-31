@@ -32,8 +32,11 @@ const out = resolve(opt('out', '/tmp/o55/work-checks')); mkdirSync(out, { recurs
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const browser = await chromium.connectOverCDP(cdp, { noDefaults: true });
-const ctx = await browser.newContext({ viewport: { width: W, height: H } });
+/* a tab in the browser's own context (the session's profile is fresh), not a context of its own: there a second page is
+   its own window, so no check could hide the page the way a person hides it by opening another tab (check 50) */
+const ctx = browser.contexts()[0] || await browser.newContext();
 const page = await ctx.newPage();
+await page.setViewportSize({ width: W, height: H });
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e && e.message || e).slice(0, 300)));
 const results = [];
@@ -701,6 +704,25 @@ try {
     const dlg = await ev(() => !document.getElementById('pm7-work-dialog'));
     return { ok: sys && dlg, note: JSON.stringify({ systemClosed: sys, stopListClosed: dlg }) };
   });
+  await check(50, 'A hidden tab holds the moving rows: running process marks pause where they are and resume from there, in step, and working agents\' loaders go off (Q11 B, Astra\'s review)', async () => {
+    await scenario('many'); await openP('processes'); await sleep(1200);
+    const sample = () => ev(() => ({ vis: document.visibilityState, t: [...document.querySelectorAll('#pm7-work .wk-row.wk-moving:not(.wk-off)')].slice(0, 3).map((r) => r.querySelector('.wk-lead').getAnimations({ subtree: true }).map((a) => [a.playState, Math.round(a.currentTime)])[0] || null) }));
+    const other = await page.context().newPage(); await other.goto('about:blank'); await other.bringToFront(); await sleep(300);
+    /* a hidden page restyles lazily: the hold lands on its next style pass, so the hold is read from 1 s in */
+    const h0 = await sample(); await sleep(1000); const h1 = await sample(); await sleep(1500); const h2 = await sample();
+    await page.bringToFront(); await sleep(60); const back = await sample(); await sleep(900); const later = await sample();
+    await other.close();
+    await scenario('busy'); await openP('agents'); await sleep(1200);
+    const o2 = await page.context().newPage(); await o2.goto('about:blank'); await o2.bringToFront(); await sleep(400);
+    const hidLoaders = await ev(() => [...document.querySelectorAll('#pm7-work .wk-pip .pml-ld')].map((l) => l.getAttribute('data-pml-run')));
+    await page.bringToFront(); await o2.close(); await sleep(400);
+    await ev(() => window.PM7_WORK_UI.close());
+    const t = (s) => s.t.map((x) => x && x[1]);
+    const ok = h1.vis === 'hidden' && h1.t.length > 0 && h1.t.every((x) => x && x[0] === 'paused') && t(h1).join() === t(h2).join() &&
+      back.vis === 'visible' && back.t.every((x, i) => x && x[0] === 'running' && Math.abs(x[1] - t(h2)[i]) < 150) && later.t.every((x, i) => x[1] > back.t[i][1] + 500) &&
+      new Set(t(later)).size === 1 && t(h2)[0] - t(h0)[0] < 300 && hidLoaders.length > 0 && hidLoaders.every((r) => r !== 'on');
+    return { ok, note: JSON.stringify({ hidden0: t(h0), hidden1s: t(h1), hidden25s: t(h2), back: t(back), later: t(later), hidLoaders }) };
+  });
 } finally {
   try { (await ev(() => window.__wkErrors || [])).forEach((e) => { if (!errors.includes(e)) errors.push(e); }); } catch (_) { /* the frame is gone */ }
   const failed = results.filter((r) => !r.ok).length;
@@ -708,7 +730,7 @@ try {
   if (drift.length) console.log('LOOK DRIFT: ' + drift.length + ' checks ended outside ' + wantLook + ': ' + drift.slice(0, 5).map((r) => r.n + '=' + r.look).join(', '));
   writeFileSync(join(out, 'work-checks.json'), JSON.stringify({ page: url, sandbox, look: fam + '-' + mode, width: W, results, errors, drift: drift.map((r) => r.n) }, null, 1));
   console.log(`${results.length - failed}/${results.length} passed; ${errors.length} page errors` + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
-  await ctx.close().catch(() => {});
+  await page.close().catch(() => {});
   await browser.close().catch(() => {});
   process.exitCode = failed || errors.length || drift.length ? 1 : 0;
 }
