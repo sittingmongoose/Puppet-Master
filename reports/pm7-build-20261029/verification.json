@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+  "source_commit": "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-31T03:59:30.755139+00:00",
+  "recorded_at_utc": "2026-10-31T04:30:47.817724+00:00",
   "native_runtime_certification": false,
   "step4": "GUI5abe_toast_followups_10_focused_pass",
   "counts": {
@@ -48,57 +48,67 @@
     {
       "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-rulings-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-rulings.json"
     },
     {
-      "command": "python3 scripts/pm7-canon-check.py",
+      "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-canon-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-build.json"
+    },
+    {
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-touch.json"
     },
     {
       "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-wiring-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-wiring.json"
     },
     {
-      "command": "python3 scripts/pm7-demo-canon-check.py --history-base 203455bdfa",
+      "command": "python3 scripts/pm-onboarding-contracts.py --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-boundary-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-storage.json"
     },
     {
-      "command": "coverage PlanUnit/production reference check",
+      "command": "python3 scripts/pm7-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-coverage-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-canon.json"
+    },
+    {
+      "command": "coverage references and owner-ruling state check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-coverage.json"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-shards-generate.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-shards-generate.json"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-index-generate.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-generate.json"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-shards-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-shards-check.json"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-index-validate.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-validate.json"
     },
     {
-      "command": "owned source/history/prior-artifact guard",
+      "command": "owned-source/history/wire-shape/prior-artifact guard",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-guard.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-guard.json"
     },
     {
       "command": "git diff --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-diff-check.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-diff-check.txt"
     }
   ],
   "dry": {
@@ -2822,6 +2832,96 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-wiring-check.json",
       "sha256": "4941622211b057cfedf13aac1be212d0753ba0c47b8f2e25263f09b6a635fa48",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-build.json",
+      "sha256": "1ea893341e2d3afa2654c25525c17a7c958c58b2399282bd19b67103d2f87a88",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-canon.json",
+      "sha256": "413a4c42efdac53b7aa0bf029816db26acf0960679b896fdc39ef0a5201067a6",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-companion-policy.json",
+      "sha256": "9399bd83e9bf5289f27f4821dfd5d1d87023ffd3ac68f0c193a992550d3fda3b",
+      "bytes": 3589
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-coverage.json",
+      "sha256": "fe09650f29d47e5c2c745d51bf42b113593ce6e95f25f737f97c1e15b598d11f",
+      "bytes": 368
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-guard.json",
+      "sha256": "ec3badf80a25925abbd314f25947a09c31579bbdf610e2e771ea8f541798a22c",
+      "bytes": 3166
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-generate.json",
+      "sha256": "467459a11ae5af175c5eabe770503ff04883d6564cb3de720f05c6cbbb2253c1",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-generate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-validate.json",
+      "sha256": "f66091f0c2d0a4bae445855bd16d358fd5bc046a9b6f144c59b6efda2e807705",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-index-validate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-prose-first.json",
+      "sha256": "338f07c88009e38eeea793e595162aae0e77d7204d34f36ca64dac765eae3cfd",
+      "bytes": 2156
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-rulings.json",
+      "sha256": "5e3acdf584b1f68dae45942c14e0ff78c1517594cbd169e67c72be3b4cf924cf",
+      "bytes": 648
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-shards-check.json",
+      "sha256": "ded8bfd344bbabb1236ee77e64cdea77fe463441543a23926629d048dfcef4b0",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-shards-check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-shards-generate.json",
+      "sha256": "6076ab41497ba9e1e0b982d67c8c83e83c281f1849dccd23747b3978c9f702a7",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-storage.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-touch.json",
+      "sha256": "21c0efdcb20fd991207003b89019d6ad598b8e4da15ecffa74759ae2cfe69583",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-wiring.json",
+      "sha256": "a6838f6ccd1fa4d2a98dd4784fde001b14ca99c47e59092323ad462c92ddedae",
+      "bytes": 691
     }
   ],
   "reviews": [
@@ -2876,9 +2976,9 @@
       "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-",
       "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-"
     ],
-    "mail_waiter": "off by lead direct-wake instruction"
+    "mail_waiter": "armed under refreshed AGENTS"
   },
-  "latest_amendment": "DL259_shared_ELI5_consumer_alignment",
+  "latest_amendment": "DL259_Jared_four_owner_answers_20261031",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -5204,7 +5304,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "203455bdfa79eebf90a71ee221cafd8f98fdd041",
+  "canonical_source_commit": "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": false,
   "dry_landing_run_for_QA2": false,
@@ -5216,9 +5316,9 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "verified_count": 535,
-    "prior_520_unchanged": true,
-    "recorded_at_utc": "2026-10-31T03:59:30.755087+00:00"
+    "verified_count": 553,
+    "prior_535_unchanged": true,
+    "recorded_at_utc": "2026-10-31T04:30:47.817659+00:00"
   },
   "historical_pre_DL259_commands": [
     {
@@ -5551,7 +5651,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "base checkpoint before final shared-mode consumer alignment; current canonical bytes fingerprinted in eli5-consumers-guard.json",
+  "source_commit_role": "base checkpoint before four owner answers; current canonical bytes fingerprinted in owner-answers-guard.json",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -5899,5 +5999,106 @@
     "history_unchanged": true,
     "ledger_compiled": false,
     "native_runtime_proof": false
+  },
+  "historical_shared_ELI5_consumer_commands": [
+    {
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-rulings-check.json"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-canon-check.json"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-wiring-check.json"
+    },
+    {
+      "command": "python3 scripts/pm7-demo-canon-check.py --history-base 203455bdfa",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-boundary-check.json"
+    },
+    {
+      "command": "coverage PlanUnit/production reference check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-coverage-check.json"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-shards-generate.json"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-index-generate.json"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-shards-check.json"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-index-validate.json"
+    },
+    {
+      "command": "owned source/history/prior-artifact guard",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-guard.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/eli5-consumers-diff-check.txt"
+    }
+  ],
+  "owner_answer_resolution": {
+    "decision": "DL-259",
+    "decider": "Jared",
+    "date": "2026-10-31",
+    "base_commit": "b0c1a23758e52a23eeeceb921be30cbd1f939c95",
+    "prose_first": true,
+    "owner_docs": 9,
+    "modified_units": 12,
+    "answers": {
+      "CERT-1": {
+        "choice": "neither_A_nor_B",
+        "outcome": "PM_generates_proxy_config_person_handles_certificates_no_gate_or_validity_claim"
+      },
+      "CLOUD-1": {
+        "choice": "A",
+        "outcome": "one_time_setup_code_from_cloud_provider_console_or_local_bootstrap"
+      },
+      "DESKTOP-RESTORE-1": {
+        "choice": "A",
+        "outcome": "protected_native_direct_local_handoff_no_code_to_type"
+      },
+      "REMOTE-CODE-1": {
+        "choice": "A",
+        "outcome": "Remote_Link_owner_protocol_verified_immediately_before_build_no_grammar_pin"
+      }
+    },
+    "open_owner_questions": [],
+    "pre_build_verification_required": "Remote_Link_code_protocol",
+    "claim_wire_arguments_unchanged": true,
+    "new_commands": 0,
+    "new_request_fields": 0,
+    "new_settings": 0,
+    "new_storage_or_event_family": false,
+    "PM7_policy_cases": 114,
+    "additional_PM7_policy_cases": 6,
+    "additional_native_negative_cases": 4,
+    "source_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-guard.json",
+    "edited_source_groups": 7,
+    "coverage_rows": 126,
+    "ledger_compiled": false,
+    "compile_witness": "not_applicable",
+    "native_runtime_proof": false,
+    "coverage_audit": "lead audit against b0c1a23758; lead says amendment communicated"
   }
 }

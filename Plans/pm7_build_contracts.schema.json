@@ -3129,12 +3129,81 @@
         "later_undoes_committed_Project": false,
         "later_infers_ready": false,
         "actual_app_context": "existing_owner_results_and_registry_join",
-        "certificate_without_owner_answer": "pending_or_Later",
         "cloud_claim_requires_verified_private_channel": true,
         "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
         "code_grammar": "Remote_Link_owner_defined",
         "nonblank_code_proves_validity": false,
-        "new_primary_command": false
+        "new_primary_command": false,
+        "certificate_custody": "person_own_systems",
+        "PM_certificate_administration": false,
+        "certificate_selection_validation_gate": false,
+        "Ready_claims_certificate_validity": false,
+        "ready_checks": [
+          "endpoint_reachability",
+          "PM_protocol_API",
+          "expected_Server_identity_pairing_auth",
+          "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+        ],
+        "cloud_claim_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+        "desktop_first_claim_handoff": "protected_native_direct_local_no_code_to_type",
+        "initial_claim_proof_bindings": [
+          "discovery_observation_id",
+          "pairing_session_id",
+          "identity_fingerprint"
+        ],
+        "public_unclaimed_setup": false,
+        "code_protocol_verification": "immediately_before_product_build"
+      }
+    },
+    "InitialOwnerClaimPolicy": {
+      "description": "DL-259 CLOUD-1/DESKTOP-RESTORE-1 policy descriptor; no new request field, root admission or native authority proof.",
+      "const": {
+        "owner_ref": "Plans/Server_System.md#SRV-007",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "ruling_ids": [
+          "CLOUD-1",
+          "DESKTOP-RESTORE-1"
+        ],
+        "decider": "Jared",
+        "date": "2026-10-31",
+        "proof_name": "initial_owner_claim_authorization",
+        "proof_bindings": [
+          "discovery_observation_id",
+          "pairing_session_id",
+          "identity_fingerprint"
+        ],
+        "cloud_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+        "desktop_handoff": "protected_native_direct_local_no_code_to_type",
+        "proof_authority": "Server_owner_verified_current_authorization_session",
+        "raw_code_in_command_or_durable_state": false,
+        "caller_flag_grants_authority": false,
+        "public_unclaimed_setup": false,
+        "new_command_or_payload_field": false,
+        "claim_bootstrap_restore_separate": true
+      }
+    },
+    "ProxyCertificateBoundary": {
+      "description": "DL-259 CERT-1 policy descriptor; configuration generation and PM route checks are distinct from person-owned certificate administration.",
+      "const": {
+        "owner_ref": "Plans/Remote_Access_System.md#RAS-005",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "ruling_id": "CERT-1",
+        "decider": "Jared",
+        "date": "2026-10-31",
+        "PM_scope": "proxy_configuration_and_actual_PM_route_checks",
+        "certificate_custody": "person_own_systems",
+        "PM_selects_holds_validates_issues_signs_certificates": false,
+        "certificate_profile_or_selector_command": false,
+        "certificate_selection_validation_gate": false,
+        "generated_artifact_proves_route_ready": false,
+        "Ready_claims_certificate_validity": false,
+        "public_exposure_consent_required": true,
+        "ready_checks": [
+          "endpoint_reachability",
+          "PM_protocol_API",
+          "expected_Server_identity_pairing_auth",
+          "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+        ]
       }
     }
   }

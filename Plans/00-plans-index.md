@@ -1,12 +1,15 @@
 # Plans Index (authoritative map)
 
+- 2026-10-31: DL-259 applies Jared’s CERT-1, CLOUD-1, DESKTOP-RESTORE-1 and REMOTE-CODE-1 answers. PM generates proxy configuration while the person handles certificates; no certificate gate or validity assurance. Cloud initial claim uses a protected one-time console-code handoff; native desktop local claim uses protected direct handoff without a typed code. Existing claim tuple/permission/generation fences and separate bootstrap/full restore remain. Remote Link code protocol joins D4’s pre-build verification list, with no grammar pinned.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Remote_Access_System.md#RAS-005, ContractName:Plans/Server_System.md#SRV-007, ContractName:Plans/Planning_Wizard.md#PWIZ-025
+
 - 2026-10-31: DL-259 consumer alignment removes the stale Tour Off/narration-only wording from F3-521 and the catalog preamble. The bar uses global general.interaction.mode, default ELI5, labelled Plain English / Expert; DR-074 makes the one setting/writer explicit. Existing bindings, Settings pair and typed presentation contracts already carry that ruling.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/UI_Command_Catalog.md#UCC-175, ContractName:Plans/DRY_Rules.md#DR-074
 
 - 2026-10-31: DL-260 applies Jared’s Q3 B product-only canon rule to inherited material. Retired lab contracts retain historical IDs only; real Guided Tour, shared chat, Usage Live/Pause and Settings ownership remain. Product companions remove prototype-only admission and acceptance obligations. Historical decision entries remain unchanged.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-260, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/DRY_Rules.md#DR-075
 
-- 2026-10-31: DL-259 server final-report delta: safe private claim/recovery prerequisites, owner-validated Remote Link codes, effective app context from existing owners, and optional remote setup after Creating with Later always finishing. Certificate/private-channel/first-local-claim/code-protocol questions remain report-only; no missing owner operation is fabricated.
+- 2026-10-31: DL-259 server final-report delta: safe private claim/recovery prerequisites, owner-validated Remote Link codes, effective app context from existing owners, and optional remote setup after Creating with Later always finishing. The subsequent DL-259 owner-answer amendment below resolves the certificate/private-channel/first-local-claim choices and schedules Remote Link code-protocol verification before building; no new owner command is added.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/Server_System.md#SRV-013
 
 - 2026-10-31: **DL-259 — product-only onboarding rulings.** D1–D8 set repository-only online creation, Settings-only advanced routes, Caddy/NGINX/Traefik generation, provider verification before the PM build, retired/ineligible free-route removal, execution-host credential custody, native-app built-in Tailscale and one fail-closed FileSafe switch. Wizard/Tour share Plain English/Expert; Q1 adds Pip’s room voice and Q2 confirms toasts below the open inbox as Jared’s ruling. The existing mainline non-product passages are handled separately under Q3.

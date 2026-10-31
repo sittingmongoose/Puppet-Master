@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12314-L12601
+Source lines: L12314-L12631
 
-Source SHA256: `3d51d4b0f7c8cf04a00dae7b1bdcd90d295e175d69650ad15bfaed440de1cdeb`
+Source SHA256: `d3ede703045044f170b7a7ec03c2b13b48ebdcb231b966804661e0a6be2a81ec`
 
 ---
 
@@ -266,7 +266,20 @@ canonical_text: 'The 232 CS-074 commands have exact intended GUI consumers, type
   Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences.
   Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
   nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
-  until executable evidence exists.'
+  until executable evidence exists. DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: initial owner-claim authorization
+  comes from the Server owner’s one-time console/bootstrap-code handoff for a new cloud computer, or the native desktop’s
+  protected direct local handoff for its dormant Server with no human code. cmd.server.claim keeps its existing closed
+  arguments discovery_observation_id, pairing_session_id and identity_fingerprint. Their owner-verified binding plus
+  current permission/generations carries the authorization; no raw code, certificate material, new claim command or caller
+  assertion of trust is added. Bootstrap and restore remain separate commands and receipts. Initial owner claim does
+  not grant pairing/trust to other Clients. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration;
+  the person handles certificates and signing on their own systems. PM does not select, hold, validate, issue or sign
+  those certificates, and admits no certificate-profile field or selector command. No certificate selection/validation
+  is a prerequisite to configuration generation, route activation or Ready. Generation proves only that the configuration
+  artifact was produced. Route Ready reports the actual PM-owner checks performed: endpoint reachability, protocol/API
+  compatibility, expected Server identity and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link
+  and callback checks. It never claims that a certificate is valid. Existing secure-transport, public-exposure consent,
+  identity and reachability requirements remain; missing or failed actual route checks cannot be called successful.'
 gui_related: true
 gui_classification_reason: This PlanUnit is the exact GUI reverse-coverage catalog for the remaining Touch commands.
 depends_on: [UCC-151, CS-074, FGI-013, RAS-015]
@@ -284,13 +297,30 @@ acceptance_criteria:
   fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
   nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
   until executable evidence exists.'
+- 'DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: initial owner-claim authorization comes from the Server owner’s
+  one-time console/bootstrap-code handoff for a new cloud computer, or the native desktop’s protected direct local handoff
+  for its dormant Server with no human code. cmd.server.claim keeps its existing closed arguments discovery_observation_id,
+  pairing_session_id and identity_fingerprint. Their owner-verified binding plus current permission/generations carries
+  the authorization; no raw code, certificate material, new claim command or caller assertion of trust is added. Bootstrap
+  and restore remain separate commands and receipts. Initial owner claim does not grant pairing/trust to other Clients.'
+- 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
 validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
 risk_class: reverse_gui_command_closure
 reasoning_tier: high
 context_scope: remaining_touch_gui_consumers
 implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: touch_reverse_gui_closure, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Commands_System.md#CS-074, Plans/touch_closure.json]
+source_lineage:
+- Plans/Commands_System.md#CS-074
+- Plans/touch_closure.json
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 negative_constraints:
 - Do not claim that every command requires a dedicated always-visible control.
 - Do not make PMConcept7 a runtime owner.

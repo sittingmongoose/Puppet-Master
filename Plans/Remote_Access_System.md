@@ -237,11 +237,14 @@ canonical_text: 'Custom Domain is a first-class route with a dedicated-hostname 
   public consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly
   caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record
   nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes a family.
-  DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and matching private key owned by the
-  selected Server. Their contents never pass through onboarding or a Client/browser file upload. A permissioned Server-side
-  material selection and current validation must complete before proxy generation/activation or Ready can depend on it;
-  no answer means pending or an explicit Later, never guessed success. The existing proxy preview/generation commands
-  do not by themselves admit a missing certificate-selection command or proof.'
+  DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates and
+  signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits no certificate-profile
+  field or selector command. No certificate selection/validation is a prerequisite to configuration generation, route
+  activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready reports the actual
+  PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity and pairing/auth,
+  and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that a certificate is
+  valid. Existing secure-transport, public-exposure consent, identity and reachability requirements remain; missing or
+  failed actual route checks cannot be called successful.'
 gui_related: true
 gui_classification_reason: Proxy preview/generation/export, external origin, trusted proxies, tests, warnings, and manual endpoint actions are visible workflows.
 depends_on: [RAS-002, RAS-007]
@@ -257,11 +260,14 @@ acceptance_criteria:
   onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
   existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
   silently substitutes a family.'
-- 'DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and matching private key owned by the
-  selected Server. Their contents never pass through onboarding or a Client/browser file upload. A permissioned Server-side
-  material selection and current validation must complete before proxy generation/activation or Ready can depend on it;
-  no answer means pending or an explicit Later, never guessed success. The existing proxy preview/generation commands
-  do not by themselves admit a missing certificate-selection command or proof.'
+- 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future proxy spoofing and subpath negative tests]
 risk_class: reverse_proxy_identity_or_origin_bypass
 reasoning_tier: high
@@ -269,8 +275,9 @@ context_scope: custom_domain_proxy_private_endpoints
 implementation_surfaces: [Plans/remote_access_system_contracts.schema.json, future proxy configuration service]
 node_compile_hint: {mode: proxy_private_endpoint_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:R08-R10
-  - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+- source_ref:normalized-register:server-first-2026-08-31:R08-R10
+- source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 preserved_exact_tokens: [Custom Domain, NGINX, Traefik, dedicated hostname, trusted proxy CIDRs, CGNAT, HTTPS, WSS]
 negative_constraints: [Do not promise arbitrary subpath hosting., Do not trust forwarded headers from unknown peers., Do not administer a user VPN.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Containers_Registry_and_Unraid.md]
@@ -330,13 +337,15 @@ canonical_text: 'Every public route enforces Puppet Master auth and authorizatio
   projection carries one authoritative operation/Client identity and an exact return-fence disposition; it never accepts
   a fallback Client or shadow returned-operation identity. Headless flows prefer device or paste code; native tunnels
   authenticate; web Clients are never assumed able to bind loopback. Protected authentication remains human-only, ephemeral,
-  unobserved, unpersisted, not caller-navigable, and unavailable to capture or recording. DL-259 srv final, 2026-10-31:
-  an unclaimed cloud computer is claimed only through an already established, owner-verified local/private setup channel.
-  A typed private/VPN/tailnet address alone proves neither reachability, installation nor claim authority. The claim
-  uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate post-claim cmd.server.bootstrap.start.
-  No public unclaimed setup, automatic SSH tunnel, provider-console automation or tailnet enrollment is inferred from
-  choosing the computer. If a verified private claim channel is absent, remain in the owner handoff without claiming
-  setup or trust.'
+  unobserved, unpersisted, not caller-navigable, and unavailable to capture or recording. DL-259 CLOUD-1 A, Jared 2026-10-31:
+  the person uses an explicit cloud-provider console or local-bootstrap handoff and its one-time Server setup code to
+  claim a new cloud computer. The Server owner checks and consumes the code through the protected local/private bootstrap
+  handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id, pairing_session_id
+  and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation fences. The
+  tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are not proof.
+  Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public unclaimed
+  setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
+  remains separate after successful claim.'
 gui_related: true
 gui_classification_reason: Security warnings, callback continuation, human-action-required state, version mismatch, and re-pairing are user-visible.
 depends_on: [RAS-001, SRV-004]
@@ -348,12 +357,14 @@ acceptance_criteria:
   timeout, and verification failure retain the exact initiating focus and fail closed without content return.
 - AuthBrowserSession remains inaccessible to agents, tools, automation, screenshots, recordings, DOM, console, network,
   storage, Chat, and Usage.
-- 'DL-259 srv final, 2026-10-31: an unclaimed cloud computer is claimed only through an already established, owner-verified
-  local/private setup channel. A typed private/VPN/tailnet address alone proves neither reachability, installation nor
-  claim authority. The claim uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate
-  post-claim cmd.server.bootstrap.start. No public unclaimed setup, automatic SSH tunnel, provider-console automation
-  or tailnet enrollment is inferred from choosing the computer. If a verified private claim channel is absent, remain
-  in the owner handoff without claiming setup or trust.'
+- 'DL-259 CLOUD-1 A, Jared 2026-10-31: the person uses an explicit cloud-provider console or local-bootstrap handoff
+  and its one-time Server setup code to claim a new cloud computer. The Server owner checks and consumes the code through
+  the protected local/private bootstrap handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id,
+  pairing_session_id and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation
+  fences. The tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are
+  not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public
+  unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
+  remains separate after successful claim.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, Plans/protected_auth_browser_contract_fixtures.json, future callback tunnel tests]
 risk_class: public_auth_callback_or_protected_session_bypass
 reasoning_tier: high
@@ -361,8 +372,9 @@ context_scope: public_ingress_and_callback_security
 implementation_surfaces: [Plans/remote_access_system_contracts.schema.json, Plans/protected_auth_browser_contracts.schema.json]
 node_compile_hint: {mode: public_remote_security_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:normalized-register:server-first-2026-08-31:R11-R12
-  - source_ref:packet:B5/22_SECURITY_AND_FAILURE_TEST_MATRIX.md
+- source_ref:normalized-register:server-first-2026-08-31:R11-R12
+- source_ref:packet:B5/22_SECURITY_AND_FAILURE_TEST_MATRIX.md
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 preserved_exact_tokens: [state, PKCE, AuthBrowserSession, human-only, ephemeral, metadata-minimal]
 negative_constraints: [Do not expose unclaimed setup publicly., Do not persist callback secrets or protected-browser content., Do not assume a web Client can bind loopback.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Multi-Account.md, Plans/Section15_MVP_Promoted_Features_Spec.md]
@@ -864,12 +876,14 @@ canonical_text: 'Connecting this Client to an existing Puppet Master selects the
   Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
   browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
   device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged. DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS
-  link or owner-issued opaque short code. Preserve the code’s owner-defined representation; the wizard invents no alphabet,
-  length, letter-first rule or case conversion. Empty input is invalid, and nonblank text alone is not a valid-code,
-  endpoint, identity, pairing or Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with
-  its bounded abuse/expiry policy before the existing open and Server identity/pairing continuation. Unknown, expired
-  or unresolvable input fails closed without falling back to another Server.'
+  stays external and unmanaged. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and checks its
+  protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior, expiry/abuse
+  policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks; no grammar
+  or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat nonblank
+  text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
+  it before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
+  closed without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice
+  or a wizard caveat.'
 gui_related: true
 gui_classification_reason: Defines the route chooser, discovery order, conditional fields, pairing handoff, manual fallback, and setup-later state consumed by Product Onboarding.
 depends_on: [RAS-001, RAS-003, RAS-005, RAS-006, SRV-004]
@@ -920,19 +934,25 @@ acceptance_criteria:
   permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
   through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
   Tailscale stays external and unmanaged.'
-- 'DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS link or owner-issued opaque short
-  code. Preserve the code’s owner-defined representation; the wizard invents no alphabet, length, letter-first rule or
-  case conversion. Empty input is invalid, and nonblank text alone is not a valid-code, endpoint, identity, pairing or
-  Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with its bounded abuse/expiry policy
-  before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed
-  without falling back to another Server.'
+- 'DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and checks its protected HTTPS link or opaque
+  short code. Decide the actual code grammar, normalization/case behavior, expiry/abuse policy and raw-code resolution
+  protocol immediately before building PM, alongside D4’s pre-build checks; no grammar or sample code is pinned in canon.
+  Preserve the owner-defined representation, reject empty input, and treat nonblank text as unverified draft rather than
+  identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it before the existing open and
+  Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed without another-Server fallback.
+  This accepted pre-build verification point is not an unanswered product choice or a wizard caveat.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/remote_access_system_contract_fixtures.json, future route-first LAN/VPN/Tailscale/Headscale/proxy/Remote-Link owner fixtures]
 risk_class: connect_existing_route_order_or_trust_conflation
 reasoning_tier: high
 context_scope: onboarding_connect_existing_remote_access
 implementation_surfaces: [Plans/Remote_Access_System.md, future Remote Access route service, future Product Onboarding owner adapter]
 node_compile_hint: {mode: remote_access_onboarding_projection_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user-correction:2026-09-01-connect-existing-route-semantics, user-instruction:2026-09-25-no-vpn-switch, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+source_lineage:
+- user-correction:2026-09-01-connect-existing-route-semantics
+- user-instruction:2026-09-25-no-vpn-switch
+- Plans/product_onboarding_contracts.schema.json
+- Concepts/pm7-tools/onboarding_cinematic_source.py
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 preserved_exact_tokens: [Local or VPN, You can connect through a VPN too, Tailscale, Headscale, Reverse proxy, Puppet Master Remote Link, approval, code, QR]
 negative_constraints:
   - Do not discover before route selection or mutate before Review confirmation.

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1307
+Source lines: L1024-L1321
 
-Source SHA256: `bee98667da5b59f5f8b412cb6788cf7a7421b716769c06b16d9623fdc7b70a1c`
+Source SHA256: `93649c8df06bcc1c916a241f2e27286e1dcaf7b97bf99f7b6c015cee7f485a13`
 
 ---
 
@@ -161,7 +161,13 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   Display names never become IDs, and the reviewed setup plan is intent rather than effective state. Onboarding creates
   no second account/server/Project registry or durable handoff writer; its initial context is a non-authoritative join
   of existing owner receipts/projections, followed by their normal updates. No concept-global object, event or store
-  key is a product contract.'
+  key is a product contract. DL-259 owner answers, Jared 2026-10-31: CERT-1 removes PM certificate administration and
+  every certificate-selection/validation gate; configuration generation and actual PM route checks report only their
+  own result, never certificate validity. CLOUD-1 uses the protected console one-time-code handoff; DESKTOP-RESTORE-1
+  uses protected native local handoff with no code to type. Both consume Server-owned initial claim authorization through
+  the existing exact claim tuple before separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol
+  check alongside D4; no code grammar, new resolver command or wizard caveat is invented. Existing public-exposure consent
+  and truthful reachability/identity/pairing checks remain.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -272,6 +278,13 @@ acceptance_criteria:
   setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
   handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
   their normal updates. No concept-global object, event or store key is a product contract.'
+- 'DL-259 owner answers, Jared 2026-10-31: CERT-1 removes PM certificate administration and every certificate-selection/validation
+  gate; configuration generation and actual PM route checks report only their own result, never certificate validity.
+  CLOUD-1 uses the protected console one-time-code handoff; DESKTOP-RESTORE-1 uses protected native local handoff with
+  no code to type. Both consume Server-owned initial claim authorization through the existing exact claim tuple before
+  separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol check alongside D4; no code grammar,
+  new resolver command or wizard caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing
+  checks remain.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -279,9 +292,10 @@ context_scope: product_onboarding_typed_local_request_result
 implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json]
 node_compile_hint: {mode: product_onboarding_local_action_wiring, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - approved current Product Onboarding source/schema reconciliation
-  - Plans/Planning_Wizard.md#PWIZ-021
-  - Plans/product_onboarding_contracts.schema.json
+- approved current Product Onboarding source/schema reconciliation
+- Plans/Planning_Wizard.md#PWIZ-021
+- Plans/product_onboarding_contracts.schema.json
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

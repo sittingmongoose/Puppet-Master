@@ -1,3 +1,27 @@
+# DL-259 — Jared’s four owner rulings, 2026-10-31
+
+**All 13 focused/generation/guard checks PASS. All four owner questions are answered.** Nine owner/index documents and twelve unit bodies apply Jared’s ruling, prose first, then companions. [OWNER-QUESTIONS.md](OWNER-QUESTIONS.md) now records the rulings; [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) retains 126 real-product rows with the affected cells updated. No ledger was compiled.
+
+| Ruling | Applied result |
+|---|---|
+| **CERT-1, neither A nor B** | PM generates proxy configuration; the person handles signing/certificates on their own systems. No PM selector, custody, validation, issuance/signing, certificate profile or certificate selection/validation gate. Generated proves only artifact generation. Route Ready names actual endpoint reachability, PM protocol/API, expected Server identity/pairing/auth and applicable stream/WebSocket/transfer/deep-link/callback checks; never certificate validity. Public-exposure consent and existing transport/reachability requirements remain. |
+| **CLOUD-1 A** | One-time setup code from the cloud provider’s console or explicit local-bootstrap handoff, consumed by the Server owner through protected local/private setup. Initial owner-claim authorization binds the existing discovery_observation_id, pairing_session_id and identity_fingerprint for cmd.server.claim, with current permission/generations; no raw code/caller authority flag in payload, and no public unclaimed setup. |
+| **DESKTOP-RESTORE-1 A** | Protected native desktop direct local first claim, no code to type. Claim, then separate completed bootstrap of roots/baseline and Backup maintenance/recovery authority before Full Server restore. Ordinary Client/browser/loopback state supplies no such authority. |
+| **REMOTE-CODE-1 A** | Owner issues/checks opaque link/code; grammar, normalization, expiry/abuse and code resolution protocol are verified immediately before building PM, alongside D4’s four provider items. No grammar, sample code, resolver command or wizard caveat is added now. This is an accepted verification point, not an unanswered question. |
+
+**Companions:** existing closed claim wire arguments and command identities remain unchanged. Server/Remote Access/Onboarding annotations, shared pre-build checklist, PostcommitRemoteSetupPolicy, production wiring acceptance and policy fixtures match the rulings. Two non-root policy descriptors (InitialOwnerClaimPolicy, ProxyCertificateBoundary) add no native record admission or authority. Four native negative cases reject certificate-profile/validity fields, raw setup code and a caller assertion of native claim authority. Six PM7 policy cases cover the chosen boundaries. No new primary/local command, request field, setting, control binding, event or storage family.
+
+**Proof:** onboarding **125/236**, Tour **24/59**, Remote Access **110/109**, Server **89/52**, provider policy **2/2**, five owner-answer assertions, and **114 PM7 schema cases** pass. Touch, wiring, canon, existing Onboarding materialization, coverage, shards/index, exact-wire and history guards pass. Only **seven edited-source shard groups** differ. Every Decision Log byte outside the authorized DL-259 unit is unchanged; DL-260 and all earlier unrelated history remain intact. All **535 prior artifact hashes remain unchanged**; **553** artifact records are retained in verification.json. Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/owner-answers-`.
+
+**Census unchanged:** 1010 settings; 483 bindings / 61 source families; 715 Touch rows / 140 profiles; 1269 production entries; 7243 units / 96 indexed docs; 2958 shards / 99 sources. Native, security-runtime, visual and audio acceptance remain unproven by these static checks.
+
+**Remaining coordination:** lead’s final GUI names/head and onboarding small follow-up; Astra coverage audit is running against b0c1a23758 and has been notified of this amendment. **Zero unanswered owner questions from this set.** Remote Link protocol verification remains scheduled before build. **No full gates, dry landing, landing, lock, reseal, baseline refresh or protected-governance edit.** Waiter stays armed under refreshed AGENTS. Earlier checkpoint sections below are historical and superseded by these rulings.
+
+
+Owned scratch is removed. No browser or server was started.
+
+---
+
 # DL-259 shared ELI5 consumer alignment — 2026-10-31
 
 **All 11 focused/generation/guard checks PASS.** Final sweep fixed two residual copies after pushed DL-260 (`203455bdfa`): F3-521 still labelled the Tour bar “ELI5: Off” and called it tour-specific, and the catalog’s non-unit paragraph still promised narration only. F3-521 now consumes global **general.interaction.mode**, default **ELI5**, labelled **Plain English / Expert**. DR-074 explicitly requires one Settings value/writer across wizard and Tour. DL-126 still limits dual copy to tips/help; the control never rewrites or sends a reply.

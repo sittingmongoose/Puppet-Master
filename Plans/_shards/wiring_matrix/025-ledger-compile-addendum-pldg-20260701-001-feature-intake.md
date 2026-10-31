@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4062
+Source lines: L3496-L4076
 
-Source SHA256: `75ffbc19271aa1f882ab1a31d00597beeb35ac6271a0cfa8f2d2f86d5a835a46`
+Source SHA256: `ff3936f909754a73f034d56e0ca32b0943c90c93ec9f88382be9667121d3103c`
 
 ---
 
@@ -160,7 +160,13 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   their actual readiness/deferred state. Display names never become IDs, and the reviewed setup plan is intent rather
   than effective state. Onboarding creates no second account/server/Project registry or durable handoff writer; its initial
   context is a non-authoritative join of existing owner receipts/projections, followed by their normal updates. No concept-global
-  object, event or store key is a product contract.'
+  object, event or store key is a product contract. DL-259 owner answers, Jared 2026-10-31: CERT-1 removes PM certificate
+  administration and every certificate-selection/validation gate; configuration generation and actual PM route checks
+  report only their own result, never certificate validity. CLOUD-1 uses the protected console one-time-code handoff;
+  DESKTOP-RESTORE-1 uses protected native local handoff with no code to type. Both consume Server-owned initial claim
+  authorization through the existing exact claim tuple before separate bootstrap/full restore. REMOTE-CODE-1 is an accepted
+  pre-build protocol check alongside D4; no code grammar, new resolver command or wizard caveat is invented. Existing
+  public-exposure consent and truthful reachability/identity/pairing checks remain.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -340,6 +346,13 @@ acceptance_criteria:
   setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
   handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
   their normal updates. No concept-global object, event or store key is a product contract.'
+- 'DL-259 owner answers, Jared 2026-10-31: CERT-1 removes PM certificate administration and every certificate-selection/validation
+  gate; configuration generation and actual PM route checks report only their own result, never certificate validity.
+  CLOUD-1 uses the protected console one-time-code handoff; DESKTOP-RESTORE-1 uses protected native local handoff with
+  no code to type. Both consume Server-owned initial claim authorization through the existing exact claim tuple before
+  separate bootstrap/full restore. REMOTE-CODE-1 is an accepted pre-build protocol check alongside D4; no code grammar,
+  new resolver command or wizard caveat is invented. Existing public-exposure consent and truthful reachability/identity/pairing
+  checks remain.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -358,24 +371,25 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

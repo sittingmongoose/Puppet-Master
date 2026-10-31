@@ -2123,5 +2123,30 @@
     ],
     "history_rewritten": false,
     "report": "DEMO-CLEANUP.md"
+  },
+  "onboarding_owner_answers_2026_10_31": {
+    "decision_unit": "DL-259",
+    "decider": "Jared",
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+    "answers": {
+      "CERT-1": {
+        "choice": "neither_A_nor_B",
+        "outcome": "PM_generates_proxy_config_person_handles_certificates_no_gate_or_validity_claim"
+      },
+      "CLOUD-1": {
+        "choice": "A",
+        "outcome": "one_time_setup_code_from_cloud_provider_console_or_local_bootstrap"
+      },
+      "DESKTOP-RESTORE-1": {
+        "choice": "A",
+        "outcome": "protected_native_direct_local_handoff_no_code_to_type"
+      },
+      "REMOTE-CODE-1": {
+        "choice": "A",
+        "outcome": "Remote_Link_owner_protocol_verified_immediately_before_build_no_grammar_pin"
+      }
+    },
+    "open_owner_questions": [],
+    "Remote_Link_protocol_verification": "immediately_before_PM_build"
   }
 }

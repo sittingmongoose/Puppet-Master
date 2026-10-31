@@ -8678,5 +8678,35 @@
     "Plans/remote_access_system_contract_fixtures.json": "8faa9f2973fc65039b576e14cd965f60a7c0bfba1c282de0364a4b56feab4e78",
     "Plans/remote_access_contracts.schema.json": "6e83a6a7b1abbb2baff2911a48ec6bc7b3454afe1c52c1b01248c6e58d9251e1",
     "Plans/remote_access_contract_fixtures.json": "c384992bcf204af47fbb38bc1137a3113e7c54b5fab1171f458797b633643882"
+  },
+  "x-proxy-certificate-boundary": {
+    "owner_ref": "Plans/Remote_Access_System.md#RAS-005",
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "ruling_id": "CERT-1",
+    "decider": "Jared",
+    "date": "2026-10-31",
+    "PM_scope": "proxy_configuration_and_actual_PM_route_checks",
+    "certificate_custody": "person_own_systems",
+    "PM_selects_holds_validates_issues_signs_certificates": false,
+    "certificate_profile_or_selector_command": false,
+    "certificate_selection_validation_gate": false,
+    "generated_artifact_proves_route_ready": false,
+    "Ready_claims_certificate_validity": false,
+    "public_exposure_consent_required": true,
+    "ready_checks": [
+      "endpoint_reachability",
+      "PM_protocol_API",
+      "expected_Server_identity_pairing_auth",
+      "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+    ]
+  },
+  "x-pre-build-verification": {
+    "owner_ref": "Plans/Decision_Log.md#DL-259",
+    "ruling_id": "REMOTE-CODE-1",
+    "item": "Remote_Link_code_protocol",
+    "when": "immediately_before_product_build",
+    "grammar_pinned": false,
+    "issuer_and_checker": "Remote_Link_owner",
+    "wizard_caveat": false
   }
 }

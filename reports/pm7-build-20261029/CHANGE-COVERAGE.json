@@ -592,7 +592,7 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "companions": "RAS-014 owner-issued/checkable link/code; REMOTE-CODE-1 protocol deferred to shared pre-build checklist; existing typed open/identity/pairing owners",
       "state": "covered_by_current_contract"
     },
     {
@@ -608,14 +608,14 @@
     },
     {
       "id": "SCR-07",
-      "change": "Own certificate uses protected certificate/key owner continuation",
-      "owner": "RAS-005; PWIZ-025",
-      "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; CERT-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
-      "settings": "none needed: owner data or presentation, not a preference",
+      "change": "PM generates proxy configuration; certificates/signing stay on the person’s systems",
+      "owner": "RAS-005; PWIZ-025; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
+      "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; CS-074; UCC-152",
+      "settings": "none needed: no PM certificate profile or selector",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
-      "state": "owner_question_CERT-1"
+      "companions": "x-proxy-certificate-boundary; PostcommitRemoteSetupPolicy; native forbidden-profile/validity-field negatives",
+      "state": "covered_by_Jared_CERT-1"
     },
     {
       "id": "SCR-08",
@@ -674,25 +674,25 @@
     },
     {
       "id": "SCR-13",
-      "change": "Full recovery stays safe bootstrap; no remote activation as restore side effect",
+      "change": "Protected native local first claim without typed code, then bootstrap/maintenance before full restore",
       "owner": "PWIZ-025; BRS-019; SRV-013",
-      "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; DESKTOP-RESTORE-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; catalog.restore_server_full; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
-      "state": "owner_question_DESKTOP-RESTORE-1"
+      "companions": "x-initial-owner-claim-authorization; existing closed proof tuple; native caller-authority-flag negative",
+      "state": "covered_by_Jared_DESKTOP-RESTORE-1"
     },
     {
       "id": "SCR-14",
-      "change": "Cloud claim starts through a protected private bootstrap channel",
-      "owner": "PWIZ-025; SRV-004; RAS-014",
-      "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; CLOUD-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
+      "change": "Cloud first claim uses protected console/local-bootstrap one-time setup code",
+      "owner": "RAS-007; SRV-005; SRV-007; PWIZ-025; DL-259",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
-      "state": "owner_question_CLOUD-1"
+      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup",
+      "state": "covered_by_Jared_CLOUD-1"
     },
     {
       "id": "SCR-15",
@@ -1070,7 +1070,7 @@
     },
     {
       "id": "T13",
-      "change": "Proxy/certificate help names selected route and does not replace trust/auth",
+      "change": "Proxy help names external certificate custody and actual PM checks without replacing trust/auth",
       "owner": "PWIZ-022; F3-663; DL-126; PWIZ-025; RAS-014",
       "wiring": "UIW-015; WM-041",
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
@@ -1158,13 +1158,13 @@
     },
     {
       "id": "ONB-D4",
-      "change": "Verify provider support immediately before building PM, not as wizard caveats",
-      "owner": "MS-120; MA-040; CBP-022; DL-259",
+      "change": "Verify provider support and Remote Link code protocol immediately before PM build; no wizard caveats",
+      "owner": "MS-120; MA-040; CBP-022; RAS-014; DL-259",
       "wiring": "none needed: presentation uses existing route",
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "none needed: existing owner boundary suffices",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "companions": "x-provider-entry-amendments.pre_build_verification; x-pre-build-verification; no code grammar pin",
       "state": "covered_by_current_contract"
     },
     {
@@ -1312,47 +1312,47 @@
     },
     {
       "id": "SRV-CERT",
-      "change": "Server-only certificate/key selection must finish before activation/Ready",
+      "change": "No PM certificate administration/gate or certificate-validity Ready claim",
       "owner": "RAS-005; PWIZ-025",
-      "wiring": "CERT-1: owner selection route not admitted",
-      "commands": "CERT-1: named selector admission is open",
-      "settings": "none needed: TLS material is owner data",
+      "wiring": "catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
+      "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; no certificate selector admitted",
+      "settings": "none needed: certificate administration is external",
       "dry": "DR-005",
-      "companions": "PostcommitRemoteSetupPolicy.certificate_without_owner_answer",
-      "state": "owner_question_CERT-1"
+      "companions": "x-proxy-certificate-boundary; PostcommitRemoteSetupPolicy certificate boundary",
+      "state": "covered_by_Jared_CERT-1"
     },
     {
       "id": "SRV-CLOUD",
-      "change": "First cloud claim requires established owner-verified private channel",
-      "owner": "RAS-007; SRV-005",
-      "wiring": "UIW-015; catalog.server_claim",
-      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CLOUD-1 for initial channel",
+      "change": "Cloud first claim uses protected console/local-bootstrap one-time setup code",
+      "owner": "RAS-007; SRV-005; SRV-007; PWIZ-025; DL-259",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CS-074; UCC-152",
       "settings": "none needed: bootstrap path is not a preference",
       "dry": "DR-005",
-      "companions": "existing Server claim proofs; PostcommitRemoteSetupPolicy",
-      "state": "owner_question_CLOUD-1"
+      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup",
+      "state": "covered_by_Jared_CLOUD-1"
     },
     {
       "id": "SRV-DESKTOP-RESTORE",
-      "change": "Actual local claim, bootstrap roots/baseline and maintenance before full restore",
+      "change": "Protected native local first claim without typed code, then bootstrap/maintenance before full restore",
       "owner": "PWIZ-025; SRV-013",
-      "wiring": "catalog.server_claim; catalog.restore_server_full",
-      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; DESKTOP-RESTORE-1",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; catalog.restore_server_full; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; CS-074; UCC-152",
       "settings": "none needed: existing owner prerequisites",
       "dry": "DR-005; DR-037",
-      "companions": "existing claim/bootstrap/restore contracts; no self-approval or new proof invented",
-      "state": "owner_question_DESKTOP-RESTORE-1"
+      "companions": "x-initial-owner-claim-authorization; existing closed proof tuple; native caller-authority-flag negative",
+      "state": "covered_by_Jared_DESKTOP-RESTORE-1"
     },
     {
       "id": "SRV-CODE",
-      "change": "Owner-issued opaque code; blank invalid; owner resolution before identity/pairing",
+      "change": "Owner issues/checks opaque Remote Link code; protocol verified immediately before build",
       "owner": "RAS-014",
       "wiring": "UIW-015; catalog.remote_access_remote_link_open",
-      "commands": "cmd.remote_access.remote_link.open; REMOTE-CODE-1 for raw-code resolver/grammar",
+      "commands": "cmd.remote_access.remote_link.open consumes owner-resolved address; no resolver command invented",
       "settings": "none needed: unverified input, not a preference",
       "dry": "DR-005",
-      "companions": "onboarding plan blank-code negative; no guessed grammar",
-      "state": "owner_question_REMOTE-CODE-1"
+      "companions": "x-pre-build-verification; D4 shared checklist plus Remote_Link_code_protocol; existing blank-input negative",
+      "state": "covered_by_Jared_REMOTE-CODE-1_pre_build_verification"
     },
     {
       "id": "SRV-EFFECTIVE-CONTEXT",
@@ -1396,8 +1396,8 @@
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
-      "sha256": "e943e485c0fc271477a8dbb585be0d39827e3a74ea7f75ed44ec8703e8018bea",
-      "state": "consulted snapshot"
+      "sha256": "ddd22aeb386d3df6d7db89e643c787954d4d105e1e98fb96e82b45697dd40f73",
+      "state": "read through four owner answers, Jared 2026-10-31; applied under DL-259"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/QA2-HUNTER.md",
@@ -1463,12 +1463,7 @@
     "FF-21",
     "FF-22"
   ],
-  "owner_questions": [
-    "CERT-1",
-    "CLOUD-1",
-    "DESKTOP-RESTORE-1",
-    "REMOTE-CODE-1"
-  ],
+  "owner_questions": [],
   "prototype_cleanup": {
     "decision": "DL-260",
     "demo_only_rows_added": 0,
@@ -1496,5 +1491,31 @@
       "fixture account worlds and timestamps",
       "browser assertion counts as native evidence"
     ]
+  },
+  "owner_rulings_2026_10_31": {
+    "decision": "DL-259",
+    "decider": "Jared",
+    "answers": {
+      "CERT-1": {
+        "choice": "neither_A_nor_B",
+        "outcome": "PM_generates_proxy_config_person_handles_certificates_no_gate_or_validity_claim"
+      },
+      "CLOUD-1": {
+        "choice": "A",
+        "outcome": "one_time_setup_code_from_cloud_provider_console_or_local_bootstrap"
+      },
+      "DESKTOP-RESTORE-1": {
+        "choice": "A",
+        "outcome": "protected_native_direct_local_handoff_no_code_to_type"
+      },
+      "REMOTE-CODE-1": {
+        "choice": "A",
+        "outcome": "Remote_Link_owner_protocol_verified_immediately_before_build_no_grammar_pin"
+      }
+    },
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+    "source_sha256": "ddd22aeb386d3df6d7db89e643c787954d4d105e1e98fb96e82b45697dd40f73",
+    "pre_build_detail": "REMOTE-CODE-1",
+    "new_command_or_payload_field": false
   }
 }

@@ -5566,6 +5566,24 @@
         }
       },
       "expected_error": "NPM is existing-only, never a generator"
+    },
+    {
+      "name": "DL259.CERT1.proxy_generation_has_no_certificate_profile",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.proxy.generate",
+      "patch": {
+        "args.configuration.certificate_profile_ref": "tls-profile:not-an-admitted-field"
+      },
+      "expected_error": "CERT-1: external certificate administration is not a PM configuration field"
+    },
+    {
+      "name": "DL259.CERT1.Ready_has_no_certificate_validity_assertion",
+      "definition": "reverse_proxy_configuration",
+      "base_valid": "dedicated_hostname_proxy_is_security_complete",
+      "patch": {
+        "certificate_validated": true
+      },
+      "expected_error": "CERT-1: route Ready cannot carry a certificate-validation assertion"
     }
   ]
 }

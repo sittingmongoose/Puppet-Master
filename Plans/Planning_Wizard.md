@@ -2592,13 +2592,15 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   and Backup preview, identity/collision/recovery-safe checks; it never auto-activates public routes or work. DL-259
   H3/D6: SMB credential copy follows the authorized secure keychain policy for that share and host. It never calls SMB
   sign-in SSH key installation or promises never saved when a secure-store credential is retained. One-time SSH installation
-  secrets and protected unlock inputs retain their own no-store boundaries. DL-259 srv final, 2026-10-31: Full Server
-  recovery onto this computer first resolves the actual local Server. Dormant local capability is not a claim receipt.
-  A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start completion for durable roots
-  and immutable execution baseline, and the Backup owner’s maintenance/recovery authority are prerequisites for cmd.restore.server_full.
-  Reuse current verified prerequisites when already satisfied; otherwise hand off to their owner and wait. No automatic
-  self-approval, ordinary Client authority or invented desktop claim mechanism is admitted. Restore remains paused; pairing
-  and remote activation remain separate owner continuations after recovery. DL-259 srv final, 2026-10-31: Creating observes
+  secrets and protected unlock inputs retain their own no-store boundaries. DL-259 DESKTOP-RESTORE-1 A, Jared 2026-10-31:
+  the native desktop performs the first owner claim of its dormant local Server through a protected direct local handoff,
+  with no code for the person to type. The Server owner binds that initial owner-claim authorization to its discovery_observation_id,
+  pairing_session_id and identity_fingerprint for the existing cmd.server.claim request and exact current permission/generations.
+  Ordinary Clients, browser state and loopback reachability cannot manufacture this protected native authority. Claim
+  then separate cmd.server.bootstrap.start must complete for the actual local Server, its durable roots/mounts and immutable
+  execution baseline before cmd.restore.server_full. Backup maintenance/recovery authority, exact-target verification,
+  paused restore and separate pairing/remote activation remain required. Reuse current verified prerequisites when already
+  satisfied; dormant capability alone is never a claim or bootstrap receipt. DL-259 srv final, 2026-10-31: Creating observes
   only the reviewed Project creation/open/restore result and its actual prerequisites. It does not run optional remote-access
   configuration. After that owner settlement, a separate postcommit remote-setup view inside automatic_preparation runs
   any requested Remote Access continuation, before the normal provider/Free Models continuation; the eleven-stage graph
@@ -2607,7 +2609,29 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   Project intact: it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted
   setup is deferred; any already-started work obeys the owner’s existing cancel/background rules, and the app shows its
   actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without
-  a new mutation command.'
+  a new mutation command. DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person
+  handles certificates and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates,
+  and admits no certificate-profile field or selector command. No certificate selection/validation is a prerequisite
+  to configuration generation, route activation or Ready. Generation proves only that the configuration artifact was
+  produced. Route Ready reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility,
+  expected Server identity and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks.
+  It never claims that a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability
+  requirements remain; missing or failed actual route checks cannot be called successful. DL-259 CLOUD-1 A, Jared 2026-10-31:
+  the person uses an explicit cloud-provider console or local-bootstrap handoff and its one-time Server setup code to
+  claim a new cloud computer. The Server owner checks and consumes the code through the protected local/private bootstrap
+  handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id, pairing_session_id
+  and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation fences. The
+  tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are not proof.
+  Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public unclaimed
+  setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
+  remains separate after successful claim. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and
+  checks its protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior,
+  expiry/abuse policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks;
+  no grammar or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat
+  nonblank text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
+  it before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
+  closed without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice
+  or a wizard caveat.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -2704,12 +2728,15 @@ acceptance_criteria:
 - 'DL-259 H3/D6: SMB credential copy follows the authorized secure keychain policy for that share and host. It never
   calls SMB sign-in SSH key installation or promises never saved when a secure-store credential is retained. One-time
   SSH installation secrets and protected unlock inputs retain their own no-store boundaries.'
-- 'DL-259 srv final, 2026-10-31: Full Server recovery onto this computer first resolves the actual local Server. Dormant
-  local capability is not a claim receipt. A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start
-  completion for durable roots and immutable execution baseline, and the Backup owner’s maintenance/recovery authority
-  are prerequisites for cmd.restore.server_full. Reuse current verified prerequisites when already satisfied; otherwise
-  hand off to their owner and wait. No automatic self-approval, ordinary Client authority or invented desktop claim mechanism
-  is admitted. Restore remains paused; pairing and remote activation remain separate owner continuations after recovery.'
+- 'DL-259 DESKTOP-RESTORE-1 A, Jared 2026-10-31: the native desktop performs the first owner claim of its dormant local
+  Server through a protected direct local handoff, with no code for the person to type. The Server owner binds that initial
+  owner-claim authorization to its discovery_observation_id, pairing_session_id and identity_fingerprint for the existing
+  cmd.server.claim request and exact current permission/generations. Ordinary Clients, browser state and loopback reachability
+  cannot manufacture this protected native authority. Claim then separate cmd.server.bootstrap.start must complete for
+  the actual local Server, its durable roots/mounts and immutable execution baseline before cmd.restore.server_full.
+  Backup maintenance/recovery authority, exact-target verification, paused restore and separate pairing/remote activation
+  remain required. Reuse current verified prerequisites when already satisfied; dormant capability alone is never a claim
+  or bootstrap receipt.'
 - 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
   prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
   remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
@@ -2719,6 +2746,29 @@ acceptance_criteria:
   owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
   cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
   semantics supply this exit without a new mutation command.'
+- 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
+- 'DL-259 CLOUD-1 A, Jared 2026-10-31: the person uses an explicit cloud-provider console or local-bootstrap handoff
+  and its one-time Server setup code to claim a new cloud computer. The Server owner checks and consumes the code through
+  the protected local/private bootstrap handoff. Its initial owner-claim authorization is bound to the existing discovery_observation_id,
+  pairing_session_id and identity_fingerprint handed to cmd.server.claim, with the command’s current permission and generation
+  fences. The tuple references owner-verified authority; guessed IDs, an address or a caller-provided success flag are
+  not proof. Raw setup code never enters the ordinary command payload, stored setup plan, logs or receipts. No public
+  unclaimed setup, automated provider-console/SSH provisioning or implicit tailnet enrollment is admitted. cmd.server.bootstrap.start
+  remains separate after successful claim.'
+- 'DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and checks its protected HTTPS link or opaque
+  short code. Decide the actual code grammar, normalization/case behavior, expiry/abuse policy and raw-code resolution
+  protocol immediately before building PM, alongside D4’s pre-build checks; no grammar or sample code is pinned in canon.
+  Preserve the owner-defined representation, reject empty input, and treat nonblank text as unverified draft rather than
+  identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it before the existing open and
+  Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed without another-Server fallback.
+  This accepted pre-build verification point is not an unanswered product choice or a wizard caveat.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2746,6 +2796,7 @@ source_lineage:
 - packet:10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md
 - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-004
 - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 preserved_exact_tokens:
 - restore_existing_pm_data
 - Restore a backup

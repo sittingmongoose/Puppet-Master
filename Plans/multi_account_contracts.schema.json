@@ -2498,9 +2498,11 @@
       "Z.AI_listed_tools",
       "Kimi_Code_client_identity",
       "OpenCode_Go_client_identity",
-      "Muse_only_subscription_credential"
+      "Muse_only_subscription_credential",
+      "Remote_Link_code_protocol"
     ],
     "provider_caveats_in_wizard": false,
-    "codex_device_auth_prerequisite": "ChatGPT_security_settings_or_workspace_admin_permission"
+    "codex_device_auth_prerequisite": "ChatGPT_security_settings_or_workspace_admin_permission",
+    "pre_build_verification_owner_ref": "Plans/Decision_Log.md#DL-259"
   }
 }

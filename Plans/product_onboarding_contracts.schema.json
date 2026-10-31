@@ -10199,7 +10199,17 @@
       "fixed_count": false,
       "Settings_matches": true
     },
-    "usable_AI_summary": "all_current_usable_paid_and_free_routes"
+    "usable_AI_summary": "all_current_usable_paid_and_free_routes",
+    "owner_answers": {
+      "decision_ref": "Plans/Decision_Log.md#DL-259",
+      "decider": "Jared",
+      "date": "2026-10-31",
+      "CERT-1": "external_certificate_custody_no_PM_gate_or_validity_claim",
+      "CLOUD-1": "console_one_time_setup_code",
+      "DESKTOP-RESTORE-1": "protected_native_local_handoff_no_typed_code",
+      "REMOTE-CODE-1": "owner_protocol_verified_immediately_before_build"
+    },
+    "pre_build_verification_ref": "Plans/multi_account_contracts.schema.json#/x-provider-entry-amendments/pre_build_verification"
   },
   "x-postcommit-remote-setup-policy": {
     "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
@@ -10212,11 +10222,29 @@
     "later_undoes_committed_Project": false,
     "later_infers_ready": false,
     "actual_app_context": "existing_owner_results_and_registry_join",
-    "certificate_without_owner_answer": "pending_or_Later",
     "cloud_claim_requires_verified_private_channel": true,
     "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
     "code_grammar": "Remote_Link_owner_defined",
     "nonblank_code_proves_validity": false,
-    "new_primary_command": false
+    "new_primary_command": false,
+    "certificate_custody": "person_own_systems",
+    "PM_certificate_administration": false,
+    "certificate_selection_validation_gate": false,
+    "Ready_claims_certificate_validity": false,
+    "ready_checks": [
+      "endpoint_reachability",
+      "PM_protocol_API",
+      "expected_Server_identity_pairing_auth",
+      "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+    ],
+    "cloud_claim_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+    "desktop_first_claim_handoff": "protected_native_direct_local_no_code_to_type",
+    "initial_claim_proof_bindings": [
+      "discovery_observation_id",
+      "pairing_session_id",
+      "identity_fingerprint"
+    ],
+    "public_unclaimed_setup": false,
+    "code_protocol_verification": "immediately_before_product_build"
   }
 }

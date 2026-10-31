@@ -46909,7 +46909,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_generate.availability and state.commands.remote_access_proxy_generate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_generate.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47025,7 +47026,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_preview.availability and state.commands.remote_access_proxy_preview.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_preview.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -49328,7 +49330,8 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_server_full.availability and state.commands.restore_server_full.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 DESKTOP-RESTORE-1: first Full Server recovery onto this computer uses protected native direct local claim with no typed code, then separate completed Server bootstrap and Backup maintenance/recovery authority. Reuse current verified prerequisites; no ordinary Client or loopback self-authorization."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_server_full.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54426,7 +54429,8 @@
         "Validate Plans/server_system_contracts.schema.json#/$defs/command_payload -> Plans/server_system_contracts.schema.json#/$defs/command_result and Plans/server_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.server_claim.availability and state.commands.server_claim.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: bind the existing discovery_observation_id, pairing_session_id and identity_fingerprint to Server-owned initial claim authorization and exact current permission/generations. Cloud code is one-use protected handoff material; native local handoff requires no typed code. No raw code/caller authority flag in payload, no public unclaimed setup, no other-Client trust; bootstrap stays separate."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.server_claim.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54479,7 +54483,7 @@
       ],
       "ui_command_id": "cmd.server.claim",
       "ui_element_id": "catalog.server_claim",
-      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API"
+      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API; cloud-provider console/local-bootstrap code handoff; protected native desktop direct local first claim before full recovery"
     },
     "catalog.server_connect": {
       "ui_element_id": "catalog.server_connect",

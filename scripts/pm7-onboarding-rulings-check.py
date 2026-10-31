@@ -26,7 +26,7 @@ def check():
 
     verifier = runpy.run_path(str(ROOT / 'scripts/pm-new-contracts-verify.py'))
     registry = verifier['offline_schema_registry']()
-    for stem in ('product_onboarding', 'guided_tour', 'remote_access_system'):
+    for stem in ('product_onboarding', 'guided_tour', 'remote_access_system', 'server_system'):
         schema_name = stem + '_contracts.schema.json'
         fixture_name = stem + '_contract_fixtures.json'
         schema, fixtures = read(schema_name), read(fixture_name)
@@ -118,6 +118,42 @@ def check():
             ['caddy', 'nginx', 'traefik'], 'Generated proxy families differ')
     require(len(remote['$defs']['command_payload']['oneOf']) == 44,
             'D7 introduced or removed a Remote Access primary command')
+    certificate = remote['x-proxy-certificate-boundary']
+    require(certificate['certificate_custody'] == 'person_own_systems' and
+            all(certificate[key] is False for key in (
+                'PM_selects_holds_validates_issues_signs_certificates',
+                'certificate_profile_or_selector_command', 'certificate_selection_validation_gate',
+                'generated_artifact_proves_route_ready', 'Ready_claims_certificate_validity')) and
+            certificate['public_exposure_consent_required'] is True and certificate['ready_checks'],
+            'CERT-1 regained certificate administration, a gate, or a validity assurance')
+    server = read('server_system_contracts.schema.json')
+    claim = server['x-initial-owner-claim-authorization']
+    claim_variant = next(v for v in server['$defs']['command_payload']['oneOf']
+                         if 'cmd.server.claim' in str(v))
+    claim_args = claim_variant['allOf'][1]['properties']['args']
+    require(claim['proof_bindings'] == ['discovery_observation_id', 'pairing_session_id',
+                                      'identity_fingerprint'] and
+            set(claim_args['properties']) == set(claim['proof_bindings']) and
+            claim_args['additionalProperties'] is False,
+            'Initial owner claim changed its closed proof tuple')
+    require(claim['cloud_handoff'] == 'cloud_provider_console_or_local_bootstrap_one_time_code' and
+            claim['desktop_handoff'] == 'protected_native_direct_local_no_code_to_type' and
+            all(claim[key] is False for key in ('raw_code_in_command_or_durable_state',
+                'caller_flag_grants_authority', 'public_unclaimed_setup', 'new_command_or_payload_field')) and
+            claim['claim_bootstrap_restore_separate'] is True,
+            'CLOUD-1/DESKTOP-RESTORE-1 lost protected claim or separate bootstrap/restore')
+    postcommit = read('product_onboarding_contracts.schema.json')['x-postcommit-remote-setup-policy']
+    require('certificate_without_owner_answer' not in postcommit and
+            postcommit['certificate_selection_validation_gate'] is False and
+            postcommit['Ready_claims_certificate_validity'] is False and
+            postcommit['initial_claim_proof_bindings'] == claim['proof_bindings'],
+            'Onboarding retains a superseded owner question or certificate gate')
+    code = remote['x-pre-build-verification']
+    require(code['item'] == 'Remote_Link_code_protocol' and
+            code['when'] == postcommit['code_protocol_verification'] == 'immediately_before_product_build' and
+            code['grammar_pinned'] is False and code['wizard_caveat'] is False,
+            'REMOTE-CODE-1 is pinned or presented as a wizard caveat')
+    counts['owner_answer_policy_checks'] = 5
     account_schema = read('multi_account_contracts.schema.json')
     jsonschema.Draft202012Validator.check_schema(account_schema)
     provider = account_schema['x-provider-entry-amendments']
@@ -135,7 +171,7 @@ def check():
     require(not validator.is_valid({**entries['alibaba_token_plan'], 'billing_class': 'pay_as_you_go'}),
             'Token Plan collapses into DashScope billing')
     require(provider['pre_build_verification'] == ['Z.AI_listed_tools', 'Kimi_Code_client_identity',
-            'OpenCode_Go_client_identity', 'Muse_only_subscription_credential'] and
+            'OpenCode_Go_client_identity', 'Muse_only_subscription_credential', 'Remote_Link_code_protocol'] and
             provider['provider_caveats_in_wizard'] is False, 'D4 checklist became wizard caveats')
     counts['provider_entry_policy'] = {'positive': 2, 'negative': 2}
     return {'check': 'pm7-onboarding-rulings', 'status': 'fail' if failures else 'pass',
