@@ -1613,5 +1613,15 @@
       "Query: This unit could not match “{q}” to a known task.",
       "Proposal: Ask about plans, builds, usage, history or settings."
     ]
+  },
+  "demoHint": {
+    "label": "Try it in this demo:",
+    "outcome": {
+      "works": "works",
+      "wrong": "wrong",
+      "noAnswer": "no answer",
+      "refused": "refused",
+      "taken": "taken"
+    }
   }
 }

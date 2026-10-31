@@ -201,8 +201,10 @@
     pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } }
   };
 
+  /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
+  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
   O55.fixtures = {
-    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders,
+    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders, DEMO,
     make(scenario) {
       const e = base();
       const ids = String(scenario || 'fresh').split('+');
