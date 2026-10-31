@@ -251,5 +251,8 @@
     }
     return null;
   }
-  O55.pipOops = { read, match, face: (key) => FACE[key] || 'oops', line: (key) => O55.t('pip.oops.' + key), cheer: (key) => O55.t('pip.cheer.' + key) };
+  /* a line that is missing is never shown as its key (FO-13: "pip.cheer.endpoint.path" on screen): a cheer without its own
+     line says the general one, and build.py --check fails on any pip.oops key without its pip.cheer twin */
+  const said = (k, fb) => { const v = O55.tx(k); return typeof v === 'string' && v ? v : fb ? O55.t(fb) : ''; };
+  O55.pipOops = { read, match, face: (key) => FACE[key] || 'oops', line: (key) => said('pip.oops.' + key, null), cheer: (key) => said('pip.cheer.' + key, 'pip.cheerFallback') };
 })();

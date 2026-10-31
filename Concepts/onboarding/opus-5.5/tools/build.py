@@ -272,6 +272,50 @@ def lint_source_parts(path: Path):
             yield fragment, base_source.read_source(fragment).decode('utf-8')
 
 
+def pip_key_problems() -> list[str]:
+    """Pip never says a copy key aloud (final run FO-13: "pip.cheer.endpoint.path" on screen). Every pip.oops line has its
+    pip.cheer twin (the line Pip says once the fault is put right), the general fallback exists, and every pip.* key the
+    onboarding code names literally exists; in the stage's files (5x) a bare T('...') reads pip.stage.<key>."""
+    copy = copy_json()
+    pip = copy.get('pip', {}) if isinstance(copy.get('pip'), dict) else {}
+
+    def leaves(node, pre=''):
+        out = {}
+        for k, v in (node or {}).items():
+            if isinstance(v, dict):
+                out.update(leaves(v, pre + k + '.'))
+            else:
+                out[pre + k] = v
+        return out
+
+    def has(key: str) -> bool:
+        node = copy
+        for part in key.split('.'):
+            if not isinstance(node, dict) or part not in node:
+                return False
+            node = node[part]
+        return True
+
+    problems = []
+    oops, cheer = leaves(pip.get('oops')), leaves(pip.get('cheer'))
+    problems += [f'Pip oops line without its cheer: pip.cheer.{k} (for pip.oops.{k})' for k in oops if k not in cheer]
+    problems += [f'Pip line is not text: pip.{kind}.{k}' for kind, table in (('oops', oops), ('cheer', cheer))
+                 for k, v in table.items() if not (isinstance(v, str) and v.strip())]
+    if not (isinstance(pip.get('cheerFallback'), str) and pip['cheerFallback'].strip()):
+        problems.append('pip.cheerFallback is missing (the cheer said when a fault has no line of its own)')
+    for path in sorted((SRC / 'js').glob('*.js')):
+        text = path.read_text(encoding='utf-8')
+        for m in re.finditer(r"(?:\bO55\.tx?|(?<![.\w])T)\(\s*'(pip\.[A-Za-z0-9_.:-]+)'\s*[,)]", text):
+            if not has(m.group(1)):
+                problems.append(f'missing copy key {m.group(1)} named in js/{path.name}')
+        if path.name[:1] == '5':
+            for m in re.finditer(r"(?<![.\w])T\(\s*'([A-Za-z0-9_.:-]+)'\s*[,)]", text):
+                k = m.group(1)
+                if not k.startswith('pip.') and not has('pip.stage.' + k) and not has(k):
+                    problems.append(f'missing copy key pip.stage.{k} (or {k}) named in js/{path.name}')
+    return problems
+
+
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
@@ -313,6 +357,7 @@ def lint_sources() -> list[str]:
             if BANNED_COPY.search(node) and not last.startswith('detail') and not expert and owner_labels.get(path) != node:
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
+    problems.extend(pip_key_problems())
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
