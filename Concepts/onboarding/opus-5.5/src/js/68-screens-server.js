@@ -120,13 +120,17 @@
   });
 
   /* ------------------------------------------------------------------ S1b: waiting for it to appear (read-only) */
-  function unclaimedFound(S) { const st = F.state(S, 'discover:server'); return st && st.state === 'done'; }
+  /* a look on the network belongs to the kind of computer it was for: a NAS found there is never shown as the rented
+     computer after Back and another kind (SCR-01's class, the pm7-srv sweep); a rented computer is only typed */
+  const discoverKey = (S) => 'discover:server:' + (S.sess.server.kind || 'nas');
+  function unclaimedFound(S) { if (cloud(S)) return false; const st = F.state(S, discoverKey(S)); return st && st.state === 'done'; }
   def('s-wait', {
     chapter: 'computer', stage: 'simple_path',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.wait.eyebrow'),
     title: () => T('server.wait.title'),
-    lead: () => T('server.wait.lead'),
+    /* (a rented computer never shows up by itself: its address is typed) */
+    lead: (S) => T(cloud(S) ? 'server.wait.leadCloud' : 'server.wait.lead'),
     body(S) {
       const u = unclaimed(S), sv = S.sess.server, kind = sv.kind || 'nas';
       /* install steps sit beside the discovery: do them on the other computer, and it shows up here by itself */
@@ -155,9 +159,9 @@
     },
     mounted(S) {
       if (S.sess.server.manual || cloud(S)) return;
-      const st = F.state(S, 'discover:server');
+      const st = F.state(S, discoverKey(S));
       if (st && st.state === 'done') return; /* a finished look must not rebuild its options on every refresh */
-      F.op(S, 'discover:server', 'cmd.server.discovery.refresh', DISCOVER_PHASES, DISCOVER_OPTS);
+      F.op(S, discoverKey(S), 'cmd.server.discovery.refresh', DISCOVER_PHASES, DISCOVER_OPTS);
     },
     foot: (S) => ({ primary: { label: T('server.wait.choose'), do: 'next', disabled: !S.sess.server.target, reason: T('server.wait.looking') } }),
     do: {

@@ -355,7 +355,8 @@
         "models": "Check that your model is listed in the install guide: not every {brand} model can run Puppet Master.",
         "data": "Give Puppet Master a folder of its own for its data, on a disk that is kept. Your work lives there, so updating or reinstalling the app never loses it. The guide shows where to set it.",
         "address": "Once it starts, it shows up here by itself, with the address your other devices use to reach it."
-      }
+      },
+      "leadCloud": "Install Puppet Master on it, then type the address it has on your private network."
     },
     "confirm": {
       "eyebrow": "New Server",
