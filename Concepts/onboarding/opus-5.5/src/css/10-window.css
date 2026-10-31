@@ -520,7 +520,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
   color: var(--text-secondary); font: 400 13.5px/1.5 var(--body-font); }
 .o55-explainer-pip { flex: none; width: 26px; height: 26px; }
 .o55-explainer-pip svg { display: block; width: 26px; height: 26px; }
-.o55-explainer-t { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.o55-explainer-t { flex: 1; min-width: 0; display: grid; gap: 2px; overflow-wrap: anywhere; } /* (a long token wraps: FO-14) */
 .o55-explainer-h { color: var(--text-primary); font: 650 13.5px/1.35 var(--body-font); }
 .o55-explainer-x { flex: none; height: 26px; min-width: 26px; padding: 0; margin: -4px 0 0; border: 0; }
 .o55-tw-off { visibility: hidden; }
