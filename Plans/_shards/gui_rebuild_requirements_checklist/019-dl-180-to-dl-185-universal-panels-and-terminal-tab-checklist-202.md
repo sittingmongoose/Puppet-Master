@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L2092-L2277
+Source lines: L2092-L2280
 
-Source SHA256: `64e858a20c01af8b263735faeb050f2102a9d5328ae964cd5f4c4ebf53a1469d`
+Source SHA256: `f143f38e3cf82e3af2fe5a213070d72e4508c794febcfc9cdd738e67f9ed83f7`
 
 ---
 
@@ -194,3 +194,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-077, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Decision_Log.md#DL-201
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

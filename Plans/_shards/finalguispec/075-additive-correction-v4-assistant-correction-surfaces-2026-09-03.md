@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38147-L38331
+Source lines: L38530-L38714
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -14,7 +14,7 @@ This section applies the GUI-related clauses of `PM_Assistant_v2_Additive_Correc
 additive: every v2 Assistant surface above — the primary mode menu and its sidecars, the wand,
 Context Lens at the top of the chat, the context ring and details, thread history, the
 questionnaire host, Orbit and Step Rail, the activity bar, Send/Stop, the follow-up queue, the
-attachment tray, the composer selectors and indicators, and the eight themes — stays exactly as
+attachment tray, the composer selectors and indicators, and the ten themes — stays exactly as
 specified. Nothing here authorises a broad restyle.
 
 ### QMAX-017 — Where the question numbers appear

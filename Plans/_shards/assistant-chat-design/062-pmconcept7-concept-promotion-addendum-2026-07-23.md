@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24437-L24824
+Source lines: L24437-L24835
 
-Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
+Source SHA256: `e7220edd0866b63cc8dbcc96ddeeb464626c05030c33176c35751d179009ded6`
 
 ---
 
@@ -31,7 +31,18 @@ canonical_text: >-
   keep search. Under reduced motion, open and close render as instant show/hide. The
   single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
   implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
-  removes their former duplicates while retaining this unit’s visible motion/focus contract.
+  removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
+  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
+  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
+  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
+  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
+  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
+  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
+  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
+  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
+  flight. DR-079 also owns the shared origin/shown/instant/fade inputs and Home's morph geometry adapter;
+  chat does not recreate those operations. Shared presentation APIs create no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false

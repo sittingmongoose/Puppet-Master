@@ -1875,7 +1875,7 @@
     },
     "assistant.redesign.cmd.chat_schedule_message_cancel": {
       "ui_element_id": "assistant.redesign.cmd.chat_schedule_message_cancel",
-      "ui_location": "Puppet Master Assistant > schedule_details",
+      "ui_location": "Puppet Master Assistant > schedule_details; Work panel / thread Processes > work.cancel_scheduled",
       "ui_command_id": "cmd.chat.schedule_message.cancel",
       "handler_location": "handlers::scheduling::schedule_message_cancel",
       "expected_event_types": [],
@@ -1887,7 +1887,8 @@
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (SMSG-012, SMSG-016): cancel affects exactly one schedule, preserves the immutable audit record, and leaves other schedules in the thread untouched. Hiding a card never deletes schedule evidence.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them."
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager joined the exact surface list above and no other surface did. Each reads this row's availability and exact disabled reason (UCC-156) and renders disabled, never optimistic, when it cannot read them.",
+        "D7/D8/D13 work producer work.cancel_scheduled: Scheduled Cancel uses the scheduling owner with exact schedule ID/revision, source scope and owner gates; no WorkTarget/PID or cmd.work.stop target. Concept W.stop dispatch is an adapter limitation."
       ],
       "evidence_required": "Future production evidence for cmd.chat.schedule_message.cancel: source-hashed native dispatcher and sole handler handlers::scheduling::schedule_message_cancel, typed ScheduledMessageCancelRequest/ScheduledMessageCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Scheduling_and_Quota_Resume.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.schedule_message.cancel. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-031) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_schedule_message_cancel.availability",
@@ -7676,7 +7677,8 @@
         "cmd.alert.open_source exposes state selector and disabled reason before dispatch.",
         "cmd.alert.open_source dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
         "cmd.alert.open_source uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
-        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification.",
+        "F3-1/F3-5, final GUI5abe285507: a staged-toast body producer dispatches nothing while its card enters or leaves on every page, Usage included; it queues no click and no late arrival completion reactivates a leaving card. After settled placement it uses this unchanged owner route; Reduced Motion settles placement/removal instantly. This stage-only guard does not block settled inbox or other owner producers."
       ],
       "evidence_required": "Production wiring contract for cmd.alert.open_source. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.alert_open_source.availability",
@@ -8410,7 +8412,8 @@
         "Read state.commands.auth_profile_open_official_page.availability and state.commands.auth_profile_open_official_page.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
-        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup."
+        "Precommit official-page use requires PWIZ-021 selected-source authorization plus the unchanged MACS-002 official-source/current-Client/protected-browser proof; it grants no Project/repository creation or broad provider setup.",
+        "DL-259 P10: Get a key opens the exact selected provider/account route’s owner-verified official key console/guide under MACS-003; key is not password. Preserve initiating active Client/protected official-source handoff and exact return; returning never proves a created key, sign-in or Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_open_official_page.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -8465,7 +8468,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.open_official_page",
       "ui_element_id": "catalog.auth_profile_open_official_page",
-      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route"
+      "ui_location": "Doctor remediation; Product Onboarding owner handoff; Settings > Integrations; authentication handoff surface; Product Onboarding explicit selected-source account creation through protected allowlisted official route; provider API-key row > Get a key (Onboarding and Settings)"
     },
     "catalog.auth_profile_rename": {
       "acceptance_checks": [
@@ -11984,7 +11987,7 @@
     },
     "catalog.browser_open_workspace_preview": {
       "ui_element_id": "catalog.browser_open_workspace_preview",
-      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_location": "Browser preview and visible testing surfaces; Work panel / thread Processes > work.open_port",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
       "expected_event_types": [
@@ -12000,7 +12003,8 @@
         "cmd.browser.open_workspace_preview must declare state selector, disabled reason, browser event effect, and regression evidence before production certification",
         "Carries CV-360's placement fields where, mode, by and background and resolves through the one opening module (F3-634, DR-071), never a private placement argument; target_editor_panel_id, target_editor_group_id and target_group never select a home panel (UCC-200).",
         "by: user opens and takes focus; by: agent:<name> lands as a background tab with the 6 px hollow square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel the person is typing in (F3-634).",
-        "workspace.layout_changed accompanies an added browser tab only; revealing an open session's tab adds no layout event (UCC-063 amended). Producers include the \"+\" menu's Browser sub-row and filter field, the terminal's URL links and the chat (home.*, terminal.* rows)."
+        "workspace.layout_changed accompanies an added browser tab only; revealing an open session's tab adds no layout event (UCC-063 amended). Producers include the \"+\" menu's Browser sub-row and filter field, the terminal's URL links and the chat (home.*, terminal.* rows).",
+        "D7/D8/D13 work producer work.open_port: Browser-owner URL derived from exact work/Project/server/environment and exposed port; protocol/host/port must be owner-authoritative. Concept localhost is a fixture convenience, never a native client-host assumption. CV-360 placement."
       ],
       "evidence_required": "Production wiring contract for cmd.browser.open_workspace_preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_open_workspace_preview.availability",
@@ -16431,7 +16435,7 @@
     },
     "catalog.chat_open_thread": {
       "ui_element_id": "catalog.chat_open_thread",
-      "ui_location": "Cross-surface thread entry points > Open Chat Thread",
+      "ui_location": "Cross-surface thread entry points > Open Chat Thread; Work panel / thread Processes > work.open_thread",
       "ui_command_id": "cmd.chat.open_thread",
       "handler_location": "handlers::chat::open_thread",
       "expected_event_types": [],
@@ -16443,7 +16447,8 @@
         "cmd.chat.open_thread must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.chat.open_thread availability class is selection (thread_exists) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
         "Cross-surface thread entry wrapper carrying route/OpenSubject identity; it opens the chat panel when closed, does not duplicate the chat-panel-local cmd.chat.switch_thread, and retired prototype token cmd.chat.open_at (excluded from production wiring) migrates to this canonical id.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message."
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): scheduled_message_card, schedule_manager also raise cmd.chat.open_thread, and no other surface is added. Each reads state.cmd_chat_open_thread.enabled and state.cmd_chat_open_thread.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them. Go to message and Open message carry route_target message.",
+        "D7/D8/D13 work producer work.open_thread: Exact bound Assistant thread via cmd.chat.open_thread. Native route resolves signed thread/Project, not the local owner-row selection or a child transcript tab by accident."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/assistant-chat-design.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_chat_open_thread.enabled",
@@ -46847,7 +46852,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_export.availability and state.commands.remote_access_proxy_export.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_export.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -46905,7 +46911,9 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_generate.availability and state.commands.remote_access_proxy_generate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_generate.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47021,7 +47029,9 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_preview.availability and state.commands.remote_access_proxy_preview.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1, Jared 2026-10-31: generate proxy configuration without a certificate selector/profile, material custody or certificate selection/validation gate. The person handles certificates/signing on their own systems. Generated does not mean route Ready or certificate valid; keep actual PM route checks and public-exposure consent.",
+        "DL-259 CERT-1 / srv C1: onboarding generate_only generates/exports a file the person installs; existing_proxy only tests the existing route and live connection. No Set it up for me hosting or certificate selection/validation step; draft proxy_tls is null. Existing public consent, secure reachability and exact Server/route identity fences remain; generation alone is never Ready."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_preview.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47195,7 +47205,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_proxy_test.availability and state.commands.remote_access_proxy_test.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CERT-1 / srv C1: onboarding existing_proxy checks the exact existing route and live connection, with no generated file or PM hosting. generate_only generates/exports configuration for the person to install before these checks. No certificate selection/validation gate or certificate-validity assurance is admitted; actual secure reachability, public consent and Server identity/pairing remain required."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_proxy_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -47949,7 +47960,8 @@
         "Validate the exact request/result pair Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and reject unknown, stale, conflicting, or authority-widening fields.",
         "Read state.commands.remote_access_route_test.availability and state.commands.remote_access_route_test.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
-        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
+        "DL-259 CERT-1 / srv C1: onboarding existing_proxy checks the exact existing route and live connection, with no generated file or PM hosting. generate_only generates/exports configuration for the person to install before these checks. No certificate selection/validation gate or certificate-validity assurance is admitted; actual secure reachability, public consent and Server identity/pairing remain required."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_route_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48065,7 +48077,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_connector_check.availability and state.commands.remote_access_tailscale_connector_check.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_connector_check.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48123,7 +48136,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_connector_restart.availability and state.commands.remote_access_tailscale_connector_restart.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_connector_restart.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48181,7 +48195,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_disable.availability and state.commands.remote_access_tailscale_disable.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_disable.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48239,7 +48254,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_headscale_start.availability and state.commands.remote_access_tailscale_headscale_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_headscale_start.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48297,7 +48313,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_headscale_submit_registration.availability and state.commands.remote_access_tailscale_headscale_submit_registration.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_headscale_submit_registration.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48355,7 +48372,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_identity_reset.availability and state.commands.remote_access_tailscale_identity_reset.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_identity_reset.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48413,7 +48431,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_login_resume.availability and state.commands.remote_access_tailscale_login_resume.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_login_resume.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48471,7 +48490,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_login_start.availability and state.commands.remote_access_tailscale_login_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_login_start.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48529,7 +48549,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_setup_start.availability and state.commands.remote_access_tailscale_setup_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_setup_start.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48587,7 +48608,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_sign_out.availability and state.commands.remote_access_tailscale_sign_out.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_sign_out.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -48645,7 +48667,8 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_test.availability and state.commands.remote_access_tailscale_test.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -49313,7 +49336,8 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_server_full.availability and state.commands.restore_server_full.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 DESKTOP-RESTORE-1: first Full Server recovery onto this computer uses protected native direct local claim with no typed code, then separate completed Server bootstrap and Backup maintenance/recovery authority. Reuse current verified prerequisites; no ordinary Client or loopback self-authorization."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_server_full.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54411,7 +54435,8 @@
         "Validate Plans/server_system_contracts.schema.json#/$defs/command_payload -> Plans/server_system_contracts.schema.json#/$defs/command_result and Plans/server_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.server_claim.availability and state.commands.server_claim.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
+        "DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: bind the existing discovery_observation_id, pairing_session_id and identity_fingerprint to Server-owned initial claim authorization and exact current permission/generations. Cloud code is one-use protected handoff material; native local handoff requires no typed code. No raw code/caller authority flag in payload, no public unclaimed setup, no other-Client trust; bootstrap stays separate."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.server_claim.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -54464,7 +54489,7 @@
       ],
       "ui_command_id": "cmd.server.claim",
       "ui_element_id": "catalog.server_claim",
-      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API"
+      "ui_location": "Server manager, Settings, Onboarding, Doctor, cards, palette, API; cloud-provider console/local-bootstrap code handoff; protected native desktop direct local first claim before full recovery"
     },
     "catalog.server_connect": {
       "ui_element_id": "catalog.server_connect",
@@ -55996,12 +56021,14 @@
         "Route each value to its sole owner and require readback before committed",
         "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
         "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
-        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control uses the same atomic Settings pair (DL-228); the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
         "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
-        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key."
+        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key.",
+        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event.",
+        "DL-259 QA2 M1: selecting Auto atomically writes mode Auto and the current family/effective OS scheme. OS changes and Project reopen reconcile only Theme while retaining Auto via the same Project Settings writer, current revision and read-only/refusal gates; no rendering-side or shadow-store write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56068,12 +56095,14 @@
         "Reject stale revisions, invalid values, permission/policy blockers, secrets, and unavailable owners with typed reasons",
         "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
         "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
-        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control uses the same atomic Settings pair (DL-228); the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
         "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
         "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration.",
-        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key."
+        "PM7 S1–S9/D5: parts, presets and status-bar-words write the same admitted inventory row across all hosts; no shadow store, no switchable brand/loader and no extra sound key.",
+        "Q22, Jared 2026-10-30 (DL-257): all five families including nier use the existing theme/mode pair; retired general.visual.nier-mode is rejected as a current setting ID. Onboarding previews through ui.onboarding.choose_look and keeps the exact Project commit boundary. NieR Adjust retains parts/background; no new command or event.",
+        "DL-259 QA2 M1: selecting Auto atomically writes mode Auto and the current family/effective OS scheme. OS changes and Project reopen reconcile only Theme while retaining Auto via the same Project Settings writer, current revision and read-only/refusal gates; no rendering-side or shadow-store write."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -59573,7 +59602,7 @@
     },
     "catalog.terminal_rerun": {
       "ui_element_id": "catalog.terminal_rerun",
-      "ui_location": "Chat command cards and the terminal tab's command-mark menu > Rerun in Terminal",
+      "ui_location": "Chat command cards and the terminal tab's command-mark menu > Rerun in Terminal; Work panel / thread Processes > work.rerun",
       "ui_command_id": "cmd.terminal.rerun",
       "handler_location": "handlers::terminal::rerun",
       "expected_event_types": [],
@@ -59583,7 +59612,8 @@
         "cmd.terminal.rerun dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.terminal.rerun must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.terminal.rerun must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Hosted chat port (WM-096): Rerun in Terminal starts a new invocation under the existing terminal permissions and session contract, never appends output to a simulated inline terminal."
+        "Hosted chat port (WM-096): Rerun in Terminal starts a new invocation under the existing terminal permissions and session contract, never appends output to a simulated inline terminal.",
+        "D7/D8/D13 work producer work.rerun: Terminal-owner replay of the exact ended command, with a new invocation; explicit new-session request where needed, permission/currentness and no duplicate replay. Concept W.restart is not native owner admission."
       ],
       "evidence_required": "Production wiring contract for cmd.terminal.rerun; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.terminal_rerun.availability",
@@ -76093,7 +76123,7 @@
     },
     "pm7.processes_open": {
       "ui_element_id": "pm7.processes_open",
-      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes",
+      "ui_location": "Assistant Chat > Activity bar / Activity Detail > Processes; composer dock > process or scheduled Review / Show",
       "ui_command_id": "cmd.chat.processes.open",
       "handler_location": "handlers::chat::open_processes",
       "expected_event_types": [],
@@ -76101,7 +76131,9 @@
         "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
         "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
         "Reveal only this Project/thread’s Processes detail with D4 presence and full-size G1/G2 geometry.",
-        "Opening this view starts/stops no process and does not duplicate a subagent as process work."
+        "Opening this view starts/stops no process and does not duplicate a subagent as process work.",
+        "D2/D7 dock producer carries optional exact work_id with signed Project/thread and expected_generation. Resolve/select only that current process/scheduled row; foreign/stale/missing selection refuses without title fallback, cross-thread navigation or process effect. A normal bar open may omit work_id.",
+        "QA2 Q13/DL-258: 60-second dock expiry affects presentation only; this route still opens the exact thread/process scope, with no stop/cancel/delete effect."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/assistant-chat-design.md#ACD-505",
       "state_selector": "state.pm7.processes_open.availability",
@@ -76157,7 +76189,8 @@
         "Keyboard and pointer submit the same typed owner request; project/application scope must match the signed source context and owner bindings.",
         "Unknown scope, stale identity, unavailable owner or refused permission/storage makes no prohibited effect; accepted/replayed outcomes remain distinguishable.",
         "Select agents/processes/resources in the one shared panel; repeat activation of the already-open status item closes it.",
-        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added."
+        "Application scope permits project_id null, never invents a Project; no CPU/RAM status item is added.",
+        "DL-259 QA2 Q12: opening Resources uses tab=resources through this existing show request; in-panel switching is ui.work_panel.select_tab, not another command. Shared computer/services remain read-only and owner-scoped under F3-664/SIR-054."
       ],
       "evidence_required": "Static production-intent contract only. Native handler/dispatcher/rendering, permission/currentness/identity, receipt and accessibility proof are required before certification. Owner: Plans/FinalGUISpec.md#F3-664",
       "state_selector": "state.pm7.work_panel_show.availability",

@@ -373,7 +373,7 @@ and BSD Usage are never merged.
 
 Official CLI subscription authentication remains owned by the official CLI; PM launches
 and observes supported sign-in and stores only permitted references and state. Direct API
-credentials remain in PM secure credential custody. OpenCode server authentication is
+credentials remain in PM secure credential custody on the execution host. Human sign-in runs on the initiating active device; CLI sign-ins remain in that tool’s isolated root on the execution host (DL-259, D6 A). OpenCode server authentication is
 separate from model-provider credentials, and Cursor SDK execution/auth is separate from
 its quota telemetry.
 
@@ -409,7 +409,7 @@ Adapter classes and their honest limitations:
 | Server bridge | OpenCode server | PM binds the provider session as correlation, projects PM tools/MCP, normalizes events | the provider server may retain native session state, which stays noncanonical |
 | CLI bridge | Claude Code, Antigravity, Muse Code, coding CLIs | prefer host-tool execution; otherwise isolate process/workspace and reconcile | native plans/todos/subagents/tools may be partly opaque |
 
-OpenCode Go/Zen and similar plans are model/provider offerings; they are not the OpenCode
+OpenCode Go, OpenCode Console (formerly Zen) and similar offerings are model/provider offerings; they are not the OpenCode
 server control path.
 
 ## Owner / Consumer Map
@@ -558,11 +558,18 @@ plan_unit_id: CBP-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  The Provider facade runs CLI-bridged and server-bridged providers through a
-  uniform transport-normalization contract for deterministic request envelopes,
-  normalized streams, tool-call reconciliation, auth/UX-state detection, and
-  stream resilience, without taking ownership of PM-internal child orchestration.
+canonical_text: 'The Provider facade runs CLI-bridged and server-bridged providers through a uniform transport-normalization
+  contract for deterministic request envelopes, normalized streams, tool-call reconciliation, auth/UX-state detection,
+  and stream resilience, without taking ownership of PM-internal child orchestration. DL-259, Jared 2026-10-31: D6 A:
+  the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official
+  tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s
+  secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
+  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
+  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
+  account of the same provider has a distinct identity. D4: confirm provider admission and executable conformance immediately
+  before building Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings
+  or caveats. This scheduling decision does not change per-account authentication, entitlement, health or quota truth:
+  Ready is the shared account owner’s current usable result, not merely signed in.'
 gui_related: true
 gui_classification_reason: The facade owns normalized streaming with one consumer and no UI special-casing plus auth/UX-state detection.
 split_recommended: true
@@ -570,12 +577,23 @@ split_recommendation_reason: Source span S0004 mixes provider transport scope, U
 depends_on: [CBP-002]
 unblocks: [CBP-004, CBP-005, CBP-008, CBP-010]
 acceptance_criteria:
-  - The facade supports structured request envelopes for deterministic replayable runs.
-  - Normalized streaming events have one consumer and no UI special-casing.
-  - Tool-call correlation and reconciliation tolerate CLI oddities.
-  - Auth/UX-state detection includes logged out, expired or invalid, rate limit, and outage.
-  - Stream resilience includes bounded retry, replay safety, and circuit breaking.
-  - PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by orchestrator-subagent-integration and Contracts_V0.
+- The facade supports structured request envelopes for deterministic replayable runs.
+- Normalized streaming events have one consumer and no UI special-casing.
+- Tool-call correlation and reconciliation tolerate CLI oddities.
+- Auth/UX-state detection includes logged out, expired or invalid, rate limit, and outage.
+- Stream resilience includes bounded retry, replay safety, and circuit breaking.
+- PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by orchestrator-subagent-integration
+  and Contracts_V0.
+- 'DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity. D4: confirm provider
+  admission and executable conformance immediately before building Puppet Master. The wizard lists its provider choices
+  without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account
+  authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not
+  merely signed in.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1479,17 +1497,36 @@ plan_unit_id: CBP-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  Claude Code and Cursor CLI-runtime routes require output-level prompt success, route-specific auth semantics, and protocol-correct automation. Claude Code uses first-party `claude.ai` session proof and print-mode probes rather than `claude doctor` as the noninteractive readiness gate; `--output-format=stream-json` requires `--verbose`. Cursor routes are split: `cursor-agent --print` browser-login/session or API-key execution, `agent acp` JSON-RPC stdio, native Cursor API/SDK/composer-api-style direct routes, and `opencode-cursor` as source-lineage/non-primary. ACP must not be invoked as `cursor-agent --print`.
+canonical_text: 'Claude Code and Cursor CLI-runtime routes require output-level prompt success, route-specific auth semantics,
+  and protocol-correct automation. Claude Code uses first-party `claude.ai` session proof and print-mode probes rather
+  than `claude doctor` as the noninteractive readiness gate; `--output-format=stream-json` requires `--verbose`. Cursor
+  routes are split: `cursor-agent --print` browser-login/session or API-key execution, `agent acp` JSON-RPC stdio, native
+  Cursor API/SDK/composer-api-style direct routes, and `opencode-cursor` as source-lineage/non-primary. ACP must not
+  be invoked as `cursor-agent --print`. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider
+  entry, with API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning
+  team; these remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced
+  optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider
+  entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct
+  from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan
+  retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway.
+  A label change never changes a saved provider/account ID.'
 gui_related: false
 gui_classification_reason: CLI/protocol/runtime readiness requirements rather than visual presentation.
 depends_on: [MS-113]
 unblocks: [MA-062, F3-400, ACD-424]
 acceptance_criteria:
-  - Claude Code readiness uses prompt output markers and route-specific session/auth state.
-  - Cursor ACP is treated as JSON-RPC stdio, separate from print-mode execution.
-  - Native Cursor API-key/SDK route remains primary direct-provider planning support after live verification.
-  - "`opencode-cursor` does not block native Cursor support."
+- Claude Code readiness uses prompt output markers and route-specific session/auth state.
+- Cursor ACP is treated as JSON-RPC stdio, separate from print-mode execution.
+- Native Cursor API-key/SDK route remains primary direct-provider planning support after live verification.
+- '`opencode-cursor` does not block native Cursor support.'
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -1521,17 +1558,25 @@ plan_unit_id: CBP-022
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  Codex/OpenAI, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax Coding Plan, and Z.AI/Zhipu coding-plan routes are not made active PM CLI-bridge requirements merely because local CLIs or OpenCode-routed probes exist. CLI probes may remain installation, optional-route, or source-lineage evidence, but direct-provider implementation readiness comes from the direct route's authenticated end-to-end prompt output and route contract.
+canonical_text: 'Codex/OpenAI, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax Coding Plan,
+  and Z.AI/Zhipu coding-plan routes are not made active PM CLI-bridge requirements merely because local CLIs or OpenCode-routed
+  probes exist. CLI probes may remain installation, optional-route, or source-lineage evidence, but direct-provider implementation
+  readiness comes from the direct route''s authenticated end-to-end prompt output and route contract. DL-259 D4, Jared
+  2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session identity,
+  OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build provider-conformance
+  checklist, not a wizard warning, badge or disabled choice.'
 gui_related: false
 gui_classification_reason: Provider-transport boundary and evidence disposition rather than visual presentation.
 depends_on: [MS-113]
 unblocks: [CV-292, PO-048]
 acceptance_criteria:
-  - Codex and OpenCode are not required CLI bridges for core provider support.
-  - GitHub Copilot direct hosted API readiness is not blocked by optional `copilot` or `gh copilot` CLI prompt behavior.
-  - OpenCode-server-routed providers are not direct-provider closure evidence.
-  - CLI probes are retained only as optional-route, install, or source-lineage evidence unless explicitly promoted.
+- Codex and OpenCode are not required CLI bridges for core provider support.
+- GitHub Copilot direct hosted API readiness is not blocked by optional `copilot` or `gh copilot` CLI prompt behavior.
+- OpenCode-server-routed providers are not direct-provider closure evidence.
+- CLI probes are retained only as optional-route, install, or source-lineage evidence unless explicitly promoted.
+- 'DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
+  identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
+  provider-conformance checklist, not a wizard warning, badge or disabled choice.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -1698,23 +1743,33 @@ plan_unit_id: CBP-028
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  CLI/provider bridges consume Shared Integration Runtime lifecycle state machines while retaining provider acquisition,
-  authentication ownership, compatibility, readiness, and normalized failure policy. Initial provider CLI acquisition is
-  explicit, official-source, and exact-Host/Environment only; installation, authentication, and route readiness remain
-  separate; post-consent lifecycle management is allowed only against the proven bound installation.
+canonical_text: 'CLI/provider bridges consume Shared Integration Runtime lifecycle state machines while retaining provider
+  acquisition, authentication ownership, compatibility, readiness, and normalized failure policy. Initial provider CLI
+  acquisition is explicit, official-source, and exact-Host/Environment only; installation, authentication, and route
+  readiness remain separate; post-consent lifecycle management is allowed only against the proven bound installation.
+  DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
+  in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
+  alternative inside Sign in with ChatGPT, not another top-level auth family.'
 gui_related: true
 gui_classification_reason: Provider Setup Required, authentication ownership, readiness state, recovery, and continuation consequences are user-visible provider setup behavior.
 depends_on: [SIR-002, SIR-003, SIR-006, SIR-009, SIR-011, CBP-008, CBP-011, CBP-012, CBP-014, CBP-020, CBP-021, CBP-024, CBP-026, BS-028]
 unblocks: []
 acceptance_criteria:
-  - Missing provider CLI demand returns typed provider_setup_required with exact Host/Environment and continuation evidence and never silently installs or cross-routes.
-  - ProviderReadinessProof keeps installation, executable, auth, account, entitlement, model, adapter, capability, generation, and Usage facts independent.
-  - Claude CLI and Antigravity CLI auth remain CLI-owned; PM-direct OAuth is not fabricated.
-  - Post-consent activation or rollback revalidates every dependent route while preserving in-flight installation-generation truth.
-  - Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
-  - Secret material is represented only by OS credential-store handles or non-secret CLI profile refs and never enters runtime/storage evidence.
-  - Native, WSL distribution, container, Kubernetes, and remote provider state is keyed by exact Host/Environment, and SQLite remains forbidden.
+- Missing provider CLI demand returns typed provider_setup_required with exact Host/Environment and continuation evidence
+  and never silently installs or cross-routes.
+- ProviderReadinessProof keeps installation, executable, auth, account, entitlement, model, adapter, capability, generation,
+  and Usage facts independent.
+- Claude CLI and Antigravity CLI auth remain CLI-owned; PM-direct OAuth is not fabricated.
+- Post-consent activation or rollback revalidates every dependent route while preserving in-flight installation-generation
+  truth.
+- Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
+- Secret material is represented only by OS credential-store handles or non-secret CLI profile refs and never enters
+  runtime/storage evidence.
+- Native, WSL distribution, container, Kubernetes, and remote provider state is keyed by exact Host/Environment, and
+  SQLite remains forbidden.
+- 'DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
+  in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
+  alternative inside Sign in with ChatGPT, not another top-level auth family.'
 validation_surfaces:
   - bounded markdown/YAML structure check for CBP-028
   - future provider_setup_required and stale-continuation fixtures

@@ -1,0 +1,1101 @@
+{
+  "owner_ref": "Plans/Decision_Log.md#DL-258",
+  "claim_boundary": "static_contract_and_source_helpers_only_no_native_or_rendering_proof",
+  "restore_cases": [
+    {
+      "name": "not_pointed",
+      "value": {
+        "pointed": false,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": false,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "source"
+    },
+    {
+      "name": "kit_not_storage_auth",
+      "value": {
+        "pointed": true,
+        "reached": false,
+        "locked": true,
+        "accepted_kit": true,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "reach"
+    },
+    {
+      "name": "reach_before_phrase",
+      "value": {
+        "pointed": true,
+        "reached": false,
+        "locked": true,
+        "accepted_kit": false,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "reach"
+    },
+    {
+      "name": "locked_without_kit",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": false,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "unlock"
+    },
+    {
+      "name": "accepted_kit_unlocks",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": true,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "pick"
+    },
+    {
+      "name": "already_owner_unlocked",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": false,
+        "owner_unlocked": true,
+        "binding_matches": true
+      },
+      "expected": "pick"
+    },
+    {
+      "name": "not_locked",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": false,
+        "accepted_kit": false,
+        "owner_unlocked": false,
+        "binding_matches": true
+      },
+      "expected": "pick"
+    },
+    {
+      "name": "repoint_invalidates_kit",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": true,
+        "owner_unlocked": false,
+        "binding_matches": false
+      },
+      "expected": "unlock"
+    },
+    {
+      "name": "repoint_invalidates_owner_unlock",
+      "value": {
+        "pointed": true,
+        "reached": true,
+        "locked": true,
+        "accepted_kit": false,
+        "owner_unlocked": true,
+        "binding_matches": false
+      },
+      "expected": "unlock"
+    }
+  ],
+  "dock_scenarios": [
+    {
+      "name": "exact_expiry_and_needs_exemption",
+      "steps": [
+        {
+          "thread": "A",
+          "now": 100000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            },
+            {
+              "id": "q1",
+              "kind": "agent",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": true,
+              "ask": "A question"
+            },
+            {
+              "id": "s1",
+              "kind": "scheduled",
+              "state": "pending",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false,
+              "at": 110000
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:q1",
+              "tone": "needs"
+            },
+            {
+              "key": "work:p1",
+              "tone": "live"
+            },
+            {
+              "key": "work:s1",
+              "tone": "comingup"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 159999,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            },
+            {
+              "id": "q1",
+              "kind": "agent",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": true,
+              "ask": "A question"
+            },
+            {
+              "id": "s1",
+              "kind": "scheduled",
+              "state": "pending",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false,
+              "at": 110000
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:q1",
+              "tone": "needs"
+            },
+            {
+              "key": "work:p1",
+              "tone": "live"
+            },
+            {
+              "key": "work:s1",
+              "tone": "comingup"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 160000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            },
+            {
+              "id": "q1",
+              "kind": "agent",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": true,
+              "ask": "A question"
+            },
+            {
+              "id": "s1",
+              "kind": "scheduled",
+              "state": "pending",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false,
+              "at": 110000
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:q1",
+              "tone": "needs"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 160001,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            },
+            {
+              "id": "q1",
+              "kind": "agent",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": true,
+              "ask": "A question"
+            },
+            {
+              "id": "s1",
+              "kind": "scheduled",
+              "state": "pending",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false,
+              "at": 110000
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:q1",
+              "tone": "needs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "repaint_and_thread_clocks",
+      "steps": [
+        {
+          "thread": "A",
+          "now": 100000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 150000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "B",
+          "now": 160000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 160001,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": []
+        },
+        {
+          "thread": "B",
+          "now": 219999,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "B",
+          "now": 220000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": []
+        }
+      ]
+    },
+    {
+      "name": "restart_is_new_work",
+      "steps": [
+        {
+          "thread": "A",
+          "now": 100000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 160001,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 90000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": []
+        },
+        {
+          "thread": "A",
+          "now": 170000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 165000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": [
+            {
+              "key": "work:p1",
+              "tone": "live"
+            }
+          ]
+        },
+        {
+          "thread": "A",
+          "now": 230000,
+          "items": [
+            {
+              "id": "p1",
+              "kind": "process",
+              "state": "working",
+              "startedAt": 165000,
+              "title": "Build",
+              "needs": false
+            }
+          ],
+          "expected": []
+        }
+      ]
+    }
+  ],
+  "resource_cases": [
+    {
+      "name": "Project_A",
+      "project": "A",
+      "items": [
+        {
+          "id": "local-service",
+          "kind": "service",
+          "project": null,
+          "server": "local",
+          "environment": "native"
+        },
+        {
+          "id": "pm-service",
+          "kind": "service",
+          "project": null,
+          "server": "pm",
+          "environment": "native"
+        },
+        {
+          "id": "a-process",
+          "kind": "process",
+          "project": "A",
+          "server": "remote",
+          "environment": "ssh"
+        },
+        {
+          "id": "b-process",
+          "kind": "process",
+          "project": "B",
+          "server": "remote",
+          "environment": "other"
+        },
+        {
+          "id": "a-agent",
+          "kind": "agent",
+          "project": "A",
+          "server": "local",
+          "environment": "native"
+        }
+      ],
+      "expected": [
+        "local-service",
+        "pm-service",
+        "a-process"
+      ],
+      "idle": false
+    },
+    {
+      "name": "Project_B",
+      "project": "B",
+      "items": [
+        {
+          "id": "local-service",
+          "kind": "service",
+          "project": null,
+          "server": "local",
+          "environment": "native"
+        },
+        {
+          "id": "pm-service",
+          "kind": "service",
+          "project": null,
+          "server": "pm",
+          "environment": "native"
+        },
+        {
+          "id": "a-process",
+          "kind": "process",
+          "project": "A",
+          "server": "remote",
+          "environment": "ssh"
+        },
+        {
+          "id": "b-process",
+          "kind": "process",
+          "project": "B",
+          "server": "remote",
+          "environment": "other"
+        },
+        {
+          "id": "a-agent",
+          "kind": "agent",
+          "project": "A",
+          "server": "local",
+          "environment": "native"
+        }
+      ],
+      "expected": [
+        "local-service",
+        "pm-service",
+        "b-process"
+      ],
+      "idle": false
+    },
+    {
+      "name": "Project_new-Project",
+      "project": "new-Project",
+      "items": [
+        {
+          "id": "local-service",
+          "kind": "service",
+          "project": null,
+          "server": "local",
+          "environment": "native"
+        },
+        {
+          "id": "pm-service",
+          "kind": "service",
+          "project": null,
+          "server": "pm",
+          "environment": "native"
+        },
+        {
+          "id": "a-process",
+          "kind": "process",
+          "project": "A",
+          "server": "remote",
+          "environment": "ssh"
+        },
+        {
+          "id": "b-process",
+          "kind": "process",
+          "project": "B",
+          "server": "remote",
+          "environment": "other"
+        },
+        {
+          "id": "a-agent",
+          "kind": "agent",
+          "project": "A",
+          "server": "local",
+          "environment": "native"
+        }
+      ],
+      "expected": [
+        "local-service",
+        "pm-service"
+      ],
+      "idle": true
+    },
+    {
+      "name": "Project_empty-Project",
+      "project": "empty-Project",
+      "items": [
+        {
+          "id": "local-service",
+          "kind": "service",
+          "project": null,
+          "server": "local",
+          "environment": "native"
+        },
+        {
+          "id": "pm-service",
+          "kind": "service",
+          "project": null,
+          "server": "pm",
+          "environment": "native"
+        },
+        {
+          "id": "a-process",
+          "kind": "process",
+          "project": "A",
+          "server": "remote",
+          "environment": "ssh"
+        },
+        {
+          "id": "b-process",
+          "kind": "process",
+          "project": "B",
+          "server": "remote",
+          "environment": "other"
+        },
+        {
+          "id": "a-agent",
+          "kind": "agent",
+          "project": "A",
+          "server": "local",
+          "environment": "native"
+        }
+      ],
+      "expected": [
+        "local-service",
+        "pm-service"
+      ],
+      "idle": true
+    }
+  ],
+  "feedback_cases": [
+    {
+      "name": "control_button",
+      "kind": "button",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_input",
+      "kind": "input",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_select",
+      "kind": "select",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_textarea",
+      "kind": "textarea",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_label",
+      "kind": "label",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_a[href]",
+      "kind": "a[href]",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:switch",
+      "kind": "role:switch",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:radio",
+      "kind": "role:radio",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:checkbox",
+      "kind": "role:checkbox",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:tab",
+      "kind": "role:tab",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:slider",
+      "kind": "role:slider",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:spinbutton",
+      "kind": "role:spinbutton",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_role:combobox",
+      "kind": "role:combobox",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_contenteditable",
+      "kind": "contenteditable",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": "team"
+    },
+    {
+      "name": "control_words",
+      "kind": "words",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": ""
+    },
+    {
+      "name": "control_space",
+      "kind": "space",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": ""
+    },
+    {
+      "name": "control_plate",
+      "kind": "plate",
+      "inside_affects": true,
+      "inside_sheet": true,
+      "expected": ""
+    },
+    {
+      "name": "outside_False_True",
+      "kind": "button",
+      "inside_affects": false,
+      "inside_sheet": true,
+      "expected": ""
+    },
+    {
+      "name": "outside_True_False",
+      "kind": "button",
+      "inside_affects": true,
+      "inside_sheet": false,
+      "expected": ""
+    }
+  ],
+  "schedule_pair_cases": [
+    {
+      "name": "only_real_partner",
+      "ids": [
+        "paired",
+        "missing"
+      ],
+      "drawn": [
+        "paired"
+      ],
+      "expected": [
+        "paired"
+      ]
+    },
+    {
+      "name": "no_drawn_partner",
+      "ids": [
+        "missing"
+      ],
+      "drawn": [],
+      "expected": []
+    },
+    {
+      "name": "all_drawn",
+      "ids": [
+        "a",
+        "b"
+      ],
+      "drawn": [
+        "a",
+        "b"
+      ],
+      "expected": [
+        "a",
+        "b"
+      ]
+    }
+  ],
+  "narrow_cases": [
+    {
+      "width": 720,
+      "keep_open": false,
+      "strip": true
+    },
+    {
+      "width": 720,
+      "keep_open": true,
+      "strip": false
+    },
+    {
+      "width": 860,
+      "keep_open": false,
+      "strip": true
+    },
+    {
+      "width": 860,
+      "keep_open": true,
+      "strip": false
+    },
+    {
+      "width": 900,
+      "keep_open": false,
+      "strip": true
+    },
+    {
+      "width": 900,
+      "keep_open": true,
+      "strip": false
+    },
+    {
+      "width": 960,
+      "keep_open": false,
+      "strip": false
+    },
+    {
+      "width": 960,
+      "keep_open": true,
+      "strip": false
+    },
+    {
+      "width": 1024,
+      "keep_open": false,
+      "strip": false
+    },
+    {
+      "width": 1024,
+      "keep_open": true,
+      "strip": false
+    },
+    {
+      "width": 1390,
+      "keep_open": false,
+      "strip": false
+    },
+    {
+      "width": 1390,
+      "keep_open": true,
+      "strip": false
+    }
+  ],
+  "sound_cases": [
+    {
+      "name": "factory_on",
+      "snapshot": null,
+      "expected": true,
+      "initial_enabled": true
+    },
+    {
+      "name": "visit_mute_survives_unreadable",
+      "snapshot": null,
+      "expected": false,
+      "initial_enabled": false
+    },
+    {
+      "name": "visit_on_survives_unreadable",
+      "snapshot": null,
+      "expected": true,
+      "initial_enabled": true
+    },
+    {
+      "name": "readable_missing_uses_default",
+      "snapshot": {},
+      "expected": true,
+      "initial_enabled": false
+    },
+    {
+      "name": "readable_off_wins",
+      "snapshot": {
+        "general.interaction.sound-effects": false
+      },
+      "expected": false,
+      "initial_enabled": true
+    },
+    {
+      "name": "readable_on_wins",
+      "snapshot": {
+        "general.interaction.sound-effects": true
+      },
+      "expected": true,
+      "initial_enabled": false
+    }
+  ],
+  "native_boundaries": {
+    "new_onboarding_actions": 0,
+    "new_work_commands": 0,
+    "new_setting_keys": 0,
+    "new_physical_families": 0,
+    "visit_memory_not_native_receipt": true
+  },
+  "restore_reach_cases": [
+    {
+      "name": "gdrive_reached",
+      "restore": {
+        "source": "cloud",
+        "cloud": "gdrive",
+        "reachedFor": "cloud:gdrive"
+      },
+      "expected_key": "cloud:gdrive",
+      "reached": true
+    },
+    {
+      "name": "gdrive_not_onedrive",
+      "restore": {
+        "source": "cloud",
+        "cloud": "onedrive",
+        "reachedFor": "cloud:gdrive"
+      },
+      "expected_key": "cloud:onedrive",
+      "reached": false
+    },
+    {
+      "name": "gdrive_not_s3",
+      "restore": {
+        "source": "cloud",
+        "cloud": "s3",
+        "reachedFor": "cloud:gdrive"
+      },
+      "expected_key": "cloud:s3",
+      "reached": false
+    },
+    {
+      "name": "s3_reached",
+      "restore": {
+        "source": "cloud",
+        "cloud": "s3",
+        "reachedFor": "cloud:s3"
+      },
+      "expected_key": "cloud:s3",
+      "reached": true
+    },
+    {
+      "name": "nas_a_reached",
+      "restore": {
+        "source": "nas",
+        "device": "A",
+        "reachedFor": "nas:A"
+      },
+      "expected_key": "nas:A",
+      "reached": true
+    },
+    {
+      "name": "nas_a_not_b",
+      "restore": {
+        "source": "nas",
+        "device": "B",
+        "reachedFor": "nas:A"
+      },
+      "expected_key": "nas:B",
+      "reached": false
+    },
+    {
+      "name": "kit_cloud_overrides_old_choice",
+      "restore": {
+        "source": "kit",
+        "kit": "K1",
+        "cloud": "onedrive",
+        "reachedFor": "cloud:gdrive"
+      },
+      "kit": {
+        "id": "K1",
+        "scope": "project",
+        "source": "cloud",
+        "cloud": "gdrive"
+      },
+      "expected_key": "cloud:gdrive",
+      "reached": true
+    },
+    {
+      "name": "kit_device_overrides_old_choice",
+      "restore": {
+        "source": "kit",
+        "kit": "K2",
+        "device": "B",
+        "reachedFor": "nas:A"
+      },
+      "kit": {
+        "id": "K2",
+        "scope": "project",
+        "source": "nas",
+        "device": "A"
+      },
+      "expected_key": "nas:A",
+      "reached": true
+    },
+    {
+      "name": "boolean_is_not_place_receipt",
+      "restore": {
+        "source": "cloud",
+        "cloud": "gdrive",
+        "reachedFor": true
+      },
+      "expected_key": "cloud:gdrive",
+      "reached": false
+    }
+  ],
+  "ssh_key_unlock_cases": [
+    {
+      "key_id": "A",
+      "unlocked": "A",
+      "expected": "notAdded"
+    },
+    {
+      "key_id": "B",
+      "unlocked": "A",
+      "expected": "locked"
+    },
+    {
+      "key_id": "A",
+      "unlocked": true,
+      "expected": "locked"
+    },
+    {
+      "key_id": "A",
+      "unlocked": null,
+      "expected": "locked"
+    }
+  ],
+  "remote_route_cases": [
+    {
+      "mode": "none",
+      "expected": ""
+    },
+    {
+      "mode": "local_or_vpn",
+      "expected": ""
+    },
+    {
+      "mode": "tailscale",
+      "expected": ""
+    },
+    {
+      "mode": "reverse_proxy",
+      "expected": ""
+    },
+    {
+      "mode": "remote_link",
+      "expected": "pm://signed-endpoint"
+    }
+  ]
+}

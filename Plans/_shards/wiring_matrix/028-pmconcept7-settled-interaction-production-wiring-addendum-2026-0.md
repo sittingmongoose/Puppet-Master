@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3969-L4108
+Source lines: L4183-L4334
 
-Source SHA256: `ad65ad36fddd03d342d8bd2a02f327ea4a5d65344d84f6df69adf25adfd707f1`
+Source SHA256: `b21a57b9cdea7200278d09fa59bb646371fc30b6005228545e375d42408e39fd`
 
 ---
 
@@ -67,44 +67,56 @@ plan_unit_id: WM-045
 unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  The PMConcept7 production wiring matrix binds every relevant producer to an existing
-  command or view_only disposition, its sole handler/reducer, owner projection/store,
-  settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
-  error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
-  its target footprint and visibly repack only obstructed peers, with Usage board gravity applied at settle and
-  never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every dashboard
-  board previews and settles as the Usage board does, gravity included); one changed
-  pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
-  cmd.workspace_layout.*, and on Usage that one command carries the whole settled room, gravity included. Usage
-  Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
-  cmd.widget.move carrying arrange { mode: tidy, detail } with one receipt, never one move per card, and a
-  size-picker preset commits one cmd.widget.resize. The Usage Accounts room's Use this account reuses the
-  account-select row, and each provider's Auto-switch toggle and switch level at scope provider and each account's
-  own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
-  drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
-  remain local inspectors; Context-ring actions reuse their existing rows; and the same
-  Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180): the
-  chat no longer re-seats inside the window; it is a fixed column whose only move is Pop out into its own window and
-  Dock back, and the same node/store serves both without cloning. Home commits are every panel and tab commit of
-  WM-090 on pm.home_workspace_layout.v2. The concept-only size_surface
-  token is normalized to resize_surface, rejected provider management stays unwired, and
-  no pointer-preview event family is added.
+canonical_text: 'The PMConcept7 production wiring matrix binds every relevant producer to an existing command or view_only
+  disposition, its sole handler/reducer, owner projection/store, settled persistence or declared effect, dispatch receipt,
+  consumer, cancel path, and error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize
+  may locally advance its target footprint and visibly repack only obstructed peers, with Usage board gravity applied
+  at settle and never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every
+  dashboard board previews and settles as the Usage board does, gravity included); one changed pointer release, keyboard
+  reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or cmd.workspace_layout.*, and on Usage
+  that one command carries the whole settled room, gravity included. Usage Tidy commits the whole repacked room as one
+  settled layout transaction through exactly one existing cmd.widget.move carrying arrange { mode: tidy, detail } with
+  one receipt, never one move per card, and a size-picker preset commits one cmd.widget.resize. The Usage Accounts room''s
+  Use this account reuses the account-select row, and each provider''s Auto-switch toggle and switch level at scope provider
+  and each account''s own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live /
+  Paused is view_only. Usage refresh and stable-event drill-through reuse their existing rows while current PMConcept7
+  aggregate provider/account/panel details remain local inspectors; Context-ring actions reuse their existing rows; and
+  the same Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180):
+  the chat no longer re-seats inside the window; it is a fixed column whose only move is Pop out into its own window
+  and Dock back, and the same node/store serves both without cloning. Home commits are every panel and tab commit of
+  WM-090 on pm.home_workspace_layout.v2. The concept-only size_surface token is normalized to resize_surface, rejected
+  provider management stays unwired, and no pointer-preview event family is added. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The wiring contract connects the recovered visible controls, their disabled/error states, and the shared Assistant seating behavior.
 split_recommended: false
 depends_on: [WM-044, CS-068, UCC-147, WS-019, SP-249, SP-250]
 unblocks: [UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt, consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain their pre-recovery bytes and are not counted in that enrichment set.
-  - "Amended 2026-10-09 (DL-180): the counts in the criterion above are the 2026-08-27 recovery's. After DL-180 the Home rows are WM-090's tables: 51 fixed-zone home.* rows retired, five rebuilt on the v2 model, and the chat's rows are show and hide, width, Pop out and Dock back with no re-seat row."
-  - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
-  - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
-  - "A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit."
-  - "The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level, and each account's own switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair, at scope provider for the provider's controls and at scope account for an account's (D43, 2026-10-10), the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
-  - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
-  - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Prose and production JSON agree on producer, command/disposition, handler, selector/store, persistence/effect, receipt,
+  consumer, cancel, and error behavior for every covered family; event-primary callers use usage_event/usage_event_ref,
+  while a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route
+  without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation. Current aggregate
+  cards remain local with no command, receipt, or event. The production matrix retains all 726 keys and this recovery
+  enriches exactly 40 existing rows, comprising the 13 named catalog rows for Chat Context, Usage, panel switching, and
+  widget commands plus the 27 existing home.* rows; cmd.artifacts.show_in_usage and cmd.artifacts.show_in_ledger retain
+  their pre-recovery bytes and are not counted in that enrichment set.
+- 'Amended 2026-10-09 (DL-180): the counts in the criterion above are the 2026-08-27 recovery''s. After DL-180 the Home
+  rows are WM-090''s tables: 51 fixed-zone home.* rows retired, five rebuilt on the v2 model, and the chat''s rows are
+  show and hide, width, Pop out and Dock back with no re-seat row.'
+- Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage
+  writes.
+- Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases
+  produce exactly one existing semantic command and settle only after owner acceptance.
+- A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the
+  resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and
+  one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit.
+- The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
+- No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- Usage account selection, provider/account Auto-switch controls and Tidy reuse catalog.account_select_profile, catalog.settings_transaction_preview/apply
+  and catalog.widget_move at their exact existing scopes; Live/Pause dispatches nothing.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate

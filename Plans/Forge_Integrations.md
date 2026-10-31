@@ -723,39 +723,95 @@ plan_unit_id: FGI-011
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  An onboarding online copy is an optional hosted Git destination independent from local Git or Jujutsu. It becomes
-  ready only through an explicit current account verification and an explicit repository binding; selecting its
-  uncreated draft requires neither a phantom account nor a phantom repository. Provider-specific
-  host, owner/container, repository, visibility, eligibility, and capability requirements remain visible and typed.
-  Cursor Origin Preview is an eligible hosted Git destination with Private or Internal onboarding visibility, never a
-  no-host pseudo-option. Reusing an existing connection selects and verifies the exact account and repository rather than
-  skipping setup. Protected sign-in and explicit external account creation are distinct owner-controlled handoffs.
-  PWIZ-021's precommit exception permits only current owner-authorized read-only checks/listing and necessary
-  selected-source authentication. MACS-005 owns first-time sign-in. The existing cmd.forge.repository.list command
-  has a closed repository_list_scope account-container variant with a verified real account, no Project/repository
-  binding, zero repository generation, and no mutation. Its request/result/error/availability/receipt all preserve
-  that scope; it creates neither a new command nor a standalone storage/event family. Repository creation/binding and
-  content movement remain inside the exact reviewed Project owner's commit chain.
+canonical_text: 'An onboarding online copy is an optional hosted Git destination independent from local Git or Jujutsu.
+  It becomes ready only through an explicit current account verification and an explicit repository binding; selecting
+  its uncreated draft requires neither a phantom account nor a phantom repository. Provider-specific host, owner/container,
+  repository, visibility, eligibility, and capability requirements remain visible and typed. Cursor Origin Preview is
+  an eligible hosted Git destination with Private visibility for personal repositories and Private or Internal for eligible
+  team codebases, never a no-host pseudo-option. Reusing an existing connection selects and verifies the exact account
+  and repository rather than skipping setup. Protected sign-in and explicit external account creation are distinct owner-controlled
+  handoffs. PWIZ-021''s precommit exception permits only current owner-authorized read-only checks/listing and necessary
+  selected-source authentication. MACS-005 owns first-time sign-in. The existing cmd.forge.repository.list command has
+  a closed repository_list_scope account-container variant with a verified real account, no Project/repository binding,
+  zero repository generation, and no mutation. Its request/result/error/availability/receipt all preserve that scope;
+  it creates neither a new command nor a standalone storage/event family. Repository creation/binding and content movement
+  remain inside the exact reviewed Project owner''s commit chain. DL-259, Jared 2026-10-31: D1 A: the online-service
+  step creates or selects a code repository; onboarding does not publish a website, GitHub Pages, GitLab Pages or another
+  site. Local-only Project choices remain valid. Audit FF-01..12: Review binds the exact provider/instance/account and
+  repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal repositories
+  cannot be Internal. Origin personal repositories are Private; eligible team codebases may be Private or Internal. GitLab
+  uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized
+  workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project
+  key, including a supported personal Project. Azure Services binds organization and team Project; Server binds collection
+  URI and team Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use
+  Public/Private repository privacy, not a fabricated Internal value; both hosted and self-managed choices require a
+  real instance profile. Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific
+  naming and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must
+  match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
+  with expandable exact details and owner-routed Edit links.'
 gui_related: true
 gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification, and exact disabled reasons in Product Onboarding.
 depends_on: [FGI-001, FGI-003, FGI-006, FGI-008, SCS-011]
 unblocks: [PWIZ-024]
 acceptance_criteria:
-  - A hosted-copy draft records the selected provider/variant/host, source/container intent and desired visibility. Only actual verified identities populate account/repository refs; absent or uncreated targets remain explicitly absent. Once bound, the Forge owner supplies stable account/container/repository/PM repo identity, binding generation, capability currentness and non-secret grant refs. Selection, listing and account verification alone never claim repository readiness.
-  - Account authentication and repository selection/creation are separate required results; `already_connected` must select and verify a current account and then select the exact repository, and cannot succeed as an empty action.
-  - Existing accounts use one owner-controlled protected sign-in when needed. An allowlisted official provider page is offered only for explicit account creation or provider-required external administration, not as a redundant second sign-in path.
-  - GitHub requires github.com or a normalized GitHub Enterprise host, a verified stable account, personal or organization owner, and repository; Private/Public are ordinary hosted choices and Internal is shown only when the exact enterprise capability permits it.
-  - GitLab requires GitLab.com or a normalized self-managed HTTPS instance, a verified account, namespace/group, and project repository; GitLab.com onboarding exposes Private/Public, while Internal on self-managed GitLab is capability-probed rather than assumed.
-  - Azure DevOps requires cloud or self-managed variant, normalized organization/server host, verified account, Azure organization or collection, Azure project, and repository; repository visibility inherits the Azure project policy and is not represented by a fabricated repository-level selector.
-  - Bitbucket Cloud requires a verified account, workspace, optional project locator when used, and repository, with Private/Public subject to current capability; Bitbucket Data Center requires normalized HTTPS instance, verified account, project key, repository slug, and licensed/versioned capability, without being collapsed into Cloud.
-  - Forgejo requires its own normalized HTTPS instance, stable instance/account/organization/repository identity, typed API root/base path and SSH host/port, scoped CA and known-host proof refs, detected Forgejo product/version/API schema, and independently probed API/Git/Actions state; PAT is the default and OAuth PKCE appears only for a registered instance flow.
-  - Gitea requires the same typed self-host fields through a distinct Gitea adapter and product identity; shared primitives never imply permanent Forgejo API equivalence, and API-disabled does not disable proven Git transport.
-  - Cursor Origin requires a current Preview eligibility projection, verified eligible account/team owner, fixed hosted Origin service identity, and repository binding; onboarding permits only Private or Internal, keeps Public unavailable, and allows normal Git or Jujutsu-backed clone/fetch/push through certified transports.
-  - Local-only Safe History stays valid with `forge_provider=none`; no forge account or repository is required until the user explicitly chooses an online copy or `Bring one from online`.
-  - Before commit, explicit source access may consume owner-authorized read-only preflight/current eligibility and account-scoped repository listing or necessary selected-source sign-in. Admission consumes PWIZ-021's exact current draft/source/permission/capability/consent/hash/expiry join and MACS-005 when no account exists. It never admits repository creation/binding, clone, fetch, publish, filesystem writes, Project creation, or broad provider setup.
-  - The account-list variant of cmd.forge.repository.list uses repository_list_scope in the existing command_request/result/error/availability/receipt definitions; only this variant permits null repo_id/repository_binding_ref with zero repository generation. It binds actual account verification/generation/container, provider, selected source, draft, Client/Host and return context; requests are human GUI/read-only/current, and responses do not emit EventRecords or complete Project setup. Ordinary repository-bound requests remain unchanged, and another command cannot reuse the variant.
-  - This PlanUnit reuses common `cmd.forge.*`, shared authentication/integration lifecycle, provider-owner adapters, and Source Control transport commands; it creates no provider-specific command namespace, account store, secret custody, or native/runtime evidence.
+- A hosted-copy draft records the selected provider/variant/host, source/container intent and desired visibility. Only
+  actual verified identities populate account/repository refs; absent or uncreated targets remain explicitly absent.
+  Once bound, the Forge owner supplies stable account/container/repository/PM repo identity, binding generation, capability
+  currentness and non-secret grant refs. Selection, listing and account verification alone never claim repository readiness.
+- Account authentication and repository selection/creation are separate required results; `already_connected` must select
+  and verify a current account and then select the exact repository, and cannot succeed as an empty action.
+- Existing accounts use one owner-controlled protected sign-in when needed. An allowlisted official provider page is
+  offered only for explicit account creation or provider-required external administration, not as a redundant second
+  sign-in path.
+- GitHub requires github.com or a normalized GitHub Enterprise host, a verified stable account, personal or organization
+  owner, and repository; Private/Public are ordinary hosted choices and Internal is shown only when the exact enterprise
+  capability permits it.
+- GitLab requires GitLab.com or a normalized self-managed HTTPS instance, a verified account, namespace/group, and project
+  repository; GitLab.com onboarding exposes Private/Public, while Internal on self-managed GitLab is capability-probed
+  rather than assumed.
+- Azure DevOps requires cloud or self-managed variant, normalized organization/server host, verified account, Azure organization
+  or collection, Azure project, and repository; repository visibility inherits the Azure project policy and is not represented
+  by a fabricated repository-level selector.
+- Bitbucket Cloud requires a verified account, workspace, optional project locator when used, and repository, with Private/Public
+  subject to current capability; Bitbucket Data Center requires normalized HTTPS instance, verified account, project
+  key, repository slug, and licensed/versioned capability, without being collapsed into Cloud.
+- Forgejo requires its own normalized HTTPS instance, stable instance/account/organization/repository identity, typed
+  API root/base path and SSH host/port, scoped CA and known-host proof refs, detected Forgejo product/version/API schema,
+  and independently probed API/Git/Actions state; PAT is the default and OAuth PKCE appears only for a registered instance
+  flow.
+- Gitea requires the same typed self-host fields through a distinct Gitea adapter and product identity; shared primitives
+  never imply permanent Forgejo API equivalence, and API-disabled does not disable proven Git transport.
+- Cursor Origin requires a current Preview eligibility projection, verified eligible account/team owner, fixed hosted
+  Origin service identity, and repository binding; onboarding permits Private for personal repositories and Private or
+  Internal for eligible team codebases, keeping Public unavailable, and allows normal Git or Jujutsu-backed clone/fetch/push
+  through certified transports.
+- Local-only Safe History stays valid with `forge_provider=none`; no forge account or repository is required until the
+  user explicitly chooses an online copy or `Bring one from online`.
+- Before commit, explicit source access may consume owner-authorized read-only preflight/current eligibility and account-scoped
+  repository listing or necessary selected-source sign-in. Admission consumes PWIZ-021's exact current draft/source/permission/capability/consent/hash/expiry
+  join and MACS-005 when no account exists. It never admits repository creation/binding, clone, fetch, publish, filesystem
+  writes, Project creation, or broad provider setup.
+- The account-list variant of cmd.forge.repository.list uses repository_list_scope in the existing command_request/result/error/availability/receipt
+  definitions; only this variant permits null repo_id/repository_binding_ref with zero repository generation. It binds
+  actual account verification/generation/container, provider, selected source, draft, Client/Host and return context;
+  requests are human GUI/read-only/current, and responses do not emit EventRecords or complete Project setup. Ordinary
+  repository-bound requests remain unchanged, and another command cannot reuse the variant.
+- This PlanUnit reuses common `cmd.forge.*`, shared authentication/integration lifecycle, provider-owner adapters, and
+  Source Control transport commands; it creates no provider-specific command namespace, account store, secret custody,
+  or native/runtime evidence.
+- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
+  publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. Audit FF-01..12:
+  Review binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible
+  enterprise organization capability; personal repositories cannot be Internal. Origin personal repositories are Private;
+  eligible team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance
+  visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility
+  compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure Services binds
+  organization and team Project; Server binds collection URI and team Project; selecting an existing repository carries
+  its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal
+  value; both hosted and self-managed choices require a real instance profile. Provider/owner changes invalidate incompatible
+  visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
+  selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider-specific positive/negative fixtures, future protected-auth and repository-binding owner-return fixtures]
 risk_class: onboarding_forge_account_repository_or_provider_requirement_drift
 reasoning_tier: high
@@ -935,58 +991,77 @@ plan_unit_id: FGI-015
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  The required provider-profile set is exactly github_cloud, github_enterprise, gitlab_saas,
-  gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud,
-  bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, and
-  generic_git. The independent local-VCS set is git, jj_git_colocated, jj_git_noncolocated, and none.
-  Each profile reports explicit status, evidence/probe, reason, and freshness for Git transport, repository
-  discovery/create, review read/write/approve/merge, checks, definitions, run/log/artifact read,
-  dispatch/cancel/rerun, webhook/poll, branch policy, secrets/variables, runner management, release assets,
-  and external URL fallback; no GitHub-compatible boolean grants parity. Instance trust validates normalized
-  host, tenant/account, API base path, scoped private CA, redirects/pagination, SSH host key, and explicit
-  localhost/metadata policy before credentials, without global TLS disable or cross-origin Authorization.
-  Authentication is provider- and instance-scoped, and what a provider profile itself carries is the closed field
-  set of its own schema: the setup methods it admits, in `provider_adapter_profile.auth_methods`, together with its
-  capability and reason vocabulary, its version or tier gate and its catalog reference. The other six facts are
-  each recorded by a named existing surface rather than by the profile record: the issuer by
-  `Plans/GitHub_API_Auth_and_Flows.md` and by `provider_instance_profile.oauth_registration_ref` for a registered
-  instance flow; the allowed host by `provider_instance_profile.normalized_host` and `api_base_path` under
-  `restricted_network_target_policy`; the non-secret token owner by `provider_instance_profile.credential_ref`,
-  `token_lease.credential_ref` and `app_installation.credential_key_ref`; the requested scopes by
-  `api_compatibility.scopes` and `token_lease.scope_grant_refs`; refresh and revoke by `token_lease.state`,
-  `expires_at_utc` and `ttl_seconds` with `app_installation.state`; and the separate Git-versus-API roles by
-  `provider_instance_profile.git_transport_state`, `api_state`, `transport_api_independent` and
-  `credential_access`. The provider list is: GitHub direct OAuth/App/token plus separate Git helper;
-  GitLab registered OAuth/PKCE or scoped PAT; Azure Services Entra and Server supported on-prem auth;
-  Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Microsoft Entra is the
-  Azure Services issuer rather than a new legacy Azure DevOps OAuth registration; Forgejo/Gitea
-  guided scoped PAT by default or registered OAuth/PKCE; Origin official CLI browser auth plus verified Git
-  helper. Account passwords and silent ordinary admin scope grants are forbidden. Hosted administration
-  enumerates read and write independently for repository/branch policy, CI environments/deployment approvals,
-  secrets/variables, runner list/register/remove, and release assets using versioned adapter field schemas.
-  Unsupported operations route to a labeled official external surface, secret values enter through the
-  human-only broker and are never read back from metadata, and runner registration requires an exact Execution
-  Host and consent rather than following from CI enablement.
+canonical_text: 'The required provider-profile set is exactly github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed,
+  azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native,
+  cursor_origin_github_mirror, and generic_git. The independent local-VCS set is git, jj_git_colocated, jj_git_noncolocated,
+  and none. Each profile reports explicit status, evidence/probe, reason, and freshness for Git transport, repository
+  discovery/create, review read/write/approve/merge, checks, definitions, run/log/artifact read, dispatch/cancel/rerun,
+  webhook/poll, branch policy, secrets/variables, runner management, release assets, and external URL fallback; no GitHub-compatible
+  boolean grants parity. Instance trust validates normalized host, tenant/account, API base path, scoped private CA,
+  redirects/pagination, SSH host key, and explicit localhost/metadata policy before credentials, without global TLS disable
+  or cross-origin Authorization. Authentication is provider- and instance-scoped, and what a provider profile itself
+  carries is the closed field set of its own schema: the setup methods it admits, in `provider_adapter_profile.auth_methods`,
+  together with its capability and reason vocabulary, its version or tier gate and its catalog reference. The other six
+  facts are each recorded by a named existing surface rather than by the profile record: the issuer by `Plans/GitHub_API_Auth_and_Flows.md`
+  and by `provider_instance_profile.oauth_registration_ref` for a registered instance flow; the allowed host by `provider_instance_profile.normalized_host`
+  and `api_base_path` under `restricted_network_target_policy`; the non-secret token owner by `provider_instance_profile.credential_ref`,
+  `token_lease.credential_ref` and `app_installation.credential_key_ref`; the requested scopes by `api_compatibility.scopes`
+  and `token_lease.scope_grant_refs`; refresh and revoke by `token_lease.state`, `expires_at_utc` and `ttl_seconds` with
+  `app_installation.state`; and the separate Git-versus-API roles by `provider_instance_profile.git_transport_state`,
+  `api_state`, `transport_api_independent` and `credential_access`. The provider list is: GitHub direct OAuth/App/token
+  plus separate Git helper; GitLab registered OAuth/PKCE or scoped PAT; Azure Services Entra and Server supported on-prem
+  auth; Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Microsoft Entra is the
+  Azure Services issuer rather than a new legacy Azure DevOps OAuth registration; Forgejo/Gitea guided scoped PAT by
+  default or registered OAuth/PKCE; Origin official CLI browser auth plus verified Git helper. Account passwords and
+  silent ordinary admin scope grants are forbidden. Hosted administration enumerates read and write independently for
+  repository/branch policy, CI environments/deployment approvals, secrets/variables, runner list/register/remove, and
+  release assets using versioned adapter field schemas. Unsupported operations route to a labeled official external surface,
+  secret values enter through the human-only broker and are never read back from metadata, and runner registration requires
+  an exact Execution Host and consent rather than following from CI enablement. DL-259, Jared 2026-10-31: Audit FF-01..12:
+  Review binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible
+  enterprise organization capability; personal repositories cannot be Internal. Origin personal repositories are Private;
+  eligible team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance
+  visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility
+  compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure Services binds
+  organization and team Project; Server binds collection URI and team Project; selecting an existing repository carries
+  its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal
+  value; both hosted and self-managed choices require a real instance profile. Provider/owner changes invalidate incompatible
+  visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
+  selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
 gui_related: true
 gui_classification_reason: The matrix supplies setup cards, permission labels, precise disabled reasons, trust prompts, admin forms, and external-only navigation.
 depends_on: [FGI-014, GAAAF-015, SIR-033]
 unblocks: [F3-529]
 acceptance_criteria:
-  - All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit state/probe/reason rather than generic compatibility.
-  - Same-name/different-instance, custom base path/SSH port, private CA, redirect, metadata, and changed-host-key fixtures fail or prompt at the exact trust gate without leaking authorization.
-  - >-
-    Every provider profile identifies the setup method it admits, in `provider_adapter_profile.auth_methods`. The
-    other six facts are identified by the surfaces the canonical text names one by one: the issuer by
-    `Plans/GitHub_API_Auth_and_Flows.md` and `oauth_registration_ref`, the allowed host by `normalized_host` and
-    `api_base_path`, the non-secret token owner by the three `credential_ref` and `credential_key_ref` fields, the
-    requested scopes by `api_compatibility.scopes` and `token_lease.scope_grant_refs`, refresh and revoke by the
-    `token_lease` lifetime and state fields, and the Git-versus-API roles by `git_transport_state`, `api_state`,
-    `transport_api_independent` and `credential_access`. Neither closed profile schema has a field for those six,
-    so this criterion is met by naming the surface that holds each one; adding them to the profile schemas would be
-    a new capability and is not done here.
-  - Repository delete, force push, policy edit, runner registration, secret write, and organization management remain individually risk-tiered with preview, permission, confirmation, and currentness.
-  - Every visible hosted-admin control resolves to owner command, versioned schema, permission, receipt, or labeled external-only route; GitHub retained administration is inventoried and no live section is silently dropped.
+- All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit
+  state/probe/reason rather than generic compatibility.
+- Same-name/different-instance, custom base path/SSH port, private CA, redirect, metadata, and changed-host-key fixtures
+  fail or prompt at the exact trust gate without leaking authorization.
+- 'Every provider profile identifies the setup method it admits, in `provider_adapter_profile.auth_methods`. The other
+  six facts are identified by the surfaces the canonical text names one by one: the issuer by `Plans/GitHub_API_Auth_and_Flows.md`
+  and `oauth_registration_ref`, the allowed host by `normalized_host` and `api_base_path`, the non-secret token owner
+  by the three `credential_ref` and `credential_key_ref` fields, the requested scopes by `api_compatibility.scopes` and
+  `token_lease.scope_grant_refs`, refresh and revoke by the `token_lease` lifetime and state fields, and the Git-versus-API
+  roles by `git_transport_state`, `api_state`, `transport_api_independent` and `credential_access`. Neither closed profile
+  schema has a field for those six, so this criterion is met by naming the surface that holds each one; adding them to
+  the profile schemas would be a new capability and is not done here.'
+- Repository delete, force push, policy edit, runner registration, secret write, and organization management remain individually
+  risk-tiered with preview, permission, confirmation, and currentness.
+- Every visible hosted-admin control resolves to owner command, versioned schema, permission, receipt, or labeled external-only
+  route; GitHub retained administration is inventoried and no live section is silently dropped.
+- 'DL-259, Jared 2026-10-31: Audit FF-01..12: Review binds the exact provider/instance/account and repository or creation
+  target. GitHub Internal requires an eligible enterprise organization capability; personal repositories cannot be Internal.
+  Origin personal repositories are Private; eligible team codebases may be Private or Internal. GitLab uses the exact
+  personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized workspace and
+  explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project key, including
+  a supported personal Project. Azure Services binds organization and team Project; Server binds collection URI and team
+  Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private
+  repository privacy, not a fabricated Internal value; both hosted and self-managed choices require a real instance profile.
+  Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific naming
+  and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must match
+  the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences, with
+  expandable exact details and owner-routed Edit links.'
 validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider matrix/trust/admin fixtures]
 risk_class: capability_matrix_scope_trust_or_admin_authority_conflation
 reasoning_tier: high

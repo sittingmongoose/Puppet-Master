@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38333-L39059
+Source lines: L38716-L39436
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -18,8 +18,7 @@ invariants.
 ### 17. Activity Detail Geometry, History Coexistence, and Floating Activity Bar
 
 - **Full-Size Activity Detail (G1/G2, 2026-10-29; supersedes APR-001):** Every entry opens the
-  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. First widen the chat within its centre/page floor; at the window limit cover the transcript
-  at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
+  full-size detail directly under F3-535/ACD-453/ACD-506, with G1 B’s view-local Pin/unpin and no small transient form. G2, Jared follow-up 2026-10-30: first widen the chat within its centre/page floor; when it cannot widen further, dock detail inside the column and squeeze messages if at least 360 px remain, otherwise cover the transcript at the full column height. Within the current thread, the detail stays until ×, Esc or its own Activity icon closes it and
   returns focus. G1 B (Jared 2026-10-30): pinned detail stays open across thread switches and follows the new thread; unpinned detail closes on a switch. Another domain/record replaces that full detail. History keeps its separate pin.
 - **History and Activity Detail Coexistence (APR-002):** Pinned Thread History (left rail) and
   full-size Activity Detail share the available canvas width dynamically using a coordinated flex
@@ -110,10 +109,6 @@ Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide 
   button is permitted within the chat composer. Browser automation, scraping, and inspection entry
   points belong to their respective dedicated tools and panel locations. Composer attachments and
   URL citations remain supported without turning the composer into a browser host.
-- **Demo and Product Separation (APR-014):** All concept demonstration launchers, replay fixtures,
-  test harnesses, mock scenarios, and simulation loaders are isolated in a dedicated Demo Gallery.
-  No demo-only action or fixture trigger may be registered in the product wand or as a product
-  command in `Plans/Commands_System.md`.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
 
@@ -269,14 +264,16 @@ canonical_text: >-
   G1 B/G2 (Jared 2026-10-30): every Activity Detail opens directly as the full-size docked view and, within the current thread, stays
   until ×,
   Esc or its Activity icon closes it. Pin is available; no small transient form remains. Widen the
-  chat to fit within current centre/page floors, then cover transcript at full column height when the
-  window cannot fit the dock. History keeps its separate flyout/pin and actual-width contract in F3-637.
+  chat to fit within current centre/page floors first. G2, Jared follow-up 2026-10-30: when it cannot
+  widen further, dock full-size detail inside the column and squeeze messages if at least 360 px remain;
+  below that threshold cover the transcript at full column height. History keeps its separate flyout/pin and actual-width contract in F3-637.
   Hover previews remain one bounded, non-scrolling preview with existing dwell and direct detail routes.
   F3-533/ACD-453/ACD-506 own content and layout; this unit adds no runtime state. The Chat Activity Bar
   remains a floating bar centred above the composer, with transparent sides/bottom and pointer pass-through
   around it; transcript bottom padding ensures the final child at settled bottom scroll clears the bar.
   This is the Activity Bar, not a floating Activity Detail fallback. History and full-size detail divide
-  the available canvas without overlapping gutters; at the window limit detail uses G2’s full-height cover. G1
+  the available canvas without overlapping gutters; at the window limit detail uses G2’s 360 px
+  docking/squeeze threshold, then full-height cover below it. G1
   B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin),
   default false. Pinned Activity Detail stays open across thread switches and reprojects the selected thread’s
   data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size
@@ -293,8 +290,8 @@ unblocks:
 - F3-537
 acceptance_criteria:
 - Clicking any of ten present domains opens full detail immediately; Processes follows D4 conditional presence.
-- When docking cannot fit, chat widens within available space then detail covers transcript at full column
-  height, never a small popup; Pin never changes the size.
+- Widen chat within available space first; at the column limit dock/squeeze if at least 360 px of messages
+  remain, otherwise cover transcript at full column height, never a small popup. Pin changes lifetime only.
 - Pin survives thread switches while data follows the selected thread; unpinned detail closes on a switch.
   Explicit close/×/Esc/icon-again returns focus; History pin remains separate.
 - The floating Chat Activity Bar keeps transparent pointer-pass-through surrounds and the settled transcript
@@ -476,11 +473,9 @@ plan_unit_id: F3-539
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Assistant wand menu structures commands into compact, organized submenus rather than a single
-  unbounded command list. The chat composer strictly excludes internal-browser launch controls, preserving
-  independent URL and attachment capabilities. All concept demonstration fixtures, replay commands, and
-  sample loaders are isolated within a dedicated Demo Gallery and excluded from product command menus.
+canonical_text: 'The Assistant wand menu structures commands into compact, organized submenus rather than a single unbounded
+  command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
+  attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
 depends_on:
@@ -489,7 +484,6 @@ unblocks: []
 acceptance_criteria:
 - Wand menu uses submenus for logical grouping within viewport bounds.
 - No browser launch button appears in the chat composer.
-- Demo fixtures and replays are located exclusively in the Demo Gallery.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: wand_overflow_or_demo_command_pollution
@@ -509,7 +503,6 @@ source_lineage:
 preserved_exact_tokens:
 - wand
 - submenus
-- Demo Gallery
 negative_constraints:
 - Do not render a browser launcher in the composer.
 - Do not register demo fixtures as product commands.
@@ -688,20 +681,21 @@ canonical_text: >-
   decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are
   presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills,
   Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners
-  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain
-  switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls
-  with the page while remaining virtualized per SSYS-005.
+  and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches
+  obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the
+  page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
+  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
 depends_on: [F3-542, F3-519, F3-513, F3-405, SSYS-033]
 unblocks: []
 acceptance_criteria:
-  - No manager workspace renders a header-level action strip; no manager exposes more than six tabs; each view has at most one Advanced disclosure.
-  - Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below).
-  - The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close.
-  - Eight themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow.
-  - (USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551).
+  - "No manager workspace renders a header-level action strip; no manager exposes more than six tabs; each view has at most one Advanced disclosure."
+  - "Manager drawers and the setting Details inspector share one anatomy and the spring/material motion tokens; the inspector measures 350 px (min(370 px, 82 percent) overlay at 960 px and below)."
+  - "The browser checkpoint and the slow-motion film show no blank or uniform-frame flash on domain switch, tab switch, panel open/close, or inspector open/close."
+  - "Ten themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow."
+  - "(USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551)."
 validation_surfaces:
   - "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
   - python3 scripts/pm-plans-verify.py run-gates

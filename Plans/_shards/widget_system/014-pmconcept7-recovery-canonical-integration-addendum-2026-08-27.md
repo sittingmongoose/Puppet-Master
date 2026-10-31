@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L1250-L1756
 
-Source SHA256: `671b76fafcdacda1bddb62cc8b85b15ee74a0f3beabe0b88b3c05a5da41de2a0`
+Source SHA256: `d3a505b118c49657485e9bb15c1366dbd0956c5094f2f294e72b2c4ad3cd9aa0`
 
 ---
 
@@ -27,7 +27,7 @@ retains that classification.
 
 Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
 `IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
-eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+eight then-current themes (historical audit evidence; Q22 now requires ten) even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
 keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
 
 ### WS-017 - Kind-Aware Curated Size And Adaptive Content Contract

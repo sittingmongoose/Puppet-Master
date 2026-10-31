@@ -1,0 +1,1650 @@
+{
+  "scope": "real_product_changes_only",
+  "rows": [
+    {
+      "id": "QA2-Q1",
+      "change": "Onboarding sound starts on",
+      "owner": "F3-599; F3-663; SSYS-039",
+      "wiring": "UIW-014; catalog.settings_transaction_preview; catalog.settings_transaction_apply",
+      "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply",
+      "settings": "general.interaction.sound-effects (existing true)",
+      "dry": "DR-043; DR-076",
+      "companions": "QA2PresentationPolicy.sound; pm7-qa2 source sound cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q2",
+      "change": "Unreadable Project does not repeatedly mute current effective sound",
+      "owner": "F3-599; SSYS-039; DL-258",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "general.interaction.sound-effects",
+      "dry": "DR-043",
+      "companions": "QA2PresentationPolicy.sound.unreadable_snapshot; sound binding cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q3",
+      "change": "Tip hover and keyboard-focus feedback",
+      "owner": "F3-663; F3-523",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-076",
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q4",
+      "change": "Pip and beads share one progress rail; current label does not cover Pip",
+      "owner": "F3-663; F3-520",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-076",
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q5",
+      "change": "Wizard and Tour look menus fit their window and rows",
+      "owner": "F3-598; F3-520",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-079",
+      "companions": "existing look controls; appearance contracts unchanged",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q6",
+      "change": "Locate and reach backup before requesting any remaining unlock",
+      "owner": "PWIZ-025; BRS-019; F3-520",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "product_onboarding contracts; QA2PresentationPolicy.restore; reach/repoint cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q7",
+      "change": "Recovery Kit is locator/key, not a place; follow-ups join selected parent",
+      "owner": "PWIZ-025; BRS-018; BRS-019; DR-080",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "QA2PresentationPolicy.restore/choices; native backup owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q8",
+      "change": "Remove explanation-only duplicate disclosures; keep functional FileSafe/proxy and receipts",
+      "owner": "PWIZ-022; F3-520; F3-663",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080; DR-076",
+      "companions": "existing choice-help and FileSafe owner shapes",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q9",
+      "change": "Tip buttons and selectors never overlap",
+      "owner": "F3-663; DR-080",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "QA2PresentationPolicy.choices.question_control_overlaps",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q10",
+      "change": "One continuous speech-bubble fill/border/tail; NieR has no tail",
+      "owner": "F3-663",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-076",
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q11",
+      "change": "Live work-row marks animate under shared clock and motion/visibility gates",
+      "owner": "F3-658; F3-662; F3-664; DL-253",
+      "wiring": "UIW-045; WM-097",
+      "commands": "none needed: no new semantic action",
+      "settings": "general.visual.animation-speed; OS Reduced Motion (no inventory row)",
+      "dry": "DR-077; DR-078",
+      "companions": "q11_row_motion_contract and 92 eligibility cases; glyph_catalog status marks",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q12",
+      "change": "Resources immediately samples shared computer/services under every Project",
+      "owner": "F3-664; SIR-054; DL-251",
+      "wiring": "UIW-045; WM-097; pm7.work_panel_show; work.panel.resources",
+      "commands": "CS-106; UCC-210; cmd.agents_and_processes.show (entrance tab=resources); ui.work_panel.select_tab (in-panel value=resources)",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-078",
+      "companions": "work_panel_show_request.tab; local_action_request select_tab; work.panel.resources; QA2PresentationPolicy.resources",
+      "state": "corrected_Astra_F1_exact_existing_routes"
+    },
+    {
+      "id": "QA2-Q13",
+      "change": "Non-needs dock lines expire after 60000 ms; needs-input stays; no work mutation",
+      "owner": "ACD-476; F3-567; F3-664",
+      "wiring": "UIW-045; WM-097; chat.work_dock.process_open",
+      "commands": "CS-106; UCC-210; cmd.chat.processes.open",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-078",
+      "companions": "QA2PresentationPolicy.dock; 14 dock-provider steps",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q14",
+      "change": "Glass Activity bar/dock use shared menu plate",
+      "owner": "F3-654; F3-664; F3-665",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-067",
+      "companions": "QA2PresentationPolicy.glass.bar_and_dock_plate",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q15",
+      "change": "One wand drawing across Pip/menu/entry",
+      "owner": "F3-550; ACD-507",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-051; DR-076",
+      "companions": "glyph_catalog.qa2_actor_presentation.wand",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q16",
+      "change": "You actor is the person alone",
+      "owner": "F3-550; ACD-507",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-051",
+      "companions": "glyph_catalog.qa2_actor_presentation.you; QA2PresentationPolicy.feedback",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q17",
+      "change": "Only controls/focus start plate feedback; schedule rows require a real paired mark",
+      "owner": "F3-465; ACD-507",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-072",
+      "companions": "QA2PresentationPolicy.feedback; control-feedback and schedule-pair cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q20",
+      "change": "Glass uses shared hover light only on edge-glow objects at Basic strength",
+      "owner": "F3-465; F3-654",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-072",
+      "companions": "QA2PresentationPolicy.glass; shared hover source boundary",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q21",
+      "change": "Title look-menu highlights fit; Customize Pip is a separated real menu row",
+      "owner": "F3-598; SSYS-056",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "CS-105; UCC-209; ui.settings.pip_editor.open",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-079",
+      "companions": "existing Pip-editor and family binding rows",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-Q22",
+      "change": "NieR is fifth family, ten variants; retained Adjust; old override migrates",
+      "owner": "DL-257; F3-425; F3-598; SSYS-043; SSYS-010; F3-513; SSYS-026",
+      "wiring": "UIW-015; shell.theme.family; onboarding.theme.family; tour.theme.family",
+      "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply",
+      "settings": "general.visual.theme; general.visual.nier-parts; general.visual.nier-background; retired general.visual.nier-mode",
+      "dry": "DR-056",
+      "companions": "nier_theme_contract; Settings/onboarding/GUI schemas; 3 non_dispatch checkbox tombstones; five-family/ten-variant acceptance and checkbox retirement reconciled",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H2",
+      "change": "Existing-work subchoices join Existing above Restore",
+      "owner": "PWIZ-024; DR-080; F3-520",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H3",
+      "change": "SMB copy matches secure-keychain custody, distinct from one-time SSH install secrets",
+      "owner": "PWIZ-025; MA-014",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H4",
+      "change": "SSH explanation-only old disclosure moves into current tips",
+      "owner": "PWIZ-022; F3-663",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-076",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H5",
+      "change": "Modal lifetime keeps original background-input basis across replacement and restores it on exit",
+      "owner": "F3-520; DR-067",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-067",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H6",
+      "change": "Chat cleanly folds at 900 and below; preserves minimum, Pin/peek and hysteresis",
+      "owner": "F3-637; ACD-453",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-075",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H8",
+      "change": "Naming shows actual selected mounted/network share identity",
+      "owner": "PWIZ-024; DR-080",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "H9",
+      "change": "Glass Settings forms use opaque menu tint over ground",
+      "owner": "F3-654; SSYS-016",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-067",
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-01",
+      "change": "Existing Azure selection binds exact team project/repository",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_list; catalog.project_add_existing; WM-041",
+      "commands": "cmd.forge.repository.list (selected-source read); cmd.project.add_existing (reviewed commit); CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "onboarding_setup_plan exact owner/project; FGI-011 account-container list scope; existing project add owner chain",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-02",
+      "change": "GitHub Internal requires eligible organization/enterprise owner",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-03",
+      "change": "Origin personal is Private; team may use Internal",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-04",
+      "change": "GitLab exact namespace and instance visibility policy",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-05",
+      "change": "Bitbucket Cloud exact workspace plus project",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-06",
+      "change": "Bitbucket Data Center resolved project key",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-07",
+      "change": "Azure Server collection belongs to that instance",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-08",
+      "change": "Forgejo/Gitea exact instance, never an implicit placeholder",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-09",
+      "change": "Current service-specific repository/ref validation before Available",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-10",
+      "change": "Review names material online and backup choices",
+      "owner": "PWIZ-021; PWIZ-024; FGI-011; BRS-018",
+      "wiring": "UIW-015; WM-041; none additional: Review details/Edit are local navigation",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; no domain mutation from details/Edit",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "onboarding_setup_plan exact material choices; existing typed navigation/Review fences",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-11",
+      "change": "Forgejo/Gitea only private/public; reset incompatible service choices",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024",
+      "wiring": "UIW-015; WM-041; FGI-013",
+      "commands": "none needed for draft reset: CS-069/UCC-106 local choice boundary; later commit keeps existing Forge owner",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "onboarding_setup_plan Forgejo/Gitea private/public conditions; selected-source/profile generation fences",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-12",
+      "change": "Selected auth method matches exact provider instance/profile",
+      "owner": "FGI-011; FGI-015; PWIZ-021; PWIZ-024; MACS-005",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-13",
+      "change": "S3/B2 backend, endpoint and credential/temporary-session identity",
+      "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
+      "wiring": "catalog.backup_destination_add; catalog.backup_destination_test; WM-041",
+      "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-14",
+      "change": "Drive/OneDrive exact account, folder and existing repository",
+      "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
+      "wiring": "catalog.backup_destination_add; catalog.backup_destination_test; WM-041",
+      "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-15",
+      "change": "Restore manifest/catalog scope is the exact selected source",
+      "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
+      "wiring": "catalog.backup_destination_discover; catalog.backup_browse; catalog.backup_unlock; catalog.restore_preview; WM-041",
+      "commands": "cmd.backup.destination.discover; cmd.backup.browse; cmd.backup.unlock; cmd.restore.preview",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "Backup_Restore owner exact locator/repository/snapshot selection and currentness; no cross-place catalog",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-16",
+      "change": "WebDAV and SFTP preserve distinct families/locator rules",
+      "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
+      "wiring": "catalog.backup_destination_add; catalog.backup_destination_test; WM-041",
+      "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-17",
+      "change": "Eight onboarding backup families, pointer to all eleven in Settings",
+      "owner": "BRS-013; BRS-018; BRS-019; PWIZ-025",
+      "wiring": "catalog.backup_destination_add; catalog.backup_destination_test; WM-041",
+      "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-18",
+      "change": "Protocol/source change invalidates incompatible previous selection",
+      "owner": "PWIZ-025; SCS-011",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "product_onboarding source/profile identity; existing owner currentness fences",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-19",
+      "change": "Repository object-format selector is Settings-only",
+      "owner": "SCS-022; PWIZ-024",
+      "wiring": "UIW-014; cmd.settings.open",
+      "commands": "CS-069; cmd.settings.open",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "none needed: existing owner boundary suffices",
+      "companions": "existing object-format owner contract; onboarding does not add a field",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-20",
+      "change": "M1a grouped New/Existing/Restore presentation preserves execution intents",
+      "owner": "PWIZ-024; PWIZ-025; SCS-011; F3-520",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "product_onboarding action/plan contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-23",
+      "change": "Unchanged mounted-volume choice is not asked twice",
+      "owner": "PWIZ-024; PWIZ-025; SCS-011",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-080",
+      "companions": "product_onboarding action/plan contracts",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FF-12b",
+      "change": "Late token completion cannot authorize another service/server/attempt",
+      "owner": "PWIZ-021; FGI-015; MACS-001",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "existing auth-profile generation/host/Client fences; source callback negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-01",
+      "change": "Pairing result stays with selected Server and current attempt",
+      "owner": "PWIZ-025; SRV-002; SRV-004",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-02",
+      "change": "Pairing codes/protected inputs never persist in ordinary state",
+      "owner": "PWIZ-025; MACS-002; SRV-004",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-03",
+      "change": "Entering app retains real Server/Client/remote topology, not just a label",
+      "owner": "PWIZ-025; SRV-002; SRV-006",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-04",
+      "change": "Native app built-in Tailscale; protected phases, approval and recovery; browser distinction",
+      "owner": "PWIZ-025; RAS-015; SIR-032; Crosswalk.md connector-owner row",
+      "wiring": "catalog.remote_access_tailscale_setup_start; UIW-017",
+      "commands": "cmd.remote_access.tailscale.setup.start",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness; shared auth Server/native owner policy (native uses initiating_active_client_only)",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-05",
+      "change": "New Remote Link returns owner link/QR/code; connect-existing consumes it",
+      "owner": "PWIZ-025; RAS-014",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "RAS-014 owner-issued/checkable link/code; REMOTE-CODE-1 protocol deferred to shared pre-build checklist; existing typed open/identity/pairing owners",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-06",
+      "change": "Public proxy requires exposure consent and current reachability/security preflight",
+      "owner": "RAS-005; RAS-014",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-07",
+      "change": "PM generates proxy configuration; certificates/signing stay on the person’s systems",
+      "owner": "RAS-005; PWIZ-025; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
+      "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; CS-074; UCC-152",
+      "settings": "none needed: no PM certificate profile or selector",
+      "dry": "DR-005; DR-037",
+      "companions": "x-proxy-certificate-boundary; PostcommitRemoteSetupPolicy; native forbidden-profile/validity-field negatives",
+      "state": "covered_by_Jared_CERT-1"
+    },
+    {
+      "id": "SCR-08",
+      "change": "srv C1 / CERT-1: configuration-file/export or existing-proxy checks only; managed hosting removed, proxy_tls null",
+      "owner": "RAS-005; PWIZ-025; CS-069; UCC-106; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_generate; catalog.remote_access_proxy_export; catalog.remote_access_proxy_test; catalog.remote_access_route_test",
+      "commands": "cmd.remote_access.proxy.generate; cmd.remote_access.proxy.export; cmd.remote_access.proxy.test; cmd.remote_access.route.test (existing owner continuations; no installation/hosting action)",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "onboarding_setup_plan.proxy_hosting generate_only|existing_proxy; proxy_tls null; PostcommitRemoteSetupPolicy; C1 draft positive/negative cases",
+      "state": "aligned_latest_srv_C1"
+    },
+    {
+      "id": "SCR-09",
+      "change": "Normalized endpoint validation precedes Review and identity acceptance",
+      "owner": "RAS-014; PWIZ-025",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-10",
+      "change": "SSH retains user/host/port/key/fingerprint/passphrase identity",
+      "owner": "PWIZ-025; SRV-006",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-11",
+      "change": "SMB/NFS mount is owner-scoped, with manual share/export routes",
+      "owner": "PWIZ-025; SRV-006",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-12",
+      "change": "NAS installation uses release-owned persistent-data/host prerequisites",
+      "owner": "PWIZ-025; SRV-005",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-13",
+      "change": "Protected native local first claim without typed code, then bootstrap/maintenance before full restore",
+      "owner": "PWIZ-025; BRS-019; SRV-013",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; catalog.restore_server_full; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "x-initial-owner-claim-authorization; existing closed proof tuple; native caller-authority-flag negative",
+      "state": "covered_by_Jared_DESKTOP-RESTORE-1"
+    },
+    {
+      "id": "SCR-14",
+      "change": "Cloud first claim uses protected console/local-bootstrap one-time setup code",
+      "owner": "RAS-007; SRV-005; SRV-007; PWIZ-025; DL-259",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup",
+      "state": "covered_by_Jared_CLOUD-1"
+    },
+    {
+      "id": "SCR-15",
+      "change": "Pairing exposes typed denial/expiry/cancel/retry outcomes",
+      "owner": "PWIZ-025; SRV-004",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-16",
+      "change": "Unpaired discovery is minimal; no Project metadata before trust",
+      "owner": "PWIZ-025; SRV-003",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-17",
+      "change": "Pair link is authoritative, never derived from display name",
+      "owner": "PWIZ-025; SRV-002; SRV-004",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SCR-18",
+      "change": "Existing Project ID is not its human name",
+      "owner": "PWIZ-025; SRV-002; SRV-006",
+      "wiring": "UIW-015; WM-041; UCC-152",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P01",
+      "change": "GitHub Models retired; old choices unavailable, never Copilot",
+      "owner": "MS-118; MS-119; PWIZ-021",
+      "wiring": "none needed: retired/ineligible free route has no active dispatch",
+      "commands": "none needed: catalog filtering adds no command",
+      "settings": "none needed: catalog entry, not a preference",
+      "dry": "DR-005; DR-081",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P02",
+      "change": "Cerebras is not a current free route",
+      "owner": "MS-118; MS-119; PWIZ-021",
+      "wiring": "none needed: retired/ineligible free route has no active dispatch",
+      "commands": "none needed: catalog filtering adds no command",
+      "settings": "none needed: catalog entry, not a preference",
+      "dry": "DR-005; DR-081",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P03",
+      "change": "Hugging Face is not a current free route",
+      "owner": "MS-118; MS-119; PWIZ-021",
+      "wiring": "none needed: retired/ineligible free route has no active dispatch",
+      "commands": "none needed: catalog filtering adds no command",
+      "settings": "none needed: catalog entry, not a preference",
+      "dry": "DR-005; DR-081",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P04",
+      "change": "Free routes set up exact underlying account/auth before usability",
+      "owner": "MS-118; MS-119; PWIZ-021",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005; DR-081",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P05",
+      "change": "Auth surface and billing class remain separate",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P06",
+      "change": "Codex ChatGPT and API-key accounts are distinct auth families",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P07",
+      "change": "OpenCode server is managed/existing runtime, not website login",
+      "owner": "CBP-022; MA-012; Provider_OpenCode section 5.1–5.3",
+      "wiring": "UIW-014; existing OpenCode runtime/profile owner flow",
+      "commands": "none needed: no website login; existing runtime/profile setup (CBP-022)",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "existing OpenCode server/profile contracts and installation/health/discovery boundaries",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P08",
+      "change": "Multiple accounts per provider retain stable independent identities",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P09",
+      "change": "Provider-specific workspace/billing/region context before Ready",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P10",
+      "change": "Every key row explains key versus password and opens its exact official key console/guide",
+      "owner": "MA-040; MACS-003; MACS-004",
+      "wiring": "catalog.auth_profile_open_official_page; MACS-003; MACS-004",
+      "commands": "cmd.auth_profile.open_official_page (existing exact Client-bound official-page handoff)",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005; DR-037",
+      "companions": "x-provider-key-acquisition; AuthProfileCommandRequest/Result unchanged; QA2CoverageAuditPolicy.key_acquisition",
+      "state": "corrected_Astra_F2_exact_official_key_acquisition"
+    },
+    {
+      "id": "P11",
+      "change": "Human sign-in here; credentials on execution host",
+      "owner": "MA-014; MA-045; MA-046; CBP-003; MACS-001; MACS-002",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P12",
+      "change": "Logged in, quota, readiness and recoverable failures stay distinct",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P13",
+      "change": "Wizard/Settings/model picker consume one actual account roster",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P14",
+      "change": "Provider-conformance verification occurs before build, no wizard caveat",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "none needed: existing provider routes and identity remain",
+      "commands": "none needed: admission timing, labels or typed ID validation",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P15",
+      "change": "Current MiniMax/OpenCode/Alibaba product labels and aliases",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "none needed: existing provider routes and identity remain",
+      "commands": "none needed: admission timing, labels or typed ID validation",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P17",
+      "change": "Non-secret Token Plan IDs are not filtered as credential fields",
+      "owner": "MA-012; MA-040; MA-043; CBP-028",
+      "wiring": "none needed: existing provider routes and identity remain",
+      "commands": "none needed: admission timing, labels or typed ID validation",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P18",
+      "change": "Usable free-only setup contributes to AI Ready",
+      "owner": "MS-118; MS-119; PWIZ-021",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (existing manager); no new row",
+      "dry": "DR-005; DR-081",
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "P16 / T15",
+      "change": "Keep onboarding billing/Ready copy concise; no extra-usage exposition",
+      "owner": "PWIZ-022; F3-520; F3-663",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "none needed: existing owner boundary suffices",
+      "companions": "existing tips/help presentation; no prices or limits frozen",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T01",
+      "change": "Explain local versions vs online copy vs FileSafe",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T02",
+      "change": "Explain grouped FileSafe and Settings-only individual guards",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T03",
+      "change": "Explain work/Server/Client placement at the consequential choice",
+      "owner": "PWIZ-022; F3-663; DL-126; PWIZ-025; RAS-014",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T04",
+      "change": "Git or Jujutsu remains required; no no-history onboarding route",
+      "owner": "SCS-011; SCS-012; PWIZ-024; PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T05",
+      "change": "Explain forge sign-in, repository and account purpose",
+      "owner": "PWIZ-022; F3-663; DL-126; FGI-015",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T06",
+      "change": "Explain audience for selected service/owner",
+      "owner": "PWIZ-022; F3-663; DL-126; FGI-015",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T07",
+      "change": "Explain optional repository choices before technical detail",
+      "owner": "PWIZ-022; F3-663; DL-126; FGI-015",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T08",
+      "change": "NAS install points to current release-owned guide",
+      "owner": "PWIZ-022; F3-663; DL-126; PWIZ-025; RAS-014",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T09",
+      "change": "Explain verified device identity and key/custody choices",
+      "owner": "PWIZ-022; F3-663; DL-126; PWIZ-025; RAS-014",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T10",
+      "change": "Recovery Kit locates/unlocks; do not invent a six-word key format",
+      "owner": "PWIZ-022; F3-663; DL-126; BRS-018; BRS-019",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T11",
+      "change": "Backup is separate from safe history; deferred backup stays honest",
+      "owner": "PWIZ-022; F3-663; DL-126; BRS-018; BRS-019",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T12",
+      "change": "Restore copy describes this restore; authorized portable-secret envelope remains separate",
+      "owner": "PWIZ-022; F3-663; DL-126; BRS-018; BRS-019; BRS-004",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T13",
+      "change": "Proxy help names external certificate custody and actual PM checks without replacing trust/auth",
+      "owner": "PWIZ-022; F3-663; DL-126; PWIZ-025; RAS-014",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T14",
+      "change": "Free route limits/readiness follow underlying account; do not over-explain",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T16",
+      "change": "Look/tone tips explain choice plainly, without changing control labels",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T17",
+      "change": "Explain technical term at first consequential choice; details stay behind disclosure",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "T18",
+      "change": "Opened advanced help remains concise with clear optional defaults",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: help changes no owner effect; CS-069 boundary",
+      "settings": "general.interaction.mode (shared tips/help mode)",
+      "dry": "DR-043; DR-076",
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D1",
+      "change": "Repository creation/import only; no site publishing",
+      "owner": "FGI-011; PWIZ-021; PWIZ-024",
+      "wiring": "FGI-013; catalog.forge_repository_create",
+      "commands": "cmd.forge.repository.create; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D2",
+      "change": "Advanced Server/private HTTPS/gateway/SSH/AI/object-format routes Settings-only with pointers",
+      "owner": "PWIZ-021; PWIZ-024; SSYS-016; SCS-022",
+      "wiring": "UIW-014; UIW-015",
+      "commands": "CS-069; cmd.settings.open",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D3",
+      "change": "Generate Caddy/NGINX/Traefik; Caddy default; NPM existing-only",
+      "owner": "RAS-005; RAS-014; F3-520",
+      "wiring": "UIW-017; catalog.remote_access_proxy_generate",
+      "commands": "cmd.remote_access.proxy.generate",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-037",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D4",
+      "change": "Verify provider support and Remote Link code protocol immediately before PM build; no wizard caveats",
+      "owner": "MS-120; MA-040; CBP-022; RAS-014; DL-259",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "none needed: existing owner boundary suffices",
+      "companions": "x-provider-entry-amendments.pre_build_verification; x-pre-build-verification; no code grammar pin",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D5",
+      "change": "Current Free Models source; three front providers plus catalog-driven advanced remainder",
+      "owner": "MS-118; MS-119; PWIZ-021; SSYS-016",
+      "wiring": "onboarding.free_models.advanced; settings.free_models.advanced",
+      "commands": "none needed: no new semantic action",
+      "settings": "ai.usage.free-models-auto-apply (existing); disclosure is not a preference",
+      "dry": "DR-081",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D6",
+      "change": "Exact initiating human device and execution-host credential custody",
+      "owner": "MA-014; MA-045; MA-046; CBP-003; MACS-001; MACS-002",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D7",
+      "change": "Native apps own built-in connection; browser has none; Server/Client contexts remain isolated",
+      "owner": "RAS-015; PWIZ-025; SP-254; SIR-032; Crosswalk.md connector-owner row",
+      "wiring": "UIW-017; UCC-152; catalog.remote_access_tailscale_setup_start",
+      "commands": "cmd.remote_access.tailscale.setup.start; CS-074",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005; DR-037",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives; shared auth Server/native owner policy (native uses initiating_active_client_only)",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ONB-D8",
+      "change": "One default-on grouped FileSafe switch; effective fail-closed guards always win",
+      "owner": "F2-030; PWIZ-022; F3-520",
+      "wiring": "UIW-015; WM-041",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions",
+      "settings": "none needed: grouped owner intent; existing FileSafe individual configuration",
+      "dry": "DR-013",
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Oct31-Q1",
+      "change": "Shared say/vocals room after trim/pan, 0.35; Glass 0.30; NieR 0.16; one registered room, ~0.4 dB",
+      "owner": "F3-599; F3-663; SSYS-039; ACD-507; DL-256",
+      "wiring": "none needed: presentation uses existing route",
+      "commands": "none needed: no new semantic action",
+      "settings": "general.interaction.sound-effects; general.visual.pip-parts (existing gates)",
+      "dry": "DR-043; DR-076",
+      "companions": "PipVoiceRoomPolicy; 3 positive/negative schema cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Oct31-Q2",
+      "change": "Jared confirms toasts stay below open inbox",
+      "owner": "F3-447; F3-460; F3-461; DL-259",
+      "wiring": "UIW-045; WM-097",
+      "commands": "none needed: no new semantic action",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "none needed: existing owner boundary suffices",
+      "companions": "PresentationPolicy; inbox-push relational cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ELI5-control",
+      "change": "Wizard/Tour bars share one Plain English/Expert state, default ELI5",
+      "owner": "PWIZ-022; PWIZ-023; SSYS-016; F3-521; F3-663",
+      "wiring": "UIW-014; catalog.settings_transaction_preview; catalog.settings_transaction_apply; onboarding.interaction.mode; tour.interaction.mode",
+      "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply; UCC-175",
+      "settings": "general.interaction.mode; option_labels Plain English/Expert",
+      "dry": "DR-074 (one Settings value/writer across both bars)",
+      "companions": "guided_tour_presentation_contract.eli5; x-product-rulings.interaction_mode; three owner-consumer assertions in pm7-onboarding-rulings-check.py",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "ELI5-tips",
+      "change": "Every opened onboarding tip/help has novice and technical copy; dual copy stays tips/help only",
+      "owner": "PWIZ-022; F3-663; DL-126",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: no chat reply command or new effect",
+      "settings": "general.interaction.mode",
+      "dry": "DR-074 (shared preference); none additional: DL-126 owns tips/help-only copy limit",
+      "companions": "choice_help_presentation; guided Tour no-rewrite constraints",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Free-catalog",
+      "change": "v0.6.0 read Oct31; preserve June lineage; no fixed advanced list/count or prose prices",
+      "owner": "MS-118; MS-119; DR-081",
+      "wiring": "onboarding.free_models.advanced; settings.free_models.advanced",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.usage.free-models-auto-apply (existing)",
+      "dry": "DR-081",
+      "companions": "x-product-rulings.onboarding_free_front/advanced_free_providers",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Provider-cursor_sdk",
+      "change": "Cursor SDK is its own key-default entry; CLI retains browser default",
+      "owner": "MA-012; MA-043; CBP-021",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (data-backed entry)",
+      "dry": "DR-005",
+      "companions": "x-provider-entry-amendments cursor_sdk; ProviderEntryPolicy",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Provider-alibaba_token_plan",
+      "change": "Own monthly-credit subscription/key, distinct from Coding Plan and DashScope",
+      "owner": "MA-012; MA-043",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "ai.accounts.provider-connections (data-backed entry)",
+      "dry": "DR-005",
+      "companions": "x-provider-entry-amendments alibaba_token_plan; ProviderEntryPolicy",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Provider-names",
+      "change": "MiniMax M Plan and OpenCode Console; aliases preserve stored identity",
+      "owner": "MA-012; MA-043",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "none needed: existing provider records keep their IDs",
+      "dry": "DR-005",
+      "companions": "x-provider-entry-amendments.display_aliases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "Codex-remote-auth",
+      "change": "Device-code alternative first enabled in ChatGPT security/workspace permissions",
+      "owner": "MA-047; CBP-028",
+      "wiring": "MACS-004; catalog.auth_profile_sign_in; catalog.auth_profile_verify",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
+      "settings": "none needed: owner data or presentation, not a preference",
+      "dry": "DR-005",
+      "companions": "existing protected auth-profile fields; D6 prerequisite annotation",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-CERT",
+      "change": "srv C1 / CERT-1: PM only writes proxy configuration; no certificate administration/gate or validity Ready claim",
+      "owner": "RAS-005; PWIZ-025",
+      "wiring": "catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
+      "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; no certificate selector admitted",
+      "settings": "none needed: certificate administration is external",
+      "dry": "DR-005",
+      "companions": "x-proxy-certificate-boundary; PostcommitRemoteSetupPolicy certificate boundary",
+      "state": "covered_by_Jared_CERT-1"
+    },
+    {
+      "id": "SRV-CLOUD",
+      "change": "srv C2 / CLOUD-1: protected console setup-code initial claim, no address/discovery or public unclaimed setup",
+      "owner": "RAS-007; SRV-005; SRV-007; PWIZ-025; DL-259",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CS-074; UCC-152",
+      "settings": "none needed: bootstrap path is not a preference",
+      "dry": "DR-005",
+      "companions": "x-initial-owner-claim-authorization; unchanged claim tuple; raw-code argument negative; no public unclaimed setup; PostcommitRemoteSetupPolicy cloud address/discovery false",
+      "state": "covered_by_Jared_CLOUD-1"
+    },
+    {
+      "id": "SRV-DESKTOP-RESTORE",
+      "change": "srv C3 / DESKTOP-RESTORE-1: protected native first local claim without code, then bootstrap/maintenance before full restore",
+      "owner": "PWIZ-025; SRV-013",
+      "wiring": "catalog.server_claim; catalog.server_bootstrap_start; catalog.restore_server_full; UIW-015; WM-041",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; CS-074; UCC-152",
+      "settings": "none needed: existing owner prerequisites",
+      "dry": "DR-005; DR-037",
+      "companions": "x-initial-owner-claim-authorization; existing closed proof tuple; native caller-authority-flag negative",
+      "state": "covered_by_Jared_DESKTOP-RESTORE-1"
+    },
+    {
+      "id": "SRV-CODE",
+      "change": "srv C4 / REMOTE-CODE-1: owner issues/checks opaque code; protocol decided immediately before build",
+      "owner": "RAS-014",
+      "wiring": "UIW-015; catalog.remote_access_remote_link_open",
+      "commands": "cmd.remote_access.remote_link.open consumes owner-resolved address; no resolver command invented",
+      "settings": "none needed: unverified input, not a preference",
+      "dry": "DR-005",
+      "companions": "x-pre-build-verification; D4 shared checklist plus Remote_Link_code_protocol; existing blank-input negative",
+      "state": "covered_by_Jared_REMOTE-CODE-1_pre_build_verification"
+    },
+    {
+      "id": "SRV-EFFECTIVE-CONTEXT",
+      "change": "App selects actual owner-result IDs/readiness, not labels or setup intent",
+      "owner": "PWIZ-021; SRV-008; WM-041",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: join existing owner receipts/projections, no handoff writer",
+      "settings": "none needed: existing registries remain authoritative",
+      "dry": "DR-005",
+      "companions": "PostcommitRemoteSetupPolicy.actual_app_context; existing stable-ID owner types",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-REMOTE-ORDER",
+      "change": "Optional remote setup leaves Creating; separate view after owner settlement",
+      "owner": "PWIZ-025; CS-069; UCC-106; WM-041",
+      "wiring": "UIW-015; WM-041",
+      "commands": "existing Remote Access domain commands; CS-074; UCC-152",
+      "settings": "none needed: unchanged eleven-stage journey",
+      "dry": "DR-005",
+      "companions": "automatic_preparation_owner_projection.preparation_phase/setup_settlement_ref; two negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-REMOTE-LATER",
+      "change": "Later always finishes without waiting, undoing effects or inventing Ready",
+      "owner": "PWIZ-025; CS-069; UCC-106",
+      "wiring": "UIW-015; WM-041",
+      "commands": "ui.onboarding.skip / close existing terminal exit; no new mutation",
+      "settings": "none needed: local exit, not preference",
+      "dry": "DR-005",
+      "companions": "PostcommitRemoteSetupPolicy; Later/Creating negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "QA2-M1",
+      "change": "Auto Theme word follows the current family and effective OS scheme while mode remains Auto",
+      "owner": "SSYS-010; SSYS-009; DL-259",
+      "wiring": "shell.theme.mode; shell.theme.family; catalog.settings_transaction_preview; catalog.settings_transaction_apply",
+      "commands": "cmd.settings.transaction.preview; cmd.settings.transaction.apply (existing Project writer and refusal/currentness fences)",
+      "settings": "general.visual.theme; general.visual.theme-mode (existing rows, clarified Auto help)",
+      "dry": "DR-075; DR-005",
+      "companions": "QA2CoverageAuditPolicy.theme_auto; existing bindings/transaction acceptance; no new setting",
+      "state": "covered_Astra_M1"
+    },
+    {
+      "id": "QA2-M2",
+      "change": "Technical hover candidacy excludes internal container/render/scroll keys; explicit declarations remain eligible",
+      "owner": "F3-523; DL-259",
+      "wiring": "none needed: same shared hover controller and census, no owner route",
+      "commands": "none needed: tooltip candidacy is presentation only",
+      "settings": "general.interaction.show-tooltips (existing gate; no new row)",
+      "dry": "DR-043; DR-076",
+      "companions": "QA2CoverageAuditPolicy.technical_hover; source attributes remain source_lineage",
+      "state": "covered_Astra_M2"
+    },
+    {
+      "id": "QA2-M3",
+      "change": "System status and Stop/Quit Escape work without focus entering; innermost overlay closes first",
+      "owner": "F3-665; CS-106; DL-259",
+      "wiring": "system_status.close; work.quit.cancel; UIW-045; WM-097",
+      "commands": "ui.system_status.close; ui.work_quit.cancel (existing local actions; no owner dispatch)",
+      "settings": "none needed: fixed keyboard/focus behavior",
+      "dry": "DR-067",
+      "companions": "QA2CoverageAuditPolicy.inner_escape; existing local_action_request and bindings; owner rule was already explicit",
+      "state": "covered_Astra_M3"
+    },
+    {
+      "id": "QA2-M4",
+      "change": "Welcome offers five equal look choices with accessible labels, reachable tips/Adjust and bounded short/narrow fit",
+      "owner": "F3-520; F3-598; DL-257; DL-259",
+      "wiring": "onboarding.theme.family; UIW-015; WM-041",
+      "commands": "ui.onboarding.choose_look (existing local preview and commit boundary)",
+      "settings": "general.visual.theme; general.visual.theme-mode (existing pair; no new row)",
+      "dry": "DR-079; DR-076",
+      "companions": "QA2CoverageAuditPolicy.welcome_looks; existing closed look_choice; CSS mechanics remain lineage",
+      "state": "covered_Astra_M4"
+    },
+    {
+      "id": "QA2-M5",
+      "change": "Plain English/Expert option notes use settled stage bounds, scroll long text internally and have no separate tail",
+      "owner": "F3-663; PWIZ-022; DL-259",
+      "wiring": "none needed: existing shared option-note owner and local Details action",
+      "commands": "ui.onboarding.open_details (existing toggle_choice_explanation intent; no new action)",
+      "settings": "general.interaction.mode (existing tips/help choice)",
+      "dry": "DR-080; DR-076",
+      "companions": "QA2CoverageAuditPolicy.stage_note; onboarding_motion.choice_help target_binding; no DOM id pinned",
+      "state": "covered_Astra_M5"
+    },
+    {
+      "id": "QA2-M6",
+      "change": "Ordinary resting stage props visibly clear floor and edge; Creating blocks intentionally rest on floor",
+      "owner": "F3-663; DL-259",
+      "wiring": "none needed: shared stage layout invariant",
+      "commands": "none needed: no semantic action or owner phase",
+      "settings": "none needed: fixed presentation geometry",
+      "dry": "DR-076",
+      "companions": "QA2CoverageAuditPolicy.resting_props; coordinate-specific six-unit source margin is not pinned",
+      "state": "covered_Astra_M6"
+    },
+    {
+      "id": "QA2-M7",
+      "change": "No account yet retains its chosen provider category and puts those providers first on return",
+      "owner": "PWIZ-021; PWIZ-022; DL-259",
+      "wiring": "none needed: existing reversible local AI-navigation context",
+      "commands": "none needed: category return changes no provider/account owner state",
+      "settings": "none needed: local navigation/draft state, not a persisted preference",
+      "dry": "DR-005; DR-037",
+      "companions": "x-product-rulings.provider_category_return; QA2CoverageAuditPolicy.provider_category_return",
+      "state": "covered_Astra_M7"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "sha256": "37fceee340a0587beb6d2cd041857149d8b35b075338ca2ffe7e84a1b85a190b",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+      "sha256": "ddd22aeb386d3df6d7db89e643c787954d4d105e1e98fb96e82b45697dd40f73",
+      "state": "read through four owner answers, Jared 2026-10-31; applied under DL-259"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/QA2-HUNTER.md",
+      "sha256": "0162143d646bf5bcd0921584467e759cfb2ec197430a30d9c679d390a3735c86",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
+      "sha256": "e03a8d38e1978d51f654fcc29e13b289cc3119bbcdf5fad5e61f65246c521174",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+      "sha256": "2883ce8c1dbf81a41d3412cdf5de4f97fb97fb8960229961f313100c0f6647f5",
+      "state": "latest C1–C4 owner-answer report read in full; C1 draft/hosting aligned; C2 code-only UI aligned; C3/C4 accepted owner rules retained"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md",
+      "sha256": "7fea5a05423bb53588f39c47cd62e37322c87056d43f5ca8cec949f097b464b1",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+      "sha256": "57dd5fd452fd84f1b1f427ea5f721bdaba6da5409ce1707d92d41dc78a8c4e46",
+      "state": "final report read in full (fe981f3b38); four canon items already DL-259; real FF-01..17/19/20/12b and T04 traced; demo mechanics excluded"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md",
+      "sha256": "b97d40d1f8ed9c9fafb9ae2e8973911eb20a29745b758f88cfc525483ccd838e",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/activity/REPORT.md",
+      "sha256": "f4cc7063594345e6bc6f71ee5b59386d1c33814d332e1adca4db324e38079e43",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md",
+      "sha256": "864c42ca38b32f00a779e89254ce794d24d54e1ed39843685d16e22ddfff9744",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/demo/REPORT.md",
+      "sha256": "7c82812c57135d0b1096f98d844f719c3445103ae6a9b40950362630201bf4b8",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/title/REPORT.md",
+      "sha256": "30056426caad0de4c2ef8ed51c634a9fc4d1ffb18b746f275e09fa1bcb0a5517",
+      "state": "consulted snapshot"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md",
+      "sha256": "81349f1031004a812e2e70c07a6897331b4ab5e94fc89a09b2262e8f85515a91",
+      "state": "all 13 findings confirmed and corrected; independent re-check follows"
+    }
+  ],
+  "unit_id_check": "pass",
+  "pending_sources": [
+    "lead final GUI names/head",
+    "onboarding small follow-up (lead signal)"
+  ],
+  "exclusions": [
+    "QA2-Q18",
+    "QA2-Q19",
+    "H1",
+    "H7",
+    "FF-21",
+    "FF-22"
+  ],
+  "owner_questions": [],
+  "prototype_cleanup": {
+    "decision": "DL-260",
+    "demo_only_rows_added": 0,
+    "real_product_rows_retained": 133,
+    "retired_units_used_as_active_coverage": false
+  },
+  "fields_final": {
+    "head": "fe981f3b38",
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+    "sha256": "57dd5fd452fd84f1b1f427ea5f721bdaba6da5409ce1707d92d41dc78a8c4e46",
+    "canon_requests_closed_in": "DL-259",
+    "new_product_command_or_setting": false,
+    "mapping_corrections": [
+      "FF-01 selected-source repository.list then project.add_existing, not create",
+      "FF-10 Review disclosure/Edit is local navigation",
+      "FF-11 incompatible choice reset is draft-local",
+      "FF-12 auth owner MACS-005",
+      "FF-15 discover/browse/unlock/preview, not destination add/test",
+      "T04 exact SCS-011/012 and PWIZ-024 required-backend owners"
+    ],
+    "excluded": [
+      "demo hints/sample keys/prefills",
+      "O55 globals/helpers and demo callback APIs",
+      "sandbox/storage demonstrations",
+      "fixture account worlds and timestamps",
+      "browser assertion counts as native evidence"
+    ]
+  },
+  "owner_rulings_2026_10_31": {
+    "decision": "DL-259",
+    "decider": "Jared",
+    "answers": {
+      "CERT-1": {
+        "choice": "neither_A_nor_B",
+        "outcome": "PM_generates_proxy_config_person_handles_certificates_no_gate_or_validity_claim"
+      },
+      "CLOUD-1": {
+        "choice": "A",
+        "outcome": "one_time_setup_code_from_cloud_provider_console_or_local_bootstrap"
+      },
+      "DESKTOP-RESTORE-1": {
+        "choice": "A",
+        "outcome": "protected_native_direct_local_handoff_no_code_to_type"
+      },
+      "REMOTE-CODE-1": {
+        "choice": "A",
+        "outcome": "Remote_Link_owner_protocol_verified_immediately_before_build_no_grammar_pin"
+      }
+    },
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+    "source_sha256": "ddd22aeb386d3df6d7db89e643c787954d4d105e1e98fb96e82b45697dd40f73",
+    "pre_build_detail": "REMOTE-CODE-1",
+    "new_command_or_payload_field": false
+  },
+  "coverage_audit_resolution": {
+    "base": "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+    "audit_canon": "b0c1a23758",
+    "confirmed": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "F1",
+      "F2",
+      "C1",
+      "C2",
+      "C3",
+      "D1"
+    ],
+    "new_product_rows": 7,
+    "source_API_names": "source_lineage_only",
+    "owner_questions_remaining": 0,
+    "independent_recheck": "requested_by_lead_after_push"
+  },
+  "srv_C1_C4": {
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+    "row_map": {
+      "C1": [
+        "SCR-08",
+        "SRV-CERT"
+      ],
+      "C2": [
+        "SRV-CLOUD"
+      ],
+      "C3": [
+        "SRV-DESKTOP-RESTORE"
+      ],
+      "C4": [
+        "SRV-CODE"
+      ]
+    },
+    "C1_proxy_hosting": [
+      "generate_only",
+      "existing_proxy"
+    ],
+    "C1_proxy_tls": null,
+    "demo_mechanics_added": false
+  }
+}

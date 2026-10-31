@@ -28,7 +28,7 @@
       "label": "Status faces in lists",
       "group": "Where Pip appears",
       "default_enabled": true,
-      "help": "Pip faces in Scheduled and Memory lists follow each owner’s exact status-key table.",
+      "help": "In Scheduled and Memory, each row’s status icon is Pip’s face: sent is happy, failed says oops, waiting sleeps.",
       "size": 3
     },
     {
@@ -108,7 +108,7 @@
       "label": "Gaze",
       "group": "Faces",
       "default_enabled": true,
-      "help": "The sheet’s Pip looks where the pointer is, and keeps looking there when it stops.",
+      "help": "Pip looks where the pointer is, and keeps looking there when it stops.",
       "size": 2
     },
     {
@@ -124,7 +124,7 @@
       "label": "Sway and physics",
       "group": "Motion",
       "default_enabled": true,
-      "help": "The sheet’s Pip swings a little, as if a hand held it, and drops in when a sheet opens.",
+      "help": "Pip swings a little on its strings, as if a hand held it, and drops in when a sheet opens.",
       "size": 2
     },
     {
@@ -132,7 +132,7 @@
       "label": "Blinks between faces",
       "group": "Motion",
       "default_enabled": true,
-      "help": "A face changes behind a quick blink, the way it does in onboarding.",
+      "help": "A face changes behind a quick blink.",
       "size": 2
     },
     {
@@ -148,7 +148,7 @@
       "label": "Idle life",
       "group": "Motion",
       "default_enabled": true,
-      "help": "Small resting acts while Pip is visible and the interface is idle.",
+      "help": "Left alone, Pip looks around, stretches and, after a while, naps.",
       "size": 2
     },
     {
@@ -188,7 +188,7 @@
       "label": "Setup world life",
       "group": "Look",
       "default_enabled": true,
-      "help": "Look-specific chapter worlds and their bounded ambient life during setup.",
+      "help": "In setup, the world behind Pip moves in each theme’s own way.",
       "size": 3
     },
     {
@@ -196,7 +196,7 @@
       "label": "Pip talks in setup",
       "group": "Sound",
       "default_enabled": true,
-      "help": "Pip speaks in the current look’s short setup voice, under the master mute.",
+      "help": "Pip says its lines in setup, in the theme’s voice.",
       "size": 3
     },
     {
@@ -212,7 +212,7 @@
       "label": "Setup music",
       "group": "Sound",
       "default_enabled": true,
-      "help": "The current setup chapter’s quiet, gesture-gated background music.",
+      "help": "Each theme’s own music plays quietly through setup.",
       "size": 3
     }
   ],

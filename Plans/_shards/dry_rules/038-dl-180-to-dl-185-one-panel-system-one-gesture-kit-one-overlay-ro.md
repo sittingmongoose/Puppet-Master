@@ -1,14 +1,14 @@
-# Shard 038: DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)
+# Shard 038: DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans And One Opening Module (2026-10-09)
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3458-L4509
+Source lines: L3509-L4747
 
-Source SHA256: `d87bda498a59f6ce9a2cc5c5e94d4472482c0aa8d38f9a4641b4bc045c7c5c97`
+Source SHA256: `3e54996b18a8b9e3c3eabfbce6f8859c0427e58b48789ece794b71cdf8ebb852`
 
 ---
 
-## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)
+## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans And One Opening Module (2026-10-09)
 
 Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces Home's four fixed editor panels, singleton dashboard, bottom terminal zone and movable chat with one universal panel system, rebuilds the terminal as one session per tab, and makes the bans on side stripes, emoji and pills one rule for the whole app. Each piece the redesign shares across surfaces lives in one place, and these seven rules say where. They supersede the per-surface owners of the 2026-08-04 Home owner boundary and its U10 sentence (both amended in place above), and they amend the PMConcept7 SSOT table's Home row and DR-039 for several dashboard tabs, the Guided Tour paragraph of the touch-closure addendum, DR-044's run view, DR-047's Plan footer and DR-057's pill clause, which now reads as the left rail's instance of DR-069. The concept builds are lineage only: no concept class, storage key or script global is a product name here.
 
@@ -105,7 +105,6 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
@@ -199,33 +198,43 @@ plan_unit_id: DR-067
 unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  Everything that floats over the home centre opens in one overlay root with one stacking order (DL-180, DL-185,
-  D27), except the folded rail's side panel, which opens over the centre from the rail's own slot, drawn and fitted
-  by the rail (F3-636, F3-621), above the panels' strips and dividers and below the overlay root. The "+" menu, the "+N" list, tab menus, panel menus, every menu a tab kind opens through the host, drag ghosts
-  and landing previews open in that root, and no tab kind appends an overlay layer of its own to the page or the
-  window. The order is fixed, bottom to top: panel content, then tab strips and dividers, then the overlay root, which
-  sits above the status bar and below the Demo Studio's controls (DR-070), the hover tags and the Guided Tour
-  (F3-635). Hover tags belong to the shell's one hover tag controller (FinalGUISpec F3-523) and the Guided Tour to its own owner; neither
-  joins the overlay root and neither keeps a second stacking order. When the 5.6 Pro chat is ported (ACD-501, D27),
-  its body-portaled popouts (F3-424) and its menus open in the same root and order; the chat keeps no overlay layer
-  and no stacking order of its own. A tab body never draws past its own box except through this root, and Escape
-  closes only the innermost open thing (F3-568).
-  Amended 2026-10-17 (DL-228): above the overlay root the whole window has one order, bottom to top: the
-  notification stage and its inbox (F3-447), the setup resume prompt, the Guided Tour and its page note, the
-  onboarding window with its scrim and the NieR editor panel inside it, then the look cover and the NieR
-  reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape closes only the innermost open
-  thing; the numbers are the rebuild's.
-  Amended 2026-10-29 (PC1, D6/D10, G9; PM7): Work panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner; teardown releases copies/timers. All floating Glass Activity/History/attachment surfaces use the persona/model menu plate token, not new plates.
+canonical_text: 'Everything that floats over the home centre opens in one overlay root with one stacking order (DL-180,
+  DL-185, D27), except the folded rail''s side panel, which opens over the centre from the rail''s own slot, drawn and
+  fitted by the rail (F3-636, F3-621), above the panels'' strips and dividers and below the overlay root. The "+" menu,
+  the "+N" list, tab menus, panel menus, every menu a tab kind opens through the host, drag ghosts and landing previews
+  open in that root, and no tab kind appends an overlay layer of its own to the page or the window. The order is fixed,
+  bottom to top: panel content, then tab strips and dividers, then the overlay root, which sits above the status bar
+  and below the hover tags and the Guided Tour (F3-635). Hover tags belong to the shell''s one hover tag controller (FinalGUISpec
+  F3-523) and the Guided Tour to its own owner; neither joins the overlay root and neither keeps a second stacking order.
+  When the 5.6 Pro chat is ported (ACD-501, D27), its body-portaled popouts (F3-424) and its menus open in the same root
+  and order; the chat keeps no overlay layer and no stacking order of its own. A tab body never draws past its own box
+  except through this root, and Escape closes only the innermost open thing (F3-568). Amended 2026-10-17 (DL-228): above
+  the overlay root the whole window has one order, bottom to top: the notification stage and its inbox (F3-447), the
+  setup resume prompt, the Guided Tour and its page note, the onboarding window with its scrim and the NieR editor panel
+  inside it, then the look cover and the NieR reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape
+  closes only the innermost open thing; the numbers are the rebuild''s. Amended 2026-10-29 (PC1, D6/D10, G9; PM7): Work
+  panel/quit dialog/pop-out view and sheet Pip lift-off use this overlay owner; teardown releases copies/timers. All
+  floating Glass Activity/History/attachment surfaces use the persona/model menu plate token, not new plates. QA round
+  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis for the
+  entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots
+  nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds,
+  preserves pre-existing inert nodes and restores focus/input. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Fixes one overlay root and one stacking order for the home centre and the ported chat."
 split_recommended: false
 depends_on: [DL-180, DL-185, F3-635]
 unblocks: [F3-640, ACD-501]
 acceptance_criteria:
-  - "Every menu, list, drag ghost and landing preview over the home centre opens in the one overlay root."
-  - "No tab kind and, after the port, no part of the 5.6 Pro chat appends its own overlay layer or keeps its own stacking order."
-  - "The order is panel content, then strips and dividers, then the overlay root above the status bar, with the Demo Studio's controls, hover tags and the Guided Tour above it."
+- Every menu, list, drag ghost and landing preview over the home centre opens in the one overlay root.
+- No tab kind and, after the port, no part of the 5.6 Pro chat appends its own overlay layer or keeps its own stacking
+  order.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis
+  for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
+  never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
+- The order is panel content, strips/dividers, the overlay root above the status bar, then shared hover tags and Guided
+  Tour above it.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -379,7 +388,6 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
   - Plans/storage-plan.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/DRY_Rules.md#DR-056
@@ -465,68 +473,49 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-417, ContractName:Plans/FinalGUISpec.md#F3-534, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/DRY_Rules.md#DR-057, ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Decision_Log.md#DL-141
 
-### DR-070 - One Demo Studio For PMConcept7
+### DR-070 - Retired historical identifier
 
 ```yaml
 plan_unit_id: DR-070
-unit_type: invariant
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  PMConcept7 has one Demo Studio (DL-185, D26; Jared: "So that should all just be folded into one demo studio(like 5.6
-  chat's system)."). Every concept surface's demo controls are sections of it: the Guided Tour's and onboarding's,
-  the chat's, the home demos', and later the Orchestrator and Planning Wizard pages'. No surface draws a demo panel,
-  demo bar or demo menu of its own, and when the 5.6 Pro chat is ported its demo controls move into the studio
-  (ACD-501). The studio and everything in it are lab only, in the pattern ACD-474 set for the chat: never a product
-  control, setting, command, wiring row, saved value or test gate, and no canon number comes from a demo control. No
-  product catalog (UI_Command_Catalog, settings_inventory, Wiring_Matrix, touch_closure, storage_value_registry,
-  Automated_Testing_System) names a demo control. Its presentation is F3-649's, and in the concept it sits above the
-  one overlay root (DR-067).
-gui_related: true
-gui_classification_reason: "Fixes one Demo Studio for every PMConcept7 concept surface and keeps it out of the product."
+canonical_text: DR-070 is retired by DL-260, Jared 2026-10-31. The ID remains only for unchanged historical decision
+  references. It defines no active product feature, control, command, setting, schema, wiring, stored state, test obligation
+  or implementation debt.
+gui_related: false
+gui_classification_reason: Historical identifier only; no product UI requirement.
 split_recommended: false
-depends_on: [DL-185]
-unblocks: [ACD-501]
+depends_on: []
+unblocks: []
 acceptance_criteria:
-  - "Every PMConcept7 surface's demo controls are sections of the one Demo Studio; no surface draws a demo panel of its own."
-  - "No command catalog, settings inventory, wiring matrix, touch-closure row, storage registry entry or test gate names a Demo Studio control."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
-risk_class: home_panels_terminal_redesign_drift
-reasoning_tier: high
-context_scope: home_panels_terminal
-implementation_surfaces:
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: exact_key_static_dry_gate_only
+  mode: retired_no_product_work
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26, D27)"
+- Plans/Decision_Log.md#DL-260
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "So that should all just be folded into one demo studio(like 5.6 chat's system)."
-  - "ACD-474"
-  - "F3-649"
+- DR-070
+- DL-260
 negative_constraints:
-  - "Do not give a demo control a command, setting, wiring row, saved value or test gate."
-  - "Do not draw a separate demo panel per surface."
+- Do not reactivate this historical identifier as a product requirement.
 owner_hints:
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
-  - Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-649, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-067
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-067
 
 ### DR-071 - One Opening Module For Everything That Opens In A Panel
 
@@ -720,22 +709,31 @@ plan_unit_id: DR-074
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
-  alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as
-  one cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System
-  SSYS-044 owns which surface may host which row, the bound value and the preview-then-apply transaction;
-  Multi-Account MA-073 owns the switch and warning hold rules, and SSYS-044 consumes them (review r1).
-  usage-feature UF-092, UF-093 and UF-107, UI_Command_Catalog UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix
-  WM-043 and WM-045, Commands_System CS-067 and FinalGUISpec F3-514, F3-515 and F3-628 consume them; where a consumer's wording differs from its owner, the
-  owner wins, and a later edit cites the owner by id instead of restating it.
+canonical_text: 'Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
+  alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as one
+  cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System SSYS-044 owns
+  which surface may host which row, the bound value and the preview-then-apply transaction; Multi-Account MA-073 owns
+  the switch and warning hold rules, and SSYS-044 consumes them (review r1). usage-feature UF-092, UF-093 and UF-107,
+  UI_Command_Catalog UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix WM-043 and WM-045, Commands_System CS-067 and FinalGUISpec
+  F3-514, F3-515 and F3-628 consume them; where a consumer''s wording differs from its owner, the owner wins, and a later
+  edit cites the owner by id instead of restating it. DL-259, Jared 2026-10-31: onboarding.interaction.mode and tour.interaction.mode
+  are two controls over the same Settings-owned global general.interaction.mode, default ELI5, labelled Plain English
+  / Expert. They use the existing Settings preview/apply pair; neither keeps a copied preference, independent default
+  or second writer. The legacy ui.guided_tour.toggle_eli5 adapter forwards to that owner. Chat reply ELI5 and one-extra-reply
+  explanation keep their separate DL-126 owners; tips/help dual copy does not duplicate or rewrite replies.'
 gui_related: true
 gui_classification_reason: One owner for the board commit shape and for hosted Settings controls.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044, and a switch or warning hold by MA-073; a differing consumer sentence does not create a second rule.
+- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044, and a switch or warning hold by MA-073;
+  a differing consumer sentence does not create a second rule.
+- 'DL-259, Jared 2026-10-31: onboarding.interaction.mode and tour.interaction.mode are two controls over the same Settings-owned
+  global general.interaction.mode, default ELI5, labelled Plain English / Expert. They use the existing Settings preview/apply
+  pair; neither keeps a copied preference, independent default or second writer. The legacy ui.guided_tour.toggle_eli5
+  adapter forwards to that owner. Chat reply ELI5 and one-extra-reply explanation keep their separate DL-126 owners;
+  tips/help dual copy does not duplicate or rewrite replies.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -752,9 +750,13 @@ node_compile_hint:
 source_lineage:
 - Plans/Widget_System.md#WS-019
 - Plans/Settings_System.md#SSYS-044
-- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256
-  a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144 (OB-47, OB-48, OB-30; source lineage)
-preserved_exact_tokens: []
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256 a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144
+  (OB-47, OB-48, OB-30; source lineage)
+- Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+preserved_exact_tokens:
+- general.interaction.mode
+- onboarding.interaction.mode
+- tour.interaction.mode
 negative_constraints:
 - "Do not restate the board commit shape or the hosted-control rule in a consumer; cite WS-019 or SSYS-044."
 owner_hints:
@@ -771,42 +773,37 @@ plan_unit_id: DR-075
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  The hosted chat uses one owner for each shared behavior (DL-232). Opening, placement, deduplication,
-  preview, focus and tab chrome are the universal panels' F3-634 and F3-635, never a second chat
-  opener. Look, fonts, NieR parts, first-paint appearance, hover tags and overlay stacking are the
-  app's existing owners (DR-050, DR-054, DR-056, DR-067, DR-072); the hosted chat neither loads its
-  standalone first-paint theme reader nor owns a theme, scene, ground layer or reboot moment. A chat
-  settings sheet and the Settings page edit the same admitted setting through the same Settings
-  transaction; copying a value to a concept renderer is a projection, not another source of truth. The
-  application/project ELI5 default and the active chat's override remain separate. The History default
-  is a starting value only; History pin, chat width and Keep open remain layout view state, and Activity Detail opens full size until closed (G1/G2). Recipe selectors, arbitrary family takes, motion-voice overrides
-  and guided examples belong only to the concept's one Demo Studio (DR-070). The port's class names,
-  DOM roots, JavaScript globals, localStorage keys and build-layer APIs are concept lineage and grant
-  no native API or persistence authority. Integrated concept 59ca2d4382 is assembled from the
-  standalone chat's own module list by pm7-port/tools/chat56_layer.py at opus build step 6b; the port
-  does not maintain a second conversation implementation. Its column layer is
-  div.pm56-frame.pmw-scope#pmw-chat56 containing div.pm56-host#pmRoot inside #chatPanel. Its scoped
-  overlays and effects mount in body > div#pm56-layers.pmw-scope under the host stacking order.
-  This actual wrapper is a concept mounting boundary, not evidence of the product's single overlay
-  root acceptance. Chat CSS is scoped under .pm56-host; column and tab width queries use pm56col and
-  pm56tab containers while app sheets and menus keep window queries. The remaining window-based
-  isPhone helper means full container-based behavior is not yet demonstrated. The hosted build drops
-  the chat's first-paint reader, theme picker and NieR scripts and follows the host's existing look
-  and NieR controllers. SSYS-055 records the project-only adapter and session-only ELI5 limit rather
-  than treating every concept control as a persistent application setting.
-  Amended 2026-10-29 (G1–G3, S1–S9; PM7): Jared G1 B (2026-10-30) restores the view-local Pin/unpin lifetime
-  contract: pinned detail stays open and follows the new thread across switches, while unpinned detail closes
-  on a switch; only the small view is retired. History pin remains local layout state. Pip parts read the same
-  Project row/transaction in every host, never pip-chat:v1 or a second option registry.
+canonical_text: 'The hosted chat uses one owner for each shared behavior (DL-232). Opening, placement, deduplication,
+  preview, focus and tab chrome are the universal panels'' F3-634 and F3-635, never a second chat opener. Look, fonts,
+  NieR parts, first-paint appearance, hover tags and overlay stacking are the app''s existing owners (DR-050, DR-054,
+  DR-056, DR-067, DR-072); the hosted chat neither loads its standalone first-paint theme reader nor owns a theme, scene,
+  ground layer or reboot moment. A chat settings sheet and the Settings page edit the same admitted setting through the
+  same Settings transaction; renderers consume the owner projection without another writer. The application/project ELI5
+  default and the active chat''s override remain separate. The History default is a starting value only; History pin,
+  chat width and Keep open remain layout view state, and Activity Detail opens full size until closed (G1/G2). One shared
+  conversation implementation serves the column, pop-out and hosted views. Each measures its own container and uses the
+  shared overlay root; mount wrappers grant no second layout, theme or persistence owner. Amended 2026-10-29 (G1–G3,
+  S1–S9; PM7): Jared G1 B (2026-10-30) restores the view-local Pin/unpin lifetime contract: pinned detail stays open
+  and follows the new thread across switches, while unpinned detail closes on a switch; only the small view is retired.
+  History pin remains local layout state. Pip parts read the same Project row/transaction in every host, never a second
+  preference or option registry. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
+  requirement.'
 gui_related: true
 gui_classification_reason: Keeps shared host presentation and Settings control ownership single.
 split_recommended: false
-depends_on: [DL-232, DR-050, DR-054, DR-056, DR-067, DR-070, DR-072, SSYS-050]
+depends_on:
+- DL-232
+- DR-050
+- DR-054
+- DR-056
+- DR-067
+- DR-072
+- SSYS-050
 unblocks: []
 acceptance_criteria:
-  - "Changing an admitted preference through either visible surface updates one Settings value and both consumers without a feedback loop."
-  - "No hosted theme store, second tab-placement rule, second hover tag system or second Demo Studio is introduced."
+- Changing an admitted preference through either visible surface updates one Settings value and both consumers without
+  a feedback loop.
+- No hosted theme store, second placement rule, second hover system, conversation owner or persistence writer is introduced.
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -825,8 +822,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b (concept integration lineage, not native API authority)"
   - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept source; not native or final visual verification)"
 preserved_exact_tokens:
-  - "Demo Studio"
-  - "Keep open"
+- Keep open
 negative_constraints:
   - "Do not promote localStorage keys or bridge globals into product contracts."
 compatibility_only_notes: []
@@ -907,11 +903,19 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   L1–L8, X2: one F3-662 loader owner/opt-in/class contract and clock supplies every indeterminate wait with
-  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout
-  skeletons and determinate bars; working status remains st-working. NieR routes to its Diamond
-  owner/fallback. No surface spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30):
-  this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu;
-  chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation.
+  contextual Swing/Think/Hop, per-family timing, size/accessibility and pause gates. Preserve layout skeletons
+  and determinate bars; working status remains st-working. NieR routes to its Diamond owner/fallback. No surface
+  spinner, loader-setting or duplicate thinking/Orbit Pip. L8 B (Jared 2026-10-30): this build removes
+  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and Home
+  PMW.menu delegate to it with no private animation implementation. Q11 B, Jared 2026-10-30: only live Work rows
+  animate, capped to rows on screen. Working, checking and retrying agents use the shared Think loader; running
+  process marks move on the shared document clock. Waiting, waiting-dep, blocked, finished/done, stopped and
+  scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced Motion hold recognizable
+  rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility policy. Lead
+  clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond loader
+  owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing
+  material language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling
+  loop, command, event, setting, state or extra loader owner is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -921,9 +925,11 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Every loader consumer opts into one owner/class/clock rather than implementing a spinner.
-- Skeletons, measured bars and status marks retain their own contracts, including NieR routing.
-- Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers.
+  - "Every loader consumer opts into one owner/class/clock rather than implementing a spinner."
+  - "Skeletons, measured bars and status marks retain their own contracts, including NieR routing."
+  - "Family periods, size gate, accessibility and hidden/drag/Reduced Motion behavior agree across all consumers."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -961,12 +967,38 @@ plan_unit_id: DR-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
-  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage.
-  No consumer owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate
-  ProcessFacts; host monitor owns server/environment resource samples while Resources is open only. Actions
-  route to one owner command/handler; services are read-only and stop lists are generation-bound.
+canonical_text: 'D2/D5–D14, G4/G7: thread Processes, status items/panel, Agents rail, Home Agents board, tray/project
+  badge and composer attention are filtered OperationalAwareness over ObservableWork and registry lineage. No consumer
+  owns a separate list/count/status/needs-you set. Executor/terminal owns subordinate ProcessFacts; host monitor owns
+  server/environment resource samples while Resources is open only. Actions route to one owner command/handler; services
+  are read-only and stop lists are generation-bound. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64):
+  PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js are the shared row/filter/summary
+  adapters. The rail #panel-agents [data-work-rail] keeps its four shelves (Needs you, Active with lineage, Queued, Recently
+  completed); Home dashboard:agents in 30-dashboard.js keeps its frame/filter. Both read PM_WORK and the same needs-you
+  set; the live owner projection and shared clock remain the sole inputs. list refreshes on change, patchTicks updates
+  times/progress/output, hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out
+  ages; Home keeps its short time form. These source adapters demonstrate the projection boundary without certifying
+  native runtime. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and
+  retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting, waiting-dep,
+  blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs and effective Reduced
+  Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the same row renderer and eligibility
+  policy. Lead clarification 1030183348-18bd permits no NieR exemption: a working NieR agent uses its existing Diamond
+  loader owner and L7 part/fallback rules, never animated Pip; running NieR process marks move in their existing material
+  language. The 2200 ms category-head breath remains distinct and below needs-you priority. No polling loop, command,
+  event, setting, state or extra loader owner is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends
+  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
+  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
+  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
+  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
+  read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives
+  a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
+  dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the
+  same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs
+  line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry
+  timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work.
+  Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
+  Activity and the panel.'
 gui_related: false
 gui_classification_reason: Defines owner authority, record semantics or lifecycle.
 split_recommended: false
@@ -975,9 +1007,12 @@ depends_on:
 - SIR-054
 unblocks: []
 acceptance_criteria:
-- Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters.
-- ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity.
-- No surface-private runtime list/stop handler or system-service mutation is introduced.
+  - "Counts, rows, freshness and attention agree across thread/status/panel/rail/board/tray/composer filters."
+  - "ProcessFacts and resource samples resolve their sole Executor/terminal/host owner with stable identity."
+  - "No surface-private runtime list/stop handler or system-service mutation is introduced."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1016,7 +1051,27 @@ canonical_text: >-
   lifecycle, family motion tokens, Reduced Motion settle, drag/hidden pause and teardown. Chat menus.js,
   Usage PMU.menu and Home PMW.menu delegate to that owner instead of carrying duplicate sprout
   implementations. This build closes the former L8 DRY debt. Menus retain their existing items, routing,
-  focus and availability contracts; sharing motion dispatches no command or runtime write.
+  focus and availability contracts; sharing motion dispatches no command or runtime write. L8 B, PM7 Step4,
+  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
+  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
+  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
+  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
+  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
+  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
+  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
+  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
+  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
+  flight. L8 B, joined review fixes at 4c49e10567: opts.origin accepts corner (default), trigger, or
+  {ox,oy,tx,ty,sx,sy}; opts.shown waits for timely painted entrance frames, and close opts.instant settles
+  immediately. The shared --pm6-sprout-fade-in/--pm6-sprout-fade-ease inputs preserve the consumers' fades
+  (160 ms for Home/Usage/chat, 140 ms default). morph(el, from, to, opts) moves the same box between
+  {left,top,width,height} geometries: height-only changes use the shared height spring/size bounce;
+  a level's width/place change uses its opts.shape duration/easing, with the same motion gates.
+  Shared presentation APIs create no new product command or saved key. L8 B, PM7 Step4 final-source alignment,
+  2026-10-30 (integration e9b15abc64): the owner also supplies --pm6-sprout-height-ease. A growing resize may
+  overshoot; a shrinking resize or height-only morph settles without passing below its content. A drag
+  catching an in-flight morph settles it at the end. All editor overflow menus (.pm-ed-overflow-menu) use the
+  same open/close owner, and superseded local styles/lifecycles are retired.
 gui_related: true
 gui_classification_reason: Defines one visible menu motion and lifecycle owner.
 split_recommended: false
@@ -1060,3 +1115,135 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-237, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-439
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+
+
+
+### DR-080 - One Joined-Choice Tray And Option Hint Owner
+
+```yaml
+plan_unit_id: DR-080
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs
+  immediately in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the
+  join, indentation and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage
+  under DL-260). The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring;
+  narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the
+  option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer
+  checks, sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by
+  CERT-1 / srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same
+  selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer
+  hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the
+  Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared
+  option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
+  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating
+  system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
+  protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question
+  affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer
+  engine or sibling-level follow-up. Source API/class names remain lineage only.'
+gui_related: true
+gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
+split_recommended: false
+depends_on:
+- PWIZ-022
+- F3-520
+- F3-663
+- DL-258
+unblocks: []
+acceptance_criteria:
+- 'DL-260: all twelve joined-tray screens use the one shared joined-choice owner; parent edges join with no gap, lower
+  ring or corner overlap in all ten looks.'
+- A narrow parent note is the first line of the tray; keyboard arrows stay in their own list and question controls do
+  not overlap inputs.
+- Functional sections and data remain; explanation-only duplicates use the shared tips.
+- No new setting, command, local action, persisted field or permission is created.
+validation_surfaces:
+- python3 scripts/pm7-qa2-alignment-check.py
+- python3 scripts/pm-shard-plans.py --check
+risk_class: duplicate_choice_presentation
+reasoning_tier: high
+context_scope: qa2_joined_choices
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Concepts/onboarding/opus-5.5/src/js/61-components.js
+node_compile_hint:
+  mode: static_presentation_contract
+  create_worknodes: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md Q7
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md QA round 2
+- Concepts/onboarding/opus-5.5/src/js/61-components.js at 7d586bad18
+- 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
+  joined-choice tray; these source APIs/classes are not native product contracts.'
+preserved_exact_tokens: []
+negative_constraints:
+- Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.
+- Do not remove FileSafe/proxy selectors or identity/receipt data as if they were explanation-only tips.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+```
+
+### DR-081 - One Free Models Catalog And Advanced Disclosure
+
+```yaml
+plan_unit_id: DR-081
+unit_type: ssot_rule
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: 'DL-259 D5, Jared 2026-10-31: one Models-owned Free Models catalog supplies onboarding and Settings.
+  Both show OpenRouter, Groq and NVIDIA up front and place all other currently eligible free providers behind one advanced
+  control, closed by default. The remainder is catalog-driven, with no fixed list/count or second provider registry.
+  Underlying provider/account/auth/billing/readiness identity remains with MS-118/MS-119 and MA-012. Disclosure is local
+  view state, adds no setting, command, effect or permission, and never authenticates every revealed route automatically.'
+gui_related: true
+gui_classification_reason: Shared provider ordering and advanced disclosure across onboarding and Settings.
+depends_on:
+- MS-118
+- MS-119
+- MA-012
+- PWIZ-021
+- SSYS-016
+unblocks: []
+acceptance_criteria:
+- Both surfaces consume the same current eligible catalog and show the same three front providers.
+- One initially closed advanced control reveals the catalog-driven remainder without a fixed provider list/count.
+- Disclosure writes no Settings row and creates no provider account or native command.
+validation_surfaces:
+- python3 scripts/pm7-onboarding-rulings-check.py
+- Plans/product_onboarding_contracts.schema.json
+- Plans/pm7_control_bindings.json
+risk_class: free_catalog_fork
+reasoning_tier: high
+context_scope: shared_free_provider_disclosure
+implementation_surfaces:
+- Plans/Models_System.md
+- Plans/Planning_Wizard.md
+- Plans/Settings_System.md
+- Plans/pm7_control_bindings.json
+node_compile_hint:
+  mode: shared_provider_catalog_rule
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-259
+- user-ruling:2026-10-31-three-front-free-providers-advanced-catalog-remainder
+preserved_exact_tokens:
+- OpenRouter
+- Groq
+- NVIDIA
+- Free Models
+negative_constraints:
+- Do not pin the advanced provider list or its count.
+- Do not infer usable_now from catalog presence.
+owner_hints:
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/Planning_Wizard.md
+```

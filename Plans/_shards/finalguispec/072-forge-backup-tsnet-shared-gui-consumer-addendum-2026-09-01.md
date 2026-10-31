@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37561-L37651
+Source lines: L37887-L38025
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a
 
 F3-528 supersedes only generic GitHub-Actions-shell identity and the older Backup/Remote Access presentation details
 named below. GitHub-specific behavior remains intact inside the selected GitHub automation binding. The selected K3
-Settings layout, PMConcept7 chrome, left-rail placement, exact ten-panel census, eight-theme authority, title-bar
+Settings layout, PMConcept7 chrome, left-rail placement, exact ten-panel census, ten-theme authority, title-bar
 notification stack, sprout inbox, and bottom/status mechanisms remain unchanged.
 
 ### F3-528 - Provider-neutral automation and recovery/connector presentation
@@ -23,52 +23,100 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines, owner-routed
-  Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access connector state in
-  existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections, routes, currentness,
-  availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
-  source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth.
-  Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
-  Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
-  service that opens the chat picker (F3-621), never a native select; picking runs
-  ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
-  field shows only when the project has several bindings; with one, the rail names the service as a fact beside
-  the revision (owner, 2026-10-10).
+  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
+  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access
+  connector state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections,
+  routes, currentness, availability, protected handoffs, ObservableWork phases, alerts, focus, and return
+  context without owning provider, source-control, backup, scheduler, encryption/key, connector, auth, Doctor,
+  notification-store, or status truth. Every packet action remains visibly truthful and unavailable until its
+  owner and central runtime integration exist. Amended 2026-10-09 (DL-162): in the left rail the
+  AutomationBinding selector is a field labelled Automation service that opens the chat picker (F3-621), never a
+  native select; picking runs ui.repository_automation.binding.select and changes nothing else. As
+  Forge_Integrations' route unit says, the field shows only when the project has several bindings; with one, the
+  rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30
+  (DL-257): the current family/variant and inventory census supersede earlier counts.
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
 depends_on: [F3-019, F3-042, F3-043, F3-049, F3-050, F3-229, F3-448, F3-453, F3-460, F3-461, F3-476, F3-481, F3-519, F3-520, F3-522, SSYS-026, PWIZ-025, N2-156, SRV-013, FGI-012, BRS-012, BRS-013, BRS-014, BRS-015, BRS-016, RAS-015]
 unblocks: []
 acceptance_criteria:
-  - The left Activity Bar retains exactly ten canonical occupants and replaces `github_actions` one-for-one with `repository_automation`; label, tooltip, palette, help, route, planned Slint host, order, hidden/More state, keyboard slot, width, dock/undock state, and window identity say `Actions & Pipelines` without adding a forge-specific or second rail icon.
-  - Legacy `github_actions` routes and panel-state keys are migration-read aliases only. They normalize to the same `repository_automation` occupant with a GitHub automation binding, preserve GitHub pins and subview/focus/log position, and never create duplicate panels or discard GitHub Current Branch, Workflows, Settings, rerun, or log-recovery behavior.
-  - The automation header selects an `AutomationBinding` only when multiple services apply. Repository hosting and automation may target different providers/instances; exact project/repository/binding/currentness identity travels in routes and actions rather than being inferred from the Git remote.
-  - Provider-neutral regions cover repository/automation context, current checks, pinned definitions, definitions/workflows/pipelines, runs, gates/approvals, stage/job/step detail when supported, logs/trace, artifacts, manual dispatch, runners/secrets/variables, and external/unsupported explanation. Capability refresh never reorders icons or jumps focus.
-  - Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates `Origin Actions`.
-  - Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`, `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
-  - Restore progress renders the BRS-023 phase-local evidence without inventing future receipts. Only the existing human permission/confirmation flow may display the exact-target emergency alternative after verified recovery-point unavailability; refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback. All command, preview, generation, and evidence rules remain Backup-owned.
-  - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
-  - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities, export is disclosed as a non-restore artifact, and none activates or executes a Project.
-  - Archive retrieval presents capability, wait, possible fee/cost without a hard-coded price, explicit human consent, external-effect/indeterminate outcome, phase-based ObservableWork, cancellation/recovery truth, and exact reverse focus. No billable action starts from visibility or stale projection.
-  - RecoveryKitHandoff is human-only, step-up protected, no-store, initiating-Client bound, non-recordable, and absent from agent/NL/API automation, Doctor, screenshots, recordings, ordinary clipboard history, logs, Chat, Usage, and concept fixtures. It shows masked/non-secret state and never Recovery Key/Kit bytes.
-  - Backup failures and reminders reuse the F3-453 alert store, F3-460 title-bar stack, and F3-461 sprout inbox. Bottom/status may say `Backing up`, `Waiting for source`, `Restore in progress`, or `Backup needs attention`; it does not add a bell, toast center, rail panel, routine `Synced`, or model-token usage statistic.
-  - Remote Access disconnected presentation is exactly `Tailscale` / `Built into Puppet Master` / `Not connected` / `[Set Up]`. Hosted ready, self-hosted Headscale, reauth, connector starting/restarting/crashed/corrupt/protocol-mismatch, route failure, private ready, and hosted Funnel preflight/ready states remain distinct; Headscale never shows Funnel and private access has no normal Serve toggle.
-  - Setup projects the Server-owned connector phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection, and Ready. The operation survives refresh/Client loss while protected browser content remains authorized-Client bound; exact origin/focus return is preserved.
-  - Advanced `Connection engine` may show bounded redacted connector/tsnet build/protocol, control kind, Headscale origin, node/DNS and endpoint IDs, process/IPC/state/listener/binding health, last auth/test, logs, and owner repair/reset routes. It never shows private/auth/pre-auth keys, raw state, reusable authorization URLs, browser content/cookies, IPC secrets, or a backend selector.
-  - Browser copy states that PM-native connector egress does not enroll an ordinary browser; private browser access still needs user-managed reachability or an approved public/other route. Funnel remains hosted-only, public, off by default, consent/preflight gated, and separable from private/LAN/proxy/Remote Link operation.
-  - F3-520 consumes PWIZ-021's eleven-stage main, six-stage connect-existing and explicit-deferred graphs, narrow precommit read/source-auth admission, exact Project commit fence, then paid/free-provider phases. Bootstrap Full Server recovery renders before Product Onboarding after safe local claim; the Product `Restore a backup` route stays Project-scoped, and post-first-Project destination/Recovery Kit setup uses owner projections only.
-  - F3-522 consumes N2-156's independent Backup and connector findings. Optional-off or inapplicable targets do not paint global degradation; Doctor never installs, authenticates, decrypts, unlocks, exports, prunes, restores, or resets identity without an explicit owner-routed destructive flow.
-  - All eight PMConcept7 themes, selected K3 geometry, representative narrow/default/wide widths, variable-height virtualization, keyboard/touch, stable focus, non-color status, screen readers, localization, Reduced Motion, and phase-based non-fake progress apply to every new state. Browser-concept or static fixture results remain `concept_fixture_only`, never native Slint/runtime/visual/security/performance/accessibility evidence.
-  - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler, permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
+- The left Activity Bar retains exactly ten canonical occupants and replaces `github_actions` one-for-one with `repository_automation`;
+  label, tooltip, palette, help, route, planned Slint host, order, hidden/More state, keyboard slot, width, dock/undock
+  state, and window identity say `Actions & Pipelines` without adding a forge-specific or second rail icon.
+- Legacy `github_actions` routes and panel-state keys are migration-read aliases only. They normalize to the same `repository_automation`
+  occupant with a GitHub automation binding, preserve GitHub pins and subview/focus/log position, and never create duplicate
+  panels or discard GitHub Current Branch, Workflows, Settings, rerun, or log-recovery behavior.
+- The automation header selects an `AutomationBinding` only when multiple services apply. Repository hosting and automation
+  may target different providers/instances; exact project/repository/binding/currentness identity travels in routes and
+  actions rather than being inferred from the Git remote.
+- Provider-neutral regions cover repository/automation context, current checks, pinned definitions, definitions/workflows/pipelines,
+  runs, gates/approvals, stage/job/step detail when supported, logs/trace, artifacts, manual dispatch, runners/secrets/variables,
+  and external/unsupported explanation. Capability refresh never reorders icons or jumps focus.
+- Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the
+    selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready
+    remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates
+    `Origin Actions`.
+- Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`,
+  `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates
+  no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
+- Restore progress renders the BRS-023 phase-local evidence without inventing future receipts. Only the existing human
+  permission/confirmation flow may display the exact-target emergency alternative after verified recovery-point unavailability;
+  refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback.
+  All command, preview, generation, and evidence rules remain Backup-owned.
+- Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last
+  complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add
+  Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
+- Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to
+  the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities,
+  export is disclosed as a non-restore artifact, and none activates or executes a Project.
+- Archive retrieval presents capability, wait, possible fee/cost without a hard-coded price, explicit human consent,
+  external-effect/indeterminate outcome, phase-based ObservableWork, cancellation/recovery truth, and exact reverse focus.
+  No billable action starts from visibility or stale projection.
+- RecoveryKitHandoff is human-only, step-up protected, no-store, initiating-Client bound, non-recordable, and absent
+  from agent/NL/API automation, Doctor, screenshots, recordings, ordinary clipboard history, logs, Chat, Usage, and concept
+  fixtures. It shows masked/non-secret state and never Recovery Key/Kit bytes.
+- Backup failures and reminders reuse the F3-453 alert store, F3-460 title-bar stack, and F3-461 sprout inbox. Bottom/status
+  may say `Backing up`, `Waiting for source`, `Restore in progress`, or `Backup needs attention`; it does not add a bell,
+  toast center, rail panel, routine `Synced`, or model-token usage statistic.
+- Remote Access disconnected presentation is exactly `Tailscale` / `Built into Puppet Master` / `Not connected` / `[Set
+  Up]`. Hosted ready, self-hosted Headscale, reauth, connector starting/restarting/crashed/corrupt/protocol-mismatch,
+  route failure, private ready, and hosted Funnel preflight/ready states remain distinct; Headscale never shows Funnel
+  and private access has no normal Serve toggle.
+- Setup projects the Server-owned connector phases Starting Puppet Master connection, Opening Tailscale sign-in, Waiting
+  for authorization, Waiting for device approval, Creating private address, Testing web UI, API, and live connection,
+  and Ready. The operation survives refresh/Client loss while protected browser content remains authorized-Client bound;
+  exact origin/focus return is preserved.
+- Advanced `Connection engine` may show bounded redacted connector/tsnet build/protocol, control kind, Headscale origin,
+  node/DNS and endpoint IDs, process/IPC/state/listener/binding health, last auth/test, logs, and owner repair/reset
+  routes. It never shows private/auth/pre-auth keys, raw state, reusable authorization URLs, browser content/cookies,
+  IPC secrets, or a backend selector.
+- Browser copy states that PM-native connector egress does not enroll an ordinary browser; private browser access still
+  needs user-managed reachability or an approved public/other route. Funnel remains hosted-only, public, off by default,
+  consent/preflight gated, and separable from private/LAN/proxy/Remote Link operation.
+- F3-520 consumes PWIZ-021's eleven-stage main, six-stage connect-existing and explicit-deferred graphs, narrow precommit
+  read/source-auth admission, exact Project commit fence, then paid/free-provider phases. Bootstrap Full Server recovery
+  renders before Product Onboarding after safe local claim; the Product `Restore a backup` route stays Project-scoped,
+  and post-first-Project destination/Recovery Kit setup uses owner projections only.
+- F3-522 consumes N2-156's independent Backup and connector findings. Optional-off or inapplicable targets do not paint
+  global degradation; Doctor never installs, authenticates, decrypts, unlocks, exports, prunes, restores, or resets identity
+  without an explicit owner-routed destructive flow.
+- 'DL-257/Q22: all ten built-in variants across five families, selected K3 geometry, representative narrow/default/wide
+  widths, variable-height virtualization, keyboard/touch, stable focus, non-color status, screen readers, localization,
+  Reduced Motion, and phase-based non-fake progress apply to every new state. Browser-concept or static fixture results
+  remain `concept_fixture_only`, never native Slint/runtime/visual/security/performance/accessibility evidence.'
+- No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain
+  handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler,
+  permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
 validation_surfaces:
-  - Plans/final_gui_interaction_contracts.schema.json
-  - Plans/final_gui_interaction_contract_fixtures.json
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/backup_restore_system_contracts.schema.json
-  - Plans/remote_access_system_contracts.schema.json
-  - future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures
-  - future protected-handoff/no-capture and immutable-snapshot exact-return fixtures
-  - future native Slint eight-theme/width/keyboard/touch/Reduced-Motion/virtualization tests
+  - "Plans/final_gui_interaction_contracts.schema.json"
+  - "Plans/final_gui_interaction_contract_fixtures.json"
+  - "Plans/forge_integration_contracts.schema.json"
+  - "Plans/backup_restore_system_contracts.schema.json"
+  - "Plans/remote_access_system_contracts.schema.json"
+  - "future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures"
+  - "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures"
+  - "future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests"
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers

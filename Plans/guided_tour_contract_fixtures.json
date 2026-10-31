@@ -555,7 +555,20 @@
         "schema_version": "3.0.0",
         "opening_scene": "chat_teacher",
         "top_action_ids": ["ui.guided_tour.toggle_eli5", "ui.guided_tour.pause", "ui.guided_tour.skip"],
-        "eli5": {"control_id": "ui.guided_tour.toggle_eli5", "placement": "top_beside_pause_and_skip", "persistent": true, "called_out_in_opening": true, "changes": "tour_narration_only"},
+        "eli5": {
+          "control_id": "ui.guided_tour.toggle_eli5",
+          "placement": "top_beside_pause_and_skip",
+          "persistent": true,
+          "called_out_in_opening": true,
+          "changes": "shared_interaction_mode",
+          "setting_id": "general.interaction.mode",
+          "default_value": "ELI5",
+          "labels": {
+            "ELI5": "Plain English",
+            "Expert": "Expert"
+          },
+          "dual_copy_scope": "tips_and_help_only"
+        },
         "reduced_motion": {"introduced_in": "chat_opening_eli5_moment", "setting_id": "general.visual.reduce-animations", "owner": "Settings", "tour_write": false, "separate_scene": false, "effective": true, "long_travel_removed": true, "focus_preserved": true, "hierarchy_preserved": true, "announcements_preserved": true, "action_parity_preserved": true},
         "scene_entry": {"target": "guided_tour.chat_teacher.heading", "element": "h2", "tabindex": -1, "focus_exemption": "programmatic-focus-landmark", "automatic_action": false, "pm_hover_tag_opened": false},
         "callout_policy": {"measurement_source": "live_mounted_target", "measured_after_layout": true, "clamped_to_usable_viewport": true, "target_kept_usable": true, "remeasure_triggers": ["page_change", "resize", "scale", "localization", "panel_movement", "target_geometry_change"], "missing_target_disposition": "pause_with_recovery", "transient_geometry_persisted": false, "protected_auth_content_excluded": true},

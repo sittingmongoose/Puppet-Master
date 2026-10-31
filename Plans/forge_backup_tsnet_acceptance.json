@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "created_at": "2026-09-05T00:00:00Z",
   "packet_id": "PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01.zip",
-  "claim_boundary": "Static exact-source custody and owner-reference validation only. All scenarios and requirement mappings remain NOT_RUN; this artifact is not native, provider, network, security, backup/restore, performance, accessibility, visual, motion, readiness, or certification evidence.",
+  "claim_boundary": "Static exact-source custody and owner-reference validation only. All scenarios and requirement mappings remain NOT_RUN; this artifact is not native, provider, network, security, backup/restore, performance, accessibility, visual, motion, readiness, or certification evidence. DL-259 current_requirement_amendments supersede the indicated historical packet clauses; preserved packet bodies and joins remain source custody only, not current authority on those clauses.",
   "source_files": {
     "acceptance_scenarios": {
       "logical_path": "machine/acceptance_scenarios.json",
@@ -5872,6 +5872,38 @@
       ],
       "live_disposition": "implemented",
       "residual_evidence_boundary": "Accepted live canonical owner and schema/fixture coverage is present. This is static contract evidence only; native handlers, provider/network behavior, persistence/recovery execution, security isolation, visual/native Slint proof, performance, and readiness remain separate."
+    }
+  ],
+  "current_requirement_amendments": [
+    {
+      "requirement_id": "TSN-005",
+      "decision_ref": "Plans/Decision_Log.md#DL-259",
+      "owner_plan_units": [
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Planning_Wizard.md#PWIZ-025"
+      ],
+      "requirement": "Hosted Tailscale sign-in occurs on the initiating active device. Server and native PM Client installations own their built-in connection and protected resumable authorization; native apps require no separate Tailscale install.",
+      "acceptance": "Prove owner-isolated native-app connection, protected sign-in continuity and the browser boundary; static contract fixtures do not prove runtime behavior."
+    },
+    {
+      "requirement_id": "TSN-006",
+      "decision_ref": "Plans/Decision_Log.md#DL-259",
+      "owner_plan_units": [
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Planning_Wizard.md#PWIZ-025"
+      ],
+      "requirement": "Hosted Tailscale and user-supplied Headscale use the same owner-qualified Server/native Client connector. Headscale has protected registration and no Funnel; plain browser tabs have no embedded connection.",
+      "acceptance": "Prove owner-isolated native-app connection, protected sign-in continuity and the browser boundary; static contract fixtures do not prove runtime behavior."
+    },
+    {
+      "requirement_id": "TSN-009",
+      "decision_ref": "Plans/Decision_Log.md#DL-259",
+      "owner_plan_units": [
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Planning_Wizard.md#PWIZ-025"
+      ],
+      "requirement": "Windows/macOS/Linux native PM apps ship their own signed Go/tsnet helper and sign in once, without a separate Tailscale install or host-network mutation. Plain browsers use Remote Link or a private endpoint reachable through the device’s Tailscale.",
+      "acceptance": "Prove owner-isolated native-app connection, protected sign-in continuity and the browser boundary; static contract fixtures do not prove runtime behavior."
     }
   ]
 }

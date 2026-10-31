@@ -196,6 +196,18 @@ def validate(data: dict[str, Any], schema: dict[str, Any], source_root: Path | N
         add(failures, "requirement_join_set_or_order_mismatch", "Requirement joins must cover each exact requirement once in source order")
 
     requirements_by_id = {row.get("id"): row for row in requirements if isinstance(row, dict)}
+    amendments = data.get("current_requirement_amendments", [])
+    amended_ids = [row.get("requirement_id") for row in amendments if isinstance(row, dict)]
+    if amended_ids != ["TSN-005", "TSN-006", "TSN-009"]:
+        add(failures, "current_amendment_set_invalid", "DL-259 must amend exactly TSN-005/006/009 in order")
+    for amendment in amendments:
+        if not isinstance(amendment, dict):
+            continue
+        if amendment.get("requirement_id") not in requirements_by_id:
+            add(failures, "amended_requirement_missing", "Current amendment has no preserved source requirement")
+        validate_owner_ref(amendment.get("decision_ref"), failures)
+        for ref in amendment.get("owner_plan_units", []):
+            validate_owner_ref(ref, failures)
     joins_by_id = {row.get("requirement_id"): row for row in joins if isinstance(row, dict)}
     scenario_edge_set: set[tuple[str, str]] = set()
     evidence_count = 0

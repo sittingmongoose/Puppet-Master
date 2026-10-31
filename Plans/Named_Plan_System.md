@@ -88,7 +88,7 @@ Singleton legacy Project planning state becomes one `Imported Plan` only when al
 
 Structural tests validate all schema definitions and fixtures, immutable ID under rename, duplicate names, create idempotency, wrong-Project parent rejection, current/historical ref integrity, one-primary-PRD rule, archive/restore, active-child warning, phase/currentness conflict, command-disabled behavior before catalog registration, event-disabled behavior before EventRecord registration, singleton/multiple-cluster migration, alias collision/quarantine, and no-secret records.
 
-GUI/behavior tests cover switcher grouping and search; explicit Project/Plan scope; create/rename/archive/restore; background continuity while switching; state restoration; stale refresh/focus protection; seven Orchestrator tabs as consumer; precise waiting copy; large virtualized lists; six widths; eight themes; keyboard/screen reader; Reduced Motion; interruption/reversal/rapid switching; Slint portability; and no fake success. Static validation is not runtime registration, persistence, GUI, migration, event, wiring, or buildability proof.
+GUI/behavior tests cover switcher grouping and search; explicit Project/Plan scope; create/rename/archive/restore; background continuity while switching; state restoration; stale refresh/focus protection; seven Orchestrator tabs as consumer; precise waiting copy; large virtualized lists; six widths; ten themes; keyboard/screen reader; Reduced Motion; interruption/reversal/rapid switching; Slint portability; and no fake success. Static validation is not runtime registration, persistence, GUI, migration, event, wiring, or buildability proof.
 
 ## 7. PlanUnits
 
@@ -469,3 +469,6 @@ owner_hints:
   - Plans/Plan_To_Node_Compilation.md
   - Plans/Planning_Wizard.md
 ```
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

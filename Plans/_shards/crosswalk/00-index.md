@@ -1,29 +1,29 @@
 # Shard Index: Plans/Crosswalk.md
 
-Generated: 2026-10-29T22:47:24Z
+Generated: 2026-10-31T05:00:42Z
 
-Source SHA256: `cb2cf76956a56ead164c2f35a0d529e59e80ff5998be1c4d45bb74996fcff053`
+Source SHA256: `4271a292db2942add71690d32a4b73f8fb1713da26a690d3012ad2ca27033156`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `1ba15a3a09d498a59d8d6a1bb053c2b351e34253207840532fe12aebae46550a`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `dab9f7a8f1aab5e495bfd4ea98d868cfc33303a76bb10b6f8b3523d3e09966db`
-- [003 - 0. Scope](003-0.-scope.md) L25-L31 `95b72b4c7801141e425c85fa76cfc28f9439440140b05e02c451a3d1487a5c85`
-- [004 - 1. Precedence (anti-drift)](004-1.-precedence-anti-drift.md) L33-L50 `d04893351bc75d581161e43066ff7cad7467f3b98f68ec3cbdffb6e23af7e4c7`
-- [005 - 2. Primitive index (definitions are DRY)](005-2.-primitive-index-definitions-are-dry.md) L52-L384 `a25620ffb78b0c34c0fd5707b96f11168a2f33a9f125f1c48e2e9998f5920584`
-- [006 - References](006-references.md) L386-L459 `b25c0362fa501e4de2d8986230155453f0410fb6e84a747149ff90d43568202c`
-- [007 - Recovery Terminology Canonical Alignment (2026-03-08)](007-recovery-terminology-canonical-alignment-2026-03-08.md) L461-L472 `fa048f26d92969322d06fc522bab45acf82c1f62eed87672e7986d49c66ce782`
-- [008 - Runtime Scheduler / Recovery Ownership and Precedence](008-runtime-scheduler-recovery-ownership-and-precedence.md) L473-L490 `33ae270fecb4ec1b8426effa8938670c1c684deb570046011c31ea50666148ac`
-- [009 - Source Control, Actions & Pipelines, and Docker Manager Ownership Addendum (2026-03-12; scoped supersession 2026-09-01)](009-source-control-actions-pipelines-and-docker-manager-ownership-ad.md) L492-L560 `b5a81a2d00f62e64034c2680b8bbc48b36c414830d71b6e2194d342cfa8791b7`
-- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L562-L566 `4a494825124c45cad869b0a0735f2132ea4ce4688c86cb46167d109f412b46d3`
-- [011 - PlanUnits](011-planunits.md) L568-L3239 `ef43b8a9894f4a0abc65748b92bff546bce363ae52c0e246b5e6541ee6f0d10d`
-- [012 - Migration Coverage](012-migration-coverage.md) L3241-L3251 `05d79fc456f43fd46befa8fceae040268b3af6990b8548b5ceffafd73d2ccb56`
-- [013 - Ledger Compile Addendum - pldg-20260614-001](013-ledger-compile-addendum-pldg-20260614-001.md) L3253-L3290 `71d1d274359aafcfb7401decaf03d7e39b5a028f29615c728faed5ad84993bc6`
-- [014 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3293-L3368 `82f3a4557c1344820b3ef9a29e3463f6eaa57e127ae88d278941810e44750f5c`
-- [015 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3370-L3374 `fd79f2d54c795358f3e4d9c399979f3ab4495882f3187d87e24ba12d0f3c46fd`
-- [016 - Touch Closure Authority Addendum - 2026-09-01](016-touch-closure-authority-addendum-2026-09-01.md) L3376-L3437 `934066ecd98cd9ce7e8ec93825fb25b61a91a5db4e525888d0daa2b9a2fc9d8b`
-- [017 - Forge/Backup/tsnet Owner And Route Reconciliation Addendum - 2026-09-01](017-forge-backup-tsnet-owner-and-route-reconciliation-addendum-2026-.md) L3439-L3522 `ac059e61476769e7b8fb9b3231b6347a58583d2abd5c9a9c0ada11b039f8f1aa`
-- [018 - Puppet Master Assistant Redesign Ownership Routing - 2026-09-03](018-puppet-master-assistant-redesign-ownership-routing-2026-09-03.md) L3524-L3545 `0554d68d331cceebc86c03d845367143f41fd55a37b29ee0f3b5db3be8e28d6a`
-- [019 - DL-180 to DL-185 — Who Owns The Home Panels, Tabs And Terminal Now (2026-10-09)](019-dl-180-to-dl-185-who-owns-the-home-panels-tabs-and-terminal-now-.md) L3547-L3568 `3f1eb05dd4c1d2a38e25ab022e949ea27df1fd86488cee75ea2b5479149b0f4b`
+- [001 - Preamble](001-preamble.md) L1-L1 `344d9dfdbbfb0cfe11c68009319e27e904c6e97e01166dc8d4d6bb74caf5fbd2`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L23 `f665563e241fa51c42bb22a96e1b1ded7b4eaa6026293bc6c317fe89124b3245`
+- [003 - 0. Scope](003-0.-scope.md) L25-L31 `fdae0bcc7feacc902fd690c3e98d464f189bc27dc2342ffe14318f139d612821`
+- [004 - 1. Precedence (anti-drift)](004-1.-precedence-anti-drift.md) L33-L50 `53ab81a4c1508bd762add37bbf426a41b2f3b024fba73e99814aafe1a0ffa3c9`
+- [005 - 2. Primitive index (definitions are DRY)](005-2.-primitive-index-definitions-are-dry.md) L52-L384 `933ba4e40aa42eac14dee80164476287fc9e50411dcda6dfd0145d97c536c3e1`
+- [006 - References](006-references.md) L386-L459 `612889dd2d5bdf170950414695a44881683c1bd0a5922033270a2f3b143827d7`
+- [007 - Recovery Terminology Canonical Alignment (2026-03-08)](007-recovery-terminology-canonical-alignment-2026-03-08.md) L461-L472 `1f59f3c863b9bb1ceaddd45d2bc6b5c46d14dedd9f5b981d34ad1eae2f490d5c`
+- [008 - Runtime Scheduler / Recovery Ownership and Precedence](008-runtime-scheduler-recovery-ownership-and-precedence.md) L473-L490 `6c2b1316aeee3cf7de1c894b5a9b2202b7f191b1d8babf5281397587977acecb`
+- [009 - Source Control, Actions & Pipelines, and Docker Manager Ownership Addendum (2026-03-12; scoped supersession 2026-09-01)](009-source-control-actions-pipelines-and-docker-manager-ownership-ad.md) L492-L560 `5f595cc3e2d242152d35b535e69322798dbc78a9c89054db25595744e7eec8c3`
+- [010 - Owner / Consumer Map](010-owner-consumer-map.md) L562-L566 `d993d61a50dd4623fd6c86b0a42a14296f122f7222dd86dc3102eaa5f0dd507d`
+- [011 - PlanUnits](011-planunits.md) L568-L3239 `1048d0e9adca9c137faad2d7819a3fe13e9338aea6cc0a043a0c6b9c7f3e5a14`
+- [012 - Migration Coverage](012-migration-coverage.md) L3241-L3251 `7d4defb187e00ae98ce78d1005580030efac4a9d10122517f16aa32617ded430`
+- [013 - Ledger Compile Addendum - pldg-20260614-001](013-ledger-compile-addendum-pldg-20260614-001.md) L3253-L3290 `97171d2ff90f4cd6952456a191e047780c88b2c11f91241bd3a8379f1d8abe6a`
+- [014 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3293-L3368 `e0885c4fa631a3dd0c3f1946e95ccdf0e43c9d7725b2daf5eb57335272db7ad2`
+- [015 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3370-L3374 `adc11a6b1c033183da79667784f1553fb189b83605559c6584e2ac206a04ffce`
+- [016 - Touch Closure Authority Addendum - 2026-09-01](016-touch-closure-authority-addendum-2026-09-01.md) L3376-L3437 `f507cecc8532e57bf06e2db2154bb31f4fc512dca9ac597e4e916f46899345d9`
+- [017 - Forge/Backup/tsnet Owner And Route Reconciliation Addendum - 2026-09-01](017-forge-backup-tsnet-owner-and-route-reconciliation-addendum-2026-.md) L3439-L3522 `9e7ba4d0172ab36eb7534135902bbe574f3cfa1eb47ce7510eec05873129f66a`
+- [018 - Puppet Master Assistant Redesign Ownership Routing - 2026-09-03](018-puppet-master-assistant-redesign-ownership-routing-2026-09-03.md) L3524-L3545 `fe865e0292ae01e61b5e3aaf75dd20618e64031bea1c66c64fe89f89f2893f37`
+- [019 - DL-180 to DL-185 — Who Owns The Home Panels, Tabs And Terminal Now (2026-10-09)](019-dl-180-to-dl-185-who-owns-the-home-panels-tabs-and-terminal-now-.md) L3547-L3571 `75e55b3d02a8361a45d9cd3f82aa4af876c42ca2d3c730baa4843e2789bf0d0c`

@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L834-L4684
+Source lines: L840-L4806
 
-Source SHA256: `181b1cea7944f86544de9675e1c5d25d6becae40f626900d1f8a64f82be2240e`
+Source SHA256: `21313ef39113eff15e627a0f7265d0349a3c443825de4807478ba4b5dbdefc18`
 
 ---
 
@@ -688,13 +688,23 @@ plan_unit_id: MA-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: >-
-  Each provider entry represents one concrete runtime surface, not a loose vendor family label. provider_family_id is
-  additive grouping metadata and must not replace provider_entry_id. Provider entries declare allowed auth_surface values,
-  preserve provider_entry_id, provider_family_id, and transport_kind, keep provider_identity descriptive and provider-native,
-  and preserve direct coding-plan provider boundaries for MiniMax, Z.AI, Zhipu AI, and Alibaba coding-plan endpoints and keys.
-gui_related: false
-gui_classification_reason: The unit defines provider registry identity and API boundaries rather than GUI presentation.
+canonical_text: 'Each provider entry represents one concrete runtime surface, not a loose vendor family label. provider_family_id
+  is additive grouping metadata and must not replace provider_entry_id. Provider entries declare allowed auth_surface
+  values, preserve provider_entry_id, provider_family_id, and transport_kind, keep provider_identity descriptive and
+  provider-native, and preserve direct coding-plan provider boundaries for MiniMax, Z.AI, Zhipu AI, and Alibaba coding-plan
+  endpoints and keys. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with
+  API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning team; these
+  remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced optional
+  CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for
+  Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba
+  Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as
+  a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label
+  change never changes a saved provider/account ID. DL-259 P17: provider-entry identifiers are typed non-secret IDs;
+  a Token Plan name or ID is not a credential field. Secret filtering acts on the declared credential fields and channels,
+  without rejecting a registered ID because its spelling contains token.'
+gui_related: true
+gui_classification_reason: Provider entries, current display names, setup choices and billing identity appear in Settings
+  and onboarding.
 split_recommended: false
 depends_on:
 - MA-011
@@ -706,6 +716,17 @@ acceptance_criteria:
 - transport_kind remains direct_api, cli_runtime, or server_bridge.
 - Coding-plan provider identities preserve vendor-specific API boundaries.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
+- 'DL-259 P17: provider-entry identifiers are typed non-secret IDs; a Token Plan name or ID is not a credential field.
+  Secret filtering acts on the declared credential fields and channels, without rejecting a registered ID because its
+  spelling contains token.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -830,12 +851,16 @@ plan_unit_id: MA-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: >-
-  credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path, with supported
-  stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
-  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported
-  auth_surface values so the HTTP client can attach credentials correctly and account validation rejects incompatible
-  pairings early.
+canonical_text: 'credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path,
+  with supported stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
+  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported auth_surface
+  values so the HTTP client can attach credentials correctly and account validation rejects incompatible pairings early.
+  DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity.'
 gui_related: false
 gui_classification_reason: The unit defines credential indirection and validation semantics rather than GUI presentation.
 split_recommended: true
@@ -849,6 +874,12 @@ acceptance_criteria:
 - query_param remains deprecated and warns before use.
 - Provider definitions validate supported auth_surface values early.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2526,9 +2557,27 @@ plan_unit_id: MA-040
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Provider/account setup flows distinguish authentication from readiness. Account/profile GUI state machines
+canonical_text: 'Provider/account setup flows distinguish authentication from readiness. Account/profile GUI state machines
   retain provider-specific state for logged-out, logging-in, logged-in, needs-setup, validating, ready, expired, failed,
-  logging-out, and disabled labels, and PM does not collapse logged-in, entitlement, billing, or partial setup states into Ready.
+  logging-out, and disabled labels, and PM does not collapse logged-in, entitlement, billing, or partial setup states
+  into Ready. DL-259, Jared 2026-10-31: D4: confirm provider admission and executable conformance immediately before
+  building Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or
+  caveats. This scheduling decision does not change per-account authentication, entitlement, health or quota truth: Ready
+  is the shared account owner’s current usable result, not merely signed in. D6 A: the human signs in on the initiating
+  active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots
+  stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host.
+  Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name
+  booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule,
+  Kimi Code’s client/session identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential.
+  This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice. DL-259 P10, 2026-10-31:
+  every provider API-key row explains that the input is a key rather than the person’s password and offers Get a key
+  through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 gui_related: true
 gui_classification_reason: The unit defines user-visible setup/readiness states and GUI state machine labels.
 split_recommended: true
@@ -2542,6 +2591,25 @@ acceptance_criteria:
 - Provider-specific entitlement/billing can keep an account in Needs setup after auth succeeds.
 - The GUI state machine preserves provider-specific degraded states.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: D4: confirm provider admission and executable conformance immediately before building Puppet
+  Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling
+  decision does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account
+  owner’s current usable result, not merely signed in. D6 A: the human signs in on the initiating active device while
+  the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool
+  on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings,
+  model selection and Usage share stable account/profile/host/environment references, never provider-name booleans or
+  copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution
+  host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct
+  identity.'
+- 'DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
+  identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
+  provider-conformance checklist, not a wizard warning, badge or disabled choice.'
+- 'DL-259 P10, 2026-10-31: every provider API-key row explains that the input is a key rather than the person’s password
+  and offers Get a key through that exact provider/account route’s official console or key-creation guide. Reuse cmd.auth_profile.open_official_page
+  and MACS-003/004 with the owner-verified official-source policy, exact initiating active Client, protected handoff
+  and exact return. Returning from that page proves neither a created key nor authentication/readiness; key entry and
+  verification remain the existing secure credential-owner flow. No fixed URL registry, sample key or new command is
+  admitted.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2555,6 +2623,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0027
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md P10 — exact official key acquisition and
+  category return; product-only source, no hints/sample keys.
 preserved_exact_tokens:
 - Logged out
 - Logged Out
@@ -2712,9 +2782,17 @@ plan_unit_id: MA-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Provider-specific setup choices preserve Codex ChatGPT/API-key account entry labels and helper text, root-backed
-  Fresh Login and Import Existing Auth modes, direct coding-plan provider API-key setup rows, remediation actions valid
-  for the selected provider entry/account state, and explicit billing-entity refresh cadence.
+canonical_text: 'Provider-specific setup choices preserve Codex ChatGPT/API-key account entry labels and helper text,
+  root-backed Fresh Login and Import Existing Auth modes, direct coding-plan provider API-key setup rows, remediation
+  actions valid for the selected provider entry/account state, and explicit billing-entity refresh cadence. DL-259, Jared
+  2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its default auth surface.
+  A user key bills that user’s plan and a service-account key its owning team; these remain distinct account/billing
+  identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it does not rename
+  or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan, a monthly-credit
+  subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and DashScope pay-as-you-go.
+  MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search alias; OpenCode Console
+  replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes a saved provider/account
+  ID.'
 gui_related: true
 gui_classification_reason: The unit defines user-visible provider setup choices, helper text, and remediation actions.
 split_recommended: true
@@ -2728,6 +2806,14 @@ acceptance_criteria:
 - Fresh Login, Import Existing Auth, and Environment/API-Key Setup remain provider-specific.
 - Invalid remediation actions are hidden rather than generalized.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2839,9 +2925,15 @@ plan_unit_id: MA-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Authentication walkthroughs define PM-side orchestration around provider-native auth mechanisms. Every account
-  setup/auth flow surfaces its active auth path, token refresh is either PM-managed or visibly delegated, and credential
-  expiry produces user-visible notification and recovery action instead of silently degrading the account row.
+canonical_text: 'Authentication walkthroughs define PM-side orchestration around provider-native auth mechanisms. Every
+  account setup/auth flow surfaces its active auth path, token refresh is either PM-managed or visibly delegated, and
+  credential expiry produces user-visible notification and recovery action instead of silently degrading the account
+  row. DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the
+  selected execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct
+  API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and
+  Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected
+  returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account,
+  host or route invalidates stale validation; another account of the same provider has a distinct identity.'
 gui_related: true
 gui_classification_reason: The unit covers user-visible auth path disclosure, expiry notification, and recovery actions.
 split_recommended: false
@@ -2855,6 +2947,12 @@ acceptance_criteria:
 - Token refresh ownership is visible.
 - Credential expiry is visible and recoverable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2896,9 +2994,15 @@ plan_unit_id: MA-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: API-key setup lets the user select API Key, enter the key in a secure input, validate it with a lightweight
+canonical_text: 'API-key setup lets the user select API Key, enter the key in a secure input, validate it with a lightweight
   provider call, store the key in the OS credential store on success, write the resulting credential_ref, mark the account
-  active, and keep failed setup recoverable with a concrete reason.
+  active, and keep failed setup recoverable with a concrete reason. DL-259, Jared 2026-10-31: D6 A: the human signs in
+  on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private
+  account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store
+  on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
+  never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity.'
 gui_related: true
 gui_classification_reason: The unit covers the visible API-key setup flow and secure input behavior.
 split_recommended: false
@@ -2912,6 +3016,12 @@ acceptance_criteria:
 - Secret material is stored in the OS credential store.
 - Failure reasons are concrete and recoverable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2953,9 +3063,12 @@ plan_unit_id: MA-047
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: OAuth device-code setup requests a provider device code, shows the device code, verification URL, and QR code,
-  lets the user complete authorization outside PM, polls for the token every five seconds for up to five minutes, stores
-  refresh tokens in the OS credential store, keeps short-lived access tokens in memory only, and exposes clear retry on failure.
+canonical_text: 'OAuth device-code setup requests a provider device code, shows the device code, verification URL, and
+  QR code, lets the user complete authorization outside PM, polls for the token every five seconds for up to five minutes,
+  stores refresh tokens in the OS credential store, keeps short-lived access tokens in memory only, and exposes clear
+  retry on failure. DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling
+  device-code login in ChatGPT security settings first, or the corresponding workspace permission by its administrator.
+  This remains an alternative inside Sign in with ChatGPT, not another top-level auth family.'
 gui_related: true
 gui_classification_reason: The unit covers visible device-code, URL, QR, timeout, and retry behavior.
 split_recommended: false
@@ -2969,6 +3082,9 @@ acceptance_criteria:
 - Token polling cadence and timeout remain explicit.
 - Refresh tokens and access tokens use the specified storage/cache split.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
+  in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
+  alternative inside Sign in with ChatGPT, not another top-level auth family.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

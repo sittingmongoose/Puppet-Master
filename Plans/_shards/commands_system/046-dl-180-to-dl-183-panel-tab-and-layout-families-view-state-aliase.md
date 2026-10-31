@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7648-L7997
+Source lines: L7781-L8123
 
-Source SHA256: `1fc0e0187776d4122f8df57d459e7c146f7b557025eceb9ce611513b18aa5a6c`
+Source SHA256: `e5441e9674a932b2ef647a474c816f795128574b7e2ee9e31666e8f08de3ae4c`
 
 ---
 
@@ -275,46 +275,40 @@ plan_unit_id: CS-102
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its
-  expected_state_hash guards the editor tab's saved nonstructural state; a mismatch refuses as
-  stale_projection, a replay with the same idempotency key returns the existing receipt, and
-  conflicting reuse refuses. Validation/permission, bounded serialization, write and readback
-  complete before applied is returned; failure retains or restores the earlier state.
-  Plans/editor_appearance.schema.json closes fields and fixed failure reasons; no arbitrary code,
-  path payload or unknown field is accepted. UI_Command_Catalog remains the only command minter.
-  ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token and
-  try_sample are typed local actions, parameterized by editor/terminal and target tab where
-  available; Indentation opens the same editor screen at its indentation group. Scope selection is
-  saved tab view state only when invoked from that tab; Settings' All entry is temporary.
-  ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read (the inbox header's Mark all read,
-  marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and explain_state
-  operate the one shared inbox's presentation/read projection and never resolve its source.
-  Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
-  dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
-  keyboard gallery navigation before selection, change-meter display, drag previews, glow and timer
-  suspension dispatch nothing and write nothing. Choosing a background file returns a validated
-  owner asset reference then uses the selected scope's writer; importing a scheme uses the existing
-  import command. Sample cursor/caret, bell, typing, problem and Step back trials affect only
-  isolated sample state. Committed quick sets, reset, fields and token edits always use UCC-204's
-  writers, never a view-local bypass. The production/exclusion census is WM-093/UIW-043 and
-  Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and
-  cmd.theme.preview; it is not normalized to the internal Settings preview command. The retained
-  scheme-preview local actions belong only to the editor/terminal Customize screens.
-  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
-  ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix.
-  Unlike a transient preview, they persist only SP-331's computer-local preset library, with its
-  validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
-  Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
-  through a local action.
-  Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
-  and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
-  Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5, the left rail review copy's
-  concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200's focus panel N, and no
-  rebuild or fixture inherits the collision. Alt+Shift+L, the former Liquid Glass demonstration
-  toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
-  option 1). Neither a local action nor a command may select a material off state or old Glass
-  fallback; F3-652 always supplies the Glass look's Liquid Glass material.
+canonical_text: 'UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its expected_state_hash
+  guards the editor tab''s saved nonstructural state; a mismatch refuses as stale_projection, a replay with the same
+  idempotency key returns the existing receipt, and conflicting reuse refuses. Validation/permission, bounded serialization,
+  write and readback complete before applied is returned; failure retains or restores the earlier state. Plans/editor_appearance.schema.json
+  closes fields and fixed failure reasons; no arbitrary code, path payload or unknown field is accepted. UI_Command_Catalog
+  remains the only command minter. ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token
+  and try_sample are typed local actions, parameterized by editor/terminal and target tab where available; Indentation
+  opens the same editor screen at its indentation group. Scope selection is saved tab view state only when invoked from
+  that tab; Settings'' All entry is temporary. ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read
+  (the inbox header''s Mark all read, marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and
+  explain_state operate the one shared inbox''s presentation/read projection and never resolve its source. Mark_visible_read
+  names only notices actually shown for the F3-453 dwell. No catalog row, dispatcher receipt or domain event belongs
+  to these ui.* ids. Picker/menu openings, hover, keyboard gallery navigation before selection, change-meter display,
+  drag previews, glow and timer suspension dispatch nothing and write nothing. Choosing a background file returns a validated
+  owner asset reference then uses the selected scope''s writer; importing a scheme uses the existing import command.
+  Sample cursor/caret, bell, typing, problem and Step back trials affect only isolated sample state. Committed quick
+  sets, reset, fields and token edits always use UCC-204''s writers, never a view-local bypass. The production/exclusion
+  census is WM-093/UIW-043 and Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and cmd.theme.preview;
+  it is not normalized to the internal Settings preview command. The retained scheme-preview local actions belong only
+  to the editor/terminal Customize screens. ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete
+  and ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix. Unlike a transient
+  preview, they persist only SP-331''s computer-local preset library, with its validation/readback and no dispatcher
+  receipt or event. Naming/selection/search remain view-local. Applying a preset always uses UCC-204''s existing This
+  or All writer and never writes appearance through a local action. Amended 2026-10-17 (DL-228): background design tiles
+  preview through the same ui.appearance.preview_scheme and cancel_preview as scheme tiles, after the same 110 ms rest
+  (F3-642). ui.terminal.degauss is the Retro Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5,
+  the left rail review copy''s concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200''s focus panel
+  N, and no implementation inherits the collision. Neither a local action nor a command may select a material off state
+  or old Glass fallback; F3-652 always supplies the Glass look''s Liquid Glass material. F3-1/F3-5, 2026-10-30: a staged
+  notice card takes no clicks during entry or exit on every page, Usage included. Its existing body/action/dismiss click
+  routes stay inactive, with no queued or duplicate dispatch and no late reactivation of a leaving card. Reduced Motion
+  settles instantly after placement; still-pending placement and exit stay guarded. This transient presentation gate
+  adds no action, command, receipt or domain event. Amended DL-260, Jared 2026-10-31: only real product behavior remains
+  an implementation requirement.'
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false
@@ -354,7 +348,6 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Commands_System.md
-
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Wiring_Matrix.md#WM-093

@@ -2,15 +2,15 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27534-L27610
+Source lines: L27540-L27616
 
-Source SHA256: `18361d7f7e137b4d8f41ee4d70e0b9c8e3f59db1e80ae3ff091b5e1c7d7d87ea`
+Source SHA256: `e7220edd0866b63cc8dbcc96ddeeb464626c05030c33176c35751d179009ded6`
 
 ---
 
 ## Chat Tweaks Addendum (2026-10-08)
 
-This addendum carries DL-147's subagent decision into this owner. What opening a subagent does is ACD-485's; how the live transcript looks is FinalGUISpec F3-593's. The 5.6 Pro concept is source lineage only, and its lab tools stay excluded by ACD-474.
+This addendum carries DL-147's subagent decision into this owner. What opening a subagent does is ACD-485's; how the live transcript looks is FinalGUISpec F3-593's. The 5.6 Pro concept is source lineage only.
 
 ### ACD-485 - A Subagent Opens As A Read-Only Live Child Transcript
 

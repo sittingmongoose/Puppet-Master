@@ -1102,11 +1102,20 @@ def pairwise_invariant_is_violated(left: Any, right: Any) -> bool:
 
 
 def server_remote_semantic_failures(definition_name: str, value: Any) -> list[str]:
-    """Evaluate the two cross-field laws JSON Schema annotations cannot express."""
+    """Evaluate return-context and DL-259 connector-owner identity joins."""
 
     if not isinstance(value, dict):
         return []
     failures: list[str] = []
+    if value.get("connector_owner") == "native_client":
+        owner = value.get("owner_client_id")
+        # A local native connector belongs to this installation. The Server
+        # command path still permits a distinct initiating remote Client.
+        if "client_id" in value and owner != value["client_id"]:
+            failures.append("native_connector_client_owner_mismatch")
+        for field in ("initiating_client_id", "authorized_client_id"):
+            if value.get(field) is not None and value[field] != owner:
+                failures.append("native_connector_client_owner_mismatch")
     if definition_name == "command_result":
         output = value.get("output")
         if not isinstance(output, dict) or value.get("command_id") != output.get("action"):
@@ -1119,6 +1128,10 @@ def server_remote_semantic_failures(definition_name: str, value: Any) -> list[st
             exact_fields = ("command_id", "command_instance_id", "correlation_id", "return_context")
             if any(request.get(field) != result.get(field) for field in exact_fields):
                 failures.append("exact_return_context")
+            if (request.get("connector_owner", "server") != result.get("connector_owner", "server")
+                    or any(request.get(field) != result.get(field)
+                           for field in ("owner_client_id", "native_installation_ref", "server_id"))):
+                failures.append("exact_connector_owner_context")
             output = result.get("output")
             if not isinstance(output, dict) or result.get("command_id") != output.get("action"):
                 failures.append("command_action_parity")

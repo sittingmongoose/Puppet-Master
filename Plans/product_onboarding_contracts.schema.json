@@ -834,10 +834,11 @@
         },
         "theme_family": {
           "enum": [
+            "basic",
             "friendly",
             "glass",
             "retro",
-            "basic"
+            "nier"
           ]
         },
         "theme_mode": {
@@ -899,7 +900,8 @@
           ]
         },
         "filesafe": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "DL-259 D8 A: one requested switch for command blocklist, write scope, security filter and pre-write safe points; effective mandatory/fail-closed policy still wins."
         },
         "online_mode": {
           "enum": [
@@ -1147,7 +1149,6 @@
           "oneOf": [
             {
               "enum": [
-                "generate_for_server",
                 "generate_only",
                 "existing_proxy"
               ]
@@ -1155,23 +1156,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "DL-259 CERT-1 / srv C1: write/export the file for the person to install, or check their existing proxy. PM-managed proxy hosting is removed."
         },
         "proxy_hostname": {
           "$ref": "#/$defs/bounded_nonsecret_string"
         },
         "proxy_tls": {
-          "oneOf": [
-            {
-              "enum": [
-                "lets_encrypt",
-                "existing_certificate"
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "null",
+          "description": "DL-259 CERT-1 / srv C1: certificates remain on the person’s own systems; onboarding collects no TLS/certificate choice."
         },
         "source_more": {
           "type": "boolean"
@@ -1676,8 +1669,7 @@
               "repository_visibility": {
                 "enum": [
                   "private",
-                  "public",
-                  "internal"
+                  "public"
                 ]
               }
             }
@@ -1722,8 +1714,7 @@
               "repository_visibility": {
                 "enum": [
                   "private",
-                  "public",
-                  "internal"
+                  "public"
                 ]
               }
             }
@@ -1799,6 +1790,9 @@
               },
               "proxy_tls": {
                 "type": "null"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -1842,6 +1836,9 @@
               },
               "proxy_tls": {
                 "type": "null"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -1863,6 +1860,9 @@
                 "const": "check_existing_then_sign_in_once"
               },
               "headscale_url": {
+                "const": ""
+              },
+              "remote_endpoint": {
                 "const": ""
               }
             }
@@ -1886,6 +1886,9 @@
               },
               "headscale_url": {
                 "$ref": "#/$defs/https_url"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -2030,6 +2033,192 @@
             "properties": {
               "repository_ref": {
                 "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "cursor_origin"
+              },
+              "repository_owner_scope": {
+                "const": "personal"
+              }
+            },
+            "required": [
+              "forge",
+              "repository_owner_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "const": "private"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "github"
+              },
+              "repository_owner_scope": {
+                "const": "personal"
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "repository_owner_scope",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "enum": [
+                  "bitbucket_cloud",
+                  "bitbucket_data_center"
+                ]
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_container": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "bitbucket_cloud"
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_project": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "proxy_hosting": {
+                "enum": [
+                  "generate_only"
+                ]
+              }
+            },
+            "required": [
+              "proxy_hosting"
+            ]
+          },
+          "then": {
+            "properties": {
+              "proxy_kind": {
+                "enum": [
+                  "caddy",
+                  "nginx",
+                  "traefik"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "remote_link"
+              },
+              "journey": {
+                "const": "connect_existing"
+              }
+            },
+            "required": [
+              "journey",
+              "remote_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remote_endpoint": {
+                "type": "string",
+                "pattern": "\\S"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "journey": {
+                "const": "new_or_local"
+              },
+              "remote_mode": {
+                "const": "reverse_proxy"
+              }
+            },
+            "required": [
+              "journey",
+              "remote_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "proxy_hosting": {
+                "enum": [
+                  "generate_only",
+                  "existing_proxy"
+                ]
               }
             }
           }
@@ -3496,7 +3685,6 @@
             "start",
             "resume",
             "advance",
-            "retry_concept_preview",
             "return",
             "dismiss",
             "skip_product_onboarding",
@@ -3513,7 +3701,6 @@
             "choose_first_project",
             "finish",
             "choose_look",
-            "preview_nier",
             "toggle_look_menu",
             "toggle_look_editor"
           ]
@@ -3674,13 +3861,12 @@
     },
     "onboarding_look_choice": {
       "title": "OnboardingLookChoice",
-      "description": "The closed look one ui.onboarding.choose_look request previews inside the onboarding window (DL-153): the theme family and Light/Dark mode for intent choose_look, or NieR Mode's three Settings rows (Settings_System SSYS-043) by their canonical inventory labels for intent preview_nier. Only the fields the intent changes are non-null; a NieR preset is one value of nier_parts. It is a preview written with the Project at commit (FinalGUISpec F3-520), never a Settings transaction or a cmd.theme.* dispatch.",
+      "description": "Q22, Jared 2026-10-30 (DL-257): closed preview of five-family/mode choices or the retained NieR parts/background Adjust rows via ui.onboarding.choose_look intent choose_look. Only changed fields are non-null; one preset is one nier_parts value. No independent nier_mode or preview_nier intent, Settings dispatch or durable write before the existing exact Project commit/finish boundary.",
       "type": "object",
       "additionalProperties": false,
       "required": [
         "theme_family",
         "theme_mode",
-        "nier_mode",
         "nier_parts",
         "nier_background"
       ],
@@ -3689,10 +3875,11 @@
           "oneOf": [
             {
               "enum": [
+                "basic",
                 "friendly",
                 "glass",
                 "retro",
-                "basic"
+                "nier"
               ]
             },
             {
@@ -3707,16 +3894,6 @@
                 "light",
                 "dark"
               ]
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "nier_mode": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -4485,8 +4662,7 @@
                 "properties": {
                   "intent": {
                     "enum": [
-                      "advance",
-                      "retry_concept_preview"
+                      "advance"
                     ]
                   }
                 }
@@ -5657,7 +5833,6 @@
                   "intent": {
                     "enum": [
                       "choose_look",
-                      "preview_nier",
                       "toggle_look_menu",
                       "toggle_look_editor"
                     ]
@@ -5733,80 +5908,78 @@
                   },
                   "look_choice": {
                     "type": "object",
-                    "properties": {
-                      "theme_family": {
-                        "type": "string"
-                      },
-                      "theme_mode": {
-                        "type": "string"
-                      },
-                      "nier_mode": {
-                        "type": "null"
-                      },
-                      "nier_parts": {
-                        "type": "null"
-                      },
-                      "nier_background": {
-                        "type": "null"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "action_id": {
-                "const": "ui.onboarding.choose_look"
-              },
-              "local_context": {
-                "properties": {
-                  "intent": {
-                    "const": "preview_nier"
-                  }
-                }
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "local_context": {
-                "properties": {
-                  "expanded": {
-                    "type": "null"
-                  },
-                  "look_choice": {
-                    "type": "object",
-                    "properties": {
-                      "theme_family": {
-                        "type": "null"
-                      },
-                      "theme_mode": {
-                        "type": "null"
-                      }
-                    },
                     "anyOf": [
                       {
                         "properties": {
-                          "nier_mode": {
-                            "type": "boolean"
+                          "theme_family": {
+                            "type": "string"
                           }
-                        }
+                        },
+                        "required": [
+                          "theme_family"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "theme_mode": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "theme_mode"
+                        ]
                       },
                       {
                         "properties": {
                           "nier_parts": {
                             "type": "array"
                           }
-                        }
+                        },
+                        "required": [
+                          "nier_parts"
+                        ]
                       },
                       {
                         "properties": {
                           "nier_background": {
                             "type": "string"
+                          }
+                        },
+                        "required": [
+                          "nier_background"
+                        ]
+                      }
+                    ],
+                    "allOf": [
+                      {
+                        "if": {
+                          "properties": {
+                            "theme_family": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "then": {
+                          "properties": {
+                            "theme_mode": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "if": {
+                          "properties": {
+                            "theme_mode": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "then": {
+                          "properties": {
+                            "theme_family": {
+                              "type": "string"
+                            }
                           }
                         }
                       }
@@ -7223,7 +7396,7 @@
     },
     "automatic_preparation_owner_projection": {
       "title": "AutomaticPreparationOwnerProjection",
-      "description": "One closed Product Onboarding projection over owner-owned ObservableWork, result, receipt, and exact currentness. Product Onboarding observes this record; it does not implement, time, cancel, duplicate, or infer the underlying work. Browser concept fixtures are explicitly non-production and cannot carry a production receipt or readiness claim.",
+      "description": "One closed Product Onboarding projection over owner-owned ObservableWork, result, receipt, and exact currentness. Product Onboarding observes this record; it does not implement, time, cancel, duplicate, or infer the underlying work.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -7472,13 +7645,10 @@
           "$ref": "#/$defs/nullable_safe_ref"
         },
         "evidence_class": {
-          "enum": [
-            "production_owner_projection",
-            "browser_concept_fixture_only"
-          ]
+          "const": "production_owner_projection"
         },
         "production_owner_work": {
-          "type": "boolean"
+          "const": true
         },
         "production_readiness": {
           "type": "boolean"
@@ -7539,6 +7709,15 @@
         "observed_at_utc": {
           "type": "string",
           "format": "date-time"
+        },
+        "preparation_phase": {
+          "enum": [
+            "creating",
+            "remote_setup_after_settlement"
+          ]
+        },
+        "setup_settlement_ref": {
+          "$ref": "#/$defs/safe_ref"
         }
       },
       "allOf": [
@@ -7846,53 +8025,6 @@
           "if": {
             "properties": {
               "evidence_class": {
-                "const": "browser_concept_fixture_only"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": false
-              },
-              "production_readiness": {
-                "const": false
-              },
-              "native_runtime_exercised": {
-                "const": false
-              },
-              "production_receipt_ref": {
-                "type": "null"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "production_owner_projection"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": true
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
                 "const": "production_owner_projection"
               },
               "work_state": {
@@ -7914,6 +8046,29 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "owner_domain": {
+                "const": "remote_access"
+              }
+            },
+            "required": [
+              "owner_domain"
+            ]
+          },
+          "then": {
+            "required": [
+              "preparation_phase",
+              "setup_settlement_ref"
+            ],
+            "properties": {
+              "preparation_phase": {
+                "const": "remote_setup_after_settlement"
+              }
+            }
+          }
         }
       ],
       "x-puppet-master-assertions": [
@@ -7921,8 +8076,7 @@
         "the accepting adapter compares session, current simple-path selection, exact reviewed_setup_plan_revision, exact approved_setup_plan_sha256, local backend, optional forge, target, expected revision, continuation generation, and exact next projection generation to its active fence rather than trusting currentness booleans",
         "stale or mismatched projections are rejected without replacing the last accepted projection or advancing the stage",
         "close, defer, resume, reload, and view changes preserve owner work and reuse the same owner_operation_id and dedupe_key",
-        "automatic preparation advances only after an accepted current ready projection; timers may settle presentation after readiness but never synthesize work, progress, result, receipt, or readiness",
-        "a browser concept fixture never claims production owner work, production readiness, native runtime execution, or a production receipt"
+        "automatic preparation advances only after an accepted current ready projection; timers may settle presentation after readiness but never synthesize work, progress, result, receipt, or readiness"
       ]
     },
     "onboarding_project_recovery_route_projection": {
@@ -9150,13 +9304,10 @@
           "const": []
         },
         "evidence_class": {
-          "enum": [
-            "production_owner_projection",
-            "browser_concept_fixture_only"
-          ]
+          "const": "production_owner_projection"
         },
         "production_owner_work": {
-          "type": "boolean"
+          "const": true
         },
         "production_readiness": {
           "type": "boolean"
@@ -9317,50 +9468,6 @@
               }
             }
           }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "browser_concept_fixture_only"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": false
-              },
-              "production_readiness": {
-                "const": false
-              },
-              "native_runtime_exercised": {
-                "const": false
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "evidence_class": {
-                "const": "production_owner_projection"
-              }
-            },
-            "required": [
-              "evidence_class"
-            ]
-          },
-          "then": {
-            "properties": {
-              "production_owner_work": {
-                "const": true
-              }
-            }
-          }
         }
       ],
       "x-puppet-master-assertions": [
@@ -9372,7 +9479,6 @@
         "authorization work survives refresh and Client loss by owner operation identity, but protected URL or browser content is never embedded and requires a new current authorized handoff on another Client",
         "ordinary browsers are not enrolled by embedded tsnet and still require host-private reachability or an explicit public/reverse-proxy/Remote-Link route",
         "Headscale supports private access but never Funnel",
-        "browser concept fixtures remain simulated and cannot claim production work, readiness, native execution, security proof, or connector runtime",
         "event_family_ids remains empty until Event Authority admits exact connector families; owner receipts and projections remain non-event evidence"
       ]
     },
@@ -10023,5 +10129,165 @@
         }
       ]
     }
+  },
+  "x-product-rulings": {
+    "owner_ref": "Plans/Decision_Log.md#DL-259",
+    "online_creation": "repository_only",
+    "advanced_routes": "Settings_only_with_pointer",
+    "provider_admission": "immediately_before_product_build",
+    "wizard_provider_caveats": false,
+    "grouped_source_routes": [
+      "new",
+      "existing",
+      "restore"
+    ],
+    "existing_subchoices": [
+      "local",
+      "online",
+      "other_device"
+    ],
+    "file_safe_group": [
+      "command_blocklist",
+      "write_scope",
+      "security_filter",
+      "pre_write_safe_points"
+    ],
+    "backup_offer": [
+      "NAS",
+      "Google Drive",
+      "OneDrive",
+      "Amazon S3",
+      "Backblaze B2",
+      "S3-compatible",
+      "SFTP",
+      "WebDAV"
+    ],
+    "backup_Settings": [
+      "Azure Blob",
+      "Google Cloud Storage",
+      "REST server"
+    ],
+    "free_catalog_source": "https://github.com/vava-nessa/free-coding-models/releases/tag/v0.6.0",
+    "free_catalog_read_date": "2026-10-31",
+    "excluded_free_offer": [
+      "github_models",
+      "cerebras",
+      "hugging_face",
+      "ollama_cloud"
+    ],
+    "broader_catalog_owner": "Plans/Models_System.md#MS-118",
+    "interaction_mode": {
+      "setting_id": "general.interaction.mode",
+      "default": "ELI5",
+      "labels": {
+        "ELI5": "Plain English",
+        "Expert": "Expert"
+      },
+      "surfaces": [
+        "onboarding_bar",
+        "guided_tour_bar"
+      ],
+      "dual_copy_scope": "tips_and_help_only"
+    },
+    "file_safe_bypass_allowed": false,
+    "credential_custody": "execution_host",
+    "native_client_tailnet": "built_in_no_separate_install",
+    "plain_browser_tailnet": "none_use_remote_link_or_device_private_path",
+    "onboarding_free_front": [
+      {
+        "provider": "openrouter",
+        "auth": "sign_in"
+      },
+      {
+        "provider": "groq",
+        "auth": "api_key"
+      },
+      {
+        "provider": "nvidia",
+        "auth": "api_key"
+      }
+    ],
+    "advanced_free_providers": {
+      "initially_open": false,
+      "controls_per_surface": 1,
+      "source": "current_eligible_Free_Models_catalog",
+      "fixed_list": false,
+      "fixed_count": false,
+      "Settings_matches": true
+    },
+    "usable_AI_summary": "all_current_usable_paid_and_free_routes",
+    "owner_answers": {
+      "decision_ref": "Plans/Decision_Log.md#DL-259",
+      "decider": "Jared",
+      "date": "2026-10-31",
+      "CERT-1": "external_certificate_custody_no_PM_gate_or_validity_claim",
+      "CLOUD-1": "console_one_time_setup_code",
+      "DESKTOP-RESTORE-1": "protected_native_local_handoff_no_typed_code",
+      "REMOTE-CODE-1": "owner_protocol_verified_immediately_before_build"
+    },
+    "pre_build_verification_ref": "Plans/multi_account_contracts.schema.json#/x-provider-entry-amendments/pre_build_verification",
+    "proxy_hosting": {
+      "proxy_hosting_choices": [
+        "generate_only",
+        "existing_proxy"
+      ],
+      "proxy_tls": null,
+      "PM_installs_or_hosts_proxy": false,
+      "generated_file_requires_person_install": true,
+      "existing_proxy_generates_configuration": false
+    },
+    "provider_category_return": {
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
+      "retain_chosen_category": true,
+      "chosen_category_providers_first": true,
+      "scope": "local_navigation_draft",
+      "new_persisted_preference": false
+    }
+  },
+  "x-postcommit-remote-setup-policy": {
+    "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "stage": "automatic_preparation",
+    "remote_in_Creating": false,
+    "remote_after_owner_settlement": true,
+    "remote_before_normal_provider_continuation": true,
+    "later_finishes_onboarding": true,
+    "later_undoes_committed_Project": false,
+    "later_infers_ready": false,
+    "actual_app_context": "existing_owner_results_and_registry_join",
+    "cloud_claim_requires_verified_private_channel": true,
+    "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
+    "code_grammar": "Remote_Link_owner_defined",
+    "nonblank_code_proves_validity": false,
+    "new_primary_command": false,
+    "certificate_custody": "person_own_systems",
+    "PM_certificate_administration": false,
+    "certificate_selection_validation_gate": false,
+    "Ready_claims_certificate_validity": false,
+    "ready_checks": [
+      "endpoint_reachability",
+      "PM_protocol_API",
+      "expected_Server_identity_pairing_auth",
+      "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+    ],
+    "cloud_claim_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+    "desktop_first_claim_handoff": "protected_native_direct_local_no_code_to_type",
+    "initial_claim_proof_bindings": [
+      "discovery_observation_id",
+      "pairing_session_id",
+      "identity_fingerprint"
+    ],
+    "public_unclaimed_setup": false,
+    "code_protocol_verification": "immediately_before_product_build",
+    "proxy_hosting_choices": [
+      "generate_only",
+      "existing_proxy"
+    ],
+    "proxy_tls": null,
+    "PM_installs_or_hosts_proxy": false,
+    "generated_file_requires_person_install": true,
+    "existing_proxy_generates_configuration": false,
+    "cloud_claim_address_input": false,
+    "cloud_unclaimed_network_discovery": false
   }
 }

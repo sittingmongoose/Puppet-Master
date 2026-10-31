@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L18464
+Source lines: L14517-L18589
 
-Source SHA256: `cda307c35a94d9246e6e931344e9a3ac3a748f2ba5fa0e8f7cc2d48b0df317f6`
+Source SHA256: `4936295e89588932f8861abbc3aa972ce4f9c497e69d79fe78fbb67bcae3e349`
 
 ---
 
@@ -2205,6 +2205,22 @@ canonical_text: >-
   (DL-230). The sizes, distances and times these
   amendments quote from the concept are tokens, not acceptance numbers (review r1). Concept evidence is not native
   certification.
+  F3-1, Jared follow-up 2026-10-30, supersedes the earlier Jared #19 rule that notices must clear
+  controls. His words: "It is fine that it covers stuff up... The notifications should start below the bell.
+  Like the theme selector does." On every page the stage hangs tight below the title bar at the bell, with
+  its first card at the theme selector menu’s resting top. Final GUI 70b30f482f binds that top to the
+  selector wrapper’s bottom plus its menu gap (6 px), rather than title-bar bottom plus 6 px. A negative
+  stage drop is allowed; the title-bar fallback remains only when no selector is drawn. It may cover controls, the chat
+  head included; no collision scan, Home strip offset or chat-head clearance changes that anchor. The
+  lead's explicit ruling of 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix) keeps the
+  existing --pmn-push exception while the shared inbox is open: the inbox hangs from the bell and the stage
+  sits below it. That exception is the lead's reading and is listed for Jared; it is not part of the quoted
+  answer. F3-5/F3-6, final GUI 5abe285507, 2026-10-30, implements this ruling: entering and leaving cards
+  take no clicks on any page, Usage included, and queue no deferred activation; Reduced Motion settles
+  placement/removal instantly. The authoritative inbox push is read after the sprout owner opens it, on
+  first open and reopen, using resting/destination layout height rather than transformed height, and is
+  refreshed after content/height changes or resize and cleared on close. F3-447/F3-460/F3-461 and the shared notification bindings apply this
+  presentation ruling without changing source actions, urgency, read/ack or alert-store ownership.
 gui_related: true
 gui_classification_reason: The Week Sweep Records What The Concept Built.
 split_recommended: false
@@ -2738,28 +2754,34 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. X1, X3, A1–A5, S8: Pip is the brand and each individual agent;
-  robot is the small category mark. One static Basic Dark app tile ships in the signed bundle (ICO 16–256,
-  ICNS, PNG and SVG manifest); the title-bar mark is static, 24 px, state-free and non-interactive, with
-  mark-only density. A2 B (Jared 2026-10-30): the tray is always present while Puppet Master runs;
-  minimize-to-tray changes Close behavior only. Across all Projects its face maps idle→idle,
-  working→working, done→complete for about 10 s, needs-you→waiting (wins), error→failed, paused→paused.
-  NieR Pip shows eyes through the band on live and static marks, including title bar, app icon and tray, at
-  every size (X3 B, Jared 2026-10-30). OS notifications and Friendly’s app tile use Pip;
-  in-app kind marks stay. No mood adds a status key. Jared decided these packet rows on 2026-10-30; every
-  unmodified recommendation is confirmed as his decision, and the decision IDs remain
-  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings.
+  Adopted 2026-10-29 for the PM7 build. X1, X3, A1–A5, S8: Pip is the brand and each individual agent; robot is
+  the small category mark. One static Basic Dark app tile ships in the signed bundle (ICO 16–256, ICNS, PNG and
+  SVG manifest); the title-bar mark is static, 24 px, state-free and non-interactive, with mark-only density. A2
+  B (Jared 2026-10-30): the tray is always present while Puppet Master runs; minimize-to-tray changes Close
+  behavior only. Across all Projects its face maps idle→idle, working→working, done→complete for about 10 s,
+  needs-you→waiting (wins), error→failed, paused→paused. NieR Pip shows eyes through the band on live and static
+  marks, including title bar, app icon and tray, at every size (X3 B, Jared 2026-10-30). OS notifications and
+  Friendly’s app tile use Pip; in-app kind marks stay. No mood adds a status key. Jared decided these packet
+  rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs remain
+  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. QA round 2, Jared 2026-10-30;
+  DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and
+  small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is
+  never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one
+  ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and
+  the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry
+  wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper
+  cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a
+  second wand or fallback icon.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Brand/title mark is static/non-interactive at 24 px with mark-only density; fixed app tile is Basic Dark.
-- The tray is always on while Puppet Master runs, independently of minimize-to-tray; full A3 precedence and
-  about 10 s complete duration use one cross-Project projection.
-- X3 B exposes NieR eyes through the band on every live/static mark and at every size; moods retain the 22
-  existing keys.
+  - "Brand/title mark is static/non-interactive at 24 px with mark-only density; fixed app tile is Basic Dark."
+  - "The tray is always on while Puppet Master runs, independently of minimize-to-tray; full A3 precedence and about 10 s complete duration use one cross-Project projection."
+  - "X3 B exposes NieR eyes through the band on every live/static mark and at every size; moods retain the 22 existing keys."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2809,7 +2831,11 @@ canonical_text: >-
   frames. B7 fixes a cover guard that survives the NieR reboot cover; any different cause is reported with
   evidence. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his
   decision, and the decision IDs remain the amendment keys. X1,
-  L1, S9, O11 and G4 retain his earlier explicit rulings.
+  L1, S9, O11 and G4 retain his earlier explicit rulings. B5, PM7 Step4, 2026-10-30: Unsaved changes means a
+  Home tab has dirty/unsaved buffers in the active Project. Home autosaves layout; a layout change alone never
+  raises this badge. PMW.unsaved/PMW.noteUnsaved and pm7.home.unsaved provide the concept’s buffer-owner
+  observation to PM_WORK.project; waiting > blocked > working > change-modified > idle remains the priority.
+  The accessible words are Unsaved changes, never Unsaved layout.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2858,33 +2884,43 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page, panel,
-  splash, button, check, sign-in, thinking placeholder; st-working remains item state in rows and tabs.
-  Keep meaningful skeletons and determinate bars. Think is the thinking context, Swing the default, Hop a
-  short success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s, Basic 1.7 s, Retro eight
-  frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits only the control
-  opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you stays the
-  loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is off;
-  static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 B (Jared 2026-10-30):
-  this build removes
-  menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat menus.js, Usage PMU.menu and
-  Home PMW.menu delegate to it with no private animation implementation. Jared decided these packet rows on
-  2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs remain
-  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1: Reduced
-  Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
-  preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces
-  no new store or key.
+  Adopted 2026-10-29 for the PM7 build. X2, RM1, L1–L8: Pip marks every indeterminate wait: page, panel, splash,
+  button, check, sign-in, thinking placeholder; st-working remains item state vocabulary, with Q11’s
+  working-agent row-loader exception. Keep meaningful skeletons and determinate bars. Think is the thinking
+  context, Swing the default, Hop a short success wait; these are not preferences. Friendly 1.8 s, Glass 2.6 s,
+  Basic 1.7 s, Retro eight frames/1.2 s share one clock and scale with Animation speed. Reduced Motion permits
+  only the control opacity breath and Pip blink as wait feedback, no travel; under 12 px is still. Needs-you
+  stays the loudest loop. NieR routes to Diamond loaders and retains its existing fallback when that part is
+  off; static NieR Pip never animates. All loops pause offscreen, hidden and during drags. L8 B (Jared
+  2026-10-30): this build removes menu-sprout duplication. DR-079 is the one sprout owner for every menu; chat
+  menus.js, Usage PMU.menu and Home PMW.menu delegate to it with no private animation implementation. Jared
+  decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and the
+  decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. RM1:
+  Reduced Motion stays stored per Project, app-wide in effect for the active Project and combined with the OS
+  preference. Global inventory applicability is not app-global persistence; the adopted ruling introduces no new
+  store or key. L4/L5 and accepted reviews L-1/L-2, PM7 Step4, 2026-10-30: Swing ×1, Think ×1.15 and Hop ×0.78
+  apply at every drawing tier; busy buttons use 14 px and the chat thinking placeholder 16 px, keeping
+  Working-row 18 px, content-wait tab 14 px, panel 40 px and splash 128 px. This changes no preference or status
+  key. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen. Working, checking and
+  retrying agents use the shared Think loader; running process marks move on the shared document clock. Waiting,
+  waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen rows, drags, hidden tabs
+  and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and Home board consume the
+  same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no NieR exemption: a
+  working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never animated Pip;
+  running NieR process marks move in their existing material language. The 2200 ms category-head breath remains
+  distinct and below needs-you priority. No polling loop, command, event, setting, state or extra loader owner
+  is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Every indeterminate wait uses the shared loader while item state, skeletons and measured progress keep their
-  owners.
-- Family periods are 1.8/2.6/1.7/1.2 s, scaled by Animation speed; all clocks pause hidden/offscreen/during
-  drags.
-- Reduced Motion has only permitted wait breath/blink; NieR routes to Diamond/fallback and <12 px stays still.
+  - "Every indeterminate wait uses the shared loader while item state, skeletons and measured progress keep their owners."
+  - "Family periods are 1.8/2.6/1.7/1.2 s, scaled by Animation speed; all clocks pause hidden/offscreen/during drags."
+  - "Reduced Motion has only permitted wait breath/blink; NieR routes to Diamond/fallback and <12 px stays still."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2923,37 +2959,67 @@ plan_unit_id: DL-238
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every
-  look, preserving each family’s own world/material. Expand to every real onboarding route, screen, choice
-  and error, about 44 screens and 203 tips. O2 A (Jared 2026-10-30): match the approved concept;
-  implementation technique is the implementer’s choice. Preserve solved
-  strings, world materials, bounded shared life and hidden/offscreen/drag pause behavior; an optimization must
-  preserve the concept in recorded frame-by-frame A/B. Retro Dark CRT and Retro Light paper have separate
-  worlds
-  and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player with recipe
-  metadata, setup-voice and music parts; Reduced Motion never mutes. O6 (Jared 2026-10-30): hovering a look
-  tile plays no sound and changes no theme; click or keyboard activation changes the theme. The question
-  note is the one pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour
-  callout, but O11 defers Tour redesign; Pod 042 remains Tour/Chat narrator. O12 B (Jared 2026-10-30):
-  Creating blocks follow
-  completed owner phases, and Continue and Ready wait for the last block to land. Reduced Motion settles the
-  blocks instantly; animation never bypasses an incomplete owner phase. Jared decided these packet rows on
-  2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs
-  remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings.
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every
+  look, preserving each family’s own world/material. Expand to every real onboarding route, screen, choice and error,
+  about 44 screens and 203 tips. O2 A (Jared 2026-10-30): match the approved concept; implementation technique is the
+  implementer’s choice. Preserve solved strings, world materials, bounded shared life and hidden/offscreen/drag pause
+  behavior; an optimization must preserve the concept in recorded frame-by-frame A/B. Retro Dark CRT and Retro Light
+  paper have separate worlds and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player
+  with recipe metadata, setup-voice and music parts; Reduced Motion never mutes. O6 (Jared 2026-10-30): hovering a look
+  tile plays no sound and changes no theme; click or keyboard activation changes the theme. The question note is the
+  one pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour callout, but O11 defers Tour
+  redesign; Pod 042 remains Tour/Chat narrator. O12 B (Jared 2026-10-30): Creating blocks follow completed owner phases,
+  and Continue and Ready wait for the last block to land. Reduced Motion settles the blocks instantly; animation never
+  bypasses an incomplete owner phase. Jared decided these packet rows on 2026-10-30; every unmodified recommendation
+  is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier
+  explicit rulings. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking
+  to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup
+  payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS,
+  or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust
+  and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot
+  bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name
+  its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and
+  snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
+  boundaries remain mandatory; only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s
+  follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns
+  the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray
+  in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
+  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control
+  never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy,
+  remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and
+  Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question
+  controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures
+  (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information
+  in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains
+  the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB
+  sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password
+  remains a separate one-use protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress
+  string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces the current
+  bead and the current bead occupies no extra width. A highlight surrounds the name without covering Pip. The speech
+  tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond; NieR keeps its no-tail
+  treatment. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player
+  and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference, retain the factory-on
+  or current effective choice rather than muting on every refresh. An explicit readable Project value wins when it binds;
+  a genuinely refused bound write remains refused. An unavailable Settings projection never fabricates a saved value
+  or authorizes a write. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime.
+  Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already
+  held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves
+  pre-existing inert nodes and restores focus/input.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo
-  shortcut.
-- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split
-  and no re-key; O2 preserves the concept while leaving implementation technique open.
+- All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo shortcut.
+- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split and no re-key;
+  O2 preserves the concept while leaving implementation technique open.
 - Look-tile hover changes neither sound nor theme; click/keyboard activation changes the theme.
-- Creating Continue/Ready wait for both owner completion and the last block landing; Reduced Motion settles
-  instantly, and Tour redesign stays deferred.
+- Creating Continue/Ready wait for both owner completion and the last block landing; Reduced Motion settles instantly,
+  and Tour redesign stays deferred.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock;
+  follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one
+  inert-state basis survives replacement; unreadable Project state does not repeatedly mute the preview.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3314,22 +3380,34 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. D6 amended by G4/G8: one platform panel has Agents, Processes,
-  Resources tabs and desktop Pop out. Agents leads with Questions; Processes leads with Needs input. Side
-  by side and the Task manager layout are retired from product; its resource table is in Resources. Home
-  panel-tab support stays deferred (G10), no new WorkNodes. One overlay root; desktop pop-out preserves
-  scope and selected tab; unsupported clients expose a reason. Authority: Jared decided D6 on 2026-10-28;
-  this is an approved source-thread decision, not an unanswered packet recommendation.
+  Adopted 2026-10-29 for the PM7 build. D6 amended by G4/G8: one platform panel has Agents, Processes, Resources
+  tabs and desktop Pop out. Agents leads with Questions; Processes leads with Needs input. Side by side and the
+  Task manager layout are retired from product; its resource table is in Resources. Home panel-tab support stays
+  deferred (G10), no new WorkNodes. One overlay root; desktop pop-out preserves scope and selected tab;
+  unsupported clients expose a reason. Authority: Jared decided D6 on 2026-10-28; this is an approved
+  source-thread decision, not an unanswered packet recommendation. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
+  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project
+  says that nothing in this Project is running, above the shared rows; it does not look empty or report another
+  Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is
+  available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact
+  host/environment identity and stale disclosure remain authoritative; shared read scope creates no
+  Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join
+  Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model
+  menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers
+  flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes
+  keep their existing material. This is consumer treatment, no global Glass token change or extra
+  backdrop-filter.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The panel has exactly Agents, Processes, Resources tabs, leading with Questions/Needs input in their own
-  views.
-- Desktop Pop out preserves one view/state in a draggable window.
-- Side by side, old Task manager layout and Home work-panel tab are not offered.
+  - "The panel has exactly Agents, Processes, Resources tabs, leading with Questions/Needs input in their own views."
+  - "Desktop Pop out preserves one view/state in a draggable window."
+  - "Side by side, old Task manager layout and Home work-panel tab are not offered."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3366,12 +3444,17 @@ plan_unit_id: DL-246
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes, queue
-  and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over
-  ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a
-  parallel runtime list/count. Authority: Jared decided D7 on 2026-10-28; this is an approved source-thread
-  decision, not an unanswered packet recommendation.
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes,
+  queue and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over ObservableWork and
+  registry lineage, one row anatomy, ordering and needs-you set. No surface owns a parallel runtime list/count. Authority:
+  Jared decided D7 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.
+  D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup
+  and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail]
+  keeps its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js
+  keeps its frame/filter. Both read PM_WORK and the same needs-you set; the live owner projection and shared clock remain
+  the sole inputs. list refreshes on change, patchTicks updates times/progress/output, hidden lists catch up on show,
+  and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source
+  adapters demonstrate the projection boundary without certifying native runtime.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3579,7 +3662,15 @@ canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. D11: collapsed System services ends the Processes tab, mirrors
   owner status and links System status. No Stop/Restart/Stop all in this feature may affect those services.
   Authority: Jared decided D11 on 2026-10-28; this is an approved source-thread decision, not an unanswered
-  packet recommendation.
+  packet recommendation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay popover,
+  reached from the existing status-bar System status item and the Processes System services link.
+  ui.system_status.open/close are typed local visibility actions, with statusbar.system_status,
+  work.open_system_status and system_status.close binding families. Service owner links use the existing
+  ui.settings.route.open action and system_status.service.open_settings binding, selecting
+  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value
+  or controlling a service. The popover has close/Escape/outside closure, return focus and the common
+  overlay/Glass plate; unavailable owner navigation says why.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3734,21 +3825,30 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. D14 with X1: processes is a console-framed >_ glyph; robot is the
-  existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on
-  2200 ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; list marks stay still.
-  Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive. Authority: Jared
-  decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet
-  recommendation.
+  existing redrawn antenna category glyph, not an individual agent figure. Live category glyphs breathe on 2200
+  ms, cursor/antenna move below needs-you’s motion priority. Panel heads join; Q11 replaces the former blanket
+  list-mark stillness. Reduced Motion shows the lit rest pose. Every individual agent is the one Pip primitive.
+  Authority: Jared decided D14 on 2026-10-28; this is an approved source-thread decision, not an unanswered
+  packet recommendation. Q11 B, Jared 2026-10-30: only live Work rows animate, capped to rows on screen.
+  Working, checking and retrying agents use the shared Think loader; running process marks move on the shared
+  document clock. Waiting, waiting-dep, blocked, finished/done, stopped and scheduled rows stay still. Offscreen
+  rows, drags, hidden tabs and effective Reduced Motion hold recognizable rest poses. The panel, Agents rail and
+  Home board consume the same row renderer and eligibility policy. Lead clarification 1030183348-18bd permits no
+  NieR exemption: a working NieR agent uses its existing Diamond loader owner and L7 part/fallback rules, never
+  animated Pip; running NieR process marks move in their existing material language. The 2200 ms category-head
+  breath remains distinct and below needs-you priority. No polling loop, command, event, setting, state or extra
+  loader owner is added.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Processes is the console-framed prompt and robot the category antenna, while each individual agent remains
-  Pip.
-- Live category heads breathe at 2200 ms below needs-you; list state marks stay still.
-- Reduced Motion and hidden/offscreen/drag state retain recognizable rest poses without live loops.
+  - "Processes is the console-framed prompt and robot the category antenna, while each individual agent remains Pip."
+  - "Live category heads breathe at 2200 ms below needs-you; Q11 live agent/process rows animate only while their row is visible and gates allow it."
+  - "Reduced Motion and hidden/offscreen/drag state retain recognizable rest poses without live loops."
+  - "Q11: working/checking/retrying rows animate in all ten looks; waiting/dependency/blocked/finished/stopped/scheduled rows stay still; offscreen, drag, hidden-tab and Reduced Motion gates hold."
+  - "Q11: the working-agent loader uses the one Think owner, with NieR Diamond/fallback rather than animated Pip; process marks reuse their own status rhythm/clock."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3789,35 +3889,51 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. G1–G3/G9: keep Activity Detail Pin and remove the small transient view
-  (G1 B, Jared 2026-10-30).
-  Click opens full-size docked detail and keeps it until ×, Esc or that icon closes it. Widen chat to fit,
-  then cover transcript at full column height when no more room remains. Message area has no fixed 760 cap,
-  preserving centre/page floors and the narrow ladder. History pin remains a different control. Floating
-  Glass Activity/attachment/History plates use the persona/model menu plate; context rings must be
-  continuous and artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build.
-  Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as his decision,
-  and the decision IDs remain the amendment keys. X1, L1, S9, O11
-  and G4 retain his earlier explicit rulings. W7/C5 open investigation PM7-C5-CONTEXT-RING: the ring’s correct
-  continuous rendering is the requested acceptance outcome. The activity GUI lane must report the
-  investigated cause and actual drawing/token fix; no mechanism is claimed by this decision before that
-  report. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding
-  chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
-  the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one
-  full-size docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and never
-  leaves the previous thread’s rows/actions in the new thread. A missing domain shows its truthful
-  empty/unavailable state. Pin is session view state, not a Settings row, durable layout field or runtime
-  mutation.
+  (G1 B, Jared 2026-10-30). Click opens full-size docked detail and keeps it until ×, Esc or that icon closes
+  it. G2 follow-up, Jared 2026-10-30: "I think the squeeze is fine." Widen chat first within centre/page floors;
+  when the column cannot widen further, dock full-size detail inside it and squeeze messages if at least 360 px
+  remain. Below 360 px cover the transcript at full column height, never a small panel. The squeeze is approved
+  canon, superseding the earlier direct widen-to-cover sequence. Message area has no fixed 760 cap, preserving
+  centre/page floors and the narrow ladder. History pin remains a different control. Floating Glass
+  Activity/attachment/History plates use the persona/model menu plate; context rings must be continuous and
+  artifact-free in Friendly/Glass. NieR and narrow forms are designed in this build. Jared decided these packet
+  rows on 2026-10-30; every unmodified recommendation is confirmed as his decision, and the decision IDs remain
+  the amendment keys. X1, L1, S9, O11 and G4 retain his earlier explicit rulings. G9/C5, PM7 Step4 final-source
+  reconciliation, 2026-10-30: the activity lane report and pm7-port/css/20-controls.css resolve
+  PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint border (Friendly 6 percent, Glass 9 percent
+  alpha), exposing slivers; Glass’s clear --surface middle disc exposed the meter as a pie. The hosted
+  Basic/Friendly/Glass owner now draws the meter on its own ::before layer, cut to an approximately 3 px ring
+  with a radial mask; the middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain
+  their own drawings. This records the reported concept cause/drawing rule; native continuous antialiased
+  rendering at actual widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B
+  (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin),
+  default false. Pinned Activity Detail stays open across thread switches and reprojects the selected thread’s
+  data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size
+  docked-or-full-height-cover view, no small form. A switch cancels stale subscriptions and never leaves the
+  previous thread’s rows/actions in the new thread. A missing domain shows its truthful empty/unavailable state.
+  Pin is session view state, not a Settings row, durable layout field or runtime mutation. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail,
+  panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s
+  near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten
+  that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their
+  existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. H6: at
+  the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width
+  ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s
+  painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed
+  transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new
+  chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail
+  rules remain.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- No fixed 760 cap or small transient fallback remains; History pin and centre/page floors survive.
-- Pin keeps full-size Activity Detail open across thread switches and follows the new thread; unpinned detail
-  closes on a switch, with stale data/actions/subscriptions discarded.
-- Glass floating Activity/History/attachment surfaces share the persona/model menu plate.
-- Friendly/Glass ring acceptance remains PM7-C5-CONTEXT-RING investigation and later GUI mechanism evidence.
+  - "No fixed 760 cap or small transient fallback remains; History pin and centre/page floors survive."
+  - "Pin keeps full-size Activity Detail open across thread switches and follows the new thread; unpinned detail closes on a switch, with stale data/actions/subscriptions discarded."
+  - "Glass floating Activity/History/attachment surfaces share the persona/model menu plate."
+  - "Friendly/Glass ring acceptance remains PM7-C5-CONTEXT-RING investigation and later GUI mechanism evidence."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3859,21 +3975,31 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Adopted 2026-10-29 for the PM7 build. G5–G7/G10: stopping→pending, lost→warning, stopped→skipped; keep 22
   status keys. cmd.work.clear_finished hides finished rows in this view only and deletes no owner record.
-  ProcessFacts is subordinate, referenced from subject_refs; it does not burden non-process work. Keyboard
-  panel shortcuts, OS badge/notification flow implementation and Home panel-tab opening remain deferred; a
-  future OS badge consumes the same needs-you projection. D9 in-app notices and existing OS notification
-  behavior remain their owners. Jared decided these packet rows on 2026-10-30; every unmodified recommendation
-  is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain
-  his earlier explicit rulings.
+  ProcessFacts is subordinate, referenced from subject_refs; it does not burden non-process work. Keyboard panel
+  shortcuts, OS badge/notification flow implementation and Home panel-tab opening remain deferred; a future OS
+  badge consumes the same needs-you projection. D9 in-app notices and existing OS notification behavior remain
+  their owners. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is confirmed as
+  his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier
+  explicit rulings. G6, PM7 Step4, 2026-10-30: Clear finished is available only for process/scheduled rows in
+  the invoking Processes view; finished agents remain in Agents. PM_WORK uses platform and thread:<id> view
+  identities in the concept without creating a saved setting or deleting an owner record. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet
+  Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own
+  servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not
+  look empty or report another Project’s work as its own. Shared machines show only environments with running
+  work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains.
+  Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope
+  creates no Stop/Restart/Stop all or service-control authority.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Process facts are subordinate and stopping/lost/stopped use pending/warning/skipped without a new key.
-- Clear Finished hides only the invoking view and deletes no owner record.
-- Deferred Home tab, panel shortcuts and new OS badge rollout remain absent; new candidate events do not emit.
+  - "Process facts are subordinate and stopping/lost/stopped use pending/warning/skipped without a new key."
+  - "Clear Finished hides only the invoking view and deletes no owner record."
+  - "Deferred Home tab, panel shortcuts and new OS badge rollout remain absent; new candidate events do not emit."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3905,64 +4031,51 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractN
 
 
 
-### DL-256 - Demo Studio And Evidence Boundary
+### DL-256 - Shared Pip Sound Quality And Room
 
 ```yaml
 plan_unit_id: DL-256
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. W8/W9, SND1, LAND1: the one lab-only Demo Studio gains
-  Pip/loader/moods/parts/sound, full onboarding errors/tips, project-box widths/states and background
-  Activity/Resources/quit scenarios using public owner APIs. No concept toolbar, injected runtime,
-  innerHTML hook or duplicate store becomes product. Missing APIs are unavailable. SND1 B (Jared 2026-10-30):
-  sound lands on the level/texture tools’ measured numbers; Jared listens later in the product, with no
-  pre-landing
-  listening gate. LAND1 A confirms phase review artifacts and one final landing after Jared’s approval.
-  Static checks and concept recordings supply no native Rust/Slint, production-event or governance
-  certification. No reseal in this task. Jared decided these packet rows on 2026-10-30; every unmodified
-  recommendation is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11
-  and G4 retain his earlier explicit rulings. W8’s concrete lab-only matrix
-  is normative in F3-649: all named Pip/loader/sound controls, 42 events/5 loops,
-  antigravityOnce/tastebook/≤11-character key/Ask Pip/pipRoughDay, Adjust Pip/presets/recorded pip run,
-  five Project states and widths, Busy/No asks/Quiet/Many/Stale feed/After restart/Right-now, all three
-  tabs/multiple environments/Quit/Stop all/Numbers-Words and busy/quitWithWork. No generic topic-only demo
-  substitutes for that matrix; strings/contrast/OWNED reset and public API availability remain required.
+canonical_text: 'SND1, Jared 2026-10-30: Pip uses the shared sound owner and the sound tools’ measured level/texture
+  envelope. Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim
+  and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before
+  the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains
+  within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback. The shared voice
+  remains subject to the existing sound, volume and motion/visibility gates.'
 gui_related: true
-gui_classification_reason: Defines visible PM7 presentation and interactions.
+gui_classification_reason: Defines shared Pip voice material and sound quality.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Every named F3-649 case/recipe is exposed in the one lab through public APIs or explicitly unavailable.
-- Words come from the Studio copy owner, contrast is 4.5:1 and Reset Everything clears only OWNED keys.
-- No lab trigger becomes a product preference/command/runtime. Sound acceptance uses the level/texture tools’
-  numbers; Jared listens later in the product, and LAND1 still requires his final landing approval.
+- The shared voice uses the SND1 measured envelope.
+- 'Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan
+  into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before the
+  first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains
+  within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
+- Plans/pip_parts.json
 - python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
-risk_class: owner_drift
+risk_class: shared_sound_material
 reasoning_tier: high
-context_scope: pm7_build_20261029
+context_scope: shared_pip_voice_quality
 implementation_surfaces:
-- Plans/Decision_Log.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
 node_compile_hint:
   mode: owner_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/pm7-build-20261029/IDS.md
-- Concepts/background-activity/opus-5.5/README.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
-- Concepts/onboarding/opus-5.5-pip/README.md
-- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
-preserved_exact_tokens: []
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md Q1 B
+- PM7 decisions SND1, Jared 2026-10-30
+preserved_exact_tokens:
+- SND1
+- Q1 B
 negative_constraints:
-- Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not create a second Pip voice owner or bypass the applicable sound preference.
 owner_hints:
 - Plans/Decision_Log.md
 ```

@@ -3808,6 +3808,24 @@
           "confirmation": true
         }
       }
+    },
+    {
+      "name": "DL259.owner_answers.raw_console_code_stays_out_of_payload",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.server.claim",
+      "patch": {
+        "args.setup_code": true
+      },
+      "expected_error": "Initial owner-claim authority is an owner-verified tuple, not raw code or a caller flag"
+    },
+    {
+      "name": "DL259.owner_answers.caller_cannot_assert_native_claim_authority",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.server.claim",
+      "patch": {
+        "args.native_local_claim_authorized": true
+      },
+      "expected_error": "Initial owner-claim authority is an owner-verified tuple, not raw code or a caller flag"
     }
   ]
 }

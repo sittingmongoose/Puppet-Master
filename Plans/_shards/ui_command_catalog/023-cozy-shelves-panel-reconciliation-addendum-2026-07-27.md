@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9828-L10753
+Source lines: L9953-L10880
 
-Source SHA256: `cd59305b17fd10a90053df362a4d10002c6fdf64954e2d69c15ed28f9f55b32d`
+Source SHA256: `a09088d53c161b58e7b4cb9b2d5c61e1ca075756add35b2375c2169dc42961f3`
 
 ---
 
@@ -109,7 +109,6 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.panel.detach` | alias-of `cmd.panel.undock` | recorded compatibility alias |
 | `cmd.terminal.open` (rail bare-focus usage) | markup migrates -> `cmd.terminal.show` | `cmd.terminal.open` row remains live and distinct; the two rows never collapse (see UCC-138) |
 | `cmd.chat.open_at` | retired -> `cmd.chat.open_thread` | newly registered `navigation_wrapper` |
-| `page.go` / `demo.toast` / `demo.reason` | demo fixtures (retired) | concept-shell fixtures; never registered |
 | `cmd.agents.show` / `cmd.agents.open_thread` / `cmd.agents.open_node` | newly registered | `cmd.agents.*` prefix reserved here; mirror stays read-only |
 
 ### GitHub Actions registration and adjudication rows
@@ -269,24 +268,23 @@ plan_unit_id: UCC-127
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The Cozy Shelves command reconciliation table (2026-07-27) is catalog canon: every prototype token from
-  Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html and c2-cozy-shelves-files.html is adjudicated as canonical,
-  alias-of a recorded target, newly registered, or retired, and concept markup migrates to the adjudicated ids
-  when the c2 files are patched in place as the implementation base (user decision 2026-07-27). The cmd.agents.*
-  and cmd.editor.* prefixes are reserved first-party command families. page.go, demo.toast, and demo.reason are
-  retired concept-shell demo fixtures and never become catalog rows. The verbatim-duplicated GitHub Actions
-  command family table copy lacking the legacy-alias rule is deleted; the surviving section 2.4 table carrying
-  the legacy-alias rule is the single canonical family table.
+canonical_text: 'The Cozy Shelves command reconciliation table (2026-07-27) is catalog canon: every admitted product
+  token from Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html and c2-cozy-shelves-files.html is adjudicated
+  as canonical, alias-of a recorded target, newly registered, or retired, and concept markup migrates to the adjudicated
+  ids when the c2 files are patched in place as the implementation base (user decision 2026-07-27). The cmd.agents.*
+  and cmd.editor.* prefixes are reserved first-party command families. The verbatim-duplicated GitHub Actions command
+  family table copy lacking the legacy-alias rule is deleted; the surviving section 2.4 table carrying the legacy-alias
+  rule is the single canonical family table. Amended DL-260, Jared 2026-10-31: only the product command reconciliation
+  remains active.'
 gui_related: true
 gui_classification_reason: Governs which user-visible command ids the Cozy Shelves rail panels may dispatch.
 depends_on: [UCC-002]
 unblocks: []
 acceptance_criteria:
-  - Every prototype command token has exactly one recorded disposition in the reconciliation table.
-  - cmd.agents.* and cmd.editor.* resolve as reserved first-party prefixes.
-  - Only one GitHub Actions family table exists in section 2.4 and it carries the legacy-alias rule.
-  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- Every admitted product command token has exactly one recorded disposition in the reconciliation table.
+- cmd.agents.* and cmd.editor.* resolve as reserved first-party prefixes.
+- Only one GitHub Actions family table exists in section 2.4 and it carries the legacy-alias rule.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -308,8 +306,7 @@ preserved_exact_tokens:
   - "cmd.agents.*"
   - "cmd.editor.*"
 negative_constraints:
-  - Do not copy Cozy Shelves HTML, CSS, or class names into spec canon; concept files are source lineage only.
-  - Do not register page.go, demo.toast, or demo.reason as catalog rows.
+- Do not copy Cozy Shelves HTML, CSS, or class names into spec canon; concept files are source lineage only.
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
@@ -705,6 +702,11 @@ canonical_text: >-
   cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
   cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
   Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360's placement fields and the one opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
+  D7, PM7 final-review direct correction, 2026-10-30 (Astra r2 N2): Teacher/help target requirements and
+  Settings-manager return apply only to this Settings consumer of cmd.chat.open_thread. Work detail’s
+  separate producer opens its exact ordinary Assistant thread without a Teacher predicate and preserves its
+  invoking Work view/focus. Consumer-specific availability/return rules never create a second thread owner
+  or default an unrelated caller to Settings.
 gui_related: true
 gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
 depends_on: [UCC-108, UCC-014, DL-180]

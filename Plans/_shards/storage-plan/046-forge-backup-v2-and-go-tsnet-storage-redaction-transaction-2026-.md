@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19062-L19155
+Source lines: L19072-L19211
 
-Source SHA256: `9bcf578d283570a6f569732873e9aa9ae44bbc1d77a7e271c6f6624db1043396`
+Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
 
 ---
 
@@ -29,38 +29,84 @@ plan_unit_id: SP-254
 unit_type: storage_security_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  `Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract groups as
-  public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup v2
-  retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence and
-  outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
+canonical_text: '`Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract
+  groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup
+  v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence
+  and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
   restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw
-  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2
-  disposition without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup's
-  `pm.backup_restore_system.recovery_set_public.v2` is never Storage boot recovery `recovery_set_id`. Forge retains
-  provider-instance, repository-binding, independent automation-binding/shell, provider-native object, currentness,
-  and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential content; canonical shell state uses
-  `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor keys only through an
-  idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
+  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition
+  without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup''s `pm.backup_restore_system.recovery_set_public.v2`
+  is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent
+  automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential
+  content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor
+  keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
   generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt
   refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/
-  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public
-  requests, results, errors, availability, receipts, and health/currentness projections and reject key/token/code,
-  protected/browser, private path/host, unsafe SCM configuration, and capture content. All three domains remain
-  receipt-only and Event Authority silent with `runtime_evidence=false`.
+  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests,
+  results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser,
+  private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority
+  silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction.
+  Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once
+  through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet
+  helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client
+  installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server
+  endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
+  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
+  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
+  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
+  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
+  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the
+  human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool
+  sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure
+  credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
+  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
+  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
+  account of the same provider has a distinct identity.'
 gui_related: false
 gui_classification_reason: The unit defines storage custody, migration, redaction, and event-admission boundaries rather than visible presentation.
 depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
 unblocks: []
 acceptance_criteria:
-  - The storage registry remains schema-valid and this disposition-only transaction adds no physical-family rows; the current census follows the readiness validator and separately admitted Notebook additions. New classifications use contract_family_dispositions and do not claim a materialized family.
-  - Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected attachment/submission, and session payload.
-  - Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2` with the deterministic Storage boot `recovery_set_id` work-set identity.
-  - Forge persistence retains independent repository and automation binding identities/generations plus provider-instance and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH, private-CA, or protected-browser contents.
-  - repository_automation is the canonical automation shell key; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id} are read-only copy-forward aliases, canonical data wins, nonconflicting legacy fields merge only with a verified GitHub automation binding, and ambiguity quarantines with a typed migration receipt.
-  - Remote Access persists only public connector/Server identity, configuration, state enums, versions, redacted lifecycle/health and receipt facts plus opaque secure-state refs; raw connector state, host Tailscale state, tailnet identity/keys, reusable URLs/queries, cookies, protected browser content, and IPC secrets/payloads have no ordinary durable family.
-  - rt.backup_manifest_metadata.v1, rt.scm_forge_metadata.v1, and rt.server_remote_metadata.v1 cover their public requests/results/errors/availability/receipts/health and quarantine prohibited key/token/code/protected/browser/private-path/private-host/unsafe-SCM-config/capture input before persistence, indexing, export, help/copy, GUI, Chat, Usage, Doctor, or evidence reuse.
-  - Every touched disposition retains physical-family truth, `runtime_evidence=false`, and `receipt_only_no_eventrecord_pending_event_authority`; every transform remains `contract_only_no_runtime_evidence`.
+- The storage registry remains schema-valid and this disposition-only transaction adds no physical-family rows; the current
+  census follows the readiness validator and separately admitted Notebook additions. New classifications use contract_family_dispositions
+  and do not claim a materialized family.
+- Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store
+  delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected
+  attachment/submission, and session payload.
+- Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2`
+  with the deterministic Storage boot `recovery_set_id` work-set identity.
+- Forge persistence retains independent repository and automation binding identities/generations plus provider-instance
+  and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH,
+  private-CA, or protected-browser contents.
+- repository_automation is the canonical automation shell key; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id}
+  are read-only copy-forward aliases, canonical data wins, nonconflicting legacy fields merge only with a verified GitHub
+  automation binding, and ambiguity quarantines with a typed migration receipt.
+- Remote Access persists only public connector/Server identity, configuration, state enums, versions, redacted lifecycle/health
+  and receipt facts plus opaque secure-state refs; raw connector state, host Tailscale state, tailnet identity/keys,
+  reusable URLs/queries, cookies, protected browser content, and IPC secrets/payloads have no ordinary durable family.
+- rt.backup_manifest_metadata.v1, rt.scm_forge_metadata.v1, and rt.server_remote_metadata.v1 cover their public requests/results/errors/availability/receipts/health
+  and quarantine prohibited key/token/code/protected/browser/private-path/private-host/unsafe-SCM-config/capture input
+  before persistence, indexing, export, help/copy, GUI, Chat, Usage, Doctor, or evidence reuse.
+- Every touched disposition retains physical-family truth, `runtime_evidence=false`, and `receipt_only_no_eventrecord_pending_event_authority`;
+  every transform remains `contract_only_no_runtime_evidence`.
+- 'DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on
+  Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected
+  auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning
+  PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active node
+  per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified
+  configuration, process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate
+  active nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying
+  or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit,
+  off by default and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust
+  or work permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint
+  reachable through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed
+  host Tailscale stays external and unmanaged. D6 A: the human signs in on the initiating active device while the AI/tool
+  runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
+  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
+  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
+  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.'
 validation_surfaces:
   - Draft 2020-12 validation of Plans/storage_value_registry.json against Plans/storage_value_registry.schema.json
   - Draft 2020-12 validation of Plans/redaction_transform_registry.json against Plans/redaction_transform_registry.schema.json

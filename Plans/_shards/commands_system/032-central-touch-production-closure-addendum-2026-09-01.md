@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5514-L5796
+Source lines: L5612-L5942
 
-Source SHA256: `1fc0e0187776d4122f8df57d459e7c146f7b557025eceb9ce611513b18aa5a6c`
+Source SHA256: `e5441e9674a932b2ef647a474c816f795128574b7e2ee9e31666e8f08de3ae4c`
 
 ---
 
@@ -265,15 +265,62 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: 'Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated
+  future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted
+  EventRecord types. DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server
+  owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and
+  receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner
+  server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local
+  operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records
+  and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers
+  and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select
+  native ownership. All routes remain handler_unavailable until executable evidence exists. DL-259 CLOUD-1 / DESKTOP-RESTORE-1,
+  Jared 2026-10-31: initial owner-claim authorization comes from the Server owner’s one-time console/bootstrap-code handoff
+  for a new cloud computer, or the native desktop’s protected direct local handoff for its dormant Server with no human
+  code. cmd.server.claim keeps its existing closed arguments discovery_observation_id, pairing_session_id and identity_fingerprint.
+  Their owner-verified binding plus current permission/generations carries the authorization; no raw code, certificate
+  material, new claim command or caller assertion of trust is added. Bootstrap and restore remain separate commands and
+  receipts. Initial owner claim does not grant pairing/trust to other Clients. DL-259 CERT-1, Jared 2026-10-31: Puppet
+  Master generates the proxy configuration; the person handles certificates and signing on their own systems. PM does
+  not select, hold, validate, issue or sign those certificates, and admits no certificate-profile field or selector command.
+  No certificate selection/validation is a prerequisite to configuration generation, route activation or Ready. Generation
+  proves only that the configuration artifact was produced. Route Ready reports the actual PM-owner checks performed:
+  endpoint reachability, protocol/API compatibility, expected Server identity and pairing/auth, and the applicable WebSocket,
+  stream, transfer, deep-link and callback checks. It never claims that a certificate is valid. Existing secure-transport,
+  public-exposure consent, identity and reachability requirements remain; missing or failed actual route checks cannot
+  be called successful.'
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
-- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false
+  inventory.
+- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission
+  contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
+- 'DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
+  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
+  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
+  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
+- 'DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: initial owner-claim authorization comes from the Server owner’s
+  one-time console/bootstrap-code handoff for a new cloud computer, or the native desktop’s protected direct local handoff
+  for its dormant Server with no human code. cmd.server.claim keeps its existing closed arguments discovery_observation_id,
+  pairing_session_id and identity_fingerprint. Their owner-verified binding plus current permission/generations carries
+  the authorization; no raw code, certificate material, new claim command or caller assertion of trust is added. Bootstrap
+  and restore remain separate commands and receipts. Initial owner claim does not grant pairing/trust to other Clients.'
+- 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
 validation_surfaces:
 - python3 scripts/pm-touch-closure-verify.py --json
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -286,6 +333,7 @@ source_lineage:
 - Plans/touch_closure.json
 - Plans/Wiring_Matrix.production.json
 - user-approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 negative_constraints:
 - Do not treat a planned target or production-intent row as native implementation proof.
 - Do not mint peer alias handlers or events.

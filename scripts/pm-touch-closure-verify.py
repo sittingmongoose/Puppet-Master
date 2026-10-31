@@ -676,6 +676,15 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     ]:
         add(profile, kind, schema_enum_actions(
             "Plans/pm7_build_contracts.schema.json", "/$defs/" + definition + "/enum"))
+    reused_owner_profiles = {
+        "cmd.browser.open_workspace_preview": "TCP-PM7-BROWSER-OPEN",
+        "cmd.chat.schedule_message.cancel": "TCP-PM7-SCHEDULE-CANCEL",
+        "cmd.terminal.rerun": "TCP-PM7-TERMINAL-RERUN",
+    }
+    if schema_enum_actions("Plans/pm7_build_contracts.schema.json", "/$defs/reused_work_command_id/enum") != set(reused_owner_profiles):
+        inventory_failures.append("Reused Work command/profile inventory differs")
+    for command, profile in reused_owner_profiles.items():
+        add(profile, "command", {command})
     uncovered_guided_actions = sorted(effective_guided_actions - set(expected))
     if uncovered_guided_actions:
         inventory_failures.append(
@@ -1657,6 +1666,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         if not isinstance(row, list) or len(row) != 6:
             continue
         touch_id, profile_id, kind, action, disposition, residual = row
+        declared = profiles.get(profile_id, {}).get("command_ids")
+        if declared is not None and action not in declared:
+            failures.append(f"{touch_id}: action outside its profile command_ids fence")
         profile = profiles.get(profile_id, {})
         if not residual.strip():
             failures.append(f"{touch_id}: residual risk is empty")
@@ -1855,10 +1867,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # producer). No Touch row/profile, alias, exclusion, native handler or proof
     # is added.
     exact_resolved_denominators = {
-        "row_count": 708,
+        "row_count": 715,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 137,
+        "profile_count": 140,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1269,

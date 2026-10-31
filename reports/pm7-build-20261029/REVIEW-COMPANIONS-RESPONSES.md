@@ -1,0 +1,25 @@
+# Companion review fix pass 1 — 2026-10-30
+
+Inputs: REVIEW-companions-astra.md and REVIEW-companions-muse.md, pinned to Plans 7f2cd192c8 / GUI e9b15abc64. Lead scope: mail 1030075153-e551. Current GUI ff9476a5c8 is merged through 2c2ae604d3. No GUI code or generated HTML was authored in this pass.
+
+Status: requested fixes implemented; focused checks pass. Derived validation passes after the WM-097 count correction. Independent cycle-2 recheck is under pm7-build; no self-approval or new full-gates result is claimed.
+
+| Finding | Fix / evidence |
+|---|---|
+| Astra A1 | Title re-exported both animated Working SVGs; manifest 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500 is cited in F3-660. This lane verifies 141 hashes and both 1.95 s/separate rest-control markups. Kit byte equality and unchanged static exports are reported by title mail 1030075414-b44d; no native bundle certification. |
+| Astra A2 | work.open_owner now uses local ui.work_panel.select / WorkRowSelection with owner_id, generation, destination agents or subagents, view/focus and exact thread for Subagents. It has no production row. Actual Open thread reuses cmd.chat.open_thread because the concept selects item.thread; Open surface uses local ui.work_panel.open_surface to its resolved owner. cmd.agents.open_thread remains the distinct live-transcript opener, not owner selection. A misrouting mutation is rejected. |
+| Astra A3 | Copy command is local ui.work_panel.copy_command; Open port reuses cmd.browser.open_workspace_preview; scheduled Cancel reuses cmd.chat.schedule_message.cancel, never PID Stop; Rerun reuses cmd.terminal.rerun while Restart keeps cmd.work.restart. Native requests/results stay with their existing owners. Concept W.stop/W.restart/localhost/clipboard adapters are explicitly weaker demonstrations. WorkTarget and the nine work-command IDs are unchanged. |
+| Astra A3 guard | Reverse census discovers literal data-work-act emissions and act.* labels from the actual detail renderer. 13 binding cases cover 10 hooks and their label branches, so removing Cancel cannot hide under Stop or removing one goto destination under the other. Five negative mutations cover omitted Copy/port, missing scheduled branch, a new unmapped hook, and owner-to-transcript misrouting. |
+| Astra A4 | Closed required value branches for tab/sort/filter/expand/select/quit draft, with Copy/surface targets and no-value visibility actions. 74 schema cases include the four reported holes and missing/extra/unknown/cross-branch payloads. Pin/System restrictions remain. No new durable state or command. |
+| Astra A5 | All four preset arrays are compared to the actual shared PM_PIP_PARTS.PRESETS evaluated in a DOM-inactive Node VM. Plain is schema-empty. Five parity cases include unchanged data and four drift mutations; no new registry/player/table and Settings still stores LABELS. |
+| Astra A6 / Muse1 | Chat working is [working,working]; the admitted public working mood renders the internal dots face. Chat reviewing/recovering remain think. Guard compares all 13 chat rows to PIP_STATE_MOOD with only declared alias normalization and checks the kit's working-to-dots normalization. No status key added. |
+| Muse2 | CS-105 spells ui.project_switcher.close and all_projects in full, including the latter's preserved token. System open/close literals are spelled out in registering units. Guard checks registered tokens in all 45 reserved units, with explicit System close checks. No ledger compilation occurred. |
+| Muse3 | Binding and ACD-476 disclose the concept's agent Review title lookup. Native signed identity/thread/generation remains required; equal/renamed titles are not certified safe. The same limitation is explicit for chat showOwner. No GUI edit or new native-proof claim. |
+| Muse nit1 | F3-660 labels the dormant eyes:false capability as legacy/gallery-only; X3 B still forbids product use. No plain-band product option admitted. |
+| Muse nit2 | Catalog scope notes and F3-660 distinguish chat agent rows from platform STATUS_FACE (reviewing/recovering working-dots, mixed oops, skipped idle). Typed state keys remain the same. |
+
+Counts: 477 bindings / 58 source-anchored PM7 families; 715 Touch rows / 137 profiles; 1269 production entries; 1011 settings; 22 status keys. Seven binding families and two local action IDs added; three existing commands receive missing Touch reverse coverage. No new production handler, command, event or native certification.
+
+Prose first: nine existing units amended; no added/deleted unit. Only CS-105 additionally gains one preserved exact token. Eight owner/index docs changed, seven are sharding sources; Settings_System remains index-only under the existing config. Generators alone write shards/index.
+
+Focused evidence is under /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-*. The final verification manifest carries file hashes and tested source. Full gates/dry remain at 8d63d284ac until the lead explicitly authorizes another pass; Quiet over allowed heavy work but did not explicitly request a new full pass. No landing, lock or reseal.

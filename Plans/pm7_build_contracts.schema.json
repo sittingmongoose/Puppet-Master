@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pm.pm7_build.contracts.v1",
   "title": "PM7 build project, work and Pip contracts",
-  "description": "Owner contracts CS-105/CS-106, SIR-054 and SSYS-056. Static schema only; no Event Authority or native implementation admission. Current owner/permission/identity comparison is semantic validation before dispatch.",
+  "description": "Owner contracts CS-105/CS-106, SIR-054, SSYS-056 and static GUI presentation F3-447/F3-535/ACD-506. Static schema only; no Event Authority or native implementation admission. Current owner/permission/identity comparison is semantic validation before dispatch. PresentationPolicy is not part of the command/action request union.",
   "oneOf": [
     {
       "$ref": "#/$defs/project_switch_request"
@@ -45,6 +45,9 @@
     },
     {
       "$ref": "#/$defs/PipPartsRegistry"
+    },
+    {
+      "$ref": "#/$defs/system_status_settings_route_request"
     }
   ],
   "$defs": {
@@ -84,7 +87,9 @@
         "ui.work_panel.select",
         "ui.work_quit.open",
         "ui.work_quit.select",
-        "ui.work_quit.cancel"
+        "ui.work_quit.cancel",
+        "ui.work_panel.copy_command",
+        "ui.work_panel.open_surface"
       ]
     },
     "pip_local_action_id": {
@@ -298,7 +303,11 @@
             "ui.settings.pip_editor.close",
             "ui.settings.pip_editor.replay",
             "ui.project_switcher.all_projects",
-            "ui.activity_detail.pin"
+            "ui.activity_detail.pin",
+            "ui.system_status.open",
+            "ui.system_status.close",
+            "ui.work_panel.copy_command",
+            "ui.work_panel.open_surface"
           ]
         },
         "project_id": {
@@ -382,6 +391,227 @@
             "properties": {
               "thread_id": false,
               "pinned": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "enum": [
+                  "ui.system_status.open",
+                  "ui.system_status.close"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.select_tab"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "enum": [
+                  "agents",
+                  "processes",
+                  "resources"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.sort"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "column",
+                  "direction"
+                ],
+                "properties": {
+                  "column": {
+                    "enum": [
+                      "title",
+                      "rank",
+                      "time",
+                      "cpu",
+                      "mem",
+                      "ports",
+                      "where"
+                    ]
+                  },
+                  "direction": {
+                    "enum": [
+                      -1,
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.filter"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkPanelFilter"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.expand"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkPanelExpand"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.select"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkRowSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_quit.select"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkQuitSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.copy_command"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkViewTarget"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "ui.work_panel.open_surface"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/WorkSurfaceSelection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "enum": [
+                  "ui.project_switcher.open",
+                  "ui.project_switcher.close",
+                  "ui.project_switcher.all_projects",
+                  "ui.work_panel.close",
+                  "ui.work_quit.open",
+                  "ui.work_quit.cancel",
+                  "ui.settings.pip_editor.open",
+                  "ui.settings.pip_editor.close",
+                  "ui.settings.pip_editor.replay"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": false
             }
           }
         }
@@ -638,7 +868,8 @@
                   "app-voice",
                   "setup-music"
                 ]
-              }
+              },
+              "maxItems": 0
             }
           }
         },
@@ -937,6 +1168,12 @@
             "application",
             "project"
           ]
+        },
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "description": "Optional exact process/scheduled row for dock Review/Show; owner must bind to the signed Project/thread and expected generation. No title fallback."
         }
       },
       "allOf": [
@@ -1915,7 +2152,9 @@
     },
     "activity_local_action_id": {
       "enum": [
-        "ui.activity_detail.pin"
+        "ui.activity_detail.pin",
+        "ui.system_status.open",
+        "ui.system_status.close"
       ]
     },
     "ActivityDetailViewState": {
@@ -1973,6 +2212,1082 @@
           }
         }
       ]
+    },
+    "system_status_settings_route_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_id",
+        "project_id",
+        "return_focus_id",
+        "view_id",
+        "scope_kind",
+        "setting_id"
+      ],
+      "properties": {
+        "action_id": {
+          "const": "ui.settings.route.open"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_focus_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "view_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "setting_id": {
+          "enum": [
+            "code.editing.lsp-server-catalog",
+            "system.mcp.server-list",
+            "web.index.enable"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ],
+      "description": "D11/G4: read-only System status owner-Settings reveal using the already admitted ui.settings.route.open action. No Settings write, service action, event or receipt."
+    },
+    "WorkViewTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "expected_generation"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "WorkRowSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "work_id",
+            "expected_generation"
+          ],
+          "properties": {
+            "kind": {
+              "const": "item"
+            },
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id",
+            "destination",
+            "expected_generation"
+          ],
+          "properties": {
+            "kind": {
+              "const": "owner"
+            },
+            "owner_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "destination": {
+              "enum": [
+                "agents",
+                "subagents"
+              ]
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "destination": {
+                    "const": "subagents"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "thread_id"
+                ]
+              },
+              "else": {
+                "properties": {
+                  "thread_id": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "WorkPanelFilter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "owner"
+            },
+            "owner_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "group"
+          ],
+          "properties": {
+            "kind": {
+              "const": "agent_group"
+            },
+            "group": {
+              "enum": [
+                "all",
+                "working",
+                "needs",
+                "waiting",
+                "done"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "grouping"
+          ],
+          "properties": {
+            "kind": {
+              "const": "process_grouping"
+            },
+            "grouping": {
+              "enum": [
+                "state",
+                "owner"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "WorkPanelExpand": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "work_id",
+            "expected_generation",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "item"
+            },
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "owner_id",
+            "expected_generation",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "subagents"
+            },
+            "owner_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "group_id",
+            "expanded"
+          ],
+          "properties": {
+            "kind": {
+              "const": "group"
+            },
+            "group_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expanded": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "WorkQuitSelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "choice"
+          ],
+          "properties": {
+            "choice": {
+              "enum": [
+                "keep_running",
+                "stop_selected"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "work_id",
+            "expected_generation",
+            "selected"
+          ],
+          "properties": {
+            "work_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "expected_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "selected": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope"
+          ],
+          "properties": {
+            "scope": {
+              "enum": [
+                "procs",
+                "all"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "WorkSurfaceSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_id",
+        "expected_generation",
+        "surface"
+      ],
+      "properties": {
+        "work_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "surface": {
+          "enum": [
+            "orchestrator",
+            "wizard",
+            "prd",
+            "scout"
+          ]
+        }
+      }
+    },
+    "reused_work_command_id": {
+      "description": "Existing owner command IDs reused by work-detail producers for reverse Touch coverage; no new command family or handler.",
+      "enum": [
+        "cmd.browser.open_workspace_preview",
+        "cmd.chat.schedule_message.cancel",
+        "cmd.terminal.rerun"
+      ]
+    },
+    "ReusedCatalogRequestIdentity": {
+      "description": "Identity-only fence from the existing UI catalog dispatch minimum. Additional fields belong to the catalog owner contract and are NOT validated or admitted here. No native payload, effect or terminal-success proof.",
+      "type": "object",
+      "required": [
+        "dispatch_id",
+        "command_id",
+        "source_surface",
+        "actor_ref"
+      ],
+      "properties": {
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_id": {
+          "enum": [
+            "cmd.browser.open_workspace_preview",
+            "cmd.terminal.rerun"
+          ]
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "PresentationPolicy": {
+      "description": "Static G2/F3-1 owner policy descriptor, not a native request, runtime event, persisted value or GUI execution proof. Threshold and relative first-card anchor are approved by Jared 2026-10-30. Final GUI 70b30f482f aligns the first card to the theme selector wrapper bottom plus menu gap, allowing a negative drop; open-inbox placement remains the separately attributed lead exception. F3-5/F3-6 on GUI5abe285507 guard entering/leaving cards on every page and measure authoritative inbox push after owner open from resting/destination layout height.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activity_detail",
+        "notice_stage"
+      ],
+      "properties": {
+        "activity_detail": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "widen_first",
+            "minimum_remaining_messages_px",
+            "below_minimum",
+            "small_panel"
+          ],
+          "properties": {
+            "widen_first": {
+              "const": true
+            },
+            "minimum_remaining_messages_px": {
+              "const": 360
+            },
+            "below_minimum": {
+              "const": "full_height_cover"
+            },
+            "small_panel": {
+              "const": false
+            }
+          }
+        },
+        "notice_stage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "anchor",
+            "first_card_gap_source",
+            "all_pages",
+            "may_cover_controls",
+            "clear_chat_head",
+            "avoid_controls",
+            "accepts_clicks_during_entry",
+            "reduced_motion_instant",
+            "open_inbox_placement",
+            "first_card_top_source",
+            "allow_negative_stage_drop",
+            "selector_absent_fallback",
+            "accepts_clicks_during_exit",
+            "inbox_push_geometry_source"
+          ],
+          "properties": {
+            "anchor": {
+              "const": "titlebar_bell"
+            },
+            "first_card_gap_source": {
+              "const": "theme_selector_menu"
+            },
+            "all_pages": {
+              "const": true
+            },
+            "may_cover_controls": {
+              "const": true
+            },
+            "clear_chat_head": {
+              "const": false
+            },
+            "avoid_controls": {
+              "const": false
+            },
+            "accepts_clicks_during_entry": {
+              "const": false
+            },
+            "reduced_motion_instant": {
+              "const": true
+            },
+            "open_inbox_placement": {
+              "const": "under_inbox"
+            },
+            "first_card_top_source": {
+              "const": "theme_menu_resting_top"
+            },
+            "allow_negative_stage_drop": {
+              "const": true
+            },
+            "selector_absent_fallback": {
+              "const": "titlebar_nonnegative_drop"
+            },
+            "accepts_clicks_during_exit": {
+              "const": false
+            },
+            "inbox_push_geometry_source": {
+              "const": "after_owner_open_resting_or_destination_height"
+            }
+          }
+        }
+      }
+    },
+    "QA2PresentationPolicy": {
+      "description": "DL-258/DR-080 static presentation descriptor. Not a native request, event, stored value or new product authority.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_scope",
+        "owner_ref",
+        "restore",
+        "choices",
+        "dock",
+        "resources",
+        "feedback",
+        "glass",
+        "sound",
+        "modal_lifetime",
+        "narrow_chat"
+      ],
+      "properties": {
+        "contract_scope": {
+          "const": "static_QA2_presentation_only"
+        },
+        "owner_ref": {
+          "const": "Plans/Decision_Log.md#DL-258"
+        },
+        "restore": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "locate_before_unlock",
+            "kit_is_place",
+            "kit_carries_storage_signin",
+            "accepted_kit_can_unlock",
+            "reach_place_before_manifest",
+            "repoint_invalidates_unlock",
+            "reach_bound_to_selected_place"
+          ],
+          "properties": {
+            "locate_before_unlock": {
+              "const": true
+            },
+            "kit_is_place": {
+              "const": false
+            },
+            "kit_carries_storage_signin": {
+              "const": false
+            },
+            "accepted_kit_can_unlock": {
+              "const": true
+            },
+            "reach_place_before_manifest": {
+              "const": true
+            },
+            "repoint_invalidates_unlock": {
+              "const": true
+            },
+            "reach_bound_to_selected_place": {
+              "const": true
+            }
+          }
+        },
+        "choices": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_ref",
+            "single_joined_choice_owner",
+            "affected_screens",
+            "joined_all_looks",
+            "question_control_overlaps"
+          ],
+          "properties": {
+            "owner_ref": {
+              "const": "Plans/DRY_Rules.md#DR-080"
+            },
+            "single_joined_choice_owner": {
+              "const": true
+            },
+            "affected_screens": {
+              "const": 12
+            },
+            "joined_all_looks": {
+              "const": true
+            },
+            "question_control_overlaps": {
+              "const": false
+            }
+          },
+          "x-source-lineage": "DL-260: C.cards/under and o55-under/o55-card-parent are concept implementation evidence only, not native APIs/classes."
+        },
+        "dock": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lifetime_ms",
+            "key_fields",
+            "needs_you_expires",
+            "expiry_mutates_owner",
+            "timer"
+          ],
+          "properties": {
+            "lifetime_ms": {
+              "const": 60000
+            },
+            "key_fields": {
+              "const": [
+                "thread_id",
+                "work_id",
+                "started_at_or_occurrence"
+              ]
+            },
+            "needs_you_expires": {
+              "const": false
+            },
+            "expiry_mutates_owner": {
+              "const": false
+            },
+            "timer": {
+              "const": "one_next_expiry"
+            }
+          }
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope",
+            "empty_Project_shows_shared",
+            "shared_empty_environment_shown",
+            "sampling_period_ms",
+            "sampling_visible_only",
+            "service_control_added"
+          ],
+          "properties": {
+            "scope": {
+              "const": "current_Project_plus_shared_computer_services"
+            },
+            "empty_Project_shows_shared": {
+              "const": true
+            },
+            "shared_empty_environment_shown": {
+              "const": false
+            },
+            "sampling_period_ms": {
+              "const": 2000
+            },
+            "sampling_visible_only": {
+              "const": true
+            },
+            "service_control_added": {
+              "const": false
+            }
+          }
+        },
+        "feedback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "you",
+            "you_has_cross_or_strings",
+            "wand_owner",
+            "plate_requires_control",
+            "schedule_requires_partner"
+          ],
+          "properties": {
+            "you": {
+              "const": "person_alone"
+            },
+            "you_has_cross_or_strings": {
+              "const": false
+            },
+            "wand_owner": {
+              "const": "one_registry_wand"
+            },
+            "plate_requires_control": {
+              "const": true
+            },
+            "schedule_requires_partner": {
+              "const": true
+            }
+          }
+        },
+        "glass": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hover_owner",
+            "independent_sheet_light",
+            "dark_sheen_alpha",
+            "light_sheen_alpha",
+            "edge_glow_changed",
+            "bar_and_dock_plate",
+            "Settings_modal_fill"
+          ],
+          "properties": {
+            "hover_owner": {
+              "const": "PMH"
+            },
+            "independent_sheet_light": {
+              "const": false
+            },
+            "dark_sheen_alpha": {
+              "const": 0.045
+            },
+            "light_sheen_alpha": {
+              "const": 0.045
+            },
+            "edge_glow_changed": {
+              "const": false
+            },
+            "bar_and_dock_plate": {
+              "const": "menu_plate"
+            },
+            "Settings_modal_fill": {
+              "const": "menu_tint_over_look_ground"
+            }
+          }
+        },
+        "sound": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "factory_enabled",
+            "unreadable_snapshot",
+            "readable_Project_wins",
+            "trusted_gesture_required",
+            "new_preference"
+          ],
+          "properties": {
+            "factory_enabled": {
+              "const": true
+            },
+            "unreadable_snapshot": {
+              "const": "retain_effective_choice"
+            },
+            "readable_Project_wins": {
+              "const": true
+            },
+            "trusted_gesture_required": {
+              "const": true
+            },
+            "new_preference": {
+              "const": false
+            }
+          }
+        },
+        "modal_lifetime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "inert_basis",
+            "replace_reacquires_existing_holds"
+          ],
+          "properties": {
+            "inert_basis": {
+              "const": "first_open_lifetime"
+            },
+            "replace_reacquires_existing_holds": {
+              "const": false
+            }
+          }
+        },
+        "narrow_chat": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "default_900_and_below",
+            "centre_threshold_px",
+            "hysteresis_px",
+            "descendant_paint_while_folded",
+            "peek_restores_same_subtree"
+          ],
+          "properties": {
+            "default_900_and_below": {
+              "const": "clean_32px_strip"
+            },
+            "centre_threshold_px": {
+              "const": 480
+            },
+            "hysteresis_px": {
+              "const": 48
+            },
+            "descendant_paint_while_folded": {
+              "const": false
+            },
+            "peek_restores_same_subtree": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "PipVoiceRoomPolicy": {
+      "description": "Q1 B, Jared 2026-10-31: shared Pip voice room, static contract only.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "decision_ref",
+        "voice_paths",
+        "room_owner",
+        "send_by_family",
+        "stacked_rooms",
+        "approx_loudness_bound_db",
+        "new_preference",
+        "send_stage",
+        "room_registered_before_first_voice"
+      ],
+      "properties": {
+        "owner_ref": {
+          "const": "Plans/FinalGUISpec.md#F3-599"
+        },
+        "decision_ref": {
+          "const": "Plans/Decision_Log.md#DL-259"
+        },
+        "voice_paths": {
+          "const": [
+            "say",
+            "vocals"
+          ]
+        },
+        "room_owner": {
+          "const": "one_per_look_kit_room"
+        },
+        "send_by_family": {
+          "const": {
+            "basic": 0.35,
+            "friendly": 0.35,
+            "glass": 0.3,
+            "retro": 0.35,
+            "nier": 0.16
+          }
+        },
+        "stacked_rooms": {
+          "const": false
+        },
+        "approx_loudness_bound_db": {
+          "const": 0.4
+        },
+        "new_preference": {
+          "const": false
+        },
+        "send_stage": {
+          "const": "after_trim_and_pan"
+        },
+        "room_registered_before_first_voice": {
+          "const": true
+        }
+      }
+    },
+    "PostcommitRemoteSetupPolicy": {
+      "description": "DL-259 real product continuation; static descriptor, no owner admission or native proof.",
+      "const": {
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "stage": "automatic_preparation",
+        "remote_in_Creating": false,
+        "remote_after_owner_settlement": true,
+        "remote_before_normal_provider_continuation": true,
+        "later_finishes_onboarding": true,
+        "later_undoes_committed_Project": false,
+        "later_infers_ready": false,
+        "actual_app_context": "existing_owner_results_and_registry_join",
+        "cloud_claim_requires_verified_private_channel": true,
+        "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
+        "code_grammar": "Remote_Link_owner_defined",
+        "nonblank_code_proves_validity": false,
+        "new_primary_command": false,
+        "certificate_custody": "person_own_systems",
+        "PM_certificate_administration": false,
+        "certificate_selection_validation_gate": false,
+        "Ready_claims_certificate_validity": false,
+        "ready_checks": [
+          "endpoint_reachability",
+          "PM_protocol_API",
+          "expected_Server_identity_pairing_auth",
+          "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+        ],
+        "cloud_claim_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+        "desktop_first_claim_handoff": "protected_native_direct_local_no_code_to_type",
+        "initial_claim_proof_bindings": [
+          "discovery_observation_id",
+          "pairing_session_id",
+          "identity_fingerprint"
+        ],
+        "public_unclaimed_setup": false,
+        "code_protocol_verification": "immediately_before_product_build",
+        "proxy_hosting_choices": [
+          "generate_only",
+          "existing_proxy"
+        ],
+        "proxy_tls": null,
+        "PM_installs_or_hosts_proxy": false,
+        "generated_file_requires_person_install": true,
+        "existing_proxy_generates_configuration": false,
+        "cloud_claim_address_input": false,
+        "cloud_unclaimed_network_discovery": false
+      }
+    },
+    "InitialOwnerClaimPolicy": {
+      "description": "DL-259 CLOUD-1/DESKTOP-RESTORE-1 policy descriptor; no new request field, root admission or native authority proof.",
+      "const": {
+        "owner_ref": "Plans/Server_System.md#SRV-007",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "ruling_ids": [
+          "CLOUD-1",
+          "DESKTOP-RESTORE-1"
+        ],
+        "decider": "Jared",
+        "date": "2026-10-31",
+        "proof_name": "initial_owner_claim_authorization",
+        "proof_bindings": [
+          "discovery_observation_id",
+          "pairing_session_id",
+          "identity_fingerprint"
+        ],
+        "cloud_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+        "desktop_handoff": "protected_native_direct_local_no_code_to_type",
+        "proof_authority": "Server_owner_verified_current_authorization_session",
+        "raw_code_in_command_or_durable_state": false,
+        "caller_flag_grants_authority": false,
+        "public_unclaimed_setup": false,
+        "new_command_or_payload_field": false,
+        "claim_bootstrap_restore_separate": true
+      }
+    },
+    "ProxyCertificateBoundary": {
+      "description": "DL-259 CERT-1 policy descriptor; configuration generation and PM route checks are distinct from person-owned certificate administration.",
+      "const": {
+        "owner_ref": "Plans/Remote_Access_System.md#RAS-005",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "ruling_id": "CERT-1",
+        "decider": "Jared",
+        "date": "2026-10-31",
+        "PM_scope": "proxy_configuration_and_actual_PM_route_checks",
+        "certificate_custody": "person_own_systems",
+        "PM_selects_holds_validates_issues_signs_certificates": false,
+        "certificate_profile_or_selector_command": false,
+        "certificate_selection_validation_gate": false,
+        "generated_artifact_proves_route_ready": false,
+        "Ready_claims_certificate_validity": false,
+        "public_exposure_consent_required": true,
+        "ready_checks": [
+          "endpoint_reachability",
+          "PM_protocol_API",
+          "expected_Server_identity_pairing_auth",
+          "applicable_WebSocket_stream_transfer_deeplink_callback_checks"
+        ]
+      }
+    },
+    "QA2CoverageAuditPolicy": {
+      "description": "DL-259 audit closure descriptor; not a native request, event, preference or owner-authority record.",
+      "const": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "contract_scope": "static_product_presentation_only",
+        "theme_auto": {
+          "owner_ref": "Plans/Settings_System.md#SSYS-010",
+          "choose_Auto": "atomic_mode_Auto_and_family_effective_OS_scheme",
+          "OS_change_or_Project_reopen": "theme_only_retain_Auto",
+          "writer": "existing_Project_Settings_transaction",
+          "read_only_refusal_currentness_preserved": true,
+          "write_during_render": false
+        },
+        "technical_hover": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-523",
+          "visible_small_identifier_eligible": true,
+          "explicit_technical_declaration_eligible": true,
+          "container_or_internal_render_scroll_keys_eligible": false,
+          "second_controller": false
+        },
+        "inner_escape": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-665",
+          "focus_independent": true,
+          "innermost_overlay_first": true
+        },
+        "welcome_looks": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-598",
+          "families": [
+            "basic",
+            "friendly",
+            "glass",
+            "retro",
+            "nier"
+          ],
+          "equal_prominence": true,
+          "accessible_labels_tips_Adjust": true,
+          "title_choices_footer_clipped": false
+        },
+        "stage_note": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "settled_untransformed_bounds": true,
+          "long_text_scrolls_inside": true,
+          "both_help_modes": true,
+          "separate_tail": false
+        },
+        "resting_props": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-663",
+          "ordinary_props_clear_floor_and_edge": true,
+          "Creating_blocks_floor_contact": true,
+          "coordinate_margin_pinned": false
+        },
+        "provider_category_return": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
+          "retain_chosen_category": true,
+          "chosen_category_providers_first": true,
+          "new_persisted_preference": false
+        },
+        "key_acquisition": {
+          "owner_ref": "Plans/Multi-Account.md#MA-040",
+          "command_id": "cmd.auth_profile.open_official_page",
+          "production_entry": "catalog.auth_profile_open_official_page",
+          "exact_provider_official_console_or_guide": true,
+          "key_not_password": true,
+          "initiating_active_Client_bound": true,
+          "return_proves_readiness": false
+        },
+        "tailnet_auth": {
+          "owner_ref": "Plans/Shared_Integration_Runtime.md#SIR-032",
+          "connector_owner_roles": [
+            "server",
+            "native_client"
+          ],
+          "server_policy": "server_owned_authorized_client_handoff",
+          "native_client_policy": "initiating_active_client_only",
+          "native_Client_listener_or_Funnel": false,
+          "native_Client_arbitrary_proxy": false,
+          "plain_browser_embedded_connection": false
+        }
+      }
     }
   }
 }
