@@ -254,7 +254,17 @@
       "sum": "{n} services",
       "open": "Settings",
       "openLabel": "Open {where} in Settings",
-      "note": "Puppet Master runs these for you. They are started and stopped in Settings, never from here."
+      "note": "Puppet Master runs these for you. They are started and stopped in Settings, never from here.",
+      "serverHere": "Puppet Master runs on this computer.",
+      "server": "Connected to {name} through {how}.",
+      "serverRoute": "Uses {name}. Getting in through {how} is not set up yet.",
+      "route": {
+        "lan": "your home network",
+        "vpn": "your VPN",
+        "tailscale": "Tailscale",
+        "reverse_proxy": "your own web address",
+        "remote_link": "Puppet Master Remote Link"
+      }
     },
     "rail": {
       "label": "Agents, with their subagents",

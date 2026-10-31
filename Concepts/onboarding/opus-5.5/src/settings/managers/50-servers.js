@@ -103,9 +103,44 @@
     for (const k of ['headscale', 'domain', 'vpn', 'remoteLink']) if (R[k] === undefined) R[k] = null;
     if (R.order === 'recommended') DEFAULT_ROUTE_ORDER.forEach((id, i) => { const r = R.routes.find(x => x.id === id); if (r) r.priority = i + 1; });
   }
+  /* ---------- What onboarding set up (O55.handoff, pm.onboarding.result.v1; SCR-03) ---------- */
+  /* The result names this device, the Server it now uses (or this computer) and the way it reaches it. This model is
+     rebuilt from the example data on every Project reload, so the result is applied after each rebuild and again when a
+     new one arrives. Example Servers and devices the person never set up are not listed beside it, and a value the
+     result does not carry is shown as not checked rather than invented. */
+  const ROUTE_OF = { local_or_vpn: r => (r.via === 'vpn' ? 'vpn' : 'lan'), tailscale: () => 'tailscale', reverse_proxy: () => 'domain', remote_link: () => 'remote-link' };
+  const ROUTE_STATE = { in_use: 'active', ready: 'ready', waiting: 'testing', needs_attention: 'needs-attention', set_up_later: 'not-set-up', not_set_up: 'not-set-up' };
+  function adoptOnboarding(SP) {
+    const r = window.PM_ONBOARDING_RESULT;
+    if (!SP || !r || r.schema !== 'pm.onboarding.result.v1' || !Array.isArray(SP.servers)) return;
+    const me = r.client || {}, srv = r.server && r.server.role !== 'this_device' ? r.server : null, route = r.route || {};
+    const here = SP.servers.find(s => s.id === 'this') || {};
+    const local = Object.assign({}, here, { id: 'this', name: me.name || here.name || 'This computer', role: 'This computer', address: 'localhost', state: 'Connected', lastCheck: 'Now', default: !srv });
+    SP.servers = srv ? [{ id: srv.server_id, name: srv.name, role: 'Home server', address: srv.address_label || '', state: 'Connected', version: 'Not checked yet', updateReady: false, runsWork: true, default: true, lastCheck: 'During setup', deployment: srv.role === 'new_server' ? (srv.kind === 'nas' ? 'Container' : 'Standalone') : undefined, environments: [] }, local] : [local];
+    SP.homeServer = srv ? srv.server_id : 'this';
+    SP.devices = [{ id: me.client_id || 'this-device', name: me.name || 'This device', platform: me.platform || '', role: srv ? 'Client' : 'Client + runs work', state: 'Connected', lastSeen: 'Now', trust: 'Owner', current: true }];
+    const R = SP.remoteAccess, pick = ROUTE_OF[route.mode] && ROUTE_OF[route.mode](route);
+    if (!R || !Array.isArray(R.routes)) return;
+    if (pick) {
+      R.actual = route.state === 'in_use' ? pick : R.actual;
+      R.routes.forEach(x => {
+        if (x.id === pick) { x.status = ROUTE_STATE[route.state] || 'not-set-up'; x.enabled = x.locked || x.status === 'active' || x.status === 'ready'; x.lastCheck = x.status === 'active' ? 'During setup' : 'Never'; }
+        else if (x.id === 'lan' && R.actual !== 'lan') { x.status = 'not-set-up'; x.lastCheck = 'Never'; }
+      });
+      if (pick === 'tailscale' && route.control === 'headscale') R.headscale = { address: route.endpoint_label || '' };
+      if (pick === 'domain') R.domain = { name: String(route.endpoint_label || '').replace(/^https:\/\//, ''), proxy: 'Proxy' };
+      if (pick === 'remote-link') R.remoteLink = { link: route.endpoint_label || '', created: 'During setup' };
+      if (pick === 'vpn') R.vpn = { kind: 'Other', address: srv ? srv.address_label || '' : '' };
+    }
+    const files = r.project && r.project.files;
+    if (files && files.label) SP.sourceLocation = { kind: { server: 'Server folder', this_device: 'This computer', network_drive: 'Network drive' }[files.kind] || 'Folder', path: files.label };
+    SP.status = Object.assign({}, SP.status, { connection: srv ? `Connected · ${(R.routes.find(x => x.id === R.actual) || {}).name || 'Local network'}` : 'This computer', lastChange: 'During setup' });
+  }
   const pm51ServersOriginalEnsureStateShape = ensureStateShape;
-  ensureStateShape = function () { const out = pm51ServersOriginalEnsureStateShape.apply(this, arguments); try { normalizeRemoteAccess(PM51.s().serverProject); } catch (_e) { /* shape only */ } return out; };
-  try { normalizeRemoteAccess(PM51.s().serverProject); } catch (_e) { /* shape only */ }
+  ensureStateShape = function () { const out = pm51ServersOriginalEnsureStateShape.apply(this, arguments); try { normalizeRemoteAccess(PM51.s().serverProject); adoptOnboarding(PM51.s().serverProject); } catch (_e) { /* shape only */ } return out; };
+  try { normalizeRemoteAccess(PM51.s().serverProject); adoptOnboarding(PM51.s().serverProject); } catch (_e) { /* shape only */ }
+  /* (a new result repaints this page only when it is drawn; otherwise the next visit draws it from the model) */
+  window.addEventListener('pm:onboarding-result', () => { try { adoptOnboarding(PM51.s().serverProject); if (document.querySelector(`[data-continuous-workspace-body="${ID}"]`)) PM51.refresh(ID, { swap: false }); } catch (_e) { /* Settings not built yet */ } });
 
   const ra = () => sp().remoteAccess;
   const routeById = id => ra().routes.find(r => r.id === id);

@@ -726,6 +726,11 @@
     }
   });
 
+  /* the restored Project opened goes to the app by its own name, never its id as a name (SCR-18's class) */
+  function restoredOpen(S) {
+    const b = S.env.fullBackups.find((x) => x.id === R(S).pick) || S.env.fullBackups[0], names = b.projectList, id = R(S).open || U.slug(names[0]);
+    return { project: id, projectName: names.find((n) => U.slug(n) === id) || null, restored: true };
+  }
   def('r-done', {
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'hero', beat: 'ready' }),
@@ -745,8 +750,8 @@
     do: {
       pickProject(S, id) { R(S).open = id; S.save(); O55.ui.refresh(); },
       createNew(S, arg, el) { S.sess.active = 'main'; O55.draft.set(md(S), { project_mode: 'new' }); S.save(); O55.ui.charm(el, T('begin.new.title'), 'seed'); O55.ui.go('begin'); },
-      enter(S) { O55.finish(S, { tour: false, project: R(S).open || U.slug(S.env.fullBackups[0].projectList[0]) }); },
-      tour(S) { O55.finish(S, { tour: true, project: R(S).open || U.slug(S.env.fullBackups[0].projectList[0]) }); }
+      enter(S) { O55.finish(S, Object.assign({ tour: false }, restoredOpen(S))); },
+      tour(S) { O55.finish(S, Object.assign({ tour: true }, restoredOpen(S))); }
     }
   });
 })();

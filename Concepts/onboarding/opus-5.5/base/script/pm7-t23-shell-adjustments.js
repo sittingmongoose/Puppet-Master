@@ -926,6 +926,14 @@
       hostItem.setAttribute('data-pm-hover-label', 'Where it runs');
       hostItem.setAttribute('data-pm-hover-detail', 'The computer Puppet Master runs on, and how quickly it answers.');
     }
+    /* O55: the computer that does the work is the one onboarding set up (window.PM_ONBOARDING_RESULT, SCR-03) */
+    function paintHost() {
+      var r = window.PM_ONBOARDING_RESULT, item = bar.querySelector('[data-status-item="host"]'), strong = item && item.querySelector('strong');
+      if (!strong || !r || !r.host) return;
+      strong.textContent = r.host.role === 'this_device' || !r.host.name ? 'this computer' : r.host.name;
+    }
+    paintHost();
+    if (!bar.hasAttribute('data-o55-host')) { bar.setAttribute('data-o55-host', ''); window.addEventListener('pm:onboarding-result', paintHost); }
     function updatePage() {
       var page = document.querySelector('.page.active'), tab = page && document.querySelector('[data-page="' + page.id.replace(/^panel-/,'') + '"]');
       var name = tab ? tab.textContent.trim() : (page ? page.id.replace(/^panel-/,'') : 'Home');
