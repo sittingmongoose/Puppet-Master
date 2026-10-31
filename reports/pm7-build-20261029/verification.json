@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "78af23f393d730766d7a354cea57bdcf34505bea",
+  "source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-30T18:47:32.393093+00:00",
+  "recorded_at_utc": "2026-10-31T00:00:19.160523+00:00",
   "native_runtime_certification": false,
   "step4": "GUI5abe_toast_followups_10_focused_pass",
   "counts": {
@@ -36,10 +36,13 @@
     "touch_rows": 715,
     "touch_profiles": 140,
     "production_wiring_entries": 1269,
-    "plan_units": 7238,
+    "plan_units": 7240,
     "indexed_docs": 96,
     "shards": 2956,
-    "sharded_sources": 99
+    "sharded_sources": 99,
+    "pm7_bindings": 479,
+    "pm7_source_families": 61,
+    "shard_sources": 99
   },
   "commands": [
     {
@@ -55,9 +58,10 @@
         "Plans/sharding_config.json"
       ],
       "exit": 0,
-      "seconds": 2.067,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+      "seconds": 2.238,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "index-generate",
@@ -70,9 +74,25 @@
         "generate"
       ],
       "exit": 0,
-      "seconds": 32.899,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-generate.log",
-      "sha256": "652157de762eb1d37a95c7c0b2af2b04d3f8f300a1a29838b91a122aa5566b02"
+      "seconds": 34.864,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-generate.log",
+      "sha256": "83b69bad77a145cbf3bff482cc3a6567e9ca9a4974e92a5a6fd9248354748757",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "qa2",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-qa2-alignment-check.py"
+      ],
+      "exit": 0,
+      "seconds": 0.902,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-qa2.log",
+      "sha256": "c145a63321acc395c7a25523affb2a7623dc067b9b213f7e9b7736ce1d010e48",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "nier",
@@ -84,9 +104,10 @@
         "scripts/pm7-nier-theme-check.py"
       ],
       "exit": 0,
-      "seconds": 7.965,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-nier.log",
-      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf"
+      "seconds": 7.803,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
     },
     {
       "label": "canon",
@@ -98,9 +119,10 @@
         "scripts/pm7-canon-check.py"
       ],
       "exit": 0,
-      "seconds": 9.459,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-canon.log",
-      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87"
+      "seconds": 10.645,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
     },
     {
       "label": "pm7-build",
@@ -112,9 +134,9 @@
         "scripts/pm7-build-check.py"
       ],
       "exit": 0,
-      "seconds": 1.948,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-pm7-build.log",
-      "sha256": "28f53ca5dceb851780700d0d677a4f453f667dd297594c9395d4669c64064607"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-pm7-build.log",
+      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
     },
     {
       "label": "touch",
@@ -126,9 +148,10 @@
         "scripts/pm-touch-closure-verify.py"
       ],
       "exit": 0,
-      "seconds": 1.59,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-touch.log",
-      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032"
+      "seconds": 1.85,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "wiring",
@@ -141,9 +164,10 @@
         "validate-wiring-matrix"
       ],
       "exit": 0,
-      "seconds": 0.825,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-wiring.log",
-      "sha256": "042aa3c2b20854888cf0b8ca70c23e6e6687d015ee5e03b0ec74734ad3f74f1b"
+      "seconds": 0.988,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-wiring.log",
+      "sha256": "5928f3f7961400d2e1e8685a4fb52c3c200829c7fe6046c647ed25c7641232a5",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "shards-check",
@@ -156,9 +180,10 @@
         "--check"
       ],
       "exit": 0,
-      "seconds": 14.056,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+      "seconds": 14.566,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "index-validate",
@@ -171,9 +196,10 @@
         "validate"
       ],
       "exit": 0,
-      "seconds": 35.208,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-validate.log",
-      "sha256": "8cdf21d515a771b8751b99cfd79b22209fafcd123221b4cd7da652668b8408a2"
+      "seconds": 39.127,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-validate.log",
+      "sha256": "b9d4a03f5d4b9f3b053677470e459f84351a479f96a51029740f6b93f8da8340",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
     },
     {
       "label": "onboarding-storage",
@@ -186,9 +212,60 @@
         "--check"
       ],
       "exit": 0,
-      "seconds": 0.612,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-onboarding-storage.log",
-      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd"
+      "seconds": 0.724,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "onboarding-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/build.py",
+        "--publish-pm7",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 40.973,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-onboarding-builder.log",
+      "sha256": "edc415fa7f579563670057059cf8193d3510c579b7a26974f43c39b6e6902398",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+    },
+    {
+      "label": "retired-input-parser",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/settings_layer_retire.test.py"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-retired-input-parser.log",
+      "sha256": "551b858429918aa10fef86629e8e512cc972d31d017ffdb5fba1e9ea6cf7c1f0",
+      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+      "relevant_source_inputs_unchanged": true
+    },
+    {
+      "label": "chat-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.471,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-chat-builder.log",
+      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644",
+      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+      "relevant_source_inputs_unchanged": true
     }
   ],
   "dry": {
@@ -244,10 +321,12 @@
   ],
   "protected_governance_changes": [],
   "clean_committed_shard_check": {
-    "source_commit": "78af23f393d730766d7a354cea57bdcf34505bea",
+    "source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+    "current_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554",
     "exit": 0,
-    "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
-    "source_hashes_match_commit": true
+    "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
+    "source_hashes_match_commit": true,
+    "canon_and_derived_bytes_unchanged_after_source_checks": true
   },
   "review_status": "Astra r2 closed all11 prior findings; N1/N2 direct proof retained. Final owner follow-ups and exact GUI anchor aligned, no third review.",
   "artifacts": [
@@ -280,641 +359,6 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-run-gates.stderr",
       "sha256": "7fd34ecb19b38b554699d327e57f52280c95758e6e64884632d7ad0c5a9d7aa7",
       "bytes": 4713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-cycle-direct-fixes.json",
-      "sha256": "eae45b9f7cc9667a2fa2ea6f70e817718c550136b52a9d25faa965b63dae1fa6",
-      "bytes": 3333
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-plan-index-generate.log",
-      "sha256": "0f67bf1101ed457a1e1c0bece2a08711dbf3a64ddf9afc7a99d7a881688f1ced",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-build-check.json",
-      "sha256": "ce4aeef6b4b5873495fe4336ba66020981b84b15147a3652e43af47940931534",
-      "bytes": 416
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-canon-check.json",
-      "sha256": "691406c56b0ff3c57d7e4de7a6c6657dd4adcb32b3d0378d478ec039a0c865b1",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-prose-followups.json",
-      "sha256": "891569521c2e1793360769ed8d971df20f7fbd0df21c99a51bc9a86fccb37148",
-      "bytes": 606
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-touch-check.log",
-      "sha256": "7cf53ed8ffa6092fa4c0b96871bdad53fed89553f104c06a2c6b4546fbb6c519",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-committed-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.exit",
-      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.json",
-      "sha256": "35142120860c22ffe9eb80841077ca0946be0b0ba749398166c6d40dcef93034",
-      "bytes": 120841
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.stderr",
-      "sha256": "3f3376fd7cc412c7b3c94736bab1b58c95945c5f1204d57ab45b0243e1c3a170",
-      "bytes": 4713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.log",
-      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
-      "bytes": 434
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/label-committed-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pip-label-storage-proof.json",
-      "sha256": "3aa89680379be557921209965ff6b5c8eae72a157efa02beb2d3b0a422d3c81c",
-      "bytes": 1284
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard-after.log",
-      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
-      "bytes": 434
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard.log",
-      "sha256": "7850caf74413749a19c48f80aa611a1dc70edb92ac2a0ad5f2a2e144ac01ea52",
-      "bytes": 529
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-regenerate.log",
-      "sha256": "36fe1ff117044c29cad9b2dfe4ead063dd833c49fa0612f032544765e60070b3",
-      "bytes": 695
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json",
-      "sha256": "c1b63a66ecdc454ebe66033f66bc0ef6d24e62bc31b6590c1addbaa146f0727f",
-      "bytes": 841
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/settings-disposition-pin-proof.json",
-      "sha256": "cce5fa7208ce87c8546101c0eb244cceb6761bf9f4ffaf3b012f7a668e8c9a35",
-      "bytes": 525
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/touch-failure-probe.log",
-      "sha256": "5873f35f2eb174525e1d0802295ecad14ffcb78657f20f6761508541ebc0fc18",
-      "bytes": 216
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.exit",
-      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.json",
-      "sha256": "98ad146911a62486c2bf82ac554c1437c0cc11d378673f6346f79161fecc237a",
-      "bytes": 19618681
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.stderr",
-      "sha256": "cfd4c0069b9dd4b6a091a08aaf5ff60ca077958ceea7159b6ded0d153af8b928",
-      "bytes": 50
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.exit",
-      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.json",
-      "sha256": "75dfc9a8dea6ea1510fb8757b0851ecf2945d0263583ea3acb6248c88f91da1a",
-      "bytes": 120230
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.stderr",
-      "sha256": "6e6891131044cb110e7d9fe809e3e968fa2051c4cfdca2f7967a5e694c4beb09",
-      "bytes": 4712
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-focused.json",
-      "sha256": "f893a5b4e90b44b8742c39b618aacea2d81be7b92af6a0dff038a71d87141399"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.log",
-      "sha256": "87b2aa5e03c7d6900feeaf02baf487dbf18d2414a34b10d6536ffd67c7844117"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.log",
-      "sha256": "f020afe1c160a74025da1db3dc4e1ce4f93f5b2916cb90edc3f89f5d1d159d3b"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.log",
-      "sha256": "0251f3528842063e4f92ea9564f3e45fd57cd4ca2d5bb3c43091692de80f8659"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.log",
-      "sha256": "4c09e0365e2ca34f188445d3a6a89807f583e66a951a978b9fa9369aa32d9130"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-prose-proof.json",
-      "sha256": "3d4ff67fa1c43761a035f93d350300177f8a54bab75e4723a191d493dd5f992e"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.log",
-      "sha256": "03d0ace681d7f55672a106a6004232422960546c15469e32a4ddc7c46520369e"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-builder-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-builder-check.log",
-      "sha256": "3dab4a3111ee5d477b2a36a7b7429b89f3e0b6fa006b68c71da6d9ba3bee4c85",
-      "bytes": 434
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-focused.json",
-      "sha256": "ebd3749abe91d3371060876b7615b99b525a768435bacfebea50fc3353e4303d",
-      "bytes": 2184
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-generate.log",
-      "sha256": "2fda353e02e1422d098c5060e98b08b53c3b07cfda0e20c8a1499385da688760",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-validate.log",
-      "sha256": "a858fe10739931df12da0c9a434c6bf4dd585b0cefcb20016ff288fd68127869",
-      "bytes": 328
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-build.log",
-      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
-      "bytes": 513
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-canon.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-canon.log",
-      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-prose-proof.json",
-      "sha256": "541a800376e26a18f004c643f377c88956c4ccbbb5e5a8181a31f74ead3632fa",
-      "bytes": 6486
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-touch.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-touch.log",
-      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-release-assets-proof.json",
-      "sha256": "aa18d4c327a1915ad1ae0fc7a99d5c83fd43eaa43edea0978652313f793e534f",
-      "bytes": 379
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-registry-alignment.json",
-      "sha256": "757db0f2b4b31a6939c251a2232b5b0c21a9671348e3bc3522f0eafa59c25e7f",
-      "bytes": 567
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-standalone-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-standalone-check.log",
-      "sha256": "8e78b148210fd48855395637777edc3fb523ed12e0273aa7ab2052ffbfd64b7b",
-      "bytes": 69
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-loader-selector-census.json",
-      "sha256": "099b83975b382af7748213427ece638ffc9a837f2a179a01cad9c2bfa1f1ac46",
-      "bytes": 1470
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-index-validate.log",
-      "sha256": "056ff73d50c63e4df80ef4f75ade0da1a7a960bab2cd787b8ff72f4fb174158b",
-      "bytes": 328
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-mismatches-before.json",
-      "sha256": "2bd44137ad23c550adec0c875d54ae1a0d10b6d46f75096e034e8f5c4c07c8fe",
-      "bytes": 2449
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-build.log",
-      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
-      "bytes": 513
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-canon.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-canon.log",
-      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-generate.log",
-      "sha256": "779d5cedbc958d5b583ad10e59de8493d6ce32d33116cd6b795510b6dce8ca48",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-validate.log",
-      "sha256": "83f919cd0172c6caf56da067bad845a658c7411e7675b1ea321590e27baaa0a7",
-      "bytes": 328
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-build.log",
-      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
-      "bytes": 513
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-canon.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-canon.log",
-      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-prose-proof.json",
-      "sha256": "6f0ad9e110c7043bc5eeecfc026187522554ee777790e2cd541f3b6532e481d5",
-      "bytes": 1925
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-touch.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-touch.log",
-      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-aggregate-source.json",
-      "sha256": "f9e4a1f1c86ea674dd566b4a0894b5ff47ec707d2ad407bcb4be12f0bd81074e",
-      "bytes": 994
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-attribution.json",
-      "sha256": "41211b35442b444c716201773e03c2a819419722550af2b2fc0576bf592238e7",
-      "bytes": 8894
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-builder-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-builder-check.log",
-      "sha256": "3dab4a3111ee5d477b2a36a7b7429b89f3e0b6fa006b68c71da6d9ba3bee4c85",
-      "bytes": 434
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-export-manifest.json",
-      "sha256": "e23aaeea5268aa821b4682b4d690773d8ba6afbe46055b2a1e020567de282b2f",
-      "bytes": 2198
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.exit",
-      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.json",
-      "sha256": "284384d62ea50f9f72ecaa792df4f2fa64a95badb45a54cf13b88dac802ae677",
-      "bytes": 20928796
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.stderr",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "bytes": 0
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-focused.json",
-      "sha256": "913b8715940c2fafcf93791ef93f3db93116139ee53d80a93a61c5f9db3ddbaa",
-      "bytes": 2605
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-generate.log",
-      "sha256": "86cfdae35bbe6924f0438a047fefbc1be2708be7794624d3c3e655ffff303db9",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-validate.log",
-      "sha256": "c2fbe8de52b1a1c6b590b1b0deed4ab53934c18cf8c7ab33c785b592b79a77d9",
-      "bytes": 328
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-orchestration.log",
-      "sha256": "34951cf16c627b10497e0c7ed2e8586777d1b1c6e99599b71262b4c9448376c5",
-      "bytes": 140
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-build.log",
-      "sha256": "c9ba21d8ef06213932c5f0c0813789a9fefc03479d6b52d5c4ef03b94990abf4",
-      "bytes": 513
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-canon.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-canon.log",
-      "sha256": "520ca7c581f55e55bae91bddc1d06e010b1f435a70ecb362a2706cc123521ecd",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-prose-proof.json",
-      "sha256": "5e19d7a88440d81025d717a4754adc1e05cae0d3251f507afe7d6bcbb3d6c66b",
-      "bytes": 4971
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.exit",
-      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.json",
-      "sha256": "2f834e921ee2617235f5a0438964e37ebf47511874deb572ea3700ed849c6169",
-      "bytes": 120828
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.stderr",
-      "sha256": "fdf1299429cdf2472dfbd0966f78201976d3df73632c634facda8c2c23076966",
-      "bytes": 4711
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-run-gates.json",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "bytes": 0,
-      "purpose": "Empty stdout from the143-interrupted attempt; not a completed gate report."
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-run-gates.stderr",
-      "sha256": "8c4d7f09639187b2b3f001cd4ce798c8486786352d7937e00e246f2422572c12",
-      "bytes": 2807
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-source-snapshot.json",
-      "sha256": "83e92809b69b9dfc4ffb2173b657b89805f147b9e585ed0de95ab07cedecbe6a",
-      "bytes": 3760
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-standalone-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-standalone-check.log",
-      "sha256": "9521e1db6fe872df83c6eee18e45ffe59a02bb08d334419af67960b6c308553d",
-      "bytes": 69
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-touch.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-touch.log",
-      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/audit-governance.json",
-      "sha256": "f7434d2c4f8bc3ac473e62429e8c79cafb724a44eb6c10d03beaa45d5a22b9a1",
-      "bytes": 231980
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-evidence.json",
-      "sha256": "a8f513939afaffe21de3f3854efba9d2d22788bacbde9d94942a37b05a13d0b5",
-      "bytes": 629918
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-implementation-readiness.json",
-      "sha256": "dd4eac96c633cf2e5008224352db6fdfd98dbfad297af3ba6768bed6fd3bce79",
-      "bytes": 22198
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-plan-graph.json",
-      "sha256": "b3a8de67eb906ccadbb889073181df9f9d74c56b5b748294b333153c728e5c1e",
-      "bytes": 628129
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-plan-migration.json",
-      "sha256": "7c876aa4a88a54b5394097f4e9962577cde9974cc68758a614f271f0390fb1b6",
-      "bytes": 46081
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
-      "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e",
-      "bytes": 382073
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/plan-migration-validate.json",
-      "sha256": "3209ad6457b2c9fb03052ef050fe3cb8d98a83000c95ad44560c29213643a649",
-      "bytes": 16580974
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/run-gates.json",
-      "sha256": "710f5dbe2823176e30a2c52d83515d1ece1c9465adb06badca2a033edba33b90",
-      "bytes": 139061
     },
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.exit",
@@ -1050,6 +494,975 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-wiring.log",
       "sha256": "dd6997148cf353deed736e9bd4942a65e29cc5143b9d2b74243b4bb218f04d54",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-focused.json",
+      "sha256": "f893a5b4e90b44b8742c39b618aacea2d81be7b92af6a0dff038a71d87141399"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-generate.log",
+      "sha256": "87b2aa5e03c7d6900feeaf02baf487dbf18d2414a34b10d6536ffd67c7844117"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-index-validate.log",
+      "sha256": "f020afe1c160a74025da1db3dc4e1ce4f93f5b2916cb90edc3f89f5d1d159d3b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-build.log",
+      "sha256": "0251f3528842063e4f92ea9564f3e45fd57cd4ca2d5bb3c43091692de80f8659"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-pm7-canon.log",
+      "sha256": "4c09e0365e2ca34f188445d3a6a89807f583e66a951a978b9fa9369aa32d9130"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-prose-proof.json",
+      "sha256": "3d4ff67fa1c43761a035f93d350300177f8a54bab75e4723a191d493dd5f992e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-shards-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/decisions-20261030-touch.log",
+      "sha256": "03d0ace681d7f55672a106a6004232422960546c15469e32a4ddc7c46520369e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-cycle-direct-fixes.json",
+      "sha256": "eae45b9f7cc9667a2fa2ea6f70e817718c550136b52a9d25faa965b63dae1fa6",
+      "bytes": 3333
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-plan-index-generate.log",
+      "sha256": "0f67bf1101ed457a1e1c0bece2a08711dbf3a64ddf9afc7a99d7a881688f1ced",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-build-check.json",
+      "sha256": "ce4aeef6b4b5873495fe4336ba66020981b84b15147a3652e43af47940931534",
+      "bytes": 416
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-pm7-canon-check.json",
+      "sha256": "691406c56b0ff3c57d7e4de7a6c6657dd4adcb32b3d0378d478ec039a0c865b1",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-prose-followups.json",
+      "sha256": "891569521c2e1793360769ed8d971df20f7fbd0df21c99a51bc9a86fccb37148",
+      "bytes": 606
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-canon.log",
+      "sha256": "fec9bdb353aef89ea3bab507814035392a808d32d3cdc193b1233963ef0ee2ff",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-census-before.json",
+      "sha256": "fdad235a61c34cdc8950ad32923952c19fdeb2217613d5577d83beb81c340f3a",
+      "bytes": 22026
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-companion-delta.json",
+      "sha256": "fa35bd7de774daffb1e71117fc18753d745d60a001b960514f35ecdff8f7f300",
+      "bytes": 891
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-focused-results.json",
+      "sha256": "73c7f26f596d1a8697c06080e438484aa05719be7d4f74605b8f53f787c1c234",
+      "bytes": 2075
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-focused-source-snapshot.json",
+      "sha256": "32a963dc2d82aac9685ad2d136ea885d4f3c168550da9edc3f6b918f4bfde0b8",
+      "bytes": 526
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-inbox-prose-proof.json",
+      "sha256": "5cdfa0c0e860b23d9699269a1a7c0c4c299bb026972205779f4a59d9c4b9d888",
+      "bytes": 1055
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-generate.log",
+      "sha256": "351e3dce7650a7ba75be9e9f4367cb1f251222cad8265e452e6dc30a8c986644",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-validate.log",
+      "sha256": "b728e70ec99faccfaba8a9d7be950a721fcdc7040c1036d1b90ee9aef76dc2c1",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-pm7-build.log",
+      "sha256": "57beecef91f4819a2cd6b419831bb6d0f55216cf63718d2ae71363ad7cf29f0d",
+      "bytes": 734
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-prose-proof.json",
+      "sha256": "a7037b561b137f274bea68c805287d38721ecd6bdd8593fea2c43fede80c8acf",
+      "bytes": 2105
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shard-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-source-proof.json",
+      "sha256": "e89697e58fd0cedc9d6f0e04b0874572e815628961c6bd4c022a77e75d342137",
+      "bytes": 13009
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-wiring.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-wiring.log",
+      "sha256": "1164cc75c7f1eb096a6b56af349f2487902422f81c53d991c18055246335aadb",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-touch-check.log",
+      "sha256": "7cf53ed8ffa6092fa4c0b96871bdad53fed89553f104c06a2c6b4546fbb6c519",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-committed-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.json",
+      "sha256": "35142120860c22ffe9eb80841077ca0946be0b0ba749398166c6d40dcef93034",
+      "bytes": 120841
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/finalized-run-gates.stderr",
+      "sha256": "3f3376fd7cc412c7b3c94736bab1b58c95945c5f1204d57ab45b0243e1c3a170",
+      "bytes": 4713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/integration-inventory-guard.log",
+      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
+      "bytes": 434
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-results.json",
+      "sha256": "a21cabe665f4b0ecac294519b8e53c9fae2c64ab6a48abaaaee4d66a1d49c50b",
+      "bytes": 1929
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-runner.log",
+      "sha256": "7916a7d5f408b4b9fcc77b8cac36d9c963fe474d6c6e16ad4738d705848b00d8",
+      "bytes": 216
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-anchor-prose-proof.json",
+      "sha256": "b52273047d72471abf1dd26ef2d5cafb298ac268bee09944ff36af5a31e6c149",
+      "bytes": 1095
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-attribution.json",
+      "sha256": "8526eb2ebaba7e4c192a88dfadeb4e8d149fcf043194b29eaca417bbafb13860",
+      "bytes": 13954
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-builder.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-builder.log",
+      "sha256": "3dab4a3111ee5d477b2a36a7b7429b89f3e0b6fa006b68c71da6d9ba3bee4c85",
+      "bytes": 434
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-canon.log",
+      "sha256": "fec9bdb353aef89ea3bab507814035392a808d32d3cdc193b1233963ef0ee2ff",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/audit-governance.json",
+      "sha256": "47752b0a3970fdc78eff6b00f7da10aa5c256f197a3214a8a48d5f9218268593",
+      "bytes": 231980
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-evidence.json",
+      "sha256": "9d0f4cb64d05fb4dd76f333b38e3801aabb2f6e9fa3f5869995b969018111a82",
+      "bytes": 629918
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-implementation-readiness.json",
+      "sha256": "225e279cdb06d3ece2585428a832e36441744030693dbf0920050fb600ee647e",
+      "bytes": 22198
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-graph.json",
+      "sha256": "ae5283266da83c783752c30cb7436532fa6140c725e31de27e16e5e25e799012",
+      "bytes": 628129
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-migration.json",
+      "sha256": "fdedfd83bfb51bea3570dfc1a7a9d3284b0a9a76a5729cec1b26079ce3775bfe",
+      "bytes": 46081
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+      "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e",
+      "bytes": 382073
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/plan-migration-validate.json",
+      "sha256": "e49c3efafb754b69ab380948e5c3db137d4c3bf9035298aca28004939c38c5ac",
+      "bytes": 16750816
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/run-gates.json",
+      "sha256": "4e3d3a44de09127343dd97b44d15f69c0749426233e403c02b8d6b4d57717730",
+      "bytes": 139061
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.json",
+      "sha256": "43bd9c741a59fdef1f149a707a62eefbfabdce50ad599437eaa4ccbc61635a85",
+      "bytes": 21659880
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-focused-results.json",
+      "sha256": "b0acd482f12ed71735f6f3d328e313d5a3f3e479b79936a6c9aad29347219ef3",
+      "bytes": 2710
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-generate.log",
+      "sha256": "66255ba188f761a1fd548fc410448feb9d7771f5fbf1e0a1ce74823c1683da9a",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-validate.log",
+      "sha256": "92392082e06fda0db26038803055ac944af53586e361efd88d97a7d2365336de",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-pm7-build.log",
+      "sha256": "cd593cf8fdff041b66b3a39a6899b22a3bdd193ddf4cfca0a9d64b7e813126af",
+      "bytes": 770
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.json",
+      "sha256": "3585b4a527ad03e103e3212aef9ad4dcede07bdd8c509968b2c7275c25c432e0",
+      "bytes": 151961
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stderr.log",
+      "sha256": "b77617a4a550599ce36d0ce133da6b78753a96fbf208dfd910813b5e3052482f",
+      "bytes": 4711
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stdout.log",
+      "sha256": "8c44c7062307ce4dd47b2f1a271b3032131e68e3deaf17778eadfcd8cdd505f3",
+      "bytes": 120828
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shard-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-proof.json",
+      "sha256": "be35b0852b342e523d8b067de89db7b5cfaf5461ac3d98f8435b737de88af347",
+      "bytes": 12774
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-snapshot.json",
+      "sha256": "1b34edf41e405fc5c622f3f53c66080f685590f828cdc838ba68157f9177d64f",
+      "bytes": 549
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-standalone-builder.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-standalone-builder.log",
+      "sha256": "9fd1cecb6a82ca357f10266bf234e0f9ca678e12841539efd36e40498ae05f93",
+      "bytes": 69
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-wiring.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-wiring.log",
+      "sha256": "aaf2b71d5fe5649837df7beb8a3b4270524729e086692ea6a2ac85d928d950d3",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/label-committed-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pip-label-storage-proof.json",
+      "sha256": "3aa89680379be557921209965ff6b5c8eae72a157efa02beb2d3b0a422d3c81c",
+      "bytes": 1284
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard-after.log",
+      "sha256": "0dfc105b8c4c0a7a898634108e30a7e51f12d29d871a70744304271098a5ebe9",
+      "bytes": 434
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-guard.log",
+      "sha256": "7850caf74413749a19c48f80aa611a1dc70edb92ac2a0ad5f2a2e144ac01ea52",
+      "bytes": 529
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/pm7-inventory-regenerate.log",
+      "sha256": "36fe1ff117044c29cad9b2dfe4ead063dd833c49fa0612f032544765e60070b3",
+      "bytes": 695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-census-before.json",
+      "sha256": "97d135d9f277470d67fdb5a1e88d5273444e8182b670d3f770591a3cbd0a9648",
+      "bytes": 293259
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-focused-run.json",
+      "sha256": "f1d9c18cf197e770bc642222e6d17a1407619cbb9a1e59f6b6f2365b8fd45b53",
+      "bytes": 7505
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-index-generate.log",
+      "sha256": "6a6bd2d025ac80eeff2025354063e721f1b5aa6788d4f2a1626b23942b4c68e7",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-inventory-format-proof.json",
+      "sha256": "da4cb152ff0bb11105a71bef7d5f5cde5de009c31dc7cbb0defdd4c77d45cbf1",
+      "bytes": 454
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-pm7-build.log",
+      "sha256": "a8979a950e7c7cc73d73e104495050af17b54c44394f18ccd7028d2816200296",
+      "bytes": 827
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-prose-proof.json",
+      "sha256": "b071e64cbbf29c67c0235ede649860a35736a75f597b30ab16113ea66649987a",
+      "bytes": 13205
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-touch.log",
+      "sha256": "22486001cb8d389c16ffd01d8efb309a6c2500167753169ac93369f2d50c9a47",
+      "bytes": 216
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-builder-initial.log",
+      "sha256": "39736ac17bdc11b9b927a9a4fb61bedb43c002edaf2ce70de8fd4a30c2390603",
+      "bytes": 82
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-builder-post-found.log",
+      "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c",
+      "bytes": 677
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-canon-initial.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-chat-builder-initial.log",
+      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644",
+      "bytes": 69
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-committed-source.json",
+      "sha256": "7b2661da7cb07859842ba560130d03846a5a0c7f6a11578e956d4be969a76b69",
+      "bytes": 2876
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-companion-diff.json",
+      "sha256": "b1fc3bc5281ff54a83a5c9c766b53fba3f337a450363001067044df8996e6358",
+      "bytes": 14267
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-core-initial.log",
+      "sha256": "e85a6b774673490d30cfdf79f6f75cd17fa398e0a7487876c6f05fb15c0a0103",
+      "bytes": 477
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-core-recheck.log",
+      "sha256": "1a0fefa813ab5dea8e516dbfd9eab17c2d50239c24479ca2a45c2043e20e1ae3",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-eli5-gap-audit.md",
+      "sha256": "49390c8779257d227cc96448be23e389f3140ed87651e54be3f97db67eb2aedf",
+      "bytes": 3749
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-chat-builder.log",
+      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644",
+      "bytes": 69
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-index-generate.log",
+      "sha256": "1347192507294720a7c91af31e6a697a7027ec380a5cf3057e5e59ab43db37b2",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-index-validate.log",
+      "sha256": "5ce208e2c5f2005cbf8fa7ab123fde779c5f7c3999f80dd4779f38e8df7fe9c6",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-onboarding-builder.log",
+      "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c",
+      "bytes": 677
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-pm7-build.log",
+      "sha256": "1a0fefa813ab5dea8e516dbfd9eab17c2d50239c24479ca2a45c2043e20e1ae3",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-qa2.log",
+      "sha256": "f7f48c2d99cf18ea4b1c8cffa43f208a6dec526accc0ddaaaf060ca59c0f7075",
+      "bytes": 722
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-retired-input-parser.log",
+      "sha256": "551b858429918aa10fef86629e8e512cc972d31d017ffdb5fba1e9ea6cf7c1f0",
+      "bytes": 684
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-wiring.log",
+      "sha256": "1c0e5d4ed3e9eedcacc95427de12398da0aef271b7d212cbeb2256249cbcddb2",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-focused-runner.log",
+      "sha256": "6e07c9b3645e9b41e70ab80abbf372dbbf942d381c3160a420c0301a8889d3b9",
+      "bytes": 1543
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-focused-state.json",
+      "sha256": "f20457a4332ab4aefef71c4277d2d269dfcc3ab26f871dc3aaa10dc69f01a8a7",
+      "bytes": 6499
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-frozen-after.json",
+      "sha256": "d3958c6d4d1a2c3154e0b263b6509e91a7e686f3ea48c6d3eba34c25b39e5076",
+      "bytes": 1187179
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-frozen-inputs.json",
+      "sha256": "fe7218aa330aa4491e3b5b00e78e1016c41e47e0d8a707a4d983c13f2eeb2b95",
+      "bytes": 1187216
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-full-checkout.json",
+      "sha256": "955adc752e28c5030a36d22dae5f12cd3497417e62caa45845363543e5c4eb75",
+      "bytes": 184
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-initial-check.json",
+      "sha256": "f233a8c690ff724ce140e6d88ea4e011445e34fd1c8af3595d20d0bad959c13a",
+      "bytes": 754
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-QA-ROUND2.md",
+      "sha256": "37fceee340a0587beb6d2cd041857149d8b35b075338ca2ffe7e84a1b85a190b",
+      "bytes": 7742
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-QA2-HUNTER.md",
+      "sha256": "0162143d646bf5bcd0921584467e759cfb2ec197430a30d9c679d390a3735c86",
+      "bytes": 18531
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-activity.md",
+      "sha256": "773fb4c75b7e652f940f33c54a99f5b5af2d12dccd786ba2d6598a8298e998c4",
+      "bytes": 10253
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-chatpip.md",
+      "sha256": "b903df7bde0191cf436788cdabaefaaa434ea0ecd31f28e7adf39954d555d3b6",
+      "bytes": 5733
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-demo.md",
+      "sha256": "ac0b34a5b601e13cd5bfb532eb35e0ebe1ac3b5a6978125cd199c7537bec352e",
+      "bytes": 24605
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-found.md",
+      "sha256": "d868f22b9668eca83584d0e4568ce525148ae9c4d531fba090ffc40f017ccf9d",
+      "bytes": 12109
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-onb.md",
+      "sha256": "ab12917bdaf1dca273e7424b68b1cd3368597b33ef8fd6d1712da8c5d839a7b0",
+      "bytes": 17167
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-input-title.md",
+      "sha256": "f15b9ceffee9b628487f7a803f7998cd4851a9e0dfdd32ac2380271b8092595b",
+      "bytes": 4165
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-pre-store-check.json",
+      "sha256": "8faee5e2966c49f8ea5237038eb3b19b9741865d58ee8969534fadc79ce92a93",
+      "bytes": 647
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-prior-artifacts-check.json",
+      "sha256": "7c5292cc57e72d3f3ab710065a010b9e04fbfecf8276e2c4c360033889077a52",
+      "bytes": 49
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-prose-checkpoint.json",
+      "sha256": "faf91d6f2d4719d481d24ce456c6b7819d896eecd56ab027edb43e8e8dc3418b",
+      "bytes": 2020
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-prose-first.json",
+      "sha256": "f17872281290ec5e122ff25e96e129547e7f2fac56e7813224bb86dfd28220b2",
+      "bytes": 2426
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-runner-guard-recovery.json",
+      "sha256": "ed7cdddf33ebc1d7fc2c1506eacf48b82d030eea39dcd5748471a5ce519b2327",
+      "bytes": 1287
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-shard-owners.json",
+      "sha256": "eefdc5a5f0d8f6fd579e7e13215930eb0fafa4a49c0983fe18f44738b7988425",
+      "bytes": 985
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-source-proof.json",
+      "sha256": "9983e55a26cb341195ba554b90ca43eb158fd2937bd669befff0ac9901479163",
+      "bytes": 5427
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-generate.log",
+      "sha256": "652157de762eb1d37a95c7c0b2af2b04d3f8f300a1a29838b91a122aa5566b02",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-validate.log",
+      "sha256": "8cdf21d515a771b8751b99cfd79b22209fafcd123221b4cd7da652668b8408a2",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-pm7-build.log",
+      "sha256": "28f53ca5dceb851780700d0d677a4f453f667dd297594c9395d4669c64064607",
+      "bytes": 857
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-run.json",
+      "sha256": "c8905f54db8617c90b638927a516880187cdb11111ffb4f63f1303e2b368277b",
+      "bytes": 9626
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-wiring.log",
+      "sha256": "042aa3c2b20854888cf0b8ca70c23e6e6687d015ee5e03b0ec74734ad3f74f1b",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-committed-source.json",
+      "sha256": "222ebefe3a14cca21876ca3ef8552a7aa42ab744a2dbf5f0d377e8e47a011c7f",
+      "bytes": 2833
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-generate.log",
+      "sha256": "83b69bad77a145cbf3bff482cc3a6567e9ca9a4974e92a5a6fd9248354748757",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-validate.log",
+      "sha256": "b9d4a03f5d4b9f3b053677470e459f84351a479f96a51029740f6b93f8da8340",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-builder.log",
+      "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c",
+      "bytes": 677
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-pm7-build.log",
+      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-qa2.log",
+      "sha256": "c145a63321acc395c7a25523affb2a7623dc067b9b213f7e9b7736ce1d010e48",
+      "bytes": 887
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-wiring.log",
+      "sha256": "5928f3f7961400d2e1e8685a4fb52c3c200829c7fe6046c647ed25c7641232a5",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-focused-runner.log",
+      "sha256": "89e39f1a2ff7c254d82ba715c1e344fcdcc32d96cd3debb7c35e0b2871491e7f",
+      "bytes": 158
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-focused-state.json",
+      "sha256": "7a3cfe160378f817e679be35a08943ca6930ebfb39b26fb386118cd694c020a4",
+      "bytes": 5555
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-frozen-after.json",
+      "sha256": "b011206466772a955eb963ccfbaa894664df3716daa00c31505cfd7f246440f3",
+      "bytes": 1188096
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-frozen-inputs.json",
+      "sha256": "0f6635ffc2c14d7ccd70db1867c68b8271854018f4ab4d164aaa9c592f85dbe5",
+      "bytes": 1188133
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-full-checkout.json",
+      "sha256": "955adc752e28c5030a36d22dae5f12cd3497417e62caa45845363543e5c4eb75",
+      "bytes": 184
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-prose-first.json",
+      "sha256": "abd3a24f56991ba717277b68bcddd562c58ccfb4a0b20895f63a593922b4812e",
+      "bytes": 682
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-shard-owners.json",
+      "sha256": "819476e81b0d80e1ee12a6101130efc5dd560734bf3e63a2def86257094af7af",
+      "bytes": 352
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-source-proof.json",
+      "sha256": "63370fa7f3f78ef925e32f3f1c05aef20f9687f685dcaa9d8b4f0359dd518322",
+      "bytes": 5507
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-build.log",
+      "sha256": "99795080217993ff2d83c2b0bdca4040443dd3a3cdd90f6fd53fc2332f371202",
+      "bytes": 695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-committed-source.json",
+      "sha256": "8ffa13ab408c49243c918164c8e5fc2c115471c28bacdf5f4e6d540158cd6b9c",
+      "bytes": 3368
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-input-diff.json",
+      "sha256": "33ba10f01c9a22681f5555a8f7b06f95659d6ac35d5a4e765a576d8486544987",
+      "bytes": 916
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-onboarding-builder.log",
+      "sha256": "edc415fa7f579563670057059cf8193d3510c579b7a26974f43c39b6e6902398",
+      "bytes": 582
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-pm7-build.log",
+      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-state.json",
+      "sha256": "ce06040f0e4de623b7ac93d18a1a6ec52ff148e05ca8acc95173363e9f1316b0",
+      "bytes": 1867
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-prior-verification.json",
+      "sha256": "9ce0cbaeb4d566581058559e2f6fc2f83b2cb35d47394829d863ed10e75dd49f",
+      "bytes": 158157
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-QA-ROUND2.md",
+      "sha256": "37fceee340a0587beb6d2cd041857149d8b35b075338ca2ffe7e84a1b85a190b",
+      "bytes": 7742
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-mails.json",
+      "sha256": "0ae247f9827611237ed586941a6c2af547a241af10d9686666830c202fdae297",
+      "bytes": 704
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-proof.json",
+      "sha256": "4ad1c06c2d7262ac1a2c7bb54ba35c30f32ce39411e4fe4e1c8fe305eb10575e",
+      "bytes": 16375
     },
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/r2-final-aggregate-results.json",
@@ -1267,334 +1680,445 @@
       "bytes": 691
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-canon.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/schema-reference-closure-proof.json",
+      "sha256": "c1b63a66ecdc454ebe66033f66bc0ef6d24e62bc31b6590c1addbaa146f0727f",
+      "bytes": 841
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/settings-disposition-pin-proof.json",
+      "sha256": "cce5fa7208ce87c8546101c0eb244cceb6761bf9f4ffaf3b012f7a668e8c9a35",
+      "bytes": 525
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-builder-check.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-canon.log",
-      "sha256": "fec9bdb353aef89ea3bab507814035392a808d32d3cdc193b1233963ef0ee2ff",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-census-before.json",
-      "sha256": "fdad235a61c34cdc8950ad32923952c19fdeb2217613d5577d83beb81c340f3a",
-      "bytes": 22026
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-companion-delta.json",
-      "sha256": "fa35bd7de774daffb1e71117fc18753d745d60a001b960514f35ecdff8f7f300",
-      "bytes": 891
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-focused-results.json",
-      "sha256": "73c7f26f596d1a8697c06080e438484aa05719be7d4f74605b8f53f787c1c234",
-      "bytes": 2075
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-inbox-prose-proof.json",
-      "sha256": "5cdfa0c0e860b23d9699269a1a7c0c4c299bb026972205779f4a59d9c4b9d888",
-      "bytes": 1055
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-generate.log",
-      "sha256": "351e3dce7650a7ba75be9e9f4367cb1f251222cad8265e452e6dc30a8c986644",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-validate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-index-validate.log",
-      "sha256": "b728e70ec99faccfaba8a9d7be950a721fcdc7040c1036d1b90ee9aef76dc2c1",
-      "bytes": 328
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-pm7-build.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-pm7-build.log",
-      "sha256": "57beecef91f4819a2cd6b419831bb6d0f55216cf63718d2ae71363ad7cf29f0d",
-      "bytes": 734
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-prose-proof.json",
-      "sha256": "a7037b561b137f274bea68c805287d38721ecd6bdd8593fea2c43fede80c8acf",
-      "bytes": 2105
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shard-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shards-check.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-source-proof.json",
-      "sha256": "e89697e58fd0cedc9d6f0e04b0874572e815628961c6bd4c022a77e75d342137",
-      "bytes": 13009
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-touch.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-touch.log",
-      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-wiring.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-wiring.log",
-      "sha256": "1164cc75c7f1eb096a6b56af349f2487902422f81c53d991c18055246335aadb",
-      "bytes": 691
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/final-rulings-focused-source-snapshot.json",
-      "sha256": "32a963dc2d82aac9685ad2d136ea885d4f3c168550da9edc3f6b918f4bfde0b8",
-      "bytes": 526
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-anchor-prose-proof.json",
-      "sha256": "b52273047d72471abf1dd26ef2d5cafb298ac268bee09944ff36af5a31e6c149",
-      "bytes": 1095
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-builder.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-builder.log",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-builder-check.log",
       "sha256": "3dab4a3111ee5d477b2a36a7b7429b89f3e0b6fa006b68c71da6d9ba3bee4c85",
       "bytes": 434
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-canon.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-focused.json",
+      "sha256": "ebd3749abe91d3371060876b7615b99b525a768435bacfebea50fc3353e4303d",
+      "bytes": 2184
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-generate.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-canon.log",
-      "sha256": "fec9bdb353aef89ea3bab507814035392a808d32d3cdc193b1233963ef0ee2ff",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-focused-results.json",
-      "sha256": "b0acd482f12ed71735f6f3d328e313d5a3f3e479b79936a6c9aad29347219ef3",
-      "bytes": 2710
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-generate.exit",
-      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
-      "bytes": 2
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-generate.log",
-      "sha256": "66255ba188f761a1fd548fc410448feb9d7771f5fbf1e0a1ce74823c1683da9a",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-generate.log",
+      "sha256": "2fda353e02e1422d098c5060e98b08b53c3b07cfda0e20c8a1499385da688760",
       "bytes": 713
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-validate.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-validate.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-index-validate.log",
-      "sha256": "92392082e06fda0db26038803055ac944af53586e361efd88d97a7d2365336de",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-index-validate.log",
+      "sha256": "a858fe10739931df12da0c9a434c6bf4dd585b0cefcb20016ff288fd68127869",
       "bytes": 328
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-pm7-build.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-build.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-pm7-build.log",
-      "sha256": "cd593cf8fdff041b66b3a39a6899b22a3bdd193ddf4cfca0a9d64b7e813126af",
-      "bytes": 770
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-build.log",
+      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
+      "bytes": 513
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shard-generate.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-canon.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-pm7-canon.log",
+      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
+      "bytes": 415
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shards-check.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-prose-proof.json",
+      "sha256": "541a800376e26a18f004c643f377c88956c4ccbbb5e5a8181a31f74ead3632fa",
+      "bytes": 6486
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-registry-alignment.json",
+      "sha256": "757db0f2b4b31a6939c251a2232b5b0c21a9671348e3bc3522f0eafa59c25e7f",
+      "bytes": 567
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-check.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-shards-check.log",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-check.log",
       "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
       "bytes": 111
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-proof.json",
-      "sha256": "be35b0852b342e523d8b067de89db7b5cfaf5461ac3d98f8435b737de88af347",
-      "bytes": 12774
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-standalone-builder.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-generate.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-standalone-builder.log",
-      "sha256": "9fd1cecb6a82ca357f10266bf234e0f9ca678e12841539efd36e40498ae05f93",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-shards-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-standalone-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-standalone-check.log",
+      "sha256": "8e78b148210fd48855395637777edc3fb523ed12e0273aa7ab2052ffbfd64b7b",
       "bytes": 69
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-touch.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-touch.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-touch.log",
-      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-core-touch.log",
+      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
       "bytes": 185
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-wiring.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-aggregate-source.json",
+      "sha256": "f9e4a1f1c86ea674dd566b4a0894b5ff47ec707d2ad407bcb4be12f0bd81074e",
+      "bytes": 994
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-attribution.json",
+      "sha256": "41211b35442b444c716201773e03c2a819419722550af2b2fc0576bf592238e7",
+      "bytes": 8894
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-builder-check.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-wiring.log",
-      "sha256": "aaf2b71d5fe5649837df7beb8a3b4270524729e086692ea6a2ac85d928d950d3",
-      "bytes": 691
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-builder-check.log",
+      "sha256": "3dab4a3111ee5d477b2a36a7b7429b89f3e0b6fa006b68c71da6d9ba3bee4c85",
+      "bytes": 434
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-results.json",
-      "sha256": "a21cabe665f4b0ecac294519b8e53c9fae2c64ab6a48abaaaee4d66a1d49c50b",
-      "bytes": 1929
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-aggregate-runner.log",
-      "sha256": "7916a7d5f408b4b9fcc77b8cac36d9c963fe474d6c6e16ad4738d705848b00d8",
-      "bytes": 216
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-attribution.json",
-      "sha256": "8526eb2ebaba7e4c192a88dfadeb4e8d149fcf043194b29eaca417bbafb13860",
-      "bytes": 13954
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/audit-governance.json",
-      "sha256": "47752b0a3970fdc78eff6b00f7da10aa5c256f197a3214a8a48d5f9218268593",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/audit-governance.json",
+      "sha256": "f7434d2c4f8bc3ac473e62429e8c79cafb724a44eb6c10d03beaa45d5a22b9a1",
       "bytes": 231980
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-evidence.json",
-      "sha256": "9d0f4cb64d05fb4dd76f333b38e3801aabb2f6e9fa3f5869995b969018111a82",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-evidence.json",
+      "sha256": "a8f513939afaffe21de3f3854efba9d2d22788bacbde9d94942a37b05a13d0b5",
       "bytes": 629918
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-implementation-readiness.json",
-      "sha256": "225e279cdb06d3ece2585428a832e36441744030693dbf0920050fb600ee647e",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-implementation-readiness.json",
+      "sha256": "dd4eac96c633cf2e5008224352db6fdfd98dbfad297af3ba6768bed6fd3bce79",
       "bytes": 22198
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-graph.json",
-      "sha256": "ae5283266da83c783752c30cb7436532fa6140c725e31de27e16e5e25e799012",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-plan-graph.json",
+      "sha256": "b3a8de67eb906ccadbb889073181df9f9d74c56b5b748294b333153c728e5c1e",
       "bytes": 628129
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-plan-migration.json",
-      "sha256": "fdedfd83bfb51bea3570dfc1a7a9d3284b0a9a76a5729cec1b26079ce3775bfe",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-plan-migration.json",
+      "sha256": "7c876aa4a88a54b5394097f4e9962577cde9974cc68758a614f271f0390fb1b6",
       "bytes": 46081
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
       "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e",
       "bytes": 382073
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/plan-migration-validate.json",
-      "sha256": "e49c3efafb754b69ab380948e5c3db137d4c3bf9035298aca28004939c38c5ac",
-      "bytes": 16750816
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/plan-migration-validate.json",
+      "sha256": "3209ad6457b2c9fb03052ef050fe3cb8d98a83000c95ad44560c29213643a649",
+      "bytes": 16580974
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-check-reports/run-gates.json",
-      "sha256": "4e3d3a44de09127343dd97b44d15f69c0749426233e403c02b8d6b4d57717730",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-check-reports/run-gates.json",
+      "sha256": "710f5dbe2823176e30a2c52d83515d1ece1c9465adb06badca2a033edba33b90",
       "bytes": 139061
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-export-manifest.json",
+      "sha256": "e23aaeea5268aa821b4682b4d690773d8ba6afbe46055b2a1e020567de282b2f",
+      "bytes": 2198
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.exit",
       "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.json",
-      "sha256": "43bd9c741a59fdef1f149a707a62eefbfabdce50ad599437eaa4ccbc61635a85",
-      "bytes": 21659880
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.json",
+      "sha256": "284384d62ea50f9f72ecaa792df4f2fa64a95badb45a54cf13b88dac802ae677",
+      "bytes": 20928796
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-dry-landing.stderr.log",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-dry-landing.stderr",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bytes": 0
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.exit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-focused.json",
+      "sha256": "913b8715940c2fafcf93791ef93f3db93116139ee53d80a93a61c5f9db3ddbaa",
+      "bytes": 2605
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-generate.log",
+      "sha256": "86cfdae35bbe6924f0438a047fefbc1be2708be7794624d3c3e655ffff303db9",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-index-validate.log",
+      "sha256": "c2fbe8de52b1a1c6b590b1b0deed4ab53934c18cf8c7ab33c785b592b79a77d9",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-orchestration.log",
+      "sha256": "34951cf16c627b10497e0c7ed2e8586777d1b1c6e99599b71262b4c9448376c5",
+      "bytes": 140
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-build.log",
+      "sha256": "c9ba21d8ef06213932c5f0c0813789a9fefc03479d6b52d5c4ef03b94990abf4",
+      "bytes": 513
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-pm7-canon.log",
+      "sha256": "520ca7c581f55e55bae91bddc1d06e010b1f435a70ecb362a2706cc123521ecd",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-prose-proof.json",
+      "sha256": "5e19d7a88440d81025d717a4754adc1e05cae0d3251f507afe7d6bcbb3d6c66b",
+      "bytes": 4971
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.exit",
       "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
       "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.json",
-      "sha256": "3585b4a527ad03e103e3212aef9ad4dcede07bdd8c509968b2c7275c25c432e0",
-      "bytes": 151961
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stderr.log",
-      "sha256": "b77617a4a550599ce36d0ce133da6b78753a96fbf208dfd910813b5e3052482f",
-      "bytes": 4711
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-run-gates.stdout.log",
-      "sha256": "8c44c7062307ce4dd47b2f1a271b3032131e68e3deaf17778eadfcd8cdd505f3",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.json",
+      "sha256": "2f834e921ee2617235f5a0438964e37ebf47511874deb572ea3700ed849c6169",
       "bytes": 120828
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/jared-final-source-snapshot.json",
-      "sha256": "1b34edf41e405fc5c622f3f53c66080f685590f828cdc838ba68157f9177d64f",
-      "bytes": 549
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-recovered-run-gates.stderr",
+      "sha256": "fdf1299429cdf2472dfbd0966f78201976d3df73632c634facda8c2c23076966",
+      "bytes": 4711
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/toast-followups-source-snapshot.json",
-      "sha256": "9b4bc623dc68c127e1af0d58f44f0a91d7bb84076042c115e569b434618659be",
-      "bytes": 531
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-run-gates.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "purpose": "Empty stdout from the143-interrupted attempt; not a completed gate report."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-run-gates.stderr",
+      "sha256": "8c4d7f09639187b2b3f001cd4ce798c8486786352d7937e00e246f2422572c12",
+      "bytes": 2807
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-shards-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-source-snapshot.json",
+      "sha256": "83e92809b69b9dfc4ffb2173b657b89805f147b9e585ed0de95ab07cedecbe6a",
+      "bytes": 3760
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-standalone-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-standalone-check.log",
+      "sha256": "9521e1db6fe872df83c6eee18e45ffe59a02bb08d334419af67960b6c308553d",
+      "bytes": 69
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-final-touch.log",
+      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
+      "bytes": 185
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-loader-selector-census.json",
+      "sha256": "099b83975b382af7748213427ece638ffc9a837f2a179a01cad9c2bfa1f1ac46",
+      "bytes": 1470
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-index-validate.log",
+      "sha256": "056ff73d50c63e4df80ef4f75ade0da1a7a960bab2cd787b8ff72f4fb174158b",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-mismatches-before.json",
+      "sha256": "2bd44137ad23c550adec0c875d54ae1a0d10b6d46f75096e034e8f5c4c07c8fe",
+      "bytes": 2449
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-build.log",
+      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
+      "bytes": 513
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-registry-pm7-canon.log",
+      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-release-assets-proof.json",
+      "sha256": "aa18d4c327a1915ad1ae0fc7a99d5c83fd43eaa43edea0978652313f793e534f",
+      "bytes": 379
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-generate.log",
+      "sha256": "779d5cedbc958d5b583ad10e59de8493d6ce32d33116cd6b795510b6dce8ca48",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-validate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-index-validate.log",
+      "sha256": "83f919cd0172c6caf56da067bad845a658c7411e7675b1ea321590e27baaa0a7",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-build.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-build.log",
+      "sha256": "6b5f28792164148ba7dd615089d089a11ea89c5b2c0899363d8e825e1f7a06ee",
+      "bytes": 513
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-canon.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-pm7-canon.log",
+      "sha256": "1e1737328f99ce77b5c02934f486df6dfbd8a1aeb737cb884d3af2605060121a",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-prose-proof.json",
+      "sha256": "6f0ad9e110c7043bc5eeecfc026187522554ee777790e2cd541f3b6532e481d5",
+      "bytes": 1925
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-generate.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-shards-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-touch.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/step4-review-touch.log",
+      "sha256": "557e4a9e7c84d354b4fdd71a84a19805d2443ab3b45277b26e31d87bf4a9927f",
+      "bytes": 185
     },
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/toast-followups-builder.exit",
@@ -1682,6 +2206,11 @@
       "bytes": 21801
     },
     {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/toast-followups-source-snapshot.json",
+      "sha256": "9b4bc623dc68c127e1af0d58f44f0a91d7bb84076042c115e569b434618659be",
+      "bytes": 531
+    },
+    {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/toast-followups-standalone-builder.exit",
       "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
       "bytes": 2
@@ -1712,119 +2241,39 @@
       "bytes": 691
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-canon.log",
-      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
-      "bytes": 415
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-census-before.json",
-      "sha256": "97d135d9f277470d67fdb5a1e88d5273444e8182b670d3f770591a3cbd0a9648",
-      "bytes": 293259
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-focused-run.json",
-      "sha256": "f1d9c18cf197e770bc642222e6d17a1407619cbb9a1e59f6b6f2365b8fd45b53",
-      "bytes": 7505
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-index-generate.log",
-      "sha256": "6a6bd2d025ac80eeff2025354063e721f1b5aa6788d4f2a1626b23942b4c68e7",
-      "bytes": 713
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-inventory-format-proof.json",
-      "sha256": "da4cb152ff0bb11105a71bef7d5f5cde5de009c31dc7cbb0defdd4c77d45cbf1",
-      "bytes": 454
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-pm7-build.log",
-      "sha256": "a8979a950e7c7cc73d73e104495050af17b54c44394f18ccd7028d2816200296",
-      "bytes": 827
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-prose-proof.json",
-      "sha256": "b071e64cbbf29c67c0235ede649860a35736a75f597b30ab16113ea66649987a",
-      "bytes": 13205
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/q22-touch.log",
-      "sha256": "22486001cb8d389c16ffd01d8efb309a6c2500167753169ac93369f2d50c9a47",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/touch-failure-probe.log",
+      "sha256": "5873f35f2eb174525e1d0802295ecad14ffcb78657f20f6761508541ebc0fc18",
       "bytes": 216
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-canon.log",
-      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
-      "bytes": 415
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-generate.log",
-      "sha256": "652157de762eb1d37a95c7c0b2af2b04d3f8f300a1a29838b91a122aa5566b02",
-      "bytes": 713
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.json",
+      "sha256": "98ad146911a62486c2bf82ac554c1437c0cc11d378673f6346f79161fecc237a",
+      "bytes": 19618681
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-validate.log",
-      "sha256": "8cdf21d515a771b8751b99cfd79b22209fafcd123221b4cd7da652668b8408a2",
-      "bytes": 328
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-dry-landing.stderr",
+      "sha256": "cfd4c0069b9dd4b6a091a08aaf5ff60ca077958ceea7159b6ded0d153af8b928",
+      "bytes": 50
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-nier.log",
-      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
-      "bytes": 638
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-onboarding-storage.log",
-      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
-      "bytes": 162
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.json",
+      "sha256": "75dfc9a8dea6ea1510fb8757b0851ecf2945d0263583ea3acb6248c88f91da1a",
+      "bytes": 120230
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-pm7-build.log",
-      "sha256": "28f53ca5dceb851780700d0d677a4f453f667dd297594c9395d4669c64064607",
-      "bytes": 857
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-run.json",
-      "sha256": "c8905f54db8617c90b638927a516880187cdb11111ffb4f63f1303e2b368277b",
-      "bytes": 9626
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "bytes": 115
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "bytes": 111
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-touch.log",
-      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
-      "bytes": 185
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-wiring.log",
-      "sha256": "042aa3c2b20854888cf0b8ca70c23e6e6687d015ee5e03b0ec74734ad3f74f1b",
-      "bytes": 691
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-QA-ROUND2.md",
-      "sha256": "37fceee340a0587beb6d2cd041857149d8b35b075338ca2ffe7e84a1b85a190b",
-      "bytes": 7742
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-mails.json",
-      "sha256": "0ae247f9827611237ed586941a6c2af547a241af10d9686666830c202fdae297",
-      "bytes": 704
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-source-proof.json",
-      "sha256": "4ad1c06c2d7262ac1a2c7bb54ba35c30f32ce39411e4fe4e1c8fe305eb10575e",
-      "bytes": 16375
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.stderr",
+      "sha256": "6e6891131044cb110e7d9fe809e3e968fa2051c4cfdca2f7967a5e694c4beb09",
+      "bytes": 4712
     }
   ],
   "reviews": [
@@ -1870,29 +2319,18 @@
     }
   ],
   "cleanup": {
+    "owned_browsers_or_servers_started": 0,
+    "detached_runners_complete": true,
     "owned_scratch_removed": true,
-    "browsers_started": 0,
-    "servers_started": 0,
-    "landed": false,
-    "landing_lock_taken": false,
-    "resealed": false,
-    "decision_amendment_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-decisions-20261030",
-    "decision_amendment_scratch_removed": true,
-    "step4_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-step4-20261030",
-    "step4_scratch_removed": true,
-    "verification_runner_finished": true,
-    "validation_jobs_running": 0,
-    "companion_fix1_scratch_removed": true,
-    "r2_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-r2-final-20261030",
-    "r2_scratch_removed": true,
-    "final_rulings_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-final-rulings-20261030",
-    "final_rulings_scratch_removed": true,
-    "toast_followups_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-toast-followups-20261030",
-    "toast_followups_scratch_removed": true,
-    "qa_round2_scratch_path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-plans-q22-20261030",
-    "qa_round2_scratch_removed": true
+    "unused_GUI660_initial_logs_removed": true,
+    "kept_raw_prefixes": [
+      "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-",
+      "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-",
+      "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-"
+    ],
+    "mail_waiter": "off by lead direct-wake instruction"
   },
-  "latest_amendment": "QA round 2 Q22 fifth theme family and Q11 B live-row policy; focused checks only",
+  "latest_amendment": "QA2 GUI660/N1 plus foundations publication; DL-258 / DR-080; all focused checks pass",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -3237,7 +3675,7 @@
     "future_full_check_owner": "lead landing check",
     "evidence_repair": "Interim manifest write replaced this pass wiring log; read-only wiring check rerun passed; manifest rebuilt and every retained hash verified. Product source unchanged."
   },
-  "latest_GUI_input": "5abe2855072ec616409f3d0d2f72564e73030066",
+  "latest_GUI_input": "6609384fd036ebb7025eef3a8ad844ab00dbd1af",
   "historical_GUI5abe_commands": [
     {
       "argv": [
@@ -3449,11 +3887,789 @@
     "retired_inventory_rows": 1,
     "retired_control_tombstones": 3,
     "new_family_census_adapters": 2,
-    "gui_QA2_alignment_pending": true,
+    "gui_QA2_alignment_pending": false,
     "full_gates_run": false,
     "dry_landing_run": false,
     "runtime_or_rendering_claim": false,
     "mail_waiter": "off by lead instruction; direct wake",
-    "pending": "Lead QA2 GUI head/name/coverage alignment and remaining QA deltas"
+    "pending": "Shared ELI5 wizard/Tour control names and source-control/provider audit deltas are later follow-ups; current QA2 publication is aligned."
+  },
+  "historical_qa2_Q22_Q11_commands": [
+    {
+      "label": "shard-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 2.067,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+    },
+    {
+      "label": "index-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "seconds": 32.899,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-generate.log",
+      "sha256": "652157de762eb1d37a95c7c0b2af2b04d3f8f300a1a29838b91a122aa5566b02"
+    },
+    {
+      "label": "nier",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-nier-theme-check.py"
+      ],
+      "exit": 0,
+      "seconds": 7.965,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf"
+    },
+    {
+      "label": "canon",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-canon-check.py"
+      ],
+      "exit": 0,
+      "seconds": 9.459,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87"
+    },
+    {
+      "label": "pm7-build",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-build-check.py"
+      ],
+      "exit": 0,
+      "seconds": 1.948,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-pm7-build.log",
+      "sha256": "28f53ca5dceb851780700d0d677a4f453f667dd297594c9395d4669c64064607"
+    },
+    {
+      "label": "touch",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "exit": 0,
+      "seconds": 1.59,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032"
+    },
+    {
+      "label": "wiring",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-wiring-matrix"
+      ],
+      "exit": 0,
+      "seconds": 0.825,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-wiring.log",
+      "sha256": "042aa3c2b20854888cf0b8ca70c23e6e6687d015ee5e03b0ec74734ad3f74f1b"
+    },
+    {
+      "label": "shards-check",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 14.056,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+    },
+    {
+      "label": "index-validate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "seconds": 35.208,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-index-validate.log",
+      "sha256": "8cdf21d515a771b8751b99cfd79b22209fafcd123221b4cd7da652668b8408a2"
+    },
+    {
+      "label": "onboarding-storage",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-onboarding-contracts.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.612,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd"
+    }
+  ],
+  "latest_GUI_source_patch": "12e764ef28efd7b85431198f65223745ea4553f7",
+  "qa2_gui_alignment": {
+    "source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554",
+    "canonical_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+    "prior_QA2_canon": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+    "integration": "6609384fd036ebb7025eef3a8ad844ab00dbd1af",
+    "foundations": "12e764ef28efd7b85431198f65223745ea4553f7",
+    "status": "focused_pass",
+    "current_published_parity": "pass",
+    "prior_published_parity_failures": "historical source/input mismatches resolved by merged-source regeneration at 833552622c1f984e218b7cb2778b5aed1ab8e554",
+    "focused_or_generation_checks": 14,
+    "passed_checks": 14,
+    "failed_checks": 0,
+    "prose_before_companions": true,
+    "ledger_compiled": false,
+    "compile_witness": "not applicable",
+    "prose_docs_changed": 14,
+    "existing_units_changed": 58,
+    "new_units": [
+      "DL-258",
+      "DR-080"
+    ],
+    "existing_units_removed": [],
+    "existing_identity_lineage_token_gui_metadata_drift": [],
+    "preserved_tokens_lost": [],
+    "whole_QA2_edited_shard_groups": 14,
+    "gui660_delta_edited_shard_groups": 5,
+    "unexpected_shard_groups": {},
+    "full_checkout": {
+      "currentness_is_symlink": true,
+      "currentness_target": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness",
+      "missing": [],
+      "required_inputs": 17
+    },
+    "cases": {
+      "restore_cases": 9,
+      "rejected_lab_fields": 4,
+      "source": {
+        "restore_reach_cases": 9,
+        "restore_repoint_cases": 9,
+        "restore_callback_cases": 2,
+        "ssh_key_unlock_cases": 4,
+        "remote_route_cases": 5,
+        "dock_provider_steps": 14,
+        "resource_cases": 4,
+        "control_feedback_cases": 19,
+        "schedule_pair_cases": 3,
+        "modal_lifetime_cases": 2,
+        "narrow_cases": 12,
+        "owner_store_cases": 7,
+        "settings_store_cases": 12,
+        "settings_owner_refusal_cases": 4,
+        "sound_binding_cases": 6,
+        "source_boundary_checks": 12
+      }
+    },
+    "pm7_schema_cases": 105,
+    "Q11_cases": 92,
+    "production_acceptance_only_rows": 52,
+    "binding_payload_or_anchor_changes": 8,
+    "native_request_union_unchanged": true,
+    "prior_native_definitions_unchanged": true,
+    "checked_source_hashes": {
+      "Plans/00-plans-index.md": "825e085695fc6b441fe79dd2548904791888446f2bacf95fd1d9fe313aa1092f",
+      "Plans/Backup_Restore_System.md": "1461e38a71cc95fb1a510e5fc5c3bb4878b323b85c829078cdf7c42913eca5bb",
+      "Plans/Commands_System.md": "d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2",
+      "Plans/DRY_Rules.md": "ab462d8dfe2c0862859d57604e3853b18856b465034217045db575b261f78b39",
+      "Plans/Decision_Log.md": "4d7438497971839608473386d62b899d7dcd57f4dcdb53addb48bdaf990f683c",
+      "Plans/FinalGUISpec.md": "d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af",
+      "Plans/Planning_Wizard.md": "da86162c041087b873a136ee5f83ce37ff9dd2190909e318f6b0be2dec331f84",
+      "Plans/Settings_System.md": "61672a52dd1284299bc2a136fc7290589328d69a497b4cb1482847b761542bae",
+      "Plans/Shared_Integration_Runtime.md": "2f7a63769ff82f4c134a97bb91d89bbb4a99e8e220f72aa69530b88e9247e00f",
+      "Plans/UI_Command_Catalog.md": "bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479",
+      "Plans/UI_Wiring_Rules.md": "31ab8def06b0bea8e3a914d7a2299c766aa1a80e91dab405505a9f00a759b575",
+      "Plans/Wiring_Matrix.md": "a1bcd353fe2e9b33c3f364ff4e8b31ff8e1e401304c1816b7df50b0a2831ffde",
+      "Plans/Wiring_Matrix.production.json": "eb8e6d49f988517ff45521eeaf98dc25543ab2fdf5b1c7a0e58ca7a2f3a63baa",
+      "Plans/assistant-chat-design.md": "6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc",
+      "Plans/glyph_catalog.json": "2b3ade242cd867543bbb5bf475d954f06317f416559fc324fd5f762228074f1f",
+      "Plans/pm7_build_contracts.fixtures.json": "ac639bd2b72785ffca21fabc389b1fb9d3033980fd0727665056e9801595519d",
+      "Plans/pm7_build_contracts.schema.json": "b5ad9559fc5798dc8952f237318683a79ef23dd7e347ac0343ca77520adb550d",
+      "Plans/pm7_control_bindings.json": "a51fe598b9bfc0d8c52dfd1787c48f6f7dbd84985222a2db3c2a9899377aeba0",
+      "Plans/pm7_qa2_alignment.fixtures.json": "fc63e34a90e47ba274cf14614560f913a3c21d498c68d3d8f4cd08e6eda95c47",
+      "Plans/settings_inventory.json": "2d5dd1e1846f6b3370c95cd371e84cbfba2c859c94d127d51580ae937448fbe4",
+      "Plans/settings_inventory.schema.json": "ab42664ca6e15f866e4e574c7d9cc1c4562e32ad263d3881b5dfeef6485de89f",
+      "Plans/storage-plan.md": "c836901e05afcb382d84b0d0377ab9e918d474d1df14a4484dafbb81a64713bc",
+      "scripts/pm7-canon-check.py": "06cc8250bdd30070355f46533add3ff53168d2c7661e36549e89e235d463b866",
+      "scripts/pm7-nier-theme-check.py": "df0d064e96917976eaf2b8f6fc996f51454bbac4b5b8f282c8e0a174b91d5111",
+      "scripts/pm7-qa2-alignment-check.py": "4ecbe6f8db94a5cab150ed966dcb8b9a2d15533832d503a0da61e526572dd759",
+      "scripts/pm7-qa2-source-probe.cjs": "44ff6d6fa0f3c1f43b15227c878054a4d6e3a885e13e3037d2982a559011dc11"
+    },
+    "frozen_checked_bytes_match_commit": true,
+    "prior_checked_helpers_unchanged_after_publish": true,
+    "publication_changed_inputs": [
+      "Concepts/PMConcept7.html",
+      "Concepts/glyph-system/opus-5.5/PMGlyphCatalog.html",
+      "Concepts/onboarding/opus-5.5/src/settings/kit.d/40-bound.js"
+    ],
+    "publication_sha256": "66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673",
+    "publication_bytes": 32977907,
+    "new_commands": 0,
+    "new_events": 0,
+    "new_setting_rows": 0,
+    "new_binding_ids": 0,
+    "new_Touch_rows_or_profiles": 0,
+    "full_gates_run": false,
+    "dry_landing_run": false,
+    "native_runtime_certification": false,
+    "browser_or_rendering_certification": false,
+    "pending": [
+      "Shared wizard/Tour general.interaction.mode controls and dual help copy: onboarding names awaited",
+      "Source-control/provider flow/field audit deltas: lead will send findings"
+    ],
+    "ELI5_gap_memo": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/QA2-ELI5-CANON-GAPS.md",
+    "mail_waiter": "off by lead direct-wake instruction"
+  },
+  "historical_qa2_gui7d_commands": [
+    {
+      "label": "shard-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 2.875,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+    },
+    {
+      "label": "index-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "seconds": 34.973,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-index-generate.log",
+      "sha256": "1347192507294720a7c91af31e6a697a7027ec380a5cf3057e5e59ab43db37b2"
+    },
+    {
+      "label": "qa2",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-qa2-alignment-check.py"
+      ],
+      "exit": 0,
+      "seconds": 1.253,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-qa2.log",
+      "sha256": "f7f48c2d99cf18ea4b1c8cffa43f208a6dec526accc0ddaaaf060ca59c0f7075"
+    },
+    {
+      "label": "nier",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-nier-theme-check.py"
+      ],
+      "exit": 0,
+      "seconds": 8.049,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf"
+    },
+    {
+      "label": "canon",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-canon-check.py"
+      ],
+      "exit": 0,
+      "seconds": 12.688,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87"
+    },
+    {
+      "label": "pm7-build",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-build-check.py"
+      ],
+      "exit": 0,
+      "seconds": 1.759,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-pm7-build.log",
+      "sha256": "1a0fefa813ab5dea8e516dbfd9eab17c2d50239c24479ca2a45c2043e20e1ae3"
+    },
+    {
+      "label": "touch",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "exit": 0,
+      "seconds": 1.875,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032"
+    },
+    {
+      "label": "wiring",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-wiring-matrix"
+      ],
+      "exit": 0,
+      "seconds": 0.934,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-wiring.log",
+      "sha256": "1c0e5d4ed3e9eedcacc95427de12398da0aef271b7d212cbeb2256249cbcddb2"
+    },
+    {
+      "label": "shards-check",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 15.362,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+    },
+    {
+      "label": "index-validate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "seconds": 41.512,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-index-validate.log",
+      "sha256": "5ce208e2c5f2005cbf8fa7ab123fde779c5f7c3999f80dd4779f38e8df7fe9c6"
+    },
+    {
+      "label": "onboarding-storage",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-onboarding-contracts.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.683,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd"
+    },
+    {
+      "label": "retired-input-parser",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/settings_layer_retire.test.py"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-retired-input-parser.log",
+      "sha256": "551b858429918aa10fef86629e8e512cc972d31d017ffdb5fba1e9ea6cf7c1f0"
+    },
+    {
+      "label": "chat-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.471,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-chat-builder.log",
+      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644"
+    },
+    {
+      "label": "onboarding-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/build.py",
+        "--publish-pm7",
+        "--check"
+      ],
+      "exit": 1,
+      "seconds": 42.064,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-onboarding-builder.log",
+      "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
+    }
+  ],
+  "historical_qa2_gui7d_alignment": {
+    "source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+    "integration": "7d586bad189b6fae24045430ef2d8e6d1ce0b091",
+    "foundations": "e2de4bb8710a57cfb85448d605e67b0012389e8a",
+    "merge_commit": "e7ff5d4a6e7d818d53a8cf08117780527681358f",
+    "retired_input_bootstrap_commit": "58f1061b6e",
+    "status": "focused_pass_with_external_published_GUI_parity_failure",
+    "focused_or_generation_commands": 14,
+    "passed_commands": 13,
+    "failed_commands": [
+      {
+        "label": "onboarding-builder",
+        "exit": 1,
+        "owner": "generated_GUI_milestone",
+        "reason": "PMConcept7.html differs from a fresh build after the found source patch and canonical inventory update",
+        "other_builder_failures": 0
+      }
+    ],
+    "prose_before_companions": true,
+    "ledger_compiled": false,
+    "compile_witness": "not applicable",
+    "prose_docs_changed": 14,
+    "existing_units_changed": 57,
+    "new_units": [
+      "DL-258",
+      "DR-080"
+    ],
+    "existing_units_removed": [],
+    "existing_identity_lineage_token_gui_metadata_drift": [],
+    "preserved_tokens_lost": [],
+    "edited_source_shard_groups": 14,
+    "unexpected_shard_groups": {},
+    "full_checkout": {
+      "currentness_is_symlink": true,
+      "currentness_target": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness",
+      "missing": [],
+      "required_inputs": 17
+    },
+    "cases": {
+      "restore_cases": 9,
+      "rejected_lab_fields": 4,
+      "source": {
+        "dock_provider_steps": 14,
+        "resource_cases": 4,
+        "control_feedback_cases": 19,
+        "schedule_pair_cases": 3,
+        "modal_lifetime_cases": 2,
+        "narrow_cases": 12,
+        "owner_store_cases": 7,
+        "settings_store_cases": 12,
+        "settings_owner_refusal_cases": 4,
+        "sound_binding_cases": 6,
+        "source_boundary_checks": 12
+      }
+    },
+    "pm7_schema_cases": 104,
+    "Q11_cases": 92,
+    "production_acceptance_only_rows": 52,
+    "binding_payload_or_anchor_changes": 8,
+    "native_request_union_unchanged": true,
+    "prior_native_definitions_unchanged": true,
+    "source_unchanged_during_checks": true,
+    "checked_source_hashes": {
+      "Plans/00-plans-index.md": "9933a0d3e0886ce5e9199260db5b5b0bb776fc39541bcb9b9825037b6947dceb",
+      "Plans/Backup_Restore_System.md": "5215e4e9ce07a796aec7318776aff191a5c77d1bcd4f31775101161969ba0db5",
+      "Plans/Commands_System.md": "d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2",
+      "Plans/DRY_Rules.md": "ab462d8dfe2c0862859d57604e3853b18856b465034217045db575b261f78b39",
+      "Plans/Decision_Log.md": "eeb1e4e938aaffad44b639b70c3e238ae1712bb5641ba469501faf9fcc65080a",
+      "Plans/FinalGUISpec.md": "dfa6948b8277aef445496a2361b7c866b7cb0a73981c3f358ee080e627c59e4b",
+      "Plans/Planning_Wizard.md": "267c68a08cd068658426fd0118e3386623e4041a8281d059e15edc4e89337634",
+      "Plans/Settings_System.md": "61672a52dd1284299bc2a136fc7290589328d69a497b4cb1482847b761542bae",
+      "Plans/Shared_Integration_Runtime.md": "2f7a63769ff82f4c134a97bb91d89bbb4a99e8e220f72aa69530b88e9247e00f",
+      "Plans/UI_Command_Catalog.md": "bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479",
+      "Plans/UI_Wiring_Rules.md": "8eda93ad8a87d47b45dae0eb108aff9ba27fc1dade915c07ac881b0d23849187",
+      "Plans/Wiring_Matrix.md": "a1bcd353fe2e9b33c3f364ff4e8b31ff8e1e401304c1816b7df50b0a2831ffde",
+      "Plans/Wiring_Matrix.production.json": "eb8e6d49f988517ff45521eeaf98dc25543ab2fdf5b1c7a0e58ca7a2f3a63baa",
+      "Plans/assistant-chat-design.md": "6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc",
+      "Plans/glyph_catalog.json": "2b3ade242cd867543bbb5bf475d954f06317f416559fc324fd5f762228074f1f",
+      "Plans/pm7_build_contracts.fixtures.json": "72a6e5998505cdaa0f2c65688be52532ac23bf2bb1ae4dbd141facc9a42422e7",
+      "Plans/pm7_build_contracts.schema.json": "e5b3cdd14811cdd6c7f01aac611e7978e1b94fb43e43fa112c04b0acafef5c71",
+      "Plans/pm7_control_bindings.json": "a51fe598b9bfc0d8c52dfd1787c48f6f7dbd84985222a2db3c2a9899377aeba0",
+      "Plans/pm7_qa2_alignment.fixtures.json": "66dfbfb85570e39443a286a5401ef844869ea1d5467fb68ab8ec32bea7c20a01",
+      "Plans/settings_inventory.json": "2d5dd1e1846f6b3370c95cd371e84cbfba2c859c94d127d51580ae937448fbe4",
+      "Plans/settings_inventory.schema.json": "ab42664ca6e15f866e4e574c7d9cc1c4562e32ad263d3881b5dfeef6485de89f",
+      "Plans/storage-plan.md": "c836901e05afcb382d84b0d0377ab9e918d474d1df14a4484dafbb81a64713bc",
+      "scripts/pm7-canon-check.py": "06cc8250bdd30070355f46533add3ff53168d2c7661e36549e89e235d463b866",
+      "scripts/pm7-nier-theme-check.py": "df0d064e96917976eaf2b8f6fc996f51454bbac4b5b8f282c8e0a174b91d5111",
+      "scripts/pm7-qa2-alignment-check.py": "4ecbe6f8db94a5cab150ed966dcb8b9a2d15533832d503a0da61e526572dd759",
+      "scripts/pm7-qa2-source-probe.cjs": "a497d410673ac45afe8e367df9509b756e6bbc46a8f276ab9d44245956f292bb"
+    },
+    "frozen_checked_bytes_match_commit": true,
+    "new_commands": 0,
+    "new_events": 0,
+    "new_setting_rows": 0,
+    "new_binding_ids": 0,
+    "new_Touch_rows_or_profiles": 0,
+    "full_gates_run": false,
+    "dry_landing_run": false,
+    "native_runtime_certification": false,
+    "browser_or_rendering_certification": false,
+    "pending": [
+      "Generated GUI rebuild/parity at integration",
+      "Shared wizard/Tour general.interaction.mode controls and dual help copy: onboarding names awaited",
+      "Source-control flow/field audit deltas: lead will send canon findings"
+    ],
+    "ELI5_gap_memo": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/QA2-ELI5-CANON-GAPS.md",
+    "mail_waiter": "off by lead direct-wake instruction"
+  },
+  "historical_qa2_gui660_commands": [
+    {
+      "label": "shard-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 2.238,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865"
+    },
+    {
+      "label": "index-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "seconds": 34.864,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-generate.log",
+      "sha256": "83b69bad77a145cbf3bff482cc3a6567e9ca9a4974e92a5a6fd9248354748757"
+    },
+    {
+      "label": "qa2",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-qa2-alignment-check.py"
+      ],
+      "exit": 0,
+      "seconds": 0.902,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-qa2.log",
+      "sha256": "c145a63321acc395c7a25523affb2a7623dc067b9b213f7e9b7736ce1d010e48"
+    },
+    {
+      "label": "nier",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-nier-theme-check.py"
+      ],
+      "exit": 0,
+      "seconds": 8.347,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf"
+    },
+    {
+      "label": "canon",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-canon-check.py"
+      ],
+      "exit": 0,
+      "seconds": 11.92,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87"
+    },
+    {
+      "label": "pm7-build",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-build-check.py"
+      ],
+      "exit": 0,
+      "seconds": 1.927,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-pm7-build.log",
+      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61"
+    },
+    {
+      "label": "touch",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "exit": 0,
+      "seconds": 1.85,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032"
+    },
+    {
+      "label": "wiring",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-wiring-matrix"
+      ],
+      "exit": 0,
+      "seconds": 0.988,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-wiring.log",
+      "sha256": "5928f3f7961400d2e1e8685a4fb52c3c200829c7fe6046c647ed25c7641232a5"
+    },
+    {
+      "label": "shards-check",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 14.566,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f"
+    },
+    {
+      "label": "index-validate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "seconds": 39.127,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-validate.log",
+      "sha256": "b9d4a03f5d4b9f3b053677470e459f84351a479f96a51029740f6b93f8da8340"
+    },
+    {
+      "label": "onboarding-storage",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-onboarding-contracts.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.724,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd"
+    },
+    {
+      "label": "onboarding-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/build.py",
+        "--publish-pm7",
+        "--check"
+      ],
+      "exit": 1,
+      "seconds": 40.995,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-builder.log",
+      "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
+    }
+  ],
+  "canonical_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+  "aggregate_results_apply_latest": false,
+  "full_gates_run_for_QA2": false,
+  "dry_landing_run_for_QA2": false,
+  "next_full_gates_and_dry": "await lead authorization",
+  "historical_clean_committed_shard_check": {
+    "source_commit": "78af23f393d730766d7a354cea57bdcf34505bea",
+    "exit": 0,
+    "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-final-shards-check.log",
+    "source_hashes_match_commit": true
+  },
+  "artifact_integrity": {
+    "verified_artifacts": 392,
+    "prior_manifest_artifacts_unchanged": 362,
+    "mismatches": 0
   }
 }

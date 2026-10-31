@@ -178,3 +178,25 @@ Canonical source: `78af23f393d730766d7a354cea57bdcf34505bea`. Q22 owner decision
 | Q11 | DL-253/L1/DR-077/078: live rows animate on the shared clock in all ten looks; visibility/drag/hidden/Reduced Motion holds; NieR working agent uses Diamond/fallback, never animated Pip. |
 
 Glyph ids and the 22 pinned status keys are unchanged. Q11 changes presentation eligibility, with no new state, command, event, key or clock. GUI QA2 names/coverage are reconciled after the lead’s head.
+
+
+## QA2 integration alignment — GUI 6609384fd0 (2026-10-30)
+
+| Name | Current contract |
+| --- | --- |
+| **DL-258** | Jared’s QA2 restore/onboarding/activity/chat/Glass rules and the accepted hunter fixes; no new native authority. |
+| **DR-080** | One joined-choice tray and option-hint owner, `C.cards` `under`; `.o55-card-parent` and `.o55-under`. Twelve affected screens. |
+| **Retirement metadata** | Inventory-root `retired_input_ids: [general.visual.nier-mode]`; disjoint from the 1010 active `settings[]` rows and current setting-ID enums. No current writer or row decision. |
+| **Visit stores** | `PMW.store.raw/get/set/remove`; `O55.store.get/set/clear/scrub`; `window.PM7_SETTINGS_STORE` `{persistent,getItem,setItem,removeItem,key(i),length}`. Memory only when storage cannot be accessed; available write/readback failures remain failures. |
+| **Settings keys** | Existing `pm7:settings:tome-tabs:v1:<project>` and `pm7.settings.toolchain-flags.v1:<project>`; no new physical store family or native durability. |
+| **Dock provider** | Existing `PM56_PMX.dock.provide(workDock)`; `DOCK_MS=60000`, freshness per thread/work/run occurrence. Needs-input lines stay. No command, persisted timer or work mutation on expiry. |
+| **Family source anchors** | Existing `shell.theme.family`, `tour.theme.family`, `onboarding.theme.family` now source-anchored; 479 census records / 61 anchored families. |
+| **You / wand** | `ppYou`, `PX_YOU`, `pnYou` show the person alone; existing `wand` glyph and its ink roles serve head and trigger. No new glyph/status key. |
+
+Census remains 715 Touch rows / 140 profiles, 1269 production rows and 22 status keys. No new command, local product action, setting or event. New static `QA2PresentationPolicy` stays outside the native request union.
+
+Queued ELI5 follow-up: both wizard and Tour bars reuse the existing global `general.interaction.mode` (`ELI5` / `Expert`, default `ELI5`); every onboarding `?` tip/help section has both versions behind explicit disclosure, preserving DL-126’s tips/help-only dual copy. Final GUI control names are awaited; no speculative IDs allocated. Gap memo: `lanes/plans/QA2-ELI5-CANON-GAPS.md`.
+
+QA2 N1 follow-up at GUI660: `O55.restore.reachKey(S)` and fixture `reachedFor` bind only the selected service/device; `repoint(S)` invalidates reach/access/unlock/copy/check state. `nas.unlocked` identifies the exact key, never a general boolean. Remote Link endpoint is absent from unrelated routes. These are concept helper names, not native DTO fields, credentials, command IDs or settings. DL-258 / PWIZ-029 record the strengthened identity boundary.
+
+Final publication join: foundations `12e764ef28` merged with GUI660 and canonical Plans as `833552622c`; `PMConcept7.html` rebuilt from source per PLAN, SHA-256 `66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673`. Existing dependency refresh follows host and Settings commits through one o55SyncDependents owner; no new public names. Published parity passes.

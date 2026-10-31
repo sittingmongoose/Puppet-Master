@@ -1,3 +1,93 @@
+# PM7 Plans lane — QA2 GUI660 close-out, 2026-10-31
+
+Branch: `t3/plans/pm7-plans-canon`. **Checked source `833552622c1f984e218b7cb2778b5aed1ab8e554`; all 14 relevant focused/generation checks PASS.** Canon commit `4be74f2f94da9b7bfd263572f542e488b1eb9b08` and prior QA2 commit `efdc45e16c` are included. GUI milestone `6609384fd0` and foundations publish `12e764ef28` are merged. All source commits are pushed to GitHub and NAS.
+
+**No full gates or dry landing ran for QA2.** The next such run requires the lead's signal. No landing, landing lock, reseal, baseline refresh or protected governance edit occurred.
+
+## Current canon and companions
+
+| QA2 item | Result |
+| --- | --- |
+| **Q6/Q7 restore** | Locate/reach the actual backup first. A Recovery Kit supplies locator/key, never a place or storage sign-in. Ask Unlock only when required and name its place; native recovery prerequisites stay. One `C.cards` `under` tray joins follow-ups to their parent on twelve screens (DR-080). |
+| **N1 identity follow-up** | Reach/access/unlock/copy/check state belongs to the selected service/device; old results cannot authorize a changed choice. SSH passphrase unlock belongs to its exact key. Remote Link data clears outside that route. PWIZ-021/025/029, BRS-019, F3-520, UIW-015 and DL-258 are amended, prose first. |
+| **Onboarding sound/help/modal** | Sound defaults on and an unreadable Project keeps the factory/current visit choice until a readable Project binds. Explanation-only disclosures move into shared tips; functional FileSafe/proxy sections, fingerprints and receipts stay. Lab seeds fill prerequisites without native effects; one original inert basis survives replacement opens. |
+| **Work and Resources** | Q13 / ACD-476 / CC5: non-needs process/next-scheduled dock lines leave after 60000 ms per thread/run exposure; needs input stays and expiry changes no work. Q12 includes current-Project work plus shared computer/services and an idle-Project explanation. Shared read scope adds no service-control authority. |
+| **Chat/Glass/narrow** | One wand keeps its ink roles; You is the person alone. Only controls/focus start affects feedback and scheduling needs a real paired mark. Glass uses the shared hover light at Basic strength and the menu plate for activity/dock. Default chat is a clean 32 px strip at 900 and below, preserving the existing ladder, Pin, peek and hysteresis. |
+| **Q18 storage and Q22 controls** | Existing Home/O55/Settings stores retain non-authoritative visit memory only when storage is unavailable; real persistent write/readback failures still refuse. `PM7_SETTINGS_STORE` and existing Project keys remain. Three family controls gain source anchors; row visibility follows host and Settings commits through the existing dependency owner. |
+
+Overall: **14 owner/index docs, 58 existing units amended, new DL-258 and DR-080.** No existing unit or identity/status/type/lineage/token/GUI metadata is removed or changed. Source lineage is supplied on the new decisions. No ledger was compiled; compile witness is inapplicable. Regeneration changed only 14 edited-source shard groups overall, with five in the GUI660/N1 delta; no unexpected group changed. All 17 full-checkout inputs and currentness symlink exist.
+
+Companions preserve the native request union and preceding native definitions. `QA2PresentationPolicy` remains static-only. All 1269 production identities/routes remain, with 52 acceptance-only additions. Eight existing binding rows change payload wording/source anchors. `retired_input_ids` names only `general.visual.nier-mode`, disjoint from active settings. No command, action, event, setting, binding or Touch identity is added.
+
+## Verification and publication
+
+PM7: **105 schema cases, 92 Q11 row-motion cases, 61 source-anchored families**, plus all previous identity, reused-owner, thread, Pin/B5, geometry and notice checks. QA2: 9 restore-order cases and 4 rejected lab fields. Actual isolated source helpers cover 9 reach cases, 9 invalidations, 2 sign-in callbacks, 4 exact-key unlocks, 5 Remote Link routes; 14 dock steps, 4 Resources cases, 19 control-feedback cases, 3 schedule pairs, 2 modal checks, 12 narrow cases, 7 Home/O55 store modes, 12 Settings store/restore/wallpaper cases with 4 owner refusals, 6 sound cases and 12 source boundaries. Fixture DOM/storage/geometry proves no native runtime, browser paint/focus, audio, performance or durability.
+
+Both generators, shard/index validation, QA2, NieR, canon, PM7, Touch, wiring and onboarding-storage checks pass. The unchanged retirement parser's six cases and Chat builder pass. After the last GUI delta, the affected NieR/canon/PM7 checks and full onboarding builder pass again; previous owner/companion/helper inputs remain byte-identical. No third review ran.
+
+The earlier publication mismatch is **resolved**. Found's generated page conflicted with GUI660; PLAN requires taking a side and rebuilding rather than hand-merging it. Only the generated page was rebuilt by this lane; the row-sync source and glyph catalog come from foundations. Current `PMConcept7.html`: **32,977,907 bytes**, SHA-256 `66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673`. Builder byte parity, source lint/syntax and package checks pass. Canon/companion bytes still match their checked commit; the three GUI publication/dependency inputs have explicit before/after hashes.
+
+Current census: **1010 settings; 479 bindings / 61 source families; 715 Touch rows / 140 profiles; 1269 production entries; 22 status keys; 25 Pip parts; 7240 units / 96 indexed docs; 2956 shards / 99 sources.**
+
+Raw prefixes: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-*`, `qa2-gui660-*`, `qa2-publish-*`. Verification manifest SHA-256: `ca5a19d418c313e5b7cceea5e3af59884264cb2740cbbbb11a7366f96c416ed0`. **392 artifact hashes verify**, including all 362 prior-manifest artifacts unchanged. The manifest records exact commands, exits, hashes, commits, input scopes and historical failures. Draft-only fixture/runner failures and the now-resolved GUI mismatch are retained as history, not current defects.
+
+Owned scratch and unused preliminary GUI660 logs are removed. All validation runners have finished; no browser/server was started. Mail waiter remains off under the lead's direct-wake instruction.
+
+## Queued lead/onboarding deltas
+
+- **Shared ELI5 control and help copy:** [QA2-ELI5-CANON-GAPS.md](QA2-ELI5-CANON-GAPS.md). Existing `general.interaction.mode` is global ELI5/Expert and defaults to ELI5. Wizard/onboarding contracts lack its shared bar binding; Tour schema/WM-041/UCC-175 still say narration-only. Both bars must share that setting. Every opened onboarding `?`/help section needs useful ELI5 and technical copy, preserving DL-126's tips/help-only dual-copy limit and no rewrite of chat replies. Final control names are awaited; this commit is not held for them.
+- **Source-control/provider audit:** wait for the lead's reports and canon-specific corrections. No service fields or retirement claims are pre-empted here.
+
+Historical aggregate/full/dry results below belong to their named old source and do not certify QA2. Governance staleness remains for the separately assigned reseal/landing process.
+
+## Historical checkpoints — earlier canonical and GUI inputs
+
+# PM7 Plans lane — QA2 GUI alignment, 2026-10-30
+
+Branch: `t3/plans/pm7-plans-canon`. Checked canonical source: `efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0`. QA2 GUI input `7d586bad18` and foundations store/parser `e2de4bb871` are merged; merge head `e7ff5d4a6e`. Inventory metadata bootstrap `58f1061b6e` is included. Source bytes match the checked commit.
+
+**13 focused/generation checks PASS. One external GUI publication check fails:** `Concepts/PMConcept7.html` differs from a fresh build after the foundations source patch and the 1010-row inventory. The onboarding builder completes with exactly that one CHECK; source lint, syntax and package checks report no other failure. Found/lead are notified. No Plans-owned failure remains. No full gates or dry landing ran, as instructed.
+
+## QA2 canon and companions
+
+| Item | Canon / resulting contract |
+| --- | --- |
+| **Q6/Q7 restore** | PWIZ-021/022/025, F3-520, BRS-019, DL-258: locate the actual backup first. A Recovery Kit supplies a locator/protected recovery credential, never a place or storage sign-in. Authenticate the selected place; ask Unlock only if still required, naming it. Repointing invalidates prior unlock/copy. Existing native owner prerequisites remain. |
+| **Q7/Q8/H2/H8 choices/help** | DR-080: one `C.cards` `under` tray (`o55-card-parent`, `o55-under`) across twelve screens. Joined edges, own keyboard list, narrow note first. Explanation-only duplicates move into shared tips; functional FileSafe/proxy sections, fingerprints and receipts stay. |
+| **Q1/Q2 sound; H1/H5 modal** | Factory sound on; an unreadable Project keeps the current visit choice until a readable value binds. One trusted-gesture-gated player. One original inert basis survives replacement opens and close removes only its own holds. Lab `open({screen})` uses the screen owner seed; `seed:false` opts out. No lab field enters product requests. |
+| **Q12/Q13/Q14 Work** | ACD-476/CC5, F3-567/664, SIR-054: non-needs process/next-scheduled dock lines expire after 60000 ms per thread/work/run exposure; needs input stays. Expiry changes no work. Resources shows current-Project work plus shared computer/services and an idle-Project explanation, without service-control authority. Glass activity/dock use the menu plate. |
+| **Q15/Q16/Q17/Q20 chat/Glass** | One wand retains its glyph ink roles; You is the person alone through `ppYou`/`PX_YOU`/`pnYou`. Controls/focus alone start affects feedback; schedule rows require a real plate partner. Glass uses only shared PMH on edge-glow targets at Basic strength; no independent sheet pointer light. |
+| **Q18 visit stores** | Existing Home/O55/Settings adapters use memory only when storage cannot be accessed. `window.PM7_SETTINGS_STORE` exposes `persistent`, `getItem`, `setItem`, `removeItem`, `key(i)`, `length`; existing Project keys remain. Available write/readback failures still refuse. Visit receipts are fixtures, never native durability/authority. |
+| **H6/H7/Q19 and naming** | The default chat strip is clean at 900 and below, preserving the centre-width ladder, hysteresis, Pin and peek. Studio steps aside for real owner launch destinations. Q22 selectors/Adjust use final five-family source names; three family controls gain source anchors. |
+
+Prose preceded companions. **14 owner/index documents; 57 existing units amended; new DL-258 and DR-080.** No existing unit is removed and no identity, status/type, source-lineage, preserved-token or `gui_related` metadata changes. No ledger was compiled; compile witness is inapplicable. Shards/index regenerated; only **14 edited-source shard groups** change. All 17 full-checkout inputs/currentness symlink are present. The native request union and all preceding native definitions are unchanged; new `QA2PresentationPolicy` is static-only.
+
+Production wiring keeps all 1269 entry identities/routes and gains **52 acceptance-only additions**. Eight existing binding rows gain payload wording/source anchors; no command/action/setting/binding/event/Touch identity is added. Inventory root `retired_input_ids` registers only `general.visual.nier-mode`, disjoint from active rows; foundations validates unknown IDs, active-row conflicts and row-decision conflicts. Current setting enums reject the retired ID.
+
+## Focused proof and limits
+
+All Plans checks pass: QA2, NieR, canon, PM7 contracts, Touch, wiring, shards, index and onboarding storage; both generators and the retirement parser tests pass. Chat builder passes. Onboarding published-byte parity is the sole failure above. The frozen source guard passes. No third review was requested/run.
+
+- **Schema and owner boundary:** 104 PM7 cases; 9 restore-order cases and 4 rejected lab fields; the earlier Q22 migrations/closed contracts and 92 Q11 eligibility cases remain passing.
+- **Actual isolated source helpers:** 14 dock steps, 4 Resources cases, 19 control feedback, 3 schedule pairs, 2 modal lifetime checks, 12 narrow cases, 7 Home/O55 store modes, 12 Settings store/restore/wallpaper cases plus 4 owner refusals, 6 sound cases and 12 source boundaries.
+- **Limits:** Node VM helpers use fixture DOM/storage/geometry; they prove no browser paint, focus delivery, audio, performance, native dispatch, storage durability or runtime certification. GUI lanes own that evidence. O55's existing concept adapter has no new readback promise; native Settings/Storage rules remain unchanged.
+
+Drafting found and corrected this lane’s sound-fixture initialization order and new-schema-case `value`/`instance` shape. The detached runner also needed two scratch guard fixes (manifest source shape and top-level-document path filtering). No product source caused those runner failures; final source/index/shard guards pass. The earlier unknown-retired-ID builder failure is fixed by foundations `e2de4bb871` and its six parser tests. The remaining byte-parity failure is reported rather than repairing another lane’s generated GUI here.
+
+Current census: **1010 settings; 479 bindings / 61 source-anchored families; 715 Touch rows / 140 profiles; 1269 production rows; 22 status keys; 25 Pip parts; 7240 PlanUnits / 96 indexed docs; 2956 shards / 99 sources.**
+
+Raw prefix: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-*`. Source proof SHA-256: `9983e55a26cb341195ba554b90ca43eb158fd2937bd669befff0ac9901479163`. Verification manifest SHA-256: `9ce0cbaeb4d566581058559e2f6fc2f83b2cb35d47394829d863ed10e75dd49f`; **362** retained artifacts, including all 318 prior artifacts whose hashes still match. `verification.json` records every command, exit, artifact hash, source hash and pending item.
+
+## Open follow-ups
+
+1. **GUI publication:** rebuild/publish from the merged canonical inventory and foundations source, then repeat only its byte-parity check. No full gates/dry until the lead says so.
+2. **Jared's ELI5 additions:** gap memo [QA2-ELI5-CANON-GAPS.md](QA2-ELI5-CANON-GAPS.md). `general.interaction.mode` already defaults to ELI5. Wizard/onboarding contracts lack its shared control; Tour schema/WM-041/UCC-175 still pin narration-only. Both bars must share that setting; every opened onboarding `?`/help section needs ELI5 and technical copy, limited by DL-126. Final GUI names are awaited; this commit is not held for them.
+3. **Source-control audit:** lead will forward actual canon field corrections from `lanes/onb-audit/FLOW-AND-FIELDS.md`; none is pre-empted here.
+
+No full gates, dry landing, landing, landing lock, reseal, baseline refresh, protected evidence/Spec Lock/auto-decisions edit or Plans-owned GUI source edit. No browser/server was started. The detached runner has finished. Owned scratch cleanup follows this report checkpoint. Mail waiter remains off under the lead's direct-wake instruction. Historical full/dry findings below apply to their named old source only and do not certify QA2.
+
+## Historical checkpoints — prior canonical revisions
+
 # PM7 Plans lane — QA round 2, 2026-10-30
 
 Branch: `t3/plans/pm7-plans-canon`. Verified canonical source: `78af23f393d730766d7a354cea57bdcf34505bea` (pushed to GitHub and NAS). **All ten focused/generation checks PASS.** Last merged GUI remains `5abe2855072ec616409f3d0d2f72564e73030066`; the QA2 GUI head is pending. No GUI source was edited.

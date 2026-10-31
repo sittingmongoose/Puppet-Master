@@ -1827,6 +1827,201 @@
         "source": "pm7-build:1030183348-18bd",
         "ruling": "No NieR exemption; working agent uses existing NieR Diamond/fallback loader, never animated Pip; running process mark moves."
       }
+    },
+    "Q1": {
+      "question": "Sound defaults on",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Settings_System.md#SSYS-039",
+        "Plans/Planning_Wizard.md#PWIZ-022"
+      ],
+      "final_ruling": "Keep general.interaction.sound-effects factory-on; one trusted-gesture-gated player."
+    },
+    "Q2": {
+      "question": "Unreadable Project does not repeatedly mute",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Settings_System.md#SSYS-039",
+        "Plans/UI_Wiring_Rules.md#UIW-043"
+      ],
+      "final_ruling": "Unbound preview keeps factory/current visit choice; an explicit readable Project value wins."
+    },
+    "Q6": {
+      "question": "Locate backup before unlock",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Backup_Restore_System.md#BRS-019",
+        "Plans/Planning_Wizard.md#PWIZ-021"
+      ],
+      "final_ruling": "Recovery Kit is locator/protected credential, not a place; storage authentication remains mandatory; ask Unlock only when still required and name the place."
+    },
+    "Q7": {
+      "question": "Joined restore and choice follow-ups",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Planning_Wizard.md#PWIZ-022",
+        "Plans/DRY_Rules.md#DR-080"
+      ],
+      "final_ruling": "One C.cards under tray joined to its selected parent across twelve screens; keep native owner prerequisites."
+    },
+    "Q8": {
+      "question": "Calm explanations, keep functional sections",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Planning_Wizard.md#PWIZ-022",
+        "Plans/FinalGUISpec.md#F3-520"
+      ],
+      "final_ruling": "Move explanation-only disclosures into shared tips; retain FileSafe/proxy selectors, fingerprints and receipts."
+    },
+    "Q12": {
+      "question": "Resources includes shared computer/services",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/FinalGUISpec.md#F3-664",
+        "Plans/Shared_Integration_Runtime.md#SIR-054"
+      ],
+      "final_ruling": "Scope current Project work plus shared This computer/Puppet Master services; empty-Project explanation; no mutation authority expansion."
+    },
+    "Q13": {
+      "question": "Dock lines leave after sixty seconds",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/assistant-chat-design.md#ACD-476",
+        "Plans/FinalGUISpec.md#F3-567"
+      ],
+      "final_ruling": "Non-needs process/next-scheduled lines expire after 60000 ms per thread/run exposure; needs input remains; expiry changes no owner work."
+    },
+    "Q14": {
+      "question": "Glass activity and dock menu plate",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/FinalGUISpec.md#F3-652",
+        "Plans/FinalGUISpec.md#F3-664"
+      ],
+      "final_ruling": "Use the persona/model menu plate with the existing warm needs wash."
+    },
+    "Q15": {
+      "question": "One wand",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/FinalGUISpec.md#F3-566",
+        "Plans/DRY_Rules.md#DR-051"
+      ],
+      "final_ruling": "The head and trigger render the existing wand with the same glyph ink roles; no colour-stripping wrapper."
+    },
+    "Q16": {
+      "question": "You is a person",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/FinalGUISpec.md#F3-594",
+        "Plans/assistant-chat-design.md#ACD-507"
+      ],
+      "final_ruling": "Person-only head/shoulders across families and small maps; no marionette cross or strings."
+    },
+    "Q17": {
+      "question": "Hover feedback starts at controls",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/DRY_Rules.md#DR-044",
+        "Plans/FinalGUISpec.md#F3-595"
+      ],
+      "final_ruling": "Actual controls/focus only; plain words/space/plate do not dim; scheduled rows light only real paired marks."
+    },
+    "Q18": {
+      "question": "No-storage visits keep memory",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/Settings_System.md#SSYS-016",
+        "Plans/storage-plan.md#SP-330"
+      ],
+      "final_ruling": "Existing owner stores keep isolated, non-authoritative visit memory only for unavailable storage; real persistent failure still refuses."
+    },
+    "Q20": {
+      "question": "One shared Glass hover light",
+      "adoption": "explicit_jared_qa2_decision_2026_10_30",
+      "decider": "Jared",
+      "decision_date": "2026-10-30",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/QA-ROUND2.md",
+      "decision_log_units": [
+        "DL-258"
+      ],
+      "owner_units": [
+        "Plans/FinalGUISpec.md#F3-465",
+        "Plans/DRY_Rules.md#DR-072"
+      ],
+      "final_ruling": "PMH only on registered edge-glow targets, at Basic strength; no independent sheet pointer light."
     }
   },
   "answers_source": {
@@ -1846,5 +2041,51 @@
     "O12",
     "G1",
     "SND1"
-  ]
+  ],
+  "qa2_gui_alignment": {
+    "integration": "6609384fd036ebb7025eef3a8ad844ab00dbd1af",
+    "foundations": "e2de4bb8710a57cfb85448d605e67b0012389e8a",
+    "new_units": [
+      "DL-258",
+      "DR-080"
+    ],
+    "hunter_source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/QA2-HUNTER.md",
+    "hunter_items": [
+      "H1",
+      "H2",
+      "H3",
+      "H5",
+      "H6",
+      "H7",
+      "H8",
+      "H9"
+    ],
+    "queued_additions": [
+      "shared wizard/Tour ELI5 bar mode",
+      "ELI5/technical copy for every opened onboarding tip/help section"
+    ],
+    "queued_gui_ids": "await onboarding lane; do not hold current commit",
+    "gap_memo": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/QA2-ELI5-CANON-GAPS.md",
+    "prior_integration": "7d586bad189b6fae24045430ef2d8e6d1ce0b091",
+    "identity_repair": {
+      "source": "158ad4404d; lead 1030234015-8f7c",
+      "units": [
+        "PWIZ-021",
+        "PWIZ-025",
+        "PWIZ-029",
+        "BRS-019",
+        "F3-520",
+        "UIW-015",
+        "DL-258"
+      ],
+      "contract": "Reached/unlock/access state belongs to the exact selected service/device/key; a stale completion cannot authorize another choice; Remote Link endpoint clears outside its route.",
+      "new_native_fields": 0
+    },
+    "foundations_publish": "12e764ef28efd7b85431198f65223745ea4553f7",
+    "checked_source": "833552622c1f984e218b7cb2778b5aed1ab8e554",
+    "canonical_source": "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+    "publication_sha256": "66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673",
+    "publication_parity": "pass",
+    "public_names_added_by_last_found_delta": []
+  }
 }
