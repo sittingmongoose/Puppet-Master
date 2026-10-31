@@ -258,7 +258,7 @@
   function contextHtml(S, p, r) {
     const c = r.ctx || {};
     if (p.context === 'billing') {
-      const orgs = (S.env.forges.github && S.env.forges.github.orgs) || [];
+      const orgs = ghOrgs(S);
       return `<p class="o55-hint" data-key="ctxq-${p.id}">${U.esc(T('ai.ctx.billing.title'))}</p>` + C.cards('entity', [{ v: p.id + '|' + c.who, glyph: 'person', title: T('ai.ctx.billing.me', { who: c.who }) }]
         .concat(orgs.map((o) => ({ v: p.id + '|' + o, glyph: 'globe', title: T('ai.ctx.billing.org', { org: o }) }))), null, { label: T('ai.ctx.billing.title') });
     }
@@ -471,12 +471,14 @@
     onBack: () => false
   });
 
+  /* the GitHub organizations a Copilot plan can come from (the forge fixture names them owners; older ones orgs) */
+  const ghOrgs = (S) => { const g = (S.env.forges && S.env.forges.github) || {}; return (g.owners || []).map((o) => o.name || o.id).concat(g.orgs || []).filter((x, i, a) => x && a.indexOf(x) === i); };
   /* a sign-in came back: an account that still needs a choice asks for it; the same account twice is said so */
   function signedIn(S, p) {
     const r = R(S, p.id), w = way(p, r), who = nextWho(S, p);
     r.recovered = !!r.failed; r.failed = false; r.remote = null;
     if (accts(S, p).some((e) => e.who === who && (e.family || null) === (w.family || null))) { Object.assign(r, { state: 'ready', adding: false, dup: who }); S.save(); O55.ui.refresh(); return; }
-    if (p.context === 'billing' && ((S.env.forges.github && S.env.forges.github.orgs) || []).length) { r.state = 'context'; r.ctx = { via: 'signin', who }; S.save(); O55.ui.refresh(); return; }
+    if (p.context === 'billing' && ghOrgs(S).length) { r.state = 'context'; r.ctx = { via: 'signin', who }; S.save(); O55.ui.refresh(); return; }
     addAccount(S, p, { via: 'signin', who, plan: w === p ? p.plan || null : null, entity: p.context === 'billing' ? who : null });
   }
   function pickContext(S, v, kind) {
