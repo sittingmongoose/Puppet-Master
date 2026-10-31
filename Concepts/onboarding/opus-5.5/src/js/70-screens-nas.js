@@ -735,10 +735,10 @@
     do: {
       check(S) {
         const n = N(S), sh = shareOf(S); if (!sh) return;
-        const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; n.pwTyped = false; O55.sound.play('tap');
+        const i = S.root.querySelector('#o55f-pw'), pwv = i ? i.value : ''; if (i) i.value = ''; n.pwTyped = false; O55.sound.play('tap');
         const key = 'smb:' + (n.share === 'manual' ? sh.path : n.share);
-        /* situation smbWrong: the share refuses the first password, as it would a mistyped one */
-        const f = S.env.failures || {}, wrong = !!f.smb_password_once; if (wrong) f.smb_password_once = false;
+        /* situation smbWrong: the share refuses the first password, as it would a mistyped one (and the demo's wrong one) */
+        const f = S.env.failures || {}, wrong = !!f.smb_password_once || pwv === (O55.fixtures.DEMO || {}).wrongPassword; if (f.smb_password_once) f.smb_password_once = false;
         F.reset(S, key);
         F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
       },

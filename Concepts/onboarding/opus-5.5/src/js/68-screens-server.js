@@ -730,13 +730,14 @@
           .concat(awayOf(S) ? [['globe', T('restore.preview.away', { how: awayOf(S) === 'tailscale' ? (md(S).tailscale_control === 'headscale' ? 'Headscale' : 'Tailscale') : awayOf(S) === 'reverse_proxy' ? String(md(S).proxy_hostname || '').replace(/^https:\/\//, '') : T('away.link.title') })]] : []).map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('') + '</ul>';
       out += C.note(T('restore.preview.never'), 'info', 'lock');
       const st = F.state(S, 'restore:' + r.pick);
+      if (st && st.state === 'failed') out += C.note(T('restore.preview.failed'), 'warn', 'rewind');
       if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings', 'paused'], { fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings'), paused: T('restore.apply.phases.paused') });
       return out;
     },
     foot(S) {
       const st = F.state(S, 'restore:' + R(S).pick);
       if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'done' } };
-      return { primary: { label: T('restore.preview.button'), do: 'apply', disabled: !!(st && st.state === 'running'), reason: T('chrome.working') } };
+      return { primary: { label: st && st.state === 'failed' ? T('restore.preview.retry') : T('restore.preview.button'), do: 'apply', disabled: !!(st && st.state === 'running'), reason: T('chrome.working') } };
     },
     do: {
       apply(S) {
@@ -746,7 +747,11 @@
         O55.sound.play('commit', SND.restore);
         /* the Backup owner's own restore of a whole Server (DL-228), into a paused, recovery-safe state; a new Server's
            way in from away is not set up inside it: it waits for the restore and asks for itself (SCR-13) */
-        F.op(S, 'restore:' + r.pick, 'cmd.restore.server_full', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }, { key: 'paused', ms: 500 }], {
+        /* situation restoreFails: the first attempt stops while bringing the Projects back, before anything is replaced;
+           Try again runs it afresh */
+        const f = S.env.failures || {}, stop = !!f.restore_once; if (stop) f.restore_once = false;
+        F.reset(S, 'restore:' + r.pick);
+        F.op(S, 'restore:' + r.pick, 'cmd.restore.server_full', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100, fail: stop ? () => 'restore_interrupted' : undefined }, { key: 'settings', ms: 600 }, { key: 'paused', ms: 500 }], {
           payload: { scope: r.scope, backup: r.pick, target: r.scope === 'server' ? S.sess.server.id || null : S.env.here.id, recovery_safe: true }, sound: { intensity: 0.9 },
           /* (a restore finished for a copy the person has since turned away from is not this one: SCR-01's class) */
           onDone: () => { if (R(S) !== r || r.pick !== pick) return; r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview' && R(S).pick === pick) afterRestore(S); }); }
