@@ -64,7 +64,7 @@
           /* (no key or certificate file is ever typed here: it is chosen on the Server after the commit, SCR-07) */
           if (d.proxy_tls === 'existing_certificate') fields += `<p class="o55-hint" data-key="owncert">${U.esc(T('away.proxy.ownNext', { name }))}</p>`;
           /* (only the proxies Puppet Master makes and tests settings for: lead question Q2) */
-          fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: KIND_NAME[d.proxy_kind] ? d.proxy_kind : 'nginx', label: T('away.proxy.kind'), options: [{ v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }] }) + `<p>${U.esc(T('away.proxy.detail'))}</p>`);
+          fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: KIND_NAME[d.proxy_kind] ? d.proxy_kind : 'nginx', label: T('away.proxy.kind'), options: [{ v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }] }) + `<p>${U.esc(O55.talk && O55.talk.t ? O55.talk.t('away.proxy.detail') : T('away.proxy.detail'))}</p>`);
         } else fields += `<p class="o55-hint" data-key="existing">${U.esc(T('away.proxy.existingNext', { name }))}</p>`;
         /* the internet sees the Server's sign-in page: said plainly, with what has to be true, and agreed to (SCR-06) */
         fields += C.note(T('away.proxy.public', { name }), 'warn', 'globe');

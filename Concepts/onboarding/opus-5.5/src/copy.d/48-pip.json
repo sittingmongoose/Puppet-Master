@@ -1130,7 +1130,8 @@
         },
         "method:mounted": {
           "title": "Already connected",
-          "text": "A drive this computer already shows in its file browser. Nothing more to connect."
+          "text": "A drive the computer doing the work already has connected. Nothing more to connect.",
+          "expert": "An existing OS mount on the computer that does the work (this computer, or the Server); no new credentials."
         },
         "group:device": {
           "title": "Choose a device",
@@ -1142,7 +1143,8 @@
         },
         "field:port": {
           "title": "Port",
-          "text": "The door number SSH answers on. Leave it at 22 unless whoever set up the device changed it."
+          "text": "The door number SSH answers on, from 1 to 65535. Leave it at 22 unless whoever set up the device changed it.",
+          "expert": "SSH TCP port, 1–65535 (default 22). Changing it means the device's identity is checked again."
         },
         "manualOn": {
           "title": "Type an address instead",
@@ -1154,7 +1156,23 @@
         },
         "group:volume": {
           "title": "Connected drives",
-          "text": "Drives this computer already shows in its file browser."
+          "text": "Drives the computer doing the work already has connected. Pick the one with the files.",
+          "expert": "Existing mounts on the connecting computer (this computer, or the Server); the next step checks it can read them."
+        },
+        "field:shareText": {
+          "title": "Shared folder address",
+          "text": "Type where the shared folder is if it wasn't found: //computer/folder for a shared folder, or computer:/path for NFS.",
+          "expert": "SMB UNC path (//host/share) or NFS export (host:/path), opened from the computer that does the work."
+        },
+        "shareManual:on": {
+          "title": "Type its address instead",
+          "text": "For a shared folder that didn't show up in the list.",
+          "expert": "Enter an SMB share or NFS export that discovery didn't list."
+        },
+        "shareManual:off": {
+          "title": "Show the shares found",
+          "text": "Back to the shared folders Puppet Master found on your network.",
+          "expert": "Return to the discovered shares."
         }
       },
       "nas-identity": {
@@ -1183,6 +1201,16 @@
         "field:pass": {
           "title": "Passphrase",
           "text": "The password that locks this key. It unlocks the key on this computer and isn't saved."
+        },
+        "field:sshUser": {
+          "title": "Account",
+          "text": "The account on the device that Puppet Master signs in to, usually your own. A key works for one account.",
+          "expert": "Remote SSH user. Keys are tested and added for this account; another account is another connection."
+        },
+        "userEdit": {
+          "title": "Change the account",
+          "text": "Sign in to the device as a different account. The keys are tested again for it.",
+          "expert": "Change the SSH user; key tests rerun for the new user@host:port."
         }
       },
       "nas-signin": {
@@ -1249,17 +1277,25 @@
       "nas-smb": {
         "field:user": {
           "title": "Username",
-          "text": "The name you use for the shared folder. Your sign-in stays in your computer's password store."
+          "text": "The name you use for the shared folder. The computer doing the work keeps the sign-in in its own password store.",
+          "expert": "SMB account on the share; the credential is held by the connecting computer's keychain or credential store."
         },
         "field:pw": {
           "title": "Password",
-          "text": "The password for the shared folder. It stays in your computer's password store, not in Puppet Master."
+          "text": "The password for the shared folder. The computer doing the work keeps it in its own password store, not Puppet Master.",
+          "expert": "SMB password, handed to the connecting computer's credential store; never saved by Puppet Master."
+        },
+        "field:domain": {
+          "title": "Domain or workgroup",
+          "text": "Only on some work networks. Leave it empty at home.",
+          "expert": "Optional SMB domain/workgroup for the account (DOMAIN\\user)."
         }
       },
       "nas-mounted": {
-        "group:volume": {
-          "title": "Choose the drive",
-          "text": "Drives this computer already shows in its file browser. Pick the one that holds the Project."
+        "other": {
+          "title": "Choose another drive",
+          "text": "Go back and pick a different connected drive.",
+          "expert": "Return to the drive list."
         }
       },
       "away-setup": {

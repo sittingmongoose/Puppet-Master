@@ -832,7 +832,8 @@
         "cgnat": "Some internet plans share one address between many homes. Then a web address can't reach you; Tailscale and Remote Link still can."
       },
       "consent": "I understand {name} will be reachable from the internet at this address",
-      "consentMissing": "Tick the box to say you understand this puts your Server on the internet"
+      "consentMissing": "Tick the box to say you understand this puts your Server on the internet",
+      "detailExpert": "Generation and tests target NGINX or Traefik (RAS-005's families). Caddy or Nginx Proxy Manager are used as an existing external proxy."
     },
     "link": {
       "title": "Puppet Master Remote Link",
@@ -1228,7 +1229,26 @@
       "pmTag": "Runs Puppet Master",
       "pmNote": "{name} runs Puppet Master, so this computer pairs with it: you approve it once, and no key or password is needed.",
       "noAnswer": "Nothing answered at {addr}. Check the address and that the device is on.",
-      "choose": "Choose a device"
+      "choose": "Choose a device",
+      "portBad": "Use a port from 1 to 65535. SSH usually uses 22.",
+      "shareLabel": {
+        "smb": "Shared folder address",
+        "nfs": "Share address"
+      },
+      "shareHint": {
+        "smb": "Like //nas.local/projects",
+        "nfs": "Like nas.local:/export/projects"
+      },
+      "shareBad": {
+        "smb": "Type it as //computer/folder, like //nas.local/projects.",
+        "nfs": "Type it as computer:/path, like nas.local:/export/projects."
+      },
+      "shareAddress": {
+        "smb": "Type its address instead",
+        "nfs": "Type its address instead"
+      },
+      "shareFound": "Show the shares found",
+      "volumesOn": "Drives {where} already has connected"
     },
     "identity": {
       "eyebrow": "Check the device",
@@ -1273,7 +1293,12 @@
       "passCancel": "Cancel",
       "passOk": "Unlock",
       "passEmpty": "Enter the passphrase for {key}.",
-      "thisComputer": "this computer"
+      "thisComputer": "this computer",
+      "account": "Signs in to {name} as {user} ({address})",
+      "accountChange": "Change",
+      "accountLabel": "Account on {name}",
+      "accountHint": "The account on {name} that Puppet Master signs in to, usually your own.",
+      "accountNeeded": "Type the account on {name} that {where} should sign in to."
     },
     "signin": {
       "eyebrow": "Secure connection",
@@ -1310,11 +1335,18 @@
         "refused": "{name} refused the key because its home folder is shared too widely.",
         "refusedFix": "Fix the folder permissions",
         "not_allowed": "This account isn't allowed to use SSH on {name}.",
-        "notAllowedFix": "Turn it on in {brand}: Control Panel › User › Edit › Applications › SSH, then try again",
+        "notAllowedFix": "Ask whoever runs {name} to let this account use SSH, or use a shared folder instead.",
         "cancelled": "The passphrase prompt was closed, so {key} stayed locked.",
         "tryAgain": "Try again",
         "not_added": "The key isn't on {name} yet.",
-        "showKey": "Show the key again"
+        "showKey": "Show the key again",
+        "notAllowedBy": {
+          "Synology": "Synology lets only accounts in its administrators group use SSH. Sign in with such an account, or use a shared folder instead.",
+          "QNAP": "On QNAP, who may use SSH is set in Control Panel › Network & File Services › Telnet / SSH › Edit Access Permission. Or use a shared folder instead.",
+          "TrueNAS": "On TrueNAS, the account has to be allowed to sign in over SSH: Credentials › Users › Edit. Or use a shared folder instead.",
+          "Unraid": "Unraid lets only its root account use SSH. Sign in as root, or use a shared folder instead."
+        },
+        "useSmb": "Use a shared folder instead"
       },
       "done": "Connected securely with your key. No password saved.",
       "donePaired": "Paired with Puppet Master on {name}. No key or password needed."
@@ -1342,7 +1374,13 @@
       "phases": {
         "mount": "Opening the shared folder",
         "read": "Checking it can be read"
-      }
+      },
+      "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
+      "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
+      "more": "More sign-in options",
+      "domain": "Domain or workgroup",
+      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise.",
+      "wrong": "That username and password weren't accepted. Check them and try again."
     },
     "nfs": {
       "eyebrow": "NFS share",
@@ -1351,12 +1389,18 @@
       "phases": {
         "mount": "Opening the share",
         "read": "Checking it can be read"
-      }
+      },
+      "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
+      "noPassword": "NFS has no password: a share lets in the computers it lists. If this check fails, add {where} to the share's allowed computers on the NAS."
     },
     "mounted": {
       "eyebrow": "Connected drive",
       "title": "Choose the drive",
-      "lead": "Drives this computer already shows in its file browser."
+      "lead": "Drives this computer already shows in its file browser.",
+      "titleCheck": "Checking the drive",
+      "leadOn": "Puppet Master reads it from {where}.",
+      "read": "Checking {where} can read it",
+      "other": "Choose another drive"
     },
     "pmpair": {
       "eyebrow": "Pair with Puppet Master",
