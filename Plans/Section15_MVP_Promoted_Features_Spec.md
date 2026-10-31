@@ -544,7 +544,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usa
 ### 3.11 Virtualized Conversation or Log List
 
 - long chat and runtime lists must use virtualization without losing keyboard navigation, focus recovery, or anchor-to-message behavior
-- Amended 2026-10-31 (DL-270, SP-338, ACD-242): chat threads page older items from the derived render-page store; load-older paging is mandatory and opening a chat never replays its events. An anchor or search jump to an unloaded item loads its page first. The first page meets SP-338's 150 ms warm and 500 ms cold p95 budget, reading at most 2 MiB. SMPFS-052 carries the same rule.
+- Amended 2026-10-31 (DL-270, SP-338, ACD-242): chat threads page older items from the derived render-page store; load-older paging is mandatory and opening a chat never replays its events. An anchor or search jump to an unloaded item loads its page first. The first page meets SP-338's 150 ms, warm or cold p95 budget, reading at most 2 MiB. SMPFS-052 carries the same rule.
 - virtualization cannot break sticky status elements, selection, or search results navigation
 
 ### 3.12 Know Where Your Tokens Go (Analytics Framing)

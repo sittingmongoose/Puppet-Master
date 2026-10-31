@@ -521,7 +521,7 @@
         "wiring_matrix_rule_two_coverage",
         "worktree_source_control_runtime_visibility"
       ],
-      "sha256": "822393a6f0344b214af8956dad4c888e8996f4676b530cdab4e83b2fdb16dada",
+      "sha256": "aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -1470,7 +1470,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "6b03276d73d6ddb048cfd254baf1269de151168db6fc99c7b51ac599bda94953",
+      "sha256": "76b7e221ee1f218ba2d415e14622b8e0d7b9ce6926f3d48e0cfe2393525cb9cb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 486,
@@ -1692,7 +1692,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "82b59412ec9e8ecd1934acb268a5e5c099f470a42c0622e7e1dc96e40bd43ade",
+      "sha256": "78941a4c2a875f0ff368c0226ff8ad1c407a65f0c9ae884a9e62db04ea3f3bb2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -1706,7 +1706,7 @@
         "validation_rule": 3
       },
       "validation_surfaces": [
-        "A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms p95 warm and 500 ms cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.",
+        "A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.",
         "Memory consolidation failures are typed, retryable or surfaced, and never silently drop required memories.",
         "Memory search timeout returns degraded result, not hung turn.",
         "Model responses that use memories can surface citations or evidence receipts.",
@@ -2076,7 +2076,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f",
+      "sha256": "2c7716a04afa1efef9387ef59e967b0189f751406e8b06794dfa57eaf72c2cd7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 70,
@@ -2784,7 +2784,7 @@
         "validation_coverage",
         "validation_outcome_drift"
       ],
-      "sha256": "68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b",
+      "sha256": "3a2ef514e89e24a91cd69abecc37c3330fbd05d8e192138f8c23a4fd38ac095b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28
@@ -3984,7 +3984,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "3e0e4494a8c7b306f843b8d32ceb1cc5bc2ab442b5a6a495669be42b65fa2c58",
+      "sha256": "bf5aacea10efea280f2920c2b492f0297a15cf3f8d671787a407a41c7ec2822e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 97
@@ -5787,7 +5787,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 17309,
+      "line_count": 17312,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 214,
       "plan_unit_ids": [
@@ -6168,7 +6168,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "e3a954bef36a9021ae59895e409765aafe10d46e5b15a20942d707b69047a620",
+      "sha256": "22b4964ef539b187c9494e40f924dd4e29b34f225c39582284adda16bf0530a6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 214
@@ -6519,7 +6519,7 @@
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 4426,
+      "line_count": 4427,
       "path": "Plans/DRY_Rules.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -6611,7 +6611,7 @@
         "storage_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "e4584075a30666f2f4e102afd1e3ed62225b2eacc8c370219c24f4e63efe43f4",
+      "sha256": "13eb088972f4e7dc5fabd6d210bf6991d8b4d32432ae5410d1533f4a726503fa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -8511,7 +8511,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac",
+      "sha256": "7063e509f535815d7a472e54919a81508e7ec47a94e8176cfba39c05854e734f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 642,
@@ -9736,7 +9736,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "6dea8884b18183c84a5e54bdbf2fab67d36b3dd3daeadfdccfb04bf0a2b71f08",
+      "sha256": "7e3af5ca50ad0501da622de7030f0248d1f16b2b3aab081e42cf643a1a954e5e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -15699,7 +15699,7 @@
         "unproved_or_incompatible_reader_installation",
         "untrusted_wsl_image_or_cross_owner_repair"
       ],
-      "sha256": "840f30800f245ba0708b658f22687bda4740c206dd03b3ec1dd18fd7cca88d6a",
+      "sha256": "950df1ce089c29e83280ca6f93ead303f67e6cc5dedca6fdc2b91acc5be816f0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -16981,7 +16981,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "8943e15242dacc0c8b0e6d9d78298004f9d502ed5dcb33966b4493a991a54b4e",
+      "sha256": "767e747e5424267e8e7ede134159a1d29ec064ac7d208051604a53a1a743e560",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17669,7 +17669,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "552774ecdac548d54433c4fe36fae3675cb67f0b9a91fd392eafb390b2dad2d6",
+      "sha256": "96cbb5b8b9c749a2083ce47236488a922c2ed466ad217468c13fbf44972627fc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -18242,7 +18242,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 28889,
+      "line_count": 28918,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 333,
       "plan_unit_ids": [
@@ -18698,7 +18698,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "f320d01624653ffd9dff3aabf375e0dc492f531c76b84a4c1925b91490786828",
+      "sha256": "a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 329,
@@ -20054,7 +20054,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "c1f99a4f0621a9c484f30c7de45b21095732ffa87a5e1ac08b2253a6591ff893",
+      "sha256": "bf8ea64727dfd57bc966d62258ca654aeebb021635dcdeec2260b4c212f4cb5e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -20164,7 +20164,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7603,
+      "line_count": 7611,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -20319,7 +20319,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5",
+      "sha256": "f14b411d90a38f9cf14ee5f171356e770083f8b20d3e2beea31dd9618b8ed4e8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -20470,7 +20470,7 @@
         "widget_preview_leaks_or_multi_commit",
         "widget_system_drift"
       ],
-      "sha256": "97bab96419d57fc13243d842f82f6a34d755afec9d118ea4df5dbc6490218523",
+      "sha256": "2e73113ed0bce271e0505cfda885618fdf092d1ac5420689b9f171d02c036775",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -20992,7 +20992,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-31T20:40:33Z",
+  "generated_at_utc": "2026-10-31T21:08:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

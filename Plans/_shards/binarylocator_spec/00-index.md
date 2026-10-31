@@ -1,30 +1,30 @@
 # Shard Index: Plans/BinaryLocator_Spec.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-10-31T21:07:45Z
 
-Source SHA256: `68378275f233e682c37ebbeb405a91ea064046815bf2454781f7589caba3304b`
+Source SHA256: `3a2ef514e89e24a91cd69abecc37c3330fbd05d8e192138f8c23a4fd38ac095b`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `a612f952a72a25b2be3c132b08d9803ff6407074f06f5f9f2a26ce3ac3621c19`
-- [002 - Purpose](002-purpose.md) L7-L8 `1c893dc9dbc2faa76337ea074217267f30167cad702f11e4e423d2cfa5669798`
-- [003 - Non-goals](003-non-goals.md) L10-L20 `392246b6b2000edb68995228bbfcaf657c4b40c8bf375ce019f0e184b9f1ddab`
-- [004 - Canonical references and constraints (SSOT; DRY)](004-canonical-references-and-constraints-ssot-dry.md) L22-L63 `5bb8469da667b6ad99f8a8b79c467944fb7f73067422d846992321a3c975135b`
-- [005 - Terminology (index only)](005-terminology-index-only.md) L65-L70 `cdea825a2172241525f87ad6ab78e960d6fca7636d97030e4dac5954a5cb5e7f`
-- [006 - BinaryLocator boundary](006-binarylocator-boundary.md) L72-L110 `26757d5b944c0d3f8c0b53867dfa7c02fd577400f8b51e580ab731e1a878fd43`
-- [007 - Deterministic discovery algorithm](007-deterministic-discovery-algorithm.md) L112-L210 `8ed756dc34540517c063ce644195658c47e61af3a6f27aef7a635a5b65f1252f`
-- [008 - Deterministic discovery algorithm](008-deterministic-discovery-algorithm.md) L212-L237 `886931d30081ea4d5ccb75b92d6cf3fb8d3ff6aeea1a1e279d1be9fc1640ebaf`
-- [009 - Validation contract (commands, version parsing, permission checks)](009-validation-contract-commands-version-parsing-permission-checks.md) L239-L280 `b531ee2910455019232767ad2eb84304cf1bf349fd178767d929cd08bebeaa27`
-- [010 - Caching and invalidation](010-caching-and-invalidation.md) L282-L302 `ba04e2db2bb548c4931134844478c03654c6adbaee621ced38b6e324466b2138`
-- [011 - Error taxonomy (stable codes)](011-error-taxonomy-stable-codes.md) L304-L324 `9ce2570efb428eb73ca6c936529a63ead22f5d6101de9b91b6c7d2280a0e2b1d`
-- [012 - Acceptance criteria (testable)](012-acceptance-criteria-testable.md) L326-L359 `c2ebf52d74cd6c4fb143479d80f4630d9e6a9b08124fafbd669a8c17de06aebc`
-- [013 - References](013-references.md) L361-L373 `6a8a7f544a59b3571c920e30073fc4ebee13d06d67060ca72d9b332ce1aabc6f`
-- [014 - Owner / Consumer Map](014-owner-consumer-map.md) L375-L379 `eebdae8f73b9a903a614eea4649025d4e7047164841665778090fb8857f325ce`
-- [015 - PlanUnits](015-planunits.md) L381-L431 `15d67ff9247e9e106181c556a0e04f33711af26048ff60ec6aa22a5940046119`
-- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L433-L1706 `0710fed5a1d8e7807f0663868c5f6af82d8783f5beebb92ceb19b1dd7c9b29fd`
-- [017 - Migration Coverage](017-migration-coverage.md) L1708-L1723 `688e896e81b0cd202bd7346a33caafaa56c0d8f4f0cf391ab4a9c834d5c709df`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L1725-L1759 `a9b3928d62b33ec6ec000385ff29a4491f7ade2486fe141fba05250b43c40cf0`
-- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1761-L1833 `b2ebe56de178e6472aea760a5c0c51d3bba283de07702d87e93747e4447e7482`
-- [020 - Remaining Runtime Integration Addendum - Provider Installation Discovery (2026-08-13)](020-remaining-runtime-integration-addendum-provider-installation-dis.md) L1835-L1955 `733778e77c4ce99a30e1918f7622ea63a38cb1fcb4892d3c25546be3e10ba964`
+- [001 - Preamble](001-preamble.md) L1-L4 `ed5a51b9de9268ef0ac7b0ace4934606a4281a0e062d453a00348af21ee6c6b9`
+- [002 - Purpose](002-purpose.md) L7-L8 `0172320d4d105c4a8821587f1eae722285719d59e527dfbe9278ae7824d5a397`
+- [003 - Non-goals](003-non-goals.md) L10-L20 `1eebba8e152698ee3c6d28c4b105ed8c0ad58781c8b1415552d5276d6ac871f3`
+- [004 - Canonical references and constraints (SSOT; DRY)](004-canonical-references-and-constraints-ssot-dry.md) L22-L63 `01eb18f2e9d4b7e308bf7a7ba55e730059649e766705cc6fb248a9c8c54b17f6`
+- [005 - Terminology (index only)](005-terminology-index-only.md) L65-L70 `b36b5e7d13901885740c0e570756383c9f5fe7a1deff961af9c8b9604dd76127`
+- [006 - BinaryLocator boundary](006-binarylocator-boundary.md) L72-L110 `95ecdd4883bc1eec48dea823b058464f0d1f51413640c6a9f93127fdbed6b92a`
+- [007 - Deterministic discovery algorithm](007-deterministic-discovery-algorithm.md) L112-L210 `65a3d83a8973b3f5b5a8c8920f58308b43bb5654781c87fc4430aeac84b7ab59`
+- [008 - Deterministic discovery algorithm](008-deterministic-discovery-algorithm.md) L212-L237 `49d2b9985b96ba6df7a4246376379796650d35c4ec8c982f1883ef154ec9516a`
+- [009 - Validation contract (commands, version parsing, permission checks)](009-validation-contract-commands-version-parsing-permission-checks.md) L239-L280 `1ec76783047e47b8ab669c4cae7279d45e6eaa02c3a93aeb8b3b75891cc89af2`
+- [010 - Caching and invalidation](010-caching-and-invalidation.md) L282-L302 `6fad7b3faf47cc7198b1d304e2b5a2a9c0e8d24d7f6824e0649c72464873523a`
+- [011 - Error taxonomy (stable codes)](011-error-taxonomy-stable-codes.md) L304-L324 `b77cd2f0fea988777c73a5e44bc2cceb4cc3e25d996a03d5e8e1238fe0d5f316`
+- [012 - Acceptance criteria (testable)](012-acceptance-criteria-testable.md) L326-L359 `53bc6c6c376d7d23f0e25e549118fbc3ae669ced7c2e582ed623c9c1f984da11`
+- [013 - References](013-references.md) L361-L373 `10c3d77298f5650f4ec11ead2f4b211c22b7b02e96dbeb822c94274b45d787de`
+- [014 - Owner / Consumer Map](014-owner-consumer-map.md) L375-L379 `99424b5a9c82c1c9f3b3207f9a0725770e98b7da16b022b82407ffbdc4ba2e23`
+- [015 - PlanUnits](015-planunits.md) L381-L431 `cd6c153e8345c2afab97d81baf1dbf415a1a4ff25d8bdf6704f5b7c435488fd7`
+- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L433-L1706 `92c2cfd933cc3a09ea1500783c41760f76423d9f6f974054cefdecf658899c6f`
+- [017 - Migration Coverage](017-migration-coverage.md) L1708-L1723 `a8371e05b86df6fe2a82f383120e7417e02891b778feeb6636971f386e7a931f`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L1725-L1759 `04728b4cac9e1499887f53760617d6cfb2f6656661182bcd17ac8742569838c8`
+- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1761-L1833 `d3e07c4eb3f48a8a62bba29877852b7b8ce79f665737db745dda3a9cd5f87432`
+- [020 - Remaining Runtime Integration Addendum - Provider Installation Discovery (2026-08-13)](020-remaining-runtime-integration-addendum-provider-installation-dis.md) L1835-L1955 `406fc26d6e8371530e7c4c4bc174948f0479ab01d5a7503bf90063c4a2ce78a4`

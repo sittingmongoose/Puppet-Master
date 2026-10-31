@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5620-L27219
 
-Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
+Source SHA256: `7063e509f535815d7a472e54919a81508e7ec47a94e8176cfba39c05854e734f`
 
 ---
 
@@ -7489,7 +7489,7 @@ canonical_text: >-
   tail and never replays events. Rows render from display headers, and a full body loads only when its section is
   expanded or scrolled to. Older 50-item pages load as the person scrolls toward the top, and a `Load 50 older`
   row stays at the top of the stream as the fallback; load-older paging is mandatory (ACD-242, F3-667). The
-  first-page budgets (150 ms p95 warm, 500 ms cold, at most 2 MiB read) are SP-338's gate.
+  first-page budgets (150 ms p95, warm or cold, at most 2 MiB read) are SP-338's gate.
 gui_related: true
 gui_classification_reason: This unit defines visible message stream, activity card, and scrolling behavior.
 split_recommended: true
@@ -13932,7 +13932,7 @@ canonical_text: >-
   by SP-338's per-thread render-page store (sealed 50-item pages of at most 256 KiB plus a hot
   tail), not by a message-count cap. Opening a thread never replays events, the list holds only
   the pages loaded, and load-older paging is mandatory (ACD-242, F3-667); the first page must
-  arrive within 150 ms p95 warm and 500 ms cold.
+  arrive within 150 ms at p95, warm or cold.
   Amended 2026-10-31 (DL-270): this replaces the former mitigation, a soft cap such as
   5000 messages per thread that would archive oldest messages to disk behind a
   Load earlier messages button; no such cap and no separate disk archive exist.

@@ -1871,8 +1871,8 @@ canonical_text: >-
   `widget_presets:v1` and shown in Start from on every dashboard of every project. Amended 2026-10-31 (DL-270):
   `widget_presets:v1` and the per-board widget-layout envelope are redb families under SP-340, each with a declared
   maximum value of 16 KiB, a typed or MessagePack encoding (SP-339) and a disk budget. Each preset is its own value,
-  not one record holding every preset; a save whose name (80 characters) and layouts do not fit the cap is refused
-  with a reason. A preset holds its id, its name,
+  not one record holding every preset; a preset larger than the cap is stored by payload reference or split, not refused
+  (SP-340, SP-337), and the 80-character name limit still applies. A preset holds its id, its name,
   when it was saved, the board it was saved from, the layout of the widgets shown at each board class (S, M, L and XL,
   WS-017), each widget's size preset and each widget's configuration; it never holds the board's view. A name is
   trimmed, with runs of white space made one, at most 80 characters; the save offers the dashboard's name made

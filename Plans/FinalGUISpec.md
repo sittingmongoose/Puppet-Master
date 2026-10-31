@@ -2866,7 +2866,7 @@ Message stream requirements:
 - stable message identity so streaming updates mutate existing rows rather than replacing the full list
 - inline `activity-card` rendering for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts; compact activity cards show 5 lines, expanded cards show 15 lines, and expanded log/detail views cap at 50 lines before routing to the owning surface
 - sticky unread marker, `New messages below`, and a `jump-to-latest` badge when the user is scrolled away from the bottom; `/auto-follow` state controls whether streaming output follows the latest row
-- Amended 2026-10-31 (DL-270): opening a thread reads `thread_head`, the hot tail and the newest 50-item page from the derived render-page store and never replays events (SP-338). Load-older paging is mandatory (ACD-242, F3-667): scrolling near the top loads the next older page by itself, and a `Load 50 older` row stays at the top of the list as the fallback. Rows render from display headers, and a full body loads only when expanded or scrolled to. The first page meets SP-338's gate: 150 ms p95 warm, 500 ms cold, at most 2 MiB read. Stream-surface page limits elsewhere in this document defer to this bullet for chat.
+- Amended 2026-10-31 (DL-270): opening a thread reads `thread_head`, the hot tail and the newest 50-item page from the derived render-page store and never replays events (SP-338). Load-older paging is mandatory (ACD-242, F3-667): scrolling near the top loads the next older page by itself, and a `Load 50 older` row stays at the top of the list as the fallback. Rows render from display headers, and a full body loads only when expanded or scrolled to. The first page meets SP-338's gate: 150 ms p95, warm or cold, at most 2 MiB read. Stream-surface page limits elsewhere in this document defer to this bullet for chat.
 
 #### 7.16.2 Composer, commands, and plan mode affordances
 
@@ -4249,7 +4249,7 @@ cargo check
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
 | **invoke_from_event_loop saturation** | High | High-frequency terminal output (1000+ lines/sec) can saturate the event loop if treated as line-widget churn. Mitigation: keep PTY/buffer ingestion and diff computation off the UI thread; push bounded paint/projection deltas to the GUI with a 33ms (30fps) throttle timer. Do not model the live terminal core as raw lines pushed into `VecModel` per frame. |
-| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation (amended 2026-10-31, DL-270): no soft cap and no separate disk archive. Chat opens from the derived render-page store (`thread_head`, hot tail, sealed 50-item pages of at most 256 KiB), the list holds only the loaded pages, and older pages load through the mandatory load-older paging (SP-338, ACD-242, F3-667). CI gates a 100k-event thread's first page at 150 ms p95 warm and 500 ms cold. This replaces the former soft cap (e.g., 5000 messages per thread). |
+| **Chat message memory bounds** | Medium | No cap on messages per thread could cause memory issues with very long sessions. Mitigation (amended 2026-10-31, DL-270): no soft cap and no separate disk archive. Chat opens from the derived render-page store (`thread_head`, hot tail, sealed 50-item pages of at most 256 KiB), the list holds only the loaded pages, and older pages load through the mandatory load-older paging (SP-338, ACD-242, F3-667). CI gates a 100k-event thread's first page at 150 ms at p95, warm or cold. This replaces the former soft cap (e.g., 5000 messages per thread). |
 | **Theme global property update batching** | Low | Switching 20+ theme properties could cause intermediate re-renders. Mitigation: Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback. |
 | **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |
 | **Floating window data sync race conditions** | High | Multiple windows reading/writing the same VecModel can race. Mitigation: All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place. |
@@ -13098,7 +13098,7 @@ canonical_text: >-
   tail and never replays events. Rows render from display headers, and a full body loads only when its section is
   expanded or scrolled to. Older 50-item pages load as the person scrolls toward the top, and a `Load 50 older`
   row stays at the top of the stream as the fallback; load-older paging is mandatory (ACD-242, F3-667). The
-  first-page budgets (150 ms p95 warm, 500 ms cold, at most 2 MiB read) are SP-338's gate.
+  first-page budgets (150 ms p95, warm or cold, at most 2 MiB read) are SP-338's gate.
 gui_related: true
 gui_classification_reason: This unit defines visible message stream, activity card, and scrolling behavior.
 split_recommended: true
@@ -19541,7 +19541,7 @@ canonical_text: >-
   by SP-338's per-thread render-page store (sealed 50-item pages of at most 256 KiB plus a hot
   tail), not by a message-count cap. Opening a thread never replays events, the list holds only
   the pages loaded, and load-older paging is mandatory (ACD-242, F3-667); the first page must
-  arrive within 150 ms p95 warm and 500 ms cold.
+  arrive within 150 ms at p95, warm or cold.
   Amended 2026-10-31 (DL-270): this replaces the former mitigation, a soft cap such as
   5000 messages per thread that would archive oldest messages to disk behind a
   Load earlier messages button; no such cap and no separate disk archive exist.
@@ -49446,11 +49446,10 @@ canonical_text: >-
   The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL
   mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>`
   (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant,
-  window, command family, event or schema. It is reached only from a labelled expert control: a Ledger row
-  (section 7.10), a row of the log and audit inspector (F3-148), the storage page that
-  `cmd.settings.open_storage_retention` opens (F3-457), a Runtime Artifacts Raw view (RAP-044), the Context
-  Detail Pane's Raw view (ACD-092), `Show raw data` on a record (F3-617), and a FileSafe or Permissions audit
-  row. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
+  window, command family, event or schema. It is reached only from a labelled expert control on the storage page that
+  `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires
+  `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add
+  an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
   owner's words, its time and place in the record order, and its decoded fields under the owner's typed field
   names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a
   bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows
@@ -49530,13 +49529,14 @@ canonical_text: >-
   `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the
   thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and
   its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or
-  Context link that lies in a page not yet loaded loads the pages between the newest loaded page and the target
-  through the same paging, then lands on it (F3-103); it never replays events. When an older page cannot be read,
+  Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and
+  loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in
+  between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read,
   the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding
   or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's
   canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide.
   This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread
-  the first page is shown within 150 ms p95 warm and 500 ms p95 cold, reading at most 2 MiB.
+  the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB.
 gui_related: true
 gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
 split_recommended: false
@@ -49546,7 +49546,7 @@ acceptance_criteria:
   - "Opening a thread paints the newest page and hot tail from display headers and replays no event."
   - "Scrolling near the top loads the next older page by itself; a Load 50 older row sits above the oldest loaded item until the first item is loaded, is keyboard reachable and is screen-reader named with its count."
   - "Both the scroll and the row fetch through `cmd.chat.load_older`, and loading a page leaves the reading position unchanged."
-  - "A jump to an unloaded message, search hit or anchor pages it in and lands on it with no event replay."
+  - "A jump to an unloaded message, search hit or anchor loads only a bounded window around its page, resolved from thread_head, and lands on it with no event replay."
   - "A page that is rebuilding, stale or unreadable shows its state and reason; history is not reported lost."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"

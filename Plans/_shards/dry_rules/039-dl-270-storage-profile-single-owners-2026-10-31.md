@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L4279-L4426
+Source lines: L4279-L4427
 
-Source SHA256: `e4584075a30666f2f4e102afd1e3ed62225b2eacc8c370219c24f4e63efe43f4`
+Source SHA256: `13eb088972f4e7dc5fabd6d210bf6991d8b4d32432ae5410d1533f4a726503fa`
 
 ---
 
@@ -17,7 +17,7 @@ DL-270 gives each storage rule one owning unit, and a few numbers appear in more
 | Sealed-segment compression | `Plans/storage-plan.md` SP-335 | zstd level 3 in about 256 KiB blocks, level 9 in 1 MiB frames, the ceiling of level 9, the active segment's `flags=0`, the SeglogFrameV2 compression flag, codec id and dictionary id | `Plans/Contracts_V0.md` (frame wire form), RAS-016 (cites the ceiling), SP-337 (cites the level for text payloads) |
 | Durability | SP-336 | one data sync per ordinary group, the barrier-class events, the three full-flush calls and F_BARRIERFSYNC, batching of streamed output, atomic store creation, redb quick repair | `Plans/Executor_Protocol.md` final flush, SP-236, SP-286 |
 | Payloads | SP-337 | the 16 KiB inline cap, the BLAKE3 id, pack files, the base64 admission error, reference counts, garbage collection holds | `Plans/Tools.md` (T-168), `Plans/Contracts_V0.md` web payloads, `Plans/Prompt_Pipeline.md` (PP-070), `Plans/Project_Output_Artifacts.md`, SP-331 background images, SP-343 media |
-| Chat pages | SP-338 (store, page limits, open-path gate numbers) and `Plans/assistant-chat-design.md` ACD-242 (load-older paging in the chat) | 50-item pages of at most 256 KiB, thread_head, hot tail, first page 150 ms p95 warm and 500 ms cold, at most 2 MiB read | `Plans/FinalGUISpec.md` F3-416, DR-052, SP-344 |
+| Chat pages | SP-338 (store, page limits, open-path gate numbers) and `Plans/assistant-chat-design.md` ACD-242 (load-older paging in the chat) | 50-item pages of at most 256 KiB, thread_head, hot tail, first page 150 ms at p95, warm or cold, at most 2 MiB read | `Plans/FinalGUISpec.md` F3-416, DR-052, SP-344 |
 | JSON copies and read paths | SP-339 (what is retired, what stays a file) and DR-083 (the one read path) | the retired files, the kept files, the four read commands | `Plans/usage-feature.md`, FileSafe, Scout, Backup |
 | redb families | SP-340 and `Plans/storage_value_registry.json` (each family row) | the 16 KiB value maximum, canonical or derived file, disk budget, compaction trigger | Back_Seat_Driver, LSPSupport, Permissions_System, Working_Notebook, Tools rollups, FileManager glossary |
 | Analytics archive | SP-341 | Parquet by family and month at seal, DuckDB embedded, on demand, read-only, the Scout split | `Plans/usage-feature.md`, Scout |
@@ -43,8 +43,9 @@ canonical_text: >-
   owns the routing and never the values. A number, level, cap, window or budget is stated by its owner. Where a
   gate or a sentence needs the number to be read alone, the copy equals the owner's, and when the two differ the
   owner wins and the copy is corrected in the same change. Retention windows and per-family limits are machine
-  values in Plans/storage_value_registry.json (its retention_policies catalog and its family rows), which UF-108
-  and SP-340 cite; no consumer carries its own copy. A plan that persists state says which of seglog events, redb
+  values to be held in Plans/storage_value_registry.json (its retention_policies catalog and its family rows), a
+  registry companion DL-270 lists as pending; until it lands, UF-108 and SP-340 are the owners, and no consumer
+  carries its own copy. A plan that persists state says which of seglog events, redb
   families, payload-store references, render-page store pages, Parquet archive files or Tantivy indexes it uses and
   cites the owning unit. A store, cache, blob directory, mirror file or compression setting that duplicates one of
   these owners is a DRY failure, not a peer option: large and identical bodies are kept only in the payload store

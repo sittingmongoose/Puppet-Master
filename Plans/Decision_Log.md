@@ -17263,9 +17263,11 @@ canonical_text: >-
   by a reading wave, with verification, brought the other owners into line in the same landing, including the
   commands, settings, GUI, wiring and DRY companions. DL-270 adds no settings row: budgets, thresholds and cache
   sizes are fixed owner values, while Jared reconsiders how settings are scoped. Still pending: SeglogFrameV2's
-  exact codec and dictionary byte fields, the data-root paths, and the registry, schema and fixture companions.
-  Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four requirements,
-  thresholds and mechanics are the review's reading, not Jared's words.
+  exact codec and dictionary byte fields and the receipt fields its commit frame carries, with the Case L proof
+  update for SP-336; the data-root paths (SP-015); and the registry, schema and fixture companions, including the
+  budget values. Card 4's 150 ms applies to warm and cold opens alike. Spec_Lock's forbid_sqlite is unchanged. The
+  option labels are the cards' words; the four requirements, thresholds and mechanics are the review's reading,
+  not Jared's words.
 gui_related: false
 gui_classification_reason: "Records owner decisions on storage, compression and durability."
 split_recommended: false
@@ -17295,6 +17297,7 @@ source_lineage:
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-followup-2026-10-31.md, SHA-256 003852e3672c98db0f5daef0876829cebb44985779579ce0a889800442f73cae (Jared's follow-up answer on the usage setting)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/jared-statements-2026-10-30.md (Jared's 2026-10-30 SQLite and JSON-file statements, verbatim)"
 preserved_exact_tokens:
   - "Do we need to tie the usage data to this?  In my work on AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make sure that is accounted for."
   - "I banned sqlite because it is slow, has serious contention and lock issues, and I have seen them corrupt frequently. I have used so many programs that have been completely ruined because they use sqlite. For example, plex is very very held back by its DB."

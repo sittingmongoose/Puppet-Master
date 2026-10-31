@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L5459-L5519
 
-Source SHA256: `7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f`
+Source SHA256: `2c7716a04afa1efef9387ef59e967b0189f751406e8b06794dfa57eaf72c2cd7`
 
 ---
 
@@ -31,7 +31,7 @@ canonical_text: >-
   across kits, at most one cue per 120ms, step ticks at most one per 250ms, and nothing before a
   user gesture. Amended 2026-10-31 (DL-270, SP-338, ACD-242): the suite also covers paging. Opening a chat
   loads its first page from the render-page store with no event replay; load-older paging works and
-  cannot be hidden; a 100k-event thread's first page is p95 150 ms warm and 500 ms cold, reading at most
+  cannot be hidden; a 100k-event thread's first page is p95 150 ms, warm or cold, reading at most
   2 MiB; and after a restart the chat reopens the same way.
 gui_related: true
 gui_classification_reason: "Defines the tests that gate the chat presentation."

@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L35-L93
 
-Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
+Source SHA256: `f14b411d90a38f9cf14ee5f171356e770083f8b20d3e2beea31dd9618b8ed4e8`
 
 ---
 
@@ -15,7 +15,7 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
 | Dependency | Purpose for Usage |
 |------------|-------------------|
 | **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |
-| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. |
+| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. Daily usage totals are the exception: they are canonical records in the canonical file, backed up and kept whatever `ai.usage.usage-retention` says, and rebuilt rollups take older days from them (UF-108). |
 | **Projector pipeline** | seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), a Parquet archive at segment seal (SP-341), projector checkpoints in redb. No always-on JSONL mirror is emitted (SP-339); JSONL is produced only by `pm export` on request. |
 | **Analytics scan jobs** | Scan seglog or the sealed Parquet archive (SP-341) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in the derived redb file for fast dashboard/Usage queries. |
 

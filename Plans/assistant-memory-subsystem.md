@@ -404,7 +404,7 @@ Required operations:
 4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
 6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
-7. Store compaction (amended 2026-10-31, DL-270): run redb `compact()` on `assistant_memory.redb` and the derived memory redb file under the maintenance lease, when PM is idle or fragmentation passes the SP-340 threshold, then verify the reclaimed bytes. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
+7. Store compaction (amended 2026-10-31, DL-270): follow SP-340's store compaction under the maintenance lease, only while PM is idle and fragmentation passes its threshold: the derived memory redb file is rebuilt, and `assistant_memory.redb` is compacted by copying its live records into a new file swapped in during a brief pause, then the reclaimed bytes are verified. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
 
 Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-in-memo.md
@@ -2394,7 +2394,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms p95 warm and 500 ms cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.
@@ -2402,7 +2402,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms p95 warm and 500 ms cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.

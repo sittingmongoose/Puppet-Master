@@ -4,7 +4,7 @@ Source: `Plans/Architecture_Invariants.md`
 
 Source lines: L190-L201
 
-Source SHA256: `822393a6f0344b214af8956dad4c888e8996f4676b530cdab4e83b2fdb16dada`
+Source SHA256: `aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e`
 
 ---
 
@@ -13,7 +13,7 @@ Source SHA256: `822393a6f0344b214af8956dad4c888e8996f4676b530cdab4e83b2fdb16dada
 
 ### Rule
 
-The UF-085 canonical token buckets (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`) MUST be stored or explicitly represented as unknown/not_exposed in every usage record, with `total_tokens` derived without losing bucket detail or double-counting provider-inclusive cache/reasoning fields. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` are compatibility import/export aliases only. Pre-aggregation or collapsing at the storage or event layer is prohibited: provider records that aggregate into fewer persisted DB fields are non-canonical. Amended 2026-10-31 (DL-270, SP-341, UF-108): the ban covers bucket fields inside usage.event records. Daily usage totals per account, provider and model kept in redb rollups are derived views, rebuildable from the usage.event records; they never replace bucket-level records, and detailed records follow the `ai.usage.usage-retention` setting (UF-108). `token-bucket` persistence is part of the same usage/BILL invariant family.
+The UF-085 canonical token buckets (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`) MUST be stored or explicitly represented as unknown/not_exposed in every usage record, with `total_tokens` derived without losing bucket detail or double-counting provider-inclusive cache/reasoning fields. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` are compatibility import/export aliases only. Pre-aggregation or collapsing at the storage or event layer is prohibited: provider records that aggregate into fewer persisted DB fields are non-canonical. Amended 2026-10-31 (DL-270, SP-341, UF-108): the ban covers bucket fields inside usage.event records. Daily usage totals per account, provider and model are canonical redb records, backed up and kept whatever the setting says, never rebuilt from expired usage.event records; they never replace bucket-level records, and detailed records follow the `ai.usage.usage-retention` setting (UF-108). `token-bucket` persistence is part of the same usage/BILL invariant family.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
 

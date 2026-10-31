@@ -4,7 +4,7 @@ Source: `Plans/assistant-memory-subsystem.md`
 
 Source lines: L2377-L2538
 
-Source SHA256: `82b59412ec9e8ecd1934acb268a5e5c099f470a42c0622e7e1dc96e40bd43ade`
+Source SHA256: `78941a4c2a875f0ff368c0226ff8ad1c407a65f0c9ae884a9e62db04ea3f3bb2`
 
 ---
 
@@ -28,7 +28,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms p95 warm and 500 ms cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.
@@ -36,7 +36,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms p95 warm and 500 ms cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.

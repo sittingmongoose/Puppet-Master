@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L8001-L8222
 
-Source SHA256: `3e0e4494a8c7b306f843b8d32ceb1cc5bc2ab442b5a6a495669be42b65fa2c58`
+Source SHA256: `bf5aacea10efea280f2920c2b492f0297a15cf3f8d671787a407a41c7ec2822e`
 
 ---
 
@@ -169,7 +169,7 @@ DL-270 (Plans/Decision_Log.md#DL-270, 2026-10-31) adds one User Command, `cmd.ch
 
 **Load older.** `cmd.chat.load_older` is registered in Plans/UI_Command_Catalog.md#UCC-212 as a `shell_view` command with the sole handler `handlers::chat::load_older`, arguments `thread_id` and `before_page_ref`, and the disabled reasons `stale_projection` and `degraded`. One request reads the next older sealed 50-item page of one thread from the render-page store (Plans/assistant-chat-design.md#ACD-242, Plans/storage-plan.md#SP-338). It writes nothing and records a no-persist command receipt. Scrolling near the top dispatches it by itself, and a "Load 50 older" row stays as the fallback. Opening a thread never replays its events and is not this command. There is no `ui.chat_thread.*` prefix.
 
-**Usage detail retention.** No retention window and no `cmd.storage.compaction.request` removes `usage.event` records beyond the Keep usage history for setting (`ai.usage.usage-retention`); daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age.
+**Usage detail retention.** Nothing other than the Keep usage history for setting (`ai.usage.usage-retention`) prunes `usage.event` records, and no command, `cmd.storage.compaction.request` included, prunes them; daily usage totals are kept whatever it says (Plans/usage-feature.md#UF-108, Plans/storage-plan.md#SP-341). Commands infer no expiry for them from prefix, key, path or age.
 
 ```yaml
 plan_unit_id: CS-107

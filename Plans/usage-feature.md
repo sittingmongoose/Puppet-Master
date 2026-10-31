@@ -39,7 +39,7 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
 | Dependency | Purpose for Usage |
 |------------|-------------------|
 | **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |
-| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. |
+| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. Amended 2026-10-31 (DL-270): the analytics rollups are derived data and live in the derived redb file, separate from the canonical file that holds settings, sessions and runs (SP-340); deleting the derived file rebuilds the rollups from seglog. Daily usage totals are the exception: they are canonical records in the canonical file, backed up and kept whatever `ai.usage.usage-retention` says, and rebuilt rollups take older days from them (UF-108). |
 | **Projector pipeline** | seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), a Parquet archive at segment seal (SP-341), projector checkpoints in redb. No always-on JSONL mirror is emitted (SP-339); JSONL is produced only by `pm export` on request. |
 | **Analytics scan jobs** | Scan seglog or the sealed Parquet archive (SP-341) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in the derived redb file for fast dashboard/Usage queries. |
 
@@ -3133,7 +3133,12 @@ plan_unit_id: UF-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage event storage uses retention, optional export-first archival/compaction, daily summary records, incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and MUST NOT serve aggregation or 5h/7d windows.
+canonical_text: >-
+  Usage event storage uses retention, optional export-first archival/compaction, daily summary records,
+  incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and
+  MUST NOT serve aggregation or 5h/7d windows. Amended 2026-10-31 (DL-270): usage.jsonl is retired as a live file
+  and pm export writes it on request (SP-339); detailed usage records follow ai.usage.usage-retention and daily
+  summary records are canonical and kept (UF-108).
 gui_related: true
 gui_classification_reason: The unit defines visible rollup freshness and backend retention behavior.
 split_recommended: false
@@ -7555,11 +7560,13 @@ canonical_text: >-
   pages through usage records by index. Detailed usage records follow the existing Keep usage history for setting,
   ai.usage.usage-retention (30 days, 90 days by default, 180 days, 1 year or unlimited), in the event log and in
   SP-341's Parquet archive alike, where SQL can query them. Daily usage totals per account, provider and model,
-  plus any further keys the usage owner rolls up such as purpose, are kept whatever the setting says. Problem 5's
-  raw-event window is that setting for usage.event. usage.jsonl is retired as a live file (SP-339). Jared,
-  2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on AAC, the usage data
-  takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make
-  sure that is accounted for."
+  plus any further keys the usage owner rolls up such as purpose, are canonical records in the canonical redb
+  file: they are written before the detailed records they summarize expire, are backed up, are never rebuilt from
+  events, and are kept whatever the setting says. The derived rollups cover the retention window and take older
+  days from them. Problem 5's raw-event window is that setting for usage.event. usage.jsonl is retired as a live
+  file (SP-339). Jared, 2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on
+  AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so
+  just want to make sure that is accounted for."
 gui_related: true
 gui_classification_reason: "Usage loads from rollups and keeps its full history."
 split_recommended: false
@@ -7569,6 +7576,7 @@ acceptance_criteria:
   - "No usage total, window or chart scans raw usage events; the Ledger pages through records by index."
   - "Detailed usage records older than the selected ai.usage.usage-retention are pruned from the event log and the archive."
   - "Daily usage totals per account, provider and model are never pruned."
+  - "Deleting the derived file, or restoring from backup, after detailed records expire keeps every daily total."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

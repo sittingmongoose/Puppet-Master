@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L46985-L49582
 
-Source SHA256: `368591466b9117a59341c7763b4ec54a164c8adaeaaaa4740e48ff3c59a7a3ac`
+Source SHA256: `7063e509f535815d7a472e54919a81508e7ec47a94e8176cfba39c05854e734f`
 
 ---
 
@@ -2472,11 +2472,10 @@ canonical_text: >-
   The record inspector is the in-app way to read one stored record, in place of any always-on JSON or JSONL
   mirror file (SP-339, DL-270). It is read-only. It opens as a `record` tab with the id `inspect:<record_ref>`
   (F3-635), placed by F3-634, through the existing `cmd.storage.open_value`; it adds no Activity Bar occupant,
-  window, command family, event or schema. It is reached only from a labelled expert control: a Ledger row
-  (section 7.10), a row of the log and audit inspector (F3-148), the storage page that
-  `cmd.settings.open_storage_retention` opens (F3-457), a Runtime Artifacts Raw view (RAP-044), the Context
-  Detail Pane's Raw view (ACD-092), `Show raw data` on a record (F3-617), and a FileSafe or Permissions audit
-  row. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
+  window, command family, event or schema. It is reached only from a labelled expert control on the storage page that
+  `cmd.settings.open_storage_retention` opens (F3-457), whose `storage.value.open` production row already wires
+  `cmd.storage.open_value`. Another surface, such as a Ledger row, an audit inspector row or a Raw view, may add
+  an entry only together with its own production wiring row; until then it offers none. No sentence of chat, onboarding or Doctor text links to it. It shows the record's family and kind in the
   owner's words, its time and place in the record order, and its decoded fields under the owner's typed field
   names; it never shows encoded bytes as text. A payload reference (SP-337) shows its size and kind and a
   bounded preview, and the whole body loads only when the person asks; an image or other binary payload shows
@@ -2556,13 +2555,14 @@ canonical_text: >-
   `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the
   thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and
   its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or
-  Context link that lies in a page not yet loaded loads the pages between the newest loaded page and the target
-  through the same paging, then lands on it (F3-103); it never replays events. When an older page cannot be read,
+  Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and
+  loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in
+  between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read,
   the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding
   or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's
   canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide.
   This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread
-  the first page is shown within 150 ms p95 warm and 500 ms p95 cold, reading at most 2 MiB.
+  the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB.
 gui_related: true
 gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
 split_recommended: false
@@ -2572,7 +2572,7 @@ acceptance_criteria:
   - "Opening a thread paints the newest page and hot tail from display headers and replays no event."
   - "Scrolling near the top loads the next older page by itself; a Load 50 older row sits above the oldest loaded item until the first item is loaded, is keyboard reachable and is screen-reader named with its count."
   - "Both the scroll and the row fetch through `cmd.chat.load_older`, and loading a page leaves the reading position unchanged."
-  - "A jump to an unloaded message, search hit or anchor pages it in and lands on it with no event replay."
+  - "A jump to an unloaded message, search hit or anchor loads only a bounded window around its page, resolved from thread_head, and lands on it with no event replay."
   - "A page that is rebuilding, stale or unreadable shows its state and reason; history is not reported lost."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"

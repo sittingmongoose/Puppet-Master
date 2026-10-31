@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5023
+Source lines: L927-L5028
 
-Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
+Source SHA256: `f14b411d90a38f9cf14ee5f171356e770083f8b20d3e2beea31dd9618b8ed4e8`
 
 ---
 
@@ -2217,7 +2217,12 @@ plan_unit_id: UF-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage event storage uses retention, optional export-first archival/compaction, daily summary records, incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and MUST NOT serve aggregation or 5h/7d windows.
+canonical_text: >-
+  Usage event storage uses retention, optional export-first archival/compaction, daily summary records,
+  incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and
+  MUST NOT serve aggregation or 5h/7d windows. Amended 2026-10-31 (DL-270): usage.jsonl is retired as a live file
+  and pm export writes it on request (SP-339); detailed usage records follow ai.usage.usage-retention and daily
+  summary records are canonical and kept (UF-108).
 gui_related: true
 gui_classification_reason: The unit defines visible rollup freshness and backend retention behavior.
 split_recommended: false

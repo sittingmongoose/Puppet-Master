@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-31T20:35:29Z",
+  "generated_at_utc": "2026-10-31T21:07:45Z",
   "index_path": "Plans/_shards/architecture_invariants/00-index.md",
-  "index_sha256": "cddedf4e021df540bbeca82241a335afa602e493811084ac463a9be6156967b0",
+  "index_sha256": "a9f7d182fa06d16bc5bca23a9e8d0365d65674a34a182de31ce39009a91a3c90",
   "manifest_path": "Plans/_shards/architecture_invariants/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/architecture_invariants/001-preamble.md",
-      "sha256": "10cbdf2e3861942c0dbce287921dd63b749515172cd7ff387c377e3b9edf8fa1",
+      "sha256": "e927e94eb5ff332f4e24336844e2c721362e6c3e953fac3115101073194dd6c0",
       "shard_id": "001",
       "source_line_end": 13,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/architecture_invariants/002-0.-scope.md",
-      "sha256": "02a5d83ef4762547329fe518c4eee40b2f8a0735e11145483f740d97e905326e",
+      "sha256": "c8b7cf8951a1b8126833e38db868f806057fa76d722371f1a2ae2bada980666d",
       "shard_id": "002",
       "source_line_end": 24,
       "source_line_start": 15,
@@ -26,7 +26,7 @@
     {
       "heading": "INV-001 -- Tool correlation integrity (normalized streams + persisted events)",
       "path": "Plans/_shards/architecture_invariants/003-inv-001-tool-correlation-integrity-normalized-streams-persisted-.md",
-      "sha256": "f7b35242471071609c686e0560c6bf08d05e7c7d7bbbae28e3f1806bab4c4a84",
+      "sha256": "8aebb18a94c5d1556f243892b1bde1c3ab2462b8bb2ea633af1dab28e1e8d247",
       "shard_id": "003",
       "source_line_end": 44,
       "source_line_start": 25,
@@ -35,7 +35,7 @@
     {
       "heading": "INV-002 -- No secrets in persistent storage",
       "path": "Plans/_shards/architecture_invariants/004-inv-002-no-secrets-in-persistent-storage.md",
-      "sha256": "d223ee8a0d19a6438484fbb64fb63cac4039a3514ac90dfd37d7074b5118d1db",
+      "sha256": "91a1c60261cbf75ba347459e8ea5c9af5819b0f2066e3fb7801e8498a3ff06a0",
       "shard_id": "004",
       "source_line_end": 56,
       "source_line_start": 45,
@@ -44,7 +44,7 @@
     {
       "heading": "INV-003 -- UI SSOT (no bespoke UI behavior)",
       "path": "Plans/_shards/architecture_invariants/005-inv-003-ui-ssot-no-bespoke-ui-behavior.md",
-      "sha256": "e414834b928d2102bda4d7e504d7741457b8fb29543986c4e6a0a2a377cff98f",
+      "sha256": "12a242909b73e74db0dab420c9649682168a27fd496d550bcdc06ad9d4597a15",
       "shard_id": "005",
       "source_line_end": 67,
       "source_line_start": 58,
@@ -53,7 +53,7 @@
     {
       "heading": "INV-004 -- UI command boundary (no business logic in UI)",
       "path": "Plans/_shards/architecture_invariants/006-inv-004-ui-command-boundary-no-business-logic-in-ui.md",
-      "sha256": "aecbeb3a0f0091b2cc12fb3ebfb68a85a7d6b04ceee24270e9154634f324d507",
+      "sha256": "43be57dd369fe8387e4bff8a46e243196d653398002fd80c8072361998b0d647",
       "shard_id": "006",
       "source_line_end": 77,
       "source_line_start": 68,
@@ -62,7 +62,7 @@
     {
       "heading": "INV-005 -- Deterministic ordering from SSOT lists",
       "path": "Plans/_shards/architecture_invariants/007-inv-005-deterministic-ordering-from-ssot-lists.md",
-      "sha256": "626ccd1449a6f061803712d988daf042374e11d2fad3ccf70c215e3863878e61",
+      "sha256": "d2cc6931dae32e25004673c8d91af4333e529548c77ed961d701bdf4130c75c2",
       "shard_id": "007",
       "source_line_end": 87,
       "source_line_start": 78,
@@ -71,7 +71,7 @@
     {
       "heading": "INV-006 -- Providers are storage-isolated",
       "path": "Plans/_shards/architecture_invariants/008-inv-006-providers-are-storage-isolated.md",
-      "sha256": "10cc551038f1ca19d304f39dfd75d510a5dbf3c4b05e62f37b020f3cd794d1c2",
+      "sha256": "08b92f73276cdb9845cbeb284830da744ee3e455d173b42735d32355a7728166",
       "shard_id": "008",
       "source_line_end": 92,
       "source_line_start": 88,
@@ -80,7 +80,7 @@
     {
       "heading": "INV-007 -- No stringly-typed IDs outside SSOT",
       "path": "Plans/_shards/architecture_invariants/009-inv-007-no-stringly-typed-ids-outside-ssot.md",
-      "sha256": "aacab74d2958cd1190b9909b8a0e46ebd4b4ec3d312f4953637e694795f72a25",
+      "sha256": "6d96fd76b1947e0f09f5276464f6aac7ea0b61321910a61e881826802fc7d60a",
       "shard_id": "009",
       "source_line_end": 103,
       "source_line_start": 94,
@@ -89,7 +89,7 @@
     {
       "heading": "INV-008 -- GitHub operations are API-only",
       "path": "Plans/_shards/architecture_invariants/010-inv-008-github-operations-are-api-only.md",
-      "sha256": "b15e00d8ce4dbc376801676d1f38645897da8a85d800e6e4744ddc4d87ed657c",
+      "sha256": "f7caafe4b7cf7cbb5a4f2394fd3be030fc984f3037805f409310d7db3186de03",
       "shard_id": "010",
       "source_line_end": 113,
       "source_line_start": 104,
@@ -98,7 +98,7 @@
     {
       "heading": "INV-009 -- Cursor transport is invisible to consumers",
       "path": "Plans/_shards/architecture_invariants/011-inv-009-cursor-transport-is-invisible-to-consumers.md",
-      "sha256": "59110857c462926e3ddd6fee533e04421bfb89cd0e69e799cf35f76d72333901",
+      "sha256": "fd25ff29ecf6871f9992ae041bd410cf4a466fb4b253395cf1dfe835dbfc46ae",
       "shard_id": "011",
       "source_line_end": 123,
       "source_line_start": 114,
@@ -107,7 +107,7 @@
     {
       "heading": "INV-010 -- Platform naming compliance",
       "path": "Plans/_shards/architecture_invariants/012-inv-010-platform-naming-compliance.md",
-      "sha256": "020cbf16d56bf9160f5abc78009e7f04eacb57780f6b3f81344442a470c66ef6",
+      "sha256": "874986f661c021a38bc138c050143c64c4eb9e6b30199e293a6ab2d912c5c9d8",
       "shard_id": "012",
       "source_line_end": 134,
       "source_line_start": 124,
@@ -116,7 +116,7 @@
     {
       "heading": "INV-011 -- UI command dispatch only (Rule 1)",
       "path": "Plans/_shards/architecture_invariants/013-inv-011-ui-command-dispatch-only-rule-1.md",
-      "sha256": "497956ebb80290f56a3efb83a3c01c581410584b772c01f74831b54e0b58041f",
+      "sha256": "7e755930dea5c49d30bf1c813bde84c8479f7f6ee3a8b5e37bea447e61f22409",
       "shard_id": "013",
       "source_line_end": 146,
       "source_line_start": 135,
@@ -125,7 +125,7 @@
     {
       "heading": "INV-012 -- Wiring matrix coverage (Rule 2)",
       "path": "Plans/_shards/architecture_invariants/014-inv-012-wiring-matrix-coverage-rule-2.md",
-      "sha256": "d44e5fcad8100fcade7f8d5436f6a051eff2aa4f18b2527e9debb4d7dfbf0fac",
+      "sha256": "d37bbd20ee2f13e905a657239b931e9fb1c16ae89c3f67cda62d61d104d43dea",
       "shard_id": "014",
       "source_line_end": 153,
       "source_line_start": 147,
@@ -134,7 +134,7 @@
     {
       "heading": "INV-013 -- Pre-dispatch tool validation",
       "path": "Plans/_shards/architecture_invariants/015-inv-013-pre-dispatch-tool-validation.md",
-      "sha256": "b011330ad503ffca88646c089689c3548aa20dfb7f6e5e85597bc81020791c29",
+      "sha256": "012a59219c3a6e2d397f118ef65aba2bbe9989ff6ef2a05a0fcc472d49b0eb6f",
       "shard_id": "015",
       "source_line_end": 163,
       "source_line_start": 154,
@@ -143,7 +143,7 @@
     {
       "heading": "INV-014 -- Shared mutable state requires RWMutex",
       "path": "Plans/_shards/architecture_invariants/016-inv-014-shared-mutable-state-requires-rwmutex.md",
-      "sha256": "bcfb7c817aa2666d5b6705111751a1ae2c1e5741dea600f98eca717774dc7374",
+      "sha256": "de728258b6c9cea29c84bf2b3efb2af00744bcaa3093eff29a96481b49859f87",
       "shard_id": "016",
       "source_line_end": 176,
       "source_line_start": 165,
@@ -152,7 +152,7 @@
     {
       "heading": "INV-015 -- Monetary values are integer microdollars",
       "path": "Plans/_shards/architecture_invariants/017-inv-015-monetary-values-are-integer-microdollars.md",
-      "sha256": "f8103e37cfa750267a7ef8fe804ba66054f4f260d4f5643ad503ef7bc3cedd1f",
+      "sha256": "4a8beea83d8b95d4ce9f31eb8fa43de11ba6a2037596112fe0ce73238727a64d",
       "shard_id": "017",
       "source_line_end": 189,
       "source_line_start": 177,
@@ -161,7 +161,7 @@
     {
       "heading": "INV-016 -- Token fields are never aggregated at storage layer",
       "path": "Plans/_shards/architecture_invariants/018-inv-016-token-fields-are-never-aggregated-at-storage-layer.md",
-      "sha256": "84c47d358043d91f5d4c1ffe2cc1801f5a3d17a8963626659f11f1a272d0dcaa",
+      "sha256": "f404dacb4e2d6df3f69b75c35c97fad14365d71ed93d0a4636a01968539e8f28",
       "shard_id": "018",
       "source_line_end": 201,
       "source_line_start": 190,
@@ -170,7 +170,7 @@
     {
       "heading": "INV-017 -- Durable atomic replacement and exact-replace recovery",
       "path": "Plans/_shards/architecture_invariants/019-inv-017-durable-atomic-replacement-and-exact-replace-recovery.md",
-      "sha256": "e55f5b047bce3775735e512ce3058e6c33dbbccccb23f8bc35f3288e31cff782",
+      "sha256": "5e3465ec460d21ec6ec58873f967849e28c2b274b6e2a8ccbbd738755f5d8658",
       "shard_id": "019",
       "source_line_end": 212,
       "source_line_start": 202,
@@ -179,7 +179,7 @@
     {
       "heading": "INV-018 -- Seglog frame integrity and deterministic recovery are mandatory",
       "path": "Plans/_shards/architecture_invariants/020-inv-018-seglog-frame-integrity-and-deterministic-recovery-are-ma.md",
-      "sha256": "0aeacfb8a30cf2df234ebf3f3640b65c119960d05671e8d323c7b39a6adc6bcd",
+      "sha256": "5aefcf35d56d554bb15d9b1b52f24b789131ab553a0a8b766d9b5197c3b15178",
       "shard_id": "020",
       "source_line_end": 236,
       "source_line_start": 213,
@@ -188,7 +188,7 @@
     {
       "heading": "Contract-driven code generation (lightweight; DRY)",
       "path": "Plans/_shards/architecture_invariants/021-contract-driven-code-generation-lightweight-dry.md",
-      "sha256": "546d9bfe589d992c2103ee5a1a0781a051fd1d3ba97231e90e7649d730a962b2",
+      "sha256": "04a3c3472efc36986d00f04e51a02fd4d86513b7af1c1e7c9064e46ff4fab53a",
       "shard_id": "021",
       "source_line_end": 245,
       "source_line_start": 238,
@@ -197,7 +197,7 @@
     {
       "heading": "Validation (gated; autonomous)",
       "path": "Plans/_shards/architecture_invariants/022-validation-gated-autonomous.md",
-      "sha256": "4a3c46c93a6f47610276f8267dc33b39552efdb03ed7aee35e6d32478dcae40b",
+      "sha256": "521ceb703967ca7b179a6f5b8afaab160e96fd75fb77126e83b7b4900b7851c1",
       "shard_id": "022",
       "source_line_end": 262,
       "source_line_start": 247,
@@ -206,7 +206,7 @@
     {
       "heading": "Debug investigation invariants addendum (2026-03-23)",
       "path": "Plans/_shards/architecture_invariants/023-debug-investigation-invariants-addendum-2026-03-23.md",
-      "sha256": "87258ef304e89caf5e8c557b47e6dee6b34240c4502996fb3989287e43697431",
+      "sha256": "097ee290d55ea955f766ac4a5ec568f4c1cb3ec7054d94afdc26dbe9640610e9",
       "shard_id": "023",
       "source_line_end": 286,
       "source_line_start": 264,
@@ -215,7 +215,7 @@
     {
       "heading": "INV-019 -- Runtime identity and blocked-policy continuity",
       "path": "Plans/_shards/architecture_invariants/024-inv-019-runtime-identity-and-blocked-policy-continuity.md",
-      "sha256": "e7099b118c05fc6882ec997b9fda481bb093925fd2f5ee4966e8097fedfaa9be",
+      "sha256": "09c3c2ea3839fdaf071848d9427b108b84328e4a9da2527b634a585ed453480e",
       "shard_id": "024",
       "source_line_end": 323,
       "source_line_start": 288,
@@ -224,7 +224,7 @@
     {
       "heading": "INV-020 -- Project-driven capability activation",
       "path": "Plans/_shards/architecture_invariants/025-inv-020-project-driven-capability-activation.md",
-      "sha256": "e61be03586b133786eed1b82df0e2ad7e2a4a1cfe8f72a81a2a338b31875d1b8",
+      "sha256": "a16c786c292e8032baa905dea79f9053b9b926b61f14300f876e1f14789a1fec",
       "shard_id": "025",
       "source_line_end": 337,
       "source_line_start": 325,
@@ -233,7 +233,7 @@
     {
       "heading": "INV-021 -- Dependency-driven seam reconciliation order",
       "path": "Plans/_shards/architecture_invariants/026-inv-021-dependency-driven-seam-reconciliation-order.md",
-      "sha256": "9ed786b8bb5888096a2d8c8779bb791810505fd7f622e1f73f6b6a292e7a76e0",
+      "sha256": "c5dda3e3ba063291844bb3d5e58fbe4ddbe588d80e926d3bad8479dbd889c21d",
       "shard_id": "026",
       "source_line_end": 349,
       "source_line_start": 339,
@@ -242,7 +242,7 @@
     {
       "heading": "INV-022 -- Service-bound native workbench architecture",
       "path": "Plans/_shards/architecture_invariants/027-inv-022-service-bound-native-workbench-architecture.md",
-      "sha256": "f2bad5e05e0e97995545c52c3af299970a0a6364db02b34f89a340c3f957835b",
+      "sha256": "7a370554b0d89080be6bbd947932c6ac46bcbde10514299c2d508bb5b11e0021",
       "shard_id": "027",
       "source_line_end": 374,
       "source_line_start": 351,
@@ -251,7 +251,7 @@
     {
       "heading": "INV-023 -- Investigation lifecycle budgets are typed",
       "path": "Plans/_shards/architecture_invariants/028-inv-023-investigation-lifecycle-budgets-are-typed.md",
-      "sha256": "d627908c4f63941653bcfb6948085c4c40641c6c96670ecde4a0f160e739c261",
+      "sha256": "323cd26746e2881a326e47f9feea6f0af1b7eb1df1fc7a31065f1d07ffdec573",
       "shard_id": "028",
       "source_line_end": 386,
       "source_line_start": 376,
@@ -260,7 +260,7 @@
     {
       "heading": "INV-024 -- Debug Mode evidence planes stay explicit",
       "path": "Plans/_shards/architecture_invariants/029-inv-024-debug-mode-evidence-planes-stay-explicit.md",
-      "sha256": "3e70083d8a547f60253c745e938f938d5db6219bce1cc19c7522d39784d1be14",
+      "sha256": "11a6b3020cd6d48e7aa29371a5b5f1b3526c8384dd6aacc042eb83691a1fdfb1",
       "shard_id": "029",
       "source_line_end": 403,
       "source_line_start": 388,
@@ -269,7 +269,7 @@
     {
       "heading": "INV-025 -- Provider profile isolation is not shared mutable state",
       "path": "Plans/_shards/architecture_invariants/030-inv-025-provider-profile-isolation-is-not-shared-mutable-state.md",
-      "sha256": "58bb2a63965f682e6d21b1b38d457502a67ed19d302f596e17d75e236ba110fa",
+      "sha256": "8e0a16a8e00113e48ca90cd9fa5dcabd4c15e0a3d2211ae45d28e6c6542c45c3",
       "shard_id": "030",
       "source_line_end": 412,
       "source_line_start": 405,
@@ -278,7 +278,7 @@
     {
       "heading": "INV-026 -- Web/provider recovery consumers defer to owner contracts",
       "path": "Plans/_shards/architecture_invariants/031-inv-026-web-provider-recovery-consumers-defer-to-owner-contracts.md",
-      "sha256": "45e0e5c32f8688244c99a3b49067c8247abcecc165013c80947cfca87f7345ae",
+      "sha256": "7e5b0892a4756a8e46f83bfac0ed57cbc54e45709251e14512fea142b5e883d4",
       "shard_id": "031",
       "source_line_end": 423,
       "source_line_start": 414,
@@ -287,7 +287,7 @@
     {
       "heading": "INV-027 -- Durable-state authority, scope, replay, and recovery remain explicit",
       "path": "Plans/_shards/architecture_invariants/032-inv-027-durable-state-authority-scope-replay-and-recovery-remain.md",
-      "sha256": "6cafefc2b541e46cee1ae5f2f7388005c4480e9d742a3ff0a5ed6cf6f40fd243",
+      "sha256": "b4f51e19fe584bf5efd2ec04469bba625b71ce2c91f04571081e78dae9396c60",
       "shard_id": "032",
       "source_line_end": 437,
       "source_line_start": 425,
@@ -296,7 +296,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/architecture_invariants/033-owner-consumer-map.md",
-      "sha256": "78461ee55b5f1f60da10f7f80075e0d250a1407da10f42ab42573e2a47f33d8f",
+      "sha256": "021a5d204b88109f75a6611bc41dec972ced3d3976c5739248f7968442de6fd6",
       "shard_id": "033",
       "source_line_end": 443,
       "source_line_start": 439,
@@ -305,7 +305,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/architecture_invariants/034-planunits.md",
-      "sha256": "3054804d1e03474b5fc472fb0da6e11675d9c2e684cebd0c6299703a5bca1dae",
+      "sha256": "c5bea3f020e4aa80ce495c93399c7ce86f1c68833833f58b30d7c64300123b64",
       "shard_id": "034",
       "source_line_end": 4532,
       "source_line_start": 445,
@@ -314,7 +314,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/architecture_invariants/035-migration-coverage.md",
-      "sha256": "0a0d103ff74501f83c28faa5c4cdfde1ab86cbc0ca33df56805d8a93ea886065",
+      "sha256": "aaf463ed0b2cde3cb4f6c3649bd17e33277c3b9db829f671837410944e7cd599",
       "shard_id": "035",
       "source_line_end": 4544,
       "source_line_start": 4534,
@@ -323,7 +323,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/architecture_invariants/036-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "9216c4f024826d28da1b473927400f319abd8a905fd3b6edfa836a7a19bf99b5",
+      "sha256": "eb5ff0468a826c407d413a661703c050593a423b033d9cacb199dc4a83149d52",
       "shard_id": "036",
       "source_line_end": 4552,
       "source_line_start": 4546,
@@ -333,6 +333,6 @@
   "source": {
     "line_count": 4552,
     "path": "Plans/Architecture_Invariants.md",
-    "sha256": "822393a6f0344b214af8956dad4c888e8996f4676b530cdab4e83b2fdb16dada"
+    "sha256": "aabdd384375f6ff5f75eac1ad5085ed9af05a5cebcf0dcbf4b5b3462eef1935e"
   }
 }

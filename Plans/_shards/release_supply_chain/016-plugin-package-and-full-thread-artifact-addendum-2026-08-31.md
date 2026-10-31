@@ -4,7 +4,7 @@ Source: `Plans/Release_Supply_Chain.md`
 
 Source lines: L964-L1105
 
-Source SHA256: `840f30800f245ba0708b658f22687bda4740c206dd03b3ec1dd18fd7cca88d6a`
+Source SHA256: `950df1ce089c29e83280ca6f93ead303f67e6cc5dedca6fdc2b91acc5be816f0`
 
 ---
 
@@ -51,7 +51,7 @@ By explicit user approval on 2026-09-09, Release consumes the `Plans/FinalGUISpe
 
 Release acceptance consumes runtime benchmark receipts for cold/warm launch, same-frame command acknowledgement, pause/stop latency under saturation, provider-fragment paint, 1/10/50/200 logical threads, many named Plans, queue/fairness, process-tree RSS, unified graphics/media memory, idle CPU/wakeups/network/disk, low-resource/thermal/battery behavior, failure recovery, and 24-hour soak. Static schemas, conformance reports, artifact hashes, or package retention alone are not empirical performance proof.
 
-Amended 2026-10-31 (DL-270): release acceptance also consumes the storage gate receipts that SP-344 defines, run on Windows, macOS and Linux: 20 producer streams with 100k-event paging, a backup and maintenance; first page p95 at most 150 ms warm and 500 ms cold; commit p99 at most 50 ms; no storage-caused UI stall over 50 ms; no acknowledged event lost, duplicated or corrupted after kill -9, simulated power cuts, torn writes and store-creation crashes; every family within its disk budget. A skipped or missing storage gate on any OS is not_run and blocks the release; SP-344 owns the thresholds.
+Amended 2026-10-31 (DL-270): release acceptance also consumes the storage gate receipts that SP-344 defines, run on Windows, macOS and Linux: 20 producer streams with 100k-event paging, a backup and maintenance; first page p95 at most 150 ms, warm or cold; commit p99 at most 50 ms; no storage-caused UI stall over 50 ms; no acknowledged event lost, duplicated or corrupted after kill -9, simulated power cuts, torn writes and store-creation crashes; every family within its disk budget. A skipped or missing storage gate on any OS is not_run and blocks the release; SP-344 owns the thresholds.
 
 ### Commands, events, and reverse coverage
 

@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3617-L22472
 
-Source SHA256: `6b03276d73d6ddb048cfd254baf1269de151168db6fc99c7b51ac599bda94953`
+Source SHA256: `76b7e221ee1f218ba2d415e14622b8e0d7b9ce6926f3d48e0cfe2393525cb9cb`
 
 ---
 
@@ -10731,7 +10731,7 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Long-thread lag and flicker risk is mitigated by section 24 virtualization, stable IDs, incremental updates, and no full rebuild on stream.
-  Amended 2026-10-31 (DL-270): the mitigation also includes mandatory load-older paging over SP-338's render-page store; a chat opens from thread_head and the newest page without replaying events, and a CI gate holds the first page at 150 ms p95 warm and 500 ms cold (ACD-242).
+  Amended 2026-10-31 (DL-270): the mitigation also includes mandatory load-older paging over SP-338's render-page store; a chat opens from thread_head and the newest page without replaying events, and a CI gate holds the first page at 150 ms at p95, warm or cold (ACD-242).
 gui_related: true
 gui_classification_reason: Long-thread lag, flicker, virtualization, and streaming updates are visible chat UI performance behavior.
 depends_on: []
@@ -11461,7 +11461,7 @@ canonical_text: >-
   Load-older pagination bounds extreme thread display while preserving full history in storage.
   Amended 2026-10-31 (DL-270): load-older paging is mandatory, not optional: the chat opens from SP-338's
   thread_head, hot tail and newest page and fetches older 50-item pages on demand, and a CI gate holds a
-  100k-event thread's first page within 150 ms p95 warm and 500 ms cold.
+  100k-event thread's first page within 150 ms at p95, warm or cold.
   Scrolling near the top loads the next older page by itself, and a Load 50 older row stays as the fallback;
   both fetch pages through cmd.chat.load_older (DL-270).
 gui_related: true

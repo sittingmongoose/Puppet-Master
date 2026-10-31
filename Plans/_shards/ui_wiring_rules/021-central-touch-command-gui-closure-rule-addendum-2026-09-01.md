@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L1180-L1218
 
-Source SHA256: `c1f99a4f0621a9c484f30c7de45b21095732ffa87a5e1ac08b2253a6591ff893`
+Source SHA256: `bf8ea64727dfd57bc966d62258ca654aeebb021635dcdeec2260b4c212f4cb5e`
 
 ---
 
@@ -14,7 +14,7 @@ For every non-blocked Touch primary command, the closure gate resolves the prima
 
 The September 1 closure preserves the same dispatch rule while changing the machine census to 425 primaries (424 actionable plus one blocked false inventory), 55 aliases, 101 typed local actions, seven presentation rows, 588 Touch rows, 87 profiles, and 1065 production entries. Forge adds nine event-silent primaries, Backup/Restore adds sixteen, and Remote Access replaces four component/Serve primaries with three built-in-connector primaries plus four compatibility-only aliases. Those aliases have no peer control, state selector, handler, production row, persistence, or EventRecord.
 
-Amended 2026-10-31 (DL-270): these counts are the September 1 census and do not yet include the DL-270 surfaces: storage health with its verified reclaim action (SP-340, F3-457), the last verified backup and what a restore from it would lose (BRS-031, F3-528), and the record inspector (SP-339, F3-666). Each needs a Touch primary or typed local action with a production entry, projection source, readback check and disabled reason. The load-older control (F3-667) is wired by the single command cmd.chat.load_older (ACD-242). The registry rows and the revised totals are companions of DL-270 and are not yet written.
+Amended 2026-10-31 (DL-270): these counts are the September 1 census and do not yet include the DL-270 surfaces: storage health with its verified reclaim action (SP-340, F3-457), the last verified backup and what a restore from it would lose (BRS-031, F3-528), and the record inspector (SP-339, F3-666). Storage health and the backup-status lines are projections and get no row (UIW-046); the reclaim action and the record inspector use the existing rows settings.storage_retention.compaction_request and storage.value.open; and load-older adds one production row, assistant.chat.history.load_older for cmd.chat.load_older (WM-098). The next census counts that row.
 
 ### UIW-017 - Exact Touch Command/GUI/Handler Closure
 

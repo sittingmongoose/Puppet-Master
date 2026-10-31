@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L7318-L7603
+Source lines: L7323-L7611
 
-Source SHA256: `3a7ada5ddfcc358a78e31797688310716605418a3cba398f15f3688c31d651f5`
+Source SHA256: `f14b411d90a38f9cf14ee5f171356e770083f8b20d3e2beea31dd9618b8ed4e8`
 
 ---
 
@@ -248,11 +248,13 @@ canonical_text: >-
   pages through usage records by index. Detailed usage records follow the existing Keep usage history for setting,
   ai.usage.usage-retention (30 days, 90 days by default, 180 days, 1 year or unlimited), in the event log and in
   SP-341's Parquet archive alike, where SQL can query them. Daily usage totals per account, provider and model,
-  plus any further keys the usage owner rolls up such as purpose, are kept whatever the setting says. Problem 5's
-  raw-event window is that setting for usage.event. usage.jsonl is retired as a live file (SP-339). Jared,
-  2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on AAC, the usage data
-  takes a long time to load and doesn’t keep its data, I know there is a lot of data there so just want to make
-  sure that is accounted for."
+  plus any further keys the usage owner rolls up such as purpose, are canonical records in the canonical redb
+  file: they are written before the detailed records they summarize expire, are backed up, are never rebuilt from
+  events, and are kept whatever the setting says. The derived rollups cover the retention window and take older
+  days from them. Problem 5's raw-event window is that setting for usage.event. usage.jsonl is retired as a live
+  file (SP-339). Jared, 2026-10-31, verbatim, on card 7: "Do we need to tie the usage data to this?  In my work on
+  AAC, the usage data takes a long time to load and doesn’t keep its data, I know there is a lot of data there so
+  just want to make sure that is accounted for."
 gui_related: true
 gui_classification_reason: "Usage loads from rollups and keeps its full history."
 split_recommended: false
@@ -262,6 +264,7 @@ acceptance_criteria:
   - "No usage total, window or chart scans raw usage events; the Ledger pages through records by index."
   - "Detailed usage records older than the selected ai.usage.usage-retention are pruned from the event log and the archive."
   - "Daily usage totals per account, provider and model are never pruned."
+  - "Deleting the derived file, or restoring from backup, after detailed records expire keeps every daily total."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

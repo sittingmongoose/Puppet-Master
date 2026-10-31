@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L2054-L2427
 
-Source SHA256: `7074eafe959a295f70198f679b2ac0b8d37121d436124fe5b71966225c31c84f`
+Source SHA256: `2c7716a04afa1efef9387ef59e967b0189f751406e8b06794dfa57eaf72c2cd7`
 
 ---
 
@@ -327,7 +327,7 @@ acceptance_criteria:
   - Migration command-inventory evidence proves diagnostics/retry are read-only gates and exposes no generic live repair/salvage/Doctor mutation, bypass, post-preflight force-cancel, or try-anyway path.
   - SEG-FX-001..018 plus SEG-OR-001..012 prove barrier durability, survivor determinism, sequence nonreuse, crash convergence, closed immutability, checkpoint/projection truth, and disclosure fidelity.
   - "Amended 2026-10-31 (DL-270). Payload fixtures prove that output over 16 KiB is one BLAKE3 pack reference with no inline base64 and that identical outputs are stored once (SP-337). Seal-time repack fixtures prove that the zstd copy decodes to the same bytes, sequence and order before the original is retired, and that the active segment stays uncompressed (flags=0) (SP-335)."
-  - "Amended 2026-10-31 (DL-270). SP-344 release-gate fixtures run 20 producer streams with 100k-event thread paging, a backup and maintenance on Windows, macOS and Linux, and prove first page p95 at most 150 ms warm and 500 ms cold, commit p99 at most 50 ms, no storage-caused UI stall over 50 ms, no lost, duplicated or corrupted acknowledged event after kill -9, power cuts, torn writes and store-creation crashes (FX-L003-CREATE-CRASH), and disk budgets enforced. Blocked or skipped runs cannot satisfy them."
+  - "Amended 2026-10-31 (DL-270). SP-344 release-gate fixtures run 20 producer streams with 100k-event thread paging, a backup and maintenance on Windows, macOS and Linux, and prove first page p95 at most 150 ms, warm or cold, commit p99 at most 50 ms, no storage-caused UI stall over 50 ms, no lost, duplicated or corrupted acknowledged event after kill -9, power cuts, torn writes and store-creation crashes (FX-L003-CREATE-CRASH), and disk budgets enforced. Blocked or skipped runs cannot satisfy them."
   - STIO, LOCK, ROOT, and FALLBACK fixtures prove exact retry/failure posture, one OS-authoritative writer, mutation-proof viewer behavior, continuity/relocation recovery, and no automatic divergent-store merge or overwrite.
   - EventRecord 2.0 fixtures prove closed scope pairs, exact v2 lookup keys, byte-identical in-memory-only legacy normalization, lifetime dedupe/catch-up, strict V1/V2 reader compatibility, and replay-only side-effect isolation.
   - RSP fixture families prove exact target/rollback equality, truthful restore envelopes, restart fencing, canonical safe-point identity, SCM baseline effects, source preservation, and Chat parity.
