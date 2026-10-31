@@ -236,7 +236,12 @@ canonical_text: 'Custom Domain is a first-class route with a dedicated-hostname 
   export-only and existing-proxy validation are separate owner continuations; generating a file does not prove installation,
   public consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly
   caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record
-  nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes a family.'
+  nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes a family.
+  DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and matching private key owned by the
+  selected Server. Their contents never pass through onboarding or a Client/browser file upload. A permissioned Server-side
+  material selection and current validation must complete before proxy generation/activation or Ready can depend on it;
+  no answer means pending or an explicit Later, never guessed success. The existing proxy preview/generation commands
+  do not by themselves admit a missing certificate-selection command or proof.'
 gui_related: true
 gui_classification_reason: Proxy preview/generation/export, external origin, trusted proxies, tests, warnings, and manual endpoint actions are visible workflows.
 depends_on: [RAS-002, RAS-007]
@@ -252,6 +257,11 @@ acceptance_criteria:
   onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
   existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
   silently substitutes a family.'
+- 'DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and matching private key owned by the
+  selected Server. Their contents never pass through onboarding or a Client/browser file upload. A permissioned Server-side
+  material selection and current validation must complete before proxy generation/activation or Ready can depend on it;
+  no answer means pending or an explicit Later, never guessed success. The existing proxy preview/generation commands
+  do not by themselves admit a missing certificate-selection command or proof.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future proxy spoofing and subpath negative tests]
 risk_class: reverse_proxy_identity_or_origin_bypass
 reasoning_tier: high
@@ -311,26 +321,39 @@ plan_unit_id: RAS-007
 unit_type: security_requirement
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: >-
-  Every public route enforces Puppet Master auth and authorization, pairing, revocation-aware sessions, rate limiting
-  before hydration, secure cookie/CSRF/origin/host/WebSocket policy, trusted-proxy rules, metadata-minimal pre-auth
-  responses, bounded Client queues, and version/protocol compatibility. Unclaimed setup remains local/private. Callback
-  transport covers Puppet Master direct OAuth, CLI/Auth-Broker callbacks, native-Client forwarding, and protected
+canonical_text: 'Every public route enforces Puppet Master auth and authorization, pairing, revocation-aware sessions,
+  rate limiting before hydration, secure cookie/CSRF/origin/host/WebSocket policy, trusted-proxy rules, metadata-minimal
+  pre-auth responses, bounded Client queues, and version/protocol compatibility. Unclaimed setup remains local/private.
+  Callback transport covers Puppet Master direct OAuth, CLI/Auth-Broker callbacks, native-Client forwarding, and protected
   AuthBrowserSession lifecycle handoff using one-time opaque session IDs and validated state, PKCE, provider, target,
-  expiry, operation generation, initiating active Client/session generation, and return context. The sole protected
-  lifecycle projection carries one authoritative operation/Client identity and an exact return-fence disposition; it
-  never accepts a fallback Client or shadow returned-operation identity. Headless flows prefer device or paste code;
-  native tunnels authenticate; web Clients are never assumed able to bind loopback. Protected authentication remains
-  human-only, ephemeral, unobserved, unpersisted, not caller-navigable, and unavailable to capture or recording.
+  expiry, operation generation, initiating active Client/session generation, and return context. The sole protected lifecycle
+  projection carries one authoritative operation/Client identity and an exact return-fence disposition; it never accepts
+  a fallback Client or shadow returned-operation identity. Headless flows prefer device or paste code; native tunnels
+  authenticate; web Clients are never assumed able to bind loopback. Protected authentication remains human-only, ephemeral,
+  unobserved, unpersisted, not caller-navigable, and unavailable to capture or recording. DL-259 srv final, 2026-10-31:
+  an unclaimed cloud computer is claimed only through an already established, owner-verified local/private setup channel.
+  A typed private/VPN/tailnet address alone proves neither reachability, installation nor claim authority. The claim
+  uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate post-claim cmd.server.bootstrap.start.
+  No public unclaimed setup, automatic SSH tunnel, provider-console automation or tailnet enrollment is inferred from
+  choosing the computer. If a verified private claim channel is absent, remain in the owner handoff without claiming
+  setup or trust.'
 gui_related: true
 gui_classification_reason: Security warnings, callback continuation, human-action-required state, version mismatch, and re-pairing are user-visible.
 depends_on: [RAS-001, SRV-004]
 unblocks: [RAS-004, RAS-005, RAS-006, RAS-009]
 acceptance_criteria:
-  - Public route tests cover CSRF, origin, cookie, host, WebSocket, proxy, rate-limit, session, and revocation attacks.
-  - Callback completion rejects wrong state, PKCE, provider, target, expiry, or return context.
-  - Completion accepts only the current exact operation and initiating active Client; stale/mismatched returns, cancel, timeout, and verification failure retain the exact initiating focus and fail closed without content return.
-  - AuthBrowserSession remains inaccessible to agents, tools, automation, screenshots, recordings, DOM, console, network, storage, Chat, and Usage.
+- Public route tests cover CSRF, origin, cookie, host, WebSocket, proxy, rate-limit, session, and revocation attacks.
+- Callback completion rejects wrong state, PKCE, provider, target, expiry, or return context.
+- Completion accepts only the current exact operation and initiating active Client; stale/mismatched returns, cancel,
+  timeout, and verification failure retain the exact initiating focus and fail closed without content return.
+- AuthBrowserSession remains inaccessible to agents, tools, automation, screenshots, recordings, DOM, console, network,
+  storage, Chat, and Usage.
+- 'DL-259 srv final, 2026-10-31: an unclaimed cloud computer is claimed only through an already established, owner-verified
+  local/private setup channel. A typed private/VPN/tailnet address alone proves neither reachability, installation nor
+  claim authority. The claim uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate
+  post-claim cmd.server.bootstrap.start. No public unclaimed setup, automatic SSH tunnel, provider-console automation
+  or tailnet enrollment is inferred from choosing the computer. If a verified private claim channel is absent, remain
+  in the owner handoff without claiming setup or trust.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, Plans/protected_auth_browser_contract_fixtures.json, future callback tunnel tests]
 risk_class: public_auth_callback_or_protected_session_bypass
 reasoning_tier: high
@@ -841,7 +864,12 @@ canonical_text: 'Connecting this Client to an existing Puppet Master selects the
   Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
   browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
   device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged.'
+  stays external and unmanaged. DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS
+  link or owner-issued opaque short code. Preserve the code’s owner-defined representation; the wizard invents no alphabet,
+  length, letter-first rule or case conversion. Empty input is invalid, and nonblank text alone is not a valid-code,
+  endpoint, identity, pairing or Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with
+  its bounded abuse/expiry policy before the existing open and Server identity/pairing continuation. Unknown, expired
+  or unresolvable input fails closed without falling back to another Server.'
 gui_related: true
 gui_classification_reason: Defines the route chooser, discovery order, conditional fields, pairing handoff, manual fallback, and setup-later state consumed by Product Onboarding.
 depends_on: [RAS-001, RAS-003, RAS-005, RAS-006, SRV-004]
@@ -892,6 +920,12 @@ acceptance_criteria:
   permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
   through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
   Tailscale stays external and unmanaged.'
+- 'DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS link or owner-issued opaque short
+  code. Preserve the code’s owner-defined representation; the wizard invents no alphabet, length, letter-first rule or
+  case conversion. Empty input is invalid, and nonblank text alone is not a valid-code, endpoint, identity, pairing or
+  Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with its bounded abuse/expiry policy
+  before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed
+  without falling back to another Server.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/remote_access_system_contract_fixtures.json, future route-first LAN/VPN/Tailscale/Headscale/proxy/Remote-Link owner fixtures]
 risk_class: connect_existing_route_order_or_trust_conflation
 reasoning_tier: high

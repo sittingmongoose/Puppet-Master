@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554",
+  "source_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -48,82 +48,52 @@
     {
       "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-contracts.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-contracts.json"
     },
     {
       "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-build.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-build.json"
     },
     {
       "command": "python3 scripts/pm7-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-canon.json"
-    },
-    {
-      "command": "python3 scripts/pm7-qa2-alignment-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-qa2.json"
-    },
-    {
-      "command": "python3 scripts/pm7-nier-theme-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-nier.json"
-    },
-    {
-      "command": "python3 scripts/pm-touch-closure-verify.py --json",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-touch.json"
-    },
-    {
-      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-wiring.json"
-    },
-    {
-      "command": "python3 scripts/pm-forge-backup-acceptance-verify.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-tsn-release.json"
-    },
-    {
-      "command": "settings_inventory/storage_value_registry Draft202012 offline schema check",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-registries.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-canon.json"
     },
     {
       "command": "python3 scripts/pm-onboarding-contracts.py --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-storage.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-storage-check.json"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-shards-generate.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-index-generate.txt"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-check.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-shards-check.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-validate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-index-validate.txt"
     },
     {
-      "command": "owned source/governance/prior-artifact guard",
+      "command": "owned source/prior-artifact/protected-governance guard",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-guard.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-guard.json"
     },
     {
       "command": "coverage PlanUnit/setting/production reference check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-coverage-check.json"
     }
   ],
   "dry": {
@@ -2402,6 +2372,71 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-generate.txt",
       "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
       "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-build.json",
+      "sha256": "0bb734dc212a2dbf478eb455e954de5d678ffb2b582ed7eb40029ddd10f3e6e9",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-canon.json",
+      "sha256": "413a4c42efdac53b7aa0bf029816db26acf0960679b896fdc39ef0a5201067a6",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-contracts.json",
+      "sha256": "24f8423edb5b6ee4f94ac397cd413eea246cc1f75b58c70e3872d2edfc2f32c3",
+      "bytes": 500
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-coverage-check.json",
+      "sha256": "2fa0732617e8c7fe96d40c2a785a81ccd1826a10e2781f90928eb870562294e1",
+      "bytes": 222
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-guard.json",
+      "sha256": "d46969658b396e0f6e6a95cdb1b5ef9b899fef14b58ad64295812ad49f919137",
+      "bytes": 122940
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-index-generate.txt",
+      "sha256": "f049d2066b806a04892132f33d963a037a7e330324e3dd0cd7813b012556bc36",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-index-validate.txt",
+      "sha256": "b249df66e025087417dcd00a411482d1a905ea6b3cbb8af7500b3a498be07bbe",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-prose-first.json",
+      "sha256": "9fe3fe897867e3814a42d1ad01ac8ddfe8f1802d16480ad2a808c275dd3b7bae",
+      "bytes": 952
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-shards-check.txt",
+      "sha256": "497a3ae3d7d65ce06abaf3d65831c971c0da613024092818574ba7e7e43f8ab9",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-shards-generate.txt",
+      "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-storage-check.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-storage-materialize-corrected.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-storage-materialize.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
     }
   ],
   "reviews": [
@@ -2458,7 +2493,7 @@
     ],
     "mail_waiter": "off by lead direct-wake instruction"
   },
-  "latest_amendment": "DL259_product_only_onboarding_rulings",
+  "latest_amendment": "DL259_srv_final_minimum_rules_and_owner_questions",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -4784,7 +4819,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08",
+  "canonical_source_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": false,
   "dry_landing_run_for_QA2": false,
@@ -4796,7 +4831,7 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "verified_count": 446,
+    "verified_count": 459,
     "prior_392_unchanged": true,
     "recorded_at_utc": "2026-10-31T02:40:08.546450+00:00"
   },
@@ -5049,5 +5084,106 @@
     ],
     "protected_governance_changes": [],
     "late_D3_check": "Caddy admitted in both preview/generate configuration payloads; NPM rejected in both. 110 positive/107 negative Remote cases pass."
+  },
+  "historical_DL259_core_commands": [
+    {
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-contracts.json"
+    },
+    {
+      "command": "python3 scripts/pm7-build-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-build.json"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-canon.json"
+    },
+    {
+      "command": "python3 scripts/pm7-qa2-alignment-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-qa2.json"
+    },
+    {
+      "command": "python3 scripts/pm7-nier-theme-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-nier.json"
+    },
+    {
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-touch.json"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-wiring.json"
+    },
+    {
+      "command": "python3 scripts/pm-forge-backup-acceptance-verify.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-tsn-release.json"
+    },
+    {
+      "command": "settings_inventory/storage_value_registry Draft202012 offline schema check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-registries.json"
+    },
+    {
+      "command": "python3 scripts/pm-onboarding-contracts.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-storage.json"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-check.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-validate.txt"
+    },
+    {
+      "command": "owned source/governance/prior-artifact guard",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-guard.json"
+    },
+    {
+      "command": "coverage PlanUnit/setting/production reference check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
+    }
+  ],
+  "source_commit_role": "last checked committed checkpoint; current server amendment identified by srv_final snapshot",
+  "srv_final": {
+    "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
+    "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+    "source_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/srv-final-guard.json",
+    "prose_first": true,
+    "ledger_compiled": false,
+    "owner_questions": [
+      "CERT-1",
+      "CLOUD-1",
+      "DESKTOP-RESTORE-1",
+      "REMOTE-CODE-1"
+    ],
+    "new_commands": 0,
+    "new_settings": 0,
+    "new_plan_units": 0,
+    "coverage_rows": 126,
+    "native_runtime_proof": false
   }
 }

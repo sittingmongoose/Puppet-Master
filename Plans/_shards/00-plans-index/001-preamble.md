@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L19
+Source lines: L1-L22
 
-Source SHA256: `dc5877377402af7e229af3d67e9d02c37b20bc6ba5b903376a7bb9356139f142`
+Source SHA256: `a1201db0c0c21c585d1e661eb99c6e58c25417605fbc711fa55673930acb0546`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-259 server final-report delta: safe private claim/recovery prerequisites, owner-validated Remote Link codes, effective app context from existing owners, and optional remote setup after Creating with Later always finishing. Certificate/private-channel/first-local-claim/code-protocol questions remain report-only; no missing owner operation is fabricated.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/Server_System.md#SRV-013
 
 - 2026-10-31: **DL-259 — product-only onboarding rulings.** D1–D8 set repository-only online creation, Settings-only advanced routes, Caddy/NGINX/Traefik generation, provider verification before the PM build, retired/ineligible free-route removal, execution-host credential custody, native-app built-in Tailscale and one fail-closed FileSafe switch. Wizard/Tour share Plain English/Expert; Q1 adds Pip’s room voice and Q2 confirms toasts below the open inbox as Jared’s ruling. The existing mainline non-product passages are handled separately under Q3.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Remote_Access_System.md#RAS-015, ContractName:Plans/Planning_Wizard.md#PWIZ-022

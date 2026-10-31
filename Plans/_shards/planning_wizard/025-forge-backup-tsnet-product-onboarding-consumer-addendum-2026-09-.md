@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2521-L2742
+Source lines: L2532-L2783
 
-Source SHA256: `b28a3459e18dbf9c27eb0f80083009e575abcf210c03058510575afd642d861a`
+Source SHA256: `713d97d234d8b55a17871628581e937ed1ed94de3fda26ee55303db6d8d8c548`
 
 ---
 
@@ -71,7 +71,22 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   and Backup preview, identity/collision/recovery-safe checks; it never auto-activates public routes or work. DL-259
   H3/D6: SMB credential copy follows the authorized secure keychain policy for that share and host. It never calls SMB
   sign-in SSH key installation or promises never saved when a secure-store credential is retained. One-time SSH installation
-  secrets and protected unlock inputs retain their own no-store boundaries.'
+  secrets and protected unlock inputs retain their own no-store boundaries. DL-259 srv final, 2026-10-31: Full Server
+  recovery onto this computer first resolves the actual local Server. Dormant local capability is not a claim receipt.
+  A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start completion for durable roots
+  and immutable execution baseline, and the Backup owner’s maintenance/recovery authority are prerequisites for cmd.restore.server_full.
+  Reuse current verified prerequisites when already satisfied; otherwise hand off to their owner and wait. No automatic
+  self-approval, ordinary Client authority or invented desktop claim mechanism is admitted. Restore remains paused; pairing
+  and remote activation remain separate owner continuations after recovery. DL-259 srv final, 2026-10-31: Creating observes
+  only the reviewed Project creation/open/restore result and its actual prerequisites. It does not run optional remote-access
+  configuration. After that owner settlement, a separate postcommit remote-setup view inside automatic_preparation runs
+  any requested Remote Access continuation, before the normal provider/Free Models continuation; the eleven-stage graph
+  is unchanged. Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing proxy steps use
+  their existing domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed
+  Project intact: it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted
+  setup is deferred; any already-started work obeys the owner’s existing cancel/background rules, and the app shows its
+  actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without
+  a new mutation command.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -168,6 +183,21 @@ acceptance_criteria:
 - 'DL-259 H3/D6: SMB credential copy follows the authorized secure keychain policy for that share and host. It never
   calls SMB sign-in SSH key installation or promises never saved when a secure-store credential is retained. One-time
   SSH installation secrets and protected unlock inputs retain their own no-store boundaries.'
+- 'DL-259 srv final, 2026-10-31: Full Server recovery onto this computer first resolves the actual local Server. Dormant
+  local capability is not a claim receipt. A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start
+  completion for durable roots and immutable execution baseline, and the Backup owner’s maintenance/recovery authority
+  are prerequisites for cmd.restore.server_full. Reuse current verified prerequisites when already satisfied; otherwise
+  hand off to their owner and wait. No automatic self-approval, ordinary Client authority or invented desktop claim mechanism
+  is admitted. Restore remains paused; pairing and remote activation remain separate owner continuations after recovery.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
+  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
+  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

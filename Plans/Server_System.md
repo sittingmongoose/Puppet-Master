@@ -201,25 +201,37 @@ plan_unit_id: SRV-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: >-
-  Every standalone Windows, macOS, and Linux Server provides authenticated typed API and projection streams, the
-  complete permanent responsive web UI, and normal work execution. Desktop packages include the native Slint Client,
-  dormant loopback/private local Server capability, and Execution Host capability. After owner claim,
-  cmd.server.bootstrap.start separately bootstraps requested execution_form standalone or container, verifies durable
-  roots or mounts and the immutable execution baseline, and never creates a reduced control-plane-only Server. Closing,
-  refreshing, sleeping, or powering off a Client never cancels Server-owned Goal, turn, login, update, backup, Move,
-  browser, build, or test. Reconnect and resume are exact cmd.server.connect modes using prior session and durable
-  cursor/snapshot catch-up without duplicate or omitted entries; they do not mint separate commands or new work. Stop
-  Server, restart, and move are explicit service/tray/menu operations; GUI close is not an implicit stop.
+canonical_text: 'Every standalone Windows, macOS, and Linux Server provides authenticated typed API and projection streams,
+  the complete permanent responsive web UI, and normal work execution. Desktop packages include the native Slint Client,
+  dormant loopback/private local Server capability, and Execution Host capability. After owner claim, cmd.server.bootstrap.start
+  separately bootstraps requested execution_form standalone or container, verifies durable roots or mounts and the immutable
+  execution baseline, and never creates a reduced control-plane-only Server. Closing, refreshing, sleeping, or powering
+  off a Client never cancels Server-owned Goal, turn, login, update, backup, Move, browser, build, or test. Reconnect
+  and resume are exact cmd.server.connect modes using prior session and durable cursor/snapshot catch-up without duplicate
+  or omitted entries; they do not mint separate commands or new work. Stop Server, restart, and move are explicit service/tray/menu
+  operations; GUI close is not an implicit stop. DL-259 srv final, 2026-10-31: an unclaimed cloud computer is claimed
+  only through an already established, owner-verified local/private setup channel. A typed private/VPN/tailnet address
+  alone proves neither reachability, installation nor claim authority. The claim uses cmd.server.claim with its exact
+  identity/session proofs; bootstrap remains the separate post-claim cmd.server.bootstrap.start. No public unclaimed
+  setup, automatic SSH tunnel, provider-console automation or tailnet enrollment is inferred from choosing the computer.
+  If a verified private claim channel is absent, remain in the owner handoff without claiming setup or trust.'
 gui_related: true
 gui_classification_reason: Native/web parity, disconnected/currentness state, explicit lifecycle controls, and responsive Client behavior are visible product behavior.
 depends_on: [SRV-004, SIR-004, SIR-005]
 unblocks: [SRV-007, SRV-008, RAS-008]
 acceptance_criteria:
-  - Native and web Clients use the same commands, identities, receipts, and projection cursors.
-  - Standalone and container bootstrap preserve requested/effective execution_form, require a prior claim receipt, validate the execution baseline, and enable normal Server execution.
-  - Client tab or process loss does not cancel Server-owned work.
-  - Explicit Server stop is permission-gated, drains or checkpoints work, and exposes truthful blocked or recovery-required outcomes.
+- Native and web Clients use the same commands, identities, receipts, and projection cursors.
+- Standalone and container bootstrap preserve requested/effective execution_form, require a prior claim receipt, validate
+  the execution baseline, and enable normal Server execution.
+- Client tab or process loss does not cancel Server-owned work.
+- Explicit Server stop is permission-gated, drains or checkpoints work, and exposes truthful blocked or recovery-required
+  outcomes.
+- 'DL-259 srv final, 2026-10-31: an unclaimed cloud computer is claimed only through an already established, owner-verified
+  local/private setup channel. A typed private/VPN/tailnet address alone proves neither reachability, installation nor
+  claim authority. The claim uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate
+  post-claim cmd.server.bootstrap.start. No public unclaimed setup, automatic SSH tunnel, provider-console automation
+  or tailnet enrollment is inferred from choosing the computer. If a verified private claim channel is absent, remain
+  in the owner handoff without claiming setup or trust.'
 validation_surfaces: [future multi-Client cursor convergence tests, future native web parity tests, future GUI-close continuation tests]
 risk_class: client_lifetime_becoming_server_lifetime
 reasoning_tier: high
@@ -315,21 +327,35 @@ plan_unit_id: SRV-008
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: >-
-  The Server manager, Settings, Onboarding, Doctor, palette, native/web UI, natural-language routing, and API/automation
-  surfaces use the exact 32-command owner inventory listed here: the retained 26-command cmd.server manager inventory
-  plus six narrowly owned bootstrap/pairing/trust commands. Each visible action requires one central
+canonical_text: 'The Server manager, Settings, Onboarding, Doctor, palette, native/web UI, natural-language routing,
+  and API/automation surfaces use the exact 32-command owner inventory listed here: the retained 26-command cmd.server
+  manager inventory plus six narrowly owned bootstrap/pairing/trust commands. Each visible action requires one central
   registration, typed request/result/error, sole handler, permission and confirmation policy, idempotency/currentness,
   ObservableWork when asynchronous, receipt or explicit no-persist result, accessibility/focus return, and production
   wiring. UI projections use stable IDs, route to owner details, and show truthful availability and disabled reasons.
+  DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
+  Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
+  owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
+  setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 gui_related: true
 gui_classification_reason: This unit defines Server manager actions, compact cards, status, details, focus return, and native/web parity.
 depends_on: [SRV-003, SRV-004, SRV-005, SRV-006, SRV-007]
 unblocks: [SSYS-012]
 acceptance_criteria:
-  - Every listed Server-owned command has one central command and UI-catalog row plus one production wiring handler before enablement.
-  - Server cards distinguish Connected Server, Home Server, processing capability, paired Clients, route, version, and exact currentness.
-  - Missing central registration, schema, handler, event admission, or wiring disables the affected action with the exact reason.
+- Every listed Server-owned command has one central command and UI-catalog row plus one production wiring handler before
+  enablement.
+- Server cards distinguish Connected Server, Home Server, processing capability, paired Clients, route, version, and
+  exact currentness.
+- Missing central registration, schema, handler, event admission, or wiring disables the affected action with the exact
+  reason.
+- 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
+  Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
+  owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
+  setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future production wiring reverse coverage, future native web focus and keyboard tests]
 risk_class: visible_server_action_without_owner_wiring
 reasoning_tier: high
@@ -720,28 +746,53 @@ plan_unit_id: SRV-013
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: >-
-  Server consumes Backup/Restore policy and run contracts through one durable schedule-occurrence, outbox, writer,
-  and maintenance-authority projection that survives every Client and restart. It also consumes Remote Access endpoint
-  provenance that distinguishes PM-connector private ingress, hosted Funnel, and verified external host-Tailscale
+canonical_text: 'Server consumes Backup/Restore policy and run contracts through one durable schedule-occurrence, outbox,
+  writer, and maintenance-authority projection that survives every Client and restart. It also consumes Remote Access
+  endpoint provenance that distinguishes PM-connector private ingress, hosted Funnel, and verified external host-Tailscale
   routes while deduplicating only by cryptographically verified server_id. A connector node identity is infrastructure
-  owned by Remote Access, never a second Server identity. Safe Bootstrap claims a local Server before optionally
-  entering fresh Full Server recovery; foreign-machine recovery creates a new Server and connector identity and pairs
-  Clients again, while exact same-host takeover requires exclusive collision fencing.
+  owned by Remote Access, never a second Server identity. Safe Bootstrap claims a local Server before optionally entering
+  fresh Full Server recovery; foreign-machine recovery creates a new Server and connector identity and pairs Clients
+  again, while exact same-host takeover requires exclusive collision fencing. DL-259 srv final, 2026-10-31: Full Server
+  recovery onto this computer first resolves the actual local Server. Dormant local capability is not a claim receipt.
+  A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start completion for durable roots
+  and immutable execution baseline, and the Backup owner’s maintenance/recovery authority are prerequisites for cmd.restore.server_full.
+  Reuse current verified prerequisites when already satisfied; otherwise hand off to their owner and wait. No automatic
+  self-approval, ordinary Client authority or invented desktop claim mechanism is admitted. Restore remains paused; pairing
+  and remote activation remain separate owner continuations after recovery.'
 gui_related: true
 gui_classification_reason: Schedule, bootstrap recovery, endpoint provenance, reconnect, disabled, and recovery-safe states are visible Server and Onboarding projections.
 depends_on: [SRV-002, SRV-004, SRV-007, SRV-008, SRV-009, BRS-012, BRS-015, BRS-016, RAS-015, SIR-005, SIR-006, SIR-007, SIR-011]
 unblocks: []
 acceptance_criteria:
-  - One Server-owned occurrence identity and durable outbox survive DST repeat/skip, sleeping or offline source Hosts, duplicate signals, multiple Clients, restart, and Project Move; a moved Project is rebound through owner preflight and one-writer transfer rather than duplicated scheduling.
-  - Backup policy, capture, encryption, repository, retention, restore, and RecoverySet semantics remain Backup/Restore-owned; Shared Integration Runtime retains governor, lease, outbox-continuity, and ObservableWork primitives.
-  - Server Catalog metadata and the catalog backup repository remain distinct from every independently recoverable Project repository; unrelated Project repositories are outside one another's prune authority.
-  - Project copy, Move, source snapshots, and Project Backup exclude connector secret state; portable Full Server Backup excludes it by default, and optional inclusion remains unavailable until portability and explicit protected consent are proven.
-  - Cloud destination traffic and credentials do not default through PM Remote Link, connector relays, or tailnet identity, and a tailnet login never unlocks Backup.
-  - Endpoint projections carry route provenance and capabilities for connector-private, Funnel, and external host-managed routes; all observations remain untrusted until Server identity verification and pairing, and duplicate labels or addresses never merge identities.
-  - Fresh recovery starts only after safe local claim, keeps schedules/execution/remote exposure paused until recovery-safe checks pass, creates new Server and connector identities on a foreign machine, and permits same-host identity recovery only behind exclusive collision fencing.
-  - SRV-009's verified pre-migration backup remains a prerequisite for that storage migration only; it is not evidence that BRS v2 handlers, native scheduling, restore, remote transport, or recovery execution exists.
-  - This static consumer admits no new command or EventRecord family; any future packet command remains handler_unavailable with expected_event_types=[] until its owner, central catalog, sole handler, persistence/receipt, and production wiring are independently closed.
+- One Server-owned occurrence identity and durable outbox survive DST repeat/skip, sleeping or offline source Hosts,
+  duplicate signals, multiple Clients, restart, and Project Move; a moved Project is rebound through owner preflight
+  and one-writer transfer rather than duplicated scheduling.
+- Backup policy, capture, encryption, repository, retention, restore, and RecoverySet semantics remain Backup/Restore-owned;
+  Shared Integration Runtime retains governor, lease, outbox-continuity, and ObservableWork primitives.
+- Server Catalog metadata and the catalog backup repository remain distinct from every independently recoverable Project
+  repository; unrelated Project repositories are outside one another's prune authority.
+- Project copy, Move, source snapshots, and Project Backup exclude connector secret state; portable Full Server Backup
+  excludes it by default, and optional inclusion remains unavailable until portability and explicit protected consent
+  are proven.
+- Cloud destination traffic and credentials do not default through PM Remote Link, connector relays, or tailnet identity,
+  and a tailnet login never unlocks Backup.
+- Endpoint projections carry route provenance and capabilities for connector-private, Funnel, and external host-managed
+  routes; all observations remain untrusted until Server identity verification and pairing, and duplicate labels or addresses
+  never merge identities.
+- Fresh recovery starts only after safe local claim, keeps schedules/execution/remote exposure paused until recovery-safe
+  checks pass, creates new Server and connector identities on a foreign machine, and permits same-host identity recovery
+  only behind exclusive collision fencing.
+- SRV-009's verified pre-migration backup remains a prerequisite for that storage migration only; it is not evidence
+  that BRS v2 handlers, native scheduling, restore, remote transport, or recovery execution exists.
+- This static consumer admits no new command or EventRecord family; any future packet command remains handler_unavailable
+  with expected_event_types=[] until its owner, central catalog, sole handler, persistence/receipt, and production wiring
+  are independently closed.
+- 'DL-259 srv final, 2026-10-31: Full Server recovery onto this computer first resolves the actual local Server. Dormant
+  local capability is not a claim receipt. A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start
+  completion for durable roots and immutable execution baseline, and the Backup owner’s maintenance/recovery authority
+  are prerequisites for cmd.restore.server_full. Reuse current verified prerequisites when already satisfied; otherwise
+  hand off to their owner and wait. No automatic self-approval, ordinary Client authority or invented desktop claim mechanism
+  is admitted. Restore remains paused; pairing and remote activation remain separate owner continuations after recovery.'
 validation_surfaces:
   - Plans/server_system_contracts.schema.json
   - Plans/server_system_contract_fixtures.json

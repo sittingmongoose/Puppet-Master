@@ -9,7 +9,8 @@
       "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply",
       "settings": "general.interaction.sound-effects (existing true)",
       "dry": "DR-043; DR-076",
-      "companions": "QA2PresentationPolicy.sound; pm7-qa2 source sound cases"
+      "companions": "QA2PresentationPolicy.sound; pm7-qa2 source sound cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q2",
@@ -19,7 +20,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "general.interaction.sound-effects",
       "dry": "DR-043",
-      "companions": "QA2PresentationPolicy.sound.unreadable_snapshot; sound binding cases"
+      "companions": "QA2PresentationPolicy.sound.unreadable_snapshot; sound binding cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q3",
@@ -29,7 +31,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-076",
-      "companions": "existing typed owner contract; no new envelope"
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q4",
@@ -39,7 +42,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-076",
-      "companions": "existing typed owner contract; no new envelope"
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q5",
@@ -49,7 +53,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-079",
-      "companions": "existing look controls; appearance contracts unchanged"
+      "companions": "existing look controls; appearance contracts unchanged",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q6",
@@ -59,7 +64,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "product_onboarding contracts; QA2PresentationPolicy.restore; reach/repoint cases"
+      "companions": "product_onboarding contracts; QA2PresentationPolicy.restore; reach/repoint cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q7",
@@ -69,7 +75,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "QA2PresentationPolicy.restore/choices; native backup owner contracts"
+      "companions": "QA2PresentationPolicy.restore/choices; native backup owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q8",
@@ -79,7 +86,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080; DR-076",
-      "companions": "existing choice-help and FileSafe owner shapes"
+      "companions": "existing choice-help and FileSafe owner shapes",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q9",
@@ -89,7 +97,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "QA2PresentationPolicy.choices.question_control_overlaps"
+      "companions": "QA2PresentationPolicy.choices.question_control_overlaps",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q10",
@@ -99,7 +108,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-076",
-      "companions": "existing typed owner contract; no new envelope"
+      "companions": "existing typed owner contract; no new envelope",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q11",
@@ -109,7 +119,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "general.visual.animation-speed; OS Reduced Motion (no inventory row)",
       "dry": "DR-077; DR-078",
-      "companions": "q11_row_motion_contract and 92 eligibility cases; glyph_catalog status marks"
+      "companions": "q11_row_motion_contract and 92 eligibility cases; glyph_catalog status marks",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q12",
@@ -119,7 +130,8 @@
       "commands": "CS-105; UCC-209; cmd.work.open",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-078",
-      "companions": "QA2PresentationPolicy.resources; resource scope cases"
+      "companions": "QA2PresentationPolicy.resources; resource scope cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q13",
@@ -129,7 +141,8 @@
       "commands": "CS-106; UCC-210; cmd.chat.processes.open",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-078",
-      "companions": "QA2PresentationPolicy.dock; 14 dock-provider steps"
+      "companions": "QA2PresentationPolicy.dock; 14 dock-provider steps",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q14",
@@ -139,7 +152,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-067",
-      "companions": "QA2PresentationPolicy.glass.bar_and_dock_plate"
+      "companions": "QA2PresentationPolicy.glass.bar_and_dock_plate",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q15",
@@ -149,7 +163,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-051; DR-076",
-      "companions": "glyph_catalog.qa2_actor_presentation.wand"
+      "companions": "glyph_catalog.qa2_actor_presentation.wand",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q16",
@@ -159,7 +174,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-051",
-      "companions": "glyph_catalog.qa2_actor_presentation.you; QA2PresentationPolicy.feedback"
+      "companions": "glyph_catalog.qa2_actor_presentation.you; QA2PresentationPolicy.feedback",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q17",
@@ -169,7 +185,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-072",
-      "companions": "QA2PresentationPolicy.feedback; control-feedback and schedule-pair cases"
+      "companions": "QA2PresentationPolicy.feedback; control-feedback and schedule-pair cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q20",
@@ -179,7 +196,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-072",
-      "companions": "QA2PresentationPolicy.glass; shared hover source boundary"
+      "companions": "QA2PresentationPolicy.glass; shared hover source boundary",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q21",
@@ -189,7 +207,8 @@
       "commands": "CS-105; UCC-209; ui.settings.pip_editor.open",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-079",
-      "companions": "existing Pip-editor and family binding rows"
+      "companions": "existing Pip-editor and family binding rows",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "QA2-Q22",
@@ -199,7 +218,8 @@
       "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply",
       "settings": "general.visual.theme; general.visual.nier-parts; general.visual.nier-background; retired general.visual.nier-mode",
       "dry": "DR-056",
-      "companions": "nier_theme_contract; Settings/onboarding/GUI schemas; 3 non_dispatch checkbox tombstones"
+      "companions": "nier_theme_contract; Settings/onboarding/GUI schemas; 3 non_dispatch checkbox tombstones",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H2",
@@ -209,7 +229,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H3",
@@ -219,7 +240,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H4",
@@ -229,7 +251,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-076",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H5",
@@ -239,7 +262,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-067",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H6",
@@ -249,7 +273,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-075",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H8",
@@ -259,7 +284,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "H9",
@@ -269,7 +295,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-067",
-      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts"
+      "companions": "QA2PresentationPolicy and existing onboarding/layout owner contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-01",
@@ -279,7 +306,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-02",
@@ -289,7 +317,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-03",
@@ -299,7 +328,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-04",
@@ -309,7 +339,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-05",
@@ -319,7 +350,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-06",
@@ -329,7 +361,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-07",
@@ -339,7 +372,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-08",
@@ -349,7 +383,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-09",
@@ -359,7 +394,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-10",
@@ -369,7 +405,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-11",
@@ -379,7 +416,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-12",
@@ -389,7 +427,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts"
+      "companions": "product_onboarding_contracts onb_setup_plan owner/visibility conditions; existing Forge contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-13",
@@ -399,7 +438,8 @@
       "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs"
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-14",
@@ -409,7 +449,8 @@
       "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs"
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-15",
@@ -419,7 +460,8 @@
       "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs"
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-16",
@@ -429,7 +471,8 @@
       "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs"
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-17",
@@ -439,7 +482,8 @@
       "commands": "cmd.backup.destination.add; cmd.backup.destination.test",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "backup_restore owner schemas; existing onboarding source/locator refs"
+      "companions": "backup_restore owner schemas; existing onboarding source/locator refs",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-18",
@@ -449,7 +493,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "product_onboarding source/profile identity; existing owner currentness fences"
+      "companions": "product_onboarding source/profile identity; existing owner currentness fences",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-19",
@@ -459,7 +504,8 @@
       "commands": "CS-069; cmd.settings.open",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "none needed: existing owner boundary suffices",
-      "companions": "existing object-format owner contract; onboarding does not add a field"
+      "companions": "existing object-format owner contract; onboarding does not add a field",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-20",
@@ -469,7 +515,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "product_onboarding action/plan contracts"
+      "companions": "product_onboarding action/plan contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-23",
@@ -479,7 +526,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-080",
-      "companions": "product_onboarding action/plan contracts"
+      "companions": "product_onboarding action/plan contracts",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "FF-12b",
@@ -489,7 +537,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "existing auth-profile generation/host/Client fences; source callback negatives"
+      "companions": "existing auth-profile generation/host/Client fences; source callback negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-01",
@@ -499,7 +548,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-02",
@@ -509,7 +559,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-03",
@@ -519,7 +570,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-04",
@@ -529,7 +581,8 @@
       "commands": "cmd.remote_access.tailscale.setup.start",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-05",
@@ -539,7 +592,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-06",
@@ -549,17 +603,19 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-07",
       "change": "Own certificate uses protected certificate/key owner continuation",
       "owner": "RAS-005; PWIZ-025",
       "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; CERT-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "owner_question_CERT-1"
     },
     {
       "id": "SCR-08",
@@ -569,7 +625,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-09",
@@ -579,7 +636,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-10",
@@ -589,7 +647,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-11",
@@ -599,7 +658,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-12",
@@ -609,27 +669,30 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-13",
       "change": "Full recovery stays safe bootstrap; no remote activation as restore side effect",
       "owner": "PWIZ-025; BRS-019; SRV-013",
       "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; DESKTOP-RESTORE-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "owner_question_DESKTOP-RESTORE-1"
     },
     {
       "id": "SCR-14",
       "change": "Cloud claim starts through a protected private bootstrap channel",
       "owner": "PWIZ-025; SRV-004; RAS-014",
       "wiring": "UIW-015; WM-041; UCC-152",
-      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
+      "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074; CLOUD-1 in OWNER-QUESTIONS.md (missing owner handoff is not fabricated)",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "owner_question_CLOUD-1"
     },
     {
       "id": "SCR-15",
@@ -639,7 +702,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-16",
@@ -649,7 +713,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-17",
@@ -659,7 +724,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "SCR-18",
@@ -669,7 +735,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness"
+      "companions": "product_onboarding/remote_access/server owner contracts; secret-free typed refs and currentness",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P01",
@@ -679,7 +746,8 @@
       "commands": "none needed: catalog filtering adds no command",
       "settings": "none needed: catalog entry, not a preference",
       "dry": "DR-005; DR-081",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P02",
@@ -689,7 +757,8 @@
       "commands": "none needed: catalog filtering adds no command",
       "settings": "none needed: catalog entry, not a preference",
       "dry": "DR-005; DR-081",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P03",
@@ -699,7 +768,8 @@
       "commands": "none needed: catalog filtering adds no command",
       "settings": "none needed: catalog entry, not a preference",
       "dry": "DR-005; DR-081",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P04",
@@ -709,7 +779,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005; DR-081",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P05",
@@ -719,7 +790,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P06",
@@ -729,7 +801,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P07",
@@ -739,7 +812,8 @@
       "commands": "none needed: no website login; existing runtime/profile setup (CBP-022)",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "existing OpenCode server/profile contracts and installation/health/discovery boundaries"
+      "companions": "existing OpenCode server/profile contracts and installation/health/discovery boundaries",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P08",
@@ -749,7 +823,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P09",
@@ -759,7 +834,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P10",
@@ -769,7 +845,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P11",
@@ -779,7 +856,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P12",
@@ -789,7 +867,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P13",
@@ -799,7 +878,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P14",
@@ -809,7 +889,8 @@
       "commands": "none needed: admission timing, labels or typed ID validation",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P15",
@@ -819,7 +900,8 @@
       "commands": "none needed: admission timing, labels or typed ID validation",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P17",
@@ -829,7 +911,8 @@
       "commands": "none needed: admission timing, labels or typed ID validation",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P18",
@@ -839,7 +922,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
       "dry": "DR-005; DR-081",
-      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules"
+      "companions": "multi_account_contracts; provider-entry amendments; Models catalog rules",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "P16 / T15",
@@ -849,7 +933,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "none needed: existing owner boundary suffices",
-      "companions": "existing tips/help presentation; no prices or limits frozen"
+      "companions": "existing tips/help presentation; no prices or limits frozen",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T01",
@@ -859,7 +944,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T02",
@@ -869,7 +955,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T03",
@@ -879,7 +966,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T04",
@@ -889,7 +977,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T05",
@@ -899,7 +988,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T06",
@@ -909,7 +999,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T07",
@@ -919,7 +1010,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T08",
@@ -929,7 +1021,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T09",
@@ -939,7 +1032,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T10",
@@ -949,7 +1043,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T11",
@@ -959,7 +1054,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T12",
@@ -969,7 +1065,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T13",
@@ -979,7 +1076,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T14",
@@ -989,7 +1087,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T16",
@@ -999,7 +1098,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T17",
@@ -1009,7 +1109,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "T18",
@@ -1019,7 +1120,8 @@
       "commands": "none needed: help changes no owner effect; CS-069 boundary",
       "settings": "general.interaction.mode (shared tips/help mode)",
       "dry": "DR-043; DR-076",
-      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas"
+      "companions": "onboarding choice-help and guided_tour presentation contracts; unchanged functional owner schemas",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D1",
@@ -1029,7 +1131,8 @@
       "commands": "cmd.forge.repository.create; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D2",
@@ -1039,7 +1142,8 @@
       "commands": "CS-069; cmd.settings.open",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D3",
@@ -1049,7 +1153,8 @@
       "commands": "cmd.remote_access.proxy.generate",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-037",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D4",
@@ -1059,7 +1164,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "none needed: existing owner boundary suffices",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D5",
@@ -1069,7 +1175,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "ai.usage.free-models-auto-apply (existing); disclosure is not a preference",
       "dry": "DR-081",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D6",
@@ -1079,7 +1186,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D7",
@@ -1089,7 +1197,8 @@
       "commands": "cmd.remote_access.tailscale.setup.start; CS-074",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005; DR-037",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ONB-D8",
@@ -1099,7 +1208,8 @@
       "commands": "CS-069; UCC-106; existing ui.onboarding actions",
       "settings": "none needed: grouped owner intent; existing FileSafe individual configuration",
       "dry": "DR-013",
-      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives"
+      "companions": "DL-259 product-ruling annotations; typed owner schemas and focused negatives",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Oct31-Q1",
@@ -1109,7 +1219,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "general.interaction.sound-effects; general.visual.pip-parts (existing gates)",
       "dry": "DR-043; DR-076",
-      "companions": "PipVoiceRoomPolicy; 3 positive/negative schema cases"
+      "companions": "PipVoiceRoomPolicy; 3 positive/negative schema cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Oct31-Q2",
@@ -1119,7 +1230,8 @@
       "commands": "none needed: no new semantic action",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "none needed: existing owner boundary suffices",
-      "companions": "PresentationPolicy; inbox-push relational cases"
+      "companions": "PresentationPolicy; inbox-push relational cases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ELI5-control",
@@ -1129,7 +1241,8 @@
       "commands": "CS-069; UCC-106; cmd.settings.transaction.preview; cmd.settings.transaction.apply; UCC-175",
       "settings": "general.interaction.mode; option_labels Plain English/Expert",
       "dry": "DR-043",
-      "companions": "guided_tour_presentation_contract.eli5; x-product-rulings.interaction_mode"
+      "companions": "guided_tour_presentation_contract.eli5; x-product-rulings.interaction_mode",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "ELI5-tips",
@@ -1139,7 +1252,8 @@
       "commands": "none needed: no chat reply command or new effect",
       "settings": "general.interaction.mode",
       "dry": "DR-043; DR-076",
-      "companions": "choice_help_presentation; guided Tour no-rewrite constraints"
+      "companions": "choice_help_presentation; guided Tour no-rewrite constraints",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Free-catalog",
@@ -1149,7 +1263,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.usage.free-models-auto-apply (existing)",
       "dry": "DR-081",
-      "companions": "x-product-rulings.onboarding_free_front/advanced_free_providers"
+      "companions": "x-product-rulings.onboarding_free_front/advanced_free_providers",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Provider-cursor_sdk",
@@ -1159,7 +1274,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (data-backed entry)",
       "dry": "DR-005",
-      "companions": "x-provider-entry-amendments cursor_sdk; ProviderEntryPolicy"
+      "companions": "x-provider-entry-amendments cursor_sdk; ProviderEntryPolicy",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Provider-alibaba_token_plan",
@@ -1169,7 +1285,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "ai.accounts.provider-connections (data-backed entry)",
       "dry": "DR-005",
-      "companions": "x-provider-entry-amendments alibaba_token_plan; ProviderEntryPolicy"
+      "companions": "x-provider-entry-amendments alibaba_token_plan; ProviderEntryPolicy",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Provider-names",
@@ -1179,7 +1296,8 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: existing provider records keep their IDs",
       "dry": "DR-005",
-      "companions": "x-provider-entry-amendments.display_aliases"
+      "companions": "x-provider-entry-amendments.display_aliases",
+      "state": "covered_by_current_contract"
     },
     {
       "id": "Codex-remote-auth",
@@ -1189,7 +1307,85 @@
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; CS-074; UCC-152",
       "settings": "none needed: owner data or presentation, not a preference",
       "dry": "DR-005",
-      "companions": "existing protected auth-profile fields; D6 prerequisite annotation"
+      "companions": "existing protected auth-profile fields; D6 prerequisite annotation",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-CERT",
+      "change": "Server-only certificate/key selection must finish before activation/Ready",
+      "owner": "RAS-005; PWIZ-025",
+      "wiring": "CERT-1: owner selection route not admitted",
+      "commands": "CERT-1: named selector admission is open",
+      "settings": "none needed: TLS material is owner data",
+      "dry": "DR-005",
+      "companions": "PostcommitRemoteSetupPolicy.certificate_without_owner_answer",
+      "state": "owner_question_CERT-1"
+    },
+    {
+      "id": "SRV-CLOUD",
+      "change": "First cloud claim requires established owner-verified private channel",
+      "owner": "RAS-007; SRV-005",
+      "wiring": "UIW-015; catalog.server_claim",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; CLOUD-1 for initial channel",
+      "settings": "none needed: bootstrap path is not a preference",
+      "dry": "DR-005",
+      "companions": "existing Server claim proofs; PostcommitRemoteSetupPolicy",
+      "state": "owner_question_CLOUD-1"
+    },
+    {
+      "id": "SRV-DESKTOP-RESTORE",
+      "change": "Actual local claim, bootstrap roots/baseline and maintenance before full restore",
+      "owner": "PWIZ-025; SRV-013",
+      "wiring": "catalog.server_claim; catalog.restore_server_full",
+      "commands": "cmd.server.claim; cmd.server.bootstrap.start; cmd.restore.server_full; DESKTOP-RESTORE-1",
+      "settings": "none needed: existing owner prerequisites",
+      "dry": "DR-005; DR-037",
+      "companions": "existing claim/bootstrap/restore contracts; no self-approval or new proof invented",
+      "state": "owner_question_DESKTOP-RESTORE-1"
+    },
+    {
+      "id": "SRV-CODE",
+      "change": "Owner-issued opaque code; blank invalid; owner resolution before identity/pairing",
+      "owner": "RAS-014",
+      "wiring": "UIW-015; catalog.remote_access_remote_link_open",
+      "commands": "cmd.remote_access.remote_link.open; REMOTE-CODE-1 for raw-code resolver/grammar",
+      "settings": "none needed: unverified input, not a preference",
+      "dry": "DR-005",
+      "companions": "onboarding plan blank-code negative; no guessed grammar",
+      "state": "owner_question_REMOTE-CODE-1"
+    },
+    {
+      "id": "SRV-EFFECTIVE-CONTEXT",
+      "change": "App selects actual owner-result IDs/readiness, not labels or setup intent",
+      "owner": "PWIZ-021; SRV-008; WM-041",
+      "wiring": "UIW-015; WM-041",
+      "commands": "none needed: join existing owner receipts/projections, no handoff writer",
+      "settings": "none needed: existing registries remain authoritative",
+      "dry": "DR-005",
+      "companions": "PostcommitRemoteSetupPolicy.actual_app_context; existing stable-ID owner types",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-REMOTE-ORDER",
+      "change": "Optional remote setup leaves Creating; separate view after owner settlement",
+      "owner": "PWIZ-025; CS-069; UCC-106; WM-041",
+      "wiring": "UIW-015; WM-041",
+      "commands": "existing Remote Access domain commands; CS-074; UCC-152",
+      "settings": "none needed: unchanged eleven-stage journey",
+      "dry": "DR-005",
+      "companions": "automatic_preparation_owner_projection.preparation_phase/setup_settlement_ref; two negatives",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "SRV-REMOTE-LATER",
+      "change": "Later always finishes without waiting, undoing effects or inventing Ready",
+      "owner": "PWIZ-025; CS-069; UCC-106",
+      "wiring": "UIW-015; WM-041",
+      "commands": "ui.onboarding.skip / close existing terminal exit; no new mutation",
+      "settings": "none needed: local exit, not preference",
+      "dry": "DR-005",
+      "companions": "PostcommitRemoteSetupPolicy; Later/Creating negatives",
+      "state": "covered_by_current_contract"
     }
   ],
   "sources": [
@@ -1215,8 +1411,8 @@
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
-      "sha256": null,
-      "state": "final report not yet supplied"
+      "sha256": "bdb248be8b5f3b8e10d5f88ce4b253d9271b17daac03add652f91766518a920a",
+      "state": "final report read in full and minimum rules applied; four explicit owner questions"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md",
@@ -1256,7 +1452,6 @@
   ],
   "unit_id_check": "pass",
   "pending_sources": [
-    "apply received srv final-report delta",
     "fields final report",
     "lead final GUI names/head"
   ],
@@ -1267,5 +1462,11 @@
     "H7",
     "FF-21",
     "FF-22"
+  ],
+  "owner_questions": [
+    "CERT-1",
+    "CLOUD-1",
+    "DESKTOP-RESTORE-1",
+    "REMOTE-CODE-1"
   ]
 }

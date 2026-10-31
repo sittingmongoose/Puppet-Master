@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L18594-L19106
+Source lines: L18594-L19179
 
-Source SHA256: `e41b607ab847e23a3732c947b7fb0886104ea5b74791ca2f743251066085d433`
+Source SHA256: `0eca365055a007552e257b90a4348b5a8c4436533acb4f513488860932aa29fb`
 
 ---
 
@@ -364,7 +364,42 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   provider-conformance checklist, not a wizard warning, badge or disabled choice. DL-259 D6, Jared 2026-10-31: the Codex
   remote/headless device-code alternative requires enabling device-code login in ChatGPT security settings first, or
   the corresponding workspace permission by its administrator. This remains an alternative inside Sign in with ChatGPT,
-  not another top-level auth family.'
+  not another top-level auth family. DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and
+  matching private key owned by the selected Server. Their contents never pass through onboarding or a Client/browser
+  file upload. A permissioned Server-side material selection and current validation must complete before proxy generation/activation
+  or Ready can depend on it; no answer means pending or an explicit Later, never guessed success. The existing proxy
+  preview/generation commands do not by themselves admit a missing certificate-selection command or proof. DL-259 srv
+  final, 2026-10-31: an unclaimed cloud computer is claimed only through an already established, owner-verified local/private
+  setup channel. A typed private/VPN/tailnet address alone proves neither reachability, installation nor claim authority.
+  The claim uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate post-claim cmd.server.bootstrap.start.
+  No public unclaimed setup, automatic SSH tunnel, provider-console automation or tailnet enrollment is inferred from
+  choosing the computer. If a verified private claim channel is absent, remain in the owner handoff without claiming
+  setup or trust. DL-259 srv final, 2026-10-31: Full Server recovery onto this computer first resolves the actual local
+  Server. Dormant local capability is not a claim receipt. A current safe local/private cmd.server.claim result, separate
+  cmd.server.bootstrap.start completion for durable roots and immutable execution baseline, and the Backup owner’s maintenance/recovery
+  authority are prerequisites for cmd.restore.server_full. Reuse current verified prerequisites when already satisfied;
+  otherwise hand off to their owner and wait. No automatic self-approval, ordinary Client authority or invented desktop
+  claim mechanism is admitted. Restore remains paused; pairing and remote activation remain separate owner continuations
+  after recovery. DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS link or owner-issued
+  opaque short code. Preserve the code’s owner-defined representation; the wizard invents no alphabet, length, letter-first
+  rule or case conversion. Empty input is invalid, and nonblank text alone is not a valid-code, endpoint, identity, pairing
+  or Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with its bounded abuse/expiry
+  policy before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
+  closed without falling back to another Server. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project
+  creation/open/restore result and its actual prerequisites. It does not run optional remote-access configuration. After
+  that owner settlement, a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote
+  Access continuation, before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale
+  authorization, new Remote Link output, and managed/export/existing proxy steps use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command. DL-259 srv final,
+  2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell, Settings and status
+  views to the stable Client, Server, Execution Host, route and Project identities supplied by current owner results
+  and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed setup
+  plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -465,6 +500,44 @@ acceptance_criteria:
 - 'DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
   in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
   alternative inside Sign in with ChatGPT, not another top-level auth family.'
+- 'DL-259 srv final, 2026-10-31: My own certificate means an existing certificate and matching private key owned by the
+  selected Server. Their contents never pass through onboarding or a Client/browser file upload. A permissioned Server-side
+  material selection and current validation must complete before proxy generation/activation or Ready can depend on it;
+  no answer means pending or an explicit Later, never guessed success. The existing proxy preview/generation commands
+  do not by themselves admit a missing certificate-selection command or proof.'
+- 'DL-259 srv final, 2026-10-31: an unclaimed cloud computer is claimed only through an already established, owner-verified
+  local/private setup channel. A typed private/VPN/tailnet address alone proves neither reachability, installation nor
+  claim authority. The claim uses cmd.server.claim with its exact identity/session proofs; bootstrap remains the separate
+  post-claim cmd.server.bootstrap.start. No public unclaimed setup, automatic SSH tunnel, provider-console automation
+  or tailnet enrollment is inferred from choosing the computer. If a verified private claim channel is absent, remain
+  in the owner handoff without claiming setup or trust.'
+- 'DL-259 srv final, 2026-10-31: Full Server recovery onto this computer first resolves the actual local Server. Dormant
+  local capability is not a claim receipt. A current safe local/private cmd.server.claim result, separate cmd.server.bootstrap.start
+  completion for durable roots and immutable execution baseline, and the Backup owner’s maintenance/recovery authority
+  are prerequisites for cmd.restore.server_full. Reuse current verified prerequisites when already satisfied; otherwise
+  hand off to their owner and wait. No automatic self-approval, ordinary Client authority or invented desktop claim mechanism
+  is admitted. Restore remains paused; pairing and remote activation remain separate owner continuations after recovery.'
+- 'DL-259 srv final, 2026-10-31: a Remote Link input is an owner-issued protected HTTPS link or owner-issued opaque short
+  code. Preserve the code’s owner-defined representation; the wizard invents no alphabet, length, letter-first rule or
+  case conversion. Empty input is invalid, and nonblank text alone is not a valid-code, endpoint, identity, pairing or
+  Ready proof. After Review, the trusted Remote Link owner must validate/resolve it with its bounded abuse/expiry policy
+  before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed
+  without falling back to another Server.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
+  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
+  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
+- 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
+  Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
+  owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
+  setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py

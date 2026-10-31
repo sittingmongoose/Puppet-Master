@@ -15963,6 +15963,30 @@
                     }
                   }
                 }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "remote_mode": {
+                      "const": "remote_link"
+                    },
+                    "journey": {
+                      "const": "connect_existing"
+                    }
+                  },
+                  "required": [
+                    "journey",
+                    "remote_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "remote_endpoint": {
+                      "type": "string",
+                      "pattern": "\\S"
+                    }
+                  }
+                }
               }
             ],
             "x-puppet-master-assertions": [

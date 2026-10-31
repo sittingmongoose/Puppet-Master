@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4979-L5096
+Source lines: L4979-L5114
 
-Source SHA256: `a3397419c621ec7b5fdb2c61f6cb98ca95bcbc34b66d698ca4558fb2e38c9f63`
+Source SHA256: `94950dd056b0bf6f815b35c86ad97341a368e6506a53d291c00b76c6e95f5b88`
 
 ---
 
@@ -63,7 +63,16 @@ canonical_text: 'Exactly five canonical cmd.settings commands are centrally regi
   listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
   connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
   connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
-  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged.'
+  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. DL-259
+  srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual prerequisites.
+  It does not run optional remote-access configuration. After that owner settlement, a separate postcommit remote-setup
+  view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free Models
+  continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output, and managed/export/existing
+  proxy steps use their existing domain owners, approvals and truthful results. Later always finishes onboarding and
+  leaves the committed Project intact: it does not wait for optional setup, certify it, undo owner effects or invent
+  readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing cancel/background rules,
+  and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close semantics supply
+  this exit without a new mutation command.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
@@ -108,6 +117,15 @@ acceptance_criteria:
   connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
   connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
   cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
+  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
+  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high

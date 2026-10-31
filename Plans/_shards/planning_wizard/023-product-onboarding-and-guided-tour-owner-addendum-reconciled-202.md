@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2373
+Source lines: L1781-L2384
 
-Source SHA256: `b28a3459e18dbf9c27eb0f80083009e575abcf210c03058510575afd642d861a`
+Source SHA256: `713d97d234d8b55a17871628581e937ed1ed94de3fda26ee55303db6d8d8c548`
 
 ---
 
@@ -196,7 +196,12 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   Plan retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go
   gateway. A label change never changes a saved provider/account ID. DL-259 P18/D5: any currently usable free route contributes
   to the same AI readiness summary as a usable paid route. A free-only setup can be Ready; catalog presence or sign-in
-  alone still cannot prove usability.'
+  alone still cannot prove usability. DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows.
+  Enter/finish binds the shell, Settings and status views to the stable Client, Server, Execution Host, route and Project
+  identities supplied by current owner results and registries, with their actual readiness/deferred state. Display names
+  never become IDs, and the reviewed setup plan is intent rather than effective state. Onboarding creates no second account/server/Project
+  registry or durable handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections,
+  followed by their normal updates. No concept-global object, event or store key is a product contract.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -309,6 +314,12 @@ acceptance_criteria:
   a saved provider/account ID.'
 - 'DL-259 P18/D5: any currently usable free route contributes to the same AI readiness summary as a usable paid route.
   A free-only setup can be Ready; catalog presence or sign-in alone still cannot prove usability.'
+- 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
+  Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
+  owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
+  setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

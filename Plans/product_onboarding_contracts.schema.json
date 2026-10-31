@@ -2182,6 +2182,30 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "remote_mode": {
+                "const": "remote_link"
+              },
+              "journey": {
+                "const": "connect_existing"
+              }
+            },
+            "required": [
+              "journey",
+              "remote_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remote_endpoint": {
+                "type": "string",
+                "pattern": "\\S"
+              }
+            }
+          }
         }
       ],
       "x-puppet-master-assertions": [
@@ -7674,6 +7698,15 @@
         "observed_at_utc": {
           "type": "string",
           "format": "date-time"
+        },
+        "preparation_phase": {
+          "enum": [
+            "creating",
+            "remote_setup_after_settlement"
+          ]
+        },
+        "setup_settlement_ref": {
+          "$ref": "#/$defs/safe_ref"
         }
       },
       "allOf": [
@@ -8046,6 +8079,29 @@
               },
               "production_receipt_ref": {
                 "$ref": "#/$defs/safe_ref"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "owner_domain": {
+                "const": "remote_access"
+              }
+            },
+            "required": [
+              "owner_domain"
+            ]
+          },
+          "then": {
+            "required": [
+              "preparation_phase",
+              "setup_settlement_ref"
+            ],
+            "properties": {
+              "preparation_phase": {
+                "const": "remote_setup_after_settlement"
               }
             }
           }
@@ -10245,5 +10301,23 @@
       "Settings_matches": true
     },
     "usable_AI_summary": "all_current_usable_paid_and_free_routes"
+  },
+  "x-postcommit-remote-setup-policy": {
+    "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "stage": "automatic_preparation",
+    "remote_in_Creating": false,
+    "remote_after_owner_settlement": true,
+    "remote_before_normal_provider_continuation": true,
+    "later_finishes_onboarding": true,
+    "later_undoes_committed_Project": false,
+    "later_infers_ready": false,
+    "actual_app_context": "existing_owner_results_and_registry_join",
+    "certificate_without_owner_answer": "pending_or_Later",
+    "cloud_claim_requires_verified_private_channel": true,
+    "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
+    "code_grammar": "Remote_Link_owner_defined",
+    "nonblank_code_proves_validity": false,
+    "new_primary_command": false
   }
 }

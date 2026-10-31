@@ -7903,6 +7903,65 @@
         "source_access_authorization_refs": [],
         "project_created": false
       }
+    },
+    {
+      "name": "DL259.postcommit_remote_setup_observes_owner",
+      "definition": "automatic_preparation_owner_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.automatic_preparation_owner_projection.v2",
+        "schema_version": "2.0.0",
+        "automatic_preparation_projection_id": "projection:onboarding:auto:4",
+        "onboarding_session_id": "onboarding:auto:session:1",
+        "stage": "automatic_preparation",
+        "simple_path_selection": "setup_server",
+        "scm_backend_selection": null,
+        "forge_provider_selection": null,
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "target:auto:host",
+        "expected_revision": 3,
+        "continuation_generation": 2,
+        "projection_generation": 4,
+        "owner_domain": "remote_access",
+        "owner_operation_id": "operation:auto:host:1",
+        "observable_work_id": "observable:auto:host:1",
+        "dedupe_key": "dedupe:auto:host:1",
+        "work_state": "running",
+        "human_phase": "Verifying declared host checks",
+        "wait_reason": null,
+        "input_request_ref": null,
+        "progress_kind": "steps",
+        "completed_units": 2,
+        "total_units": 5,
+        "progress_source": "measured",
+        "can_cancel": true,
+        "can_background": true,
+        "can_retry": false,
+        "result_status": "pending",
+        "owner_result_ref": null,
+        "error_ref": null,
+        "production_receipt_ref": null,
+        "evidence_class": "production_owner_projection",
+        "production_owner_work": true,
+        "production_readiness": false,
+        "native_runtime_exercised": true,
+        "currentness": {
+          "session_match": true,
+          "path_match": true,
+          "reviewed_setup_plan_revision_match": true,
+          "approved_setup_plan_sha256_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_existing_operation_by_dedupe_key",
+        "observed_at_utc": "2026-09-01T00:00:03Z",
+        "preparation_phase": "remote_setup_after_settlement",
+        "setup_settlement_ref": "settlement:reviewed-setup-01"
+      }
     }
   ],
   "invalid": [
@@ -13851,6 +13910,33 @@
         "repository_owner_scope": "personal"
       },
       "expected_error": "DL-259 provider/owner privacy"
+    },
+    {
+      "name": "DL259.remote_setup_not_in_Creating",
+      "definition": "automatic_preparation_owner_projection",
+      "base_valid": "DL259.postcommit_remote_setup_observes_owner",
+      "patch": {
+        "preparation_phase": "creating"
+      },
+      "expected_error": "Remote setup follows owner settlement"
+    },
+    {
+      "name": "DL259.remote_setup_requires_actual_settlement_ref",
+      "definition": "automatic_preparation_owner_projection",
+      "base_valid": "DL259.postcommit_remote_setup_observes_owner",
+      "remove": [
+        "setup_settlement_ref"
+      ],
+      "expected_error": "No optional remote setup from intent alone"
+    },
+    {
+      "name": "DL259.Remote_Link_blank_is_not_a_code",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "valid.setup_plan.connect_existing.remote_link_reference",
+      "patch": {
+        "remote_endpoint": "   "
+      },
+      "expected_error": "Blank input is invalid; no code grammar is invented"
     }
   ],
   "resolved_owner_inputs": {

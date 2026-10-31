@@ -3115,6 +3115,27 @@
           "const": true
         }
       }
+    },
+    "PostcommitRemoteSetupPolicy": {
+      "description": "DL-259 real product continuation; static descriptor, no owner admission or native proof.",
+      "const": {
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "stage": "automatic_preparation",
+        "remote_in_Creating": false,
+        "remote_after_owner_settlement": true,
+        "remote_before_normal_provider_continuation": true,
+        "later_finishes_onboarding": true,
+        "later_undoes_committed_Project": false,
+        "later_infers_ready": false,
+        "actual_app_context": "existing_owner_results_and_registry_join",
+        "certificate_without_owner_answer": "pending_or_Later",
+        "cloud_claim_requires_verified_private_channel": true,
+        "desktop_full_restore_requires_claim_bootstrap_and_maintenance": true,
+        "code_grammar": "Remote_Link_owner_defined",
+        "nonblank_code_proves_validity": false,
+        "new_primary_command": false
+      }
     }
   }
 }

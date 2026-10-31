@@ -7832,7 +7832,15 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
   chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
   local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
-  tag is retired.'
+  tag is retired. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result
+  and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement, a
+  separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before
+  the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
+  new Remote Link output, and managed/export/existing proxy steps use their existing domain owners, approvals and truthful
+  results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for optional setup,
+  certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the
+  owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing whole-session
+  ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
@@ -7909,6 +7917,15 @@ acceptance_criteria:
   change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the
   preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
   setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
+  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
+  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json

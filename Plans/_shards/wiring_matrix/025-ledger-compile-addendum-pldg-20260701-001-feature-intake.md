@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4033
+Source lines: L3496-L4062
 
-Source SHA256: `b21bb1ea69cc7a9a215f63bbf3cd86a0aa52271cbef9af636d9af0d8759f1c7e`
+Source SHA256: `159440f0ecb97013211768be4734b2539fd7ca4b98247313676df7c2c7e16b55`
 
 ---
 
@@ -146,7 +146,21 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
   browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
   device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged.'
+  stays external and unmanaged. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore
+  result and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
+  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
+  new Remote Link output, and managed/export/existing proxy steps use their existing domain owners, approvals and truthful
+  results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for optional setup,
+  certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the
+  owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing whole-session
+  ui.onboarding.skip/close semantics supply this exit without a new mutation command. DL-259 srv final, 2026-10-31: what
+  the person actually set up is what the app shows. Enter/finish binds the shell, Settings and status views to the stable
+  Client, Server, Execution Host, route and Project identities supplied by current owner results and registries, with
+  their actual readiness/deferred state. Display names never become IDs, and the reviewed setup plan is intent rather
+  than effective state. Onboarding creates no second account/server/Project registry or durable handoff writer; its initial
+  context is a non-authoritative join of existing owner receipts/projections, followed by their normal updates. No concept-global
+  object, event or store key is a product contract.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -311,6 +325,21 @@ acceptance_criteria:
   permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
   through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
   Tailscale stays external and unmanaged.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and managed/export/existing proxy steps use their existing domain owners, approvals and truthful results. Later always
+  finishes onboarding and leaves the committed Project intact: it does not wait for optional setup, certify it, undo
+  owner effects or invent readiness. Unstarted setup is deferred; any already-started work obeys the owner’s existing
+  cancel/background rules, and the app shows its actual result or pending state. Existing whole-session ui.onboarding.skip/close
+  semantics supply this exit without a new mutation command.'
+- 'DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows. Enter/finish binds the shell,
+  Settings and status views to the stable Client, Server, Execution Host, route and Project identities supplied by current
+  owner results and registries, with their actual readiness/deferred state. Display names never become IDs, and the reviewed
+  setup plan is intent rather than effective state. Onboarding creates no second account/server/Project registry or durable
+  handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections, followed by
+  their normal updates. No concept-global object, event or store key is a product contract.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json

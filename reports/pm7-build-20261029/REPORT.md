@@ -1,3 +1,26 @@
+# DL-259 server final-report delta — 2026-10-31
+
+**10 affected focused/generation/guard checks PASS.** Base checked checkpoint `ad73d6fe6d` is pushed to both remotes. The server final report is now read in full and its confirmed product rules are applied, prose first, then companions. Creating no longer executes optional remote setup: a separate view after actual owner settlement remains inside `automatic_preparation`, before the normal provider continuation. Later always finishes without undoing Project/owner effects or inventing Ready. Shell/Settings/status consume actual owner IDs and projections, not setup-plan intent or a concept-global handoff store.
+
+Minimum guards now cover Server-only certificate/key handling, verified private cloud claim, local claim + separate roots/baseline bootstrap + maintenance authority before full Server restore, and opaque owner-validated Remote Link codes. **No missing command, claim mechanism, code grammar or trust is fabricated.**
+
+| Open owner admission | Exact gap and current behavior |
+|---|---|
+| CERT-1 | No certificate/key selection command or TLS-material profile field exists in the current contract. Pending/Later until an owner is admitted. |
+| CLOUD-1 | Initial private claim-channel mechanism before connector enrollment is not defined. A typed private address alone is not proof. |
+| DESKTOP-RESTORE-1 | First claim proof for a dormant local Server needs a real native/local-bootstrap handoff; no self-approval. |
+| REMOTE-CODE-1 | Owner must supply code grammar/normalization/expiry and raw-code-to-address resolution; nonblank is not validity. |
+
+[OWNER-QUESTIONS.md](OWNER-QUESTIONS.md) contains concrete options and the safe rules, and was mailed to `pm7-build` for Jared. These questions are report-only, not product-provider caveats. All four remain explicit in [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md), now **126 product trace rows**; the table does not claim their missing owner admissions are complete. Fields final report, final GUI name alignment and independent audit remain outstanding.
+
+**Companions:** Remote Access owner projections now require `preparation_phase=remote_setup_after_settlement` plus `setup_settlement_ref`; no remote work in Creating. Blank Remote Link input on connect-existing is rejected. The existing inline Onboarding storage bundle is regenerated. A static PostcommitRemoteSetupPolicy adds three schema cases; no new primary, local action ID, setting, registry or writer. Tests: onboarding **126 positive / 239 negative**, Remote **110 / 107**, Tour **24 / 59**, provider policy **2 / 2**; PM7 **108 schema cases**. Native/visual/audio proof is not inferred.
+
+Census stays **1010 settings, 483 bindings, 715 Touch rows, 1269 production entries, 7242 units, 2957 shards / 99 sources**. Only eight edited-source shard groups change; prior 446 artifact hashes remain unchanged. Manifest now records 459 artifacts, including `srv-final-*` raw outputs and hashes. Draft-only setup-plan predicate naming was corrected before the passing fixtures and materialization.
+
+**No full gates, dry landing, landing, lock, reseal, baseline refresh or protected-governance edit.** No ledger compiled. Waiter remains off under direct-wake instruction. Next: the separately authorized DL-260 mainline cleanup; owner answers can be applied afterwards as their own amendment.
+
+---
+
 # DL-259 product-only onboarding amendment — 2026-10-31
 
 Branch `t3/plans/pm7-plans-canon`. **All 16 focused/generation/guard checks pass.** D1–D8, fields/provider corrections, shared ELI5 and two-version tips, current free-model source, Pip room Q1 B and inbox-placement Q2 A are applied. **20 owner/index docs; 85 existing unit bodies; new DL-259 and DR-081.** Prose preceded companions; no ledger was compiled.
