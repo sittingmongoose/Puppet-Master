@@ -1978,7 +1978,17 @@
         "azureProject": "Pick the Azure DevOps project first.",
         "remoteLink": "I need the Remote Link first.",
         "proxyAddress": "I need your web address first.",
-        "headscale": "I need the Headscale address."
+        "headscale": "I need the Headscale address.",
+        "instance": "Which server? I need its address.",
+        "azOrg": "Pick the organization first.",
+        "collection": "Which collection? Pick one first.",
+        "workspace": "Which workspace? Pick one first.",
+        "dcProject": "Which project does it go in?",
+        "bbProject": "Pick the Bitbucket project first.",
+        "teamProject": "Pick the team project first.",
+        "visibility": "Who can see it? Pick one first.",
+        "branch": "That branch name won't do yet.",
+        "repoName": "The service won't take that name."
       },
       "connect": {
         "route": {
@@ -1986,7 +1996,14 @@
         },
         "pair": {
           "codeWrong": "Hmm, that code doesn't match.",
-          "expired": "Oh, that request ran out of time."
+          "expired": "Oh, that request ran out of time.",
+          "fail": {
+            "unreachable": "I can't reach it. Is it on?",
+            "denied": "Oh. They said no over there.",
+            "expired": "Oh, that request ran out of time.",
+            "identity_mismatch": "Wait! That's not the right computer.",
+            "protocol_mismatch": "We speak different versions."
+          }
         }
       },
       "server": {
@@ -2003,6 +2020,9 @@
           "replayAdopt": "That answer was used already.",
           "codeMissing": "We need a new code first.",
           "wordsMissing": "I can't see its words. Ask again?"
+        },
+        "wait": {
+          "cloudPublic": "Not the public address, please!"
         }
       },
       "restore": {
@@ -2022,14 +2042,20 @@
       "nas": {
         "find": {
           "noAnswer": "Nobody answered at that address.",
-          "stillOff": "SSH is still switched off there."
+          "stillOff": "SSH is still switched off there.",
+          "portBad": "That port number won't work.",
+          "shareBad": {
+            "smb": "Hmm, that folder address looks off.",
+            "nfs": "Hmm, that export address looks off."
+          }
         },
         "identity": {
           "changedTitle": "Wait! Its ID has changed."
         },
         "key": {
           "passEmpty": "I need the passphrase first.",
-          "old": "That key is too old. Choose another."
+          "old": "That key is too old. Choose another.",
+          "accountNeeded": "Which account should it use there?"
         },
         "signin": {
           "wrong": "It didn't take that sign-in.",
@@ -2106,13 +2132,31 @@
         "keyBad": "Hmm, that key didn't work.",
         "signinFail": "Oh no. That sign-in didn't go through.",
         "skipNote": "No AI yet, so I'll nap. Add one later.",
-        "unavailable": "That account isn't here. Sign in again?"
+        "unavailable": "That account isn't here. Sign in again?",
+        "pasteBad": "Hmm, that code didn't take."
       },
       "like": {
         "unavailable": "That account isn't on this computer."
       },
       "free": {
         "limited": "That one's reached its limit for now."
+      },
+      "away": {
+        "setup": {
+          "fail": {
+            "denied": "Tailscale said no to that.",
+            "expired": "The sign-in ran out of time.",
+            "deviceApproval": "It needs an admin's OK first.",
+            "routeFailed": "It answered, but the line dropped.",
+            "hsDenied": "Headscale didn't let it in.",
+            "hsUnreachable": "Headscale isn't answering.",
+            "unreachable": "The internet can't reach it yet.",
+            "dns": "That name doesn't point here yet.",
+            "cert": "The certificate didn't take.",
+            "live": "Live updates are blocked there.",
+            "relay": "The Remote Link isn't answering."
+          }
+        }
       }
     },
     "cheer": {
@@ -2134,7 +2178,17 @@
         "azureProject": "Project picked!",
         "remoteLink": "Link in. Thank you!",
         "proxyAddress": "Address in. Lovely.",
-        "headscale": "Got it. Thank you!"
+        "headscale": "Got it. Thank you!",
+        "instance": "Address in. Let's go!",
+        "azOrg": "Organization picked!",
+        "collection": "Collection picked!",
+        "workspace": "Workspace picked!",
+        "dcProject": "Project picked!",
+        "bbProject": "Project picked!",
+        "teamProject": "Team project picked!",
+        "visibility": "Got it. That's settled.",
+        "branch": "Good branch name!",
+        "repoName": "That name works!"
       },
       "connect": {
         "route": {
@@ -2142,7 +2196,14 @@
         },
         "pair": {
           "codeWrong": "That's the one. Paired!",
-          "expired": "Fresh request. Try now!"
+          "expired": "Fresh request. Try now!",
+          "fail": {
+            "unreachable": "Reached it! Hello there.",
+            "denied": "Approved this time!",
+            "expired": "Fresh request. Approved!",
+            "identity_mismatch": "The right one this time.",
+            "protocol_mismatch": "Same version now. Paired!"
+          }
         }
       },
       "server": {
@@ -2159,6 +2220,9 @@
           "replayAdopt": "All sorted.",
           "codeMissing": "Fresh code. Go!",
           "wordsMissing": "There are the words."
+        },
+        "wait": {
+          "cloudPublic": "A private address. Safer!"
         }
       },
       "restore": {
@@ -2178,14 +2242,20 @@
       "nas": {
         "find": {
           "noAnswer": "Someone's home!",
-          "stillOff": "SSH is on! Off we go."
+          "stillOff": "SSH is on! Off we go.",
+          "portBad": "Good port!",
+          "shareBad": {
+            "smb": "That's a proper address!",
+            "nfs": "That's a proper address!"
+          }
         },
         "identity": {
           "changedTitle": "New ID trusted. Carry on."
         },
         "key": {
           "passEmpty": "Unlocked. Thank you!",
-          "old": "A newer key. Good."
+          "old": "A newer key. Good.",
+          "accountNeeded": "Account named. Thanks!"
         },
         "signin": {
           "wrong": "In we go!",
@@ -2262,13 +2332,31 @@
         "keyBad": "That key works. Power!",
         "signinFail": "Signed in! Second time lucky.",
         "skipNote": "Power! I can think now.",
-        "unavailable": "Signed in here too. Good."
+        "unavailable": "Signed in here too. Good.",
+        "pasteBad": "Code accepted!"
       },
       "like": {
         "unavailable": "Signed in. All set!"
       },
       "free": {
         "limited": "Its limit reset. Ready!"
+      },
+      "away": {
+        "setup": {
+          "fail": {
+            "denied": "Tailscale let us in!",
+            "expired": "Signed in. Onward!",
+            "deviceApproval": "Approved! Thank you.",
+            "routeFailed": "Connected for real now!",
+            "hsDenied": "Headscale let it in!",
+            "hsUnreachable": "Headscale answered!",
+            "unreachable": "Reachable now. Hooray!",
+            "dns": "The name points home now!",
+            "cert": "Certificate in place!",
+            "live": "Live updates flow now!",
+            "relay": "Remote Link is up!"
+          }
+        }
       }
     },
     "oopsAny": {

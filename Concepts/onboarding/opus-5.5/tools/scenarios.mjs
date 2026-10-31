@@ -934,7 +934,7 @@ async function toHalfMade(d, A) {
   await until(d, "window.O55.S.sess.commit.state === 'recovery'", 'GitHub copy made, setup stopped', 20000);
   A.ok(await d.state(() => /was created on GitHub, but the rest of the setup didn't finish/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says the copy was made and the rest did not finish');
   A.ok(await d.state(() => !window.O55.S.sess.commit.projectId), 'no Project is published yet');
-  const dis = (a) => d.state((x) => { const b = document.querySelector(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="${x}"]`); return !b ? 'missing' : b.getAttribute('aria-disabled') === 'true' || b.disabled ? 'off' : 'on'; }, a);
+  const dis = (a) => d.page.evaluate((x) => { const b = document.querySelector(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="${x}"]`); return !b ? 'missing' : b.getAttribute('aria-disabled') === 'true' || b.disabled ? 'off' : 'on'; }, a);
   A.eq(await dis('continueSetup'), 'on', 'Continue Setup can be pressed'); A.eq(await dis('deleteRepo'), 'on', 'Delete Repository can be pressed');
   A.eq(await dis('openRepo'), 'off', 'Open Repository stays off in the preview');
 }
