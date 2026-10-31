@@ -18,6 +18,8 @@
      done/fail/phase sounds in opts.sound (O55.flow.op): what discovery turns up is `found`, a wrong code or password
      is a soft `warn` (the field or banner says what to do), and an approval on the other device is `found`. */
   const SND = { found: { intensity: 0.55 } };
+  /* demo hints (O55.flow.hint): ready choices for steps a real device would answer, each taking a branch */
+  const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   const FOUND_SOUND = { done: 'found', intensity: 0.55 };
   /* A folder step is a click, so the generic tap (rank 30) is queued in the same moment. Move's own rank is 20 and
      would be dropped. Copy's rank (34) sits just above tap and under every outcome, so the step is the one sound. */
@@ -48,14 +50,14 @@
   function seedNas(S, id) {
     const n = N(S), d0 = md(S);
     if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
-    if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!n.share) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
-    if (id === 'nas-mounted') { n.method = 'mounted'; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!shareOf(S)) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
+    if (id === 'nas-mounted') { n.method = 'mounted'; if (!n.volume) n.volume = volumes(S)[0]; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
     n.method = 'ssh';
     if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
     const d = dev(S), step = SEED_STEP[id] || 0;
-    if (d && step >= 1 && !n.trusted) { n.trusted = true; S.env.here.knownHosts[d.address] = d.hostKey; }
+    if (d && step >= 1 && !n.trusted) { n.trusted = true; knownHosts(S)[hostId(S)] = d.hostKey; }
     if (d && step >= 2 && !n.key) n.key = defaultKey(S);
-    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); n.installed = true; }
+    if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; }
     S.save();
   }
 
@@ -84,9 +86,9 @@
             + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
         }
         if (n.manual) {
-          out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
-          /* (demo hint: an address that answers, and one that doesn't) */
-          out += F.hint('nas-find:addr', [{ label: '192.168.1.20', outcome: 'works', fills: [['addr', '192.168.1.20']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }], { when: !addrKnown(S, n.addr) });
+          const pBad = n.port != null && n.port !== '' && !portOk(n.port);
+          out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port == null ? '22' : n.port, cls: 'o55-field-port', error: pBad ? T('nas.find.portBad') : '', invalid: pBad })}</div>`;
+          out += H('nas-find:addr', [{ label: '192.168.1.20', outcome: 'works', fills: [['addr', '192.168.1.20'], ['port', '22']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }, { label: '192.168.1.20:99999', outcome: 'wrong', fills: [['addr', '192.168.1.20'], ['port', '99999']] }], { when: !addrKnown(S, n.addr) || pBad });
         } else if (!st || st.state !== 'done') {
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
@@ -99,9 +101,17 @@
         out += about;
         if (!n.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('nas.find.address'), 'manualOn')}</div>`;
       } else if (m === 'smb' || m === 'nfs') {
-        out += C.group(T(m === 'smb' ? 'nas.find.shares' : 'nas.find.exports'), C.cards('share', S.env.shares.filter((s) => s.proto === m).map((s) => ({ v: s.id, glyph: 'folder', title: s.path, sub: (S.env.devices.find((d) => d.id === s.device) || {}).name })), n.share));
+        if (n.shareManual) {
+          const t = n.shareText || '', ok = !!typedShare(m, t);
+          out += C.field({ bind: 'shareText', label: T('nas.find.shareLabel.' + m), value: t, placeholder: m === 'smb' ? '//nas.local/projects' : 'nas.local:/export/projects', hint: ok || !t ? T('nas.find.shareHint.' + m) : '', error: t && !ok ? T('nas.find.shareBad.' + m) : '', invalid: !!t && !ok, valid: ok });
+          out += H('nas-find:share-' + m, m === 'smb' ? [{ label: '//nas.local/projects', outcome: 'works', fills: [['shareText', '//nas.local/projects']] }, { label: 'nas.local/projects', outcome: 'wrong', fills: [['shareText', 'nas.local/projects']] }] : [{ label: 'nas.local:/export/projects', outcome: 'works', fills: [['shareText', 'nas.local:/export/projects']] }, { label: 'nas.local', outcome: 'wrong', fills: [['shareText', 'nas.local']] }], { when: !ok });
+          out += `<div class="o55-sublinks" data-key="sharefound">${C.link(T('nas.find.shareFound'), 'shareManual', 'off')}</div>`;
+        } else {
+          out += C.group(T(m === 'smb' ? 'nas.find.shares' : 'nas.find.exports'), C.cards('share', S.env.shares.filter((s) => s.proto === m).map((s) => ({ v: s.id, glyph: 'folder', title: s.path, sub: (S.env.devices.find((d) => d.id === s.device) || {}).name })), n.share));
+          out += `<div class="o55-sublinks" data-key="shareaddr">${C.link(T('nas.find.shareAddress.' + m), 'shareManual', 'on')}</div>`;
+        }
       } else {
-        out += C.group(T('nas.find.volumes'), C.cards('volume', ['/Volumes/Home NAS', '/Volumes/Media'].map((v) => ({ v, glyph: 'folder', title: v.split('/').pop(), sub: v })), n.volume));
+        out += C.group(T('nas.find.volumesOn', { where: machine(S) }), C.cards('volume', volumes(S).map((v) => ({ v, glyph: 'folder', title: v.split('/').pop(), sub: v })), n.volume));
       }
       return out;
     },
@@ -110,20 +120,27 @@
       const n = N(S), m = n.method || 'ssh', d = dev(S);
       let ok = false, reason = T('missing.storage');
       if (m === 'ssh') {
-        ok = n.manual ? S.env.devices.some((x) => x.address === String(n.addr || '').trim()) : !!(d && (d.ssh || d.pm));
-        if (n.manual) reason = F.nonEmpty(n.addr) ? T('nas.find.noAnswer', { addr: String(n.addr).trim() }) : T('nas.find.addressLabel');
+        const pBad = n.manual && n.port != null && n.port !== '' && !portOk(n.port);
+        ok = n.manual ? !pBad && S.env.devices.some((x) => x.address === String(n.addr || '').trim()) : !!(d && (d.ssh || d.pm));
+        if (n.manual) reason = pBad ? T('nas.find.portBad') : F.nonEmpty(n.addr) ? T('nas.find.noAnswer', { addr: String(n.addr).trim() }) : T('nas.find.addressLabel');
         else if (d && !d.ssh && !d.pm) reason = T('nas.find.offTitle', { name: d.name });
         else if (!d) reason = T('nas.find.choose');
       }
-      else if (m === 'mounted') ok = !!n.volume; else ok = !!n.share;
+      else if (m === 'mounted') ok = !!n.volume && volumes(S).includes(n.volume); else { ok = !!shareOf(S); reason = n.shareManual ? T('nas.find.shareBad.' + m) : T('missing.storage'); }
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ok, reason } };
     },
     do: {
-      method(S, v) { N(S).method = v; S.save(); O55.ui.refresh(); },
+      /* another way of reaching the files drops a share of the old way (FF-18) */
+      method(S, v) {
+        const n = N(S);
+        if (n.method !== v) { n.shareManual = false; const sh = n.share === 'manual' ? n.manualShare : S.env.shares.find((x) => x.id === n.share); if (sh && sh.proto !== v) n.share = null; }
+        n.method = v; S.save(); O55.ui.refresh();
+      },
+      shareManual(S, v) { const n = N(S); n.shareManual = v === 'on'; if (!n.shareManual && n.share === 'manual') n.share = null; S.save(); O55.ui.refresh(); if (n.shareManual) { O55.sound.play('reveal'); const i = S.root.querySelector('#o55f-shareText'); if (i) i.focus(); } },
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
         /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
-        if (n.device !== id) { if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null }); delete n.code; }
+        if (n.device !== id) { if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null }); delete n.code; }
         n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = h.key; }
         S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
       },
@@ -134,7 +151,7 @@
         F.op(S, 'sshcheck:' + d.id, 'cmd.ssh_connection.device.probe', [{ key: 'probe', ms: 900 }], { onDone: () => { d.ssh = true; S.save(); O55.ui.refresh(); } });
       },
       share(S, v) { N(S).share = v; S.save(); O55.ui.refresh(); },
-      volume(S, v) { N(S).volume = v; S.save(); O55.ui.refresh(); },
+      volume(S, v) { const n = N(S); if (n.volume !== v) F.reset(S, 'mounted:' + n.volume); n.volume = v; S.save(); O55.ui.refresh(); },
       manualOn(S) { N(S).manual = true; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const n = N(S), m = n.method || 'ssh';
@@ -143,17 +160,18 @@
         O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
       }
     },
-    bind: { addr(S, v) {
+    bind: { shareText(S, v) { const n = N(S), sh = typedShare(n.method, v); n.shareText = v; n.manualShare = sh; n.share = sh ? 'manual' : n.share === 'manual' ? null : n.share; S.save(); O55.ui.refresh(); },
+    addr(S, v) {
       const was = addrKnown(S, N(S).addr);
       N(S).addr = v; S.save(); O55.ui.refresh();
       if (!was && addrKnown(S, v)) O55.sound.play('found', SND.found); /* the typed address answers: Continue wakes up */
-    }, port(S, v) { N(S).port = v.replace(/[^0-9]/g, '').slice(0, 5); S.save(); } }
+    }, port(S, v) { const n = N(S), p = String(v).replace(/[^0-9]/g, '').slice(0, 5), had = !n.port || portOk(n.port); if (p !== n.port) Object.assign(n, { port: p, trusted: false, installed: false, opKey: null }); S.save(); if (had !== (!p || portOk(p))) O55.ui.refresh(); } }
   });
 
   /* ------------------------------------------------------------------ is this your device? (identity before trust) */
   function hostState(S) {
     const d = dev(S); if (!d) return 'new';
-    const known = S.env.here.knownHosts[d.address];
+    const known = knownHosts(S)[hostId(S)];
     if (!known) return 'new';
     return known === d.hostKey ? 'known' : 'changed';
   }
@@ -169,7 +187,7 @@
       let out = C.identity(d.hostKey, words(d.hostKey), d.name + ' · ' + d.address);
       if (hs === 'known' || n.trusted) out += C.note(hs === 'known' ? T('nas.identity.known', { name: d.name }) : T('chrome.alreadyDone'), 'ok', 'check');
       if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedTitle', { name: d.name }))}</span></div>`;
-      out += C.details(S, 'fp', T('nas.identity.details'), C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), S.env.here.knownHosts[d.address]]] : [])));
+      out += C.details(S, 'fp', T('nas.identity.details'), C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : [])));
       return out;
     },
     foot(S) {
@@ -178,7 +196,7 @@
       return { primary: { label: hs === 'known' || n.trusted ? T('chrome.continue') : T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
-      trust(S) { const n = N(S); n.trusted = true; S.env.here.knownHosts[dev(S).address] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
+      trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       trustNew(S) { N(S).acceptedNew = true; S.save(); O55.ui.refresh(); },
       stop(S) { O55.ui.back(); }
     }
@@ -205,6 +223,46 @@
     return (all[ref] = all[ref] || []);
   }
   const machine = (S) => (onServer(S) && O55.project ? O55.project.serverName(S) : O55.t('nas.key.thisComputer'));
+  /* The SSH connection is one profile (SCR-10): the computer that connects (this one, or the Server doing the work),
+     the device's address and port, the account it signs in as, the key, and the device's identity as that computer
+     knows it. A change to any of them is another connection: key tests and an added key belong to the profile they ran
+     for. The profile id is opaque and goes into the references the draft keeps. */
+  const portOk = (v) => /^\d{1,5}$/.test(String(v)) && +v >= 1 && +v <= 65535;
+  const sshPort = (S) => { const n = N(S), d = dev(S); return n.manual && portOk(n.port) ? +n.port : (d && d.port) || 22; };
+  /* the account: one named in SSH settings or typed; otherwise ssh's own default, the name of the account on the
+     computer that connects (known for this computer, not for a Server) */
+  const sshUser = (S) => { const n = N(S); return String(n.user || '').trim() || (onServer(S) ? '' : S.env.client.user || ''); };
+  const hostId = (S) => { const d = dev(S); return d ? d.address + (sshPort(S) !== 22 ? ':' + sshPort(S) : '') : ''; };
+  /* A share is chosen from those found, or typed (SCR-11): SMB as //host/share, NFS as host:/path. It must be of the
+     method chosen now (FF-18: an SMB share stayed chosen after switching to NFS). */
+  const SHARE_FORM = { smb: /^(?:smb:)?\/\/([^/\s]+)\/([^\s]+)$/i, nfs: /^([^:/\s]+):(\/[^\s]*)$/ };
+  function shareOf(S) {
+    const n = N(S), m = n.method || 'ssh';
+    if (n.share === 'manual' && n.manualShare && n.manualShare.proto === m) return n.manualShare;
+    const sh = S.env.shares.find((x) => x.id === n.share);
+    return sh && sh.proto === m ? sh : null;
+  }
+  function typedShare(m, v) {
+    const t = String(v || '').trim(), x = SHARE_FORM[m] && SHARE_FORM[m].exec(t);
+    if (!x) return null;
+    return m === 'smb' ? { id: 'manual', proto: 'smb', path: '//' + x[1] + '/' + x[2].replace(/\/+$/, ''), host: x[1], device: null } : { id: 'manual', proto: 'nfs', path: x[1] + ':' + x[2], host: x[1], device: null };
+  }
+  /* the drives the computer that connects already has (this computer's, or the Server's own) */
+  const volumes = (S) => (onServer(S) ? ['/mnt/home-nas', '/mnt/media'] : ['/Volumes/Home NAS', '/Volumes/Media']);
+  function knownHosts(S) {
+    if (!onServer(S)) return S.env.here.knownHosts;
+    const all = (S.env.serverKnownHosts = S.env.serverKnownHosts || {}), ref = md(S).server_ref || 'server';
+    return (all[ref] = all[ref] || {});
+  }
+  function hash8(t) { let h = 2166136261; for (const ch of String(t)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0; return h.toString(16).padStart(8, '0'); }
+  function profileId(S) { const d = dev(S); if (!d) return ''; return 'sshp:' + U.slug(onServer(S) ? md(S).server_ref || 'server' : S.env.here.id) + ':' + hash8(sshUser(S) + '@' + d.address + ':' + sshPort(S)); }
+  /* a key added for one account works for that account (a bare key id in the fixture is the device's own account's) */
+  /* the key tests and the key added are named by the device and, unless it is this computer's usual connection (its
+     own account, port 22), by the profile too: another account or port never finds the other one's result */
+  const opSuffix = (S) => (!onServer(S) && sshPort(S) === 22 && sshUser(S) === (S.env.client.user || '') ? '' : ':' + hash8(profileId(S)));
+  const keysKey = (S) => 'keys:' + N(S).device + opSuffix(S);
+  const authorizedFor = (S, d, keyId) => !!d && (d.authorized.includes(sshUser(S) + ':' + keyId) || (sshUser(S) === d.user && d.authorized.includes(keyId)));
+  const authorize = (S, d, keyId) => { const k = sshUser(S) + ':' + keyId; if (!d.authorized.includes(k)) d.authorized.push(k); };
   const K_PM = (S) => ({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', pubComment: 'puppet-master@' + (S && onServer(S) ? O55.util.slug(machine(S)) : 'MacBook-Pro'), type: 'ed25519', where: 'file' });
   function makeNewKey(S) {
     if (!keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
@@ -212,7 +270,7 @@
   }
   function keyStatus(S, k) {
     const d = dev(S);
-    if (d && d.authorized.includes(k.id)) return 'works';
+    if (authorizedFor(S, d, k.id)) return 'works';
     if (/^(dsa|rsa-1024)/.test(k.type)) return 'old';
     if (k.passphrase && N(S).unlocked !== k.id) return 'locked'; /* (unlocked for that key only: QA2 review N1's sweep) */
     return 'notAdded';
@@ -227,15 +285,21 @@
     title: () => T('nas.key.title'),
     lead: (S) => T('nas.key.lead', { where: machine(S) }),
     body(S) {
-      const n = N(S), d = dev(S), st = F.state(S, 'keys:' + d.id);
-      if (!st || st.state !== 'done') return F.phases(S, 'keys:' + d.id, ['discover', 'probe'], { discover: T('nas.key.looking'), probe: T('nas.key.testing', { name: d.name }) });
+      const n = N(S), d = dev(S), st = F.state(S, keysKey(S));
+      /* which account the keys are tried for, on which address: changing it is another connection (SCR-10) */
+      const user = sshUser(S);
+      let acct = n.userEdit || !user
+        ? C.field({ bind: 'sshUser', label: T('nas.key.accountLabel', { name: d.name }), value: n.user || user, placeholder: '', hint: user ? T('nas.key.accountHint', { name: d.name }) : '', error: user ? '' : T('nas.key.accountNeeded', { name: d.name, where: machine(S) }), invalid: !user, autocomplete: 'username' })
+        : `<p class="o55-locline" data-key="acct">${C.small('person', 16)}<span>${U.esc(T('nas.key.account', { name: d.name, user, address: hostId(S) }))}</span>${C.link(T('nas.key.accountChange'), 'userEdit')}</p>`;
+      if (!user) return acct;
+      if (!st || st.state !== 'done') return acct + F.phases(S, keysKey(S), ['discover', 'probe'], { discover: T('nas.key.looking'), probe: T('nas.key.testing', { name: d.name }) });
       const sel = n.key || defaultKey(S);
       const keys = keyring(S).map((k) => {
         const s = keyStatus(S, k);
         const tag = { works: T('nas.key.works', { name: d.name }), notAdded: T('nas.key.notAdded', { name: d.name }), locked: T('nas.key.locked'), old: T('nas.key.old') }[s];
         return { v: k.id, glyph: 'key', title: k.comment || k.file, sub: keyWhere(k) + (k.file ? ' · ' + k.file : ''), tag, disabled: s === 'old', reason: T('nas.key.old') };
       });
-      let out = '';
+      let out = acct;
       if (!keyring(S).length) out += C.note(T('nas.key.none', { where: machine(S) }), 'info', 'key');
       out += C.cards('pick', keys.concat([{ v: 'new', glyph: 'spark', title: T('nas.key.new'), sub: T('nas.key.newSub'), tag: defaultKey(S) === 'new' ? T('chrome.recommended') : '' }]), sel, { label: T('nas.key.title'), cls: 'o55-keys' });
       /* ("What does Puppet Master read?" was an old-style explainer; the key list's ? now says it whole: QA round 2, Q8) */
@@ -248,10 +312,11 @@
       if (n.passCancelled) out += C.note(T('nas.install.fail.cancelled', { key: (keyring(S).find((x) => x.id === sel) || {}).comment || '' }), 'warn');
       return out;
     },
-    mounted(S) { const d = dev(S); F.op(S, 'keys:' + d.id, 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, publicOnly: true }, sound: FOUND_SOUND }); },
-    foot(S) { const st = F.state(S, 'keys:' + dev(S).id); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(st && st.state === 'done'), reason: T('nas.key.looking') } }; },
+    mounted(S) { const d = dev(S); if (!sshUser(S)) return; F.op(S, keysKey(S), 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, address: d.address, port: sshPort(S), user: sshUser(S), profile: profileId(S), publicOnly: true }, sound: FOUND_SOUND }); },
+    foot(S) { const st = F.state(S, keysKey(S)), user = sshUser(S); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !user || !(st && st.state === 'done'), reason: user ? T('nas.key.looking') : T('nas.key.accountNeeded', { name: dname(S), where: machine(S) }) } }; },
     do: {
       pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
+      userEdit(S) { N(S).userEdit = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-sshUser'); if (i) i.focus(); },
       /* a deliberate cancel closes the sheet (it is not an error; the note under the keys says what it means) */
       passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('unsheet'); O55.ui.refresh(); },
       passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('warn'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = N(S).key; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
@@ -264,7 +329,11 @@
         O55.ui.go('nas-signin');
       }
     },
-    bind: { pass(S, v) { if (N(S).passEmpty && v) { N(S).passEmpty = false; S.save(); O55.ui.refresh(); } } },
+    bind: {
+      pass(S, v) { if (N(S).passEmpty && v) { N(S).passEmpty = false; S.save(); O55.ui.refresh(); } },
+      /* another account is another connection: the keys are tested again for it and an added key doesn't carry over */
+      sshUser(S, v) { const n = N(S), u = String(v || '').trim(); if (u === String(n.user || '').trim()) return; const had = !!sshUser(S); Object.assign(n, { user: u, installed: false, opKey: null }); S.save(); if (had !== !!sshUser(S)) O55.ui.refresh(); }
+    },
     leave(S) { if (S.sess.ui.sheet === 'passphrase') { S.sess.ui.sheet = null; S.save(); } }
   });
 
@@ -290,8 +359,8 @@
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
-      /* (demo hint: a password the device accepts, and one it refuses) */
-      out += F.hint('nas-signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + O55.fixtures.DEMO.wrongPassword, outcome: 'refused', fills: [['user', 'jared'], ['pw', O55.fixtures.DEMO.wrongPassword]] }], { when: !n.pwTyped });
+      const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
+      out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · correct horse', outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: (d.user || 'jared') + ' · ' + wrongPw, outcome: 'refused', fills: [['user', d.user || 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped });
       out += `<div class="o55-sublinks" data-key="self">${C.link(T('nas.signin.self'), 'selfOn')}</div>`;
       return out;
     },
@@ -309,7 +378,7 @@
       selfCheck(S) {
         const n = N(S), d = dev(S);
         if (S.env.failures.self_key_missing_once && !n.selfTried) n.selfTried = true;
-        else if (!d.authorized.includes(n.key)) d.authorized.push(n.key);
+        else authorize(S, d, n.key);
         n.selfMissing = false; S.save(); O55.ui.go('nas-install', { verifyOnly: true, selfAdded: true });
       },
       add(S) {
@@ -335,7 +404,8 @@
     const n = N(S), d = dev(S);
     if (n.key !== 'new') return;
     F.op(S, 'sshmake:' + d.id, 'cmd.ssh_connection.key.install', [{ key: 'make', ms: 700 }], { payload: { device: d.id, key: 'new', makeOnly: true, publicOnly: true },
-      onDone: () => { makeNewKey(S); S.save(); } });
+      /* (made for this device and a new key: if the person has since chosen another device or key, it is not theirs now) */
+      onDone: () => { const cur = N(S); if (cur !== n || cur.device !== d.id || cur.key !== 'new') return; makeNewKey(S); S.save(); } });
   }
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
@@ -355,7 +425,10 @@
       if (st && st.state === 'failed') {
         const code = st.code, fix = { refused: 'refusedFix', not_allowed: 'notAllowedFix' }[code];
         out += `<div class="o55-banner o55-banner-warn" data-key="fail">${C.small('lock', 18)}<span>${U.esc(T('nas.install.fail.' + code, { name: d.name, brand: d.brand, key: k ? k.comment : '' }))}</span></div>`;
-        if (code === 'not_allowed') out += C.note(T('nas.install.fail.notAllowedFix', { brand: d.brand }), 'info', 'power');
+        /* what lets an account use SSH differs by maker (Synology: administrators only; Unraid: root): say that one, and
+           offer a way in that needs no SSH rather than a wider grant (SCR-10) */
+        if (code === 'not_allowed') out += C.note(O55.tx('nas.install.fail.notAllowedBy.' + d.brand) ? T('nas.install.fail.notAllowedBy.' + d.brand, { name: d.name, user: sshUser(S) }) : T('nas.install.fail.notAllowedFix', { name: d.name }), 'info', 'power')
+          + (d.smb ? `<div class="o55-inline" data-key="usesmb">${O55.ui.btn({ label: T('nas.install.fail.useSmb'), do: 'useSmb', cls: 'o55-small', tip: false }, 'o55-secondary')}</div>` : '');
         if (fix === 'refusedFix') out += `<div class="o55-inline" data-key="fix">${O55.ui.btn({ label: T('nas.install.fail.refusedFix'), do: 'fixPerms', cls: 'o55-small' }, 'o55-secondary')}</div>`;
       }
       if (st && st.state === 'done') out += C.note(T('nas.install.done'), 'ok', 'lock');
@@ -374,6 +447,8 @@
         if (st && st.code === 'not_added') { N(S).selfMissing = true; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); return O55.ui.back(); }
         F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); O55.sound.play('tap'); run(S);
       },
+      /* a shared folder on the same device instead: the SSH steps are left and the share is chosen on Where are the files */
+      useSmb(S) { const n = N(S), h = S.sess.history || [], at = h.lastIndexOf('nas-find'); F.reset(S, installKey(S)); Object.assign(n, { method: 'smb', share: null, opKey: null, installed: false }); S.save(); if (at >= 0) S.sess.history = h.slice(0, at); O55.ui.go('nas-find', { dir: 'back', noHistory: true }); },
       fixPerms(S) { dev(S).homePermsOpen = false; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); O55.ui.refresh(); run(S); },
       next(S) { connected(S); }
     },
@@ -381,7 +456,7 @@
   });
   /* The operation keeps the identity it started with, even after a new key gets its real id, so a finished install
      is never started again. */
-  function installKey(S) { const n = N(S); return n.opKey || 'sshinstall:' + n.device + ':' + (n.key || 'new'); }
+  function installKey(S) { const n = N(S); return n.opKey || 'sshinstall:' + n.device + opSuffix(S) + ':' + (n.key || 'new'); }
   function phaseOrder(S) {
     const n = N(S), k = keyring(S).find((x) => x.id === n.key);
     if (n.verifyOnly) return (k && k.passphrase ? ['unlock'] : []).concat(['verify', 'perms']);
@@ -389,26 +464,32 @@
   }
   function run(S) {
     const n = N(S), d = dev(S), order = phaseOrder(S);
-    if (!n.opKey) { n.opKey = 'sshinstall:' + n.device + ':' + (n.key || 'new'); S.save(); }
+    if (!n.opKey) { n.opKey = 'sshinstall:' + n.device + opSuffix(S) + ':' + (n.key || 'new'); S.save(); }
     const failFor = {
       add: () => {
         if (!n.pwOnce) return 'wrong_password';
         if (n.pwWrong) { n.pwWrong = false; S.save(); return 'wrong_password'; }
         if (S.env.failures.nas_password_once && !n.pwFailedOnce) { n.pwFailedOnce = true; S.save(); return 'wrong_password'; }
-        if ((d.sshDisallowed || []).includes(n.user)) return 'not_allowed';
+        if ((d.sshDisallowed || []).includes(sshUser(S))) return 'not_allowed';
         return null;
       },
       /* the key must really be on the device: added just now by the add phase, already there, or added by the person */
-      verify: () => (n.verifyOnly && !d.authorized.includes(n.key) ? 'not_added' : d.homePermsOpen ? 'refused' : null)
+      verify: () => (n.verifyOnly && !authorizedFor(S, d, n.key) ? 'not_added' : d.homePermsOpen ? 'refused' : null)
     };
     const ms = { make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
+    /* the result belongs to the device, key and attempt it ran for: after Back and another device or key it is dropped
+       (it marked the newly chosen key as added; SCR-01's class, the pm7-srv sweep) */
+    const at = { device: n.device, key: n.key, op: installKey(S) };
+    const still = () => { const cur = N(S); return cur === n && cur.device === at.device && cur.opKey === at.op && (cur.key === at.key || (at.key === 'new' && cur.key === 'k-pm')); };
     F.op(S, installKey(S), 'cmd.ssh_connection.key.install', order.map((k) => ({ key: k, ms: ms[k], fail: failFor[k] })), {
-      payload: { device: d.id, key: n.key, publicOnly: true }, sound: { fail: 'warn', intensity: 0.8 }, /* every failure here offers its fix */
+      payload: { device: d.id, address: d.address, port: sshPort(S), user: sshUser(S), profile: profileId(S), key: n.key, publicOnly: true }, sound: { fail: 'warn', intensity: 0.8 }, /* every failure here offers its fix */
       onDone: () => {
-        if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); }
+        if (!still()) return;
+        if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); }
         n.installed = true;
         const dd = md(S);
-        O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['ssh-key:' + U.slug(d.name) + ':' + (n.key || 'new')]))).slice(0, 16), preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:ssh:' + U.slug(d.name)]))).slice(0, 32) });
+        n.profile = profileId(S);
+        O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['ssh-key:' + n.profile + ':' + (n.key || 'new')]))).slice(0, 16), preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:ssh:' + n.profile]))).slice(0, 32) });
         S.save();
       }
     });
@@ -518,9 +599,8 @@
         if (reached && !fail) {
           const v = pairCodes.get(tryId(S)) || '';
           out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
-          /* (demo hint: the code the device shows, and a wrong one) */
-          out += F.hint('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'ZZZZ-9999', outcome: 'wrong', fills: [['pmcode', 'ZZZZ-9999']] }], { when: !n.paired });
           out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += H('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['pmcode', 'AAAA-BBBB']] }]);
         }
         if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
       } else if (!n.paired) {
@@ -533,6 +613,7 @@
         }
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
       }
+      if (!fail && !n.paired) out += H('nas-pmpair:outcome', [['denied', 'refused'], ['expired', 'expired'], ['unreachable', 'noAnswer']].filter(([code]) => m !== 'code' || code === 'unreachable').map(([code, word]) => ({ label: T('connect.pair.hint.' + code), outcome: word, act: ['demoOutcome', code] })));
       if (fail) {
         const acts = PM_FAIL_ACTIONS[fail] || PM_FAIL_ACTIONS.unreachable;
         out += `<div class="o55-banner o55-banner-warn" data-key="pairfail-${U.esc(fail)}">${C.small('lock', 18)}<span>${U.esc(T('connect.pair.fail.' + fail, { name: p.name }))}</span></div>`
@@ -562,6 +643,8 @@
       /* a new request, never the old one's timer reset: the old try ends and its answers no longer count (SCR-15) */
       resend(S) { endPair(S, 'resend'); S.save(); startPmPair(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
       newRequest(S) { endPair(S, 'retry'); S.save(); startPmPair(S); O55.ui.refresh(); O55.sound.play('tap'); },
+      /* (demo: a new request that the concept's Server answers this way: failures.pair_once) */
+      demoOutcome(S, code) { if (!PM_FAIL_ACTIONS[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.pair_once = code; endPair(S, 'retry'); S.save(); startPmPair(S); O55.ui.refresh(); O55.sound.play('tap'); },
       checkCode(S) {
         const n = N(S), p = pmOf(S), at = { id: tryId(S), purpose: n.purpose };
         if (!stillThis(S, at)) return O55.ui.refresh();
@@ -608,7 +691,8 @@
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
-        const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' : 'ssh:') + U.slug(d.name) + at, dd = md(S);
+        /* (an SSH folder is named by its connection profile, so two accounts or ports on one device never collide: SCR-10) */
+        const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug(String((pmOf(S) || {}).id || d.id).replace(/^pm:/, '')) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
         n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
         if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: tr, storage_location: ref });
         else O55.draft.set(dd, { project_source_ref: ref, project_transport: tr, project_name: dd.project_name || O55.project.pretty(at.split('/').pop()) });
@@ -627,59 +711,77 @@
     else O55.draft.set(dd, { project_source_ref: ref, project_transport: 'mounted', project_name: dd.project_name || O55.project.pretty(label.split(/[›/]/).pop()) });
     S.save(); O55.ui.go('name');
   }
+  /* A share is opened by the computer that does the work, which keeps its sign-in in its own password store (SCR-11):
+     the screen names that computer. Its reference carries an opaque profile of the share, that computer and the account,
+     so two accounts on one share never collide. A domain or workgroup is asked only where a network uses one. */
+  const shareProfile = (S, sh, user, domain) => 'shp:' + U.slug(onServer(S) ? md(S).server_ref || 'server' : S.env.here.id) + ':' + hash8([sh.proto, sh.path, user || '', domain || ''].join('|'));
   def('nas-smb', {
     seed: (S) => seedNas(S, 'nas-smb'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
-    eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
+    eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: (S) => T('nas.smb.leadOn', { where: machine(S) }),
     body(S) {
-      const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
+      const n = N(S), sh = shareOf(S) || {}, key = 'smb:' + (n.share === 'manual' ? sh.path : n.share);
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
-      const st = F.state(S, 'smb:' + n.share), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHint'), error: refused ? T('nas.smb.wrong') : '', invalid: refused }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
-      /* (demo hint: a password the share accepts, and one it refuses) */
-      out += F.hint('nas-smb', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + O55.fixtures.DEMO.wrongPassword, outcome: 'refused', fills: [['user', 'jared'], ['pw', O55.fixtures.DEMO.wrongPassword]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
-      if (st) out += F.phases(S, 'smb:' + n.share, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
+      const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
+      /* (the computer that opens the share keeps its sign-in, as for any shared folder: not the SSH key's one-time password) */
+      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
+      const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
+      out += H('nas-smb:signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + wrongPw, outcome: 'refused', fills: [['user', 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
+      out += C.details(S, 'smbdomain', T('nas.smb.more'), C.field({ bind: 'domain', label: T('nas.smb.domain'), value: n.domain || '', hint: T('nas.smb.domainHint'), autocomplete: 'off' }));
+      if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
-    foot(S) { const n = N(S), st = F.state(S, 'smb:' + n.share); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
+    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
     do: {
       check(S) {
-        const i = S.root.querySelector('#o55f-pw'), pwv = i ? i.value : ''; if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('tap');
-        /* situation smbWrong: the share refuses the first password, as it would a mistyped one */
-        const f = S.env.failures || {}, wrong = !!f.smb_password_once || pwv === O55.fixtures.DEMO.wrongPassword; if (f.smb_password_once) f.smb_password_once = false;
-        F.reset(S, 'smb:' + N(S).share);
-        F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
-      use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + sh.path.replace(/^\/\//, ''), 'smb'); }
+        const n = N(S), sh = shareOf(S); if (!sh) return;
+        const i = S.root.querySelector('#o55f-pw'), pwv = i ? i.value : ''; if (i) i.value = ''; n.pwTyped = false; O55.sound.play('tap');
+        const key = 'smb:' + (n.share === 'manual' ? sh.path : n.share);
+        /* situation smbWrong: the share refuses the first password, as it would a mistyped one (and the demo's wrong one) */
+        const f = S.env.failures || {}, wrong = !!f.smb_password_once || pwv === (O55.fixtures.DEMO || {}).wrongPassword; if (f.smb_password_once) f.smb_password_once = false;
+        F.reset(S, key);
+        F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
+      },
+      use(S) { const n = N(S), sh = shareOf(S), prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
-    bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }
+    bind: {
+      user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); },
+      domain(S, v) { N(S).domain = String(v || '').trim(); S.save(); },
+      pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } }
+    }
   });
+  /* NFS has no password: the share lets in the computers it lists, so the check says which computer is asking */
+  const nfsKey = (S) => { const n = N(S), sh = shareOf(S) || {}; return 'nfs:' + (n.share === 'manual' ? sh.path : n.share); };
   def('nas-nfs', {
     seed: (S) => seedNas(S, 'nas-nfs'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
-    eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
-    body(S) { const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + F.phases(S, 'nfs:' + n.share, ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
-    mounted(S) { F.op(S, 'nfs:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
-    foot(S) { const st = F.state(S, 'nfs:' + N(S).share); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: T('chrome.working') } }; },
-    do: { use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path, 'nfs:' + sh.path, 'nfs'); } }
+    eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: (S) => T('nas.nfs.leadOn', { where: machine(S) }),
+    body(S) { const sh = shareOf(S) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + C.note(T('nas.nfs.noPassword', { where: machine(S) }), 'info', 'lock') + F.phases(S, nfsKey(S), ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
+    mounted(S) { const sh = shareOf(S); if (!sh) return; F.op(S, nfsKey(S), 'cmd.project.source_location.test', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'nfs', from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
+    foot(S) { const sh = shareOf(S), st = sh && F.state(S, nfsKey(S)); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: sh ? T('chrome.working') : T('missing.storage') } }; },
+    do: { use(S) { const sh = shareOf(S); if (!sh) return; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
   });
+  /* The drive chosen on Where are the files is not asked for again (FF-23): this step names it, says which computer has
+     it, and checks that computer can read it. */
   def('nas-mounted', {
     seed: (S) => seedNas(S, 'nas-mounted'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
-    eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),
-    body(S) { const n = N(S); return C.cards('volume', ['/Volumes/Home NAS', '/Volumes/Media'].map((v) => ({ v, glyph: 'folder', title: v.split('/').pop(), sub: v })), n.volume); },
-    foot(S) { return { primary: { label: T('chrome.continue'), do: 'use', disabled: !N(S).volume, reason: T('missing.storage') } }; },
-    do: { volume(S, v) { N(S).volume = v; S.save(); O55.ui.refresh(); }, use(S) { const v = N(S).volume; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
+    eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.titleCheck'), lead: (S) => T('nas.mounted.leadOn', { where: machine(S) }),
+    body(S) { const v = N(S).volume || ''; return `<p class="o55-path" data-key="vol">${C.small('folder', 14)} ${U.esc(v)}</p>` + F.phases(S, 'mounted:' + v, ['read'], { read: T('nas.mounted.read', { where: machine(S) }) }) + `<div class="o55-sublinks" data-key="other">${C.link(T('nas.mounted.other'), 'other')}</div>`; },
+    mounted(S) { const v = N(S).volume; if (v) F.op(S, 'mounted:' + v, 'cmd.project.source_location.test', [{ key: 'read', ms: 600 }], { payload: { path: v, from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
+    foot(S) { const v = N(S).volume, st = v && F.state(S, 'mounted:' + v); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: v ? T('chrome.working') : T('missing.storage') } }; },
+    do: { other(S) { O55.ui.back(); }, use(S) { const v = N(S).volume; finishMounted(S, v, 'mounted:' + v, 'mounted'); } }
   });
 
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
-    if (n.trusted) S.env.here.knownHosts[d.address] = d.hostKey;
-    if (n.installed && n.key && !d.authorized.includes(n.key)) d.authorized.push(n.key);
+    if (n.trusted) knownHosts(S)[hostId(S)] = d.hostKey;
+    if (n.installed && n.key) authorize(S, d, n.key);
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);

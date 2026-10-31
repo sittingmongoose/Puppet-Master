@@ -2161,7 +2161,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(typeof window.PM_ACTIVE_PROJECT_ID==='string'){
       var explicit=window.PM_ACTIVE_PROJECT_ID.trim();
       if(!explicit||/^(none|no-project)$/i.test(explicit))return null;
-      return {id:explicit,label:explicit};
+      /* the Project's own name from its title-bar row, never its id shown as a name (SCR-18) */
+      var named=Array.prototype.filter.call(document.querySelectorAll('#projectMenu [data-project]'),function(r){return r.getAttribute('data-project')===explicit;})[0];
+      return {id:explicit,label:(named&&(named.getAttribute('data-project-name')||'').trim())||explicit};
     }
     var selected=document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]');
     var label=document.getElementById('projectMenuLabel');

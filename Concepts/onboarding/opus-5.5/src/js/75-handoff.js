@@ -36,7 +36,7 @@
       return { server_id: sv.id, name: sv.displayName || sv.id, role: 'new_server', kind: sv.kind || 'nas', address_label: (O55.serverSetup && O55.serverSetup.address(S)) || '', trust_ref: sv.selfTrustId || null };
     }
     if (d.server_mode === 'existing_server') {
-      const t = c.trust;
+      const t = (c.trusts || {})[d.server_ref];
       if (!t || t.server !== d.server_ref || !d.server_trust_confirmed) return null;
       const s = known(S, d.server_ref) || {};
       return { server_id: d.server_ref, name: s.name || d.server_ref, role: 'existing_server', kind: null, address_label: s.address || '', trust_ref: t.id };
@@ -63,14 +63,20 @@
     if (mode === 'local_or_vpn') { base.via = 'lan'; base.state = server(S) ? 'in_use' : 'not_set_up'; return base; }
     const a = S.sess.awaySetup || {};
     base.state = a.mode === mode && a.state === 'done' ? 'ready' : a.mode === mode && a.state === 'later' ? 'set_up_later'
-      : a.mode === mode && (a.state === 'running' || a.state === 'waiting') ? 'waiting' : a.mode === mode && a.state === 'failed' ? 'needs_attention' : 'not_set_up';
+      : a.mode === mode && ['running', 'waiting', 'pending', 'idle'].includes(a.state) && a.confirmed ? 'waiting' : a.mode === mode && a.state === 'failed' ? 'needs_attention' : 'not_set_up';
+    if (mode === 'remote_link') base.endpoint_label = a.mode === mode && a.link ? a.link : '';
     return base;
   }
 
+  /* the Project opened, where it is kept (in words a person reads), and the Server that is its home */
   function project(S, o) {
     const id = o.project || null; if (!id) return null;
-    const h = host(S);
-    return { id, name: o.projectName || id, home_server_id: h.id };
+    const h = host(S), d = md(S), connected = S.sess.active === 'connect';
+    const kind = h.role === 'this_device' ? (d.storage_mode === 'network_location' ? 'network_drive' : 'this_device') : d.storage_mode === 'network_location' && !connected ? 'network_drive' : d.storage_mode === 'this_device' && !connected ? 'this_device' : 'server';
+    let label = '';
+    try { label = connected || o.restored ? '' : (O55.review && O55.review.filesAt ? O55.review.filesAt(S) : ''); } catch (_) { label = ''; }
+    if (!label) label = kind === 'server' ? h.name || '' : S.env.here.projectsRoot || '';
+    return { id, name: o.projectName || id, home_server_id: h.id, files: { kind, label } };
   }
 
   function build(S, o) {

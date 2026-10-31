@@ -317,7 +317,7 @@ def('n6', 'homeNasPm', 'NAS already runs Puppet Master: identity first, then app
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'folder browser');
   await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
   A.eq(await d.screen(), 'name', 'name'); const dr = await d.draft('main');
-  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home-nas\//.test(dr.project_source_ref), 'non-secret device-and-path reference');
+  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home\//.test(dr.project_source_ref), 'non-secret Server-and-path reference (by the paired Server, never its display name: SCR-10)');
   A.ok(dr.source_access_authorization_refs.includes('pairing:home-nas:source-read'), 'pairing result bound'); A.eq(dr.server_mode, 'this_device', 'work still runs here');
   A.ok(dr.server_ref !== 'pm:home', 'the NAS does not become the Server');
   A.capture('n6 paired source', dr);
@@ -833,14 +833,21 @@ def('pr29', 'fresh', 'QA2 review N1: a sign-in reaches the cloud service it was 
 });
 def('pr30', 'fresh', 'QA2 review N1 sweep: a Remote Link leaves the plan when another way to reach the Server is chosen', async (d, A) => {
   await d.openOnboarding();
+  /* (a new Server makes its own link after the commit, SCR-05: nothing is typed on Away, so nothing can linger) */
   await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'away' }));
   await d.untilScreen('away', 12000);
+  await d.act('more'); await d.act('route', 'remote_link');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-bind="link"]')), 'a new Server: no Remote Link to type');
+  A.eq((await d.draft('main')).remote_endpoint || '', '', 'a new Server: no Remote Link in the plan');
+  /* Connect, where the link is typed: another way in drops it */
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-route' }));
+  await d.untilScreen('c-route', 12000);
   await d.act('more'); await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K');
-  A.eq((await d.draft('main')).remote_endpoint, 'pm-remote-link:home-nas/7Q2K', 'the Remote Link is in the plan');
-  await d.act('pick', 'home');
-  A.eq((await d.draft('main')).remote_endpoint || '', '', 'Only at home: the Remote Link has left the plan');
-  await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K'); await d.act('pick', 'anywhere');
-  A.eq((await d.draft('main')).remote_endpoint || '', '', 'Tailscale: the Remote Link has left the plan');
+  A.eq((await d.draft('connect')).remote_endpoint, 'pm-remote-link:home-nas/7Q2K', 'the Remote Link is in the plan');
+  await d.act('route', 'local_or_vpn');
+  A.eq((await d.draft('connect')).remote_endpoint || '', '', 'On this network: the Remote Link has left the plan');
+  await d.act('route', 'remote_link'); await d.type('link', 'pm-remote-link:home-nas/7Q2K'); await d.act('route', 'tailscale');
+  A.eq((await d.draft('connect')).remote_endpoint || '', '', 'Tailscale: the Remote Link has left the plan');
 });
 def('pr31', 'fresh', "QA2 review N1 sweep: a key's passphrase is asked for that key, and once", async (d, A) => {
   await toNasKey(d);
@@ -1026,9 +1033,12 @@ def('a1', 'fresh', 'A Project later on a new Server still sets up its access, an
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'review', 'review');
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-key="rv-remote"]')), 'Review shows the access');
   A.ok(await d.state(() => /No Project is created/.test((document.querySelector('#pm-o55-onboarding .o55-will') || {}).textContent || '')), 'Review says no Project is created');
-  await d.primary(); A.eq(await d.screen(), 'creating', 'the access is prepared');
-  await until(d, "window.O55.S.sess.commit.state === 'done'", 'prepared', 12000);
-  A.eq(await d.state(() => (window.O55.S.sess.ops[window.O55.S.sess.commit.key].phases || []).map((p) => p.key).join()), 'remote,check', 'only the access and a check run');
+  /* (the way in is its own step after Review: Tailscale's own steps, the sign-in the person's, SCR-04) */
+  await d.primary(); A.eq(await d.screen(), 'away-setup', 'the access is prepared');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'waiting'", 'waits for the Tailscale sign-in', 12000);
+  await d.act('person', 'tsSignIn');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'done'", 'prepared', 20000);
+  A.eq(await d.state(() => window.O55.S.sess.commit.state), 'later', 'only the access ran');
   A.ok(await d.state(() => !window.O55.S.sess.commit.projectId && !document.querySelector('#projectMenu [data-project^="p-"]')), 'no Project record anywhere');
   await d.primary(); A.eq(await d.screen(), 'ready', 'ready');
   A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-o55-do="tour"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-do="createNow"]')), 'no tour without a Project; Create a Project now instead');
@@ -1048,7 +1058,10 @@ def('a3', 'fresh', 'A cloud computer is reached by its address and is not called
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
   await d.act('kind', 'cloud'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting');
   A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:new"]') && !!document.querySelector('#pm-o55-onboarding [data-o55-bind="addr"]')), 'no home-network scan; its address is asked');
-  await d.type('addr', '203.0.113.24'); await d.act('pick', 'pm:cloud'); await d.primary();
+  /* (set up over its private address only: a public one is refused, SCR-14) */
+  await d.type('addr', '203.0.113.24');
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="pm:cloud"]')), 'a public address is refused');
+  await d.type('addr', '100.88.12.34'); await d.act('pick', 'pm:cloud'); await d.primary();
   A.eq(await d.screen(), 's-confirm', 'confirm');
   A.eq(await d.state(() => document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]').value), 'Cloud server', 'named for what it is');
 });
@@ -1103,7 +1116,7 @@ def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own li
   A.ok(/^ssh-ed25519 AAAA\S+ puppet-master@MacBook-Pro$/.test(line), 'the line is the new key\'s public half (' + line.slice(0, 40) + '...)');
   A.ok(await paneFits(d), 'the line and its Copy button fit inside the window');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-pm']||{}).state === 'done'", 'checked with the key', 9000);
-  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-pm')), 'the device now has the key');
+  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-pm' || k.endsWith(':k-pm'))), 'the device now has the key (for the account it signs in as: SCR-10)');
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'on to the folder');
 });
 def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: the check says so and nothing goes on", async (d, A) => {
@@ -1113,7 +1126,7 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
   A.ok(await d.state(() => /isn't on Home NAS yet/.test(document.body.textContent)), 'it says the key is not on Home NAS yet');
-  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
+  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.some((k) => k === 'k-ed' || k.endsWith(':k-ed')))), 'the check did not add the key itself');
   await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
 });

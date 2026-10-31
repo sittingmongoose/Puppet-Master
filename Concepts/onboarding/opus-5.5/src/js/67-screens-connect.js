@@ -24,6 +24,8 @@
     none: { phase: false, done: 'warn', intensity: 0.55 } };
   const PAIR_SOUND = { phase: { approve: 'found', qr: 'found' }, intensity: 0.8 };
   const CODE_SOUND = { fail: 'warn', intensity: 0.8 };
+  /* demo hints (O55.flow.hint, the concept's ready choices for a step that needs a real Server): each takes a branch */
+  const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   function foundIf(before, srv) { if (srv && srv.id !== before) O55.sound.play('found', SND.found); }
 
   /* read-only discovery, cached per network scope (cmd.server.discovery.refresh). It looks on the local network and on
@@ -50,8 +52,9 @@
     const v = String(value || '').trim().toLowerCase();
     if (!v) return null;
     if (kind === 'address') return allServers(S).find((s) => s.address.toLowerCase() === v || (s.id === 'pm:home' && v === '192.168.1.20')) || null;
-    if (kind === 'proxy') return F.isHttps(v) ? S.env.pmServers[0] : null;
-    if (kind === 'link') return /^[a-z][a-z0-9._:/#-]*$/.test(v) && v.length > 8 ? S.env.pmServers[0] : null;
+    /* (only an address the endpoint check accepts is looked up: SCR-09; a link or the short code its Server shows) */
+    if (kind === 'proxy') return O55.endpoint.check(v, 'proxy').ok ? S.env.pmServers[0] : null;
+    if (kind === 'link') return O55.endpoint.checkLink(v).ok ? S.env.pmServers[0] : null;
     return null;
   }
   /* A different Server ends what was started for the one before: its pairing request (cancelled with the owner), the
@@ -106,8 +109,9 @@
   function endRun(S, reason) {
     const c = S.sess.connect, r = c.run; if (!r) return;
     PARTS.forEach((part) => { O55.owners.cancelOp(runKey(r, part)); F.reset(S, runKey(r, part)); });
-    /* the requesting device's own abort before trust is issued (never a rejection, which is the approver's) */
-    if (live.has(r.id) && !trustOf(S, r.server)) O55.owners.dispatch('cmd.client.pair.cancel', { server: r.server, pairing_run: r.id, generation: r.gen, reason }, S.ctx());
+    /* the requesting device's own abort before trust is issued (never a rejection, which is the approver's); a request
+       from before a reload is cancelled by its id too, so the Server stops waiting on it */
+    if (!trustOf(S, r.server)) O55.owners.dispatch('cmd.client.pair.cancel', { server: r.server, pairing_run: r.id, generation: r.gen, reason }, S.ctx());
     live.delete(r.id); typed.delete(r.id); c.run = null; c.fail = null; S.save();
   }
   /* the fence every completion passes: the run is still the current one, for the Server, route and way on screen */
@@ -179,6 +183,7 @@
         if (c.manual) {
           const hit = resolveAddress(S, c.addr, 'address');
           out += C.field({ bind: 'addr', label: T('connect.route.addressLabel'), value: c.addr || '', placeholder: 'home-nas.local', hint: hit ? hit.name : T('connect.route.addressHint'), valid: !!hit });
+          out += H('c-route:addr', [{ label: 'home-nas.local', outcome: 'works', fills: [['addr', 'home-nas.local']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }], { when: !hit });
           out += `<div class="o55-sublinks" data-key="l-found">${C.link(T('connect.route.found'), 'manualOff')}</div>`;
         } else {
           const list = found(S), st = F.state(S, scanKey(S));
@@ -196,15 +201,18 @@
       let under = '';
       if (mode === 'tailscale') {
         under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
-        if (d.tailscale_control === 'headscale') under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: F.isHttps(d.headscale_url) ? '' : 'https://…', valid: F.isHttps(d.headscale_url) });
+        if (d.tailscale_control === 'headscale') { const res = O55.endpoint.check(d.headscale_url, 'headscale'), w = O55.endpoint.hint(res, 'https://…'); under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok }) + H('c-route:headscale', [{ label: 'https://headscale.example.com', outcome: 'works', fills: [['headscale', 'https://headscale.example.com']] }, { label: 'http://headscale.example.com', outcome: 'wrong', fills: [['headscale', 'http://headscale.example.com']] }], { when: !res.ok }); }
         under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale', quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
       } else if (mode === 'reverse_proxy') {
-        const hit = resolveAddress(S, d.proxy_hostname, 'proxy');
-        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : 'https://…', valid: !!hit });
+        const hit = resolveAddress(S, d.proxy_hostname, 'proxy'), w = O55.endpoint.hint(O55.endpoint.check(d.proxy_hostname, 'proxy'), 'https://…');
+        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
+        under += H('c-route:proxy', [{ label: 'https://pm.example.net', outcome: 'works', fills: [['proxy', 'https://pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !hit });
         /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
       } else if (mode === 'remote_link') {
-        const hit = resolveAddress(S, d.remote_endpoint, 'link');
-        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : '', valid: !!hit });
+        /* the link it shows, or its short code (RAS-014); where the Server shows them is said under the field */
+        const hit = resolveAddress(S, d.remote_endpoint, 'link'), w = O55.endpoint.hint(O55.endpoint.checkLink(d.remote_endpoint), T('connect.route.link.where'));
+        under += C.field({ bind: 'link', label: T('connect.route.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
+        under += H('c-route:link', [{ label: 'pm-remote-link:home-nas/7Q2K', outcome: 'works', fills: [['link', 'pm-remote-link:home-nas/7Q2K']] }, { label: '7Q2K-9P3M', outcome: 'works', fills: [['link', '7Q2K-9P3M']] }, { label: 'http://home-nas', outcome: 'wrong', fills: [['link', 'http://home-nas']] }], { when: !hit });
       }
       const opts = [
         { v: 'local_or_vpn', glyph: 'link', title: T('connect.route.local'), quiet: true },
@@ -240,7 +248,14 @@
       },
       /* another control server is another way in: a request sent the other way ends and the review asks again */
       tsControl(S, v) { if (cd(S).tailscale_control !== v) { endRun(S, 'route_changed'); unconfirm(S); } O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },
-      next(S) { O55.ui.go('c-review'); }
+      /* an address is kept as typed while the person types; the one it will use (https:// in front) goes on (SCR-09) */
+      next(S) {
+        const d = cd(S), E = O55.endpoint, patch = {};
+        if (d.remote_mode === 'reverse_proxy' && E.check(d.proxy_hostname, 'proxy').ok) patch.proxy_hostname = E.check(d.proxy_hostname, 'proxy').url;
+        if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && E.check(d.headscale_url, 'headscale').ok) patch.headscale_url = E.check(d.headscale_url, 'headscale').url;
+        if (Object.keys(patch).length) { O55.draft.set(d, patch); S.save(); }
+        O55.ui.go('c-review');
+      }
     },
     bind: {
       addr(S, v) { S.sess.connect.addr = v; const was = cd(S).server_ref, hit = resolveAddress(S, v, 'address'); choose(S, hit, { server_connection_mode: 'manual' }); O55.ui.refresh(); foundIf(was, hit); },
@@ -300,6 +315,7 @@
     identity_mismatch: [{ label: 'connect.pair.fail.toList', do: 'toRoute' }],
     protocol_mismatch: [{ label: 'connect.pair.fail.retry', do: 'newRequest' }, { label: 'connect.pair.fail.toList', do: 'toRoute' }]
   };
+  const OUTCOMES = [['denied', 'refused'], ['expired', 'expired'], ['unreachable', 'noAnswer'], ['identity_mismatch', 'wrong'], ['protocol_mismatch', 'refused']];
   function failPane(S, s, code) {
     const acts = FAIL_ACTIONS[code] || FAIL_ACTIONS.unreachable;
     return `<div class="o55-banner o55-banner-warn" data-key="pairfail-${U.esc(code)}">${C.small('lock', 18)}<span>${U.esc(T('connect.pair.fail.' + code, { name: s.name || '' }))}</span></div>`
@@ -329,6 +345,7 @@
           const v = typed.get(r.id) || '';
           out += C.field({ bind: 'code', label: T('connect.pair.codeLabel', { name: s.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: s.name }) : '', invalid: cs && cs.state === 'failed' });
           out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += H('c-pair:code', [{ label: s.code || 'A7K9-M2Q4', outcome: 'works', fills: [['code', s.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['code', 'AAAA-BBBB']] }]);
           const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p>`;
         }
@@ -344,6 +361,8 @@
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: s.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: s.name }))}</span></div>`;
       }
       if (fail) out += failPane(S, s, fail);
+      /* the other answers a Server can give, each a new request answered that way */
+      else out += H('c-pair:outcome', OUTCOMES.filter(([code]) => m !== 'code' || FAIL_AT.reach.includes(code)).map(([code, word]) => ({ label: T('connect.pair.hint.' + code), outcome: word, act: ['demoOutcome', code] })));
       return out;
     },
     mounted(S) { ensureRun(S); if (!paired(S)) F.ticker(S, 'c-pair', 1000, () => paired(S)); },
@@ -355,6 +374,8 @@
       /* a new request, not the old one shown again: the old run ends and its answers no longer count (SCR-15) */
       resend(S) { endRun(S, 'resend'); startRun(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (server(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
       newRequest(S) { endRun(S, 'retry'); startRun(S); O55.ui.refresh(); O55.sound.play('tap'); },
+      /* (demo: a new request that the concept's Server answers this way: failures.pair_once, the Demo Studio hook) */
+      demoOutcome(S, code) { if (!FAIL_ACTIONS[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.pair_once = code; endRun(S, 'retry'); startRun(S); O55.ui.refresh(); O55.sound.play('tap'); },
       useCode(S) { endRun(S, 'method_changed'); unconfirm(S); O55.draft.set(cd(S), { connection_pairing: 'code' }); S.save(); O55.ui.back(); },
       toRoute(S) { endRun(S, 'back'); unconfirm(S); S.save(); const h = S.sess.history || [], at = h.lastIndexOf('c-route'); if (at >= 0) S.sess.history = h.slice(0, at); O55.ui.go('c-route', { dir: 'back', noHistory: true }); },
       checkCode(S) {
