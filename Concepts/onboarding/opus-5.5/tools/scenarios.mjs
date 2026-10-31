@@ -925,6 +925,115 @@ def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore sto
   await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
 });
 /* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
+/* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
+   2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
+const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);
+def('pr40', 'fresh+sshNotAllowed', "Situation sshNotAllowed: Home NAS doesn't let the account use SSH; its own rule is named and a shared folder is offered", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  await d.primary(); A.eq(await d.screen(), 'nas-signin', 'sign in once');
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('sshinstall:') && v.state === 'failed' && v.code === 'not_allowed')", 'not allowed', 9000);
+  const t = await layerText(d);
+  A.ok(/can't use SSH|isn't allowed|not allowed/i.test(t), 'it says this account may not use SSH there');
+  A.ok(/administrators group/.test(t), "Synology's own rule is named");
+  await d.act('useSmb'); A.ok(['nas-smb', 'nas-find'].includes(await d.screen()), 'a shared folder instead (' + await d.screen() + ')');
+});
+async function toProtectS3(d) {
+  await d.openOnboarding(); await conceptOn(d);
+  await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('backup'); await d.act('bdest', 's3'); await d.act('sheet-close'); await d.primary();
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
+  await readyPrimary(d); await d.primary();
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret');
+}
+async function protectUntilDone(d, seen) {
+  for (let i = 0; i < 16 && !(await d.state(() => window.O55.S.sess.backup.state === 'done')); i++) {
+    const t = await layerText(d);
+    for (const [k, rx] of Object.entries(seen.rx)) if (rx.test(t)) seen.hit[k] = true;
+    const info = await d.primaryInfo();
+    if (info && !info.disabled) await d.primary({ settle: true });
+    await sleep(1200);
+  }
+}
+def('pr41', 'fresh+kitTestFails', 'Situation kitTestFails: the Recovery Kit test says the kit did not open the backup once; testing again works', async (d, A) => {
+  await toProtectS3(d);
+  const seen = { rx: { failed: /That kit didn't open the backup/, handoff: /The handoff didn't finish/ }, hit: {} };
+  await protectUntilDone(d, seen);
+  A.ok(!!seen.hit.failed, 'the failed test says so'); A.ok(!seen.hit.handoff, 'and only that (no second warning)');
+  A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'the second test passes and backups are on');
+});
+def('pr42', 'fresh+protectRefused', 'Situation protectRefused: saving the Recovery Kit is turned down once; Try again saves it', async (d, A) => {
+  await toProtectS3(d);
+  const seen = { rx: { refused: /The handoff didn't finish/ }, hit: {} };
+  await protectUntilDone(d, seen);
+  A.ok(!!seen.hit.refused, 'the refusal says nothing was saved');
+  A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'Try again saves it and backups are on');
+});
+async function toServerCode(d) {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found the new Server', 6000); await d.act('pick', 'pm:new'); await d.primary();
+  await d.type('code', '482 913'); await d.primary();
+}
+def('pr43', 'fresh+serverOldAnswer', "Situation serverOldAnswer: approving this computer is answered for an old code once; approving again works", async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary();
+  await until(d, "window.O55.S.sess.server.orApproveErr === 'stale_nonce'", 'answered for an old code', 8000);
+  A.ok(/for an old code/.test(await layerText(d)), 'it says the answer was for an old code');
+  A.ok(await d.state(() => !window.O55.S.sess.server.claimed), 'nothing trusted');
+  await d.primary(); await d.untilScreen('s-ready', 15000);
+  A.ok(await d.state(() => !!window.O55.S.sess.server.selfTrustId), 'approving again trusts this computer');
+});
+def('pr44', 'fresh+serverWrongDevice', 'Situation serverWrongDevice: setting up the Server is answered for another one once; Check again goes on', async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orClaimErr === 'wrong_target'", 'answered for another Server', 8000);
+  A.ok(/for a different device or Server/.test(await layerText(d)), 'it says the answer was for another device or Server');
+  await d.primary();
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'Check again: claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary(); await d.untilScreen('s-ready', 15000); A.ok(true, 'the Server is set up');
+});
+def('pr45', 'fresh+serverWrongDevice', "Situation serverWrongDevice on Your Server is ready: a device's approval is answered for another one once; Approve again pairs it", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 's-ready' }); }); await d.settle();
+  /* (opened straight, a page before pm7-srv's e05b690b08 has no live invite yet: New code makes one, as a person would) */
+  if (await d.state(() => !(window.O55.S.sess.server.pairUntil > Date.now()))) await d.act('newCode');
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting')", "a device's request", 8000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting').id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "window.O55.S.sess.server.approveErr === 'wrong_target'", 'answered for another device', 8000);
+  A.ok(/for a different device or Server/.test(await layerText(d)), 'it says so');
+  await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'approving again pairs it');
+});
+def('pr46', 'fresh+serverNoWords', "Situation serverNoWords: a device's request comes without its words once; New code asks it again", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 's-ready' }); }); await d.settle();
+  /* (opened straight, a page before pm7-srv's e05b690b08 has no live invite yet: New code makes one, as a person would) */
+  if (await d.state(() => !(window.O55.S.sess.server.pairUntil > Date.now()))) await d.act('newCode');
+  await until(d, "window.O55.S.sess.server.runErr === 'waiting_pairing_identity_missing'", 'a request without its words', 8000);
+  A.ok(await d.state(() => !(window.O55.S.sess.server.candidates || []).some((c) => c.state === 'waiting')), 'nothing to approve');
+  A.capture('pr46 note', await d.state(() => (document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-note-warn') || {}).textContent || ''));
+  await d.act('newCode');
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting' && c.gen === window.O55.S.sess.server.pairGen)", 'asked again with the new code', 8000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting' && c.gen === window.O55.S.sess.server.pairGen).id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'its words compared, it pairs');
+});
+def('pr47', 'fresh+githubUnclear', "Situation githubUnclear: GitHub's first answer can't say whether the copy was made; Check again reads the next and the Project is made", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  await d.primary(); await d.primary(); await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'unknown'", 'unclear', 20000);
+  A.ok(/is unclear, so this is waiting/.test(await layerText(d)), 'it says the answer is unclear and nothing is retried on its own');
+  A.ok(await d.state(() => !window.O55.S.sess.commit.projectId), 'no Project yet');
+  await d.act('checkAgain');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 15000);
+  A.ok(await d.state(() => !!window.O55.S.sess.commit.projectId), 'the next answer makes the Project');
+});
 /* situation githubHalfMade: GitHub makes the copy, then this computer's part stops once (the lead, 2026-10-31: "Resume
    and delete after a partial creation stay unanswered"); the concept host answers Continue Setup and Delete Repository */
 async function toHalfMade(d, A) {
