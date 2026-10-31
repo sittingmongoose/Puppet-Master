@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28467-L28953
+Source lines: L28502-L28990
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -90,39 +90,41 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings > General > Notifications & Sounds provides the master notification enable, in-app toast/banner,
-  system/tray, sound enable, volume, per-event routing matrix, quiet/focus behavior, destination list and status,
-  sound library and mapping, upload/import/export, preview, and explicit test-send controls. The surface supports
-  Slack, Discord, generic webhook, ntfy, Pushover, Telegram, in-app toast/banner, system/tray, normal notification
-  sounds, custom uploaded sounds, and PeonPing/OpenPeon-compatible imported packs only after compatibility and
-  licensing checks. Provider forms expose only masked or ref-backed fields: Slack channel/mrkdwn/mention policy,
-  Discord thread/allowed_mentions/identity policy, generic webhook method/header/body template/success predicate, ntfy
-  server/topic/priority/tags/click policy, Pushover device/priority/sound/retry policy, and Telegram chat/thread/parse
-  mode/disable-notification fields. The routing matrix uses canonical event categories and default sound mappings, and
-  the sound library shows built-in normal notification sound entries with source/license/version/duration/hash metadata
-  beside uploaded and imported assets. Sound is never the sole carrier for important state, and missing audio support
-  hides or labels controls rather than failing silently. Preview starts the selected available audio only after an
-  explicit user gesture; its playing indicator follows actual playback rather than an independent animation timer.
-  The same control stops playback, a different selection replaces it without overlap, and leaving the sound view,
-  closing Settings, changing Project, or disposing the view releases playback resources. Missing or undecodable
-  recordings expose a non-audio unavailable/failure state and never play an unrelated substitute under the selected
-  asset's name. A browser concept may label generated demonstration tones and session-only user-selected files, but
-  must not present them as bundled licensed recordings, native audio evidence, pack validation, or notification
-  delivery. Mapping preview is read-only inspection and is distinct from local playback and explicit test-send. The
-  concept sound library renders generated demonstration tones labelled as such; production built-in sounds still carry
-  source, license, version, duration, and hash metadata, and demonstration tones never stand in for a bundled licensed
-  recording, pack validation, or delivery (USER-SETTINGS-MANAGER-REFRESH-20260908).
-  The routing matrix's categories include the chat cues (F3-564) and the onboarding and Guided Tour cues
-  (F3-599), and the library lists every onboarding and Guided Tour cue of each theme-family kit and of the
-  NieR kit, grouped in styles of their own, as built-in entries (generated demonstration tones in the concept) that
-  preview under the same rules (DL-152).
-  The in-app toast/banner destination renders through the
-  title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
-  notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
-  Amended 2026-10-17 (DL-228): every cue category, the chat's (F3-564), onboarding and the Guided Tour's
-  (F3-599) and the notifications' (F3-460), plays through this owner's one player: one kit per theme family
-  plus the NieR kit while NieR Mode is painted, nothing before the first trusted gesture, one mute bound to
-  general.interaction.sound-effects, one volume, and sound never the only signal. The consumers state their
-  own moments and keep no engine, gate or mute of their own.
+  system/tray, sound enable, volume, per-event routing matrix, quiet/focus behavior, destination list and
+  status, sound library and mapping, upload/import/export, preview, and explicit test-send controls. The surface
+  supports Slack, Discord, generic webhook, ntfy, Pushover, Telegram, in-app toast/banner, system/tray, normal
+  notification sounds, custom uploaded sounds, and PeonPing/OpenPeon-compatible imported packs only after
+  compatibility and licensing checks. Provider forms expose only masked or ref-backed fields: Slack
+  channel/mrkdwn/mention policy, Discord thread/allowed_mentions/identity policy, generic webhook
+  method/header/body template/success predicate, ntfy server/topic/priority/tags/click policy, Pushover
+  device/priority/sound/retry policy, and Telegram chat/thread/parse mode/disable-notification fields. The
+  routing matrix uses canonical event categories and default sound mappings, and the sound library shows
+  built-in normal notification sound entries with source/license/version/duration/hash metadata beside uploaded
+  and imported assets. Sound is never the sole carrier for important state, and missing audio support hides or
+  labels controls rather than failing silently. Preview starts the selected available audio only after an
+  explicit user gesture; its playing indicator follows actual playback rather than an independent animation
+  timer. The same control stops playback, a different selection replaces it without overlap, and leaving the
+  sound view, closing Settings, changing Project, or disposing the view releases playback resources. Missing or
+  undecodable recordings expose a non-audio unavailable/failure state and never play an unrelated substitute
+  under the selected asset's name. A browser concept may label generated demonstration tones and session-only
+  user-selected files, but must not present them as bundled licensed recordings, native audio evidence, pack
+  validation, or notification delivery. Mapping preview is read-only inspection and is distinct from local
+  playback and explicit test-send. The concept sound library renders generated demonstration tones labelled as
+  such; production built-in sounds still carry source, license, version, duration, and hash metadata, and
+  demonstration tones never stand in for a bundled licensed recording, pack validation, or delivery
+  (USER-SETTINGS-MANAGER-REFRESH-20260908). The routing matrix's categories include the chat cues (F3-564) and
+  the onboarding and Guided Tour cues (F3-599), and the library lists every onboarding and Guided Tour cue of
+  each theme-family kit and of the NieR kit, grouped in styles of their own, as built-in entries (generated
+  demonstration tones in the concept) that preview under the same rules (DL-152). The in-app toast/banner
+  destination renders through the title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral
+  deliveries stage beneath the title-bar notification stack and durable deliveries join the stack and its count
+  badge (F3-460, F3-461). Amended 2026-10-17 (DL-228): every cue category, the chat's (F3-564), onboarding and
+  the Guided Tour's (F3-599) and the notifications' (F3-460), plays through this owner's one player: one kit per
+  each of the five theme families including NieR, selected from the current family (Q22), nothing before the
+  first trusted gesture, one mute bound to general.interaction.sound-effects, one volume, and sound never the
+  only signal. The consumers state their own moments and keep no engine, gate or mute of their own. Q22, Jared
+  2026-10-30 (DL-257): family nier replaces the independent overlay model; retained sound parts and the shared
+  player remain.
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]

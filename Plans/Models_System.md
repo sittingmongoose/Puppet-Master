@@ -8114,17 +8114,42 @@ plan_unit_id: MS-118
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  PM exposes a single direct-provider grouping named `Free Models` for supported active free/free-limited upstream entries, while preserving the underlying provider, model, account/profile, auth surface, billing/entitlement, transport, quota, and source identity. The wrapper must not rewrite canonical stored provider/model ids into `free_models/*`; it must retain `provider_entry_id`, `provider_family_id`, `model_provider_id`, canonical provider/model ids, stable PM imported ids, hidden subprovider/auth/quota metadata, source refs, and alias/rename/provider-move mappings. Catalog presence or freshness does not prove `usable_now`, quota health, routing readiness, capability support, or policy eligibility.
+canonical_text: 'PM exposes a single direct-provider grouping named `Free Models` for supported active free/free-limited
+  upstream entries, while preserving the underlying provider, model, account/profile, auth surface, billing/entitlement,
+  transport, quota, and source identity. The wrapper must not rewrite canonical stored provider/model ids into `free_models/*`;
+  it must retain `provider_entry_id`, `provider_family_id`, `model_provider_id`, canonical provider/model ids, stable
+  PM imported ids, hidden subprovider/auth/quota metadata, source refs, and alias/rename/provider-move mappings. Catalog
+  presence or freshness does not prove `usable_now`, quota health, routing readiness, capability support, or policy eligibility.
+  DL-259, Jared 2026-10-31: D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models v0.6.0, read
+  2026-10-31; the June v0.5.39 inspection remains historical lineage. Onboarding and Settings show OpenRouter free models
+  (sign-in), Groq free plan (key) and NVIDIA free models (key) up front. Other currently eligible free providers from
+  the same Free Models catalog appear behind one closed-by-default advanced control in each surface. That list is catalog-driven,
+  never a pinned list or count, and still applies the Models owner’s supported/free/readiness filters. GitHub Models
+  retired on 2026-07-30 and has no active setup/catalog/routing action; saved choices remain No longer available and
+  never become Copilot. Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication, billing
+  class and currently usable account/model identity remain separate; catalog labels do not prove a route is free. No
+  changing limits or prices are frozen in onboarding prose.'
 gui_related: true
 gui_classification_reason: Defines the user-visible `Free Models` provider grouping, catalog rows, badges, and model-selector eligibility states.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "`Free Models` appears as one PM direct-provider grouping while underlying provider/model/account/source identity remains traceable."
-  - Every active supported free/free-limited entry can be listed with badges, but unsupported upstream additions are hidden from normal catalog/detail/search/top-10/setup/routing surfaces.
-  - Saved top-10 or section-specific choices that disappear or become ineligible remain saved as `No longer available`, are skipped automatically, and are not silently deleted or replaced.
-  - Catalog freshness is represented separately from `usable_now`, quota health, routing readiness, and capability support.
+- '`Free Models` appears as one PM direct-provider grouping while underlying provider/model/account/source identity remains
+  traceable.'
+- Every active supported free/free-limited entry can be listed with badges, but unsupported upstream additions are hidden
+  from normal catalog/detail/search/top-10/setup/routing surfaces.
+- Saved top-10 or section-specific choices that disappear or become ineligible remain saved as `No longer available`,
+  are skipped automatically, and are not silently deleted or replaced.
+- Catalog freshness is represented separately from `usable_now`, quota health, routing readiness, and capability support.
+- 'DL-259, Jared 2026-10-31: D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models v0.6.0, read
+  2026-10-31; the June v0.5.39 inspection remains historical lineage. Onboarding and Settings show OpenRouter free models
+  (sign-in), Groq free plan (key) and NVIDIA free models (key) up front. Other currently eligible free providers from
+  the same Free Models catalog appear behind one closed-by-default advanced control in each surface. That list is catalog-driven,
+  never a pinned list or count, and still applies the Models owner’s supported/free/readiness filters. GitHub Models
+  retired on 2026-07-30 and has no active setup/catalog/routing action; saved choices remain No longer available and
+  never become Copilot. Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication, billing
+  class and currently usable account/model identity remain separate; catalog labels do not prove a route is free. No
+  changing limits or prices are frozen in onboarding prose.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Free Models catalog identity and alias/rename fixture coverage
@@ -8177,17 +8202,42 @@ plan_unit_id: MS-119
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Free Models Auto Apply tracks the configured upstream source/channel for `vava-nessa/free-coding-models`, imports trusted catalog/settings/runtime-behavior material through PM-owned schemas, and applies validated Free Models changes automatically on checks. PM checks on app launch plus daily background by default, with configurable cadence, but launch checks run after startup in the background and keep last known-good active until validation completes. Runtime behavior changes are automatic only for the Free Models provider and must enter PM through PM-owned declarative router, probe, normalizer, fallback, source-resolver, test, activation, quarantine, and rollback records.
+canonical_text: 'Free Models Auto Apply tracks the configured upstream source/channel for `vava-nessa/free-coding-models`,
+  imports trusted catalog/settings/runtime-behavior material through PM-owned schemas, and applies validated Free Models
+  changes automatically on checks. PM checks on app launch plus daily background by default, with configurable cadence,
+  but launch checks run after startup in the background and keep last known-good active until validation completes. Runtime
+  behavior changes are automatic only for the Free Models provider and must enter PM through PM-owned declarative router,
+  probe, normalizer, fallback, source-resolver, test, activation, quarantine, and rollback records. DL-259, Jared 2026-10-31:
+  D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models v0.6.0, read 2026-10-31; the June v0.5.39
+  inspection remains historical lineage. Onboarding and Settings show OpenRouter free models (sign-in), Groq free plan
+  (key) and NVIDIA free models (key) up front. Other currently eligible free providers from the same Free Models catalog
+  appear behind one closed-by-default advanced control in each surface. That list is catalog-driven, never a pinned list
+  or count, and still applies the Models owner’s supported/free/readiness filters. GitHub Models retired on 2026-07-30
+  and has no active setup/catalog/routing action; saved choices remain No longer available and never become Copilot.
+  Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication, billing class and currently
+  usable account/model identity remain separate; catalog labels do not prove a route is free. No changing limits or prices
+  are frozen in onboarding prose.'
 gui_related: true
 gui_classification_reason: Includes model-settings cadence controls and user-visible refresh/update status hooks.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Auto Apply accepts only configured trusted source/channel material with source refs, hashes, schema ids, import disposition, and activation/quarantine/rollback receipts.
-  - App launch checks never block PM startup or active work for routine checks.
-  - Manual all-provider model refresh triggers the Free Models Auto Apply check only for Free Models; non-Free-Models providers remain catalog/model-refresh-only.
-  - Runtime behavior adaptation is PM-owned and Free-Models-scoped; upstream commands, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, and arbitrary config writers are rejected.
+- Auto Apply accepts only configured trusted source/channel material with source refs, hashes, schema ids, import disposition,
+  and activation/quarantine/rollback receipts.
+- App launch checks never block PM startup or active work for routine checks.
+- Manual all-provider model refresh triggers the Free Models Auto Apply check only for Free Models; non-Free-Models providers
+  remain catalog/model-refresh-only.
+- Runtime behavior adaptation is PM-owned and Free-Models-scoped; upstream commands, local proxies, telemetry hooks,
+  credential writers, endpoint installers, self-update logic, and arbitrary config writers are rejected.
+- 'DL-259, Jared 2026-10-31: D5 A: the live Free Models source is github.com/vava-nessa/free-coding-models v0.6.0, read
+  2026-10-31; the June v0.5.39 inspection remains historical lineage. Onboarding and Settings show OpenRouter free models
+  (sign-in), Groq free plan (key) and NVIDIA free models (key) up front. Other currently eligible free providers from
+  the same Free Models catalog appear behind one closed-by-default advanced control in each surface. That list is catalog-driven,
+  never a pinned list or count, and still applies the Models owner’s supported/free/readiness filters. GitHub Models
+  retired on 2026-07-30 and has no active setup/catalog/routing action; saved choices remain No longer available and
+  never become Copilot. Cerebras, Hugging Face and Ollama Cloud are excluded from the free offer. Authentication, billing
+  class and currently usable account/model identity remain separate; catalog labels do not prove a route is free. No
+  changing limits or prices are frozen in onboarding prose.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Free Models source resolver and hash mismatch quarantine fixtures
@@ -8242,18 +8292,38 @@ plan_unit_id: MS-120
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  The Free Models priority setting is a PM-wide top-10 provider/model list across all providers and models. The default setup stays global and paid-first: paid providers/models are preferred over Free Models unless the user ranks Free Models above them. Section, surface, and role-specific PM model settings override the global top-10 and must disclose requested/effective behavior. Outside-top-10 fallback is deterministic by eligibility, policy, setup, cost, pressure, provider availability, and saved user ordering; it must not use recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration language in this version.
+canonical_text: 'The Free Models priority setting is a PM-wide top-10 provider/model list across all providers and models.
+  The default setup stays global and paid-first: paid providers/models are preferred over Free Models unless the user
+  ranks Free Models above them. Section, surface, and role-specific PM model settings override the global top-10 and
+  must disclose requested/effective behavior. Outside-top-10 fallback is deterministic by eligibility, policy, setup,
+  cost, pressure, provider availability, and saved user ordering; it must not use recommendation, quality-rank, coding-strength,
+  online-review, local-learning, or benchmark/probe-calibration language in this version. DL-259, Jared 2026-10-31: D4:
+  confirm provider admission and executable conformance immediately before building Puppet Master. The wizard lists its
+  provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change
+  per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable
+  result, not merely signed in. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools
+  rule, Kimi Code’s client/session identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription
+  credential. This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.'
 gui_related: true
 gui_classification_reason: Governs the user-visible top-10 list, section override disclosure, selector behavior, and fallback labels.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - The top-10 list spans all providers/models, not just Free Models.
-  - Paid-first is the default initialization, but explicit user ordering can place Free Models above paid providers/models.
-  - Section/surface/role overrides remain authoritative over the global top-10 and show requested/effective state in the GUI.
-  - New Ready Free Models entries may become deterministic outside-top-10 fallback candidates immediately, but never insert into or reorder saved top-10 entries without explicit user action.
-  - Current scope contains no recommended models, coding-strength scoring, online review lookup, local recommendation learning, or in-PM benchmark/probe calibration.
+- The top-10 list spans all providers/models, not just Free Models.
+- Paid-first is the default initialization, but explicit user ordering can place Free Models above paid providers/models.
+- Section/surface/role overrides remain authoritative over the global top-10 and show requested/effective state in the
+  GUI.
+- New Ready Free Models entries may become deterministic outside-top-10 fallback candidates immediately, but never insert
+  into or reorder saved top-10 entries without explicit user action.
+- Current scope contains no recommended models, coding-strength scoring, online review lookup, local recommendation learning,
+  or in-PM benchmark/probe calibration.
+- 'DL-259, Jared 2026-10-31: D4: confirm provider admission and executable conformance immediately before building Puppet
+  Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling
+  decision does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account
+  owner’s current usable result, not merely signed in.'
+- 'DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
+  identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
+  provider-conformance checklist, not a wizard warning, badge or disabled choice.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Free Models top-10 precedence fixtures
@@ -9061,8 +9131,14 @@ plan_unit_id: MS-130
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079 / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.
+canonical_text: 'P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product
+  entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079
+  / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity
+  covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.
+  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription
+  reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit
+  errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally
+  severe.'
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:

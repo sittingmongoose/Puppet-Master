@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33968-L34671
+Source lines: L34020-L34729
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -417,7 +417,13 @@ canonical_text: >-
   question stays readable in the collapsed row and the waiting or elapsed time appears once, in the row head; the
   economics and lane facts read as plain words and numbers, and model names are plain words, not capsules; the
   vocabulary, mapping and ordering above are unchanged.
-  Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform panel and Home Agents board. The rail remains deep management; all named product owners are included, no Orchestrator-only narrowing.
+  Amended 2026-10-29 (D7; PM7): Its ordering, lifecycle words and stale strip are reused by F3-664’s platform
+  panel and Home Agents board. The rail remains deep management; all named product owners are included, no
+  Orchestrator-only narrowing. D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): the
+  rail and Home board consume DR-078’s PM7_WORK_UI.list/agentGroup/agentSummary instead of a second agent list
+  or clock. The rail keeps this deep-view lineage/queue contract and four shelves; the Home frame and filter
+  keep their own layout. State words, needs-you identity and row actions are the same projection, with
+  spelled-out rail ages and hidden-view teardown/catch-up.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false

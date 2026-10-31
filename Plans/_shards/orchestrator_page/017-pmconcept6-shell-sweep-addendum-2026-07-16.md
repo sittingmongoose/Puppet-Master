@@ -2,9 +2,9 @@
 
 Source: `Plans/Orchestrator_Page.md`
 
-Source lines: L2404-L2631
+Source lines: L2404-L2630
 
-Source SHA256: `23bdf8575bf40d0867f20085d2cf40c7fb32e8c64d9635f0706566001a3bb1e3`
+Source SHA256: `99709bfde0f92665acf3f3d28fd9e2691d5fad3749f3ec48a3afd1d6e9e8f723`
 
 ---
 
@@ -234,5 +234,4 @@ compatibility_only_notes:
 owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/UI_Command_Catalog.md
-
 ```

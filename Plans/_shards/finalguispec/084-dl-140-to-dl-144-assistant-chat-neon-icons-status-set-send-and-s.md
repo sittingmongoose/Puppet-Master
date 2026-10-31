@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41873-L42314
+Source lines: L42271-L42720
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
 ## DL-140 to DL-144 — Assistant Chat Neon Icons, Status Set, Send And Stop, And NieR Mode (2026-10-07)
 
-This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks, Demo Studio and every measured timing outside these units are not canon.
+This addendum compiles the owner decisions DL-140 to DL-144 on the assistant chat's look, approved in the 5.6 Pro concept and folded into its shipped standalone on 2026-10-07. Behaviour stays with its owners: `Plans/assistant-chat-design.md` ACD-469 (transcript families and the accent budget), ACD-471 (busy send) and ACD-473 (the working activity), `Plans/FinalGUISpec.md#F3-563` (busy-send controls) and `Plans/Settings_System.md#SSYS-043` (NieR Mode settings, parts and scenes). The units below own the presentation only. The concept is source lineage only: its class names, keys, harness hooks and every measured timing outside these units are not canon.
 
 ### F3-584 — Assistant Chat Neon Icon Grammar
 
@@ -174,7 +174,6 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-141, ContractName:Plans/FinalGUISpec.md#F3-584
@@ -388,37 +387,46 @@ plan_unit_id: F3-589
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  NieR Mode (SSYS-043, F3-441) covers every assistant chat surface (DL-144). With NieR Mode on, the chat paints Basic
-  under NieR's ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with square caps and stepped
-  acts, the status marks still distinct (needs you an inverted ink block with a paper question mark and, under the
-  Target brackets part, ink corner brackets; working the diamond loader under the Diamond loaders part; idle and
-  pending squares under the Square hairlines part). The capabilities wand stays ink, with a lighter handle and a filled
-  star, and its sparkles twinkle in held steps (F3-588, DL-146); agents are PMConcept7's ink NieR puppets with the
-  rigid visor band (F3-594); a setup sheet's step number is an inverted ink square (F3-592); and the Ask Card's chosen
-  answer is the menu cursor, with diamond spine marks (F3-596). The installed parts land in the chat as follows: Menu cursor on
-  menus, pickers, thread rows and wand rows; Slice open on menus, dialogs and sheets; Text decode on the thread title
-  at a thread switch and on the head of an arriving assistant turn; Page wipe on a thread switch; Alert glitch, Scan
-  sweep and Drifting particles on alert toasts, refusals and failed steps; Pod companion above the composer, turning
-  toward toasts; Pod 042 in Chat as a persona that answers in Pod's voice; Quest banners on plan approved, build
+canonical_text: 'NieR Mode (SSYS-043, F3-441) covers every assistant chat surface (DL-144). With the NieR family selected,
+  the chat paints Basic under NieR''s ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with
+  square caps and stepped acts, the status marks still distinct (needs you an inverted ink block with a paper question
+  mark and, under the Target brackets part, ink corner brackets; working the diamond loader under the Diamond loaders
+  part; idle and pending squares under the Square hairlines part). The capabilities wand stays ink, with a lighter handle
+  and a filled star, and its sparkles twinkle in held steps (F3-588, DL-146); agents are PMConcept7''s ink NieR puppets
+  with the rigid visor band (F3-594); a setup sheet''s step number is an inverted ink square (F3-592); and the Ask Card''s
+  chosen answer is the menu cursor, with diamond spine marks (F3-596). The installed parts land in the chat as follows:
+  Menu cursor on menus, pickers, thread rows and wand rows; Slice open on menus, dialogs and sheets; Text decode on the
+  thread title at a thread switch and on the head of an arriving assistant turn; Page wipe on a thread switch; Alert
+  glitch, Scan sweep and Drifting particles on alert toasts, refusals and failed steps; Pod companion above the composer,
+  turning toward toasts; Pod 042 in Chat as a persona that answers in Pod''s voice; Quest banners on plan approved, build
   complete and goal complete; Unit readouts and Block progress in the status bar and the context meter; Intel tooltips
-  for hover cards; Ink empty states; Save signal on saves. Each part stays individually switchable and silent while
-  NieR Mode is off. In the chat the transcript stage counts as the app's ground, so the selected scene shows behind
-  the conversation as well as around the panels. A change from one scene to another cross-fades by opacity over 520
-  ms, with neither scene ever drawn above its resting strength; reduced motion, and the Still and Colors only presets,
-  swap instantly. This cross-fade applies wherever a scene changes, PMConcept7 included. The chat adds no moving
-  touches inside the scenes. NieR Mode stays the Settings switch, not a ninth theme; the concept's NieR Light and NieR
-  Dark Demo Studio themes are lab only (ACD-474).
-  Amended 2026-10-29 (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states, Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not animate; live sheet/onboarding Pip has eyes (X3).
+  for hover cards; Ink empty states; Save signal on saves. Each part stays individually switchable and silent while another
+  family is selected. In the chat the transcript stage counts as the app''s ground, so the selected scene shows behind
+  the conversation as well as around the panels. A change from one scene to another cross-fades by opacity over 520 ms,
+  with neither scene ever drawn above its resting strength; reduced motion, and the Still and Colors only presets, swap
+  instantly. This cross-fade applies wherever a scene changes, PMConcept7 included. The chat adds no moving touches inside
+  the scenes. Q22 promotes NieR Light and NieR Dark to selectable product themes in the fifth family; Amended 2026-10-29
+  (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states,
+  Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not
+  animate; live sheet/onboarding Pip has eyes (X3). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
-depends_on: [DL-144, DL-146, DL-149, SSYS-043, F3-441, F3-584, F3-585, ACD-474]
+depends_on:
+- DL-144
+- DL-146
+- DL-149
+- SSYS-043
+- F3-441
+- F3-584
+- F3-585
 unblocks: []
 acceptance_criteria:
   - "Every chat surface renders under NieR Mode with no glow and with its parts placed as listed."
   - "A scene change cross-fades over 520 ms with neither scene above its resting strength, and swaps instantly under reduced motion and the Still and Colors only presets."
-  - "With NieR Mode off no NieR part draws, moves or plays in the chat."
+  - "With another family selected no NieR part draws, moves or plays in the chat."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -441,7 +449,7 @@ preserved_exact_tokens:
   - "NieR Mode"
   - "cross-fades"
 negative_constraints:
-  - "Do not make NieR Mode a ninth selectable theme."
+  - "Do not retain an independent NieR override or checkbox; Q22 makes it the fifth family via the existing theme owner."
   - "Do not add moving touches inside the scenes in the chat."
 compatibility_only_notes: []
 stale_retired_dispositions: []

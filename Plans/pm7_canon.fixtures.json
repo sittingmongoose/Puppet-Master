@@ -1303,5 +1303,310 @@
         "code.editing.tab-size": 4
       }
     }
+  ],
+  "nier_theme_contract": {
+    "decision_id": "Q22",
+    "decision_ref": "Plans/Decision_Log.md#DL-257",
+    "authority": "Jared, 2026-10-30 QA round 2",
+    "claim_boundary": "static_contract_and_migration_oracle_only_no_native_execution",
+    "family_order": [
+      "basic",
+      "friendly",
+      "glass",
+      "retro",
+      "nier"
+    ],
+    "variant_ids": [
+      "basic-dark",
+      "basic-light",
+      "friendly-dark",
+      "friendly-light",
+      "glass-dark",
+      "glass-light",
+      "retro-dark",
+      "retro-light",
+      "nier-dark",
+      "nier-light"
+    ],
+    "setting_id": "general.visual.theme",
+    "presentation_mode_setting_id": "general.visual.theme-mode",
+    "retired_setting_id": "general.visual.nier-mode",
+    "retained_adjust_setting_ids": [
+      "general.visual.nier-parts",
+      "general.visual.nier-background"
+    ],
+    "adjust_visible_theme_values": [
+      "NieR Dark",
+      "NieR Light"
+    ],
+    "retired_control_ids": [
+      "shell.nier.mode",
+      "tour.nier.mode",
+      "onboarding.nier.mode"
+    ],
+    "family_control_ids": [
+      "shell.theme.family",
+      "tour.theme.family",
+      "onboarding.theme.family"
+    ],
+    "retained_local_action_ids": [
+      "ui.settings.nier_editor.open",
+      "ui.settings.nier_editor.close",
+      "ui.settings.nier_editor.replay"
+    ],
+    "retired_onboarding_intent": "preview_nier",
+    "retired_onboarding_field": "nier_mode",
+    "paint_family": "basic",
+    "paint_marker": "html[data-o55-nier='on']",
+    "logo_look": "nier-<scheme>",
+    "transition_policy": {
+      "enter_nier_with_reboot": "reboot",
+      "enter_nier_without_reboot": "standard_cover",
+      "leave_nier": "standard_cover",
+      "change_nier_scheme": "standard_cover"
+    },
+    "basic_only_setting_ids": [
+      "general.visual.high-contrast",
+      "general.visual.basic-color-scheme"
+    ]
+  },
+  "nier_theme_migration_cases": [
+    {
+      "name": "legacy_true_light_dark",
+      "before": {
+        "general.visual.theme": "Glass Dark",
+        "general.visual.theme-mode": "Light",
+        "general.visual.nier-mode": true,
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      },
+      "os_mode": "dark",
+      "expected": {
+        "general.visual.theme": "NieR Light",
+        "general.visual.theme-mode": "Light",
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      }
+    },
+    {
+      "name": "legacy_true_dark_light",
+      "before": {
+        "general.visual.theme": "Glass Dark",
+        "general.visual.theme-mode": "Dark",
+        "general.visual.nier-mode": true,
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      },
+      "os_mode": "light",
+      "expected": {
+        "general.visual.theme": "NieR Dark",
+        "general.visual.theme-mode": "Dark",
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      }
+    },
+    {
+      "name": "legacy_true_auto_light",
+      "before": {
+        "general.visual.theme": "Glass Dark",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-mode": true,
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      },
+      "os_mode": "light",
+      "expected": {
+        "general.visual.theme": "NieR Light",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      }
+    },
+    {
+      "name": "legacy_true_auto_dark",
+      "before": {
+        "general.visual.theme": "Glass Dark",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-mode": true,
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      },
+      "os_mode": "dark",
+      "expected": {
+        "general.visual.theme": "NieR Dark",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [
+          "Square hairlines"
+        ],
+        "general.visual.nier-background": "The Bunker",
+        "general.visual.wallpaper": "look"
+      }
+    },
+    {
+      "name": "legacy_false_preserves_family_and_adjust",
+      "before": {
+        "general.visual.theme": "Retro Light",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [],
+        "general.visual.nier-background": "Parchment",
+        "general.visual.nier-mode": false
+      },
+      "os_mode": "dark",
+      "expected": {
+        "general.visual.theme": "Retro Light",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [],
+        "general.visual.nier-background": "Parchment"
+      }
+    },
+    {
+      "name": "legacy_absent_preserves_family_and_adjust",
+      "before": {
+        "general.visual.theme": "Retro Light",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [],
+        "general.visual.nier-background": "Parchment"
+      },
+      "os_mode": "dark",
+      "expected": {
+        "general.visual.theme": "Retro Light",
+        "general.visual.theme-mode": "Auto",
+        "general.visual.nier-parts": [],
+        "general.visual.nier-background": "Parchment"
+      }
+    },
+    {
+      "name": "already_nier_is_unchanged",
+      "before": {
+        "general.visual.theme": "NieR Light",
+        "general.visual.theme-mode": "Light",
+        "general.visual.nier-parts": []
+      },
+      "os_mode": "dark",
+      "expected": {
+        "general.visual.theme": "NieR Light",
+        "general.visual.theme-mode": "Light",
+        "general.visual.nier-parts": []
+      }
+    }
+  ],
+  "nier_theme_transition_cases": [
+    {
+      "name": "enter_with_reboot",
+      "from": "basic-dark",
+      "to": "nier-dark",
+      "reboot": true,
+      "expected": "reboot"
+    },
+    {
+      "name": "enter_without_reboot",
+      "from": "glass-light",
+      "to": "nier-light",
+      "reboot": false,
+      "expected": "standard_cover"
+    },
+    {
+      "name": "leave_with_reboot",
+      "from": "nier-dark",
+      "to": "retro-dark",
+      "reboot": true,
+      "expected": "standard_cover"
+    },
+    {
+      "name": "nier_dark_to_light",
+      "from": "nier-dark",
+      "to": "nier-light",
+      "reboot": true,
+      "expected": "standard_cover"
+    },
+    {
+      "name": "nier_light_to_dark",
+      "from": "nier-light",
+      "to": "nier-dark",
+      "reboot": true,
+      "expected": "standard_cover"
+    },
+    {
+      "name": "other_family",
+      "from": "basic-light",
+      "to": "friendly-light",
+      "reboot": true,
+      "expected": "standard_cover"
+    }
+  ],
+  "nier_legacy_session_look_cases": [
+    {
+      "name": "old_true_uses_nier",
+      "before": {
+        "theme_family": "basic",
+        "theme_mode": "dark",
+        "nier_mode": true,
+        "nier_parts": [
+          "Square hairlines"
+        ],
+        "nier_background": "The Bunker"
+      },
+      "expected": {
+        "theme_family": "nier",
+        "theme_mode": "dark",
+        "nier_parts": [
+          "Square hairlines"
+        ],
+        "nier_background": "The Bunker"
+      }
+    },
+    {
+      "name": "old_false_preserves_family",
+      "before": {
+        "theme_family": "glass",
+        "theme_mode": "light",
+        "nier_mode": false,
+        "nier_parts": null,
+        "nier_background": null
+      },
+      "expected": {
+        "theme_family": "glass",
+        "theme_mode": "light",
+        "nier_parts": null,
+        "nier_background": null
+      }
+    },
+    {
+      "name": "old_null_preserves_unselected",
+      "before": {
+        "theme_family": null,
+        "theme_mode": null,
+        "nier_mode": null,
+        "nier_parts": null,
+        "nier_background": null
+      },
+      "expected": {
+        "theme_family": null,
+        "theme_mode": null,
+        "nier_parts": null,
+        "nier_background": null
+      }
+    }
   ]
 }

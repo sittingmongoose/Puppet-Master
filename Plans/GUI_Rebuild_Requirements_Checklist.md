@@ -2016,7 +2016,7 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   restoreOwnerRefs never dropping section records;
 - dashboard widget reorder and grid-snap resize on the shared direct-manipulation
   vocabulary, still persisted under the widget layout contract;
-- project/workspace persistence, corruption/migration/off-screen recovery, all eight
+- project/workspace persistence, corruption/migration/off-screen recovery, all ten
   themes, Light/Dark/Auto, inline SVG only, no emoji, and zero page/console errors.
 - one source-hashed zero-omission control census, byte-identical dual pipeline
   builds, and the exact 72-case fresh-context visual matrix plus direct headful
@@ -2275,3 +2275,6 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-077, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Decision_Log.md#DL-201
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

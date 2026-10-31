@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33123-L33966
+Source lines: L33160-L34018
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -19,55 +19,62 @@ plan_unit_id: F3-460
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and
-  are the sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert
-  state. With no waiting notice the bell stands alone; otherwise the newest title and at most two
-  peeking cards form the stack, fanning on hover, with a rectangular unread badge. The inbox and
-  each card share glyph, source/time, title, body, actions and timer anatomy. Basic is a neutral
-  hairline plate with a restrained arrival and join. Friendly is a speech bubble pointing to the
-  bell, an app-icon glyph tile, soft pressed keys, dot timer, hopping join and mail light; its inbox
-  is a dotted tray with white/plum cards, not the old unsupported free-floating heading. Retro is a
-  console window with reverse-video severity, typed title, stepped block timer and CRT
-  opening/closing; Light uses perforated paper and no glow. Glass uses F3-652's menu material, with
-  condensation/stack-origin opening. NieR uses parchment/ink, the existing parts for headers,
-  glyphs, blocks, ground, cursor and brackets, stepped motion and no glow/blur. Arrivals,
-  warning/error, join and inbox open/close use the existing family sound kit only when notifications
-  and sound are enabled. Reduced Motion removes flights, springs, slides, typing, cursor blink,
-  twinkles and condensation while retaining meaning, timer/count and permitted sound. Terminal and
-  panel inline notices consume the same material but retain their own owner's placement and
-  dismissal; the restored-terminal notice does not gain the proposed eight-second auto-dismiss.
-  Setup-prompt arrival and joining follow F3-447, and the resulting entry belongs to F3-453's shared
-  inbox. The unread badge includes the owner-linked setup entry under F3-453; its Continue control
-  reuses that original prompt's action.
-  Amended 2026-10-17 (DL-228): while a blocking item is unresolved the stack keeps F3-453's attention ring,
-  drawn in each look's own form with no pill and no stripe; reading or filing never clears it. The arrival,
-  join and inbox open and close sounds are the notification category of F3-405's routing matrix, not the
-  onboarding and Guided Tour cue category. The empty inbox shows the look's caught-up line ("You're all caught
-  up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
-  over "Finished work, warnings and anything that needs you will land here." The bell's accessible name is
-  "Notifications: nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox
-  row carries its kind's mark before its title, beside it and never in its place (success complete, warning
-  warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
-  and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
-  Amended 2026-10-29 (A4, D9; PM7): Keep every in-app kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification branding become Pip; completion notices route through this alert owner and never add a second affordance.
+canonical_text: 'The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and are
+  the sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert state. With no waiting notice
+  the bell stands alone; otherwise the newest title and at most two peeking cards form the stack, fanning on hover, with
+  a rectangular unread badge. The inbox and each card share glyph, source/time, title, body, actions and timer anatomy.
+  Basic is a neutral hairline plate with a restrained arrival and join. Friendly is a speech bubble pointing to the bell,
+  an app-icon glyph tile, soft pressed keys, dot timer, hopping join and mail light; its inbox is a dotted tray with
+  white/plum cards, not the old unsupported free-floating heading. Retro is a console window with reverse-video severity,
+  typed title, stepped block timer and CRT opening/closing; Light uses perforated paper and no glow. Glass uses F3-652''s
+  menu material, with condensation/stack-origin opening. NieR uses parchment/ink, the existing parts for headers, glyphs,
+  blocks, ground, cursor and brackets, stepped motion and no glow/blur. Arrivals, warning/error, join and inbox open/close
+  use the existing family sound kit only when notifications and sound are enabled. Reduced Motion removes flights, springs,
+  slides, typing, cursor blink, twinkles and condensation while retaining meaning, timer/count and permitted sound. Terminal
+  and panel inline notices consume the same material but retain their own owner''s placement and dismissal; the restored-terminal
+  notice does not gain the proposed eight-second auto-dismiss. Setup-prompt arrival and joining follow F3-447, and the
+  resulting entry belongs to F3-453''s shared inbox. The unread badge includes the owner-linked setup entry under F3-453;
+  its Continue control reuses that original prompt''s action. Amended 2026-10-17 (DL-228): while a blocking item is unresolved
+  the stack keeps F3-453''s attention ring, drawn in each look''s own form with no pill and no stripe; reading or filing
+  never clears it. The arrival, join and inbox open and close sounds are the notification category of F3-405''s routing
+  matrix, not the onboarding and Guided Tour cue category. The empty inbox shows the look''s caught-up line ("You''re
+  all caught up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
+  over "Finished work, warnings and anything that needs you will land here." The bell''s accessible name is "Notifications:
+  nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox row carries its kind''s
+  mark before its title, beside it and never in its place (success complete, warning warning, error failed, info info;
+  F3-658), lit and still; the dismiss is the close glyph in the same button and keeps its name Dismiss; the empty stack
+  shows the bell glyph; marks hold 3:1 on severity-tinted cards. Amended 2026-10-29 (A4, D9; PM7): Keep every in-app
+  kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification
+  branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
+  2026-10-30; joined PM7 review fix 4c49e10567: Friendly''s .pmn-tile-pip draws one decorative 24 px PMLogo mark. The
+  item''s severity maps through the existing status key and PMLogo.moodFor: info→idle, success→complete, warn→waiting,
+  error→failed. Its kind glyph remains in .pmn-kind beside the title''s text node; the tile is no additional control.
+  Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same fillTile owner in
+  src/js/19-notify.js when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
+  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
+  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
+  local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- The title bar renders the rightward notification stack and count badge between the title-bar page tabs
-  and the title-bar search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)|
-  <= 2 px, including stacked-width animation and page-tab overflow modes), and no other in-app surface
-  offers a standing notification affordance.
-- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an
-  alert store entry.
-- Durable notifications join the collapsed stack with a join animation, and the count badge renders the
-  unread count from the shared alert store.
-- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's
-  readable menu material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
+- The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar
+  search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)| <= 2 px, including stacked-width
+  animation and page-tab overflow modes), and no other in-app surface offers a standing notification affordance.
+- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry.
+- Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count
+  from the shared alert store.
+- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's readable menu
+  material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -117,7 +124,6 @@ owner_boundary_notes:
 - "F3-453 owns the shared alert store and ack/snooze lifecycle; F3-447 owns the ephemeral staging cap, ordering, time to live, and exit; F3-461 owns the sprout inbox panel and kind-specific action rows."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-461 - Notification Inbox Sprout Panel And Kind Action Rows
@@ -127,45 +133,62 @@ plan_unit_id: F3-461
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Clicking the title-bar notification stack expands a sprout inbox panel using the same
-  corner-origin sprout motion family as the chat popouts. Single-item dismiss animates a
-  height spring with a size-bounce while the panel is open; Clear all runs a bottom-to-top
-  collapse-up and then the panel sprout-closes with no empty flash; Esc and outside-click
-  close the panel. Cards render kind-specific compact action rows: HITL cards offer
-  Approve, Decline, Details, and Explain with Explain read-only; Permission cards offer
-  Deny, Once, Session, and Always with pattern edit on Always per the Permissions ladder;
-  FileSafe cards follow the FileSafe ladder with its 60s TTL; Concern cards require
-  rationale for dismiss, resolve, or acknowledge per the Contracts rationale rules; Usage
-  and Wizard cards carry their compact rows. Full questionnaire forms stay on owner
-  surfaces; title-bar cards expose compact action rows plus optional rationale or Explain
-  only. Details is the click-through label, and click-through routes via
-  primary_route_payload / cmd.alert.open_source with the Contracts route_kind enumeration
-  including toast. Dismissing a card never resolves the underlying blocker, and ephemeral
-  cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
-  so card bottoms are not clipped.
-  Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read beside Clear all: the
-  typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained item read
-  and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
-  the concept's dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the
-  inbox and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach
-  the ends, and ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves
-  focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
-  the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
-  "N more" and "Show less", and an action that opens a page reads "Open <page>".
-  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient treatment. Agent delivery never wakes a user-stopped thread.
+canonical_text: 'Clicking the title-bar notification stack expands a sprout inbox panel using the same corner-origin
+  sprout motion family as the chat popouts. Single-item dismiss animates a height spring with a size-bounce while the
+  panel is open; Clear all runs a bottom-to-top collapse-up and then the panel sprout-closes with no empty flash; Esc
+  and outside-click close the panel. Cards render kind-specific compact action rows: HITL cards offer Approve, Decline,
+  Details, and Explain with Explain read-only; Permission cards offer Deny, Once, Session, and Always with pattern edit
+  on Always per the Permissions ladder; FileSafe cards follow the FileSafe ladder with its 60s TTL; Concern cards require
+  rationale for dismiss, resolve, or acknowledge per the Contracts rationale rules; Usage and Wizard cards carry their
+  compact rows. Full questionnaire forms stay on owner surfaces; title-bar cards expose compact action rows plus optional
+  rationale or Explain only. Details is the click-through label, and click-through routes via primary_route_payload /
+  cmd.alert.open_source with the Contracts route_kind enumeration including toast. Dismissing a card never resolves the
+  underlying blocker, and ephemeral cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
+  so card bottoms are not clipped. Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read
+  beside Clear all: the typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained
+  item read and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
+  the concept''s dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the inbox
+  and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach the ends, and
+  ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves focus to the next; Enter
+  activates the row''s body (F3-447); Escape closes from anywhere and returns focus to the bell. A timed item shows its
+  countdown ("Expires in N s", FileSafe''s 60 s hold), a folded group offers "N more" and "Show less", and an action
+  that opens a page reads "Open <page>". Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store,
+  deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
+  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox
+  is explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
+  remain here and in F3-453; no separate per-look inbox motion owner is exempted. The retired #rsPanel is not evidence
+  of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
+  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
+  owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
+  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after PM6_SPROUT has opened
+  the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
+  the opening transform’s temporary bounding rectangle; during the owner’s height spring use its destination height.
+  Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
+  (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
+  added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
+  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
 depends_on: [F3-460, F3-453]
 unblocks: []
 acceptance_criteria:
-- "Clicking the stack opens the sprout inbox with the corner-origin sprout motion family; Esc and outside-click close it."
-- "Single-item dismiss plays a height spring with size-bounce while the panel is open, and Clear all collapses items bottom-to-top before the panel sprout-closes with no empty flash."
-- "Kind-specific compact action rows render per card kind (HITL, Permission, FileSafe, Concern, Usage, Wizard), and full questionnaire forms remain on owner surfaces."
-- "Details click-through routes via primary_route_payload / cmd.alert.open_source, dismissing a card never resolves the underlying blocker, and ephemeral cards are X-dismiss only."
-- "The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Clicking the stack opens the sprout inbox with the corner-origin sprout motion family; Esc and outside-click close
+  it.
+- Single-item dismiss plays a height spring with size-bounce while the panel is open, and Clear all collapses items bottom-to-top
+  before the panel sprout-closes with no empty flash.
+- Kind-specific compact action rows render per card kind (HITL, Permission, FileSafe, Concern, Usage, Wizard), and full
+  questionnaire forms remain on owner surfaces.
+- Details click-through routes via primary_route_payload / cmd.alert.open_source, dismissing a card never resolves the
+  underlying blocker, and ephemeral cards are X-dismiss only.
+- The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -411,105 +434,94 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged
-  magnet and spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom
-  and the Usage page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover
-  grammar. One shared self-suspending animation driver rides the single merged document pointer-move
-  handler that F3-446 owns (`window.PM7_PMOVE` in the concept); no element has a pointer-move listener of
-  its own. The driver runs only while a spring is unsettled, the NieR reticle travels, or a pointer or
-  scroll change is pending, so it stops once a pointer resting on a box has settled, and nothing animates
-  at idle except the explicitly approved Friendly breathing ring while a control is hovered. Box rects are
-  read when the hover enters a scope and after a scroll, a resize or a change inside that scope, never for
-  every box on every frame. Targets are the outermost match of the set: markup that opts in with
-  `data-pmh` (its value names the kind, card, row, tile or icon, and an empty value means card), every
-  sheen-treated element, and the listed card, row, tile and icon classes. `data-pmh="off"` takes an
-  element out of the set even when its class matches, and nothing inside `[data-pm-hover-exempt]` is a
-  target or hovers one. Nested targets resolve to the outer box, and overlaying panels do not light boxes
-  beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance outside a box,
-  partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside the bleed
-  catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
-  hovered box leans toward the pointer by a small magnet, 2 to 2.5 px at an edge, on a spring that writes
-  the standalone translate channel only, never transform-matrix composition that fights entrance
-  animations; tiles lean less, rows by a token amount, and icons and the Usage plates get no magnet. The
-  spotlight is a small soft pointer light, a radius of about 90 to 100 px with a Gaussian roll-off
-  (smaller on tiles and rows), that reveals a pre-painted sheen tint and a hairline along the border,
-  under the box's content; only the light's centre moves with the pointer. The emitted glow is restrained (the current PMH reference) and
-  pre-painted with a short elevation shadow on a plate that stays at the box's rest rect,
-  never moving with the magnet, and animates by opacity only. The family voices stay: Basic crisp with no
-  overshoot, Friendly a warm pool and a soft band with a gentle settle, Glass a slow drift and a bright
-  specular hairline, the accent riding the theme accent. Retro and NieR use no soft light, glow, blur,
-  lean or neighbour light, and nothing follows the pointer inside a box. Retro's form is Raise: the
-  hovered card's plate rises 2 px up and to the left in one hard cut while its own hard offset shadow
-  grows from 3 to 5 px, so the shadow's far edge stays where it was; one 33 ms tick later a 1 px phosphor
-  rule in the accent appears 1 px inside the border; on leaving, the rule goes first and the plate drops
-  one tick later; tiles rise 1 px with no rule, rows take the left rail's stepped row fill, and a 2 px
-  edge hold keeps the raise from toggling at the edge it moved off. NieR's form is Lock-on: one page-level
-  reticle of four 8 px ink corner brackets is placed on the card's rest rect in whole device pixels, opens
-  4 px outside the border and steps closed to 3 px in two steps over 90 ms, then a 1 px ink line at .6
-  lands over the card's own border; between cards the reticle cuts and never glides, and the card itself
-  never changes. The corners are NieR's brackets part (Target brackets); with brackets off the lock is the
-  ink line alone on the same beat. NieR tiles and rows take the left rail's NieR row ink fill. Under
-  Reduced Motion there is no magnet, no travel, no pointer-following light and no neighbour light, and the
-  hovered box shows its hover state instantly: a static half-strength hairline and the plate in Basic,
-  Friendly and Glass, the raised shadow and rule without the rise in Retro, the closed lock in NieR. On a
-  software-rendered path the field, the light and the plate are off and the magnet stops, and the hovered
-  box shows the same static hairline. A gesture rest (a resize, a tab or panel drag, a Usage board
-  operation or moment) drops the hover and settles the magnet to 0, and a held pointer button keeps the
-  hover state but calms the magnet. A hover writes no inherited property and restyles no subtree: the
-  continuous values are registered non-inherited properties that the host's own pseudo-elements read,
-  effects are pre-painted layers whose opacity changes plus the translate, and no box-shadow or filter
-  animates on a large element. The boundary keeps editor/terminal text and drag surfaces out of card
-  magnet effects. Small controls, including strip/header buttons, use the control marker described here,
-  never card movement; resize bars use F3-657 instead. Glass controls use F3-652's own single optical
-  marker. For small controls Basic uses a faint precise plate travelling in about 120 ms without
-  overshoot, pressing to 95%; Friendly uses a springing bubble, a dot aura outside its labels and an
-  approved slow breathing ring while hovered, with squish/ripple feedback; Retro uses stepped inverse
-  video, a 33 ms cursor tick and a three-tick afterimage, never glow/blur; NieR uses ink/paper inversion
-  through its existing parts. Reduced Motion shows all marker/press states without travel, pop, breathing,
-  ripple, raise or afterimage. Overlay scaling remains centered; an already filled button keeps its fill.
-  Hover recovers under an unmoved pointer after returning to a page, filtering, scroll or layout change
-  and never sticks to hidden targets. The active mark follows the currently visible hit target and never
-  lights content behind an occluding surface. All resting hover text meets F3-654. Jared’s 2026-10-14
-  direction reduces the central spotlight immediately beneath the pointer while retaining the approved
-  surface-edge glow. This applies wherever that spotlight is drawn, including Glass; exact tuning remains
-  with the hover owner, with settled readability governed by F3-654.
-  Amended 2026-10-17 (DL-228): that tuning landed on 2026-10-14: only the pool of light under the pointer is
-  turned down, to 0.6 of its earlier strength in Basic, Friendly and Glass, dark and light, with the edge
-  catch, size, falloff, lift and timings unchanged, and Glass Dark's own shine is lowered by the same ratio.
-  Retro, NieR and Reduced Motion are unaffected. The factor is a concept token, not an acceptance number.
-  Amended 2026-10-29 (X2, L3; PM7): The universal loader alone retains control opacity breath and Pip blink under Reduced Motion as wait feedback; no travel. Shared glyph categories rest lit/still; onboarding/chat nonessential motion stays still.
+  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
+  page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
+  self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns
+  (`window.PM7_PMOVE` in the concept); no element has a pointer-move listener of its own. The driver runs only
+  while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
+  once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
+  Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
+  a scroll, a resize or a change inside that scope, never for every box on every frame. Targets are the
+  outermost match of the set: markup that opts in with `data-pmh` (its value names the kind, card, row, tile or
+  icon, and an empty value means card), every sheen-treated element, and the listed card, row, tile and icon
+  classes. `data-pmh="off"` takes an element out of the set even when its class matches, and nothing inside
+  `[data-pm-hover-exempt]` is a target or hovers one. Nested targets resolve to the outer box, and overlaying
+  panels do not light boxes beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance
+  outside a box, partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside
+  the bleed catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
+  hovered box leans toward the pointer by a small magnet, 2 to 2.5 px at an edge, on a spring that writes the
+  standalone translate channel only, never transform-matrix composition that fights entrance animations; tiles
+  lean less, rows by a token amount, and icons and the Usage plates get no magnet. The spotlight is a small soft
+  pointer light, a radius of about 90 to 100 px with a Gaussian roll-off (smaller on tiles and rows), that
+  reveals a pre-painted sheen tint and a hairline along the border, under the box's content; only the light's
+  centre moves with the pointer. The emitted glow is restrained (the current PMH reference) and pre-painted with
+  a short elevation shadow on a plate that stays at the box's rest rect, never moving with the magnet, and
+  animates by opacity only. The family voices stay: Basic crisp with no overshoot, Friendly a warm pool and a
+  soft band with a gentle settle, Glass a slow drift and a bright specular hairline, the accent riding the theme
+  accent. Retro and NieR use no soft light, glow, blur, lean or neighbour light, and nothing follows the pointer
+  inside a box. Retro's form is Raise: the hovered card's plate rises 2 px up and to the left in one hard cut
+  while its own hard offset shadow grows from 3 to 5 px, so the shadow's far edge stays where it was; one 33 ms
+  tick later a 1 px phosphor rule in the accent appears 1 px inside the border; on leaving, the rule goes first
+  and the plate drops one tick later; tiles rise 1 px with no rule, rows take the left rail's stepped row fill,
+  and a 2 px edge hold keeps the raise from toggling at the edge it moved off. NieR's form is Lock-on: one
+  page-level reticle of four 8 px ink corner brackets is placed on the card's rest rect in whole device pixels,
+  opens 4 px outside the border and steps closed to 3 px in two steps over 90 ms, then a 1 px ink line at .6
+  lands over the card's own border; between cards the reticle cuts and never glides, and the card itself never
+  changes. The corners are NieR's brackets part (Target brackets); with brackets off the lock is the ink line
+  alone on the same beat. NieR tiles and rows take the left rail's NieR row ink fill. Under Reduced Motion there
+  is no magnet, no travel, no pointer-following light and no neighbour light, and the hovered box shows its
+  hover state instantly: a static half-strength hairline and the plate in Basic, Friendly and Glass, the raised
+  shadow and rule without the rise in Retro, the closed lock in NieR. On a software-rendered path the field, the
+  light and the plate are off and the magnet stops, and the hovered box shows the same static hairline. A
+  gesture rest (a resize, a tab or panel drag, a Usage board operation or moment) drops the hover and settles
+  the magnet to 0, and a held pointer button keeps the hover state but calms the magnet. A hover writes no
+  inherited property and restyles no subtree: the continuous values are registered non-inherited properties that
+  the host's own pseudo-elements read, effects are pre-painted layers whose opacity changes plus the translate,
+  and no box-shadow or filter animates on a large element. The boundary keeps editor/terminal text and drag
+  surfaces out of card magnet effects. Small controls, including strip/header buttons, use the control marker
+  described here, never card movement; resize bars use F3-657 instead. Glass controls use F3-652's own single
+  optical marker. For small controls Basic uses a faint precise plate travelling in about 120 ms without
+  overshoot, pressing to 95%; Friendly uses a springing bubble, a dot aura outside its labels and an approved
+  slow breathing ring while hovered, with squish/ripple feedback; Retro uses stepped inverse video, a 33 ms
+  cursor tick and a three-tick afterimage, never glow/blur; NieR uses ink/paper inversion through its existing
+  parts. Reduced Motion shows all marker/press states without travel, pop, breathing, ripple, raise or
+  afterimage. Overlay scaling remains centered; an already filled button keeps its fill. Hover recovers under an
+  unmoved pointer after returning to a page, filtering, scroll or layout change and never sticks to hidden
+  targets. The active mark follows the currently visible hit target and never lights content behind an occluding
+  surface. All resting hover text meets F3-654. Jared’s 2026-10-14 direction reduces the central spotlight
+  immediately beneath the pointer while retaining the approved surface-edge glow. This applies wherever that
+  spotlight is drawn, including Glass; exact tuning remains with the hover owner, with settled readability
+  governed by F3-654. Amended 2026-10-17 (DL-228): that tuning landed on 2026-10-14: only the pool of light
+  under the pointer is turned down, to 0.6 of its earlier strength in Basic, Friendly and Glass, dark and light,
+  with the edge catch, size, falloff, lift and timings unchanged, and Q20 subsequently removes Glass’s
+  independent sheet shine; only the shared hover light remains. Retro, NieR and Reduced Motion are unaffected.
+  The factor is a concept token, not an acceptance number. Amended 2026-10-29 (X2, L3; PM7): The universal
+  loader alone retains control opacity breath and Pip blink under Reduced Motion as wait feedback; no travel.
+  Shared glyph categories rest lit/still; onboarding/chat nonessential motion stays still. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered
+  edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide
+  lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark
+  white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog
+  ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms
+  and existing Reduced Motion, software and gesture holds.
 gui_related: true
 gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false
 depends_on: [F3-446, DL-171]
 unblocks: [DR-072]
 acceptance_criteria:
-- Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system;
-  no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own.
-- One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move
-  listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation,
-  and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops
-  on leave or hide.
-- In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone
-  translate channel only; icons and the Usage plates never move.
-- The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and
-  hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the
-  box's rest rect while the box leans.
-- Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the
-  bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve
-  to the outer box.
-- Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor
-  rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping
-  closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with
-  the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light.
-- Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows
-  its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops.
-- A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours,
-  and no box-shadow or filter animates on a large element.
-- '`data-pmh` opts markup in with a kind, `data-pmh="off"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers,
-  and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize
-  dividers use F3-657.'
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+  - "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops on leave or hide."
+  - "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
+  - "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
+  - "Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
+  - "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
+  - "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
+  - "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
+  - "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize dividers use F3-657."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -568,7 +580,6 @@ owner_boundary_notes:
 - "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-466 - Friendly Editor File Tab Shape
@@ -696,12 +707,16 @@ split_recommended: false
 depends_on: [DL-153]
 unblocks: []
 acceptance_criteria:
-- "Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets settle."
-- "The first frame of an ordinary open is the look stored for the Project the application opens on, in each of the eight family variants and in NieR Mode light and dark; no default look shows before it, and with NieR's boot log coming the page shows only the log's paper before the log (DL-153)."
-- "The pre-paint reads the Project's stored Settings and writes no theme anywhere: no global or cross-Project theme key exists (DL-153)."
-- "Fonts load non-blocking via preload then swap."
-- "Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Boot stamps the persisted theme's solid background and color-scheme on a pre-paint layer before heavy styles and assets
+  settle.
+- The first frame of an ordinary open is the look stored for the Project the application opens on, in all ten built-in
+  variants across five families, including NieR Light and NieR Dark (DL-257/Q22); no default look shows before it, and
+  with NieR's boot log coming the page shows only the log's paper before the log (DL-153).
+- 'The pre-paint reads the Project''s stored Settings and writes no theme anywhere: no global or cross-Project theme
+  key exists (DL-153).'
+- Fonts load non-blocking via preload then swap.
+- Page-enter transitions gate until after first paint; boot never runs an opacity-zero enter animation or a double flash.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

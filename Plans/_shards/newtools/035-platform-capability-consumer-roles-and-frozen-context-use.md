@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L9019-L9097
+Source lines: L9019-L9100
 
-Source SHA256: `886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6`
+Source SHA256: `1b0bdcb55e15169ccc9818d10fdfa505b8801844413f8974f20d3b041f1ef208`
 
 ---
 
@@ -87,3 +87,6 @@ owner_hints: [Plans/newtools.md, Plans/Models_System.md, Plans/orchestrator-suba
 ```
 
 ContractRef: ContractName:Plans/newtools.md#N2-157, ContractName:Plans/storage-plan.md#SP-290, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-048, ContractName:Plans/platform_capability_catalog.json, ContractName:Plans/event_payload_platform_capability_evaluated.schema.json, ContractName:Plans/platform_capability_decision_contracts.schema.json
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

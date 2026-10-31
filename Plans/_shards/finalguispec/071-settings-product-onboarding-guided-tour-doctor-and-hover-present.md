@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36520-L37559
+Source lines: L36584-L37885
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -42,14 +42,14 @@ plan_unit_id: F3-519
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Final GUI renders Settings and operational Doctor with the selected K3 Tome Tabs geometry inside PMConcept7
-  shared chrome: a 250 px domain rail, 62 px top bar, workspace tabs, continuous document, 168 px page index,
-  350 px details inspector, manager destinations, and a 1040 px maximum ordinary document body, with the
-  host-width responsive states owned by SSYS-003. Mild theme and surrounding-chrome adaptation may change paint,
-  typography, shape, opacity, texture, and motion while preserving this information architecture. No Settings- or
-  Doctor-specific Back control or breadcrumb is added merely to fit the outer shell. All eight built-in PMConcept7
-  themes render the same functional inventory and geometry contract.
+canonical_text: 'Final GUI renders Settings and operational Doctor with the selected K3 Tome Tabs geometry inside PMConcept7
+  shared chrome: a 250 px domain rail, 62 px top bar, workspace tabs, continuous document, 168 px page index, 350 px
+  details inspector, manager destinations, and a 1040 px maximum ordinary document body, with the host-width responsive
+  states owned by SSYS-003. Mild theme and surrounding-chrome adaptation may change paint, typography, shape, opacity,
+  texture, and motion while preserving this information architecture. No Settings- or Doctor-specific Back control or
+  breadcrumb is added merely to fit the outer shell. All ten built-in themes render the same functional inventory and
+  geometry contract. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede
+  earlier counts.'
 gui_related: true
 gui_classification_reason: This unit owns the visible K3 layout, PMConcept7 chrome fit, and theme adaptation.
 split_recommended: false
@@ -98,110 +98,187 @@ plan_unit_id: F3-520
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over a
-  theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never a
-  full-page route or a replacement application surface. The modal consumes PWIZ-021's exact eleven-stage
-  main journey welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client ->
-  remote_access_setup -> review_setup_plan -> automatic_preparation -> provider_setup -> free_models_setup
-  -> ready. Choosing the connect-existing path uses the exact bounded six-stage shortcut welcome ->
-  simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not
-  fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or
-  free_models_setup stages. Explicit Project Later uses the owner-defined deferred path, without a
-  placeholder Project or provider setup. The bounded eight-theme choice appears at welcome, before Project
-  or infrastructure choices, and changes presentation only; below it, never among its options, a NieR Mode
-  checkbox with an Adjust NieR look button previews NieR Mode painted over Basic (F3-598). On a new
-  install, when the window opens by itself because no Project exists yet, onboarding always starts in Basic
-  Dark, from its first frame, with Basic Dark preselected and NieR Mode unticked, whatever look was shown
-  before; stored values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one
-  exception: it starts in the look then shown, NieR Mode included, preselected, with no change of look as
-  the window opens (DL-153). The window's hero moments take five styles, one per look family (F3-600). A
-  persistent Look menu (`Change the look`), carrying the same NieR Mode checkbox and Adjust NieR look
-  button below its family and mode choices, and a sound control remain reachable in the onboarding header
-  on every stage beyond welcome. Look selections preview presentation without dispatching owner work.
-  Before a verified current Project exists, Look and sound changes, NieR Mode with its parts and background
-  included, remain ephemeral and perform no durable Settings write; after Project commit or connection to
-  an existing Project, persistence requires that exact current Project Settings binding. The eight-theme
-  choice, the NieR Mode checkbox, the Look menu and the NieR Mode editor panel emit one typed local action,
-  `ui.onboarding.choose_look` (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction: the
-  look is written with the Project at commit, and a look changed after the commit is written to that
-  Project through the same Settings binding when the window finishes or closes. The sound control consumes
-  the Settings-owned `general.interaction.sound-effects` effective pref (or its factory default while no
-  Project exists), stays keyboard-reachable with an explicit sound-off state, and audio is never the sole
-  status signal; onboarding's cues are the onboarding and Guided Tour cue category of F3-599. In user
-  language, the main journey welcomes the person, chooses whether to begin here or connect to an existing
-  Puppet Master, drafts how to create or open their first project, chooses its safe version history,
-  chooses the computer and storage places that will do and hold the work, offers private access, reviews
-  the complete setup plan, prepares only the approved choices, and commits the approved Project once,
-  offers paid-provider setup and then Free Models, and finishes in a concise Ready state. First Project
-  choices persist a bounded uncreated draft, including a fresh-settings default or explicit Settings-owned
-  copy preview. Before commit, only owner-authorized read-only preflight and just-in-time authentication
-  necessary for the selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected
-  Server pairing/trust, restore, repository creation or binding, filesystem writes, and Project creation
-  are not. The sole pre-Review pairing exception is PWIZ-029's individually consented Server-owned
-  selected-source access to a chosen folder, backup, or network storage on another Puppet Master:
-  `cmd.client.pair.start` approval, code, or QR on the verified identity, recorded as `puppet_master`
-  transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`,
-  limited to read-only browsing and validation of the chosen folder or backup under the current
-  draft/session revision, hash, and expiry. The paired device stays a Source Location, backup source, or
-  storage location and never becomes the Connected Server. Source sign-in uses the protected MACS-005
-  first-time variant when no verified account exists; it never invents a Project/account/repository
-  identifier. Confirm and prepare validates the exact current draft/hash and PJCT-007 commit binding;
-  Automatic Preparation observes the Project owner's one commit chain and any Settings-owned post-commit
-  rebind/apply results. When a remote repository was created and a later step fails, Automatic Preparation
-  keeps observing the same owner operation and shows the retained Project recovery with the three
-  owner-routed choices Continue Setup, Open Repository, and Delete Repository; each choice stays disabled
-  with its exact owner reason until its Project or Forge gates hold, an unknown remote effect offers
-  reconciliation only, and no setup commit binding or provider phase advances until the listed persisted
-  Project exists. Paid providers then use the actual committed Project, followed by Free Models after paid
-  readiness or explicit Skip. Each screen has one clear decision, one dominant primary action, short human
-  copy, automatic detection, safe defaults, and calm progressive disclosure. The First Project decision is
-  the deliberate exception to progressive hiding: its four equal aligned routes remain visible together so
-  no one must guess what a More menu conceals. Safe History is the beginner-facing local version timeline:
-  Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe
-  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor
-  Origin may hold a separate optional online copy without replacing local history. User-visible copy
-  assumes no coding or IDE knowledge: it uses familiar words and never exposes the internal term `shell`,
-  raw command/route/schema identifiers, owner names, host/environment vocabulary, provider matrices,
-  diagnostics dashboards, network topology, or unexplained source-control jargon. Optional owner-routed
-  branches cover opening an existing or online project, restoring a backup, keeping history locally or
-  using a connected source service, discovering/pairing or manually locating another computer, setting up a
-  work computer, optional service help, and private-access choices; advanced detail remains deferred or
-  disclosed only when needed. Server, Storage, and this Client are three independent placements;
-  local/mounted folders, advanced SSH/SFTP sources, and backup sources remain distinct. Every main stage
-  has a scene-specific, theme-native cinematic composition rather than a generic repeated fade. The four
-  theme families use substantially different illustration systems and directing language--Basic is an exact
-  instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered spatial
-  composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or
-  silhouette. While NieR Mode is painted over Basic, its onboarding preview included, a fifth system
-  replaces Basic's: NieR ink marionettes in original line art and the NieR window touches of F3-598. The
-  interruptible opening hero assembles the Puppet Master identity in approximately 1.2-1.5 seconds without
-  blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger,
-  microinteractions use 120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves
-  hierarchy with immediate state change or a very short opacity settle. Retro uses deliberate stepped,
-  no-scale motion and hard compact reveals; Basic, Friendly, and Glass use material-appropriate easing and
-  paint; NieR uses stepped, glow-free ink motion, and its hero moments, typed text and one-way large exits
-  are F3-598's. Those moments do not hold input. A resumed onboarding repaints the session's stored
-  look_choice, NieR Mode included, with null fields falling back to this unit's start rule (DL-153).
-  Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window is open:
-  nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready's
-  Enter answers on the click's frame; the Planning Wizard is drawn whole beneath the window, the window's
-  exit is the only move, and the hand-over never passes through Home (PWIZ-021 keeps the destination).
-  F3-598 consumes this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153,
-  UCC-200); Run setup wizard is its earlier name, and it sits directly below Restore home layout, the
-  former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop
-  prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded shared life
-  and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits
-  including Retro split, live voice/music through one player. One
-  option-anchored ? note is pm7ob-explainer. All real routes/errors/203 tips expand beyond the small
-  concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating Continue and Ready
-  wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow and 14
-  onboarding actions remain.
-  O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/? permits F3-663’s
-  same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit or entrance
-  replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared 2026-10-30:
-  hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
-  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary.
+canonical_text: 'Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over
+  a theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never a full-page
+  route or a replacement application surface. The modal consumes PWIZ-021''s exact eleven-stage main journey welcome
+  -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan
+  -> automatic_preparation -> provider_setup -> free_models_setup -> ready. Choosing the connect-existing path uses the
+  exact bounded six-stage shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation
+  -> ready and does not fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or
+  free_models_setup stages. Explicit Project Later uses the owner-defined deferred path, without a placeholder Project
+  or provider setup. The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers
+  five ordered families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent
+  checkbox remains (Q22). On a new install, when the window opens by itself because no Project exists yet, onboarding
+  always starts in Basic Dark, from its first frame, with Basic Dark preselected, whatever look was shown before; stored
+  values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception: it starts in the
+  look then shown, NieR Mode included, preselected, with no change of look as the window opens (DL-153). The window''s
+  hero moments take five styles, one per look family (F3-600). A persistent Look menu (`Change the look`), carrying the
+  same five-family choices, Light/Dark controls and NieR Adjust button, and a sound control remain reachable in the onboarding
+  header on every stage beyond welcome. Look selections preview presentation without dispatching owner work. Before a
+  verified current Project exists, Look and sound changes, NieR Mode with its parts and background included, remain ephemeral
+  and perform no durable Settings write; after Project commit or connection to an existing Project, persistence requires
+  that exact current Project Settings binding. The ten-theme choice, the Look menu and the NieR Adjust editor panel emit
+  one typed local action, `ui.onboarding.choose_look` (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction:
+  the look is written with the Project at commit, and a look changed after the commit is written to that Project through
+  the same Settings binding when the window finishes or closes. The sound control consumes the Settings-owned `general.interaction.sound-effects`
+  effective pref (or its factory default while no Project exists), stays keyboard-reachable with an explicit sound-off
+  state, and audio is never the sole status signal; onboarding''s cues are the onboarding and Guided Tour cue category
+  of F3-599. In user language, the main journey welcomes the person, chooses whether to begin here or connect to an existing
+  Puppet Master, drafts how to create or open their first project, chooses its safe version history, chooses the computer
+  and storage places that will do and hold the work, offers private access, reviews the complete setup plan, prepares
+  only the approved choices, and commits the approved Project once, offers paid-provider setup and then Free Models,
+  and finishes in a concise Ready state. First Project choices persist a bounded uncreated draft, including a fresh-settings
+  default or explicit Settings-owned copy preview. Before commit, only owner-authorized read-only preflight and just-in-time
+  authentication necessary for the selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected
+  Server pairing/trust, restore, repository creation or binding, filesystem writes, and Project creation are not. The
+  sole pre-Review pairing exception is PWIZ-029''s individually consented Server-owned selected-source access to a chosen
+  folder, backup, or network storage on another Puppet Master: `cmd.client.pair.start` approval, code, or QR on the verified
+  identity, recorded as `puppet_master` transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`,
+  limited to read-only browsing and validation of the chosen folder or backup under the current draft/session revision,
+  hash, and expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the
+  Connected Server. Source sign-in uses the protected MACS-005 first-time variant when no verified account exists; it
+  never invents a Project/account/repository identifier. Confirm and prepare validates the exact current draft/hash and
+  PJCT-007 commit binding; Automatic Preparation observes the Project owner''s one commit chain and any Settings-owned
+  post-commit rebind/apply results. When a remote repository was created and a later step fails, Automatic Preparation
+  keeps observing the same owner operation and shows the retained Project recovery with the three owner-routed choices
+  Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its exact owner reason until
+  its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no setup commit binding or
+  provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project,
+  followed by Free Models after paid readiness or explicit Skip. Each screen has one clear decision, one dominant primary
+  action, short human copy, automatic detection, safe defaults, and calm progressive disclosure. DL-259 H2/FF-20: the
+  First Project decision shows three aligned, keyboard-reachable groups — New, Existing and Restore. Selecting Existing
+  opens its local/online/device choices in the joined tray before sibling alternatives. The four semantic intents new/existing_local/existing_online/restore
+  remain available; no unrelated More/Other disclosure hides a source route. Safe History is the beginner-facing local
+  version timeline: Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe
+  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin may
+  hold a separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
+  it uses familiar words and never exposes the internal term `shell`, raw command/route/schema identifiers, owner names,
+  host/environment vocabulary, provider matrices, diagnostics dashboards, network topology, or unexplained source-control
+  jargon. Optional owner-routed branches cover opening an existing or online project, restoring a backup, keeping history
+  locally or using a connected source service, discovering/pairing or manually locating another computer, setting up
+  a work computer, optional service help, and private-access choices; advanced detail remains deferred or disclosed only
+  when needed. Server, Storage, and this Client are three independent placements; local/mounted folders, advanced SSH/SFTP
+  sources, and backup sources remain distinct. Every main stage has a scene-specific, theme-native cinematic composition
+  rather than a generic repeated fade. The five theme families use substantially different illustration systems and directing
+  language--Basic is an exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered
+  spatial composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette.
+  The fifth family, NieR, has its own system, including its onboarding preview: NieR ink marionettes in original line
+  art and the NieR window touches of F3-598. The interruptible opening hero assembles the Puppet Master identity in approximately
+  1.2-1.5 seconds without blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger,
+  microinteractions use 120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves hierarchy with
+  immediate state change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact
+  reveals; Basic, Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion,
+  and its hero moments, typed text and one-way large exits are F3-598''s. Those moments do not hold input. A resumed
+  onboarding repaints the session''s stored look_choice, NieR Mode included, with null fields falling back to this unit''s
+  start rule (DL-153). Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window
+  is open: nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready''s Enter
+  answers on the click''s frame; the Planning Wizard is drawn whole beneath the window, the window''s exit is the only
+  move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes this rule. The
+  Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup wizard is its earlier name,
+  and it sits directly below Restore home layout, the former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes
+  the troupe, no-physics/no-loop prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded
+  shared life and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits
+  including Retro split, live voice/music through one player. One option-anchored ? opens the shared explanatory note
+  (DL-260). All real routes/errors/203 tips expand beyond the small concept. O12 B (Jared 2026-10-30) amends the former
+  animation-never-gates rule: Creating Continue and Ready wait for owner completion and the last block to land; Reduced
+  Motion settles instantly. Real flow and 14 onboarding actions remain. O11 defers the Tour. O7 (2026-10-29): preserving
+  the settled scene during Details/? permits F3-663’s same-stage choice preview, note-directed Pip and typed answer/idea
+  cue; no choice commit or entrance replay. The older settled-scene acceptance is read with this specific interaction.
+  O6, Jared 2026-10-30: hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
+  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary. Amended Q22, Jared
+  2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
+  Adjust controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation
+  1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is
+  an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud
+  sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue
+  waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate
+  the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication.
+  Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a
+  copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
+  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
+  only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately
+  in a tray joined to that card, before sibling alternatives. One shared joined-choice component owns the join, indentation
+  and line from the parent mark across all twelve affected screens (DL-258; source mechanics stay lineage under DL-260).
+  The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow
+  layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option,
+  its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks,
+  sign-up links, Settings copy, remote route and proxy-configuration choices (certificate choices removed by CERT-1 /
+  srv C1), online service kind/address, device notes and connection routes. Naming and Review display the same selected
+  mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover
+  and keyboard focus in the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect
+  proxy explanation, and What does Puppet Master read? on Choose a key); put their information in the shared option tips.
+  Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
+  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating
+  system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
+  protected flow; never reuse its never-saved hint for SMB. H5: the onboarding owner holds one original inert-state basis
+  for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
+  never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. Q1/Q2: onboarding sound defaults
+  on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. Until the Settings
+  owner supplies the applicable sound preference, retain the factory-on or current effective choice rather than muting
+  on every refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused.
+  An unavailable Settings projection never fabricates a saved value or authorizes a write. QA2 follow-up N1, integration
+  6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a reusable signed-in/ready
+  boolean. Choosing another source, service, device, Kit or folder invalidates its old reach proof, protected access
+  fields, unlock, copy selection and completed bucket check. A late sign-in/check result stays bound to the service/device
+  it authenticated and cannot advance a different current choice. A protected SSH key passphrase unlock belongs to that
+  exact selected key; changing keys requires that key’s own owner-proven access and never inherits another key’s unlock.
+  The Remote Link endpoint belongs only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another
+  route clears it from the reviewed draft. No stale endpoint enters an unrelated route. DL-259, Jared 2026-10-31: D1
+  A: the online-service step creates or selects a code repository; onboarding does not publish a website, GitHub Pages,
+  GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit always-on Server setup on this
+  computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types, China-region AI variants and
+  local AI servers live in Settings, with a clear context-correct pointer from onboarding. The ordinary This computer
+  choice remains the easy local-work default. The wizard says AI accounts available in this setup, not every AI. Existing
+  Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings support Caddy, NGINX and
+  Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing proxy but
+  never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding offers Make
+  the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration for the
+  person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is the default.
+  The second only checks the existing proxy route and live connection, with nothing generated. Set it up for me is removed:
+  Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only or existing_proxy
+  for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating a file proves
+  neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding proxy_kind
+  is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch
+  may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D4: confirm provider admission and executable conformance immediately before building Puppet Master. The
+  wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision
+  does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s
+  current usable result, not merely signed in. D6 A: the human signs in on the initiating active device while the AI/tool
+  runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
+  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
+  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
+  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.
+  D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have
+  their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate
+  Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps
+  one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent
+  of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
+  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
+  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
+  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
+  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
+  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
+  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
+  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
+  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
+  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
+  a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and
+  Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert,
+  labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding
+  question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
+  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
+  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
+  tour_narration_only tag is retired. DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic,
+  Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust
+  controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable
+  and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within
+  its bounded content area. Click or keyboard activation selects; silent hover does not select.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -222,192 +299,237 @@ unblocks:
 - F3-598
 - F3-599
 acceptance_criteria:
-- Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop
-  width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page
-  route.
-- The scrim blocks interaction with the application while the modal is active, including body-level surfaces
-  mounted after the modal opens; exactly one element exposes role=dialog and aria-modal=true, its accessible
-  name follows the active stage or owner-branch heading, the aria-hidden outgoing visual layer is inert and
-  contains no duplicate IDs, focus remains trapped inside, and Close/Escape returns to the exact initiating
-  application control or the verified active application tab for automatic first-run opening.
-- Welcome presents one immediate Begin setup/Get Started action whose availability is never delayed by the
-  hero sequence; main/connect-existing/deferred stage orders consume PWIZ-021's main_stage_order, connect_existing_stage_order,
-  and deferred_project_stage_order definitions by reference. Main has eleven semantic stages, with provider_setup
-  and free_models_setup after actual Project commit and before ready; a presentation may group them without
-  changing the owner phase boundary.
+- Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width;
+  narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route.
+- The scrim blocks interaction with the application while the modal is active, including body-level surfaces mounted
+  after the modal opens; exactly one element exposes role=dialog and aria-modal=true, its accessible name follows the
+  active stage or owner-branch heading, the aria-hidden outgoing visual layer is inert and contains no duplicate IDs,
+  focus remains trapped inside, and Close/Escape returns to the exact initiating application control or the verified
+  active application tab for automatic first-run opening.
+- Welcome presents one immediate Begin setup/Get Started action whose availability is never delayed by the hero sequence;
+  main/connect-existing/deferred stage orders consume PWIZ-021's main_stage_order, connect_existing_stage_order, and
+  deferred_project_stage_order definitions by reference. Main has eleven semantic stages, with provider_setup and free_models_setup
+  after actual Project commit and before ready; a presentation may group them without changing the owner phase boundary.
 - Choosing connect-existing follows exactly welcome, simple_path, remote_access_setup, review_setup_plan, automatic_preparation,
-  ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank
-  or inapplicable stages, while Back follows the same bounded shortcut in reverse.
-- The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition
-  box; entering it lands on the route chooser, never on a premature Review summary or a redundant Use nearby
-  devices/Find one I already use pre-step.
-- The bounded eight-theme choice is available at welcome before Project and infrastructure decisions and changes
-  presentation without dispatching owner work; Basic, Friendly, Glass, and Retro use one shared Pip in distinctly
-  staged family worlds and materials, composition, material, typography, and motion direction, while each family's
-  light/dark pair preserves that family identity instead of presenting eight recolors of one illustration.
-  A NieR Mode checkbox with an Adjust NieR look button sits below the eight-theme choice, never among its options,
-  and previews NieR Mode, its parts and its background without a durable write (F3-598).
-- The eight-theme choice, the NieR Mode checkbox, the header Look menu and the NieR Mode editor panel each
-  emit `ui.onboarding.choose_look` (intents choose_look, preview_nier, toggle_look_menu and toggle_look_editor)
-  with no owner route, no `cmd.theme.*` and no Settings transaction; the previewed look is written with the
-  Project at commit, a later change through the same Settings binding when the window finishes or closes (DL-153).
-- 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: four families plus
-  Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button) and sound control reachable by keyboard
-  on every stage; Look changes preview presentation without dispatching owner work and persist only through
-  the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`,
-  `general.visual.nier-parts` and `general.visual.nier-background`) with a verified current Project binding
-  after commit or connection; Project Later and every no-Project state allow only ephemeral preview without
-  durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects` effective
-  pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
+  ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank or inapplicable
+  stages, while Back follows the same bounded shortcut in reverse.
+- The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering
+  it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already
+  use pre-step.
+- The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered families,
+  including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
+- The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
+  (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
+  no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change
+  through the same Settings binding when the window finishes or closes (DL-153).
+- 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
+  plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
+  Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
+  `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
+  (Q22)) with a verified current Project binding after commit or connection; Project Later and every no-Project state
+  allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects`
+  effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
   carries a status alone.'
-- The header Look menu exposes its open state and family/mode choices as menuitemradio options and NieR Mode
-  as one menuitemcheckbox with its Adjust NieR look button, which opens the NieR Mode editor as a panel inside
-  the onboarding window; the menu closes on Escape with focus returned to its button, and theme changes settle
-  without blocking input; the sound button is a real keyboard-focusable control exposing its on/off state,
-  and missing-audio handling follows the existing sound-control rule (hidden or labelled, never silent failure).
-- Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and
-  the target owner's actual request, current permission, selected-source scope, consent, draft/session revision,
-  focus, Client/Host context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source
-  sign-in exception is not paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository
-  creation/binding, filesystem mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029
-  Server-owned `cmd.client.pair.start` approval/code/QR access to the chosen folder, backup, or network storage
-  on another Puppet Master, recorded as `puppet_master` with bound `source_access_authorization_refs` and limited
-  to read-only browsing and validation, leaving the after-Review Connected Server pairing rule unchanged.
-- Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and
-  approved-plan hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation
-  to observe current real results; stale, unconfirmed, or expanded plans dispatch nothing.
-- The first_project stage exposes four equal, aligned, keyboard-reachable choices together--Start a new project,
-  Open a folder here, Bring one from online, and Restore a backup--with no More project choices disclosure,
-  plus a working Project Later path. Each choice creates only a draft. Start fresh is the settings default;
-  explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never
-  bulk copies secrets, machine paths, runtime state, or account capability.
-- 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected
-  computer, while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented
-  as an account, website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
-- 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through
-  `cmd.project.new_local` and its backend-native child owner: local Git initializes only when the reviewed
-  draft selected Git, a reviewed Jujutsu choice routes through the existing Jujutsu owner route and is never
-  silently substituted with Git, and explicit no-history initializes no Git per PJCT-007 and Project_System.md:93;
-  local-engine selection uses the canonical Source Control owner, while GitHub, GitLab, Azure DevOps, Bitbucket,
-  and eligible Cursor Origin account verification, repository creation/selection, visibility, and binding remain
-  explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge, never as a no-host or
-  local-only preview.'
-- An online copy becomes ready only after both a current verified account identity and the exact repository
-  binding exist; Already connected must select and verify both and is never a no-op. Account creation, sign-in,
-  organization/namespace/workspace/project selection, repository name, allowed visibility, and optional repository
-  details follow the selected forge's owner contract rather than a generic one-field form.
-- Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP
-  source; Restore a backup has its own source and transport rather than reusing an ordinary folder path. Server
-  (where work runs), Storage (where files live), and this Client (the device in hand) remain visibly independent
-  choices.
-- 'Connect existing selects the route before discovery and pairing: Local or VPN looks on the local network
-  and on any VPN this device is already connected to, with no VPN switch and the line `You can connect through
-  a VPN too`, and asks for no private address by default; a usable active Tailscale tailnet needs no sign-in,
-  otherwise one protected built-in sign-in is offered and an official site is used only for explicit account
-  creation; Headscale takes its control URL and owner-managed enrollment; Reverse proxy accepts the existing
-  protected Puppet Master HTTPS URL rather than offering proxy generation; Puppet Master Remote Link remains
-  visible and accepts its link, QR, or short code. Manual Server identity/address entry appears only when safe
-  discovery cannot find the intended Server.'
-- A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never
-  grants trust; the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing
-  after Review confirmation.
+- The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR as a menuitemradio
+  family with its Adjust NieR button (Q22), which opens the NieR Mode editor as a panel inside the onboarding window;
+  the menu closes on Escape with focus returned to its button, and theme changes settle without blocking input; the sound
+  button is a real keyboard-focusable control exposing its on/off state, and missing-audio handling follows the existing
+  sound-control rule (hidden or labelled, never silent failure).
+- Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and the target
+  owner's actual request, current permission, selected-source scope, consent, draft/session revision, focus, Client/Host
+  context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source sign-in exception is not
+  paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository creation/binding, filesystem
+  mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029 Server-owned `cmd.client.pair.start`
+  approval/code/QR access to the chosen folder, backup, or network storage on another Puppet Master, recorded as `puppet_master`
+  with bound `source_access_authorization_refs` and limited to read-only browsing and validation, leaving the after-Review
+  Connected Server pairing rule unchanged.
+- Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and approved-plan
+  hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation to observe current
+  real results; stale, unconfirmed, or expanded plans dispatch nothing.
+- 'DL-259 H2/FF-20: first_project exposes New, Existing and Restore as three aligned keyboard-reachable groups; Existing’s
+  local/online/device choices open in its joined tray, before the other groups. All four semantic source intents stay
+  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Start
+  fresh is the settings default; explicit copy offers a searchable real-Project picker, source-context summary and Settings
+  preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
+- 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer,
+  while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account,
+  website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
+- 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local`
+  and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
+  choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
+  initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
+  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection,
+  visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge,
+  never as a no-host or local-only preview.'
+- An online copy becomes ready only after both a current verified account identity and the exact repository binding exist;
+  Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project
+  selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract
+  rather than a generic one-field form.
+- Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP source; Restore
+  a backup has its own source and transport rather than reusing an ordinary folder path. Server (where work runs), Storage
+  (where files live), and this Client (the device in hand) remain visibly independent choices.
+- 'Connect existing selects the route before discovery and pairing: Local or VPN looks on the local network and on any
+  VPN this device is already connected to, with no VPN switch and the line `You can connect through a VPN too`, and asks
+  for no private address by default; a usable active Tailscale tailnet needs no sign-in, otherwise one protected built-in
+  sign-in is offered and an official site is used only for explicit account creation; Headscale takes its control URL
+  and owner-managed enrollment; Reverse proxy accepts the existing protected Puppet Master HTTPS URL rather than offering
+  proxy generation; Puppet Master Remote Link remains visible and accepts its link, QR, or short code. Manual Server
+  identity/address entry appears only when safe discovery cannot find the intended Server.'
+- A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never grants trust;
+  the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing after Review confirmation.
 - Optional branches use one calm layer of progressive disclosure; read-only owner preflight and necessary selected-source
-  authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound
-  confirmation; no branch label, availability projection, or preview can satisfy that fence.
-- Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only
-  with an owner denominator, questions appear only when the current owner projection cannot choose safely,
-  and timers never synthesize work or readiness.
-- 'After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup,
-  Open Repository, and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches
-  only `cmd.project.resume_creation` with a fresh attempt identity under the one-active claim, Open Repository
-  dispatches only `cmd.forge.repository.open_in_browser` on the verified binding, and Delete Repository routes
-  only to the Forge FGI-021 `cmd.forge.repository.delete` admission with target-bound confirmation, never automatically
-  and never while the remote effect is unknown.'
-- 'Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled
-  until owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler
-  availability all hold; an unknown remote effect shows reconciliation only with no repeat create, delete,
-  or inferred identity; and no setup commit binding, paid-provider, or Free Models phase advances before the
-  listed persisted Project exists.'
-- Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve
-  the owner operation/work/dedupe identity across modal interruption and resume.
+  authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound confirmation;
+  no branch label, availability projection, or preview can satisfy that fence.
+- Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only with an
+  owner denominator, questions appear only when the current owner projection cannot choose safely, and timers never synthesize
+  work or readiness.
+- 'After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup, Open Repository,
+  and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches only `cmd.project.resume_creation`
+  with a fresh attempt identity under the one-active claim, Open Repository dispatches only `cmd.forge.repository.open_in_browser`
+  on the verified binding, and Delete Repository routes only to the Forge FGI-021 `cmd.forge.repository.delete` admission
+  with target-bound confirmation, never automatically and never while the remote effect is unknown.'
+- 'Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled until
+  owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler availability
+  all hold; an unknown remote effect shows reconciliation only with no repeat create, delete, or inferred identity; and
+  no setup commit binding, paid-provider, or Free Models phase advances before the listed persisted Project exists.'
+- Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve the owner
+  operation/work/dedupe identity across modal interruption and resume.
 - Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently
-  editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without
-  silently forcing storage or Client placement.
-- Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth
-  path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing
-  owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after
-  commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or
-  replays settled setup.
-- Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided
-  Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft;
-  a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases
-  inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff
-  and restores the saved workspace initiator/fallback.
-- The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run
-  setup wizard`) directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502;
-  amended 2026-10-17, DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source
-  surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine
-  or domain command.
-- Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE;
-  `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary
-  never appear as product copy.
+  editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently
+  forcing storage or Client placement.
+- Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free
+  Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers
+  explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing
+  Project, settled phases and exact continuation; resume never recreates it or replays settled setup.
+- Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without
+  trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project
+  stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour
+  starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace
+  initiator/fallback.
+- The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run setup wizard`)
+  directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502; amended 2026-10-17,
+  DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens
+  the same modal at Welcome, and does not create a second onboarding state machine or domain command.
+- Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`,
+  internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as
+  product copy.
 - 'Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation
-  attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections.
-  The visible shared explainer is the control''s actual `aria-controls` target and its active `aria-describedby`
-  target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped
-  treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy,
-  shape, iconography, and state rather than copy alone.'
-- All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm,
-  and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction
-  rules from one setup screen to the next.
-- 'One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation;
-  discovery, availability, capability, preview, refresh, and test-only results remain on the current choice
-  and never masquerade as completed setup. A recovery-required result is not auto-advanced: it presents the
-  explicit Continue Setup, Open Repository, and Delete Repository owner choices instead.'
-- Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead
-  of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing
-  and incoming headings never ghost through one another.
-- Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims
-  that all important systems or production owner work are ready.
+  attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The
+  visible shared explainer is the control''s actual `aria-controls` target and its active `aria-describedby` target;
+  obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment,
+  consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography,
+  and state rather than copy alone.'
+- All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow
+  footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from
+  one setup screen to the next.
+- 'One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery,
+  availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade
+  as completed setup. A recovery-required result is not auto-advanced: it presents the explicit Continue Setup, Open
+  Repository, and Delete Repository owner choices instead.'
+- Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying
+  its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings
+  never ghost through one another.
+- Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims that all
+  important systems or production owner work are ready.
 - Modal controls use the typed `ui.onboarding.*` local-action vocabulary and owner branches route only to already-canonical
   domain commands; no `cmd.onboarding.*` family or Final-GUI-owned mutation path is introduced.
-- 'The authored browser concept labels its persistence, projections, owner previews, receipts, readiness, and
-  native binding truthfully: browser choreography is concept simulation only, production owner work/readiness
-  remain false or unavailable, and no production or native Slint result is fabricated.'
-- 'Review is a live projection of the current draft: every route, placement, transport, Safe History engine,
-  online service/account/repository/visibility, pairing choice, skip, and consequence updates immediately when
-  the person goes Back and edits it; Review never displays stale defaults or marks an unconfigured connection
-  ready.'
-- Back, Close, Skip, Do this later, interruption, reversal, resize, and theme changes acknowledge in the same
-  frame and settle deterministically; Back works on every reversible stage including Ready, and Set up access
-  later persists a truthful resumable state. The modal entrance uses fixed-bounds opacity/clipping so a cross-family
-  theme switch cannot translate or scale the window outside its viewport margin.
-- At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without
-  a floating action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit
-  content region while its in-flow actions remain reachable and never cover the choices.
-- Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text
-  remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders,
-  duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent.
-- Every stage has a distinct visual scene and meaningful continuity of focus; the four theme families, and
-  NieR Mode painted over Basic, use different directing systems rather than paint-only variants, all motion
-  uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential
-  storytelling does not require browser-only effects.
-- A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected and NieR
-  Mode unticked, whatever look was shown before and without changing stored values; Run Onboarding Again starts
-  in the look then shown, NieR Mode included, preselected, and never switches look as it opens (DL-153).
-- The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five
-  styles, one per look family, as F3-600 sets out.
+- 'The authored browser concept labels its persistence, projections, owner previews, receipts, readiness, and native
+  binding truthfully: browser choreography is concept simulation only, production owner work/readiness remain false or
+  unavailable, and no production or native Slint result is fabricated.'
+- 'Review is a live projection of the current draft: every route, placement, transport, Safe History engine, online service/account/repository/visibility,
+  pairing choice, skip, and consequence updates immediately when the person goes Back and edits it; Review never displays
+  stale defaults or marks an unconfigured connection ready.'
+- Back, Close, Skip, Do this later, interruption, reversal, resize, and theme changes acknowledge in the same frame and
+  settle deterministically; Back works on every reversible stage including Ready, and Set up access later persists a
+  truthful resumable state. The modal entrance uses fixed-bounds opacity/clipping so a cross-family theme switch cannot
+  translate or scale the window outside its viewport margin.
+- At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without a floating
+  action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit content region
+  while its in-flow actions remain reachable and never cover the choices.
+- Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain
+  fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate
+  Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent.
+- Every stage has a distinct visual scene and meaningful continuity of focus; the five theme families, and the selected
+  NieR family (rendered with Basic CSS), use different directing systems rather than paint-only variants, all motion
+  uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling
+  does not require browser-only effects.
+- A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected, whatever look was
+  shown before and without changing stored values; Run Onboarding Again starts in the look then shown, NieR Mode included,
+  preselected, and never switches look as it opens (DL-153).
+- The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five styles, one
+  per look family, as F3-600 sets out.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock;
+  follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one
+  inert-state basis survives replacement; unreadable Project state does not repeatedly mute the preview.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device,
+  not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old
+  reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result
+  stays bound to the service/device it authenticated and cannot advance a different current choice. A protected SSH key
+  passphrase unlock belongs to that exact selected key; changing keys requires that key’s own owner-proven access and
+  never inherits another key’s unlock. The Remote Link endpoint belongs only to the Remote Link route; choosing Only
+  at home/local-or-VPN, Tailscale or another route clears it from the reviewed draft. No stale endpoint enters an unrelated
+  route.'
+- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
+  publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit
+  always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types,
+  China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding.
+  The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
+  setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings
+  support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected
+  as an existing proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31:
+  onboarding offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik
+  configuration for the person to add on their own system before the owner’s DNS, reachability and live-connection checks;
+  Caddy is the default. The second only checks the existing proxy route and live connection, with nothing generated.
+  Set it up for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D4: confirm provider admission and executable conformance immediately before building Puppet Master. The
+  wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision
+  does not change per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s
+  current usable result, not merely signed in. D6 A: the human signs in on the initiating active device while the AI/tool
+  runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
+  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
+  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
+  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.
+  D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have
+  their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no separate
+  Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps
+  one active node per stable server_id; a native Client installation keeps one active node per stable client_id, independent
+  of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
+  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
+  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
+  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
+  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
+  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
+  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
+  stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
+  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
+  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
+  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
+  a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and
+  Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert,
+  labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding
+  question tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
+  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
+  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
+  tour_narration_only tag is retired.'
+- 'DL-257/Q22 and DL-259 QA2 M4, 2026-10-31: the welcome look chooser gives Basic, Friendly, Glass, Retro and NieR equal
+  choice prominence. Each tile has an accessible family label and reachable question/Adjust controls where applicable.
+  At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping
+  or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click
+  or keyboard activation selects; silent hover does not select.'
 validation_surfaces:
-- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json
-  (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521
-  retains the separate v3 Guided Tour contract)
-- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner
-  actions, durable bounded draft, exact commit/result binding and phase continuation)
-- tests/test_pm_onboarding_phases.py
-- tests/test_pm_settings_draft_transfer.py
-- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return
-  routes, interruption/reversal, accessibility and short-window behavior.
-- future eight-theme, Reduced Motion, interruption, reversal, and short-window film review
+  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
+  - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
+  - "tests/test_pm_onboarding_phases.py"
+  - "tests/test_pm_settings_draft_transfer.py"
+  - "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior."
+  - "future ten-theme, Reduced Motion, interruption, reversal, and short-window film review"
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
 context_scope: product_onboarding_cinematic_presentation
@@ -435,7 +557,13 @@ source_lineage:
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - Concepts/pm7-tools/home_workspace_source.py
 - Concepts/pm7-tools/home_workspace_refresh_source.py
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
+  grid geometry is source evidence only.
+- 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
+  joined-choice tray; these source APIs/classes are not native product contracts.'
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -489,38 +617,22 @@ preserved_exact_tokens:
 - Adjust NieR look
 - menuitemcheckbox
 negative_constraints:
-- Do not render Product Onboarding as a full-page route or replacement application experience.
-- Do not restore F3-411's four-screen/provider-first choreography.
-- Do not restore the predecessor five-stage simple-path order as the current main journey.
-- Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client
-  into connect-existing, or bypass review_setup_plan before automatic_preparation.
-- Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually
-  consented Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider
-  setup, enrollment, Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit
-  before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix,
-  cached result, or GUI choice as owner authorization.
-- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice,
-  or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
-- Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated
-  advanced Settings.
-- Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously
-  expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment.
-- Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected,
-  or an inert Set up access later action.
-- Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained
-  developer/source-control vocabulary in user-visible onboarding copy.
-- Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through
-  F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state.
-- Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
-  effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving
-  recorded A/B.
-- Do not list NieR Mode among the eight-theme choices or the Look menu's family and mode options, and do not
-  write a NieR choice durably before the Project binding exists.
-- Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final
-  GUI.
-- Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
-- Do not promote browser-concept projections, route previews, local persistence, or receipts into production
-  owner-work, readiness, handler, native Slint, or certification claims.
+  - "Do not render Product Onboarding as a full-page route or replacement application experience."
+  - "Do not restore F3-411's four-screen/provider-first choreography."
+  - "Do not restore the predecessor five-stage simple-path order as the current main journey."
+  - "Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client into connect-existing, or bypass review_setup_plan before automatic_preparation."
+  - "Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment, Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner authorization."
+  - "Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding."
+  - "Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced Settings."
+  - "Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment."
+  - "Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an inert Set up access later action."
+  - "Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control vocabulary in user-visible onboarding copy."
+  - "Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state."
+  - "Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded A/B."
+  - "Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing Project binding exists."
+  - "Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI."
+  - "Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command."
+  - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
 owner_boundary_notes:
 - Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control,
   Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and
@@ -540,92 +652,170 @@ plan_unit_id: F3-521
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable chapter
-  order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
-  the learner sends the supplied local question, sees Teacher's answer stream in the same labeled guided-example
-  conversation, and then sees that same answer in simple words through Explain this reply simply
-  (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or
-  regenerates the original; the callout then points to the quick dot by the message box, which makes later replies
-  simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set
-  (DL-126, ACD-484). Workspace practice explains navigation and panels and follows the
-  workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important
-  action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
-  predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. A book-club
-  goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
-  unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
-  approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called
-  out in the first scene; the same opening moment explains that people who prefer less animation can enable Reduced
-  Motion later in Settings. All visible copy is written for a person who has never coded or used an IDE and never
-  calls the application a `shell` or exposes command IDs, owners, providers, models, tokens, receipts, routes, or
-  implementation terms. The overlay tracks and highlights mounted controls without cloning them, intercepting owner
-  work, or fabricating success. Automatic scene transitions focus the current scene heading, never an action, and do
-  not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme change, and effective
-  Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu (`Change the look`)
-  and sound control beyond setup on every step: Look choices, the NieR Mode checkbox and its Adjust NieR look editor
-  included (F3-598), apply through the Settings owner at once only with a verified
-  current Project binding, and the Tour follows that Project's effective theme. Neither control is a
-  `ui.guided_tour.*` action (DL-153): a Look choice, the NieR Mode checkbox, every live edit in the editor and the
-  sound control's write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply, and Adjust NieR look is ui.settings.nier_editor.open. Project switching invalidates stale bindings
-  and rebinds both controls before persistence; without a Project they offer ephemeral preview and no durable writes.
-  The sound control binds to the Settings-owned `general.interaction.sound-effects`
-  effective pref with a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific
-  preference toggles, and audio is never the sole status signal; the Tour's cues are the onboarding and Guided Tour cue
-  category of F3-599. Back and forward movement follow the valid story state
-  and never become
-  inert or skip required practice. Basic, Friendly, Glass, and Retro, and NieR Mode painted over Basic (F3-598),
-  direct the film with substantially different
-  callout composition, illustration, typography, target treatment, and motion--not one recolored overlay--while never
-  using a left-edge accent rail. Transitions preserve the mounted application continuously without a black or empty
-  flash. Skip restores captured layout, Chat state, and focus. While any restore runs, the application's own notices
-  about it (a widget removed, a persona applied from the next turn) stay quiet in every look, and the Tour's own
-  closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
-  or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
-  committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
-  Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner to move or dock the chat, which is a
-  fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel
-  (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip
-  and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's.
-  Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a
-  Usage widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move
-  it to where they can glance at it (F3-638); it is finished by the Home board's own accepted add of that widget
-  followed by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are
-  PWIZ-035's.
+canonical_text: 'Guided Tour teaches through successful actions over the mounted Puppet Master application in one stable
+  chapter order: Assistant Chat with Teacher, workspace practice, then Planning Wizard. Chat opens through its real control;
+  the learner sends the supplied local question, sees Teacher''s answer stream in the same labeled guided-example conversation,
+  and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which
+  adds one extra, simpler reply after the example answer and never rewrites or regenerates the original; the callout
+  then points to the quick dot by the message box, which makes later replies simple, and names the ELI5 popup behind
+  the wand''s ELI5 row (the ELI5 sheet, F3-581), where the chat''s choice is set (DL-126, ACD-484). Workspace practice
+  explains navigation and panels and follows the workspace chapter named in the 2026-10-09 amendment below (PWIZ-035).
+  Every important action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed
+  success predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
+  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17
+  (DL-230, Jared): the bar is that Planning is about half of the tour''s actions and time (it read: at least half); the
+  accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour
+  completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then.
+  A book-club goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
+  unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the approval
+  boundary. Teacher retains a broad discoverable beginner question library. The shared Plain English / Expert control
+  remains beside Pause and Skip and is called out in the first scene; the same opening moment explains that people who
+  prefer less animation can enable Reduced Motion later in Settings. All visible copy is written for a person who has
+  never coded or used an IDE and never calls the application a `shell` or exposes command IDs, owners, providers, models,
+  tokens, receipts, routes, or implementation terms. The overlay tracks and highlights mounted controls without cloning
+  them, intercepting owner work, or fabricating success. Automatic scene transitions focus the current scene heading,
+  never an action, and do not open a visual hover tag without user intent. Pause, Back, Skip, interruption, resize, theme
+  change, and effective Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu
+  (`Change the look`) and sound control beyond setup on every step: Look choices, family nier and its Adjust NieR editor
+  included (F3-598), apply through the Settings owner at once only with a verified current Project binding, and the Tour
+  follows that Project''s effective theme. Neither control is a `ui.guided_tour.*` action (DL-153): a family/mode Look
+  choice or live edit in the editor and the sound control''s write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview
+  then cmd.settings.transaction.apply, and Adjust NieR is ui.settings.nier_editor.open. Project switching invalidates
+  stale bindings and rebinds both controls before persistence; without a Project they offer ephemeral preview and no
+  durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with
+  a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific preference toggles, and audio
+  is never the sole status signal; the Tour''s cues are the onboarding and Guided Tour cue category of F3-599. Back and
+  forward movement follow the valid story state and never become inert or skip required practice. Basic, Friendly, Glass,
+  Retro and NieR (F3-598), direct the film with substantially different callout composition, illustration, typography,
+  target treatment, and motion--not one recolored overlay--while never using a left-edge accent rail. Transitions preserve
+  the mounted application continuously without a black or empty flash. Skip restores captured layout, Chat state, and
+  focus. While any restore runs, the application''s own notices about it (a widget removed, a persona applied from the
+  next turn) stay quiet in every look, and the Tour''s own closing note says what was put back (DL-153). Finish restores
+  the temporary arrangement by default or keeps it only on explicit selection, removes practice content, and lands on
+  the real Planning Wizard with the committed Project selected and no work auto-started. Close/reload resumes a safe
+  checkpoint after owner revalidation. Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner
+  to move or dock the chat, which is a fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening
+  a file from the rail into a panel (F3-634), splitting by dragging a tab to a panel''s edge (F3-630), and adding a widget
+  to the dashboard (F3-638); Skip and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035''s.
+  Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a Usage
+  widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move it to
+  where they can glance at it (F3-638); it is finished by the Home board''s own accepted add of that widget followed
+  by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are PWIZ-035''s.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
+  migration and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode. Q22 visible
+  copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier
+  label Adjust NieR look is retained as historical source text only. DL-259, Jared 2026-10-31: the wizard and Guided
+  Tour bars read and write one global general.interaction.mode, default ELI5, with the labels Plain English and Expert.
+  Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local
+  adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither
+  seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite,
+  regenerate or send a chat reply.'
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
 depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, DL-186, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
-  - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
-  - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
-  - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
-  - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10, DL-186; F3-638)."
-  - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
-  - "Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
-  - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
-  - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
-  - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
-  - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
-  - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
-  - "Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable, and restores the same beat on close without clipping or losing the target."
-  - "Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy."
-  - "The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra, simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled Guided example."
-  - "The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry is not zero-use proof. Ordinary conversations keep their normal behavior."
-  - "Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1 and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag, while exact coached interactions wait for the person to focus or activate the real target."
-  - "Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind."
-  - "Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear in product copy."
-  - "Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration exposes recovery, never false completion."
-  - "Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements, and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative work and duplicate subscriptions."
-  - "Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight."
-  - "Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography rather than just color."
-  - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
-  - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
-  - "Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153)."
-  - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
+- The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction
+  supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current
+  story.
+- Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped,
+  and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's
+  observed action rather than from unrelated clicks, elapsed time, or a generic forward control.
+- The brief opening introduces the shared Plain English / Expert mode beside Pause and Skip Tour, default ELI5, with
+  ui.guided_tour.toggle_eli5 as the compatibility adapter to general.interaction.mode through Settings preview/apply.
+  It also explains Reduced Motion, reads general.visual.reduce-animations and directs changes to Settings without a separate
+  toggle or detour (DL-259).
+- 'The Tour bar keeps the persistent Look menu (`Change the look`: five families including NieR plus Light/Dark and the
+  retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable
+  by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`,
+  and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only
+  effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds
+  both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds
+  to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn
+  on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference
+  toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22),
+  live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply,
+  and Adjust NieR emits ui.settings.nier_editor.open (DL-153).'
+- Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the "+" menu, open
+  a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and
+  makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never
+  moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves
+  or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10,
+  DL-186; F3-638).
+- Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and
+  success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never
+  count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible.
+- Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step
+  census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor
+  is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes,
+  followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current
+  Wizard names/modes.
+- The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access
+  consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved.
+- 'Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish
+  lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved
+  by the Tour).'
+- Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real
+  Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution.
+- 'Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner
+  detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors,
+  or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written
+  by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126).'
+- Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped
+  sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind
+  knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded
+  list or an unrelated fallback answer.
+- Teacher starts with the supplied question `What happens before Puppet Master changes my files?`; optional grouped questions
+  remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable,
+  and restores the same beat on close without clipping or losing the target.
+- Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe
+  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional
+  online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
+- The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real
+  composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra,
+  simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled
+  Guided example.
+- The Guided example label is visible on the mounted conversation, not only its backing record. Guided text remains local
+  when paused, in another chapter, or retained after completion/replay; composer shortcuts cannot dispatch web/tool/provider
+  work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry
+  is not zero-use proof. Ordinary conversations keep their normal behavior.
+- Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1
+  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag,
+  while exact coached interactions wait for the person to focus or activate the real target.
+- Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates
+  the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind.
+- Visible headings, instructions, results, unavailable reasons, and buttons use novice-friendly outcome language; the
+  internal term `shell`, raw command/route/schema IDs, receipt labels, and owner/provider/model/token jargon never appear
+  in product copy.
+- Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe
+  step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default
+  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration
+  exposes recovery, never false completion.
+- Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements,
+  and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative
+  work and duplicate subscriptions.
+- Callout and halo geometry is measured against the live target and viewport, remeasures after real layout changes, clamps
+  to every edge, and never covers the target whenever any safe above/below/side placement or bounded callout shrink can
+  avoid it; short/narrow fallback keeps both target and callout usable instead of accepting a misleading offset highlight.
+- Guided Tour uses no left-edge color-rail callouts. Basic uses an exact instructional/blueprint director, Friendly an
+  organic illustrated guide, Glass a spatial layered lens, and Retro a terminal/pixel director, and while NieR Mode is
+  painted a NieR ink director (YoRHa headers, ink target brackets, the menu cursor and Pod narration, each under its
+  installed part) replaces Basic's; these systems differ in silhouette, typography, target treatment, and choreography
+  rather than just color.
+- Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame;
+  no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside
+  the viewport is accepted.
+- Protected AuthBrowserSession content is never highlighted, captured, inspected, or described.
+- Skip, Restore my layout and Keep this layout raise none of the application's own notices about the restore in any look
+  (no widget-removed or persona notice); the Tour's own closing note still shows (DL-153).
+- PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence;
+  they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof.
+- 'DL-259, Jared 2026-10-31: the wizard and Guided Tour bars read and write one global general.interaction.mode, default
+  ELI5, with the labels Plain English and Expert. Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to this shared setting, not a tour-specific preference. Both bars reflect the same
+  effective value; neither seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode
+  change does not rewrite, regenerate or send a chat reply.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
   - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
@@ -639,30 +829,73 @@ implementation_surfaces:
   - future native Slint Guided Tour overlay components
 node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Planning_Wizard.md#PWIZ-023
-  - Plans/assistant-chat-design.md#ACD-431
-  - Concepts/pm7-tools/guided_tour_source.py
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-  - Plans/Decision_Log.md#DL-186
-  - "Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009 (the widget step as built; concept lineage only)"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply, NieR Mode, Adjust NieR look, Upcoming resets]
+- Plans/Planning_Wizard.md#PWIZ-023
+- Plans/assistant-chat-design.md#ACD-431
+- Concepts/pm7-tools/guided_tour_source.py
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md
+- Plans/Decision_Log.md#DL-186
+- Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009
+  (the widget step as built; concept lineage only)
+- Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+preserved_exact_tokens:
+- Planning Wizard
+- Assistant Chat
+- Teacher
+- Guided example
+- What happens before Puppet Master changes my files?
+- Ask Teacher anything about Puppet Master…
+- ELI5
+- Reduced Motion
+- general.visual.reduce-animations
+- ui.guided_tour.toggle_eli5
+- ui.guided_tour.show_me
+- programmatic-focus-landmark
+- Pause
+- Skip Tour
+- Back
+- Try it
+- Show Me
+- Finish tour
+- Change the look
+- Sound off — click to turn on
+- general.visual.theme
+- general.visual.theme-mode
+- general.interaction.sound-effects
+- Explain this reply simply
+- cmd.chat.eli5.explain_reply
+- NieR Mode
+- Adjust NieR look
+- Upcoming resets
+- general.interaction.mode
+- Plain English
+- Expert
+- DL-259
 negative_constraints:
-  - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
-  - "Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from Explain this reply simply (DL-126)."
-  - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
-  - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
-  - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."
-  - "Do not omit navigation or the real widget practice; do not turn workspace instruction into a long feature checklist (amended 2026-10-10: the chat is never moved, F3-637, so no Chat movement is practised)."
-  - "Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership in Settings."
-  - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
-  - "Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys for them."
-  - "Do not list NieR Mode among the Tour bar Look menu's family and mode options."
-  - "Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible tour copy."
-  - "Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip."
-  - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
-  - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
-  - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+- Do not build a tooltip carousel, parallel demo application, or five-chapter tour.
+- Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from
+  Explain this reply simply (DL-126).
+- Do not clone live controls, fabricate success, or cancel owner work when a view closes.
+- Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson.
+- Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller.
+- 'Do not omit navigation or the real widget practice; do not turn workspace instruction into a long feature checklist
+  (amended 2026-10-10: the chat is never moved, F3-637, so no Chat movement is practised).'
+- Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership
+  in Settings.
+- Do not restore ui.guided_tour.toggle_reduced_motion or create a Tour-specific mode preference; the bar mode uses shared
+  general.interaction.mode (DL-259).
+- Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys
+  for them.
+- Do not retain an independent NieR checkbox; the Tour Look menu includes family nier (Q22).
+- Do not expose the internal word `shell`, raw action identifiers, receipts, owners, routes, or developer jargon in visible
+  tour copy.
+- Do not auto-focus a tour action on scene entry or leave the Teacher-practice placeholder installed after Skip.
+- Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists,
+  or any black/empty transition frame.
+- Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning
+  Wizard.
+- Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence,
+  native Slint, or certification claims.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
   - "Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired."
@@ -679,12 +912,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Doctor is an ongoing operational destination in the full K3 Settings workspace, not the compact post-onboarding
-  card described by predecessor F3-411. It renders the Doctor owner's cached-first normalized projections as a calm
-  health overview, lazy detail, bounded logs and receipts, scoped rechecks, truthful requested/effective state,
-  freshness, confidence, applicability, and one owner-routed remediation path. Pending work acknowledges immediately;
-  fresh-result replacement does not move the row. Theme and motion follow F3-519 and Reduced Motion, while stable IDs
-  retain focus and accessible position across virtualization and narrow host states.
+  Doctor is an ongoing operational destination in the full K3 Settings workspace, not the compact
+  post-onboarding card described by predecessor F3-411. It renders the Doctor owner's cached-first normalized
+  projections as a calm health overview, lazy detail, bounded logs and receipts, scoped rechecks, truthful
+  requested/effective state, freshness, confidence, applicability, and one owner-routed remediation path.
+  Pending work acknowledges immediately; fresh-result replacement does not move the row. Theme and motion follow
+  F3-519 and Reduced Motion, while stable IDs retain focus and accessible position across virtualization and
+  narrow host states. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census
+  supersede earlier counts.
 gui_related: true
 gui_classification_reason: This unit owns Doctor's K3 workspace composition and truthful visible projection states.
 split_recommended: false
@@ -697,9 +932,9 @@ acceptance_criteria:
   - "Requested and effective state remain distinct; disabled or unavailable controls explain the owner reason."
   - "Doctor never privately installs, authenticates, repairs, updates, moves storage, browses, restores, or performs source-control mutations."
 validation_surfaces:
-  - Plans/final_gui_interaction_contracts.schema.json
-  - Plans/doctor_contracts.schema.json
-  - future cached/offline, scoped-check, stale-return, remediation-return, accessibility, and eight-theme tests
+  - "Plans/final_gui_interaction_contracts.schema.json"
+  - "Plans/doctor_contracts.schema.json"
+  - "future cached/offline, scoped-check, stale-return, remediation-return, accessibility, and ten-theme tests"
 risk_class: doctor_compact_false_green_or_private_repair
 reasoning_tier: high
 context_scope: doctor_k3_operational_workspace
@@ -728,57 +963,78 @@ plan_unit_id: F3-523
 unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for
-  every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled
-  control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies.
-  A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize
-  line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin,
-  center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the
-  visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent
-  within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement,
-  pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending
-  opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor
-  closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145;
-  scroll narrowed 2026-10-23, DL-232).
-  Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state,
-  shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route
-  IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current.
-  While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or
-  open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility
-  exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference
-  240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass
-  follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded,
-  performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real
-  semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or
-  steal Onboarding or Guided Tour's animation budget.
-  Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along
-  its side or flips, and with no clear place it stays shut while its accessible description is still read.
-  File references and tabs keep their path or name literally (a reference's tag is its path and line), the one
-  exception to replacing paths, file names and host:port text with generic words. Focus the application moves,
-  by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or
-  focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows.
-  Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the
-  search field already show their names; a row given its own hover label keeps its tag) and a Settings field
-  whose label and help line sit beside it (`labelled-field`).
+canonical_text: 'One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay
+  root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled
+  control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line
+  tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and
+  use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center
+  above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible
+  tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5
+  px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press,
+  a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure
+  after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that
+  anchor''s tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232).
+  Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut,
+  full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels,
+  machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding
+  or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close,
+  outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships
+  restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms
+  stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable
+  contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute
+  reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual
+  tooltip invalidation loop or steal Onboarding or Guided Tour''s animation budget. Amended 2026-10-17 (DL-228): a tag
+  never covers a primary action such as the chat''s Send: it slides along its side or flips, and with no clear place
+  it stays shut while its accessible description is still read. File references and tabs keep their path or name literally
+  (a reference''s tag is its path and line), the one exception to replacing paths, file names and host:port text with
+  generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the
+  pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab
+  or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and
+  the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose
+  label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires
+  a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript,
+  whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll
+  keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible,
+  and a container’s own semantic control label may independently qualify it under this same shared controller.'
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
 depends_on: [F3-517, F3-519, DL-145]
 unblocks: [F3-524]
 acceptance_criteria:
-  - "One overlay controller positions all tags above/below with edge clamping, no clipping, and no layout shift."
-  - "A pointer tag becomes visible only after at least 1600 ms of residence plus 1100 ms of stationary intent within a 5 px radius, and a keyboard-focus tag only after 1000 ms of continuous focus; persistent accessible descriptions and relationships remain available immediately rather than waiting for either visual dwell; movement, target relocation, pointer press, scrolling, departure, or focus change resets/cancels the pending open, opened pointer tags retain the 160 ms departure grace, and Escape closes immediately."
-  - "Every required target has one stable hover key, accessible name, aria-describedby-equivalent relationship, and role=tooltip semantics; disabled controls remain reachable and explain their disabled reason."
-  - "general.interaction.show-tooltips suppresses visual tags without removing accessible explanatory text."
-  - "A pointer press on an anchor closes its open tag, and that tag does not reopen until the pointer has left the anchor (DL-145)."
-  - "User-facing native title-only behavior is absent; tests use stable IDs/data attributes rather than title text."
-  - "Every tag uses human, contextual effect/state/shortcut/value/consequence language; raw command, action, schema, route, DOM, or machine identifiers never become generic visible fallback copy, while a genuinely useful technical value may appear as clearly explained secondary detail."
-  - "Dynamic text, shortcut, full-value, state, consequence, and disabled reason remain current after pin/unpin, availability, truncation, theme, transparency, and Settings changes."
-  - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
-  - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
-  - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
-  - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
+- One overlay controller positions all tags above/below with edge clamping, no clipping, and no layout shift.
+- A pointer tag becomes visible only after at least 1600 ms of residence plus 1100 ms of stationary intent within a 5
+  px radius, and a keyboard-focus tag only after 1000 ms of continuous focus; persistent accessible descriptions and
+  relationships remain available immediately rather than waiting for either visual dwell; movement, target relocation,
+  pointer press, scrolling, departure, or focus change resets/cancels the pending open, opened pointer tags retain the
+  160 ms departure grace, and Escape closes immediately.
+- Every required target has one stable hover key, accessible name, aria-describedby-equivalent relationship, and role=tooltip
+  semantics; disabled controls remain reachable and explain their disabled reason.
+- general.interaction.show-tooltips suppresses visual tags without removing accessible explanatory text.
+- A pointer press on an anchor closes its open tag, and that tag does not reopen until the pointer has left the anchor
+  (DL-145).
+- User-facing native title-only behavior is absent; tests use stable IDs/data attributes rather than title text.
+- Every tag uses human, contextual effect/state/shortcut/value/consequence language; raw command, action, schema, route,
+  DOM, or machine identifiers never become generic visible fallback copy, while a genuinely useful technical value may
+  appear as clearly explained secondary detail.
+- Dynamic text, shortcut, full-value, state, consequence, and disabled reason remain current after pin/unpin, availability,
+  truncation, theme, transparency, and Settings changes.
+- When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are
+  temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay
+  closes; tags inside the active overlay remain available.
+- One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current
+  attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree
+  changes remain observable and auditable.
+- A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible
+  disabled controls, or native-title-only behavior.
+- 'The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption
+  (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather
+  than as missing bindings.'
+- 'DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier,
+  or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely
+  because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip
+  target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently
+  qualify it under this same shared controller.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
   - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
@@ -791,8 +1047,10 @@ implementation_surfaces:
   - future native Slint PMHoverTag and HoverTagController components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
-  - Concepts/pm7-tools/global_hover_tags_source.py
+- Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
+- Concepts/pm7-tools/global_hover_tags_source.py
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31; source
+  attributes data-technical-id, data-scroll-key, data-hover-key and render/sort keys are implementation evidence only.
 preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
 negative_constraints:
   - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
@@ -815,15 +1073,17 @@ unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1. Settings binds
-  the owner inventory and manager projections through stable typed models and variable-height virtualization; Doctor
-  binds stable normalized finding IDs; Onboarding and Tour bind their owner state machines; PMHoverTag binds typed
-  anchor geometry, timers, hover/focus state, accessible description identity, and theme tokens. Essential behavior
-  uses native properties, models, transforms, opacity, scale, clipping/masking, vector shapes, bounded timelines, and
-  precomputed tokens/assets. PMConcept7 HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser
-  physics, Canvas/WebGL, arbitrary backdrop blur, and heavy SVG filters are concept translation inputs only. Static,
-  schema, browser, visual, motion, accessibility, performance, native runtime, and certification evidence remain
-  separately classified.
+  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1.
+  Settings binds the owner inventory and manager projections through stable typed models and variable-height
+  virtualization; Doctor binds stable normalized finding IDs; Onboarding and Tour bind their owner state
+  machines; PMHoverTag binds typed anchor geometry, timers, hover/focus state, accessible description identity,
+  and theme tokens. Essential behavior uses native properties, models, transforms, opacity, scale,
+  clipping/masking, vector shapes, bounded timelines, and precomputed tokens/assets. PMConcept7
+  HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser physics, Canvas/WebGL, arbitrary
+  backdrop blur, and heavy SVG filters are concept translation inputs only. Static, schema, browser, visual,
+  motion, accessibility, performance, native runtime, and certification evidence remain separately classified.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: This unit governs native GUI portability and truthful evidence classification for all reconciled surfaces.
 split_recommended: false
@@ -832,7 +1092,7 @@ unblocks: []
 acceptance_criteria:
   - "The complete Settings inventory remains model-backed and variable-height virtualized with stable IDs, anchor preservation, overscan, and no eager manager hydration."
   - "Concept and browser runs are labeled concept_fixture_only or browser evidence and never promoted to native Slint certification."
-  - "Responsive/browser review covers widths 320, 520, 680, 720, 750, 760, 860, 900, 960, 975, 980, 1180, 1200, 1280, 1440, 1700, 2200, and 2500 across all eight themes and full/Reduced Motion."
+  - "Responsive/browser review covers widths 320, 520, 680, 720, 750, 760, 860, 900, 960, 975, 980, 1180, 1200, 1280, 1440, 1700, 2200, and 2500 across all ten themes and full/Reduced Motion."
   - "Motion evidence reports actual delivered frame pacing and dropped/delayed frames without resampling or claiming native 60 FPS."
   - "Every delivered full-resolution campaign frame receives the TCME-007 review coverage, high-risk spans receive two independent reviews, unresolved defects require repair and replacement capture, and approval-gated evidence is retained until explicit user cleanup approval."
   - "Native Slint claims require a fresh Slint 1.17.1 build/run plus platform, accessibility, visual, motion, performance, and wiring evidence for the claimed slice."
@@ -875,28 +1135,30 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Plugins consumer is its own Code & Tools workspace over the unchanged tools-integrations key (USER-SETTINGS-MANAGER-REFRESH-20260908),
-  without changing the 250 px rail, 62 px topbar,
-  split-manager roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses
-  calm progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards show
-  Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is focusable,
-  PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
-  handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful bounded
-  explanation without changing plugin fixture state, fabricating success, issuing a production receipt, or emitting an
-  EventRecord. The Doctor projects eight separate Plugins System findings and returns to the exact Plugins tab/detail.
+  The Plugins consumer is its own Code & Tools workspace over the unchanged tools-integrations key
+  (USER-SETTINGS-MANAGER-REFRESH-20260908), without changing the 250 px rail, 62 px topbar, split-manager
+  roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses calm
+  progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards
+  show Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is
+  focusable, PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
+  handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful
+  bounded explanation without changing plugin fixture state, fabricating success, issuing a production receipt,
+  or emitting an EventRecord. The Doctor projects eight separate Plugins System findings and returns to the
+  exact Plugins tab/detail. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: This unit owns the K3 Plugins presentation, progressive disclosure, disabled controls, hover help, theme paint, responsive behavior, and Doctor-to-Plugins focus route.
 split_recommended: false
 depends_on: [F3-519, F3-522, F3-523, F3-524, SSYS-024, N2-154, PLUG-070]
 unblocks: []
 acceptance_criteria:
-  - K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ.
-  - Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness.
-  - Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall.
-  - The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text.
-  - Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture.
-  - Pointer, keyboard, narrow widths, all eight themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence.
-  - The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof.
+  - "K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ."
+  - "Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness."
+  - "Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall."
+  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text."
+  - "Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture."
+  - "Pointer, keyboard, narrow widths, all ten themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence."
+  - "The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof."
 validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json
   - Plans/plugin_contracts.schema.json

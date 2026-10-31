@@ -2666,7 +2666,14 @@
               ]
             }
           ],
-          "unevaluatedProperties": false
+          "unevaluatedProperties": false,
+          "x-initial-claim-policy-ref": "#/x-initial-owner-claim-authorization",
+          "x-puppet-master-assertions": [
+            "The Server owner verifies that the existing discovery_observation_id, pairing_session_id and identity_fingerprint name one current initial owner-claim authorization, bound to the actual invoking context and current permission/generation fences.",
+            "Cloud first claim consumes the protected one-time setup code from the cloud-provider console/local-bootstrap handoff; native desktop first local claim uses protected direct local handoff with no code to type.",
+            "Raw setup code and caller-supplied authority booleans are not command arguments; ordinary Client/localhost/browser state cannot manufacture owner authorization.",
+            "Claim does not bootstrap roots or perform restore, and grants no pairing/trust to other Clients."
+          ]
         },
         {
           "allOf": [
@@ -7591,5 +7598,29 @@
       "initial_availability": "handler_unavailable",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
     }
+  },
+  "x-initial-owner-claim-authorization": {
+    "owner_ref": "Plans/Server_System.md#SRV-007",
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "ruling_ids": [
+      "CLOUD-1",
+      "DESKTOP-RESTORE-1"
+    ],
+    "decider": "Jared",
+    "date": "2026-10-31",
+    "proof_name": "initial_owner_claim_authorization",
+    "proof_bindings": [
+      "discovery_observation_id",
+      "pairing_session_id",
+      "identity_fingerprint"
+    ],
+    "cloud_handoff": "cloud_provider_console_or_local_bootstrap_one_time_code",
+    "desktop_handoff": "protected_native_direct_local_no_code_to_type",
+    "proof_authority": "Server_owner_verified_current_authorization_session",
+    "raw_code_in_command_or_durable_state": false,
+    "caller_flag_grants_authority": false,
+    "public_unclaimed_setup": false,
+    "new_command_or_payload_field": false,
+    "claim_bootstrap_restore_separate": true
   }
 }

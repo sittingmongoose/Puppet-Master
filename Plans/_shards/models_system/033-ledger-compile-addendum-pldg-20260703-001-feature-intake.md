@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8475-L9399
+Source lines: L8545-L9475
 
-Source SHA256: `704b18faa30f9444c416381a799fb68af95c88f4d36656440cb52aa6574d32ba`
+Source SHA256: `bc868960ba0ac5cf2c6428af5eda7b260490dda6214aea5c3ae3d0730d09febf`
 
 ---
 
@@ -597,8 +597,14 @@ plan_unit_id: MS-130
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079 / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.
+canonical_text: 'P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product
+  entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079
+  / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity
+  covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.
+  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription
+  reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit
+  errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally
+  severe.'
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:

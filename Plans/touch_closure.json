@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "d77ff74645420bf3cf2421b6c20fdd9659b428ea5021450e5ac6aba900cd3468",
+      "source_sha256": "14360156be37a3de5bf85acf88af7d02c7a6f308546808de485e42b76c497ea9",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -5768,17 +5768,18 @@
       "payload_schema_ref": "typed Project and thread identity",
       "result_schema_ref": "opened Assistant Chat thread route",
       "error_schema_ref": "thread unavailable, stale, permission, or handler reason",
-      "availability_rule": "An exact Project and current Teacher/help thread target are required.",
-      "permission_gate": "Assistant Chat owns the thread, Teacher behavior and conversation state; Settings only routes.",
+      "availability_rule": "For settings_teacher_help, require the exact Project and current Teacher/help thread. For work_detail, require the exact Project and current ordinary bound Assistant thread; no Teacher predicate. Unknown consumer, stale/missing target or owner refusal stays unavailable.",
+      "permission_gate": "Assistant Chat owns thread/conversation state. Teacher behavior applies only to its Settings consumer; all producers retain source/target permissions.",
       "disabled_reason_rule": "Expose missing/stale thread or owner availability and do not create a second Teacher owner.",
       "handler_owner": "Assistant Chat thread route through cmd.chat.open_thread; native route evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "specified",
       "production_or_simulation": "Static catalog and production-intent row only.",
       "gui_triggers": [
-        "Settings Teacher and Help manager"
+        "Settings Teacher and Help manager",
+        "Work detail Open thread reuses cmd.chat.open_thread for its bound Assistant thread"
       ],
-      "return_route": "Exact prior Settings manager and focus after thread close.",
+      "return_route": "Resolve by consumer: Settings Teacher/help returns to its exact prior Settings manager/focus; Work returns to its exact invoking Work view/focus. No Settings default for another producer.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/assistant-chat-design.md",
@@ -5795,11 +5796,22 @@
       "migration_refs": [],
       "test_refs": [
         "Plans/settings_system_contract_fixtures.json",
-        "Plans/UI_Command_Catalog.md#UCC-135"
+        "Plans/UI_Command_Catalog.md#UCC-135",
+        "Plans/pm7_build_contracts.fixtures.json"
       ],
       "evidence_refs": [
         "static_catalog_and_wiring_only"
-      ]
+      ],
+      "consumer_rules": {
+        "settings_teacher_help": {
+          "requires_teacher_thread": true,
+          "return_target": "settings_manager"
+        },
+        "work_detail": {
+          "requires_teacher_thread": false,
+          "return_target": "invoking_work_view"
+        }
+      }
     },
     {
       "profile_id": "TCP-SEARCH-INDEX",
@@ -7840,7 +7852,8 @@
         "PM7 project box",
         "thread Processes",
         "status work panel",
-        "quit dialog"
+        "quit dialog",
+        "composer work dock Review / Show reuses cmd.chat.processes.open with exact work_id"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -7879,7 +7892,8 @@
         "Plans/UI_Wiring_Rules.md#UIW-045",
         "Plans/Commands_System.md#CS-106",
         "Plans/Wiring_Matrix.md#WM-097",
-        "Plans/assistant-chat-design.md#ACD-506"
+        "Plans/assistant-chat-design.md#ACD-506",
+        "Plans/FinalGUISpec.md#F3-664"
       ],
       "owner_plan": "Plans/UI_Wiring_Rules.md",
       "plan_unit": "UIW-045",
@@ -7899,7 +7913,9 @@
         "thread Processes",
         "status work panel",
         "quit dialog",
-        "Activity Detail Pin / Unpin"
+        "Activity Detail Pin / Unpin",
+        "System status popover from status bar and Processes System services",
+        "Shared detail Copy command / Open surface / local owner-row selection; closed view/draft values"
       ],
       "return_route": "Stable invoking view, Project/thread and focus; no active-tab retargeting.",
       "reverse_consumers": [
@@ -7933,6 +7949,179 @@
       "evidence_refs": [
         "static_contract_only"
       ]
+    },
+    {
+      "profile_id": "TCP-PM7-BROWSER-OPEN",
+      "requirement_refs": [
+        "Plans/UI_Command_Catalog.md#UCC-063",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/UI_Command_Catalog.md",
+      "plan_unit": "UCC-063",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/UI_Command_Catalog.md#UCC-063",
+      "result_schema_ref": "Plans/ui_command_response.schema.json",
+      "error_schema_ref": "Plans/ui_command_response.schema.json#/$defs/UICommandError",
+      "availability_rule": "Exact Project/work target and current owner context: server/environment-authoritative URL and Browser owner availability.",
+      "permission_gate": "The existing owner validates exact source/target, currentness and permission; this Work producer confers no broader authority.",
+      "disabled_reason_rule": "Return the actual owner refusal/unavailable/stale reason; no false success or retargeting.",
+      "handler_owner": "handlers::browser::open_workspace_preview; sole existing owner, native dispatch remains unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Catalog-owned payload reference plus identity-only fence. Owner request-body validation remains uncompiled/unproved; CV-333 response projection/error is executable. No native effect or successful owner-body admission is certified.",
+      "gui_triggers": [
+        "Work detail cmd.browser.open_workspace_preview"
+      ],
+      "return_route": "Exact invoking Work view and focus, subject to the existing owner route result; no active/default Project fallback.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/pm7_control_bindings.json",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "event_refs": [
+        "Existing Browser owner effects/disposition only; no new PM7 event."
+      ],
+      "receipt_refs": [
+        "Plans/ui_command_response.schema.json#/properties/receipt_ref",
+        "Plans/UI_Command_Catalog.md#UCC-063"
+      ],
+      "observable_work": [
+        "Existing owner operation only; static shape acceptance is not effect proof."
+      ],
+      "persistence_refs": [
+        "Existing owner only; this Touch profile does not define native DTO fields or persist state."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ],
+      "command_ids": [
+        "cmd.browser.open_workspace_preview"
+      ],
+      "request_identity_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/ReusedCatalogRequestIdentity"
+    },
+    {
+      "profile_id": "TCP-PM7-SCHEDULE-CANCEL",
+      "requirement_refs": [
+        "Plans/Scheduling_and_Quota_Resume.md#SQR-013",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit": "SQR-013",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelRequest",
+      "result_schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResult",
+      "error_schema_ref": "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/schedule_command_error_code",
+      "availability_rule": "Exact schedule identity/revision/currentness and an owner-admitted cancellation context. Existing source_surface vocabulary is unchanged; do not invent Work-specific DTO fields or use PID Stop.",
+      "permission_gate": "The existing owner validates exact source/target, currentness and permission; this Work producer confers no broader authority.",
+      "disabled_reason_rule": "Return the actual owner refusal/unavailable/stale reason; no false success or retargeting.",
+      "handler_owner": "Scheduling owner of cmd.chat.schedule_message.cancel; sole existing owner, native dispatch remains unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Existing executable scheduling request/result/error-code contracts; no PM7 result conversion, native dispatcher, receipt custody or effect proof.",
+      "gui_triggers": [
+        "Work detail cmd.chat.schedule_message.cancel"
+      ],
+      "return_route": "Exact invoking Work view and focus, subject to the existing owner route result; no active/default Project fallback.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/pm7_control_bindings.json",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "event_refs": [
+        "Existing scheduling owner admission only; no new event family from this producer."
+      ],
+      "receipt_refs": [
+        "Plans/scheduling_and_quota_resume_contracts.schema.json#/$defs/ScheduledMessageCancelResult",
+        "Plans/ui_command_response.schema.json#/properties/receipt_ref"
+      ],
+      "observable_work": [
+        "Existing owner operation only; static shape acceptance is not effect proof."
+      ],
+      "persistence_refs": [
+        "Scheduling owner snapshot/state only, never WorkTarget or PM7-owned cancellation state."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ],
+      "command_ids": [
+        "cmd.chat.schedule_message.cancel"
+      ]
+    },
+    {
+      "profile_id": "TCP-PM7-TERMINAL-RERUN",
+      "requirement_refs": [
+        "Plans/UI_Command_Catalog.md#UCC-201",
+        "Plans/Commands_System.md#CS-106",
+        "Plans/Wiring_Matrix.md#WM-097"
+      ],
+      "owner_plan": "Plans/UI_Command_Catalog.md",
+      "plan_unit": "UCC-201",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-078",
+      "payload_schema_ref": "Plans/UI_Command_Catalog.md#UCC-201",
+      "result_schema_ref": "Plans/ui_command_response.schema.json",
+      "error_schema_ref": "Plans/ui_command_response.schema.json#/$defs/UICommandError",
+      "availability_rule": "Exact Project/work target and current owner context: bound ended-command/session replay, explicit new session if needed, and Terminal owner availability.",
+      "permission_gate": "The existing owner validates exact source/target, currentness and permission; this Work producer confers no broader authority.",
+      "disabled_reason_rule": "Return the actual owner refusal/unavailable/stale reason; no false success or retargeting.",
+      "handler_owner": "handlers::terminal::rerun; sole existing owner, native dispatch remains unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Catalog-owned payload reference plus identity-only fence. Owner request-body validation remains uncompiled/unproved; CV-333 response projection/error is executable. No native effect or successful owner-body admission is certified.",
+      "gui_triggers": [
+        "Work detail cmd.terminal.rerun"
+      ],
+      "return_route": "Exact invoking Work view and focus, subject to the existing owner route result; no active/default Project fallback.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-210",
+        "Plans/pm7_control_bindings.json",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "event_refs": [
+        "Existing Terminal owner effects/disposition only; no new PM7 event."
+      ],
+      "receipt_refs": [
+        "Plans/ui_command_response.schema.json#/properties/receipt_ref",
+        "Plans/UI_Command_Catalog.md#UCC-201"
+      ],
+      "observable_work": [
+        "Existing owner operation only; static shape acceptance is not effect proof."
+      ],
+      "persistence_refs": [
+        "Existing owner only; this Touch profile does not define native DTO fields or persist state."
+      ],
+      "migration_refs": [
+        "No schema migration or Event Authority admission claimed by static PM7 companions."
+      ],
+      "test_refs": [
+        "Plans/pm7_build_contracts.fixtures.json",
+        "scripts/pm7-build-check.py",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ],
+      "command_ids": [
+        "cmd.terminal.rerun"
+      ],
+      "request_identity_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/ReusedCatalogRequestIdentity"
     }
   ],
   "row_columns": [
@@ -10438,7 +10627,7 @@
       "ui_action",
       "ui.onboarding.choose_look",
       "partial",
-      "The closed action covers the look choice and the header's Look menu (choose_look, preview_nier, toggle_look_menu, toggle_look_editor) with a closed look_choice and no owner route, cmd.theme.* or Settings transaction; the look is written with the Project at commit (DL-153). The onboarding session's durable NieR field, browser accessibility and native Slint evidence remain absent."
+      "Q22, Jared 2026-10-30 (DL-257): choose_look previews five-family/mode and retained NieR Adjust values in the closed session look_choice; preview_nier/nier_mode are retired. No owner command/Settings transaction or precommit write. Native Slint/accessibility evidence remains absent."
     ],
     [
       "TOUCH-TOUR-001",
@@ -13414,7 +13603,7 @@
       "command",
       "cmd.chat.processes.open",
       "partial",
-      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent."
+      "Owner/schema and production-intent row specified; native handler, dispatcher, runtime, visual and accessibility proof absent. D2/D7 composer dock producer reuses this same route with optional exact work_id; ordinary Subagents row selection introduces no additional action."
     ],
     [
       "TOUCH-PM7CMD-004",
@@ -13607,6 +13796,62 @@
       "ui.activity_detail.pin",
       "partial",
       "G1 B, Jared 2026-10-30: session-only Pin; pinned follows new-thread data across switches, unpinned closes. Static fixtures only; native focus/subscription/currentness evidence absent."
+    ],
+    [
+      "TOUCH-PM7LOC-014",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.system_status.open",
+      "partial",
+      "D11/G4: read-only System status visibility; no service/Settings write. Source/schema coverage only; native overlay/focus proof absent."
+    ],
+    [
+      "TOUCH-PM7LOC-015",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.system_status.close",
+      "partial",
+      "D11/G4: read-only System status visibility; no service/Settings write. Source/schema coverage only; native overlay/focus proof absent."
+    ],
+    [
+      "TOUCH-PM7CMD-012",
+      "TCP-PM7-BROWSER-OPEN",
+      "command",
+      "cmd.browser.open_workspace_preview",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7CMD-013",
+      "TCP-PM7-SCHEDULE-CANCEL",
+      "command",
+      "cmd.chat.schedule_message.cancel",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7CMD-014",
+      "TCP-PM7-TERMINAL-RERUN",
+      "command",
+      "cmd.terminal.rerun",
+      "partial",
+      "Existing owner command reused by work detail; signed current target and owner schema/permission/result required. Static producer mapping only, native dispatcher/effect/accessibility unproved."
+    ],
+    [
+      "TOUCH-PM7LOC-016",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.copy_command",
+      "partial",
+      "Closed value branch and local clipboard/view owner; no runtime/Settings/event write. Native signal, refusal/success, focus and accessibility remain unproved."
+    ],
+    [
+      "TOUCH-PM7LOC-017",
+      "TCP-PM7-LOCAL",
+      "ui_action",
+      "ui.work_panel.open_surface",
+      "partial",
+      "Closed value branch and local clipboard/view owner; no runtime/Settings/event write. Native signal, refusal/success, focus and accessibility remain unproved."
     ]
   ],
   "excluded_tokens": [

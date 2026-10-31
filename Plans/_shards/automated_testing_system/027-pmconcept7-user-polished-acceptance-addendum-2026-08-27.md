@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3447-L4130
+Source lines: L3447-L4129
 
-Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
+Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
 
 ---
 
@@ -20,7 +20,7 @@ retains that classification.
 
 Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
 `IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
-eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+eight then-current themes (historical audit evidence; Q22 now requires ten) even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
 keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
 
 ### ATS-036 - Canonical Usage GUI Fixture Suite
@@ -30,20 +30,19 @@ plan_unit_id: ATS-036
 unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  The canonical Usage GUI fixture suite is rooted at tests/fixtures/usage_gui. Its golden matrix preserves the
-  thirteen UF-088 fixture identities, and companion cases plus room/disclosure, curated-size, content-tier,
-  theme/width, persistence-migration, and interaction-transaction matrices statically represent the recovered
-  Usage contract without treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and
-  source lineage and fail closed for unknown, hidden, disabled, unsupported, partial, redacted, and missing data.
-  Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
-  migration behavior require fresh browser execution, raw receipts, and independent review.
-  For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
-  account of each provider, Use this account, each provider's Auto-switch toggle and switch level and each account's own
-  switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
-  target choice (MA-073), Live / Paused as a remembered view-only choice, every widget kind's size presets and their
-  stored preset_id (WS-017, WS-020), and the single commit of Usage board gravity and Tidy (WS-019). The concept's
-  demo controls take UF-107's lab-only disposition and receive no fixture or gate.
+canonical_text: 'The canonical Usage GUI fixture suite is rooted at tests/fixtures/usage_gui. Its golden matrix preserves
+  the thirteen UF-088 fixture identities, and companion cases plus room/disclosure, curated-size, content-tier, theme/width,
+  persistence-migration, and interaction-transaction matrices statically represent the recovered Usage contract without
+  treating concept demo reports as test authority. Fixtures preserve owner PlanUnits and source lineage and fail closed
+  for unknown, hidden, disabled, unsupported, partial, redacted, and missing data. Fixture presence and `must`/`must_not`
+  lists grant static representation only; runtime, visual, motion, and migration behavior require fresh browser execution,
+  raw receipts, and independent review. For the redesigned Usage page (2026-10-09) the suite also covers the Accounts
+  room acting in place (one row per account of each provider, Use this account, each provider''s Auto-switch toggle and
+  switch level and each account''s own switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control
+  commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and target choice (MA-073), Live / Paused
+  as a remembered view-only choice, every widget kind''s size presets and their stored preset_id (WS-017, WS-020), and
+  the single commit of Usage board gravity and Tidy (WS-019). Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: This unit owns the canonical fixtures for visible Usage behavior across PM surfaces.
 depends_on: [UF-088, F3-514, WS-017, WS-018, WS-019, WS-020, MA-073, SSYS-044, UCC-147]
@@ -80,9 +79,8 @@ source_lineage:
   - Plans/Decision_Log.md#DL-177
 preserved_exact_tokens: [GUI-USG-001, GUI-USG-008, GUI-CBP-001, GUI-CBP-002, GUI-ROUTE-001, GUI-RAW-001, GUI-RAP-001]
 negative_constraints:
-  - "Do not use Concepts/usage-concepts reports as the canonical fixture root."
-  - "Do not let missing or unknown data satisfy a zero-value assertion."
-  - "Do not add a fixture or gate for the concept demo controls UF-107 classes as lab-only, or let a fixture expect a Usage-local write of a provider's auto-switch values."
+- Do not use Concepts/usage-concepts reports as the canonical fixture root.
+- Do not let missing or unknown data satisfy a zero-value assertion.
 owner_hints: [Plans/Automated_Testing_System.md, Plans/usage-feature.md]
 ```
 
@@ -96,22 +94,23 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   The shared PM7 fixture suite is rooted at tests/fixtures/pm7_shared and contains the stable surface inventory,
   Assistant/context continuity, Home transaction, status-bar, theme/surface, motion-frame, and
-  workspace-layout-event fixture families. The suite statically records expected single-node Assistant re-seating;
-  thread, transcript, draft, attachment, activity, detail-drawer, and focus continuity; failed/stale re-seat rollback;
-  open-detail-drawer compaction preservation; settled-only Home and widget operations; no-preview effects; status
-  layout; all-theme inventory; frame health; Dashboard wrapper/host ownership; pointer and keyboard widget
-  manipulation parity; stable identity-based insertion intent; Usage pointer-only live occupied-neighbor resize-preview
-  displacement, Dashboard frozen resize peers (retired 2026-10-10, DL-186), and live reorder-peer displacement;
-  last-painted-intent commit without release retarget; cancellation/no-op cleanup; and the exact
-  workspace.layout_changed payload contract. It is a canonical fixture root; audit-harness and
-  concept-runner artifacts remain additional evidence, not replacement owners. Fixture lists and
-  `must`/`must_not` assertions are not runtime, visual, motion, or migration proof; those require fresh browser
-  execution, raw receipts, and independent review.
-  Amended 2026-10-10 (DL-186): every dashboard board now runs the Usage board engine (Plans/Widget_System.md#WS-030),
-  so Dashboard frozen resize peers retire with the Dashboard's own settlement (WS-019): a dashboard board's resize
-  shows the Usage board's live displacement of obstructed peers, and the Dashboard wrapper/host that owns a widget's
-  mutations is that widget's board in its dashboard tab. Until the Home transaction and motion fixtures are updated
-  to say so, their frozen-peer assertions are lineage, not current canon.
+  workspace-layout-event fixture families. The suite statically records expected single-node Assistant
+  re-seating; thread, transcript, draft, attachment, activity, detail-drawer, and focus continuity; failed/stale
+  re-seat rollback; open-detail-drawer compaction preservation; settled-only Home and widget operations;
+  no-preview effects; status layout; all-theme inventory; frame health; Dashboard wrapper/host ownership;
+  pointer and keyboard widget manipulation parity; stable identity-based insertion intent; Usage pointer-only
+  live occupied-neighbor resize-preview displacement, Dashboard frozen resize peers (retired 2026-10-10,
+  DL-186), and live reorder-peer displacement; last-painted-intent commit without release retarget;
+  cancellation/no-op cleanup; and the exact workspace.layout_changed payload contract. It is a canonical fixture
+  root; audit-harness and concept-runner artifacts remain additional evidence, not replacement owners. Fixture
+  lists and `must`/`must_not` assertions are not runtime, visual, motion, or migration proof; those require
+  fresh browser execution, raw receipts, and independent review. Amended 2026-10-10 (DL-186): every dashboard
+  board now runs the Usage board engine (Plans/Widget_System.md#WS-030), so Dashboard frozen resize peers retire
+  with the Dashboard's own settlement (WS-019): a dashboard board's resize shows the Usage board's live
+  displacement of obstructed peers, and the Dashboard wrapper/host that owns a widget's mutations is that
+  widget's board in its dashboard tab. Until the Home transaction and motion fixtures are updated to say so,
+  their frozen-peer assertions are lineage, not current canon. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
+  NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: This unit owns cross-page visible and interaction fixtures shared by PMConcept7 surfaces.
 depends_on: [F3-513, F3-515, F3-516, F3-517, DL-186]
@@ -121,7 +120,7 @@ acceptance_criteria:
   - "Assistant/context fixtures statically encode one node/store identity, Home/global re-seating, active thread and transcript, draft, attachments, activity, detail-drawer identity/tab/scroll, focus continuity, failed/stale re-seat rollback, context metrics, Compact Now, More Details, and local noncommitted compaction feedback without events; those GUI fixtures alone do not prove a committed completion. The open-detail-drawer Compact Now fixture requires one existing cmd.chat.compact_context result and one receipt, a coherent ring/detail revision update, and preservation of drawer identity, selected tab, scroll position, and focus."
   - "Home transaction fixtures statically encode Dashboard wrapper/host ownership rather than outer-grid mutation ownership, preview-spy emptiness, stable before/after insertion intent, measured placeholder footprint, pointer/keyboard move parity, a dashboard board's resize peers displaced live as on the Usage board (amended 2026-10-10, DL-186; this read 'frozen resize peers'), live reorder displacement, last-painted-intent changed-only one-command commit without pointer-up retarget, Escape/pointercancel/lostpointercapture/blur/invalid/no-change rollback, settled persistence, and cleanup."
   - "Usage interaction and motion fixtures statically encode a real target footprint, live deterministic displacement of only obstructed peers during held pointer resize, stable peer node/paint/DOM-order/entrance state, preview-spy emptiness, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), and exact rollback after cancellation, rejection, or adapter failure; dashboard boards resize the same way (amended 2026-10-10, DL-186; this read 'Dashboard resize remains frozen-peer')."
-  - "Status and theme fixtures statically encode full-width non-overlapping status with no bell plus stable functional inventory in all eight themes and supported desktop widths."
+  - "Status and theme fixtures statically encode full-width non-overlapping status with no bell plus stable functional inventory in all ten themes and supported desktop widths."
   - "Motion fixtures statically enumerate blank, black, white-until-hover, clipped, torn, or uniform transition frames and missing final settlement as conditions that fresh browser execution and independent review must reject."
   - "Workspace event fixtures validate against the current workspace_layout_changed schema and reject preview-bearing, non-persisted, or incomplete events; none of the seven fixture files or their must/must_not lists proves runtime, visual, motion, or migration behavior without fresh browser execution, raw receipts, and independent review."
 validation_surfaces:

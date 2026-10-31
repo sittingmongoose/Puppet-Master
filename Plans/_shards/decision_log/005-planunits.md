@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14483
+Source lines: L4302-L14495
 
-Source SHA256: `cda307c35a94d9246e6e931344e9a3ac3a748f2ba5fa0e8f7cc2d48b0df317f6`
+Source SHA256: `4936295e89588932f8861abbc3aa972ce4f9c497e69d79fe78fbb67bcae3e349`
 
 ---
 
@@ -5868,21 +5868,21 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing
-  cramped") that every wand-module surface uses
-  its theme's own font with no separate display face and no italic voice face, the voice roles
-  differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in every
-  theme that padding and gaps never compress below. This decision does not change which font each
-  theme's canon tokens name; canon typography adoption is a separate open question. FinalGUISpec
-  F3-566 carries the owner text.
+  Jared decided on 2026-09-27 (owner amendments J-1, "no new display face", and J-2, "nothing cramped") that
+  every wand-module surface uses its theme's own font with no separate display face and no italic voice face,
+  the voice roles differing only by size, weight and colour, and that the J-2 spacing minimums are a floor in
+  every theme that padding and gaps never compress below. This decision does not change which font each theme's
+  canon tokens name; canon typography adoption is a separate open question. FinalGUISpec F3-566 carries the
+  owner text. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
+  wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: Sets the typography and spacing floor of the wand module surfaces.
 split_recommended: false
 depends_on: []
 unblocks: [F3-566, DR-044]
 acceptance_criteria:
-  - Every wand-module surface renders in its theme's own font with no display face.
-  - Every wand-module surface meets the J-2 minimums in all eight themes.
+  - "Every wand-module surface renders in its theme's own font with no display face."
+  - "Every wand-module surface meets the J-2 minimums in all ten themes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -7555,50 +7555,47 @@ plan_unit_id: DL-139
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  DL-139 records the owner decision of 2026-10-01, completed on 2026-10-02. The native desktop GUI compiles and ships only Slint's Skia
-  renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU (winit-skia), then Skia's
-  own CPU raster (winit-skia-software); FemtoVG and Slint's separate software renderer are not compiled or shipped.
-  Puppet Master carries its own extensions to Slint's Skia renderer for element blur, backdrop blur, gradient and
-  alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable rich text
-  (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked with
-  every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint
-  portability" notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could
-  not draw them no longer bind for those effects. Setup popups (the sheets of F3-566) take DL-114's extra blur: frosted
-  glass on the GPU path, solid on the CPU raster, with the scrim a flat tint and F3-431's blur budget opened for this
-  sheet blur only. The web GUI draws the terminal from the same Rust grid as a fixed, reused set of visible page-text
-  rows updated by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a
-  Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
-  Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
-  Added 2026-10-01/02: Slint remains the native UI framework (layout, input, focus, text editing, clipboard, drag and
-  drop, windows); the Skia extensions are a fixed, centrally implemented property set that screens use without
-  calling the renderer, and replacing Slint needs a new decision. When the GPU adapter is a software implementation
-  (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses Skia's CPU raster, even when the Graphics
-  Engine setting or the SLINT_BACKEND override asks for the GPU, and then warns the user that no GPU was detected;
-  switching for this reason shows one quiet, non-blocking, one-time notice explaining why frosted panels look solid
-  (F3-033). The Skia CPU raster is a supported, tested path that starts without a GPU and stays fully usable with
-  motion unchanged, its only reductions being that backdrop blur is not drawn and frosted surfaces draw solid. After
-  GPU device or surface loss, a driver update or crash, or suspend and resume, Puppet Master rebuilds its drawing
-  surface without losing interface state and returns to the GPU automatically once it works again. Web text has no
-  ClearType guarantee and is checked on Windows for readability, selection and caret behavior at rest and during
-  transitions. The interfaces share behavior, not pixels, each with its own visual baselines (F3-583); the web
-  terminal tracks its own selection in the terminal grid's data, not with the browser's selection; and the web GUI
-  applies the UI Scale setting through one root-level CSS scale (CV-188). Development and test builds of both expose
-  test-build observability, never production builds (ATS-067). A GPUI fork was researched and rejected on
-  2026-10-02. Jared holds a Slint license, so no separate license cards are opened from the GPUI research's
-  licensing questions; this does not address Puppet Master's own license.
-  Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
-  should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
-  slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
-  Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then
-  cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended option each time: "Yes,
-  Skia only (Recommended)" (Slint's own software renderer goes too), "Yes, lift them now (Recommended)" (the
-  Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page text
-  (Recommended)" (web terminal). On the critique Jared chose "No, port normally" and "Yes, require it in test builds
-  (Recommended)"; on 2026-10-02 he said: "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.  Your recommendation.",
-  and in the question form typed "ignore the switch and warn the user that there is no gpu detected." and "I have a
-  license." The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local
-  daemon contract and the in-canvas float-layer name are unchanged.
+canonical_text: 'DL-139 records the owner decision of 2026-10-01, completed on 2026-10-02. The native desktop GUI compiles
+  and ships only Slint''s Skia renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU
+  (winit-skia), then Skia''s own CPU raster (winit-skia-software); FemtoVG and Slint''s separate software renderer are
+  not compiled or shipped. Puppet Master carries its own extensions to Slint''s Skia renderer for element blur, backdrop
+  blur, gradient and alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable
+  rich text (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked
+  with every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint portability"
+  notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could not draw them
+  no longer bind for those effects. Setup popups (the sheets of F3-566) take DL-114''s extra blur: frosted glass on the
+  GPU path, solid on the CPU raster, with the scrim a flat tint and F3-431''s blur budget opened for this sheet blur
+  only. The web GUI draws the terminal from the same Rust grid as a fixed, reused set of visible page-text rows updated
+  by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a Leptos client drawn with
+  browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the Slint/WASM canvas web GUI.
+  Both interfaces bind one shared Rust interface-model crate and one design-token source. Added 2026-10-01/02: Slint
+  remains the native UI framework (layout, input, focus, text editing, clipboard, drag and drop, windows); the Skia extensions
+  are a fixed, centrally implemented property set that screens use without calling the renderer, and replacing Slint
+  needs a new decision. When the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader),
+  Puppet Master always uses Skia''s CPU raster, even when the Graphics Engine setting or the SLINT_BACKEND override asks
+  for the GPU, and then warns the user that no GPU was detected; switching for this reason shows one quiet, non-blocking,
+  one-time notice explaining why frosted panels look solid (F3-033). The Skia CPU raster is a supported, tested path
+  that starts without a GPU and stays fully usable with motion unchanged, its only reductions being that backdrop blur
+  is not drawn and frosted surfaces draw solid. After GPU device or surface loss, a driver update or crash, or suspend
+  and resume, Puppet Master rebuilds its drawing surface without losing interface state and returns to the GPU automatically
+  once it works again. Web text has no ClearType guarantee and is checked on Windows for readability, selection and caret
+  behavior at rest and during transitions. The interfaces share behavior, not pixels, each with its own visual baselines
+  (F3-583); the web terminal tracks its own selection in the terminal grid''s data, not with the browser''s selection;
+  and the web GUI applies the UI Scale setting through one root-level CSS scale (CV-188). Development and test builds
+  of both expose test-build observability, never production builds (ATS-067). A GPUI fork was researched and rejected
+  on 2026-10-02. Jared holds a Slint license, so no separate license cards are opened from the GPUI research''s licensing
+  questions; this does not address Puppet Master''s own license. Jared said: "ok sounds like we are doing custom skia
+  work and only using skia for desktop. For web, you said we should use a browser-native web client, what would you recommend?",
+  then "I told the other thread to drop the slint requirements since we are going to do custom code on skia to alleviate
+  the shortcomings.", then "ok go with Leptos, draft the decision card and spec edits. Including the skia change, custom
+  code, dropping FemtoVG then cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended
+  option each time: "Yes, Skia only (Recommended)" (Slint''s own software renderer goes too), "Yes, lift them now (Recommended)"
+  (the Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page
+  text (Recommended)" (web terminal). On the critique Jared chose "No, port normally" and "Yes, require it in test builds
+  (Recommended)"; on 2026-10-02 he said: "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.
+  Your recommendation.", and in the question form typed "ignore the switch and warn the user that there is no gpu detected."
+  and "I have a license." The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local daemon contract
+  and the in-canvas float-layer name are unchanged.'
 gui_related: true
 gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
   it, and the technology of the web GUI.
@@ -7670,30 +7667,28 @@ plan_unit_id: DL-140
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  DL-140 records the owner decision of 2026-10-01, extended on 2026-10-02 and approved on 2026-10-07. Every icon in
-  the assistant chat is drawn from one icon registry with one drawing per concept, reused everywhere, in the activity
-  bar's neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never a blur or
-  filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving like
-  the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
-  included; colour is reserved for status (amended on 2026-10-08 by DL-146, which draws the capabilities wand in its own
-  colours); module cards draw their marks lit and still. The wand is redrawn as a rod
-  with a star tip and the Fast-mode bolt is amber and strikes like lightning (F3-588). The halo approach stays after
-  DL-139 made blur available, because it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared
-  asked: "I really like the icons/animations used for the items in the chat activity bar.  They are kind of like
-  neon signs, each with unique animations.  Can you redesign the icons used everywhere else in that html concept to
-  match that style?  That includes the icons in the working animation(which arent far off now).  The icons next to the
-  thread activity history previews should convey to the user the status of that thread easily.  A lot of the icons
-  will be repeated so that is fine, you shouldnt make bespoke icons for artifacts everywhere it's needed when you
-  already have 1, if that makes sense." He answered "Ignite on hover (Recommended)",
-  "Per-glyph, bar included (Recommended)" and "Portable neon (Recommended)", later wrote "The magic wand looks more
-  like a magic pencil.  So that needs to be fixed.  Lightning bolt for fast mode should be colored and hopefully its
-  animated.  Most of it looked good from what I saw." and "I like option 3.  Also, the working animation with the
-  circle and ball, the ball should be orbiting on the circle, not on the outside of it.  And the lightning bolt, the
-  animation is a little off, maybe think of lighting being a crack, like you see lightning coming down from the
-  sky(even though it comes from the ground technically but that isnt how it looks).  Right now the lightning bolt just
-  kinda looks like it almost shakes which misses the opportunity to act like lightning.", and approved the result on
-  2026-10-07: "changes are approved, you can PM_Chat_Assistant_5.6_Pro_Standalone.html with your version"
+canonical_text: 'DL-140 records the owner decision of 2026-10-01, extended on 2026-10-02 and approved on 2026-10-07.
+  Every icon in the assistant chat is drawn from one icon registry with one drawing per concept, reused everywhere, in
+  the activity bar''s neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never
+  a blur or filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving
+  like the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
+  included; colour is reserved for status (amended on 2026-10-08 by DL-146, which draws the capabilities wand in its
+  own colours); module cards draw their marks lit and still. The wand is redrawn as a rod with a star tip and the Fast-mode
+  bolt is amber and strikes like lightning (F3-588). The halo approach stays after DL-139 made blur available, because
+  it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared asked: "I really like the icons/animations
+  used for the items in the chat activity bar. They are kind of like neon signs, each with unique animations. Can you
+  redesign the icons used everywhere else in that html concept to match that style? That includes the icons in the working
+  animation(which arent far off now). The icons next to the thread activity history previews should convey to the user
+  the status of that thread easily. A lot of the icons will be repeated so that is fine, you shouldnt make bespoke icons
+  for artifacts everywhere it''s needed when you already have 1, if that makes sense." He answered "Ignite on hover (Recommended)",
+  "Per-glyph, bar included (Recommended)" and "Portable neon (Recommended)", later wrote "The magic wand looks more like
+  a magic pencil. So that needs to be fixed. Lightning bolt for fast mode should be colored and hopefully its animated.
+  Most of it looked good from what I saw." and "I like option 3. Also, the working animation with the circle and ball,
+  the ball should be orbiting on the circle, not on the outside of it. And the lightning bolt, the animation is a little
+  off, maybe think of lighting being a crack, like you see lightning coming down from the sky(even though it comes from
+  the ground technically but that isnt how it looks). Right now the lightning bolt just kinda looks like it almost shakes
+  which misses the opportunity to act like lightning.", and approved the result on 2026-10-07: "changes are approved,
+  you can PM_Chat_Assistant_5.6_Pro_Standalone.html with your version"'
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
@@ -8339,32 +8334,47 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-152 records the owner request of 2026-10-07. NieR Mode is reached wherever a look is chosen: the title-bar
-  theme selector, the onboarding look choice and the onboarding and Tour Look menus carry a NieR Mode checkbox with an
-  Adjust NieR look button that opens the NieR Mode editor, as a popup over the application or a panel inside the
-  onboarding window (F3-082, F3-598); during setup NieR is a preview written with the look. Onboarding and the
-  Guided Tour gain a NieR presentation, NieR ink marionettes included, gated by NieR Mode and the existing parts
-  (F3-598). Their sounds become one Notifications & Sounds cue category with variants per cue, sounds for new
-  moments with fixed fallbacks, a NieR kit while NieR Mode is painted with Menu sounds installed, one player and merged
-  coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
-  showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
-  on and that a large area does not flash. No settings key, NieR part,
-  theme variant or onboarding or tour action is added. Amended 2026-10-09 by DL-153: no command id, route, settings
-  key or ui.guided_tour.* action is added, but onboarding's look choice and its NieR Mode controls use one new typed
-  local action, ui.onboarding.choose_look, the NieR Mode editor's open, close and replay are
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and the live
-  controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
-  and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
-  setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
-  chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
-  states it in plain words, without quoting him.
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
+  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
+  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply; no independent NieR switch or command remains. Adjust NieR opens the one
+  existing editor. general.visual.nier-parts (29 parts) and general.visual.nier-background remain its Adjust
+  rows, shown when general.visual.theme is NieR Light or NieR Dark, with hidden values retained. Basic High
+  contrast and Basic color scheme remain Basic-only; Glass and Retro controls remain confined to their own
+  families. The title-bar selector, Guided Tour Look menu, onboarding welcome and its Look menu all offer the
+  same five families in order basic, friendly, glass, retro, nier. Live family picks use the Settings
+  transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode or retained
+  NieR Adjust values in the closed look_choice and persists only at the existing exact Project commit/finish
+  boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme;
+  click or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and
+  ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No
+  manager_id, route, detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and
+  onboarding.nier.mode are retired non_dispatch census tombstones with no action, setting or production writer.
+  Onboarding and the Guided Tour gain a NieR presentation, NieR ink marionettes included, gated by NieR Mode and
+  the existing parts (F3-598). Their sounds become one Notifications & Sounds cue category with variants per
+  cue, sounds for new moments with fixed fallbacks, a NieR kit while NieR Mode is painted with Menu sounds
+  installed, one player and merged coincident cues, and every cue is listed in the Settings sound library
+  (F3-599), 354 entries in the concept. The showpiece pass is part of this decision: the hero moments in setup
+  and the tour, and the rules that long words type on and that a large area does not flash. Q22 adds one family
+  and two variants with no new key, part, command, onboarding action or tour action. Amended 2026-10-09 by
+  DL-153: no command id, route, settings key or ui.guided_tour.* action is added, but onboarding's look choice
+  and its NieR Mode controls use one new typed local action, ui.onboarding.choose_look, the NieR Mode editor's
+  open, close and replay are ui.settings.nier_editor.open, ui.settings.nier_editor.close and
+  ui.settings.nier_editor.replay, and the live controls compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144 and F3-589 now
+  cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in setup and the
+  tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is chosen,
+  and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
+  states it in plain words, without quoting him. Retained historical/source tokens (not active overrides):
+  DL-152. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
+  confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only.
 gui_related: true
 gui_classification_reason: Records an owner decision on NieR Mode's entry points and on onboarding and Guided Tour presentation and sound.
 split_recommended: false
 depends_on: [DL-107, DL-144, SSYS-043, F3-082, F3-405, F3-520, F3-521]
 unblocks: [F3-598, F3-599]
 acceptance_criteria:
-  - "The title-bar theme selector, the onboarding look choice and both Look menus carry the NieR Mode checkbox and the Adjust NieR look button, and NieR Mode never appears as a theme or family (F3-598)."
+  - "The title-bar selector, onboarding welcome and both Look menus offer family nier and its Light/Dark variants with the retained Adjust editor (F3-598, Q22)."
   - "Onboarding and Tour cues form one Notifications & Sounds category with a NieR kit, and all of them are listed in the sound library (F3-599)."
   - "No settings key, NieR part or theme variant is added."
   - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
@@ -8393,7 +8403,7 @@ preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"
 negative_constraints:
-  - "Do not make NieR Mode a ninth theme or a family choice."
+  - "Do not retain an independent NieR override or checkbox; Q22 makes it the fifth family via the existing theme owner."
   - "Do not add a settings key, a NieR part or an onboarding-, tour- or NieR-only sound setting."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -8408,25 +8418,27 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored for
-  the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no theme of
-  its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look was shown before;
-  Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520). Onboarding's wake, act
-  card and curtain call take five styles, one per look family: NieR's whenever NieR Mode is painted, whatever family is
-  beneath, and otherwise the painted family's own, in its own materials and in both its variants (F3-600; F3-598 and
-  F3-599 amended). The application's own notices about the tour's restore stay quiet in every look (F3-521). No
-  settings key, theme variant, NieR part, sound setting, command id, route or tour action is added. Lead rulings under
-  existing canon, not owner answers, wire DL-152's look controls: the live ones compose
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto keeps
-  cmd.theme.set_mode); the NieR Mode editor opens, closes and replays through ui.settings.nier_editor.open,
-  ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding look choice, its NieR Mode controls
-  and its Look menu use one new typed local action, ui.onboarding.choose_look, a preview written with the Project at
-  commit that never dispatches cmd.theme.* or a Settings transaction; the sound library's Which look switch and Show N
-  more takes are typed local actions and playing an entry is cmd.sound.preview; the Tour's Look menu and sound
-  control are not tour actions; and DR-056 keeps one NieR Mode editor, reboot plate, look store and set of hero
-  moments. Jared asked for the four
-  next steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them in
-  plain words, the rulings kept word for word in the cited source.
+  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored
+  for the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no
+  theme of its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look
+  was shown before; Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520).
+  Onboarding's wake, act card and curtain call take five styles, one per look family: NieR's when family nier is
+  selected, and otherwise the selected family's own, in its own materials and in both its variants (F3-600;
+  F3-598 and F3-599 amended). The application's own notices about the tour's restore stay quiet in every look
+  (F3-521). No settings key, theme variant, NieR part, sound setting, command id, route or tour action is added.
+  Lead rulings under existing canon, not owner answers, wire DL-152's look controls: the live ones compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto uses the
+  same atomic Settings pair under DL-228); the NieR Mode editor opens, closes and replays through
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding
+  look choice, its NieR Mode controls and its Look menu use one new typed local action,
+  ui.onboarding.choose_look, a preview written with the Project at commit that never dispatches cmd.theme.* or a
+  Settings transaction; the sound library's Which look switch and Show N more takes are typed local actions and
+  playing an entry is cmd.sound.preview; the Tour's Look menu and sound control are not tour actions; and DR-056
+  keeps one NieR Mode editor, reboot plate, look store and set of hero moments. Jared asked for the four next
+  steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them
+  in plain words, the rulings kept word for word in the cited source. Amended Q22, Jared 2026-10-30 (DL-257):
+  the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust
+  controls.
 gui_related: true
 gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
 split_recommended: false

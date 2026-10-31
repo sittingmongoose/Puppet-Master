@@ -5,10 +5,13 @@
  "generated_at_utc": "2026-10-16T00:28:48Z",
  "owner_doc": "Plans/FinalGUISpec.md",
  "owner_plan_unit": "F3-441",
+ "retired_input_ids": [
+  "general.visual.nier-mode"
+ ],
  "provenance": {
   "source_path": "Concepts/pm6-build/sidecar/pm_settings_data.json",
   "source_sha256": "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d",
-  "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here."
+  "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. Current census 1010."
  },
  "related_features_vocabulary": [
   "assistant_memory",
@@ -322,17 +325,19 @@
   {
    "id": "general.visual.theme",
    "label": "Theme",
-    "desc": "Pick a look; each one has a dark and a light version.",
+   "desc": "Pick a look: Basic, Friendly, Glass, Retro or NieR. Each has a light and dark version.",
    "type": "select",
    "options": [
+    "Basic Dark",
+    "Basic Light",
     "Friendly Dark",
     "Friendly Light",
     "Glass Dark",
     "Glass Light",
     "Retro Dark",
     "Retro Light",
-    "Basic Dark",
-    "Basic Light"
+    "NieR Dark",
+    "NieR Light"
    ],
    "default": "Basic Dark",
    "scope": [
@@ -351,14 +356,17 @@
     "friendly",
     "glass",
     "liquid glass",
-     "retro",
-     "basic"
-    ]
-   },
+    "retro",
+    "basic",
+    "nier",
+    "automata",
+    "yorha"
+   ]
+  },
    {
     "id": "general.visual.theme-mode",
     "label": "Light or dark",
-    "desc": "Switches the chosen theme between its light and dark versions.",
+    "desc": "Switches the chosen theme between light and dark. Match my computer follows your computer, and Theme shows the version you see.",
     "type": "select",
     "options": [
      "Light",
@@ -474,29 +482,9 @@
     ]
   },
   {
-   "id": "general.visual.nier-mode",
-   "label": "NieR Mode",
-   "desc": "Paints the whole app in NieR: Automata's ink and parchment, in light or dark. Your theme comes back when you turn it off.",
-   "type": "toggle",
-   "default": false,
-   "scope": [
-    "global"
-   ],
-   "tier": "simple",
-   "search": [
-    "nier",
-    "automata",
-    "yorha",
-    "parchment",
-    "sepia",
-    "game theme",
-    "easter egg"
-   ]
-  },
-  {
    "id": "general.visual.nier-parts",
-   "label": "Customize NieR Mode",
-   "desc": "Choose which pieces of the look, motion, sound and world are installed.",
+   "label": "Adjust NieR",
+   "desc": "Choose which of NieR’s 29 look, motion, sound and world parts are installed. Shown when the theme is NieR Light or NieR Dark; choices are kept for the next visit.",
    "type": "multiselect",
    "options": [
     "Square hairlines",
@@ -578,7 +566,7 @@
   {
    "id": "general.visual.nier-background",
    "label": "NieR background",
-   "desc": "A faint ink scene behind the app, or plain parchment.",
+   "desc": "A faint ink scene behind NieR, or plain parchment. Shown when the theme is NieR Light or NieR Dark; the choice is kept for the next visit.",
    "type": "select",
    "options": [
     "Parchment",
@@ -1103,14 +1091,15 @@
   {
    "id": "general.interaction.mode",
    "label": "How the app talks to me",
-   "desc": "Plain English hides jargon and rarely used controls.",
+   "desc": "Choose Plain English or Expert tips and help. The wizard and Guided Tour share this preference.",
    "type": "radio",
    "options": [
     "ELI5",
     "Expert"
    ],
    "option_labels": {
-    "ELI5": "Plain English"
+    "ELI5": "Plain English",
+    "Expert": "Expert"
    },
    "default": "ELI5",
    "scope": [

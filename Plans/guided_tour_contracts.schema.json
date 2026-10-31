@@ -501,7 +501,7 @@
         {"if": {"properties": {"action_id": {"const": "ui.guided_tour.focus_route"}}, "required": ["action_id"]}, "then": {"required": ["route_target"], "properties": {"step": {"const": "workspace"}, "target_surface_id": {"const": "usage"}, "target_control_id": {"const": "ui.guided_tour.focus_route"}, "return_focus_id": {"const": "guided_tour.workspace.heading"}}}, "else": {"not": {"required": ["route_target"]}}},
         {"if": {"properties": {"action_id": {"const": "ui.guided_tour.skip"}}, "required": ["action_id"]}, "then": {"required": ["captured_state_ref"], "properties": {"target_control_id": {"const": "ui.guided_tour.skip"}, "target_label": {"const": "Skip Tour"}}}, "else": {"not": {"required": ["captured_state_ref"]}}},
         {"if": {"properties": {"action_id": {"const": "ui.guided_tour.show_me"}}, "required": ["action_id"]}, "then": {"required": ["practice_action_ref"], "properties": {"target_control_id": {"const": "ui.guided_tour.show_me"}, "target_label": {"const": "Show Me"}}}, "else": {"not": {"required": ["practice_action_ref"]}}},
-        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.toggle_eli5"}}, "required": ["action_id"]}, "then": {"properties": {"target_control_id": {"const": "ui.guided_tour.toggle_eli5"}, "target_label": {"enum": ["ELI5: Off", "ELI5: On"]}}}},
+        {"if": {"properties": {"action_id": {"const": "ui.guided_tour.toggle_eli5"}}, "required": ["action_id"]}, "then": {"properties": {"target_control_id": {"const": "ui.guided_tour.toggle_eli5"}, "target_label": {"enum": ["Expert", "Plain English"]}}}},
         {"if": {"properties": {"action_id": {"const": "ui.guided_tour.finish"}}, "required": ["action_id"]}, "then": {"required": ["finish_layout"], "properties": {"step": {"const": "planning_wizard"}, "target_control_id": {"const": "ui.guided_tour.finish"}, "target_label": {"const": "Finish tour"}, "return_focus_id": {"const": "guided_tour.planning_wizard.heading"}}}, "else": {"not": {"required": ["finish_layout"]}}}
       ]
     },
@@ -675,7 +675,49 @@
       "properties": {
         "schema_id": {"const": "pm.guided_tour.presentation.v3"}, "schema_version": {"const": "3.0.0"}, "opening_scene": {"const": "chat_teacher"},
         "top_action_ids": {"type": "array", "prefixItems": [{"const": "ui.guided_tour.toggle_eli5"}, {"const": "ui.guided_tour.pause"}, {"const": "ui.guided_tour.skip"}], "items": false, "minItems": 3, "maxItems": 3},
-        "eli5": {"type": "object", "additionalProperties": false, "required": ["control_id", "placement", "persistent", "called_out_in_opening", "changes"], "properties": {"control_id": {"const": "ui.guided_tour.toggle_eli5"}, "placement": {"const": "top_beside_pause_and_skip"}, "persistent": {"const": true}, "called_out_in_opening": {"const": true}, "changes": {"const": "tour_narration_only", "description": "The tour top-bar ELI5 changes tour narration only; it never rewrites the Teacher example answer (DL-126)."}}},
+        "eli5": {"type": "object", "additionalProperties": false, "required": [
+          "control_id",
+          "placement",
+          "persistent",
+          "called_out_in_opening",
+          "changes",
+          "setting_id",
+          "default_value",
+          "labels",
+          "dual_copy_scope"
+        ], "properties": {
+          "control_id": {
+            "const": "ui.guided_tour.toggle_eli5"
+          },
+          "placement": {
+            "const": "top_beside_pause_and_skip"
+          },
+          "persistent": {
+            "const": true
+          },
+          "called_out_in_opening": {
+            "const": true
+          },
+          "changes": {
+            "const": "shared_interaction_mode",
+            "description": "DL-259: general.interaction.mode; does not rewrite the Teacher answer."
+          },
+          "setting_id": {
+            "const": "general.interaction.mode"
+          },
+          "default_value": {
+            "const": "ELI5"
+          },
+          "labels": {
+            "const": {
+              "ELI5": "Plain English",
+              "Expert": "Expert"
+            }
+          },
+          "dual_copy_scope": {
+            "const": "tips_and_help_only"
+          }
+        }},
         "reduced_motion": {"type": "object", "additionalProperties": false, "required": ["introduced_in", "setting_id", "owner", "tour_write", "separate_scene", "effective", "long_travel_removed", "focus_preserved", "hierarchy_preserved", "announcements_preserved", "action_parity_preserved"], "properties": {"introduced_in": {"const": "chat_opening_eli5_moment"}, "setting_id": {"const": "general.visual.reduce-animations"}, "owner": {"const": "Settings"}, "tour_write": {"const": false}, "separate_scene": {"const": false}, "effective": {"type": "boolean"}, "long_travel_removed": {"const": true}, "focus_preserved": {"const": true}, "hierarchy_preserved": {"const": true}, "announcements_preserved": {"const": true}, "action_parity_preserved": {"const": true}}},
         "scene_entry": {"$ref": "#/$defs/heading_focus"},
         "callout_policy": {"type": "object", "additionalProperties": false, "required": ["measurement_source", "measured_after_layout", "clamped_to_usable_viewport", "target_kept_usable", "remeasure_triggers", "missing_target_disposition", "transient_geometry_persisted", "protected_auth_content_excluded"], "properties": {"measurement_source": {"const": "live_mounted_target"}, "measured_after_layout": {"const": true}, "clamped_to_usable_viewport": {"const": true}, "target_kept_usable": {"const": true}, "remeasure_triggers": {"type": "array", "prefixItems": [{"const": "page_change"}, {"const": "resize"}, {"const": "scale"}, {"const": "localization"}, {"const": "panel_movement"}, {"const": "target_geometry_change"}], "items": false, "minItems": 6, "maxItems": 6}, "missing_target_disposition": {"const": "pause_with_recovery"}, "transient_geometry_persisted": {"const": false}, "protected_auth_content_excluded": {"const": true}}},

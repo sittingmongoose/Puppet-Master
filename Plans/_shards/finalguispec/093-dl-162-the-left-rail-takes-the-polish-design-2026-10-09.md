@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44011-L44497
+Source lines: L44447-L44931
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -165,7 +165,6 @@ owner_boundary_notes:
   - "F3-585 owns the assistant chat's 13 status marks, the run-state subset of F3-658's one vocabulary, and this unit owns how the rail consumes that vocabulary; neither restates the other. Amended 2026-10-17 (DL-228): D44 (DL-201) settled the earlier open question, and the sets no longer differ."
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FileManager.md#F-074, ContractName:Plans/DRY_Rules.md#DR-057
@@ -491,7 +490,6 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
-
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621

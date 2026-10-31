@@ -528,26 +528,37 @@ plan_unit_id: BRS-013
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
-canonical_text: >-
-  The closed MVP destination-family registry contains exactly aws_s3, s3_compatible, backblaze_b2, azure_blob, gcs,
-  google_drive, onedrive, local_nas, sftp, webdav, and rest_server. Each family declares non-secret locator fields,
+canonical_text: 'The closed MVP destination-family registry contains exactly aws_s3, s3_compatible, backblaze_b2, azure_blob,
+  gcs, google_drive, onedrive, local_nas, sftp, webdav, and rest_server. Each family declares non-secret locator fields,
   engine/transport route, auth/profile reference kinds, list/read/write/commit/lock/delete/version/object-lock/archive/
-  stream/resume capabilities, limitations, cost/archive notes, and runtime evidence status. Destination discovery and test
-  are bounded, scoped, non-destructive: an approved random canary is confined to a PM scratch prefix; an existing
+  stream/resume capabilities, limitations, cost/archive notes, and runtime evidence status. Destination discovery and
+  test are bounded, scoped, non-destructive: an approved random canary is confined to a PM scratch prefix; an existing
   repository is offered as Use existing and never initialized over. Backup consumes the existing AuthenticationBroker,
-  Multi-Account/profile, CredentialBroker, OS-protected storage, and protected browser/session contracts with exact
-  destination/Project/Server/Client/return identity. It creates no duplicate auth owner or cmd.auth_session family.
-  Google/Microsoft production registrations, callback infrastructure, provider approvals, and shipped pinned engine/
-  transport provenance are Release Supply Chain prerequisites; family presence remains handler_unavailable/NOT_RUN proof.
+  Multi-Account/profile, CredentialBroker, OS-protected storage, and protected browser/session contracts with exact destination/Project/Server/Client/return
+  identity. It creates no duplicate auth owner or cmd.auth_session family. Google/Microsoft production registrations,
+  callback infrastructure, provider approvals, and shipped pinned engine/ transport provenance are Release Supply Chain
+  prerequisites; family presence remains handler_unavailable/NOT_RUN proof. DL-259, Jared 2026-10-31: D2 A: onboarding
+  offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining
+  their exact owner family/profile/locator identity. Azure Blob, Google Cloud Storage and REST-server destinations remain
+  available in Settings > Backup & Restore, with a clear pointer. The Backup owner still supports all eleven registered
+  families.'
 gui_related: true
 gui_classification_reason: Destination chooser/cards, account and decrypt readiness, safe tests, Use existing, unsupported/cold-archive/cost notes, and auth return are visible.
 depends_on: [BRS-004, BRS-012, MACS-001]
 unblocks: [BRS-014, BRS-015]
 acceptance_criteria:
-  - Exactly eleven family profiles validate and distinguish GCS from Drive, B2 from consumer Computer Backup, and Amazon S3 from generic compatible services.
-  - Capability fields support supported, unsupported, conditional, and not_run truth; no universal S3/object-lock/archive claim is inferred.
-  - Safe test never alters ACL/public access, creates billable resources, deletes an existing repository, or treats a missing mount as an empty repository.
-  - OAuth reuses canonical auth commands/protected browser and returns to the exact destination without exposing URL, code, token, browser content, or client secret.
+- Exactly eleven family profiles validate and distinguish GCS from Drive, B2 from consumer Computer Backup, and Amazon
+  S3 from generic compatible services.
+- Capability fields support supported, unsupported, conditional, and not_run truth; no universal S3/object-lock/archive
+  claim is inferred.
+- Safe test never alters ACL/public access, creates billable resources, deletes an existing repository, or treats a missing
+  mount as an empty repository.
+- OAuth reuses canonical auth commands/protected browser and returns to the exact destination without exposing URL, code,
+  token, browser content, or client secret.
+- 'DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible,
+  SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud
+  Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup
+  owner still supports all eleven registered families.'
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future real-provider auth capability wrong-account quota throttle and existing-repository tests]
 risk_class: destination_capability_overclaim_or_duplicate_auth_owner
 reasoning_tier: high
@@ -1013,21 +1024,51 @@ plan_unit_id: BRS-018
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
-canonical_text: >-
-  Destination setup is choose service, authenticate/select an existing profile, choose the exact bucket/container/drive/folder/prefix and required region/endpoint, run an approved bounded safe test, review encryption/scope/schedule/cost, then save or explicitly Use existing. Provider methods are capability- and engine-qualified: S3/B2/Azure/GCS use proven scoped credentials or workload attachments; Google Drive and OneDrive use PM-owned production OAuth registrations with PKCE/state and exact return; browser-only/container flows use a registered web callback or provider-supported device flow, never generic Google device/OOB or an end-user developer-console tutorial. SFTP/WebDAV/NAS/REST validate fingerprints, TLS, paths, mounts, protocols, auth, and one-writer behavior. Every remote payload is engine-encrypted/authenticated before egress. A Server-CSPRNG Backup Recovery Key with at least 256 bits belongs to a RecoverySet whose repositories retain independent master keys; human-only Save/Copy/Print/Test Saved Recovery Kit delivery is authenticated, audience-bound, no-store, Client-targeted, separate from browse authority, and never cloud escrow, agent context, URL, logs, browser storage, capture, or generic configuration.
+canonical_text: 'Destination setup is choose service, authenticate/select an existing profile, choose the exact bucket/container/drive/folder/prefix
+  and required region/endpoint, run an approved bounded safe test, review encryption/scope/schedule/cost, then save or
+  explicitly Use existing. Provider methods are capability- and engine-qualified: S3/B2/Azure/GCS use proven scoped credentials
+  or workload attachments; Google Drive and OneDrive use PM-owned production OAuth registrations with PKCE/state and
+  exact return; browser-only/container flows use a registered web callback or provider-supported device flow, never generic
+  Google device/OOB or an end-user developer-console tutorial. SFTP/WebDAV/NAS/REST validate fingerprints, TLS, paths,
+  mounts, protocols, auth, and one-writer behavior. Every remote payload is engine-encrypted/authenticated before egress.
+  A Server-CSPRNG Backup Recovery Key with at least 256 bits belongs to a RecoverySet whose repositories retain independent
+  master keys; human-only Save/Copy/Print/Test Saved Recovery Kit delivery is authenticated, audience-bound, no-store,
+  Client-targeted, separate from browse authority, and never cloud escrow, agent context, URL, logs, browser storage,
+  capture, or generic configuration. DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon
+  S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator
+  identity. Azure Blob, Google Cloud Storage and REST-server destinations remain available in Settings > Backup & Restore,
+  with a clear pointer. The Backup owner still supports all eleven registered families.'
 gui_related: true
 gui_classification_reason: Destination cards, official sign-in return, safe-test receipts, account/decryption readiness, Recovery Kit handoff, reminders, quota/throttle/archive states, and reconnect actions are visible.
 depends_on: [BRS-012, BRS-013, SIR-032]
 unblocks: []
 acceptance_criteria:
-  - Safe tests mutate only a named random canary within an approved PM scratch prefix and clean it with a receipt; read-only tests do not mutate, and no test changes ACL/public access, creates billable resources, destroys a repository, or initializes over an unreachable/existing repository.
-  - Provider profiles keep locator/account/region/prefix separately from secret refs and prove the selected engine/transport method; rotation/refresh does not rewrite backup data, endpoint/TLS trust prevents credential exfiltration, and restored missing credentials project Reconnect destination.
-  - Google Drive prefers verified drive.file app-created/selected objects and proves rediscovery; OneDrive distinguishes personal/business/tenant and app-folder availability. A retiring shared rclone client, generic OOB flow, fake client ID, or universal scope claim is forbidden.
-  - Missing NAS mounts, changed SSH keys, redirected WebDAV origins, incompatible REST protocols, and partially synchronized folders fail safely rather than appearing empty or initializing a new set.
-  - Quota full, Retry-After throttling, unavailable, reauth, tenant restriction, user-deleted objects, provider versions/trash, cold retrieval delay/fees, and external archive prerequisites remain distinct; cloud drives are not advertised as ransomware-immutable and lifecycle age never deletes live deduplicated packs.
-  - The Recovery Kit contains engine/format version, RecoverySet/repository IDs, destination hints, recovery credential, and instructions but no cloud, forge, model, tailnet, OAuth, or connector credential. Test Saved Kit proves read-only unlock, while human acknowledgement remains a separate state.
-  - Key export sessions are short-lived, audience-bound, one-use where practical, creation/redemption authorized, revocable, and no-store; later export requires step-up and protected attachment. Scheduler unlock uses protected Server/OS/admin secret attachment and projects Unlock required when unavailable.
-  - Key-slot rotation adds and verifies every new engine slot before retiring an old slot; compromise uses a new encryption domain/repository or explicit copy/re-encryption and never claims to repair already exposed copies.
+- Safe tests mutate only a named random canary within an approved PM scratch prefix and clean it with a receipt; read-only
+  tests do not mutate, and no test changes ACL/public access, creates billable resources, destroys a repository, or initializes
+  over an unreachable/existing repository.
+- Provider profiles keep locator/account/region/prefix separately from secret refs and prove the selected engine/transport
+  method; rotation/refresh does not rewrite backup data, endpoint/TLS trust prevents credential exfiltration, and restored
+  missing credentials project Reconnect destination.
+- Google Drive prefers verified drive.file app-created/selected objects and proves rediscovery; OneDrive distinguishes
+  personal/business/tenant and app-folder availability. A retiring shared rclone client, generic OOB flow, fake client
+  ID, or universal scope claim is forbidden.
+- Missing NAS mounts, changed SSH keys, redirected WebDAV origins, incompatible REST protocols, and partially synchronized
+  folders fail safely rather than appearing empty or initializing a new set.
+- Quota full, Retry-After throttling, unavailable, reauth, tenant restriction, user-deleted objects, provider versions/trash,
+  cold retrieval delay/fees, and external archive prerequisites remain distinct; cloud drives are not advertised as ransomware-immutable
+  and lifecycle age never deletes live deduplicated packs.
+- The Recovery Kit contains engine/format version, RecoverySet/repository IDs, destination hints, recovery credential,
+  and instructions but no cloud, forge, model, tailnet, OAuth, or connector credential. Test Saved Kit proves read-only
+  unlock, while human acknowledgement remains a separate state.
+- Key export sessions are short-lived, audience-bound, one-use where practical, creation/redemption authorized, revocable,
+  and no-store; later export requires step-up and protected attachment. Scheduler unlock uses protected Server/OS/admin
+  secret attachment and projects Unlock required when unavailable.
+- Key-slot rotation adds and verifies every new engine slot before retiring an old slot; compromise uses a new encryption
+  domain/repository or explicit copy/re-encryption and never claims to repair already exposed copies.
+- 'DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible,
+  SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud
+  Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup
+  owner still supports all eleven registered families.'
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record, Plans/backup_restore_system_contract_fixtures.json, future provider/OAuth/key-delivery/rotation/capture-isolation runtime tests]
 risk_class: destination_credential_exfiltration_or_recovery_key_loss
 reasoning_tier: high
@@ -1057,24 +1098,89 @@ plan_unit_id: BRS-019
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
-canonical_text: >-
-  Fresh or ordinary recovery follows one bounded order: choose/import destination or untrusted Kit, validate locator/trust, authenticate storage, select an existing repository, unlock through protected Recovery Key submission, load encrypted manifests, select an immutable snapshot, inspect exact coverage/compatibility, preview, and only then restore. SnapshotBrowser is paginated/read-only and treats text, diff, history, HTML, macros, hooks, symlinks, and artifacts as untrusted content. Restore as New, in place, selective, and Full Server modes retain dependency closure, current target revision, path/identity mapping, migrations, disk space, profile/key readiness, secret exclusion, suspended work, owner approval, the BRS-023 recovery prerequisite, target leases, staged verification, FileSafe decisions, and truthful rollback availability. RestoreRun persists immutable selection, phase/retry/validation/outcome receipts on the recovery coordinator and survives Client loss or Full Server replacement through an external recovery endpoint/token. RuntimeResourceGovernor, ObservableWork, durable outbox, per-repository writer/maintenance leases, phase-aware cancellation, cautious stale-lock recovery, retention holds, prune preview, separate destructive authorization, and cold-retrieval consent remain shared-owner consumers.
+canonical_text: 'Fresh or ordinary recovery follows one bounded order: locate the backup directly or through an untrusted
+  Kit locator, validate locator/trust, authenticate its actual storage place, select an existing repository, and unlock
+  through the protected owner credential (an accepted Kit may supply that credential; otherwise ask for the phrase only
+  when required), load encrypted manifests, select an immutable snapshot, inspect exact coverage/compatibility, preview,
+  and only then restore. SnapshotBrowser is paginated/read-only and treats text, diff, history, HTML, macros, hooks,
+  symlinks, and artifacts as untrusted content. Restore as New, in place, selective, and Full Server modes retain dependency
+  closure, current target revision, path/identity mapping, migrations, disk space, profile/key readiness, secret exclusion,
+  suspended work, owner approval, the BRS-023 recovery prerequisite, target leases, staged verification, FileSafe decisions,
+  and truthful rollback availability. RestoreRun persists immutable selection, phase/retry/validation/outcome receipts
+  on the recovery coordinator and survives Client loss or Full Server replacement through an external recovery endpoint/token.
+  RuntimeResourceGovernor, ObservableWork, durable outbox, per-repository writer/maintenance leases, phase-aware cancellation,
+  cautious stale-lock recovery, retention holds, prune preview, separate destructive authorization, and cold-retrieval
+  consent remain shared-owner consumers. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual
+  backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a
+  storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to
+  a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required
+  fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted
+  Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked
+  backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing
+  invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling
+  and actual restore/Project commit boundaries remain mandatory; only a verified Backup owner result proves unlock or
+  restore. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
+  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates
+  its old reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check
+  result stays bound to the service/device it authenticated and cannot advance a different current choice. DL-259, Jared
+  2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible, SFTP and WebDAV
+  backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud Storage and REST-server
+  destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup owner still supports
+  all eleven registered families.'
 gui_related: true
 gui_classification_reason: SnapshotBrowser, RestorePreview, DestinationCard, ScopeCoverageSummary, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, costs, failures, and exact completion axes are visible.
 depends_on: [BRS-006, BRS-014, BRS-015, BRS-017, BRS-018, SIR-032]
 unblocks: []
 acceptance_criteria:
-  - A Kit is bounded untrusted input; a new endpoint is reviewed before credentials are sent, unreachable or apparently empty repositories are never initialized, and wrong account/key/repository, missing manifest, revoked access, corruption, and unsupported future format are distinct recoverable errors.
-  - Snapshot selection binds immutable snapshot_id rather than latest; search/filter includes Project, capture date/time/timezone, host/source, verification and scope; details include PM/source/JJ coverage, unavailable sources, retention/hold, restore-test result, size, and retrieval conditions.
-  - Previewed content cannot execute, escape path bounds, enter an active workspace, or reach agents without separate permission; large trees paginate and symlink/reparse/HTML/script/macro/hook hazards fail closed.
-  - Restore apply requires current owner approval, the BRS-023 verified recovery-point or scoped verified-unavailability/human-consent prerequisite, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote activation uses a journaled recoverable boundary rather than a false atomic claim.
-  - FileSafe adjudicates traversal, case/Unicode collisions, reserved names, executable bits, UID/GID/ACL/xattrs, absolute remaps, unsafe Git/JJ config, and untrusted hooks. Every crash/failure exposes the old state, rollback, quarantine, or a precise recovery boundary.
-  - RestoreRun persists selection and per-source/destination phase, retry, validation, and outcome; completion separately reports data restored, source verified, indexes rebuilt, auth missing, and workloads paused. Client disconnect, UI refresh, or process-memory loss cannot fabricate resume or success.
-  - RuntimeResourceGovernor preserves interactive/resume/approval reserve across capture, compression, encryption, hashing, IO, network, staging, retries, and process leases. Provider throttling, full staging queues, metered/time-window policy, and cost alerts stop/defer boundedly without hard-coded cloud prices.
-  - Append-only/versioned/Object Lock claims require a tested engine/backend/maintenance profile; routine writers lack unnecessary delete authority, protected prune uses separate short-lived authorization, and locks are never removed merely because another writer is temporarily unreachable.
-  - BackupCoordinator, CaptureBarrierService, SourceSnapshotAdapter/GitJJClosureValidator, BackupEngineAdapter, destination registry/adapters, scheduler/retention owner, RecoverySetKeyService, SnapshotCatalogProjection, and RestoreCoordinator remain the exact Backup DRY components; the exact shared GUI components are DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, and ObservableWorkProgress.
-  - CMDX-001/CMDX-002 require one owner command/handler route and the shared non-secret operation envelope; all Backup routes remain handler_unavailable and event-silent with "expected_event_types=[]" until independent native and Event Authority evidence exists.
-  - PROC-001 and PROC-002 remain evidence requirements for a later bounded execution transaction; these static owner/schema/fixture repairs do not satisfy their baseline, acceptance, tranche, diff, release, or executable proof.
+- A Kit is bounded untrusted input; a new endpoint is reviewed before credentials are sent, unreachable or apparently
+  empty repositories are never initialized, and wrong account/key/repository, missing manifest, revoked access, corruption,
+  and unsupported future format are distinct recoverable errors.
+- Snapshot selection binds immutable snapshot_id rather than latest; search/filter includes Project, capture date/time/timezone,
+  host/source, verification and scope; details include PM/source/JJ coverage, unavailable sources, retention/hold, restore-test
+  result, size, and retrieval conditions.
+- Previewed content cannot execute, escape path bounds, enter an active workspace, or reach agents without separate permission;
+  large trees paginate and symlink/reparse/HTML/script/macro/hook hazards fail closed.
+- Restore apply requires current owner approval, the BRS-023 verified recovery-point or scoped verified-unavailability/human-consent
+  prerequisite, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote
+  activation uses a journaled recoverable boundary rather than a false atomic claim.
+- FileSafe adjudicates traversal, case/Unicode collisions, reserved names, executable bits, UID/GID/ACL/xattrs, absolute
+  remaps, unsafe Git/JJ config, and untrusted hooks. Every crash/failure exposes the old state, rollback, quarantine,
+  or a precise recovery boundary.
+- RestoreRun persists selection and per-source/destination phase, retry, validation, and outcome; completion separately
+  reports data restored, source verified, indexes rebuilt, auth missing, and workloads paused. Client disconnect, UI
+  refresh, or process-memory loss cannot fabricate resume or success.
+- RuntimeResourceGovernor preserves interactive/resume/approval reserve across capture, compression, encryption, hashing,
+  IO, network, staging, retries, and process leases. Provider throttling, full staging queues, metered/time-window policy,
+  and cost alerts stop/defer boundedly without hard-coded cloud prices.
+- Append-only/versioned/Object Lock claims require a tested engine/backend/maintenance profile; routine writers lack
+  unnecessary delete authority, protected prune uses separate short-lived authorization, and locks are never removed
+  merely because another writer is temporarily unreachable.
+- BackupCoordinator, CaptureBarrierService, SourceSnapshotAdapter/GitJJClosureValidator, BackupEngineAdapter, destination
+  registry/adapters, scheduler/retention owner, RecoverySetKeyService, SnapshotCatalogProjection, and RestoreCoordinator
+  remain the exact Backup DRY components; the exact shared GUI components are DestinationCard, ScopeCoverageSummary,
+  SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, and ObservableWorkProgress.
+- CMDX-001/CMDX-002 require one owner command/handler route and the shared non-secret operation envelope; all Backup
+  routes remain handler_unavailable and event-silent with "expected_event_types=[]" until independent native and Event
+  Authority evidence exists.
+- PROC-001 and PROC-002 remain evidence requirements for a later bounded execution transaction; these static owner/schema/fixture
+  repairs do not satisfy their baseline, acceptance, tranche, diff, release, or executable proof.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it.
+  A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS
+  password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a
+  cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust
+  and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot
+  bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name
+  its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and
+  snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
+  boundaries remain mandatory; only a verified Backup owner result proves unlock or restore.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device,
+  not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old
+  reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result
+  stays bound to the service/device it authenticated and cannot advance a different current choice.'
+- 'DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible,
+  SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud
+  Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup
+  owner still supports all eleven registered families.'
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record, Plans/backup_restore_system_contract_fixtures.json, Plans/shared_integration_runtime_expansion_contracts.schema.json, future destructive restore/retention/provider/GUI/runtime tests]
 risk_class: unsafe_restore_or_false_operational_completion
 reasoning_tier: high

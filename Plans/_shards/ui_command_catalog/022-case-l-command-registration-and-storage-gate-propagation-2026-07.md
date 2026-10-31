@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8619-L9826
+Source lines: L8743-L9951
 
-Source SHA256: `cd59305b17fd10a90053df362a4d10002c6fdf64954e2d69c15ed28f9f55b32d`
+Source SHA256: `a09088d53c161b58e7b4cb9b2d5c61e1ca075756add35b2375c2169dc42961f3`
 
 ---
 
@@ -704,19 +704,20 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and
-  exact-return contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the
-  command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
-  cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
-  non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
-  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply,
-  and so do the live look controls (DL-153): the title-bar theme selector's family rows and NieR Mode checkbox, the
-  Guided Tour bar's Look menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082).
-  The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
-  80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
-  seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
-  The earlier 72 non-primary source-spelling count is historical after DL-200; the live
-  direct/non-primary sets are derived from the same fixture.
+  Settings navigation uses cmd.settings.open with the typed pm.settings_route_request.v1 target and exact-return
+  contract owned by SSYS-018; the K3 Settings host chooses the current presentation and the command encodes no
+  bloom-specific geometry. The historical cmd.settings.open_notifications, cmd.settings.category.reset, and
+  cmd.settings.suggestion.dismiss spellings are retained only as retired, non-alias local-affordance lineage.
+  Notifications navigation emits cmd.settings.open. Category reset and suggestion dismissal each compose
+  cmd.settings.transaction.preview followed by cmd.settings.transaction.apply, and so do the live look controls
+  (DL-153): the title-bar theme selector's five family rows including NieR (Q22), the Guided Tour bar's Look
+  menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082). The historical
+  spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound 80-token
+  disposition registry is transitive catalog input: its canonical targets retain their existing rows, its seven
+  typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
+  The earlier 72 non-primary source-spelling count is historical after DL-200; the live direct/non-primary sets
+  are derived from the same fixture. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing
+  theme owner; no separate override remains.
 gui_related: true
 gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
 depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]

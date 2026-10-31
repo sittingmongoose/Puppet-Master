@@ -2314,6 +2314,49 @@
         }
       },
       "description": "Auth-owner-issued, selected-source-only no-profile/no-Project bootstrap. The owner verifies the exact provider/route has no CLI installation requirement, the source permission/consent and initiating Client, then allocates real profile/account identities only after verification; this value is not a new physical receipt or permission grant."
+    },
+    "ProviderEntryPolicy": {
+      "description": "DL-259 static entries for the open-ended provider registry; never an authentication request or readiness proof.",
+      "oneOf": [
+        {
+          "const": {
+            "provider_entry_id": "cursor_sdk",
+            "provider_family_id": "cursor",
+            "transport_kind": "direct_api",
+            "display_name": "Cursor SDK",
+            "default_auth_surface": "api_key",
+            "allowed_auth_surfaces": [
+              "api_key"
+            ],
+            "billing_class": "subscription",
+            "billing_identities": [
+              "user_plan",
+              "service_account_team"
+            ],
+            "credential_custody": "execution_host_secure_store",
+            "source": "https://cursor.com/docs/sdk/typescript"
+          }
+        },
+        {
+          "const": {
+            "provider_entry_id": "alibaba_token_plan",
+            "provider_family_id": "alibaba",
+            "transport_kind": "direct_api",
+            "display_name": "Alibaba Token Plan",
+            "default_auth_surface": "api_key",
+            "allowed_auth_surfaces": [
+              "api_key"
+            ],
+            "billing_class": "monthly_credit_subscription",
+            "separate_from": [
+              "alibaba_coding_plan",
+              "dashscope_pay_as_you_go"
+            ],
+            "credential_custody": "execution_host_secure_store",
+            "source": "https://www.alibabacloud.com/help/en/model-studio/token-plan-overview"
+          }
+        }
+      ]
     }
   },
   "x-owner-command-count": 12,
@@ -2404,5 +2447,71 @@
       "initial_availability": "handler_unavailable",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority"
     }
+  },
+  "x-provider-entry-amendments": {
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "owner_ref": "Plans/Multi-Account.md#MA-012",
+    "entries": [
+      {
+        "provider_entry_id": "cursor_sdk",
+        "provider_family_id": "cursor",
+        "transport_kind": "direct_api",
+        "display_name": "Cursor SDK",
+        "default_auth_surface": "api_key",
+        "allowed_auth_surfaces": [
+          "api_key"
+        ],
+        "billing_class": "subscription",
+        "billing_identities": [
+          "user_plan",
+          "service_account_team"
+        ],
+        "credential_custody": "execution_host_secure_store",
+        "source": "https://cursor.com/docs/sdk/typescript"
+      },
+      {
+        "provider_entry_id": "alibaba_token_plan",
+        "provider_family_id": "alibaba",
+        "transport_kind": "direct_api",
+        "display_name": "Alibaba Token Plan",
+        "default_auth_surface": "api_key",
+        "allowed_auth_surfaces": [
+          "api_key"
+        ],
+        "billing_class": "monthly_credit_subscription",
+        "separate_from": [
+          "alibaba_coding_plan",
+          "dashscope_pay_as_you_go"
+        ],
+        "credential_custody": "execution_host_secure_store",
+        "source": "https://www.alibabacloud.com/help/en/model-studio/token-plan-overview"
+      }
+    ],
+    "display_aliases": {
+      "MiniMax Coding Plan": "MiniMax M Plan",
+      "OpenCode Zen": "OpenCode Console"
+    },
+    "minimax_current_docs": "https://platform.minimax.io/docs/m-plan/intro",
+    "opencode_console_billing_class": "pay_as_you_go",
+    "existing_cursor_cli_default_auth": "browser",
+    "pre_build_verification": [
+      "Z.AI_listed_tools",
+      "Kimi_Code_client_identity",
+      "OpenCode_Go_client_identity",
+      "Muse_only_subscription_credential",
+      "Remote_Link_code_protocol"
+    ],
+    "provider_caveats_in_wizard": false,
+    "codex_device_auth_prerequisite": "ChatGPT_security_settings_or_workspace_admin_permission",
+    "pre_build_verification_owner_ref": "Plans/Decision_Log.md#DL-259"
+  },
+  "x-provider-key-acquisition": {
+    "owner_ref": "Plans/Multi-Account.md#MA-040",
+    "command_id": "cmd.auth_profile.open_official_page",
+    "production_entry": "catalog.auth_profile_open_official_page",
+    "exact_provider_official_console_or_guide": true,
+    "key_not_password": true,
+    "initiating_active_Client_bound": true,
+    "return_proves_readiness": false
   }
 }

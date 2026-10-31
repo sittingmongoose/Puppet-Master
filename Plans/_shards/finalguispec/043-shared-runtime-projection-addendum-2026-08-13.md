@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5596-L27172
+Source lines: L5562-L27142
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -4015,12 +4015,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The GUI exposes exactly eight built-in theme choices across four families, Friendly Dark,
-  Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light,
-  with Basic Dark as the untouched first-open/fresh-project factory default. An existing explicit
-  saved Project selection survives, and a copied Project receives a detached selection snapshot.
-  The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic
-  contract are superseded lineage kept findable; all eight variants remain supported.
+  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly
+  Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic
+  Dark as the untouched first-open/fresh-project factory default. An existing explicit saved Project selection
+  survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and
+  the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten
+  variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4070,11 +4071,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The theme token matrix defines colors, accents, fonts, hard shadows, border widths, radii,
-  effects flags, opacity, padding scale, and scrollbar width for all eight built-in variants:
-  the Retro Dark, Retro Light, Basic Light, and Basic Dark tables live in section 6.2, and the
-  Friendly Dark, Friendly Light, Glass Dark, and Glass Light tables live in the Theme System
-  addendum - 2026-07-16 as F3-426 spec data.
+  The theme token matrix defines colors, accents, fonts, hard shadows, border widths, radii, effects flags,
+  opacity, padding scale, and scrollbar width for all ten built-in variants: the Retro Dark, Retro Light, Basic
+  Light, and Basic Dark tables live in section 6.2, and the Friendly Dark, Friendly Light, Glass Dark, and Glass
+  Light tables live in the Theme System addendum - 2026-07-16 as F3-426 spec data. Amended Q22, Jared 2026-10-30
+  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained
+  Adjust controls.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4333,15 +4335,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Slint theme global exposes the canonical ThemeMode values for all eight built-in variants
-  (friendly-dark, friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light,
-  basic-dark) and theme token properties for colors, accents, retro effects, paper texture,
-  borders, padding, scrollbar width, line height, and base font size, with the property defaults
-  illustrative per active variant and basic-dark as the untouched first-open/fresh-project
-  factory mode. The former friendly-dark default is superseded lineage. The
-  ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same
-  eight token sets; in auto the effective variant tracks the OS appearance
-  (prefers-color-scheme) live and feeds the identical per-variant tokens.
+  The Slint theme global exposes the canonical ThemeMode values for all ten built-in variants (friendly-dark,
+  friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light, basic-dark) and theme token
+  properties for colors, accents, retro effects, paper texture, borders, padding, scrollbar width, line height,
+  and base font size, with the property defaults illustrative per active variant and basic-dark as the untouched
+  first-open/fresh-project factory mode. The former friendly-dark default is superseded lineage. The
+  ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same eight token
+  sets; in auto the effective variant tracks the OS appearance (prefers-color-scheme) live and feeds the
+  identical per-variant tokens. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible theme tokens, visual presentation, and Slint GUI styling state.
@@ -4401,12 +4403,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Rust-side ThemeVariant applies all theme tokens to the Slint AppWindow at runtime for all eight
-  built-in variants (FriendlyDark, FriendlyLight, GlassDark, GlassLight, RetroDark, RetroLight,
-  BasicLight, and BasicDark), including disabling retro effects for non-Retro variants and
-  applying the glass composition tokens only for the Glass variants. In auto presentation mode
-  the Rust runtime resolves the active variant via the OS appearance signal
-  (prefers-color-scheme) and re-applies the resolved variant tokens live when it changes.
+  Rust-side ThemeVariant applies all theme tokens to the Slint AppWindow at runtime for all ten built-in
+  variants (FriendlyDark, FriendlyLight, GlassDark, GlassLight, RetroDark, RetroLight, BasicLight, and
+  BasicDark), including disabling retro effects for non-Retro variants and applying the glass composition tokens
+  only for the Glass variants. In auto presentation mode the Rust runtime resolves the active variant via the OS
+  appearance signal (prefers-color-scheme) and re-applies the resolved variant tokens live when it changes.
+  Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: >-
   This unit defines runtime application of GUI theme and visual styling tokens.
@@ -4563,20 +4566,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The title-bar theme selector is a morphing sun/moon icon trigger (sun = manual Light, moon =
-  manual Dark, continuous sun-to-moon morph = Auto) opening a menu with a Light/Dark/Auto
-  segmented control above four theme-family rows (Friendly, Glass, Retro, Basic); each family
-  row shows built-in and custom theme metadata with swatch previews, and a family row becomes a
-  dropdown when >4 themes are available in it (built-in + custom). Below the family rows, after a divider, one NieR
-  Mode row carries a checkbox (menuitemcheckbox), checked while NieR Mode is on, and beside it an Adjust NieR look
-  button that opens the NieR Mode editor as a popup dialog (F3-598); toggling keeps the menu open, and NieR Mode
-  is never a family row or a theme variant. The segmented control dispatches cmd.theme.set_mode. A family row and
-  the NieR Mode checkbox are ordinary Settings changes that compose cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply over the exact IDs, the family with the current mode as SSYS-009's atomic pair, and
-  Adjust NieR look is the typed local action ui.settings.nier_editor.open (SSYS-043, DL-153). In Auto the selected family
-  resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
-  live. Settings > General exposes the theme family + mode controls and theme folder, create,
-  import, and export actions.
+  The title-bar theme selector is a morphing sun/moon trigger (sun for manual Light, moon for manual Dark and
+  continuous morph for Auto), opening a Light/Dark/Auto segmented control above five family rows in order Basic,
+  Friendly, Glass, Retro and NieR. Each row retains built-in/custom metadata and swatch previews; a family
+  becomes a dropdown when more than four built-in/custom choices exist. NieR is an ordinary family row with its
+  Light/Dark variants, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
+  removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
+  the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
+  for every family including NieR. Settings exposes the same ten variants and existing theme
+  folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
+  is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use
+  the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot
+  moment remains a local rehearsal that changes no setting. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
+  NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  Retained historical/source tokens (not active overrides): >4 themes, prefers-color-scheme, morphing sun/moon
+  icon trigger. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
+  confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible theme selector controls and Settings theme management UI.
@@ -4584,12 +4590,10 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "Below the four family rows the menu shows one NieR Mode menuitemcheckbox with an Adjust NieR look button that opens the NieR Mode editor as a popup dialog; NieR Mode never appears as a family row or a ninth variant, and the selector still exposes exactly eight built-in variants."
-- "The segmented control dispatches cmd.theme.set_mode; a family row and the NieR Mode checkbox dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with those commands' availability and disabled reasons; Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Five ordered family rows include NieR; the NieR Mode checkbox is retired."
+  - "All ten variants are reachable with pointer and keyboard; Auto follows OS appearance."
+  - "A family pick previews/applies the atomic pair; Adjust uses the existing local editor action."
+  - "Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -4619,7 +4623,8 @@ preserved_exact_tokens:
 - "NieR Mode"
 - "Adjust NieR look"
 negative_constraints:
-- "Do not list NieR Mode as a family row, a family dropdown entry or a ninth theme variant."
+  - "Do not retain an independent NieR checkbox or hidden underlying family."
+  - "Do not dispatch a new NieR command; family and mode use their existing owner commands."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -4699,7 +4704,6 @@ owner_boundary_notes:
 - "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-084 - Custom Font Fallback And Theme Preview
@@ -4811,7 +4815,6 @@ owner_boundary_notes:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7"
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-086 - Views Section Owner Boundary
@@ -15027,18 +15030,19 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia only with Skia's own CPU
   raster as the fallback (also always used on a software GPU adapter, even over an explicit GPU choice, with a
-  warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner decision;
-  a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no React or Tauri product UI with the
-  web GUI a Rust Leptos client (DL-139), IDE shell layout, four theme families (eight built-in themes,
-  untouched first-open/fresh-project factory default Basic Dark; the former Friendly Dark and
-  prior three-family defaults remain superseded lineage), Settings owned by `Plans/Settings_System.md`,
-  the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login retained by
-  auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and motion,
-  event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
-  product name Puppet Master.
-  Amended 2026-10-09 (DL-180): the IDE shell layout is the activity bar and side panel on the left, the primary content
-  and the chat column fixed on the right, with no Bottom Panel zone; Home's primary content is one universal panel
-  system (Appendix B item 4 as amended; F3-630, F3-637).
+  warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner
+  decision; a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no
+  React or Tauri product UI with the web GUI a Rust Leptos client (DL-139), IDE shell layout, five theme
+  families (ten built-in themes, untouched first-open/fresh-project factory default Basic Dark; the former
+  Friendly Dark and prior three-family defaults remain superseded lineage), Settings owned by
+  `Plans/Settings_System.md`, the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login
+  retained by auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and
+  motion, event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and product
+  name Puppet Master. Amended 2026-10-09 (DL-180): the IDE shell layout is the activity bar and side panel on
+  the left, the primary content and the chat column fixed on the right, with no Bottom Panel zone; Home's
+  primary content is one universal panel system (Appendix B item 4 as amended; F3-630, F3-637). Amended Q22,
+  Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
+  migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: >-
   This unit locks visible shell, framework, theme, settings, and persistence decisions.

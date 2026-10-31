@@ -152,7 +152,7 @@ Removing a list row preserves the stable identity alias needed for safe re-regis
 
 ## 6. Verification
 
-Static validation must cover one positive and one negative for every Project action plus ordinary Git clone handoff, distinct Jujutsu clone handoff, existing local, SSH/server-hosted registration, verified restore-result registration, immutable-ID rename/move/restore cases, same-path-different-host cases, atomic registration, idempotent retry, half-registration rejection, archive/restore/list removal, strong separation from data deletion, migration quarantine, no-secret records, exact route/focus/continuation return, cancellation without half-row, duplicate-name disambiguation, virtualized large lists, stale registry and Project currentness rejection, multi-Project background continuity, keyboard/screen-reader behavior, six widths, all eight themes, Reduced Motion, and Slint-portable interruption.
+Static validation must cover one positive and one negative for every Project action plus ordinary Git clone handoff, distinct Jujutsu clone handoff, existing local, SSH/server-hosted registration, verified restore-result registration, immutable-ID rename/move/restore cases, same-path-different-host cases, atomic registration, idempotent retry, half-registration rejection, archive/restore/list removal, strong separation from data deletion, migration quarantine, no-secret records, exact route/focus/continuation return, cancellation without half-row, duplicate-name disambiguation, virtualized large lists, stale registry and Project currentness rejection, multi-Project background continuity, keyboard/screen-reader behavior, six widths, all ten themes, Reduced Motion, and Slint-portable interruption.
 
 Owner-routing tests must prove Settings values stay with Settings; sync/move stays with PSB; Git/JJ/forge stays with Source Control; backup/restore stays with its owner; physical bytes/holds/deletion stay with Storage/FileSafe/Permissions; and shell/runtime projections never become ProjectRecord fields. Schema/fixture success is structural evidence only, not runtime registration, persistence, GUI, migration, or data-safety proof.
 
@@ -609,3 +609,6 @@ negative_constraints: [No fake Project identity., No consumer-owned Project writ
 ```
 
 ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Forge_Integrations.md#FGI-009, ContractName:Plans/Forge_Integrations.md#FGI-010, ContractName:Plans/Source_Control_System.md#SCS-016, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

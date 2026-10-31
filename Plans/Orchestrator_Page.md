@@ -2627,7 +2627,6 @@ compatibility_only_notes:
 owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/UI_Command_Catalog.md
-
 ```
 
 ## PMConcept7 Concept Promotion Addendum - 2026-07-23
@@ -2886,5 +2885,4 @@ negative_constraints:
 owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/Named_Plan_System.md
-
 ```

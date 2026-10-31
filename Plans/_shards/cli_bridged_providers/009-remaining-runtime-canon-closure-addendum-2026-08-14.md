@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L474-L1369
+Source lines: L474-L1387
 
-Source SHA256: `9968da83a5c877ca320b91bf1930fa139efb3c57feff530454707fa7d0f1732c`
+Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
 
 ---
 
@@ -95,11 +95,18 @@ plan_unit_id: CBP-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  The Provider facade runs CLI-bridged and server-bridged providers through a
-  uniform transport-normalization contract for deterministic request envelopes,
-  normalized streams, tool-call reconciliation, auth/UX-state detection, and
-  stream resilience, without taking ownership of PM-internal child orchestration.
+canonical_text: 'The Provider facade runs CLI-bridged and server-bridged providers through a uniform transport-normalization
+  contract for deterministic request envelopes, normalized streams, tool-call reconciliation, auth/UX-state detection,
+  and stream resilience, without taking ownership of PM-internal child orchestration. DL-259, Jared 2026-10-31: D6 A:
+  the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official
+  tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s
+  secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
+  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
+  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
+  account of the same provider has a distinct identity. D4: confirm provider admission and executable conformance immediately
+  before building Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings
+  or caveats. This scheduling decision does not change per-account authentication, entitlement, health or quota truth:
+  Ready is the shared account owner’s current usable result, not merely signed in.'
 gui_related: true
 gui_classification_reason: The facade owns normalized streaming with one consumer and no UI special-casing plus auth/UX-state detection.
 split_recommended: true
@@ -107,12 +114,23 @@ split_recommendation_reason: Source span S0004 mixes provider transport scope, U
 depends_on: [CBP-002]
 unblocks: [CBP-004, CBP-005, CBP-008, CBP-010]
 acceptance_criteria:
-  - The facade supports structured request envelopes for deterministic replayable runs.
-  - Normalized streaming events have one consumer and no UI special-casing.
-  - Tool-call correlation and reconciliation tolerate CLI oddities.
-  - Auth/UX-state detection includes logged out, expired or invalid, rate limit, and outage.
-  - Stream resilience includes bounded retry, replay safety, and circuit breaking.
-  - PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by orchestrator-subagent-integration and Contracts_V0.
+- The facade supports structured request envelopes for deterministic replayable runs.
+- Normalized streaming events have one consumer and no UI special-casing.
+- Tool-call correlation and reconciliation tolerate CLI oddities.
+- Auth/UX-state detection includes logged out, expired or invalid, rate limit, and outage.
+- Stream resilience includes bounded retry, replay safety, and circuit breaking.
+- PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by orchestrator-subagent-integration
+  and Contracts_V0.
+- 'DL-259, Jared 2026-10-31: D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected
+  execution host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys
+  are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share
+  stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
+  are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
+  route invalidates stale validation; another account of the same provider has a distinct identity. D4: confirm provider
+  admission and executable conformance immediately before building Puppet Master. The wizard lists its provider choices
+  without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account
+  authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not
+  merely signed in.'
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

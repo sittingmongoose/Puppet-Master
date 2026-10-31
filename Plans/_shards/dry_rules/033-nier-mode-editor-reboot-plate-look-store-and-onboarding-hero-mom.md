@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3098-L3175
+Source lines: L3142-L3219
 
-Source SHA256: `d87bda498a59f6ce9a2cc5c5e94d4472482c0aa8d38f9a4641b4bc045c7c5c97`
+Source SHA256: `3e54996b18a8b9e3c3eabfbce6f8859c0427e58b48789ece794b71cdf8ebb852`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `d87bda498a59f6ce9a2cc5c5e94d4472482c0aa8d38f9a4641b4bc045c7c5c97
 
 DL-152 reaches NieR Mode from four places and DL-153 gives onboarding's hero moments five styles and the first paint the stored look. Each of these must exist once, so the four places and the five styles never grow copies of their own.
 
-### DR-056 - One NieR Mode Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments
+### DR-056 - One NieR Adjust Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments
 
 ```yaml
 plan_unit_id: DR-056
@@ -20,33 +20,33 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  NieR Mode has exactly one editor, SSYS-043's row editor titled NieR Mode, reached from the Settings row Customize
-  NieR Mode, the title-bar theme selector, the Guided Tour bar's Look menu and the onboarding look choice and its Look
-  menu, and drawn either as a popup dialog over the application or as a panel inside the onboarding window. It reads
-  and writes only through a store: live, the current Project's Settings through cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply; inside the onboarding window, the onboarding preview through
-  ui.onboarding.choose_look, written with the Project at commit (DL-153). Its open, close and replay are
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and inside the
-  onboarding window ui.onboarding.choose_look opens and closes the panel. No surface keeps a second editor or its own
-  preset, part or background list. Every NieR Mode on or off, from Settings, the title bar, the Tour or the onboarding
-  window, plays the one reboot plate and its slat transition (F3-598); no surface draws a plate of its own. The look
-  has one store, the current Project's Settings (SSYS-010): the first paint only reads it (F3-468), and no app-global,
-  cross-Project or local-storage theme copy or paint hint exists. Onboarding's hero moments (the wake, the act card
-  and the curtain call) have one trigger, one end state, one snap to that end state and one sound path through the
-  Notifications & Sounds owner's player (DR-043); their five styles, NieR's (F3-598) and the four families' (F3-600),
-  differ in presentation only.
-  Amended 2026-10-29 (O1–O12, S1–S9; PM7): Pip has one SSYS-056 row editor, one parts/default/preset registry and one Project Settings transaction, reached from Settings/wand/titlebar only. Onboarding reads factory/Project parts, no editor inside it. One hero trigger/end state/snap/sound path remains for all Pip worlds and Ready handoff; no second local store.
+  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
+  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
+  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply; no independent NieR switch or command remains. Exactly one NieR row editor
+  serves Settings, the title bar, the Guided Tour and onboarding. Preset, part and background lists have one
+  owner. Live edits use the existing Project Settings preview/apply pair; onboarding uses its existing
+  non-persistent ui.onboarding.choose_look preview and exact commit boundary. The retained local actions
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay add no command
+  or store. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it
+  uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover.
+  Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local
+  rehearsal that changes no setting. One Project look store and one first-paint reader serve all five theme
+  families. No app-global or cross-Project copy, independent NieR boolean writer, local-storage hint, second
+  Reboot plate or per-surface family selector exists. Hero moments share one trigger, end state, snap and sound
+  path through DR-043; five family styles differ in presentation only. Pip keeps the SSYS-056 row editor, shared
+  parts/preset registry and Settings owner. Onboarding reads factory/Project Pip parts and has no Pip editor.
+  Legacy NieR Mode and Customize NieR Mode labels are source lineage, superseded by Q22.
 gui_related: true
 gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
 split_recommended: false
 depends_on: [SSYS-043, SSYS-010, F3-468, F3-598, F3-600, DL-152, DL-153, DR-043]
 unblocks: []
 acceptance_criteria:
-  - "The Settings row, the title-bar theme selector, the Tour bar's Look menu and the onboarding look choice open the same NieR Mode editor; no second editor, preset list, part list or background list exists."
-  - "The editor writes only through the live Settings transaction pair or, inside the onboarding window, through ui.onboarding.choose_look's preview, never through a store of its own."
-  - "Every NieR Mode on or off plays the one reboot plate and slat transition, wherever it is turned."
-  - "The theme and NieR rows are stored only in the current Project's Settings; the first paint reads them and keeps no app-global, cross-Project or local-storage copy or hint."
-  - "The five styles of the wake, the act card and the curtain call share one trigger, end state, snap and sound path and differ in presentation only."
+  - "One editor, part/preset/background registry, look store and first-paint reader serve all five families."
+  - "Live writes use the existing Settings pair and onboarding uses its existing preview/commit boundary."
+  - "Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting."
+  - "No independent NieR boolean, separate family command, per-surface selector list or second sound player exists."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

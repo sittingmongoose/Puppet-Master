@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6344-L6439
+Source lines: L6344-L6436
 
-Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
+Source SHA256: `4011108e61761eeefb30d658440e0a7b416d84499acdb8888bce75a60fd45471`
 
 ---
 
@@ -31,25 +31,21 @@ plan_unit_id: UF-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: >-
-  The Usage page reports measured provider accounting and never manufactures it. A cache-read or reasoning
-  bucket is folded into a displayed total only on a route whose provider publishes that bucket as separately
-  billed; on a route with no published billing treatment the bucket renders as not exposed and the total is
-  left unchanged rather than assuming an inclusive or an exclusive rule. Missing facts render unknown and
-  never zero, and a provider-reported zero renders zero and never unknown; the two remain distinct display
-  states with distinct reasons. Settlement is a separate axis from the billing route: settlement_status
-  describes how far one attempt has progressed toward final accounting, while entitlement_class and
-  provider_route_kind describe who pays for it, and the page never collapses the two into one badge. Usage
-  reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
-  deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
-  target, and the page stores, mutates, and re-declares nothing on the policy side. The one exception is a
-  bound Settings control that the Accounts room hosts in place (UF-107, DL-174): it shows the Settings
-  owner's current value and changes it only through cmd.settings.transaction.preview and
-  cmd.settings.transaction.apply, so the value, its validation, its scope and its receipt stay the Settings
-  owner's and Usage keeps no copy. Provider-native quota units
-  keep their own units, windows, and reset semantics and are never flattened onto a single cross-provider
-  percentage scale. A concept's demo clock that plays readings forward in time (UF-107) is a lab-only
-  demonstration, never a Usage reading, and nothing it shows is counted, stored or exported.
+canonical_text: 'The Usage page reports measured provider accounting and never manufactures it. A cache-read or reasoning
+  bucket is folded into a displayed total only on a route whose provider publishes that bucket as separately billed;
+  on a route with no published billing treatment the bucket renders as not exposed and the total is left unchanged rather
+  than assuming an inclusive or an exclusive rule. Missing facts render unknown and never zero, and a provider-reported
+  zero renders zero and never unknown; the two remain distinct display states with distinct reasons. Settlement is a
+  separate axis from the billing route: settlement_status describes how far one attempt has progressed toward final accounting,
+  while entitlement_class and provider_route_kind describe who pays for it, and the page never collapses the two into
+  one badge. Usage reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
+  deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail target, and
+  the page stores, mutates, and re-declares nothing on the policy side. The one exception is a bound Settings control
+  that the Accounts room hosts in place (UF-107, DL-174): it shows the Settings owner''s current value and changes it
+  only through cmd.settings.transaction.preview and cmd.settings.transaction.apply, so the value, its validation, its
+  scope and its receipt stay the Settings owner''s and Usage keeps no copy. Provider-native quota units keep their own
+  units, windows, and reset semantics and are never flattened onto a single cross-provider percentage scale. Amended
+  DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The unit governs what the Usage page shows for unknown, zero, not-exposed, settlement, entitlement, and quota-unit values, and where a policy change is routed.
 depends_on: [UF-085, UF-087, UF-089, UF-090, UF-091]
@@ -92,12 +88,13 @@ preserved_exact_tokens:
   - "ai.usage.usage-windows"
   - "scope:all"
 negative_constraints:
-  - Do not fold a cache-read or reasoning bucket into a displayed total on a route whose provider publishes no separate billing treatment for it.
-  - Do not render a missing value as zero, and do not render a provider-reported zero as unknown.
-  - Do not let the Usage page own, persist, or mutate a Settings-owned policy value; a bound control hosted in place changes it only through the Settings owner's transaction.
-  - Do not count, store, or export a reading a demo clock produced.
-  - Do not flatten provider-native quota units onto one shared percentage scale.
-  - Do not hardcode the concept fixture identities as canonical copy.
+- Do not fold a cache-read or reasoning bucket into a displayed total on a route whose provider publishes no separate
+  billing treatment for it.
+- Do not render a missing value as zero, and do not render a provider-reported zero as unknown.
+- Do not let the Usage page own, persist, or mutate a Settings-owned policy value; a bound control hosted in place changes
+  it only through the Settings owner's transaction.
+- Do not flatten provider-native quota units onto one shared percentage scale.
+- Do not hardcode the concept fixture identities as canonical copy.
 owner_hints:
   - Plans/usage-feature.md
   - Plans/FinalGUISpec.md

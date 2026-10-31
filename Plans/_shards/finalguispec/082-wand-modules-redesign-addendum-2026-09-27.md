@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40480-L41702
+Source lines: L40858-L42100
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -20,72 +20,79 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules' surfaces
-  only, this contract supersedes the presentation clauses of the 2026-09-03 redesign section's
-  section 10 (one shared modal shell, the card that pops out to a full panel) and section 13 (the
-  Schedule Message and Build At modals' layout), and Additive Correction v4's statement that
-  nothing authorises a broad restyle. Every behaviour clause stays and applies to these surfaces
-  unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their
-  tokens. Every configuration popup is a configuration sheet with one anatomy. The head has the
-  module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
-  lead sentence and the close control, and no header pill. The hero is the most important input,
-  first and focused. Then a plate, a flat drawing of who is involved and where the result goes (in
-  the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module's
-  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four
-  collaboration kinds, 1 to 3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and
-  unnumbered elsewhere; the promise lines saying what won't happen, where the module has any (the
-  Schedule Message sheet has none, DL-148); and one Advanced entry that opens as a page inside the
-  same sheet. Every
-  control has a visible label and one helper line; options with descriptions use the preserved
-  dropdown trigger, and each description names the real difference between the options (for
-  example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
-  and BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot holds the read-back
-  sentence, always true for the current settings, the estimate line (never $0.00), Cancel and one
-  primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and
-  a refused Start replaces the read-back with the refusal and a route to the control that fixes it.
-  A sheet whose changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never blurred, and
-  F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115): each theme family moves with
-  its own motion personality, aligned with the transcript's motion voices of ACD-475
-  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
-  in-chat card's changes take their family's personality. Where a card takes part in a transcript
-  beat (its family entrance, the fold), ACD-475 governs and the voice changes only path, easing and
-  texture, never timing or order. This contract states the principle only: the per-family duration
-  and easing values are the design foundation's tokens, recorded at the concept's closing step, and
-  are not canon values. Reduce Motion lands every change at its end state instantly in every family.
-  Sizes are fixed per sheet: wide 1120 x 780
-  (the collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back
-  Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet
-  (Revert, ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most
-  its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open.
-  The common case never scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster
-  grows, showing its richest mode that fits and never scaled to fit (F3-595, DL-149), but never past
-  its floor, the leanest drawing that fits its width (F3-601, DL-154), and grows into spare height
-  when the column is short; the roster scrolls in its own region only once its rows no longer fit
-  beside the plate's floor, with Add a helper kept visible; the side column scrolls only below
-  1280 x 800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the
-  body becomes one column that scrolls inside the sheet with head and foot fixed, the plate staying at
-  the top of that column while its question is on screen (F3-601); nothing overflows sideways.
-  Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims
-  the others, with no re-render. Kinds are told apart by a kind mark drawn by shape, and each
-  participant by its puppet, which replaced the cast mark (F3-594, DL-149): a role prop, the theme
-  family's material and a puppet-drawn state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
-  block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji.
-  Typography (J-1): every wand-module surface uses the theme's own font with no separate display
-  face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings)
-  differ only by size, weight and colour, and a quote is marked by quotation marks and the muted
-  colour, never a different face. Spacing (J-2) is a floor in every theme: text sits at least 8 px
-  from a hairline, divider or border above or below it (6 px inside a 40 px in-chat lane, whose
-  height grows instead) and at least 12 px from a container's side edge; controls keep at least
-  10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall; adjacent
-  controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text
-  on its line; a secondary line under a row sits at least 6 px below it and 12 px above what
-  follows; roster rows are at least 52 px tall; body and helper text keep a line height of at
-  least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes or a secondary
-  element drops; padding and gaps never compress.
-  DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript
-  entrances retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance
-  do not acquire a second entrance animation.
-  Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close. Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host follows SSYS-056.
+  Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules' surfaces only, this
+  contract supersedes the presentation clauses of the 2026-09-03 redesign section's section 10 (one shared modal
+  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'
+  layout), and Additive Correction v4's statement that nothing authorises a broad restyle. Every behaviour
+  clause stays and applies to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY,
+  the current themes and their tokens. Every configuration popup is a configuration sheet with one anatomy. The
+  head has the module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
+  lead sentence and the close control, and no header pill. The hero is the most important input, first and
+  focused. Then a plate, a flat drawing of who is involved and where the result goes (in the four collaboration
+  kinds, the cast plate of F3-595, DL-149), over the roster or the module's equivalent; then the questions,
+  numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to 3 in Crew Auto), each
+  number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying what won't
+  happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry that
+  opens as a page inside the same sheet. Every control has a visible label and one helper line; options with
+  descriptions use the preserved dropdown trigger, and each description names the real difference between the
+  options (for example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
+  and BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot
+  holds the read-back sentence, always true for the current settings, the estimate line (never $0.00), Cancel
+  and one primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and a
+  refused Start replaces the read-back with the refusal and a route to the control that fixes it. A sheet whose
+  changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is
+  frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia
+  CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never
+  blurred, and F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115):
+  each theme family moves with its own motion personality, aligned with the transcript's motion voices of
+  ACD-475 (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
+  in-chat card's changes take their family's personality. Where a card takes part in a transcript beat (its
+  family entrance, the fold), ACD-475 governs and the voice changes only path, easing and texture, never timing
+  or order. This contract states the principle only: the per-family duration and easing values are the design
+  foundation's tokens, recorded at the concept's closing step, and are not canon values. Reduce Motion lands
+  every change at its end state instantly in every family. Sizes are fixed per sheet: wide 1120 x 780 (the
+  collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back Seat Driver,
+  Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert, ELI5 and the
+  small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most its width
+  less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
+  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that
+  fits and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its
+  width (F3-601, DL-154), and grows into spare height when the column is short; the roster scrolls in its own
+  region only once its rows no longer fit beside the plate's floor, with Add a helper kept visible; the side
+  column scrolls only below 1280 x 800; the hero field scrolls inside itself past three lines; below a 900 px
+  sheet width the body becomes one column that scrolls inside the sheet with head and foot fixed, the plate
+  staying at the top of that column while its question is on screen (F3-601); nothing overflows sideways.
+  Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims the others,
+  with no re-render. Kinds are told apart by a kind mark drawn by shape, and each participant by its puppet,
+  which replaced the cast mark (F3-594, DL-149): a role prop, the theme family's material and a puppet-drawn
+  state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
+  block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji. Typography (J-1):
+  every wand-module surface uses the theme's own font with no separate display face; the voice roles
+  (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only by size, weight and
+  colour, and a quote is marked by quotation marks and the muted colour, never a different face. Spacing (J-2)
+  is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below it (6 px
+  inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container's side edge;
+  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall;
+  adjacent controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on
+  its line; a secondary line under a row sits at least 6 px below it and 12 px above what follows; roster rows
+  are at least 52 px tall; body and helper text keep a line height of at least 1.45 and headlines 1.25. When
+  space runs short, text wraps or ellipsizes or a secondary element drops; padding and gaps never compress.
+  DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript entrances
+  retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance do not acquire a
+  second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the
+  kind sign on a third string, 10 px lower than the first concept and level with Close. Existing
+  title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
+  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
+  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
+  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
+  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
+  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
+  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
+  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
+  fallback icon.
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -97,10 +104,11 @@ acceptance_criteria:
   - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
   - "No kind or participant is drawn with initials or letters."
   - "Every wand-module surface uses the theme's own font and no separate display face."
-  - "Every surface meets the J-2 minimums in all eight themes."
+  - "Every surface meets the J-2 minimums in all ten themes."
   - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
   - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
   - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -167,25 +175,36 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The composer stack, from the transcript down, is the floating Activity bar pill, the follow-up
-  queue, the provider quota-wait strip, the dock (ACD-476), then the composer. The dock is at most
-  three 34 px one-line items plus one overflow line; each line has the source's mark, its kind word
-  and the owner's sentence, a clock when the owner gives one, and one action. It is transient: it
-  shows only while it has items and takes no space otherwise. It reserves its own height in flow,
-  never floats over the transcript, and never collides with the floating Activity bar pill or the
-  decision host. The transcript's bottom padding (APR-004) is measured with the dock present, so the
-  last transcript item is never under the pill. Under width pressure a dock line ellipsizes its
-  sentence and keeps its action; the F3-534 priority order is unchanged. Among the active capability
-  glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner
-  projection and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark.
-  The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
-  The dock and the per-reply files row replace the stream footer pill's helpers and files chips
-  (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
-  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
-  dock and the quota-wait strip (amended 2026-10-17, review r1) and lifts the floating Activity bar pill and the follow-up queue, which float together as
-  one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
-  stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
-  is composer, dock, quota-wait strip, decision host, then the floating pill and queue.
+  The composer stack, from the transcript down, is the floating Activity bar pill, the follow-up queue, the
+  provider quota-wait strip, the dock (ACD-476), then the composer. The dock is at most three 34 px one-line
+  items plus one overflow line; each line has the source's mark, its kind word and the owner's sentence, a clock
+  when the owner gives one, and one action. It is transient: it shows only while it has items and takes no space
+  otherwise. It reserves its own height in flow, never floats over the transcript, and never collides with the
+  floating Activity bar pill or the decision host. The transcript's bottom padding (APR-004) is measured with
+  the dock present, so the last transcript item is never under the pill. Under width pressure a dock line
+  ellipsizes its sentence and keeps its action; the F3-534 priority order is unchanged. Among the active
+  capability glyphs inside the text field, Back Seat Driver shows an ambient eye that reads the owner projection
+  and is absent when Back Seat Driver is off, and the Crew glyph is the Crew kind mark. The ELI5 quick dot is
+  the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126). The dock and the per-reply files
+  row replace the stream footer pill's helpers and files chips (ACD-482, DL-129); no summary of helpers or file
+  changes stacks above the composer beside the dock. Amended 2026-10-17 (DL-228): while a decision host (a Plan
+  or questionnaire host) is open it sits above the dock and the quota-wait strip (amended 2026-10-17, review r1)
+  and lifts the floating Activity bar pill and the follow-up queue, which float together as one stack, with the
+  scroll-to-bottom control; the transcript keeps its bottom padding for that floating stack. The quota-wait
+  strip and the dock stay in flow beneath the decision host, so bottom to top the order is composer, dock,
+  quota-wait strip, decision host, then the floating pill and queue. QA round 2, Jared 2026-10-30; DL-258; GUI
+  7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000
+  ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
+  identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a
+  restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines
+  bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
+  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock
+  priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
+  Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel,
+  System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque
+  plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu
+  tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing
+  material. This is consumer treatment, no global Glass token change or extra backdrop-filter.
 gui_related: true
 gui_classification_reason: "Places the dock and the new capability glyphs in the composer stack."
 split_recommended: false
@@ -196,6 +215,7 @@ acceptance_criteria:
   - "The dock sits between the quota-wait strip and the composer and never overlaps the transcript, the Activity bar pill or the decision host."
   - "With the dock showing, the last transcript item clears the Activity bar pill at settled bottom scroll."
   - "The Back Seat Driver eye reflects the owner projection and is absent when Back Seat Driver is off."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -302,37 +322,37 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  A collaboration run card is a system surface at the transcript's full content width, never inside
-  an assistant bubble, and no transcript variant adds a side strip to it. One card per run changes
-  density in place (Collaborative_Workflows CWR-019 owns the densities and their state mapping);
-  this unit fixes its geometry. The card is its own width container with three tiers: S below 360 px, M from 360 to 519 px, L from 520 px. Height budgets: live at most 340 px and needs-you,
-  failed or finished at most 360 px at M and L; 360 px and 400 px at S; a receipt is one 44 px line.
-  At every tier a card shows at most three lane rows (the rest summarised in one row that opens the
-  full list), and every region has a fixed box and a line clamp, so a periodic tick changes only
-  text; heights change only at state boundaries, with the reader's scroll anchor held. The S tier
-  is a card inside a narrow chat (for example beside a full-size Activity Detail) and is not a
-  minimum chat width. Only the newest live run in a thread shows its live face; older live runs
-  are collapsed, and a needs-you decision survives the collapse. A finished run keeps its result
-  face until the user's next message and then becomes a receipt. The one-line receipt is one
-  grammar for every module (collaboration runs, Teach, Revert, a sent scheduled message, a
-  dismissed advisor note): mark, headline, time and cost where they apply, and an open action; the
-  run title shows only at L. When a card is collapsed, or narrower than 520 px (the S and M tiers),
-  Open Panel, Message and More may sit behind Expand, and below 520 px the helper count may move into
-  the card's hover card (DL-123). On a result face or a receipt, Message moves into More as a
-  disabled item with its reason printed ("This {Kind} has finished, so it can't take messages. Ask
-  the assistant instead."), never only in a tooltip. The Coordinator's puppet (the crowned one,
-  F3-594) uses the text colour or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480, which
-  holds the full record. The run view is headed by the run's cast plate in live states (F3-595), and
-  neither a run card nor a run view shows Technical details (DL-149). While a run's view is the active editor tab, the card's follow-on controls
-  give way to one line saying where to decide, at the same height, so a control that changes the run
-  is in one place at a time; decisions from an approval owner stay in the card. The collaboration
-  hover cards show at most four run rows plus one overflow line (APR-007).
-  The chat pane beside an open plan or document has a minimum width of 360 px (DL-138;
-  Assistant_Plan_Runtime APR-014). The card's S tier measures its own content box after padding and
-  remains available below 360 px; it does not lower the chat pane minimum.
-  Amended 2026-10-09 (DL-180): Open Panel opens the run view as a run tab placed by F3-634, "the active editor tab"
-  reads as the run tab being active in its panel, and the chat pane's width is F3-637's: the column never drops below
-  400 px inside the window, which meets the 360 px minimum beside an open plan or document.
+  A collaboration run card is a system surface at the transcript's full content width, never inside an assistant
+  bubble, and no transcript variant adds a side strip to it. One card per run changes density in place
+  (Collaborative_Workflows CWR-019 owns the densities and their state mapping); this unit fixes its geometry.
+  The card is its own width container with three tiers: S below 360 px, M from 360 to 519 px, L from 520 px.
+  Height budgets: live at most 340 px and needs-you, failed or finished at most 360 px at M and L; 360 px and
+  400 px at S; a receipt is one 44 px line. At every tier a card shows at most three lane rows (the rest
+  summarised in one row that opens the full list), and every region has a fixed box and a line clamp, so a
+  periodic tick changes only text; heights change only at state boundaries, with the reader's scroll anchor
+  held. The S tier is a card inside a narrow chat (for example beside a full-size Activity Detail) and is not a
+  minimum chat width. Only the newest live run in a thread shows its live face; older live runs are collapsed,
+  and a needs-you decision survives the collapse. A finished run keeps its result face until the user's next
+  message and then becomes a receipt. The one-line receipt is one grammar for every module (collaboration runs,
+  Teach, Revert, a sent scheduled message, a dismissed advisor note): mark, headline, time and cost where they
+  apply, and an open action; the run title shows only at L. When a card is collapsed, or narrower than 520 px
+  (the S and M tiers), Open Panel, Message and More may sit behind Expand, and below 520 px the helper count may
+  move into the card's hover card (DL-123). On a result face or a receipt, Message moves into More as a disabled
+  item with its reason printed ("This {Kind} has finished, so it can't take messages. Ask the assistant
+  instead."), never only in a tooltip. The Coordinator's puppet (the crowned one, F3-594) uses the text colour
+  or its seat colour, never the accent (DL-111). Open Panel opens the run view, the editor document of ACD-480,
+  which holds the full record. The run view is headed by the run's cast plate in live states (F3-595), and
+  neither a run card nor a run view shows Technical details (DL-149). While a run's view is the active editor
+  tab, the card's follow-on controls give way to one line saying where to decide, at the same height, so a
+  control that changes the run is in one place at a time; decisions from an approval owner stay in the card. The
+  collaboration hover cards show at most four run rows plus one overflow line (APR-007). The chat pane beside an
+  open plan or document has a minimum width of 360 px (DL-138; Assistant_Plan_Runtime APR-014). The card's S
+  tier measures its own content box after padding and remains available below 360 px; it does not lower the chat
+  pane minimum. Amended 2026-10-09 (DL-180): Open Panel opens the run view as a run tab placed by F3-634, "the
+  active editor tab" reads as the run tab being active in its panel, and the chat pane's width is F3-637's: the
+  column never drops below 400 px inside the window, which meets the 360 px minimum beside an open plan or
+  document. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
+  wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
@@ -343,7 +363,7 @@ acceptance_criteria:
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
   - "No run card or run view shows Technical details (DL-149)."
-  - "Card heights stay within the tier budgets under the periodic tick in all eight themes."
+  - "Card heights stay within the tier budgets under the periodic tick in all ten themes."
   - "No card shows more than three lane rows without its summary row."
   - "Every module's finished trace uses the one 44 px receipt grammar."
   - "A run-changing control is rendered in one place at a time while the run view is active."

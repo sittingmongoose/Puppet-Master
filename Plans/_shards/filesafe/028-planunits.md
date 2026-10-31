@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2943-L13294
+Source lines: L2946-L13307
 
-Source SHA256: `ece47700f08bfab6ed483e3649d3c6201fc47ae8736dbe5bdc70c828a1dc13b6`
+Source SHA256: `bd49ec5c4460ad0ff88f9178ed62b8b1d657e1ba7924cd1164bf2a3139577174`
 
 ---
 
@@ -1603,10 +1603,14 @@ plan_unit_id: F2-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
-canonical_text: >-
-  An explicitly configured-off BashGuard state is only for authenticated, auditable, scoped
-  operator grants, initializes with empty patterns and approved commands, carries the current
-  override receipt, and must not be used as an initialization-failure fallback.
+canonical_text: 'An explicitly configured-off BashGuard state is only for authenticated, auditable, scoped operator grants,
+  initializes with empty patterns and approved commands, carries the current override receipt, and must not be used as
+  an initialization-failure fallback. DL-259, Jared 2026-10-31: D8 A: onboarding has one FileSafe switch, default on,
+  covering command blocklist, write scope, security filter and pre-write safe points together. Individual controls remain
+  in Settings. The switch expresses a requested owner configuration, never approval to bypass a required guard, an absent
+  allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory
+  policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently turns
+  a guard off.'
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend disabled guard state.
@@ -1614,12 +1618,18 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "Explicit config-off state cannot be constructed without a current override receipt."
-- "Initialization failure does not construct a config-off guard state."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- Explicit config-off state cannot be constructed without a current override receipt.
+- Initialization failure does not construct a config-off guard state.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: D8 A: onboarding has one FileSafe switch, default on, covering command blocklist, write
+  scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch expresses
+  a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path
+  resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective guard state win;
+  a refused change stays refused with a clear reason. No failure silently turns a guard off.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

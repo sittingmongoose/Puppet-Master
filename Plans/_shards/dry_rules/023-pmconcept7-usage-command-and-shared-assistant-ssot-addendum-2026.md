@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2343-L2463
+Source lines: L2343-L2466
 
-Source SHA256: `d87bda498a59f6ce9a2cc5c5e94d4472482c0aa8d38f9a4641b4bc045c7c5c97`
+Source SHA256: `3e54996b18a8b9e3c3eabfbce6f8859c0427e58b48789ece794b71cdf8ebb852`
 
 ---
 
@@ -51,41 +51,44 @@ plan_unit_id: DR-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: >-
-  PMConcept7 is a consumer of one Usage authority, one widget-layout authority per
-  canonical host namespace, one Home layout schema, one command language, one production
-  wiring matrix, one Event Authority registry, and one shared Assistant node/controller/
-  transcript/context store. Concept adapters, keys, logs, and the size_surface token are
-  source-lineage or compatibility inputs only. They cannot become peer stores, services,
-  commands, events, Assistant clones, or production wiring authorities; preview state and
-  current PMConcept7 aggregate provider/account/panel inspectors are local. Event-primary Usage callers cross
-  the route-command boundary with usage_event/usage_event_ref; a PMConcept7 Ledger attempt row crosses it with
-  usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries
-  no OpenSubject. Only settled owner commands cross the command/persistence boundary. Since DL-180 the
-  dashboard host has one namespace per board: each dashboard tab shows one board whose widget layout lives in
-  widget_layout:v1:dashboard:<board_id> (WS-030), which replaces the single widget_layout:v1:dashboard namespace
-  (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one
-  Home layout schema is pm.home_workspace_layout.v2, its record home_workspace_layout.v2 (SP-330); the
-  home_workspace_layout.v1 record is a read-only migration input, converted on first read and never reset.
-  Amended 2026-10-10 (DL-186): each board's widget layout lives per project in
-  widget_layout:v1:<project_id>:<board_id> (WS-030), and the 2026-10-09 widget_layout:v1:dashboard:<board_id> was
-  never written; widget_layout:v1:dashboard is converted into no board. Every dashboard board runs the one Usage
-  board engine, so dashboards add no widget-layout authority, store or settlement, and a person's saved board
-  presets live in the one per-user family widget_presets:v1.
+canonical_text: 'PMConcept7 is a consumer of one Usage authority, one widget-layout authority per canonical host namespace,
+  one Home layout schema, one command language, one production wiring matrix, one Event Authority registry, and one shared
+  Assistant node/controller/ transcript/context store. Concept adapters, keys, logs, and the size_surface token are source-lineage
+  or compatibility inputs only. They cannot become peer stores, services, commands, events, Assistant clones, or production
+  wiring authorities; preview state and current PMConcept7 aggregate provider/account/panel inspectors are local. Event-primary
+  Usage callers cross the route-command boundary with usage_event/usage_event_ref; a PMConcept7 Ledger attempt row crosses
+  it with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries
+  no OpenSubject. Only settled owner commands cross the command/persistence boundary. Since DL-180 the dashboard host
+  has one namespace per board: each dashboard tab shows one board whose widget layout lives in widget_layout:v1:dashboard:<board_id>
+  (WS-030), which replaces the single widget_layout:v1:dashboard namespace (WS-030 says how the existing layout carries
+  over), and no board''s widget layout enters the Home record. The one Home layout schema is pm.home_workspace_layout.v2,
+  its record home_workspace_layout.v2 (SP-330); the home_workspace_layout.v1 record is a read-only migration input, converted
+  on first read and never reset. Amended 2026-10-10 (DL-186): each board''s widget layout lives per project in widget_layout:v1:<project_id>:<board_id>
+  (WS-030), and the 2026-10-09 widget_layout:v1:dashboard:<board_id> was never written; widget_layout:v1:dashboard is
+  converted into no board. Every dashboard board runs the one Usage board engine, so dashboards add no widget-layout
+  authority, store or settlement, and a person''s saved board presets live in the one per-user family widget_presets:v1.
+  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:'
 gui_related: true
 gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
 split_recommended: false
 depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012, DL-180, DL-186]
 unblocks: [ACD-448]
 acceptance_criteria:
-  - Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command, receipt, or domain event.
-  - Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
-  - Production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:dashboard:<board_id> namespace or to home_workspace_layout.v2, and no dashboard board's widget layout is written into the Home layout record.
-  - "Amended 2026-10-10 (DL-186): production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:<project_id>:<board_id> or to widget_presets:v1, and every dashboard board runs the one Usage board engine with no store or settlement of its own."
-  - No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
-  - No pointer-preview or unregistered context-compaction event family is admitted.
-  - Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner
+  and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row
+  uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command,
+  receipt, or domain event.
+- Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
+- Production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:dashboard:<board_id> namespace or
+  to home_workspace_layout.v2, and no dashboard board's widget layout is written into the Home layout record.
+- 'Amended 2026-10-10 (DL-186): production never writes PM7 fixture keys as a peer to a board''s widget_layout:v1:<project_id>:<board_id>
+  or to widget_presets:v1, and every dashboard board runs the one Usage board engine with no store or settlement of its
+  own.'
+- No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
+- No pointer-preview or unregistered context-compaction event family is admitted.
+- Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plans-verify.py lint-contractrefs

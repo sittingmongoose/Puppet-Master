@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18728-L18980
+Source lines: L18728-L18990
 
-Source SHA256: `9bcf578d283570a6f569732873e9aa9ae44bbc1d77a7e271c6f6624db1043396`
+Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
 
 ---
 
@@ -94,22 +94,29 @@ plan_unit_id: SP-252
 unit_type: migration_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
-  with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session
-  stores the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical
-  hash, current dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and
-  continuation. Return contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage
-  paths consume the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence.
-  v2 session-key/v1 values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts
-  are unconfirmed; already committed rows resume provider setup only after exact owner-result/receipt validation.
-  Migration emits the sole durable Storage migration receipt, reports exact disposition/stage/path/committed-resume
-  counts with a hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately
-  pending physical admission. No physical family, retention policy, native store, readiness or recovery certification
-  is added.
-  The session's optional look_choice is merged per ui.onboarding.choose_look request, replacing only fields
-  the request sets; absent or null fields mean nothing chosen yet, and a resume repaints that stored choice,
-  NieR Mode included, with null fields falling back to F3-520's start rule; look_choice is never a Settings
-  value.
+canonical_text: 'The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
+  with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session stores
+  the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical hash, current
+  dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and continuation. Return
+  contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage paths consume
+  the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence. v2 session-key/v1
+  values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts are unconfirmed; already
+  committed rows resume provider setup only after exact owner-result/receipt validation. Migration emits the sole durable
+  Storage migration receipt, reports exact disposition/stage/path/committed-resume counts with a hashed per-row manifest,
+  and never replays owner work. Domain reconciliation remains separately pending physical admission. No physical family,
+  retention policy, native store, readiness or recovery certification is added. The session''s optional look_choice is
+  merged per ui.onboarding.choose_look request, replacing only fields the request sets; absent or null fields mean nothing
+  chosen yet, and a resume repaints that stored choice, NieR Mode included, with null fields falling back to F3-520''s
+  start rule; look_choice is never a Settings value. Q22, Jared 2026-10-30 (DL-257): the optional closed session look_choice
+  admits family nier and the retained parts/background, with no independent nier_mode field. When reading an earlier
+  session choice, the existing onboarding migration consumes a true nier_mode as family nier in its stored light/dark
+  mode, removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged. Conversion
+  precedes validation of the current shape and is idempotent. Settings performs the separate retired general.visual.nier-mode
+  load migration under SSYS-043, including Auto resolution. No physical family, key, policy or new migration writer is
+  added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state
+  basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes;
+  it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
   point shown to the user.
@@ -119,30 +126,33 @@ depends_on:
 - PWIZ-022
 unblocks: []
 acceptance_criteria:
-- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing
-  onboarding_state family; the registry contains the same 88 families and 24 retention policies.
-- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id},
-  onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read
-  or current writes.
-- Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching
-  draft identity/revision; the confirmed plan hash matches its canonical bytes.
+- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing onboarding_state
+  family; the registry contains the same 88 families and 24 retention policies.
+- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id}, onboarding_state.v1:{project_id}
+  and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read or current writes.
+- Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching draft
+  identity/revision; the confirmed plan hash matches its canonical bytes.
 - A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation
   snapshots preserve only the exact references and phases.
-- Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not
-  authorize Project/destination/history/repository/Settings/sync or broad provider mutation.
+- Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not authorize
+  Project/destination/history/repository/Settings/sync or broad provider mutation.
 - Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider
   failure; navigation never uncreates or recommits the Project.
-- The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain
-  owner-defined; backend/forge/Server/Storage/Client axes are not conflated.
-- Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately
-  validates every committed resume in the disposition manifest without synthesizing review or owner work.
+- The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain owner-defined;
+  backend/forge/Server/Storage/Client axes are not conflated.
+- Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately validates
+  every committed resume in the disposition manifest without synthesizing review or owner work.
 - The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending,
   never peer commit authority.
-- Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile
-  roots, unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint
-  content are excluded.
+- Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile roots,
+  unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint content are
+  excluded.
 - Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models;
   actual underlying owner result/receipt authority remains separate and no new physical family is admitted.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis
+  for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
+  never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
 validation_surfaces:
 - python3 scripts/pm-onboarding-contracts.py --check
 - tests/test_pm_onboarding_phases.py

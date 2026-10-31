@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L276-L1406
+Source lines: L276-L1371
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -415,7 +415,7 @@ Web guarantees all four in-app docks and in-canvas floating. `window.open()` is
 optional, is attempted only from direct user activation, and can never be the sole
 path; a blocked or unavailable popup discloses the fallback and retains in-canvas
 floating. Native Slint 1.17.1 multi-window behavior remains the desktop authority.
-All eight themes and Light/Dark/Auto remain supported, and no new control may use
+All ten themes and Light/Dark/Auto remain supported, and no new control may use
 emoji or non-inline image assets.
 
 Superseded 2026-10-09 (DL-180) where it moves the chat or names fixed panels and
@@ -922,168 +922,133 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The active editor file tab and the code canvas below it render as one continuous
-  surface. A single shared silhouette travels between tabs on a darker tab rail: it
-  carries squircle top corners, no bottom border against the canvas, and concave
-  shoulders at its lower left and lower right, and the silhouette, its corner helpers
-  and the canvas share exactly one fill token while unselected tabs stay visually
-  independent in the rail. Corner geometry is a function of geometric contact and the
-  left and right sides are independent: with a local morph threshold of 20 px,
-  leftProgress = clamp(leftGap / 20, 0, 1) and rightProgress = clamp(rightGap / 20, 0, 1)
-  drive canvasRx = progress * 10 against a fixed canvasRy of 10, and cutoutRx =
-  progress * 8 against a fixed cutoutRy of 8, so a corner flattens sideways rather than
-  shrinking into a circular dimple, and a side that is flush against its boundary
-  flattens completely with no residual notch. Direct dragging is one-to-one with the
-  pointer and corner values are derived from the tab position in the same frame with no
-  independent easing, no momentum and no elastic overshoot; click, snap and keyboard
-  selection animate x and width with a firm low-bounce spring while the canvas stays
-  stationary and the connected shape visibly travels rather than crossfading. The shape
-  recomputes stable target bounds on window resize, tab-width change, theme or motion
-  change, and fonts-ready. Reduced motion removes the spring travel and retains
-  immediate state changes. Amended 2026-08-13 - the tab rail is a translucent plate
-  (--ed-rail-solid split from --ed-rail-bg at 72 percent alpha) over the existing
-  backdrop blur so scrolled code ghosts under the strip; the concave shoulders are
-  masked cutouts through which the frosted rail shows while the active tab and the
-  canvas keep the shared opaque fill; the silhouette layer mounts only after a
-  successful measure and mounts as the strip's last child (slot 0 is uncontested:
-  the grip moved out of the strip to the surface corner); fitters are mutation-free
-  in steady state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is
-  redesigned: the strip is 40 px tall (36 px on the dashboard) with a near-full-height
-  active tab, a 13 px squircle crown that is theme-tunable through --ed-top-radius
-  (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring
-  the 10 px canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS
-  custom properties --ed-lp and --ed-rp (0..1 per side, same 20 px threshold) and the
-  CSS derives the per-theme radii from them; corner caps render the canvas-corner
-  morph at the visible rail boundary; tabs start flush at the panel's left edge;
-  per-theme skins apply (friendly mint canvas with lime active label, glass plate
-  with edge highlight, retro sharp corners with lime). The dashboard tab strip
-  (Main/Metrics/Monitoring) enrolls in the same connected-surface system - EDSHAPE
-  syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at
-  the same alpha - while the title-bar page tabs keep their sliding ink (the F3-464
-  boundary is unchanged). The editor scrollbar is excluded from the frosted rail band
-  via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the silhouette gains
-  theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
-  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline
-  with square inactive-tab rings; basic draws a 2 px
-  accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
-  and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired
-  with this dated disposition). Wave-3 follow-up (2026-08-13): the retro outline lives
-  on the ACTIVE TAB as a three-edge inset ring that snaps on arrival, not on the
-  travelling connected shape - the outline-on-the-travelling-shape rendering is retired
-  with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction
-  canon: the connected shape is ONE JS-composed clip-path path() per frame. The crown
-  corners are superellipse-approximating cubic beziers with a handle factor of
-  0.5523 + 0.35 x progress, and each side descends through an ogee - a concave flare
-  of radius shoulder-max x progress into a convex neck of radius canvas-max x progress
-  landing tangent on the canvas line. This renders identically in Safari and Chromium,
-  which is the explicit motivation: the corner-shape/superellipse enhancement path was
-  engine-split (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown
-  strip clipped by the same path. Morph gap canon (measured against the reference
-  explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
-  canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance
-  to the NEAREST CONTACT - the static strip content-box edge or the adjacent tab's
-  transform-free layout edge - and the strip-end caps key off the strip box edges
-  only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
-  the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels
-  after). Wave-6 follow-up (2026-08-14, defect-fix refinement of the path canon): the
-  ogee construction is height-clamped - flare and neck scale together to fit below
-  the crown (the unclamped first cut inverted the wall segment into a visible hump);
-  the inflection sits at the natural corner meet (wall minus flare, canvas minus
-  neck); and bezier handles are 0.55 x their OWN radius (token-scaled handles
-  doubled back on short chords). Under the retro themes the silhouette SNAPS between
-  tabs - spring travel is suppressed for the discrete cursor-jump aesthetic, and the
-  bake-off flourishes are the motion. Second follow-up (2026-08-14, ogee bow
-  direction): handle ASYMMETRY is canon - long handles (0.9 x radius) at the fixed
-  ends and short handles (0.18 x radius) at the inflection, so the curve tucks INTO
-  the wall and spills DOWN onto the canvas; symmetric 0.55 handles bowed outward and
-  up near the wall (user-reported) and are retired with this dated disposition.
-  Third follow-up (2026-08-14, SILHOUETTE CANON CORRECTED): the tab side is a SINGLE
-  CONCAVE QUARTER-ARC - vertical tangent at the wall, horizontal tangent on the
-  canvas line, a standard-kappa (0.5523) cubic, radius = the shoulder token x the
-  per-side contact progress. The convex canvas radius belongs EXCLUSIVELY to the
-  strip-end corner caps, matching the reference explainer's two-corner model (tab
-  cutout r and canvas r are separate corners). Both ogee constructions - the
-  height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
-  retired with this dated disposition as a misreading of the reference. Fourth
-  follow-up (2026-08-14, the second corner made literal): the CANVAS surface's own
-  top corners round via real animated border-radius on the editor area
-  (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge
-  progress as the tab, so the panel corner and the tab cutout JOIN when flush (both
-  flat = one continuous surface) and the corner blooms back as the tab moves away.
-  The masked wedge caps for editor panes are retired with this dated disposition -
-  they painted rail-coloured overlays at the strip ends and were invisible at panel
-  scale; the dashboard header caps are unchanged this round. Radii retuned for
-  legibility: shoulder-rx-max 14 px default / 16 friendly / 8 retro, canvas-rx-max
-  16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
-  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the
-  rail-over-canvas composite), so the rounded-away canvas corner reveals a visibly
-  darker backdrop; a corner exposing a same-tone backdrop reads as no corner
-  (user-reported: the radius was applying at 18 px yet invisible). Strip heights
-  re-tune with this dated disposition: editor 40 to 35 px and dashboard 36 to 31 px
-  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the resizer column top
-  follows 44 to 39 px), with the minimap/code alignment verified intact under the
-  new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the
-  fourth follow-up's animated border-radius canvas corner is RETIRED with cause -
-  the canvas slides UNDER the translucent rail (the scroll frost), so the area's
-  true box corner is invisible and a border-radius there rounds nothing a user can
-  see. The masked wedge caps are RESTORED as the canonical frost-preserving
-  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid)
-  - the old --ed-cap-bg composite fill was the invisibility cause, not the wedge
-  architecture - at 18 px (20 friendly) width by 16 px height (--ed-corner-ry 12 to
-  16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane background
-  stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill
-  neutralization uses !important, and important declarations beat CSS animations,
-  so all background-based retro effects were dead on dashboard tabs (the DOS blink
-  rendered as an empty box - its non-important color applied while its background
-  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via
-  :not() and receive a normal-weight twin that keeps the pill suppressed without
-  outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's
-  exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect
-  rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin,
-  later in the assembled cascade, won the tie for plain background declarations
-  (phosphor survived only through its keyframes, which sit above the normal cascade).
-  All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and
-  outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
-  disposition. Watched verification: the phosphor block, the DOS full inversion, and
-  the CRT scanline wipe all paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar -
-  native scrollbars are suppressed - and the minimap band aligns with the frosted rail
-  via margin rather than padding, retiring the wave-2 scrollbar-track-margin exclusion
-  with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
-  CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the
-  pointer and corner values are derived from the tab position in the same frame with
-  no independent easing") and its negative constraint against easing corner values
-  independently of the tab position were being VIOLATED by the shipped build, and are
-  restored rather than retired. The violation was structural, not decorative:
-  grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the
-  lastActive change as a selection, set animate = true and sprang the plate across
-  over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
-  pointermoves then parked in the spring-preservation early return and held that state
-  indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the
-  strip contains a .tab.dragging child must SNAP - draggingLive is computed
-  immediately after the lastActive update, it forces animate = false, and the
-  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch
-  cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in
-  the activating frame. Click, snap and keyboard SELECTION springs are explicitly
-  unaffected, as is the release settle owned by the reorder gesture. Measured: worst
-  plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active
-  drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot. Also
-  with this dated disposition, a per-theme silhouette SKIN is added under the wave-6
-  skin family: glass gains a drag-scoped frost,
-  [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
-  { opacity: .92; } - slightly see-through but never legible, honouring the user's
-  "like a blur" request. The drag plate adds no independent backdrop blur; F3-652 owns
-  its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap.
-  The steady-state plate remains fully opaque in all eight themes; measured live at
-  .92 mid-drag in glass-dark and 1 at idle.
-  Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
-  consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
-  the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
-  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape was the only active-tab
-  marker until DL-214 made it the seated chip of F3-631 (amended 2026-10-17, review r1): Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
-  Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to F3-631 and F3-647 where they differ. The
-  dashboard's own Main, Metrics and Monitoring strip retires: a dashboard is a tab in a panel's strip (F3-638). The
-  rotating Retro trio, the pointer-capture reorder, the snap-while-dragging contract and the minimap as the code pane's
-  only scrollbar stand, and now apply in every strip (F3-631, F3-639).
+  The active editor file tab and the code canvas below it render as one continuous surface. A single shared
+  silhouette travels between tabs on a darker tab rail: it carries squircle top corners, no bottom border
+  against the canvas, and concave shoulders at its lower left and lower right, and the silhouette, its corner
+  helpers and the canvas share exactly one fill token while unselected tabs stay visually independent in the
+  rail. Corner geometry is a function of geometric contact and the left and right sides are independent: with a
+  local morph threshold of 20 px, leftProgress = clamp(leftGap / 20, 0, 1) and rightProgress = clamp(rightGap /
+  20, 0, 1) drive canvasRx = progress * 10 against a fixed canvasRy of 10, and cutoutRx = progress * 8 against a
+  fixed cutoutRy of 8, so a corner flattens sideways rather than shrinking into a circular dimple, and a side
+  that is flush against its boundary flattens completely with no residual notch. Direct dragging is one-to-one
+  with the pointer and corner values are derived from the tab position in the same frame with no independent
+  easing, no momentum and no elastic overshoot; click, snap and keyboard selection animate x and width with a
+  firm low-bounce spring while the canvas stays stationary and the connected shape visibly travels rather than
+  crossfading. The shape recomputes stable target bounds on window resize, tab-width change, theme or motion
+  change, and fonts-ready. Reduced motion removes the spring travel and retains immediate state changes. Amended
+  2026-08-13 - the tab rail is a translucent plate (--ed-rail-solid split from --ed-rail-bg at 72 percent alpha)
+  over the existing backdrop blur so scrolled code ghosts under the strip; the concave shoulders are masked
+  cutouts through which the frosted rail shows while the active tab and the canvas keep the shared opaque fill;
+  the silhouette layer mounts only after a successful measure and mounts as the strip's last child (slot 0 is
+  uncontested: the grip moved out of the strip to the surface corner); fitters are mutation-free in steady
+  state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is redesigned: the strip is 40 px tall (36 px
+  on the dashboard) with a near-full-height active tab, a 13 px squircle crown that is theme-tunable through
+  --ed-top-radius (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
+  canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS custom properties --ed-lp and --ed-rp
+  (0..1 per side, same 20 px threshold) and the CSS derives the per-theme radii from them; corner caps render
+  the canvas-corner morph at the visible rail boundary; tabs start flush at the panel's left edge; per-theme
+  skins apply (friendly mint canvas with lime active label, glass plate with edge highlight, retro sharp corners
+  with lime). The dashboard tab strip (Main/Metrics/Monitoring) enrolls in the same connected-surface system -
+  EDSHAPE syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at the same alpha -
+  while the title-bar page tabs keep their sliding ink (the F3-464 boundary is unchanged). The editor scrollbar
+  is excluded from the frosted rail band via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the
+  silhouette gains theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
+  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline with square inactive-tab
+  rings; basic draws a 2 px accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
+  and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired with this dated
+  disposition). Wave-3 follow-up (2026-08-13): the retro outline lives on the ACTIVE TAB as a three-edge inset
+  ring that snaps on arrival, not on the travelling connected shape - the outline-on-the-travelling-shape
+  rendering is retired with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction canon:
+  the connected shape is ONE JS-composed clip-path path() per frame. The crown corners are
+  superellipse-approximating cubic beziers with a handle factor of 0.5523 + 0.35 x progress, and each side
+  descends through an ogee - a concave flare of radius shoulder-max x progress into a convex neck of radius
+  canvas-max x progress landing tangent on the canvas line. This renders identically in Safari and Chromium,
+  which is the explicit motivation: the corner-shape/superellipse enhancement path was engine-split
+  (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown strip clipped by the same path. Morph gap
+  canon (measured against the reference explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
+  canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance to the NEAREST CONTACT -
+  the static strip content-box edge or the adjacent tab's transform-free layout edge - and the strip-end caps
+  key off the strip box edges only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
+  the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels after). Wave-6 follow-up
+  (2026-08-14, defect-fix refinement of the path canon): the ogee construction is height-clamped - flare and
+  neck scale together to fit below the crown (the unclamped first cut inverted the wall segment into a visible
+  hump); the inflection sits at the natural corner meet (wall minus flare, canvas minus neck); and bezier
+  handles are 0.55 x their OWN radius (token-scaled handles doubled back on short chords). Under the retro
+  themes the silhouette SNAPS between tabs - spring travel is suppressed for the discrete cursor-jump aesthetic,
+  and the bake-off flourishes are the motion. Second follow-up (2026-08-14, ogee bow direction): handle
+  ASYMMETRY is canon - long handles (0.9 x radius) at the fixed ends and short handles (0.18 x radius) at the
+  inflection, so the curve tucks INTO the wall and spills DOWN onto the canvas; symmetric 0.55 handles bowed
+  outward and up near the wall (user-reported) and are retired with this dated disposition. Third follow-up
+  (2026-08-14, SILHOUETTE CANON CORRECTED): the tab side is a SINGLE CONCAVE QUARTER-ARC - vertical tangent at
+  the wall, horizontal tangent on the canvas line, a standard-kappa (0.5523) cubic, radius = the shoulder token
+  x the per-side contact progress. The convex canvas radius belongs EXCLUSIVELY to the strip-end corner caps,
+  matching the reference explainer's two-corner model (tab cutout r and canvas r are separate corners). Both
+  ogee constructions - the height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
+  retired with this dated disposition as a misreading of the reference. Fourth follow-up (2026-08-14, the second
+  corner made literal): the CANVAS surface's own top corners round via real animated border-radius on the editor
+  area (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge progress as the tab, so
+  the panel corner and the tab cutout JOIN when flush (both flat = one continuous surface) and the corner blooms
+  back as the tab moves away. The masked wedge caps for editor panes are retired with this dated disposition -
+  they painted rail-coloured overlays at the strip ends and were invisible at panel scale; the dashboard header
+  caps are unchanged this round. Radii retuned for legibility: shoulder-rx-max 14 px default / 16 friendly / 8
+  retro, canvas-rx-max 16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
+  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
+  the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
+  as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
+  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h, --pm6-editor-tabs-h,
+  --pm6-dash-head-h; the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
+  intact under the new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the fourth
+  follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
+  translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
+  rounds nothing a user can see. The masked wedge caps are RESTORED as the canonical frost-preserving
+  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
+  composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
+  height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
+  background stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses
+  !important, and important declarations beat CSS animations, so all background-based retro effects were dead on
+  dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background
+  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via :not() and receive a
+  normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up
+  (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the
+  effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the
+  assembled cascade, won the tie for plain background declarations (phosphor survived only through its
+  keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on,
+  weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
+  disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all
+  paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
+  scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
+  CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
+  derived from the tab position in the same frame with no independent easing") and its negative constraint
+  against easing corner values independently of the tab position were being VIOLATED by the shipped build, and
+  are restored rather than retired. The violation was structural, not decorative: grabbing a NON-ACTIVE tab
+  flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and
+  sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
+  pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract
+  with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP -
+  draggingLive is computed immediately after the lastActive update, it forces animate = false, and the
+  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch cancels the in-flight rAF,
+  jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard
+  SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured:
+  worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct
+  monotonic intermediates on a click-to-select, no overshoot. Also with this dated disposition, a per-theme
+  silhouette SKIN is added under the wave-6 skin family: glass gains a drag-scoped frost, [data-theme^="glass"]
+  .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } - slightly see-through but never
+  legible, honouring the user's "like a blur" request. The drag plate adds no independent backdrop blur; F3-652
+  owns its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap. The
+  steady-state plate remains fully opaque in all ten themes; measured live at .92 mid-drag in glass-dark and 1
+  at idle. Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every
+  tab kind; F3-631 consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px
+  tabs whose plate overlaps the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's
+  content inset by 8 px within the 20 px morph window; the crown, shoulder and flare radii per look are
+  F3-631's. The fused shape was the only active-tab marker until DL-214 made it the seated chip of F3-631
+  (amended 2026-10-17, review r1): Basic's 2 px accent-blue crown strip is retired, and no look gives the active
+  tab a separately coloured plate, Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to
+  F3-631 and F3-647 where they differ. The dashboard's own Main, Metrics and Monitoring strip retires: a
+  dashboard is a tab in a panel's strip (F3-638). The rotating Retro trio, the pointer-capture reorder, the
+  snap-while-dragging contract and the minimap as the code pane's only scrollbar stand, and now apply in every
+  strip (F3-631, F3-639). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false

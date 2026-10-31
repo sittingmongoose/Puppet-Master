@@ -15,7 +15,10 @@
   const NO_PROJECTS = [];
   const serverProjects = (S) => { const d = md(S); const s = d.server_mode === 'existing_server' && O55.connect ? O55.connect.allServers(S).find((x) => x.id === d.server_ref) : null; return s ? s.projects : NO_PROJECTS; };
   const pretty = (s) => String(s || '').replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim().replace(/^./, (c) => c.toUpperCase());
-  const docsPath = (S, name) => S.env.here.projectsRoot + ' › ' + (name || T('name.placeholder'));
+  /* (with no name yet the path stops at the folder that will hold it: it used to end in the placeholder, which is also
+     the first suggestion, so "Kept in … › Book club website" read as chosen before anything was typed; GLM's review) */
+  const named = (name) => !!String(name || '').trim();
+  const docsPath = (S, name) => S.env.here.projectsRoot + (named(name) ? ' › ' + name : '');
   /* No numeric priority. Coinciding events are ranked by O55.sound. */
   const SND = { warn: { intensity: 0.4 } };
   /* A folder step is a click, so the generic tap (rank 30) is queued in the same moment. Move's own rank is 20 and
@@ -226,7 +229,8 @@
         ], d.storage_mode, { label: T('name.serverTitle') }));
       } else {
         const path = d.local_location_mode === 'custom' && d.local_location ? d.local_location : d.storage_mode === 'network_location' ? d.storage_location.replace(/^[a-z]+:/, '') : docsPath(S, d.project_name);
-        out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T('name.kept', { path }))}</span>${C.link(T('name.change'), 'change')}</p>`;
+        const auto = !(d.local_location_mode === 'custom' && d.local_location) && d.storage_mode !== 'network_location';
+        out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(T(auto && !named(d.project_name) ? 'name.keptUnnamed' : 'name.kept', { path }))}</span>${C.link(T('name.change'), 'change')}</p>`;
         if (S.sess.ui.sheet === 'loc') {
           const cur = d.storage_mode === 'network_location' ? 'network' : d.local_location_mode === 'custom' ? 'custom' : 'auto';
           let body = C.cards('loc', [

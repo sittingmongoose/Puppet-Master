@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36045-L36518
+Source lines: L36103-L36582
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -20,7 +20,7 @@ retains that classification.
 
 Build8 browser receipts do not establish an all-visuals pass. The protected Settings actual-pixel review retains
 `IVR-T41-B8-XPAGE-001`: the rightmost Settings card column is visibly cropped at 1180, 980, 860, and 680 in all
-eight themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
+ten themes even though the cross-page runner reports root-level containment. The P2 narrow page-overflow menu
 keyboard-focus and Arrow-key-navigation defect also remains open, and PNC-019 remains outside this evidence.
 
 ### F3-513 - User-Polished PMConcept7 Whole-Application Authority
@@ -32,23 +32,29 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The user-polished PMConcept7 is the visual and interaction authority for the recovered concept across the
-  global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage,
-  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion.
-  PMConcept7 is the appearance and interaction reference for these surfaces; canonical product
-  behavior and implementation authority remain with the Plans owners. The eight built-in themes remain Basic Dark,
-  Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the
-  recovered family-specific typography, palette, shape, contrast, and motion behavior.
+  global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage, shared
+  Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion. PMConcept7 is the
+  appearance and interaction reference for these surfaces; canonical product behavior and implementation
+  authority remain with the Plans owners. The ten built-in themes remain Basic Dark, Basic Light, Friendly Dark,
+  Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the recovered family-specific
+  typography, palette, shape, contrast, and motion behavior. Amended Q22, Jared 2026-10-30 (DL-257): the current
+  family/variant and inventory census supersede earlier counts.
 gui_related: true
 gui_classification_reason: This unit establishes the whole-application appearance and interaction reference and its boundary with canonical product owners.
 split_recommended: false
 depends_on: [F3-425, F3-426, F3-500]
 unblocks: [F3-514, F3-516, F3-517, ATS-037, ATS-038]
 acceptance_criteria:
-  - "Every required appearance and interaction is stated in its canonical owner and validated against the whole-application contract; a concept-only change is not product acceptance."
-  - "All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel, and status bar retain the recovered semantic and presentation contract."
-  - "All eight theme families preserve their intended font, palette, shape, inactive-state contrast, first-paint background, and family-specific composition."
-  - "Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or uniform-frame flashes."
-  - "This contract creates no WorkNodes, NodeSeeds, executable queues, implementation tasks, production code, or accessibility acceptance expansion."
+- Every required appearance and interaction is stated in its canonical owner and validated against the whole-application
+  contract; a concept-only change is not product acceptance.
+- All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel,
+  and status bar retain the recovered semantic and presentation contract.
+- 'DL-257/Q22: all five theme families and ten variants preserve their intended font, palette, shape, inactive-state
+  contrast, first-paint background, and family-specific composition.'
+- Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or
+  uniform-frame flashes.
+- This contract creates no WorkNodes, NodeSeeds, executable queues, implementation tasks, production code, or accessibility
+  acceptance expansion.
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"

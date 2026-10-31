@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3300-L3376
+Source lines: L3346-L3424
 
-Source SHA256: `d87bda498a59f6ce9a2cc5c5e94d4472482c0aa8d38f9a4641b4bc045c7c5c97`
+Source SHA256: `3e54996b18a8b9e3c3eabfbce6f8859c0427e58b48789ece794b71cdf8ebb852`
 
 ---
 
@@ -38,7 +38,9 @@ canonical_text: >-
   units it amends), auto-switch values and rules with Multi-Account MA-073 through the Settings
   owner's transaction (SSYS-009, SSYS-018), and the board transaction with Widget_System WS-019.
   DR-038 and DR-039 stand: Usage admits no shared-runtime role, creates no run-out projection, and
-  keeps one Usage authority, one widget-layout authority and one command language.
+  keeps one Usage authority, one widget-layout authority and one command language. L8 B, PM7 Step4,
+  2026-10-30: Usage PMU.menu delegates open/close/resize/keep to DR-079’s one sprout owner; it does not keep a
+  Usage-specific spring, close or NieR motion copy.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the Usage page's presentation grammar and points it at the owners it reuses."
 split_recommended: false

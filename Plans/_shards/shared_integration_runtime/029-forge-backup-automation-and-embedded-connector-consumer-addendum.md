@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1726-L1889
+Source lines: L1726-L1912
 
-Source SHA256: `9f361d88d816fd906587154e2a19fab136d28b524eeaa8b6892553e1792a25ea`
+Source SHA256: `cefcb402cd3ce5f136dbac9f1505593a1b68efd9ac1c54b14163dd146f9e34f2`
 
 ---
 
@@ -54,21 +54,44 @@ plan_unit_id: SIR-032
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: >-
-  Forgejo, Gitea, repository_automation, Backup destinations, and the embedded Go tsnet connector consume the one shared outbox, governor, ObservableWork, lease, authentication-profile/credential-attachment, and exact-return primitives through owner references. Provider, automation, Backup, and connector semantics remain with their named owners; handler_unavailable, read_only, and protected states fail closed and static projections claim no runtime evidence.
+canonical_text: 'Forgejo, Gitea, repository_automation, Backup destinations, and the embedded Go tsnet connector consume
+  the one shared outbox, governor, ObservableWork, lease, authentication-profile/credential-attachment, and exact-return
+  primitives through owner references. Provider, automation, Backup, and connector semantics remain with their named
+  owners; handler_unavailable, read_only, and protected states fail closed and static projections claim no runtime evidence.
+  DL-259 D7 B, Jared 2026-10-31: RAS-015 supplies the owner-qualified connector policy for Server and native Client installations.
+  Shared authentication and work primitives consume that policy without broadening identity, egress, trust or work authority.'
 gui_related: true
 gui_classification_reason: Settings, Actions & Pipelines, Data Backup and Retention, Remote Access, Onboarding, and Doctor render these exact unavailable, read-only, and protected states.
 depends_on: [SIR-005, SIR-006, SIR-007, SIR-008, SIR-011, SIR-012, SIR-031]
 unblocks: []
 acceptance_criteria:
-  - Forgejo and Gitea remain distinct provider identities while consuming one shared authentication/profile and connection lifecycle.
-  - repository_automation requires an independent AutomationBinding and never derives automation authority from ForgeBinding or the selected shell.
-  - Backup consumes outbox, governor, ObservableWork, lease, and exact auth continuation refs without transferring scheduler, crypto, repository, restore, or destination ownership.
-  - The embedded connector carries exactly one Remote-Access-owned connector identity per PM Server and never a Project/WSL/environment/runner/replica/session identity.
-  - Hosted-Tailscale authentication consumes RAS-015 through server_owned_authorized_client_handoff and the exact Server-owned operation, current authorized Client/session, newly authorized handoff generation, fresh protected session, and exact current-Client return context; other protected providers retain initiating_active_client_only.
-  - Initial Client loss never cancels Server-owned authorization, but a new Client inherits no protected content and cannot resume without owner reauthorization; schema acceptance is not proof of live currentness, revocation, expiry, or idempotency joins.
-  - handler_unavailable and read_only projections have mutation_dispatch_allowed=false; protected projections require the human-only boundary and expose no protected content to agents or adapters.
-  - All records use receipt_projection_only_no_unregistered_eventrecord and runtime_evidence_claimed=false.
+- Forgejo and Gitea remain distinct provider identities while consuming one shared authentication/profile and connection
+  lifecycle.
+- repository_automation requires an independent AutomationBinding and never derives automation authority from ForgeBinding
+  or the selected shell.
+- Backup consumes outbox, governor, ObservableWork, lease, and exact auth continuation refs without transferring scheduler,
+  crypto, repository, restore, or destination ownership.
+- 'DL-259 D7 B: connector_owner=server binds one connector identity to stable server_id; connector_owner=native_client
+  binds one to stable client_id and its native installation, never a Project, window, browser tab, WSL/environment, runner,
+  replica or session. Keys, IPC, secure state and generations remain owner-isolated under RAS-015.'
+- 'DL-259 D7 B: Server-owned hosted-Tailscale authorization retains server_owned_authorized_client_handoff with the exact
+  Server operation, current authorized Client/session, new authorized handoff generation, fresh protected session and
+  exact current-Client return. Native-Client-owned authorization uses initiating_active_client_only for that same stable
+  native owner, with exact operation/session/generation and return fences; other protected providers retain their existing
+  policy. No cross-owner protected content is inherited.'
+- 'DL-259 D7 B: initiating Client loss never cancels Server-owned authorization; a different Client receives no protected
+  content without a fresh Server-authorized handoff. Native ownership stays with its stable native installation. Schema
+  acceptance proves no live currentness, revocation, expiry or idempotency join.'
+- handler_unavailable and read_only projections have mutation_dispatch_allowed=false; protected projections require the
+  human-only boundary and expose no protected content to agents or adapters.
+- All records use receipt_projection_only_no_unregistered_eventrecord and runtime_evidence_claimed=false.
+- 'DL-259 D7 B, Jared 2026-10-31: RAS-015 supplies the owner-qualified connector policy for Server and native Client
+  installations. Shared authentication and work primitives consume that policy without broadening identity, egress, trust
+  or work authority.'
+- 'DL-259 D7 B: Server nodes alone provide the private listener and hosted-only, explicit off-by-default consent-gated
+  Funnel. Native Client nodes provide bounded Dial/stream only to verified PM endpoints, not arbitrary proxying or a
+  LAN pivot. A plain browser has no embedded connection and needs Remote Link or its device’s own private Tailscale reachability;
+  native apps require no separate Tailscale app install.'
 validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_command_contract_fixtures.json, tests/test_pm_auth_handoff_contracts.py, python3 scripts/pm-new-contracts-verify.py]
 risk_class: shared_consumer_owner_drift_or_false_availability
 reasoning_tier: high

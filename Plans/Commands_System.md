@@ -4888,42 +4888,52 @@ plan_unit_id: CS-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh,
-  object-backed cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail
-  Pane, and cmd.panel.switch authorities. Event-primary Usage callers use usage_event/usage_event_ref;
-  a PMConcept7 Ledger attempt row dispatches the navigation command with usage_attempt/attempt_id and
-  retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel details remain
-  local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost,
-  placeholder, and animation previews are local projection state; exactly one changed semantic
-  release or explicit action dispatches the existing command, while no-change and cancel paths
-  dispatch nothing and write nothing. The concept-only
-  cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
-  after preset resolution and never becomes a primary command. No pointer-preview event,
-  PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
-  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
-  switch level at scope provider and each account's own switch level at scope account (D43, 2026-10-10) reuse
-  the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
-  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
-  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
-  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
-  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
-  Amended 2026-10-10 (DL-186): a dashboard tab's widget commits name the board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019); cmd.widget.reset_layout's optional set_id names the set a dashboard starts from (UCC-200).
+canonical_text: 'PMConcept7 uses the existing cmd.widget.*, cmd.workspace_layout.*, cmd.usage.refresh, object-backed
+  cmd.nav.open_usage_subject, cmd.chat.compact_context, thread Context Detail Pane, and cmd.panel.switch authorities.
+  Event-primary Usage callers use usage_event/usage_event_ref; a PMConcept7 Ledger attempt row dispatches the navigation
+  command with usage_attempt/attempt_id and retains usage_event_ref as correlation. Current PMConcept7 aggregate provider/account/panel
+  details remain local inspectors. Pointer, hover, popup, room, scope, range, disclosure, filter, ghost, placeholder,
+  and animation previews are local projection state; exactly one changed semantic release or explicit action dispatches
+  the existing command, while no-change and cancel paths dispatch nothing and write nothing. The concept-only cmd.workspace_layout.size_surface
+  token normalizes to cmd.workspace_layout.resize_surface after preset resolution and never becomes a primary command.
+  No pointer-preview event, PM7 command family, second Assistant command path, or rejected provider-management command
+  is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its Accounts room''s Use this account
+  reuses cmd.account.select_profile, each provider''s Auto-switch toggle and switch level at scope provider and each
+  account''s own switch level at scope account (D43, 2026-10-10) reuse the Settings owner''s cmd.settings.transaction.preview
+  and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy,
+  detail } for the whole room and Usage board gravity commits inside the action''s own widget command (WS-019), a size
+  preset commits through cmd.widget.resize, Live / Paused is a local view projection. UCC-147 carries the control-by-control
+  census. Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families
+  of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard
+  widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
+  Amended 2026-10-10 (DL-186): a dashboard tab''s widget commits name the board in the payload''s existing room field,
+  not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019);
+  cmd.widget.reset_layout''s optional set_id names the set a dashboard starts from (UCC-200). Amended DL-260, Jared 2026-10-31:
+  only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
 depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180, DL-186]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
-  - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
-  - Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
-  - Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
-  - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
-  - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
-  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level and at scope account for an account's own switch level (D43, 2026-10-10), exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+- Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed
+  settled action creates one command receipt and no pointer-preview domain event.
+- Home move, resize, collapse, and reset reuse cmd.workspace_layout.move_surface, resize_surface, set_collapsed, and
+  reset; cmd.workspace_layout.size_surface is compatibility-only and normalizes to resize_surface.
+- Usage room, scope, range, disclosure, More-menu state, per-widget filters, and current PMConcept7 aggregate provider/account/panel
+  inspectors remain local projection state and do not mint commands, receipts, events, or route identity; event-primary
+  callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses
+  usage_attempt/attempt_id without OpenSubject and retains usage_event_ref plus provider/account/runtime refs as correlation.
+- Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context
+  Detail Pane command family; menu open and hover dispatch nothing.
+- Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command,
+  receipt, event, or persistence write.
+- cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are
+  created.
+- 'Usage reuses cmd.account.select_profile, cmd.settings.transaction.preview/apply at the exact provider/account scope,
+  and one cmd.widget.move with arrange { mode: tidy, detail }; Live/Pause and gravity beyond the causing action dispatch
+  nothing.'
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -5001,22 +5011,108 @@ plan_unit_id: CS-069
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
-  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six
-  Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler
-  destinations are contract targets and do not prove that a dispatcher or runtime handler exists.
+canonical_text: 'Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
+  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six Onboarding,
+  Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler destinations are
+  contract targets and do not prove that a dispatcher or runtime handler exists. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen
+  onboarding local actions and selected owner routes. No new restore wrapper or onboarding command. DL-259, Jared 2026-10-31:
+  ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner,
+  with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
+  state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions,
+  including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
+  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help
+  (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
+  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
+  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
+  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
+  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
+  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
+  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
+  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
+  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged. DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore
+  result and its actual prerequisites. It does not run optional remote-access configuration. After that owner settlement,
+  a separate postcommit remote-setup view inside automatic_preparation runs any requested Remote Access continuation,
+  before the normal provider/Free Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization,
+  new Remote Link output, and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing
+  domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
+  it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
+  any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
+  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
 unblocks: [UIW-014]
 acceptance_criteria:
-  - The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export.
-  - Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1.
-  - Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1.
-  - The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation.
-  - Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists.
-  - No unregistered EventRecord is emitted or inferred.
+- The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply,
+  cmd.settings.transaction.rollback, and cmd.settings.export.
+- Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json;
+  cmd.settings.open returns pm.settings_route_return.v1.
+- Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with
+  owner readback; export returns a non-secret pm.settings_export_manifest.v1.
+- The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or
+  remediation operation.
+- Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler
+  evidence; handler_unavailable remains truthful until executable proof exists.
+- No unregistered EventRecord is emitted or inferred.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined
+  choices reuse the existing fourteen onboarding local actions and selected owner routes. No new restore wrapper or onboarding
+  command.'
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
+  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
+  proxy but never sent to a generation/install/export operation. DL-259 CERT-1 / srv C1, Jared 2026-10-31: onboarding
+  offers Make the settings file or I have one already. The first generates/exports Caddy, NGINX or Traefik configuration
+  for the person to add on their own system before the owner’s DNS, reachability and live-connection checks; Caddy is
+  the default. The second only checks the existing proxy route and live connection, with nothing generated. Set it up
+  for me is removed: Puppet Master does not install or host the proxy. The onboarding draft carries proxy_hosting=generate_only
+  or existing_proxy for this new-Server proxy branch and keeps proxy_tls null; it collects no certificate choice. Generating
+  a file proves neither installation nor consent, identity, secure reachability or a live route. For generation, onboarding
+  proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy
+  branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch silently substitutes
+  a family. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
+  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
+  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
+  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
+  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged.'
+- 'DL-259 srv final, 2026-10-31: Creating observes only the reviewed Project creation/open/restore result and its actual
+  prerequisites. It does not run optional remote-access configuration. After that owner settlement, a separate postcommit
+  remote-setup view inside automatic_preparation runs any requested Remote Access continuation, before the normal provider/Free
+  Models continuation; the eleven-stage graph is unchanged. Tailscale/Headscale authorization, new Remote Link output,
+  and configuration-file/export or existing-proxy checks (CERT-1 / srv C1) use their existing domain owners, approvals
+  and truthful results. Later always finishes onboarding and leaves the committed Project intact: it does not wait for
+  optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
+  work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
+  whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high
@@ -5024,9 +5120,11 @@ context_scope: settings_command_family
 implementation_surfaces: [Plans/Commands_System.md, Plans/Settings_System.md, Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 node_compile_hint: {mode: settings_command_family_registration, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Settings_System.md#SSYS-018
-  - Plans/Settings_System.md#SSYS-019
-  - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+- Plans/Settings_System.md#SSYS-018
+- Plans/Settings_System.md#SSYS-019
+- source_ref:chat:settings-reference-review-canon-closure-2026-08-31
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
+  rules, no hints.
 preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
 negative_constraints:
   - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.
@@ -5369,7 +5467,7 @@ For every record, preconditions additionally require central registration, execu
 
 | Exact primary command | Label | Description | Preconditions | Owner / PlanUnit | Sole future handler target | Contracts | Intended consumers / exact return |
 |---|---|---|---|---|---|---|---|
-| `cmd.auth_profile.open_official_page` | Open Official Page | Begin the owner-verified human-only official-page handoff. | Human GUI/palette invocation; exact initiating active Client; current official-source/domain-policy proof and protected-auth permission. | `Plans/Multi-Account_Connection_Spec.md#MACS-003` | `handlers::multi_account::open_official_page` | request `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest`; result `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult`; error `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError`; availability `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability`; permission `Plans/multi_account_contracts.schema.json#/$defs/AuthProfilePermissionDecision` | Doctor remediation; Product Onboarding explicit selected-source owner handoff; Settings > Integrations; authentication handoff surface; human palette; exact owner return settlement. |
+| `cmd.auth_profile.open_official_page` | Open Official Page | Begin the owner-verified human-only official-page handoff. | Human GUI/palette invocation; exact initiating active Client; current official-source/domain-policy proof and protected-auth permission. | `Plans/Multi-Account_Connection_Spec.md#MACS-003` | `handlers::multi_account::open_official_page` | request `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest`; result `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult`; error `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandError`; availability `Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandAvailability`; permission `Plans/multi_account_contracts.schema.json#/$defs/AuthProfilePermissionDecision` | Doctor remediation; Product Onboarding explicit selected-source owner handoff; Settings > Integrations; authentication handoff surface; human palette; exact owner return settlement.; provider API-key rows > Get a key in Onboarding and Settings (DL-259 P10). |
 | `cmd.integration.connection.add` | Add Connection Draft | Create the persisted inactive connection draft and optional opaque auth continuation. | Current identity/topology/generations and permission; validated non-secret configuration; no preexisting authenticated profile required. | `Plans/Shared_Integration_Runtime.md#SIR-035` | `handlers::integration_connection::add` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings integration/destination rows; Product Onboarding owner setup; Doctor deep links/remediation; connection managers; palette/API; exact owner return settlement. |
 | `cmd.integration.connection.update` | Update Connection | Apply the owner-bounded connection patch. | Current connection/topology generations, permission snapshot and bounded patch reference. | `Plans/Shared_Integration_Runtime.md#SIR-019` | `handlers::integration_connection::update` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings integration/destination rows; Product Onboarding owner setup; Doctor deep links/remediation; connection managers; palette/API; exact owner return settlement. |
 | `cmd.integration.connection.test` | Test Connection | Run the bounded non-destructive connection probe with separate currentness and probe evidence. | Current exact connection scope, generations and permission; probe-policy and capability-requirement references; no write probe. | `Plans/Shared_Integration_Runtime.md#SIR-019` | `handlers::integration_connection::test` | request `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandRequest`; result `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandResult`; error `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionCommandError`; availability `Plans/shared_integration_runtime.schema.json#/$defs/IntegrationConnectionAvailability`; permission `Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision` | Settings > Integrations/Credentials and destination rows; Product Onboarding owner setup; Doctor deep links/remediation; Project copy/move readiness; connection managers; palette/API; exact owner return settlement. |
@@ -5768,15 +5866,62 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: 'Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated
+  future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted
+  EventRecord types. DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server
+  owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and
+  receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner
+  server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local
+  operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records
+  and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers
+  and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select
+  native ownership. All routes remain handler_unavailable until executable evidence exists. DL-259 CLOUD-1 / DESKTOP-RESTORE-1,
+  Jared 2026-10-31: initial owner-claim authorization comes from the Server owner’s one-time console/bootstrap-code handoff
+  for a new cloud computer, or the native desktop’s protected direct local handoff for its dormant Server with no human
+  code. cmd.server.claim keeps its existing closed arguments discovery_observation_id, pairing_session_id and identity_fingerprint.
+  Their owner-verified binding plus current permission/generations carries the authorization; no raw code, certificate
+  material, new claim command or caller assertion of trust is added. Bootstrap and restore remain separate commands and
+  receipts. Initial owner claim does not grant pairing/trust to other Clients. DL-259 CERT-1, Jared 2026-10-31: Puppet
+  Master generates the proxy configuration; the person handles certificates and signing on their own systems. PM does
+  not select, hold, validate, issue or sign those certificates, and admits no certificate-profile field or selector command.
+  No certificate selection/validation is a prerequisite to configuration generation, route activation or Ready. Generation
+  proves only that the configuration artifact was produced. Route Ready reports the actual PM-owner checks performed:
+  endpoint reachability, protocol/API compatibility, expected Server identity and pairing/auth, and the applicable WebSocket,
+  stream, transfer, deep-link and callback checks. It never claims that a certificate is valid. Existing secure-transport,
+  public-exposure consent, identity and reachability requirements remain; missing or failed actual route checks cannot
+  be called successful.'
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
-- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false
+  inventory.
+- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission
+  contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
+- 'DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
+  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
+  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
+  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
+- 'DL-259 CLOUD-1 / DESKTOP-RESTORE-1, Jared 2026-10-31: initial owner-claim authorization comes from the Server owner’s
+  one-time console/bootstrap-code handoff for a new cloud computer, or the native desktop’s protected direct local handoff
+  for its dormant Server with no human code. cmd.server.claim keeps its existing closed arguments discovery_observation_id,
+  pairing_session_id and identity_fingerprint. Their owner-verified binding plus current permission/generations carries
+  the authorization; no raw code, certificate material, new claim command or caller assertion of trust is added. Bootstrap
+  and restore remain separate commands and receipts. Initial owner claim does not grant pairing/trust to other Clients.'
+- 'DL-259 CERT-1, Jared 2026-10-31: Puppet Master generates the proxy configuration; the person handles certificates
+  and signing on their own systems. PM does not select, hold, validate, issue or sign those certificates, and admits
+  no certificate-profile field or selector command. No certificate selection/validation is a prerequisite to configuration
+  generation, route activation or Ready. Generation proves only that the configuration artifact was produced. Route Ready
+  reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
+  and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
+  a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
+  remain; missing or failed actual route checks cannot be called successful.'
 validation_surfaces:
 - python3 scripts/pm-touch-closure-verify.py --json
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -5789,6 +5934,7 @@ source_lineage:
 - Plans/touch_closure.json
 - Plans/Wiring_Matrix.production.json
 - user-approved Parallel Canon, Settings, and PMConcept7 Integration Plan
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 negative_constraints:
 - Do not treat a planned target or production-intent row as native implementation proof.
 - Do not mint peer alias handlers or events.
@@ -6299,33 +6445,27 @@ disposition rules in accordance with APR-014, APR-019, and APR-023, strictly adh
   collapsible sections, plan Rich/Markdown toggle, Activity Detail open/close (G1), and manager tabs—are
   classified as `LOCAL_PRESENTATION`. They utilize local or shared view-state primitives and emit no
   domain command.
-- **Isolation of Demo Fixtures (APR-014):** Test fixtures, replay commands, mock simulations, and
-  sample loaders are classified as `CONCEPT_DEMO_ONLY`. They reside exclusively in the Demo Gallery
-  and are strictly prohibited from registration in the product command catalog or production wiring.
 
 ```yaml
 plan_unit_id: CS-079
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses
-  cmd.bsd.configure / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure /
-  cmd.collaboration.start; Crew Auto uses cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set;
-  Plan Build uses cmd.chat.plan.build with topology discriminator (prohibiting build_as_goal); Plan
-  schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
-  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set.
-  View toggles are classified as LOCAL_PRESENTATION view state, and test fixtures are classified as
-  CONCEPT_DEMO_ONLY, excluded from product command catalogs.
+canonical_text: 'Product operations enforce canonical command reuse: BSD mode uses cmd.bsd.set; BSD policy uses cmd.bsd.configure
+  / cmd.bsd.workflow.configure; collaboration uses cmd.collaboration.configure / cmd.collaboration.start; Crew Auto uses
+  cmd.chat.crew_auto.open_config / cmd.chat.crew_auto.set; Plan Build uses cmd.chat.plan.build with topology discriminator
+  (prohibiting build_as_goal); Plan schedule uses cmd.chat.plan.schedule_build; scheduled messages use cmd.chat.schedule_message[.update|.cancel];
+  execution windows use cmd.execution_window.create/update/cancel; quota consent uses cmd.runtime.quota_resume.set. View
+  toggles are classified as LOCAL_PRESENTATION view state. Amended DL-260, Jared 2026-10-31: only real product behavior
+  remains an implementation requirement.'
 gui_related: false
 gui_classification_reason: Governs command catalog dispositions, canonical ID reuse, and demo separation.
 depends_on: [CS-078]
 unblocks: []
 acceptance_criteria:
-  - Specified operations reuse canonical command IDs without minting parallel commands.
-  - Plan Build uses topology discriminator; build_as_goal is prohibited.
-  - View toggles are classified as LOCAL_PRESENTATION without domain commands.
-  - Demo fixtures are classified as CONCEPT_DEMO_ONLY and excluded from product catalogs.
+- Specified operations reuse canonical command IDs without minting parallel commands.
+- Plan Build uses topology discriminator; build_as_goal is prohibited.
+- View toggles are classified as LOCAL_PRESENTATION without domain commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: command_duplication_or_demo_command_leak
@@ -6342,11 +6482,10 @@ source_lineage:
   - APR-019
   - APR-023
 preserved_exact_tokens:
-  - "cmd.chat.plan.build"
-  - "cmd.bsd.configure"
-  - "cmd.collaboration.start"
-  - "CONCEPT_DEMO_ONLY"
-  - "LOCAL_PRESENTATION"
+- cmd.chat.plan.build
+- cmd.bsd.configure
+- cmd.collaboration.start
+- LOCAL_PRESENTATION
 negative_constraints:
   - Do not mint cmd.chat.plan.build_as_goal.
   - Do not register demo fixtures in the product command catalog.
@@ -6999,28 +7138,25 @@ Each control of the redesigned sheets, cards, dock lines and run view is a comma
 - Send now on a held scheduled message: `cmd.chat.schedule_message.update` (SQR-013).
 - Go to message and Open the original message: `cmd.chat.open_thread`.
 
-Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity. Recorded examples and other concept demo controls stay `CONCEPT_DEMO_ONLY` under CS-079.
+Apart from the nine command identities that CDRY-022 and CDRY-023 record (DL-130, DL-126, DL-136), the redesign needs no new command identity.
 
 ```yaml
 plan_unit_id: CDRY-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The wand-module redesign's non-command controls are fixed. View state (LOCAL_PRESENTATION, no
-  command, no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x,
-  Escape and scrim on a collaboration sheet and Keep going; expand, More, tabs, filters, disclosures
-  and Advanced, and Technical details on a setup sheet's Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the
-  Revert preview, See what's blocking it and Leave my files as they are; the Why? on a Back Seat
-  Driver aside. Draft state: every sheet control, stepper, team recipe, specialist and Advanced row,
-  and Bring back, which is never an undo command. Reuse replaces aliases: cmd.collaboration.open for
-  every Open Panel and the dock's Show or Review, cmd.collaboration.export for every download or
-  export, cmd.collaboration.start or cmd.review.run_again for run again,
-  cmd.chat.schedule_message.update for Send now, cmd.chat.open_thread for going to a message. Teach
-  closes through cmd.chat.teach.cancel. The Plan view stays the one document view toggle with a
-  shell_view row, cmd.chat.plan.view.set. Recorded examples and other concept demo controls stay
-  CONCEPT_DEMO_ONLY, and apart from the nine identities of CDRY-022 and CDRY-023 the redesign needs no
-  new command identity.
+canonical_text: 'The wand-module redesign''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
+  no event, no catalog row): opening a sheet unless a registered row opens it; Cancel, x, Escape and scrim on a collaboration
+  sheet and Keep going; expand, More, tabs, filters, disclosures and Advanced, and Technical details on a setup sheet''s
+  Advanced page (DL-148, DL-149); the Review and BrainStorm Formatted and Plain text toggles; the Revert preview, See
+  what''s blocking it and Leave my files as they are; the Why? on a Back Seat Driver aside. Draft state: every sheet
+  control, stepper, team recipe, specialist and Advanced row, and Bring back, which is never an undo command. Reuse replaces
+  aliases: cmd.collaboration.open for every Open Panel and the dock''s Show or Review, cmd.collaboration.export for every
+  download or export, cmd.collaboration.start or cmd.review.run_again for run again, cmd.chat.schedule_message.update
+  for Send now, cmd.chat.open_thread for going to a message. Teach closes through cmd.chat.teach.cancel. The Plan view
+  stays the one document view toggle with a shell_view row, cmd.chat.plan.view.set. Apart from the nine identities of
+  CDRY-022 and CDRY-023 the redesign needs no new command identity. Amended DL-260, Jared 2026-10-31: only real product
+  behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Classifies visible sheet, card, dock and run-view controls as view state, draft state or command reuse."
 split_recommended: false
@@ -7049,16 +7185,15 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-07, B-CMD-08"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
-  - "LOCAL_PRESENTATION"
-  - "cmd.chat.plan.view.set"
-  - "shell_view"
-  - "cmd.collaboration.open"
-  - "cmd.collaboration.export"
-  - "cmd.review.run_again"
-  - "cmd.chat.schedule_message.update"
-  - "cmd.chat.open_thread"
-  - "cmd.chat.teach.cancel"
-  - "CONCEPT_DEMO_ONLY"
+- LOCAL_PRESENTATION
+- cmd.chat.plan.view.set
+- shell_view
+- cmd.collaboration.open
+- cmd.collaboration.export
+- cmd.review.run_again
+- cmd.chat.schedule_message.update
+- cmd.chat.open_thread
+- cmd.chat.teach.cancel
 negative_constraints:
   - "Do not register a Review or BrainStorm view-mode command."
   - "Do not register a recipe, Bring back, dock show, Send now, jump-to-message, Revert preview or Revert keep command."
@@ -7525,26 +7660,25 @@ The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity of its own (U
 
 **Reuse instead of an alias.** Opening a subagent's live transcript is `cmd.agents.open_thread` (UCC-129) with the child run's thread ref, from every opener assistant-chat-design ACD-485 names. There is no chat-local subagent open command or alias. A Subagents preview row routes into Activity Detail as every preview row does.
 
-**Concept demos (`CONCEPT_DEMO_ONLY`, CS-079).** The concept's Demo Studio NieR controls (Plug-in Chips, presets, the background picker and Play reboot moment) and the concept's `nier-*`, `feed-stretch` and `goal-*` action names. NieR Mode itself is a Settings write that the Settings owner owns.
-
 ```yaml
 plan_unit_id: CS-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  The 5.6 Pro chat round's non-command controls are fixed. View state (LOCAL_PRESENTATION, no command, no event, no
-  catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row's selection
-  and expansion and Close details; Activity Detail's domain tabs; a stretch row's toggle, Expand or Collapse and More
-  details in a subagent's live transcript; message More and its panel; a setup sheet's dropdown trigger pressed again;
-  Technical details on a setup sheet's Advanced page and Show raw data. Hover tags, press-to-close and the activity
-  preview dwell are presentation. The Schedule Message send-time track is draft state. Opening a subagent's live
-  transcript reuses cmd.agents.open_thread from every ACD-485 opener, with no chat-local alias; the transcript's Copy is
-  cmd.chat.copy_message and the Goal preview's Edit objective is cmd.chat.goal.open_editor. The concept's Demo Studio
-  NieR controls and its nier-*, feed-stretch and goal-* action names are concept demos under CS-079; NieR Mode is a
-  Settings write.
+canonical_text: 'The 5.6 Pro chat round''s non-command controls are fixed. View state (LOCAL_PRESENTATION, no command,
+  no event, no catalog row): Edit objective, Cancel edit and Objective history inside Goal Activity Detail; a To-Do row''s
+  selection and expansion and Close details; Activity Detail''s domain tabs; a stretch row''s toggle, Expand or Collapse
+  and More details in a subagent''s live transcript; message More and its panel; a setup sheet''s dropdown trigger pressed
+  again; Technical details on a setup sheet''s Advanced page and Show raw data. Hover tags, press-to-close and the activity
+  preview dwell are presentation. The Schedule Message send-time track is draft state. Opening a subagent''s live transcript
+  reuses cmd.agents.open_thread from every ACD-485 opener, with no chat-local alias; the transcript''s Copy is cmd.chat.copy_message
+  and the Goal preview''s Edit objective is cmd.chat.goal.open_editor. A NieR family selection is an ordinary theme Settings
+  write through cmd.settings.transaction.preview then cmd.settings.transaction.apply (Q22); editor open/close/replay
+  remain local presentation actions. Amended Q22, Jared 2026-10-30 (DL-257): the fifth family uses the existing theme
+  owner; no separate override remains. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation
+  requirement.'
 gui_related: true
-gui_classification_reason: "Keeps the 5.6 Pro round's view, draft and demo controls out of the command catalog."
+gui_classification_reason: Keeps local presentation and draft controls separate from domain commands.
 split_recommended: false
 depends_on: [UCC-188, CDRY-021, CS-079]
 unblocks: []
@@ -7569,9 +7703,8 @@ source_lineage:
   - "Plans/UI_Command_Catalog.md#UCC-188"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
-  - "LOCAL_PRESENTATION"
-  - "CONCEPT_DEMO_ONLY"
-  - "cmd.agents.open_thread"
+- LOCAL_PRESENTATION
+- cmd.agents.open_thread
 negative_constraints:
   - "Do not mint a command for a control listed here as view state, draft state or presentation."
   - "Do not register a concept action name as a command identity."
@@ -7912,46 +8045,40 @@ plan_unit_id: CS-102
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its
-  expected_state_hash guards the editor tab's saved nonstructural state; a mismatch refuses as
-  stale_projection, a replay with the same idempotency key returns the existing receipt, and
-  conflicting reuse refuses. Validation/permission, bounded serialization, write and readback
-  complete before applied is returned; failure retains or restores the earlier state.
-  Plans/editor_appearance.schema.json closes fields and fixed failure reasons; no arbitrary code,
-  path payload or unknown field is accepted. UI_Command_Catalog remains the only command minter.
-  ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token and
-  try_sample are typed local actions, parameterized by editor/terminal and target tab where
-  available; Indentation opens the same editor screen at its indentation group. Scope selection is
-  saved tab view state only when invoked from that tab; Settings' All entry is temporary.
-  ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read (the inbox header's Mark all read,
-  marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and explain_state
-  operate the one shared inbox's presentation/read projection and never resolve its source.
-  Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
-  dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
-  keyboard gallery navigation before selection, change-meter display, drag previews, glow and timer
-  suspension dispatch nothing and write nothing. Choosing a background file returns a validated
-  owner asset reference then uses the selected scope's writer; importing a scheme uses the existing
-  import command. Sample cursor/caret, bell, typing, problem and Step back trials affect only
-  isolated sample state. Committed quick sets, reset, fields and token edits always use UCC-204's
-  writers, never a view-local bypass. The production/exclusion census is WM-093/UIW-043 and
-  Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and
-  cmd.theme.preview; it is not normalized to the internal Settings preview command. The retained
-  scheme-preview local actions belong only to the editor/terminal Customize screens.
-  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
-  ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix.
-  Unlike a transient preview, they persist only SP-331's computer-local preset library, with its
-  validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
-  Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
-  through a local action.
-  Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
-  and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
-  Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5, the left rail review copy's
-  concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200's focus panel N, and no
-  rebuild or fixture inherits the collision. Alt+Shift+L, the former Liquid Glass demonstration
-  toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
-  option 1). Neither a local action nor a command may select a material off state or old Glass
-  fallback; F3-652 always supplies the Glass look's Liquid Glass material.
+canonical_text: 'UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its expected_state_hash
+  guards the editor tab''s saved nonstructural state; a mismatch refuses as stale_projection, a replay with the same
+  idempotency key returns the existing receipt, and conflicting reuse refuses. Validation/permission, bounded serialization,
+  write and readback complete before applied is returned; failure retains or restores the earlier state. Plans/editor_appearance.schema.json
+  closes fields and fixed failure reasons; no arbitrary code, path payload or unknown field is accepted. UI_Command_Catalog
+  remains the only command minter. ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token
+  and try_sample are typed local actions, parameterized by editor/terminal and target tab where available; Indentation
+  opens the same editor screen at its indentation group. Scope selection is saved tab view state only when invoked from
+  that tab; Settings'' All entry is temporary. ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read
+  (the inbox header''s Mark all read, marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and
+  explain_state operate the one shared inbox''s presentation/read projection and never resolve its source. Mark_visible_read
+  names only notices actually shown for the F3-453 dwell. No catalog row, dispatcher receipt or domain event belongs
+  to these ui.* ids. Picker/menu openings, hover, keyboard gallery navigation before selection, change-meter display,
+  drag previews, glow and timer suspension dispatch nothing and write nothing. Choosing a background file returns a validated
+  owner asset reference then uses the selected scope''s writer; importing a scheme uses the existing import command.
+  Sample cursor/caret, bell, typing, problem and Step back trials affect only isolated sample state. Committed quick
+  sets, reset, fields and token edits always use UCC-204''s writers, never a view-local bypass. The production/exclusion
+  census is WM-093/UIW-043 and Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and cmd.theme.preview;
+  it is not normalized to the internal Settings preview command. The retained scheme-preview local actions belong only
+  to the editor/terminal Customize screens. ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete
+  and ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix. Unlike a transient
+  preview, they persist only SP-331''s computer-local preset library, with its validation/readback and no dispatcher
+  receipt or event. Naming/selection/search remain view-local. Applying a preset always uses UCC-204''s existing This
+  or All writer and never writes appearance through a local action. Amended 2026-10-17 (DL-228): background design tiles
+  preview through the same ui.appearance.preview_scheme and cancel_preview as scheme tiles, after the same 110 ms rest
+  (F3-642). ui.terminal.degauss is the Retro Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5,
+  the left rail review copy''s concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200''s focus panel
+  N, and no implementation inherits the collision. Neither a local action nor a command may select a material off state
+  or old Glass fallback; F3-652 always supplies the Glass look''s Liquid Glass material. F3-1/F3-5, 2026-10-30: a staged
+  notice card takes no clicks during entry or exit on every page, Usage included. Its existing body/action/dismiss click
+  routes stay inactive, with no queued or duplicate dispatch and no late reactivation of a leaving card. Reduced Motion
+  settles instantly after placement; still-pending placement and exit stay guarded. This transient presentation gate
+  adds no action, command, receipt or domain event. Amended DL-260, Jared 2026-10-31: only real product behavior remains
+  an implementation requirement.'
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false
@@ -7991,7 +8118,6 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Commands_System.md
-
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Wiring_Matrix.md#WM-093
@@ -8088,30 +8214,36 @@ plan_unit_id: CS-104
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Hosted chat producers use UCC-208's closed mapping (DL-232). Dispatch normalizes cmd.editor.close_tab to
-  cmd.panel_tab.close before gates and receipts; the alias has no handler. Domain openers use CV-360
-  placement and F3-634's one opening module; a child transcript remains cmd.agents.open_thread, not a
-  chat-private open. Existing command identity, authorization, idempotency, typed results and effect rules
-  do not change with the renderer. Pin History and Keep open are the existing ui.chat_column.pin_history
-  and ui.chat_column.keep_open local actions, with no receipt or event; resize is the existing
-  cmd.workspace_layout.resize_surface, committed once on release. An app-modal open, hover preview,
-  disclosure or body redraw is local presentation. An admitted preference changed in chat uses the same
-  cmd.settings.transaction.preview then cmd.settings.transaction.apply over its inventory id as Settings;
-  application/project defaults never masquerade as the per-chat ELI5 command. A mirrored renderer value
-  does not write a second store or echo the Settings save into a loop. No new event, command, alias or
-  future handler is added by the port, and existing DL-218 command candidates retain their exact exclusions
-  until separately admitted. The integrated concept at 59ca2d4382 realizes the Home opening and
-  local-column controls through JavaScript bridges; it does not implement the native dispatcher or typed
-  receipts specified here. Its existing Settings adapter persists Project default ELI5, while All chats
-  remains session-only (SSYS-055); that session choice is not evidence of an application-scope transaction.
-  Thought Stream's shared preference drives the chat's live thinking display (ACD-221, DL-234); opening or
-  folding a thinking block is local presentation with no command, receipt or event. Demo Studio launches,
-  lab-only document ids and unknown-id document fallback add no product command. PM7 S5/G1–G3: hosted chat
-  adds the one Pip editor’s typed no-write open/close/replay; admitted parts edit the existing Settings
-  pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin as a typed view-local boolean action; History
-  pin/Keep open remain local, and resizing uses the existing layout
-  command. CS-105/106 own the newly admitted project/work commands.
+canonical_text: 'Hosted chat producers use UCC-208''s closed mapping (DL-232). Dispatch normalizes cmd.editor.close_tab
+  to cmd.panel_tab.close before gates and receipts; the alias has no handler. Domain openers use CV-360 placement and
+  F3-634''s one opening module; a child transcript remains cmd.agents.open_thread, not a chat-private open. Existing
+  command identity, authorization, idempotency, typed results and effect rules do not change with the renderer. Pin History
+  and Keep open are the existing ui.chat_column.pin_history and ui.chat_column.keep_open local actions, with no receipt
+  or event; resize is the existing cmd.workspace_layout.resize_surface, committed once on release. An app-modal open,
+  hover preview, disclosure or body redraw is local presentation. An admitted preference changed in chat uses the same
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply over its inventory id as Settings; application/project
+  defaults never masquerade as the per-chat ELI5 command. A mirrored renderer value does not write a second store or
+  echo the Settings save into a loop. No new event, command, alias or future handler is added by the port, and existing
+  DL-218 command candidates retain their exact exclusions until separately admitted. The integrated concept at 59ca2d4382
+  realizes the Home opening and local-column controls through JavaScript bridges; it does not implement the native dispatcher
+  or typed receipts specified here. Its existing Settings adapter persists Project default ELI5, while All chats remains
+  session-only (SSYS-055); that session choice is not evidence of an application-scope transaction. Thought Stream''s
+  shared preference drives the chat''s live thinking display (ACD-221, DL-234); opening or folding a thinking block is
+  local presentation with no command, receipt or event. PM7 S5/G1–G3: hosted chat adds the one Pip editor’s typed no-write
+  open/close/replay; admitted parts edit the existing Settings pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin
+  as a typed view-local boolean action; History pin/Keep open remain local, and resizing uses the existing layout command.
+  CS-105/106 own the newly admitted project/work commands. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17:
+  hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea,
+  label or switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture do not dim the
+  cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights
+  only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies
+  this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16:
+  You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette
+  cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express
+  the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates,
+  run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Defines shared dispatch, alias normalization and local actions for the hosted chat
   controls.
@@ -8125,8 +8257,9 @@ depends_on:
 - DL-234
 unblocks: []
 acceptance_criteria:
-- Hosted producers preserve the existing handler, alias normalization and effect contract.
-- Reverse preference projection emits no second command or Settings write.
+  - "Hosted producers preserve the existing handler, alias normalization and effect contract."
+  - "Reverse preference projection emits no second command or Settings write."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -8174,10 +8307,12 @@ canonical_text: >-
   commands of the workspace/project router, not aliases of opening the menu. Stable project_id and current
   workspace identity/generation are required; stale/not-found/not-permitted refuse without changing the
   active tab. Ctrl+Shift+P binds typed local ui.project_switcher.open (registered ui.project_switcher.*
-  prefix); .close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
+  prefix); ui.project_switcher.close restores opener focus. Ctrl/Cmd+Enter on a row chooses the new-workspace-tab command;
   keyboard/pointer send identical typed payloads. Opening/closing/filtering a picker does not dispatch a
   domain command. Existing project open/switch receipts and events stay owner-authoritative, no new event
   emission by these producers.
+  B2, PM7 companion review fix1, 2026-10-30: ui.project_switcher.all_projects is the no-write route to the
+  existing Projects primary view; it does not dispatch the side-panel switch command.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8209,6 +8344,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
 preserved_exact_tokens:
+- ui.project_switcher.all_projects
 - cmd.project.switch_active_tab
 - cmd.project.open_in_new_workspace_tab
 - ui.project_switcher.open
@@ -8231,39 +8367,85 @@ plan_unit_id: CS-106
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input,
-  cmd.work.set_completion_delivery, cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open,
-  cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out. Runtime commands bind
-  project/server/environment, stable work/owner and process identity, expected projection/input generation,
-  actor/permission and idempotency key, return an owner receipt or typed rejection, and never
-  optimistically manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local
-  clear do not write runtime state or emit events. Stop all is cmd.work.stop with scope thread/platform and
-  the reviewed target list, never a second handler; process-group semantics are EP-043/SIR-054. Input is
-  current safe yes/no only; other input reveals terminal. Restart is eligible owner-controlled new
-  invocation, no PID-only replay. Completion policy writes one owner value; delivery does not wake stopped
-  threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed current
-  target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select),
-  ui.work_quit.* (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.*
-  (open/close/replay), plus ui.work_quit.open to draft the quit dialog. They write no durable/runtime
-  state, carry return focus/scope and release timers/subscriptions/copies. cmd.work.clear_finished is a
-  navigation_wrapper with view-local hiding, not record deletion. All settings hosts use preview/apply. No
-  Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
-  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event
-  Authority. B2: ui.project_switcher.all_projects is the typed local action that focuses the existing
-  Projects page route tab_id projects. It never misuses cmd.panel.switch, which is only a rail side-panel
-  shell action. D10/D13/G4: Requests carry explicit scope_kind under the existing application/project
-  policy. Quit and platform Stop all are application-scoped with project_id null; thread Processes is
-  project-scoped with a real Project. A global panel or local editor/navigation action works without an
-  active Project. Every reviewed target still carries its actual Project/server/environment and current
-  owner permission. Dispatch verifies source/target scope rather than inferring a default Project; a
-  mismatch refuses before effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30):
-  Pin/unpin is the view-local ui.activity_detail.pin action (binding chat.activity.pin), default false. Pinned
-  Activity Detail stays open across thread switches and reprojects the selected thread’s data; unpinned detail
-  closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover view, no
-  small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
-  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a
-  Settings row, durable layout field or runtime mutation.
+canonical_text: 'D8–D13, G5–G7/G10. UCC-210 declares cmd.work.stop, cmd.work.restart, cmd.work.send_input, cmd.work.set_completion_delivery,
+  cmd.work.clear_finished, cmd.work.quit, cmd.chat.processes.open, cmd.agents_and_processes.show and cmd.agents_and_processes.pop_out.
+  Runtime commands bind project/server/environment, stable work/owner and process identity, expected projection/input
+  generation, actor/permission and idempotency key, return an owner receipt or typed rejection, and never optimistically
+  manufacture success. Unknown/stale/unavailable owner refuses. Navigation and view-local clear do not write runtime
+  state or emit events. Stop all is cmd.work.stop with scope thread/platform and the reviewed target list, never a second
+  handler; process-group semantics are EP-043/SIR-054. Input is current safe yes/no only; other input reveals terminal.
+  Restart is eligible owner-controlled new invocation, no PID-only replay. Completion policy writes one owner value;
+  delivery does not wake stopped threads. Quit defaults keep_running; stop_selected excludes services and binds the reviewed
+  current target set. Registered local prefixes: ui.work_panel.* (close/select_tab/filter/sort/expand/select), ui.work_quit.*
+  (select/cancel), ui.project_switcher.* (open/close), ui.settings.pip_editor.* (open/close/replay), plus ui.work_quit.open
+  to draft the quit dialog. They write no durable/runtime state, carry return focus/scope and release timers/subscriptions/copies.
+  cmd.work.clear_finished is a navigation_wrapper with view-local hiding, not record deletion. All settings hosts use
+  preview/apply. No Home panel-tab command or panel shortcut in this build. ProcessFacts and command request/result/error
+  fixtures are static contracts; new input/completion event candidates remain non-emitting until Event Authority. B2:
+  ui.project_switcher.all_projects is the typed local action that focuses the existing Projects page route tab_id projects.
+  It never misuses cmd.panel.switch, which is only a rail side-panel shell action. D10/D13/G4: Requests carry explicit
+  scope_kind under the existing application/project policy. Quit and platform Stop all are application-scoped with project_id
+  null; thread Processes is project-scoped with a real Project. A global panel or local editor/navigation action works
+  without an active Project. Every reviewed target still carries its actual Project/server/environment and current owner
+  permission. Dispatch verifies source/target scope rather than inferring a default Project; a mismatch refuses before
+  effects. This adds no Settings store or event family. G1 B (Jared 2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin
+  action (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and reprojects
+  the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only: one full-size docked-or-full-height-cover
+  view, no small form. A switch cancels stale subscriptions and never leaves the previous thread’s rows/actions in the
+  new thread. A missing domain shows its truthful empty/unavailable state. Pin is session view state, not a Settings
+  row, durable layout field or runtime mutation. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only overlay
+  popover, reached from the existing status-bar System status item and the Processes System services link. ui.system_status.open
+  and ui.system_status.close are typed local visibility actions, with statusbar.system_status, work.open_system_status
+  and system_status.close binding families. Service owner links use the existing ui.settings.route.open action and system_status.service.open_settings
+  binding, selecting code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
+  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or controlling
+  a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass plate; unavailable
+  owner navigation says why. System status open/close and owner-Settings navigation carry the same explicit source scope,
+  view and return-focus identity as other no-write local actions. G6 Clear finished is a Processes-view action; it never
+  clears finished agents. Concept thread Stop all reviews processes/scheduled runs, while platform Stop all may include
+  agents after review; the canonical cmd.work.stop identity and per-owner permission/identity checks remain. D2/D7, PM7
+  Step4 final-source alignment, 2026-10-30: cmd.chat.processes.open accepts optional work_id for a dock Review/Show route
+  selecting one process or scheduled row. A bar open may omit it. Resolve that ID only within the signed Project/thread
+  scope and current expected generation; missing, stale or foreign selection cannot retarget to a title match or another
+  thread. This remains navigation with no process effect. Agent dock Review selects its existing Subagents detail locally
+  and never opens a child transcript by this route. D7/D8/D13, PM7 companion review fix1, 2026-10-30 (Astra A2/A3): work.open_owner
+  is ui.work_panel.select with an owner-row value, owner_id, destination agents|subagents, invoking view and focus; Subagents
+  also binds its exact thread_id. It never opens a transcript. Actual Open thread uses cmd.chat.open_thread for the item’s
+  bound Assistant thread; actual Open surface is ui.work_panel.open_surface, a local navigation request to the resolved
+  owner surface with work identity and focus, unavailable if that owner cannot be reached. Copy command is ui.work_panel.copy_command,
+  a local clipboard request over the selected current command; clipboard refusal cannot report success. Open port reuses
+  cmd.browser.open_workspace_preview with a server/environment-authoritative URL and CV-360 placement, never an assumed
+  client localhost. A scheduled-row Cancel reuses cmd.chat.schedule_message.cancel with the exact schedule identity/revision
+  and owner gates; it is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation
+  through the terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for restartable
+  live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner routes. G4/D7/D10,
+  PM7 companion review fix1, 2026-10-30 (Astra A4): local_action_request requires a closed action-specific value. select_tab
+  is agents|processes|resources. sort is {column: title|rank|time|cpu|mem|ports|where, direction: -1|1}. filter distinguishes
+  owner, agent_group and process_grouping; expand distinguishes item, subagents and group plus boolean expanded. select
+  distinguishes an item work_id from owner_id with destination agents|subagents; exact thread_id is required for Subagents.
+  Quit draft selection is one closed choice keep_running|stop_selected, one work_id/expected_generation/selected checkbox,
+  or the Stop-list scope procs|all. Missing values, unknown fields, arbitrary enums and cross-branch fields refuse before
+  view or owner effects. Pin and System status retain their separate restrictions. None of these draft/view changes creates
+  a runtime mutation or saved setting. D7/D8/D13, PM7 final-review direct correction, 2026-10-30 (Astra r2 N1): reused-owner
+  Touch routes retain separate contracts, never PM7 command_result. Browser open and Terminal rerun retain UCC-063/UCC-201
+  catalog payload contracts and the existing CV-333 UICommandResponse v2 projection/error/receipt; their per-command
+  identity fence checks common dispatch identity only, not an uncompiled owner request body or terminal effect. Scheduling
+  Cancel directly consumes ScheduledMessageCancelRequest and ScheduledMessageCancelResult plus the scheduling owner’s
+  closed error code. Its admitted source_surface vocabulary is unchanged; Work delegates to the scheduling-owned cancellation
+  context rather than inventing a source or PID target. Precise per-command profiles and fixtures bind these distinctions;
+  no owner adopts a new PM7 result. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider
+  gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
+  thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
+  to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs
+  line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry
+  timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work.
+  Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through
+  Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
+  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that
+  nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work
+  as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry;
+  the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure
+  remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -8276,9 +8458,22 @@ acceptance_criteria:
 - Every command has one sole handler and closed typed request/result; explicit source scope, target owner/permission/storage/currentness
   reject before effects, including application controls with no active Project.
 - Stop all reuses cmd.work.stop; pid/start/group/descendant targeting and 3 s grace are enforced by the owner.
-- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events
-  remain non-emitting.
+- Prompt input is current safe yes/no only, quit defaults keep-running, clear is view-local and candidate events remain
+  non-emitting.
 - All declared local prefixes write no runtime state and release focus/subscriptions/copies on close.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and
+  the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection.
+  Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not
+  restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you
+  lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
+  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three
+  budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends
+  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
+  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
+  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
+  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
+  read scope creates no Stop/Restart/Stop all or service-control authority.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -8307,3 +8502,6 @@ owner_hints:
 ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractName:Plans/Executor_Protocol.md#EP-043
 
 
+
+
+Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.

@@ -3273,6 +3273,582 @@
         "dedupe_key": "server_id",
         "observed_at_utc": "2026-09-01T12:03:00Z"
       }
+    },
+    {
+      "name": "DL259.native_client.tailscale_connector_configuration",
+      "definition": "tailscale_connector_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_configuration.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "implementation": "go_tsnet",
+        "helper_binary": "pm-tailnet-connector",
+        "artifact_ownership": "puppet_master_core_artifact",
+        "embedded_module": "tailscale.com/tsnet",
+        "signature_state": "verified_pm_signature",
+        "full_tailscale_product_adopted": false,
+        "control_server_kind": "hosted_tailscale",
+        "headscale_origin_ref": null,
+        "secure_state_ref": "server-secure-state:connector:tsnet-hosted-01",
+        "connector_version": "1.0.0",
+        "state_schema_version": "1.0.0",
+        "build_id": "pm-tailnet-connector-linux-amd64-build-01",
+        "ipc_protocol_version": "1.0.0",
+        "tsnet_module_version": "release-pinned",
+        "build_provenance_ref": "provenance:pm-tailnet-connector:build-01",
+        "expected_connector_revision": 9,
+        "current_connector_revision": 9,
+        "one_active_binding": true,
+        "node_scope": "one_per_native_client_id",
+        "automatic_private_endpoint": false,
+        "external_host_tailscale_adopted": false,
+        "normal_title": "Tailscale",
+        "normal_subtitle": "Built into Puppet Master",
+        "updated_at_utc": "2026-09-01T12:00:00Z",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_connector_process_projection",
+      "definition": "tailscale_connector_process_projection",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_process_projection.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "connector_state": "needs_attention",
+        "process_state": "blocked",
+        "protocol_state": "compatible",
+        "backoff_state": "circuit_open",
+        "state_integrity": "corrupt",
+        "state_corrupt_overwritten_blindly": false,
+        "identity_binding_state": "bound_expected_server",
+        "supervisor_generation": 3,
+        "connector_revision": 9,
+        "ipc_protocol_version": "1.0.0",
+        "crash_isolation": "connector_process_only",
+        "goals_unaffected_by_connector_crash": true,
+        "observed_at_utc": "2026-09-01T12:01:00Z",
+        "freshness_ref": "freshness:connector-process:tsnet-hosted-01:3",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_authorization_session",
+      "definition": "tailscale_authorization_session",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_authorization_session.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "authentication_operation_id": "authentication-operation:tsnet-hosted-01",
+        "authorization_session_ref": "authorization-session:tsnet-hosted-01",
+        "control_server_kind": "hosted_tailscale",
+        "state": "waiting_for_authorization",
+        "operation_generation": 7,
+        "handoff_generation": 2,
+        "initiating_client_id": "client:native-01",
+        "authorized_client_id": "client:native-01",
+        "authorized_client_session_generation": 3,
+        "protected_action_ref": "protected-action:tailscale-authorization:handoff-02",
+        "approval_state": "not_required",
+        "client_loss_policy": "operation_survives_handoff_must_be_reauthorized",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "tailscale-setup-row",
+          "invocation_token": "ret_tsnet-auth-00000001"
+        },
+        "authorization_url_persisted": false,
+        "protected_content_persisted": false,
+        "cookies_persisted": false,
+        "started_at_utc": "2026-09-01T12:00:00Z",
+        "expires_at_utc": "2026-09-01T12:15:00Z",
+        "completed_at_utc": null,
+        "redacted_error_ref": null,
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_native_egress_policy",
+      "definition": "tailscale_native_egress_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_native_egress_policy.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "policy_id": "policy:tailscale-native-egress:01",
+        "allowed_endpoint_refs": [
+          "server-endpoint:approved-private-01"
+        ],
+        "dial_mode": "bounded_dial_or_stream_to_verified_pm_endpoints",
+        "open_socks_proxy": false,
+        "arbitrary_lan_pivot": false,
+        "ordinary_browser_enrolled": false,
+        "pm_identity_required": true,
+        "policy_generation": 1,
+        "updated_at_utc": "2026-09-01T12:02:00Z",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_connector_ipc_envelope",
+      "definition": "tailscale_connector_ipc_envelope",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_ipc_envelope.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "request_id": "request:connector-private-test:01",
+        "idempotency_key": "idem-tsnet-private-test-01",
+        "ipc_protocol_version": "1.0.0",
+        "expected_connector_revision": 9,
+        "operation": "dial_approved_endpoint",
+        "deadline_at_utc": "2026-09-01T12:05:00Z",
+        "cancellation_ref": "cancellation:connector-private-test:01",
+        "authenticated_peer_ref": "peer:pm-server-process:tsnet-hosted-01",
+        "peer_validation": "owning_pm_native_client_only",
+        "payload_ref": "ipc-payload:connector-private-test:01",
+        "public_management_api": false,
+        "general_localapi_exposed": false,
+        "redaction_profile": "connector_secrets_excluded",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_connector_receipt",
+      "definition": "tailscale_connector_receipt",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:connector-private-test:01",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "server_endpoint_id": "server-endpoint:tsnet-private-01",
+        "remote_route_id": "remote-route:tsnet-private-01",
+        "connector_version": "1.0.0",
+        "ipc_protocol_version": "1.0.0",
+        "tsnet_module_version": "release-pinned",
+        "build_id": "pm-tailnet-connector-linux-amd64-build-01",
+        "build_provenance_ref": "provenance:pm-tailnet-connector:build-01",
+        "control_server_kind": "hosted_tailscale",
+        "redacted_control_origin_ref": null,
+        "requested_operation": "dial_approved_endpoint",
+        "effective_operation": "dial_approved_endpoint",
+        "requested_route_class": "private",
+        "effective_route_class": "private",
+        "before_revision": 9,
+        "after_revision": 9,
+        "initiating_client_id": "client:native-01",
+        "approval_ref": null,
+        "consent_ref": null,
+        "pm_identity_result": "verified",
+        "ingress_class": "none",
+        "observable_work_ref": "work:connector-private-test:01",
+        "bounded_remediation_ref": null,
+        "invoked_compatibility_id": null,
+        "started_at_utc": "2026-09-01T12:02:00Z",
+        "completed_at_utc": "2026-09-01T12:02:01Z",
+        "freshness_ref": "freshness:connector-private-test:01",
+        "secret_material_excluded": true,
+        "raw_state_excluded": true,
+        "authorization_url_excluded": true,
+        "cookies_excluded": true,
+        "unredacted_query_excluded": true,
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.tailscale_connector_security_policy",
+      "definition": "tailscale_connector_security_policy",
+      "value": {
+        "schema_id": "pm.remote_access_system.tailscale_connector_security_policy.v1",
+        "schema_version": "1.0.0",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "secure_state_owner": "native_client_owner_permissioned_secure_state",
+        "allowed_secret_location": "native_client_secure_state_only",
+        "forbidden_secret_sinks": [
+          "project_vault",
+          "ordinary_redb_projection",
+          "seglog_event",
+          "settings",
+          "logs",
+          "chat",
+          "usage",
+          "screenshot",
+          "concept"
+        ],
+        "local_ipc_peer_policy": "owning_pm_native_client_only",
+        "least_privilege": true,
+        "public_management_api": false,
+        "tailnet_identity_grants_pm_authority": false,
+        "reset_requires_step_up": true,
+        "reset_requires_current_preview": true,
+        "logs_redacted": true,
+        "updated_at_utc": "2026-09-01T12:00:00Z",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.Caddy_generated_configuration",
+      "definition": "reverse_proxy_configuration",
+      "value": {
+        "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
+        "schema_version": "1.0.0",
+        "configuration_id": "reverse-proxy-config:nginx-01",
+        "server_id": "server:home-01",
+        "proxy_family": "caddy",
+        "deployment_form": "compose",
+        "external_origin": "https://pm.example.test",
+        "base_path": "/",
+        "dedicated_hostname": true,
+        "trusted_proxy_cidrs": [
+          "10.0.0.0/24"
+        ],
+        "tls_required": true,
+        "forwarded_host_proto_policy": "trust_configured_peers_only",
+        "forwarded_client_policy": "trust_configured_peers_only",
+        "websocket_upgrade": true,
+        "secure_cookie_policy": "secure_http_only_same_site",
+        "csrf_policy": "enforced",
+        "origin_policy": "exact_external_origin",
+        "callback_policy": "validated_exact_return_context",
+        "file_transfer_policy": "authenticated_bounded_stream",
+        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "test_receipt_ref": "receipt:remote-test:proxy-01",
+        "state": "ready",
+        "updated_at_utc": "2026-08-31T12:00:00Z",
+        "trust_forwarded_headers_from_any_peer": false,
+        "deep_links_tested": true,
+        "callbacks_tested": true,
+        "transfers_tested": true,
+        "arbitrary_subpath_supported": false,
+        "claims_to_solve_cgnat": false
+      }
+    },
+    {
+      "name": "DL259.native_client.setup_request",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "command_instance_id": "rcmd_case-000000000017",
+        "correlation_id": "corr_remote-000000000017",
+        "idempotency_key": "idem_remote-000000000017",
+        "server_id": null,
+        "client_id": "client:native-01",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "client_generation": 3,
+          "connector_generation": 3,
+          "policy_generation": 3,
+          "session_generation": 3
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "control_server_kind": "hosted_tailscale",
+          "expected_connector_revision": 9,
+          "operation_scope": "connect_native_client"
+        },
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.command_result",
+      "definition": "command_result",
+      "value": {
+        "record_type": "remote_access.command.result.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "command_instance_id": "rcmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": null,
+        "status": "succeeded",
+        "receipt_id": "rrcpt_result-00000000001",
+        "resulting_route_generation": 6,
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "output": {
+          "action": "cmd.remote_access.tailscale.setup.start",
+          "changed": false
+        },
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.command_error",
+      "definition": "command_error",
+      "value": {
+        "record_type": "remote_access.command.error.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "command_instance_id": "rcmd_error-000000000001",
+        "correlation_id": "corr_error-000000000001",
+        "server_id": null,
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "status": "failed",
+        "code": "route_unreachable",
+        "retryable": true,
+        "message": "The route did not answer the authenticated transport probe.",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.command_availability",
+      "definition": "command_availability",
+      "value": {
+        "record_type": "remote_access.command.availability.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "server_id": null,
+        "connector_id": "connector:tsnet-hosted-01",
+        "available": false,
+        "currentness": "blocked",
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "integration_evidence": {
+          "central_registered": false,
+          "schema_bound": true,
+          "native_handler_bound": false,
+          "permission_route_bound": false,
+          "security_preflight_bound": false,
+          "production_wired": false,
+          "receipt_or_admitted_event_bound": false
+        },
+        "disabled_reason": {
+          "record_type": "remote_access.command.disabled_reason.v1",
+          "command_id": "cmd.remote_access.tailscale.connector.check",
+          "connector_id": "connector:tsnet-hosted-01",
+          "code": "handler_unavailable",
+          "message": "The PM tailnet connector handler is unavailable.",
+          "blocking_refs": [
+            "Plans/Wiring_Matrix.production.json"
+          ],
+          "remediation_command_id": null
+        },
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_client.command_permission",
+      "definition": "command_permission",
+      "value": {
+        "record_type": "remote_access.command.permission.v1",
+        "command_id": "cmd.remote_access.tailscale.setup.start",
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "server_id": null,
+        "client_id": "client:native-01",
+        "principal_id": "local-user",
+        "permission_class": "remote_access.public_ingress",
+        "decision": "allowed",
+        "filesafe_confirmation_required": true,
+        "policy_generation": 4,
+        "evaluated_at": "2026-08-31T00:00:00Z",
+        "connector_owner": "native_client",
+        "owner_client_id": "client:native-01",
+        "client_runtime_kind": "native_app",
+        "native_installation_ref": "native-installation:verified-01"
+      }
+    },
+    {
+      "name": "DL259.native_owner_round_trip",
+      "definition": "command_round_trip",
+      "value": {
+        "record_type": "remote_access.command.round_trip.v1",
+        "request": {
+          "record_type": "remote_access.command.payload.v1",
+          "command_id": "cmd.remote_access.tailscale.setup.start",
+          "command_instance_id": "rcmd_case-000000000017",
+          "correlation_id": "corr_remote-000000000017",
+          "idempotency_key": "idem_remote-000000000017",
+          "server_id": null,
+          "client_id": "client:native-01",
+          "session_id": "session:abcdefghijkl",
+          "expected_generations": {
+            "client_generation": 3,
+            "connector_generation": 3,
+            "policy_generation": 3,
+            "session_generation": 3
+          },
+          "permission_snapshot_id": "perm_abcdefghijkl",
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "route-card",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "args": {
+            "control_server_kind": "hosted_tailscale",
+            "expected_connector_revision": 9,
+            "operation_scope": "connect_native_client"
+          },
+          "connector_owner": "native_client",
+          "owner_client_id": "client:native-01",
+          "client_runtime_kind": "native_app",
+          "native_installation_ref": "native-installation:verified-01"
+        },
+        "result": {
+          "record_type": "remote_access.command.result.v1",
+          "command_id": "cmd.remote_access.tailscale.setup.start",
+          "command_instance_id": "rcmd_case-000000000017",
+          "correlation_id": "corr_remote-000000000017",
+          "server_id": null,
+          "status": "succeeded",
+          "receipt_id": "rrcpt_result-00000000001",
+          "resulting_route_generation": 6,
+          "return_context": {
+            "surface_id": "settings.remote_access",
+            "route_id": "settings/remote-access",
+            "focus_target": "route-card",
+            "invocation_token": "ret_remote-000000000001"
+          },
+          "output": {
+            "action": "cmd.remote_access.tailscale.setup.start",
+            "changed": false
+          },
+          "connector_owner": "native_client",
+          "owner_client_id": "client:native-01",
+          "client_runtime_kind": "native_app",
+          "native_installation_ref": "native-installation:verified-01"
+        }
+      }
+    },
+    {
+      "name": "DL259.Caddy.cmd.remote_access.proxy.preview",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.preview",
+        "command_instance_id": "rcmd_case-000000000025",
+        "correlation_id": "corr_remote-000000000025",
+        "idempotency_key": "idem_remote-000000000025",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "configuration": {
+            "proxy_kind": "caddy",
+            "packaging": "compose",
+            "dedicated_hostname": "pm.example.test",
+            "external_origin": "https://pm.example.test",
+            "trusted_proxy_cidrs": [
+              "10.0.0.0/8"
+            ],
+            "websocket_upgrade": true,
+            "secure_cookies": true,
+            "csrf_origin_enforced": true
+          }
+        }
+      }
+    },
+    {
+      "name": "DL259.Caddy.cmd.remote_access.proxy.generate",
+      "definition": "command_payload",
+      "value": {
+        "record_type": "remote_access.command.payload.v1",
+        "command_id": "cmd.remote_access.proxy.generate",
+        "command_instance_id": "rcmd_case-000000000026",
+        "correlation_id": "corr_remote-000000000026",
+        "idempotency_key": "idem_remote-000000000026",
+        "server_id": "server:abcdefghijkl",
+        "server_endpoint_id": "server-endpoint:abcdefghijkl",
+        "remote_route_id": "remote-route:abcdefghijkl",
+        "client_id": "client:abcdefghijkl",
+        "session_id": "session:abcdefghijkl",
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        },
+        "permission_snapshot_id": "perm_abcdefghijkl",
+        "return_context": {
+          "surface_id": "settings.remote_access",
+          "route_id": "settings/remote-access",
+          "focus_target": "route-card",
+          "invocation_token": "ret_remote-000000000001"
+        },
+        "args": {
+          "configuration": {
+            "proxy_kind": "caddy",
+            "packaging": "compose",
+            "dedicated_hostname": "pm.example.test",
+            "external_origin": "https://pm.example.test",
+            "trusted_proxy_cidrs": [
+              "10.0.0.0/8"
+            ],
+            "websocket_upgrade": true,
+            "secure_cookies": true,
+            "csrf_origin_enforced": true
+          }
+        }
+      }
     }
   ],
   "invalid": [
@@ -4699,6 +5275,315 @@
       "remove": [
         "idempotency_key"
       ]
+    },
+    {
+      "name": "DL259.tailscale_connector_configuration.browser_not_embedded",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "DL259.native_client.tailscale_connector_configuration",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_configuration.missing_native_proof",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "DL259.native_client.tailscale_connector_configuration",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.native_node_cannot_own_Server_listener",
+      "definition": "tailscale_connector_configuration",
+      "base_valid": "DL259.native_client.tailscale_connector_configuration",
+      "patch": {
+        "automatic_private_endpoint": true
+      },
+      "expected_error": "Client node is bounded egress, not a Server listener"
+    },
+    {
+      "name": "DL259.tailscale_connector_process_projection.browser_not_embedded",
+      "definition": "tailscale_connector_process_projection",
+      "base_valid": "DL259.native_client.tailscale_connector_process_projection",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_process_projection.missing_native_proof",
+      "definition": "tailscale_connector_process_projection",
+      "base_valid": "DL259.native_client.tailscale_connector_process_projection",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_authorization_session.browser_not_embedded",
+      "definition": "tailscale_authorization_session",
+      "base_valid": "DL259.native_client.tailscale_authorization_session",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_authorization_session.missing_native_proof",
+      "definition": "tailscale_authorization_session",
+      "base_valid": "DL259.native_client.tailscale_authorization_session",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_native_egress_policy.browser_not_embedded",
+      "definition": "tailscale_native_egress_policy",
+      "base_valid": "DL259.native_client.tailscale_native_egress_policy",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_native_egress_policy.missing_native_proof",
+      "definition": "tailscale_native_egress_policy",
+      "base_valid": "DL259.native_client.tailscale_native_egress_policy",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_ipc_envelope.browser_not_embedded",
+      "definition": "tailscale_connector_ipc_envelope",
+      "base_valid": "DL259.native_client.tailscale_connector_ipc_envelope",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_ipc_envelope.missing_native_proof",
+      "definition": "tailscale_connector_ipc_envelope",
+      "base_valid": "DL259.native_client.tailscale_connector_ipc_envelope",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.native_node_cannot_enable_Funnel",
+      "definition": "tailscale_connector_ipc_envelope",
+      "base_valid": "DL259.native_client.tailscale_connector_ipc_envelope",
+      "patch": {
+        "operation": "funnel_enable"
+      },
+      "expected_error": "Funnel is Server-only"
+    },
+    {
+      "name": "DL259.tailscale_connector_receipt.browser_not_embedded",
+      "definition": "tailscale_connector_receipt",
+      "base_valid": "DL259.native_client.tailscale_connector_receipt",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_receipt.missing_native_proof",
+      "definition": "tailscale_connector_receipt",
+      "base_valid": "DL259.native_client.tailscale_connector_receipt",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_security_policy.browser_not_embedded",
+      "definition": "tailscale_connector_security_policy",
+      "base_valid": "DL259.native_client.tailscale_connector_security_policy",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.tailscale_connector_security_policy.missing_native_proof",
+      "definition": "tailscale_connector_security_policy",
+      "base_valid": "DL259.native_client.tailscale_connector_security_policy",
+      "patch": {
+        "native_installation_ref": null
+      },
+      "expected_error": "Native owner requires a verified native installation, never a browser tab"
+    },
+    {
+      "name": "DL259.NPM_has_no_generated_configuration",
+      "definition": "reverse_proxy_configuration",
+      "base_valid": "DL259.Caddy_generated_configuration",
+      "patch": {
+        "proxy_family": "nginx_proxy_manager"
+      },
+      "expected_error": "NPM is existing-only"
+    },
+    {
+      "name": "DL259.native_setup_cannot_ensure_Server_listener",
+      "definition": "command_payload",
+      "base_valid": "DL259.native_client.setup_request",
+      "patch": {
+        "args": {
+          "operation_scope": "ensure_private_endpoint"
+        }
+      },
+      "expected_error": "Native connection starts bounded egress only"
+    },
+    {
+      "name": "DL259.native_receipt_cannot_claim_Funnel",
+      "definition": "tailscale_connector_receipt",
+      "base_valid": "DL259.native_client.tailscale_connector_receipt",
+      "patch": {
+        "ingress_class": "public_funnel"
+      },
+      "expected_error": "Native egress has no public listener"
+    },
+    {
+      "name": "DL259.native_setup_other_Client_owner",
+      "definition": "command_payload",
+      "base_valid": "DL259.native_client.setup_request",
+      "patch": {
+        "owner_client_id": "client:another-01"
+      },
+      "expected_error": "Native connector operation must name its owning initiating Client"
+    },
+    {
+      "name": "DL259.command_result.browser_owner_refused",
+      "definition": "command_result",
+      "base_valid": "DL259.native_client.command_result",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Plain browsers have no embedded connector"
+    },
+    {
+      "name": "DL259.command_error.browser_owner_refused",
+      "definition": "command_error",
+      "base_valid": "DL259.native_client.command_error",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Plain browsers have no embedded connector"
+    },
+    {
+      "name": "DL259.command_availability.browser_owner_refused",
+      "definition": "command_availability",
+      "base_valid": "DL259.native_client.command_availability",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Plain browsers have no embedded connector"
+    },
+    {
+      "name": "DL259.command_permission.browser_owner_refused",
+      "definition": "command_permission",
+      "base_valid": "DL259.native_client.command_permission",
+      "patch": {
+        "client_runtime_kind": "browser"
+      },
+      "expected_error": "Plain browsers have no embedded connector"
+    },
+    {
+      "name": "DL259.native_round_trip_other_owner",
+      "definition": "command_round_trip",
+      "base_valid": "DL259.native_owner_round_trip",
+      "patch": {
+        "result": {
+          "owner_client_id": "client:another-01"
+        }
+      },
+      "expected_error": "Response must preserve exact native connector owner"
+    },
+    {
+      "name": "DL259.native_request_wrong_generation_namespace",
+      "definition": "command_payload",
+      "base_valid": "DL259.native_client.setup_request",
+      "patch": {
+        "expected_generations": {
+          "server_generation": 3,
+          "endpoint_generation": 2,
+          "route_generation": 5,
+          "policy_generation": 4,
+          "trust_generation": 2,
+          "session_generation": 7
+        }
+      },
+      "expected_error": "Local Client connector does not use a Server generation fence"
+    },
+    {
+      "name": "DL259.native_process_cannot_claim_Server_listener",
+      "definition": "tailscale_connector_process_projection",
+      "base_valid": "DL259.native_client.tailscale_connector_process_projection",
+      "patch": {
+        "connector_state": "private_endpoint_ready"
+      },
+      "expected_error": "Native node is egress only"
+    },
+    {
+      "name": "DL259.native_result_cannot_claim_public_route",
+      "definition": "command_result",
+      "base_valid": "DL259.native_client.command_result",
+      "patch": {
+        "output": {
+          "visibility": "public"
+        }
+      },
+      "expected_error": "Native connector has no public ingress"
+    },
+    {
+      "name": "DL259.NPM_no_generation.cmd.remote_access.proxy.preview",
+      "definition": "command_payload",
+      "base_valid": "DL259.Caddy.cmd.remote_access.proxy.preview",
+      "patch": {
+        "args": {
+          "configuration": {
+            "proxy_kind": "nginx_proxy_manager"
+          }
+        }
+      },
+      "expected_error": "NPM is existing-only, never a generator"
+    },
+    {
+      "name": "DL259.NPM_no_generation.cmd.remote_access.proxy.generate",
+      "definition": "command_payload",
+      "base_valid": "DL259.Caddy.cmd.remote_access.proxy.generate",
+      "patch": {
+        "args": {
+          "configuration": {
+            "proxy_kind": "nginx_proxy_manager"
+          }
+        }
+      },
+      "expected_error": "NPM is existing-only, never a generator"
+    },
+    {
+      "name": "DL259.CERT1.proxy_generation_has_no_certificate_profile",
+      "definition": "command_payload",
+      "base_valid": "positive.payload.cmd.remote_access.proxy.generate",
+      "patch": {
+        "args.configuration.certificate_profile_ref": "tls-profile:not-an-admitted-field"
+      },
+      "expected_error": "CERT-1: external certificate administration is not a PM configuration field"
+    },
+    {
+      "name": "DL259.CERT1.Ready_has_no_certificate_validity_assertion",
+      "definition": "reverse_proxy_configuration",
+      "base_valid": "dedicated_hostname_proxy_is_security_complete",
+      "patch": {
+        "certificate_validated": true
+      },
+      "expected_error": "CERT-1: route Ready cannot carry a certificate-validation assertion"
     }
   ]
 }

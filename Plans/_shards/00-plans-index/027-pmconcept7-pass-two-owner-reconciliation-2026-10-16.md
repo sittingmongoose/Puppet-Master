@@ -2,14 +2,14 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L6122-L6126
+Source lines: L6174-L6178
 
-Source SHA256: `912e4002af52d354f043552a789b095cda2e863d480db11dd256dd316ef60ae4`
+Source SHA256: `f24741b1ec3a3ed72ac6bbc0122d561b0195f07d95646c1e4044a7a9204ec25d`
 
 ---
 
 ## PMConcept7 pass-two owner reconciliation — 2026-10-16
 
-DL-203 through DL-212 record the landed changes through a42713eff4. Existing owners now cover Glass/wallpaper publication, the shared switcher and notification placement, Usage handover, editor delivery, round-3 terminal catalogs/housing/personal presets, Wizard continuity, picker Back and MA-073 consumer closure. Plans/terminal_background_catalog.json and Plans/terminal_appearance_presets.schema.json join the finite appearance companions; SP-331 owns preset custody. Glyph adoption remains distinct from the approved vocabulary. The consistency pass, Q13, terminal round 5 and Friendly lavender await a top-up; Demo Studio remains concept-only. No governance reseal or native certification is claimed.
+DL-203 through DL-212 record the landed changes through a42713eff4. Existing owners now cover Glass/wallpaper publication, the shared switcher and notification placement, Usage handover, editor delivery, round-3 terminal catalogs/housing/personal presets, Wizard continuity, picker Back and MA-073 consumer closure. Plans/terminal_background_catalog.json and Plans/terminal_appearance_presets.schema.json join the finite appearance companions; SP-331 owns preset custody. Glyph adoption remains distinct from the approved vocabulary. The consistency pass, Q13, terminal round 5 and Friendly lavender await a top-up. No governance reseal or native certification is claimed.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-203, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/Settings_System.md#SSYS-044

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40252-L40478
+Source lines: L40629-L40856
 
-Source SHA256: `08d403f7fe95d2a17cba06522d2ca2d20b5ef11cef4174a978e9be01270c8a4a`
+Source SHA256: `fa27487fdab79cd26189d6a8524a9d4365b15dab5aa0b72393bd6f3320103331`
 
 ---
 
@@ -19,29 +19,31 @@ plan_unit_id: F3-562
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a
-  turn mark and a paint-only spine per assistant turn, seven item families by message type with
-  distinct silhouettes, prose without a container, a neutral right-aligned user bubble (under Retro
-  both drawn as F3-597 states, DL-151), and the accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style,
-  with the behaviour owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering
-  to at most 30 nodes, narration that tucks into the card's caption, and the fold into the strip
-  when the final answer starts. For the transcript and the working activity this supersedes the
-  2026-09-03 redesign section's binding-by-reference list where it conflicts and Additive Correction
-  v4's statements that Orbit and Step Rail stay exactly as specified and that nothing authorises a
-  broad restyle. That binding-by-reference never includes the concept's lab tools (ACD-474). The
-  narration tuck is a projection of the turn's own progress summary into its card and does not
-  violate the rule that cards do not float out of narrative position. The eight themes keep their
-  tokens; family hues and the accent budget are theme-token roles defined for all eight.
+canonical_text: 'The assistant chat transcript renders in the Turn Stage presentation owned by ACD-469 (DL-104): a turn
+  mark and a paint-only spine per assistant turn, seven item families by message type with distinct silhouettes, prose
+  without a container, a neutral right-aligned user bubble (under Retro both drawn as F3-597 states, DL-151), and the
+  accent budget. The working activity keeps Orbit as the default and Step Rail as the simple style, with the behaviour
+  owned by ACD-473 (DL-105): concurrent, failed and waiting subjects, clustering to at most 30 nodes, narration that
+  tucks into the card''s caption, and the fold into the strip when the final answer starts. For the transcript and the
+  working activity this supersedes the 2026-09-03 redesign section''s binding-by-reference list where it conflicts and
+  Additive Correction v4''s statements that Orbit and Step Rail stay exactly as specified and that nothing authorises
+  a broad restyle. The narration tuck is a projection of the turn''s own progress summary into its card and does not
+  violate the rule that cards do not float out of narrative position. The ten themes keep their tokens; family hues and
+  the accent budget are theme-token roles defined for all ten variants (DL-257/Q22). Amended Q22, Jared 2026-10-30 (DL-257):
+  the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: "Promotes the rebuilt chat transcript and working activity presentation."
 split_recommended: false
-depends_on: [DL-104, DL-105, ACD-469, ACD-473, ACD-474]
+depends_on:
+- DL-104
+- DL-105
+- ACD-469
+- ACD-473
 unblocks: []
 acceptance_criteria:
-  - "The chat transcript renders families, turn marks and the spine per ACD-469 in all eight themes."
-  - "The working activity behaves per ACD-473 in both styles."
-  - "No lab tool listed in ACD-474 appears in a product surface."
+- The chat transcript renders families, turn marks and the spine per ACD-469 in all ten themes.
+- The working activity behaves per ACD-473 in both styles.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -64,8 +66,7 @@ preserved_exact_tokens:
   - "Orbit"
   - "Step Rail"
 negative_constraints:
-  - "Do not treat the concept's lab tools as bound by reference."
-  - "Do not restate the family map or the accent rule here; ACD-469 owns them."
+- Do not restate the family map or the accent rule here; ACD-469 owns them.
 stale_retired_dispositions:
   - "Additive Correction v4 wording that Orbit and Step Rail stay exactly as specified and that nothing authorises a broad restyle is superseded for the chat transcript and working activity by DL-104 and DL-105."
 owner_hints:
@@ -73,7 +74,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473
 
 ### F3-563 - Composer Busy Send Steer Queue Switch Default And Send Now
 

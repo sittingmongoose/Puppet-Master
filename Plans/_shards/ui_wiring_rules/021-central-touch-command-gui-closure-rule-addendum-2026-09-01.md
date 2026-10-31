@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1180-L1215
+Source lines: L1377-L1432
 
-Source SHA256: `f8178b222787114c5465431af2b18394e3e0e1093b97cc30a7b80b4aa079bd63`
+Source SHA256: `725dc022d5120a2d2045672a9c078530aa3b62e531ae560774065754796fd2fd`
 
 ---
 
@@ -21,18 +21,38 @@ plan_unit_id: UIW-017
 unit_type: gui_wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: >-
-  Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
-  UIW-017 owns Plans/touch_closure_action_sources.json, the bounded static product action census used by Touch discovery independently of the Touch crosswalk and production wiring. Its system-local, Guided Tour, and required Home layout action lists reference the existing semantic owners. The census is not a command catalog, concept build input, native execution evidence, or readiness admission.
+canonical_text: 'Every actionable Touch primary command must have production wiring and exactly one handler identity
+  across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not
+  create synthetic controls. UIW-017 owns Plans/touch_closure_action_sources.json, the bounded static product action
+  census used by Touch discovery independently of the Touch crosswalk and production wiring. Its system-local, Guided
+  Tour, and required Home layout action lists reference the existing semantic owners. The census is not a command catalog,
+  concept build input, native execution evidence, or readiness admission. DL-259 D7 B, Jared 2026-10-31: the existing
+  Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector. Request,
+  result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the native installation
+  reference. Native ownership has no owner server_id; client/connector/policy/session generations replace Server/endpoint/route/trust
+  generations for that local operation. The native owner must equal the initiating Client; cross-owner returns fail closed.
+  Server-owned records and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse
+  the same handlers and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser
+  tabs cannot select native ownership. All routes remain handler_unavailable until executable evidence exists.'
 gui_related: true
 gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
 depends_on: [UIW-016, CS-074, UCC-152, WM-051]
 unblocks: []
 acceptance_criteria:
-- The Touch verifier fails on missing production coverage, competing handler identities, alias peer rows, blocked-token wiring, missing GUI routes, or stale profile refs.
+- The Touch verifier fails on missing production coverage, competing handler identities, alias peer rows, blocked-token
+  wiring, missing GUI routes, or stale profile refs.
 - Rebinding uses exact semantic equivalence and never relabels a nearby non-equivalent action.
 - Static, concept-simulated, and native-runtime claims remain separate.
-- Plans/touch_closure_action_sources.json remains an independent static census; the verifier rejects action drift and unresolved semantic-owner references against the existing schema, catalog, and Touch contracts.
+- Plans/touch_closure_action_sources.json remains an independent static census; the verifier rejects action drift and
+  unresolved semantic-owner references against the existing schema, catalog, and Touch contracts.
+- 'DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
+  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
+  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
+  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
 validation_surfaces: [Plans/touch_closure_action_sources.json, python3 scripts/pm-touch-closure-verify.py --json]
 risk_class: gui_command_reverse_coverage
 reasoning_tier: high
