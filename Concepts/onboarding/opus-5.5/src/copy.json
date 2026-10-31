@@ -214,8 +214,9 @@
       },
       "link": {
         "title": "Puppet Master Remote Link",
-        "sub": "Paste the link your Server gave you",
-        "label": "Remote Link"
+        "sub": "Paste the link or type the code your Server shows",
+        "label": "Remote Link or its code",
+        "where": "Your Server shows it in Settings › Server & Project Location › Away From Home"
       },
       "local": "On this network",
       "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well."
@@ -228,7 +229,8 @@
       "confirmTitle": "How do you want to confirm?",
       "approve": {
         "title": "Approve from another device",
-        "sub": "{device} will show a request"
+        "sub": "{device} will show a request",
+        "subAny": "A device that already uses {name} will show a request"
       },
       "code": {
         "title": "Enter the code it shows",
@@ -249,17 +251,39 @@
         "approve": "Waiting for approval on {device}",
         "code": "Checking the code",
         "qr": "Reading the QR code",
-        "trust": "Pairing this device"
+        "trust": "Pairing this device",
+        "approveAny": "Waiting for approval on a device that already uses {name}"
       },
       "approved": "Approved on {device}",
-      "resend": "Didn't get a request? Send it again",
+      "resend": "Didn't get a request? Send a new one",
       "codeLabel": "Code from {name}",
       "codeHint": "8 letters and numbers, like A7K9-M2Q4",
       "codeWrong": "That code doesn't match. Check it on {name} and try again.",
       "qrAim": "Point your camera at the QR code on {name}",
       "expired": "The request expired.",
       "done": "This device is paired with {name}",
-      "check": "Check code"
+      "check": "Check code",
+      "fail": {
+        "unreachable": "Couldn't reach {name}. Check that it is turned on and connected, then try again. Nothing was connected.",
+        "denied": "The request was turned down on the other device. Nothing was connected.",
+        "expired": "The request ran out before anyone approved it. Nothing was connected.",
+        "identity_mismatch": "The computer that answered is not {name}: its picture and ID are different. Nothing was connected.",
+        "protocol_mismatch": "{name} runs a different version of Puppet Master. Update the older one, then try again. Nothing was connected.",
+        "retry": "Try again",
+        "otherWay": "Choose another way",
+        "askAgain": "Ask again",
+        "useCode": "Use a code instead",
+        "newRequest": "Send a new request",
+        "toList": "Back to the list",
+        "reason": "Pairing didn't finish. Choose what to do next."
+      },
+      "hint": {
+        "denied": "Turned down",
+        "expired": "Runs out",
+        "unreachable": "Can't be reached",
+        "identity_mismatch": "Another computer answers",
+        "protocol_mismatch": "Another version"
+      }
     },
     "ready": {
       "eyebrow": "Connected",
@@ -337,9 +361,18 @@
       "notSetUp": "Not set up yet",
       "choose": "Set up this one",
       "address": "Enter its address instead",
-      "cloudNote": "A cloud computer does not show up on your home network. Enter the address its setup printed.",
-      "cloudLabel": "Its address",
-      "scan": "Look on this network instead"
+      "scan": "Look on this network instead",
+      "cloudPrivate": "A rented computer is set up privately: until it is yours, its setup page only answers on a private network. Put it on your VPN or Tailscale network first, then type the address it has there.",
+      "cloudPrivateLabel": "Its private address (VPN or Tailscale)",
+      "cloudHint": "Like 100.88.12.34 or cloud-box.tail1234.ts.net",
+      "cloudPublic": "That's a public internet address. Use the address it has on your VPN or Tailscale network, so its setup page never faces the internet.",
+      "before": {
+        "title": "Before you start",
+        "models": "Check that your model is listed in the install guide: not every {brand} model can run Puppet Master.",
+        "data": "Give Puppet Master a folder of its own for its data, on a disk that is kept. Your work lives there, so updating or reinstalling the app never loses it. The guide shows where to set it.",
+        "address": "Once it starts, it shows up here by itself, with the address your other devices use to reach it."
+      },
+      "leadCloud": "Install Puppet Master on it, then type the address it has on your private network."
     },
     "confirm": {
       "eyebrow": "New Server",
@@ -394,7 +427,7 @@
       "lead": "Other devices can join with this code. You can also do it later.",
       "pairTitle": "Add another device",
       "pairSub": "On the other device choose Connect this device, then scan this or enter the code.",
-      "link": "Local link",
+      "link": "Link for other devices",
       "waiting": "{name} wants to join",
       "waitingHint": "Compare the words with what {name} shows, then approve.",
       "approve": "Approve",
@@ -478,9 +511,13 @@
       "settings": "Your settings and look",
       "never": "This restore doesn't bring back sign-ins. You sign in again where needed.",
       "button": "Restore",
-      "away": "Access away from home is set up: {how}",
+      "away": "Then {how} is set up for away from home, as its own step",
       "failed": "The restore stopped before it finished. Nothing on this computer was replaced. Try again.",
-      "retry": "Try again"
+      "retry": "Try again",
+      "ontoServer": "Comes back onto {name}, the Server you just set up",
+      "ontoHere": "Comes back onto this computer, {name}",
+      "paused": "Everything comes back paused: no Goals run, no schedules start and nothing opens to the internet until you turn it on",
+      "repair": "Devices that used the old computer pair again with {name}"
     },
     "apply": {
       "phases": {
@@ -488,7 +525,7 @@
         "check": "Checking it is complete",
         "projects": "Bringing back Projects",
         "settings": "Bringing back settings",
-        "remote": "Setting up access away from home"
+        "paused": "Keeping work, schedules and outside access paused"
       }
     },
     "done": {
@@ -498,7 +535,8 @@
       "lead": "{n} Projects are ready. AI accounts need a quick sign-in.",
       "enter": "Enter Puppet Master",
       "open": "Open a Project",
-      "create": "Create a new Project"
+      "create": "Create a new Project",
+      "paused": "Goals, schedules and outside access stay paused until you turn them on in Settings."
     }
   },
   "begin": {
@@ -951,35 +989,126 @@
     "lead": "{name} can stay reachable when you're out. You can change this any time.",
     "home": {
       "title": "Only at home for now",
-      "sub": "On your home network or VPN"
+      "sub": "On your home network, or a VPN you already use"
     },
     "anywhere": {
       "title": "Also away from home",
-      "sub": "Tailscale, built into Puppet Master — sign in once"
+      "sub": "Tailscale, built into Puppet Master: sign in once, after you confirm"
     },
     "more": "Other ways to connect",
     "proxy": {
       "title": "My own web address",
-      "sub": "Reach it at a web address you manage",
+      "sub": "Puts your Server at a web address you own, on the internet",
       "label": "Web address",
       "hosting": "Who runs it?",
-      "pm": "Puppet Master sets it up",
-      "generate": "Only make the settings file",
-      "existing": "I already have one",
+      "pm": "Set it up for me",
+      "generate": "Settings file only",
+      "existing": "I have one already",
       "tls": "Certificate",
       "free": "A free certificate",
       "own": "My own certificate",
       "kind": "Which proxy",
-      "detail": "The program that answers on your web address and passes visits on to Puppet Master. Caddy is the default; pick another only if you already use it.",
-      "detailExpert": "The reverse proxy Puppet Master configures in front of the Server: Caddy (default), NGINX, Traefik or Nginx Proxy Manager. It terminates TLS for the domain and forwards to the Server."
+      "detail": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
+      "detailExpert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is used as an existing external proxy.",
+      "ownNext": "After you confirm, you choose the certificate on {name}. It and its key stay there.",
+      "existingNext": "Puppet Master checks that this address reaches {name} and that its certificate is right before using it.",
+      "public": "This puts {name}'s sign-in page on the internet, where anyone can find it. Only devices you pair can use it. If only your own devices need it, Tailscale is the private way.",
+      "needsTitle": "What has to be true for this to work",
+      "needs": {
+        "dns": "{host} has to point to the network {name} is on.",
+        "ports": "That network has to let web traffic in: usually port 443, and port 80 too for a free certificate. Your router or cloud firewall decides this.",
+        "cgnat": "Some internet plans share one address between many homes. Then a web address can't reach you; Tailscale and Remote Link still can."
+      },
+      "consent": "I understand {name} will be reachable from the internet at this address",
+      "consentMissing": "Tick the box to say you understand this puts your Server on the internet"
     },
     "link": {
       "title": "Puppet Master Remote Link",
-      "sub": "A private link through Puppet Master's relay",
-      "label": "Remote Link",
-      "hint": "Your Server shows it under Settings › Access"
+      "sub": "No account, domain or router changes. Puppet Master makes the link.",
+      "next": "After you confirm, {name} makes its link and shows it to you, to open on your other devices."
     },
-    "headscale": "My own Headscale server"
+    "headscale": "My own Headscale server",
+    "headscaleNext": "After you confirm, Puppet Master asks your Headscale server to let {name} in, and whoever runs it approves.",
+    "setup": {
+      "eyebrow": "Access",
+      "title": {
+        "tailscale": "Setting up Tailscale for {name}",
+        "headscale": "Setting up Headscale for {name}",
+        "proxy": "Setting up your web address for {name}",
+        "link": "Making {name}'s Remote Link"
+      },
+      "lead": "Each step says what it is doing. You can finish this later in Settings.",
+      "leadAsk": "Your backup is back. Now set up how you reach {name} away from home, or do it later.",
+      "ask": "Nothing is set up until you press Set it up.",
+      "start": "Set it up",
+      "later": "Do this later",
+      "laterNote": "Not set up yet. Finish it any time in Settings › Server & Project Location › Away From Home.",
+      "done": "Done. You can reach {name} away from home now.",
+      "person": {
+        "tsSignIn": "Sign in to Tailscale",
+        "hsApproved": "It's approved",
+        "installed": "I've added it"
+      },
+      "ts": {
+        "start": "Starting Puppet Master's connection",
+        "signin": "Signing in to Tailscale",
+        "signinWait": "Tailscale's sign-in page opens. Sign in there with your Tailscale account.",
+        "auth": "Waiting for Tailscale to say yes",
+        "approve": "Waiting for device approval, if your Tailscale network asks for it",
+        "address": "Creating the private address",
+        "test": "Testing the web page, the app and the live connection"
+      },
+      "hs": {
+        "register": "Asking your Headscale server to let {name} in",
+        "approve": "Waiting for your Headscale administrator",
+        "approveWait": "Whoever runs your Headscale server approves {name} there. Press It's approved when they have."
+      },
+      "px": {
+        "config": "Making the {kind} settings on {name}",
+        "file": "Making the {kind} settings file",
+        "install": "Waiting for you to add the settings to {kind}",
+        "installWait": "The settings file is ready: download it from Settings › Server & Project Location › Away From Home, add it to your {kind}, then press I've added it.",
+        "dns": "Checking {host} points to {name}",
+        "reach": "Checking it can be reached from the internet",
+        "reaches": "Checking {host} reaches {name}",
+        "freeCert": "Getting a free certificate",
+        "theirCert": "Checking its certificate",
+        "ownCert": "Using your certificate on {name}",
+        "ownCertWait": "Choose the certificate on {name}: Puppet Master there asks for it, and it never leaves {name}. Until then this web address isn't finished. You can finish it later in Settings › Server & Project Location › Away From Home.",
+        "test": "Testing sign-in, the app and the live connection"
+      },
+      "rl": {
+        "create": "{name} is making its link",
+        "test": "Testing the link",
+        "share": "Open this link on your other devices. Each one still asks you to approve it."
+      },
+      "fail": {
+        "denied": "Tailscale didn't allow it. Nothing was set up. Try again, or do this later.",
+        "expired": "The Tailscale sign-in ran out before it finished. Try again for a fresh one.",
+        "deviceApproval": "Your Tailscale network needs an administrator to approve {name}. Approve it on Tailscale's admin page, then try again.",
+        "routeFailed": "The private address answered, but the live connection didn't work. Try again; if it keeps failing, do this later.",
+        "hsDenied": "Your Headscale server didn't let {name} in. Check with whoever runs it, then try again.",
+        "hsUnreachable": "Your Headscale server didn't answer. Check its address and that it is running, then try again.",
+        "unreachable": "{host} can't be reached from the internet. Your router or cloud firewall may need to let web traffic in, or your internet plan may share its address. Tailscale works without any of this.",
+        "dns": "{host} doesn't point to {name} yet. Change its address record where you bought the name, then try again. Changes can take a while.",
+        "cert": "The certificate couldn't be set up for {host}. Check that {host} points here and that web traffic can get in, then try again.",
+        "live": "The page opens, but live updates are blocked. Your proxy has to pass live connections through (WebSockets). Try again after fixing it.",
+        "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later."
+      },
+      "hint": {
+        "denied": "Tailscale says no",
+        "expired": "Sign-in runs out",
+        "needs_device_approval": "Needs an admin's approval",
+        "route_failed": "Live connection fails",
+        "registration_denied": "Headscale says no",
+        "hs_unreachable": "Headscale can't be reached",
+        "dns_mismatch": "Address points elsewhere",
+        "unreachable": "Can't be reached",
+        "certificate_failed": "No certificate",
+        "live_failed": "Live updates blocked",
+        "relay_unavailable": "Link service down"
+      }
+    }
   },
   "review": {
     "eyebrow": "Review",
@@ -1028,9 +1157,10 @@
       "restore": "The backup is brought back",
       "online": "An online copy is made on {service} · {privacy}",
       "settings": "Settings from {project} are applied",
-      "remote": "Access away from home is set up",
+      "remote": "Next, access away from home is set up, step by step (or later)",
       "server": "The Project lives on {server}",
-      "noProject": "No Project is created; make one whenever you like"
+      "noProject": "No Project is created; make one whenever you like",
+      "remotePublic": "Next, {host} is set up, putting your Server's sign-in page on the internet"
     },
     "checked": "Checked just now",
     "changed": "{what} changed since you chose it. Take a look.",
@@ -1320,7 +1450,26 @@
       "pmTag": "Runs Puppet Master",
       "pmNote": "{name} runs Puppet Master, so this computer pairs with it: you approve it once, and no key or password is needed.",
       "noAnswer": "Nothing answered at {addr}. Check the address and that the device is on.",
-      "choose": "Choose a device"
+      "choose": "Choose a device",
+      "portBad": "Use a port from 1 to 65535. SSH usually uses 22.",
+      "shareLabel": {
+        "smb": "Shared folder address",
+        "nfs": "Share address"
+      },
+      "shareHint": {
+        "smb": "Like //nas.local/projects",
+        "nfs": "Like nas.local:/export/projects"
+      },
+      "shareBad": {
+        "smb": "Type it as //computer/folder, like //nas.local/projects.",
+        "nfs": "Type it as computer:/path, like nas.local:/export/projects."
+      },
+      "shareAddress": {
+        "smb": "Type its address instead",
+        "nfs": "Type its address instead"
+      },
+      "shareFound": "Show the shares found",
+      "volumesOn": "Drives {where} already has connected"
     },
     "identity": {
       "eyebrow": "Check the device",
@@ -1365,7 +1514,12 @@
       "passCancel": "Cancel",
       "passOk": "Unlock",
       "passEmpty": "Enter the passphrase for {key}.",
-      "thisComputer": "this computer"
+      "thisComputer": "this computer",
+      "account": "Signs in to {name} as {user} ({address})",
+      "accountChange": "Change",
+      "accountLabel": "Account on {name}",
+      "accountHint": "The account on {name} that Puppet Master signs in to, usually your own.",
+      "accountNeeded": "Type the account on {name} that {where} should sign in to."
     },
     "signin": {
       "eyebrow": "Secure connection",
@@ -1402,11 +1556,18 @@
         "refused": "{name} refused the key because its home folder is shared too widely.",
         "refusedFix": "Fix the folder permissions",
         "not_allowed": "This account isn't allowed to use SSH on {name}.",
-        "notAllowedFix": "Turn it on in {brand}: Control Panel › User › Edit › Applications › SSH, then try again",
+        "notAllowedFix": "Ask whoever runs {name} to let this account use SSH, or use a shared folder instead.",
         "cancelled": "The passphrase prompt was closed, so {key} stayed locked.",
         "tryAgain": "Try again",
         "not_added": "The key isn't on {name} yet.",
-        "showKey": "Show the key again"
+        "showKey": "Show the key again",
+        "notAllowedBy": {
+          "Synology": "Synology lets only accounts in its administrators group use SSH. Sign in with such an account, or use a shared folder instead.",
+          "QNAP": "On QNAP, who may use SSH is set in Control Panel › Network & File Services › Telnet / SSH › Edit Access Permission. Or use a shared folder instead.",
+          "TrueNAS": "On TrueNAS, the account has to be allowed to sign in over SSH: Credentials › Users › Edit. Or use a shared folder instead.",
+          "Unraid": "Unraid lets only its root account use SSH. Sign in as root, or use a shared folder instead."
+        },
+        "useSmb": "Use a shared folder instead"
       },
       "done": "Connected securely with your key. No password saved.",
       "donePaired": "Paired with Puppet Master on {name}. No key or password needed."
@@ -1435,7 +1596,12 @@
         "mount": "Opening the shared folder",
         "read": "Checking it can be read"
       },
-      "wrong": "The shared folder didn't accept that username and password."
+      "wrong": "The shared folder didn't accept that username and password.",
+      "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
+      "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
+      "more": "More sign-in options",
+      "domain": "Domain or workgroup",
+      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise."
     },
     "nfs": {
       "eyebrow": "NFS share",
@@ -1444,12 +1610,18 @@
       "phases": {
         "mount": "Opening the share",
         "read": "Checking it can be read"
-      }
+      },
+      "leadOn": "Puppet Master opens it from {where} and checks it can be read.",
+      "noPassword": "NFS has no password: a share lets in the computers it lists. If this check fails, add {where} to the share's allowed computers on the NAS."
     },
     "mounted": {
       "eyebrow": "Connected drive",
       "title": "Choose the drive",
-      "lead": "Drives this computer already shows in its file browser."
+      "lead": "Drives this computer already shows in its file browser.",
+      "titleCheck": "Checking the drive",
+      "leadOn": "Puppet Master reads it from {where}.",
+      "read": "Checking {where} can read it",
+      "other": "Choose another drive"
     },
     "pmpair": {
       "eyebrow": "Pair with Puppet Master",
@@ -1855,7 +2027,21 @@
       "noAnswer": "no answer",
       "refused": "refused",
       "taken": "taken",
-      "nothingThere": "nothing there"
+      "nothingThere": "nothing there",
+      "expired": "runs out"
     }
+  },
+  "endpoint": {
+    "spaces": "An address has no spaces in it.",
+    "scheme": "Use an address that starts with https:// so the connection is protected.",
+    "credentials": "Leave out any user name or password. You sign in after connecting.",
+    "port": "The number after the colon has to be between 1 and 65535.",
+    "host": "That doesn't look like an address yet. It should look like pm.example.com.",
+    "hostname": "Use a name, like pm.example.com, not a number. The web address needs a name of its own.",
+    "path": "Use the address on its own, like https://pm.example.com, with nothing after it. Puppet Master needs a whole web address of its own.",
+    "query": "Leave out anything after a ? or a #.",
+    "short": "That's too short for a Remote Link or its code.",
+    "long": "That's too long for a Remote Link or its code.",
+    "added": "Puppet Master will use {url}"
   }
 }

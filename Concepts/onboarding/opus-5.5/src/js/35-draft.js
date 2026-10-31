@@ -88,16 +88,21 @@
       Object.assign(d, { server_connection_mode: 'discover', include_vpn_networks: false, proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null, remote_endpoint: '' });
       if (!d.tailscale_control) d.tailscale_control = 'hosted';
       d.tailscale_account_action = d.tailscale_control === 'hosted' ? 'check_existing_then_sign_in_once' : 'headscale_enrollment';
-      if (d.tailscale_control === 'hosted') d.headscale_url = ''; else if (d.headscale_url && !/^https:\/\//.test(d.headscale_url)) d.headscale_url = 'https://' + d.headscale_url.replace(/^[a-z]+:\/\//i, '');
+      /* (an address is kept as typed: O55.endpoint checks it, and the screen's Continue stores the address it will use;
+         another scheme is never quietly rewritten into https, SCR-09) */
+      if (d.tailscale_control === 'hosted') d.headscale_url = '';
     } else if (d.remote_mode === 'reverse_proxy') {
       Object.assign(d, { include_vpn_networks: false, tailscale_control: null, tailscale_account_action: null, headscale_url: '', remote_endpoint: '' });
-      if (d.proxy_hostname && !/^https:\/\//.test(d.proxy_hostname)) d.proxy_hostname = 'https://' + d.proxy_hostname.replace(/^[a-z]+:\/\//i, '');
       if (d.journey === 'connect_existing') Object.assign(d, { server_connection_mode: 'manual', proxy_kind: null, proxy_hosting: null, proxy_tls: null });
       else if (d.proxy_hosting === 'existing_proxy') { /* an address someone already runs: nothing to generate here */ }
-      else { if (!d.proxy_kind) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
+      /* Puppet Master makes settings for Caddy (the default), NGINX and Traefik; Nginx Proxy Manager is used as a proxy
+         the person already runs (Jared, D3 A, 2026-10-31) */
+      else { if (!['caddy', 'nginx', 'traefik'].includes(d.proxy_kind)) d.proxy_kind = 'caddy'; if (!d.proxy_hosting) d.proxy_hosting = 'generate_for_server'; if (!d.proxy_tls) d.proxy_tls = 'lets_encrypt'; }
     } else if (d.remote_mode === 'remote_link') {
       clearRemote(); Object.assign(d, { server_connection_mode: 'manual', include_vpn_networks: false });
-      if (d.remote_endpoint && !/^[A-Za-z][A-Za-z0-9._:/#-]*$/.test(d.remote_endpoint)) d.remote_endpoint = '';
+      /* (a short code the Server shows is kept too: it was cleared for not starting with a letter, SCR-05) */
+      /* a new Server's link is made after the commit and shown then: nothing is typed for it here */
+      if (d.server_mode === 'new_server') d.remote_endpoint = '';
     }
     return d;
   }
@@ -139,9 +144,7 @@
     const r = [];
     if (d.journey === 'connect_existing') {
       if (!d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
-      if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
-      if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
-      if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+      remoteMissing(d, r);
       return r;
     }
     if (d.server_mode !== 'this_device' && !d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
@@ -154,10 +157,25 @@
     if (d.online_mode === 'existing' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
     /* the service's own needs: its address, owner, project, a visibility valid there, a name and branch it accepts */
     O55.forgeRules.needs(envOf(), d).forEach((m) => { if (!r.some((x) => x.field === m.field)) r.push(m); });
-    if (d.remote_mode === 'remote_link' && !d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
-    if (d.remote_mode === 'reverse_proxy' && !d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
-    if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale' && !d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+    remoteMissing(d, r);
     return r;
+  }
+  /* an address for the way in: present, and one the endpoint check accepts (SCR-09); a new Server's Remote Link is
+     made after the commit, so nothing is asked for it */
+  function remoteMissing(d, r) {
+    const E = O55.endpoint, bad = (res) => !!(res && !res.ok && !res.empty);
+    if (d.remote_mode === 'remote_link' && d.server_mode !== 'new_server') {
+      if (!d.remote_endpoint) r.push({ field: 'remote_endpoint', key: 'missing.remoteLink' });
+      else if (E && bad(E.checkLink(d.remote_endpoint))) r.push({ field: 'remote_endpoint', key: 'endpoint.' + E.checkLink(d.remote_endpoint).error });
+    }
+    if (d.remote_mode === 'reverse_proxy') {
+      if (!d.proxy_hostname) r.push({ field: 'proxy_hostname', key: 'missing.proxyAddress' });
+      else if (E && bad(E.check(d.proxy_hostname, 'proxy'))) r.push({ field: 'proxy_hostname', key: 'endpoint.' + E.check(d.proxy_hostname, 'proxy').error });
+    }
+    if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale') {
+      if (!d.headscale_url) r.push({ field: 'headscale_url', key: 'missing.headscale' });
+      else if (E && bad(E.check(d.headscale_url, 'headscale'))) r.push({ field: 'headscale_url', key: 'endpoint.' + E.check(d.headscale_url, 'headscale').error });
+    }
   }
 
   O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility };

@@ -86,6 +86,8 @@
   const whereWork = (S) => (md(S).server_mode === 'this_device' ? T('where.this.title') : P().serverName(S));
   /* a new Server's access away from home needs setting up unless it stays on the home network */
   const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
+  /* (a web address of your own puts the Server's sign-in page on the internet: Review says so again, SCR-06) */
+  const remoteWill = (d) => (d.remote_mode === 'reverse_proxy' ? T('review.will.remotePublic', { host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }) : T('review.will.remote'));
   const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? 'Tailscale' : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
   /* The online copy as the plan holds it (FF-10): the service and its server, where it lives (the owner and, where the
@@ -140,7 +142,7 @@
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
         if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
-        const willLater = [['seed', T('review.will.noProject')]].concat(needsRemote(d) ? [['globe', T('review.will.remote')]] : []);
+        const willLater = [['seed', T('review.will.noProject')]].concat(needsRemote(d) ? [['globe', remoteWill(d)]] : []);
         out += C.group(T('review.willTitle', { button: buttonLabel(d) }), `<ul class="o55-will">${willLater.map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('')}</ul>`);
         return out;
       }
@@ -176,7 +178,7 @@
       will.push(['history', T('review.will.history')]);
       if (d.online_mode === 'new') will.push(['cloud', T('review.will.online', { service: forgeName(d), privacy: privacyLine(S, d).toLowerCase() })]);
       if (d.settings_transfer.mode === 'copy_from_project') will.push(['stack', T('review.will.settings', { project: (S.sess.like && S.sess.like.name) || '' })]);
-      if (d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn') will.push(['globe', T('review.will.remote')]);
+      if (needsRemote(d)) will.push(['globe', remoteWill(d)]);
       if (d.server_mode !== 'this_device') will.push(['server', T('review.will.server', { server: P().serverName(S) })]);
       out += C.group(T('review.willTitle', { button: buttonLabel(d) }), `<ul class="o55-will">${will.map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('')}</ul>`);
       return out;
@@ -200,9 +202,10 @@
         /* a deferred Project: nothing is created, but a new Server's access away from home is prepared now */
         if (d.project_mode === 'later') {
           O55.draft.set(d, { review_confirmed: true });
-          if (!needsRemote(d)) { S.sess.commit = { state: 'later' }; S.save(); return O55.ui.go('ready'); }
-          if (!S.sess.commit || S.sess.commit.state === 'none' || S.sess.commit.state === 'later') S.sess.commit = { state: 'running', later: true, key: 'prepare:' + d.project_draft_ref, attempt: 1, revision: d.project_draft_revision };
-          S.save(); O55.sound.play('commit', SND.prepare); return O55.ui.go('creating', { silent: true });
+          /* (a new Server's way in from away is set up step by step after this, 71a away-setup, or later) */
+          S.sess.commit = { state: 'later' }; S.save();
+          if (!needsRemote(d)) return O55.ui.go('ready');
+          O55.sound.play('commit', SND.prepare); return O55.away.start(S, 'ready');
         }
         /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a
            fresh review (new revision) starts a new original attempt. The destination stays a private
@@ -225,7 +228,7 @@
   /* ------------------------------------------------------------------ creating (the one commit) */
   function phasesFor(S) {
     const d = md(S), cm = S.sess.commit, list = [];
-    if (d.project_mode === 'later') return (needsRemote(d) ? ['remote'] : []).concat(['check']);
+    if (d.project_mode === 'later') return ['check'];
     if (d.project_mode === 'new') list.push('folder');
     if (d.project_mode === 'existing_local' && d.project_transport !== 'local') list.push('device');
     if (d.project_mode === 'existing_online') list.push('folder', 'clone');
@@ -235,7 +238,7 @@
     if (!hasHistory) list.push((d.history_backend === 'jujutsu' ? S.env.here.jj : S.env.here.git) ? 'history' : 'historyInstall');
     if (d.online_mode === 'new' && !cm.skipOnline) list.push('online');
     if (d.settings_transfer.mode === 'copy_from_project') list.push('settings');
-    if (d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn') list.push('remote');
+    /* (a new Server's way in from away is its own step after this one: 71a away-setup, SCR-04) */
     list.push('check');
     return list;
   }
@@ -592,7 +595,7 @@
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
       skipOnline(S) { if (S.sess.commit.recovery) return; const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
-      next(S) { O55.ui.go(md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'); }
+      next(S) { const then = md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'; return O55.away && O55.away.needed(S) ? O55.away.start(S, then) : O55.ui.go(then); }
     },
     onBack: () => false
   });

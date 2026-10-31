@@ -77,6 +77,7 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :is(strong, .wk-g > svg, .wk-sb-
 #pm7-work-system [data-tone="working"] { --wk-t: var(--wk-work); }
 #pm7-work-system [data-tone="attention"] { --wk-t: var(--wk-attn); }
 #pm7-work-system :is([data-tone="idle"], [data-tone="paused"]) { --wk-t: var(--wk-idle); }
+.wk-sys-server { margin: 0; padding: 8px 12px 2px; }
 .wk-sys-list { list-style: none; margin: 0; padding: 4px 6px; }
 .wk-sys-list > li { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; padding: 6px 6px; border-radius: 7px; }
 .wk-sys-list > li + li { border-top: 1px solid var(--wk-line2); border-radius: 0; }
