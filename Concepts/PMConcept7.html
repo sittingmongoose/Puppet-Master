@@ -180541,7 +180541,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     bind: {
       pass(S, v) { if (N(S).passEmpty && v) { N(S).passEmpty = false; S.save(); O55.ui.refresh(); } },
       /* another account is another connection: the keys are tested again for it and an added key doesn't carry over */
-      sshUser(S, v) { const n = N(S), u = String(v || '').trim(); if (u === String(n.user || '').trim()) return; const had = !!sshUser(S); Object.assign(n, { user: u, installed: false, opKey: null }); S.save(); if (had !== !!sshUser(S)) O55.ui.refresh(); }
+      /* (a field the person is typing in stays a field: without userEdit the first letter turned it into the account line) */
+      sshUser(S, v) { const n = N(S), u = String(v || '').trim(); if (u === String(n.user || '').trim()) return; Object.assign(n, { user: u, userEdit: true, installed: false, opKey: null }); S.save(); O55.ui.refresh(); }
     },
     leave(S) { if (S.sess.ui.sheet === 'passphrase') { S.sess.ui.sheet = null; S.save(); } }
   });
