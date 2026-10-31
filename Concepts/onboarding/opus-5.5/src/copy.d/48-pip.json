@@ -1695,7 +1695,7 @@
         "typing": "Ooh, bucket details. I'll be careful."
       },
       "r-unlock": {
-        "enter": "Read me the six words.",
+        "enter": "Read me your recovery phrase.",
         "typing": "A secret phrase. I won't keep it.",
         "unlocked": "Unlocked! Let's see what's inside."
       },
@@ -2008,7 +2008,7 @@
         }
       },
       "protect": {
-        "accessMissing": "I need all three to connect.",
+        "accessMissing": "I still need the access details.",
         "testFailed": "That kit didn't open the backup.",
         "ownerFail": "That step didn't finish.",
         "pendingHost": "Still waiting for an answer…"
@@ -2177,7 +2177,9 @@
       },
       "connect": {
         "route": {
-          "none": "There it is!"
+          "none": "There it is!",
+          "addrMissing": "Got it. Let's look!",
+          "addrNoAnswer": "Better! Let's go."
         },
         "pair": {
           "codeWrong": "That's the one. Paired!",
@@ -2338,6 +2340,18 @@
             "relay": "Remote Link is up!"
           }
         }
+      },
+      "endpoint": {
+        "spaces": "Looks tidy now!",
+        "scheme": "Looks right now!",
+        "credentials": "No password in sight. Good.",
+        "port": "That works now!",
+        "host": "That looks right!",
+        "hostname": "Much better!",
+        "path": "All clear now.",
+        "query": "Nice and clean!",
+        "short": "That fits now!",
+        "long": "That fits now!"
       }
     },
     "oopsAny": {
@@ -2586,7 +2600,8 @@
           "cmd": "pip mount --drive"
         }
       }
-    }
+    },
+    "cheerFallback": "There we go!"
   },
   "ai": {
     "signinFail": {
