@@ -1319,9 +1319,7 @@
     "seeAll": "See all providers",
     "allTitle": "All providers",
     "subs": "Plans with included usage",
-    "subsSub": "A plan you already pay for",
     "apis": "Pay for what you use",
-    "apisSub": "Billed by what you use",
     "none": "I don't have any of these",
     "skip": "Skip for now",
     "skipNote": "Puppet Master can't plan or work until an AI is added.",
@@ -1336,19 +1334,19 @@
       "cursor": "A Cursor API key, or Cursor's browser sign-in",
       "copilot": "The Copilot plan on your GitHub account",
       "qwen-coding": "Qwen and other models, with the plan's own key",
-      "qwen-token": "A monthly plan, not the Coding Plan",
+      "qwen-token": "Not the Coding Plan",
       "kimi": "Kimi Code's own key, not Kimi Open Platform",
       "minimax": "Formerly the MiniMax Coding Plan",
-      "anthropic-api": "Billed by use, separate from a Claude plan",
+      "anthropic-api": "Separate from a Claude plan",
       "antigravity": "Antigravity plan, not the Gemini API",
-      "gemini-api": "Free limits or billed by use, separate from Antigravity",
+      "gemini-api": "Separate from Antigravity",
       "vertex": "Google Cloud, separate from Antigravity and the Gemini API",
       "grok": "Grok Build plan, not the xAI API",
-      "xai-api": "Billed by use, separate from Grok Build",
+      "xai-api": "Separate from Grok Build",
       "muse": "Muse Code plan, not the Meta Model API",
-      "meta-api": "Billed by use, separate from Muse Code",
-      "opencode-go": "OpenCode's monthly plan, not the OpenCode server",
-      "opencode-zen": "Billed by use from credit you buy. Formerly OpenCode Zen",
+      "meta-api": "Separate from Muse Code",
+      "opencode-go": "Not the OpenCode server",
+      "opencode-zen": "Formerly OpenCode Zen",
       "opencode-runtime": "Runs OpenCode itself. Its model accounts stay in OpenCode."
     },
     "names": {},
@@ -1357,7 +1355,6 @@
     "where": "The AI works on {host}. Sign-ins open here on this device, and are kept on {host}.",
     "keychainHere": "this computer's keychain",
     "keychainOn": "the keychain on {host}",
-    "connect": "Connect",
     "setUp": "Set up",
     "notSetUp": "Not set up",
     "keyFrom": "Get a key from {name}",
@@ -1376,7 +1373,7 @@
     },
     "bill": {
       "plan": "Uses your {product}",
-      "use": "{product}, billed by use",
+      "use": "{product}",
       "managed": "Run by Puppet Master on {host}",
       "attached": "Your server at {address}"
     },
@@ -1386,20 +1383,6 @@
     "removeGo": "Remove",
     "keep": "Keep it",
     "dup": "That's {who}, already connected. To add a different one, sign in with another account.",
-    "way": {
-      "codex": {
-        "main": "Sign in with ChatGPT",
-        "mainSub": "Uses Codex through your ChatGPT plan limits.",
-        "alt": "Use an OpenAI API key",
-        "altSub": "Separate from ChatGPT."
-      },
-      "cursor": {
-        "main": "Use a Cursor API key",
-        "mainSub": "From your Cursor dashboard. Uses your Cursor plan.",
-        "alt": "Sign in in the browser instead",
-        "altSub": "Installs Cursor's command-line tool, then signs in."
-      }
-    },
     "ctx": {
       "billing": {
         "title": "Whose Copilot plan should Puppet Master use?",
@@ -1449,7 +1432,15 @@
       "body": "{who} · that sign-in has expired. Sign in again to keep using it."
     },
     "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here.",
-    "skipped": "Skipped for now."
+    "skipped": "Skipped for now.",
+    "alt": {
+      "codex": "Use an OpenAI API key instead",
+      "cursor": "Sign in in the browser instead"
+    },
+    "main": {
+      "codex": "Sign in with ChatGPT instead",
+      "cursor": "Use an API key instead"
+    }
   },
   "aiNone": {
     "eyebrow": "AI",
@@ -1461,7 +1452,7 @@
     },
     "api": {
       "title": "Pay as you go",
-      "sub": "Like the Anthropic or Gemini API. Pay for what you use."
+      "sub": "Like the Anthropic or Gemini API."
     },
     "free": {
       "title": "Free Models",

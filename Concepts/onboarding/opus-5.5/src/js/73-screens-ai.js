@@ -1,7 +1,8 @@
 /* Chapter 4 — AI [provider_setup -> free_models_setup], only after the Project exists. Accounts and plans, never
    adapters: detection is bounded, cached per work computer (by its id, never its name) and runs there; each provider
-   row offers its own way in — Install (only where a vendor program is required), Sign In, Enter API Key, a choice of
-   two ways (Codex: ChatGPT or an OpenAI API key; Cursor: a key or its browser sign-in), or a server profile (OpenCode)
+   row offers its own way in — Install (only where a vendor program is required), Sign In, or Enter API Key (packet 03:
+   never a Connect button), a server profile for OpenCode, and where a provider has a second way in (Codex: an OpenAI
+   API key; Cursor: its browser sign-in) a small "… instead" link under the row
    — and an account is Ready only once it is checked and has what it needs (Multi-Account §9.3: Logged in is not Ready).
    Steps that need a real service (a key, an address, a code) carry the demo's hint with values that work and fail.
    Every connected account is its own record with a stable id, the identity it reports and the computer it is kept on,
@@ -114,12 +115,13 @@
     const det = F.state(S, detKey(S));
     if (!det || det.state !== 'done') return 'checking';
     if (p.auth === 'server') return 'server';
-    if (p.alt && !(r && r.method)) return 'choose';
     const w = way(p, r), d = detected(S, p);
     if (d && d.installed && d.expired && !(r && r.attempt)) return 'expired';
     if (w.cli && !installed(S, p, r)) return 'install';
     return w.auth === 'key' ? 'key' : 'signin';
   }
+  /* where a way in starts: its vendor program's Install, its key, or its sign-in */
+  const startOf = (S, p, r) => { const w = way(p, r); return w.cli && !installed(S, p, r) ? 'install' : w.auth === 'key' ? 'key' : 'signin'; };
   const installed = (S, p, r) => (r && r.method === 'alt' ? !!(r && r.altInstalled) : !!((detected(S, p) || {}).installed || (r && r.installed)));
   function autoReady(S) {
     /* verified credentials connect automatically — no Connect button (packet 03); one the person removed stays removed */
@@ -147,7 +149,8 @@
   }
   function readyMeta(S, p) {
     const list = accts(S, p);
-    if (list.length === 1) return accLabel(list[0]) + ' · ' + billLine(S, list[0]);
+    /* an account's name, then what it uses where that adds something (an OpenAI API key needs no "OpenAI API" after it) */
+    if (list.length === 1) { const lab = accLabel(list[0]), bl = billLine(S, list[0]); return bl && !lab.includes(bl) ? lab + ' · ' + bl : lab; }
     return T('ai.acct.many', { n: list.length }) + ': ' + list.map(accLabel).join(', ');
   }
   const btnIn = (label, act, arg, kind, o) => O55.ui.btn(Object.assign({ label, do: act, arg, cls: 'o55-small', tip: false }, o || {}), kind === 'primary' ? 'o55-primary' : 'o55-secondary');
@@ -167,7 +170,7 @@
     out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }, { label: DEMO_REVOKED, outcome: 'revoked', fills: [[o.bind, DEMO_REVOKED]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
     out += `<div class="o55-inline" data-key="kb-${U.esc(o.key)}">` + btnIn(T('ai.verify'), o.check, o.arg, 'secondary', { disabled: !o.typed || o.checking, reason: T('ai.keyLabel', { name: o.name }) })
-      + (o.from ? C.link(T('ai.keyFrom', { name: o.from.name }), o.fromDo, o.arg, { tip: false }) : '') + (o.cancel ? C.link(T('ai.cancel'), o.cancel, o.arg, { tip: false }) : '') + '</div>';
+      + (o.from ? C.link(T('ai.keyFrom', { name: o.from.name }), o.fromDo, o.arg, { tip: false }) : '') + (o.other || '') + (o.cancel ? C.link(T('ai.cancel'), o.cancel, o.arg, { tip: false }) : '') + '</div>';
     return out;
   }
 
@@ -183,13 +186,12 @@
       if (r.dup) extra = ex('dup', C.note(T('ai.dup', { who: r.dup }), 'info'));
       if (r.manage) extra = ex('mg', manageHtml(S, p, r));
     }
-    if (st === 'choose') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.connect'), do: 'choose', arg: p.id }; }
-    if (st === 'choosing') extra = ex('way', C.cards('way', [{ v: p.id + '|main', title: T('ai.way.' + p.id + '.main'), sub: T('ai.way.' + p.id + '.mainSub') }, { v: p.id + '|alt', title: T('ai.way.' + p.id + '.alt'), sub: T('ai.way.' + p.id + '.altSub') }], null, { label: pname(p) })
-      + (r.adding ? `<div class="o55-sublinks">${C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false })}</div>` : ''));
-    if (st === 'choosing') { pill = ['needs', T('ai.notReady')]; }
     if (st === 'install') { pill = ['needs', T('ai.notInstalled')]; action = { label: onServer(S) ? T('ai.installOn', { host: host(S).name }) : T('ai.install'), do: 'install', arg: p.id }; }
     if (st === 'expired') { pill = ['fail', T('ai.expired.title')]; meta = T('ai.expired.body', { who: d.account || pname(p) }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
-    if (st === 'signin') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.signIn'), do: 'signin', arg: p.id }; if (r.adding) extra = ex('add', `<div class="o55-sublinks">${C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false })}</div>`); }
+    if (st === 'signin') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.signIn'), do: 'signin', arg: p.id }; }
+    /* the provider's other way in, and Cancel while adding another account, as small links under a row at its start */
+    const otherWay = p.alt ? C.link(T('ai.' + (r.method === 'alt' ? 'main' : 'alt') + '.' + p.id), 'useAlt', p.id, { tip: false }) : '';
+    if (['signin', 'key', 'install'].includes(st) && !r.confirmInstall && (otherWay || r.adding)) extra = ex('add', `<div class="o55-sublinks">${otherWay}${r.adding ? C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false }) : ''}</div>`);
     if (st === 'key') { action = { label: T('ai.key'), do: 'key', arg: p.id }; }
     if (st === 'server') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); action = { label: T('ai.setUp'), do: 'server', arg: p.id }; }
     if (fromCopy && st !== 'ready') meta = T('ai.unavailable', { project: cp.name, host: hostName(S) });
@@ -208,7 +210,7 @@
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : null;
       const project = p.context === 'project' ? C.field({ bind: 'project:' + p.id, id: 'o55f-project-' + p.id, label: T('ai.ctx.project.label'), value: r.project || '', placeholder: 'my-project', hint: T('ai.ctx.project.hint'), tip: 'field:project' }) : '';
       extra = ex('key', keyArea(S, { bind: 'key:' + p.id, key: p.id, arg: p.id, op: 'key:' + p.id + ':' + (r.attempt || 0), name: w.auth === 'key' && r.method === 'alt' ? w.product : pname(p),
-        typed: r.keyTyped, checking: st === 'keyChecking', check: 'keyCheck', from: w.keyFrom || p.keyFrom, fromDo: 'keyFrom', more: project, cancel: r.adding ? 'cancelAdd' : null }));
+        typed: r.keyTyped, checking: st === 'keyChecking', check: 'keyCheck', from: w.keyFrom || p.keyFrom, fromDo: 'keyFrom', more: project, cancel: r.adding ? 'cancelAdd' : null, other: st === 'keyEntry' ? otherWay : '' }));
     }
     if (st === 'context' || st === 'contextChecking') { pill = st === 'contextChecking' ? ['wait', T('ai.checking')] : ['needs', T('ai.needsChoice')]; extra = ex('ctx', contextHtml(S, p, r)); }
     if (st === 'serverPick') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); extra = ex('srv', serverHtml(S, p, r)); }
@@ -229,7 +231,8 @@
         return `<div class="o55-inline" data-key="rm-${U.esc(e.id)}"><span class="o55-hint">${U.esc(T('ai.removeAsk', { who: accLabel(e), vendor: p.vendor }))}</span>`
           + btnIn(T('ai.removeGo'), 'removeGo', e.id, 'primary') + C.link(T('ai.keep'), 'removeNo', p.id, { tip: false }) + '</div>';
       }
-      return `<div class="o55-inline" data-key="ac-${U.esc(e.id)}"><span class="o55-hint">${U.esc(accLabel(e) + ' · ' + billLine(S, e))}</span>${C.link(T('ai.remove'), 'remove', e.id, { tip: false })}</div>`;
+      const lab = accLabel(e), bl = billLine(S, e);
+      return `<div class="o55-inline" data-key="ac-${U.esc(e.id)}"><span class="o55-hint">${U.esc(bl && !lab.includes(bl) ? lab + ' · ' + bl : lab)}</span>${C.link(T('ai.remove'), 'remove', e.id, { tip: false })}</div>`;
     }).join('');
     if (p.auth !== 'server') out += `<div class="o55-inline" data-key="add-${p.id}">${btnIn(T('ai.addAnother', { name: pname(p) }), 'addAnother', p.id)}</div>`;
     return out;
@@ -321,14 +324,12 @@
       return { back: false, secondary: [{ label: T('ai.skip'), do: 'skip', cls: 'o55-ghost' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('ai.skipNote') } };
     },
     do: {
-      choose(S, id) { R(S, id).state = 'choosing'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
-      way(S, v) {
-        const [id, m] = String(v).split('|'), p = prov(id), r = R(S, id);
-        r.method = m === 'alt' ? 'alt' : 'main'; r.state = null; S.save();
-        const w = way(p, r);
-        if (w.cli && !installed(S, p, r)) { r.state = 'install'; r.confirmInstall = true; S.save(); O55.ui.refresh(); return; }
-        if (w.auth === 'key') return O55.screens.defs.ai.do.key(S, id);
-        return O55.screens.defs.ai.do.signin(S, id);
+      /* the provider's other way in (Codex: an OpenAI API key; Cursor: its browser sign-in), and back again */
+      useAlt(S, id) {
+        const p = prov(id), r = R(S, id);
+        Object.assign(r, { method: r.method === 'alt' ? 'main' : 'alt', confirmInstall: false, keyTyped: false });
+        const st = startOf(S, p, r); r.state = st === 'key' && r.adding ? 'keyEntry' : st;
+        S.save(); O55.ui.refresh(); O55.sound.play('reveal');
       },
       install(S, id) { R(S, id).confirmInstall = true; S.save(); O55.ui.refresh(); },
       installGo(S, id) {
@@ -426,8 +427,8 @@
       addAnother(S, id) {
         const p = prov(id), r = R(S, id);
         Object.assign(r, { adding: true, manage: false, dup: null, removing: null });
-        if (p.alt) { r.method = undefined; r.state = 'choosing'; S.save(); O55.ui.refresh(); return; }
-        if (p.auth === 'key') return O55.screens.defs.ai.do.key(S, id);
+        if (p.alt) r.method = undefined;
+        if (startOf(S, p, r) === 'key') return O55.screens.defs.ai.do.key(S, id);
         r.state = 'signin'; S.save(); O55.ui.refresh();
       },
       cancelAdd(S, id) { const p = prov(id), r = R(S, id); Object.assign(r, { adding: false, state: accts(S, p).length ? 'ready' : null, method: accts(S, p).length ? r.method : undefined, keyTyped: false }); S.save(); O55.ui.refresh(); },
@@ -509,7 +510,9 @@
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="where">${C.small('server', 18)}<span>${U.esc(T('ai.where', { host: host(S).name }))}</span></div>`;
       GROUPS.forEach(([bill, k]) => {
         const rows = PROV().filter((p) => p.bill === bill && match(p));
-        if (rows.length) out += C.group(T('ai.' + k), `<p class="o55-hint">${U.esc(T('ai.' + k + 'Sub'))}</p>` + rows.map((p) => rowHtml(S, p)).join(''));
+        /* the group's name organizes the list; only a group whose name needs a word more carries one (no payment lines: FO-4) */
+        const sub = O55.tx('ai.' + k + 'Sub');
+        if (rows.length) out += C.group(T('ai.' + k), (sub ? `<p class="o55-hint">${U.esc(sub)}</p>` : '') + rows.map((p) => rowHtml(S, p)).join(''));
       });
       return out;
     },

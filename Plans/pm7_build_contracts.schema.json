@@ -3288,6 +3288,50 @@
           "plain_browser_embedded_connection": false
         }
       }
+    },
+    "LateOnboardingPolicy": {
+      "description": "DL-259 late integration cf0ae92b9a. Static descriptor only; no native request, preference, event or owner admission.",
+      "const": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "contract_scope": "static_onboarding_presentation_and_validation_only",
+        "unnamed_destination": {
+          "owner_ref": "Plans/FinalGUISpec.md#F3-520",
+          "automatic_local_base_only_until_name_chosen": true,
+          "placeholder_is_chosen_leaf": false,
+          "clear_name_restores_generic_line": true,
+          "existing_source_location_preserved": true,
+          "preview_creates_files": false
+        },
+        "service_address": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-024",
+          "scope": [
+            "service",
+            "variant"
+          ],
+          "switch_back_recalls_own_text": true,
+          "reuse_address_across_choices": false,
+          "reviewed_plan_has_selected_choice_only": true,
+          "remembered_text_proves_auth_or_readiness": false,
+          "new_setting_or_storage_family": false
+        },
+        "continue_validation": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-024",
+          "display_button_action_share_current_choice": true,
+          "activation_rechecks_current_validation": true,
+          "invalid_action_advances_or_dispatches": false,
+          "Protect_restore_prerequisites_rechecked": true,
+          "domain_permission_currentness_gates_preserved": true
+        },
+        "AI_phase_skip": {
+          "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
+          "immediate_feedback_at_step_start": true,
+          "feedback_waits_for_auth_or_detection": false,
+          "optional_Free_Models_available": true,
+          "skip_proves_account_Ready": false,
+          "whole_session_skip": false,
+          "Reduced_Motion_settled_feedback": true
+        }
+      }
     }
   }
 }

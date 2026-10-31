@@ -172,9 +172,31 @@
     /* (the believable wait is each request's own transport phases, shown on screen before its answer is read: claiming,
        setting up, reaching, creating, saving; the concept host adds none, so a person never has to press Check again) */
     const hex64 = (str) => { let out = ''; for (let r = 0; r < 8; r++) { let h = 2166136261 ^ r; for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619) >>> 0; out += ('00000000' + h.toString(16)).slice(-8); } return out; };
-    function conceptResult(req) {
-      const S = window.O55 && window.O55.S, ref = 'concept:' + req.id;
-      const res = Object.assign({}, req, { id: ref + ':result', requestId: req.id, outcome: 'ok', concept: true, postcondition: { ok: true, evidence: ref + ':postcondition' } });
+    /* The situations' one-shot owner faults (25-fixtures.js; the lead, 2026-10-31: branches only injection reached).
+       A fault answer stays the request's answer until the screen has tried to adopt it once; the owner's next answer to
+       the same request is then the right one (Try again, Approve again, Check again), with an answer id of its own.
+       A device's request without its words is not one of them: that request keeps it, and New code asks again. */
+    const once = new WeakSet();
+    function fault(S, req, res) {
+      const f = (S && S.env && S.env.failures) || {};
+      if (req.operation === 'cmd.client.pair.approve' && f.server_answer_once) {
+        const k = f.server_answer_once; f.server_answer_once = null;
+        if (k === 'stale') res.nonce = 'n-old:' + req.nonce; else res.candidate = 'pairing_candidate:another-device';
+        once.add(res);
+      } else if (req.operation === 'cmd.server.claim' && f.server_answer_once === 'wrong_target') {
+        f.server_answer_once = null; res.server = 'pm:another-server'; once.add(res);
+      } else if (req.operation === 'cmd.client.pair.start' && f.words_once && S && req.client !== S.env.client.id) {
+        f.words_once = false; res.identity = { words: '' };
+      } else if (req.operation === 'cmd.backup.recovery_key.test' && f.kit_test_once) {
+        f.kit_test_once = false; res.outcome = 'kit_mismatch'; Object.assign(res.postcondition, { unlock: 'failed', scratch: 'skipped' }); once.add(res);
+      } else if (req.operation === 'cmd.backup.recovery_key.export' && f.protect_once) {
+        f.protect_once = false; res.outcome = 'refused'; delete res.postcondition.delivery; delete res.postcondition.savedAck; once.add(res);
+      }
+      return res;
+    }
+    function conceptResult(req, n) {
+      const S = window.O55 && window.O55.S, ref = 'concept:' + req.id, nth = n > 1 ? ':' + n : '';
+      const res = Object.assign({}, req, { id: ref + ':result' + nth, requestId: req.id, outcome: 'ok', concept: true, postcondition: { ok: true, evidence: ref + ':postcondition' + nth } });
       if (req.operation === 'cmd.client.pair.start') {
         res.pairing_run = { id: ref + ':pairing-run', state: 'waiting', server: req.server, candidate: req.candidate, generation: req.generation, expires_at: Date.now() + 120000 };
         let words = 'river candle orbit';
@@ -189,9 +211,16 @@
         const failure = f.online_copy || null; if (failure) f.online_copy = null;
         /* (githubHalfMade: the copy is made on GitHub, then this computer's part stops after preparing the folder) */
         const partial = !failure && !!f.online_partial; if (partial) f.online_partial = false;
+        /* (githubUnclear: GitHub's first answer can't say whether the copy was made; Check again reads its next one) */
+        if (!failure && !partial && f.online_unclear) {
+          f.online_unclear = false;
+          Object.assign(res, { remote_effect: 'unknown', recovery_id: ref + ':recovery', reviewed_setup_binding: { project_draft_ref: draft.project_draft_ref, project_draft_revision: draft.project_draft_revision },
+            terminal_result_ref: ref + ':terminal' + nth, terminal_result_sha256: hex64(ref + ':terminal:unknown'), composition_revision: 1, composition_sha256: hex64(ref + ':composition'), settled_effects: {}, reconciliation_refs: [ref + ':reconcile'] });
+          once.add(res); return res;
+        }
         Object.assign(res, { remote_effect: failure ? 'failed_before_effect' : 'verified_created', recovery_id: ref + ':recovery',
           reviewed_setup_binding: { project_draft_ref: draft.project_draft_ref, project_draft_revision: draft.project_draft_revision },
-          terminal_result_ref: ref + ':terminal', terminal_result_sha256: hex64(ref + ':terminal:' + !!failure),
+          terminal_result_ref: ref + ':terminal' + nth, terminal_result_sha256: hex64(ref + ':terminal:' + !!failure + nth),
           composition_revision: 1, composition_sha256: hex64(ref + ':composition'), settled_effects: {} });
         if (failure) res.failure_reason = failure;
         else {
@@ -225,7 +254,7 @@
         Object.assign(res.postcondition, req.operation.endsWith('.export') ? { delivery: 'verified', savedAck: true } : { unlock: 'verified', scratch: 'verified' });
       } else if (req.operation === 'cmd.backup.policy.update') res.postcondition.policy = 'on';
       /* every other request (a Server's claim and setup) takes the generic owner result */
-      return res;
+      return fault(S, req, res);
     }
     function begin(operation, sel) {
       sel = sel || {};
@@ -251,8 +280,15 @@
       if (fixtures[requestId]) return fixtures[requestId];
       const b = begun[requestId];
       if (!b || !conceptOn()) return null;
-      if (b.res === undefined) b.res = conceptResult(b.req);
+      if (b.res === undefined) b.res = conceptResult(b.req, b.n || 1);
       return b.res;
+    }
+    /* a one-shot fault, once the screen has tried to adopt it, gives way to the owner's next answer */
+    function adoptOnce(req, res, cur) {
+      const v = adopt(req, res, cur);
+      const b = res && begun[res.requestId];
+      if (b && b.res === res && once.has(res)) { b.res = undefined; b.n = (b.n || 1) + 1; }
+      return v;
     }
     function adopt(req, res, cur) {
       cur = cur || {};
@@ -313,7 +349,7 @@
       if (!c || c.project !== project || !c.client || !c.server || !c.recovery_set_id || !Number.isInteger(c.recovery_generation)) return null;
       return { project, client: c.client, server: c.server, recovery_set_id: c.recovery_set_id, recovery_generation: c.recovery_generation };
     }
-    return { begin: beginSeen, inject, take, adopt, reset, hostAvailable, protectedContext, conceptOn };
+    return { begin: beginSeen, inject, take, adopt: adoptOnce, reset, hostAvailable, protectedContext, conceptOn };
   })();
 
   /* Ephemeral memory-only store for pairing invite codes and candidate identity words. Never persisted:

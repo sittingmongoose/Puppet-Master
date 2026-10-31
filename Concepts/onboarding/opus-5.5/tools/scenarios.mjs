@@ -20,6 +20,9 @@ mkdirSync(out, { recursive: true });
 const SC = [];
 const def = (id, scenario, title, fn) => SC.push({ id, scenario, title, fn });
 const until = (d, js, what, timeout) => d.until(new Function('return ' + js), { what, timeout: timeout || 15000 });
+/* AI detection is cached per work computer, keyed by that computer's id (73-screens-ai.js detKey: detect:server:this on
+   this computer), never its display name; read the key the page itself uses */
+const DETECTED = "(((window.O55.S.sess.ops || {})['detect:' + window.O55.ai.host(window.O55.S).id]) || {}).state === 'done'";
 const readyPrimary = (d) => d.until(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; }, { what: 'primary enabled', timeout: 15000 });
 async function connectRoutes(d) {
   // Discovery grows the list above More ways and can move it between a geometry probe and real input.
@@ -112,7 +115,10 @@ def('s06b', 'fresh', 'Bring in a Project stored online (just-in-time sign-in)', 
   A.eq(await d.screen(), 'online-service', 'service choice'); await d.primary();
   A.eq(await d.screen(), 'online-signin', 'sign in'); await d.act('signIn');
   await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
-  A.eq(await d.screen(), 'ex-repos', 'repository list'); await d.act('pick', 'jared-p/garden-planner');
+  A.eq(await d.screen(), 'ex-repos', 'repository list');
+  /* pick the card the list shows as garden-planner (a card's value is the service's own Project id, not owner/name) */
+  const garden = await d.state(() => { const c = [...document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]')].find((b) => ((b.querySelector('.o55-cardtitle') || {}).textContent || '').trim() === 'garden-planner'); return c ? c.getAttribute('data-arg') : null; });
+  A.ok(!!garden, 'garden-planner is in the list'); await d.act('pick', garden);
   await d.primary(); A.eq(await d.screen(), 'name', 'name'); A.eq((await d.draft('main')).project_name, 'Garden planner', 'name from the online Project');
   A.ok(!(await d.commands()).some((c) => c.includes('postcommit')), 'no AI provider work before commit');
   await d.primary(); await d.primary(); await reviewAndCreate(d); A.capture('s06b online', await d.draft('main'));
@@ -159,7 +165,7 @@ def('s09b', 'flaky', 'Network failure before a remote effect: review a fresh att
   await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'fresh creation requires review');
   A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });
-async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, "(window.O55.S.sess.ops||{})['detect:this computer'] && window.O55.S.sess.ops['detect:this computer'].state === 'done'", 'detection', 8000); await d.settle(); }
+async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, DETECTED, 'detection', 8000); await d.settle(); }
 def('s10', 'returning', 'Provider already installed and signed in: Ready automatically', async (d, A) => {
   await toAi(d); A.ok(await d.state(() => window.O55.S.sess.ai.accounts.claude && window.O55.S.sess.ai.accounts.claude.state === 'ready'), 'Claude Ready with no action');
   A.ok(!(await d.state(() => [...document.querySelectorAll('.o55-pane button')].some((b) => /^(Connect|Use This Installation|Use This Provider|Open Installer)$/.test(b.textContent.trim())))), 'no forbidden action labels');
@@ -555,7 +561,7 @@ def('pr12', 'antigravityOnce', 'Opened at a post-commit screen, the run has its 
     A.ok(await d.state(() => window.O55.S.sess.commit.state === 'done'), scr + ': a Project made');
   }
   await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'ai' }); }); await d.settle();
-  await until(d, "(window.O55.S.sess.ops['detect:this computer']||{}).state === 'done'", 'detection', 9000); A.ok(true, 'AI: detection ran');
+  await until(d, DETECTED, 'detection', 9000); A.ok(true, 'AI: detection ran');
   await d.act('install', 'antigravity'); await d.act('installGo', 'antigravity');
   await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signin'", 'installed', 9000);
   A.ok(await d.state(() => window.O55.ui.act('signin', 'antigravity')), 'act: Sign in');
@@ -662,24 +668,28 @@ def('pr19', 'fresh', "Audit W3-32: the resume chip's tip is its hover tag", asyn
 });
 /* Final check F1-2: every block's touchdown sound plays in Retro (a mute flipped on while Creating published the new
    Project landed on the middle block); also one other look */
-for (const look of ['retro-dark', 'retro-light', 'basic-dark']) def('pr20-' + look, 'fresh', `Final check F1-2: in ${look} all of Creating's block sounds play, the master never muted`, async (d, A) => {
+/* (every look since FO-2: Retro Dark's last two blocks landed together and the second sound was merged away) */
+for (const look of ['retro-dark', 'retro-light', 'basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'nier-dark']) def('pr20-' + look, 'fresh', `Final check F1-2: in ${look} all of Creating's block sounds play, the master never muted`, async (d, A) => {
   await d.openOnboarding();
-  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(1500);
+  await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(look.startsWith('nier') ? 4000 : 1500);
   await d.click('#pm-o55-onboarding .o55-layer:not(.o55-out) #o55-h', 'the title'); /* a real press: sound may play */
   await toName(d); await d.type('name', 'Blocks ' + look);
   for (let i = 0; i < 6 && (await d.screen()) !== 'review'; i++) await d.primary();
   await readyPrimary(d);
   await d.page.evaluate(() => {
     const w = window.__f12 = { blocks: [], mutes: [] }, V = window.O55.pipVoice, S = window.O55.sound, f = V.play;
-    V.play = function (name, o) { const r = f.apply(this, arguments); if (name === 'block') w.blocks.push({ r, muted: S.muted, index: o && o.index }); return r; };
+    V.play = function (name, o) { const t = Math.round(performance.now()), r = f.apply(this, arguments); if (name === 'block') w.blocks.push({ r, muted: S.muted, index: o && o.index, t }); return r; };
     window.addEventListener('o55:sound', (e) => w.mutes.push(e.detail && e.detail.muted));
+    w.logFrom = S.log.length;
   });
   A.ok(await d.state(() => !window.O55.sound.muted), 'sound on before Creating');
   await d.primary();
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 25000); await sleep(2500);
-  const w = await d.state(() => window.__f12);
-  A.eq(w.blocks.length, 3, 'three touchdowns (' + JSON.stringify(w.blocks) + ')');
-  A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted');
+  const w = await d.state(() => Object.assign({}, window.__f12, { log: window.O55.sound.log.slice(window.__f12.logFrom).map((e) => [e.t, e.name || e.event, e.played ? 1 : 0, e.dropped || '', e.ms || '']) }));
+  A.eq(w.blocks.length, 3, 'three touchdowns (' + JSON.stringify(w.blocks.map((b) => ({ r: b.r, muted: b.muted, index: b.index, t: b.t }))) + ')');
+  /* (a refused touchdown names what the sound core heard in the 1.2 s before it) */
+  const near = w.blocks.filter((b) => b.r !== true).map((b) => ({ index: b.index, t: b.t, before: w.log.filter((e) => e[0] <= b.t + 5 && e[0] > b.t - 1200) }));
+  A.ok(w.blocks.every((b) => b.r === true && !b.muted), 'every one played, the master unmuted' + (near.length ? ' ' + JSON.stringify(near) : ''));
   A.ok(!w.mutes.includes(true), 'no mute while Creating (' + JSON.stringify(w.mutes) + ')');
 });
 const railFit = (d) => d.state(() => {
@@ -925,6 +935,115 @@ def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore sto
   await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
 });
 /* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
+/* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
+   2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
+const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);
+def('pr40', 'fresh+sshNotAllowed', "Situation sshNotAllowed: Home NAS doesn't let the account use SSH; its own rule is named and a shared folder is offered", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  await d.primary(); A.eq(await d.screen(), 'nas-signin', 'sign in once');
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('sshinstall:') && v.state === 'failed' && v.code === 'not_allowed')", 'not allowed', 9000);
+  const t = await layerText(d);
+  A.ok(/can't use SSH|isn't allowed|not allowed/i.test(t), 'it says this account may not use SSH there');
+  A.ok(/administrators group/.test(t), "Synology's own rule is named");
+  await d.act('useSmb'); A.ok(['nas-smb', 'nas-find'].includes(await d.screen()), 'a shared folder instead (' + await d.screen() + ')');
+});
+async function toProtectS3(d) {
+  await d.openOnboarding(); await conceptOn(d);
+  await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('backup'); await d.act('bdest', 's3'); await d.act('sheet-close'); await d.primary();
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
+  await readyPrimary(d); await d.primary();
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret');
+}
+async function protectUntilDone(d, seen) {
+  for (let i = 0; i < 16 && !(await d.state(() => window.O55.S.sess.backup.state === 'done')); i++) {
+    const t = await layerText(d);
+    for (const [k, rx] of Object.entries(seen.rx)) if (rx.test(t)) seen.hit[k] = true;
+    const info = await d.primaryInfo();
+    if (info && !info.disabled) await d.primary({ settle: true });
+    await sleep(1200);
+  }
+}
+def('pr41', 'fresh+kitTestFails', 'Situation kitTestFails: the Recovery Kit test says the kit did not open the backup once; testing again works', async (d, A) => {
+  await toProtectS3(d);
+  const seen = { rx: { failed: /That kit didn't open the backup/, handoff: /The handoff didn't finish/ }, hit: {} };
+  await protectUntilDone(d, seen);
+  A.ok(!!seen.hit.failed, 'the failed test says so'); A.ok(!seen.hit.handoff, 'and only that (no second warning)');
+  A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'the second test passes and backups are on');
+});
+def('pr42', 'fresh+protectRefused', 'Situation protectRefused: saving the Recovery Kit is turned down once; Try again saves it', async (d, A) => {
+  await toProtectS3(d);
+  const seen = { rx: { refused: /The handoff didn't finish/ }, hit: {} };
+  await protectUntilDone(d, seen);
+  A.ok(!!seen.hit.refused, 'the refusal says nothing was saved');
+  A.eq(await d.state(() => window.O55.S.sess.backup.state), 'done', 'Try again saves it and backups are on');
+});
+async function toServerCode(d) {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found the new Server', 6000); await d.act('pick', 'pm:new'); await d.primary();
+  await d.type('code', '482 913'); await d.primary();
+}
+def('pr43', 'fresh+serverOldAnswer', "Situation serverOldAnswer: approving this computer is answered for an old code once; approving again works", async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary();
+  await until(d, "window.O55.S.sess.server.orApproveErr === 'stale_nonce'", 'answered for an old code', 8000);
+  A.ok(/for an old code/.test(await layerText(d)), 'it says the answer was for an old code');
+  A.ok(await d.state(() => !window.O55.S.sess.server.claimed), 'nothing trusted');
+  await d.primary(); await d.untilScreen('s-ready', 15000);
+  A.ok(await d.state(() => !!window.O55.S.sess.server.selfTrustId), 'approving again trusts this computer');
+});
+def('pr44', 'fresh+serverWrongDevice', 'Situation serverWrongDevice: setting up the Server is answered for another one once; Check again goes on', async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orClaimErr === 'wrong_target'", 'answered for another Server', 8000);
+  A.ok(/for a different device or Server/.test(await layerText(d)), 'it says the answer was for another device or Server');
+  await d.primary();
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'Check again: claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary(); await d.untilScreen('s-ready', 15000); A.ok(true, 'the Server is set up');
+});
+def('pr45', 'fresh+serverWrongDevice', "Situation serverWrongDevice on Your Server is ready: a device's approval is answered for another one once; Approve again pairs it", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 's-ready' }); }); await d.settle();
+  /* (opened straight, a page before pm7-srv's e05b690b08 has no live invite yet: New code makes one, as a person would) */
+  if (await d.state(() => !(window.O55.S.sess.server.pairUntil > Date.now()))) await d.act('newCode');
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting')", "a device's request", 8000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting').id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "window.O55.S.sess.server.approveErr === 'wrong_target'", 'answered for another device', 8000);
+  A.ok(/for a different device or Server/.test(await layerText(d)), 'it says so');
+  await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'approving again pairs it');
+});
+def('pr46', 'fresh+serverNoWords', "Situation serverNoWords: a device's request comes without its words once; New code asks it again", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 's-ready' }); }); await d.settle();
+  /* (opened straight, a page before pm7-srv's e05b690b08 has no live invite yet: New code makes one, as a person would) */
+  if (await d.state(() => !(window.O55.S.sess.server.pairUntil > Date.now()))) await d.act('newCode');
+  await until(d, "window.O55.S.sess.server.runErr === 'waiting_pairing_identity_missing'", 'a request without its words', 8000);
+  A.ok(await d.state(() => !(window.O55.S.sess.server.candidates || []).some((c) => c.state === 'waiting')), 'nothing to approve');
+  A.capture('pr46 note', await d.state(() => (document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-note-warn') || {}).textContent || ''));
+  await d.act('newCode');
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting' && c.gen === window.O55.S.sess.server.pairGen)", 'asked again with the new code', 8000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting' && c.gen === window.O55.S.sess.server.pairGen).id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000); A.ok(true, 'its words compared, it pairs');
+});
+def('pr47', 'fresh+githubUnclear', "Situation githubUnclear: GitHub's first answer can't say whether the copy was made; Check again reads the next and the Project is made", async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  await d.primary(); await d.primary(); await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'unknown'", 'unclear', 20000);
+  A.ok(/is unclear, so this is waiting/.test(await layerText(d)), 'it says the answer is unclear and nothing is retried on its own');
+  A.ok(await d.state(() => !window.O55.S.sess.commit.projectId), 'no Project yet');
+  await d.act('checkAgain');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'made', 15000);
+  A.ok(await d.state(() => !!window.O55.S.sess.commit.projectId), 'the next answer makes the Project');
+});
 /* situation githubHalfMade: GitHub makes the copy, then this computer's part stops once (the lead, 2026-10-31: "Resume
    and delete after a partial creation stay unanswered"); the concept host answers Continue Setup and Delete Repository */
 async function toHalfMade(d, A) {

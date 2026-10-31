@@ -365,7 +365,17 @@
     /* the AI step's recovery states (provider-login audit P12): a sign-in that has expired since it was made (Sign in
        again), and the connection dropping during AI setup once (the first check says so; the next one works) */
     claudeExpired: { label: 'Claude sign-in expired', apply(e) { e.here.providers.claude = { installed: true, version: '2.4.1', signedIn: false, expired: true, account: 'jared@example.com' }; } },
-    aiOffline: { label: 'Offline once during AI setup', apply(e) { e.failures.ai_offline_once = true; } }
+    aiOffline: { label: 'Offline once during AI setup', apply(e) { e.failures.ai_offline_once = true; } },
+    /* branches only injected results reached (the lead, 2026-10-31, from final-onb: "Jared wants every flow"). Each is
+       the owner's answer, given by the concept owner host (30-owners.js), once: the next answer to the same request is
+       the right one, except a request without its words, which that request keeps (the device asks again: New code) */
+    sshNotAllowed: { label: "Home NAS doesn't let this account use SSH", apply(e) { e.devices[0].sshDisallowed = [e.devices[0].user]; } },
+    kitTestFails: { label: 'The Recovery Kit test fails once', apply(e) { e.failures.kit_test_once = true; } },
+    protectRefused: { label: 'Saving the Recovery Kit is turned down once', apply(e) { e.failures.protect_once = true; } },
+    serverOldAnswer: { label: 'The Server answers an approval for an old code once', apply(e) { e.failures.server_answer_once = 'stale'; } },
+    serverWrongDevice: { label: 'The Server answers for another device once', apply(e) { e.failures.server_answer_once = 'wrong_target'; } },
+    serverNoWords: { label: "A device's request comes without its words once", apply(e) { e.failures.words_once = true; } },
+    githubUnclear: { label: "GitHub's answer is unclear once", apply(e) { e.failures.online_unclear = true; } }
   };
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */

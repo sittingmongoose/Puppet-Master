@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L1968
+Source lines: L265-L1984
 
-Source SHA256: `3e54996b18a8b9e3c3eabfbce6f8859c0427e58b48789ece794b71cdf8ebb852`
+Source SHA256: `cc787a184347f1af07630520bb0d003eff91ecb21bba141e0dd6a3894cf8985c`
 
 ---
 
@@ -896,7 +896,12 @@ plan_unit_id: DR-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: UI /behavior docs need owner-defined operational policy before consumer summaries can be canonical, and route reconciliation updates owner docs before consumers consume the canonical route/object model.
+canonical_text: 'UI /behavior docs need owner-defined operational policy before consumer summaries can be canonical,
+  and route reconciliation updates owner docs before consumers consume the canonical route/object model. DL-259 late
+  integration, 2026-10-31: Product Onboarding consumes PWIZ-024’s current choice and validation contract for display,
+  Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites are shared;
+  a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness validation
+  remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -905,8 +910,13 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
-- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries
+  from the source span remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259 late integration, 2026-10-31: Product Onboarding consumes PWIZ-024’s current choice and validation contract
+  for display, Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites
+  are shared; a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness
+  validation remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -920,6 +930,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer

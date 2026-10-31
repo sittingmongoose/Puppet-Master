@@ -9775,11 +9775,6 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-seat, .pmx-p-slot, .pmx-p-screen-g, .pmx-p-paper-g, .pmx-p-you, .pmx-p-chapter, .pmx-p-cue-g{transform:translate(var(--x,0),var(--y,0));transition:transform var(--pmx-t-move) var(--pmx-ease-move),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-lab{font:var(--pmx-fs-plate);fill:var(--text);}
 .pmx-p-sub{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--subtle);}
-/* Retro Light lead seat: hover-to-light fades every other plate part to 35% (pmx-system.css). On this paper the
-   lead is near-black ink, so 35% composites to about rgb(168,165,160) on #F5F0E8 (~2.2:1) and the puppet, the name
-   and the sub line wash out together. The seat stays at full ink (the labels' own text colour). The crown stays
-   the retro gold prop, never the accent. Other themes are unchanged. */
-body[data-theme="retro-light"] #pmOverlayRoot[data-pmx-focus] .pmx-plate :is(.pmx-p-seat, .pmx-p-hub):has(.pmx-p-mark[data-sil="lead"]){opacity:1;}
 .pmx-p-note{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--muted);}
 .pmx-p-voice{font:var(--pmx-w-reg) 12px/17.5px var(--pmx-voice);fill:var(--muted);}
 .pmx-p-paper{fill:var(--surface-2);stroke:var(--pmx-line);stroke-width:1;}
@@ -11093,14 +11088,20 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 
 /* ================================================================ 6.6 hover-to-light
    pmx-system.js writes data-pmx-focus="{parts}" on #pmOverlayRoot while a
-   control carrying data-pmx-affects is hovered or keyboard-focused. Unrelated
-   plate parts dim to 35 %, the lit part turns accent, the read-back phrase gets
-   the wash. No re-render, no caret risk. The per-part rules (four per part)
-   are generated at load from the one vocabulary, PM56_PMX.PARTS. */
-.pmx-plate [data-pmx-part]{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-.pmx-plate [data-pmx-part] .pmx-p-lab, .pmx-plate [data-pmx-part] .pmx-p-note, .pmx-plate [data-pmx-part] .pmx-p-sub{transition:fill var(--pmx-t-light) var(--pmx-ease-linear);}
+   control carrying data-pmx-affects is hovered or keyboard-focused. The lit
+   part is emphasised and nothing dims (FS-1, lead ruling 2026-10-31: the cast
+   went grey as the pointer moved): every part keeps its full colour, the lit
+   part's marks take the look's accent outline (--pmx-lit-outline: a crisp
+   one-pixel accent ring, with a soft glow in Glass and in NieR's ink), its
+   lines and the job card's edge turn accent, the read-back phrase gets the
+   wash. No re-render, no layout change, no caret risk. The per-part rules are
+   generated at load from the one vocabulary, PM56_PMX.PARTS. */
+.pmx-plate, .pmx-sched-mgr{--pmx-lit:var(--accent);--pmx-lit-outline:drop-shadow(1px 0 0 var(--pmx-lit)) drop-shadow(-1px 0 0 var(--pmx-lit)) drop-shadow(0 1px 0 var(--pmx-lit)) drop-shadow(0 -1px 0 var(--pmx-lit));}
+body[data-theme^="glass"] :is(.pmx-plate, .pmx-sched-mgr){--pmx-lit-outline:drop-shadow(1px 0 0 var(--pmx-lit)) drop-shadow(-1px 0 0 var(--pmx-lit)) drop-shadow(0 1px 0 var(--pmx-lit)) drop-shadow(0 -1px 0 var(--pmx-lit)) drop-shadow(0 0 3px var(--pmx-lit));}
+html[data-o55-nier="on"] :is(.pmx-plate, .pmx-sched-mgr){--pmx-lit:var(--o55-nier-ink, var(--accent));}
+.pmx-plate .pmx-p-mark, .pmx-sched-mgr .pmx-sched-mark{transition:filter var(--pmx-t-light) var(--pmx-ease-linear);}
+.pmx-plate .pmx-p-paper{transition:stroke var(--pmx-t-light) var(--pmx-ease-linear),stroke-width var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-readback .pmx-rb{transition:background-color var(--pmx-t-light) var(--pmx-ease-linear),box-shadow var(--pmx-t-light) var(--pmx-ease-linear);border-radius:3px;}
-#pmOverlayRoot[data-pmx-focus] .pmx-plate [data-pmx-part]{opacity:.35;}
 
 /* ================================================================ 7.10 living beside ordinary replies */
 .transcript[data-variant] .message:has(.pmx-run){display:block;border-left:0;padding-left:0;}
@@ -13578,7 +13579,7 @@ body.pm56-reduced .pmx-sched-marker{transition:none;}
 .pmx-sched-evsay{min-width:0;font:var(--pmx-fs-help);color:var(--text);overflow-wrap:anywhere;}
 /* the plate: messages are marks on the line, build slots bands under it; a row and its mark light each other */
 .pmx-sched-mark{transition:opacity var(--pmx-t-light) var(--pmx-ease-linear);}
-/* the dimming is the pair's own (scheduling.js linkStyle): only a row or mark with a partner on the plate dims the rest */
+/* a row and its mark light each other (scheduling.js linkStyle): the partner takes the accent and its outline, nothing dims */
 .pmx-sched-slotmark .pmx-sched-band{fill:var(--pmx-sched-mark-ink,var(--muted));}
 .pmx-sched-windbar{fill:var(--pmx-hatch);}
 .pmx-sched-mark .pmx-sched-dot{fill:var(--pmx-sched-mark-ink,var(--accent));}
@@ -39423,6 +39424,8 @@ window.PM56_NIER_FACES = [
      line: names beside the marks, 40 tall, for the Chat Room), the Chat Room's lean line (leanLine: the line at .79,
      32 tall, every name whole) and pmxPlateFit's caption. A mode whose seats would sit closer than its minimum pitch
      is left out, so the slot yields to the next one (J-2: never scaled). */
+  var PAPER_IN = 8;   /* the paper's text inset, hosted (see castStage's paper) */
+  var YOU_SHIFT = 10;  /* hosted, You stands 10 left of where it is drawn (pm7-port 24-layout.css .pmx-p-you translate) */
   var CAST = {
     full: { W: 576, M: 12, s: 1.5, sy: 1.25, bar: 29, paperW: 150, paperH: 50, bus: 64, drop: 10, name: 14, sub: 16, pmin: 84, pmax: 128, wing: 24 },
     /* the compact paper is 32 tall: its one centred line keeps 8 px of ink clear of the paper's top and bottom edges (J-2) */
@@ -39541,8 +39544,10 @@ window.PM56_NIER_FACES = [
       var ch = sp.chapters, L = Math.max(14, Math.ceil(yh) + 2), ylw = castW(you.label, 11);
       var youX = W - M - Math.max(Math.round(yh), Math.ceil(ylw / 2));
       var cw = ch.map(function (c) { return castW(c.label, 10.5); });
-      /* the last chapter's name ends 6 short of You's */
-      var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - 6 - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
+      /* the last chapter's name ends 6 short of You's; hosted, You stands YOU_SHIFT further left (the port's
+         .pmx-p-you translate, pm7-port 24-layout.css), which the gap counts too (FS-2: "Write the planYou" ran together) */
+      var youGap = 6 + YOU_SHIFT;
+      var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - youGap - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
       var q = ch.length > 1 ? Math.min(92, (lastMax - first) / (ch.length - 1)) : 0;
       var cx = ch.map(function (c, i) { return Math.round(first + q * i); });
       /* the stops keep one even step while every pair of neighbouring names keeps 12 of measured ink apart. Where one
@@ -39561,7 +39566,7 @@ window.PM56_NIER_FACES = [
         var room = 2 * (cx[ci + 1] - cx[ci] - 4);
         if ((cw[ci] + cw[ci + 1] - 2) / 1.04 > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
       }
-      cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - 6 - cx[cx.length - 1]));
+      cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - youGap - cx[cx.length - 1]));
       /* Grill Me (DL-218): BrainStorm's bar has no Coordinator seat, so the Coordinator who grills you stands behind the
          kettle at the first chapter (Understand, where intake runs), in place of its diamond; the line starts past it */
       var g0 = ch[0] && ch[0].grill ? 12 : 0;
@@ -39575,12 +39580,20 @@ window.PM56_NIER_FACES = [
     } else {
       /* the input paper, the hub (a lead puppet, or Review's junction), You */
       /* a full plate drawn wider than 576 (a run view's 640) gives half the extra width to the paper, so more of the job shows */
-      var inp = sp.input, pw = inp ? (full ? G.paperW + Math.max(0, Math.round((W - G.W) / 2)) : Math.max(72, Math.min(G.paperW + 54, castW(castPlain(inp.short || inp.label), 10.5) + 28))) : 0, ph = G.paperH, px = M;
+      /* the paper's words sit 12 in from each side (its foreignObject) and, hosted, 7.5 more (the port's 1.5 + 6 text
+         inset, pm7-port 24-layout.css): PAPER_IN counts that inset, so a lean paper is as wide as its words need in every
+         font (Retro's Plex Mono "The job" was cut to "The j…" by the 7.5 it did not count) */
+      /* and a paper is as wide as its fixed words need, within limits: a full paper widens by up to 40 for its words
+         (Review's "Your latest changes" in Plex Mono), a lean one up to 158; the job's own text (input.text) is fitted to
+         the paper below instead */
+      var inp = sp.input, pbase = G.paperW + Math.max(0, Math.round((W - G.W) / 2));
+      var pneed = inp ? Math.max(castW(castPlain(full ? inp.label : (inp.short || inp.label)), 10.5), full && inp.text == null && inp.sub ? castW(castPlain(inp.sub), 11) : 0) + 24 + PAPER_IN : 0;
+      var pw = inp ? (full ? Math.max(pbase, Math.min(pbase + 40, pneed)) : Math.max(72, Math.min(G.paperW + 62, pneed))) : 0, ph = G.paperH, px = M;
       var ylw2 = Math.max(castW(you.label, 11), you.sub ? castW(you.sub, 10.5) : 0);
       var yx = W - M - ylw2 - Math.round(yh + 4);
       /* input.text (plain words, the job or the topic) is fitted to the paper's inner width here, so the paper never
          leans on its CSS ellipsis once drawn (a mirror span, input.mirror, keeps it live while you type) */
-      var inSub = inp && inp.text != null ? '<span' + (inp.mirror ? ' data-collab-mirror="' + esc(inp.mirror) + '"' : '') + '>' + castLabel(inp.text, pw - 24, 11) + '</span>' : inp && inp.sub;
+      var inSub = inp && inp.text != null ? '<span' + (inp.mirror ? ' data-collab-mirror="' + esc(inp.mirror) + '"' : '') + '>' + castLabel(inp.text, pw - 24 - PAPER_IN, 11) + '</span>' : inp && inp.sub;
       if (inp) out += P.paper({ key: kp + 'paper', x: px, y: BY - ph / 2, w: pw, h: ph, label: full ? inp.label : esc(inp.short || inp.label), sub: full ? inSub : '', part: inp.part });
       var after = px + pw, edgeFrom;
       if (sp.hub) {
@@ -42259,9 +42272,12 @@ window.PM56_NIER_FACES = [
     var out = ['/* generated by pmx-system.js from PM56_PMX.PARTS (6.6 hover-to-light) and PM56_PMX.SURFACES (7.14, IMPACT A2-18) */'];
     PARTS.forEach(function (p) {
       var f = '#pmOverlayRoot[data-pmx-focus~="' + p + '"] ', q = '[data-pmx-part~="' + p + '"]';
-      out.push(f + '.pmx-plate ' + q + '{opacity:1;--pmx-line:var(--accent);--pmx-seat:var(--accent);--pmx-seat-fill:var(--pmx-seat-fill-accent);}');
+      /* the lit part is emphasised, nothing dims (FS-1): its marks take the accent outline, its lines and the job
+         card's edge the accent; the marks keep their own colours and every label its own */
+      out.push(f + '.pmx-plate ' + q + '{--pmx-line:var(--accent);}');
+      out.push(f + '.pmx-plate ' + q + ' .pmx-p-mark, ' + f + '.pmx-plate .pmx-p-mark' + q + '{filter:var(--pmx-lit-outline);}');
       out.push(f + '.pmx-plate :is(path, circle, rect)' + q + '{stroke:var(--accent);}');
-      out.push(['.pmx-p-lab', '.pmx-p-note', '.pmx-p-sub'].map(function (c) { return f + '.pmx-plate ' + q + ' ' + c; }).join(', ') + ', ' + f + '.pmx-plate text' + q + '{fill:var(--accent);color:var(--accent);}');
+      out.push(f + '.pmx-plate ' + q + ' .pmx-p-paper{stroke:var(--accent);stroke-width:2.2px;}');
       out.push(f + '.pmx-readback ' + q + '{background-color:var(--pmx-wash);box-shadow:0 0 0 2px var(--pmx-wash);}');
     });
     var fam = '.transcript .transcript-inner > [data-family]';
@@ -58506,17 +58522,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       '<div class="pmx-sched-mgrlegend"><p class="pmx-fine">The next 48 hours, your time (' + esc(zoneCity(deviceZone())) + ').' + (paused ? ' Paused: none of this starts until you turn it off.' : '') + '</p>' + legend + '</div>';
   }
   /* a row and its plate mark light each other (CSS :has, one rule per record; nothing is written from JS) */
-  /* a row and its mark light each other: hovering one dims the plate's other marks and lights its partner. Only a row
-     whose mark the plate draws does it (QA round 2, the Q17 sweep: a row with no mark in the 48 hours dimmed every mark
-     and lit none) */
+  /* a row and its mark light each other: hovering one gives its partner the accent and the look's accent outline
+     (pmx-system.css --pmx-lit-outline); nothing dims (FS-1). Only a row whose mark the plate draws does it */
   function linkStyle(ids, plate) {
     ids = ids.filter(function (id) { return plate.indexOf('data-sched-mark="' + id + '"') >= 0; });
     if (!ids.length) return '';
     var r = '#pmOverlayRoot .pmx-sched-mgr';
     return '<style data-k="sched-mgr-link">' + ids.map(function (id) {
       var row = r + ':has([data-sched-row="' + id + '"]:is(:hover,:focus-within)) ', mark = r + ':has([data-sched-mark="' + id + '"]:hover) ';
-      return row + '[data-sched-mark]{opacity:.35;}' + row + '[data-sched-mark="' + id + '"]{opacity:1;--pmx-sched-mark-ink:var(--accent);}' +
-        mark + '[data-sched-mark]{opacity:.35;}' + mark + '[data-sched-mark="' + id + '"]{opacity:1;}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
+      return row + '[data-sched-mark="' + id + '"]{--pmx-sched-mark-ink:var(--accent);filter:var(--pmx-lit-outline);}' +
+        mark + '[data-sched-mark="' + id + '"]{filter:var(--pmx-lit-outline);}' + mark + '[data-sched-row="' + id + '"]{background-color:var(--pmx-wash);}';
     }).join('') + '</style>';
   }
 

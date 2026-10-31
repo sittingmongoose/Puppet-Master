@@ -192,7 +192,9 @@
         "ai": "AI accounts",
         "pip": "Sign-ins that fail once",
         "restore": "Restoring Projects",
-        "pairing": "Pairing"
+        "pairing": "Pairing",
+        "protect": "Protecting your work",
+        "server": "The Server's answers"
       },
       "chapters": {
         "welcome": "Welcome",
@@ -301,6 +303,38 @@
         "githubSigninOnce": {
           "title": "GitHub sign-in fails once",
           "sub": "The online copy's sign-in does not finish the first time; the second try works."
+        },
+        "sshNotAllowed": {
+          "title": "Home NAS doesn't let this account use SSH",
+          "sub": "Adding the key is refused for this account; Synology's own rule is named, and a shared folder is offered instead."
+        },
+        "githubHalfMade": {
+          "title": "GitHub copy made, setup stops once",
+          "sub": "Creating stops after GitHub made the copy; Continue Setup finishes it, or deleting the online copy removes only that copy."
+        },
+        "githubUnclear": {
+          "title": "GitHub's answer is unclear once",
+          "sub": "Creating can't tell whether the copy was made; nothing is retried on its own; Check again reads the next answer."
+        },
+        "kitTestFails": {
+          "title": "The Recovery Kit test fails once",
+          "sub": "On Finish protecting your work, Test the kit says it didn't open the backup; the second test works."
+        },
+        "protectRefused": {
+          "title": "Saving the Recovery Kit is turned down once",
+          "sub": "On Finish protecting your work, saving the kit doesn't finish and nothing is saved; Try again works."
+        },
+        "serverOldAnswer": {
+          "title": "The Server answers an approval for an old code once",
+          "sub": "Approving a device (this computer on Set up, or another one on Your Server is ready) is answered for an old code; Approve again works."
+        },
+        "serverWrongDevice": {
+          "title": "The Server answers for another device once",
+          "sub": "The Server's first answer (setting it up, or an approval) names another device; Check again or Approve again works."
+        },
+        "serverNoWords": {
+          "title": "A device's request comes without its words once",
+          "sub": "On Your Server is ready, the next device's request has no words to compare; New code asks it again."
         }
       },
       "screens": {

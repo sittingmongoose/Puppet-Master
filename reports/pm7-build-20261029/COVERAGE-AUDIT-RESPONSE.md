@@ -1,6 +1,6 @@
 # Coverage audit response — 2026-10-31
 
-**All 13 findings confirmed and fixed.** Base a447a7c7e0; Astra audited b0c1a23758. This is an owner/companion correction under DL-259, DL-257/Q22 and DL-260, with focused static proof only. The lead arranges the independent re-check after push. No full gates, dry landing, landing lock or reseal is part of this pass.
+**All 13 findings confirmed and fixed.** Base a447a7c7e0; Astra audited b0c1a23758. This is an owner/companion correction under DL-259, DL-257/Q22 and DL-260, with focused static proof only. GLM independently re-checked 17e87e52e0: PASS, all 13 closed and zero new blockers. It sampled 32/133 rows and ran the shard check; its canon-only/static scope and removal-sample limits are preserved in lanes/COVERAGE-RECHECK-glm.md. The later cf0ae92b9a product delta is recorded separately and receives focused checks. No full gates, dry landing, landing lock or reseal is part of this pass.
 
 | Finding | Confirmed cause | Owner correction | Companion / coverage correction |
 |---|---|---|---|

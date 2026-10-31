@@ -839,11 +839,6 @@ body[data-theme^="retro"] .pmx-plate{background-image:linear-gradient(var(--pmx-
 .pmx-p-seat, .pmx-p-slot, .pmx-p-screen-g, .pmx-p-paper-g, .pmx-p-you, .pmx-p-chapter, .pmx-p-cue-g{transform:translate(var(--x,0),var(--y,0));transition:transform var(--pmx-t-move) var(--pmx-ease-move),opacity var(--pmx-t-light) var(--pmx-ease-linear);}
 .pmx-p-lab{font:var(--pmx-fs-plate);fill:var(--text);}
 .pmx-p-sub{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--subtle);}
-/* Retro Light lead seat: hover-to-light fades every other plate part to 35% (pmx-system.css). On this paper the
-   lead is near-black ink, so 35% composites to about rgb(168,165,160) on #F5F0E8 (~2.2:1) and the puppet, the name
-   and the sub line wash out together. The seat stays at full ink (the labels' own text colour). The crown stays
-   the retro gold prop, never the accent. Other themes are unchanged. */
-body[data-theme="retro-light"] #pmOverlayRoot[data-pmx-focus] .pmx-plate :is(.pmx-p-seat, .pmx-p-hub):has(.pmx-p-mark[data-sil="lead"]){opacity:1;}
 .pmx-p-note{font:var(--pmx-w-reg) 10.5px/15.5px var(--font-ui);fill:var(--muted);}
 .pmx-p-voice{font:var(--pmx-w-reg) 12px/17.5px var(--pmx-voice);fill:var(--muted);}
 .pmx-p-paper{fill:var(--surface-2);stroke:var(--pmx-line);stroke-width:1;}

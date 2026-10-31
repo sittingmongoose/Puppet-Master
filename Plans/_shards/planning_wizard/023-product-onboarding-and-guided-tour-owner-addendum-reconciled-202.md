@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2402
+Source lines: L1781-L2419
 
-Source SHA256: `9035764f79b6060e2ea552a02a0683fd957726c255b1fd32aa9ab9afbc8bfc36`
+Source SHA256: `2f6e4421fd4caa0caee0084020e3d170c35879cbf8de60f0a2a860eabb0ae4da`
 
 ---
 
@@ -205,7 +205,12 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   object, event or store key is a product contract. DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the
   person chose under No account yet when returning to AI setup, and present that category’s providers first. This is
   reversible local navigation/draft state, not a persisted preference, account connection, provider readiness result
-  or owner mutation.'
+  or owner mutation. DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges
+  the skipped choice and brings its concise skipped-state/consequence message into view at the start of that step, rather
+  than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
+  Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
+  current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
+  Skip. Reduced Motion reveals the feedback in its settled position.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -327,6 +332,12 @@ acceptance_criteria:
 - 'DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the person chose under No account yet when returning
   to AI setup, and present that category’s providers first. This is reversible local navigation/draft state, not a persisted
   preference, account connection, provider readiness result or owner mutation.'
+- 'DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges the skipped choice
+  and brings its concise skipped-state/consequence message into view at the start of that step, rather than leaving the
+  feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional Free Models remains
+  available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free
+  account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion
+  reveals the feedback in its settled position.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -361,6 +372,12 @@ source_lineage:
 - 'DL-260 implementation lineage only: O55.pipStage/pipWorlds/pipScenes/pipVoice, O55.tips, O55.pipOops, pm7ob-explainer,
   handOff(), O55.finish and handingOff are source spellings, not product APIs. /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md
   D1.'
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository

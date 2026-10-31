@@ -36851,7 +36851,19 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and reachable question/Adjust
   controls where applicable. At narrow and short supported sizes the title, all five choices and footer remain readable
   and reachable without clipping or a hidden extra-family strip; the chooser fits above the footer or scrolls within
-  its bounded content area. Click or keyboard activation selects; silent hover does not select.'
+  its bounded content area. Click or keyboard activation selects; silent hover does not select. DL-259 late integration,
+  2026-10-31: for an unnamed Project using the automatic local destination, Name shows the base destination plus “in
+  a folder with your Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master, in a folder
+  with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen folder leaf. Typing a name
+  or explicitly choosing a suggestion adds that current draft name; clearing it restores the generic line. The local-location
+  picker’s On this computer card names the base destination. Existing folders and selected network/mounted/remote sources
+  still display their actual resolved location under H8. These are truthful draft previews and create no folder or Project
+  before the reviewed commit. DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges
+  the skipped choice and brings its concise skipped-state/consequence message into view at the start of that step, rather
+  than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
+  Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
+  current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
+  Skip. Reduced Motion reveals the feedback in its settled position.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37096,6 +37108,19 @@ acceptance_criteria:
   At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping
   or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click
   or keyboard activation selects; silent hover does not select.'
+- 'DL-259 late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the
+  base destination plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents
+  › Puppet Master, in a folder with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen
+  folder leaf. Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the
+  generic line. The local-location picker’s On this computer card names the base destination. Existing folders and selected
+  network/mounted/remote sources still display their actual resolved location under H8. These are truthful draft previews
+  and create no folder or Project before the reviewed commit.'
+- 'DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges the skipped choice
+  and brings its concise skipped-state/consequence message into view at the start of that step, rather than leaving the
+  feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional Free Models remains
+  available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free
+  account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion
+  reveals the feedback in its settled position.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37137,6 +37162,12 @@ source_lineage:
   grid geometry is source evidence only.
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens:
 - welcome
 - simple_path
