@@ -6,28 +6,70 @@
   'use strict';
   const O55 = window.O55;
 
+  /* One row per concrete route a person can connect (Multi-Account §4.1), keyed by its own stable id, with the id the
+     app's Settings uses for the same route (settings). Three facts stay apart (provider-login audit P05): how it
+     signs in (auth: signin | key | server), what pays for its use (bill: plan, a plan with included usage | use, billed
+     by what you use | own, your own setup) and whether a vendor program must be installed first (cli).
+     - alt: a second way in for the same provider, its own account family (Codex's OpenAI API key, MA §9.3.1; Cursor's
+       browser sign-in through its CLI). Settings offers the same pair.
+     - keyFrom: where the right key is made: an exact console, or the vendor's own guide where the concept is not sure of
+       the console address (P10). guide: true opens it as a guide.
+     - regions: a plan sold per region with different keys and addresses (MA-062; Global and China are separate routes).
+     - context: what the account still needs after sign-in before it is Ready (MA §9.3: Logged in is not Ready):
+       billing (Copilot: whose Copilot plan), workspace (an Anthropic key that works in more than one), project (Vertex).
+     - remote: how a sign-in comes back when the browser is on another device than the AI (MACS §4): device (a code the
+       person types on the vendor's page), paste (the vendor's page shows a code the person pastes here), or none known.
+     - custody: cli (the vendor program keeps its own sign-in on the AI computer, MA-070), store (Puppet Master keeps
+       it in that computer's keychain), server (OpenCode keeps its model accounts itself).
+     - gate: admission not established (P14): the row says what is known and offers no setup.
+     - who / plan: what this fixture's sign-in reports back (the account and, where the vendor reports it, its plan).
+     - aka: former or familiar names, matched by search (P15). */
   const PROVIDERS = [
-    /* id, name, kind (subscription|api|runtime), family, cli (binary needing Install) or null, auth (signin|key), pair (billing sibling) */
-    { id: 'claude', name: 'Claude', product: 'Claude subscription', kind: 'subscription', cli: 'claude', auth: 'signin', pair: 'anthropic-api', vendor: 'Anthropic', likely: 1 },
-    { id: 'codex', name: 'ChatGPT / Codex', product: 'ChatGPT plan', kind: 'subscription', cli: null, auth: 'signin', vendor: 'OpenAI', likely: 2, canon: true },
-    { id: 'antigravity', name: 'Google Antigravity', product: 'Antigravity subscription', kind: 'subscription', cli: 'agy', auth: 'signin', pair: 'gemini-api', vendor: 'Google', likely: 3 },
-    { id: 'cursor', name: 'Cursor', product: 'Cursor account', kind: 'api', cli: null, auth: 'key', vendor: 'Cursor', likely: 4 },
-    { id: 'grok', name: 'Grok Build', product: 'Grok Build subscription', kind: 'subscription', cli: 'grok', auth: 'signin', pair: 'xai-api', vendor: 'xAI' },
-    { id: 'muse', name: 'Muse Code', product: 'Muse Code subscription', kind: 'subscription', cli: 'muse', auth: 'signin', pair: 'meta-api', vendor: 'Meta' },
-    { id: 'copilot', name: 'GitHub Copilot', product: 'Copilot plan', kind: 'subscription', cli: null, auth: 'signin', vendor: 'GitHub', canon: true },
-    { id: 'qwen-coding', name: 'Qwen Coding Plan', product: 'Alibaba Coding Plan', kind: 'subscription', cli: null, auth: 'key', vendor: 'Alibaba' },
-    { id: 'qwen-token', name: 'Qwen Token Plan', product: 'Alibaba Token Plan', kind: 'api', cli: null, auth: 'key', vendor: 'Alibaba' },
-    { id: 'zai', name: 'Z.AI Coding Plan', product: 'Z.AI Coding Plan', kind: 'subscription', cli: null, auth: 'key', vendor: 'Z.AI' },
-    { id: 'kimi', name: 'Kimi Code', product: 'Kimi Code plan', kind: 'subscription', cli: null, auth: 'key', vendor: 'Moonshot' },
-    { id: 'minimax', name: 'MiniMax Coding Plan', product: 'MiniMax Coding Plan', kind: 'subscription', cli: null, auth: 'key', vendor: 'MiniMax', canon: true },
-    { id: 'opencode-go', name: 'OpenCode Go', product: 'OpenCode Go plan', kind: 'subscription', cli: null, auth: 'key', vendor: 'OpenCode' },
-    { id: 'opencode-zen', name: 'OpenCode Zen', product: 'OpenCode Zen (pay as you go)', kind: 'api', cli: null, auth: 'key', vendor: 'OpenCode' },
-    { id: 'opencode-runtime', name: 'OpenCode (your own runtime)', product: 'OpenCode runtime', kind: 'runtime', cli: 'opencode', auth: 'signin', vendor: 'OpenCode' },
-    { id: 'anthropic-api', name: 'Anthropic API', product: 'Anthropic API (pay as you go)', kind: 'api', cli: null, auth: 'key', pair: 'claude', vendor: 'Anthropic' },
-    { id: 'gemini-api', name: 'Gemini API', product: 'Gemini API (pay as you go)', kind: 'api', cli: null, auth: 'key', pair: 'antigravity', vendor: 'Google' },
-    { id: 'vertex', name: 'Vertex AI', product: 'Google Cloud Vertex AI', kind: 'api', cli: null, auth: 'key', pair: 'antigravity', vendor: 'Google' },
-    { id: 'xai-api', name: 'xAI API', product: 'xAI API (pay as you go)', kind: 'api', cli: null, auth: 'key', pair: 'grok', vendor: 'xAI' },
-    { id: 'meta-api', name: 'Meta Model API', product: 'Meta Model API (pay as you go)', kind: 'api', cli: null, auth: 'key', pair: 'muse', vendor: 'Meta' }
+    { id: 'claude', settings: 'claude-code', name: 'Claude', product: 'Claude plan', bill: 'plan', auth: 'signin', cli: 'claude', vendor: 'Anthropic', likely: 1, pair: 'anthropic-api',
+      remote: 'paste', custody: 'cli', who: ['jared@example.com', 'jared@studio.example'], plan: 'Claude Pro' },
+    { id: 'codex', settings: 'openai-codex', name: 'ChatGPT / Codex', product: 'ChatGPT plan', bill: 'plan', auth: 'signin', family: 'chatgpt', cli: null, vendor: 'OpenAI', likely: 2,
+      remote: 'device', custody: 'store', who: ['jared@example.com', 'jared@studio.example'], plan: 'ChatGPT Plus',
+      alt: { auth: 'key', bill: 'use', family: 'api_key', product: 'OpenAI API' }, keyFrom: { name: 'the OpenAI API dashboard', url: 'https://platform.openai.com/api-keys' } },
+    { id: 'antigravity', settings: 'antigravity', name: 'Google Antigravity', product: 'Antigravity plan', bill: 'plan', auth: 'signin', cli: 'agy', vendor: 'Google', likely: 3, pair: 'gemini-api',
+      remote: 'paste', custody: 'cli', who: ['jared@gmail.com', 'jared@studio.example'] },
+    { id: 'cursor', settings: 'cursor-cli', name: 'Cursor', product: 'Cursor plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Cursor', likely: 4, custody: 'store',
+      keyFrom: { name: 'your Cursor dashboard', url: 'https://cursor.com/dashboard/api' },
+      alt: { auth: 'signin', cli: 'cursor-agent', bill: 'plan', product: 'Cursor plan', custody: 'cli' }, who: ['jared@example.com', 'jared@studio.example'] },
+    { id: 'grok', settings: 'grok', name: 'Grok Build', product: 'Grok Build plan', bill: 'plan', auth: 'signin', cli: 'grok', vendor: 'xAI', pair: 'xai-api',
+      remote: 'device', custody: 'cli', who: ['jared@example.com', 'jared@studio.example'] },
+    { id: 'muse', settings: 'muse', name: 'Muse Code', product: 'Muse Code plan', bill: 'plan', auth: 'signin', cli: 'muse', vendor: 'Meta', pair: 'meta-api',
+      custody: 'cli', who: ['jared@example.com', 'jared@studio.example'] },
+    { id: 'copilot', settings: 'github-copilot', name: 'GitHub Copilot', product: 'Copilot plan', bill: 'plan', auth: 'signin', cli: null, vendor: 'GitHub',
+      remote: 'device', custody: 'store', context: 'billing', who: ['jared-p', 'jared-studio'] },
+    { id: 'qwen-coding', settings: 'qwen-coding', name: 'Alibaba Coding Plan', aka: 'Qwen Coding Plan', product: 'Alibaba Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
+      custody: 'store', regions: ['global', 'china'], keyFrom: { name: "Alibaba Cloud's Coding Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/coding-plan', guide: true } },
+    { id: 'qwen-token', settings: 'qwen-token', name: 'Alibaba Token Plan', aka: 'Qwen Token Plan', product: 'Alibaba Token Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
+      custody: 'store', keyFrom: { name: "Alibaba Cloud's Token Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/token-plan-overview', guide: true } },
+    { id: 'zai', settings: 'zai-coding', name: 'Z.AI Coding Plan', aka: 'GLM Coding Plan Zhipu', product: 'Z.AI Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Z.AI',
+      custody: 'store', gate: 'unverified', gateUrl: 'https://docs.z.ai/devpack/tool/others' },
+    { id: 'kimi', settings: 'kimi-coding', name: 'Kimi Code', product: 'Kimi Code plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Moonshot',
+      custody: 'store', keyFrom: { name: 'the Kimi Code console', url: 'https://www.kimi.com/code/console' } },
+    { id: 'minimax', settings: 'minimax-coding', name: 'MiniMax M Plan', aka: 'MiniMax Coding Plan', product: 'MiniMax M Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'MiniMax', canon: true,
+      custody: 'store', regions: ['global', 'china'], keyFrom: { name: "MiniMax's M Plan guide", url: 'https://platform.minimax.io/docs/m-plan/intro', guide: true } },
+    { id: 'opencode-go', settings: 'opencode-go', name: 'OpenCode Go', product: 'OpenCode Go plan', bill: 'plan', auth: 'key', cli: null, vendor: 'OpenCode',
+      custody: 'store', keyFrom: { name: 'the OpenCode Console', url: 'https://opencode.ai/console/' } },
+    { id: 'opencode-zen', settings: 'opencode-zen', name: 'OpenCode Console', aka: 'OpenCode Zen', product: 'OpenCode Console', bill: 'use', auth: 'key', cli: null, vendor: 'OpenCode',
+      custody: 'store', keyFrom: { name: 'the OpenCode Console', url: 'https://opencode.ai/console/' } },
+    /* OpenCode itself is a server profile, never a website sign-in (Provider_OpenCode §5): Puppet Master runs one
+       (Managed Server: installs OpenCode on the AI computer with consent, starts it, checks it) or attaches to one the
+       person already runs (its address and, if it asks for one, its own username and password). Its model accounts
+       stay in OpenCode. */
+    { id: 'opencode-runtime', settings: 'opencode', name: 'OpenCode server', product: 'OpenCode server', bill: 'own', auth: 'server', cli: 'opencode', vendor: 'OpenCode', custody: 'server' },
+    { id: 'anthropic-api', settings: 'anthropic-api', name: 'Anthropic API', product: 'Anthropic API', bill: 'use', auth: 'key', cli: null, pair: 'claude', vendor: 'Anthropic',
+      custody: 'store', context: 'workspace', workspaces: ['Default workspace', 'Side projects'], keyFrom: { name: 'the Claude Console', url: 'https://platform.claude.com/settings/keys' } },
+    { id: 'gemini-api', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
+      custody: 'store', keyFrom: { name: 'Google AI Studio', url: 'https://aistudio.google.com/api-keys' } },
+    { id: 'vertex', settings: 'vertex', name: 'Vertex AI', product: 'Google Cloud', bill: 'use', auth: 'key', cli: null, vendor: 'Google',
+      custody: 'store', context: 'project', keyFrom: { name: "Google Cloud's API key guide", url: 'https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/start/api-keys', guide: true } },
+    { id: 'xai-api', settings: 'xai-api', name: 'xAI API', product: 'xAI API', bill: 'use', auth: 'key', cli: null, pair: 'grok', vendor: 'xAI',
+      custody: 'store', keyFrom: { name: 'the xAI Console', url: 'https://console.x.ai' } },
+    { id: 'meta-api', settings: 'meta-api', name: 'Meta Model API', product: 'Meta Model API', bill: 'use', auth: 'key', cli: null, pair: 'muse', vendor: 'Meta',
+      custody: 'store', keyFrom: { name: "Meta's developer site", url: 'https://dev.meta.ai/' } }
   ];
 
   const FORGES = [
@@ -45,21 +87,33 @@
      opens its page without the concept naming an address, and a self-managed service uses the address the person typed.
      A device code (Browser didn't open?) is offered only where the service has a device sign-in, on its hosted edition. */
   const OFFICIAL = {
-    provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login', 'opencode-runtime': 'https://opencode.ai' },
+    provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login' },
+    /* a device sign-in's page, where the concept knows it (the code itself comes from the vendor) */
+    device: { copilot: 'github.com/login/device' },
     signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
     forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com' },
     forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },
-    free: { 'free-openrouter': 'https://openrouter.ai', 'free-github-models': 'https://github.com/login', 'free-cerebras': 'https://cloud.cerebras.ai', 'free-groq': 'https://console.groq.com', 'free-hf': 'https://huggingface.co/login' },
+    free: { 'free-openrouter': 'https://openrouter.ai' },
     backup: { gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com' }
   };
 
-  const FREE_ROUTES = [ /* mirrors the concept's Settings freeRoutes (Free Models owns no credential store) */
-    { id: 'free-openrouter', name: 'OpenRouter free models', provider: 'OpenRouter', needs: 'signin' },
-    { id: 'free-github-models', name: 'GitHub Models', provider: 'GitHub', needs: 'signin', usesForge: 'github' },
-    { id: 'free-cerebras', name: 'Cerebras free tier', provider: 'Cerebras', needs: 'setup' },
-    { id: 'free-groq', name: 'Groq free tier', provider: 'Groq', needs: 'setup', rateLimited: true },
-    { id: 'free-hf', name: 'Hugging Face Inference', provider: 'Hugging Face', needs: 'setup' }
+  /* Free Models routes (Models System MS-118; mirrors the app's Settings freeRoutes; Free Models owns no credential
+     store, MA-064). Each route is set up through its own provider's account, shown on the row before and after.
+     tier says what a new account actually gets today (official pages read 2026-10-31; provider-login audit P02, P03):
+     free (free with limits), trial (needs a payment method and ends), paid (needs bought credit or a paid plan).
+     FREE_TIERS decides where each tier is offered: 'list' on the screen, 'more' behind its own disclosure, 'hide' not
+     at all (Jared's D5 may move trial and paid to 'hide'). retired: closed by its vendor; never offered, and a choice
+     saved before it closed shows as No longer available (MS-118). */
+  const FREE_ROUTES = [
+    { id: 'free-openrouter', name: 'OpenRouter free models', provider: 'OpenRouter', tier: 'free', needs: 'signin', who: 'jared@example.com' },
+    { id: 'free-groq', name: 'Groq free plan', provider: 'Groq', tier: 'free', needs: 'key', keyFrom: { name: "Groq's console", url: 'https://console.groq.com/keys' },
+      /* the key works, and this account is at its limit when it is first checked: Retry now, never a reconnect */
+      limitedOnce: true },
+    { id: 'free-cerebras', name: 'Cerebras trial', provider: 'Cerebras', tier: 'trial', needs: 'key', keyFrom: { name: "Cerebras's console", url: 'https://cloud.cerebras.ai' } },
+    { id: 'free-hf', name: 'Hugging Face Inference', provider: 'Hugging Face', tier: 'paid', needs: 'key', keyFrom: { name: 'your Hugging Face token settings', url: 'https://huggingface.co/settings/tokens' } },
+    { id: 'free-github-models', name: 'GitHub Models', provider: 'GitHub', retired: true }
   ];
+  const FREE_TIERS = { free: 'list', trial: 'more', paid: 'more' };
 
   function folders() {
     return {
@@ -118,7 +172,7 @@
       pmServers: [
         { id: 'pm:home', name: 'Home NAS', device: 'nas-home', address: 'home-nas.local', route: 'local_or_vpn', seed: 'pm-home-7f3a', approver: "Jared's iPhone", code: 'A7K9-M2Q4',
           projects: [{ id: 'recipe-app', name: 'Recipe App', updated: 'today' }, { id: 'garden-planner', name: 'Garden Planner', updated: '3 days ago' }, { id: 'family-photos', name: 'Family Photos', updated: 'last week' }],
-          accounts: [{ provider: 'claude', label: 'Claude · jared@example.com', ready: true }] },
+          accounts: [{ provider: 'claude', label: 'Claude · jared@example.com', who: 'jared@example.com', plan: 'Claude Pro', ready: true }] },
         { id: 'pm:studio', name: 'Studio PC', address: 'studio.local', route: 'local_or_vpn', seed: 'pm-studio-19c2', approver: "Jared's MacBook Air", code: 'Q3P8-L6W2',
           projects: [{ id: 'podcast-site', name: 'Podcast Site', updated: 'yesterday' }], accounts: [] },
         /* a Puppet Master that was set up but has no Projects yet */
@@ -197,7 +251,7 @@
   };
 
   O55.fixtures = {
-    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders,
+    PROVIDERS, FORGES, FREE_ROUTES, FREE_TIERS, SCENARIOS, OFFICIAL, folders,
     make(scenario) {
       const e = base();
       const ids = String(scenario || 'fresh').split('+');
