@@ -5,12 +5,12 @@
         "provider:claude": {
           "title": "Claude",
           "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate, pay-as-you-go choice.",
-          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider billed per token."
+          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
-          "text": "Two ways in: sign in with ChatGPT to use your plan's limits, or use an OpenAI API key, billed separately by use. Each one is its own account here.",
-          "expert": "Direct provider with two auth families: ChatGPT OAuth (plan-backed usage) or an OpenAI API key (API billing). Separate account rows; their usage and cooldowns never merge."
+          "text": "Two ways in: sign in with ChatGPT, or use an OpenAI API key. Each one is its own account here.",
+          "expert": "Direct provider with two auth families, ChatGPT OAuth or an OpenAI API key; each is its own account row."
         },
         "provider:antigravity": {
           "title": "Google Antigravity",
@@ -29,13 +29,13 @@
         },
         "provider:muse": {
           "title": "Muse Code",
-          "text": "Uses Muse Code, signed in through Meta's own app. That sign-in works only in Muse Code; other Meta keys are billed separately.",
+          "text": "Uses Muse Code, signed in through Meta's own app. That sign-in works only in Muse Code.",
           "expert": "Muse Code CLI (muse) with its own sign-in; the subscription credential is limited to Muse Code, and an API key set in Muse takes precedence over it. The Meta Model API is separate."
         },
         "provider:copilot": {
           "title": "GitHub Copilot",
           "text": "Signs in with your GitHub account, then asks whose Copilot plan to use: yours or an organization's. It doesn't change where your code is kept.",
-          "expert": "GitHub Copilot direct hosted API: GitHub OAuth, then entitlement and billing-entity selection before Ready. Separate from the GitHub account used for repositories."
+          "expert": "GitHub Copilot direct hosted API: GitHub OAuth, then a choice of whose Copilot plan to use before Ready. Separate from the GitHub account used for repositories."
         },
         "provider:qwen-coding": {
           "title": "Alibaba Coding Plan",
@@ -70,7 +70,7 @@
         "provider:opencode-zen": {
           "title": "OpenCode Console",
           "text": "OpenCode's pay-as-you-go service, which used to be called Zen. You buy credit in the OpenCode Console, then use its key.",
-          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway funded by Console credit, with an API key; not the OpenCode server connection."
+          "expert": "OpenCode Console (formerly Zen): a pay-as-you-go gateway with an API key; not the OpenCode server connection."
         },
         "provider:opencode-runtime": {
           "title": "OpenCode server",
@@ -80,27 +80,27 @@
         "provider:anthropic-api": {
           "title": "Anthropic API",
           "text": "Pay as you go with Anthropic, using a key from the Claude Console. Separate from a Claude plan.",
-          "expert": "Anthropic API key (sk-ant-…) from the Claude Console, billed per token. A key that isn't tied to one workspace asks which workspace to use."
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console. A key that isn't tied to one workspace asks which workspace to use."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
           "text": "Google's Gemini through a key from Google AI Studio. Separate from Antigravity.",
-          "expert": "Gemini Direct (API key only) from AI Studio; the key's Cloud project decides its free or paid tier and quota. Separate from Antigravity."
+          "expert": "Gemini Direct (API key only) from AI Studio. Separate from Antigravity."
         },
         "provider:vertex": {
           "title": "Vertex AI",
-          "text": "Google's AI through your Google Cloud account, billed by Google Cloud. Pick it if your work already uses Google Cloud.",
-          "expert": "Vertex AI with a Google Cloud API key, in express mode or tied to a project; billing and quota follow that project."
+          "text": "Google's AI through your Google Cloud account. Pick it if your work already uses Google Cloud.",
+          "expert": "Vertex AI with a Google Cloud API key, in express mode or tied to a project."
         },
         "provider:xai-api": {
           "title": "xAI API",
           "text": "Pay as you go with xAI, using a key from the xAI Console. Separate from a Grok Build plan.",
-          "expert": "xAI API key from the xAI Console, billed per request. Separate from Grok Build."
+          "expert": "xAI API key from the xAI Console. Separate from Grok Build."
         },
         "provider:meta-api": {
           "title": "Meta Model API",
           "text": "Pay as you go with Meta's models, using a key from Meta's developer site. A Muse Code plan's sign-in is different.",
-          "expert": "Meta Model API key from dev.meta.ai, billed by use. The Muse Code subscription credential works only in Muse Code."
+          "expert": "Meta Model API key from dev.meta.ai. The Muse Code subscription credential works only in Muse Code."
         },
         "pairing:approval": {
           "title": "Approve from another device",
@@ -171,13 +171,13 @@
         },
         "way:codex|main": {
           "title": "Sign in with ChatGPT",
-          "text": "Uses your ChatGPT plan. Codex use counts against that plan's limits.",
-          "expert": "ChatGPT OAuth account row; plan-backed usage bucket."
+          "text": "Uses your ChatGPT plan.",
+          "expert": "ChatGPT OAuth account row."
         },
         "way:codex|alt": {
           "title": "Use an OpenAI API key",
-          "text": "A key from the OpenAI API dashboard. Billed by use, separately from any ChatGPT plan.",
-          "expert": "API-key account row at standard API pricing, separate from ChatGPT plan usage."
+          "text": "A key from the OpenAI API dashboard, separate from any ChatGPT plan.",
+          "expert": "API-key account row, separate from the ChatGPT sign-in."
         },
         "way:cursor|main": {
           "title": "Use a Cursor API key",
@@ -196,8 +196,8 @@
         },
         "field:project": {
           "title": "Google Cloud project ID",
-          "text": "The project your key belongs to, if it belongs to one. It decides which Google Cloud bill pays.",
-          "expert": "Optional project ID for billing and quota; leave empty for an express-mode key."
+          "text": "The project your key belongs to, if it belongs to one.",
+          "expert": "Optional Google Cloud project ID; leave empty for an express-mode key."
         },
         "field:ocAddr": {
           "title": "Server address",
@@ -216,12 +216,12 @@
         },
         "group:entity": {
           "title": "Whose Copilot plan",
-          "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one that should pay.",
-          "expert": "Copilot billing entity; entitlement and premium-request limits follow it."
+          "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one to use.",
+          "expert": "Whose Copilot plan this account uses: your own or an organization's."
         },
         "group:workspace": {
           "title": "Workspace",
-          "text": "Anthropic bills each workspace separately. Pick the one this key's use should go to.",
+          "text": "Your key works in more than one Anthropic workspace. Pick the one to use.",
           "expert": "Workspace context for a key that isn't scoped to one workspace."
         },
         "ocMode:managed": {
@@ -1273,8 +1273,8 @@
       "ai": {
         "all": {
           "title": "See all providers",
-          "text": "The full list, in three groups: plans you pay for, keys billed by what you use, and your own server. An AI provider is the company your assistant uses.",
-          "expert": "All providers in this concept, grouped as subscriptions, API billing, and self-run servers."
+          "text": "The full list, in three groups: plans, pay as you go, and your own server. An AI provider is the company your assistant uses.",
+          "expert": "All providers in this concept, grouped as subscriptions, pay-as-you-go API keys, and self-run servers."
         },
         "none": {
           "title": "I don't have any of these",
@@ -1313,7 +1313,7 @@
         "pick:api": {
           "title": "Pay as you go",
           "text": "Like the Anthropic or Gemini API. You pay for what you use, so the cost goes up and down with how much you use it.",
-          "expert": "A pay-as-you-go API account (Anthropic API, Gemini API): billed per token, authenticated with an API key."
+          "expert": "A pay-as-you-go API account (Anthropic API, Gemini API) with an API key."
         },
         "pick:free": {
           "title": "Free Models",
@@ -1330,7 +1330,7 @@
         "route:free-openrouter": {
           "title": "OpenRouter free models",
           "text": "OpenRouter's free models: free to use, with a small daily limit. You sign in on OpenRouter's page.",
-          "expert": "OpenRouter :free model variants through OpenRouter sign-in; per-minute and per-day request limits depend on credit bought."
+          "expert": "OpenRouter :free model variants through OpenRouter sign-in; rate limits apply."
         },
         "route:free-github-models": {
           "title": "GitHub Models",

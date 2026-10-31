@@ -296,9 +296,11 @@
       let out = '';
       /* which computer does what (P11): the AI works on the Server; sign-ins open on this device and are kept there */
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="where">${C.small('server', 18)}<span>${U.esc(T('ai.where', { host: host(S).name }))}</span></div>`;
+      /* Skip for now answers on its own press: what skipping means, at the top where the press brings it into view
+         (GLM review: it used to land under the list, out of sight) */
+      if (a.skipped && !readyIds(S).length && !freeReady(S)) out += `<div data-key="skipped">${C.note(T('ai.skipped') + ' ' + T('ai.skipNote'), 'warn', 'spark')}</div>`;
       out += `<div class="o55-providers" data-key="list">${shortlist(S).map((p) => rowHtml(S, p)).join('')}</div>`;
       out += `<div class="o55-sublinks" data-key="links">${C.link(T('ai.seeAll'), 'all')}${readyIds(S).length ? '' : C.link(T('ai.none'), 'none')}</div>`;
-      if (a.skipped && !readyIds(S).length && !freeReady(S)) out += C.note(T('ai.skipNote'), 'warn', 'spark');
       if (readyIds(S).length || a.skipped) {
         out += O55.tips.opt('free', `<button type="button" class="o55-card o55-card-link" data-o55-do="free" data-o55-sound="self" data-pm-hover-exempt="true" data-key="free">${C.glyph('stack')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('ai.free.title'))}</span><span class="o55-cardsub">${U.esc(freeReady(S) ? T('ai.free.some', { n: freeReady(S) }) : T('ai.free.sub'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
       }
@@ -451,7 +453,10 @@
       },
       all(S) { O55.ui.go('ai-all'); },
       none(S) { O55.ui.go('ai-none'); },
-      skip(S) { A(S).skipped = true; S.save(); O55.ui.refresh(); },
+      skip(S) {
+        A(S).skipped = true; S.save(); O55.ui.refresh();
+        requestAnimationFrame(() => { const el = S.root && S.root.querySelector('[data-key="skipped"]'); if (el) el.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' }); });
+      },
       free(S) { O55.ui.go('free'); },
       next(S) { O55.ui.go('ready'); }
     },

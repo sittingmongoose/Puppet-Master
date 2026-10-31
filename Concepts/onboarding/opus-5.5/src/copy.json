@@ -1304,7 +1304,7 @@
     "key": "Enter API Key",
     "keyLabel": "API key for {name}",
     "keyHint": "Paste the key, not your password. Kept in {where}. Never shown again.",
-    "keyBad": "That key wasn't accepted. Check it's a {name} key, then try again.",
+    "keyBad": "That key wasn't accepted. Check it's the right key for {name}, then try again.",
     "verify": "Check key",
     "installAsk": "Install {name} on {host}? It uses {vendor}'s official installer.",
     "installGo": "Install",
@@ -1341,7 +1341,7 @@
       "anthropic-api": "Billed by use, separate from a Claude plan",
       "antigravity": "Antigravity plan, not the Gemini API",
       "gemini-api": "Free limits or billed by use, separate from Antigravity",
-      "vertex": "Billed by Google Cloud, separate from Antigravity and the Gemini API",
+      "vertex": "Google Cloud, separate from Antigravity and the Gemini API",
       "grok": "Grok Build plan, not the xAI API",
       "xai-api": "Billed by use, separate from Grok Build",
       "muse": "Muse Code plan, not the Meta Model API",
@@ -1390,7 +1390,7 @@
         "main": "Sign in with ChatGPT",
         "mainSub": "Uses Codex through your ChatGPT plan limits.",
         "alt": "Use an OpenAI API key",
-        "altSub": "Billed by use, separately from ChatGPT."
+        "altSub": "Separate from ChatGPT."
       },
       "cursor": {
         "main": "Use a Cursor API key",
@@ -1407,7 +1407,7 @@
         "via": "through {who}"
       },
       "workspace": {
-        "title": "This key works in more than one workspace. Which one should pay for its use?",
+        "title": "This key works in more than one workspace. Which one should it use?",
         "default": "Default workspace"
       },
       "project": {
@@ -1447,7 +1447,8 @@
       "title": "Sign-in expired",
       "body": "{who} · that sign-in has expired. Sign in again to keep using it."
     },
-    "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here."
+    "keyRevoked": "That key was revoked or has expired. Make a new key, then paste it here.",
+    "skipped": "Skipped for now."
   },
   "aiNone": {
     "eyebrow": "AI",
