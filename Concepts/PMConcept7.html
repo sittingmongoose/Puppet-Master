@@ -160214,7 +160214,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!a.hasAttribute('data-morph-skip')) for (const { name } of Array.from(a.attributes)) if (!b.hasAttribute(name)) a.removeAttribute(name);
     for (const { name, value } of Array.from(b.attributes)) if (a.getAttribute(name) !== value) a.setAttribute(name, value);
     if (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT') {
-      if (document.activeElement !== a && 'value' in b && a.value !== b.value) a.value = b.value;
+      /* A protected field's template never carries what was typed (it is never stored), so a same-screen redraw (typing
+         in another field, a ? note, Plain English or Expert, a demo hint) keeps what the person typed there; it is
+         emptied only when the screen says nothing was typed (data-o55-typed="false"), when its action reads it, or with
+         the screen itself (a new screen, Back) (final check FO-6). */
+      const kept = a.hasAttribute('data-o55-protected') && b.hasAttribute('data-o55-protected') && b.value === '' && b.getAttribute('data-o55-typed') !== 'false';
+      if (document.activeElement !== a && 'value' in b && a.value !== b.value && !kept) a.value = b.value;
       if (a.type === 'checkbox' || a.type === 'radio') a.checked = b.hasAttribute('checked');
     }
   }
@@ -176731,7 +176736,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const type = f.type || 'text', tid = f.tip === false ? null : f.tip || 'field:' + f.bind, qh = tid ? q(tid) : '';
       const input = type === 'textarea'
         ? `<textarea id="${id}" data-o55-bind="${esc(f.bind)}" rows="${f.rows || 3}" placeholder="${esc(f.placeholder || '')}"${qh ? described(tid) : ''}${U.attrs(X)}>${esc(f.value || '')}</textarea>`
-        : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' : ''}${f.invalid ? ' aria-invalid="true"' : ''}${qh ? described(tid) : ''}${U.attrs(X)}>`;
+        : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' + (typeof f.typed === 'boolean' ? ` data-o55-typed="${f.typed}"` : '') : ''}${f.invalid ? ' aria-invalid="true"' : ''}${qh ? described(tid) : ''}${U.attrs(X)}>`;
       const label = qh ? `<span class="o55-labq"><label for="${id}">${esc(f.label)}</label>${qh}</span>` : `<label for="${id}">${esc(f.label)}</label>`;
       return `<div class="o55-field${f.invalid ? ' o55-invalid' : ''}${f.cls ? ' ' + f.cls : ''}" data-key="field-${esc(f.bind)}">${label}${f.prefix ? `<div class="o55-inputwrap"><span class="o55-prefix">${esc(f.prefix)}</span>${input}</div>` : input}`
         /* f.reserve: the hint's line is always there (empty until there is something to say), so a hint appearing as the
@@ -179772,7 +179777,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     lead: (S) => (whereOf(S) ? T('restore.unlock.leadAt', { where: whereOf(S) }) : T('restore.unlock.lead')),
     body(S) {
       const r = R(S);
-      return C.field({ bind: 'phrase', type: 'password', protected: true, label: T('restore.unlock.label'), value: '', placeholder: '', hint: r.bad ? '' : T('restore.unlock.hint'), error: r.bad ? T('restore.unlock.wrong') : '', invalid: r.bad, autocomplete: 'off' })
+      return C.field({ bind: 'phrase', type: 'password', protected: true, typed: !!r.typed, label: T('restore.unlock.label'), value: '', placeholder: '', hint: r.bad ? '' : T('restore.unlock.hint'), error: r.bad ? T('restore.unlock.wrong') : '', invalid: r.bad, autocomplete: 'off' })
         /* (demo hint: the kit's recovery key, and a wrong one) */
         + F.hint('r-unlock:phrase', [{ label: S.env.recoveryPhrase, outcome: 'works', fills: [['phrase', S.env.recoveryPhrase]] }, { label: O55.fixtures.DEMO.wrongPhrase, outcome: 'wrong', fills: [['phrase', O55.fixtures.DEMO.wrongPhrase]] }], { when: !r.unlocked })
         + (r.unlocked ? C.note(T('chrome.alreadyDone'), 'ok', 'check') : '');
@@ -180675,7 +180680,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         return out + `<div class="o55-sublinks" data-key="back">${C.link(T('nas.signin.selfOff'), 'selfOff')}</div>`;
       }
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, typed: !!n.pwTyped, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
       const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
       out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · correct horse', outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: (d.user || 'jared') + ' · ' + wrongPw, outcome: 'refused', fills: [['user', d.user || 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped });
@@ -181046,7 +181051,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
       const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
       /* (the computer that opens the share keeps its sign-in, as for any shared folder: not the SSH key's one-time password) */
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, typed: !!N(S).pwTyped, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
       const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
       out += H('nas-smb:signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + wrongPw, outcome: 'refused', fills: [['user', 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
       out += C.details(S, 'smbdomain', T('nas.smb.more'), C.field({ bind: 'domain', label: T('nas.smb.domain'), value: n.domain || '', hint: T('nas.smb.domainHint'), autocomplete: 'off' }));
@@ -181262,7 +181267,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const ts = F.state(S, 'token:' + si.service), d = md(S), host = (() => { try { return new URL(d.forge_instance_url).host; } catch (_) { return si.name; } })();
         const purpose = OL(S).purpose === 'source' ? 'existing' : 'new';
         if (methods[0] === 'token') out += `<p class="o55-hint" data-key="toklead">${U.esc(T('online.signin.tokenLead', { host }))}</p>`;
-        out += C.field({ bind: 'token', type: 'password', protected: true, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
+        out += C.field({ bind: 'token', type: 'password', protected: true, typed: !!si.tokenTyped, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
         out += demo('online-signin:token', [{ label: T('online.signin.demo.good'), outcome: 'works', fills: [['token', 'pm-demo-token-7f3a9c41']], act: ['tokenCheck'] }, { label: T('online.signin.demo.bad'), outcome: 'refused', fills: [['token', 'abc']], act: ['tokenCheck'] }], !(ts && ts.state === 'running'));
         if (methods[0] === 'token' && si.state === 'idle') {
@@ -181689,7 +181694,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const shown = (kind, st) => (ACCESS[kind] || []).filter((f) => f[3] !== 'temp' || st.temp);
   const bad = (f, st) => !!(f[2] && F.nonEmpty(st[f[0]]) && !CHECK[f[2]](st[f[0]]));
   const accessFields = (S, kind, st, o) => shown(kind, st).map((f) => { const [k, type] = f, key = 'access.' + kind + '.' + k;
-    return C.field({ bind: 'acc-' + k, type, protected: type === 'password', label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
+    return C.field({ bind: 'acc-' + k, type, protected: type === 'password', typed: type === 'password' ? !!st[k + 'Typed'] : undefined, label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
       hint: O55.tx(key + 'Hint') || '', error: bad(f, st) ? T(key + 'Bad') : '', invalid: bad(f, st), autocomplete: type === 'password' ? 'off' : undefined }); }).join('')
     + (kind === 'aws_s3' ? `<div class="o55-sublinks" data-key="acc-temp">${C.link(T(st.temp ? 'access.aws_s3.tempOff' : 'access.aws_s3.tempOn'), 'accTemp')}</div>` : '')
     + demo('access:' + kind, (DEMO_ACCESS[kind] || []).filter(([outcome]) => outcome !== 'nothingThere' || (o && o.restore)).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, fills: fills.map(([k, v]) => ['acc-' + k, v]) })), !accessReady(kind, st));
@@ -183087,7 +183092,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function keyArea(S, o) {
     const ks = F.state(S, o.op), failed = ks && ks.state === 'failed';
     const why = failed ? (ks.code === 'offline' ? T('ai.offline') : ks.code === 'key_revoked' ? T('ai.keyRevoked') : T('ai.keyBad', { name: o.name })) : '';
-    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, label: T('ai.keyLabel', { name: o.name }), value: '',
+    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, typed: !!o.typed, label: T('ai.keyLabel', { name: o.name }), value: '',
       hint: T('ai.keyHint', { where: keychain(S) }), error: why, invalid: failed, tip: 'field:key' });
     out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }, { label: DEMO_REVOKED, outcome: 'revoked', fills: [[o.bind, DEMO_REVOKED]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
@@ -183173,7 +183178,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const cs = F.state(S, 'code:' + p.id + ':' + (r.attempt || 0)), failed = cs && cs.state === 'failed';
       return `<p class="o55-hint" data-key="pl-${p.id}">${U.esc(T('ai.pasteLead'))}</p>`
         + `<div class="o55-inline" data-key="cl-${p.id}">${btnIn(T('ai.copyLink'), 'copySigninLink', p.id)}</div>`
-        + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
+        + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, typed: !!r.pasteTyped, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
         + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
         + `<div class="o55-inline" data-key="pb-${p.id}">${btnIn(T('ai.pasteGo'), 'submitCode', p.id, 'secondary', { disabled: !r.pasteTyped || (cs && cs.state === 'running'), reason: T('ai.pasteLabel') })}</div>` + links;
     }
@@ -183201,7 +183206,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const attached = C.field({ bind: 'ocAddr:' + p.id, id: 'o55f-ocaddr', label: T('ai.oc.addr'), value: r.endpoint || '', placeholder: 'http://127.0.0.1:4096', hint: T('ai.oc.addrHint'), tip: 'field:ocAddr' })
       + hint('ocAddr', [{ label: 'http://127.0.0.1:4096', outcome: 'works', fills: [['ocAddr:' + p.id, 'http://127.0.0.1:4096']] }, { label: 'http://192.168.1.99:4096', outcome: 'noAnswer', fills: [['ocAddr:' + p.id, 'http://192.168.1.99:4096']] }], !ok)
       + C.field({ bind: 'ocUser:' + p.id, id: 'o55f-ocuser', label: T('ai.oc.user'), value: r.user || '', placeholder: 'opencode', tip: 'field:ocUser' })
-      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
+      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, typed: !!r.secretTyped, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
       + `<div class="o55-inline">${btnIn(T('ai.oc.connect'), 'ocConnect', p.id, 'primary', { disabled: !ok, reason: T('ai.oc.addr') })}</div>`;
     return C.cards('ocMode', [
       { v: 'managed', glyph: 'server', title: T('ai.oc.managed'), sub: T('ai.oc.managedSub', { host: hostName(S) }), under: r.mode === 'managed' ? managed : '' },
