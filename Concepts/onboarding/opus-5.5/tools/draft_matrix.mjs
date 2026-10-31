@@ -33,7 +33,8 @@ try {
     for (const [forge, variants] of Object.entries({ github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed', 'forgejo_cloud'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] })) {
       for (const variant of variants) {
         const base = { project_name: 'Book club website', online_mode: 'new', forge, forge_provider_variant: variant, repository_name: 'book-club-website', forge_account_action: 'sign_in_during_setup', forge_account_ref: 'account:' + forge + ':jared' };
-        if (variant === 'self_managed' || /self_managed|data_center/.test(variant)) base.forge_instance_url = 'https://git.example.org';
+        /* a server the person names (self-managed, Data Center, a team's Gitea Cloud): the plan never invents one */
+        if (window.O55.fixtures.needsAddress(forge, variant)) base.forge_instance_url = 'https://git.example.org';
         if (forge === 'azure_devops') base.repository_project = 'Book club';
         for (const vis of ['private', 'public', 'internal', null]) {
           const d = window.O55.draft.create('new_or_local'); window.O55.draft.set(d, Object.assign({}, base, { repository_visibility: vis }));
