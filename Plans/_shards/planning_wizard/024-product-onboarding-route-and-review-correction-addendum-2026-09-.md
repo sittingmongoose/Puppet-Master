@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2404-L2550
+Source lines: L2421-L2613
 
-Source SHA256: `9035764f79b6060e2ea552a02a0683fd957726c255b1fd32aa9ab9afbc8bfc36`
+Source SHA256: `2f6e4421fd4caa0caee0084020e3d170c35879cbf8de60f0a2a860eabb0ae4da`
 
 ---
 
@@ -49,7 +49,26 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   D2 A: repository object-format selection and its permanence acknowledgement belong in Settings, not onboarding. Existing-repository
   format observation, unknown/capability handling and the Source Control owner’s safeguards remain unchanged. DL-259
   H8: Naming and Review show the actual resolved NFS, SMB or already-connected share/path selected by the source owner,
-  preserving its identity instead of displaying an empty local-only field.'
+  preserving its identity instead of displaying an empty local-only field. DL-259 late integration, 2026-10-31: for an
+  unnamed Project using the automatic local destination, Name shows the base destination plus “in a folder with your
+  Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master, in a folder with your Project''s
+  name”. A placeholder or unselected suggestion never supplies a chosen folder leaf. Typing a name or explicitly choosing
+  a suggestion adds that current draft name; clearing it restores the generic line. The local-location picker’s On this
+  computer card names the base destination. Existing folders and selected network/mounted/remote sources still display
+  their actual resolved location under H8. These are truthful draft previews and create no folder or Project before the
+  reviewed commit. DL-259 late integration, 2026-10-31: a typed online-service address belongs to that service and its
+  hosted/self-managed variant. Switching choices retains each choice’s own draft text for return and never substitutes
+  another service’s address. An untouched or resumed choice resolves its actual current service, default variant and
+  address consistently. Only the selected service/variant/address enters the reviewed setup plan. Changing the service,
+  variant or instance invalidates incompatible account, repository, visibility and auth/preflight proofs under the existing
+  owners. Remembered address text conveys no authentication or readiness and creates no setting, account registry or
+  new durable storage family. DL-259 late integration, 2026-10-31: the online-copy/import service screen’s displayed
+  selection, Continue availability/reason and activation consume one current resolved service/variant/address validation
+  result. A missing or invalid required address keeps Continue unavailable, and activation rechecks that same current
+  choice before any navigation, draft acceptance or owner dispatch; refusal has no partial effect or crash. Untouched
+  defaults, Review Edit and resumed choices use that same interpretation. Protect Connect and restore destination Continue
+  likewise recheck their displayed owner prerequisites at activation. Existing domain permission, exact identity, generation
+  and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
   projection, and defer behavior.
@@ -113,6 +132,27 @@ acceptance_criteria:
   Control owner’s safeguards remain unchanged.'
 - 'DL-259 H8: Naming and Review show the actual resolved NFS, SMB or already-connected share/path selected by the source
   owner, preserving its identity instead of displaying an empty local-only field.'
+- 'DL-259 late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the
+  base destination plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents
+  › Puppet Master, in a folder with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen
+  folder leaf. Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the
+  generic line. The local-location picker’s On this computer card names the base destination. Existing folders and selected
+  network/mounted/remote sources still display their actual resolved location under H8. These are truthful draft previews
+  and create no folder or Project before the reviewed commit.'
+- 'DL-259 late integration, 2026-10-31: a typed online-service address belongs to that service and its hosted/self-managed
+  variant. Switching choices retains each choice’s own draft text for return and never substitutes another service’s
+  address. An untouched or resumed choice resolves its actual current service, default variant and address consistently.
+  Only the selected service/variant/address enters the reviewed setup plan. Changing the service, variant or instance
+  invalidates incompatible account, repository, visibility and auth/preflight proofs under the existing owners. Remembered
+  address text conveys no authentication or readiness and creates no setting, account registry or new durable storage
+  family.'
+- 'DL-259 late integration, 2026-10-31: the online-copy/import service screen’s displayed selection, Continue availability/reason
+  and activation consume one current resolved service/variant/address validation result. A missing or invalid required
+  address keeps Continue unavailable, and activation rechecks that same current choice before any navigation, draft acceptance
+  or owner dispatch; refusal has no partial effect or crash. Untouched defaults, Review Edit and resumed choices use
+  that same interpretation. Protect Connect and restore destination Continue likewise recheck their displayed owner prerequisites
+  at activation. Existing domain permission, exact identity, generation and currentness gates remain authoritative; a
+  visually enabled button alone never authorizes owner work.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -137,6 +177,12 @@ source_lineage:
 - user-correction:2026-09-01-onboarding-route-review-semantics
 - Plans/product_onboarding_contracts.schema.json
 - Concepts/pm7-tools/onboarding_cinematic_source.py
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here

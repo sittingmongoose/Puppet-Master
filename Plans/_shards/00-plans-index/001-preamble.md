@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L34
+Source lines: L1-L37
 
-Source SHA256: `f24741b1ec3a3ed72ac6bbc0122d561b0195f07d95646c1e4044a7a9204ec25d`
+Source SHA256: `ac9394be2df86ca0cd5e4f7a238597b689f5628a760574448010a91396956d9b`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-259 late integration cf0ae92b9a preserves truthful unnamed destination previews, service/variant-scoped address drafts, immediate AI phase-skip feedback and one current choice/validation result across view, Continue availability and activation. GLM’s re-check closes all 13 earlier coverage findings at 17e87e52e0. Existing commands, Settings counts and owner admission/commit remain unchanged.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-024, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-020
 
 - 2026-10-31: DL-259 coverage-audit amendment resolves grouped First Project choices, shared D7 Server/native-Client boundaries, Auto Theme-word synchronization, exact key-acquisition/category return, equal five-family look choices and bounded note/prop geometry; DL-257 acceptance now consistently requires five families/ten variants. DL-260 moves concept API spellings into source lineage while retaining shared product owners. Server C1 offers configuration-file/export or existing-proxy checks only, with proxy_tls null; C2–C4 retain the accepted protected claim and pre-build decisions.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Decision_Log.md#DL-260, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/Shared_Integration_Runtime.md#SIR-032

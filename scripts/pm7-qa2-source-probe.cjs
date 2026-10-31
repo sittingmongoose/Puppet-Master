@@ -15,29 +15,35 @@ function context(extra = {}) { return vm.createContext({ console, ...extra }); }
 
 // N1: actual restore reach helpers bind the completed operation to its place.
 const serverScreens = read('Concepts/onboarding/opus-5.5/src/js/68-screens-server.js');
-const restoreHelpers = section(serverScreens, 'const kitsFor =', "def('r-source',");
+const restoreHelpers = section(serverScreens, 'const racc =', "def('r-source',");
+const safeScreens = read('Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js');
+const backupFamilySource = section(safeScreens, 'const SUBS =', 'const subOf =');
 function restoreContext(test) {
   const S = { sess: { restore: { scope: 'project', ...test.restore } },
     env: { here: { recoveryKits: test.kit ? [test.kit] : [] }, devices: [] } };
-  const resets = [];
-  const c = context({ S, R: s => s.sess.restore, O55: {}, T: key => key,
+  const resets = [], cancellations = [];
+  const c = context({ S, R: s => s.sess.restore,
+    O55: { owners: { cancelOp: key => cancellations.push(key) } }, T: key => key,
     F: { reset: (_s, key) => resets.push(key) } });
+  vm.runInContext(backupFamilySource + '\nO55.backup = { family };', c, { timeout: 1000 });
   vm.runInContext(restoreHelpers, c, { timeout: 1000 });
-  return { c, S, resets };
+  return { c, S, resets, cancellations };
 }
 for (const test of fixture.restore_reach_cases) {
-  const { c, S, resets } = restoreContext(test);
+  const { c, S, resets, cancellations } = restoreContext(test);
   requireThat(c.O55.restore.reachKey(S) === test.expected_key, 'restore reach key ' + test.name);
   requireThat(vm.runInContext('reached(S)', c) === test.reached, 'restore reused another place ' + test.name);
   Object.assign(S.sess.restore, { unlocked: true, pick: 'copy-A', access: { credential_ref: 'fixture' } });
+  const generation = S.sess.restore.reachGen || 0;
   vm.runInContext('repoint(S)', c);
   const r = S.sess.restore;
   requireThat(r.reachedFor === null && r.unlocked === false && r.pick === null
     && Object.keys(r.access).length === 0 && resets.join() === 'restore-s3', 'restore repoint leaked state ' + test.name);
+  requireThat(r.reachGen === generation + 1 && cancellations.join() === 'restore-s3',
+    'restore repoint retained an old check operation ' + test.name);
 }
 counts.restore_reach_cases = fixture.restore_reach_cases.length;
 counts.restore_repoint_cases = fixture.restore_reach_cases.length;
-const safeScreens = read('Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js');
 const signInCallback = section(safeScreens, 'O55.official.handlers.restoreCloud =', '\n\n  const SI');
 for (const selected of ['gdrive', 'onedrive']) {
   const { c, S } = restoreContext({ restore: { source: 'cloud', cloud: selected } });
@@ -50,9 +56,11 @@ for (const selected of ['gdrive', 'onedrive']) {
 counts.restore_callback_cases = 2;
 const nasScreens = read('Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js');
 const keyStatusSource = section(nasScreens, 'function keyStatus(S, k)', 'const keyWhere =');
+const authorizedSource = section(nasScreens, 'const authorizedFor =', 'const authorize =');
 for (const test of fixture.ssh_key_unlock_cases) {
-  const c = context({ dev: () => ({ authorized: [] }), N: s => s.nas });
-  vm.runInContext(keyStatusSource, c, { timeout: 1000 });
+  const c = context({ dev: () => ({ authorized: [], user: 'fixture-account' }),
+    sshUser: () => 'fixture-account', N: s => s.nas });
+  vm.runInContext(authorizedSource + keyStatusSource, c, { timeout: 1000 });
   requireThat(c.keyStatus({ nas: { unlocked: test.unlocked } }, { id: test.key_id, type: 'ed25519', passphrase: true })
     === test.expected, 'key inherited another passphrase unlock');
 }

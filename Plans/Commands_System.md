@@ -5054,7 +5054,12 @@ canonical_text: 'Exactly five canonical cmd.settings commands are centrally regi
   domain owners, approvals and truthful results. Later always finishes onboarding and leaves the committed Project intact:
   it does not wait for optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred;
   any already-started work obeys the owner’s existing cancel/background rules, and the app shows its actual result or
-  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
+  pending state. Existing whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.
+  DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
@@ -5113,6 +5118,11 @@ acceptance_criteria:
   optional setup, certify it, undo owner effects or invent readiness. Unstarted setup is deferred; any already-started
   work obeys the owner’s existing cancel/background rules, and the app shows its actual result or pending state. Existing
   whole-session ui.onboarding.skip/close semantics supply this exit without a new mutation command.'
+- 'DL-259 late integration, 2026-10-31: consume PWIZ-024’s one current resolved service/variant/address and validation
+  result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
+  restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
+  and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
+  fences remain unchanged.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high
@@ -5125,6 +5135,12 @@ source_lineage:
 - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
   rules, no hints.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md — GLM Name/Kept in amendment at 7aafb35322;
+  product behavior only.
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md — GLM online-service validation and same-kind
+  sweep; source implementation serviceChoice and address map are lineage only.
+- Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
+  visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
 negative_constraints:
   - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.

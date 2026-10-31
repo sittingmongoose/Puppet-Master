@@ -1463,6 +1463,50 @@
       "dry": "DR-005; DR-037",
       "companions": "x-product-rulings.provider_category_return; QA2CoverageAuditPolicy.provider_category_return",
       "state": "covered_Astra_M7"
+    },
+    {
+      "id": "INT-CF0-NAME",
+      "change": "Unnamed automatic local destination shows its base and generic future folder; placeholders/suggestions are not chosen names",
+      "owner": "F3-520; PWIZ-024; DL-259",
+      "wiring": "none needed: formatting the existing name/destination draft; UIW-015 preserves the commit boundary",
+      "commands": "none needed: preview text creates no folder or Project; CS-069; UCC-106 retain existing local actions",
+      "settings": "none needed: existing destination and draft name, no preference",
+      "dry": "DR-005; DR-020",
+      "companions": "LateOnboardingPolicy.unnamed_destination; factory copy in F3-520; actual existing-source locations retained",
+      "state": "covered_late_integration_cf0ae92b9a"
+    },
+    {
+      "id": "INT-CF0-ADDRESS",
+      "change": "Typed service address stays with its service/variant; current/resumed defaults resolve consistently and stale auth/binding proof is invalidated",
+      "owner": "PWIZ-024; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_open_official_page",
+      "commands": "CS-069; UCC-106; cmd.auth_profile.sign_in (existing owner only after current choice validation)",
+      "settings": "none needed: draft address text, not a persisted preference or account registry",
+      "dry": "DR-020; DR-005; DR-037",
+      "companions": "LateOnboardingPolicy.service_address; setup_plan selected forge/variant/instance only; existing exact auth/currentness envelopes",
+      "state": "covered_late_integration_cf0ae92b9a"
+    },
+    {
+      "id": "INT-CF0-SKIP",
+      "change": "AI phase Skip for now immediately reveals its skipped-state feedback at the step start; optional Free Models remains; skipping proves no account Ready",
+      "owner": "PWIZ-021; F3-520; DL-259",
+      "wiring": "UIW-015; WM-041 (existing phase-local navigation; no backend effect)",
+      "commands": "none needed: existing phase-local skip feedback under CS-069/UCC-106; whole-session Skip stays distinct",
+      "settings": "none needed: phase state/feedback, not a preference",
+      "dry": "DR-005; DR-020",
+      "companions": "LateOnboardingPolicy.AI_phase_skip; existing explicit phase-skip/readiness boundary",
+      "state": "covered_late_integration_cf0ae92b9a"
+    },
+    {
+      "id": "INT-CF0-VALIDATION",
+      "change": "Online-copy/import display, Continue and activation share current choice/validation; Protect Connect and restore Continue recheck their displayed prerequisites",
+      "owner": "PWIZ-024; CS-069; UCC-106; DL-259",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.project_add_existing; catalog.backup_destination_test; catalog.backup_browse",
+      "commands": "CS-069; UCC-106; existing owner operations only after local validation and unchanged domain permission/currentness gates",
+      "settings": "none needed: fixed validation/dispatch safety, no preference",
+      "dry": "DR-020; DR-005; DR-037",
+      "companions": "LateOnboardingPolicy.continue_validation; four product areas, six refusal vectors; source services regression from fields lane",
+      "state": "covered_late_integration_cf0ae92b9a"
     }
   ],
   "sources": [
@@ -1530,12 +1574,16 @@
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-AUDIT-astra.md",
       "sha256": "81349f1031004a812e2e70c07a6897331b4ab5e94fc89a09b2262e8f85515a91",
       "state": "all 13 findings confirmed and corrected; independent re-check follows"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-RECHECK-glm.md",
+      "sha256": "c081ea49bbe066fcf9da379f614640e3880f4e2b42e29e143b499ffac86652ce",
+      "state": "read in full; PASS at17e87e52e0; all13 closed,0 new blockers;32/133 rows sampled"
     }
   ],
   "unit_id_check": "pass",
   "pending_sources": [
-    "lead final GUI names/head",
-    "onboarding small follow-up (lead signal)"
+    "accepted FS-/FO- final-recording product delta when posted/forwarded by lead"
   ],
   "exclusions": [
     "QA2-Q18",
@@ -1549,7 +1597,7 @@
   "prototype_cleanup": {
     "decision": "DL-260",
     "demo_only_rows_added": 0,
-    "real_product_rows_retained": 133,
+    "real_product_rows_retained": 137,
     "retired_units_used_as_active_coverage": false
   },
   "fields_final": {
@@ -1621,7 +1669,15 @@
     "new_product_rows": 7,
     "source_API_names": "source_lineage_only",
     "owner_questions_remaining": 0,
-    "independent_recheck": "requested_by_lead_after_push"
+    "independent_recheck": {
+      "status": "pass",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-RECHECK-glm.md",
+      "canon_head": "17e87e52e091ce052bdd529606e68132dde9f7d2",
+      "open_findings": 0,
+      "new_blockers": 0,
+      "rows_sampled": 32,
+      "rows_at_review": 133
+    }
   },
   "srv_C1_C4": {
     "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -1646,5 +1702,30 @@
     ],
     "C1_proxy_tls": null,
     "demo_mechanics_added": false
+  },
+  "late_integration": {
+    "head": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
+    "merge": "fast_forward",
+    "decision_ref": "DL-259",
+    "rows": [
+      "INT-CF0-NAME",
+      "INT-CF0-ADDRESS",
+      "INT-CF0-SKIP",
+      "INT-CF0-VALIDATION"
+    ],
+    "source_ranges": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
+        "sha256": "62466a26b582db2eb8c2e39c3a34e2b7e7e7c51058043be4aaf8376b8e1fed9e",
+        "consulted": "Integration checks and GLM Name/Kept in amendment, report lines18–43"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
+        "sha256": "e3282964b52b8b5f0f5430fdd9d499b813453ea5d60826b7f5c2b9c788239afc",
+        "consulted": "GLM online-service blocker and same-kind sweep, report lines246–251"
+      }
+    ],
+    "demo_rules_added": false,
+    "FS_FO_numbered_findings_posted": false
   }
 }

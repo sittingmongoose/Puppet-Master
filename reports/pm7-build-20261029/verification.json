@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+  "source_commit": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-31T05:08:06.847170+00:00",
+  "recorded_at_utc": "2026-10-31T08:33:10.804142+00:00",
   "native_runtime_certification": false,
   "step4": "GUI5abe_toast_followups_10_focused_pass",
   "counts": {
@@ -43,78 +43,78 @@
     "pm7_bindings": 483,
     "pm7_source_families": 61,
     "shard_sources": 99,
-    "coverage_rows": 133
+    "coverage_rows": 137
   },
   "commands": [
     {
       "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-rulings.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-rulings.json"
     },
     {
       "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-build.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-build.json"
     },
     {
       "command": "python3 scripts/pm7-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-canon.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-canon-final.json"
     },
     {
       "command": "python3 scripts/pm7-demo-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-boundary.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-boundary.json"
     },
     {
       "command": "python3 scripts/pm-touch-closure-verify.py --json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-touch.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-touch.json"
     },
     {
       "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-wiring-final.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-wiring-final.json"
     },
     {
       "command": "python3 scripts/pm-onboarding-contracts.py --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-storage.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-storage.json"
     },
     {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-check-coverage.py",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-check-coverage.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-coverage.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-coverage-final.json"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-shards-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-shards-generate.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-index-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-index-generate.txt"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-shards-check.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-shards-check.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-index-validate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-index-validate.txt"
     },
     {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-guard-final.py",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-guard.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-guard-final.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-guard.json"
     },
     {
       "command": "git diff --check",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-diff-check.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-diff-check.txt"
     }
   ],
   "dry": {
@@ -179,7 +179,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "Astra coverage audit: all 13 findings confirmed and corrected; independent lead re-check pending. Prior companion reviews remain recorded; no new review delegated by this lane.",
+  "review_status": "GLM PASS at17e87e52e0: all13 coverage findings closed,0 new blockers;32/133 rows sampled. Four later cf0 product rules have14 focused checks passing; FS-/FO- accepted delta pending lead.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -3010,6 +3010,91 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-wiring-final.json",
       "sha256": "f40312ee1a3058a691f3f13198194152a81e6e861585ef016fcc03f448792749",
       "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-boundary.json",
+      "sha256": "3dff680e48f9dc34cf4a101ce6dac79afe41618a4f4ae46ba55042eafe4b4724",
+      "bytes": 259
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-build.json",
+      "sha256": "23413f940ce8f88d00a8a6db9f67401d06d329ae9b1c486538b457caddec2a9e",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-canon-final.json",
+      "sha256": "413a4c42efdac53b7aa0bf029816db26acf0960679b896fdc39ef0a5201067a6",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-canon.json",
+      "sha256": "21ddaaa90234a1394713354e50d9ff7ad23194b2c89311fb61c2228a47d81384",
+      "bytes": 1685
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-check-coverage.py",
+      "sha256": "43fd054d201957c838a7e0f574fe394f088c6b6b2325543b627ca9de465a823a",
+      "bytes": 4439
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-coverage-final.json",
+      "sha256": "311694f216043f8a96f7de435c52991c50a32cf40930f42c220a3251ec7f9107",
+      "bytes": 469
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-guard.json",
+      "sha256": "916c6ed2062abf95144d1ef92db3ca0cf8a098e3a4c869a1e24430ee97659ac5",
+      "bytes": 4100
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-guard.py",
+      "sha256": "212f5abbec55e6950430c538fb45b0ace3c80d45881175f8aa50893c25dd072e",
+      "bytes": 5253
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-index-generate.txt",
+      "sha256": "12c0b7d630804707d4be7b94489f8354b402ba1ee4ebda581a544e5ef8ff6851",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-index-validate.txt",
+      "sha256": "d8c7984155b39ce90f4fc1eb5ddfd5dc16b43ac54fcc1008c8033502e422f024",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-rulings.json",
+      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-shards-check.txt",
+      "sha256": "ded8bfd344bbabb1236ee77e64cdea77fe463441543a23926629d048dfcef4b0",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-shards-generate.txt",
+      "sha256": "6076ab41497ba9e1e0b982d67c8c83e83c281f1849dccd23747b3978c9f702a7",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-storage.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-touch.json",
+      "sha256": "21c0efdcb20fd991207003b89019d6ad598b8e4da15ecffa74759ae2cfe69583",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-wiring-final.json",
+      "sha256": "32c6fd6455ce4aac8881d303ab8f59610946ad4dfc25c9df2c0909c8250ed7e7",
+      "bytes": 691
     }
   ],
   "reviews": [
@@ -3066,7 +3151,7 @@
     ],
     "mail_waiter": "armed under refreshed AGENTS"
   },
-  "latest_amendment": "DL259_DL257_DL260_Astra_coverage_and_srv_C1_C4_20261031",
+  "latest_amendment": "DL259_cf0_integration_four_product_rules_20261031",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -4411,7 +4496,7 @@
     "future_full_check_owner": "lead landing check",
     "evidence_repair": "Interim manifest write replaced this pass wiring log; read-only wiring check rerun passed; manifest rebuilt and every retained hash verified. Product source unchanged."
   },
-  "latest_GUI_input": "6609384fd036ebb7025eef3a8ad844ab00dbd1af",
+  "latest_GUI_input": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
   "historical_GUI5abe_commands": [
     {
       "argv": [
@@ -5392,7 +5477,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "a447a7c7e08b37ccebe61da95f23b12cca3c832e",
+  "canonical_source_commit": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": false,
   "dry_landing_run_for_QA2": false,
@@ -5404,9 +5489,9 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "verified_count": 569,
-    "prior_553_unchanged": true,
-    "recorded_at_utc": "2026-10-31T05:08:06.847170+00:00"
+    "verified_count": 586,
+    "prior_569_unchanged": true,
+    "recorded_at_utc": "2026-10-31T08:33:10.804142+00:00"
   },
   "historical_pre_DL259_commands": [
     {
@@ -5739,7 +5824,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "pre-audit-fix parent; exact amended Plans/scripts and generated-group scope pinned in coverage-fix-guard-final.json",
+  "source_commit_role": "merged GUI baseline; exact late-amendment Plans/scripts and source-group scope fingerprinted in cf0-integration-guard.json",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -6309,11 +6394,124 @@
     "ledger_compiled": false,
     "compile_witness": "not_applicable_no_ledger_compile",
     "native_runtime_audio_visual_certification": false,
-    "independent_recheck": "lead_after_push",
+    "independent_recheck": {
+      "status": "pass",
+      "head": "17e87e52e091ce052bdd529606e68132dde9f7d2",
+      "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/COVERAGE-RECHECK-glm.md",
+      "sha256": "c081ea49bbe066fcf9da379f614640e3880f4e2b42e29e143b499ffac86652ce",
+      "open_findings": 0,
+      "new_blockers": 0,
+      "rows_sampled": 32,
+      "rows_at_review": 133,
+      "scope": "canon_only_static_and_shard_check"
+    },
     "response": "reports/pm7-build-20261029/COVERAGE-AUDIT-RESPONSE.md",
     "remaining_sources": [
       "lead final GUI names/head",
       "onboarding small follow-up (lead signal)"
     ]
+  },
+  "historical_coverage_fix_commands": [
+    {
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-rulings.json"
+    },
+    {
+      "command": "python3 scripts/pm7-build-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-build.json"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-canon.json"
+    },
+    {
+      "command": "python3 scripts/pm7-demo-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-boundary.json"
+    },
+    {
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-touch.json"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-wiring-final.json"
+    },
+    {
+      "command": "python3 scripts/pm-onboarding-contracts.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-storage.json"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-check-coverage.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-coverage.json"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-shards-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-index-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-shards-check.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-index-validate.txt"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-guard-final.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-guard-final.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/coverage-fix-diff-check.txt"
+    }
+  ],
+  "cf0_integration_delta": {
+    "base_commit": "cf0ae92b9acffe4b80203e9c147ac7073cb2224b",
+    "merged_GUI": true,
+    "merge_kind": "fast_forward",
+    "decision_ref": "DL-259",
+    "new_product_rows": 4,
+    "coverage_rows": 137,
+    "required_cells": 685,
+    "owner_units_changed": 9,
+    "owner_documents_changed": 9,
+    "regenerated_source_groups": 9,
+    "PM7_schema_cases": 132,
+    "restore_reach_and_repoint_cases": 11,
+    "source_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-guard.json",
+    "focused_checks_passed": 14,
+    "new_setting_command_handler_control_or_runtime_request_ids": 0,
+    "ledger_compiled": false,
+    "compile_witness": "not_applicable",
+    "native_runtime_audio_visual_certification": false,
+    "full_gates_dry_landing_lock_reseal": false,
+    "diagnostic": {
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-canon.json",
+      "cause": "isolated_source_helper_stubs_and_vectors_preceded_the_merged_restore_SSH_helpers",
+      "resolution": "actual_family_and_authorized_helpers_plus_cancel_generation_assertions_and_family_bucket_vectors",
+      "final_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/cf0-integration-canon-final.json"
+    },
+    "pending_sources": [
+      "accepted FS-/FO- final-recording product changes when forwarded by lead"
+    ],
+    "demo_step_aside_or_hint_timing_rules_added": false
   }
 }
