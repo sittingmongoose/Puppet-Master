@@ -28,7 +28,7 @@
   /* ---- situations: where the person starts, plus twists that stack (the fixtures apply them in order) ---- */
   const BASES = ['fresh', 'returning'];
   const GROUPS = [
-    { id: 'computer', ids: ['lowResource', 'noKeys', 'oldKey'] },
+    { id: 'computer', ids: ['lowResource', 'noKeys', 'oldKey', 'oldKeyWorks', 'oldKeyLocked'] },
     { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'sshNotAllowed', 'readOnly', 'smbWrong'] },
     { id: 'online', ids: ['nameTaken', 'flaky', 'githubHalfMade', 'githubUnclear'], one: true },
     { id: 'ai', ids: ['cliMissing', 'signedOut', 'claudeExpired', 'copiedUnavailable', 'remoteAi', 'noAi', 'aiOffline'], one: true },
@@ -52,7 +52,7 @@
   [['keyWorks', 'keyRefused'], ['keyWorks', 'selfKeyMissing'], ['keyWorks', 'noKeys'], ['homeNasPm', 'keyWorks'],
     ['homeNasPm', 'keyRefused'], ['homeNasPm', 'selfKeyMissing'], ['homeNasPm', 'hostChanged'], ['homeNasPm', 'wrongPassword'],
     ['homeNasPm', 'noKeys'], ['keyRefused', 'selfKeyMissing'], ['sshNotAllowed', 'homeNasPm'], ['sshNotAllowed', 'keyWorks'],
-    ['serverOldAnswer', 'serverWrongDevice'], ['oldKey', 'noKeys'], ['oldKey', 'homeNasPm'], ['guestLater', 'serverNoWords']].forEach(([a, b]) => { (CLASH[a] = CLASH[a] || []).push(b); (CLASH[b] = CLASH[b] || []).push(a); });
+    ['serverOldAnswer', 'serverWrongDevice'], ['oldKey', 'noKeys'], ['oldKey', 'homeNasPm'], ['oldKeyWorks', 'oldKey'], ['oldKeyWorks', 'noKeys'], ['oldKeyWorks', 'homeNasPm'], ['oldKeyLocked', 'oldKey'], ['oldKeyLocked', 'oldKeyWorks'], ['oldKeyLocked', 'noKeys'], ['oldKeyLocked', 'homeNasPm'], ['guestLater', 'serverNoWords']].forEach(([a, b]) => { (CLASH[a] = CLASH[a] || []).push(b); (CLASH[b] = CLASH[b] || []).push(a); });
   GROUPS.forEach((g) => { if (g.one) g.ids.forEach((a) => g.ids.forEach((b) => { if (a !== b) (CLASH[a] = CLASH[a] || []).push(b); })); });
   const TWISTS = GROUPS.reduce((all, g) => all.concat(g.ids), []);
   const sitTitle = (id) => T(`studio.onboarding.situations.${id}.title`);

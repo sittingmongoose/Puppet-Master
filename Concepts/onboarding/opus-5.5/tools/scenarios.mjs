@@ -1052,6 +1052,36 @@ def('srv1', 'fresh+oldKey', "Situation oldKey: Existing Project on Home NAS reac
   /* (this driver presses enabled controls only; the refused press itself is the browser kit's reach-states check) */
   A.ok(await d.state(() => (window.O55.S.sess.nas || {}).key !== 'k-old'), 'it is not the chosen key');
 });
+/* (plans review: an old key Home NAS already accepts, named for it in the SSH settings, is still refused first) */
+def('srv3', 'fresh+oldKeyWorks', "Situation oldKeyWorks: Home NAS from the SSH settings names an old DSA key it accepts; Choose a key refuses it, preselects a new key, and Continue goes to sign in to add it", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home|cfg\"]')", 'the SSH settings entry', 5000); await d.act('device', 'nas-home|cfg'); await d.primary();
+  for (let i = 0; i < 2 && (await d.screen()) !== 'nas-key'; i++) await d.primary();
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  const st = await d.state(() => { const L = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) ', b = document.querySelector(L + '[data-o55-do="pick"][data-arg="k-old"]'), on = document.querySelector(L + '[data-o55-do="pick"][aria-checked="true"]');
+    return { dis: b && b.getAttribute('aria-disabled'), tag: b && (b.querySelector('.o55-tag') || {}).textContent, selected: on && on.getAttribute('data-arg'), key: window.O55.S.sess.nas.key }; });
+  A.ok(st.dis === 'true' && /weak to use/i.test(st.tag || ''), 'the accepted old key is refused: ' + JSON.stringify(st));
+  A.ok(st.selected === 'new' && st.key !== 'k-old', 'the SSH settings do not preselect it; the new key is: ' + JSON.stringify(st));
+  await d.primary();
+  A.eq(await d.screen(), 'nas-signin', 'Continue goes to sign in to add the new key, never verifying the old one');
+});
+def('srv4', 'fresh+oldKeyLocked', "Situation oldKeyLocked: the SSH settings name a locked old DSA key for Home NAS; it is refused before its passphrase is asked, and Continue goes to sign in with a new key", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home|cfg\"]')", 'the SSH settings entry', 5000); await d.act('device', 'nas-home|cfg'); await d.primary();
+  for (let i = 0; i < 2 && (await d.screen()) !== 'nas-key'; i++) await d.primary();
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  const st = await d.state(() => { const L = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) ', b = document.querySelector(L + '[data-o55-do="pick"][data-arg="k-old"]'), on = document.querySelector(L + '[data-o55-do="pick"][aria-checked="true"]');
+    return { dis: b && b.getAttribute('aria-disabled'), tag: b && (b.querySelector('.o55-tag') || {}).textContent, selected: on && on.getAttribute('data-arg') }; });
+  A.ok(st.dis === 'true' && /weak to use/i.test(st.tag || '') && st.selected === 'new', 'the locked old key is refused and not preselected: ' + JSON.stringify(st));
+  await d.primary();
+  A.ok(await d.state(() => window.O55.S.sess.ui.sheet !== 'passphrase'), 'its passphrase is never asked');
+  A.eq(await d.screen(), 'nas-signin', 'Continue goes to sign in to add the new key');
+  A.ok(await d.state(() => window.O55.S.sess.nas.key !== 'k-old'), 'the key going on is not the old one');
+});
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
