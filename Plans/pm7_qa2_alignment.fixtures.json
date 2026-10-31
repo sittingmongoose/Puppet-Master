@@ -1400,5 +1400,84 @@
         "online"
       ]
     }
+  ],
+  "Connect_route_reason_cases": [
+    {
+      "name": "web_address_empty_before_Server_choice",
+      "route": "reverse_proxy",
+      "expected_key": "missing.proxyAddress"
+    },
+    {
+      "name": "web_address_invalid_owner_result",
+      "route": "reverse_proxy",
+      "nonempty": true,
+      "endpoint_error": "scheme",
+      "expected_key": "endpoint.scheme"
+    },
+    {
+      "name": "web_address_owner_host_reason",
+      "route": "reverse_proxy",
+      "nonempty": true,
+      "endpoint_error": "host",
+      "expected_key": "endpoint.host"
+    },
+    {
+      "name": "Remote_Link_empty_before_Server_choice",
+      "route": "remote_link",
+      "expected_key": "missing.remoteLink"
+    },
+    {
+      "name": "Remote_Link_invalid_owner_result",
+      "route": "remote_link",
+      "nonempty": true,
+      "endpoint_error": "scheme",
+      "expected_key": "endpoint.scheme"
+    },
+    {
+      "name": "Remote_Link_owner_reason_forwarded",
+      "route": "remote_link",
+      "nonempty": true,
+      "endpoint_error": "spaces",
+      "expected_key": "endpoint.spaces"
+    },
+    {
+      "name": "typed_address_empty",
+      "route": "local_or_vpn",
+      "manual": true,
+      "address": "",
+      "expected_key": "connect.route.addrMissing"
+    },
+    {
+      "name": "typed_address_whitespace",
+      "route": "local_or_vpn",
+      "manual": true,
+      "address": "   ",
+      "expected_key": "connect.route.addrMissing"
+    },
+    {
+      "name": "typed_address_unanswered",
+      "route": "local_or_vpn",
+      "manual": true,
+      "address": "typed_input",
+      "expected_key": "connect.route.addrNoAnswer"
+    },
+    {
+      "name": "found_list_requires_choice",
+      "route": "local_or_vpn",
+      "expected_key": "missing.server"
+    },
+    {
+      "name": "found_list_selected",
+      "route": "local_or_vpn",
+      "selected": true,
+      "expected_key": ""
+    },
+    {
+      "name": "valid_web_address_with_selected_Server",
+      "route": "reverse_proxy",
+      "nonempty": true,
+      "selected": true,
+      "expected_key": ""
+    }
   ]
 }
