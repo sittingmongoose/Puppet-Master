@@ -39424,6 +39424,8 @@ window.PM56_NIER_FACES = [
      line: names beside the marks, 40 tall, for the Chat Room), the Chat Room's lean line (leanLine: the line at .79,
      32 tall, every name whole) and pmxPlateFit's caption. A mode whose seats would sit closer than its minimum pitch
      is left out, so the slot yields to the next one (J-2: never scaled). */
+  var PAPER_IN = 8;   /* the paper's text inset, hosted (see castStage's paper) */
+  var YOU_SHIFT = 10;  /* hosted, You stands 10 left of where it is drawn (pm7-port 24-layout.css .pmx-p-you translate) */
   var CAST = {
     full: { W: 576, M: 12, s: 1.5, sy: 1.25, bar: 29, paperW: 150, paperH: 50, bus: 64, drop: 10, name: 14, sub: 16, pmin: 84, pmax: 128, wing: 24 },
     /* the compact paper is 32 tall: its one centred line keeps 8 px of ink clear of the paper's top and bottom edges (J-2) */
@@ -39542,8 +39544,10 @@ window.PM56_NIER_FACES = [
       var ch = sp.chapters, L = Math.max(14, Math.ceil(yh) + 2), ylw = castW(you.label, 11);
       var youX = W - M - Math.max(Math.round(yh), Math.ceil(ylw / 2));
       var cw = ch.map(function (c) { return castW(c.label, 10.5); });
-      /* the last chapter's name ends 6 short of You's */
-      var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - 6 - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
+      /* the last chapter's name ends 6 short of You's; hosted, You stands YOU_SHIFT further left (the port's
+         .pmx-p-you translate, pm7-port 24-layout.css), which the gap counts too (FS-2: "Write the planYou" ran together) */
+      var youGap = 6 + YOU_SHIFT;
+      var lastMax = Math.min(youX - Math.round(yh) - 22, youX - Math.ceil(ylw / 2) - youGap - Math.ceil(cw[cw.length - 1] / 2)), first = M + Math.ceil(cw[0] / 2);
       var q = ch.length > 1 ? Math.min(92, (lastMax - first) / (ch.length - 1)) : 0;
       var cx = ch.map(function (c, i) { return Math.round(first + q * i); });
       /* the stops keep one even step while every pair of neighbouring names keeps 12 of measured ink apart. Where one
@@ -39562,7 +39566,7 @@ window.PM56_NIER_FACES = [
         var room = 2 * (cx[ci + 1] - cx[ci] - 4);
         if ((cw[ci] + cw[ci + 1] - 2) / 1.04 > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
       }
-      cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - 6 - cx[cx.length - 1]));
+      cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - youGap - cx[cx.length - 1]));
       /* Grill Me (DL-218): BrainStorm's bar has no Coordinator seat, so the Coordinator who grills you stands behind the
          kettle at the first chapter (Understand, where intake runs), in place of its diamond; the line starts past it */
       var g0 = ch[0] && ch[0].grill ? 12 : 0;
@@ -39576,12 +39580,20 @@ window.PM56_NIER_FACES = [
     } else {
       /* the input paper, the hub (a lead puppet, or Review's junction), You */
       /* a full plate drawn wider than 576 (a run view's 640) gives half the extra width to the paper, so more of the job shows */
-      var inp = sp.input, pw = inp ? (full ? G.paperW + Math.max(0, Math.round((W - G.W) / 2)) : Math.max(72, Math.min(G.paperW + 54, castW(castPlain(inp.short || inp.label), 10.5) + 28))) : 0, ph = G.paperH, px = M;
+      /* the paper's words sit 12 in from each side (its foreignObject) and, hosted, 7.5 more (the port's 1.5 + 6 text
+         inset, pm7-port 24-layout.css): PAPER_IN counts that inset, so a lean paper is as wide as its words need in every
+         font (Retro's Plex Mono "The job" was cut to "The j…" by the 7.5 it did not count) */
+      /* and a paper is as wide as its fixed words need, within limits: a full paper widens by up to 40 for its words
+         (Review's "Your latest changes" in Plex Mono), a lean one up to 158; the job's own text (input.text) is fitted to
+         the paper below instead */
+      var inp = sp.input, pbase = G.paperW + Math.max(0, Math.round((W - G.W) / 2));
+      var pneed = inp ? Math.max(castW(castPlain(full ? inp.label : (inp.short || inp.label)), 10.5), full && inp.text == null && inp.sub ? castW(castPlain(inp.sub), 11) : 0) + 24 + PAPER_IN : 0;
+      var pw = inp ? (full ? Math.max(pbase, Math.min(pbase + 40, pneed)) : Math.max(72, Math.min(G.paperW + 62, pneed))) : 0, ph = G.paperH, px = M;
       var ylw2 = Math.max(castW(you.label, 11), you.sub ? castW(you.sub, 10.5) : 0);
       var yx = W - M - ylw2 - Math.round(yh + 4);
       /* input.text (plain words, the job or the topic) is fitted to the paper's inner width here, so the paper never
          leans on its CSS ellipsis once drawn (a mirror span, input.mirror, keeps it live while you type) */
-      var inSub = inp && inp.text != null ? '<span' + (inp.mirror ? ' data-collab-mirror="' + esc(inp.mirror) + '"' : '') + '>' + castLabel(inp.text, pw - 24, 11) + '</span>' : inp && inp.sub;
+      var inSub = inp && inp.text != null ? '<span' + (inp.mirror ? ' data-collab-mirror="' + esc(inp.mirror) + '"' : '') + '>' + castLabel(inp.text, pw - 24 - PAPER_IN, 11) + '</span>' : inp && inp.sub;
       if (inp) out += P.paper({ key: kp + 'paper', x: px, y: BY - ph / 2, w: pw, h: ph, label: full ? inp.label : esc(inp.short || inp.label), sub: full ? inSub : '', part: inp.part });
       var after = px + pw, edgeFrom;
       if (sp.hub) {
