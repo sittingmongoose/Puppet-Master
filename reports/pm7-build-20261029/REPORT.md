@@ -1,3 +1,24 @@
+# Plans lane — storage main and final weak-key close-out, 2026-10-31
+
+**All 15 effective focused/generation/guard checks PASS.** Storage main `683e603ac1` is incorporated by pushed merge `3030c0061b`; final GUI integration `ed1f82fed7` brings srv `d1abe18d58`. The resulting head is mailed after push. **No source follow-up remains.** No browsers, full gates, dry landing, landing lock, landing, migration/baseline refresh or reseal.
+
+| Result | Evidence |
+|---|---|
+| **Both canon sets retained** | [STORAGE-MERGE.md](STORAGE-MERGE.md): all 12 units changed by both branches reread; 7,147 one-sided/new top-level units and all 240 prior decision-unit bodies exact. ACD-242 and every reserved storage ID retained. DL-271 follows DL-270. |
+| **True union** | 1010 active settings; raw union1011 includes retired `general.visual.nier-mode`, which stays migration-only. Main's retention description and PM7's two new rows remain. Touch715 rows/140 profiles; production1270 includes `assistant.chat.history.load_older`. Bindings483/61 source families; status keys22. |
+| **Coverage** | [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md): 155 real product rows / 775 cells. FO-11/12, recovery phrase, initial waiting, weak keys and note wrapping covered. FO-13 implementation glue and Studio situations/seeds stay excluded. |
+| **Weak keys** | 89 isolated final-review source cases/checks PASS, including 10 eligibility, 10 picker, 6 retained-key, 6 install-entry and 2 eligible-guard cases. Authorized/locked old keys remain refused; a replacement must match the chooser before advance. Install guards run before secret reads/effects. Existing DL-271 already says this. |
+| **Companions** | 161 PM7 schema cases PASS; onboarding129/241, Tour24/59, Remote110/109, Server89/52 and GUI1/160 remain passing. Touch, production wiring, product-only boundary and index validation pass. No new setting, command, action, handler or binding identity for this feedback batch. |
+| **Derived/page** | Publish/check PASS with exact supplied Glass SHA `023ac451ee3adf6e8b54831f624d5b927cdaeaab099669fe271af16d67f40132`. 7268 indexed units / 96 docs / 29242 acceptance units; 2964 shards / 99 sources. No WorkNodes or NodeSeeds created; runtime readiness remains incomplete. |
+
+**Diagnostics retained:** before the GUI correction, 11 weak-key assertions failed plus the wrapper exit. The expanded source harness now imports the real weak-key helpers and supplies its UI-refresh dependency; the older QA2 harness imports the extracted owner constant. The retained-key oracle tests the existing eligible-replacement rule rather than forbidding all advance. An initial preservation guard looked for the wrong literal for the existing Touch fence; its corrected version passes. None is waived. Initial `dl261-*` evidence filenames retain their provisional allocation; live canon uses DL-271. The whitespace check only flagged main's inherited two-space Markdown hard break in FileSafe and its shard; it was retained.
+
+**Proof:** all 653 prior artifact hashes remain unchanged; [verification.json](verification.json) records 685 retained artifacts and the exact current input hashes. Manifest SHA-256 `ff133d7f753bd1f2207ee5e3ed8b8da9c2abc1f2155187bd6a37ebccbf71ad31`. Final merge-preservation proof: `storage-weak-final-guard.txt`, SHA-256 `527ee511cb17ece7855f47f27351e44c7fa8feaa6e1feae5e3c5752a65ad7c35`. Final source proof: `storage-weak-final-source-v2.json`, SHA-256 `fe6d164ceaa4fb5cb55e4d0a6ba8d7e0d4c3c74e60b077685ea96b58fc3f201e`. Both are under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`.
+
+Protected governance, current migration `pds-20261031-001-current-planunit-snapshot` and the baseline recorded at `808de86f4d` match main exactly. Their next refresh belongs to landing. The prior GLM 0/13 finding result remains pinned to `17e87e52e0`; it is not a review of this later delta. Static/source checks confer no native, visual or audio acceptance. Owned text scratch is removed after proof; cited raw proof and portable guards remain. Mail rings this T3 thread; no waiter is needed.
+
+---
+
 # Plans lane — storage main merge checkpoint, 2026-10-31
 
 **Storage main `683e603ac1` reconciled with checkpoint `69d974d555`.** Both canon sets remain; [STORAGE-MERGE.md](STORAGE-MERGE.md) records every overlapping owner and the union proof. Main's reserved IDs are retained; the feedback decision is DL-271. Counts: **1010 active settings; 715 Touch rows / 140 profiles; 1270 production rows; 155 PM7 coverage rows / 775 cells**.

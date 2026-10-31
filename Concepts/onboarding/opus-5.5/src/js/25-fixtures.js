@@ -338,6 +338,20 @@
     noKeys: { label: 'No SSH keys on this computer', apply(e) { e.here.sshKeys = []; } },
     /* an old DSA key beside the others: the key step shows it and won't use it (70-screens-nas.js keyStatus 'old') */
     oldKey: { label: 'An old DSA key on this computer', apply(e) { e.here.sshKeys.push({ id: 'k-old', file: '~/.ssh/id_dsa', comment: 'old-imac', type: 'dsa', where: 'file' }); } },
+    /* the same old key, already accepted by Home NAS and named for it in this computer's SSH settings: still refused,
+       never preselected or verified; a new key is offered */
+    oldKeyWorks: { label: 'Home NAS already accepts an old DSA key', apply(e) {
+      e.here.sshKeys.push({ id: 'k-old', file: '~/.ssh/id_dsa', comment: 'old-imac', type: 'dsa', where: 'file' });
+      e.devices[0].authorized = (e.devices[0].authorized || []).concat(['k-old']);
+      e.here.sshConfigHosts = e.here.sshConfigHosts.filter((h) => h.host !== e.devices[0].address).concat([{ alias: 'nas', host: e.devices[0].address, user: e.devices[0].user, key: 'k-old' }]);
+      e.here.knownHosts = Object.assign({}, e.here.knownHosts, { [e.devices[0].address]: e.devices[0].hostKey });
+    } },
+    /* an old DSA key locked with a passphrase, named for Home NAS in the SSH settings, which Home NAS does not accept:
+       refused before its passphrase is ever asked */
+    oldKeyLocked: { label: 'An old locked DSA key named for Home NAS', apply(e) {
+      e.here.sshKeys.push({ id: 'k-old', file: '~/.ssh/id_dsa', comment: 'old-imac', type: 'dsa', where: 'file', passphrase: true });
+      e.here.sshConfigHosts = e.here.sshConfigHosts.filter((h) => h.host !== e.devices[0].address).concat([{ alias: 'nas', host: e.devices[0].address, user: e.devices[0].user, key: 'k-old' }]);
+    } },
     hostChanged: { label: 'Home NAS ID changed', apply(e) { e.here.knownHosts = { '192.168.1.20': 'SHA256:OLDkeyZ9x8w7v6u5t4s3r2q1p0o9n8m7l6k5j4i3h2g' }; } },
     wrongPassword: { label: 'Wrong NAS password first', apply(e) { e.failures.nas_password_once = true; } },
     readOnly: { label: 'Read-only NAS folder', apply(e) { e.devices[0].readOnly = ['/volume1/projects']; } },

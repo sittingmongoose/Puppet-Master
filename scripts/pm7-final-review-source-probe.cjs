@@ -230,7 +230,7 @@ async function main() {
   counts.Backup_recovery_copy_checks = 2;
 
   const nasSource = read('Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js');
-  const keyHelpers = section(nasSource, 'function keyStatus(S, k)', "def('nas-key', {");
+  const keyHelpers = section(nasSource, '  const WEAK =', "def('nas-key', {");
   const keyDefinition = section(nasSource, "def('nas-key', {", "def('nas-signin', {");
   const keyBody = section(keyDefinition, '    body(S) {', '    mounted(S)');
   const keyActions = section(keyDefinition, '    do: {', '    bind: {');
@@ -242,12 +242,17 @@ async function main() {
     const kc = vm.createContext({ T: text, N: () => draft, dev: () => ({ name: 'Target' }),
       authorizedFor: () => test.authorized, keyring: () => [key], keysKey: () => 'keys', sshUser: () => 'actor',
       machine: () => 'Execution host', hostId: () => 'target', U: { esc: value => value },
-      F: { state: () => ({ state: 'done' }) },
+      F: { state: () => ({ state: 'done' }) }, O55: { ui: { refresh() {} } },
       C: { small: () => '', link: () => '', field: () => '', note: () => '',
         cards: (_action, rows) => { choices = rows; return ''; } } });
-    vm.runInContext(keyHelpers + '\nglobalThis.keyBody = ({' + keyBody + '}).body;', kc, { timeout: 1000 });
+    vm.runInContext(keyHelpers + '\nglobalThis.keyBody = ({' + keyBody + '}).body;' +
+      '\nglobalThis.keyActions = ({' + keyActions + '}).do;', kc, { timeout: 1000 });
     requireThat(kc.keyStatus({}, key) === test.expected, 'DL-271 weak eligibility before authorization ' + test.name);
     kc.keyBody({ sess: { ui: {} } });
+    draft.key = 'new';
+    kc.keyActions.pick({ save() {} }, key.id);
+    requireThat(draft.key === (test.expected === 'old' ? 'new' : key.id),
+      'DL-271 actual picker refuses weak key ' + test.name);
     const row = choices.find(r => r.v === key.id);
     requireThat(row && row.disabled === (test.expected === 'old'), 'DL-271 chooser availability ' + test.name);
     if (test.expected === 'old') {
@@ -256,19 +261,68 @@ async function main() {
     }
   }
   counts.weak_SSH_key_cases = fixture.weak_SSH_key_cases.length;
+  counts.weak_SSH_picker_cases = fixture.weak_SSH_key_cases.length;
+  const signInDefinition = section(nasSource, "def('nas-signin', {", "def('nas-install', {");
+  const signInActions = section(signInDefinition, '    do: {', '    mounted(S, layer, fresh)');
+  const installRun = section(nasSource, 'function run(S) {',
+    "  /* ------------------------------------------------------------------ where the device's steps lead */");
+  let retainedCases = 0, installCases = 0;
   for (const type of ['dsa', 'rsa-1024']) {
-    const key = { id: 'retained', type, passphrase: type === 'rsa-1024' };
-    const draft = { key: key.id }, routes = [];
-    const S = { sess: { ui: {} }, save() {} };
-    const rc = vm.createContext({ T: text, N: () => draft, dev: () => ({ name: 'Target' }),
-      authorizedFor: () => type === 'dsa', keyring: () => [key], seeSheet() {},
-      F: {}, O55: { ui: { go: route => routes.push(route), refresh() {}, shake() {} }, sound: { play() {} } } });
-    vm.runInContext(keyHelpers + '\nglobalThis.keyActions = ({' + keyActions + '}).do;', rc, { timeout: 1000 });
-    rc.keyActions.next(S);
-    requireThat(routes.length === 0 && S.sess.ui.sheet !== 'passphrase',
-      'DL-271 retained weak selection cannot advance/unlock/install ' + type);
+    for (const posture of ['authorized', 'locked', 'locked_authorized']) {
+      const key = { id: 'retained', type, passphrase: posture !== 'authorized', where: 'file', file: 'key-ref' };
+      const draft = { key: key.id, installed: true, opKey: 'prior-operation', unlocked: key.id };
+      const routes = [];
+      let shownSelection = null;
+      const S = { sess: { ui: {} }, save() {} };
+      const rc = vm.createContext({ T: text, N: () => draft, dev: () => ({ name: 'Target' }),
+        authorizedFor: (_s, _d, id) => id === key.id && posture !== 'locked', keyring: () => [key],
+        sshUser: () => 'actor', keysKey: () => 'keys', machine: () => 'Execution host', hostId: () => 'target',
+        U: { esc: value => value }, seeSheet() {}, F: { state: () => ({ state: 'done' }) },
+        C: { small: () => '', link: () => '', field: () => '', note: () => '',
+          cards: (_action, _rows, selected) => { shownSelection = selected; return ''; } },
+        O55: { ui: { go: route => routes.push({ route, key: draft.key }), refresh() {}, shake() {} },
+          sound: { play() {} } } });
+      vm.runInContext(keyHelpers + '\nglobalThis.keyActions = ({' + keyActions + '}).do;' +
+        '\nglobalThis.keyBody = ({' + keyBody + '}).body; globalThis.eligible = usableKey;', rc, { timeout: 1000 });
+      rc.keyBody(S);
+      rc.keyActions.next(S);
+      // The weak selection itself cannot advance. The eligible replacement already
+      // shown by the chooser may advance, matching DL-271's replacement requirement.
+      requireThat(shownSelection !== key.id && draft.key === shownSelection && rc.eligible(S, draft.key) &&
+        routes.every(r => r.key !== key.id) && S.sess.ui.sheet !== 'passphrase' &&
+        !draft.installed && draft.opKey === null && draft.unlocked === null,
+        'DL-271 retained weak key replaced before advance/unlock/install ' + type + '/' + posture);
+      retainedCases++;
+    }
+    for (const entry of ['selfCheck', 'add', 'run']) {
+      const key = { id: 'retained', type, passphrase: true };
+      const draft = { key: key.id, installed: true, opKey: 'prior-operation', unlocked: key.id };
+      const routes = [];
+      let effects = 0, secretReads = 0;
+      const S = { sess: { ui: {} }, save() {}, root: { querySelector() { secretReads++; return null; } } };
+      const ic = vm.createContext({ N: () => draft, dev: () => ({ name: 'Target' }), keyring: () => [key],
+        authorizedFor: () => true, authorize: () => effects++, phaseOrder: () => { effects++; return []; },
+        F: { op() { effects++; } }, O55: { ui: { go: route => routes.push(route) } } });
+      vm.runInContext(keyHelpers + installRun + '\nglobalThis.signInActions = ({' + signInActions + '}).do;',
+        ic, { timeout: 1000 });
+      if (entry === 'run') ic.run(S); else ic.signInActions[entry](S);
+      requireThat(routes.length === 1 && routes[0] === 'nas-key' && !effects && !secretReads &&
+        draft.key !== key.id && !draft.installed && draft.opKey === null && draft.unlocked === null,
+        'DL-271 weak install entry returns before effects ' + type + '/' + entry);
+      installCases++;
+    }
   }
-  counts.retained_weak_key_action_cases = 2;
+  counts.retained_weak_key_action_cases = retainedCases;
+  counts.weak_key_install_entry_cases = installCases;
+  for (const type of ['ed25519', 'rsa-4096']) {
+    const key = { id: 'eligible', type }, draft = { key: key.id, installed: true, opKey: 'current', unlocked: key.id };
+    const gc = vm.createContext({ N: () => draft, keyring: () => [key] });
+    vm.runInContext(keyHelpers, gc, { timeout: 1000 });
+    requireThat(gc.keyGate({ save() { throw new Error('Eligible state must not be reset'); } }) &&
+      draft.key === key.id && draft.installed && draft.opKey === 'current' && draft.unlocked === key.id,
+      'DL-271 eligible key gate preserves owner state ' + type);
+  }
+  counts.eligible_key_gate_cases = 2;
 
   const waitingSource = section(server, 'if (!shownWaiting && inviteOpen(S) && runDone(S))', 'if (!inviteOpen(S))');
   for (const test of fixture.initial_pairing_wait_cases) {
@@ -291,7 +345,8 @@ async function main() {
     pending_final_sources: [],
     resolved_final_source: { 'FX-1_PDF': 'd8df03ac1820a7cb68d0d1b4897eeb03fa228a6b',
       'FO-9': '503368802df57c9d35660d0a89dea15df01afc53',
-      'FO-10': '03a02a178b1c386488b4a6f7865f9172cca7990c' } };
+      'FO-10': '03a02a178b1c386488b4a6f7865f9172cca7990c',
+      'WEAK-SSH-KEY': 'd1abe18d58b0a8e8b8fdec7cd9f4525101f48895' } };
 }
 main().then(result => {
   process.stdout.write(JSON.stringify(result, null, 2));

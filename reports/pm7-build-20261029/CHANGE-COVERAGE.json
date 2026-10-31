@@ -1681,8 +1681,8 @@
       "commands": "CS-069; UCC-106 (existing selected-source auth/local action; no new primary)",
       "settings": "code.execution.ssh-keys (existing global row; description amended)",
       "dry": "DR-020 (one eligibility result before authorization and every consumer)",
-      "companions": "OnboardingCredentialFeedbackPolicy.weak_SSH_key; 10 key vectors; historical authorized-key source failures retained",
-      "state": "owner_rule_covered_pending_corrected_GUI_source"
+      "companions": "OnboardingCredentialFeedbackPolicy.weak_SSH_key; 10 eligibility + 10 picker + 6 retained-selection + 6 install-entry + 2 eligible-guard source vectors; historical before failures retained",
+      "state": "covered_by_current_contract_final_source_merged"
     },
     {
       "id": "INITIAL-REQUEST-WAIT",
@@ -1927,7 +1927,7 @@
     "FS_FO_numbered_findings_posted": false
   },
   "final_review_delta": {
-    "merged_GUI_head": "2819a3def08f1e2c359b8d191cb71be4012f43c1",
+    "merged_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
     "decision_ref": "DL-259",
     "new_rows": [
       "FO-4",
@@ -1951,12 +1951,7 @@
     ],
     "rows": 155,
     "required_cells": 775,
-    "pending_final_sources": {
-      "WEAK-SSH-KEY": {
-        "state": "authorized/retained-key source correction requested from server lane; no product decision pending",
-        "lead_ack": "1031215509-a74e"
-      }
-    },
+    "pending_final_sources": {},
     "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
     "demo_mechanics_added": false,
     "browser_or_native_acceptance_claim": false,
@@ -2008,6 +2003,12 @@
         "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
         "source": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
         "state": "current-route reason rule and 12 isolated source vectors; no native/browser acceptance or grammar admission"
+      },
+      "WEAK-SSH-KEY": {
+        "head": "d1abe18d58b0a8e8b8fdec7cd9f4525101f48895",
+        "merged_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+        "source": "Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js",
+        "state": "weak-first eligibility, picker/default/refusal, displayed eligible replacement before advance, install entry fences; isolated source only"
       }
     }
   },
@@ -2065,6 +2066,11 @@
       "main_only_production_row": "assistant.chat.history.load_older",
       "glass_resolution_sha256": "023ac451ee3adf6e8b54831f624d5b927cdaeaab099669fe271af16d67f40132",
       "baseline_and_migration_refreshed": false
+    },
+    "final_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+    "weak_final_source_report": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+      "sha256": "f866c649afbf3c680bc2fd5a0cb2ed262217bfb19007622f258dda76b52a6bad"
     }
   }
 }

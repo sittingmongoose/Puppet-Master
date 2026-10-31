@@ -56,11 +56,12 @@ for (const selected of ['gdrive', 'onedrive']) {
 counts.restore_callback_cases = 2;
 const nasScreens = read('Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js');
 const keyStatusSource = section(nasScreens, 'function keyStatus(S, k)', 'const keyWhere =');
+const weakTypeSource = section(nasScreens, 'const WEAK =', 'const weakKey =');
 const authorizedSource = section(nasScreens, 'const authorizedFor =', 'const authorize =');
 for (const test of fixture.ssh_key_unlock_cases) {
   const c = context({ dev: () => ({ authorized: [], user: 'fixture-account' }),
     sshUser: () => 'fixture-account', N: s => s.nas });
-  vm.runInContext(authorizedSource + keyStatusSource, c, { timeout: 1000 });
+  vm.runInContext(authorizedSource + weakTypeSource + keyStatusSource, c, { timeout: 1000 });
   requireThat(c.keyStatus({ nas: { unlocked: test.unlocked } }, { id: test.key_id, type: 'ed25519', passphrase: true })
     === test.expected, 'key inherited another passphrase unlock');
 }
