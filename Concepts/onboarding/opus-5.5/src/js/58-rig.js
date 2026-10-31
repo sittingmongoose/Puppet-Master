@@ -369,7 +369,19 @@
       if (gap) { this.sfxT = this.sfxT || {}; if (this.t - (this.sfxT[ev] || -9) < gap) return; this.sfxT[ev] = this.t; }
       o = Object.assign({}, o || {});
       if (o.x != null) { o.pan = R(clamp(o.x / this.L.w * 2 - 1, -1, 1) * .8); delete o.x; }
+      /* a block's touchdown is its own moment: a sound the core played in the last 70 ms (its merge window) would have it
+         dropped as the same moment, so it sounds just after that one. Retro Dark's last two blocks landed 6-65 ms apart
+         and Friendly's middle one 24 ms after the Project-made sound; both were dropped (final run FO-2) */
+      if (ev === 'block') { this.blockSfx(S, o, 0); return; }
       try { S.play(ev, o); } catch (e) { /* sound never stops the stage */ }
+    }
+    blockSfx(S, o, tries) {
+      if (this.dead) return;
+      const now = performance.now(), log = (O55.sound && O55.sound.log) || [];
+      let last = null;
+      for (let i = log.length - 1; i >= 0 && i >= log.length - 8; i--) { const e = log[i]; if (now - e.t >= 70) break; if (e.played) { last = e; break; } }
+      if (tries < 4 && last) { setTimeout(() => this.blockSfx(S, o, tries + 1), Math.max(1, last.t + 85 - now)); return; }
+      try { S.play('block', o); } catch (e) { /* sound never stops the stage */ }
     }
     loopSnd(name, level) {
       level = R(level);
