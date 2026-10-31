@@ -310815,7 +310815,9 @@ try {
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
-      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
+      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
+      /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
+      follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true },
     /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
        choices (pm7-terminal-customizer). In-flow indicators that slide with their own content (the home panels'
@@ -311456,9 +311458,41 @@ try {
     m.lay = lay;
     return m;
   }
+  /* RV-7 (2026-10-31): a strip its neighbours place moves without resizing when one of them changes width. The wizard's
+     step rail sits centred between the window's brand and its header controls, so Plain English <-> Expert or the
+     window's width moved the rail 18-29 px while its chip stayed where it was: for good in Basic and Friendly, whose chip
+     is in the window's lens layer, and for 1-7 frames in Glass, until the next sheet sync. A strip's follow(strip) names
+     the boxes whose size places it; when one of them changes size, the strip is synced in that delivery, after the
+     frame's own layout and before its paint, so the chip moves in the frame the rail does (as the page tabs follow the
+     project box, in start()). A first report, or one with no change of size, syncs nothing. */
+  var followers = new Map(), followSize = new WeakMap(), followed = new WeakSet();
+  var followWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    var due = [];
+    entries.forEach(function (en) {
+      var b = en.borderBoxSize && en.borderBoxSize[0], size = b ? Math.round(b.inlineSize * 2) + 'x' + Math.round(b.blockSize * 2) : Math.round(en.contentRect.width * 2) + 'x' + Math.round(en.contentRect.height * 2);
+      var was = followSize.get(en.target); followSize.set(en.target, size);
+      var set = followers.get(en.target); if (!set) return;
+      set.forEach(function (x) { if (!x.isConnected) set.delete(x); else if (was !== undefined && was !== size && due.indexOf(x) < 0) due.push(x); });
+      if (!set.size) { followers.delete(en.target); followWatch.unobserve(en.target); }
+    });
+    if (!due.length || !switchOn()) return;
+    if (dragHeld()) { due.forEach(function (x) { heldScopes.push(x); }); flushHeldSoon(); return; }
+    due.forEach(function (x) { settleStrips.add(x); });
+    syncPending();
+  }) : null;
+  function followStrip(strip, cfg) {
+    if (!followWatch || !cfg.follow || followed.has(strip)) return;
+    followed.add(strip);
+    cfg.follow(strip).forEach(function (e) {
+      if (!e) return;
+      var set = followers.get(e); if (!set) { followers.set(e, set = new Set()); followWatch.observe(e); }
+      set.add(strip);
+    });
+  }
   function syncStripNow(cfg, strip, m) {
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
+    followStrip(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
       /* pressed, not yet chosen by the app: hold the lens there until the app makes any choice. This app switches on
