@@ -5059,7 +5059,16 @@ canonical_text: 'Exactly five canonical cmd.settings commands are centrally regi
   result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged.'
+  fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
+  pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.
+  DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
+  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
@@ -5123,6 +5132,16 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing create no
+  new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
+  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high
@@ -5141,6 +5160,9 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, pm.settings_route_return.v1, handler_unavailable]
 negative_constraints:
   - Do not resurrect cmd.settings.bloom.open or mint route-only UI action commands.
@@ -8248,12 +8270,15 @@ canonical_text: 'Hosted chat producers use UCC-208''s closed mapping (DL-232). D
   local presentation with no command, receipt or event. PM7 S5/G1–G3: hosted chat adds the one Pip editor’s typed no-write
   open/close/replay; admitted parts edit the existing Settings pair. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin
   as a typed view-local boolean action; History pin/Keep open remain local, and resizing uses the existing layout command.
-  CS-105/106 own the newly admitted project/work commands. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17:
-  hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea,
-  label or switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture do not dim the
-  cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights
-  only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies
-  this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  CS-105/106 own the newly admitted project/work commands. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
+  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
+  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
+  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
+  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
+  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
+  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
+  sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
   rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
   role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16:
   You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette
@@ -8273,9 +8298,23 @@ depends_on:
 - DL-234
 unblocks: []
 acceptance_criteria:
-  - "Hosted producers preserve the existing handler, alias normalization and effect contract."
-  - "Reverse preference projection emits no second command or Settings write."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+- Hosted producers preserve the existing handler, alias normalization and effect contract.
+- Reverse preference projection emits no second command or Settings write.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -8294,9 +8333,11 @@ source_lineage:
   (D3, D4, D7, D8, D9, D26, D27, D28)
 - /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
   (concept integration lineage, not native API authority)
-- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
-  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
-  against concept source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256
+  108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept
+  source; not native or final visual verification)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
 - cmd.editor.close_tab
 - cmd.panel_tab.close

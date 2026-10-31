@@ -27722,29 +27722,62 @@ canonical_text: 'Everything the chat and its wizards open lands in the home cent
   the 5.6 Pro chat''s own editor pane as the host of what it opens and its inline Shell box (concept lineage), the left
   editor/document tab system and Return to chat of ACD-455 and v3 item 15 for Home, the "beside the chat" wording of
   ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat''s Goal tab. Amended DL-260, Jared
-  2026-10-31: only real product behavior remains an implementation requirement.'
+  2026-10-31: only real product behavior remains an implementation requirement. DL-259 FX-1 final, 2026-10-31: an export/print
+  attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt
+  and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created.
+  A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure
+  or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command,
+  receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, DL-187, DL-188, DL-157, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
 unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
-  - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
-  - "Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its own or as a centred modal."
-  - "A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact viewer tab, never a separate window (DL-180)."
-  - "What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes keyboard focus."
-  - "Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal tab exists."
-  - "Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws tells the chat, and the active tab in each panel is reported to it."
-  - "The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another chat minimum, and no tab covers the chat at any width."
-  - "History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout record, and only one thread-history list exists after the port."
-  - "The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab; Rerun in Terminal and View output follow ACD-108 and ACD-129."
-  - "Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command's status reads Done · exited 0, Failed · exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still; the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder> or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode."
-  - "Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail's Chat entry shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is on the chat's header menu, not in Settings."
-  - "Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal's Open exact Plan · Vn open that version through cmd.chat.plan.open_version and the one opening module, never Plan Details."
-  - "View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the chat (DL-180, F3-641)."
-  - "A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running, Done or Failed (SMPFS-180, F3-641)."
-  - "The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat."
-  - "Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal."
+- Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file
+  records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a
+  file already open anywhere, and opens a new panel on Alt+click, all through F3-634.
+- Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user
+  opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its
+  own or as a centred modal.
+- A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact
+  viewer tab, never a separate window (DL-180).
+- What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes
+  keyboard focus.
+- Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal
+  tab exists.
+- Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws
+  tells the chat, and the active tab in each panel is reported to it.
+- The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another
+  chat minimum, and no tab covers the chat at any width.
+- History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout
+  record, and only one thread-history list exists after the port.
+- The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the
+  count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab;
+  Rerun in Terminal and View output follow ACD-108 and ACD-129.
+- 'Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command''s status reads Done · exited 0, Failed ·
+  exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still;
+  the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder>
+  or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no
+  output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced
+  Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode.'
+- 'Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail''s Chat entry
+  shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is
+  on the chat''s header menu, not in Settings.'
+- 'Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal''s Open exact Plan · Vn open
+  that version through cmd.chat.plan.open_version and the one opening module, never Plan Details.'
+- View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer
+  tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the
+  chat (DL-180, F3-641).
+- A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running,
+  Done or Failed (SMPFS-180, F3-641).
+- The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat.
+- Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal.
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27762,24 +27795,41 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-181"
-  - "Plans/Decision_Log.md#DL-185"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D7, D8, D9, D19, D27)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.1; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 2, 3, 4, 9 and 10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 5)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (section 7, the chat command card; concept lineage only)"
-  - "Concepts/home-redesign/src/terminal/js/80-card.js at 2851bfcd9e on concept/home-terminal-20261009, SHA-256 16f3f3f478787f272cb26dde233cdb41e755db33e6e07f536dc1e00f83dfeba9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 11, the chat command card; concept lineage only)"
-  - "Concepts/home-redesign/src/terminal/js/80-card.js at 01c5e78c42 on concept/home-terminal-20261009, SHA-256 f6552706c9916a04f69f88dfa3ba22fce237f07e398f325a0fc3577ffcd53a80 (the card's words and actions; concept lineage only)"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-188"
-  - "Plans/UI_Command_Catalog.md#UCC-176 (cited here rather than in depends_on, which would close the cycle ACD-500, UCC-176, F3-593, ACD-485; lead ruling L22)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256 9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings, not native proof)"
-  - "/mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd (concept-only Studio inventory, not product counts or native APIs)"
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-181
+- Plans/Decision_Log.md#DL-185
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D7, D8, D9, D19, D27)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 6 and 6.1; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
+  (sections 2, 3, 4, 9 and 10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (section 5)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md,
+  SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (section 7, the chat command card; concept
+  lineage only)
+- Concepts/home-redesign/src/terminal/js/80-card.js at 2851bfcd9e on concept/home-terminal-20261009, SHA-256 16f3f3f478787f272cb26dde233cdb41e755db33e6e07f536dc1e00f83dfeba9
+  (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 11, the chat command card; concept
+  lineage only)
+- Concepts/home-redesign/src/terminal/js/80-card.js at 01c5e78c42 on concept/home-terminal-20261009, SHA-256 f6552706c9916a04f69f88dfa3ba22fce237f07e398f325a0fc3577ffcd53a80
+  (the card's words and actions; concept lineage only)
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)
+- Plans/Decision_Log.md#DL-188
+- Plans/UI_Command_Catalog.md#UCC-176 (cited here rather than in depends_on, which would close the cycle ACD-500, UCC-176,
+  F3-593, ACD-485; lead ruling L22)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/lead-checkpoint-20261022-2155.md, SHA-256
+  9063fdc033b2aac0d2558eba612d2f0ab33b032f0a0df72c848c21112ee72e98 (lead checkpoint; concept integration and rulings,
+  not native proof)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/demo-inventory-20261022.md, SHA-256 3f1f8f372c1ec03a047cd6936853f14f3b745b056791bd2f7a30d929a00e60cd
+  (concept-only Studio inventory, not product counts or native APIs)
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
   - "Open in Terminal"
   - "Rerun in Terminal"
@@ -27859,16 +27909,18 @@ canonical_text: 'The 5.6 Pro chat follows these shared presentation and behavior
   360 px of messages remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size
   view across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History and
   detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258;
-  GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input,
-  select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
-  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback;
-  a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless
-  rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu
-  head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
-  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its
-  sheet head; do not fork a second wand or fallback icon. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement.'
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes
+  Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects region, including an embedded plate
+  control; plain text, empty space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring,
+  with the shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the
+  linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body,
+  seat or label; each retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled
+  emphasises only a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis,
+  Reduced Motion settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner
+  serves every sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with
+  the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
+  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback
+  icon. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
 gui_classification_reason: Owns shared chat colors, sizing, layers, hover, controls and keys under the application owners.
 split_recommended: false
@@ -27891,14 +27943,17 @@ acceptance_criteria:
   tag in the chat comes from PMConcept7's hover controller.
 - No pill and no coloured side stripe remains in the chat in any look.
 - Under NieR Mode the page draws one scene and one ground layer, and the chat adds none.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
-  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
-  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
-  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
-  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
-  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
-  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
-  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27914,12 +27969,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-185"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26, D27, D28)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 5, 6, 8 and 10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/ (concept lineage only)"
+- Plans/Decision_Log.md#DL-185
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D26, D27, D28)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
+  (sections 5, 6, 8 and 10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md,
+  SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728
+- Concepts/chat-assistant-concepts/5.6 Pro/ (concept lineage only)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
 - Basic, Friendly and Glass
 negative_constraints:

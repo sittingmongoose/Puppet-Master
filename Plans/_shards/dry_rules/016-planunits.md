@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L1984
+Source lines: L265-L1996
 
-Source SHA256: `cc787a184347f1af07630520bb0d003eff91ecb21bba141e0dd6a3894cf8985c`
+Source SHA256: `02d0c78e441f2adcddd8bf49da0aa460eb3f78212a2af22e3481786ae5475189`
 
 ---
 
@@ -901,7 +901,12 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   integration, 2026-10-31: Product Onboarding consumes PWIZ-024’s current choice and validation contract for display,
   Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites are shared;
   a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness validation
-  remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
+  remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities. DL-259 FX-1 final,
+  2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and
+  says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is
+  not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful
+  PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback
+  rule, not a new export command, receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -917,6 +922,11 @@ acceptance_criteria:
   for display, Continue availability/reason and activation. The service/variant/address resolver and owner prerequisites
   are shared; a screen does not own a separate button-only or action-only interpretation. Domain permission/currentness
   validation remains with its existing owner. UIW-015 and UCC-106 are consumers, not peer validation authorities.'
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -936,6 +946,8 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer

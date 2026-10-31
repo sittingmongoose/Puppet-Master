@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2615-L2924
+Source lines: L2657-L2978
 
-Source SHA256: `2f6e4421fd4caa0caee0084020e3d170c35879cbf8de60f0a2a860eabb0ae4da`
+Source SHA256: `fe32d389c7c50561a530fd9e42fef00d64641ea655d1c0f8e07531c9fae614a2`
 
 ---
 
@@ -113,7 +113,13 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   or a wizard caveat. DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the
   provider-console/local-bootstrap one-time setup-code handoff. That initial claim route asks for the code, not a Server
   address, and does not discover unclaimed cloud computers over the network. The Server owner’s protected authorization
-  and existing exact proof tuple still gate claim; no public unclaimed setup is exposed.'
+  and existing exact proof tuple still gate claim; no public unclaimed setup is exposed. DL-259 FO-7, 2026-10-31: accepting
+  an owner’s approval or rejection finishes that exact pairing request/generation in the view. Clear its obsolete warning
+  and render the answered result; later refreshes must not re-adopt the consumed result as a new request or show a false
+  used-answer warning. The answered view offers a fresh code/request rather than Check again for the completed one. A
+  fresh invitation starts a new generation; exact Server/Client/session/generation, matching-identity confirmation, permission,
+  expiry and genuine replay rejection remain. Rejecting a later request cannot remove a Client already approved by an
+  earlier request. A view marker never grants trust or bypasses the Server owner.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -255,6 +261,12 @@ acceptance_criteria:
   one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
   unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
   still gate claim; no public unclaimed setup is exposed.'
+- 'DL-259 FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing request/generation
+  in the view. Clear its obsolete warning and render the answered result; later refreshes must not re-adopt the consumed
+  result as a new request or show a false used-answer warning. The answered view offers a fresh code/request rather than
+  Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
+  matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
+  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

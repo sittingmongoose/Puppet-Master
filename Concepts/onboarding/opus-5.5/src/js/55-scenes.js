@@ -102,10 +102,12 @@
       /* O12: a block for each owner phase that has completed, lowered onto the stack as it completes; once the Project is
          made, Continue waits for the last to land (Jared's O12 B; about half a second, at once under Reduced Motion) */
       props(S) {
-        const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key);
-        const done = O55.review && O55.review.shownDone(S) ? list.length : st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
+        /* (the phases Creating shows done: on the GitHub chain only what the accepted owner result settled, FO-9; a block
+           keeps its phase's identity, so one not confirmed lifts off and a settled one stays where it landed) */
+        const list = O55.review ? O55.review.phasesFor(S) : [], shown = O55.review && O55.review.shownPhases ? O55.review.shownPhases(S) : [];
+        const keys = O55.review && O55.review.shownDone(S) ? list : shown.filter((p) => p.status === 'done').map((p) => p.key);
         const ICON = { folder: 'folder', device: 'nas', clone: 'cloud', restore: 'restore', history: 'history', historyInstall: 'history', online: 'cloud', settings: 'stack', remote: 'globe', check: 'check' };
-        return list.slice(0, done).map((k, i) => ({ id: 'b' + i, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[i % 5], count: list.length } }));
+        return keys.map((k, i) => ({ id: 'b-' + k, kind: 'block', stack: i, ground: true, params: { icon: ICON[k] || 'check', hue: 'abcde'[list.indexOf(k) % 5], count: list.length } }));
       },
       state(S) {
         if (O55.review && O55.review.shownDone(S)) return md(S).project_mode === 'later' ? 'doneLater' : 'done';
@@ -115,7 +117,7 @@
       },
       work: true,
       vars(S) {
-        const list = O55.review ? O55.review.phasesFor(S) : [], st = op(S, (S.sess.commit || {}).key), done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0;
+        const list = O55.review ? O55.review.phasesFor(S) : [], done = O55.review && O55.review.shownPhases ? O55.review.shownPhases(S).filter((p) => p.status === 'done').length : 0;
         return { kind: md(S).history_backend === 'jujutsu' ? 'Jujutsu' : 'Git', service: forgeName(S), device: (S.sess.nas && S.sess.nas.folderLabel) || '', phase: phaseNow(S) || list[Math.min(done, list.length - 1)] || 'check', done, total: list.length };
       }
     },

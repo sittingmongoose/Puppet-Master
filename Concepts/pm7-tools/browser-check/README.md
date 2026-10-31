@@ -26,6 +26,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | `reduced-motion` | `prefers-reduced-motion: reduce` holds after a load and after a reload. |
 | `sandbox` | The page boots and paints in a sandboxed iframe (opaque origin, no storage) with no console errors. |
 | `qa2-chatpip`, `pip-voice-room` | Lane checks for chat Pip and the voice room. |
+| `nier-help-on-chosen` | Every onboarding screen in NieR Light and Dark: each option with a ? is clicked in turn, and every ? on the screen stays on top (clickable) and is not ink on ink, with the pointer on the option and away (FO-5). `--set sandbox=1` runs it in a sandboxed iframe. About 7 minutes. |
+| `native-dialogs` | FX-1, on a normal page and in a sandboxed iframe at `t.openInSandbox`'s default flags (no `allow-modals`): the old Terminal chrome (workgroup pills and subtabs, whose menus used `prompt()` and `confirm()`) stays out of reach; the chat's Plan PDF export (thread Query performance, Details, More, Export, PDF) prints on a normal page (print stubbed) and in the sandbox says no PDF was made and leaves no blank window; no `alert`, `confirm` or `prompt` fires. About 35 seconds. |
 
 "No overflow" means: no sideways page scroll, no element painted past the right edge outside a scroller or clipper, and no text clipped without an ellipsis. Screen-reader-only labels and layers that aren't on top are ignored.
 

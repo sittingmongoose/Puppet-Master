@@ -1980,7 +1980,19 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
   Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
   current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
-  Skip. Reduced Motion reveals the feedback in its settled position.'
+  Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows
+  and connected-account summaries show the category and concise product/account identity without billing explanations,
+  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
+  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
+  FO-9 final, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When
+  GitHub creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven
+  to have failed may show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending
+  through an incomplete or unclear result until a later accepted owner result from Continue Setup or Check again proves
+  those effects settled. The checklist, stage block count and stage progress use that same result; a settled phase keeps
+  its block and an unproven phase has no completed block. Refresh alone neither completes a phase nor repeats a settled
+  remote create. Transport completion and animation never prove the later registration, settings or connection steps.
+  The recovery banner/actions, Continue availability and Ready use that same current owner result; O12’s last-block landing
+  condition is additional to owner completion, never a replacement for it.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2108,6 +2120,19 @@ acceptance_criteria:
   available and continuation reflects the explicit phase skip. No account becomes Ready from skipping; current paid/free
   account usability still comes from its owner. This phase skip remains distinct from whole-session Skip. Reduced Motion
   reveals the feedback in its settled position.'
+- 'DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
+  identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
+  account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
+  account identity or credential custody. DL-259 FO-9 final, 2026-10-31: Creating’s checklist and block stack share the
+  accepted owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases
+  as checked or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain
+  pending. Unexecuted or unproven phases stay pending through an incomplete or unclear result until a later accepted
+  owner result from Continue Setup or Check again proves those effects settled. The checklist, stage block count and
+  stage progress use that same result; a settled phase keeps its block and an unproven phase has no completed block.
+  Refresh alone neither completes a phase nor repeats a settled remote create. Transport completion and animation never
+  prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
+  Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
+  a replacement for it.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2148,6 +2173,11 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- PM7 final-onb FO-4/FO-9; source 73-screens-ai/copy and b75da99bef shownPhases; WIP helper names are source lineage
+  only.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -2225,7 +2255,13 @@ canonical_text: 'Product Onboarding uses one bounded modal window over the visib
   Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently
   turns a guard off. DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the person chose under No account
   yet when returning to AI setup, and present that category’s providers first. This is reversible local navigation/draft
-  state, not a persisted preference, account connection, provider readiness result or owner mutation.'
+  state, not a persisted preference, account connection, provider readiness result or owner mutation. DL-259 FO-6, 2026-10-31:
+  a protected field keeps its typed value through redraws of the same screen and field identity, including typing in
+  another field, opening help and changing Plain English/Expert. A blank rendering template alone must not erase it.
+  The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
+  or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
+  in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
+  submission reads the current protected value and rechecks its existing owner requirements.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -2277,6 +2313,12 @@ acceptance_criteria:
 - 'DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the person chose under No account yet when returning
   to AI setup, and present that category’s providers first. This is reversible local navigation/draft state, not a persisted
   preference, account connection, provider readiness result or owner mutation.'
+- 'DL-259 FO-6, 2026-10-31: a protected field keeps its typed value through redraws of the same screen and field identity,
+  including typing in another field, opening help and changing Plain English/Expert. A blank rendering template alone
+  must not erase it. The action clears the field when it consumes the input; leaving/recreating the screen, changing
+  its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control
+  until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential
+  or validation proof; submission reads the current protected value and rechecks its existing owner requirements.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -2717,7 +2759,13 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   or a wizard caveat. DL-259 CLOUD-1 / srv C2 A, Jared 2026-10-31: onboarding claims a new cloud computer through the
   provider-console/local-bootstrap one-time setup-code handoff. That initial claim route asks for the code, not a Server
   address, and does not discover unclaimed cloud computers over the network. The Server owner’s protected authorization
-  and existing exact proof tuple still gate claim; no public unclaimed setup is exposed.'
+  and existing exact proof tuple still gate claim; no public unclaimed setup is exposed. DL-259 FO-7, 2026-10-31: accepting
+  an owner’s approval or rejection finishes that exact pairing request/generation in the view. Clear its obsolete warning
+  and render the answered result; later refreshes must not re-adopt the consumed result as a new request or show a false
+  used-answer warning. The answered view offers a fresh code/request rather than Check again for the completed one. A
+  fresh invitation starts a new generation; exact Server/Client/session/generation, matching-identity confirmation, permission,
+  expiry and genuine replay rejection remain. Rejecting a later request cannot remove a Client already approved by an
+  earlier request. A view marker never grants trust or bypasses the Server owner.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -2859,6 +2907,12 @@ acceptance_criteria:
   one-time setup-code handoff. That initial claim route asks for the code, not a Server address, and does not discover
   unclaimed cloud computers over the network. The Server owner’s protected authorization and existing exact proof tuple
   still gate claim; no public unclaimed setup is exposed.'
+- 'DL-259 FO-7, 2026-10-31: accepting an owner’s approval or rejection finishes that exact pairing request/generation
+  in the view. Clear its obsolete warning and render the answered result; later refreshes must not re-adopt the consumed
+  result as a new request or show a false used-answer warning. The answered view offers a fresh code/request rather than
+  Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
+  matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
+  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

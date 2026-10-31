@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40889-L42131
+Source lines: L40939-L42194
 
-Source SHA256: `adb38593194fb49cd9cbcbc9e02affc60eb29403654dfd8c46b3ae7cd43ef023`
+Source SHA256: `266ef12dd89bed0609723a4656865e115e9f79b9e1888e22e07001fe700b33b5`
 
 ---
 
@@ -19,96 +19,105 @@ plan_unit_id: F3-566
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules' surfaces only, this
-  contract supersedes the presentation clauses of the 2026-09-03 redesign section's section 10 (one shared modal
-  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'
-  layout), and Additive Correction v4's statement that nothing authorises a broad restyle. Every behaviour
-  clause stays and applies to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY,
-  the current themes and their tokens. Every configuration popup is a configuration sheet with one anatomy. The
-  head has the module's kind mark (no tile, no box), a sentence-case title with the canonical name inside, one
-  lead sentence and the close control, and no header pill. The hero is the most important input, first and
-  focused. Then a plate, a flat drawing of who is involved and where the result goes (in the four collaboration
-  kinds, the cast plate of F3-595, DL-149), over the roster or the module's equivalent; then the questions,
-  numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to 3 in Crew Auto), each
-  number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying what won't
-  happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry that
-  opens as a page inside the same sheet. Every control has a visible label and one helper line; options with
-  descriptions use the preserved dropdown trigger, and each description names the real difference between the
-  options (for example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive
-  and BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot
-  holds the read-back sentence, always true for the current settings, the estimate line (never $0.00), Cancel
-  and one primary naming a verb, the canonical name and a count; a disabled primary prints its reason, and a
-  refused Start replaces the read-back with the refusal and a route to the control that fixes it. A sheet whose
-  changes apply at once shows only Done. Every sheet sits over a flat scrim. On the Skia GPU path a sheet is
-  frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions (DL-139, F3-582); on the Skia
-  CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel. The scrim is never
-  blurred, and F3-431's blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113, DL-115):
-  each theme family moves with its own motion personality, aligned with the transcript's motion voices of
-  ACD-475 (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet's opening and closing and an
-  in-chat card's changes take their family's personality. Where a card takes part in a transcript beat (its
-  family entrance, the fold), ACD-475 governs and the voice changes only path, easing and texture, never timing
-  or order. This contract states the principle only: the per-family duration and easing values are the design
-  foundation's tokens, recorded at the concept's closing step, and are not canon values. Reduce Motion lands
-  every change at its end state instantly in every family. Sizes are fixed per sheet: wide 1120 x 780 (the
-  collaboration kinds, the Scheduled and Automations manager, Memory), standard 900 x 720 (Back Seat Driver,
-  Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert, ELI5 and the
-  small raw-data and evidence dialogs; F3-581 gives ELI5's), always clamped inside the window (at most its width
-  less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
-  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that
-  fits and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its
-  width (F3-601, DL-154), and grows into spare height when the column is short; the roster scrolls in its own
-  region only once its rows no longer fit beside the plate's floor, with Add a helper kept visible; the side
-  column scrolls only below 1280 x 800; the hero field scrolls inside itself past three lines; below a 900 px
-  sheet width the body becomes one column that scrolls inside the sheet with head and foot fixed, the plate
-  staying at the top of that column while its question is on screen (F3-601); nothing overflows sideways.
-  Hovering or focusing a control lights the plate parts and read-back phrases it affects and dims the others,
-  with no re-render. Kinds are told apart by a kind mark drawn by shape, and each participant by its puppet,
-  which replaced the cast mark (F3-594, DL-149): a role prop, the theme family's material and a puppet-drawn
-  state, never initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a
-  block (columns are separated by space only), nested boxes, uppercase micro-labels or emoji. Typography (J-1):
-  every wand-module surface uses the theme's own font with no separate display face; the voice roles
-  (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only by size, weight and
-  colour, and a quote is marked by quotation marks and the muted colour, never a different face. Spacing (J-2)
-  is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below it (6 px
-  inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container's side edge;
-  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall;
-  adjacent controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on
-  its line; a secondary line under a row sits at least 6 px below it and 12 px above what follows; roster rows
-  are at least 52 px tall; body and helper text keep a line height of at least 1.45 and headlines 1.25. When
-  space runs short, text wraps or ellipsizes or a secondary element drops; padding and gaps never compress.
-  DL-138 confirms this scope: theme durations govern sheets and a card's own changes; transcript entrances
-  retain ACD-475's shared timing and order. Wand cards that opt out of the family entrance do not acquire a
-  second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet header may add Pip holding the
-  kind sign on a third string, 10 px lower than the first concept and level with Close. Existing
-  title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
-  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
-  independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared
-  2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its
-  affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words,
-  empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
-  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner
-  on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
-  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
-  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
-  fallback icon.
+canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules'' surfaces only,
+  this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s section 10 (one shared modal
+  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'' layout),
+  and Additive Correction v4''s statement that nothing authorises a broad restyle. Every behaviour clause stays and applies
+  to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens.
+  Every configuration popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile,
+  no box), a sentence-case title with the canonical name inside, one lead sentence and the close control, and no header
+  pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of who is involved and
+  where the result goes (in the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module''s
+  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to
+  3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying
+  what won''t happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry
+  that opens as a page inside the same sheet. Every control has a visible label and one helper line; options with descriptions
+  use the preserved dropdown trigger, and each description names the real difference between the options (for example
+  Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and BrainStorm; BrainStorm
+  has no Quick strategy); a disabled control prints its reason in words. The foot holds the read-back sentence, always
+  true for the current settings, the estimate line (never $0.00), Cancel and one primary naming a verb, the canonical
+  name and a count; a disabled primary prints its reason, and a refused Start replaces the read-back with the refusal
+  and a route to the control that fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over
+  a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
+  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel.
+  The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113,
+  DL-115): each theme family moves with its own motion personality, aligned with the transcript''s motion voices of ACD-475
+  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet''s opening and closing and an in-chat card''s changes
+  take their family''s personality. Where a card takes part in a transcript beat (its family entrance, the fold), ACD-475
+  governs and the voice changes only path, easing and texture, never timing or order. This contract states the principle
+  only: the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s closing
+  step, and are not canon values. Reduce Motion lands every change at its end state instantly in every family. Sizes
+  are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled and Automations manager, Memory), standard
+  900 x 720 (Back Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert,
+  ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most
+  its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
+  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that fits
+  and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its width (F3-601,
+  DL-154), and grows into spare height when the column is short; the roster scrolls in its own region only once its rows
+  no longer fit beside the plate''s floor, with Add a helper kept visible; the side column scrolls only below 1280 x
+  800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one column
+  that scrolls inside the sheet with head and foot fixed, the plate staying at the top of that column while its question
+  is on screen (F3-601); nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and
+  read-back phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds are
+  told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the cast mark (F3-594,
+  DL-149): a role prop, the theme family''s material and a puppet-drawn state, never initials or letters. Nothing draws
+  pills or capsules, side strips or vertical rules beside a block (columns are separated by space only), nested boxes,
+  uppercase micro-labels or emoji. Typography (J-1): every wand-module surface uses the theme''s own font with no separate
+  display face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only
+  by size, weight and colour, and a quote is marked by quotation marks and the muted colour, never a different face.
+  Spacing (J-2) is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
+  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s side edge;
+  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall; adjacent
+  controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on its line; a secondary
+  line under a row sits at least 6 px below it and 12 px above what follows; roster rows are at least 52 px tall; body
+  and helper text keep a line height of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes
+  or a secondary element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
+  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards that opt out
+  of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet
+  header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close.
+  Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
+  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
+  SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
+  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
+  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
+  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
+  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
+  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
+  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
+  sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
+  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
 depends_on: [DL-109, DL-113, DL-114, DL-115, DL-139, DL-148, DL-149, ACD-475, F3-431, F3-531, F3-534, F3-582]
 unblocks: [F3-567, F3-568, F3-569, F3-570, F3-573, F3-574, F3-576, F3-579, DR-044]
 acceptance_criteria:
-  - "Theme timing never overrides the shared timing or order of a transcript entrance."
-  - "Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may have no hero or questions, and its foot shows only Done."
-  - "No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open."
-  - "No kind or participant is drawn with initials or letters."
-  - "Every wand-module surface uses the theme's own font and no separate display face."
-  - "Every surface meets the J-2 minimums in all ten themes."
-  - "A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses a backdrop blur in any theme."
-  - "Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats keep ACD-475's shared timing and order."
-  - "With Reduce Motion on, every sheet and card change lands at its end state instantly in every family."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
+- Theme timing never overrides the shared timing or order of a transcript entrance.
+- Every wand configuration popup with a committing primary renders the head, hero, plate, questions and foot anatomy
+  with one primary; a sheet whose changes apply at once (the ELI5 sheet, F3-581) keeps the head, plate and foot, may
+  have no hero or questions, and its foot shows only Done.
+- No sheet scrolls in its common case at 1440 x 900 or 1280 x 800, and no sheet changes size while open.
+- No kind or participant is drawn with initials or letters.
+- Every wand-module surface uses the theme's own font and no separate display face.
+- Every surface meets the J-2 minimums in all ten themes.
+- A sheet uses a backdrop blur only on the Skia GPU path and is a solid surface on the Skia CPU raster; no scrim uses
+  a backdrop blur in any theme.
+- Each theme family's sheets and in-chat cards move with that family's motion personality, and a card's transcript beats
+  keep ACD-475's shared timing and order.
+- With Reduce Motion on, every sheet and card change lands at its end state instantly in every family.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -124,13 +133,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6"
-  - "IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)"
-  - "Plans/Decision_Log.md#DL-109"
-  - "Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)"
-  - "Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)"
-  - "Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6
+- IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)
+- Plans/Decision_Log.md#DL-109
+- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)
+- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)
+- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the
+  token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
   - "DL-138"
   - "configuration sheet"

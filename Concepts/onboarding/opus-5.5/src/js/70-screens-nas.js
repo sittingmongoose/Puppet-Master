@@ -358,7 +358,7 @@
         return out + `<div class="o55-sublinks" data-key="back">${C.link(T('nas.signin.selfOff'), 'selfOff')}</div>`;
       }
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, typed: !!n.pwTyped, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
       const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
       out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · correct horse', outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: (d.user || 'jared') + ' · ' + wrongPw, outcome: 'refused', fills: [['user', d.user || 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped });
@@ -729,7 +729,7 @@
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
       const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
       /* (the computer that opens the share keeps its sign-in, as for any shared folder: not the SSH key's one-time password) */
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
+      out += C.field({ bind: 'pw', type: 'password', protected: true, typed: !!N(S).pwTyped, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
       const wrongPw = (O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password';
       out += H('nas-smb:signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + wrongPw, outcome: 'refused', fills: [['user', 'jared'], ['pw', wrongPw]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
       out += C.details(S, 'smbdomain', T('nas.smb.more'), C.field({ bind: 'domain', label: T('nas.smb.domain'), value: n.domain || '', hint: T('nas.smb.domainHint'), autocomplete: 'off' }));

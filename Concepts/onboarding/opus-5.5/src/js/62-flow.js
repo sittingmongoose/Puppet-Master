@@ -144,9 +144,25 @@
   };
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */
   /* (its ? is copy:<key>; the explainer opens after the line the button sits in: F.copyNote(key)) */
+  /* The "Copied" acknowledgment is kept here, per button, until its deadline, and the button is drawn from it: a screen
+     redrawn meanwhile (s-ready's and the codes' once-a-second countdown) used to write "Copy" back over it after about
+     0.2 s (final recording FO-8). Kept for this page only; nothing is saved. */
+  const COPIED = {}, COPIED_MS = 1400;
+  const copyKey = (text, key) => 'copy-' + (key || U.slug(text));
+  const copiedNow = (k) => !!COPIED[k];
   F.copyNote = (key) => O55.tips.explainer('copy:' + (key || ''));
-  F.copyBtn = (text, key) => O55.tips.opt('copy:' + (key || ''), `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="copy-${U.esc(key || U.slug(text))}">${U.esc(T('chrome.copy'))}</button>`, 'o55-opt-inline', 'span', { note: false });
+  F.copyBtn = (text, key) => { const k = copyKey(text, key); return O55.tips.opt('copy:' + (key || ''), `<button type="button" class="o55-btn o55-secondary o55-small" data-o55-do="copyText" data-arg="${U.esc(text)}" data-pm-hover-exempt="true" data-key="${U.esc(k)}">${U.esc(T(copiedNow(k) ? 'chrome.copied' : 'chrome.copy'))}</button>`, 'o55-opt-inline', 'span', { note: false }); };
   O55.actions.copyText = function (S, text, el) {
-    U.copyText(text).then((ok) => { if (!ok || !el || !document.contains(el)) return; el.textContent = T('chrome.copied'); O55.sound.play('copy'); O55.motion.after(1400, () => { if (document.contains(el)) el.textContent = T('chrome.copy'); }); });
+    U.copyText(text).then((ok) => {
+      if (!ok || !el || !document.contains(el)) return;
+      /* (its deadline runs on the motion clock, as the timer does: slow-motion filming stretches both alike) */
+      const k = el.getAttribute('data-key') || copyKey(text), until = {};
+      COPIED[k] = until; el.textContent = T('chrome.copied'); O55.sound.play('copy');
+      O55.motion.after(COPIED_MS, () => {
+        if (COPIED[k] !== until) return; /* copied again meanwhile: that one's deadline counts */
+        delete COPIED[k];
+        document.querySelectorAll('[data-o55-do="copyText"]').forEach((b) => { if (b.getAttribute('data-key') === k) b.textContent = T('chrome.copy'); });
+      });
+    });
   };
 })();

@@ -242,6 +242,18 @@
     list.push('check');
     return list;
   }
+  /* On the GitHub chain the transport's ticks are display only. Once it has run, a phase shows done only when the accepted
+     owner result settled its effect, and stays pending until an accepted Continue Setup settles it (final check FO-9: a
+     half-made copy showed every phase done under "the rest of the setup didn't finish", and an unclear answer showed them
+     all done with nothing confirmed). The stage's blocks count the same. */
+  const PH_EFFECT = { folder: 'source_preparation', device: 'source_preparation', clone: 'clone_connect', online: 'remote_repository_create', history: 'history_init', historyInstall: 'history_init', settings: 'settings_rebind_apply', check: 'registry_publication' };
+  function shownPhases(S) {
+    const d = md(S), cm = S.sess.commit || {}, st = F.state(S, cm.key);
+    const transport = (k) => { const ph = st && st.phases ? st.phases.find((p) => p.key === k) : null; return ph ? ph.status : 'waiting'; };
+    if (!PR().isGithubRemoteChain(d) || cm.state === 'done' || !cm.transportDone) return phasesFor(S).map((k) => ({ key: k, status: transport(k) }));
+    const r = cm.recovery || {}, settled = r.settled_effects || {};
+    return phasesFor(S).map((k) => ({ key: k, status: PH_EFFECT[k] && settled[PH_EFFECT[k]] ? 'done' : k === 'online' && r.remote_effect_state === 'failed_before_effect' ? 'failed' : 'waiting' }));
+  }
   const PH_MS = { folder: 700, device: 900, clone: 1400, restore: 1500, history: 700, historyInstall: 1600, online: 1300, settings: 900, remote: 1100, check: 900 };
   const CHILD = { history: 'cmd.source_control.backend.select', historyInstall: 'cmd.source_control.backend.select', online: 'cmd.source_control.repository.bind', settings: 'cmd.settings.transaction.apply', remote: null };
   function remoteCmd(d) { return d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup'; }
@@ -514,7 +526,7 @@
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
-    scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
+    scene: (S) => { const done = shownPhases(S).filter((p) => p.status === 'done').length; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
     eyebrow: () => T('creating.eyebrow'),
     title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return shownDone(S) ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
     lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return shownDone(S) ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
@@ -522,7 +534,8 @@
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d), github = PR().isGithubRemoteChain(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
         history: T('creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
-      let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null) + savedLine(S, cm);
+      const details = cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null;
+      let out = C.phases(shownPhases(S).map((p) => ({ key: p.key, label: labels[p.key], status: p.status, detail: details && details[p.key] }))) + savedLine(S, cm);
       if (github) {
         out += githubStatus(S);
         if (shownDone(S)) out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));
@@ -813,5 +826,5 @@
     onBack: () => false
   });
 
-  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone, phasesFor };
+  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone, phasesFor, shownPhases };
 })();

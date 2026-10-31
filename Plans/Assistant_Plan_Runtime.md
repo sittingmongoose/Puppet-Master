@@ -182,8 +182,16 @@ plan_unit_id: APR-003
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
-canonical_text: >-
-  Every one of the six strategy choices produces the same user-facing Plan document family. The durable canonical content is a structured document tree with stable block identifiers and plan_step_id-bearing plan-step blocks. Rich Text is the default view, Markdown is a toggle over the same revision without losing block identity, and PDF export is a third projection of the same exact version. Embedded artifacts open in the ordinary artifact viewer through refs this runtime supplies. Progress display is a separate projection keyed by plan_step_id and approved Markdown is never mutated to show status.
+canonical_text: 'Every one of the six strategy choices produces the same user-facing Plan document family. The durable
+  canonical content is a structured document tree with stable block identifiers and plan_step_id-bearing plan-step blocks.
+  Rich Text is the default view, Markdown is a toggle over the same revision without losing block identity, and PDF export
+  is a third projection of the same exact version. Embedded artifacts open in the ordinary artifact viewer through refs
+  this runtime supplies. Progress display is a separate projection keyed by plan_step_id and approved Markdown is never
+  mutated to show status. DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes
+  any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was
+  made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s
+  actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision
+  unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: Rich Text default, the Markdown toggle, embedded artifact rendering, and export are user-visible Plan card behavior.
 depends_on:
@@ -191,10 +199,15 @@ depends_on:
 unblocks:
   - APR-004
 acceptance_criteria:
-  - The Plan card opens in Rich Text by default and the Markdown toggle renders the same revision.
-  - Block and plan step identifiers remain stable across both projections and across export.
-  - Markdown and PDF export deliver the exact bound version and hash with an export receipt.
-  - No projection mutates the structured revision or its content hash.
+- The Plan card opens in Rich Text by default and the Markdown toggle renders the same revision.
+- Block and plan step identifiers remain stable across both projections and across export.
+- Markdown and PDF export deliver the exact bound version and hash with an export receipt.
+- No projection mutates the structured revision or its content hash.
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - document revision projection and export fixtures
@@ -207,7 +220,9 @@ node_compile_hint:
   mode: document_projection_contract
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:PLAN-002
+- pm-assistant-implementation-2026-09-02-recovered:PLAN-002
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
   - "Rich Text"
   - "Markdown"

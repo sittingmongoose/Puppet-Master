@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3525-L4763
+Source lines: L3554-L4812
 
-Source SHA256: `cc787a184347f1af07630520bb0d003eff91ecb21bba141e0dd6a3894cf8985c`
+Source SHA256: `02d0c78e441f2adcddd8bf49da0aa460eb3f78212a2af22e3481786ae5475189`
 
 ---
 
@@ -1145,7 +1145,15 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
   protected flow; never reuse its never-saved hint for SMB. DL-260: one shared component renders the option question
   affordance, expanded note and joined tray in every family; no screen appends a second tray, disclosure grammar, pointer
-  engine or sibling-level follow-up. Source API/class names remain lineage only.'
+  engine or sibling-level follow-up. Source API/class names remain lineage only. DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31:
+  the shared choice/help owner preserves question visibility through selected/hover/focus states, NieR included. One
+  protected-field reconciliation owner preserves same-field live input through redraw and performs explicit consumption/reset
+  clearing (PWIZ-022); a screen never copies the secret into its draft to survive redraw. Copy feedback uses one per-control
+  acknowledgment deadline (F3-182), and Creating checks/blocks read one verified phase/effect projection (PWIZ-021),
+  rather than separate timer-driven completion state. DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection
+  feeds Creating’s checklist, block set, block count and stage progress. Incomplete/unclear results retain pending phases
+  until a later accepted owner result settles them; no timer, refresh or separate scene counter promotes them. Project
+  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -1162,6 +1170,15 @@ acceptance_criteria:
   not overlap inputs.
 - Functional sections and data remain; explanation-only duplicates use the shared tips.
 - No new setting, command, local action, persisted field or permission is created.
+- 'DL-259 FO-5/FO-6/FO-8/FO-9, 2026-10-31: the shared choice/help owner preserves question visibility through selected/hover/focus
+  states, NieR included. One protected-field reconciliation owner preserves same-field live input through redraw and
+  performs explicit consumption/reset clearing (PWIZ-022); a screen never copies the secret into its draft to survive
+  redraw. Copy feedback uses one per-control acknowledgment deadline (F3-182), and Creating checks/blocks read one verified
+  phase/effect projection (PWIZ-021), rather than separate timer-driven completion state.'
+- 'DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection feeds Creating’s checklist, block set, block
+  count and stage progress. Incomplete/unclear results retain pending phases until a later accepted owner result settles
+  them; no timer, refresh or separate scene counter promotes them. Project recovery remains PJCT-007’s existing owner
+  route, with no second resume command or duplicate remote create.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -1181,6 +1198,9 @@ source_lineage:
 - Concepts/onboarding/opus-5.5/src/js/61-components.js at 7d586bad18
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.

@@ -7849,7 +7849,10 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   result for the online-copy/import view, its Continue availability/reason and activation. Recheck Protect Connect and
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
-  fences remain unchanged.'
+  fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
+  pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
@@ -7945,6 +7948,10 @@ acceptance_criteria:
   restore Continue prerequisites through the same existing owners at activation. Invalid or stale input advances nothing
   and dispatches no owner action. Existing local onboarding IDs, reviewed commit, protected auth, permission and return
   fences remain unchanged.'
+- 'DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered pairing create no
+  new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
+  fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -13689,24 +13696,51 @@ plan_unit_id: UCC-165
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The 2026-09-26 central admission registers exactly seven primaries -- cmd.project.resume_creation from PJCT-007 and six Forge commands from FGI-021 -- each with one owner binding, one typed request/result/error contract set, one sole future handler, handler_unavailable projection, expected_event_types=[], central response separation, and complete reverse consumers with exact return; recovery open/delete routes reuse Forge owner routes and Commands & Shortcuts local actions were outside that seven-primary batch; UCC-166 now admits their distinct local-action consumers without additional primaries.
+canonical_text: 'The 2026-09-26 central admission registers exactly seven primaries -- cmd.project.resume_creation from
+  PJCT-007 and six Forge commands from FGI-021 -- each with one owner binding, one typed request/result/error contract
+  set, one sole future handler, handler_unavailable projection, expected_event_types=[], central response separation,
+  and complete reverse consumers with exact return; recovery open/delete routes reuse Forge owner routes and Commands
+  & Shortcuts local actions were outside that seven-primary batch; UCC-166 now admits their distinct local-action consumers
+  without additional primaries. DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s
+  current accepted owner result. Continue Setup retains the existing cmd.project.resume_creation owner route and its
+  fresh-attempt/retained-recovery fence, never the original creation key. Check again consumes the applicable current
+  owner observation/recovery result; neither action nor refresh may mark unexecuted phases complete or manufacture Project
+  publication. Checklist, block count and stage progress agree on verified settled effects. Existing fourteen local actions,
+  exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 gui_related: true
 gui_classification_reason: These rows are the reverse-consumer identity for recovery Continue Setup, Delete Repository, CI artifact download/import, hosted secret/variable administration, and official-service navigation controls.
 depends_on: [UCC-164, PJCT-007, FGI-021]
 unblocks: [WM-058]
 acceptance_criteria:
-  - All seven IDs appear exactly once in the admission table with label, owner binding, sole future handler, and intended consumers with exact return.
-  - Each ID has exactly one production-intent row with the same command and sole target, typed request/result refs, expected_event_types=[], and central response separation.
-  - Every named consumer reads typed availability and disabled reason, renders handler_unavailable until native evidence, and returns to the exact initiating route/focus/continuation.
-  - Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation, peer row, alias, or second handler exists for any admitted ID.
-  - Commands & Shortcuts local actions gain no row here; no EventRecord, native handler, or runtime is claimed.
+- All seven IDs appear exactly once in the admission table with label, owner binding, sole future handler, and intended
+  consumers with exact return.
+- Each ID has exactly one production-intent row with the same command and sole target, typed request/result refs, expected_event_types=[],
+  and central response separation.
+- Every named consumer reads typed availability and disabled reason, renders handler_unavailable until native evidence,
+  and returns to the exact initiating route/focus/continuation.
+- Recovery open/delete dispatch through Forge owner routes only; no Project-local mutation, peer row, alias, or second
+  handler exists for any admitted ID.
+- Commands & Shortcuts local actions gain no row here; no EventRecord, native handler, or runtime is claimed.
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
+  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-plan-index.py validate]
 risk_class: central_admission_alias_collision_or_simulated_success
 reasoning_tier: high
 context_scope: project_recovery_forge_delete_ci_central_admission
 implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: static_command_catalog_registration_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Project_System.md#PJCT-007, Plans/Forge_Integrations.md#FGI-021, Plans/project_system_contracts.schema.json#x-project-recovery-command-contract, reports/packet-integration-completion-20260926/project-recovery.md]
+source_lineage:
+- Plans/Project_System.md#PJCT-007
+- Plans/Forge_Integrations.md#FGI-021
+- Plans/project_system_contracts.schema.json#x-project-recovery-command-contract
+- reports/packet-integration-completion-20260926/project-recovery.md
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens: [cmd.project.resume_creation, cmd.forge.repository.delete, cmd.forge.pipeline.artifact.download, cmd.forge.pipeline.secret.set, cmd.forge.pipeline.secret.remove, cmd.forge.pipeline.variable.set, cmd.forge.pipeline.variable.remove, handlers::project::resume_creation, handlers::forge::repository_delete, handlers::forge::pipeline_artifact_download, handlers::forge::pipeline_secret_set, handlers::forge::pipeline_secret_remove, handlers::forge::pipeline_variable_set, handlers::forge::pipeline_variable_remove, handler_unavailable, "expected_event_types=[]", command_not_registered, creation_recovery_resume_binding, project_creation_recovery_context, ObservableWork, FileSafe, one-use protected human-broker ref, official_destination_kind, automation_run_artifacts, hosted_service_settings, automation_service_overview, automation_run_id, hosted_setting_scope_ref, AutomationBinding, "Open artifacts in service", "Open service settings", "Open in <provider>", download, import]
 negative_constraints:
   - Do not create a second catalog row, peer control, or alternate handler for any admitted ID.
@@ -16597,13 +16631,16 @@ canonical_text: 'The chat port adds producers to existing commands and local act
   with boolean pinned (default false), selected thread_id, view_id, source scope and return-focus identity. It is view-local,
   has no runtime/Settings/event/receipt write and uses no production mutation handler. Pinned detail follows thread data
   across switches; unpinned detail closes on a switch. History pin remains separate; work actions use the UCC-210 owners
-  instead of chat-private aliases. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming
-  starts only from an actual control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider
-  semantics). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control
-  gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real
-  partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet
-  hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip
-  and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s
+  instead of chat-private aliases. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
+  at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
+  alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
+  NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus
+  never lowers another cast part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours.
+  Genuine owner-state quietness remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner
+  and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet hover
+  engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and
+  that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s
   kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
   shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
   or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
@@ -16626,10 +16663,25 @@ depends_on:
 - DL-234
 unblocks: []
 acceptance_criteria:
-  - "Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit local disposition."
-  - "History pin and Keep open never issue a Settings transaction or workspace.layout_changed; resizing commits once."
-  - "No candidate is registered or enabled merely because its concept demonstration works."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+- Every port producer resolves to one existing command, its recorded alias, a Settings transaction or an explicit local
+  disposition.
+- History pin and Keep open never issue a Settings transaction or workspace.layout_changed; resizing commits once.
+- No candidate is registered or enabled merely because its concept demonstration works.
+- 'DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only at an actual control in its affects
+  region, including an embedded plate control; plain text, empty space and the picture alone trigger none. Affected marks
+  take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in NieR; their connecting lines and
+  the job-card edge take accent, and the linked read-back takes the shared wash. Hover/focus never lowers another cast
+  part’s opacity or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims unrelated marks.
+  Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis changes no layout or owner
+  state. One shared affects/partner owner serves every sheet; there is no per-sheet hover engine. Q15: the menu head
+  and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s
+  own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet
+  head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -16648,9 +16700,11 @@ source_lineage:
   (D3, D4, D7, D8, D9, D26, D27, D28)
 - /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/CONTRACT.md, SHA-256 10adf449002887257c2a95eb97bf25d923e68a1650264622b6461e954f87389b
   (concept integration lineage, not native API authority)
-- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md,
-  SHA-256 108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated
-  against concept source; not native or final visual verification)
+- /mnt/Cursor/share/puppet-master/2026-10-22-chat56-port/handoff/plans-sources/integrated-behavior-59ca2d4382.md, SHA-256
+  108510ec4a80a24dc8a3fe05d7c45ebb7632934cd5b36bfd4edb3f01f833c649 (lead integration brief, corroborated against concept
+  source; not native or final visual verification)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
+  source evidence, not native APIs.'
 preserved_exact_tokens:
 - cmd.agents.open_thread
 - cmd.editor.close_tab

@@ -1,20 +1,20 @@
 # Shard Index: Plans/Decision_Log.md
 
-Generated: 2026-10-31T08:25:07Z
+Generated: 2026-10-31T18:01:21Z
 
-Source SHA256: `276967521505a96660a716e6f31cfab84b6e64d476f9a1364c2b7e2b6afd7521`
+Source SHA256: `f41c5ef6f3877fd08510c827e11cce289bfd6412c374f50da2db34fdf0a740b5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `65eebbd877c75a4ada5573fd2b403ac0417edf6018f37b15a65edf6dd0321453`
-- [002 - Purpose](002-purpose.md) L6-L11 `f3b95248f0efd7949d88c4a4976192e2d5b0f6573ac7a22c0d493421fa453fb0`
-- [003 - Entries](003-entries.md) L13-L4294 `990856fe3fb7506fe254693591d75a1fbb88456eba1d10c30329951814371792`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L4296-L4300 `cf5f17ff0340efbfd42df1c90e5d696e585fde661ecb0d7df1e242a546dbf5a9`
-- [005 - PlanUnits](005-planunits.md) L4302-L14495 `e669c185ff183243b6573ba3c9c49ec1c405603dcd9138f741bb17a15ce1f73e`
-- [006 - Migration Coverage](006-migration-coverage.md) L14497-L14507 `a96b7c61f7d0fbbf2d8816c36369917c26a402c777abb47d400f1f1181415160`
-- [007 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L14509-L14516 `c9d0529e2b1371b6d51dae6ec4110a5ba602e7e942972b8eeb7c956a2527c085`
-- [008 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L14517-L18589 `cf394dfa6618ad78413a9803fed52b610b57aa32efb750a61736beb39c6abecc`
-- [009 - QA round 2 — NieR is the fifth theme family (Jared, 2026-10-30, Q22)](009-qa-round-2-nier-is-the-fifth-theme-family-jared-2026-10-30-q22.md) L18594-L19254 `36eff597ecc9ebfb79a4afc06d8442847bab5fecf0fd8af1895555846f47fbdf`
-- [010 - DL-260 — Product canon excludes prototype mechanics (Jared, 2026-10-31, Q3 B)](010-dl-260-product-canon-excludes-prototype-mechanics-jared-2026-10-.md) L19256-L19326 `9459e6436d8f72998b13152da3326ec58ed70b31dede03beb8e2cd953b5c0037`
+- [001 - Preamble](001-preamble.md) L1-L4 `9ed8cbf410f52f679183e0ce260053bc861a1d81412581be5db91da7b5e746fb`
+- [002 - Purpose](002-purpose.md) L6-L11 `4065b03e6beb26fc9a6fb89ce5c644a45dbc623629f823ab8cf35ded14868e11`
+- [003 - Entries](003-entries.md) L13-L4294 `d4a196b57042407fb5ce327f5914bbe3f65b05be58e554e4b2a3828e58798f14`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L4296-L4300 `9df4203e402bb78374c01e888d43d057d30a5d417966968882f24ff7b8471dd7`
+- [005 - PlanUnits](005-planunits.md) L4302-L14495 `8bf7b0e7a5fbc159558ec8491b66aba960fd2786767492c1aa1e731a69d72cca`
+- [006 - Migration Coverage](006-migration-coverage.md) L14497-L14507 `57ef116757753daafb9fb7302073e387988ded6f78fd43a9353f5b19f090874a`
+- [007 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L14509-L14516 `9d94f89544b26a8d0e386f11953a98619fea32c587caadb7cbf655160d14f875`
+- [008 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L14517-L18589 `4b2feafdd388fab7810f3bfc46754a5d7f10bf995b2049a85c302bce2771b1ad`
+- [009 - QA round 2 — NieR is the fifth theme family (Jared, 2026-10-30, Q22)](009-qa-round-2-nier-is-the-fifth-theme-family-jared-2026-10-30-q22.md) L18594-L19368 `3b633f5e89dd08b27dbbcdab9846c090a32ad48b2a9c0ceec5455c87da1660cd`
+- [010 - DL-260 — Product canon excludes prototype mechanics (Jared, 2026-10-31, Q3 B)](010-dl-260-product-canon-excludes-prototype-mechanics-jared-2026-10-.md) L19370-L19440 `03151d234ef217172d5d274a45dbd54463ba52eb3a2cf8b729a6f1379bbcd21e`
