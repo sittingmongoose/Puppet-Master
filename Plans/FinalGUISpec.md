@@ -36892,7 +36892,14 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   phase has no completed block. Refresh alone neither completes a phase nor repeats a settled remote create. Transport
   completion and animation never prove the later registration, settings or connection steps. The recovery banner/actions,
   Continue availability and Ready use that same current owner result; O12’s last-block landing condition is additional
-  to owner completion, never a replacement for it.'
+  to owner completion, never a replacement for it. DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled
+  Continue gives an actionable reason for the selected route’s visible input before an unresolved Server-choice reason.
+  Web address and Remote Link use that field’s current missing/invalid-address result; an address typed instead of the
+  found list asks for the address when empty and explains when no Puppet Master answers, with a route back to the list.
+  Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s feedback conveys the same cause.
+  These screen/status words stay single in Plain English and Expert (DL-126); only tips/help have two versions. Reason
+  priority changes no validation, route identity, readiness, pairing or permission gate and admits no address/Remote
+  Link grammar.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37168,6 +37175,13 @@ acceptance_criteria:
   a phase nor repeats a settled remote create. Transport completion and animation never prove the later registration,
   settings or connection steps. The recovery banner/actions, Continue availability and Ready use that same current owner
   result; O12’s last-block landing condition is additional to owner completion, never a replacement for it.'
+- 'DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled Continue gives an actionable reason for the selected
+  route’s visible input before an unresolved Server-choice reason. Web address and Remote Link use that field’s current
+  missing/invalid-address result; an address typed instead of the found list asks for the address when empty and explains
+  when no Puppet Master answers, with a route back to the list. Say Choose your Puppet Master only while the found-Server
+  choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English
+  and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness,
+  pairing or permission gate and admits no address/Remote Link grammar.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37218,6 +37232,9 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 preserved_exact_tokens:
 - welcome
 - simple_path

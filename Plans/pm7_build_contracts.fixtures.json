@@ -5494,6 +5494,82 @@
           "second_Retro_fit_engine": false
         }
       }
+    },
+    {
+      "name": "DL259.FO10.route_reason",
+      "definition": "ConnectRouteReasonPolicy",
+      "valid": true,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "contract_scope": "static_Connect_route_reason_presentation_only",
+        "selected_visible_address_reason_before_unresolved_Server_choice": true,
+        "Server_choice_reason_only_while_list_shown": true,
+        "empty_typed_address_asks_for_address": true,
+        "unanswered_typed_address_explains_check_or_return_to_list": true,
+        "Continue_and_Pip_share_cause": true,
+        "screen_copy_single_Plain_English_Expert": true,
+        "reason_priority_changes_owner_validation_or_authority": false,
+        "new_action_command_setting_or_error_store": false,
+        "URL_or_Remote_Link_grammar_pinned": false
+      }
+    },
+    {
+      "name": "DL259.FO10.reject.Server_choice_reason_only_while_list_shown",
+      "definition": "ConnectRouteReasonPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "contract_scope": "static_Connect_route_reason_presentation_only",
+        "selected_visible_address_reason_before_unresolved_Server_choice": true,
+        "Server_choice_reason_only_while_list_shown": false,
+        "empty_typed_address_asks_for_address": true,
+        "unanswered_typed_address_explains_check_or_return_to_list": true,
+        "Continue_and_Pip_share_cause": true,
+        "screen_copy_single_Plain_English_Expert": true,
+        "reason_priority_changes_owner_validation_or_authority": false,
+        "new_action_command_setting_or_error_store": false,
+        "URL_or_Remote_Link_grammar_pinned": false
+      }
+    },
+    {
+      "name": "DL259.FO10.reject.selected_visible_address_reason_before_unresolved_Server_choice",
+      "definition": "ConnectRouteReasonPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "contract_scope": "static_Connect_route_reason_presentation_only",
+        "selected_visible_address_reason_before_unresolved_Server_choice": false,
+        "Server_choice_reason_only_while_list_shown": true,
+        "empty_typed_address_asks_for_address": true,
+        "unanswered_typed_address_explains_check_or_return_to_list": true,
+        "Continue_and_Pip_share_cause": true,
+        "screen_copy_single_Plain_English_Expert": true,
+        "reason_priority_changes_owner_validation_or_authority": false,
+        "new_action_command_setting_or_error_store": false,
+        "URL_or_Remote_Link_grammar_pinned": false
+      }
+    },
+    {
+      "name": "DL259.FO10.reject.reason_priority_changes_owner_validation_or_authority",
+      "definition": "ConnectRouteReasonPolicy",
+      "valid": false,
+      "instance": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "contract_scope": "static_Connect_route_reason_presentation_only",
+        "selected_visible_address_reason_before_unresolved_Server_choice": true,
+        "Server_choice_reason_only_while_list_shown": true,
+        "empty_typed_address_asks_for_address": true,
+        "unanswered_typed_address_explains_check_or_return_to_list": true,
+        "Continue_and_Pip_share_cause": true,
+        "screen_copy_single_Plain_English_Expert": true,
+        "reason_priority_changes_owner_validation_or_authority": true,
+        "new_action_command_setting_or_error_store": false,
+        "URL_or_Remote_Link_grammar_pinned": false
+      }
     }
   ],
   "semantic_cases": [
@@ -8842,5 +8918,19 @@
     "unusable_temporary_print_window_closed": true,
     "failure_cancel_changes_exact_Plan_revision": false,
     "new_command_receipt_or_platform_detection": false
+  },
+  "Connect_route_reason_policy": {
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+    "contract_scope": "static_Connect_route_reason_presentation_only",
+    "selected_visible_address_reason_before_unresolved_Server_choice": true,
+    "Server_choice_reason_only_while_list_shown": true,
+    "empty_typed_address_asks_for_address": true,
+    "unanswered_typed_address_explains_check_or_return_to_list": true,
+    "Continue_and_Pip_share_cause": true,
+    "screen_copy_single_Plain_English_Expert": true,
+    "reason_priority_changes_owner_validation_or_authority": false,
+    "new_action_command_setting_or_error_store": false,
+    "URL_or_Remote_Link_grammar_pinned": false
   }
 }

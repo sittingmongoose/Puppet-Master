@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2657-L2978
+Source lines: L2657-L2995
 
-Source SHA256: `fe32d389c7c50561a530fd9e42fef00d64641ea655d1c0f8e07531c9fae614a2`
+Source SHA256: `e4d279800724ea814073841e3dbb091dd65c75e72733a2f6638ff4783da751d0`
 
 ---
 
@@ -119,7 +119,14 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   used-answer warning. The answered view offers a fresh code/request rather than Check again for the completed one. A
   fresh invitation starts a new generation; exact Server/Client/session/generation, matching-identity confirmation, permission,
   expiry and genuine replay rejection remain. Rejecting a later request cannot remove a Client already approved by an
-  earlier request. A view marker never grants trust or bypasses the Server owner.'
+  earlier request. A view marker never grants trust or bypasses the Server owner. DL-259 FO-10 final, 2026-10-31: on
+  Connect’s route screen, disabled Continue gives an actionable reason for the selected route’s visible input before
+  an unresolved Server-choice reason. Web address and Remote Link use that field’s current missing/invalid-address result;
+  an address typed instead of the found list asks for the address when empty and explains when no Puppet Master answers,
+  with a route back to the list. Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s
+  feedback conveys the same cause. These screen/status words stay single in Plain English and Expert (DL-126); only tips/help
+  have two versions. Reason priority changes no validation, route identity, readiness, pairing or permission gate and
+  admits no address/Remote Link grammar.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -267,6 +274,13 @@ acceptance_criteria:
   Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
   matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
   remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
+- 'DL-259 FO-10 final, 2026-10-31: on Connect’s route screen, disabled Continue gives an actionable reason for the selected
+  route’s visible input before an unresolved Server-choice reason. Web address and Remote Link use that field’s current
+  missing/invalid-address result; an address typed instead of the found list asks for the address when empty and explains
+  when no Puppet Master answers, with a route back to the list. Say Choose your Puppet Master only while the found-Server
+  choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English
+  and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness,
+  pairing or permission gate and admits no address/Remote Link grammar.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -295,6 +309,9 @@ source_lineage:
 - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-004
 - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
+  FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
+  API/error-grammar admission.
 preserved_exact_tokens:
 - restore_existing_pm_data
 - Restore a backup

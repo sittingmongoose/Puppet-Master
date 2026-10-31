@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-10-31: DL-259 FO-10 final makes Connect’s disabled Continue explain the chosen route’s visible address requirement before a hidden Server-list choice. The found-list prompt appears only with that list; Pip shares the reason, screen copy stays single across explanation modes, and existing validation/action/permission gates remain.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/UI_Wiring_Rules.md#UIW-015, ContractName:Plans/DRY_Rules.md#DR-020
+
 - 2026-10-31: DL-259 FO-9 final aligns Creating’s checklist, completed blocks and stage progress with the accepted owner’s settled effects. Incomplete/unclear GitHub results keep the rest pending until an accepted Continue Setup or Check again result; existing Project resume identity, publication and O12 landing gates remain.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/UI_Command_Catalog.md#UCC-165, ContractName:Plans/DRY_Rules.md#DR-080
 

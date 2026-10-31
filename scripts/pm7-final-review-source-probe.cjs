@@ -156,11 +156,49 @@ async function main() {
   }
   counts.Creating_phase_cases = fixture.Creating_phase_cases.length;
   counts.Creating_resume_checks = fixture.Creating_phase_cases.filter(test => test.resume).length;
+
+  // FO-10: current validation still owns eligibility. Select its reason for the field/list on screen.
+  const connectSource = read('Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js');
+  const draftSource = read('Concepts/onboarding/opus-5.5/src/js/35-draft.js');
+  const missingHelpers = section(draftSource, 'function missing(d)', '  O55.draft =');
+  const reasonHelper = section(connectSource, 'function routeReason(S)', '  /* A different Server');
+  const routeDefinition = section(connectSource, "def('c-route', {", "def('c-review', {");
+  const foot = section(routeDefinition, '    foot(S) {', '    do: {');
+  const commonCopy = JSON.parse(read('Concepts/onboarding/opus-5.5/src/copy.json'));
+  const pipCopy = JSON.parse(read('Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json')).pip.oops;
+  const lookup = (data, key) => key.split('.').reduce((value, part) => value && value[part], data);
+  const translate = key => {
+    const value = lookup(commonCopy, key);
+    if (typeof value !== 'string') throw new Error('Missing common screen copy: ' + key);
+    return value;
+  };
+  for (const test of fixture.Connect_route_reason_cases) {
+    const S = { sess: { drafts: { connect: { journey: 'connect_existing', server_mode: 'existing_server',
+      remote_mode: test.route, server_ref: test.selected ? 'verified_Server' : '',
+      proxy_hostname: test.nonempty ? 'typed_input' : '', remote_endpoint: test.nonempty ? 'typed_input' : '' } },
+      connect: { manual: !!test.manual, addr: test.address || '' } } };
+    // The accepted validator result is supplied. This tests its presentation, not address/code syntax.
+    const endpointResult = test.endpoint_error ? { ok: false, error: test.endpoint_error } : { ok: true };
+    const routeContext = vm.createContext({ S, cd: s => s.sess.drafts.connect, T: translate,
+      O55: { endpoint: { check: () => endpointResult, checkLink: () => endpointResult } } });
+    vm.runInContext(missingHelpers, routeContext, { timeout: 1000 });
+    routeContext.O55.draft = { missing: routeContext.missing };
+    vm.runInContext(reasonHelper + '\nglobalThis.routeFoot = ({' + foot + '}).foot;', routeContext, { timeout: 1000 });
+    const expected = test.expected_key ? translate(test.expected_key) : '';
+    requireThat(routeContext.routeReason(S) === expected, 'FO-10 current-route reason ' + test.name);
+    const result = routeContext.routeFoot(S).primary;
+    requireThat(result.reason === expected && result.disabled === !!expected,
+      'FO-10 Continue reason/availability agree ' + test.name);
+    if (test.expected_key) requireThat(typeof lookup(pipCopy, test.expected_key) === 'string',
+      'FO-10 matching Pip cause copy ' + test.name);
+  }
+  counts.Connect_route_reason_cases = fixture.Connect_route_reason_cases.length;
   return { status: failures.length ? 'fail' : 'pass', counts, failures,
     claim_boundary: 'static_and_isolated_source_functions_only_no_browser_native_pixel_or_runtime_acceptance',
     pending_final_sources: [],
     resolved_final_source: { 'FX-1_PDF': 'd8df03ac1820a7cb68d0d1b4897eeb03fa228a6b',
-      'FO-9': '503368802df57c9d35660d0a89dea15df01afc53' } };
+      'FO-9': '503368802df57c9d35660d0a89dea15df01afc53',
+      'FO-10': '03a02a178b1c386488b4a6f7865f9172cca7990c' } };
 }
 main().then(result => {
   process.stdout.write(JSON.stringify(result, null, 2));

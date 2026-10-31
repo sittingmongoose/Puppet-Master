@@ -3442,6 +3442,23 @@
         "failure_cancel_changes_exact_Plan_revision": false,
         "new_command_receipt_or_platform_detection": false
       }
+    },
+    "ConnectRouteReasonPolicy": {
+      "description": "DL-259 FO-10. Static reason-selection/feedback descriptor only; no runtime request, validation grammar or authority admission.",
+      "const": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Planning_Wizard.md#PWIZ-025",
+        "contract_scope": "static_Connect_route_reason_presentation_only",
+        "selected_visible_address_reason_before_unresolved_Server_choice": true,
+        "Server_choice_reason_only_while_list_shown": true,
+        "empty_typed_address_asks_for_address": true,
+        "unanswered_typed_address_explains_check_or_return_to_list": true,
+        "Continue_and_Pip_share_cause": true,
+        "screen_copy_single_Plain_English_Expert": true,
+        "reason_priority_changes_owner_validation_or_authority": false,
+        "new_action_command_setting_or_error_store": false,
+        "URL_or_Remote_Link_grammar_pinned": false
+      }
     }
   }
 }
