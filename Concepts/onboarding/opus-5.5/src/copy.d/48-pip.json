@@ -289,8 +289,8 @@
       "c-route": {
         "group:pickServer": {
           "title": "Found on your network",
-          "text": "Puppet Masters already running on your network. Pick the one this device should use; it shows how many Projects each one has.",
-          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to, each with its Project count."
+          "text": "Puppet Masters already running on your network. Pick the one this device should use. You'll see its Projects once this device is paired with it.",
+          "expert": "Puppet Master Servers found by discovery on your local network, and on a VPN you're connected to. Discovery shows only a name, an address and an ID; Project details come after pairing."
         },
         "field:addr": {
           "title": "Its address",
@@ -338,9 +338,9 @@
           "expert": "The reverse proxy's https URL for the Server, like https://pm.example.com."
         },
         "field:link": {
-          "title": "Remote Link",
-          "text": "The link your Server gave you, starting pm-remote-link:. Your Server shows it under Settings › Access.",
-          "expert": "The Remote Link string the Server issued (pm-remote-link:…), shown in its Settings › Access."
+          "title": "Remote Link or its code",
+          "text": "The link your Server made, or the short code it shows. Your Server shows them in Settings › Server & Project Location › Away From Home.",
+          "expert": "The Server-issued Remote Link (or its short code) from Settings › Server & Project Location › Away From Home; pairing still follows."
         }
       },
       "c-pair": {
@@ -350,9 +350,9 @@
           "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks the other device to show the request again, if you missed it or it went away.",
-          "expert": "Re-sends the pairing approval request to your trusted devices."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "c-ready": {
@@ -375,8 +375,8 @@
         },
         "kind:cloud": {
           "title": "A cloud computer",
-          "text": "A computer you rent online. It is always on and reachable, and costs a monthly fee from the company you rent it from.",
-          "expert": "A rented cloud VM (VPS) running the Server: always on and reachable from anywhere, billed monthly by the host."
+          "text": "A computer you rent online. It is always on and costs a monthly fee. It is set up over a private network, like a VPN or Tailscale, so its setup page never faces the internet.",
+          "expert": "A rented cloud VM running the Server. Claim and setup happen over a private path (VPN/tailnet); public access is a separate, later choice."
         },
         "kind:pc": {
           "title": "Another computer",
@@ -407,8 +407,8 @@
         },
         "field:addr": {
           "title": "Its address",
-          "text": "Where to reach it. A cloud computer does not show up on your home network, so enter the address its setup printed.",
-          "expert": "The Server's hostname or IP. A cloud VM isn't discoverable on your LAN: use the address its setup printed."
+          "text": "Where to reach it. A rented computer is set up over a private network only: put it on your VPN or Tailscale network and type the address it has there.",
+          "expert": "The Server's hostname or IP. An unclaimed cloud VM is claimed only over a private path (VPN or tailnet address), never its public IP (RAS-007)."
         },
         "manualOn": {
           "title": "Enter its address instead",
@@ -446,8 +446,8 @@
         },
         "copy:pairlink": {
           "title": "Copy the link",
-          "text": "Copies a link another device on your network can open to join.",
-          "expert": "Copies the invite link another device on your network can open to request pairing."
+          "text": "Copies the link to this Server at the address it was found at, for another device on the same network to open and ask to join.",
+          "expert": "Copies the pairing URL at the Server's reached address; the joining device still needs your approval."
         },
         "group:approve": {
           "title": "Approve",
@@ -955,68 +955,68 @@
       "away": {
         "pick:home": {
           "title": "Only at home",
-          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN.",
-          "expert": "Local network only, or a VPN you already run: no public route is set up."
+          "text": "Your devices reach the Server on your home network, or on a private network you already use, called a VPN. Nothing is opened to the internet.",
+          "expert": "LAN or an existing VPN only; no remote route is configured and nothing is exposed publicly."
         },
         "pick:anywhere": {
           "title": "Away from home",
-          "text": "Tailscale connects your devices through a private network. Each device that connects needs the Tailscale app, signed in to the same account. Then you can reach your Server while away from home.",
-          "expert": "Tailscale: a WireGuard tailnet between your devices. Each device that connects needs Tailscale, signed in to the same account."
+          "text": "Tailscale is a private network for your own devices, built into Puppet Master. Sign in once, after you confirm, and the Puppet Master app on your other devices can use it. In a plain web browser, use Remote Link or that device's own Tailscale.",
+          "expert": "Built-in Tailscale connector on the Server and in Puppet Master's own apps; sign in once after Review. A plain browser tab needs Remote Link or the device's own Tailscale."
         },
         "route:headscale": {
           "title": "My own Headscale server",
-          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale.",
-          "expert": "Tailscale clients coordinated by your own Headscale server instead of Tailscale's."
+          "text": "Like Tailscale, but run on a server of your own. Pick it only if you already run Headscale. Whoever runs it approves your Server.",
+          "expert": "Self-hosted Headscale control server; the connector enrolls after Review by interactive approval or a one-time key. No Funnel."
         },
         "route:reverse_proxy": {
           "title": "My own web address",
-          "text": "Reach Puppet Master at a web address you manage, like pm.example.com. Pick it if you already know how that address reaches your Server. The options below choose who runs it and its certificate.",
-          "expert": "A reverse proxy on an https domain you control, in front of the Server. You need the domain's DNS pointing at it; the proxy and certificate options are below."
+          "text": "Puts your Server at a web address you own, like pm.example.com, on the internet. Anyone can find its sign-in page; only devices you pair can use it.",
+          "expert": "Public custom-domain route through a reverse proxy (dedicated hostname). Requires DNS, inbound HTTPS and explicit consent; preflight and tests run after Review."
         },
         "route:remote_link": {
           "title": "Puppet Master Remote Link",
-          "text": "Puppet Master carries the connection between your devices. Use its private link without changing your network settings.",
-          "expert": "A Puppet Master Remote Link: reach the Server from outside without changing your router, DNS or certificates."
+          "text": "Your Server makes a link for your other devices. No account, web address or router changes. Each device still needs your approval.",
+          "expert": "Accountless outbound rendezvous (direct or relayed). The Server creates the link after Review; pairing is still required."
         },
         "field:proxy": {
           "title": "Web address",
-          "text": "The address you own and want to use, starting with https://, like https://pm.example.com.",
-          "expert": "The public https URL the proxy will answer on, like https://pm.example.com."
+          "text": "The address you own, like https://pm.example.com. It needs a name of its own, with nothing after it.",
+          "expert": "Dedicated https origin for the proxy; no subpath, credentials, query or fragment."
         },
         "hosting:generate_for_server": {
-          "title": "Puppet Master sets it up",
-          "text": "Puppet Master sets up the proxy (the program that answers on that address) for you. The easiest way.",
-          "expert": "Puppet Master deploys and configures the proxy on the Server for you."
+          "title": "Set it up for me",
+          "text": "Puppet Master sets up the program that answers on that address (the proxy) on your Server and checks it works. The easiest way.",
+          "expert": "Generate and activate a Caddy, NGINX or Traefik configuration on the Server, then run DNS, reach, TLS and live-connection tests."
         },
         "hosting:generate_only": {
-          "title": "Only make the settings file",
-          "text": "You get the file to use with a proxy you set up yourself. For people who manage their own.",
-          "expert": "Puppet Master generates the proxy's configuration file; you deploy it yourself."
+          "title": "Settings file only",
+          "text": "You get a settings file to add to a proxy you run yourself. Puppet Master checks it works once you have added it.",
+          "expert": "Export the Caddy, NGINX or Traefik configuration; activation waits until you install it and the tests pass."
         },
         "hosting:existing_proxy": {
-          "title": "I already have one",
-          "text": "Your address already points at a proxy you run. Puppet Master just uses it.",
-          "expert": "An existing reverse proxy you run already forwards that address to the Server; nothing is generated."
+          "title": "I have one already",
+          "text": "Your address already points at a proxy you run, such as Nginx Proxy Manager. Puppet Master checks it reaches your Server and uses it.",
+          "expert": "Existing external proxy: validate its origin, certificate and live connection against the Server's identity; nothing is generated."
         },
         "tls:lets_encrypt": {
           "title": "A free certificate",
-          "text": "A free certificate that renews by itself. It protects the connection to that address (the padlock in your browser). It doesn't replace signing in to Puppet Master.",
-          "expert": "A Let's Encrypt certificate, issued and renewed automatically (ACME). It encrypts the connection; it doesn't vouch for who runs the address."
+          "text": "A certificate lets browsers check they reached your address and protects the connection. A free one is fetched and renewed by itself.",
+          "expert": "Managed ACME certificate (HTTP-01 needs port 80; TLS-ALPN uses 443). Encryption doesn't make the route private."
         },
         "tls:existing_certificate": {
           "title": "My own certificate",
-          "text": "Use a certificate you already have for that address.",
-          "expert": "A certificate and key you already have for that domain."
+          "text": "Use a certificate you already have for that address. You choose it on the Server after you confirm; it never passes through this window.",
+          "expert": "Bring-your-own certificate and key, selected on the Server through its secure store after Review; validated for the hostname and chain."
         },
         "group:kind": {
           "title": "Which proxy",
-          "text": "Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported. Pick the one you already use.",
-          "expert": "The reverse proxy to configure: Caddy (default), NGINX, Traefik or Nginx Proxy Manager."
+          "text": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
+          "expert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is treated as an existing external proxy."
         },
-        "field:link": {
-          "title": "Remote Link",
-          "text": "Paste the Remote Link here. Your Server shows it under Settings › Access.",
-          "expert": "The Remote Link string the Server issued (pm-remote-link:…), shown under its Settings › Access."
+        "field:headscale": {
+          "title": "Headscale address",
+          "text": "The https:// address of your Headscale server, like https://headscale.example.com.",
+          "expert": "Headscale control URL (https)."
         }
       },
       "review": {
@@ -1243,8 +1243,8 @@
         },
         "method:mounted": {
           "title": "Already connected",
-          "text": "A drive this computer already shows in its file browser. Nothing more to connect.",
-          "expert": "A volume already mounted on this computer."
+          "text": "A drive the computer doing the work already has connected. Nothing more to connect.",
+          "expert": "An existing OS mount on the computer that does the work (this computer, or the Server); no new credentials."
         },
         "group:device": {
           "title": "Choose a device",
@@ -1258,8 +1258,8 @@
         },
         "field:port": {
           "title": "Port",
-          "text": "The number SSH answers on. Leave it at 22 unless whoever set up the device changed it.",
-          "expert": "The SSH port; 22 unless it was changed on the device."
+          "text": "The door number SSH answers on, from 1 to 65535. Leave it at 22 unless whoever set up the device changed it.",
+          "expert": "SSH TCP port, 1–65535 (default 22). Changing it means the device's identity is checked again."
         },
         "manualOn": {
           "title": "Type an address instead",
@@ -1273,8 +1273,23 @@
         },
         "group:volume": {
           "title": "Connected drives",
-          "text": "Drives this computer already shows in its file browser.",
-          "expert": "Volumes mounted on this computer."
+          "text": "Drives the computer doing the work already has connected. Pick the one with the files.",
+          "expert": "Existing mounts on the connecting computer (this computer, or the Server); the next step checks it can read them."
+        },
+        "field:shareText": {
+          "title": "Shared folder address",
+          "text": "Type where the shared folder is if it wasn't found: //computer/folder for a shared folder, or computer:/path for NFS.",
+          "expert": "SMB UNC path (//host/share) or NFS export (host:/path), opened from the computer that does the work."
+        },
+        "shareManual:on": {
+          "title": "Type its address instead",
+          "text": "For a shared folder that didn't show up in the list.",
+          "expert": "Enter an SMB share or NFS export that discovery didn't list."
+        },
+        "shareManual:off": {
+          "title": "Show the shares found",
+          "text": "Back to the shared folders Puppet Master found on your network.",
+          "expert": "Return to the discovered shares."
         }
       },
       "nas-identity": {
@@ -1309,6 +1324,16 @@
           "title": "Passphrase",
           "text": "The password that locks this key. It unlocks the key on this computer and isn't saved.",
           "expert": "The key's passphrase, to decrypt the private key on this computer; not stored."
+        },
+        "field:sshUser": {
+          "title": "Account",
+          "text": "The account on the device that Puppet Master signs in to, usually your own. A key works for one account.",
+          "expert": "Remote SSH user. Keys are tested and added for this account; another account is another connection."
+        },
+        "userEdit": {
+          "title": "Change the account",
+          "text": "Sign in to the device as a different account. The keys are tested again for it.",
+          "expert": "Change the SSH user; key tests rerun for the new user@host:port."
         }
       },
       "nas-signin": {
@@ -1362,9 +1387,9 @@
           "expert": "The one-time pairing code the device's Puppet Master shows (8 characters)."
         },
         "resend": {
-          "title": "Send it again",
-          "text": "Asks for the request to be shown again, if you missed it.",
-          "expert": "Re-sends the pairing approval request."
+          "title": "Send a new one",
+          "text": "Ends the request that went missing and sends a fresh one. Only the new one can be approved.",
+          "expert": "Cancels the current pairing request and starts a new one; an answer to the old request is ignored."
         }
       },
       "nas-folder": {
@@ -1387,20 +1412,52 @@
       "nas-smb": {
         "field:user": {
           "title": "Username",
-          "text": "The name you use for the shared folder. Your sign-in stays in your computer's password store.",
-          "expert": "The SMB account; the OS keeps the credentials in its keychain."
+          "text": "The name you use for the shared folder. The computer doing the work keeps the sign-in in its own password store.",
+          "expert": "SMB account on the share; the credential is held by the connecting computer's keychain or credential store."
         },
         "field:pw": {
           "title": "Password",
-          "text": "The password for the shared folder. It stays in your computer's password store, not in Puppet Master.",
-          "expert": "The SMB password, kept by the OS keychain with the share's mount, not by Puppet Master."
+          "text": "The password for the shared folder. The computer doing the work keeps it in its own password store, not Puppet Master.",
+          "expert": "SMB password, handed to the connecting computer's credential store; never saved by Puppet Master."
+        },
+        "field:domain": {
+          "title": "Domain or workgroup",
+          "text": "Only on some work networks. Leave it empty at home.",
+          "expert": "Optional SMB domain/workgroup for the account (DOMAIN\\user)."
         }
       },
       "nas-mounted": {
-        "group:volume": {
-          "title": "Choose the drive",
-          "text": "Drives this computer already shows in its file browser. Pick the one that holds the Project.",
-          "expert": "The mounted volume that holds the Project."
+        "other": {
+          "title": "Choose another drive",
+          "text": "Go back and pick a different connected drive.",
+          "expert": "Return to the drive list."
+        }
+      },
+      "away-setup": {
+        "start": {
+          "title": "Set it up",
+          "text": "Starts setting up the way you chose to reach your Server away from home. Each step says what it is doing.",
+          "expert": "Starts the Remote Access owner's setup for the reviewed route; each step is a separate owner command."
+        },
+        "later": {
+          "title": "Do this later",
+          "text": "Stops here without setting it up. Everything else keeps working at home. Finish it any time in Settings.",
+          "expert": "Leaves the route not set up; Settings › Server & Project Location › Away From Home resumes it."
+        },
+        "person:tsSignIn": {
+          "title": "Sign in to Tailscale",
+          "text": "Opens Tailscale's own sign-in page. Your Tailscale password is never typed into Puppet Master.",
+          "expert": "Opens Tailscale's protected authorization page; Puppet Master never sees the credentials."
+        },
+        "person:hsApproved": {
+          "title": "It's approved",
+          "text": "Press this once whoever runs your Headscale server has let your Server in.",
+          "expert": "Continue after the Headscale administrator approves the node registration."
+        },
+        "person:installed": {
+          "title": "I've added it",
+          "text": "Press this once the settings file is in your proxy. Puppet Master then checks it works.",
+          "expert": "Continue to the reach, certificate and live-connection tests after installing the exported configuration."
         }
       }
     },
