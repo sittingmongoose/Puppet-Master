@@ -868,7 +868,8 @@ def('pr32', 'fresh', 'A new Server is set up by clicks alone: claim, setup, reac
   await d.act('selfMatch'); await d.primary();
   await d.untilScreen('s-ready', 15000);
   A.ok(await d.state(() => !!window.O55.S.sess.server.selfTrustId && window.O55.S.sess.drafts.main.server_trust_confirmed), 'the approval answered: this device is trusted');
-  await d.primary(); A.eq(await d.screen(), 'begin', 'then a Project on the new Server');
+  /* (a device asking to join now shows here with its own Approve: Continue is pressed by its action) */
+  await d.act('next'); A.eq(await d.screen(), 'begin', 'then a Project on the new Server');
 });
 def('pr33', 'fresh', 'A new Project with a new GitHub copy is created by clicks alone (the concept host answers the creation)', async (d, A) => {
   await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();

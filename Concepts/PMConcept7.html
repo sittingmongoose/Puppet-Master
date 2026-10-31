@@ -170305,7 +170305,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           recovery_generation: req.recovery_generation, audience: 'initiating_human_client', one_time: true, evidence_ref: ref + ':stepup', issued_at: now, expires_at: now + 60000 };
         Object.assign(res.postcondition, req.operation.endsWith('.export') ? { delivery: 'verified', savedAck: true } : { unlock: 'verified', scratch: 'verified' });
       } else if (req.operation === 'cmd.backup.policy.update') res.postcondition.policy = 'on';
-      else return null; /* (a recovery the concept never produces: resume, delete) */
+      /* (a recovery after a partial creation, which the concept never produces: resume, delete) */
+      else if (req.operation === 'cmd.project.resume_creation' || req.operation === 'cmd.forge.repository.delete') return null;
+      /* every other request (a Server's claim and setup) takes the generic owner result */
       return res;
     }
     function begin(operation, sel) {
