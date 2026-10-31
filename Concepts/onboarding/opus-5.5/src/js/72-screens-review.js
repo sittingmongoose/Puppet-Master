@@ -747,7 +747,7 @@
       if (st && st.state === 'running') return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
       if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.stepUp'), do: 'stepUp' } };
       if (kitGated(next) && st && st.state === 'done' && b['orErr_' + next]) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.retry'), do: 'retry' } };
-      const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
+      const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('protect.checkKit'), policy: T('protect.steps.policy') }[next];
       const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(famOf(S), acc(S));
       return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step', disabled: waiting, reason: T('protect.accessMissing') } };
     },
