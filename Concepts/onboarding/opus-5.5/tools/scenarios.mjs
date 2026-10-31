@@ -115,7 +115,10 @@ def('s06b', 'fresh', 'Bring in a Project stored online (just-in-time sign-in)', 
   A.eq(await d.screen(), 'online-service', 'service choice'); await d.primary();
   A.eq(await d.screen(), 'online-signin', 'sign in'); await d.act('signIn');
   await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
-  A.eq(await d.screen(), 'ex-repos', 'repository list'); await d.act('pick', 'jared-p/garden-planner');
+  A.eq(await d.screen(), 'ex-repos', 'repository list');
+  /* pick the card the list shows as garden-planner (a card's value is the service's own Project id, not owner/name) */
+  const garden = await d.state(() => { const c = [...document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]')].find((b) => ((b.querySelector('.o55-cardtitle') || {}).textContent || '').trim() === 'garden-planner'); return c ? c.getAttribute('data-arg') : null; });
+  A.ok(!!garden, 'garden-planner is in the list'); await d.act('pick', garden);
   await d.primary(); A.eq(await d.screen(), 'name', 'name'); A.eq((await d.draft('main')).project_name, 'Garden planner', 'name from the online Project');
   A.ok(!(await d.commands()).some((c) => c.includes('postcommit')), 'no AI provider work before commit');
   await d.primary(); await d.primary(); await reviewAndCreate(d); A.capture('s06b online', await d.draft('main'));
