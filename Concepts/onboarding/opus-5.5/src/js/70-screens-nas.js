@@ -85,6 +85,8 @@
         }
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
+          /* (demo hint: an address that answers, and one that doesn't) */
+          out += F.hint('nas-find:addr', [{ label: '192.168.1.20', outcome: 'works', fills: [['addr', '192.168.1.20']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }], { when: !addrKnown(S, n.addr) });
         } else if (!st || st.state !== 'done') {
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
@@ -288,6 +290,8 @@
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
+      /* (demo hint: a password the device accepts, and one it refuses) */
+      out += F.hint('nas-signin', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + O55.fixtures.DEMO.wrongPassword, outcome: 'refused', fills: [['user', 'jared'], ['pw', O55.fixtures.DEMO.wrongPassword]] }], { when: !n.pwTyped });
       out += `<div class="o55-sublinks" data-key="self">${C.link(T('nas.signin.self'), 'selfOn')}</div>`;
       return out;
     },
@@ -311,7 +315,8 @@
       add(S) {
         const i = S.root.querySelector('#o55f-pw'), pw = i ? i.value : '';
         if (i) i.value = '';
-        N(S).pwTyped = false; N(S).pwOnce = !!pw; S.save();
+        /* (the demo's wrong password is refused like any wrong one; the password itself is never kept) */
+        N(S).pwTyped = false; N(S).pwOnce = !!pw; N(S).pwWrong = pw === O55.fixtures.DEMO.wrongPassword; S.save();
         O55.ui.go('nas-install', { password: !!pw });
       }
     },
@@ -388,6 +393,7 @@
     const failFor = {
       add: () => {
         if (!n.pwOnce) return 'wrong_password';
+        if (n.pwWrong) { n.pwWrong = false; S.save(); return 'wrong_password'; }
         if (S.env.failures.nas_password_once && !n.pwFailedOnce) { n.pwFailedOnce = true; S.save(); return 'wrong_password'; }
         if ((d.sshDisallowed || []).includes(n.user)) return 'not_allowed';
         return null;
@@ -512,6 +518,8 @@
         if (reached && !fail) {
           const v = pairCodes.get(tryId(S)) || '';
           out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
+          /* (demo hint: the code the device shows, and a wrong one) */
+          out += F.hint('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'ZZZZ-9999', outcome: 'wrong', fills: [['pmcode', 'ZZZZ-9999']] }], { when: !n.paired });
           out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
         }
         if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
@@ -628,14 +636,21 @@
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.smb.passwordHint') }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
-      const st = F.state(S, 'smb:' + n.share);
+      const st = F.state(S, 'smb:' + n.share), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
+      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHint'), error: refused ? T('nas.smb.wrong') : '', invalid: refused }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
+      /* (demo hint: a password the share accepts, and one it refuses) */
+      out += F.hint('nas-smb', [{ label: 'jared · correct horse', outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: 'jared · ' + O55.fixtures.DEMO.wrongPassword, outcome: 'refused', fills: [['user', 'jared'], ['pw', O55.fixtures.DEMO.wrongPassword]] }], { when: !n.pwTyped && !(st && st.state === 'done') });
       if (st) out += F.phases(S, 'smb:' + n.share, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
     foot(S) { const n = N(S), st = F.state(S, 'smb:' + n.share); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
     do: {
-      check(S) { const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('tap'); F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
+      check(S) {
+        const i = S.root.querySelector('#o55f-pw'), pwv = i ? i.value : ''; if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('tap');
+        /* situation smbWrong: the share refuses the first password, as it would a mistyped one */
+        const f = S.env.failures || {}, wrong = !!f.smb_password_once || pwv === O55.fixtures.DEMO.wrongPassword; if (f.smb_password_once) f.smb_password_once = false;
+        F.reset(S, 'smb:' + N(S).share);
+        F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
       use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }

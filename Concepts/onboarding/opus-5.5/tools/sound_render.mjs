@@ -16,6 +16,9 @@
  *         landing limits, a stage sound's pan from its voice, and Pod 042's 8-bit Show Me voice
  * tools/sound_board.py then builds listening boards and spectrograms (--pip: Pip's board); tools/sound_catalog.py writes
  * TRIM and DUR (--pip: the TRIM and MAKEUP blocks of 15-sound-pip.js).
+ *   voice: Pip's voice (O55.sound.pip) in each look, a line and two vocals, dry and with its look's room (Q1 B):
+ *          voice.rows[] = { voice, key, send, dry: stats, room: stats, tail: [{ at, dry, room }] } and
+ *          <out>/pip-voice/<voice>/<key>-dry.wav and -room.wav (tools/sound_board.py --pip puts them on a board)
  *   pip: Pip's kits (lane onb, 15-sound-pip.js), the six looks' stage events and loops as O55.sound.pip plays them (the
  *        same registered event functions, offline, at their trims): pip.rows[] = { kit, kind, name, key, target, raw
  *        (untrimmed stats), rmsDb, rmsZ, peakDb, dc, hfDb, dur, nan, buzz, wobble, drones } and <out>/pip/<kit>/<key>.wav;
@@ -156,6 +159,21 @@ const pipTake = async (kit, kind, name, wav) => {
   return r;
 };
 
+/* Pip's voice, dry and in its room: stats from the pip tools' measure (A-weighted body RMS, peak, duration), the tail as
+   the level after the dry take has ended (dB of its 0.1 s windows), and the room's share of the energy */
+const VOICE_LINE = 'Hello! I am Pip. Let us set this up together.';
+const voiceTake = async (voice, what, wav) => {
+  const P = window.O55.sound.pip, V = window.O55.pipVoice, o = { voice, look: voice === 'phosphor' ? 'retro-dark' : voice === 'teletype' ? 'retro-light' : voice + '-dark' };
+  const dry = await P.render(what, Object.assign({ dry: true }, o)), room = await P.render(what, o);
+  if (!dry || !room) return null;
+  const last = (b) => { const d = b.getChannelData(0), e = b.getChannelData(1); for (let i = d.length - 1; i >= 0; i--) if (Math.abs(d[i]) > 0.001 || Math.abs(e[i]) > 0.001) return i; return 0; };
+  const win = (b, from, sec) => { const d = b.getChannelData(0), n = Math.min(d.length, from + Math.round(sec * b.sampleRate)); let acc = 0; for (let i = from; i < n; i++) acc += d[i] * d[i]; return n > from ? 10 * Math.log10(acc / (n - from) + 1e-20) : -200; };
+  const end = last(dry), rnd = (v) => Math.round(v * 10) / 10;
+  const tail = [0, 0.25, 0.5, 1].map((t) => ({ at: t, dry: rnd(win(dry, end + Math.round(t * 48000), 0.1)), room: rnd(win(room, end + Math.round(t * 48000), 0.1)) }));
+  const side = (b) => Object.assign(V.stats(b), { lastSec: Math.round((last(b) / b.sampleRate) * 100) / 100 }, wav ? { base64: V.wav(b) } : {});
+  return { dry: side(dry), room: side(room), tail };
+};
+
 try {
   await page.goto(pathToFileURL(pageFile).href + '?o55=off');
   await page.waitFor(() => !!(window.O55 && window.O55.sound && window.O55.sound.CATALOG), { timeout: 30000 });
@@ -171,6 +189,19 @@ try {
         report.pip.rows.push(r);
       }
       Object.assign(report.pip, await page.evaluate(async () => ({ chain: await window.O55.pipVoice.chainGain(), makeup: window.O55.pipVoice.MAKEUP })));
+    }
+    /* Pip's voice in its look's room (Q1 B): each voice says a line and two vocals, dry and with the room, through the
+       one player's own chain (O55.sound.pip.render); the room may not make it louder or clip, and its tail must exist */
+    const vjobs = await page.evaluate(() => { const P = window.O55.sound.pip; return P && P.render ? P.VOICES.map((v) => [v, P.roomSend(v)]) : null; });
+    if (vjobs) {
+      report.voice = { line: VOICE_LINE, rows: [] };
+      for (const [voice, send] of vjobs) for (const what of [VOICE_LINE, 'happy', 'wake']) {
+        const r = await page.evaluate(voiceTake, voice, what, !flag('no-wav'));
+        if (!r) continue;
+        const key = what === VOICE_LINE ? 'say' : what;
+        for (const side of ['dry', 'room']) if (r[side].base64) { mkdirSync(join(out, 'pip-voice', voice), { recursive: true }); writeFileSync(join(out, 'pip-voice', voice, key + '-' + side + '.wav'), Buffer.from(r[side].base64, 'base64')); delete r[side].base64; }
+        report.voice.rows.push(Object.assign({ voice, key, send }, r));
+      }
     }
   }
   if (!flag('pip-only')) {

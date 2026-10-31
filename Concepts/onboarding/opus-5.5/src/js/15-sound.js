@@ -2164,8 +2164,11 @@
        voiceOf(look?)             -> the voice id for a look (default: the painted one, PMLogo.look())
        allowed(where?)            -> may Pip sound there now (switch, gesture, part, holds)
        hold(name, on) / held()    a named extra mute for Pip's voice, kits and music
-       registerKit(id, { events: { name: fn(ctx, out, t0, opts) }, trim?: { name: dB } }) -> bool   lane onb's kits
-           (id: a voice id, or any id passed as opts.kit)
+       registerKit(id, { events: { name: fn(ctx, out, t0, opts) }, trim?: { name: dB }, room?: fn(ctx, bus?) -> AudioNode })
+           -> bool   lane onb's kits (id: a voice id, or any id passed as opts.kit); room: the look's room input, which
+           the voice sends to (0.35; Glass 0.3, NieR 0.16)
+       render(textOrVocal, { look?, voice?, mood?, dry?, tail? }) -> Promise<AudioBuffer>   offline, for the sound tools
+       roomSend(voice?)           -> the voice's room send
        play(event, { kit?, look?, pan?, intensity?, priority?, motion? }) -> bool   a registered kit's event through
            synth() (mute, gesture, rest and merge rules); motion: true drops it under Reduced Motion (foley that only
            describes motion)
@@ -2478,14 +2481,29 @@
       if (lk === 'retro-light') return 'teletype';
       return { friendly: 'friendly', glass: 'glass', basic: 'basic', nier: 'nier', retro: 'phosphor' }[lk.split('-')[0]] || 'basic';
     }
-    /* one chain per sound: trim and pan into the master, gone when the sound is */
-    function chain(c, vk, name, o, life) {
+    /* Pip sits in a room (Jared, Q1 B, 2026-10-31): the look's own room, the one its kit's stage sounds use (lane onb's
+       rooms, registered with the kit as room(ctx, bus)), so there is one room per look and never a second reverb on
+       top (Glass's voice goes into the Glass kit's hall only, not also into this player's Glass room). The send is the
+       old onboarding voice's: 0.35 of the voice reaches the room, less in Glass's and NieR's long rooms so the words
+       stay clear. Without a kit for the look (a page without lane onb's kits) the voice stays dry. */
+    const ROOM_SEND = { glass: 0.3, nier: 0.16 }, ROOM_SEND_DEFAULT = 0.35;
+    const roomSend = (vk) => (ROOM_SEND[vk] != null ? ROOM_SEND[vk] : ROOM_SEND_DEFAULT);
+    function roomOf(c, vk, bus) {
+      const k = KITS2[vk];
+      if (!k || typeof k.room !== 'function') return null;
+      try { return k.room(c, bus) || null; } catch (_) { return null; }
+    }
+    /* one chain per sound: trim and pan into the master (or a render's destination) and the look's room, gone when the
+       sound is */
+    function chain(c, vk, name, o, life, dest, dry) {
       const g = c.createGain();
       g.gain.value = db((TRIM[vk] && TRIM[vk][name]) || 0) * LEVEL;
       let head = g;
       if (c.createStereoPanner) { const p = c.createStereoPanner(); p.pan.value = o.pan != null ? clamp(+o.pan || 0, -1, 1) : jit(0.12); g.connect(p); head = p; }
-      head.connect(S.master);
-      W.setTimeout(() => { try { head.disconnect(); } catch (_) {} try { g.disconnect(); } catch (_) {} }, Math.round(life * 1000) + 600);
+      head.connect(dest || S.master);
+      const room = dry ? null : roomOf(c, vk, dest), send = room ? c.createGain() : null;
+      if (send) { send.gain.value = roomSend(vk); head.connect(send); send.connect(room); }
+      if (!dest) W.setTimeout(() => { try { head.disconnect(); } catch (_) {} try { g.disconnect(); } catch (_) {} try { if (send) send.disconnect(); } catch (_) {} }, Math.round(life * 1000) + 600);
       return g;
     }
 
@@ -2523,6 +2541,18 @@
       if (!VS[name] || !allowed(o.where)) return false;
       hush();
       return speak(() => scriptFor(vk, name), vk, name, o);
+    }
+    /* for the sound tools: one line (text) or vocal (a name) offline, through the same chain and room as it sounds live;
+       never gated or logged. { dry: true } leaves the room out. -> Promise<AudioBuffer|null> */
+    function render(what, opts) {
+      const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look), V = VOX[vk], name = VS[what] ? what : 'say';
+      if (typeof OfflineAudioContext === 'undefined') return Promise.resolve(null);
+      const cps = name === 'say' ? timing(what, o, vk).cps : 0;
+      const script = name !== 'say' ? scriptFor(vk, name) : V.kind === 'pulse' || V.kind === 'tick' ? blipScript(what, V, o.mood, cps) : textScript(what, V, o.mood, cps);
+      if (!script || !script.length) return Promise.resolve(null);
+      const rate = 48000, end = script.reduce((mx, q) => Math.max(mx, q.t + q.d * 2.2), 0) + 0.5, off = new OfflineAudioContext(2, Math.ceil(rate * (end + (o.tail == null ? 3.2 : o.tail))), rate);
+      voice(off, chain(off, vk, name, Object.assign({ pan: 0 }, o), end, off.destination, !!o.dry), 0.01, script, vk, o);
+      return off.startRendering();
     }
 
     /* ---- lane onb's kits and music */
@@ -2590,7 +2620,8 @@
     });
 
     return Object.freeze({
-      VOICES, say, hush, timing: (text, o) => timing(text, o), vocal, voiceOf, allowed, hold, held: () => [...holds],
+      VOICES, say, hush, timing: (text, o) => timing(text, o), vocal, voiceOf, allowed, hold, held: () => [...holds], render,
+      roomSend: (vk) => roomSend(VOX[vk] ? vk : voiceOf()),
       registerKit, play, registerMusic, music, stopMusic, kits: () => Object.keys(KITS2), musics: () => Object.keys(MUSIC),
       playing: () => ({ line: !!line, music: tune ? tune.id : null }), chatMute
     });
