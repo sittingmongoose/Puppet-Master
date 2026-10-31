@@ -145,54 +145,6 @@
           document.addEventListener('mousedown', out, true);
         }, 0);
       }
-      /* FX-1: the workgroup and terminal names and the two closing questions used the browser's prompt() and confirm(),
-         which a sandboxed preview without allow-modals (T3's file preview) answers with nothing: renames did nothing,
-         Close workgroup did nothing and Close terminal never asked. A name is edited in the menu itself, the way its
-         colour pickers open in place; a question goes to the app's own dialog (PM7_WORK_UI.ask, the Stop and Quit
-         dialog), and without it the chosen action simply happens. */
-      function renameInMenu(menu, heading, value, save) {
-        menu.innerHTML = '';
-        var h = document.createElement('div');
-        h.className = 'pm-term-ctx-h';
-        h.textContent = heading;
-        menu.appendChild(h);
-        var f = document.createElement('input');
-        f.type = 'text';
-        f.className = 'pm-term-ctx-field';
-        f.value = value || '';
-        f.maxLength = 40;
-        f.setAttribute('aria-label', heading);
-        f.setAttribute('spellcheck', 'false');
-        menu.appendChild(f);
-        var row = document.createElement('div');
-        row.className = 'pm-term-ctx-actions';
-        var no = document.createElement('button');
-        no.type = 'button';
-        no.textContent = 'Cancel';
-        no.onclick = function() { closeTermCtxMenus(); };
-        var go = document.createElement('button');
-        go.type = 'button';
-        go.className = 'pm-term-ctx-go';
-        go.textContent = 'Rename';
-        go.onclick = function() {
-          var n = f.value.trim();
-          closeTermCtxMenus();
-          if (n && n !== value) save(n);
-        };
-        f.onkeydown = function(e) {
-          if (e.key === 'Enter') { e.preventDefault(); go.onclick(); }
-          else if (e.key === 'Escape') { e.preventDefault(); closeTermCtxMenus(); }
-        };
-        row.appendChild(no);
-        row.appendChild(go);
-        menu.appendChild(row);
-        setTimeout(function() { try { f.focus(); f.select(); } catch (e0) {} }, 0);
-      }
-      function askTerm(o) {
-        var ui = window.PM7_WORK_UI;
-        if (ui && typeof ui.ask === 'function') { ui.ask(o); return; }
-        o.onGo();
-      }
       function swapPaneIdsInTree(node, a, b) {
         if (!node) return;
         if (node.type === 'leaf') {
@@ -943,18 +895,12 @@
         syncTerminalTabBar('terminal');
       }
       function closePane(paneId) {
-        var p = state.panes[paneId];
-        if (!findPaneLocation(paneId)) return;
-        if (p && p.state === 'running') {
-          askTerm({ title: 'Close ' + paneChipLabel(paneId) + '?', lead: 'It is still running. Closing it ends its session.',
-            go: 'Close terminal', onGo: function() { closePaneNow(paneId); } });
-          return;
-        }
-        closePaneNow(paneId);
-      }
-      function closePaneNow(paneId) {
         var loc = findPaneLocation(paneId);
         if (!loc) return;
+        var p = state.panes[paneId];
+        if (p && p.state === 'running') {
+          if (!confirm('Terminate session? OK = terminate, Cancel = layout only')) { /* demo still removes */ }
+        }
         if (countLeaves(loc.group.tree) <= 1) {
           killWorkgroup(loc.group.id);
           return;
@@ -1298,7 +1244,8 @@
               var b1 = document.createElement('button');
               b1.textContent = 'Rename workgroup…';
               b1.onclick = function() {
-                renameInMenu(menu, 'Rename workgroup', gg.title, function(n) { gg.title = n; renderAll(); syncTerminalTabBar('terminal'); });
+                var n = prompt('Workgroup name', gg.title);
+                if (n) { gg.title = n; closeTermCtxMenus(); renderAll(); syncTerminalTabBar('terminal'); }
               };
               menu.appendChild(b1);
               var b2 = document.createElement('button');
@@ -1357,10 +1304,7 @@
               b4.textContent = 'Close workgroup';
               b4.onclick = function() {
                 closeTermCtxMenus();
-                var n = collectLeafPaneIds(gg.tree).length;
-                var live = collectLeafPaneIds(gg.tree).some(function(id) { return state.panes[id] && state.panes[id].state === 'running'; });
-                askTerm({ title: 'Close ' + gg.title + '?', lead: (n === 1 ? 'Its terminal closes' : 'Its ' + n + ' terminals close') + ' with it' + (live ? ', and the sessions running in them end.' : '.'),
-                  go: 'Close workgroup', onGo: function() { killWorkgroup(gg.id); } });
+                if (confirm('Close this workgroup and all its terminals?')) killWorkgroup(gg.id);
               };
               menu.appendChild(b4);
             });
@@ -1410,9 +1354,8 @@
                   var r1 = document.createElement('button');
                   r1.textContent = 'Rename terminal…';
                   r1.onclick = function() {
-                    renameInMenu(menu, 'Rename terminal', p && p.displayName ? p.displayName : paneChipLabel(pid), function(n) {
-                      if (p) { p.displayName = n; renderAll(); syncTerminalTabBar('terminal'); }
-                    });
+                    var n = prompt('Terminal label', paneChipLabel(pid));
+                    if (n && p) { p.displayName = n; closeTermCtxMenus(); renderAll(); syncTerminalTabBar('terminal'); }
                   };
                   menu.appendChild(r1);
                   var r2 = document.createElement('button');

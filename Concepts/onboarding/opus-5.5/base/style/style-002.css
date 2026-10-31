@@ -3093,13 +3093,6 @@
     .pm-term-ctx-menu button:hover { background: var(--border-light); }
     .pm-term-ctx-menu .pm-term-ctx-h { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 6px 10px 2px; }
     .pm-term-ctx-swatches { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 8px 8px; }
-    /* a name edited in the menu itself (FX-1: it replaced the browser's prompt(), which a sandboxed preview answers with nothing) */
-    .pm-term-ctx-field { display: block; box-sizing: border-box; width: calc(100% - 16px); min-width: 200px; margin: 4px 8px 6px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--text-primary); font: inherit; font-size: 12px; }
-    .pm-term-ctx-field:focus { outline: 2px solid var(--accent-lime); outline-offset: 0; border-color: var(--accent-lime); }
-    .pm-term-ctx-actions { display: flex; justify-content: flex-end; gap: 4px; padding: 0 8px 6px; }
-    .pm-term-ctx-menu .pm-term-ctx-actions button { width: auto; padding: 5px 12px; }
-    .pm-term-ctx-menu .pm-term-ctx-actions .pm-term-ctx-go { background: var(--accent-lime); color: var(--background); font-weight: 600; }
-    .pm-term-ctx-menu .pm-term-ctx-actions .pm-term-ctx-go:hover { background: color-mix(in srgb, var(--accent-lime) 86%, var(--text-primary)); }
     .pm-term-ctx-swatch {
       width: 22px;
       height: 22px;

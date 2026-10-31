@@ -746,7 +746,7 @@
       const n = chosen(m).length;
       go.textContent = o.goLabel(n, m);
       go.disabled = !n && !o.allowZero;
-      go.classList.toggle('danger', o.danger != null ? !!o.danger : !!n);
+      go.classList.toggle('danger', !!n);
     }
     const shut = () => { d.remove(); if (dlg === d) dlg = null; if (back && back.isConnected) back.focus({ preventScroll: true }); };
     d.addEventListener('change', count);
@@ -774,13 +774,6 @@
     if (dlg && dlg.isConnected && dlg.__shut) { e.preventDefault(); dlg.__shut(); return; }
     if (sys) { e.preventDefault(); closeSystem(); }
   });
-  /* A plain question in the same dialog: a title, a line, the action's word and Cancel, which leaves things as they are.
-     The Terminal's Close workgroup and Close terminal ask through it (FX-1): they used the browser's confirm(), which a
-     sandboxed preview without allow-modals (T3's file preview) answers "no" at once, with nothing shown. */
-  function ask(o) {
-    return confirm({ title: o.title, lead: o.lead || '', items: [], note: o.note || '', allowZero: true, danger: o.danger !== false,
-      goLabel: () => o.go, onGo: () => { if (typeof o.onGo === 'function') o.onGo(); } });
-  }
   /* Stop all in one chat thread (D8; the chat's Processes view calls this) */
   function confirmThread(threadId, where) {
     const w = W(); if (!w) return;
@@ -1019,6 +1012,6 @@
   }
   doc.addEventListener('pointerdown', (e) => { if (sys && !sys.contains(e.target) && !(sysItem() && sysItem().contains(e.target))) closeSystem(false); }, true);
 
-  window.PM7_WORK_UI = { open, close, toggle, systemStatus, list, agentGroup, agentSummary, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, patchTicks, confirmThread, confirmPlatform, ask, quit, paintBar, ui };
+  window.PM7_WORK_UI = { open, close, toggle, systemStatus, list, agentGroup, agentSummary, isOpen: () => ui.open, tab: () => ui.tab, detail, tail, patchTicks, confirmThread, confirmPlatform, quit, paintBar, ui };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', boot); else boot();
 })();
