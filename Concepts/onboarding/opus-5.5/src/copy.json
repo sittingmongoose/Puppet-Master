@@ -145,7 +145,17 @@
     "azureProject": "Choose the Azure DevOps project first.",
     "remoteLink": "Paste the Remote Link first.",
     "proxyAddress": "Enter your web address first.",
-    "headscale": "Enter your Headscale address first."
+    "headscale": "Enter your Headscale address first.",
+    "instance": "Enter the server's address first.",
+    "azOrg": "Choose the Azure DevOps organization first.",
+    "collection": "Choose the collection first.",
+    "workspace": "Choose the workspace first.",
+    "dcProject": "Choose the project it goes in first.",
+    "teamProject": "Choose the team project first.",
+    "bbProject": "Choose the Bitbucket project first.",
+    "visibility": "Choose who can see it first.",
+    "repoName": "Fix the name first: the service won't accept it as it is.",
+    "branch": "Fix the main branch name first."
   },
   "art": {
     "hero": "A marionette control bar with three helpers on strings",
@@ -437,7 +447,7 @@
       },
       "cloud": {
         "title": "A cloud account",
-        "sub": "Google Drive, OneDrive, S3 or B2"
+        "sub": "Google Drive, OneDrive or a storage bucket"
       }
     },
     "unlock": {
@@ -455,7 +465,9 @@
       "lead": "Pick the copy you want.",
       "leadAt": "Found on {where}. Pick the copy you want.",
       "full": "Everything from {label}",
-      "project": "{project} from {where}"
+      "project": "{project} from {where}",
+      "none": "No Puppet Master backup was found on {where}.",
+      "elsewhere": "Look somewhere else"
     },
     "preview": {
       "eyebrow": "Restore",
@@ -574,7 +586,10 @@
       "bbDc": "Bitbucket Data Center",
       "forgejoCloud": "Codeberg (hosted Forgejo)",
       "giteaCloud": "Gitea Cloud",
-      "ownServer": "My own server"
+      "ownServer": "My own server",
+      "otherServer": "Another server",
+      "tenantLabel": "Your Gitea Cloud address",
+      "tenantHint": "The https address your team's Gitea Cloud has"
     },
     "signin": {
       "eyebrow": "Online copy",
@@ -605,7 +620,55 @@
       "simEmail": "Email",
       "simButton": "Create account",
       "linkCopied": "Sign-in link copied: {url}. Paste it into your browser.",
-      "linkCopiedNone": "Open your browser and sign in there, then come back."
+      "linkCopiedNone": "Open your browser and sign in there, then come back.",
+      "tokenLead": "{host} signs in with an access token you make there. Paste it below.",
+      "createOn": "No account on {host} yet? Create one",
+      "tokenHow": {
+        "forgejo": "Make one on {host} under Settings › Applications.",
+        "gitea": "Make one on {host} under Settings › Applications.",
+        "bitbucket_data_center": "Make one on {host} under your profile › Manage account › HTTP access tokens.",
+        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens.",
+        "gitlab": "Make one on {host} under Preferences › Access tokens.",
+        "azure_devops": "Make one on {host} under User settings › Personal access tokens."
+      },
+      "scopes": {
+        "forgejo": {
+          "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
+          "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
+          "detailExisting": "Allow it Read and write for repository, and Read for user.",
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+        },
+        "gitea": {
+          "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
+          "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
+          "detailExisting": "Allow it Read and write for repository, and Read for user.",
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+        },
+        "bitbucket_data_center": {
+          "detailNew": "Give it Admin for both Project and Repository: only that level can make a new copy.",
+          "detailNewExpert": "Project admin and repository admin: the only HTTP access token level that can create a repository.",
+          "detailExisting": "Give it Read for Project and Write for Repository.",
+          "detailExistingExpert": "Project read and repository write: clone and push."
+        },
+        "github": {
+          "detailNew": "Tick the repo box.",
+          "detailNewExpert": "A classic token with the repo scope, or a fine-grained token with Administration and Contents set to read and write.",
+          "detailExisting": "Tick the repo box.",
+          "detailExistingExpert": "A classic token with the repo scope, or a fine-grained token with Contents set to read and write."
+        },
+        "gitlab": {
+          "detailNew": "Tick api and write_repository.",
+          "detailNewExpert": "Scopes api (create the project) and write_repository (push over HTTPS).",
+          "detailExisting": "Tick read_api and write_repository.",
+          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS)."
+        },
+        "azure_devops": {
+          "detailNew": "Under Code, choose Read, write, & manage.",
+          "detailNewExpert": "Scope vso.code_manage (Code: read, write and manage).",
+          "detailExisting": "Under Code, choose Read & write.",
+          "detailExistingExpert": "Scope vso.code_write (Code: read and write)."
+        }
+      }
     },
     "details": {
       "eyebrow": "Online copy",
@@ -648,6 +711,87 @@
         "mit": "MIT",
         "apache_2": "Apache 2.0",
         "gpl_3": "GPL 3.0"
+      },
+      "nameReserved": "{name} keeps that name for itself. Choose another.",
+      "nameRule": {
+        "github": "Use letters, numbers, - . or _ only, up to 100.",
+        "gitlab": "Use letters, numbers, - . or _, starting and ending with a letter or number, and no two symbols together.",
+        "azure_devops": "Up to 64 characters, not starting with _ or . and without \\ / : * ? \" < > | ; # $ { } , + = [ ] or &.",
+        "bitbucket_cloud": "Use letters or numbers: its web address keeps them, turns the rest into dashes, and holds up to 62.",
+        "bitbucket_data_center": "Start with a letter or number; then letters, numbers, spaces, - . or _.",
+        "forgejo": "Use letters, numbers, - . or _ only, up to 100.",
+        "gitea": "Use letters, numbers, - . or _ only, up to 100.",
+        "cursor_origin": "Use letters, numbers, - . or _ only, up to 100."
+      },
+      "branchRule": "A branch name can't have spaces, two dots in a row or ~ ^ : ? * [ \\, can't start with - and can't end with / or a dot.",
+      "spelled": "Saved as {name}",
+      "slug": "Its web address ends in /{slug}",
+      "ownerOf": {
+        "organization": "Whose account keeps it?",
+        "group": "Where does it live?",
+        "azOrg": "Organization",
+        "collection": "Collection",
+        "workspace": "Workspace",
+        "dcProject": "Which project keeps it?",
+        "team": "Whose account keeps it?"
+      },
+      "kind": {
+        "organization": "Organization",
+        "group": "Group",
+        "subgroup": "Subgroup",
+        "azOrg": "Organization",
+        "collection": "Collection on this server",
+        "workspace": "Workspace",
+        "dcProject": "Project",
+        "personal": "Your personal project",
+        "team": "Team codebase",
+        "profile": {
+          "limited": "seen only by signed-in people",
+          "private": "seen only by its members"
+        }
+      },
+      "bbProject": "Project",
+      "bb": {
+        "private": "Private project · {key}",
+        "public": "Public project · {key}"
+      },
+      "cap": {
+        "gitlab": "{org} is a private group, so copies in it are private too.",
+        "gitlabInternal": "{org} is an internal group, so copies in it can be private or internal, not public.",
+        "bitbucket": "{project} is a private project, so copies in it are private.",
+        "origin": "Copies in your own account are always private. Choose your team to share it with them.",
+        "profileLimited": "{org} is seen only by people signed in to {host}, so even an Everyone copy is seen only by them.",
+        "profilePrivate": "{org} is seen only by its members, so even an Everyone copy is seen only by them."
+      },
+      "vis": {
+        "github": {
+          "internal": {
+            "title": "Everyone in your company",
+            "sub": "Members of the enterprise {org} belongs to"
+          }
+        },
+        "gitlab": {
+          "internal": {
+            "title": "Everyone signed in to {host}",
+            "sub": "Anyone with an account on this server"
+          }
+        },
+        "cursor_origin": {
+          "internal": {
+            "title": "Everyone in {org}",
+            "sub": "People on your team with access to its codebase"
+          }
+        },
+        "bitbucket_data_center": {
+          "private": {
+            "title": "People with access to {org}",
+            "sub": "The project's permissions decide"
+          },
+          "public": {
+            "title": "Anyone who can reach {host}",
+            "sub": "No sign-in needed to read it"
+          }
+        }
       }
     },
     "repos": {
@@ -659,7 +803,8 @@
       "private": "Private",
       "public": "Public",
       "empty": "No Projects found in this account.",
-      "copyToServer": "The copy is kept on {name}. You can choose another place on the next page."
+      "copyToServer": "The copy is kept on {name}. You can choose another place on the next page.",
+      "noMatch": "No Project matches that search."
     }
   },
   "name": {
@@ -765,11 +910,24 @@
       "nasSub": "Over your home network",
       "gdrive": "Google Drive",
       "onedrive": "OneDrive",
-      "s3": "S3 or B2",
-      "s3Sub": "A cloud storage bucket",
-      "sftp": "Another server (SFTP or WebDAV)",
+      "s3": "A storage bucket",
+      "s3Sub": "Amazon S3, Backblaze B2 or another S3-compatible service",
+      "sftp": "Another server",
       "none": "Not now",
-      "nasSame": "Your Project's files are on {name}, so a backup there would not survive losing it. Choose another place."
+      "nasSame": "Your Project's files are on {name}, so a backup there would not survive losing it. Choose another place.",
+      "sftpSub": "Over SFTP or WebDAV",
+      "family": {
+        "aws_s3": "Amazon S3",
+        "backblaze_b2": "Backblaze B2",
+        "s3_compatible": "S3-compatible storage",
+        "sftp": "SFTP server",
+        "webdav": "WebDAV server"
+      },
+      "subLabel": {
+        "s3": "Which service",
+        "sftp": "How it connects"
+      },
+      "more": "Azure Blob Storage, Google Cloud Storage and a backup server of your own can be added later, in Settings › Backup & Restore."
     },
     "sync": "Your other Puppet Master devices see this Project automatically.",
     "notNow": "Not now"
@@ -832,7 +990,8 @@
       "history": "Every version",
       "online": "Online copy",
       "backup": "Backup",
-      "remote": "Away from home"
+      "remote": "Away from home",
+      "privacy": "Who can see it"
     },
     "begins": {
       "new": "A new, empty Project",
@@ -853,7 +1012,7 @@
       "history": "Safe History starts saving every version",
       "clone": "The Project is copied from {service}",
       "restore": "The backup is brought back",
-      "online": "A private copy is made on {service}",
+      "online": "An online copy is made on {service} · {privacy}",
       "settings": "Settings from {project} are applied",
       "remote": "Access away from home is set up",
       "server": "The Project lives on {server}",
@@ -868,7 +1027,22 @@
     "edit": "Edit",
     "leadLaterAccess": "No Project will be created now. Access to {name} from away is set up so it is ready when you are.",
     "savedExisting": "Keeps its {kind} history",
-    "backupDropped": "Backup to {name} was taken off: your Project's files are on {name}. Choose another place for backups."
+    "backupDropped": "Backup to {name} was taken off: your Project's files are on {name}. Choose another place for backups.",
+    "plan": {
+      "label": "Everything for the online copy",
+      "service": "Service",
+      "server": "Address",
+      "account": "Account",
+      "name": "Name",
+      "none": "None",
+      "yes": "Yes",
+      "no": "No",
+      "signin": "Signs in with",
+      "byToken": "An access token",
+      "byBrowser": "Its sign-in page"
+    },
+    "fix": "Fix this",
+    "backupLater": "connected right after"
   },
   "creating": {
     "eyebrow": "Creating",
@@ -963,7 +1137,7 @@
     "nasFlow": "Puppet Master sets up a secure connection to {name} with a key. You sign in to it once.",
     "nasPath": "Backups go to {path} on {name}.",
     "connect": "Connect",
-    "accessMissing": "Fill in all three to connect.",
+    "accessMissing": "Fill in the access details to connect.",
     "nasReusePaired": "Uses the pairing with Puppet Master on {name}. Nothing more to approve.",
     "nasFlowPaired": "{name} runs Puppet Master, so this computer pairs with it: you approve it once. No key or password.",
     "pendingHost": "The protected handoff isn't available in this preview, so this step stays waiting. Nothing is saved yet. Try again when a host is available.",
@@ -971,7 +1145,12 @@
     "stepUp": "Confirm it's you",
     "stepUpDone": "Confirmed it's you",
     "stepUpHint": "The kit is shown only to you, once, on this device.",
-    "ownerFail": "The handoff didn't finish. Nothing was saved or switched on. Try again."
+    "ownerFail": "The handoff didn't finish. Nothing was saved or switched on. Try again.",
+    "willGo": "Backups will go to: {where}",
+    "goesTo": "Backups go to: {where}",
+    "accountKind": {
+      "personal": "for home"
+    }
   },
   "ai": {
     "eyebrow": "AI",
@@ -1545,10 +1724,42 @@
     "page": "Your browser opened {name}"
   },
   "access": {
-    "s3": {
+    "aws_s3": {
       "bucket": "Bucket",
-      "bucketPh": "s3://my-backups",
-      "bucketHint": "An S3 or B2 bucket made for backups.",
+      "bucketPh": "my-backups or my-backups/puppet-master",
+      "bucketHint": "Its name, and a folder in it if you like. Puppet Master finds its region.",
+      "bucketBad": "Amazon bucket names have 3 to 63 lowercase letters, numbers, dots or dashes, and start and end with a letter or number.",
+      "keyId": "Access key ID",
+      "secret": "Secret access key",
+      "secretHint": "Kept in your computer's password store, never in Puppet Master's files.",
+      "session": "Session token",
+      "sessionHint": "Temporary keys come with one. Kept in your computer's password store, never in Puppet Master's files.",
+      "tempOn": "Using temporary keys?",
+      "tempOff": "Not using temporary keys"
+    },
+    "backblaze_b2": {
+      "b2host": "S3 address",
+      "b2hostPh": "s3.us-west-004.backblazeb2.com",
+      "b2hostHint": "Shown on the bucket's page in Backblaze.",
+      "b2hostBad": "It looks like s3.us-west-004.backblazeb2.com.",
+      "bucket": "Bucket",
+      "bucketPh": "my-backups",
+      "bucketHint": "Its name, and a folder in it if you like.",
+      "bucketBad": "B2 bucket names have 6 to 63 letters, numbers, dashes or dots, and don't start with b2-.",
+      "keyId": "Application key ID",
+      "secret": "Application key",
+      "secretHint": "A key made for this bucket: Backblaze's master key doesn't work here. Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "s3_compatible": {
+      "server": "Service address",
+      "serverPh": "https://s3.example.com",
+      "serverHint": "The S3 address your storage service gives you.",
+      "serverBad": "It starts with https://.",
+      "region": "Region, if the service asks for one",
+      "bucket": "Bucket",
+      "bucketPh": "my-backups",
+      "bucketHint": "Its name, and a folder in it if you like.",
+      "bucketBad": "Bucket names have 3 to 63 letters, numbers, dots, dashes or underscores.",
       "keyId": "Access key ID",
       "secret": "Secret access key",
       "secretHint": "Kept in your computer's password store, never in Puppet Master's files."
@@ -1556,7 +1767,17 @@
     "sftp": {
       "address": "Server address",
       "addressPh": "sftp://backup.example.com/puppet-master",
-      "addressHint": "sftp:// for SFTP, https:// for WebDAV.",
+      "addressHint": "The server and the folder for backups.",
+      "addressBad": "It starts with sftp://. An https:// address is WebDAV: choose WebDAV above.",
+      "user": "Username",
+      "password": "Password",
+      "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "webdav": {
+      "address": "WebDAV address",
+      "addressPh": "https://dav.example.com/puppet-master",
+      "addressHint": "The folder's https address, as your server gives it.",
+      "addressBad": "It starts with https://.",
       "user": "Username",
       "password": "Password",
       "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."

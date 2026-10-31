@@ -124,23 +124,23 @@
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The S3 or B2 bucket made for backups, like s3://my-backups. A bucket is storage space you rent from a cloud company.",
-          "expert": "The S3-compatible bucket (Amazon S3 or Backblaze B2) the backup repository lives in, like s3://my-backups."
+          "text": "The storage bucket's name, and a folder inside it if you want backups kept there, like my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
+          "expert": "The bucket, optionally /prefix, checked with the chosen service's bucket-name rule (Amazon and Backblaze differ)."
         },
         "field:acc-keyId": {
           "title": "Access key ID",
-          "text": "The name that identifies this storage key. Copy it from your storage account; the separate secret access key is its password.",
-          "expert": "The access key ID of an S3-compatible key with access to that bucket; the secret access key is its password."
+          "text": "The ID half of the key made for the bucket. Copy it from your storage account; the secret below is its password.",
+          "expert": "The access key ID (Backblaze: application key ID) of a key scoped to that bucket."
         },
         "field:acc-secret": {
-          "title": "Secret access key",
-          "text": "The private half of the bucket's key. Kept in your computer's password store, never in Puppet Master's files.",
-          "expert": "The secret access key. Stored in the OS keychain, never in Puppet Master's files or logs."
+          "title": "Secret",
+          "text": "The private half of that key. Kept in your computer's password store, never in Puppet Master's files.",
+          "expert": "The secret access key (Backblaze: application key). Stored in the OS keychain, never in Puppet Master's files or logs."
         },
         "field:acc-address": {
           "title": "Server address",
-          "text": "Where your backup server is. Start it with sftp:// for SFTP, or https:// for WebDAV.",
-          "expert": "The backup server's URL: sftp:// for SFTP, https:// for WebDAV."
+          "text": "Where the backup goes on that server: start it with sftp:// for SFTP, or https:// for WebDAV, then the folder.",
+          "expert": "The server's URL with the backup path: sftp:// for SFTP, https:// for WebDAV, matching the protocol chosen above."
         },
         "field:acc-user": {
           "title": "Username",
@@ -168,6 +168,26 @@
         "startOver": {
           "title": "Start over",
           "text": "Clears the choices from last time and begins setup again from the first page."
+        },
+        "field:acc-session": {
+          "title": "Session token",
+          "text": "Only for temporary keys: the third part they come with. Kept in your computer's password store.",
+          "expert": "The STS session token that temporary AWS credentials require. Stored with the secret, never in files or logs."
+        },
+        "field:acc-b2host": {
+          "title": "S3 address",
+          "text": "The bucket's S3 address, shown on its page in Backblaze, like s3.us-west-004.backblazeb2.com.",
+          "expert": "Backblaze B2's regional S3 address, s3.<region>.backblazeb2.com."
+        },
+        "field:acc-server": {
+          "title": "Service address",
+          "text": "The S3 address your storage service gives you, starting with https://.",
+          "expert": "The S3-compatible service's base URL (https)."
+        },
+        "field:acc-region": {
+          "title": "Region",
+          "text": "Only if your storage service asks for one. Leave it empty otherwise.",
+          "expert": "The signing region, for services that require one; empty uses the service's default."
         }
       },
       "chrome": {
@@ -496,7 +516,8 @@
         },
         "source:cloud": {
           "title": "A cloud account",
-          "text": "A backup kept in Google Drive, OneDrive, or an S3 or B2 bucket."
+          "text": "A backup kept in Google Drive, OneDrive or a storage bucket. Only backups kept there are shown next.",
+          "expert": "Google Drive, OneDrive or an S3-family bucket; the snapshot list is scoped to the exact service, account and bucket reached."
         },
         "group:device": {
           "title": "Which device",
@@ -511,8 +532,24 @@
           "text": "You sign in to Microsoft on its own page next. Puppet Master only reads the backup."
         },
         "cloud:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket. Fill in its three access details below to reach it."
+          "title": "A storage bucket",
+          "text": "A bucket on Amazon S3, Backblaze B2 or another S3-compatible service. Pick which, then fill in its access details below.",
+          "expert": "An S3-family bucket (aws_s3, backblaze_b2 or s3_compatible) reached with its own access details; only backups in that exact bucket are listed next."
+        },
+        "rsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "rsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "rsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
         }
       },
       "r-unlock": {
@@ -525,6 +562,11 @@
         "group:pick": {
           "title": "Choose what to bring back",
           "text": "Each copy is a moment the backup was taken. The newest is usually the right one."
+        },
+        "elsewhere": {
+          "title": "Look somewhere else",
+          "text": "Go back and point to another place the backup might be.",
+          "expert": "Return to the source step; the reached place, unlock and pick are dropped when another place is chosen."
         }
       },
       "r-done": {
@@ -664,13 +706,13 @@
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service people run on their own server, or use at Codeberg. Pick it if you already have an account on one.",
-          "expert": "Forgejo, self-hosted or Codeberg: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A free service that people run on their own servers. Codeberg is the best-known one. Pick it if you already have an account on Codeberg or on another Forgejo server.",
+          "expert": "Forgejo: Codeberg (codeberg.org; browser sign-in with Puppet Master's registered app, or a token) or another Forgejo instance at its own https address, which signs in with a personal access token, since no registered OAuth app is assumed there."
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service people run on their own server, or use as Gitea Cloud. Pick it if you already have one.",
-          "expert": "Gitea, self-hosted or Gitea Cloud: a Git remote. Sign-in uses a personal access token made on that server."
+          "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
+          "expert": "Gitea Cloud (your team's own instance, at the address Gitea gave you; browser sign-in or a token) or a self-hosted Gitea at its https address (personal access token)."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
@@ -689,13 +731,13 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run either by the company itself or by your organisation on its own server. Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it) or self-managed / data center (your organisation runs it at its own https address)."
+          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where your organisation's own copy of the service lives, starting with https://, like https://git.example.com.",
-          "expert": "The instance's base URL (https only), used for its sign-in and API."
+          "text": "Where that server lives, starting with https://, like https://git.example.com. For Gitea Cloud, the address your team was given.",
+          "expert": "The instance's base URL (https only, a path such as /git is kept), used for its sign-in and API. Never filled in for you."
         },
         "group:pick": {
           "title": "Which online service",
@@ -728,11 +770,13 @@
         },
         "tokenOn": {
           "title": "Use an access token instead",
-          "text": "A token is a long password made just for apps. Use it when your server does not offer browser sign-in."
+          "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
+          "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
         "field:token": {
           "title": "Access token",
-          "text": "Make one on your server under Settings › Applications. It stays in your computer's password store, never in Puppet Master's files."
+          "text": "Make it on the server, give it the permissions listed under the box, then paste it here. It stays in your computer's password store, never in Puppet Master's files.",
+          "expert": "A PAT with the least scopes for this purpose: creating needs write access to repositories (and to the organization for an organization's copy); bringing one in needs read and write on it. Stored through the credential owner, referenced by the plan."
         },
         "code": {
           "title": "Browser didn't open?",
@@ -758,15 +802,13 @@
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy appears there. The suggestion is fine; letters, numbers and dashes work best."
+          "text": "How the online copy is named there. Each service has its own rules: if a name won't work, the line under the box says why. Spaces become dashes where the service needs that.",
+          "expert": "Validated with the provider's own rule: GitHub up to 100 of A-Z a-z 0-9 . - _; GitLab paths start and end alphanumeric, no consecutive specials, not .git/.atom; Azure DevOps up to 64, no reserved characters or names; Bitbucket's slug up to 62; Forgejo/Gitea up to 100, no .git/.wiki/.rss/.atom endings."
         },
         "group:owner": {
-          "title": "Whose account keeps it",
-          "text": "Your own account, or an organization you belong to. Pick an organization when the Project belongs to a team."
-        },
-        "group:azOrg": {
-          "title": "Organization",
-          "text": "The Azure DevOps organization the Project belongs to."
+          "title": "Where it lives",
+          "text": "Your own account, or a place you share with others. Each service has its own word for it: an organization, a group, a workspace or a project. Pick the one the Project belongs to.",
+          "expert": "The owner or namespace: a GitHub user or organization; a GitLab personal namespace, group or subgroup; an Azure DevOps organization (Services) or collection (Server); a Bitbucket workspace; a Bitbucket Data Center project key (~USER for personal); a Forgejo or Gitea user or organization; an Origin personal account or team codebase."
         },
         "group:azProject": {
           "title": "Team project",
@@ -782,15 +824,17 @@
         },
         "vis:private": {
           "title": "Only you",
-          "text": "Only you, and people you invite, can see it. Right for most Projects."
+          "text": "Only you, and people you give access, can see it. Right for most Projects.",
+          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
           "text": "Anyone on the internet can see it; only you and people you invite can change it. Pick it for work you want to share."
         },
         "vis:internal": {
-          "title": "Everyone in your organization",
-          "text": "People in your organization can see it; nobody outside can."
+          "title": "A wider group",
+          "text": "More people than just you, but nobody outside: everyone in your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
+          "expert": "internal: GitHub enterprise members (enterprise-owned organizations, any organization on Enterprise Server); GitLab self-managed signed-in, non-external users (not offered on GitLab.com); Origin team codebase members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
@@ -798,7 +842,8 @@
         },
         "field:branch": {
           "title": "Main branch name",
-          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name."
+          "text": "The name of the main line of your work, usually main. Leave it unless your team uses another name. No spaces.",
+          "expert": "The default branch, checked as git check-ref-format --branch does (no .., @{, spaces, ~ ^ : ? * [ \\, leading -, trailing / or .)."
         },
         "readme": {
           "title": "Add a README file",
@@ -811,6 +856,11 @@
         "group:license": {
           "title": "License",
           "text": "Says what others may do with your work if you share it. No license keeps all rights with you."
+        },
+        "group:bbProject": {
+          "title": "Project",
+          "text": "Bitbucket keeps every copy inside one of the workspace's projects. A private project holds only private copies.",
+          "expert": "The Bitbucket Cloud project (by key) in the workspace. Chosen explicitly: without it the API puts the repository in the workspace's oldest project. Private projects admit only private repositories."
         }
       },
       "ex-repos": {
@@ -820,14 +870,15 @@
         },
         "group:pick": {
           "title": "Choose the Project",
-          "text": "Only the Project you pick is copied. The line below shows where the working copy will be kept."
+          "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
+          "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
         }
       },
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git.",
-          "expert": "The local version-control backend. Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git. One of them is always on: 'Not now' further down is only about an online copy.",
+          "expert": "The local version-control backend, always one of Git or Jujutsu for a Project made here (SCS-011/012). Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
         },
         "backend:git": {
           "title": "Git",
@@ -867,17 +918,44 @@
           "text": "Keeps the backup in your Microsoft account. You'll sign in right after your Project is created."
         },
         "bdest:s3": {
-          "title": "S3 or B2",
-          "text": "A cloud storage bucket you rent. Good if you already have one; you add its access details after your Project is created."
+          "title": "A storage bucket",
+          "text": "Cloud storage you rent, like Amazon S3 or Backblaze B2. Pick the service under the card; you add its access details after your Project is created.",
+          "expert": "Object storage: aws_s3, backblaze_b2 (its S3-compatible API with a regional S3 address and an application key) or s3_compatible (any other S3 service at its own address). Bucket, optional folder and keys are entered after commit."
         },
         "bdest:sftp": {
           "title": "Another server",
-          "text": "A server you can reach over SFTP or WebDAV keeps the backup, like one at work or a friend's."
+          "text": "A server you can reach over SFTP or WebDAV, like one at work or a friend's. Pick which under the card.",
+          "expert": "sftp (SSH file transfer at sftp://host/path; its host key is checked) or webdav (HTTPS, https://host/path, e.g. Nextcloud). Recorded as its own family."
         },
         "bdest:none": {
           "title": "Not now",
           "text": "No separate backup for now. Earlier versions stay on this computer with Safe History, so if this computer is lost, the Project is lost too unless it has an online copy. You can add a backup later in Settings.",
           "expert": "No backup destination. Local history and any remote stay as they are; nothing protects against losing this computer except a remote. Add a destination later in Settings."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
         }
       },
       "away": {
@@ -1014,6 +1092,36 @@
         "later": {
           "title": "Do this later",
           "text": "Your Project is ready either way. Backups wait until you finish these steps."
+        },
+        "bsub:aws_s3": {
+          "title": "Amazon S3",
+          "text": "Amazon's storage. You'll need the bucket's name and an access key made for it.",
+          "expert": "AWS S3: bucket name (3-63 lowercase letters, digits, dots, dashes), region discovered from the bucket; access key ID and secret, plus a session token for temporary credentials."
+        },
+        "bsub:backblaze_b2": {
+          "title": "Backblaze B2",
+          "text": "Backblaze's storage. You'll need the bucket's S3 address, shown on its page, and an application key made for that bucket.",
+          "expert": "Backblaze B2 through its S3-compatible API: s3.<region>.backblazeb2.com, an application key ID and key (the master application key is refused there); bucket names 6-63 characters."
+        },
+        "bsub:s3_compatible": {
+          "title": "S3-compatible storage",
+          "text": "Any other storage that works like Amazon's, such as Wasabi or MinIO. You'll need its address, the bucket and a key.",
+          "expert": "A custom S3 service: its https address, a signing region if it needs one, bucket and optional prefix, and an access key."
+        },
+        "bsub:sftp": {
+          "title": "SFTP",
+          "text": "A server you sign in to with a username and password over a secure connection.",
+          "expert": "SFTP over SSH: sftp://host[:port]/path; the host key is checked at the test."
+        },
+        "bsub:webdav": {
+          "title": "WebDAV",
+          "text": "A folder on a web server, like Nextcloud, reached at an https address.",
+          "expert": "WebDAV over HTTPS (RFC 4918): the collection's https address; its certificate is checked."
+        },
+        "accTemp": {
+          "title": "Temporary keys",
+          "text": "Keys that expire, such as ones from a company sign-in, come with a session token. Add it if yours has one.",
+          "expert": "AWS STS temporary credentials: access key ID, secret access key and session token, all three sent through the credential owner."
         }
       },
       "ai": {

@@ -486,8 +486,21 @@
     if (k) return k.where;
     if (place === 'folder') return ((S.env.here.backupFolders || []).find((f) => f.path === r.folder) || {}).name || r.folder || '';
     if (place === 'nas') return (S.env.devices.find((d) => d.id === r.device) || {}).name || '';
-    if (place === 'cloud') return T('safe.backup.' + (r.cloud || 'gdrive'));
+    if (place === 'cloud') return r.cloud === 's3' ? O55.backup.whereLine(S, 's3', r.sub, racc(S)) : T('safe.backup.' + (r.cloud || 'gdrive')) + (r.account ? ' · ' + r.account : '');
     return '';
+  }
+  /* a bucket's own family (Amazon S3, Backblaze B2, another S3-compatible service) and its name */
+  const bucketFam = (S) => O55.backup.family('s3', R(S).sub);
+  const bucketName = (S) => String(racc(S).bucket || '').trim().replace(/^s3:\/\//i, '').split('/')[0];
+  /* A backup is listed only where it is kept: the exact folder, device, cloud service or bucket the person pointed to
+     (or the Recovery Kit names), never another place's, and never every backup when this place has none (FF-15). */
+  function atPlace(S, b) {
+    const r = R(S), k = kitOf(S), place = placeOf(S);
+    if (!b || b.source !== place) return false;
+    if (place === 'folder') return b.folder === (k ? k.folderPath : r.folder);
+    if (place === 'nas') return b.device === ((k && k.device) || r.device);
+    if (place === 'cloud') { const svc = (k && k.cloud) || r.cloud || 'gdrive'; return b.cloud === svc && (svc !== 's3' || (b.family === bucketFam(S) && b.bucket === bucketName(S))); }
+    return false;
   }
   /* a backup of a whole computer, or one in a cloud account, is locked until its kit is opened or its phrase is typed
      (a Project's backup in a folder or on a NAS opens as it did before) */
@@ -499,12 +512,12 @@
      access fields and went straight to the phrase). */
   function reachKey(S) {
     const r = R(S), k = kitOf(S), place = placeOf(S);
-    if (place === 'cloud') return 'cloud:' + ((k && k.cloud) || r.cloud || 'gdrive');
+    if (place === 'cloud') { const svc = (k && k.cloud) || r.cloud || 'gdrive'; return 'cloud:' + svc + (svc === 's3' ? ':' + bucketFam(S) + ':' + bucketName(S) : ''); }
     if (place === 'nas') return 'nas:' + ((k && k.device) || r.device || '');
     return place ? place + ':' : '';
   }
   const reached = (S) => !!R(S).reachedFor && R(S).reachedFor === reachKey(S);
-  O55.restore = { afterReach, placeOf, whereOf, reachKey };
+  O55.restore = { afterReach, placeOf, whereOf, reachKey, atPlace };
   /* choosing another backup drops what was reached, unlocked and picked for the last one, the bucket's access details
      and the bucket check (a finished check never runs again under the same key) */
   const repoint = (S) => { const r = R(S); r.reachedFor = null; r.unlocked = false; r.pick = null; r.access = {}; F.reset(S, 'restore-s3'); };
@@ -539,8 +552,8 @@
       if (r.source === 'nas') nasUnder = C.cards('device', S.env.devices.filter((d) => d.ssh).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, quiet: true })), r.device, { cls: 'o55-choices-quiet', label: T('restore.source.nas.title') });
       if (r.source === 'cloud') {
         cloudUnder = C.segmented({ do: 'cloud', value: r.cloud || 'gdrive', label: T('restore.source.cloud.title'), options: [{ v: 'gdrive', label: T('safe.backup.gdrive') }, { v: 'onedrive', label: T('safe.backup.onedrive') }, { v: 's3', label: T('safe.backup.s3') }] });
-        /* a bucket is reached with its access details (a cloud drive signs in on its own page, next) */
-        if (r.cloud === 's3' && !reached(S)) cloudUnder += O55.backup.accessFields(S, 's3', racc(S));
+        /* a bucket is reached with its service's own access details (a cloud drive signs in on its own page, next) */
+        if (r.cloud === 's3' && !reached(S)) cloudUnder += O55.backup.subChoice('s3', r.sub, 'rsub') + O55.backup.accessFields(S, bucketFam(S), racc(S));
         if (r.cloud === 's3' && F.state(S, 'restore-s3') && F.state(S, 'restore-s3').state === 'running') cloudUnder += F.phases(S, 'restore-s3', ['check'], { check: T('access.checking') });
       }
       return C.cards('source', [
@@ -557,7 +570,7 @@
       if (r.source === 'kit') { ready = !!kitOf(S); reason = T('missing.kit'); }
       if (r.source === 'folder') { ready = r.folderManual ? F.nonEmpty(r.bpath) : !!r.folder; reason = T('missing.backupFolder'); }
       if (r.source === 'nas') ready = !!r.device;
-      if (s3) { ready = O55.backup.accessReady('s3', racc(S)); reason = T('protect.accessMissing'); }
+      if (s3) { ready = O55.backup.accessReady(bucketFam(S), racc(S)); reason = T('protect.accessMissing'); }
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ready, reason } };
     },
     mounted(S, layer, fresh) { if (fresh && R(S).access) O55.backup.accessReset(R(S).access); },
@@ -565,7 +578,7 @@
        folder's typed location is this screen's own */
     bind: new Proxy({
       bpath(S, v) { const r = R(S), had = F.nonEmpty(r.bpath); r.bpath = v; r.unlocked = false; r.pick = null; S.save(); if (had !== F.nonEmpty(v)) O55.ui.refresh(); }
-    }, { get: (t, key) => t[key] || (O55.backup ? O55.backup.accessBinds((S) => ['s3', racc(S)])[key] : undefined) }),
+    }, { get: (t, key) => t[key] || (O55.backup ? O55.backup.accessBinds((S) => [bucketFam(S), racc(S)])[key] : undefined) }),
     do: {
       source(S, v) { const r = R(S); if (r.source !== v) repoint(S); r.source = v; if (v === 'cloud' && !r.cloud) r.cloud = 'gdrive'; S.save(); O55.ui.refresh(); },
       kit(S, v) { const r = R(S); if (r.kit !== v) repoint(S); r.kit = v; S.save(); O55.ui.refresh(); },
@@ -574,6 +587,8 @@
       folderFound(S) { R(S).folderManual = false; S.save(); O55.ui.refresh(); },
       device(S, v) { const r = R(S); if (r.device !== v) repoint(S); r.device = v; S.save(); O55.ui.refresh(); },
       cloud(S, v) { const r = R(S); if (r.cloud !== v) repoint(S); r.cloud = v; S.save(); O55.ui.refresh(); },
+      rsub(S, v) { const r = R(S); if (!O55.backup.SUBS.s3.includes(v)) return; if (r.sub !== v) repoint(S); r.sub = v; S.save(); O55.ui.refresh(); },
+      accTemp(S) { const a = racc(S); a.temp = !a.temp; if (!a.temp) a.sessionTyped = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       next(S) {
         const r = R(S), k = kitOf(S);
         /* an opened kit says where its backup is and unlocks it */
@@ -587,9 +602,10 @@
           S.save(); return O55.ui.go(O55.nas.entry(S)); /* a NAS running Puppet Master pairs instead (PWIZ-029) */
         }
         if (place === 'cloud' && r.cloud === 's3' && !reached(S)) {
-          if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* the secret field was empty: Continue waits for it */
-          return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: 's3', method: 'access_key', credential_ref: 'credential:restore:s3' },
-            onDone: () => { r.reachedFor = 'cloud:s3'; S.save(); if (reachKey(S) === 'cloud:s3' && S.sess.screen === 'r-source') O55.ui.go(afterReach(S), { silent: true }); } }); /* (not if the person has chosen another place meanwhile) */ /* like every cloud source; the sign-in's own sound carries the screen change */
+          const key = reachKey(S), fam = bucketFam(S);
+          if (!O55.backup.accessTake(S, fam, racc(S))) { O55.sound.play('warn'); return O55.ui.refresh(); } /* a secret field was empty: Continue waits for it */
+          return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: fam, method: 'access_key', locator: O55.backup.locator(S, 's3', r.sub, racc(S)), credential_ref: 'credential:restore:' + fam },
+            onDone: () => { r.reachedFor = key; S.save(); if (reachKey(S) === key && S.sess.screen === 'r-source') O55.ui.go(afterReach(S), { silent: true }); } }); /* (not if the person has chosen another place or bucket meanwhile) */ /* like every cloud source; the sign-in's own sound carries the screen change */
         }
         if (place === 'cloud' && !reached(S)) return O55.official.signIn(S, { service: r.cloud, name: T('safe.backup.' + r.cloud), kind: 'cloud', then: afterReach(S), done: 'restoreCloud' });
         S.save(); O55.ui.go(afterReach(S));
@@ -637,24 +653,27 @@
     lead: (S) => (whereOf(S) ? T('restore.pick.leadAt', { where: whereOf(S) }) : T('restore.pick.lead')),
     body(S) {
       const r = R(S);
+      /* only the copies kept where the person pointed; none there is said plainly, with the way back to choose again */
+      const none = () => C.note(T('restore.pick.none', { where: whereOf(S) }), 'info', 'vault') + `<div class="o55-sublinks" data-key="elsewhere">${C.link(T('restore.pick.elsewhere'), 'elsewhere')}</div>`;
       if (r.scope === 'project') {
-        /* the copies kept where the person pointed (all of them, if the concept has none there) */
-        const opts = [], here = S.env.backups.filter((b) => b.source === placeOf(S));
-        (here.length ? here : S.env.backups).forEach((b) => b.snapshots.forEach((snap, i) => opts.push({ v: b.id + '#' + i, glyph: 'history', title: T('restore.pick.project', { project: b.project, where: b.where }), sub: snap })));
-        return C.cards('pick', opts, r.pick, { label: T('restore.pick.title') });
+        const opts = [];
+        S.env.backups.filter((b) => atPlace(S, b)).forEach((b) => b.snapshots.forEach((snap, i) => opts.push({ v: b.id + '#' + i, glyph: 'history', title: T('restore.pick.project', { project: b.project, where: b.where }), sub: snap })));
+        return opts.length ? C.cards('pick', opts, r.pick, { label: T('restore.pick.title') }) : none();
       }
-      return C.cards('pick', S.env.fullBackups.map((b) => ({ v: b.id, glyph: 'history', title: T('restore.pick.full', { label: b.label.replace(/^Everything from /, '') }), sub: b.when + ' · ' + T('connect.route.projects', { n: b.projects }) })), r.pick, { label: T('restore.pick.title') });
+      const full = S.env.fullBackups.filter((b) => atPlace(S, b));
+      return full.length ? C.cards('pick', full.map((b) => ({ v: b.id, glyph: 'history', title: T('restore.pick.full', { label: b.label.replace(/^Everything from /, '') }), sub: b.when + ' · ' + T('connect.route.projects', { n: b.projects }) })), r.pick, { label: T('restore.pick.title') }) : none();
     },
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !R(S).pick, reason: T('missing.backup') } }),
     do: {
       pick(S, v) { R(S).pick = v; S.save(); O55.ui.refresh(); },
+      elsewhere(S) { O55.ui.go('r-source', { dir: 'back' }); },
       next(S) {
         const r = R(S);
         if (r.scope === 'project') {
           const [bid] = r.pick.split('#'), b = S.env.backups.find((x) => x.id === bid);
           const place = placeOf(S), transport = place === 'nas' ? O55.nas.transport(S) : place === 'cloud' ? 'mounted' : 'local';
           /* the place the backup came from is suggested as the new backup's place (marked, so it leaves with the restore) */
-          if (!S.sess.backup.dest && (place === 'nas' || place === 'cloud')) { S.sess.backup.dest = place === 'nas' ? 'nas' : (r.cloud || 'gdrive'); S.sess.backup.fromRestore = true; }
+          if (!S.sess.backup.dest && (place === 'nas' || place === 'cloud')) { S.sess.backup.dest = place === 'nas' ? 'nas' : (r.cloud || 'gdrive'); S.sess.backup.sub = r.cloud === 's3' ? bucketFam(S) : null; S.sess.backup.fromRestore = true; }
           O55.draft.set(md(S), { project_mode: 'restore', backup_source_ref: 'backup:' + U.slug(b.where) + '/' + U.slug(b.project) + '#' + r.pick.split('#')[1], backup_transport: transport, project_name: md(S).project_name || b.project });
           if (place === 'cloud') S.sess.gaps = Object.assign(S.sess.gaps || {}, { cloudBackupTransport: true });
           S.save(); return O55.ui.go('name');

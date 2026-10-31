@@ -88,6 +88,30 @@
   const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
   const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? 'Tailscale' : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
+  /* The online copy as the plan holds it (FF-10): the service and its server, where it lives (the owner and, where the
+     service has them, its project), and who can see it, in the service's own words; the rest of the plan for it in a
+     details section anyone can open. */
+  const RU = () => O55.forgeRules;
+  const serviceLine = (d) => forgeName(d) + (O55.fixtures.needsAddress(d.forge, d.forge_provider_variant) && O55.safe.hostOf(d) ? ' (' + O55.safe.hostOf(d) + ')' : '');
+  function livesAt(S, d) {
+    const o = RU().ownerOf(S.env, d), p = RU().projectOf(S.env, d), acct = O55.official.accountFor(S, d.forge) || '';
+    return [o && o.id ? o.id : acct, p ? p.name || p.key : d.repository_project && d.forge !== 'azure_devops' ? d.repository_project : ''].filter(Boolean).join(' / ');
+  }
+  const privacyLine = (S, d) => (d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility ? O55.safe.visCopy(d, d.repository_visibility, RU().ownerOf(S.env, d)).title : '');
+  function onlinePlan(S, d) {
+    const o = RU().ownerOf(S.env, d), p = RU().projectOf(S.env, d), yes = T('review.plan.yes'), no = T('review.plan.no');
+    const rows = [[T('review.plan.service'), forgeName(d)], [T('review.plan.server'), d.forge_instance_url], [T('review.plan.account'), O55.official.accountFor(S, d.forge) || '']];
+    if (o && o.id) rows.push([T('online.details.ownerOf.' + RU().ownerNoun(d)), o.name || o.id]);
+    if (p) rows.push([d.forge === 'azure_devops' ? T('online.details.project') : T('online.details.bbProject'), (p.name || p.key) + (p.key ? ' (' + p.key + ')' : '')]);
+    rows.push([T('review.plan.name'), d.repository_name], [T('online.details.privacy'), privacyLine(S, d)]);
+    if (d.online_mode === 'new') rows.push([T('online.details.branch'), d.repository_default_branch], [T('online.details.description'), d.repository_description || T('review.plan.none')],
+      [T('online.details.readme'), d.repository_initialize_readme ? yes : no], [T('online.details.gitignore'), (O55.tx('online.details.gitignoreOpts') || {})[d.repository_gitignore] || d.repository_gitignore],
+      [T('online.details.license'), (O55.tx('online.details.licenseOpts') || {})[d.repository_license] || d.repository_license]);
+    rows.push([T('review.plan.signin'), T(d.forge_auth_method === 'token' ? 'review.plan.byToken' : 'review.plan.byBrowser')]);
+    return C.details(S, 'onlinePlan', T('review.plan.label'), C.kv(rows.filter(([, v]) => v !== '' && v != null)));
+  }
+  /* the screen that supplies each thing the plan can still lack: Review names it, with the way back to it (FF-01) */
+  const FIX = { server_ref: 'where', project_name: 'name', project_source_ref: 'begin', repository_ref: 'begin', backup_source_ref: 'begin', storage_location: 'name', forge_account_ref: 'online-service', remote_endpoint: 'away', proxy_hostname: 'away', headscale_url: 'away' };
   function routeParams(S) {
     const d = md(S), start = { new: ['seed', T('art.labels.start')], existing_local: ['folder', T('art.labels.files')], existing_online: ['cloud', forgeName(d)], restore: ['rewind', T('art.labels.start')], later: ['seed', T('art.labels.start')] }[d.project_mode];
     const nodes = [{ icon: start[0], label: start[1], sub: d.project_name ? d.project_name.toLowerCase().slice(0, 18) : '' }];
@@ -127,14 +151,22 @@
       out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where') + row('files', filesAt(S), d.project_mode === 'existing_local' ? 'begin' : 'name'));
       const fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null, kind = d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git';
       let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
-      if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || O55.official.accountFor(S, d.forge) || '') + '/' + d.repository_name, 'safe');
+      if (d.online_mode !== 'none') {
+        const existing = d.project_mode === 'existing_online', at = existing ? 'ex-repos' : 'online-details';
+        safe += row('online', serviceLine(d) + ' · ' + livesAt(S, d) + '/' + d.repository_name, at);
+        if (d.online_mode === 'new' || privacyLine(S, d)) safe += row('privacy', privacyLine(S, d), existing ? null : at);
+        safe += onlinePlan(S, d);
+      }
       else if (fi && fi.online) safe += row('online', O55.safe.forgeName(fi.online.forge) + ' · ' + fi.online.repo + ' · ' + T('safe.online.linked'), 'begin');
       else notSet.push(T('safe.online.title').toLowerCase());
-      if (S.sess.backup.dest) safe += row('backup', O55.backup.label(S, S.sess.backup.dest), 'safe'); else notSet.push(T('safe.backup.title').toLowerCase());
+      if (S.sess.backup.dest) safe += row('backup', O55.backup.whereLine(S, S.sess.backup.dest, S.sess.backup.sub) + ' · ' + T('review.backupLater'), 'backup'); else notSet.push(T('safe.backup.title').toLowerCase());
       if (S.sess.ui.backupDropped) safe += C.note(T('review.backupDropped', { name: O55.backup.label(S, 'nas') }), 'warn', 'vault');
       out += C.group(T('review.groups.safe'), safe);
       if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
       if (notSet.length) out += `<p class="o55-hint" data-key="notset">${U.esc(T('review.notSet', { list: notSet.join(', ') }))}</p>`;
+      /* anything the plan still lacks, with the way to the screen that supplies it */
+      const miss = O55.draft.missing(d)[0];
+      if (miss) out += `<div class="o55-banner o55-banner-warn" data-key="missing">${C.small('spark', 18)}<span>${U.esc(T(miss.key))}</span>${C.link(T('review.fix'), 'edit', miss.screen || FIX[miss.field] || 'begin')}</div>`;
       /* what the one click does */
       const will = [];
       if (d.project_mode === 'new') will.push(['folder', T('review.will.folder', { path: filesAt(S) })]);
@@ -142,7 +174,7 @@
       if (d.project_mode === 'existing_online') will.push(['cloud', T('review.will.clone', { service: forgeName(d) })]);
       if (d.project_mode === 'restore') will.push(['rewind', T('review.will.restore')]);
       will.push(['history', T('review.will.history')]);
-      if (d.online_mode === 'new') will.push(['cloud', T('review.will.online', { service: forgeName(d) })]);
+      if (d.online_mode === 'new') will.push(['cloud', T('review.will.online', { service: forgeName(d), privacy: privacyLine(S, d).toLowerCase() })]);
       if (d.settings_transfer.mode === 'copy_from_project') will.push(['stack', T('review.will.settings', { project: (S.sess.like && S.sess.like.name) || '' })]);
       if (d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn') will.push(['globe', T('review.will.remote')]);
       if (d.server_mode !== 'this_device') will.push(['server', T('review.will.server', { server: P().serverName(S) })]);
@@ -161,7 +193,8 @@
       return { primary: { label: buttonLabel(d), do: 'commit', disabled: !!reason, reason } };
     },
     do: {
-      edit(S, target) { S.sess.ui.returnTo = { screen: 'review', from: target }; S.save(); O55.ui.go(target === 'safe' ? 'safe' : target); },
+      /* (the backup's Edit opens its sheet on Keep your work safe) */
+      edit(S, target) { const to = target === 'backup' ? 'safe' : target; if (target === 'backup') S.sess.ui.sheet = 'backup'; S.sess.ui.returnTo = { screen: 'review', from: to }; S.save(); O55.ui.go(to); },
       commit(S) {
         const d = md(S);
         /* a deferred Project: nothing is created, but a new Server's access away from home is prepared now */
@@ -582,6 +615,8 @@
   const ACCESSED = (dest) => dest === 's3' || dest === 'sftp';
   const signinStep = (dest) => (dest === 'nas' ? 'connect' : ACCESSED(dest) ? 'access' : 'signin');
   const acc = (S) => (S.sess.backup.access = S.sess.backup.access || {});
+  /* the place's own family (Amazon S3, Backblaze B2, another S3-compatible service, SFTP, WebDAV ...): FF-13, FF-16 */
+  const famOf = (S) => O55.backup.family(S.sess.backup.dest, S.sess.backup.sub);
   /* a working SSH connection to the backup NAS already exists (set up for it here, or earlier in this run) */
   const nasReady = (S) => { const n = S.sess.nas || {}, nas = O55.backup.nas(S); return !!(nas && n.device === nas.id && n.installed); };
   /* the kit's own words are the person's copy, outside this computer: the protected handoff shows them once and
@@ -660,7 +695,11 @@
         out += C.note(T('protect.' + (nasReady(S) ? 'nasReuse' : 'nasFlow') + (paired ? 'Paired' : ''), { name: where }), 'info', paired ? 'link' : 'key');
         out += `<p class="o55-hint" data-key="naspath">${U.esc(T('protect.nasPath', { name: where, path: NAS_PATH.split('/').filter(Boolean).join(' › ') }))}</p>`;
       }
-      if (next === 'signin' && ACCESSED(b.dest)) out += O55.backup.accessFields(S, b.dest, acc(S));
+      /* a bucket's service or a server's protocol can still be changed here, above its fields */
+      if (next === 'signin' && ACCESSED(b.dest)) out += O55.backup.subChoice(b.dest, b.sub, 'bsub') + O55.backup.accessFields(S, famOf(S), acc(S));
+      /* where the backups go, exactly: before a cloud drive's sign-in the folder Puppet Master keeps there, after any
+         connection the account and place it reached (FF-14), shown before the test runs in it */
+      if (b.dest && b.dest !== 'nas' && (next !== 'signin' || !ACCESSED(b.dest))) out += C.note(T(next === 'signin' ? 'protect.willGo' : 'protect.goesTo', { where: O55.backup.whereLine(S, b.dest, b.sub, acc(S), b.account) }), 'info', 'vault');
       if (next === 'kit') out += C.note(T('protect.kitWhy'), 'info', 'key');
       if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) out += C.note(T('protect.stepUpHint'), 'info', 'key');
       if (done.includes('kit') && !done.includes('kitTest')) {
@@ -685,7 +724,7 @@
       if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.stepUp'), do: 'stepUp' } };
       if (kitGated(next) && st && st.state === 'done' && b['orErr_' + next]) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.retry'), do: 'retry' } };
       const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
-      const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(b.dest, acc(S));
+      const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(famOf(S), acc(S));
       return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step', disabled: waiting, reason: T('protect.accessMissing') } };
     },
     /* back from the NAS's SSH steps, the connection is finished here; fields for a secret are empty when drawn afresh */
@@ -741,20 +780,24 @@
           S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
           S.save(); return O55.ui.go(O55.nas.entry(S));
         }
-        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('warn'); O55.ui.refresh(); return; } /* the secret field was empty */
+        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, famOf(S), acc(S))) { O55.sound.play('warn'); O55.ui.refresh(); return; } /* a secret field was empty */
         press();
         if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
+        const fam = famOf(S), cloudDrive = b.dest === 'gdrive' || b.dest === 'onedrive';
         F.op(S, 'backup:' + next, cmd, phases, {
-          payload: { destination: b.dest, transport: b.dest === 'nas' ? O55.nas.transport(S) : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null },
+          payload: { destination: fam, transport: b.dest === 'nas' ? O55.nas.transport(S) : fam, path: b.dest === 'nas' ? NAS_PATH : null, locator: b.dest === 'nas' ? null : O55.backup.locator(S, b.dest, b.sub, acc(S), b.account), credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + fam : null },
           sound: { done: false }, /* stepDone sounds the tick-off */
-          onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); stepDone(S, done.length); }
+          onDone: () => { if (next === 'signin' && cloudDrive) b.account = 'jared@example.com'; if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); stepDone(S, done.length); }
         });
       },
       later(S) { S.sess.backup.state = 'later'; S.save(); O55.ui.go('ai'); },
-      finish(S) { O55.ui.go('ai'); }
+      finish(S) { O55.ui.go('ai'); },
+      /* another service or protocol for the same place: its own fields, empty */
+      bsub(S, v) { const b = S.sess.backup; if (!(O55.backup.SUBS[b.dest] || []).includes(v) || (b.done || []).length) return; if (b.sub !== v) b.access = {}; b.sub = v; S.save(); O55.ui.refresh(); },
+      accTemp(S) { const a = acc(S); a.temp = !a.temp; if (!a.temp) a.sessionTyped = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); }
     },
     /* the access fields keep what is not secret, and only whether a secret was typed */
-    bind: O55.backup.accessBinds((S) => [S.sess.backup.dest, acc(S)]),
+    bind: O55.backup.accessBinds((S) => [famOf(S), acc(S)]),
     onBack: () => false
   });
 

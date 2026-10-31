@@ -30,16 +30,70 @@
     { id: 'meta-api', name: 'Meta Model API', product: 'Meta Model API (pay as you go)', kind: 'api', cli: null, auth: 'key', pair: 'muse', vendor: 'Meta' }
   ];
 
+  /* ---------------------------------------------------------------- what each source service needs (flow audit FF-02..FF-12)
+     One row per service, never a chain of special cases. A new online copy lives with an owner taken from the signed-in
+     account ({ id, scope, kind, name } plus what the service says about it): `personal` says whether the person's own
+     account can keep it, `owner` names that place in the service's own words, `project` is the place inside the owner a
+     service also needs (Azure DevOps' team project, Bitbucket's project). visibility(owner, variant, project) is what the
+     service allows there; an empty list means the copy follows its project's settings. name(n) returns null or the reason
+     a name breaks the service's own rule; spaces says how the service spells a space (dash: it becomes '-'; keep: names
+     may have spaces and the web address uses slug()). auth lists the sign-in methods per variant, the first the main one:
+     browser (its own page), device (a code to type there), token (an access token the person makes on that server). An
+     instance with no sign-in app registered for Puppet Master signs in with a token (FGI-011/FGI-012). */
+  const gitBasic = (n, max, extra) => (!n ? 'empty' : n.length > max ? 'long' : !/^[A-Za-z0-9._-]+$/.test(n) ? 'chars' : n === '.' || n === '..' ? 'reserved' : extra ? extra(n) : null);
+  const giteaName = (n) => gitBasic(n, 100, (x) => (x === '-' || /\.(git|wiki|rss|atom)$/i.test(x) ? 'reserved' : /\.\./.test(x) ? 'chars' : null));
+  const AZURE_RESERVED = /^(aux|con|nul|prn|com([1-9]|10)|lpt[1-9]|server|signalr|defaultcollection|web)$/i;
+  const OPENNESS = { private: 0, internal: 1, public: 2 };
+  const slugOf = (n) => String(n || '').trim().toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
   const FORGES = [
-    { id: 'github', name: 'GitHub', variants: ['hosted', 'self_managed'], visibility: ['private', 'public', 'internal'], internalNeedsOrg: true, signup: 'https://github.com/signup', device: 'github.com/login/device', primary: true },
-    { id: 'gitlab', name: 'GitLab', variants: ['hosted', 'self_managed'], visibility: { hosted: ['private', 'public'], self_managed: ['private', 'public', 'internal'] }, signup: 'https://gitlab.com/users/sign_up', device: 'gitlab.com/oauth/device' },
-    { id: 'azure_devops', name: 'Azure DevOps', variants: ['cloud', 'self_managed'], visibility: [], needsProject: true, signup: 'https://azure.microsoft.com/products/devops', device: 'microsoft.com/devicelogin' },
-    { id: 'bitbucket_cloud', name: 'Bitbucket', variants: ['cloud'], visibility: ['private', 'public'], signup: 'https://bitbucket.org/account/signup' },
-    { id: 'bitbucket_data_center', name: 'Bitbucket Data Center', variants: ['data_center'], visibility: ['private', 'public'], needsAddress: true },
-    { id: 'forgejo', name: 'Forgejo', variants: ['forgejo_self_managed', 'forgejo_cloud'], visibility: ['private', 'public', 'internal'], needsAddress: true, token: true },
-    { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed', 'gitea_cloud'], visibility: ['private', 'public', 'internal'], needsAddress: true, token: true },
-    { id: 'cursor_origin', name: 'Cursor Origin', variants: ['preview'], visibility: ['private', 'internal'], preview: true, address: 'https://origin.cursor.com' }
+    { id: 'github', name: 'GitHub', variants: ['hosted', 'self_managed'], signup: 'https://github.com/signup', device: 'github.com/login/device', primary: true,
+      personal: true, owner: 'organization',
+      /* Internal: an organization in an enterprise (every organization on an Enterprise Server is in one), never a person's own */
+      visibility: (o, variant) => (o.scope === 'organization' && (variant === 'self_managed' || o.enterprise) ? ['private', 'public', 'internal'] : ['private', 'public']),
+      nameRule: (n) => gitBasic(n, 100), spaces: 'dash', auth: { hosted: ['browser', 'device'], self_managed: ['browser', 'token'] } },
+    { id: 'gitlab', name: 'GitLab', variants: ['hosted', 'self_managed'], signup: 'https://gitlab.com/users/sign_up', device: 'gitlab.com/oauth/device',
+      personal: true, owner: 'group',
+      /* GitLab.com offers no Internal for new projects; a project is never more open than the group it is in */
+      visibility: (o, variant) => (variant === 'self_managed' ? ['private', 'public', 'internal'] : ['private', 'public']).filter((v) => !o.visibility || OPENNESS[v] <= OPENNESS[o.visibility]),
+      /* the project's path: letters, digits, _ - . ; starts and ends with a letter or digit; no two special characters together */
+      nameRule: (n) => (!n ? 'empty' : n.length > 255 ? 'long' : !/^[A-Za-z0-9._-]+$/.test(n) ? 'chars' : !/^[A-Za-z0-9]/.test(n) || !/[A-Za-z0-9]$/.test(n) ? 'ends' : /[._-]{2}/.test(n) ? 'chars' : /\.(git|atom)$/i.test(n) ? 'reserved' : null),
+      spaces: 'dash', auth: { hosted: ['browser', 'device'], self_managed: ['browser', 'token'] } },
+    { id: 'azure_devops', name: 'Azure DevOps', variants: ['cloud', 'self_managed'], signup: 'https://azure.microsoft.com/products/devops', device: 'microsoft.com/devicelogin',
+      personal: false, owner: { cloud: 'azOrg', self_managed: 'collection' }, project: 'teamProject',
+      visibility: () => [],
+      nameRule: (n) => (!n ? 'empty' : n.length > 64 ? 'long' : /[\\/:*?"<>|;#$*{},+=[\]&\x00-\x1f\x7f]/.test(n) ? 'chars' : /^[_.]/.test(n) || /\.$/.test(n) ? 'ends' : AZURE_RESERVED.test(n) ? 'reserved' : null),
+      spaces: 'keep', auth: { cloud: ['browser', 'device'], self_managed: ['browser', 'token'] } },
+    { id: 'bitbucket_cloud', name: 'Bitbucket', variants: ['cloud'], signup: 'https://bitbucket.org/account/signup',
+      personal: false, owner: 'workspace', project: 'bbProject',
+      /* a private project holds only private copies */
+      visibility: (o, variant, p) => (p && p.private ? ['private'] : ['private', 'public']),
+      /* its address (the slug) keeps ASCII letters, digits, _ - . and turns every other run of characters into one dash */
+      nameRule: (n) => (!n ? 'empty' : !slugOf(n) ? 'chars' : slugOf(n).length > 62 ? 'long' : null),
+      slug: (n) => slugOf(n), spaces: 'keep', auth: { cloud: ['browser'] } },
+    { id: 'bitbucket_data_center', name: 'Bitbucket Data Center', variants: ['data_center'],
+      personal: false, owner: 'dcProject',
+      /* access follows the project's permissions; public access only where the server allows it */
+      visibility: (o) => (o.publicAccess ? ['private', 'public'] : ['private']),
+      nameRule: (n) => (!n ? 'empty' : n.length > 128 ? 'long' : !/^[A-Za-z0-9][A-Za-z0-9 ._-]*$/.test(n) ? 'chars' : null),
+      slug: (n) => slugOf(n), spaces: 'keep', auth: { data_center: ['browser', 'token'] } },
+    { id: 'forgejo', name: 'Forgejo', variants: ['forgejo_self_managed', 'forgejo_cloud'], token: true, signup: 'https://codeberg.org/user/sign_up',
+      personal: true, owner: 'organization',
+      /* a copy is private or public; an organization's own profile visibility can narrow who sees a public one */
+      visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',
+      auth: { forgejo_cloud: ['browser', 'token'], forgejo_self_managed: ['token'] } },
+    { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed', 'gitea_cloud'], token: true,
+      personal: true, owner: 'organization',
+      visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',
+      auth: { gitea_cloud: ['browser', 'token'], gitea_self_managed: ['token'] } },
+    { id: 'cursor_origin', name: 'Cursor Origin', variants: ['preview'], preview: true, address: 'https://origin.cursor.com',
+      personal: true, owner: 'team',
+      /* a person's own copy is always private; a team's may be private or internal; never public in onboarding */
+      visibility: (o) => (o.scope === 'organization' ? ['private', 'internal'] : ['private']),
+      nameRule: (n) => gitBasic(n, 100), spaces: 'dash', auth: { preview: ['browser'] } }
   ];
+  /* the address a hosted variant always has (a self-managed one is typed; Gitea Cloud's is the team's own) */
+  const HOSTED_URL = { github: 'https://github.com', gitlab: 'https://gitlab.com', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org', cursor_origin: 'https://origin.cursor.com', forgejo_cloud: 'https://codeberg.org' };
+  const variantNeedsAddress = (forge, variant) => /self_managed|data_center|gitea_cloud/.test(variant || '') || forge === 'bitbucket_data_center';
 
   /* Official pages the onboarding opens in the browser. Only addresses the concept is sure of: a service missing here
      opens its page without the concept naming an address, and a self-managed service uses the address the person typed.
@@ -47,7 +101,7 @@
   const OFFICIAL = {
     provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login', 'opencode-runtime': 'https://opencode.ai' },
     signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
-    forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com' },
+    forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com', forgejo: 'https://codeberg.org/user/login' },
     forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },
     free: { 'free-openrouter': 'https://openrouter.ai', 'free-github-models': 'https://github.com/login', 'free-cerebras': 'https://cloud.cerebras.ai', 'free-groq': 'https://console.groq.com', 'free-hf': 'https://huggingface.co/login' },
     backup: { gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com' }
@@ -139,25 +193,54 @@
       ],
       serverTree: { '/mnt/tank': ['projects', 'media', 'backups'], '/mnt/tank/projects': ['recipe-app', 'book club', 'garden-notes'], '/mnt/tank/media': [], '/mnt/tank/backups': [] },
       recoveryPhrase: 'river candle orbit maple quiet lantern',
+      /* Each service's world for the signed-in account (login): the places a new copy can live (owners: an organization,
+         group, workspace, collection or project, each with what the service says about it), the Projects already there
+         (repos: each with its service id and the owner and project it lives in, so picking one carries all of it), and the
+         names already used. A self-managed or other variant is a different server with its own world (instances), never
+         the hosted one's. */
       forges: {
-        github: { accounts: [], orgs: ['book-club-crew'], repos: [{ name: 'recipe-app', owner: 'jared-p', private: true, updated: '2 days ago' }, { name: 'garden-planner', owner: 'jared-p', private: true, updated: 'last month' }, { name: 'dotfiles', owner: 'jared-p', private: false, updated: 'last year' }], taken: ['recipe-app'], signup: true },
-        gitlab: { accounts: [], orgs: [], repos: [{ name: 'thesis', owner: 'jared', private: true, updated: '4 months ago' }], taken: [], signup: true },
-        azure_devops: { accounts: [], orgs: ['platyr'], projects: [
+        github: { accounts: [], login: 'jared-p', owners: [{ id: 'book-club-crew', name: 'book-club-crew' }],
+          repos: [{ id: 'R_kgDOH2a1', name: 'recipe-app', owner: 'jared-p', container: '', private: true, updated: '2 days ago' }, { id: 'R_kgDOH2a2', name: 'garden-planner', owner: 'jared-p', container: '', private: true, updated: 'last month' }, { id: 'R_kgDOH2a3', name: 'dotfiles', owner: 'jared-p', container: '', private: false, updated: 'last year' }], taken: ['recipe-app'], signup: true,
+          instances: { self_managed: { login: 'jared', owners: [{ id: 'platform-team', name: 'platform-team' }], repos: [{ id: '1042', name: 'handbook', owner: 'platform-team', container: 'platform-team', scope: 'organization', private: true, updated: 'yesterday' }], taken: [] } } },
+        gitlab: { accounts: [], login: 'jared', owners: [{ id: 'thesis-lab', name: 'thesis-lab', kind: 'group', visibility: 'private' }, { id: 'thesis-lab/papers', name: 'thesis-lab / papers', kind: 'subgroup', visibility: 'private' }],
+          repos: [{ id: '48213377', name: 'thesis', owner: 'jared', container: '', private: true, updated: '4 months ago' }], taken: [], signup: true,
+          instances: { self_managed: { login: 'jared', owners: [{ id: 'research', name: 'research', kind: 'group', visibility: 'internal' }], repos: [{ id: '311', name: 'lab-notes', owner: 'research', container: 'research', scope: 'organization', private: true, updated: 'last week' }], taken: [], signup: false } } },
+        azure_devops: { accounts: [], login: 'jared@platyr.com', owners: [{ id: 'platyr', name: 'platyr' }], projects: [
           { id: 'd0b8b4c2-2e98-4ebf-86ca-28957a858cc1', name: 'Website', kind: 'Git', container: 'platyr' },
           { id: '79682e68-758b-4a53-9257-fd975aa7829f', name: 'Operations', kind: 'Git', container: 'platyr' }
-        ], repos: [{ name: 'intranet', owner: 'platyr / Website', private: true, updated: 'last week' }], taken: [], signup: true },
-        bitbucket_cloud: { accounts: [], orgs: ['jared-workspace'], repos: [], taken: [], signup: true },
-        bitbucket_data_center: { accounts: [], orgs: ['PROJ'], repos: [], taken: [], signup: false },
-        forgejo: { accounts: [], orgs: [], repos: [{ name: 'home-lab', owner: 'jared', private: true, updated: 'yesterday' }], taken: [], signup: false },
-        gitea: { accounts: [], orgs: [], repos: [], taken: [], signup: true },
-        cursor_origin: { accounts: [], orgs: ['jared'], repos: [], taken: [], signup: true }
+        ], repos: [{ id: '6f2c1a9e-5b7d-4e8a-a3c2-1d9f0b4e7a21', name: 'intranet', owner: 'platyr / Website', container: 'platyr', scope: 'organization', project: 'd0b8b4c2-2e98-4ebf-86ca-28957a858cc1', projectName: 'Website', private: true, updated: 'last week' }], taken: [], signup: true,
+          /* an Azure DevOps Server keeps its team projects in collections */
+          instances: { self_managed: { login: 'PLATYR\\jared', owners: [{ id: 'DefaultCollection', name: 'DefaultCollection' }], projects: [
+            { id: '5c3e8a6e-1f7b-4d2a-9c41-7a2b9e0d3f15', name: 'Intranet', kind: 'Git', container: 'DefaultCollection' }
+          ], repos: [{ id: '0b7e4d2c-8a1f-4c6e-b9d3-2f5a7c1e8d40', name: 'runbooks', owner: 'DefaultCollection / Intranet', container: 'DefaultCollection', scope: 'organization', project: '5c3e8a6e-1f7b-4d2a-9c41-7a2b9e0d3f15', projectName: 'Intranet', private: true, updated: 'last week' }], taken: [], signup: false } } },
+        /* a Bitbucket Cloud copy lives in a workspace and in one of its projects */
+        bitbucket_cloud: { accounts: [], login: 'jared-p', owners: [{ id: 'jared-workspace', name: 'jared-workspace', projects: [{ key: 'WEB', name: 'Website', private: false }, { key: 'PRIV', name: 'Private work', private: true }] }],
+          repos: [{ id: '{4a1c9e2b-7d3f-4b8a-9e1c-5f2d7a3b8c60}', name: 'garden-site', owner: 'jared-workspace / Website', container: 'jared-workspace', scope: 'organization', project: 'WEB', projectName: 'Website', private: true, updated: '3 weeks ago' }], taken: [], signup: true },
+        /* a Data Center copy lives in a project (by its key), or in the person's own personal project (~USER) */
+        bitbucket_data_center: { accounts: [], login: 'jared', owners: [{ id: 'PROJ', name: 'Projects (PROJ)', publicAccess: true }, { id: '~JARED', name: 'Your personal projects (~JARED)', scope: 'personal', publicAccess: true }],
+          repos: [{ id: '87', name: 'build-tools', owner: 'PROJ', container: 'PROJ', scope: 'organization', private: true, updated: 'last month' }], taken: [], signup: false },
+        /* hosted Forgejo is Codeberg; another Forgejo server is its own world */
+        forgejo: { accounts: [], login: 'jared', owners: [], repos: [{ id: '20914', name: 'home-lab', owner: 'jared', container: '', private: true, updated: 'yesterday' }], taken: [], signup: true,
+          instances: { forgejo_self_managed: { login: 'jared', owners: [{ id: 'home-lab-crew', name: 'home-lab-crew', profile: 'limited' }], repos: [{ id: '12', name: 'nas-scripts', owner: 'home-lab-crew', container: 'home-lab-crew', scope: 'organization', private: true, updated: '2 days ago' }], taken: [], signup: false } } },
+        gitea: { accounts: [], login: 'jared', owners: [{ id: 'platyr', name: 'platyr' }], repos: [{ id: '5', name: 'notes', owner: 'jared', container: '', private: true, updated: 'last week' }], taken: [], signup: false,
+          instances: { gitea_self_managed: { login: 'jared', owners: [], repos: [{ id: '3', name: 'home-wiki', owner: 'jared', container: '', private: true, updated: 'last month' }], taken: [], signup: true } } },
+        /* a person's own Origin copies, and the team they belong to */
+        cursor_origin: { accounts: [], login: 'jared', owners: [{ id: 'platyr', name: 'Platyr' }], repos: [{ id: 'orp_7Hq2', name: 'scratchpad', owner: 'jared', container: '', private: true, updated: 'yesterday' }], taken: [], signup: true }
       },
+      /* each backup is kept in one exact place (a folder, a device, a cloud service, a bucket): a restore lists only the
+         ones at the place pointed to (FF-15) */
       backups: [
-        { id: 'bk-recipe', project: 'Recipe App', where: 'Home NAS', source: 'nas', snapshots: ['Yesterday · 9:14 PM', 'Sep 20 · 9:10 PM', 'Sep 13 · 9:02 PM'] },
-        { id: 'bk-garden', project: 'Garden Planner', where: 'Google Drive', source: 'cloud', snapshots: ['Sep 22 · 7:40 AM', 'Sep 15 · 7:38 AM'] },
-        { id: 'bk-loom', project: 'Loom', where: 'Backup Drive', source: 'folder', snapshots: ['Sep 18 · 6:00 PM', 'Sep 11 · 6:00 PM'] }
+        { id: 'bk-recipe', project: 'Recipe App', where: 'Home NAS', source: 'nas', device: 'nas-home', snapshots: ['Yesterday · 9:14 PM', 'Sep 20 · 9:10 PM', 'Sep 13 · 9:02 PM'] },
+        { id: 'bk-garden', project: 'Garden Planner', where: 'Google Drive', source: 'cloud', cloud: 'gdrive', snapshots: ['Sep 22 · 7:40 AM', 'Sep 15 · 7:38 AM'] },
+        { id: 'bk-loom', project: 'Loom', where: 'Backup Drive', source: 'folder', folder: '/Volumes/Backup Drive/Puppet Master', snapshots: ['Sep 18 · 6:00 PM', 'Sep 11 · 6:00 PM'] },
+        { id: 'bk-harbor', project: 'Harbor', where: 'Backblaze B2 · jared-pm-backups', source: 'cloud', cloud: 's3', family: 'backblaze_b2', bucket: 'jared-pm-backups', snapshots: ['Sep 19 · 1:00 AM'] }
       ],
-      fullBackups: [{ id: 'full-1', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:02 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'] }],
+      /* the old laptop backed itself up to the drive, the Home NAS and Google Drive */
+      fullBackups: [
+        { id: 'full-1', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:02 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'], source: 'folder', folder: '/Volumes/Backup Drive/Puppet Master' },
+        { id: 'full-nas', label: 'Everything from "Jared’s old laptop"', when: 'Sep 21 · 11:40 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'], source: 'nas', device: 'nas-home' },
+        { id: 'full-gdrive', label: 'Everything from "Jared’s old laptop"', when: 'Sep 20 · 10:15 PM', projects: 3, accounts: 2, projectList: ['Tastebook', 'Harbor', 'Loom'], source: 'cloud', cloud: 'gdrive' }
+      ],
       failures: {}, /* e.g. { online_copy: 'name_taken' | 'network' } — one-shot owner failures for the recovery scenarios;
                        signin_once: { <provider or service id>: true } — that browser sign-in does not finish the first time */
       lowResource: false
@@ -208,7 +291,81 @@
     },
     provider: (id) => PROVIDERS.find((p) => p.id === id),
     forge: (id) => FORGES.find((f) => f.id === id),
+    /* the account's world on the chosen server: a variant's own (another server), or the hosted service's */
+    forgeWorld(env, forge, variant) {
+      const w = env && env.forges && env.forges[forge], none = { accounts: [], owners: [], repos: [], taken: [], projects: [] };
+      if (!w) return none;
+      const own = (w.instances || {})[variant];
+      return own ? Object.assign({}, none, { signup: w.signup }, own) : Object.assign({}, none, w);
+    },
+    /* the address a hosted variant always has; '' where it is typed (a self-managed server, or a team's Gitea Cloud) */
+    hostedUrl: (forge, variant) => (variantNeedsAddress(forge, variant) ? '' : HOSTED_URL[variant] || HOSTED_URL[forge] || ''),
+    needsAddress: variantNeedsAddress,
     /* a one-shot sign-in failure, used up by the try it fails (signin_once) */
     signinFails(e, id) { const f = e && e.failures && e.failures.signin_once; if (!f || !f[id]) return false; f[id] = false; return true; }
+  };
+
+  /* ---------------------------------------------------------------- a plan's online copy against its service's row
+     O55.forgeRules reads the draft's owner, project, visibility, name and branch against the row above and the account's
+     world; needs() lists what a plan still lacks for its service (Review cannot be confirmed until it is empty, and every
+     entry names the screen that fixes it: never a requirement no earlier screen can satisfy, flow audit FF-01). */
+  const variantOf = (d) => d.forge_provider_variant || ((FORGES.find((f) => f.id === d.forge) || {}).variants || [])[0];
+  const worldOf = (env, d) => O55.fixtures.forgeWorld(env, d.forge, variantOf(d));
+  function ownerOf(env, d) {
+    const w = worldOf(env, d), id = d.repository_container || '';
+    const found = id ? w.owners.find((o) => o.id === id) : null;
+    if (found) return Object.assign({ scope: 'organization' }, found);
+    if (!id && d.repository_owner_scope !== 'organization') return { id: '', scope: 'personal', name: w.login || '' };
+    /* an owner the account's world does not list: kept as typed, with no capability of its own */
+    return id ? { id, scope: d.repository_owner_scope || 'organization', name: id, unlisted: true } : null;
+  }
+  function projectOf(env, d) {
+    const row = FORGES.find((f) => f.id === d.forge) || {}, o = ownerOf(env, d);
+    if (row.project === 'bbProject') return o && (o.projects || []).find((p) => p.key === d.repository_project) || null;
+    if (row.project === 'teamProject') return worldOf(env, d).projects.find((p) => p.id === d.repository_project && p.container === d.repository_container) || null;
+    return null;
+  }
+  /* what git check-ref-format --branch refuses */
+  function branchProblem(b) {
+    if (!b) return 'empty';
+    if (b === 'HEAD' || b.startsWith('-') || b.startsWith('/') || b.endsWith('/') || b.endsWith('.')) return 'bad';
+    if (/[\x00-\x20\x7f~^:?*[\\]/.test(b) || b.includes('..') || b.includes('@{') || b.includes('//')) return 'bad';
+    if (b.split('/').some((c) => c.startsWith('.') || /\.lock$/.test(c))) return 'bad';
+    return null;
+  }
+  O55.forgeRules = {
+    row: (forge) => FORGES.find((f) => f.id === forge) || null,
+    world: worldOf, ownerOf, projectOf, branchProblem,
+    ownerNoun(d) { const r = FORGES.find((f) => f.id === d.forge) || {}; return typeof r.owner === 'object' ? r.owner[variantOf(d)] : r.owner; },
+    visibility(env, d) {
+      const r = FORGES.find((f) => f.id === d.forge); if (!r) return ['private'];
+      const o = ownerOf(env, d) || { scope: 'personal' };
+      return r.visibility(o, variantOf(d), projectOf(env, d));
+    },
+    nameProblem(d) { const r = FORGES.find((f) => f.id === d.forge); return r ? r.nameRule(String(d.repository_name || '')) : null; },
+    /* how the service spells what was typed: spaces become dashes where its names cannot hold them */
+    spell(forge, typed) { const r = FORGES.find((f) => f.id === forge) || {}, t = String(typed || '').trim(); return r.spaces === 'keep' ? t.replace(/\s+/g, ' ') : t.replace(/\s+/g, '-'); },
+    slug(d) { const r = FORGES.find((f) => f.id === d.forge) || {}; return r.slug ? r.slug(d.repository_name) : d.repository_name; },
+    auth(forge, variant) { const r = FORGES.find((f) => f.id === forge) || {}; return (r.auth || {})[variant] || ['browser']; },
+    /* What the plan's online copy still lacks, each with the screen that fixes it. A new copy needs its owner (and a
+       project where the service has them), a visibility valid there, a name and branch the service accepts and the
+       server's address; one brought in needs the owner and project its pick carried (FF-01: Azure's team project). */
+    needs(env, d) {
+      const r = FORGES.find((f) => f.id === d.forge), out = [];
+      if (!r || d.online_mode === 'none') return out;
+      const fresh = d.online_mode === 'new', at = fresh ? 'online-details' : 'ex-repos';
+      if (variantNeedsAddress(d.forge, variantOf(d)) && !/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url || '')) out.push({ field: 'forge_instance_url', key: 'missing.instance', screen: 'online-service' });
+      if (!fresh && !d.repository_ref) return out;
+      const o = ownerOf(env, d);
+      if (!r.personal && !(o && o.id)) out.push({ field: 'repository_container', key: 'missing.' + this.ownerNoun(d), screen: at });
+      if (r.project && !d.repository_project) out.push({ field: 'repository_project', key: 'missing.' + r.project, screen: at });
+      if (!fresh) return out;
+      if (r.project && d.repository_project && !projectOf(env, d) && env) out.push({ field: 'repository_project', key: 'missing.' + r.project, screen: at });
+      const vis = this.visibility(env, d);
+      if (vis.length && !vis.includes(d.repository_visibility)) out.push({ field: 'repository_visibility', key: 'missing.visibility', screen: at });
+      if (this.nameProblem(d)) out.push({ field: 'repository_name', key: 'missing.repoName', screen: at });
+      if (branchProblem(d.repository_default_branch)) out.push({ field: 'repository_default_branch', key: 'missing.branch', screen: at });
+      return out;
+    }
   };
 })();
