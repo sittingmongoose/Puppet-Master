@@ -27292,15 +27292,16 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 
 /* The chapter rail with Pip (O9): the bar is a string between two screw eyes, Pip rides it to the current chapter
    (58-rig.js O55.pipStage.rail); the walked part is in the accent */
-.o55-rail[data-o55-pip] .o55-railbar { visibility: hidden; }
+/* (the plain bar is not drawn at all where Pip's string is: Muse M3 measured both boxes on one line) */
+#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railbar { display: none; }
 /* One string, like the concept (QA round 2, Q4: the bar above and the beads hanging on their own strings below it read
    as two bars). Each chapter's bead is threaded on the string Pip rides, its name under it; Pip stands in for the
    current bead; the beads follow the string's sag (58-rig.js rail.tick). The names share one line, below Pip's feet. */
-#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem { flex-direction: column; justify-content: flex-start; gap: 0; padding-top: calc(9px - var(--o55-node-w, 10px) / 2); }
+#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem { flex-direction: column; justify-content: flex-start; gap: 0; padding-top: calc(14px - var(--o55-node-w, 10px) / 2); }
 .o55-rail[data-o55-pip] .o55-railstring { display: none; }
-.o55-rail[data-o55-pip] .o55-raillabel { margin-top: calc(27px - var(--o55-node-w, 10px) / 2); line-height: 1.2; }
+.o55-rail[data-o55-pip] .o55-raillabel { margin-top: calc(25px - var(--o55-node-w, 10px) / 2); line-height: 1.2; }
 /* (NieR's chapter box goes behind the name, where the name now is) */
-html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem::after { top: 30px; height: 22px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem::after { top: 34px; height: 21px; }
 /* (the current bead takes no width, so the look's chip behind the current chapter, Glass's lens included, wraps its
    name alone and never covers Pip; its centre, where Pip goes, stays the column's) */
 #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem[data-state="current"] .o55-railnode { visibility: hidden; width: 0; border-width: 0; }
@@ -31923,6 +31924,10 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 #pm-o55-onboarding .pst[data-reduced="1"] *, #pm-o55-onboarding .pst[data-reduced="1"]::before, #pm-o55-onboarding .pst[data-reduced="1"]::after { animation: none !important; transition: none !important; }
 /* ------------------------------------------------------ Pip's tip */
 /* asked for with a ? beside a choice: a note that hangs under Pip, its tail pointing up at it, written out as you watch */
+/* A note never runs off the stage: its height is held to the stage's room (--tipmax, 58-rig.js placeTip) and its words
+   scroll inside it when they must (the pattern review: an Expert note was cut off under the Back bar) */
+#pm-o55-onboarding .pst-tip { max-height: var(--tipmax, none); grid-template-rows: auto auto minmax(0, 1fr); }
+#pm-o55-onboarding .pst-tip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 #pm-o55-onboarding .pst-tip { position: absolute; left: 0; top: 0; display: grid; gap: 3px; width: max-content; max-width: min(58%, 226px); padding: 7px 9px 8px 11px;
   font: 500 12.5px/1.42 var(--pst-font, 'Poppins', system-ui, sans-serif); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; pointer-events: none; will-change: transform; }
 #pm-o55-onboarding .pst-tip.on { opacity: 1; visibility: visible; transition: opacity .3s; pointer-events: auto; }
@@ -31931,7 +31936,8 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 #pm-o55-onboarding .pst-tip-x:hover, #pm-o55-onboarding .pst-tip-x:focus-visible { opacity: 1; }
 #pm-o55-onboarding .pst-tip-x:focus-visible { outline: 1.5px solid currentColor; outline-offset: 1px; }
 #pm-o55-onboarding .pst-tip-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-#pm-o55-onboarding .pst-tip::after { content: ''; position: absolute; left: var(--tx, 30px); top: -5px; width: 9px; height: 9px; translate: -50% 0; rotate: 45deg; background: inherit; border: inherit; border-right: 0; border-bottom: 0; }
+/* (no tail: the note is labelled as Pip's and sits under Pip; its separate diamond was the shape Jared asked to lose,
+   QA round 2 Q10 and the pattern review) */
 #pm-o55-onboarding .pst-tip-k { display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 #pm-o55-onboarding .pst-tip .pst-tip-k::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 2.5px color-mix(in srgb, currentColor 22%, transparent); }
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-tip { display: none; }
@@ -31969,6 +31975,9 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 #pm-o55-onboarding .pst-ntip .pst-tip-x { font-size: 13px; opacity: .8; }
 #pm-o55-onboarding .pst-ntip .pst-tip-h { padding: 6px 8px 0; font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
 #pm-o55-onboarding .pst-ntip .pst-tip-t { padding: 3px 8px 7px; font-size: 11.5px; line-height: 1.45; }
+/* (NieR's note too stays on the stage, its words scrolling inside it when they must) */
+#pm-o55-onboarding .pst-ntip { max-height: calc(100% - 34px); grid-template-rows: auto auto minmax(0, 1fr); }
+#pm-o55-onboarding .pst-ntip .pst-tip-t { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 #pm-o55-onboarding .pst[data-fam="nier"]:not([data-layout="portrait"]) .pst-ntip { display: none; }
 
 /* Pip parts (Settings > Pip parts): the world's own life held, the strings hidden */
@@ -173449,7 +173458,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       keep.forEach((p) => { if (p.state !== 'out') this.addProp(p.spec, true); });
       this.ghosts = [];
       this.syncDefs();
-      this.measure();
+      this.measure(); this.remeasureAt = now() + 0.9; /* (and once the window's opening has settled) */
       if (this.tube) this.powerOn();
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
@@ -173670,8 +173679,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
-      const Lay = this.L, [x, y] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
+      const Lay = this.L, [x, y0] = this.slotXY(pr.spec), sc = (pr.spec.scale || 1) * Lay.propScale;
       const tieY = pr.ties.reduce((m, t) => Math.min(m, t[1]), 0);
+      /* a prop at rest hangs whole above the floor, never sunk into it or cut by the stage's edge (Muse m3: the server on
+         Where is the backup? sat in the floor line); Creating's blocks stack on the floor by design */
+      const y = pr.spec.stack == null && !pr.spec.at && pr.foot != null ? Math.min(y0, Lay.ground - 6 - pr.foot * sc) : y0;
       let len = (y + tieY * sc) - Lay.anchorY;
       if (pr.spec.preview) len -= 26 * Lay.propScale;
       if (pr.state === 'out') len = -10;
@@ -173849,16 +173861,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const short = restY + 12 + h - (by - foot), room = Math.max(0, headTop - top - 4);
       this.ps.liftT = clamp(short, 0, room) / mk;
       this.bubble.classList.toggle('pst-hush', this.ps.liftT * mk > 18);
-      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, 8, by - h - foot)];
+      /* the note's height is held to the stage's room, its words scrolling inside it, so it is always whole on the stage */
+      const room0 = Math.max(60, by - foot - top - 8);
+      if (el._tipmax !== room0) { el._tipmax = room0; el.style.setProperty('--tipmax', room0 + 'px'); }
+      const goal = [clamp(p[0] - w * .4, 8, Math.max(8, Math.min(bx * .62 - w, bx - w - 10))), clamp(p[1] + 12, top, Math.max(top, by - h - foot))];
       if (!this.tipXY || this.reduced) this.tipXY = goal.slice();
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
       el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
     }
     /* --------------------------------------------------------- geometry */
+    /* in the stage's own, untransformed size: the window's opening scales it, and a box measured then kept the larger
+       size once it settled, so a note was allowed below the window's bottom (the pattern review; the rail's F1-3) */
     measure() {
-      const r = this.screen.getBoundingClientRect(), Lay = this.L;
-      this.box = r;
+      const r0 = this.screen.getBoundingClientRect(), Lay = this.L;
+      const w = this.screen.offsetWidth || r0.width, h = this.screen.offsetHeight || r0.height;
+      const r = this.box = { left: r0.left + (r0.width - w) / 2, top: r0.top + (r0.height - h) / 2, width: w, height: h, right: r0.left + (r0.width + w) / 2, bottom: r0.top + (r0.height + h) / 2 };
       const k = this.tube ? Math.max(r.width / Lay.w, r.height / Lay.h) : Math.min(r.width / Lay.w, r.height / Lay.h);
       this.map = { k, ox: (r.width - Lay.w * k) / 2, oy: (r.height - Lay.h * k) / 2 };
       this.headTo();
@@ -173873,6 +173891,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* paused while the window is shut or held, the page hidden, a drag under way (body.pm-resizing) or the stage
          gone; a still stage (Reduced Motion, a low-resource computer) is drawn only when something changed */
       if (!this.live()) { this.park(); return; }
+      if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
       this.dirty = false;
       this.raf = requestAnimationFrame(this.loop);
@@ -174260,7 +174279,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
-    const W = rail.W, y0 = 9, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
+    /* (the string sits where the concept has it, clear of the window's top edge with Pip's bar under it: Muse M3) */
+    const W = rail.W, y0 = 14, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
     if (rail.x == null || red) { rail.x = tx; rail.v = 0; rail.dip = weight; rail.dv = 0; rail.ang = 0; rail.av = 0; }
     const M2 = SPRING[fam] || SPRING.basic, ax = M2[0] * (tx - rail.x) - M2[1] * rail.v;
     rail.v += ax * dt; rail.x += rail.v * dt;
