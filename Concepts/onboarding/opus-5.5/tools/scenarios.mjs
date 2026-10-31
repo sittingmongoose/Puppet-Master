@@ -1005,6 +1005,13 @@ def('pr44', 'fresh+serverWrongDevice', 'Situation serverWrongDevice: setting up 
   await d.primary();
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'Check again: claim, setup and reach answered', 15000);
   await d.act('selfMatch'); await d.primary(); await d.untilScreen('s-ready', 15000); A.ok(true, 'the Server is set up');
+  /* FO-7: a device's request approved once is finished: the next redraws never take its answer again ("already used") */
+  await until(d, "(window.O55.S.sess.server.candidates||[]).some((c) => c.state === 'waiting')", "a device's request", 8000);
+  const id = await d.state(() => window.O55.S.sess.server.candidates.find((c) => c.state === 'waiting').id);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]', 'the words match'); await d.act('approve', id);
+  await until(d, "(window.O55.S.sess.server.paired||[]).length > 0", 'paired', 8000);
+  await new Promise((f) => setTimeout(f, 2500));
+  A.ok(await d.state(() => !window.O55.S.sess.server.runErr) && !/already used/.test(await layerText(d)), 'approved once: no "already used" warning after it');
 });
 def('pr45', 'fresh+serverWrongDevice', "Situation serverWrongDevice on Your Server is ready: a device's approval is answered for another one once; Approve again pairs it", async (d, A) => {
   await d.openOnboarding(); await conceptOn(d);
