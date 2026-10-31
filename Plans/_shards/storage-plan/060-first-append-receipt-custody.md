@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L22135-L22315
 
-Source SHA256: `a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf`
+Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
 
 ---
 
@@ -54,17 +54,17 @@ Case L-2 seal and allocation rules remain exact: ordinary sealing on the first o
 
 Under the existing writer gate, validate current normal writer/schema/registry/no-secret/scope/permission/dedupe admission, actual append input durability class, all source frames and exact original segment bindings. Global/scoped dedupe values and the existing checkpoint must agree with the verified actual source tail. Application partition is exactly `app`; project partition is `project~` plus unpadded base64url of exact UTF-8 project ID. Native idempotency keys remain nonempty. This contract changes no EventRecord producer-semantic digest recipe.
 
-Seal the actual complete group. Complete frame writes and make ONE data sync of the active segment, with the durable watermark carried in the segment's frames (SP-336). The manifest is published and the parent directory synced only at creation, rotation and structural changes. Barrier-class groups get the full flush. Amended 2026-10-31 (DL-270, SP-336). After that sync, commit ALL member custody rows in ONE redb transaction before exposing any successful receipt or releasing any receipt-dependent terminal write. For an ordinary group that transaction makes no sync of its own and becomes durable with the next synced commit; the group's commit frame carries the receipt fields, so after a crash the rows are rebuilt identically from the segment up to the durable watermark. A barrier-class group commits its custody rows durably before acknowledging. No cross-redb/seglog transaction is asserted. `acknowledged_at_utc` is the UTC time selected for that first successful durable issuance transaction; the complete group shares one selected time. It is not delivery time or `persisted_at_utc`, which remains commit-group seal time. A tentative timestamp in an uncommitted candidate is not a receipt.
+Seal the actual complete group. Complete frame writes and active-segment `sync_all`, then atomically publish its complete terms with the manifest watermark and synchronize the parent directory. These remain the two source durability barriers. After both succeed, durably commit ALL member custody rows in ONE redb transaction before exposing any successful receipt or releasing any receipt-dependent terminal write. No cross-redb/seglog transaction is asserted. `acknowledged_at_utc` is the UTC time selected for that first successful durable issuance transaction; the complete group shares one selected time. It is not delivery time or `persisted_at_utc`, which remains commit-group seal time. A tentative timestamp in an uncommitted candidate is not a receipt. Amended 2026-10-31 (DL-270): SP-336's publication and recovery sequence supersedes the two per-group source barriers and the redb-commit issuance boundary in this subsection: an ordinary group is issued exactly when its commit frame, which carries every receipt field and the seal-time acknowledged_at_utc, is durable after one segment sync, and its custody rows follow without their own sync and are rebuilt from that frame after a crash. This paragraph and the rules below that assume per-group manifest promotion, durable custody before exposure or fencing of absent rows for a durable commit frame are the pre-DL-270 protocol; rewriting their proof tables to SP-336 is a pending companion.
 
 The held gate binds actual source/control identity and generation, manifest/group/source bytes, original segment mappings, complete current dedupe admission, selected store, gate lease/revision and canonical custody preimage. Revalidate those actual owner values immediately before the atomic commit. An independently repaired mapping/candidate or source/dedupe/barrier set still invalidates the attempt when held facts changed. Validate the exact all-member row set against independently authenticated source and owner terms, not merely mutual hashes or a caller row. Prevent precommit disclosure and verify committed custody before release.
 
 `storage.first_append_receipt.group_gate.v2` encloses every operation that could replace, advance or lose an unissued current group: next append, manifest/source generation advance, recovery publication, intent resumption, rotation, compaction/retirement and the recovery event's own append. Startup checks it before those operations or mutation admission. Both source advance and retirement authenticate the complete current-group rows and immutable receipt/group terms; an `issued` phase marker alone is insufficient. Revalidate current source/dedupe for such mutations even after issuance. Once that admitted retirement completes, passive original receipt reads do not reacquire retired source controls.
 
-Current-group rows are either all absent with authenticated never-issued authority, or all present and exactly compatible with one completed issuance. A proper subset, mixed first timestamps, duplicate keys, mixed Storage identities, conflicting group/receipt terms, or evidence that absent rows were previously issued is corruption/loss/backup skew. Fence rather than filling missing rows or minting a second first acknowledgement. Previously issued rows remain immutable on retries.
+Current-group rows are either all absent with authenticated never-issued authority, or all present and exactly compatible with one completed issuance. Amended 2026-10-31 (DL-270): under SP-336, rows absent for a group whose commit frame is durable are rebuilt from that frame, not fenced; rows without a durable commit frame fence. A proper subset, mixed first timestamps, duplicate keys, mixed Storage identities, conflicting group/receipt terms, or evidence that absent rows were previously issued is corruption/loss/backup skew. Fence rather than filling missing rows or minting a second first acknowledgement. Previously issued rows remain immutable on retries.
 
 ### Crash and uncertainty behavior
 
-Before manifest promotion there is no successful receipt. Valid unacknowledged tail frames follow existing Case L-2 recovery and acquire their first actual recovery group/class/publication; do not assert an earlier acknowledged group existed. An OS-visible manifest rename with unknown directory synchronization is not prior durability proof. Authenticate the actually selected old/new state and establish both actual barriers.
+Before manifest promotion there is no successful receipt. Amended 2026-10-31 (DL-270): under SP-336 the issuance boundary is the durable commit frame, and the manifest is promoted only at creation, rotation and structural changes. Valid unacknowledged tail frames follow existing Case L-2 recovery and acquire their first actual recovery group/class/publication; do not assert an earlier acknowledged group existed. An OS-visible manifest rename with unknown directory synchronization is not prior durability proof. Authenticate the actually selected old/new state and establish both actual barriers.
 
 After both source barriers but before issuance, the intact last protected group's original terms permit first mint at the subsequent actual issuance time only after revalidation and actual barrier establishment. Preserve original coordinates and promotion generation. After issuance, lost caller delivery or an interrupted domain terminal commit returns the exact stored original receipt. Domain owners independently reconcile action execution and original terminal outcome; the generic reader does not rerun the action.
 
@@ -143,17 +143,17 @@ canonical_text: >-
   technical prerequisite only; event-specific adoption and native proof remain separate. New strict
   stored v2 retains the original complete EventRecord value commitment, exact v1/v2 read dispatch
   and explicit legacy-selector compatibility; full-value resolution is independently adopted.
-  Amended 2026-10-31 (DL-270): for an ordinary group the source durability barrier is the single segment data
-  sync, with the watermark in the segment's frames (SP-336); the manifest barrier applies only at creation,
-  rotation and structural changes, and the receipt-custody rows commit without their own sync and are rebuilt
-  identically from the segment's commit frames after a crash. A barrier-class group keeps a full flush and commits
-  its custody rows durably before acknowledging.
+  Amended 2026-10-31 (DL-270): SP-336's publication and recovery sequence applies: an ordinary group's receipt is
+  issued when its commit frame, carrying every receipt field and the seal-time acknowledged_at_utc, is durable
+  after one segment sync; its custody rows commit without their own sync and are rebuilt identically from that
+  frame after a crash. A barrier-class group keeps a full flush and commits its custody rows durably before
+  acknowledging.
 gui_related: false
 gui_classification_reason: Defines Storage receipt custody and internal restore admission; existing recovery-shell disclosure remains separately owned.
 depends_on: [SP-230, SP-235, SP-236, CV-318, DL-045]
 unblocks: []
 acceptance_criteria:
-  - Both source barriers precede one durable complete-group custody commit; no receipt or dependent terminal write escapes earlier.
+  - Both source barriers precede one durable complete-group custody commit; no receipt or dependent terminal write escapes earlier. Amended 2026-10-31 (DL-270): under SP-336 an ordinary group's receipt follows its durable commit frame after one segment sync, and its custody commit needs no sync of its own.
   - Original eleven receipt fields and four-field result remain immutable across retries, source relocation and lost delivery.
   - Current-group loss, subset custody, repaired held mappings/dedupe, contradictory identities or late owner/session changes fence.
   - Settled older restore preserves covered receipts but cannot mint a replacement for missing delivered work.

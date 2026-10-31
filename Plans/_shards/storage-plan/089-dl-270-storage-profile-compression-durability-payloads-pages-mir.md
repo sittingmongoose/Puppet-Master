@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28218-L28918
+Source lines: L28218-L28928
 
-Source SHA256: `a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf`
+Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
 
 ---
 
@@ -60,7 +60,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
@@ -98,13 +98,22 @@ canonical_text: >-
   from 93/194 ms to 3/20 ms p50/p99. Measured: F_FULLFSYNC p50 2.9 ms and p99 3.9 ms, F_BARRIERFSYNC 0.41 ms and a
   32-event group with a barrier 0.62 ms on a MacBook Air; FlushFileBuffers p50 0.48 ms and p99 0.88 ms on Windows;
   0 of 134,423 acknowledged commits lost, duplicated or corrupted across 4,250 kills, LazyFS power cuts and torn
-  writes. This amends SP-236's acknowledgement rule and SP-286's two source barriers. For an ordinary group the
-  receipt-custody rows commit in one redb transaction without their own sync and become durable with the next
-  synced commit; the group's commit frame carries the receipt fields, so after a crash the rows are rebuilt
-  identically from the segment up to the durable watermark, and acknowledgement waits only for the segment sync,
-  plus SP-337's pack sync when the group writes new payload bytes to packs. A barrier-class group commits its
-  custody rows durably before acknowledging. On Linux and Windows every acknowledged group survives power loss.
-  The Case L proofs and frame fields need the matching update.
+  writes. This amends SP-236's acknowledgement rule and SP-286's two source barriers; acknowledgement waits only
+  for the segment sync, plus SP-337's pack sync when the group writes new payload bytes to packs. Publication and
+  recovery for an ordinary group: the writer appends the group's frames and then a commit frame carrying every
+  member's receipt fields, with acknowledged_at_utc chosen once when the group is sealed, and from then on those
+  fields are immutable; one data sync of the segment makes the commit frame durable, and that is the issuance
+  boundary, so the group is issued exactly when its commit frame is durable; receipts are exposed only after that
+  sync; the receipt-custody rows are then committed in redb without a sync of their own and become durable with
+  the next synced commit. Recovery scans from the last manifest checkpoint: a group whose valid commit frame lies
+  within the durable tail is issued, and its missing custody rows are rebuilt from that frame, identical to the
+  ones exposed; a group without a valid commit frame was never issued, and Case L-2 truncates its tail; custody
+  rows without a durable commit frame are corruption and fence. A barrier-class group also takes a full flush and
+  commits its custody rows durably before acknowledging. The manifest is promoted only at creation, rotation and
+  structural changes. Restoring a backup rebuilds custody rows beyond its redb snapshot from the restored
+  segments' commit frames. This sequence supersedes Case L's per-group manifest promotion and its redb-commit
+  issuance boundary in storage-plan's publication subsection and in CV-339; rewriting the Case L proof tables to
+  match is a pending companion. On Linux and Windows every acknowledged group survives power loss.
 gui_related: false
 gui_classification_reason: "Defines commit durability and store creation; no visible surface."
 split_recommended: false
@@ -118,6 +127,7 @@ acceptance_criteria:
   - "After kill -9, torn writes or a crash while a store is created, no acknowledged group is lost, duplicated or corrupted."
   - "After a simulated power cut nothing is reordered or corrupted, no barrier-class group is lost, and only on macOS may ordinary groups after the last full flush be missing."
   - "Receipt-custody rows rebuilt after a crash are identical to the ones exposed before it."
+  - "A group is issued exactly when its commit frame is durable: a crash before that sync leaves it never issued, and a crash after it leaves it issued with identical receipts."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -133,7 +143,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-crash-REPORT.md, SHA-256 8b0b9d24c5351baf9fb19f4c64ea4ea44f6483a22b3afe3e424c9c307a83c0cd"
@@ -205,7 +215,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/opus/REPORT.md, SHA-256 0af8522bf4ff4d5deb44346305c7e93d6c0aeb0dcf03905f6e008980cb562155 (base64 share of session bytes)"
@@ -267,7 +277,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
@@ -333,7 +343,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
 preserved_exact_tokens:
@@ -373,10 +383,10 @@ canonical_text: >-
   their budgets by eviction and rebuild. Canonical budgets are advisory: a canonical family at or over its budget
   raises a notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes
   canonical history because of a budget. Daily usage totals are a canonical family (UF-108). The budget values are
-  set in the storage registry. Measured: 128-130 of 301 redb families stored JSON text; redb held 1-8 KiB values
-  at 1.56 times their size; deleting half a store returned no space until compact(); compacting a 3 GB store took
-  21.7 s with 328 MB of RAM and no extra disk, against 109.6 s for SQLite VACUUM, whose disk use peaked at 4.71
-  GB, 1.5 times the database.
+  owner values here until the storage registry companion, which is pending, holds them. Measured: 128-130 of 301
+  redb families stored JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store
+  returned no space until compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk,
+  against 109.6 s for SQLite VACUUM, whose disk use peaked at 4.71 GB, 1.5 times the database.
 gui_related: true
 gui_classification_reason: "Storage health shows usage, budgets, reclaimable bytes and a reclaim action."
 split_recommended: false
@@ -401,7 +411,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
@@ -458,7 +468,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"
@@ -494,7 +504,7 @@ canonical_text: >-
   into a new file, and never rewrites a busy store exclusively. SP-344 turns them into release gates. SQLite and
   SQLite-format engines such as libSQL and Turso stay banned for PM-owned stores. Measured: SQLite checkpoint
   stalls of 48-78 ms p99 on the commit path; VACUUM of a 3 GB store took 109.6 s with disk use peaking at 1.5
-  times the database; Turso 0.8.3 read single rows 12-19 times slower than SQLite, took three times as long to
+  times the database; Turso 0.8.3 read single rows 12-19 times slower than SQLite, took 3.3 times as long to
   VACUUM, and its BEGIN CONCURRENT commits stalled 1.35-1.81 s at p99. Two narrow exceptions: PM may read other
   tools' SQLite files, such as Codex, T3 Code, Cursor and OpenCode history, for import, only through a read-only
   connection or a copy, never writing to them; and a user may run an optional pm export --sqlite. Spec_Lock's
@@ -525,7 +535,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
@@ -579,7 +589,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-media-REPORT.md, SHA-256 bb27abc69a8204a6598ffea1bad173c490836d9cc6a16ca4d0b60deb7c5666bd"
@@ -634,7 +644,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/vm-crash-REPORT.md, SHA-256 8b0b9d24c5351baf9fb19f4c64ea4ea44f6483a22b3afe3e424c9c307a83c0cd"
@@ -691,7 +701,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/tests/mac-REPORT.md, SHA-256 d697785c0131d449a4ba6162d7cd8f91cb84515db4bd1afe80285e057f21e319"

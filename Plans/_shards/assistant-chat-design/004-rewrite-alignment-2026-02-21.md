@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L32-L47
 
-Source SHA256: `76b7e221ee1f218ba2d415e14622b8e0d7b9ce6926f3d48e0cfe2393525cb9cb`
+Source SHA256: `77302794ae93130af469993e867345584783a274d40ed03b1a46a58c0ab495ab`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `76b7e221ee1f218ba2d415e14622b8e0d7b9ce6926f3d48e0cfe2393525cb9cb
 This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md` with the following reconciled assumptions:
 
 - **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
-- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack. Amended 2026-10-31 (DL-270): there is no JSONL mirror; storage/jsonl is retired (SP-339). People read stored state through pm db dump, pm inspect, pm tail and pm export, which writes JSONL or JSON on request only.
+- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack. Amended 2026-10-31 (DL-270): there is no JSONL mirror; storage/jsonl is retired (SP-339). People read stored state through pm db dump, pm inspect, pm tail and pm export; only pm export writes JSONL or JSON, on request.
 - **UI:** Rust + Slint (Skia renderer) remain the intended native desktop shell implementation; the web GUI is the Rust Leptos client (`Plans/FinalGUISpec.md` F3-583, DL-139). The behavior and data contracts in this plan apply to both frontends.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
 - **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.

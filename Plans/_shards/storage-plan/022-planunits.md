@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L2393-L15116
 
-Source SHA256: `a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf`
+Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
 
 ---
 
@@ -11538,7 +11538,7 @@ plan_unit_id: SP-194
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Backend acceptance criteria preserve phase 1-5 success conditions for storage dirs, seglog readback, redb schema/migrations, pm tail and pm export resume from a checkpoint, Tantivy search, and analytics rollups readable from redb. Amended 2026-10-31 (DL-270): \"JSONL projector tails seglog\" is replaced by pm tail and pm export resuming from a checkpoint without duplicating or skipping events (SP-339). Backend acceptance also includes the SP-344 release gates on Windows, macOS and Linux: first page p95 at most 150 ms, warm or cold, commit confirmation p99 at most 50 ms, no storage-caused UI stall over 50 ms, and no acknowledged event lost, duplicated or corrupted after kill -9, power cuts, torn writes or store-creation crashes."
+canonical_text: "Backend acceptance criteria preserve phase 1-5 success conditions for storage dirs, seglog readback, redb schema/migrations, pm tail and pm export resume from a checkpoint, Tantivy search, and analytics rollups readable from redb. Amended 2026-10-31 (DL-270): \"JSONL projector tails seglog\" is replaced by pm tail and pm export resuming from a checkpoint without duplicating or skipping events (SP-339). Backend acceptance also includes the SP-344 release gates on Windows, macOS and Linux: first page p95 at most 150 ms, warm or cold, commit confirmation p99 at most 50 ms, no storage-caused UI stall over 50 ms, no acknowledged event lost, duplicated or corrupted after kill -9, torn writes or store-creation crashes, and after power cuts nothing reordered or corrupted and no loss beyond SP-336's durability classes."
 gui_related: false
 gui_classification_reason: This unit preserves backend phase acceptance criteria.
 split_recommended: true

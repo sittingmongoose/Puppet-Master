@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3229,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-31T21:08:23Z",
+  "generated_at_utc": "2026-10-31T21:26:43Z",
   "gui_related_units": {
     "count": 3635,
     "units": [
@@ -33814,8 +33814,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28430,
-          "line": 28432,
+          "heading_line": 28440,
+          "line": 28442,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33825,8 +33825,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28493,
-          "line": 28495,
+          "heading_line": 28503,
+          "line": 28505,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33836,8 +33836,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28559,
-          "line": 28561,
+          "heading_line": 28569,
+          "line": 28571,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33847,8 +33847,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28625,
-          "line": 28627,
+          "heading_line": 28635,
+          "line": 28637,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -44308,7 +44308,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "2c7716a04afa1efef9387ef59e967b0189f751406e8b06794dfa57eaf72c2cd7",
+        "expected": "e225838e9aa2d5457f9f80a75fa0d5c5ec63e8cd671db59216c0de3884d65f03",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -44320,7 +44320,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "739c63ed2d29ea5d9c5d8e70e09096c542e2e8281d4eef9eaf3d057e51834f4d",
+        "expected": "5c0cd20af01bfca6988189d80b6961f06c470784f2151a9ab368a04371355686",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

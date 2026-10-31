@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5620-L27219
 
-Source SHA256: `7063e509f535815d7a472e54919a81508e7ec47a94e8176cfba39c05854e734f`
+Source SHA256: `36eabcb14eb7e960991b74f723867457cca4603e8f9099f2423c4dbdad87a696`
 
 ---
 
@@ -8256,7 +8256,7 @@ canonical_text: >-
   Amended 2026-10-31 (DL-270): the inspector reads seglog and the payload store, never a log or mirror file (SP-339).
   On-demand payload dereference resolves a payload reference through the payload store (SP-337) under the same
   redaction profile and permissions. Export matches `pm export` (JSONL or JSON on request), a row's drill-down
-  opens the record inspector (F3-666) through `cmd.storage.open_value`, and the help line names `pm tail` and
+  will open the record inspector (F3-666) through `cmd.storage.open_value` once its own production wiring row lands, and the help line names `pm tail` and
   `pm inspect`.
 gui_related: true
 gui_classification_reason: This unit defines visible log/audit inspector rows and interactions.

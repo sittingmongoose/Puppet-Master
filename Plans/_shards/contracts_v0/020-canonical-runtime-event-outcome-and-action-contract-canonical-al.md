@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L2919-L3209
 
-Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4`
+Source SHA256: `e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e`
 
 ---
 
@@ -109,7 +109,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 #### Stable active-agent coordination event families
 
-Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; the side files `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are retired as live files and do not stand beside the EventRecord/projection model as runtime truth. Amended 2026-10-31 (DL-270): nothing writes them during normal runs (SP-339). People read coordination state through `pm db dump`, `pm inspect`, `pm tail` and `pm export`, which writes JSON or JSONL only on request. The redb coordination projections stay the only runtime copy.
+Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; the side files `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are retired as live files and do not stand beside the EventRecord/projection model as runtime truth. Amended 2026-10-31 (DL-270): nothing writes them during normal runs (SP-339). People read coordination state through `pm db dump`, `pm inspect`, `pm tail` and `pm export`; only `pm export` writes JSON or JSONL, on request. The redb coordination projections stay the only runtime copy.
 
 For every `coordination.*` event below, the payload MUST preserve the PM lineage envelope:
 - `project_id`

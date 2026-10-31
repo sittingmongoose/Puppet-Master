@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L4279-L4427
 
-Source SHA256: `13eb088972f4e7dc5fabd6d210bf6991d8b4d32432ae5410d1533f4a726503fa`
+Source SHA256: `49134c67314bfefc583eb849bd15fe37b9f0749f7dd33fa68d4ea0071cec1fbf`
 
 ---
 
@@ -19,7 +19,7 @@ DL-270 gives each storage rule one owning unit, and a few numbers appear in more
 | Payloads | SP-337 | the 16 KiB inline cap, the BLAKE3 id, pack files, the base64 admission error, reference counts, garbage collection holds | `Plans/Tools.md` (T-168), `Plans/Contracts_V0.md` web payloads, `Plans/Prompt_Pipeline.md` (PP-070), `Plans/Project_Output_Artifacts.md`, SP-331 background images, SP-343 media |
 | Chat pages | SP-338 (store, page limits, open-path gate numbers) and `Plans/assistant-chat-design.md` ACD-242 (load-older paging in the chat) | 50-item pages of at most 256 KiB, thread_head, hot tail, first page 150 ms at p95, warm or cold, at most 2 MiB read | `Plans/FinalGUISpec.md` F3-416, DR-052, SP-344 |
 | JSON copies and read paths | SP-339 (what is retired, what stays a file) and DR-083 (the one read path) | the retired files, the kept files, the four read commands | `Plans/usage-feature.md`, FileSafe, Scout, Backup |
-| redb families | SP-340 and `Plans/storage_value_registry.json` (each family row) | the 16 KiB value maximum, canonical or derived file, disk budget, compaction trigger | Back_Seat_Driver, LSPSupport, Permissions_System, Working_Notebook, Tools rollups, FileManager glossary |
+| redb families | SP-340 (its storage registry rows are a pending companion) | the 16 KiB value maximum, canonical or derived file, disk budget, compaction trigger | Back_Seat_Driver, LSPSupport, Permissions_System, Working_Notebook, Tools rollups, FileManager glossary |
 | Analytics archive | SP-341 | Parquet by family and month at seal, DuckDB embedded, on demand, read-only, the Scout split | `Plans/usage-feature.md`, Scout |
 | Usage history | `Plans/usage-feature.md` UF-108, with its policy row in `Plans/storage_value_registry.json#/retention_policies` | detailed usage records follow the existing `ai.usage.usage-retention` setting (90 days by default); daily totals per account, provider and model are kept forever whatever it says | SP-341, the storage-plan retention table, usage-feature Problem 5 |
 | Engine requirements | SP-342 and `Plans/Spec_Lock.json` `forbid_sqlite` | the four requirements, commit confirmation p99 at most 50 ms, no storage-caused UI stall over 50 ms, the SQLite ban and its two exceptions | SP-344 |

@@ -2024,7 +2024,7 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-Amended 2026-10-31 (DL-270): the Raw view resolves `raw_payload_ref` through the payload store (SP-337) and may open the record inspector (F3-666), whose command-line form is `pm inspect`. It never reads a JSON mirror file.
+Amended 2026-10-31 (DL-270): the Raw view resolves `raw_payload_ref` through the payload store (SP-337) and may open the record inspector (F3-666) once its own production wiring row lands; the command-line form is `pm inspect`. It never reads a JSON mirror file.
 
 ## Case L Durable-State Consumer Addendum - 2026-07-17
 

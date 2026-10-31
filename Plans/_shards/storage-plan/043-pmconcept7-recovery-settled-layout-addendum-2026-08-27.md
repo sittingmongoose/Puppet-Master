@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L18555-L18756
 
-Source SHA256: `a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf`
+Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
 
 ---
 
@@ -64,7 +64,7 @@ canonical_text: >-
   retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
   storage key is admitted by this rule.
   Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB (SP-340), so a widget-layout record larger than that
-  is split per key or stored by reference.
+  keeps its one record and holds the oversized layout body by payload reference (SP-337).
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]

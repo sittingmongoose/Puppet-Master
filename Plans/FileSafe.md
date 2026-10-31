@@ -2442,7 +2442,7 @@ impl FileGuard {
   - **"Block sensitive files"** -- Security filter state and scoped override request; missing baseline remains blocked.
 - **Override:** "Request destructive override" control with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
 - **Approved commands:** Scrollable list; per-row **Remove** button; optional **"Add command manually"**; persisted in `filesafe.approvedCommands` (e.g. `puppet-master.yaml`).
-- **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands): opens the log and audit inspector (F3-148) with the event-family filter set to FileSafe events, read from seglog (SP-339, DL-270); a row opens the record inspector (F3-666). Help text names `pm tail` and `pm inspect` as the CLI equivalents. No FileSafe-only log file is read.
+- **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands): opens the log and audit inspector (F3-148) with the event-family filter set to FileSafe events, read from seglog (SP-339, DL-270); a row will open the record inspector (F3-666) once its own production wiring row lands. Help text names `pm tail` and `pm inspect` as the CLI equivalents. No FileSafe-only log file is read.
 - **Widget reuse:** Use existing widgets from `src/widgets/` per DRY Method (e.g. `toggler`, `help_tooltip(tooltip_key, tooltip_variant, theme, scaled)`, `styled_button`). See `docs/gui-widget-catalog.md`. **Tooltip keys** (for localization and help system): `filesafe.bash_guard`, `filesafe.file_guard`, `filesafe.security_filter` (three toggles); optionally `filesafe.override`, `filesafe.approved_commands` for override toggle and approved list. Document in widget catalog or central tooltip doc.
 
 **Config struct (unchanged):** `GuiConfig.filesafe: FileSafeConfig` with `BashGuardConfig`, `FileGuardConfig`, `SecurityFilterConfig`, `approved_commands: Vec<String>` as in §2.4 and §5.2.
@@ -10575,7 +10575,7 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row opens the record inspector (F3-666) (SP-339). No JSONL file is its source."
+- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row will open the record inspector (F3-666) once its own production wiring row lands (SP-339). No JSONL file is its source."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"

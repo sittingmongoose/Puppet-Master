@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L2943-L13298
 
-Source SHA256: `4b3d85b690bb307a70c79bb4c063184e045339ae0af6da11095bfcbb11e0d62e`
+Source SHA256: `3e2760d08279b7908ac72fa0c4ec7e33d70dfb92c0747804f769be5b50d66e20`
 
 ---
 
@@ -7643,7 +7643,7 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row opens the record inspector (F3-666) (SP-339). No JSONL file is its source."
+- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row will open the record inspector (F3-666) once its own production wiring row lands (SP-339). No JSONL file is its source."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"

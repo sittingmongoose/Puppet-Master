@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L16397-L16879
 
-Source SHA256: `a0539dcb50c5e14170f514c86899fc16a79d6d2995eaded38121755babbc83cf`
+Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
 
 ---
 
@@ -446,7 +446,7 @@ gui_classification_reason: This unit defines backend storage records and mirror/
 depends_on: [SP-230, SP-231, CV-309, OSI-432]
 unblocks: []
 acceptance_criteria:
-  - The canonical coordination event families are named for agent registration, status update, operation update, file-activity update, unregister, crash, abort, and debug mirror export.
+  - The canonical coordination event families are named for agent registration, status update, operation update, file-activity update, unregister, crash and abort. Amended 2026-10-31 (DL-270): debug mirror export is retired (SP-339).
   - The authoritative projection families are `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}`.
   - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.
   - Stale writes fail with coordination conflict diagnostics rather than overwriting canonical state.

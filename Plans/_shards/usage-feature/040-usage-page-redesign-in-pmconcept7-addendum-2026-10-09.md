@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L7323-L7611
 
-Source SHA256: `f14b411d90a38f9cf14ee5f171356e770083f8b20d3e2beea31dd9618b8ed4e8`
+Source SHA256: `f65e1bd01b100393967cade7f6027e576127765da35587ffacf8b80f7f709bc2`
 
 ---
 
@@ -264,7 +264,7 @@ acceptance_criteria:
   - "No usage total, window or chart scans raw usage events; the Ledger pages through records by index."
   - "Detailed usage records older than the selected ai.usage.usage-retention are pruned from the event log and the archive."
   - "Daily usage totals per account, provider and model are never pruned."
-  - "Deleting the derived file, or restoring from backup, after detailed records expire keeps every daily total."
+  - "Deleting the derived file after detailed records expire keeps every daily total, and a restore keeps every daily total its backup covers and says that totals written after the backup's capture point are lost."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -280,7 +280,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-270"
-  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 377105f30d488726efdc246c00004cf5a87fb8585f2d50984a21c66de8190eca (decision packet)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/README.md, SHA-256 05aa90cf844b3b65b0bad394fc43136669d2f228b2cccfe7a7acdfe80c22efe4 (decision packet)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/decision-cards.json, SHA-256 27a79f44c4a56a63ff2864a8e57fe6389507ffc56e939c1477408546117e502c (card text and options)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answers-2026-10-31.jsonl, SHA-256 e77364da11705bc6e50b35e50c252faea49f13cbfe193cd23f936db4e6c99637 (Jared's answers)"
   - "/mnt/Cursor/share/puppet-master/2026-10-30-storage-compression-review/answer-replies-2026-10-31.json, SHA-256 c51138b79bba5efa55662f3cd7ef04bd67f8afc6c9dc76fb34e42d1de99d0db4 (the reply to the card 7 note)"

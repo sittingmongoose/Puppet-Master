@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L22256-L22438
 
-Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4`
+Source SHA256: `e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `8199f4572b98b7f5882ae59ff86f29efbe682d00a238f5bff5797ca9c0a378a4
 
 CV-339 defines the shared first-receipt shapes, byte semantics and caller interfaces. SP-286 owns physical custody, durability, exclusion, restore, migration and withdrawal. The successful `AppendReceipt` remains exactly the existing eleven fields: `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, `acknowledged_at_utc`. `durability_class = ordinary | barrier`; `durability_state = synced`. The existing four-field `original_append_result` remains `event_id`, `sequence_id`, `segment_ref`, `byte_offset`. Neither gains a pending state, origin flag, replacement ID or new field.
 
-Amended 2026-10-31 (DL-270): one data sync of the group's segment bytes is required for an ordinary group, and a full flush for a barrier-class event (SP-336). The manifest is not a per-group barrier. SP-286 then requires durable canonical all-member first-receipt issuance before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the selected successful first issuance time, not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
+Amended 2026-10-31 (DL-270): one data sync of the group's segment bytes is required for an ordinary group, and a full flush for a barrier-class event (SP-336). The manifest is not a per-group barrier. For an ordinary group, issuance is the durable commit frame, which carries every member's receipt fields and the seal-time `acknowledged_at_utc`, and the canonical custody rows follow without their own sync and are rebuilt from that frame after a crash (SP-336); a barrier-class group commits its custody durably before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the issuance time selected when the group is sealed and carried in its commit frame (SP-336), not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
 
 ### Exact closed schema routes
 

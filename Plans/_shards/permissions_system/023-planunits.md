@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1307-L7533
 
-Source SHA256: `575359e7ec9810c790caafb09df5fcf79e3608d5e3a2ffbbc5b303d403f00478`
+Source SHA256: `a2f40fb89918b299f4b90af9d0d7d7c85b75ad57f8312f598490040ea1d74bca`
 
 ---
 
@@ -2251,7 +2251,7 @@ plan_unit_id: PS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector. Amended 2026-10-31 (DL-270): the dedicated log/audit inspector is the log and audit inspector of F3-148, and a row opens the record inspector (F3-666); pm inspect, pm tail and pm export read the same permission and audit records. On-demand payload reads resolve a payload reference through the payload store (SP-337) under the same redaction profile."
+canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector. Amended 2026-10-31 (DL-270): the dedicated log/audit inspector is the log and audit inspector of F3-148, and a row will open the record inspector (F3-666) once its own production wiring row lands; pm inspect, pm tail and pm export read the same permission and audit records. On-demand payload reads resolve a payload reference through the payload store (SP-337) under the same redaction profile."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
 split_recommended: false
