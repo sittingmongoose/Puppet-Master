@@ -152,7 +152,7 @@
         const purpose = OL(S).purpose === 'source' ? 'existing' : 'new';
         if (methods[0] === 'token') out += `<p class="o55-hint" data-key="toklead">${U.esc(T('online.signin.tokenLead', { host }))}</p>`;
         out += C.field({ bind: 'token', type: 'password', protected: true, typed: !!si.tokenTyped, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
-        out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
+        out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('online.signin.tokenCheck'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
         out += demo('online-signin:token', [{ label: T('online.signin.demo.good'), outcome: 'works', fills: [['token', 'pm-demo-token-7f3a9c41']], act: ['tokenCheck'] }, { label: T('online.signin.demo.bad'), outcome: 'refused', fills: [['token', 'abc']], act: ['tokenCheck'] }], !(ts && ts.state === 'running'));
         if (methods[0] === 'token' && si.state === 'idle') {
           if (env.signup !== false) out += `<div class="o55-sublinks" data-key="tokcreate">${C.link(T('online.signin.createOn', { host }), 'create')}</div>`;
@@ -421,7 +421,7 @@
       let under = '';
       if (d.forge === 'azure_devops') {
         const projects = azureProjects(S), route = azureProjectRoute(S);
-        under = C.group(T('online.details.project'), C.cards('azProject', projects.map((x) => ({ v: x.id, glyph: 'stack', title: x.name, sub: T('online.details.azure.gitSub', { id: x.id }), quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }))
+        under = C.group(T('online.details.project'), C.cards('azProject', projects.map((x) => ({ v: x.id, glyph: 'stack', title: x.name, sub: T('online.details.azure.gitSub'), quiet: true })), d.repository_project, { cls: 'o55-choices-quiet' }))
           + `<div class="o55-actions" data-key="azure-refresh">${O55.ui.btn({ label: T('online.details.azure.refresh'), do: 'azRefresh', note: false }, 'o55-secondary')}</div>${O55.tips.explainer('azRefresh')}`
           + F.more(!!S.sess.ui.azureTeamProjectAdvanced, T('online.details.azure.advanced'), 'azAdvanced',
             (route ? O55.ui.btn({ label: T('online.details.azure.create'), do: 'azCreateTeamProject', note: false }, 'o55-secondary')
