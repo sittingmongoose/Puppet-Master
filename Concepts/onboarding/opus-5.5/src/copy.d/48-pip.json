@@ -1786,6 +1786,9 @@
       "restore": {
         "unlock": {
           "wrong": "Hmm, those words don't unlock it."
+        },
+        "preview": {
+          "failed": "Oh. It stopped. Nothing was changed."
         }
       },
       "protect": {
@@ -1822,6 +1825,9 @@
         },
         "folder": {
           "readOnly": "I can't write in that folder."
+        },
+        "smb": {
+          "wrong": "Hmm, it didn't take that password."
         }
       },
       "online": {
@@ -1936,6 +1942,9 @@
       "restore": {
         "unlock": {
           "wrong": "Unlocked! Well remembered."
+        },
+        "preview": {
+          "failed": "All back this time!"
         }
       },
       "protect": {
@@ -1972,6 +1981,9 @@
         },
         "folder": {
           "readOnly": "This one's writable. Good."
+        },
+        "smb": {
+          "wrong": "In! The folder opened."
         }
       },
       "online": {

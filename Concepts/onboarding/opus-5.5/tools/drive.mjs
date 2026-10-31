@@ -35,6 +35,9 @@ export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1
     await page.goto(pathToFileURL(PAGE).href + `?o55=off&o55scenario=${encodeURIComponent(scenario)}${query}`);
     await wait(() => !!(window.PM_THEME && window.PM_THEME.setFamily && window.PM_THEME.setMode && window.O55 && window.O55.ui && window.O55.ui.open && window.PM7_ONBOARDING_CINEMATIC), { what: 'theme and onboarding APIs ready' });
     await page.evaluate((f, m) => { window.PM_THEME.setFamily(f, { persist: false }); window.PM_THEME.setMode(m, { persist: false }); localStorage.removeItem('pm.o55.onboarding.v1'); }, fam, mode);
+    /* the scenarios test the owner gate themselves (injected results, refusals), so the page's concept owner host
+       (30-owners.js) is off here unless a scenario turns it on to walk a route to its end by clicks */
+    await page.evaluate(() => { window.__O55_CONCEPT_HOST_OFF__ = true; });
   } catch (err) { await close(); throw err; }
   const log = [];
   let lastSnapScreen = null, snapN = 0;

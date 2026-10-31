@@ -682,13 +682,14 @@
       out += C.note(T('restore.preview.never'), 'info', 'lock');
       const st = F.state(S, 'restore:' + r.pick);
       const rp = (st && st.phases || []).some((x) => x.key === 'remote') ? ['remote'] : [];
+      if (st && st.state === 'failed') out += C.note(T('restore.preview.failed'), 'warn', 'rewind');
       if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings'].concat(rp), { remote: T('restore.apply.phases.remote'), fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings') });
       return out;
     },
     foot(S) {
       const st = F.state(S, 'restore:' + R(S).pick);
       if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'done' } };
-      return { primary: { label: T('restore.preview.button'), do: 'apply', disabled: !!(st && st.state === 'running'), reason: T('chrome.working') } };
+      return { primary: { label: st && st.state === 'failed' ? T('restore.preview.retry') : T('restore.preview.button'), do: 'apply', disabled: !!(st && st.state === 'running'), reason: T('chrome.working') } };
     },
     do: {
       apply(S) {
@@ -699,7 +700,11 @@
         const d = md(S), remote = r.scope === 'server' && d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
         /* the Restore button stands in for Review on this path: the preview listed the access being set up */
         if (remote) O55.owners.dispatch(d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup', { draft: d.project_draft_ref, restore: r.pick }, Object.assign(S.ctx(), { reviewConfirmed: true }), () => ({ ok: true }));
-        F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }].concat(remote ? [{ key: 'remote', ms: 900 }] : []), {
+        /* situation restoreFails: the first attempt stops while bringing the Projects back, before anything is replaced;
+           Try again runs it afresh */
+        const f = S.env.failures || {}, stop = !!f.restore_once; if (stop) f.restore_once = false;
+        F.reset(S, 'restore:' + r.pick);
+        F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100, fail: stop ? () => 'restore_interrupted' : undefined }, { key: 'settings', ms: 600 }].concat(remote ? [{ key: 'remote', ms: 900 }] : []), {
           payload: { scope: r.scope, backup: r.pick, remote_mode: remote ? d.remote_mode : null }, sound: { intensity: 0.9 },
           onDone: () => { r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview') O55.ui.go('r-done'); }); }
         });

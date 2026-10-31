@@ -193,7 +193,11 @@
     /* a browser sign-in closed before it finished: the row says so and offers it again (ai.signinFail,
        online.signin.fail); the second try works */
     antigravityOnce: { label: 'Antigravity sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { antigravity: true }); } },
-    githubSigninOnce: { label: 'GitHub sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { github: true }); } }
+    githubSigninOnce: { label: 'GitHub sign-in fails once', apply(e) { e.failures.signin_once = Object.assign({}, e.failures.signin_once, { github: true }); } },
+    /* the three failures a first-time person can meet that had no way to happen here (the lead, 2026-10-30) */
+    smbWrong: { label: 'Shared folder refuses the first password', apply(e) { e.failures.smb_password_once = true; } },
+    restoreFails: { label: 'A restore stops part-way once', apply(e) { e.failures.restore_once = true; } },
+    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_expires_once = true; } }
   };
 
   O55.fixtures = {

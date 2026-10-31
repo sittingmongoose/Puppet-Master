@@ -465,7 +465,9 @@
       "settings": "Your settings and look",
       "never": "This restore doesn't bring back sign-ins. You sign in again where needed.",
       "button": "Restore",
-      "away": "Access away from home is set up: {how}"
+      "away": "Access away from home is set up: {how}",
+      "failed": "The restore stopped before it finished. Nothing on this computer was replaced. Try again.",
+      "retry": "Try again"
     },
     "apply": {
       "phases": {
@@ -1241,7 +1243,8 @@
       "phases": {
         "mount": "Opening the shared folder",
         "read": "Checking it can be read"
-      }
+      },
+      "wrong": "The shared folder didn't accept that username and password."
     },
     "nfs": {
       "eyebrow": "NFS share",

@@ -582,14 +582,19 @@
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
       let out = `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>`;
       out += C.field({ bind: 'user', label: T('nas.smb.user'), value: n.user || '', autocomplete: 'username' });
-      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: T('nas.smb.passwordHint') }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
-      const st = F.state(S, 'smb:' + n.share);
+      const st = F.state(S, 'smb:' + n.share), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
+      out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHint'), error: refused ? T('nas.smb.wrong') : '', invalid: refused }); /* (the OS keeps a shared folder's sign-in: not the SSH key's one-time password; QA2 hunter H3) */
       if (st) out += F.phases(S, 'smb:' + n.share, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
     foot(S) { const n = N(S), st = F.state(S, 'smb:' + n.share); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
     do: {
-      check(S) { const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('tap'); F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
+      check(S) {
+        const i = S.root.querySelector('#o55f-pw'); if (i) i.value = ''; N(S).pwTyped = false; O55.sound.play('tap');
+        /* situation smbWrong: the share refuses the first password, as it would a mistyped one */
+        const f = S.env.failures || {}, wrong = !!f.smb_password_once; if (wrong) f.smb_password_once = false;
+        F.reset(S, 'smb:' + N(S).share);
+        F.op(S, 'smb:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
       use(S) { const sh = S.env.shares.find((s) => s.id === N(S).share); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: { user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); }, pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } } }
