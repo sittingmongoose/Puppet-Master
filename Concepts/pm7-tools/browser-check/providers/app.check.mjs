@@ -33,14 +33,12 @@ async function connectAndEnter(t, W, plan) {
 	await waitRow(W, 'claude', /Not installed|Not signed in|Ready/);
 	if (plan.includes('claude')) { await W.$('[data-key="pv-claude"] [data-o55-do="signin"]').click(); await waitRow(W, 'claude', /Ready/); }
 	if (plan.includes('cursor')) {
-		await W.$('[data-key="pv-cursor"] [data-o55-do="choose"]').click(); await W.frame.waitForTimeout(400);
-		await W.$('[data-o55-do="way"][data-arg="cursor|main"]').click(); await W.frame.waitForTimeout(400);
+		await W.$('[data-key="pv-cursor"] [data-o55-do="key"]').click(); await W.frame.waitForTimeout(400);
 		await W.$('#o55f-key-cursor').pressSequentially(FAKE_KEY, { delay: 5 });
 		await W.$('[data-key="pv-cursor"] [data-o55-do="keyCheck"]').click(); await waitRow(W, 'cursor', /Ready/);
 	}
 	if (plan.includes('codex')) {
-		await W.$('[data-key="pv-codex"] [data-o55-do="choose"]').click(); await W.frame.waitForTimeout(400);
-		await W.$('[data-o55-do="way"][data-arg="codex|main"]').click(); await waitRow(W, 'codex', /Ready/);
+		await W.$('[data-key="pv-codex"] [data-o55-do="signin"]').click(); await waitRow(W, 'codex', /Ready/);
 	}
 	if (!plan.length) { await W.$('.o55-foot [data-o55-do="skip"]').click(); await W.frame.waitForTimeout(500); }
 	await W.$('.o55-foot .o55-primary').click(); await W.frame.waitForTimeout(1500);

@@ -118,11 +118,12 @@ export const tests = {
 	async 'codex: ChatGPT or an OpenAI API key, each its own account'(t) {
 		const W = await open(t, 'ai');
 		await waitRow(t, W, 'codex', /Not signed in/, 'detection done');
-		await act(W, 'codex', 'choose').click(); await screenDone(W);
-		const cards = await row(W, 'codex').innerText();
-		await t.check('P06: Codex offers Sign in with ChatGPT and Use an OpenAI API key', /Sign in with ChatGPT/.test(cards) && /Use an OpenAI API key/.test(cards) && /ChatGPT plan limits/.test(cards), cards);
-		await W.$('[data-o55-do="way"][data-arg="codex|alt"]').click(); await screenDone(W);
+		const ways = await row(W, 'codex').innerText();
+		await t.check('P06: Codex offers Sign In (ChatGPT) and "Use an OpenAI API key instead"; no Connect button', /Sign In/.test(ways) && /Use an OpenAI API key instead/.test(ways) && !(await act(W, 'codex', 'choose').count()), ways);
+		await W.$('[data-o55-do="useAlt"][data-arg="codex"]').click(); await screenDone(W);
+		await act(W, 'codex', 'key').click(); await screenDone(W);
 		await t.visible(W.$('#o55f-key-codex'), 'P06: the OpenAI API key field');
+		await t.text(row(W, 'codex'), /Sign in with ChatGPT instead/, 'P06: the way back to ChatGPT sign-in');
 		await t.text(row(W, 'codex'), /Get a key from the OpenAI API dashboard/, 'P10: says where the OpenAI key is made');
 		await t.text(row(W, 'codex'), /not your password/, 'P10: says it is the key, not the password');
 		await typeInto(W, '#o55f-key-codex', FAKE_KEY);
@@ -130,7 +131,7 @@ export const tests = {
 		await waitRow(t, W, 'codex', /(?=.*Ready)(?=.*OpenAI API key · OpenAI API, billed by use)/, 'P05/P16: Ready says OpenAI API, billed by use (not "Charged to your ChatGPT plan")');
 		await act(W, 'codex', 'manage').click(); await screenDone(W);
 		await W.$('[data-o55-do="addAnother"][data-arg="codex"]').click(); await screenDone(W);
-		await W.$('[data-o55-do="way"][data-arg="codex|main"]').click();
+		await act(W, 'codex', 'signin').click();
 		await waitRow(t, W, 'codex', /2 accounts: OpenAI API key, jared@example\.com/, 'P08: a second Codex account of the other family is its own row entry', 9000);
 		await t.shot('codex-two-accounts', 'Codex Ready with an OpenAI API key and a ChatGPT account');
 	},
@@ -227,8 +228,7 @@ export const tests = {
 		if (scr !== 'ai') return;
 		await t.text(W.$('[data-key="where"]'), /The AI works on Home NAS\. Sign-ins open here on this device, and are kept on Home NAS\./, 'P11: two-line host summary');
 		await waitRow(t, W, 'claude', /Install on Home NAS|Not installed|Not signed in/, 'Claude on Home NAS');
-		await act(W, 'cursor', 'choose').click(); await screenDone(W);
-		await W.$('[data-o55-do="way"][data-arg="cursor|main"]').click(); await screenDone(W);
+		await act(W, 'cursor', 'key').click(); await screenDone(W);
 		await t.text(row(W, 'cursor'), /Kept in the keychain on Home NAS/, 'P11: a key is kept on the computer that does the work');
 		await t.shot('remote-key', 'Home NAS: host summary, Cursor key kept on Home NAS');
 	},
@@ -278,9 +278,8 @@ export const tests = {
 	async 'demo hints and recovery states: key works, refused, revoked; expired sign-in; offline once'(t) {
 		const pick = async (W, scope, label) => { const b = W.frame.locator(`${ROOT} ${scope} [data-o55-do="demoHint"]`).filter({ hasText: label }).first(); await b.click(); await W.frame.waitForTimeout(400); };
 		let W = await open(t, 'ai');
-		await waitRow(t, W, 'cursor', /Not signed in/, 'detection done');
-		await act(W, 'cursor', 'choose').click(); await screenDone(W);
-		await W.$('[data-o55-do="way"][data-arg="cursor|main"]').click(); await screenDone(W);
+		await waitRow(t, W, 'cursor', /Enter API Key/, 'detection done');
+		await act(W, 'cursor', 'key').click(); await screenDone(W);
 		await t.visible(W.$('[data-key="pv-cursor"] .o55-demohint'), 'hint: the key step shows "Try it in this demo"');
 		await t.crop('hint-key', W.$('[data-key="pv-cursor"]'), 'Cursor key step with its demo hint: a key that works, one refused, one revoked');
 		await pick(W, '[data-key="pv-cursor"]', 'demo-key-revoked-0000');
