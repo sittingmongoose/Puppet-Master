@@ -1,18 +1,22 @@
 # PuppetMaster browser-check kit
 
-Checks for the published page `Concepts/PMConcept7.html` (or a private build), run with browser-check (`browser-check guide`, or `/mnt/Cursor/Agent-Guides/browser-check.md`). Follows the PM7 plan's browser rules:
+Checks for the published page `Concepts/PMConcept7.html` (or a private build), run with browser-check (`browser-check guide`, or `Agent-Guides/browser-check.md` on the Cursor share). Follows the PM7 plan's browser rules:
 - loads the page as `file://` with a cache-buster on every load, and `?o55=off` unless asked;
 - re-applies and confirms Reduced Motion after each navigation;
-- uses one GPU browser per run, so it counts once against your lane's 2.
+- uses one GPU browser per run. A lane gets at most 2 browsers and 1 recording unless the lead gives it more, and `browser-check slots` shows what the machines have free.
+
+The default page is the committed one, which moves only at milestones. To test your change, build it (`python3 Concepts/onboarding/opus-5.5/tools/build.py --out <scratch>.html`) and pass `--set page=`.
 
 ```sh
 K=Concepts/pm7-tools/browser-check
-browser-check run $K/checks                                    # boot, ten looks, widths, reduced motion, sandbox
+OUT=$(mktemp -d)                                               # private to this run: /tmp is shared with other lanes
+browser-check run $K/checks                                    # boot, looks, widths, reduced motion, sandbox and the lane checks
 browser-check run $K/checks/looks.check.mjs --set lookShots=1  # list every look for viewing
-browser-check run $K/checks --set page=/tmp/my-build.html      # a private build
+browser-check run $K/checks --set page=$OUT/build.html         # a private build
+browser-check run $K/providers --set page=$OUT/build.html      # provider logins, separately
 ```
 
-If `browser-check` is not on PATH, run `node /mnt/Cursor/Tools/browser-check/bin/browser-check.mjs`. A full run takes about 2.5 minutes on the P1000.
+Parallel runs are safe: each gets its own browser and run folder. Give each its own copy of the build (a rebuild during a run mixes builds) and its own `--out`. The page loads as `file://`, so `--host` can't open it: to use another machine, ssh there with a checkout of the branch (`~/.local/bin/browser-check`). Motion claims need the VM, Windows or Nas1, because the Mac records about 36 fps and refuses pixel checks while recording.
 
 | Check file | What it asserts |
 |---|---|
@@ -21,6 +25,7 @@ If `browser-check` is not on PATH, run `node /mnt/Cursor/Tools/browser-check/bin
 | `widths` | 860, 1024, 1280, 1390 and 1920 wide, plus narrow 740 and short 1280x500. Main content is visible with no overflow. Frames are saved for `diff`. |
 | `reduced-motion` | `prefers-reduced-motion: reduce` holds after a load and after a reload. |
 | `sandbox` | The page boots and paints in a sandboxed iframe (opaque origin, no storage) with no console errors. |
+| `qa2-chatpip`, `pip-voice-room` | Lane checks for chat Pip and the voice room. |
 
 "No overflow" means: no sideways page scroll, no element painted past the right edge outside a scroller or clipper, and no text clipped without an ellipsis. Screen-reader-only labels and layers that aren't on top are ignored.
 
@@ -45,17 +50,18 @@ export default async function (t) {
 `t.moving` and `t.still` compare real compositor frames. They are a quick gate, not the verification standard. The plan requires 60 fps recordings watched frame by frame, so for a motion claim:
 
 ```sh
-browser-check run $K/checks/my-motion.check.mjs --record /mnt/Cursor/PuppetMaster-Evidence/tests/<run>/<lane>/loader.mp4
+browser-check run $K/checks/my-motion.check.mjs --record ~/pm-scratch/<lane>/loader.mp4
 ```
 
-Call `t.mark('drag start')` in the check. The summary prints the seconds of each mark into the recording, for `ffmpeg -ss <s> -i loader.mp4 -frames:v 1 f.png` or a frame range. A recorded run refuses viewport changes and new windows.
+Record one check file, not the folder: `widths` changes the viewport, which a recording refuses, and so does opening a new window. Call `t.mark('drag start')` in the check. The summary prints the seconds of each mark into the recording, and `browser-check frames loader.mp4 --run <run folder>` writes native frames at the marks. Every-frame review is in `Agent-Guides/gpu-recording.md`. Keep working recordings on local disk, not the share, and copy to `PuppetMaster-Evidence/` only what the lane must keep.
 
 ## Comparing builds
 
 ```sh
-browser-check run $K/checks --set page=/tmp/base.html --out /tmp/bc-base
-browser-check run $K/checks --out /tmp/bc-tip
-browser-check diff /tmp/bc-base /tmp/bc-tip      # opens nothing; lists CHANGED frames with a diff image each
+# copy your base build to $OUT/base.html first
+browser-check run $K/checks --set page=$OUT/base.html --out $OUT/base
+browser-check run $K/checks --set page=$OUT/build.html --out $OUT/tip
+browser-check diff $OUT/base $OUT/tip            # opens nothing; lists CHANGED frames with a diff image each
 ```
 
 The concept demo is live: clocks, usage numbers and toasts move between runs. A changed frame whose box sits only on a live widget is expected. Look at the diff image before reporting it.
