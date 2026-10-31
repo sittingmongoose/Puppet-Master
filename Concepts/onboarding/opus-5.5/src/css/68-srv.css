@@ -1,4 +1,4 @@
-/* The checkbox line (pm7-srv): a box with its words beside it, for the Server's "these words match" and the away
+/* pm7-srv. The checkbox line: a box with its words beside it, for the Server's "these words match" and the away
    screen's agreement that a web address puts the Server on the internet. It had no layout of its own, so the round
    choice mark sat against the first word. The box is square so it never reads as one of a list's round choices. */
 #pm-o55-onboarding .o55-checkline { display: flex; align-items: flex-start; gap: 10px; margin: 12px 0 4px; line-height: 1.45; }
@@ -6,3 +6,8 @@
 #pm-o55-onboarding .o55-checkline > .o55-check.is-on { border-color: var(--o55-accent); background: var(--o55-accent); }
 #pm-o55-onboarding .o55-checkline > .o55-check[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 #pm-o55-onboarding .o55-checkline > .o55-check:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+/* Who runs the web address's proxy: three long choices in a tray. Kept on one row with their ? (it wrapped onto a
+   line of its own, apart from the choice it explains); each choice shares the width and its words may take two lines. */
+#pm-o55-onboarding [data-key="opt-seg-hosting"] { display: flex; flex-wrap: nowrap; align-items: center; }
+#pm-o55-onboarding [data-key="seg-hosting"] { flex: 1 1 auto; min-width: 0; }
+#pm-o55-onboarding [data-key="seg-hosting"] > button { flex: 1 1 0; min-width: 0; height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.2; white-space: normal; justify-content: center; text-align: center; }

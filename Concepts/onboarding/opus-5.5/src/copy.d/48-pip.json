@@ -984,17 +984,17 @@
           "expert": "Dedicated https origin for the proxy; no subpath, credentials, query or fragment."
         },
         "hosting:generate_for_server": {
-          "title": "Puppet Master sets it up",
+          "title": "Set it up for me",
           "text": "Puppet Master sets up the program that answers on that address (the proxy) on your Server and checks it works. The easiest way.",
           "expert": "Generate and activate a Caddy, NGINX or Traefik configuration on the Server, then run DNS, reach, TLS and live-connection tests."
         },
         "hosting:generate_only": {
-          "title": "Only make the settings file",
+          "title": "Settings file only",
           "text": "You get a settings file to add to a proxy you run yourself. Puppet Master checks it works once you have added it.",
           "expert": "Export the Caddy, NGINX or Traefik configuration; activation waits until you install it and the tests pass."
         },
         "hosting:existing_proxy": {
-          "title": "I already have one",
+          "title": "I have one already",
           "text": "Your address already points at a proxy you run, such as Nginx Proxy Manager. Puppet Master checks it reaches your Server and uses it.",
           "expert": "Existing external proxy: validate its origin, certificate and live connection against the Server's identity; nothing is generated."
         },
@@ -1010,7 +1010,7 @@
         },
         "group:kind": {
           "title": "Which proxy",
-          "text": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I already have one.",
+          "text": "Puppet Master makes the settings for Caddy, NGINX or Traefik. Caddy is the default. Using Nginx Proxy Manager? Choose I have one already.",
           "expert": "Generated and tested for Caddy (default), NGINX or Traefik. Nginx Proxy Manager is treated as an existing external proxy."
         },
         "field:headscale": {
