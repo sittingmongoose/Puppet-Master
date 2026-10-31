@@ -288,24 +288,23 @@
     },
     "install": {
       "truenas": [
-        "Open TrueNAS and go to Apps",
-        "Search for Puppet Master and choose Install",
-        "Keep the suggested settings"
+        "Open TrueNAS on that computer",
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "unraid": [
-        "Open Unraid and go to Apps",
-        "Search for Puppet Master and choose Install"
+        "Open Unraid on that computer",
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "synology": [
         "Open Container Manager on the Synology",
-        "Add the Puppet Master image and start it"
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "qnap": [
         "Open Container Station on the QNAP",
-        "Add the Puppet Master image and start it"
+        "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "linux": [
-        "Open a terminal on it",
+        "Open a terminal on it: the window where you type commands",
         "Paste this line and press Enter"
       ],
       "windows": [
@@ -464,7 +463,7 @@
       "projects": "{n} Projects with their history",
       "accounts": "{n} AI accounts (you sign in again)",
       "settings": "Your settings and look",
-      "never": "Passwords and keys never come back from a backup. You sign in again where needed.",
+      "never": "This restore doesn't bring back sign-ins. You sign in again where needed.",
       "button": "Restore",
       "away": "Access away from home is set up: {how}"
     },
@@ -789,7 +788,7 @@
     "more": "Other ways to connect",
     "proxy": {
       "title": "My own web address",
-      "sub": "Puppet Master sets up Caddy with a free certificate",
+      "sub": "Reach it at a web address you manage",
       "label": "Web address",
       "hosting": "Who runs it?",
       "pm": "Puppet Master sets it up",
@@ -799,7 +798,8 @@
       "free": "A free certificate",
       "own": "My own certificate",
       "kind": "Which proxy",
-      "detail": "Caddy is the default. NGINX, Traefik and Nginx Proxy Manager are also supported."
+      "detail": "The program that answers on your web address and passes visits on to Puppet Master. Caddy is the default; pick another only if you already use it.",
+      "detailExpert": "The reverse proxy Puppet Master configures in front of the Server: Caddy (default), NGINX, Traefik or Nginx Proxy Manager. It terminates TLS for the domain and forwards to the Server."
     },
     "link": {
       "title": "Puppet Master Remote Link",

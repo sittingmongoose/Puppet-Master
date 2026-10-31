@@ -509,7 +509,7 @@
         fields = C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', valid: F.isHttps(d.proxy_hostname) });
         fields += C.segmented({ do: 'hosting', value: d.proxy_hosting || 'generate_for_server', label: T('away.proxy.hosting'), options: [{ v: 'generate_for_server', label: T('away.proxy.pm') }, { v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
         if (d.proxy_hosting !== 'existing_proxy') fields += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
-        fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: d.proxy_kind || 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }, { v: 'nginx_proxy_manager', label: 'Nginx Proxy Manager' }] }) + `<p>${U.esc(T('away.proxy.detail'))}</p>`);
+        fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: d.proxy_kind || 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }, { v: 'nginx_proxy_manager', label: 'Nginx Proxy Manager' }] }) + `<p>${U.esc(O55.talk.t('away.proxy.detail'))}</p>`);
       }
       if (route === 'remote_link') fields = C.field({ bind: 'link', label: T('away.link.label'), value: d.remote_endpoint, placeholder: 'pm-remote-link:home-nas/7Q2K', hint: T('away.link.hint') });
       const more = C.cards('route', [
