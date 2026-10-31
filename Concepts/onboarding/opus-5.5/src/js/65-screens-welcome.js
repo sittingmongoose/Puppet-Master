@@ -27,10 +27,11 @@
   });
 
   const FAMS = O55.LOOKS || ['basic', 'friendly', 'glass', 'retro', 'nier'];
-  /* NieR is the fifth look (Q22, Jared 2026-10-30: "make NieR Mode a new theme rather than an override"): its tile spans
-     the grid's width under the other four (its scene beside its name), and while it is the chosen look Adjust NieR sits
-     in its corner, beside its ?, for NieR's own options (its parts and background). In onboarding the pick and the
-     options are a preview kept with the look (O55.nierLook). */
+  /* NieR is the fifth look (Q22, Jared 2026-10-30: "make NieR Mode a new theme rather than an override"): five equal
+     tiles, three over two (QA2 review M2: NieR's short strip under four big tiles read as tacked on, and the footer cut
+     it). While NieR is the chosen look, Adjust NieR sits at the end of Light / Dark's line, with its ?, for NieR's own
+     options (its parts and background). In onboarding the pick and the options are a preview kept with the look
+     (O55.nierLook). */
   function adjustNier(th) {
     if (th.chosen !== 'nier' || !O55.nierLook || !window.PM_NIER) return '';
     return `<button type="button" class="o55-btn o55-secondary o55-small o55-nieradjust" data-o55-do="adjustNier" data-o55-sound="self" data-key="nier-adjust"${O55.tips.described('adjustNier')} data-pm-hover-exempt="true">${O55.nierLook.icon()}<span>${U.esc(T('look.nier.adjust'))}</span></button>${O55.tips.q('adjustNier', { cls: 'o55-tipq-adjust' })}`;
@@ -78,12 +79,11 @@
           + `<span class="o55-tileart o55-scene-host" data-family="${nier ? 'basic' : f}" data-tile="${f}"${nier ? ' data-nier-thumb' : ''} aria-hidden="true" data-morph-skip></span>`
           + `<span class="o55-tilename">${U.esc(T('look.families.' + f + '.name'))}</span><span class="o55-tilesub">${U.esc(T('look.families.' + f + '.sub'))}</span>`
           + `<span class="o55-check" aria-hidden="true"></span></button>`;
-      }).map((html, i) => (FAMS[i] === 'nier'
-        ? O55.tips.opt('pickFamily:nier', html + adjustNier(th), 'o55-opt-tile o55-opt-tile-wide', 'div', { note: false })
-        : O55.tips.opt('pickFamily:' + FAMS[i], html, 'o55-opt-tile', 'div', { note: false }))).join('');
-      /* Light / Dark sits above the five tiles; NieR's tile spans the grid under the other four, with Adjust NieR on it
-         while NieR is the chosen look (13-nier-look.css) */
-      return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}</div>`
+      }).map((html, i) => O55.tips.opt('pickFamily:' + FAMS[i], html, 'o55-opt-tile', 'div', { note: false })).join('');
+      /* Light / Dark (and, while NieR is the look, Adjust NieR at the line's end) above the five tiles, which fit the
+         first view at every window size (10-window.css, the look screen's tile sizes) */
+      const adjust = adjustNier(th);
+      return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}${adjust ? `<span class="o55-lookmode-adjust">${adjust}</span>` : ''}</div>`
         + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>`
         + FAMS.map((f) => O55.tips.explainer('pickFamily:' + f)).join('') + (th.chosen === 'nier' ? O55.tips.explainer('adjustNier') : '') + '</div>';
     },
@@ -116,7 +116,8 @@
           O55.art.mount(thumb, 'tile', { family: 'basic', mode: th.mode, beat: 'default', tok: O55.art.tokens(thumb), params: {}, instance: 'nier', band: true, still: !th.nier });
         }
       }
-      wings(layer.querySelector('.o55-opt-tile-wide'));
+      const nierTile = layer.querySelector('.o55-tile-nier');
+      wings(nierTile ? nierTile.closest('.o55-opt-tile') : null);
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {

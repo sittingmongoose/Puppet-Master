@@ -20,6 +20,8 @@
   var ACTION_SELECTOR=SEMANTIC_ACTION_SELECTOR+',[tabindex]';
   var SEMANTIC_SELECTOR='[title],[data-hover-tip],[data-tooltip],[data-pm-hover-label],[data-pm-hover-detail],[data-technical-id],[data-setting-id],[data-widget-id],[data-chart-mark],[data-status],[data-truncated],[class*="truncate"],[class*="ellipsis"],[class*="status"],[class*="badge"],[class*="pill"],code,kbd,samp,svg [data-value],svg [aria-label]';
   var BLOCKED_EVENTS=['click','dblclick','beforeinput','input','change','submit'];
+  /* an element holding any of these is a container, not a displayed identifier (technicalAttribute) */
+  var TECH_CONTAINER_SELECTOR='article,section,div,p,ul,ol,li,table,form,header,footer,nav,main,aside,button,input,select,textarea';
 
   function clean(value){return String(value==null?'':value).replace(/\s+/g,' ').trim();}
   function slug(value){return clean(value).toLowerCase().replace(/[^a-z0-9_.:-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,72)||'item';}
@@ -94,15 +96,29 @@
     /* Command/UI-action attributes identify wiring, not user-facing technical
        values. They still make the element actionable, but their raw tokens do
        not leak into the hover copy. */
-    var preferred=['data-technical-id','data-setting-id','data-widget-id','data-instance-id','data-run-id','data-thread-id'];
+    /* data-technical-id is an author's own declaration and always counts. Every
+       other identifier attribute names a value an element shows, so it counts
+       only on a small element that displays it, never on a container of blocks
+       or controls (the transcript, a whole message, a card, a run), whose tag
+       would be its run-together text. Keys (data-scroll-key, data-hover-key,
+       sort and render keys) are internal wiring and never make a tooltip target
+       (QA round 2, F5: the transcript's data-scroll-key bound it as one). A card
+       that should have a tag keeps it through its own label or the semantic
+       selectors (data-setting-id, data-widget-id), not as an identifier. */
+    var declared=attr(el,'data-technical-id');if(declared)return declared;
+    if(el.querySelector&&el.querySelector(TECH_CONTAINER_SELECTOR))return technicalClass(el);
+    var preferred=['data-setting-id','data-widget-id','data-instance-id','data-run-id','data-thread-id'];
     for(var i=0;i<preferred.length;i++){var value=attr(el,preferred[i]);if(value)return value;}
     for(var j=0;j<el.attributes.length;j++){
       var a=el.attributes[j];
       /* Controller-owned annotations describe the hover system itself; they
          are not product identifiers and must never feed back into copy. */
       if(/^data-pm-hover-/.test(a.name))continue;
-      if(/^data-[a-z0-9-]*(?:id|key|ref)$/.test(a.name)&&clean(a.value))return clean(a.value);
+      if(/^data-[a-z0-9-]*(?:id|ref)$/.test(a.name)&&clean(a.value))return clean(a.value);
     }
+    return technicalClass(el);
+  }
+  function technicalClass(el){
     var cls=attr(el,'class');
     if(el.matches('code,kbd,samp')||/(^|\s)(mono|monospace|technical|identifier|hash|commit|sha|path)(\s|$)/i.test(cls))return visibleText(el);
     return '';

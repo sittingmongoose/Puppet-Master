@@ -51,10 +51,19 @@
   const MOVING = { working: 1, reviewing: 1, recovering: 1 };
   const moving = (it) => !!it && !it.stopping && !!MOVING[it.state];
   let moveIo = null;
+  /* a hidden tab holds them too, as the loader holds Pip (QA round 2 review, Astra: hidden, the marks went on advancing):
+     paused where they are and resumed from there, so a mark goes on from its own pose, in step with the others it
+     paused with, with no jump */
+  const hiddenNow = () => doc.visibilityState === 'hidden';
+  doc.addEventListener('visibilitychange', () => {
+    const h = hiddenNow();
+    doc.querySelectorAll('.wk-row.wk-moving').forEach((r) => r.classList.toggle('wk-hid', h));
+  });
   function watchMoving(root) {
     if (!root) return;
     const rows = root.querySelectorAll('.wk-row.wk-moving');
     if (!rows.length) return;
+    if (hiddenNow()) rows.forEach((r) => r.classList.add('wk-hid'));
     if (typeof IntersectionObserver !== 'function') { rows.forEach((r) => r.classList.remove('wk-off')); return; }
     if (!moveIo) moveIo = new IntersectionObserver((es) => es.forEach((e) => {
       const r = e.target;
