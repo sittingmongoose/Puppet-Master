@@ -16,7 +16,7 @@
   /* the agreement that a web address puts the Server's sign-in page on the internet, for that one address (SCR-06) */
   const AW = (S) => (S.sess.away = S.sess.away || {});
   const consented = (S) => { const d = md(S); return d.remote_mode !== 'reverse_proxy' || (!!AW(S).publicFor && AW(S).publicFor === E().check(d.proxy_hostname, 'proxy').url); };
-  const KIND_NAME = { nginx: 'NGINX', traefik: 'Traefik' };
+  const KIND_NAME = { caddy: 'Caddy', nginx: 'NGINX', traefik: 'Traefik' };
   /* Opened straight (Demo Studio's Open at one screen): what the Server steps would have left, a new Server set up and
      this computer trusted, and a Project that has a name (so Review can be confirmed); away-setup also gets its run */
   function seedServer(S, way) {
@@ -63,8 +63,8 @@
           fields += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
           /* (no key or certificate file is ever typed here: it is chosen on the Server after the commit, SCR-07) */
           if (d.proxy_tls === 'existing_certificate') fields += `<p class="o55-hint" data-key="owncert">${U.esc(T('away.proxy.ownNext', { name }))}</p>`;
-          /* (only the proxies Puppet Master makes and tests settings for: lead question Q2) */
-          fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: KIND_NAME[d.proxy_kind] ? d.proxy_kind : 'nginx', label: T('away.proxy.kind'), options: [{ v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }] }) + `<p>${U.esc(O55.talk && O55.talk.t ? O55.talk.t('away.proxy.detail') : T('away.proxy.detail'))}</p>`);
+          /* (the proxies Puppet Master makes settings for, Caddy first: Jared, D3 A) */
+          fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: KIND_NAME[d.proxy_kind] ? d.proxy_kind : 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }] }) + `<p>${U.esc(O55.talk && O55.talk.t ? O55.talk.t('away.proxy.detail') : T('away.proxy.detail'))}</p>`);
         } else fields += `<p class="o55-hint" data-key="existing">${U.esc(T('away.proxy.existingNext', { name }))}</p>`;
         /* the internet sees the Server's sign-in page: said plainly, with what has to be true, and agreed to (SCR-06) */
         fields += C.note(T('away.proxy.public', { name }), 'warn', 'globe');
@@ -91,7 +91,7 @@
       pick(S, v, el) { O55.draft.set(md(S), v === 'home' ? { remote_mode: 'local_or_vpn' } : { remote_mode: 'tailscale', tailscale_control: 'hosted' }); S.save(); O55.ui.refresh(); O55.ui.charm(el, T('away.' + v + '.title'), v === 'home' ? 'computer' : 'globe'); },
       more(S) { O55.draft.set(md(S), { remote_more: !md(S).remote_more }); S.save(); O55.ui.refresh(); },
       route(S, v) { O55.draft.set(md(S), v === 'headscale' ? { remote_mode: 'tailscale', tailscale_control: 'headscale', remote_more: true } : { remote_mode: v, remote_more: true }); S.save(); O55.ui.refresh(); },
-      hosting(S, v) { O55.draft.set(md(S), { proxy_hosting: v, proxy_tls: v === 'existing_proxy' ? null : md(S).proxy_tls || 'lets_encrypt', proxy_kind: v === 'existing_proxy' ? null : KIND_NAME[md(S).proxy_kind] ? md(S).proxy_kind : 'nginx' }); S.save(); O55.ui.refresh(); },
+      hosting(S, v) { O55.draft.set(md(S), { proxy_hosting: v, proxy_tls: v === 'existing_proxy' ? null : md(S).proxy_tls || 'lets_encrypt', proxy_kind: v === 'existing_proxy' ? null : KIND_NAME[md(S).proxy_kind] ? md(S).proxy_kind : 'caddy' }); S.save(); O55.ui.refresh(); },
       tls(S, v) { O55.draft.set(md(S), { proxy_tls: v }); S.save(); O55.ui.refresh(); },
       kind(S, v) { O55.draft.set(md(S), { proxy_kind: v }); S.save(); O55.ui.refresh(); },
       /* the agreement is for this address: another address asks again */
@@ -120,7 +120,7 @@
      person does (it waits for their click); fail: the one-shot fixture answers Demo Studio can set with
      S.env.failures.away_once (the published page has no owner host). */
   function plan(S) {
-    const d = md(S), name = serverName(S), host = String(d.proxy_hostname || '').replace(/^https:\/\//, ''), kind = KIND_NAME[d.proxy_kind] || 'NGINX';
+    const d = md(S), name = serverName(S), host = String(d.proxy_hostname || '').replace(/^https:\/\//, ''), kind = KIND_NAME[d.proxy_kind] || 'Caddy';
     if (d.remote_mode === 'tailscale' && d.tailscale_control === 'headscale') return [
       { key: 'start', cmd: 'cmd.remote_access.tailscale.setup.start', label: T('away.setup.ts.start') },
       { key: 'register', cmd: 'cmd.remote_access.tailscale.headscale.start', label: T('away.setup.hs.register', { name }), fail: ['registration_denied', 'hs_unreachable'] },

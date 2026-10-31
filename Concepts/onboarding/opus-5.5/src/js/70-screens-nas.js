@@ -253,6 +253,10 @@
   function hash8(t) { let h = 2166136261; for (const ch of String(t)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0; return h.toString(16).padStart(8, '0'); }
   function profileId(S) { const d = dev(S); if (!d) return ''; return 'sshp:' + U.slug(onServer(S) ? md(S).server_ref || 'server' : S.env.here.id) + ':' + hash8(sshUser(S) + '@' + d.address + ':' + sshPort(S)); }
   /* a key added for one account works for that account (a bare key id in the fixture is the device's own account's) */
+  /* the key tests and the key added are named by the device and, unless it is this computer's usual connection (its
+     own account, port 22), by the profile too: another account or port never finds the other one's result */
+  const opSuffix = (S) => (!onServer(S) && sshPort(S) === 22 && sshUser(S) === (S.env.client.user || '') ? '' : ':' + hash8(profileId(S)));
+  const keysKey = (S) => 'keys:' + N(S).device + opSuffix(S);
   const authorizedFor = (S, d, keyId) => !!d && (d.authorized.includes(sshUser(S) + ':' + keyId) || (sshUser(S) === d.user && d.authorized.includes(keyId)));
   const authorize = (S, d, keyId) => { const k = sshUser(S) + ':' + keyId; if (!d.authorized.includes(k)) d.authorized.push(k); };
   const K_PM = (S) => ({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', pubComment: 'puppet-master@' + (S && onServer(S) ? O55.util.slug(machine(S)) : 'MacBook-Pro'), type: 'ed25519', where: 'file' });
@@ -277,14 +281,14 @@
     title: () => T('nas.key.title'),
     lead: (S) => T('nas.key.lead', { where: machine(S) }),
     body(S) {
-      const n = N(S), d = dev(S), st = F.state(S, 'keys:' + profileId(S));
+      const n = N(S), d = dev(S), st = F.state(S, keysKey(S));
       /* which account the keys are tried for, on which address: changing it is another connection (SCR-10) */
       const user = sshUser(S);
       let acct = n.userEdit || !user
         ? C.field({ bind: 'sshUser', label: T('nas.key.accountLabel', { name: d.name }), value: n.user || user, placeholder: '', hint: user ? T('nas.key.accountHint', { name: d.name }) : '', error: user ? '' : T('nas.key.accountNeeded', { name: d.name, where: machine(S) }), invalid: !user, autocomplete: 'username' })
         : `<p class="o55-locline" data-key="acct">${C.small('person', 16)}<span>${U.esc(T('nas.key.account', { name: d.name, user, address: hostId(S) }))}</span>${C.link(T('nas.key.accountChange'), 'userEdit')}</p>`;
       if (!user) return acct;
-      if (!st || st.state !== 'done') return acct + F.phases(S, 'keys:' + profileId(S), ['discover', 'probe'], { discover: T('nas.key.looking'), probe: T('nas.key.testing', { name: d.name }) });
+      if (!st || st.state !== 'done') return acct + F.phases(S, keysKey(S), ['discover', 'probe'], { discover: T('nas.key.looking'), probe: T('nas.key.testing', { name: d.name }) });
       const sel = n.key || defaultKey(S);
       const keys = keyring(S).map((k) => {
         const s = keyStatus(S, k);
@@ -304,8 +308,8 @@
       if (n.passCancelled) out += C.note(T('nas.install.fail.cancelled', { key: (keyring(S).find((x) => x.id === sel) || {}).comment || '' }), 'warn');
       return out;
     },
-    mounted(S) { const d = dev(S); if (!sshUser(S)) return; F.op(S, 'keys:' + profileId(S), 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, address: d.address, port: sshPort(S), user: sshUser(S), profile: profileId(S), publicOnly: true }, sound: FOUND_SOUND }); },
-    foot(S) { const st = F.state(S, 'keys:' + profileId(S)), user = sshUser(S); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !user || !(st && st.state === 'done'), reason: user ? T('nas.key.looking') : T('nas.key.accountNeeded', { name: dname(S), where: machine(S) }) } }; },
+    mounted(S) { const d = dev(S); if (!sshUser(S)) return; F.op(S, keysKey(S), 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, address: d.address, port: sshPort(S), user: sshUser(S), profile: profileId(S), publicOnly: true }, sound: FOUND_SOUND }); },
+    foot(S) { const st = F.state(S, keysKey(S)), user = sshUser(S); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !user || !(st && st.state === 'done'), reason: user ? T('nas.key.looking') : T('nas.key.accountNeeded', { name: dname(S), where: machine(S) }) } }; },
     do: {
       pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
       userEdit(S) { N(S).userEdit = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-sshUser'); if (i) i.focus(); },
@@ -445,7 +449,7 @@
   });
   /* The operation keeps the identity it started with, even after a new key gets its real id, so a finished install
      is never started again. */
-  function installKey(S) { const n = N(S); return n.opKey || 'sshinstall:' + profileId(S) + ':' + (n.key || 'new'); }
+  function installKey(S) { const n = N(S); return n.opKey || 'sshinstall:' + n.device + opSuffix(S) + ':' + (n.key || 'new'); }
   function phaseOrder(S) {
     const n = N(S), k = keyring(S).find((x) => x.id === n.key);
     if (n.verifyOnly) return (k && k.passphrase ? ['unlock'] : []).concat(['verify', 'perms']);
@@ -453,7 +457,7 @@
   }
   function run(S) {
     const n = N(S), d = dev(S), order = phaseOrder(S);
-    if (!n.opKey) { n.opKey = 'sshinstall:' + profileId(S) + ':' + (n.key || 'new'); S.save(); }
+    if (!n.opKey) { n.opKey = 'sshinstall:' + n.device + opSuffix(S) + ':' + (n.key || 'new'); S.save(); }
     const failFor = {
       add: () => {
         if (!n.pwOnce) return 'wrong_password';
