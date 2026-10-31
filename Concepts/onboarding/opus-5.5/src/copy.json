@@ -1598,7 +1598,7 @@
       "works": "Already works with {name}",
       "notAdded": "Not added to {name} yet",
       "locked": "Locked with a passphrase",
-      "old": "Older key type — not recommended",
+      "old": "Older key type — too weak to use",
       "new": "Make a new key just for Puppet Master",
       "newSub": "Easy to remove later. Doesn't touch your other keys.",
       "none": "No keys found on {where}. Puppet Master will make one there.",
@@ -1615,7 +1615,8 @@
       "accountChange": "Change",
       "accountLabel": "Account on {name}",
       "accountHint": "The account on {name} that Puppet Master signs in to, usually your own.",
-      "accountNeeded": "Type the account on {name} that {where} should sign in to."
+      "accountNeeded": "Type the account on {name} that {where} should sign in to.",
+      "oldTag": "Too weak to use"
     },
     "signin": {
       "eyebrow": "Secure connection",

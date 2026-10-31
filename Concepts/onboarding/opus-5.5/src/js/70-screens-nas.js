@@ -296,7 +296,8 @@
       const sel = n.key || defaultKey(S);
       const keys = keyring(S).map((k) => {
         const s = keyStatus(S, k);
-        const tag = { works: T('nas.key.works', { name: d.name }), notAdded: T('nas.key.notAdded', { name: d.name }), locked: T('nas.key.locked'), old: T('nas.key.old') }[s];
+        const tag = { works: T('nas.key.works', { name: d.name }), notAdded: T('nas.key.notAdded', { name: d.name }), locked: T('nas.key.locked'), old: T('nas.key.oldTag') }[s];
+        /* (an old key's tag is a plain fact; the reason its refused press gives is Pip's line, so Pip worries only then) */
         return { v: k.id, glyph: 'key', title: k.comment || k.file, sub: keyWhere(k) + (k.file ? ' · ' + k.file : ''), tag, disabled: s === 'old', reason: T('nas.key.old') };
       });
       let out = acct;

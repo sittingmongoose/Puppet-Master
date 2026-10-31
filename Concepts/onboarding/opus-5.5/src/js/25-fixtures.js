@@ -336,6 +336,8 @@
     } },
     keyWorks: { label: 'A key already works with Home NAS', apply(e) { e.devices[0].authorized = ['k-ed']; e.here.knownHosts = { '192.168.1.20': e.devices[0].hostKey }; } },
     noKeys: { label: 'No SSH keys on this computer', apply(e) { e.here.sshKeys = []; } },
+    /* an old DSA key beside the others: the key step shows it and won't use it (70-screens-nas.js keyStatus 'old') */
+    oldKey: { label: 'An old DSA key on this computer', apply(e) { e.here.sshKeys.push({ id: 'k-old', file: '~/.ssh/id_dsa', comment: 'old-imac', type: 'dsa', where: 'file' }); } },
     hostChanged: { label: 'Home NAS ID changed', apply(e) { e.here.knownHosts = { '192.168.1.20': 'SHA256:OLDkeyZ9x8w7v6u5t4s3r2q1p0o9n8m7l6k5j4i3h2g' }; } },
     wrongPassword: { label: 'Wrong NAS password first', apply(e) { e.failures.nas_password_once = true; } },
     readOnly: { label: 'Read-only NAS folder', apply(e) { e.devices[0].readOnly = ['/volume1/projects']; } },
@@ -362,6 +364,9 @@
     restoreFails: { label: 'A restore stops part-way once', apply(e) { e.failures.restore_once = true; } },
     /* (the Server lane's pairing outcomes, SCR-15: failures.pair_once fires once at the approval step) */
     pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } },
+    /* the other device answers the new Server's code about 15 seconds after it shows: until then Your Server is ready
+       has no request and Check again finds none (30-owners.js fault, guest_later) */
+    guestLater: { label: 'The other device answers the code a little later', apply(e) { e.failures.guest_later = true; } },
     /* the AI step's recovery states (provider-login audit P12): a sign-in that has expired since it was made (Sign in
        again), and the connection dropping during AI setup once (the first check says so; the next one works) */
     claudeExpired: { label: 'Claude sign-in expired', apply(e) { e.here.providers.claude = { installed: true, version: '2.4.1', signedIn: false, expired: true, account: 'jared@example.com' }; } },

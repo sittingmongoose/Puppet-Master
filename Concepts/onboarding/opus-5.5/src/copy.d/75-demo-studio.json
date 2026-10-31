@@ -335,6 +335,14 @@
         "serverNoWords": {
           "title": "A device's request comes without its words once",
           "sub": "On Your Server is ready, the next device's request has no words to compare; New code asks it again."
+        },
+        "oldKey": {
+          "title": "An old SSH key here",
+          "sub": "This computer also has an old DSA key. Choose a key shows it as too weak to use, and Puppet Master won't pick it."
+        },
+        "guestLater": {
+          "title": "The other device answers later",
+          "sub": "On Your Server is ready, no request shows for about 15 seconds: Check again finds none, then the device's request arrives."
         }
       },
       "screens": {

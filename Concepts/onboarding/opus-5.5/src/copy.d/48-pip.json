@@ -533,6 +533,11 @@
           "title": "Bring back old data",
           "text": "Replacing an old Server? Brings its Projects back from a Recovery Kit or an old backup.",
           "expert": "Restores Projects onto this new Server from a Recovery Kit or a backup destination."
+        },
+        "checkRun": {
+          "title": "Check again",
+          "text": "Looks again for a device that has answered the code. A request also shows up here by itself when one arrives.",
+          "expert": "Re-reads this code's pairing run from the Server; a waiting request also appears on the screen's own next check."
         }
       },
       "r-source": {
@@ -1464,6 +1469,11 @@
           "title": "Change the account",
           "text": "Sign in to the device as a different account. The keys are tested again for it.",
           "expert": "Change the SSH user; key tests rerun for the new user@host:port."
+        },
+        "pick:k-old": {
+          "title": "Older key type",
+          "text": "This key uses an old kind of lock that is easy to break today, so Puppet Master won't use it. Pick another key, or make a new one.",
+          "expert": "DSA and RSA-1024 keys are refused as too weak (current OpenSSH turns them off). Use an ed25519 key, or make a new one."
         }
       },
       "nas-signin": {

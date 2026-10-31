@@ -177,6 +177,8 @@
        the same request is then the right one (Try again, Approve again, Check again), with an answer id of its own.
        A device's request without its words is not one of them: that request keeps it, and New code asks again. */
     const once = new WeakSet();
+    /* (no answer yet: the request is still the Server's to answer, so take() asks the concept host again next time) */
+    const LATER = {}, GUEST_LATER_MS = 15000;
     function fault(S, req, res) {
       const f = (S && S.env && S.env.failures) || {};
       if (req.operation === 'cmd.client.pair.approve' && f.server_answer_once) {
@@ -185,6 +187,12 @@
         once.add(res);
       } else if (req.operation === 'cmd.server.claim' && f.server_answer_once === 'wrong_target') {
         f.server_answer_once = null; res.server = 'pm:another-server'; once.add(res);
+      } else if (req.operation === 'cmd.client.pair.start' && f.guest_later && S && req.client !== S.env.client.id) {
+        /* guestLater: an owner wait, not a fault. The other device has not answered the code yet, so the Server has no
+           request to give; it answers about 15 seconds after the first look, and later codes are answered at once */
+        f.guest_later_at = f.guest_later_at || Date.now() + GUEST_LATER_MS;
+        if (Date.now() < f.guest_later_at) return LATER;
+        f.guest_later = false; f.guest_later_at = 0;
       } else if (req.operation === 'cmd.client.pair.start' && f.words_once && S && req.client !== S.env.client.id) {
         f.words_once = false; res.identity = { words: '' };
       } else if (req.operation === 'cmd.backup.recovery_key.test' && f.kit_test_once) {
@@ -280,8 +288,8 @@
       if (fixtures[requestId]) return fixtures[requestId];
       const b = begun[requestId];
       if (!b || !conceptOn()) return null;
-      if (b.res === undefined) b.res = conceptResult(b.req, b.n || 1);
-      return b.res;
+      if (b.res === undefined || b.res === LATER) b.res = conceptResult(b.req, b.n || 1);
+      return b.res === LATER ? null : b.res;
     }
     /* a one-shot fault, once the screen has tried to adopt it, gives way to the owner's next answer */
     function adoptOnce(req, res, cur) {
