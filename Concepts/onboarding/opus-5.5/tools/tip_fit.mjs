@@ -46,10 +46,11 @@ for (const [w, h] of sizes) {
             const got = [];
             for (const id of ids) {
               window.O55.ui.tip(id); await sleep2(160);
-              const stage = root.querySelector('.o55-stage .pst'), note = root.querySelector('.o55-stage .pst-tip.on, .o55-stage .pst-ntip.on');
+              const stage = root.querySelector('.o55-stage'), note = root.querySelector('.o55-stage .pst-tip.on, .o55-stage .pst-ntip.on');
               if (note && stage) {
                 const sr = stage.getBoundingClientRect(), nr = note.getBoundingClientRect(), t = note.querySelector('.pst-tip-t');
-                got.push({ id, where: 'stage', h: Math.round(nr.height), room: Math.round(sr.height), out: nr.top < sr.top - 1 || nr.bottom > sr.bottom + 1 || nr.left < sr.left - 1 || nr.right > sr.right + 1, scrolls: !!(t && t.scrollHeight > t.clientHeight + 1) });
+                const rr = (x) => [x.left, x.top, x.right, x.bottom].map(Math.round);
+                got.push({ id, where: 'stage', h: Math.round(nr.height), room: Math.round(sr.height), note: rr(nr), stage: rr(sr), out: nr.top < sr.top - 1 || nr.bottom > sr.bottom + 1 || nr.left < sr.left - 1 || nr.right > sr.right + 1, scrolls: !!(t && t.scrollHeight > t.clientHeight + 1) });
               } else {
                 const ex = L.querySelector('#pm7ob-explainer'), pr = L.getBoundingClientRect(), er = ex && ex.getBoundingClientRect();
                 got.push({ id, where: 'form', out: !!(er && (er.left < pr.left - 1 || er.right > pr.right + 1)) });
