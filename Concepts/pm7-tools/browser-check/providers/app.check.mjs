@@ -115,4 +115,29 @@ export const tests = {
 			await t.shot(`picker-${plan.length}`, `Chat model picker on the Project onboarding just made with ${plan.length} accounts`);
 		}
 	}
+	,
+	async 'Guided Tour on the new Project reads truthfully (none, then several accounts)'(t) {
+		for (const plan of [[], ['claude', 'cursor', 'codex']]) {
+			const W = await open(t, 'ai', { scenario: 'signedOut' });
+			await connectAndEnter(t, W, plan);
+			await W.frame.locator(`${ROOT} .o55-foot button`).filter({ hasText: 'Take the Guided Tour' }).first().click();
+			await W.frame.waitForSelector('.o55t-callout', { timeout: 20000 }).catch(() => {});
+			const seen = [];
+			for (let i = 0; i < 40; i++) {
+				await W.frame.waitForTimeout(1300);
+				const c = ((await W.frame.locator('.o55t-callout').innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim();
+				if (c && seen[seen.length - 1] !== c) seen.push(c);
+				const b = W.frame.locator('.o55t-callout button:visible, .o55t-bar button:visible').filter({ hasText: /^(Show Me|Next|Start|Done|Try it)$/ }).first();
+				if (!(await b.count())) { if (!(await W.frame.locator('.o55t-callout:visible').count())) break; continue; }
+				const label = (await b.innerText().catch(() => '')).trim();
+				await b.click().catch(() => {});
+				if (label === 'Done') break;
+			}
+			t.run.log(`tour ${plan.length} accounts, ${seen.length} callouts: ` + seen.map((x) => x.slice(0, 90)).join(' || '));
+			const joined = seen.join(' ');
+			await t.check(`tour with ${plan.length} accounts: callouts shown`, seen.length >= 5, `${seen.length} callouts`);
+			await t.check(`tour with ${plan.length} accounts: nothing assumes example accounts`, !/Work Claude|Playty|Claude Max|ChatGPT Plus|Kimi plan|Qwen Global/.test(joined), joined.slice(0, 400));
+		}
+	}
 };
+
