@@ -165,7 +165,7 @@
   function keyArea(S, o) {
     const ks = F.state(S, o.op), failed = ks && ks.state === 'failed';
     const why = failed ? (ks.code === 'offline' ? T('ai.offline') : ks.code === 'key_revoked' ? T('ai.keyRevoked') : T('ai.keyBad', { name: o.name })) : '';
-    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, label: T('ai.keyLabel', { name: o.name }), value: '',
+    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, typed: !!o.typed, label: T('ai.keyLabel', { name: o.name }), value: '',
       hint: T('ai.keyHint', { where: keychain(S) }), error: why, invalid: failed, tip: 'field:key' });
     out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }, { label: DEMO_REVOKED, outcome: 'revoked', fills: [[o.bind, DEMO_REVOKED]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
@@ -251,7 +251,7 @@
       const cs = F.state(S, 'code:' + p.id + ':' + (r.attempt || 0)), failed = cs && cs.state === 'failed';
       return `<p class="o55-hint" data-key="pl-${p.id}">${U.esc(T('ai.pasteLead'))}</p>`
         + `<div class="o55-inline" data-key="cl-${p.id}">${btnIn(T('ai.copyLink'), 'copySigninLink', p.id)}</div>`
-        + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
+        + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, typed: !!r.pasteTyped, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
         + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
         + `<div class="o55-inline" data-key="pb-${p.id}">${btnIn(T('ai.pasteGo'), 'submitCode', p.id, 'secondary', { disabled: !r.pasteTyped || (cs && cs.state === 'running'), reason: T('ai.pasteLabel') })}</div>` + links;
     }
@@ -279,7 +279,7 @@
     const attached = C.field({ bind: 'ocAddr:' + p.id, id: 'o55f-ocaddr', label: T('ai.oc.addr'), value: r.endpoint || '', placeholder: 'http://127.0.0.1:4096', hint: T('ai.oc.addrHint'), tip: 'field:ocAddr' })
       + hint('ocAddr', [{ label: 'http://127.0.0.1:4096', outcome: 'works', fills: [['ocAddr:' + p.id, 'http://127.0.0.1:4096']] }, { label: 'http://192.168.1.99:4096', outcome: 'noAnswer', fills: [['ocAddr:' + p.id, 'http://192.168.1.99:4096']] }], !ok)
       + C.field({ bind: 'ocUser:' + p.id, id: 'o55f-ocuser', label: T('ai.oc.user'), value: r.user || '', placeholder: 'opencode', tip: 'field:ocUser' })
-      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
+      + C.field({ bind: 'ocPass:' + p.id, id: 'o55f-ocpass', type: 'password', protected: true, typed: !!r.secretTyped, label: T('ai.oc.pass'), value: '', hint: T('ai.keyHint', { where: keychain(S) }), tip: 'field:ocPass' })
       + `<div class="o55-inline">${btnIn(T('ai.oc.connect'), 'ocConnect', p.id, 'primary', { disabled: !ok, reason: T('ai.oc.addr') })}</div>`;
     return C.cards('ocMode', [
       { v: 'managed', glyph: 'server', title: T('ai.oc.managed'), sub: T('ai.oc.managedSub', { host: hostName(S) }), under: r.mode === 'managed' ? managed : '' },

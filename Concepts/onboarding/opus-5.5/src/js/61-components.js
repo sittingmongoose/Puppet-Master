@@ -170,7 +170,7 @@
       const type = f.type || 'text', tid = f.tip === false ? null : f.tip || 'field:' + f.bind, qh = tid ? q(tid) : '';
       const input = type === 'textarea'
         ? `<textarea id="${id}" data-o55-bind="${esc(f.bind)}" rows="${f.rows || 3}" placeholder="${esc(f.placeholder || '')}"${qh ? described(tid) : ''}${U.attrs(X)}>${esc(f.value || '')}</textarea>`
-        : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' : ''}${f.invalid ? ' aria-invalid="true"' : ''}${qh ? described(tid) : ''}${U.attrs(X)}>`;
+        : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' + (typeof f.typed === 'boolean' ? ` data-o55-typed="${f.typed}"` : '') : ''}${f.invalid ? ' aria-invalid="true"' : ''}${qh ? described(tid) : ''}${U.attrs(X)}>`;
       const label = qh ? `<span class="o55-labq"><label for="${id}">${esc(f.label)}</label>${qh}</span>` : `<label for="${id}">${esc(f.label)}</label>`;
       return `<div class="o55-field${f.invalid ? ' o55-invalid' : ''}${f.cls ? ' ' + f.cls : ''}" data-key="field-${esc(f.bind)}">${label}${f.prefix ? `<div class="o55-inputwrap"><span class="o55-prefix">${esc(f.prefix)}</span>${input}</div>` : input}`
         /* f.reserve: the hint's line is always there (empty until there is something to say), so a hint appearing as the
