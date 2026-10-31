@@ -659,7 +659,10 @@
     const extra = next === 'kit' ? (pc.delivery === 'verified' && pc.savedAck === true)
       : next === 'kitTest' ? (pc.unlock === 'verified' && pc.scratch === 'verified')
       : (pc.policy === 'on');
-    if (res && !extra) { b['orErr_' + next] = 'postcondition_missing'; S.save(); O55.ui.refresh(); kitWarn(); return; }
+    /* an owner's refusal is reported as itself (a kit test that failed is "That kit didn't open the backup"), not as a
+       missing postcondition: only an answer that says it succeeded must carry its postcondition */
+    const refused = !!res && res.outcome !== 'ok' && res.outcome !== 'verified';
+    if (res && !extra && !refused) { b['orErr_' + next] = 'postcondition_missing'; S.save(); O55.ui.refresh(); kitWarn(); return; }
     const v = OR.adopt(req, res, {});
     if (!v.ok) {
       b['orErr_' + next] = v.reason;
@@ -715,7 +718,7 @@
         out += `<div class="o55-kit" data-key="kit"><span class="o55-hint">${U.esc(T('protect.saved'))} · ${U.esc(kitFile(md(S).project_name))}</span><span class="o55-hint">${U.esc(T('protect.kitOnce'))}</span></div>`;
       }
       if (next === 'kitTest' && b.kitBad) out += C.note(T('protect.testFailed'), 'warn', 'key');
-      if (kitGated(next) && b['orErr_' + next]) {
+      if (kitGated(next) && b['orErr_' + next] && !(next === 'kitTest' && b.kitBad)) {
         const r = b['orErr_' + next];
         out += C.note(r === 'host_unavailable' || r === 'pending_no_result' ? T('protect.pendingHost') : T('protect.ownerFail'), r === 'host_unavailable' || r === 'pending_no_result' ? 'info' : 'warn', 'key');
       }
