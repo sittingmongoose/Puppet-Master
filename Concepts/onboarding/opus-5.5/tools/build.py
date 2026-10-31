@@ -306,7 +306,11 @@ def lint_sources() -> list[str]:
         elif isinstance(node, str):
             # PJCT-007/PWIZ-021 fix these two recovery action labels exactly.
             owner_labels = {'.creating.recovery.open': 'Open Repository', '.creating.recovery.delete': 'Delete Repository'}
-            if BANNED_COPY.search(node) and not path.split('.')[-1].startswith('detail') and owner_labels.get(path) != node:
+            # the Expert version of a tip or help section uses the real names on purpose (Jared 2026-10-30: "toggles between
+            # technical tips and easier to understand ones"; 21-talk.js): `expert`, `expertTitle`, and keys ending in Expert
+            last = path.split('.')[-1]
+            expert = last in ('expert', 'expertTitle') or last.endswith('Expert')
+            if BANNED_COPY.search(node) and not last.startswith('detail') and not expert and owner_labels.get(path) != node:
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
     problems.extend(duplicate_keys())

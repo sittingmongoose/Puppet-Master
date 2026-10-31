@@ -64,7 +64,9 @@
     const p = String(id).split(':'), tries = [String(id)];
     if (p[0] === 'field' && p.length > 2) tries.push('field:' + p[1]);
     if (p.length > 1 && p[0] !== 'field' && p[0] !== 'group') tries.push(p[0], 'group:' + p[0]);
-    for (const k of tries) for (const m of maps) { const v = m[k]; if (v && v.title && v.text) return { id: String(id), key: k, title: v.title, text: v.text }; }
+    /* two versions (21-talk.js): `text` in Plain English, `expert` (and `expertTitle`) with the real names */
+    const expert = O55.talk && !O55.talk.eli5();
+    for (const k of tries) for (const m of maps) { const v = m[k]; if (v && v.title && v.text) return { id: String(id), key: k, title: (expert && v.expertTitle) || v.title, text: (expert && v.expert) || v.text }; }
     return null;
   }
   const tipOpen = (id) => !!(O55.S && O55.S.tip && O55.S.tip.id === id && O55.S.tip.screen === (O55.S.sess && O55.S.sess.screen));
@@ -110,9 +112,12 @@
   function write(scope) {
     const w = scope && scope.querySelector('#pm7ob-explainer .o55-explainer-w'), host = w && w.closest('[data-tip]');
     if (!w || !host) return;
-    const id = host.getAttribute('data-tip'), t = tipOf(id);
-    if (!t || w.getAttribute('data-written') === id) return;
-    w.setAttribute('data-written', id);
+    const id = host.getAttribute('data-tip'), t = tipOf(id), mark = id + '|' + (O55.talk ? O55.talk.mode() : '');
+    if (!t || w.getAttribute('data-written') === mark) return;
+    /* the same note in the other version (Plain English or Expert): the new words at once, no retyping */
+    const swap = String(w.getAttribute('data-written') || '').split('|')[0] === id;
+    w.setAttribute('data-written', mark);
+    if (swap) { if (writing) { writing.cancel(); writing = null; } host.classList.remove('o55-writing'); w.textContent = t.text; return; }
     if (writing) { writing.cancel(); writing = null; }
     if (O55.motion.reduced()) { w.textContent = t.text; return; }
     const th = O55.theme(), cps = th.nier ? 55 : th.family === 'retro' ? 60 : 44;

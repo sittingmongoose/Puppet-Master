@@ -31,7 +31,11 @@
     delete(ref) { live.delete(ref); const kept = readBasis(); if (kept && kept.ref === ref) { try { localStorage.removeItem(BASIS); } catch (_) {} } },
     clear() { live.clear(); try { localStorage.removeItem(BASIS); } catch (_) {} }
   };
-  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, ending: false, pendingBack: false, seq: 0 };
+  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, paused: false, entries: {}, rewinding: false, entering: false, ending: false, pendingBack: false, seq: 0 };
+  /* the tour's tips follow the one Plain English / Expert state the wizard and the app share (21-talk.js,
+     general.interaction.mode, Plain English by default): 'eli5' or 'normal' as the steps read it. A saved tour session's
+     own `tips` (it held 'normal') is no longer read. */
+  Object.defineProperty(st, 'tips', { get: () => (O55.talk && !O55.talk.eli5() ? 'normal' : 'eli5'), set: () => {}, configurable: true });
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
 
@@ -205,6 +209,8 @@
      rewritten whole each time (their row skips the morph), so the page's hover-tag layer binds them as it always has. */
   /* st.barHold (a step): the bar keeps showing that step's progress until a skin lets go (a chapter's arrival walks it
      over, 85-tour-nier.js) */
+  /* Plain English or Expert changed (here, in the wizard or in Settings): the bar and the open callout follow */
+  window.addEventListener('o55:talk', () => { if (TR.running && st.sess) { renderBar(); renderCallout(false); } });
   function renderBar() {
     const bar = st.root.querySelector('.o55t-bar'), s = st.barHold || st.step, ch = s ? s.chapter : 'ask';
     const ci = CHAPTERS.indexOf(ch), inCh = TR.defs.filter((d) => d.chapter === ch), si = inCh.indexOf(s);
@@ -217,8 +223,8 @@
       return `<span class="o55t-pip${i < ci ? ' o55t-done' : i === ci ? ' o55t-cur' : ''}" title="${U.esc(T('tour.chapters.' + c))}"><span class="o55t-pipname">${U.esc(T('tour.chapters.' + c))}</span><span class="o55t-ticks">${ticks}</span>${deco.pip[c] || ''}</span>`;
     }).join('');
     U.morph(bar, `<span class="o55t-brand">${O55.c.small('spark', 14)}<span>${U.esc(T('tour.bar.label'))}</span>${deco.brand}</span><span class="o55t-pips" data-morph-skip aria-label="${U.esc(T('tour.bar.progress', { n: ci + 1, name: T('tour.chapters.' + ch), s: si + 1, total: inCh.length }))}">${pips}</span>`
-      + `<span class="o55t-seg" role="radiogroup" aria-label="${U.esc(T('tour.bar.tips'))}"><span class="o55t-seglabel">${U.esc(T('tour.bar.tips'))}</span>`
-      + ['normal', 'eli5'].map((v) => `<button type="button" role="radio" aria-checked="${st.tips === v}" class="${st.tips === v ? 'o55t-on' : ''}" data-o55t="tips" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(T('tour.bar.' + v))}</button>`).join('') + '</span>'
+      + `<span class="o55t-seg" role="radiogroup" aria-label="${U.esc(T('chrome.talk.group'))}"><span class="o55t-seglabel">${U.esc(T('tour.bar.tips'))}</span>`
+      + ['eli5', 'normal'].map((v) => `<button type="button" role="radio" aria-checked="${st.tips === v}" class="${st.tips === v ? 'o55t-on' : ''}" data-o55t="tips" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(T(v === 'eli5' ? 'chrome.talk.eli5' : 'chrome.talk.expert'))}</button>`).join('') + '</span>'
       + `<button type="button" class="o55t-barbtn" data-o55t="pause" data-pm-hover-exempt="true">${U.esc(st.paused ? T('tour.bar.resume') : T('tour.bar.pause'))}</button>`
       + `<button type="button" class="o55t-barbtn" data-o55t="skip" data-pm-hover-exempt="true">${U.esc(T('tour.bar.skip'))}</button>`
       + (O55.lookMenu ? `<span class="o55t-lookslot">${O55.lookMenu.button('o55t-barbtn o55t-sound', 'data-o55t', st.lookOpen)}${st.lookOpen ? O55.lookMenu.panel('data-o55t') : ''}</span>` : '')
@@ -708,7 +714,7 @@
     if (a === 'showMe') { if (st.keyStop && M.now() - st.keyStop < 400) return; return showMe(); }
     if (a === 'skip') return skip();
     if (a === 'pause') return togglePause();
-    if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
+    if (a === 'tips') { if (O55.talk && O55.talk.set(arg === 'eli5' ? 'ELI5' : 'Expert', 'tour')) O55.sound.play('select'); return; } /* (the o55:talk listener draws the bar and the callout again) */
     if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
     /* the look, after setup: saved through Settings at once (the tour follows the change) */
     if (a === 'lookMenu') { lookMenu(!st.lookOpen); return; }
@@ -787,7 +793,7 @@
   const stamp = (index) => ({ step: (TR.defs[index] || {}).id || null, order: TR.order() });
   function save() {
     O55.store.set(KEY, Object.assign({ v: 2, status: st.sess.status, index: st.sess.index, done: st.sess.done.slice(0, TR.defs.length),
-      tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked,
+      started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked,
       snapshot_ref: st.snapshotRef, thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page }, stamp(st.sess.index)));
   }
   /* A checkpoint saved under another step order (an older page, or the page before the Home panels, whose checkpoints
@@ -864,7 +870,6 @@
     }
     build(); syncTheme();
     st.sess = resume ? { status: 'running', index: at, done: saved.done.filter((id) => TR.byId[id].index < at), started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
-    st.tips = (resume && saved.tips) || 'normal';
     /* a new run starts clean: nothing the last run sent, answered or planned counts as done */
     if (!resume) { if (TR.chat && TR.chat.reset) TR.chat.reset(); if (TR.practice && TR.practice.reset) TR.practice.reset(); }
     st.entries = {};
