@@ -95,13 +95,13 @@
   const serviceLine = (d) => forgeName(d) + (O55.fixtures.needsAddress(d.forge, d.forge_provider_variant) && O55.safe.hostOf(d) ? ' (' + O55.safe.hostOf(d) + ')' : '');
   function livesAt(S, d) {
     const o = RU().ownerOf(S.env, d), p = RU().projectOf(S.env, d), acct = O55.official.accountFor(S, d.forge) || '';
-    return [o && o.id ? o.id : acct, p ? p.name || p.key : d.repository_project && d.forge !== 'azure_devops' ? d.repository_project : ''].filter(Boolean).join(' / ');
+    return [o && o.id ? o.id : acct, p ? p.name || p.key : d.repository_project && d.forge !== 'azure_devops' ? d.repository_project : ''].filter(Boolean).join('/');
   }
   const privacyLine = (S, d) => (d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility ? O55.safe.visCopy(d, d.repository_visibility, RU().ownerOf(S.env, d)).title : '');
   function onlinePlan(S, d) {
     const o = RU().ownerOf(S.env, d), p = RU().projectOf(S.env, d), yes = T('review.plan.yes'), no = T('review.plan.no');
     const rows = [[T('review.plan.service'), forgeName(d)], [T('review.plan.server'), d.forge_instance_url], [T('review.plan.account'), O55.official.accountFor(S, d.forge) || '']];
-    if (o && o.id) rows.push([T('online.details.ownerOf.' + RU().ownerNoun(d)), o.name || o.id]);
+    if (o && o.id) rows.push([T('online.details.kind.' + (o.kind || (o.scope === 'personal' ? 'personal' : RU().ownerNoun(d)))), o.name || o.id]);
     if (p) rows.push([d.forge === 'azure_devops' ? T('online.details.project') : T('online.details.bbProject'), (p.name || p.key) + (p.key ? ' (' + p.key + ')' : '')]);
     rows.push([T('review.plan.name'), d.repository_name], [T('online.details.privacy'), privacyLine(S, d)]);
     if (d.online_mode === 'new') rows.push([T('online.details.branch'), d.repository_default_branch], [T('online.details.description'), d.repository_description || T('review.plan.none')],

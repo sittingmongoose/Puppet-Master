@@ -20,6 +20,9 @@
   const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
+  /* a concept demo's ready choices under a step that needs a real service (pm7-onb's O55.flow.hint), each taking one
+     branch, failures included; nothing when the piece is not there */
+  const demo = (id, items, when) => (F.hint ? F.hint(id, items.filter(Boolean), { when }) : '');
   /* the account's world on the chosen server (its owners, Projects and used names): 25-fixtures.js */
   const world = (S) => RULES().world(S.env, md(S));
   const accountFor = (S, service) => {
@@ -150,6 +153,7 @@
         if (methods[0] === 'token') out += `<p class="o55-hint" data-key="toklead">${U.esc(T('online.signin.tokenLead', { host }))}</p>`;
         out += C.field({ bind: 'token', type: 'password', protected: true, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
+        out += demo('online-signin:token', [{ label: T('online.signin.demo.good'), outcome: 'works', fills: [['token', 'pm-demo-token-7f3a9c41']], act: ['tokenCheck'] }, { label: T('online.signin.demo.bad'), outcome: 'refused', fills: [['token', 'abc']], act: ['tokenCheck'] }], !(ts && ts.state === 'running'));
         if (methods[0] === 'token' && si.state === 'idle') {
           if (env.signup !== false) out += `<div class="o55-sublinks" data-key="tokcreate">${C.link(T('online.signin.createOn', { host }), 'create')}</div>`;
           else out += C.note(T('online.signin.admin'), 'info', 'person');
@@ -244,7 +248,11 @@
       }
       const variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (VARIANTS[forge] || [['hosted']])[0][0];
       const tenant = variant === 'gitea_cloud';
-      if (needsAddress(forge, variant)) under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: ol.address || '', placeholder: tenant ? 'https://' : 'https://git.example.com', hint: T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint'), valid: F.isHttps(ol.address) });
+      if (needsAddress(forge, variant)) {
+        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: ol.address || '', placeholder: tenant ? 'https://' : 'https://git.example.com', hint: T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint'), valid: F.isHttps(ol.address) });
+        const good = tenant ? 'https://platyr.gitea.test' : 'https://git.platyr.test';
+        under += demo('online-service:address', [{ label: good, outcome: 'works', fills: [['address', good]] }, { label: 'http://git.platyr.test', outcome: 'wrong', fills: [['address', 'http://git.platyr.test']] }], !F.isHttps(ol.address));
+      }
       const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise', 'cursor_origin'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), tag: id === 'cursor_origin' ? T('online.service.preview') : '', quiet: true, under: id === sel ? under : '' }));
       out += F.more(ol.others || sel !== 'github', T('online.service.others'), 'others', C.cards('pick', others, sel, { cls: 'o55-choices-quiet' }), 'others');
       return out;
@@ -312,7 +320,12 @@
      person's own account only where the service has one), the project inside it where the service has those (Azure
      DevOps' team project, Bitbucket's project) under the choice it belongs to, the visibility valid there, and the
      service's own name rule. A choice another depends on settles that one at once (FF-02 to FF-06, FF-11). */
-  function nameTaken(S, name) { return world(S).taken.includes(String(name || '').trim().toLowerCase()); }
+  /* a name already used in that place: the service's own taken names, or a Project the account already has there */
+  function nameTaken(S, name) {
+    const w = world(S), n = String(name || '').trim().toLowerCase(), at = md(S).repository_container || '';
+    return w.taken.includes(n) || w.repos.some((r) => r.name.toLowerCase() === n && (r.container || '') === at);
+  }
+  const takenExample = (S) => { const w = world(S), at = md(S).repository_container || ''; const r = w.repos.find((x) => (x.container || '') === at); return r ? r.name : w.taken[0] || null; };
   const hostOf = (d) => { try { return new URL(d.forge_instance_url).host; } catch (_) { return ''; } };
   const azureGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   function azureProjects(S) {
@@ -392,6 +405,8 @@
       let out = C.field({ bind: 'repo', label: T('online.details.nameLabel', { name: svc }), value: d.repository_name, prefix: path,
         hint: [spelled || slug, ok ? T('online.details.available') : ''].filter(Boolean).join(' · '), valid: ok,
         error: err || (taken ? T('online.details.taken', { owner: (o && o.id) || account }) : ''), invalid: !!err || taken });
+      const tk = takenExample(S), fine = RULES().spell(d.forge, d.project_name) || 'book-club-site';
+      out += demo('online-details:name', [tk && { label: tk, outcome: 'taken', fills: [['repo', tk]] }, { label: 'bad/name?', outcome: 'wrong', fills: [['repo', 'bad/name?']] }, { label: fine, outcome: 'works', fills: [['repo', fine]] }], true);
       /* 2. where it lives: the person's own account where the service has one, and the places the account belongs to;
          the project inside the chosen one sits under its card (QA round 2, Q7) */
       let under = '';
@@ -553,10 +568,21 @@
   };
   const shown = (kind, st) => (ACCESS[kind] || []).filter((f) => f[3] !== 'temp' || st.temp);
   const bad = (f, st) => !!(f[2] && F.nonEmpty(st[f[0]]) && !CHECK[f[2]](st[f[0]]));
-  const accessFields = (S, kind, st) => shown(kind, st).map((f) => { const [k, type] = f, key = 'access.' + kind + '.' + k;
+  const accessFields = (S, kind, st, o) => shown(kind, st).map((f) => { const [k, type] = f, key = 'access.' + kind + '.' + k;
     return C.field({ bind: 'acc-' + k, type, protected: type === 'password', label: T(key), value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx(key + 'Ph') || '',
       hint: O55.tx(key + 'Hint') || '', error: bad(f, st) ? T(key + 'Bad') : '', invalid: bad(f, st), autocomplete: type === 'password' ? 'off' : undefined }); }).join('')
-    + (kind === 'aws_s3' ? `<div class="o55-sublinks" data-key="acc-temp">${C.link(T(st.temp ? 'access.aws_s3.tempOff' : 'access.aws_s3.tempOn'), 'accTemp')}</div>` : '');
+    + (kind === 'aws_s3' ? `<div class="o55-sublinks" data-key="acc-temp">${C.link(T(st.temp ? 'access.aws_s3.tempOff' : 'access.aws_s3.tempOn'), 'accTemp')}</div>` : '')
+    + demo('access:' + kind, (DEMO_ACCESS[kind] || []).filter(([outcome]) => outcome !== 'nothingThere' || (o && o.restore)).map(([outcome, fills]) => ({ label: (fills.find(([k]) => k === 'bucket') || fills[0])[1], outcome, fills })), !accessReady(kind, st));
+  /* demo values that take each branch: one that works, one each service refuses (and, for a restore, a bucket with
+     nothing in it); they agree with the fixtures (a B2 bucket jared-pm-backups holds Harbor's backup) */
+  const KEYS = [['keyId', 'demo-access-key-id'], ['secret', 'demo-secret-access-key']], B2KEYS = [['keyId', 'demo-b2-key-id'], ['secret', 'demo-b2-application-key']];
+  const DEMO_ACCESS = {
+    aws_s3: [['works', [['bucket', 'jared-pm-backups']].concat(KEYS)], ['wrong', [['bucket', 'My_Backups']]]],
+    backblaze_b2: [['works', [['b2host', 's3.us-west-004.backblazeb2.com'], ['bucket', 'jared-pm-backups']].concat(B2KEYS)], ['wrong', [['b2host', 's3.amazonaws.com']]], ['nothingThere', [['b2host', 's3.us-west-004.backblazeb2.com'], ['bucket', 'old-backups']].concat(B2KEYS)]],
+    s3_compatible: [['works', [['server', 'https://s3.wasabisys.com'], ['bucket', 'jared-pm-backups']].concat(KEYS)], ['wrong', [['server', 'http://s3.wasabisys.com']]]],
+    sftp: [['works', [['address', 'sftp://backup.platyr.test/puppet-master'], ['user', 'jared'], ['password', 'demo-password']]], ['wrong', [['address', 'https://backup.platyr.test/puppet-master']]]],
+    webdav: [['works', [['address', 'https://dav.platyr.test/puppet-master'], ['user', 'jared'], ['password', 'demo-password']]], ['wrong', [['address', 'sftp://dav.platyr.test/puppet-master']]]]
+  };
   const accessReady = (kind, st) => !!ACCESS[kind] && shown(kind, st).every((f) => f[3] === 'opt' || (f[1] === 'password' ? !!st[f[0] + 'Typed'] : F.nonEmpty(st[f[0]]) && !bad(f, st)));
   function accessBind(kind, st, S, key, v) {
     const f = (ACCESS[kind] || []).find(([k]) => k === key); if (!f) return;

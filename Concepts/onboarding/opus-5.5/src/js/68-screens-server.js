@@ -553,7 +553,7 @@
       if (r.source === 'cloud') {
         cloudUnder = C.segmented({ do: 'cloud', value: r.cloud || 'gdrive', label: T('restore.source.cloud.title'), options: [{ v: 'gdrive', label: T('safe.backup.gdrive') }, { v: 'onedrive', label: T('safe.backup.onedrive') }, { v: 's3', label: T('safe.backup.s3') }] });
         /* a bucket is reached with its service's own access details (a cloud drive signs in on its own page, next) */
-        if (r.cloud === 's3' && !reached(S)) cloudUnder += O55.backup.subChoice('s3', r.sub, 'rsub') + O55.backup.accessFields(S, bucketFam(S), racc(S));
+        if (r.cloud === 's3' && !reached(S)) cloudUnder += O55.backup.subChoice('s3', r.sub, 'rsub') + O55.backup.accessFields(S, bucketFam(S), racc(S), { restore: true });
         if (r.cloud === 's3' && F.state(S, 'restore-s3') && F.state(S, 'restore-s3').state === 'running') cloudUnder += F.phases(S, 'restore-s3', ['check'], { check: T('access.checking') });
       }
       return C.cards('source', [

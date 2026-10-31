@@ -124,7 +124,7 @@
         },
         "field:acc-bucket": {
           "title": "Bucket",
-          "text": "The storage bucket's name, and a folder inside it if you want backups kept there, like my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
+          "text": "The bucket's name, and a folder in it if you like, such as my-backups/puppet-master. A bucket is storage space you rent from a cloud company.",
           "expert": "The bucket, optionally /prefix, checked with the chosen service's bucket-name rule (Amazon and Backblaze differ)."
         },
         "field:acc-keyId": {
@@ -706,13 +706,13 @@
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service that people run on their own servers. Codeberg is the best-known one. Pick it if you already have an account on Codeberg or on another Forgejo server.",
-          "expert": "Forgejo: Codeberg (codeberg.org; browser sign-in with Puppet Master's registered app, or a token) or another Forgejo instance at its own https address, which signs in with a personal access token, since no registered OAuth app is assumed there."
+          "text": "A free service people run on their own servers. Codeberg is the best-known one. Pick it if you have an account on Codeberg or another Forgejo server.",
+          "expert": "Codeberg (browser sign-in or a token) or another Forgejo instance at its https address (a personal access token)."
         },
         "pick:gitea": {
           "title": "Gitea",
           "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
-          "expert": "Gitea Cloud (your team's own instance, at the address Gitea gave you; browser sign-in or a token) or a self-hosted Gitea at its https address (personal access token)."
+          "expert": "Gitea Cloud at your team's own address (browser sign-in or a token), or a self-hosted Gitea at its https address (a personal access token)."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
@@ -775,8 +775,8 @@
         },
         "field:token": {
           "title": "Access token",
-          "text": "Make it on the server, give it the permissions listed under the box, then paste it here. It stays in your computer's password store, never in Puppet Master's files.",
-          "expert": "A PAT with the least scopes for this purpose: creating needs write access to repositories (and to the organization for an organization's copy); bringing one in needs read and write on it. Stored through the credential owner, referenced by the plan."
+          "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
+          "expert": "A PAT with the least scopes for this purpose, kept by the credential owner; the plan records only that a token is used."
         },
         "code": {
           "title": "Browser didn't open?",
@@ -802,13 +802,13 @@
       "online-details": {
         "field:repo": {
           "title": "Name on the service",
-          "text": "How the online copy is named there. Each service has its own rules: if a name won't work, the line under the box says why. Spaces become dashes where the service needs that.",
-          "expert": "Validated with the provider's own rule: GitHub up to 100 of A-Z a-z 0-9 . - _; GitLab paths start and end alphanumeric, no consecutive specials, not .git/.atom; Azure DevOps up to 64, no reserved characters or names; Bitbucket's slug up to 62; Forgejo/Gitea up to 100, no .git/.wiki/.rss/.atom endings."
+          "text": "How the online copy is named there. If a name won't work on that service, the line under the box says why.",
+          "expert": "Checked with the provider's own rule (GitHub, GitLab path, Azure DevOps, Bitbucket slug, Forgejo/Gitea), not one shared pattern."
         },
         "group:owner": {
           "title": "Where it lives",
-          "text": "Your own account, or a place you share with others. Each service has its own word for it: an organization, a group, a workspace or a project. Pick the one the Project belongs to.",
-          "expert": "The owner or namespace: a GitHub user or organization; a GitLab personal namespace, group or subgroup; an Azure DevOps organization (Services) or collection (Server); a Bitbucket workspace; a Bitbucket Data Center project key (~USER for personal); a Forgejo or Gitea user or organization; an Origin personal account or team codebase."
+          "text": "Your own account, or a place you share with others: an organization, group, workspace or project. Pick the one the Project belongs to.",
+          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key, Origin team."
         },
         "group:azProject": {
           "title": "Team project",
@@ -833,8 +833,8 @@
         },
         "vis:internal": {
           "title": "A wider group",
-          "text": "More people than just you, but nobody outside: everyone in your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
-          "expert": "internal: GitHub enterprise members (enterprise-owned organizations, any organization on Enterprise Server); GitLab self-managed signed-in, non-external users (not offered on GitLab.com); Origin team codebase members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
+          "text": "More people than just you, but nobody outside: your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
+          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com); Origin team members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
@@ -859,8 +859,8 @@
         },
         "group:bbProject": {
           "title": "Project",
-          "text": "Bitbucket keeps every copy inside one of the workspace's projects. A private project holds only private copies.",
-          "expert": "The Bitbucket Cloud project (by key) in the workspace. Chosen explicitly: without it the API puts the repository in the workspace's oldest project. Private projects admit only private repositories."
+          "text": "Bitbucket keeps every copy in one of the workspace's projects. A private project holds only private copies.",
+          "expert": "Bitbucket Cloud project key, chosen explicitly (the API would otherwise use the workspace's oldest project). Private projects hold only private repositories."
         }
       },
       "ex-repos": {
@@ -877,8 +877,8 @@
       "safe": {
         "group:backend": {
           "title": "Git or Jujutsu",
-          "text": "Both keep earlier versions of your Project on this computer, with no account. Git saves a version each time a piece of work is marked done, and almost every service expects it. Jujutsu also records each change as it happens and can undo any step. If you're not sure, pick Git. One of them is always on: 'Not now' further down is only about an online copy.",
-          "expert": "The local version-control backend, always one of Git or Jujutsu for a Project made here (SCS-011/012). Git: commits, branches and the staging index; the default everywhere. Jujutsu (jj): the working copy is itself a commit, changes keep stable change IDs, and every operation is logged and reversible (jj undo, jj op restore). Puppet Master runs Jujutsu colocated with a Git repository, so any Git remote works with either."
+          "text": "Both keep earlier versions of your Project on this computer, with no account. Git is the usual choice; pick it if you're not sure. Jujutsu can also undo any step. One of them is always on: 'Not now' below is only about an online copy.",
+          "expert": "Local version control, always Git or Jujutsu for a Project made here. Jujutsu runs colocated with Git, so any Git remote works with either, and its operation log makes every step undoable (jj undo)."
         },
         "backend:git": {
           "title": "Git",
@@ -920,7 +920,7 @@
         "bdest:s3": {
           "title": "A storage bucket",
           "text": "Cloud storage you rent, like Amazon S3 or Backblaze B2. Pick the service under the card; you add its access details after your Project is created.",
-          "expert": "Object storage: aws_s3, backblaze_b2 (its S3-compatible API with a regional S3 address and an application key) or s3_compatible (any other S3 service at its own address). Bucket, optional folder and keys are entered after commit."
+          "expert": "Object storage: Amazon S3, Backblaze B2 (its S3 API, regional address, application key) or another S3 service at its own address. Keys are added after the Project is created."
         },
         "bdest:sftp": {
           "title": "Another server",
