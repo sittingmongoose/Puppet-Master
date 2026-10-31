@@ -680,7 +680,7 @@
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
         /* (an SSH folder is named by its connection profile, so two accounts or ports on one device never collide: SCR-10) */
-        const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug((pmOf(S) || {}).id || d.name) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
+        const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' + U.slug(String((pmOf(S) || {}).id || d.id).replace(/^pm:/, '')) : 'ssh:' + (n.profile || profileId(S))) + at, dd = md(S);
         n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
         if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: tr, storage_location: ref });
         else O55.draft.set(dd, { project_source_ref: ref, project_transport: tr, project_name: dd.project_name || O55.project.pretty(at.split('/').pop()) });
@@ -739,14 +739,15 @@
     }
   });
   /* NFS has no password: the share lets in the computers it lists, so the check says which computer is asking */
+  const nfsKey = (S) => { const n = N(S), sh = shareOf(S) || {}; return 'nfs:' + (n.share === 'manual' ? sh.path : n.share); };
   def('nas-nfs', {
     seed: (S) => seedNas(S, 'nas-nfs'),
     chapter: 'project', stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: (S) => T('nas.nfs.leadOn', { where: machine(S) }),
-    body(S) { const n = N(S), sh = shareOf(S) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + C.note(T('nas.nfs.noPassword', { where: machine(S) }), 'info', 'lock') + F.phases(S, 'nfs:' + (sh.path || n.share), ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
-    mounted(S) { const sh = shareOf(S); if (!sh) return; F.op(S, 'nfs:' + sh.path, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'nfs', from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
-    foot(S) { const sh = shareOf(S), st = sh && F.state(S, 'nfs:' + sh.path); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: sh ? T('chrome.working') : T('missing.storage') } }; },
+    body(S) { const sh = shareOf(S) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + C.note(T('nas.nfs.noPassword', { where: machine(S) }), 'info', 'lock') + F.phases(S, nfsKey(S), ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
+    mounted(S) { const sh = shareOf(S); if (!sh) return; F.op(S, nfsKey(S), 'cmd.project.source_location.test', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'nfs', from: onServer(S) ? md(S).server_ref : S.env.here.id, readOnly: true } }); },
+    foot(S) { const sh = shareOf(S), st = sh && F.state(S, nfsKey(S)); return { primary: { label: T('chrome.continue'), do: 'use', disabled: !(st && st.state === 'done'), reason: sh ? T('chrome.working') : T('missing.storage') } }; },
     do: { use(S) { const sh = shareOf(S); if (!sh) return; finishMounted(S, sh.path, 'nfs:' + shareProfile(S, sh) + ':' + sh.path, 'nfs'); } }
   });
   /* The drive chosen on Where are the files is not asked for again (FF-23): this step names it, says which computer has

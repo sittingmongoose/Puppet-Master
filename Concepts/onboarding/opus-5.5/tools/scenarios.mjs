@@ -317,7 +317,7 @@ def('n6', 'homeNasPm', 'NAS already runs Puppet Master: identity first, then app
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'folder browser');
   await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
   A.eq(await d.screen(), 'name', 'name'); const dr = await d.draft('main');
-  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home-nas\//.test(dr.project_source_ref), 'non-secret device-and-path reference');
+  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home\//.test(dr.project_source_ref), 'non-secret Server-and-path reference (by the paired Server, never its display name: SCR-10)');
   A.ok(dr.source_access_authorization_refs.includes('pairing:home-nas:source-read'), 'pairing result bound'); A.eq(dr.server_mode, 'this_device', 'work still runs here');
   A.ok(dr.server_ref !== 'pm:home', 'the NAS does not become the Server');
   A.capture('n6 paired source', dr);
