@@ -5,7 +5,7 @@
    After the commit, 'away-setup' runs the owner's own steps for the chosen way (PWIZ-025's connector phases for
    Tailscale and Headscale; generate, export or check for a web address, with the internet exposure agreed first and
    its checks shown; a Remote Link made and shown), each step a separate owner command with its own answer, a person's
-   own steps (signing in, installing a file, a certificate) waiting for them, and Later always possible: the way in is
+   own steps (signing in, adding a file to their proxy) waiting for them, and Later always possible: the way in is
    then not set up, and Settings › Server & Project Location › Away From Home is where it is finished. */
 (function () {
   'use strict';
@@ -59,14 +59,13 @@
           + `<p class="o55-hint" data-key="hs-next">${U.esc(T('away.headscaleNext', { name }))}</p>`;
       }
       if (route === 'reverse_proxy') {
-        const res = E().check(d.proxy_hostname, 'proxy'), w = E().hint(res, 'https://…'), hosting = d.proxy_hosting || 'generate_for_server';
+        const res = E().check(d.proxy_hostname, 'proxy'), w = E().hint(res, 'https://…'), hosting = d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : 'generate_only';
         fields = C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok });
         fields += H('away:proxy', [{ label: 'pm.example.net', outcome: 'works', fills: [['proxy', 'pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !res.ok });
-        fields += C.segmented({ do: 'hosting', value: hosting, label: T('away.proxy.hosting'), options: [{ v: 'generate_for_server', label: T('away.proxy.pm') }, { v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
+        /* Puppet Master writes the settings file; the person's proxy runs it and keeps their certificate (Jared, C1) */
+        fields += C.segmented({ do: 'hosting', value: hosting, label: T('away.proxy.hosting'), options: [{ v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
         if (hosting !== 'existing_proxy') {
-          fields += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
-          /* (no key or certificate file is ever typed here: it is chosen on the Server after the commit, SCR-07) */
-          if (d.proxy_tls === 'existing_certificate') fields += `<p class="o55-hint" data-key="owncert">${U.esc(T('away.proxy.ownNext', { name }))}</p>`;
+          fields += `<p class="o55-hint" data-key="certnote">${U.esc(T('away.proxy.certNote'))}</p>`;
           /* (the proxies Puppet Master makes settings for, Caddy first: Jared, D3 A) */
           fields += C.details(S, 'proxykind', T('away.proxy.kind'), C.segmented({ do: 'kind', value: KIND_NAME[d.proxy_kind] ? d.proxy_kind : 'caddy', label: T('away.proxy.kind'), options: [{ v: 'caddy', label: 'Caddy' }, { v: 'nginx', label: 'NGINX' }, { v: 'traefik', label: 'Traefik' }] }) + `<p>${U.esc(O55.talk && O55.talk.t ? O55.talk.t('away.proxy.detail') : T('away.proxy.detail'))}</p>`);
         } else fields += `<p class="o55-hint" data-key="existing">${U.esc(T('away.proxy.existingNext', { name }))}</p>`;
@@ -95,8 +94,7 @@
       pick(S, v, el) { O55.draft.set(md(S), v === 'home' ? { remote_mode: 'local_or_vpn' } : { remote_mode: 'tailscale', tailscale_control: 'hosted' }); S.save(); O55.ui.refresh(); O55.ui.charm(el, T('away.' + v + '.title'), v === 'home' ? 'computer' : 'globe'); },
       more(S) { O55.draft.set(md(S), { remote_more: !md(S).remote_more }); S.save(); O55.ui.refresh(); },
       route(S, v) { O55.draft.set(md(S), v === 'headscale' ? { remote_mode: 'tailscale', tailscale_control: 'headscale', remote_more: true } : { remote_mode: v, remote_more: true }); S.save(); O55.ui.refresh(); },
-      hosting(S, v) { O55.draft.set(md(S), { proxy_hosting: v, proxy_tls: v === 'existing_proxy' ? null : md(S).proxy_tls || 'lets_encrypt', proxy_kind: v === 'existing_proxy' ? null : KIND_NAME[md(S).proxy_kind] ? md(S).proxy_kind : 'caddy' }); S.save(); O55.ui.refresh(); },
-      tls(S, v) { O55.draft.set(md(S), { proxy_tls: v }); S.save(); O55.ui.refresh(); },
+      hosting(S, v) { const own = v === 'existing_proxy'; O55.draft.set(md(S), { proxy_hosting: own ? 'existing_proxy' : 'generate_only', proxy_tls: null, proxy_kind: own ? null : KIND_NAME[md(S).proxy_kind] ? md(S).proxy_kind : 'caddy' }); S.save(); O55.ui.refresh(); },
       kind(S, v) { O55.draft.set(md(S), { proxy_kind: v }); S.save(); O55.ui.refresh(); },
       /* the agreement is for this address: another address asks again */
       consent(S) {
@@ -146,13 +144,10 @@
         { key: 'dns', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.dns', { host, name }), fail: ['dns_mismatch'] },
         { key: 'reach', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.reach'), fail: ['unreachable'] }
       ];
-      const cert = d.proxy_tls === 'existing_certificate'
-        ? { key: 'cert', cmd: null, label: T('away.setup.px.ownCert', { name }), wait: T('away.setup.px.ownCertWait', { name }), owner: true }
-        : { key: 'cert', cmd: 'cmd.remote_access.proxy.test', label: T('away.setup.px.freeCert'), fail: ['certificate_failed'] };
+      /* (no certificate step: it stays with their proxy, Jared C1; the test is of the way in, not of a certificate) */
       const test = { key: 'test', cmd: 'cmd.remote_access.proxy.test', label: T('away.setup.px.test'), fail: ['live_failed'] };
-      if (d.proxy_hosting === 'existing_proxy') return [{ key: 'dns', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.reaches', { host, name }), fail: ['dns_mismatch', 'unreachable'] }, { key: 'cert', cmd: 'cmd.remote_access.proxy.test', label: T('away.setup.px.theirCert'), fail: ['certificate_failed'] }, test];
-      if (d.proxy_hosting === 'generate_only') return [{ key: 'config', cmd: 'cmd.remote_access.proxy.export', label: T('away.setup.px.file', { kind }) }, { key: 'install', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.install', { kind }), person: 'installed', wait: T('away.setup.px.installWait', { kind }) }].concat(checks, [cert, test]);
-      return [{ key: 'config', cmd: 'cmd.remote_access.proxy.generate', label: T('away.setup.px.config', { kind, name }) }].concat(checks, [cert, test]);
+      if (d.proxy_hosting === 'existing_proxy') return [{ key: 'dns', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.reaches', { host, name }), fail: ['dns_mismatch', 'unreachable'] }, test];
+      return [{ key: 'config', cmd: 'cmd.remote_access.proxy.export', label: T('away.setup.px.file', { kind }) }, { key: 'install', cmd: 'cmd.remote_access.route.test', label: T('away.setup.px.install', { kind }), person: 'installed', wait: T('away.setup.px.installWait', { kind }) }].concat(checks, [test]);
     }
     return [
       { key: 'create', cmd: 'cmd.remote_access.remote_link.setup', label: T('away.setup.rl.create', { name }), fail: ['relay_unavailable'] },
@@ -179,7 +174,7 @@
     if (!st) { a.state = 'done'; S.save(); O55.ui.refresh(); return; }
     if (a.state === 'running') { if (liveSteps.has(stepKey(a, st))) return; a.state = 'idle'; }
     if (st.person && !a.people[st.person]) { if (a.state !== 'waiting') { a.state = 'waiting'; S.save(); O55.ui.refresh(); } return; }
-    /* an owner answer only the owner can give (a certificate chosen on the Server) waits for its host (none here) */
+    /* an owner answer only the owner can give waits for its host (none here) */
     if (st.owner && !O55.ownerResults.hostAvailable()) { if (a.state !== 'pending') { a.state = 'pending'; S.save(); O55.ui.refresh(); } return; }
     a.state = 'running'; S.save();
     const at = { id: a.id, step: a.step }, key = stepKey(a, st);
@@ -198,8 +193,8 @@
       onFail: (S2, res) => { liveSteps.delete(key); const cur = A(S); if (!cur || cur.id !== at.id || cur.step !== at.step) return; cur.state = 'failed'; cur.fail = { step: st.key, code: res.code }; S.save(); O55.ui.refresh(); }
     });
   }
-  const HINT_WORD = { denied: 'refused', expired: 'expired', needs_device_approval: 'refused', route_failed: 'noAnswer', registration_denied: 'refused', hs_unreachable: 'noAnswer', dns_mismatch: 'wrong', unreachable: 'noAnswer', certificate_failed: 'refused', live_failed: 'noAnswer', relay_unavailable: 'noAnswer' };
-  const FAIL_WORDS = { denied: 'denied', expired: 'expired', needs_device_approval: 'deviceApproval', route_failed: 'routeFailed', registration_denied: 'hsDenied', hs_unreachable: 'hsUnreachable', unreachable: 'unreachable', dns_mismatch: 'dns', certificate_failed: 'cert', live_failed: 'live', relay_unavailable: 'relay' };
+  const HINT_WORD = { denied: 'refused', expired: 'expired', needs_device_approval: 'refused', route_failed: 'noAnswer', registration_denied: 'refused', hs_unreachable: 'noAnswer', dns_mismatch: 'wrong', unreachable: 'noAnswer', live_failed: 'noAnswer', relay_unavailable: 'noAnswer' };
+  const FAIL_WORDS = { denied: 'denied', expired: 'expired', needs_device_approval: 'deviceApproval', route_failed: 'routeFailed', registration_denied: 'hsDenied', hs_unreachable: 'hsUnreachable', unreachable: 'unreachable', dns_mismatch: 'dns', live_failed: 'live', relay_unavailable: 'relay' };
   def('away-setup', {
     seed: (S) => { seedServer(S, 'tailscale'); if (!needsSetup(S)) O55.draft.set(md(S), { remote_mode: 'tailscale', tailscale_control: 'hosted' }); if (!A(S)) { O55.draft.set(md(S), { review_confirmed: true }); begin(S, 'ready'); } S.save(); },
     chapter: 'project', stage: 'automatic_preparation',

@@ -12,20 +12,10 @@
   const PLATFORMS = { nas: ['truenas', 'unraid', 'synology', 'qnap'], cloud: ['linux'], pc: ['windows', 'macos', 'linux'] };
   /* the computer being set up: a rented cloud computer is reached by its address, never found on the home network */
   const cloud = (S) => (S.sess.server.kind || 'nas') === 'cloud';
-  /* A rented computer is set up only over a private network until it is yours (RAS-007: unclaimed setup stays
-     local/private; SCR-14): it is reached at the address it has on the person's VPN or Tailscale network, never at its
-     public internet address. (The fixture's computer has one there.) */
-  const CLOUD_PRIVATE = '100.88.12.34';
-  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { address: S.env.unclaimedCloud.privateAddress || CLOUD_PRIVATE, name: S.env.unclaimedCloud.privateAddress || CLOUD_PRIVATE }) : S.env.unclaimed);
-  /* a private address: a home or VPN range, the 100.64/10 range Tailscale uses, or a local name; anything else faces the internet */
-  function privateAddress(v) {
-    const a = String(v || '').trim().toLowerCase().replace(/^\[|\]$/g, '');
-    if (!a) return true;
-    const m = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.exec(a);
-    if (m) { const [x, y] = [+m[1], +m[2]]; return x === 10 || x === 127 || (x === 172 && y >= 16 && y <= 31) || (x === 192 && y === 168) || (x === 100 && y >= 64 && y <= 127) || (x === 169 && y === 254); }
-    if (a.includes(':')) return /^(fc|fd|fe8|fe9|fea|feb|::1$)/.test(a);
-    return !a.includes('.') || /\.(local|lan|home\.arpa|internal|ts\.net|vpn)$/.test(a);
-  }
+  /* A rented computer is claimed with the one-time setup code its cloud provider's console shows once Puppet Master is
+     installed there: no address to type and no setup page on the internet (Jared, C2 A, 2026-10-31). It is named as
+     what it is, not by its address. */
+  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') }) : S.env.unclaimed);
   /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
      from the name the person gives it) */
   const reachedAt = (S) => unclaimed(S).address;
@@ -116,8 +106,8 @@
     },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
-      kind(S, v, el) { const sv = S.sess.server; if (sv.kind !== v) { sv.target = null; sv.manual = v === 'cloud'; sv.addr = ''; retarget(S); } sv.kind = v; sv.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
-      next(S) { const sv = S.sess.server; if (!sv.kind) { sv.kind = 'nas'; sv.platform = 'truenas'; } if (sv.kind === 'cloud') sv.manual = true; S.save(); O55.ui.go('s-wait'); }
+      kind(S, v, el) { const sv = S.sess.server; if (sv.kind !== v) { sv.target = null; sv.manual = false; sv.addr = ''; retarget(S); } sv.kind = v; sv.platform = PLATFORMS[v][0]; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('server.kind.' + v + '.title').split(' ').slice(-2).join(' '), { nas: 'server', cloud: 'cloud', pc: 'computer' }[v]); },
+      next(S) { const sv = S.sess.server; if (!sv.kind) { sv.kind = 'nas'; sv.platform = 'truenas'; } S.save(); O55.ui.go('s-wait'); }
     }
   });
 
@@ -130,8 +120,8 @@
     chapter: 'computer', stage: 'simple_path',
     scene: (S) => ({ id: 'where', beat: 'server' }),
     eyebrow: () => T('server.wait.eyebrow'),
-    title: () => T('server.wait.title'),
-    /* (a rented computer never shows up by itself: its address is typed) */
+    title: (S) => T(cloud(S) ? 'server.wait.titleCloud' : 'server.wait.title'),
+    /* (a rented computer never shows up by itself: its console gives the setup code) */
     lead: (S) => T(cloud(S) ? 'server.wait.leadCloud' : 'server.wait.lead'),
     body(S) {
       const u = unclaimed(S), sv = S.sess.server, kind = sv.kind || 'nas';
@@ -145,18 +135,19 @@
       /* what keeps a Server's work, before anyone installs it (SCR-12): behind a disclosure, so the steps stay short */
       if (kind === 'nas') inner += C.details(S, 'nasbefore', T('server.wait.before.title'), `<ul class="o55-will">${['models', 'data', 'address'].map((k) => `<li>${C.small(k === 'models' ? 'server' : k === 'data' ? 'vault' : 'globe', 14)}<span>${U.esc(T('server.wait.before.' + k, { brand: PLATFORM_NAMES[plat] || '' }))}</span></li>`).join('')}</ul>`);
       let out = C.group(T('server.kind.installTitle'), inner, { cls: 'o55-install' });
-      if (sv.manual) {
-        const typed = String(sv.addr || '').trim().toLowerCase(), hit = typed === u.address, pub = kind === 'cloud' && !!typed && !privateAddress(typed);
-        if (kind === 'cloud') out += C.note(T('server.wait.cloudPrivate'), 'info', 'lock');
-        out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudPrivateLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : pub ? '' : T(kind === 'cloud' ? 'server.wait.cloudHint' : 'connect.route.addressHint'), error: pub ? T('server.wait.cloudPublic') : '', invalid: pub, valid: hit });
-        out += H('s-wait:addr', kind === 'cloud' ? [{ label: u.address, outcome: 'works', fills: [['addr', u.address]] }, { label: '203.0.113.24', outcome: 'refused', fills: [['addr', '203.0.113.24']] }] : [{ label: u.address, outcome: 'works', fills: [['addr', u.address]] }, { label: '192.168.1.77', outcome: 'noAnswer', fills: [['addr', '192.168.1.77']] }], { when: !hit });
+      /* a rented computer: its setup code comes from the provider's console, typed on the next screen (C2 A) */
+      if (kind === 'cloud') out += C.note(T('server.wait.cloudCode'), 'info', 'lock');
+      else if (sv.manual) {
+        const hit = String(sv.addr || '').trim().toLowerCase() === u.address;
+        out += C.field({ bind: 'addr', label: T('connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
+        out += H('s-wait:addr', [{ label: u.address, outcome: 'works', fills: [['addr', u.address]] }, { label: '192.168.1.77', outcome: 'noAnswer', fills: [['addr', '192.168.1.77']] }], { when: !hit });
       } else if (!unclaimedFound(S)) {
         out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
-      if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
+      if (kind !== 'cloud' && (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address))) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
       }
-      if (!sv.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('server.wait.address'), 'manualOn')}</div>`;
+      if (kind === 'cloud') { /* (nothing to look for or type here) */ } else if (!sv.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('server.wait.address'), 'manualOn')}</div>`;
       else if (kind !== 'cloud') out += `<div class="o55-sublinks" data-key="scanlink">${C.link(T('server.wait.scan'), 'manualOff')}</div>`;
       return out;
     },
@@ -166,14 +157,14 @@
       if (st && st.state === 'done') return; /* a finished look must not rebuild its options on every refresh */
       F.op(S, discoverKey(S), 'cmd.server.discovery.refresh', DISCOVER_PHASES, DISCOVER_OPTS);
     },
-    foot: (S) => ({ primary: { label: T('server.wait.choose'), do: 'next', disabled: !S.sess.server.target, reason: T('server.wait.looking') } }),
+    foot: (S) => ({ primary: { label: T(cloud(S) ? 'server.wait.cloudNext' : 'server.wait.choose'), do: 'next', disabled: !cloud(S) && !S.sess.server.target, reason: T('server.wait.looking') } }),
     do: {
       pick(S, id, el) { S.sess.server.target = id; S.save(); O55.ui.refresh(); },
       manualOn(S) { S.sess.server.manual = true; S.save(); O55.ui.refresh(); },
       manualOff(S) { S.sess.server.manual = false; S.save(); O55.ui.refresh(); },
       platform(S, v) { S.sess.server.platform = v; S.save(); O55.ui.refresh(); },
       guide(S, plat) { O55.official.open(S, { kind: 'guide', name: PLATFORM_NAMES[plat] || plat, url: 'https://puppetmaster.app/install/' + plat }); },
-      next(S) { O55.ui.go('s-confirm'); }
+      next(S) { if (cloud(S)) { S.sess.server.target = unclaimed(S).id; S.save(); } O55.ui.go('s-confirm'); }
     },
     bind: { addr(S, v) {
       const sv = S.sess.server, was = String(sv.addr || '').trim().toLowerCase() === unclaimed(S).address, hit = String(v).trim().toLowerCase() === unclaimed(S).address;
@@ -262,7 +253,7 @@
       out += F.chips('suggest', suggestions(S), name);
       const st = F.state(S, 'claim:' + u.id);
       const failedCode = (st && st.state === 'failed') || sv.orClaimErr === 'setup_code_mismatch';
-      out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: setupCodes.get(u.id) || '', placeholder: '482 913', hint: T('server.confirm.codeHint', { name: u.name }), error: failedCode ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: failedCode });
+      out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: setupCodes.get(u.id) || '', placeholder: '482 913', hint: T(cloud(S) ? 'server.confirm.codeHintCloud' : 'server.confirm.codeHint', { name: u.name }), error: failedCode ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: failedCode });
       out += H('s-confirm:code', [{ label: u.setupCode, outcome: 'works', fills: [['code', u.setupCode]] }, { label: '000 000', outcome: 'wrong', fills: [['code', '000 000']] }], { when: !sv.orClaimOk });
       if (!sv.orClaimReq) { out += C.note(T('server.confirm.willLine', { name }), 'info', 'lock'); return out; }
       const ch = claimChain(S);
@@ -292,14 +283,14 @@
       const running = [ch.claim, ch.boot, ch.reach, ch.ok].some((st) => st && st.state === 'running');
       if (running) return { primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
       if (!sv.orClaimReq) {
-        const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T('server.confirm.codeHint', { name: u.name }) : '';
+        const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeHintCloud' : 'server.confirm.codeHint', { name: u.name }) : '';
         return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
       }
       if (!sv.orClaimOk || !sv.orBootOk || !sv.orRunOk) {
         /* A wrong setup code is not a pending adoption. Check again only retries the owner result, so a corrected
            code could never be sent. Set up Server submits it again; a pending owner keeps Check again. */
         if (!sv.orClaimOk && sv.orClaimErr === 'setup_code_mismatch') {
-          const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T('server.confirm.codeHint', { name: u.name }) : '';
+          const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeHintCloud' : 'server.confirm.codeHint', { name: u.name }) : '';
           return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
         }
         return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
@@ -433,8 +424,8 @@
       let card = `<div class="o55-paircard" data-key="pair"><div class="o55-qrbox">${code ? F.qr('pair-' + code, 132) : ''}</div><div class="o55-pairinfo">`
         + `<span class="o55-pairtitle">${U.esc(T('server.ready.pairTitle'))}</span><span class="o55-paircode">${U.esc(code || T('server.ready.codeMissing'))}</span>`
         + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
-        + `<span class="o55-hint">${U.esc(T('server.ready.link'))}: ${U.esc(link)}</span>`
-        + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}${F.copyBtn(link, 'pairlink')}</span></div></div>`
+        + (cloud(S) ? '' : `<span class="o55-hint">${U.esc(T('server.ready.link'))}: ${U.esc(link)}</span>`)
+        + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}${cloud(S) ? '' : F.copyBtn(link, 'pairlink')}</span></div></div>`
           + O55.tips.explainer('newCode') + F.copyNote('pairlink');
       card += `<p class="o55-note o55-note-info" data-key="pairsub">${C.small('phone', 14)}<span>${U.esc(T('server.ready.pairSub'))}</span></p>`;
       let shownWaiting = false;
@@ -750,6 +741,7 @@
       /* where it comes back to, and that it comes back safe: paused, and paired again (SCR-13, SRV-013, PWIZ-025) */
       const onto = r.scope === 'server' ? T('restore.preview.ontoServer', { name: S.sess.server.displayName || '' }) : T('restore.preview.ontoHere', { name: S.env.client.name });
       let out = `<p class="o55-locline" data-key="onto">${C.small(r.scope === 'server' ? 'server' : 'computer', 16)}<span>${U.esc(onto)}</span></p>`;
+      if (r.scope === 'full') out += `<p class="o55-hint" data-key="claimhere">${U.esc(T('restore.preview.claimHere'))}</p>`;
       out += `<ul class="o55-will" data-key="what">`
         + [['stack', T('restore.preview.projects', { n: b.projects })], ['spark', T('restore.preview.accounts', { n: b.accounts })], ['history', T('restore.preview.settings')], ['power', T('restore.preview.paused')], ['phone', T('restore.preview.repair', { name: r.scope === 'server' ? S.sess.server.displayName || '' : S.env.client.name })]]
           /* a new Server's way in from away is set up after the restore, as its own step (SCR-13) */
@@ -757,7 +749,7 @@
       out += C.note(T('restore.preview.never'), 'info', 'lock');
       const st = F.state(S, 'restore:' + r.pick);
       if (st && st.state === 'failed') out += C.note(T('restore.preview.failed'), 'warn', 'rewind');
-      if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings', 'paused'], { fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings'), paused: T('restore.apply.phases.paused') });
+      if (st) out += F.phases(S, 'restore:' + r.pick, (r.scope === 'full' ? ['claim'] : []).concat(['fetch', 'check', 'projects', 'settings', 'paused']), { claim: T('restore.apply.phases.claimHere'), fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings'), paused: T('restore.apply.phases.paused') });
       return out;
     },
     foot(S) {
@@ -777,7 +769,9 @@
            Try again runs it afresh */
         const f = S.env.failures || {}, stop = !!f.restore_once; if (stop) f.restore_once = false;
         F.reset(S, 'restore:' + r.pick);
-        F.op(S, 'restore:' + r.pick, 'cmd.restore.server_full', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100, fail: stop ? () => 'restore_interrupted' : undefined }, { key: 'settings', ms: 600 }, { key: 'paused', ms: 500 }], {
+        /* onto this computer: the desktop app hands its built-in Server's claim over itself, on the same machine, with no
+           code to type (Jared, C3 A): an automatic first step, not a question */
+        F.op(S, 'restore:' + r.pick, 'cmd.restore.server_full', (r.scope === 'full' ? [{ key: 'claim', ms: 600 }] : []).concat([{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100, fail: stop ? () => 'restore_interrupted' : undefined }, { key: 'settings', ms: 600 }, { key: 'paused', ms: 500 }]), {
           payload: { scope: r.scope, backup: r.pick, target: r.scope === 'server' ? S.sess.server.id || null : S.env.here.id, recovery_safe: true }, sound: { intensity: 0.9 },
           /* (a restore finished for a copy the person has since turned away from is not this one: SCR-01's class) */
           onDone: () => { if (R(S) !== r || r.pick !== pick) return; r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview' && R(S).pick === pick) afterRestore(S); }); }
