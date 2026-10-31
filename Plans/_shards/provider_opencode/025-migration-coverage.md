@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L3427-L3437
+Source lines: L3443-L3453
 
-Source SHA256: `8629de0b0a491c725a7fe023e1456ca34da1cd408ce530a7fee43fe6afe864ac`
+Source SHA256: `4d19a9e229069e37e121ce7cba0030348c73c6337264823503c85e33dea6d782`
 
 ---
 

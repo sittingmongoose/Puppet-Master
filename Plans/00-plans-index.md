@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-10-31: DL-271 distinguishes OpenCode server-password custody, keeps Protect access guidance count-neutral and recovery-phrase wording format-neutral, refuses weak SSH keys before prior authorization, and separates initial request waiting from answered pairing. Long tokens wrap inside the bounded question note while vertical scrolling remains. Existing credential, Backup, key-list and trust owners remain.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-271, ContractName:Plans/Provider_OpenCode.md#PO-009, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/Server_System.md#SRV-004
+
 - 2026-10-31: DL-259 FO-10 final makes Connect’s disabled Continue explain the chosen route’s visible address requirement before a hidden Server-list choice. The found-list prompt appears only with that list; Pip shares the reason, screen copy stays single across explanation modes, and existing validation/action/permission gates remain.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/UI_Wiring_Rules.md#UIW-015, ContractName:Plans/DRY_Rules.md#DR-020
 

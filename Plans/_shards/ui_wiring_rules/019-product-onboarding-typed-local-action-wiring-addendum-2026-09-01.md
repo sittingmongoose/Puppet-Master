@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1387
+Source lines: L1024-L1403
 
-Source SHA256: `b902ea54962263f3671ac4b1c77ac48163090c7d0ed7b639bd1e3f693243cbb1`
+Source SHA256: `a153f8c2e3ec8a96012c4a77bed34f368d0cbcb929d8c8a355bc917a4ee304d9`
 
 ---
 
@@ -190,7 +190,13 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   current-route reason projection. A visible web-address/Remote Link field or typed-address alternative gets its own
   actionable reason before a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled
   feedback and Pip use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and
-  validation/permission/currentness gates remain unchanged; no new action or dispatch is added.'
+  validation/permission/currentness gates remain unchanged; no new action or dispatch is added. DL-271, 2026-10-31: the
+  existing onboarding/authentication routes distinguish OpenCode server passwords from provider API keys and retain execution-host
+  credential custody (PO-009). Protect’s required fields remain Backup-owner data; its speech is count-neutral and Unlock
+  asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before
+  prior authorization/unlock and before advance/install. Initial live-invitation waiting says No requests yet with Check
+  again, while answered runs keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary
+  command, handler, request field or trust/permission bypass.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -335,6 +341,12 @@ acceptance_criteria:
   a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip
   use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness
   gates remain unchanged; no new action or dispatch is added.'
+- 'DL-271, 2026-10-31: the existing onboarding/authentication routes distinguish OpenCode server passwords from provider
+  API keys and retain execution-host credential custody (PO-009). Protect’s required fields remain Backup-owner data;
+  its speech is count-neutral and Unlock asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility
+  refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
+  says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
+  and owner routes; no new primary command, handler, request field or trust/permission bypass.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -362,6 +374,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

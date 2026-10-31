@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47930-L51124
+Source lines: L47979-L51204
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `781852ffff2fb8fb72d415e56aaac417ed9194477fd0ccf171c7185a82f4527b`
 
 ---
 
@@ -2877,7 +2877,18 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
   result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
   recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
-  Motion settlement remain additional to real owner completion.'
+  Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance
+  is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination
+  family, auth method and credential mode determine the actual required fields and validation through their existing
+  owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns
+  incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase,
+  rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the
+  Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The
+  wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31:
+  long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
+  scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
+  including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
+  content version.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2942,6 +2953,18 @@ acceptance_criteria:
   its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
   settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
   rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 FO-14, 2026-10-31: long tokens in an opened question note wrap within its available width, so their full text
+  is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
+  applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
+  adds no second note renderer or per-family content version.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -2971,6 +2994,14 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

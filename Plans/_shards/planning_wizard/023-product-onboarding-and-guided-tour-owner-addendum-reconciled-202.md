@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2461
+Source lines: L1781-L2475
 
-Source SHA256: `e4d279800724ea814073841e3dbb091dd65c75e72733a2f6638ff4783da751d0`
+Source SHA256: `70230b5a0db987a76e35b0843e5bffd023830aeb87c7653326ffad1cf64b8f2e`
 
 ---
 
@@ -222,7 +222,12 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   its block and an unproven phase has no completed block. Refresh alone neither completes a phase nor repeats a settled
   remote create. Transport completion and animation never prove the later registration, settings or connection steps.
   The recovery banner/actions, Continue availability and Ready use that same current owner result; O12’s last-block landing
-  condition is additional to owner completion, never a replacement for it.'
+  condition is additional to owner completion, never a replacement for it. DL-271 FO-11, 2026-10-31: where an OpenCode
+  server requires its own HTTP Basic credentials, the Password field asks for that server’s password, not an AI provider’s
+  API key or the person’s Puppet Master sign-in. Its hint states that distinction and identifies credential custody in
+  the OS keychain on the selected execution host, through the existing credential owner. Optional server auth stays optional
+  when the server needs none. Protected entry, secret-free readback and exact host/account binding remain; an API-key-only
+  hint is used only on an actual API-key field.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -363,6 +368,11 @@ acceptance_criteria:
   prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
   Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
   a replacement for it.'
+- 'DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks
+  for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that
+  distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
+  credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
+  and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -408,6 +418,10 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository

@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L761-L3425
+Source lines: L761-L3441
 
-Source SHA256: `8629de0b0a491c725a7fe023e1456ca34da1cd408ce530a7fee43fe6afe864ac`
+Source SHA256: `4d19a9e229069e37e121ce7cba0030348c73c6337264823503c85e33dea6d782`
 
 ---
 
@@ -403,8 +403,14 @@ plan_unit_id: PO-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
-canonical_text: >-
-  OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth and callback endpoints.
+canonical_text: 'OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials
+  to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth
+  and callback endpoints. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials,
+  the Password field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in.
+  Its hint states that distinction and identifies credential custody in the OS keychain on the selected execution host,
+  through the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry,
+  secret-free readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key
+  field.'
 gui_related: false
 gui_classification_reason: This unit defines auth realm mapping rather than visual presentation.
 split_recommended: false
@@ -413,9 +419,15 @@ depends_on:
   - "CV-125"
 unblocks: []
 acceptance_criteria:
-  - "Server Provider Auth Realm Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Server Provider Auth Realm Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer
+  boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- 'DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks
+  for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that
+  distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
+  credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
+  and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -428,7 +440,11 @@ node_compile_hint:
   mode: opencode_auth_realm_mapping
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
   - "Server-level auth"
   - "OPENCODE_SERVER_PASSWORD"

@@ -36899,7 +36899,28 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   Say Choose your Puppet Master only while the found-Server choice list is shown. Pip’s feedback conveys the same cause.
   These screen/status words stay single in Plain English and Expert (DL-126); only tips/help have two versions. Reason
   priority changes no validation, route identity, readiness, pairing or permission gate and admits no address/Remote
-  Link grammar.'
+  Link grammar. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password
+  field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint
+  states that distinction and identifies credential custody in the OS keychain on the selected execution host, through
+  the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free
+  readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field. DL-271
+  FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action. DL-271 Unlock
+  wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count. The Recovery
+  Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real protected recovery
+  material and its exact source/target binding. The wording admits no new phrase format, key derivation, unlock proof
+  or weaker secret-handling rule. DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key
+  as Too weak to use, but it cannot be selected, used as a default, advanced or installed. The refusal reads Older key
+  type — too weak to use. Check this eligibility before an existing authorization, matching prior profile or passphrase/unlock
+  state; those cannot make a weak key usable. A retained weak selection must be replaced by an owner-eligible key before
+  the flow advances. Other keys keep their existing owner checks, identity binding and custody; the shared list never
+  exposes or moves a private half. DL-271 initial request waiting, 2026-10-31: while the current invitation is live and
+  no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current
+  owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate,
+  approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
+  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37182,6 +37203,30 @@ acceptance_criteria:
   choice list is shown. Pip’s feedback conveys the same cause. These screen/status words stay single in Plain English
   and Expert (DL-126); only tips/help have two versions. Reason priority changes no validation, route identity, readiness,
   pairing or permission gate and admits no address/Remote Link grammar.'
+- 'DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks
+  for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that
+  distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
+  credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
+  and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot
+  be selected, used as a default, advanced or installed. The refusal reads Older key type — too weak to use. Check this
+  eligibility before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make
+  a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other
+  keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves a private
+  half.'
+- 'DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived,
+  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
+  request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
+  retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
+  request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37235,6 +37280,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -50796,7 +50845,18 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   progress consume the same verified owner-phase projection as its checklist (PWIZ-021). An incomplete or unclear GitHub
   result cannot produce completed blocks for unproven phases; settled phases keep their corresponding blocks through
   recheck/resume. Later accepted owner results may settle the rest. O12’s final landing condition and instant Reduced
-  Motion settlement remain additional to real owner completion.'
+  Motion settlement remain additional to real owner completion. DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance
+  is count-neutral: ask for the access details without claiming a fixed number of fields. The selected Backup destination
+  family, auth method and credential mode determine the actual required fields and validation through their existing
+  owner. Changing the line never omits a required credential, locator, region or temporary-session value and never turns
+  incomplete access into an available Connect action. DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase,
+  rather than six words or another fixed word count. The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the
+  Backup owner still defines and verifies the real protected recovery material and its exact source/target binding. The
+  wording admits no new phrase format, key derivation, unlock proof or weaker secret-handling rule. DL-271 FO-14, 2026-10-31:
+  long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
+  scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
+  including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
+  content version.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -50861,6 +50921,18 @@ acceptance_criteria:
   its checklist (PWIZ-021). An incomplete or unclear GitHub result cannot produce completed blocks for unproven phases;
   settled phases keep their corresponding blocks through recheck/resume. Later accepted owner results may settle the
   rest. O12’s final landing condition and instant Reduced Motion settlement remain additional to real owner completion.'
+- 'DL-271 FO-12, 2026-10-31: Protect’s missing-access guidance is count-neutral: ask for the access details without claiming
+  a fixed number of fields. The selected Backup destination family, auth method and credential mode determine the actual
+  required fields and validation through their existing owner. Changing the line never omits a required credential, locator,
+  region or temporary-session value and never turns incomplete access into an available Connect action.'
+- 'DL-271 Unlock wording, 2026-10-31: ask for your recovery phrase, rather than six words or another fixed word count.
+  The Recovery Kit is not a six-word format (PWIZ-025/BRS-018); the Backup owner still defines and verifies the real
+  protected recovery material and its exact source/target binding. The wording admits no new phrase format, key derivation,
+  unlock proof or weaker secret-handling rule.'
+- 'DL-271 FO-14, 2026-10-31: long tokens in an opened question note wrap within its available width, so their full text
+  is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
+  applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
+  adds no second note renderer or per-family content version.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -50890,6 +50962,14 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

@@ -193,6 +193,99 @@ async function main() {
       'FO-10 matching Pip cause copy ' + test.name);
   }
   counts.Connect_route_reason_cases = fixture.Connect_route_reason_cases.length;
+
+  // DL-271: server-password hints preserve the actual credential realm and selected execution-host custody.
+  const aiSource = read('Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js');
+  const hostHelpers = section(aiSource, 'function host(S)', 'const pname =');
+  const serverForm = section(aiSource, 'function serverHtml(S, p, r)', "def('ai', {");
+  const text = (key, values = {}) => {
+    const value = lookup(commonCopy, key);
+    if (typeof value !== 'string') throw new Error('Missing screen string ' + key);
+    return value.replace(/\{([^}]+)\}/g, (_m, name) => values[name] == null ? '' : String(values[name]));
+  };
+  for (const role of ['this_device', 'existing_server']) {
+    const fields = [], executionHost = { id: 'execution-host', name: 'Execution host', role };
+    const authContext = vm.createContext({ T: text, U: { slug: value => value, esc: value => value },
+      md: s => s.draft, installed: () => true, hostName: () => executionHost.name,
+      F: { isHttps: () => true }, btnIn: () => '', hint: () => '', pname: p => p.name,
+      C: { field: f => { fields.push(f); return ''; }, cards: () => '' },
+      O55: { handoff: { host: () => executionHost } } });
+    vm.runInContext(hostHelpers + '\n' + serverForm, authContext, { timeout: 1000 });
+    authContext.serverHtml({ draft: {} }, { id: 'server-entry', name: 'OpenCode server' },
+      { mode: 'attached', endpoint: 'accepted_endpoint', secretTyped: true });
+    const password = fields.find(f => f.bind.startsWith('ocPass:'));
+    requireThat(password && password.type === 'password' && password.protected && password.value === '' &&
+      password.hint.includes("server's own password") && password.hint.includes('not a key from an AI company'),
+      'DL-271 OpenCode server-auth hint/protected entry ' + role);
+    requireThat(role === 'this_device' ? password.hint.includes(commonCopy.ai.keychainHere) :
+      password.hint.includes(executionHost.name), 'DL-271 selected execution-host custody ' + role);
+  }
+  counts.OpenCode_server_password_cases = 2;
+  const accessLine = lookup(JSON.parse(read('Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json')), 'pip.oops.protect.accessMissing');
+  const unlockLine = lookup(JSON.parse(read('Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json')), 'pip.say.r-unlock.enter');
+  requireThat(typeof accessLine === 'string' && /access details/i.test(accessLine) &&
+    !/\b(?:one|two|three|four|five|six|\d+)\b/i.test(accessLine), 'DL-271 Protect access guidance is count-neutral');
+  requireThat(typeof unlockLine === 'string' && /your recovery phrase/i.test(unlockLine) &&
+    !/\b(?:six|6)\b/.test(unlockLine), 'DL-271 recovery phrase prompt has no six-word format');
+  counts.Backup_recovery_copy_checks = 2;
+
+  const nasSource = read('Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js');
+  const keyHelpers = section(nasSource, 'function keyStatus(S, k)', "def('nas-key', {");
+  const keyDefinition = section(nasSource, "def('nas-key', {", "def('nas-signin', {");
+  const keyBody = section(keyDefinition, '    body(S) {', '    mounted(S)');
+  const keyActions = section(keyDefinition, '    do: {', '    bind: {');
+  for (const test of fixture.weak_SSH_key_cases) {
+    const key = { id: 'candidate', type: test.type, passphrase: !!test.passphrase,
+      where: 'file', file: 'key-ref', comment: 'Existing key' };
+    const draft = { key: null, unlocked: test.unlocked ? key.id : null };
+    let choices = [];
+    const kc = vm.createContext({ T: text, N: () => draft, dev: () => ({ name: 'Target' }),
+      authorizedFor: () => test.authorized, keyring: () => [key], keysKey: () => 'keys', sshUser: () => 'actor',
+      machine: () => 'Execution host', hostId: () => 'target', U: { esc: value => value },
+      F: { state: () => ({ state: 'done' }) },
+      C: { small: () => '', link: () => '', field: () => '', note: () => '',
+        cards: (_action, rows) => { choices = rows; return ''; } } });
+    vm.runInContext(keyHelpers + '\nglobalThis.keyBody = ({' + keyBody + '}).body;', kc, { timeout: 1000 });
+    requireThat(kc.keyStatus({}, key) === test.expected, 'DL-271 weak eligibility before authorization ' + test.name);
+    kc.keyBody({ sess: { ui: {} } });
+    const row = choices.find(r => r.v === key.id);
+    requireThat(row && row.disabled === (test.expected === 'old'), 'DL-271 chooser availability ' + test.name);
+    if (test.expected === 'old') {
+      requireThat(row.tag === 'Too weak to use' && row.reason === 'Older key type — too weak to use' &&
+        kc.defaultKey({}) !== key.id, 'DL-271 weak label/reason/default ' + test.name);
+    }
+  }
+  counts.weak_SSH_key_cases = fixture.weak_SSH_key_cases.length;
+  for (const type of ['dsa', 'rsa-1024']) {
+    const key = { id: 'retained', type, passphrase: type === 'rsa-1024' };
+    const draft = { key: key.id }, routes = [];
+    const S = { sess: { ui: {} }, save() {} };
+    const rc = vm.createContext({ T: text, N: () => draft, dev: () => ({ name: 'Target' }),
+      authorizedFor: () => type === 'dsa', keyring: () => [key], seeSheet() {},
+      F: {}, O55: { ui: { go: route => routes.push(route), refresh() {}, shake() {} }, sound: { play() {} } } });
+    vm.runInContext(keyHelpers + '\nglobalThis.keyActions = ({' + keyActions + '}).do;', rc, { timeout: 1000 });
+    rc.keyActions.next(S);
+    requireThat(routes.length === 0 && S.sess.ui.sheet !== 'passphrase',
+      'DL-271 retained weak selection cannot advance/unlock/install ' + type);
+  }
+  counts.retained_weak_key_action_cases = 2;
+
+  const waitingSource = section(server, 'if (!shownWaiting && inviteOpen(S) && runDone(S))', 'if (!inviteOpen(S))');
+  for (const test of fixture.initial_pairing_wait_cases) {
+    const S = { sess: { server: { runErr: test.owner_pending ? 'pending_no_result' : null } } };
+    const wc = vm.createContext({ T: text, U: { esc: value => value },
+      C: { link: (label, action) => label + '[' + action + ']', note: value => value },
+      inviteOpen: () => test.invite_live, runDone: () => test.answered, pendingCopy: value => value });
+    vm.runInContext('function waitingView(S, shownWaiting) { let card = ""; const sv = S.sess.server; ' +
+      waitingSource + ' return card; }', wc, { timeout: 1000 });
+    const result = wc.waitingView(S, test.shown_waiting);
+    if (test.expected === 'initial') requireThat(result.includes('No requests yet') && result.includes('Check again') &&
+      !result.includes(text('server.ready.runDone')), 'DL-271 neutral initial request wait ' + test.name);
+    else if (test.expected === 'answered') requireThat(result.includes(text('server.ready.runDone')) &&
+      !result.includes('Check again') && !result.includes('No requests yet'), 'DL-271 answered request remains terminal ' + test.name);
+    else requireThat(result === '', 'DL-271 no initial-wait fiction ' + test.name);
+  }
+  counts.initial_pairing_wait_cases = fixture.initial_pairing_wait_cases.length;
   return { status: failures.length ? 'fail' : 'pass', counts, failures,
     claim_boundary: 'static_and_isolated_source_functions_only_no_browser_native_pixel_or_runtime_acceptance',
     pending_final_sources: [],

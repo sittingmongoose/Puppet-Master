@@ -213,3 +213,11 @@ DL-259 connector context: `connector_owner=server|native_client`, `owner_client_
 Q1 B shared Pip say/vocals: per-look kit room sends Basic/Friendly/Retro 0.35, Glass 0.30, NieR 0.16; one room per look, no stacked rooms; approximately 0.4 dB loudness bound.
 
 DR-081: one Free Models catalog and matching advanced disclosure. New local control families `onboarding.free_models.advanced`, `settings.free_models.advanced`; default closed, no action ID/command/setting. Three front providers only are pinned; the advanced remainder and count follow the current eligible catalog.
+
+## 2026-10-31 final-batch allocation
+
+| ID | Purpose | Authority |
+|---|---|---|
+| DL-271 | FO-11/FO-12, recovery-phrase wording, unconditional weak-key refusal and initial request-waiting state | Lead1031214952-2d19; checked free on branch and origin/main808de86f4d |
+
+DL-270 and SP-335 onward remain reserved to the storage work. No new SP, ACD, UF, RAS or BRS unit ID is allocated by this batch. Main is read for collision checks only and remains unmerged.

@@ -2976,27 +2976,41 @@ plan_unit_id: SSYS-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Settings sets defaults and runs guided set-ups; it does no live work. No Settings view shows, starts, pauses or
-  stops a live chat or Goal: Goals start in the assistant chat or the Planning Wizard, Goals in Settings holds new-Goal
-  defaults, templates, recovery and check rules, and one chat's own actions live in that chat's menu. Every set-up
-  listed in the presentation section's owner-routes subsection runs in the onboarding wizard's form and ends with its
-  result shown where it was started, changeable and removable. A permission profile carries its four answers and its
-  own rules, which form the profile layer above the project's rules and win rule by rule; built-in profiles change
-  only through a copy. SSH keys are one shared list that servers, SSH computers and Git's sign-in attach from, never
-  showing or moving a private half. Settings Transfer previews every change in plain labels and values and never
-  moves passwords, keys, sign-ins or device pairings.
+canonical_text: 'Settings sets defaults and runs guided set-ups; it does no live work. No Settings view shows, starts,
+  pauses or stops a live chat or Goal: Goals start in the assistant chat or the Planning Wizard, Goals in Settings holds
+  new-Goal defaults, templates, recovery and check rules, and one chat''s own actions live in that chat''s menu. Every
+  set-up listed in the presentation section''s owner-routes subsection runs in the onboarding wizard''s form and ends
+  with its result shown where it was started, changeable and removable. A permission profile carries its four answers
+  and its own rules, which form the profile layer above the project''s rules and win rule by rule; built-in profiles
+  change only through a copy. SSH keys are one shared list that servers, SSH computers and Git''s sign-in attach from,
+  never showing or moving a private half. Settings Transfer previews every change in plain labels and values and never
+  moves passwords, keys, sign-ins or device pairings. DL-271 weak-key eligibility, 2026-10-31: Choose a key may list
+  a DSA or RSA-1024 key as Too weak to use, but it cannot be selected, used as a default, advanced or installed. The
+  refusal reads Older key type — too weak to use. Check this eligibility before an existing authorization, matching prior
+  profile or passphrase/unlock state; those cannot make a weak key usable. A retained weak selection must be replaced
+  by an owner-eligible key before the flow advances. Other keys keep their existing owner checks, identity binding and
+  custody; the shared list never exposes or moves a private half.'
 gui_related: true
 gui_classification_reason: Governs which Settings views may act on live work and how every guided set-up, permission profile, SSH key and transfer is presented.
 split_recommended: false
 depends_on: [SSYS-013, SSYS-040]
 unblocks: []
 acceptance_criteria:
-  - No Settings view lists, starts, pauses or stops a live chat or Goal, and no Settings row reads "this thread" or "this chat".
-  - Each listed guided set-up reaches its end in the wizard form and leaves its result on the page it started from, with a way to change or remove it.
-  - A permission profile shows its four answers and its own rules; a rule can move between a profile and the project; the profile's rule wins where both cover an action; a built-in profile's answers change only through Make a copy.
-  - Servers, SSH computers and Git's sign-in attach keys from one SSH key list, and no private key half is rendered.
-  - The transfer preview shows each changing setting by its plain label with plain before and after values, and lists what is never copied.
+- No Settings view lists, starts, pauses or stops a live chat or Goal, and no Settings row reads "this thread" or "this
+  chat".
+- Each listed guided set-up reaches its end in the wizard form and leaves its result on the page it started from, with
+  a way to change or remove it.
+- A permission profile shows its four answers and its own rules; a rule can move between a profile and the project; the
+  profile's rule wins where both cover an action; a built-in profile's answers change only through Make a copy.
+- Servers, SSH computers and Git's sign-in attach keys from one SSH key list, and no private key half is rendered.
+- The transfer preview shows each changing setting by its plain label with plain before and after values, and lists what
+  is never copied.
+- 'DL-271 weak-key eligibility, 2026-10-31: Choose a key may list a DSA or RSA-1024 key as Too weak to use, but it cannot
+  be selected, used as a default, advanced or installed. The refusal reads Older key type — too weak to use. Check this
+  eligibility before an existing authorization, matching prior profile or passphrase/unlock state; those cannot make
+  a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other
+  keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves a private
+  half.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_live_work_or_guided_setup_drift
@@ -3008,11 +3022,15 @@ node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
 source_lineage:
-  - Concepts/onboarding/opus-5.5/src/settings/managers/31-goals.js
-  - Concepts/onboarding/opus-5.5/src/settings/managers/50-servers.js
-  - Concepts/onboarding/opus-5.5/src/settings/managers/52-permissions.js
-  - Concepts/onboarding/opus-5.5/src/settings/managers/53-transfer.js
-  - Plans/Permissions_System.md#PRECEDENCE-LAYERS
+- Concepts/onboarding/opus-5.5/src/settings/managers/31-goals.js
+- Concepts/onboarding/opus-5.5/src/settings/managers/50-servers.js
+- Concepts/onboarding/opus-5.5/src/settings/managers/52-permissions.js
+- Concepts/onboarding/opus-5.5/src/settings/managers/53-transfer.js
+- Plans/Permissions_System.md#PRECEDENCE-LAYERS
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
   - "Make a copy"
   - "Same as the project"

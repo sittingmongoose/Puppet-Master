@@ -1,3 +1,23 @@
+# Plans lane — storage-main merge in progress, 2026-10-31
+
+Checkpointing DL-271 before the requested merge of main683e603ac1. The uncommitted DL-261 allocation was renumbered to DL-271 to follow the new main ceiling; no committed decision history changed. Main's DL-270/SP-335..345/other reserved unit IDs do not collide; GUI-SRT/RET/FX requirement ids are absent on our side. Full source and conflict reconciliation follows the checkpoint.
+
+**Union facts:** raw settings union1011 includes retired general.visual.nier-mode, so active union stays1010. Touch union715 rows/140 profiles; production wiring1270, adding main's assistant.chat.history.load_older. Preserve PM7's two new setting rows and NieR migration/tombstone. Use the lead's Glass file exactly and rebuild the generated concept. Do not refresh the new migration run or landing baseline; no Spec_Lock/auto_decisions/.evidence edits, browser or landing lock.
+
+**Source still pending:** server-lane weak-key eligibility/action correction; canon keeps unconditional refusal. All before artifacts remain immutable; manifest now653 records. This is a checkpoint, not final verification or landing approval.
+
+---
+
+# Plans lane — DL-271 batch checkpoint, 2026-10-31
+
+**In progress.** Integration2819a3def0 merged. DL-271 is allocated, with all prior Decision Log bytes preserved. Prose and companions cover FO-11/FO-12, recovery phrase, unconditional weak-key refusal, initial request waiting and the missing long-token note-wrap rule. Coverage is **155 real product rows / 775 cells**. DL-270 and SP-335 onward are reserved; no new SP/ACD/UF/RAS/BRS IDs or main merge.
+
+**Source correction pending:** isolated actual code on2819 still lets authorized weak keys report works and retained weak selections advance or open passphrase. Eleven source assertions expose those paths; server lane is fixing them under the lead. The source pack has 67 cases/checks; its failures are limited to the 11 weak-key assertions. Immutable before diagnostics are retained. No accepted product decision is pending.
+
+FO-13 lookup/build-key glue and Studio oldKey/guestLater, host delays and seeds stay out of product canon. No browsers, full gates, dry landing, landing, lock or reseal. Static build and shard/index generation pass before checkpoint; final source checks await the corrected head.
+
+---
+
 # Plans lane — FO-10 current-route Continue reason, 2026-10-31
 
 **Complete: 12/12 affected focused/regeneration/guard checks PASS.** Branch `t3/plans/pm7-plans-canon`; integration `619cd29955942cb418f6a42deffd02b0587e5b4a` merged by fast-forward, including FO-10 final `03a02a178b1c386488b4a6f7865f9172cca7990c`. The resulting full head is mailed after push. One real product row added: **149 coverage rows / 745 required cells**, no final-source item pending.
