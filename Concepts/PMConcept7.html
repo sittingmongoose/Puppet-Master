@@ -32958,8 +32958,10 @@ html[data-o55-nier="on"] .pm7-work-item.is-open :where(.wk-sb-ask):not(.t7:not(*
 .wk-right b[data-tone] { color: var(--wk-t); font-weight: 600; }
 .wk-right i { font-style: normal; color: var(--wk-small); font-variant-numeric: tabular-nums; }
 /* Q11 (B): a running process's status mark moves only while its row is on screen (.wk-off holds it, 48-work.js
-   watchMoving) and holds in drags with the beat (pm7-beat.css); a working agent's Pip is the loader, which holds itself */
-.wk-row.wk-off .wk-lead .nx-st *,
+   watchMoving) and the tab is shown (.wk-hid), and holds in drags with the beat (pm7-beat.css); a working agent's Pip is
+   the loader, which holds itself */
+.wk-row:is(.wk-off) .wk-lead .nx-st *,
+.wk-row:is(.wk-hid) .wk-lead .nx-st *,
 body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) .wk-row.wk-moving .wk-lead :is(svg.nx),
 body:is(.pm-resizing, .pm-ab-dragging, .pmw-dragging, .pmu-pointer-op, .pm7u-pointer-op) .wk-row.wk-moving .wk-lead :where(.nx-p):not(.t7:not(*)):not(t7:not(*)) { animation-play-state: paused !important; }
 
@@ -170956,10 +170958,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const MOVING = { working: 1, reviewing: 1, recovering: 1 };
   const moving = (it) => !!it && !it.stopping && !!MOVING[it.state];
   let moveIo = null;
+  /* a hidden tab holds them too, as the loader holds Pip (QA round 2 review, Astra: hidden, the marks went on advancing):
+     paused where they are and resumed from there, so a mark goes on from its own pose, in step with the others it
+     paused with, with no jump */
+  const hiddenNow = () => doc.visibilityState === 'hidden';
+  doc.addEventListener('visibilitychange', () => {
+    const h = hiddenNow();
+    doc.querySelectorAll('.wk-row.wk-moving').forEach((r) => r.classList.toggle('wk-hid', h));
+  });
   function watchMoving(root) {
     if (!root) return;
     const rows = root.querySelectorAll('.wk-row.wk-moving');
     if (!rows.length) return;
+    if (hiddenNow()) rows.forEach((r) => r.classList.add('wk-hid'));
     if (typeof IntersectionObserver !== 'function') { rows.forEach((r) => r.classList.remove('wk-off')); return; }
     if (!moveIo) moveIo = new IntersectionObserver((es) => es.forEach((e) => {
       const r = e.target;
