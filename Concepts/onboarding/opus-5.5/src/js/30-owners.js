@@ -181,26 +181,43 @@
         const draft = S.sess.drafts.main, projectId = S.sess.commit && S.sess.commit.fixtureProjectId, f = S.env.failures || {};
         /* the situations' one-shot failures (a taken name, a dropped connection) happen here as an owner would report them */
         const failure = f.online_copy || null; if (failure) f.online_copy = null;
+        /* (githubHalfMade: the copy is made on GitHub, then this computer's part stops after preparing the folder) */
+        const partial = !failure && !!f.online_partial; if (partial) f.online_partial = false;
         Object.assign(res, { remote_effect: failure ? 'failed_before_effect' : 'verified_created', recovery_id: ref + ':recovery',
           reviewed_setup_binding: { project_draft_ref: draft.project_draft_ref, project_draft_revision: draft.project_draft_revision },
           terminal_result_ref: ref + ':terminal', terminal_result_sha256: hex64(ref + ':terminal:' + !!failure),
           composition_revision: 1, composition_sha256: hex64(ref + ':composition'), settled_effects: {} });
         if (failure) res.failure_reason = failure;
         else {
-          Object.assign(res, { accepted: true, listed_project_id: projectId, forge_create_result_ref: ref + ':forge-result', forge_create_receipt_ref: ref + ':forge-receipt',
+          Object.assign(res, { forge_create_result_ref: ref + ':forge-result', forge_create_receipt_ref: ref + ':forge-receipt',
             repository_binding: { provider: 'github', normalized_host: 'github.com', account_id: 'concept:account', provider_repository_id: ref + ':repository' } });
-          ['remote_repository_create', 'source_preparation', 'clone_connect', 'history_init', 'settings_rebind_apply', 'registry_publication'].forEach((e) => {
+          if (!partial) Object.assign(res, { accepted: true, listed_project_id: projectId });
+          else res.route_availability = { continue_setup: { available: true, reason: 'concept_host', resume_eligible: true, eligible_reason: 'owner_join_holds' },
+            open_repository: { available: false, reason: 'open_unavailable' }, delete_repository: { available: true, reason: 'concept_host' } };
+          (partial ? ['remote_repository_create', 'source_preparation'] : ['remote_repository_create', 'source_preparation', 'clone_connect', 'history_init', 'settings_rebind_apply', 'registry_publication']).forEach((e) => {
             res.settled_effects[e] = e === 'remote_repository_create' ? { result_ref: res.forge_create_result_ref, receipt_ref: res.forge_create_receipt_ref } : { result_ref: ref + ':' + e + ':result', receipt_ref: ref + ':' + e + ':receipt' };
           });
         }
+      } else if (req.operation === 'cmd.project.resume_creation') {
+        /* Continue Setup after a half-made copy: this attempt's own claim, and the steps still left, each settled once */
+        const cm = S && S.sess.commit, r = cm && cm.recovery, att = cm && cm.resumeAttempt;
+        if (!r || !att || r.remote_effect_state !== 'verified_created' || cm.deleteReceipt) return null;
+        res.attempt = { command_instance_id: att.instance, idempotency_key: att.key, sequence: att.sequence, claim_generation: 1, claimed_at_utc: new Date().toISOString() };
+        Object.assign(res, { recovery_ref: r.recovery_id, recovery_composition_revision: r.composition_revision, recovery_composition_sha256: r.composition_sha256,
+          settled_now: {}, remaining_effects: [], listed_project_id: cm.fixtureProjectId });
+        r.remaining_effects.forEach((e) => { res.settled_now[e] = { result_ref: ref + ':' + e + ':result', receipt_ref: ref + ':' + e + ':receipt' }; });
+      } else if (req.operation === 'cmd.forge.repository.delete') {
+        /* Delete Repository: GitHub deletes exactly the copy it made, and nothing on this computer */
+        const r = S && S.sess.commit && S.sess.commit.recovery;
+        if (!r || !r.repository_binding) return null;
+        Object.assign(res, { target_binding: Object.assign({}, r.repository_binding), verified_create_result_ref: r.forge_create_result_ref,
+          verified_create_receipt_ref: r.forge_create_receipt_ref, delete_result_ref: ref + ':delete-result', delete_receipt_ref: ref + ':delete-receipt' });
       } else if (req.operation.startsWith('cmd.backup.recovery_key.')) {
         const now = Date.now();
         res.stepup = { outcome: 'verified', request_id: req.id, nonce: req.nonce, client: req.client, server: req.server, project: req.project, recovery_set_id: req.recovery_set_id,
           recovery_generation: req.recovery_generation, audience: 'initiating_human_client', one_time: true, evidence_ref: ref + ':stepup', issued_at: now, expires_at: now + 60000 };
         Object.assign(res.postcondition, req.operation.endsWith('.export') ? { delivery: 'verified', savedAck: true } : { unlock: 'verified', scratch: 'verified' });
       } else if (req.operation === 'cmd.backup.policy.update') res.postcondition.policy = 'on';
-      /* (a recovery after a partial creation, which the concept never produces: resume, delete) */
-      else if (req.operation === 'cmd.project.resume_creation' || req.operation === 'cmd.forge.repository.delete') return null;
       /* every other request (a Server's claim and setup) takes the generic owner result */
       return res;
     }

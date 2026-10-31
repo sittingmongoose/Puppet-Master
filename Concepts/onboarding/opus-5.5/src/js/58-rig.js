@@ -595,8 +595,9 @@
     placeTip(H, ang, dt) {
       const el = this.tipBox;
       if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
-      // it holds still while the pointer is on it, so its close button is easy to hit
-      if (el.matches(':hover')) return;
+      // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
+      // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
+      if (this.tipXY && el.matches(':hover')) return;
       const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       // under Pip, kept to the left of the stage where the props do not hang, above a tube's command line, and
       // always whole on the stage. A long note on a small stage: the hand lifts Pip to make room for it
