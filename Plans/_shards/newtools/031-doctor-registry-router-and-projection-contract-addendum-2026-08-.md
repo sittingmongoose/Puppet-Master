@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L8719-L8864
+Source lines: L8724-L8871
 
-Source SHA256: `1b0bdcb55e15169ccc9818d10fdfa505b8801844413f8974f20d3b041f1ef208`
+Source SHA256: `2d8d35c569a7e8c83623a981274b5a4ae8a47984adc41958fa9c13bdf9326d9b`
 
 ---
 
@@ -39,6 +39,8 @@ Details, Logs, and Receipt hydrate lazily, remain byte/row bounded, and are reda
 Doctor may open, refresh, run a bounded check, reveal bounded evidence, or navigate to an owner. It never installs, signs in, repairs, moves, updates, restores, changes a route, runs Source Control mutations, alters storage, or authorizes governance. Every issue has one canonical `remediation_action_id`, owner command or typed route, exact return/focus/currentness context, permission/confirmation behavior, disabled reasons, and recovery evidence. A successful route is not successful remediation; Doctor updates only after a fresh owner result.
 
 The exact owner-local UI action IDs are `ui.doctor.open`, `ui.doctor.refresh_visible`, `ui.doctor.run_check`, `ui.doctor.open_details`, `ui.doctor.open_logs`, `ui.doctor.open_receipt`, and `ui.doctor.open_remediation`. They are typed UI actions, not central command registrations. `ui.doctor.open_remediation` carries `check_id`, finding revision, owner route/action ID, exact target identity, return route, expected owner generation, and idempotency key. Central command/wiring owners must either map the typed action to one canonical command or record it as route-only; Doctor cannot mint a peer command.
+
+Amended 2026-10-31 (DL-270): storage findings (budget pressure, fragmentation, reclaimable bytes) appear as read-only findings and route to the reclaim action (`cmd.storage.compaction.request`) on the page that `cmd.settings.open_storage_retention` opens (F3-457). Doctor itself never compacts or reclaims.
 
 ### Settings GUI projection, motion, and accessibility
 

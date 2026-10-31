@@ -1866,6 +1866,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # row above had already been netted against the retired theme-preview
     # producer). No Touch row/profile, alias, exclusion, native handler or proof
     # is added.
+    # 2026-10-31 storage review (DL-270; WM-098, UIW-046, UCC-212, CS-107): +1
+    # production-intent entry, assistant.chat.history.load_older for the newly
+    # registered cmd.chat.load_older (1258 -> 1259). Reclaim space reuses
+    # cmd.storage.compaction.request and the inspector reuses cmd.storage.open_value.
+    # No Touch row, profile, alias, exclusion, native handler or proof is added.
+    # PM7 adds eleven production entries over main's 1259: the merged denominator
+    # is 1270; PM7's existing 715 Touch rows and 140 profiles remain unchanged.
     exact_resolved_denominators = {
         "row_count": 715,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1873,7 +1880,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 140,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1269,
+        "production_wiring_entry_count": 1270,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

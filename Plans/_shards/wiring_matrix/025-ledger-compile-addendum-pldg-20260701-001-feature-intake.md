@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4138
+Source lines: L3496-L4154
 
-Source SHA256: `ca006564234b7c0dea8ee96561e44f5437daf08bb666f3e0dcda30ad7aa8b367`
+Source SHA256: `a8d6df41d489b3bce1e2d759a43766013436ff30bb387cc304ff8e58d668edb7`
 
 ---
 
@@ -189,7 +189,13 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   web-address/Remote Link field or typed-address alternative gets its own actionable reason before a hidden Server-list
   prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip use the same cause and
   common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness gates
-  remain unchanged; no new action or dispatch is added.'
+  remain unchanged; no new action or dispatch is added. DL-271, 2026-10-31: the existing onboarding/authentication routes
+  distinguish OpenCode server passwords from provider API keys and retain execution-host credential custody (PO-009).
+  Protect’s required fields remain Backup-owner data; its speech is count-neutral and Unlock asks for the recovery phrase
+  without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before prior authorization/unlock and
+  before advance/install. Initial live-invitation waiting says No requests yet with Check again, while answered runs
+  keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary command, handler, request
+  field or trust/permission bypass.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -401,6 +407,12 @@ acceptance_criteria:
   a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip
   use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness
   gates remain unchanged; no new action or dispatch is added.'
+- 'DL-271, 2026-10-31: the existing onboarding/authentication routes distinguish OpenCode server passwords from provider
+  API keys and retain execution-host credential custody (PO-009). Protect’s required fields remain Backup-owner data;
+  its speech is count-neutral and Unlock asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility
+  refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
+  says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
+  and owner routes; no new primary command, handler, request field or trust/permission bypass.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -452,6 +464,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

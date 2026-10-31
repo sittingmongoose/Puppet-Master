@@ -1479,5 +1479,118 @@
       "selected": true,
       "expected_key": ""
     }
+  ],
+  "weak_SSH_key_cases": [
+    {
+      "name": "DSA_not_authorized",
+      "type": "dsa",
+      "authorized": false,
+      "expected": "old"
+    },
+    {
+      "name": "DSA_already_authorized",
+      "type": "dsa",
+      "authorized": true,
+      "expected": "old"
+    },
+    {
+      "name": "RSA1024_not_authorized",
+      "type": "rsa-1024",
+      "authorized": false,
+      "expected": "old"
+    },
+    {
+      "name": "RSA1024_already_authorized",
+      "type": "rsa-1024",
+      "authorized": true,
+      "expected": "old"
+    },
+    {
+      "name": "DSA_locked_and_authorized",
+      "type": "dsa",
+      "authorized": true,
+      "passphrase": true,
+      "expected": "old"
+    },
+    {
+      "name": "RSA1024_unlocked",
+      "type": "rsa-1024",
+      "authorized": false,
+      "passphrase": true,
+      "unlocked": true,
+      "expected": "old"
+    },
+    {
+      "name": "eligible_existing_authorization",
+      "type": "ed25519",
+      "authorized": true,
+      "expected": "works"
+    },
+    {
+      "name": "eligible_not_added",
+      "type": "ed25519",
+      "authorized": false,
+      "expected": "notAdded"
+    },
+    {
+      "name": "eligible_locked",
+      "type": "ed25519",
+      "authorized": false,
+      "passphrase": true,
+      "expected": "locked"
+    },
+    {
+      "name": "eligible_unlocked_not_added",
+      "type": "ed25519",
+      "authorized": false,
+      "passphrase": true,
+      "unlocked": true,
+      "expected": "notAdded"
+    }
+  ],
+  "initial_pairing_wait_cases": [
+    {
+      "name": "initial_no_request",
+      "invite_live": true,
+      "shown_waiting": false,
+      "answered": false,
+      "expected": "initial"
+    },
+    {
+      "name": "owner_still_waiting",
+      "invite_live": true,
+      "shown_waiting": false,
+      "answered": false,
+      "owner_pending": true,
+      "expected": "initial"
+    },
+    {
+      "name": "real_request_visible",
+      "invite_live": true,
+      "shown_waiting": true,
+      "answered": false,
+      "expected": "none"
+    },
+    {
+      "name": "approved_run_stays_answered",
+      "invite_live": true,
+      "shown_waiting": false,
+      "answered": "approved",
+      "expected": "answered"
+    },
+    {
+      "name": "rejected_run_stays_answered",
+      "invite_live": true,
+      "shown_waiting": false,
+      "answered": "denied",
+      "expected": "answered"
+    },
+    {
+      "name": "expired_invitation_not_initial_wait",
+      "invite_live": false,
+      "shown_waiting": false,
+      "answered": false,
+      "expected": "none"
+    }
   ]
 }

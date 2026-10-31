@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22252-L22434
+Source lines: L22256-L22438
 
-Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0`
+Source SHA256: `e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0
 
 CV-339 defines the shared first-receipt shapes, byte semantics and caller interfaces. SP-286 owns physical custody, durability, exclusion, restore, migration and withdrawal. The successful `AppendReceipt` remains exactly the existing eleven fields: `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, `acknowledged_at_utc`. `durability_class = ordinary | barrier`; `durability_state = synced`. The existing four-field `original_append_result` remains `event_id`, `sequence_id`, `segment_ref`, `byte_offset`. Neither gains a pending state, origin flag, replacement ID or new field.
 
-Both source durability barriers remain required. SP-286 then requires durable canonical all-member first-receipt issuance before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the selected successful first issuance time, not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
+Amended 2026-10-31 (DL-270): one data sync of the group's segment bytes is required for an ordinary group, and a full flush for a barrier-class event (SP-336). The manifest is not a per-group barrier. For an ordinary group, issuance is the durable commit frame, which carries every member's receipt fields and the seal-time `acknowledged_at_utc`, and the canonical custody rows follow without their own sync and are rebuilt from that frame after a crash (SP-336); a barrier-class group commits its custody durably before any successful acknowledgement or receipt-dependent terminal publication. A failed/unknown barrier or uncommitted custody returns no success. `acknowledged_at_utc` records the issuance time selected when the group is sealed and carried in its commit frame (SP-336), not delivery, EventRecord seal time or a reconstructed historical time. Exact retained replay returns that original time and all original receipt coordinates, even when current physical source coordinates differ.
 
 ### Exact closed schema routes
 
@@ -112,7 +112,7 @@ The four existing operation roles now have explicit `2.0.0` bindings; the additi
 
 | Binding | Inputs and successful result | Required refusal boundary |
 |---|---|---|
-| `storage.first_append_receipt.issue.v2` | The existing writer's authenticated selected source/manifest, complete protected group, normal append-class/identity admission, both actual durability barriers and held canonical store/gate. Storage derives and durably commits the complete group once; only then may the unchanged receipts be exposed. | Caller row, mapping, acknowledgement timestamp or index assertion cannot supply authority. Changed gate/source/dedupe/segment/restore controls, prior issuance loss or partial custody fences; no partial successful group. |
+| `storage.first_append_receipt.issue.v2` | The existing writer's authenticated selected source/manifest, complete protected group, normal append-class/identity admission, the group's actual durability sync (one data sync for an ordinary group, full flush for a barrier-class event, SP-336) and held canonical store/gate. Storage derives and durably commits the complete group once; only then may the unchanged receipts be exposed. | Caller row, mapping, acknowledgement timestamp or index assertion cannot supply authority. Changed gate/source/dedupe/segment/restore controls, prior issuance loss or partial custody fences; no partial successful group. |
 | `storage.first_append_receipt.resolve.v2` | An incoming EventRecord identity/semantic request under its existing replay policy; Storage resolves retained original global/scoped identity and actual canonical custody, then returns the exact original eleven-field receipt. | The request cannot override source, group, locator, custody row or retained mapping. Missing/conflicting custody/identity returns unavailable/fenced behavior under existing caller failure contracts, without append or domain effects. |
 | `storage.first_append_receipt.group_gate.v2` | Existing writer/recovery/maintenance operation against actual current Storage/generation/lease; complete immutable current-group custody is authenticated before advance, replacement or retirement is released. | A phase marker or stale dedupe state is insufficient. Every operation that could lose/replace an unissued group remains excluded, including a recovery event append. |
 | `storage.first_append_receipt.backup_gate.v2` | Existing coherent backup/restore operation and actual selected canonical boundary; settle current issuance, capture/verify all required receipt authority with source/manifest/store identity, and restore covered exact receipts through existing coordinator. | Pending authority backup, partial/missing required custody, epoch skew, changed confirmed selection or unsupported state cannot produce successful authority restoration or a replacement first receipt. |
@@ -122,7 +122,7 @@ NEW explicit compatibility entrypoints, installed with the actual SP-286 v2 owne
 
 These are semantic caller contracts around existing Storage owners, not a new generic dispatch/authentication service or a prescribed fixture API. No new result/error vocabulary is introduced. Callers use their existing refusal/recovery contracts when original receipt authority is unavailable and must not treat absence as success.
 
-First issuance validates full original frame/source/group, current dedupe checkpoint and actual global/scoped identity values, Storage instance and both barriers under the held gate. Replay instead validates retained global/scoped schemas, exact key/raw/original-result identities, custody scope/type/idempotency/semantic digest and original receipt/result. A matching scoped alternate incoming event ID resolves the retained original event ID. Replay never reassigns first time, group/generation, original segment ref or coordinates, and does not require retired frames, historical redb snapshots or old owner requests. It provides append evidence only; current event availability and downstream mutation permission remain independent.
+First issuance validates full original frame/source/group, current dedupe checkpoint and actual global/scoped identity values, Storage instance and the group's durability sync (a full flush for barrier-class events, SP-336) under the held gate. Replay instead validates retained global/scoped schemas, exact key/raw/original-result identities, custody scope/type/idempotency/semantic digest and original receipt/result. A matching scoped alternate incoming event ID resolves the retained original event ID. Replay never reassigns first time, group/generation, original segment ref or coordinates, and does not require retired frames, historical redb snapshots or old owner requests. It provides append evidence only; current event availability and downstream mutation permission remain independent.
 
 ### Restore caller protocol and crash handoff
 
@@ -143,7 +143,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Preserve the exact existing eleven-field AppendReceipt and four-field original append result.
-  SP-286 durable first-receipt custody follows both source barriers and precedes exposure.
+  SP-286 durable first-receipt custody follows the group's durability sync (full flush for barrier-class events, SP-336) and precedes exposure.
   The First append receipt shared contract defines exact closed current v2 protected-group,
   compact restore-admission and issued-only custody shapes, strict ordered MessagePack digest
   bytes, versioned Storage caller interfaces, immutable retained replay and the distinct

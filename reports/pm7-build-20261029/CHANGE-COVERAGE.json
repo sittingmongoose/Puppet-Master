@@ -1639,6 +1639,72 @@
       "dry": "DR-020 (one validation/reason projection, shared with Pip)",
       "companions": "ConnectRouteReasonPolicy; 4 schema cases; 12 actual missing/reason/Continue/Pip source vectors; final 03a02a178b merged at 619cd29955",
       "state": "covered_by_current_contract_final_source_merged"
+    },
+    {
+      "id": "FO-11",
+      "change": "OpenCode server Password asks for its own HTTP Basic password and execution-host keychain custody, distinct from provider API keys",
+      "owner": "PO-009; PWIZ-021; F3-520; MA-040; DL-271",
+      "wiring": "UIW-015; WM-041 (existing protected provider/server-auth return)",
+      "commands": "CS-069; UCC-106 (existing local/auth routes; hint does not add a command)",
+      "settings": "none needed: credential-realm guidance uses existing auth/profile owner",
+      "dry": "DR-020 (credential realm and custody from one owner)",
+      "companions": "OnboardingCredentialFeedbackPolicy.OpenCode_server_password; 2 actual protected-field/host-custody source cases",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FO-12",
+      "change": "Protect access guidance does not state a field count; actual requirements follow Backup family/auth mode",
+      "owner": "PWIZ-025; F3-520; F3-663; BRS-013; BRS-018; DL-271",
+      "wiring": "UIW-015; WM-041 (existing Backup access owner/availability)",
+      "commands": "CS-069; UCC-106 (same local action and Backup handoff; copy only)",
+      "settings": "none needed: provider-specific required fields are owner data, not preferences",
+      "dry": "DR-020 (one Backup requirement source; no speech-side field count)",
+      "companions": "OnboardingCredentialFeedbackPolicy.Protect_access; count-neutral source-copy check",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "UNLOCK-PHRASE",
+      "change": "Unlock asks for your recovery phrase without a six-word or other fixed word-count contract",
+      "owner": "PWIZ-025; F3-520; F3-663; BRS-018; DL-271",
+      "wiring": "UIW-015; WM-041 (existing protected Backup unlock return)",
+      "commands": "CS-069; UCC-106 (existing recovery owner; no new format/crypto action)",
+      "settings": "none needed: protected recovery input is not a preference",
+      "dry": "DR-020 (existing Backup format and verified unlock owner)",
+      "companions": "OnboardingCredentialFeedbackPolicy.Unlock; actual recovery-phrase source-copy check",
+      "state": "covered_by_current_contract"
+    },
+    {
+      "id": "WEAK-SSH-KEY",
+      "change": "DSA/RSA-1024 entries are Too weak to use; prior authorization/unlock and retained selection cannot bypass refusal or advance/install",
+      "owner": "SSYS-042; PWIZ-025; F3-520; DL-271",
+      "wiring": "UIW-015; WM-041 (shared key eligibility before default/advance/install)",
+      "commands": "CS-069; UCC-106 (existing selected-source auth/local action; no new primary)",
+      "settings": "code.execution.ssh-keys (existing global row; description amended)",
+      "dry": "DR-020 (one eligibility result before authorization and every consumer)",
+      "companions": "OnboardingCredentialFeedbackPolicy.weak_SSH_key; 10 eligibility + 10 picker + 6 retained-selection + 6 install-entry + 2 eligible-guard source vectors; historical before failures retained",
+      "state": "covered_by_current_contract_final_source_merged"
+    },
+    {
+      "id": "INITIAL-REQUEST-WAIT",
+      "change": "Current live invitation with no request shows No requests yet plus Check again, distinct from answered FO-7 runs",
+      "owner": "SRV-004; PWIZ-025; F3-520; DL-271",
+      "wiring": "UIW-015; WM-041 (existing current-run observation; no new trust writer)",
+      "commands": "CS-069; UCC-106 (existing check/refresh local behavior; no approve or new command)",
+      "settings": "none needed: owner request state and neutral copy are not preferences",
+      "dry": "DR-020 (one pairing owner run, initial versus terminal feedback)",
+      "companions": "OnboardingCredentialFeedbackPolicy.initial_pairing_wait; 6 actual waiting/answered source vectors; no host delay fixture",
+      "state": "existing_waiting_contract_wording_confirmed"
+    },
+    {
+      "id": "FO-14",
+      "change": "Long tokens in question notes wrap within width without horizontal reading; vertical scroll and exact copied tokens remain",
+      "owner": "F3-663; DL-271 (bounds existed; explicit long-token wrap rule added)",
+      "wiring": "none needed: existing shared option-note renderer and control route",
+      "commands": "none needed: layout of existing help content only",
+      "settings": "general.interaction.mode (existing; both tip versions fit)",
+      "dry": "DR-080 (one option-note owner, no per-family renderer fork)",
+      "companions": "OnboardingCredentialFeedbackPolicy.question_note_layout; owner source e69d9377ed read; no CSS-specific or browser proof claimed",
+      "state": "covered_by_current_contract"
     }
   ],
   "sources": [
@@ -1861,7 +1927,7 @@
     "FS_FO_numbered_findings_posted": false
   },
   "final_review_delta": {
-    "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
+    "merged_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
     "decision_ref": "DL-259",
     "new_rows": [
       "FO-4",
@@ -1875,10 +1941,16 @@
       "FS-2-CHAPTER",
       "FS-2-COMPACT",
       "FX-1-PDF",
-      "FO-10"
+      "FO-10",
+      "FO-11",
+      "FO-12",
+      "UNLOCK-PHRASE",
+      "WEAK-SSH-KEY",
+      "INITIAL-REQUEST-WAIT",
+      "FO-14"
     ],
-    "rows": 149,
-    "required_cells": 745,
+    "rows": 155,
+    "required_cells": 775,
     "pending_final_sources": {},
     "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
     "demo_mechanics_added": false,
@@ -1931,7 +2003,74 @@
         "merged_GUI_head": "619cd29955942cb418f6a42deffd02b0587e5b4a",
         "source": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
         "state": "current-route reason rule and 12 isolated source vectors; no native/browser acceptance or grammar admission"
+      },
+      "WEAK-SSH-KEY": {
+        "head": "d1abe18d58b0a8e8b8fdec7cd9f4525101f48895",
+        "merged_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+        "source": "Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js",
+        "state": "weak-first eligibility, picker/default/refusal, displayed eligible replacement before advance, install entry fences; isolated source only"
       }
+    }
+  },
+  "DL271_batch": {
+    "decision_ref": "DL-271",
+    "initial_GUI_head": "2819a3def08f1e2c359b8d191cb71be4012f43c1",
+    "product_rows": [
+      "FO-11",
+      "FO-12",
+      "UNLOCK-PHRASE",
+      "WEAK-SSH-KEY",
+      "INITIAL-REQUEST-WAIT",
+      "FO-14"
+    ],
+    "main_read_only_ref": "808de86f4d607dd5386b6f26cd6d1703ba7248ad",
+    "main_merged": true,
+    "new_SP_ACD_UF_RAS_BRS_units": 0,
+    "excluded": [
+      "FO-13 translation lookup/build-key census implementation",
+      "Studio oldKey/guestLater situations and seeded data",
+      "concept-host/no-owner-host states and artificial guest-answer delays"
+    ],
+    "FO14_owner_gap": "existing note bounds/internal scrolling did not explicitly require long-token wrapping; minimal F3-663 rule added",
+    "source_reports": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
+        "sha256": "8153d57d68b160d42d364a50966ca4b7219c08ded298a72c582a10112a694952"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md",
+        "sha256": "6386c8bc3796e85a5b8175fb164eea074a336dfd2115cff5db6838830a772a2b"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+        "sha256": "b1cbb352a499294ba4931df9f941a36c14ce69c6820d6131f0dda7844af82012"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/final-onb/REPORT.md",
+        "sha256": "2dc0d290daeb518c5b8f74d96a9c293357f1bff9d308d47845ca44b9ae838c1d"
+      }
+    ],
+    "main_merged_ref": "683e603ac13b150dfc5f7a7e957355c666731fe6",
+    "reserved_not_allocated_by_feedback_batch": [
+      "DL-270",
+      "SP-335_and_up"
+    ],
+    "storage_integration": {
+      "decision_ref": "DL-270",
+      "settings_active": 1010,
+      "settings_raw_union": 1011,
+      "retired_excluded": "general.visual.nier-mode",
+      "touch_rows": 715,
+      "touch_profiles": 140,
+      "production_wiring_entries": 1270,
+      "main_only_production_row": "assistant.chat.history.load_older",
+      "glass_resolution_sha256": "023ac451ee3adf6e8b54831f624d5b927cdaeaab099669fe271af16d67f40132",
+      "baseline_and_migration_refreshed": false
+    },
+    "final_GUI_head": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+    "weak_final_source_report": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
+      "sha256": "f866c649afbf3c680bc2fd5a0cb2ed262217bfb19007622f258dda76b52a6bad"
     }
   }
 }

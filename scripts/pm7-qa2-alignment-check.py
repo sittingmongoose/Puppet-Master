@@ -53,7 +53,7 @@ def check():
             "QA2 family-source anchors differ")
     require(len(read("settings_inventory.json")["settings"]) == 1010, "QA2 invented a setting")
     require(len(read("glyph_catalog.json")["status_marks"]) == 22, "QA2 invented a status key")
-    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1269, "QA2 invented a production row")
+    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1270, "QA2/DL-270 production wiring union differs")
     actor = read("glyph_catalog.json")["qa2_actor_presentation"]
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",

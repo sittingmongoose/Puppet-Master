@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3614-L22455
+Source lines: L3617-L22472
 
-Source SHA256: `f844135b97b3285cd88b3f0e377906be3dc72329a13056057c7b0e966720a041`
+Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
 
 ---
 
@@ -1197,7 +1197,9 @@ plan_unit_id: ACD-024
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+canonical_text: >-
+  Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+  Amended 2026-10-31 (DL-270): an attachment record carries at most 16 KiB inline; bodies and images above that are BLAKE3 payload references (digest, byte size, media type) into the payload store, base64 is decoded to binary at ingest, and inline base64 is an admission error (SP-337).
 gui_related: false
 gui_classification_reason: Attachment payload persistence and field shape are storage/schema behavior, not GUI implementation.
 depends_on: [ACD-023]
@@ -3569,7 +3571,7 @@ acceptance_criteria:
   - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
   - Suspended and archived states prune only the allowed transient state.
   - Deletion immediately removes the thread from normal user-visible chat surfaces and active context/export projections.
-  - Unheld canonical message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours.
+  - Unheld canonical message, attachment, search, and derived content (including the render-page store) is purged within 24 hours; payload-store references are released within that bound and the bytes are reclaimed by reference-counted garbage collection that honours holds and backups (SP-337). No mirror exists (SP-339).
   - The content-free tombstone remains indefinitely, backups retain deleted bytes for no more than 30 days unless held, and restore replays tombstones before visibility.
   - Legal, preserve, restore-point source-lineage, descendant, and in-flight application holds delay byte purge without restoring the source thread.
 validation_surfaces:
@@ -4491,6 +4493,8 @@ canonical_text: >-
   source-class inspectable, and truncation, redaction, and
   context-serialization state remain visible so omitted context is never
   presented as serialized.
+  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
+  raw usage.event reads are limited to the per-turn Context Detail drill-down.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
@@ -10725,7 +10729,9 @@ plan_unit_id: ACD-224
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Long-thread lag and flicker risk is mitigated by section 24 virtualization, stable IDs, incremental updates, and no full rebuild on stream.
+canonical_text: >-
+  Long-thread lag and flicker risk is mitigated by section 24 virtualization, stable IDs, incremental updates, and no full rebuild on stream.
+  Amended 2026-10-31 (DL-270): the mitigation also includes mandatory load-older paging over SP-338's render-page store; a chat opens from thread_head and the newest page without replaying events, and a CI gate holds the first page at 150 ms at p95, warm or cold (ACD-242).
 gui_related: true
 gui_classification_reason: Long-thread lag, flicker, virtualization, and streaming updates are visible chat UI performance behavior.
 depends_on: []
@@ -11444,20 +11450,26 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-### ACD-242 - Load Older Optional
+### ACD-242 - Load Older Paging
 
 ```yaml
 plan_unit_id: ACD-242
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+canonical_text: >-
+  Load-older pagination bounds extreme thread display while preserving full history in storage.
+  Amended 2026-10-31 (DL-270): load-older paging is mandatory, not optional: the chat opens from SP-338's
+  thread_head, hot tail and newest page and fetches older 50-item pages on demand, and a CI gate holds a
+  100k-event thread's first page within 150 ms at p95, warm or cold.
+  Scrolling near the top loads the next older page by itself, and a Load 50 older row stays as the fallback;
+  both fetch pages through cmd.chat.load_older (DL-270).
 gui_related: true
 gui_classification_reason: Load older pagination is visible long-thread UI behavior.
 depends_on: [ACD-236]
 unblocks: [ACD-250]
 acceptance_criteria:
-  - Load older pagination is available as an optional enhancement if virtualization alone is insufficient.
+  - Load-older paging is mandatory for every thread; the chat opens from thread_head, hot tail and newest page and loads older 50-item pages on demand (SP-338). Opening a thread never replays its events.
   - Full history remains in storage.
   - UI can fetch older slices on demand.
 validation_surfaces:
@@ -11470,13 +11482,13 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
 node_compile_hint:
-  mode: load_older_optional
+  mode: load_older_mandatory
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
 preserved_exact_tokens:
   - "Load 50 older"
-  - "optional"
+  - "mandatory"
   - "Full history remains in storage"
 negative_constraints: []
 owner_hints:
@@ -11776,7 +11788,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Streaming tail remains visible only when the user is already at bottom;
   persistence has no hard limit while display relies on virtualization and
-  optional load-older for 10k+ message threads.
+  mandatory load-older paging of 50-item render pages for all threads (SP-338, ACD-242).
 gui_related: true
 gui_classification_reason: Streaming tail behavior and long-thread display limits are visible chat UI behavior.
 depends_on: [ACD-242]
@@ -11785,7 +11797,7 @@ acceptance_criteria:
   - Streaming auto-scrolls only when already at bottom.
   - User scroll-up during stream is respected.
   - Persistence has no hard thread length limit.
-  - Display uses virtualization and optional load-older for very long threads.
+  - Display uses virtualization and mandatory load-older paging for all threads, loading older 50-item pages on demand from the render-page store.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15128,7 +15140,7 @@ gui_classification_reason: Thread worktree binding storage is persistence/data-c
 depends_on: [ACD-318]
 unblocks: [ACD-327, ACD-328, ACD-329, ACD-335]
 acceptance_criteria:
-  - Thread worktree binding uses the specified redb key family and JSON fields.
+  - Thread worktree binding uses the specified redb key family with typed fields or MessagePack values, not JSON text (SP-339). The thread_state and worktree_binding_reverse families live in the canonical redb file with a maximum value size of 16 KiB each and a declared disk budget (SP-340).
   - UI display uses `branch_name`; `temp_branch_name` is internal bookkeeping.
   - Worktree filesystem paths use `.puppet-master/worktrees/thread-{short_id}` with suffixes when needed.
 validation_surfaces:
@@ -18634,7 +18646,9 @@ plan_unit_id: ACD-408
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
+canonical_text: >-
+  Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
+  Amended 2026-10-31 (DL-270): the backing is one canonical redb family with typed fields or MessagePack values, not a JSONL file or JSONL mirror (SP-339). The family declares a maximum value size of at most 16 KiB; larger bodies are payload-store references (SP-337, SP-340). The preserved token /JSONL/redb-backed records the original question only.
 gui_related: false
 gui_classification_reason: Worker handoff/retry memory records are runtime/storage behavior.
 depends_on: []

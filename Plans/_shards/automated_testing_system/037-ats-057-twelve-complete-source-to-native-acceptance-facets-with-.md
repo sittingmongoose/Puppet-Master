@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5138-L5265
+Source lines: L5153-L5282
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -111,7 +111,9 @@ acceptance_criteria:
   mandatory original custody; restore optional derived root/generation/dataset coherently after holds/deletion/permissions
   and current-source checks. Negative: Reject certified-indefinite copy of expired Start, full-body archive, rebuilt
   authority, partial backup generation, deleted source resurrection or holds bypass. Evidence: Exact unchanged 27
-  policy values/285 rows and whole backup/source witnesses; real restore native execution NOT_RUN.'
+  policy values/285 rows and whole backup/source witnesses; real restore native execution NOT_RUN. Amended 2026-10-31 (DL-270): backups carry canonical families, sealed
+  segments and payload packs only; derived roots, generations and datasets are rebuilt after restore and are not
+  restore-verified artifacts (BRS-031).'
 validation_surfaces:
 - Plans/goal_certified_event_coordinator_contracts/protocol.md
 - Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json

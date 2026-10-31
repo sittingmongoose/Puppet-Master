@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2373-L2534
+Source lines: L2377-L2538
 
-Source SHA256: `936b85610810e410df6782fc810cf5e5e2b8e888583370c467235deed287d4ff`
+Source SHA256: `850f323361c1d32d81cd5d03659ba656c7512eb546a13b396dd0aeb68a06e546`
 
 ---
 
@@ -28,7 +28,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- A giant chat/session file is compacted or paged before app crash.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.
@@ -36,7 +36,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- A giant chat/session file is compacted or paged before app crash.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.

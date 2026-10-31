@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12409-L13106
+Source lines: L12414-L13111
 
-Source SHA256: `54280821ea1b3d8c648e6af69123fae7b415edcc5c536e7f58aac106408d4674`
+Source SHA256: `6036b30a812233edbf0bef2b245d12421f646cdbda6669ab390587c28def4e7d`
 
 ---
 
@@ -228,7 +228,7 @@ canonical_text: >-
   is treated the same. An evicted image's cells show a dashed hairline box with `[<name> <W>×<H> · not kept]`,
   where the name is the file name (kitty file transfer, iTerm2 `name=`) or `kitty image`, `sixel image` or `inline
   image`; a Unicode-placeholder run shows the label in its first cell. Saved images are stored as PNG, one record
-  per frame, written once and reused by later saves. Placeholder cells on restored lines resolve only to restored
+  per frame, written once and reused by later saves. Amended 2026-10-31 (DL-270, SP-337): each saved frame's PNG bytes are kept as is, since SP-337 stores already-compressed media unchanged, but as a payload-store entry referenced by BLAKE3 id, so identical frames are stored once and the scrollback record holds only the reference; SP-332 still owns the quota and the backup exclusion, and the storage owner must give saved-scrollback payloads a class that backups skip. Placeholder cells on restored lines resolve only to restored
   images, so a program in the new session that reuses an image id never paints into the old scrollback. Saved
   images follow the saved scrollback's own storage, retention and backup rules (SP-332): they stay on this machine
   and are excluded from backups, exports and sync; they are part of the bounded `best_effort_durable` transcript

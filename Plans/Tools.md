@@ -358,6 +358,7 @@ Recovery rules:
 - Blind reruns are prohibited. A retry requires a permitted failure class, remaining parent deadline/resource budget, a concrete changed recovery condition, and an unspent class-specific retry allowance.
 - MCP invocations use the stricter MCP-owner rule: at most one additional bounded invoke-time reconnect or noninteractive auth-refresh retry. The general tool retry allowance MUST NOT add retries above that MCP limit.
 - Complete large output is redacted before artifact spill. The model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, settlement is `fatal` or `partial_truncated`, never success.
+- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). The canonical artifact ref is a payload reference (BLAKE3 hash, pack, offset), and spilled output is stored once, reference-counted, with garbage collection honouring holds. The same applies to ToolRecoveryEnvelope and ToolManagedOutputRef (T-177).
 - Artifact/spill refs follow canonical retention, access-control, cleanup, and redaction owners; raw secrets, decrypted headers, tokens, cookies, or unredacted environment values never enter the envelope, receipt, prompt, cache, or spill.
 - Terminal recovery reports `cwd_before`/`cwd_after`, bounded pattern-based hints, and the retained full redacted output ref. It tells the caller to inspect the artifact instead of rerunning only to recover omitted bytes.
 - Patch/write reports already-applied success/no-op only when post-read proof shows new content present and old content absent. Whitespace mismatch and ambiguous locations are explicit; mutation remains atomic, FileSafe-approved, and post-write verified.
@@ -714,7 +715,8 @@ Core rules:
 - Native site-reading uses the PM Site Reader/browser-reader layer for `/token-efficient` structured reading with iframe-aware support; `/plain` fetch is a fallback/degraded read mode, not the default product path.
 - Permission requests for `websearch` and `webresearch` are wildcard-only operation approvals because the URL set is not known before discovery, while `/extract/crawl/map` and `webfetch` use host/site-scoped approvals when their target is known.
 - `webfetch` accepts `formats?: Array<"markdown" | "html" | "rawHtml" | "screenshot" | "pdf" | "summary" | "links" | "images">` with default `["markdown"]`; provider slash shorthand such as `/html/rawHtml/screenshot/pdf/summary/links/images` and legacy `/PDF/summary` wording normalize to this typed `formats` enum instead of becoming a path or mode family.
-- Format semantics stay explicit: `"screenshot"` returns a full-page or viewport screenshot as a base64 image artifact through the browser runtime, `"pdf"` renders the page to a PDF artifact through the browser runtime, and `"summary"` returns an LLM-generated page summary. Summary execution is provider-dependent: Firecrawl may satisfy it natively when selected and supported, while other providers use PM-composed summarization over the fetched/read page content.
+- Format semantics stay explicit: `"screenshot"` returns a full-page or viewport screenshot captured through the browser runtime and carried as a payload reference rather than inline base64 (see the amendment note below), `"pdf"` renders the page to a PDF artifact through the browser runtime, and `"summary"` returns an LLM-generated page summary. Summary execution is provider-dependent: Firecrawl may satisfy it natively when selected and supported, while other providers use PM-composed summarization over the fetched/read page content.
+- Amended 2026-10-31 (DL-270, SP-337, SP-343): the base64 the browser returns is decoded to binary at ingest and stored as lossless WebP in the payload store. The tool result carries a payload reference (BLAKE3 content hash, MIME type, size, dimensions). Inline base64 in a result is an admission error (SP-337).
 - `webcrawl` accepts compatibility `formats?: string[]` with default `["markdown"]`; the same options as `webfetch` apply to each crawled page and normalize into the typed `formats` enum before dispatch.
 - Permission and GUI consumers must preserve URL/domain pattern visibility for extract/crawl/map, query/task pattern visibility for search/research where supported, and provider availability in `/web` help/autocomplete and Settings rather than hiding fan-out behind generic `webfetch`.
 - `snapshot` and `screenshot` action results are included in the parent tool output, specifically the `webfetch` or `/webextract` result that owns the browser session.
@@ -822,7 +824,8 @@ This section defines the canonical contract for this surface.
 
 Core rules:
 - webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise.
-- Binary `/non-text` webfetch URL responses are detected from the HTTP `Content-Type` header. Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) return as inline attachments with MIME type preserved and size capped by `max_content_length` (5 MB by default). Unsupported or `/large` binary media such as video, audio, or executables returns metadata only (`MIME type`, `content-length`, `URL`) without downloading the body, and non-text responses do not enter HTML-to-Markdown conversion.
+- Binary `/non-text` webfetch URL responses are detected from the HTTP `Content-Type` header. Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) are stored in the payload store (SP-337) with MIME type preserved, and the result carries a content-hash reference; the ingest size is capped by `max_content_length` (5 MB by default). Unsupported or `/large` binary media such as video, audio, or executables returns metadata only (`MIME type`, `content-length`, `URL`) without downloading the body, and non-text responses do not enter HTML-to-Markdown conversion.
+- Amended 2026-10-31 (DL-270): fetched images are stored in the BLAKE3 payload store (SP-337) with MIME type preserved, and the result carries a content-hash reference. Only metadata or a small preview within the 16 KiB inline-body limit travels inline. `max_content_length` (5 MB default) caps ingest, not inline bytes. Inline base64 is an admission error.
 - webfetch defaults `cache_policy` to `{ max_age_seconds: 14400, store: true }` and uses hash-based `change_tracking` with status values `new|same|changed|removed`.
 - webfetch accepts `url: string` and returns extracted page `content: string` in the requested format, with markdown as the default content view. Output also carries `execution_path?: string`; valid paths include `pm_site_reader`, `provider_firecrawl_scrape`, and `pm_fetch_fallback`.
 
@@ -945,6 +948,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integ
 - **Index rule:** Tantivy logs index stores summaries/snippets only; full payload remains out-of-index and is fetched via logread.
 - **Secrets policy:** Log summaries/snippets and any persisted payload returned by logread MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
 - **Blob resolution:** `blob_ref` resolves to `storage/blobs/projects/{project_id}/logs/...` (see Plans/storage-plan.md).
+- Amended 2026-10-31 (DL-270): `blob_ref` is an opaque reference that resolves through the payload store (SP-337): a BLAKE3 content hash located in an append-only pack file by offset. The per-project path shape above is lineage only; identical payloads are stored once and are not one file per blob. The preserved token `storage/blobs/projects/{project_id}/logs/...` stays for traceability.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -1291,7 +1295,8 @@ Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the *
 
 - **Namespace:** `rollups`
 - **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set.
-- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ "bash": { "count": 42, "p50_ms": 120, "p95_ms": 500, "error_count": 2 }, "grep": { "count": 30, "p50_ms": 18, "p95_ms": 40, "error_count": 0, "index_used": { "true_count": 24, "false_count": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3.
+- **Value shape:** MessagePack or a typed struct, never JSON text (SP-339, SP-340): `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. The example is JSON for shape only. Example: `{ "bash": { "count": 42, "p50_ms": 120, "p95_ms": 500, "error_count": 2 }, "grep": { "count": 30, "p50_ms": 18, "p95_ms": 40, "error_count": 0, "index_used": { "true_count": 24, "false_count": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3.
+- Amended 2026-10-31 (DL-270): `tool_usage.{window}` and `tool_usage_meta.{window}` are derived families in the derived redb file, each declaring a maximum value size of at most 16 KiB (SP-340). The Usage widget reads only these rollups, never raw events (UF-108).
 - **Runtime identity alignment:** Blocked episodes and tool/runtime recovery evidence are `node-native`; tool-facing `usage/evidence/runtime` rollups MUST NOT remain `tier-native` execution authority. Consumers align those rollups to graph `/node/package/seam/lane` identity, and any `tier-aligned` or `tier-native` fields survive only as compatibility/grouping projections.
 - **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only.
 - **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a "Last updated" timestamp without opening seglog.
@@ -2280,6 +2285,7 @@ Core rules:
 - Two-phase cache-check is locked: before provider selection, PM checks `(url, formats_hash)` only as an adapter-agnostic lookup; after provider selection, PM validates `adapter_id`, discards a mismatched hit, and fetches fresh.
 - Cache routing must skip read-time cache for requests with actions, may still store the post-action result, and must preserve PM-cache precedence over Firecrawl cache with diff-reuse audit states.
 - Web content caching is per-project with a 500 MB default cache budget, per-operation TTL defaults, LRU eviction for bounded storage, stable cache key ordering, and change detection persistence for later `change_tracking` comparison.
+- Amended 2026-10-31 (DL-270): cached bodies are stored in the payload store (SP-337) and entries keep only a content reference. The 500 MB per-project budget is a per-family disk budget reported in storage health with usage and reclaimable bytes (SP-340), and SP-344 gates it. The setting is `web.fetch.cache-size`. Persistence and budgets stay owned by Plans/storage-plan.md section 8.
 - When `change_tracking: true` and a cached entry exists, even if expired, PM fetches fresh content, compares `content_hash` against the cached entry, returns `change_status: "changed"` with `diff_summary` when content differs, returns `change_status: "same"` and may extend TTL when content matches, and returns `change_status: "removed"` when the previous URL entry existed but the fresh fetch resolves to 404.
 
 Fields:
@@ -4810,8 +4816,11 @@ plan_unit_id: T-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`webfetch` detects binary non-text responses by `Content-Type`, returns supported image types as capped inline
-  attachments, returns unsupported large media as metadata only, and keeps non-text responses out of HTML-to-Markdown conversion.'
+canonical_text: '`webfetch` detects binary non-text responses by `Content-Type`, returns supported image types as payload-store references
+  (SP-337) with only metadata or a small preview inline, returns unsupported large media as metadata only, and keeps non-text
+  responses out of HTML-to-Markdown conversion. Amended 2026-10-31 (DL-270): supported image types are stored in the payload
+  store (SP-337) and returned as content-hash references; only metadata or a preview within the 16 KiB inline-body limit
+  stays inline. Same rule as the webfetch binary-response bullet in section 3.5D.'
 gui_related: true
 gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
   activity, or visible rendering behavior.
@@ -4821,6 +4830,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Supported image MIME types and source shorthands remain preserved.
+- Supported images are returned as payload-store references, not inline attachment bodies (SP-337).
 - Unsupported or large binary media returns metadata only without downloading the body.
 - Non-text responses do not enter HTML-to-Markdown conversion.
 - Markdown remains the default content view for text fetches.
@@ -10613,6 +10623,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Per-project 500 MB, TTL, LRU, stable ordering, and change detection persistence are preserved.
+- Amended 2026-10-31 (DL-270): the 500 MB per-project limit is registered as a per-family disk budget (SP-340) and cached bodies are payload-store references (SP-337); see section 14. The setting is `web.fetch.cache-size`.
 - Question/questionnaire and TODO storage carry-through are not overwritten by web cache/activity payloads.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11731,7 +11742,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -12451,7 +12462,9 @@ owner_doc: Plans/Tools.md
 canonical_text: >-
   ToolRecoveryEnvelope gives every partial, failed, truncated, or recoverable attempt typed failure, retry,
   verification, cwd, match-diagnostic, and final-outcome evidence. Complete redacted large output spills to a canonical
-  artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited.
+  artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
+  (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
+  exists for large output.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
@@ -12794,7 +12807,7 @@ Packet `PM-WNC-2026-09-05-v1`. Logical notebook semantics are owned by `Plans/Wo
 
 **`notebook_read` — exact bounded entry read.** Input: `{ notebook_id, entry_id, revision?, range?, include_provenance? }`. Returns the immutable entry revision (or the clearly qualified current object), envelope metadata (author, lifecycle, epistemic kind, freshness), provenance/validity/restriction references, and explicit truncation. Same single range convention rule and bounds as `chatread`. Read-time checks match `notebook_search` exactly.
 
-**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
+**`notebook_write` — create/update/append with CAS.** Input: `{ notebook_id?, scope (create), entry_id?, operation: create | update | append, expected_revision?, request_id, body, epistemic_kind, provenance_refs?, validity_refs? }`. Bounded input (hard 64 KiB UTF-8 body); oversize input is rejected with a split offer, never silently truncated. Amended 2026-10-31 (DL-270): the 64 KiB cap applies to the request; a stored notebook record keeps at most 16 KiB of body inline (SP-337), and larger bodies are stored as payload-store references. The host fills envelope metadata. Stale `expected_revision` yields a typed conflict naming the conflicting revision; a repeated `request_id` returns the original result without a second write. No whole-notebook wildcard write exists: each request targets exactly one entry identity.
 
 **`notebook_supersede` — lifecycle transitions.** Input: `{ notebook_id, entry_id, expected_revision, request_id, operation: supersede | archive | tombstone, supersedes_entry_revision? }`. `request_id` is the mutation idempotency identity per the Working Notebook revision contract (WN-007): retrying the same request returns the original result without a second write. Runs through owner policy (WN-014); current checkpoint dependencies hold retention and cannot be silently purged.
 

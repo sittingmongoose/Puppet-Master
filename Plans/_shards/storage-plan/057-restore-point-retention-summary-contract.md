@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20451-L21313
+Source lines: L20481-L21343
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -777,7 +777,7 @@ The index row-set digest is the new binding digest of `{domain: "pm.event_index.
 
 Legal sequence gaps are exactly `allocator_lease_abandoned | corruption_loss | retention_compaction` and require actual manifest/owner evidence. Ordering is by canonical source order, not timestamps. A complete survivor index can be fresh relative to verified survivors while `health=degraded`; loss provenance and global integrity/mutation fences remain. An unsupported otherwise-valid future source version stops indexing before that record and prevents a claim of complete current coverage; it is not skipped or quarantined as corruption. Source controls changing during the read invalidate the current token. A reader pinned to an older coherent snapshot may finish only under the existing fence/lease; it cannot claim the latest boundary or disclose after invalidation.
 
-**Publication and ordinary append.** Source frame sync and manifest-watermark sync precede indexing, through the existing append barriers. The index writer captures the verified durable source under the writer/maintenance fence. If the same selected source/recovery generation only extends the immutable anchored prefix, it verifies all newly durable frames, adds only their rows, and atomically commits the complete advancing frontier with those rows under predecessor-frontier CAS. No row-only or checkpoint-only state is publishable. A crash before that transaction leaves the old coherent snapshot; a crash after it leaves the new one. A later source append may make the checkpoint stale until catch-up; stale does not become a fabricated complete boundary. Manifest revision/digest and survivor digest may change on append without replacing the generation or rewriting old rows.
+**Publication and ordinary append.** Indexing follows the ordinary commit group's single data sync, with the durable watermark carried inside the segment (SP-336). It does not wait for a separate manifest-watermark sync; the manifest is synced only at creation, rotation and structural changes. Barrier-class groups follow their full flush (Amended 2026-10-31, DL-270). The index writer captures the verified durable source under the writer/maintenance fence. If the same selected source/recovery generation only extends the immutable anchored prefix, it verifies all newly durable frames, adds only their rows, and atomically commits the complete advancing frontier with those rows under predecessor-frontier CAS. No row-only or checkpoint-only state is publishable. A crash before that transaction leaves the old coherent snapshot; a crash after it leaves the new one. A later source append may make the checkpoint stale until catch-up; stale does not become a fabricated complete boundary. Manifest revision/digest and survivor digest may change on append without replacing the generation or rewriting old rows.
 
 Rotation, recovery, exclusions, compaction or any source change that cannot satisfy the exact same-prefix rule uses a fresh verified generation. In particular, this version conservatively rebuilds on a changed CURRENT byte digest, selected segment generation or recovery epoch. Rebuild reads the current retained source, including supported compatibility inputs, and preserves source schema/version, source-value hash, original identity and the existing normalization rules. It writes only derived target rows and the new checkpoint generation. It never repairs or reproduces canonical source bytes.
 

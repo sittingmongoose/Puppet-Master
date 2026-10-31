@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29352-L29817
+Source lines: L29414-L29879
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -321,7 +321,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
+  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate. Amended 2026-10-31 (DL-270): the GUI thread projection's stored form is SP-338's per-thread render-page store (50-item pages of at most 256 KiB, a hot tail), a derived family rebuilt from seglog. This unit keeps the separate-cap and eviction-receipt rule for the other projections.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

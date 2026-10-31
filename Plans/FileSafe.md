@@ -1095,7 +1095,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 
 Authoritative logging path:
 - FileSafe events are written to seglog as canonical `EventRecord` entries.
-- Any `filesafe-events.jsonl` surface is a derived projector or diagnostic mirror rebuilt from seglog.
+- No `filesafe-events.jsonl` file or other JSON mirror of FileSafe history is kept always-on; the file name is retired. FileSafe events live only in seglog. People read them with `pm tail`, `pm inspect`, `pm db dump` or the in-app record inspector, and `pm export` writes JSONL or JSON on request. Amended 2026-10-31 (DL-270): SP-339 retires the mirror.
 - PM MUST NOT maintain a second authoritative FileSafe append log alongside seglog, and recovery logic MUST NOT prefer a FileSafe-only mirror over the canonical event stream.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md
@@ -1506,7 +1506,7 @@ The scope excludes `.git` internals, other worktrees, paths outside the canonica
 
 ##### Snapshot custody and compatibility lookup
 
-Snapshot bodies are content-addressed and off-worktree. FileSafe materializes manifests and blobs below the storage-owner-resolved active storage root, using refs equivalent to `snapshots/manifests/<sha256>.json` and `snapshots/blobs/<sha256>`. The exact root layout and persisted keys remain storage-owned. Snapshot bodies inherit the storage owner's sensitive local custody, are owner-only, are not included in routine exports, logs, events, or redb values, and are never copied into the worktree merely to make restore possible. Persisted values and events carry stable refs, hashes, lengths, and redaction metadata rather than captured file bodies.
+Snapshot bodies are content-addressed and off-worktree. FileSafe materializes manifests and blobs below the storage-owner-resolved active storage root, using manifest refs equivalent to `snapshots/manifests/<sha256>.json`. Amended 2026-10-31 (DL-270): snapshot blob bodies go to the SP-337 payload store (BLAKE3 ids, append-only packs, reference-counted, garbage collection honouring holds and backups), not one file per blob, so the per-file layout `snapshots/blobs/<sha256>` is retired. FileSafe keeps the manifest refs and the SHA-256 manifest hash that decides restore equality. The exact root layout and persisted keys remain storage-owned. Snapshot bodies inherit the storage owner's sensitive local custody, are owner-only, are not included in routine exports, logs, events, or redb values, and are never copied into the worktree merely to make restore possible. Persisted values and events carry stable refs, hashes, lengths, and redaction metadata rather than captured file bodies.
 
 For an SSH/remote project, manifest enumeration, blob custody, verification, staging, restore, and rollback occur on the authorized remote host under its resolved Puppet Master storage root. The local process may retain refs and hashes permitted by the contract, but MUST NOT silently create or restore from an unrelated local snapshot. Remote unavailability before mutation is a refusal; remote unavailability after a prepared transaction preserves the fence and routes to recovery-required reconciliation.
 
@@ -2212,7 +2212,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Archit
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
-- Guard violations are logged to the canonical event stream; any `filesafe-events.jsonl` output is a derived mirror only
+- Guard violations are logged to the canonical seglog event stream only. No `filesafe-events.jsonl` mirror is written (SP-339, DL-270); readers use `pm tail`, `pm db dump`, `pm inspect` or the record inspector, and `pm export` writes JSONL on request.
 - Path resolution follows §11.1.1: `canonicalize()` failure produces `GuardError::SymlinkResolution`, never a silent fallback to the unresolved path
 - The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited in all FileSafe-managed code paths
 
@@ -2445,7 +2445,7 @@ impl FileGuard {
   - **"Block sensitive files"** -- Security filter state and scoped override request; missing baseline remains blocked.
 - **Override:** "Request destructive override" control with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
 - **Approved commands:** Scrollable list; per-row **Remove** button; optional **"Add command manually"**; persisted in `filesafe.approvedCommands` (e.g. `puppet-master.yaml`).
-- **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands; link to FileSafe event log).
+- **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands): opens the log and audit inspector (F3-148) with the event-family filter set to FileSafe events, read from seglog (SP-339, DL-270); a row will open the record inspector (F3-666) once its own production wiring row lands. Help text names `pm tail` and `pm inspect` as the CLI equivalents. No FileSafe-only log file is read.
 - **Widget reuse:** Use existing widgets from `src/widgets/` per DRY Method (e.g. `toggler`, `help_tooltip(tooltip_key, tooltip_variant, theme, scaled)`, `styled_button`). See `docs/gui-widget-catalog.md`. **Tooltip keys** (for localization and help system): `filesafe.bash_guard`, `filesafe.file_guard`, `filesafe.security_filter` (three toggles); optionally `filesafe.override`, `filesafe.approved_commands` for override toggle and approved list. Document in widget catalog or central tooltip doc.
 
 **Config struct (unchanged):** `GuiConfig.filesafe: FileSafeConfig` with `BashGuardConfig`, `FileGuardConfig`, `SecurityFilterConfig`, `approved_commands: Vec<String>` as in §2.4 and §5.2.
@@ -2468,7 +2468,7 @@ Amended 2026-10-09 (DL-181, DL-184): the blocked line is for a command an agent 
 
 **4. Message enum and update flow**
 
-- Add FileSafe-related messages (e.g. `FileSafeBashGuardToggled(bool)`, `FileSafeAllowDestructiveToggled(bool)`, `FileSafeFileGuardToggled(bool)`, `FileSafeFileGuardStrictToggled(bool)`, `FileSafeSecurityFilterToggled(bool)`, `FileSafeAllowSensitiveDuringInterviewToggled(bool)`, `FileSafeRemoveApprovedCommand(usize)`, `FileSafeAddApprovedCommandClicked`, `FileSafeAddApprovedCommand(String)`, `FileSafeViewEventLog`).
+- Add FileSafe-related messages (e.g. `FileSafeBashGuardToggled(bool)`, `FileSafeAllowDestructiveToggled(bool)`, `FileSafeFileGuardToggled(bool)`, `FileSafeFileGuardStrictToggled(bool)`, `FileSafeSecurityFilterToggled(bool)`, `FileSafeAllowSensitiveDuringInterviewToggled(bool)`, `FileSafeRemoveApprovedCommand(usize)`, `FileSafeAddApprovedCommandClicked`, `FileSafeAddApprovedCommand(String)`, `FileSafeViewEventLog`). Amended 2026-10-31 (DL-270): `FileSafeViewEventLog` opens the record inspector filtered to FileSafe event types, read from seglog (SP-339); FileSafe keeps no log file of its own.
 - Config save: FileSafe changes persist with the rest of Advanced tab (Save Changes per tab or global).
 
 **5. Config Wiring (Critical):**
@@ -2524,7 +2524,7 @@ pub struct GateOverrideConfig {
 1. **FileSafe event state**
    - FileSafe history is canonical in seglog.
    - State snapshots, dashboards, or diagnostic mirrors derive from seglog or its projector state.
-   - A standalone `filesafe-events.jsonl` file may exist only as a rebuildable mirror, not as an owner store.
+   - No standalone `filesafe-events.jsonl` file exists (SP-339, DL-270 retire it, even as a rebuildable mirror). FileSafe history is read through `pm tail`, `pm inspect`, `pm db dump` and the in-app record inspector; `pm export` writes JSONL on request.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
@@ -2794,7 +2794,7 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 9. **ExecutionRequest:** ensure allowed files and operation type are passed via env_vars (`PUPPET_MASTER_ALLOWED_FILES`, `PUPPET_MASTER_OPERATION_TYPE`).  
 10. Implement **extract_file_paths_from_request** (§15.2), **is_verification_gate_operation**, **is_interview_operation** (§15.2).  
 11. In **platform runners** (e.g. Cursor): after **append_prompt_attachments**, call **check_prompt** on compiled prompt and **security_filter** on context files; respect `PUPPET_MASTER_OPERATION_TYPE` (`verification_gate`/`interview`).  
-12. Event logging: **FileSafeEvent** struct (§6), write to seglog; any `filesafe-events.jsonl` surface is rebuildable mirror output only.  
+12. Event logging: **FileSafeEvent** struct (§6), write to seglog only. Build no `filesafe-events.jsonl` mirror (SP-339, DL-270). Test reads through `pm tail`, `pm db dump` and the record inspector; `pm export` covers JSONL on request.  
 13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
 14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
 
@@ -5963,7 +5963,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "PM MUST NOT maintain a second authoritative FileSafe append log alongside seglog, and recovery logic MUST NOT prefer a FileSafe-only mirror over the canonical event stream."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 no `filesafe-events.jsonl` mirror or projector exists; FileSafe events live only in the seglog EventRecord stream, and JSONL is produced only by pm export on request. The file name stays in preserved_exact_tokens as a retired name."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
@@ -9951,7 +9952,8 @@ negative_constraints:
 - "Fallback to unresolved paths is prohibited for FileSafe-managed code paths."
 - "FileSafe-only event log mirrors are not authoritative."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 BaseRunner logs guard errors only into the canonical seglog stream and writes no `filesafe-events.jsonl` mirror; they are read through pm inspect, pm tail or the record inspector."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md"
 owner_hints:
@@ -10585,7 +10587,8 @@ preserved_exact_tokens:
 - "Save Changes per tab or global"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): event-log viewing, including the FileSafeViewEventLog message in this unit's tokens, opens the log and audit inspector (F3-148) filtered to FileSafe events, backed by seglog; a row will open the record inspector (F3-666) once its own production wiring row lands (SP-339). No JSONL file is its source."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"
@@ -10809,7 +10812,8 @@ preserved_exact_tokens:
 - "diagnostic mirrors"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-31 (DL-270): per SP-339 filesafe-events.jsonl is retired and is no longer a derived projection. Seglog is the only FileSafe history; JSON output is an on-request pm export."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
 - "FileSafe event history ownership remains with canonical seglog."
@@ -14295,6 +14299,8 @@ negative_constraints:
   - Do not use git status, mtime, or path count as the equality authority.
   - Do not keep snapshot bodies in the worktree or silently move remote custody local.
   - Do not write a new compatibility alias as a primary safe-point key.
+stale_retired_dispositions:
+  - "Amended 2026-10-31 (DL-270): blob bodies live in the SP-337 payload store; the one-file layout snapshots/blobs/<sha256> is retired. Restore equality stays the SHA-256 of the canonical manifest. Remote custody on the authorized host is unchanged."
 owner_hints: [Plans/FileSafe.md]
 ```
 

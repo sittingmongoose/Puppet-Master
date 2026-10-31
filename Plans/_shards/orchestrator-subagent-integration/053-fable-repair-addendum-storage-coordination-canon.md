@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31502-L31568
+Source lines: L31513-L31579
 
-Source SHA256: `35d1512263810cd671e3c64529e82dd4eaee8b11fcf78a5b0aace7fc6c7328f4`
+Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
 
 ---
 
@@ -21,21 +21,21 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Active-agent coordination canonical truth is the EventRecord seglog coordination family plus redb projections for agent
-  registration, status, operation, file-activity, unregister/crash/abort, snapshots, and optional debug mirror export.
-  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are compatibility/debug/export
-  mirrors or retired source-lineage only; they cannot drive scheduling, execution admission, conflict prevention, prompt
-  injection, unregister, crash, or abort decisions.
+  registration, status, operation, file-activity, unregister/crash/abort, and snapshots. Amended 2026-10-31 (DL-270, SP-339):
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are retired and are no longer
+  compatibility mirrors. Coordination state is read through pm db dump, pm inspect, pm tail and pm export (JSON or JSONL on
+  request); no always-on mirror file exists. Exports never drive scheduling, execution admission, conflict prevention,
+  prompt injection, unregister, crash, abort or cleanup decisions.
 gui_related: false
 gui_classification_reason: This unit defines backend coordination storage and projection authority, not GUI presentation.
 depends_on: [OSI-225, OSI-270, OSI-271, CV-309, SP-230]
 unblocks: []
 acceptance_criteria:
-  - "`coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported` are the named coordination event families consumed by Orchestrator."
+  - "`coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported` (no longer emitted: amended 2026-10-31, DL-270, SP-339) are the named coordination event families consumed by Orchestrator."
   - "`coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` are the authoritative coordination read models."
   - Up to 32 active agents across multiple worktrees update coordination through append/CAS boundaries with idempotency keys, expected agent revision or last applied event id, and one redb projection/checkpoint transaction.
   - Lost updates return coordination conflict diagnostics; writers reload projections and append successor events instead of overwriting canonical state.
-  - Canonical coordination forbids read-modify-write of `.puppet-master/state/*.json`; mirror writes occur only after projection commit and are recoverable by regenerating from seglog/redb.
-  - Corrupted, missing, stale, or lagging mirrors are quarantined or overwritten by PM-owned projection/export code and cannot decide scheduling, execution, conflict prevention, prompt injection, unregister, crash, or abort behavior.
+  - Canonical coordination forbids read-modify-write of `.puppet-master/state/*.json` because no such file is written; state is recoverable from seglog and redb, and any JSON is produced by pm export on request (SP-339, DL-270). There is no quarantine or regeneration duty.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
@@ -67,7 +67,7 @@ preserved_exact_tokens:
   - "coordination_snapshot_projection.v1"
 negative_constraints:
   - Do not read file-based coordination state as canonical runtime truth.
-  - Do not allow debug/export mirrors to drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, or abort decisions.
+  - Do not allow exports to drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, or abort decisions.
   - Do not use read-modify-write of `.puppet-master/state/*.json` for canonical coordination updates.
   - Do not reinterpret file-activity coordination claims as FileSafe locks or durable exclusive leases.
 owner_hints:

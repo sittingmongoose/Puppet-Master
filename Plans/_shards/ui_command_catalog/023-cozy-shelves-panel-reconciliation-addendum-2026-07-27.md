@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9976-L10903
+Source lines: L9978-L10905
 
-Source SHA256: `9ea4866153f0fa583750c83b6065aadc778647cfb80435f9bd2e802b9619edc3`
+Source SHA256: `715b489e7711ed6f4a709a6b542f4d10cf949f344c00a0c44d6cfb71960c9bcd`
 
 ---
 
@@ -208,7 +208,7 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 ### File Manager, editor, and chat navigation rows
 
-`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
+`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged. Amended 2026-10-31 (DL-270): opening a thread through `cmd.chat.open_thread` reads thread_head, the hot tail and the newest page and never replays the thread's events (ACD-242, SP-338); older pages load only through `cmd.chat.load_older` (UCC-212).
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|

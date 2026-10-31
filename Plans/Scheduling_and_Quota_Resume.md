@@ -742,6 +742,11 @@ Scheduling clears the source `ComposerBuffer` only **after** a durable schedule 
 preserves text, attachments, browser references, destination, cursor, and selection, so a retry
 needs no reconstruction. Optimistic clearing on button press is prohibited.
 
+Amended 2026-10-31 (DL-270): a schedule create, update, cancel or Build At commit is a receipt the UI
+waits on, so it is a barrier-class event under SP-336 and is acknowledged only after a full flush. The
+composer is cleared and the card shown only after that flush. Ordinary schedule-fire bookkeeping stays
+in ordinary commit groups.
+
 Edit and Cancel use expected revision and currentness and cannot race an in-progress dispatch;
 stale edits fail closed and a `Sent` schedule is never mutated.
 
@@ -763,6 +768,13 @@ pm.schedule.attachment_snapshot.v1
 A live project file or folder reference stores its exact scheduled hash or manifest. If that
 retained version is unavailable at dispatch the schedule holds or fails and the card names the
 reference that became unavailable. Current project bytes are never substituted.
+
+Amended 2026-10-31 (DL-270): the frozen attachment versions (`snapshot_ref`) and the scheduled text
+(`text_blob_ref`) are payload-store references under SP-337. The schedule record counts as a live
+reference from schedule commit until dispatch, cancel or expiry, so payload garbage collection and
+deduplication never release them while the schedule is pending; backups and holds are honoured as SP-337
+states. The independent-lifetimes clause for scheduled-message and attachment content still applies after
+release.
 
 A live `BrowserElementContext` or selector cannot be scheduled. The schedule flow either converts
 it to a frozen screenshot, crop, or DOM snapshot that is valid independently of the live page, or

@@ -372,6 +372,8 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/storage-pla
 
 Low-context warning rule: if remaining context falls below 15% of the effective window after adding tool output or injected context, PM emits a model-visible diagnostic warning so the agent can adapt before hard compaction. This is based on post-execution accounting, not pre-flight prediction, and large tool-output markers use the 512 KiB policy boundary where truncation is applied.
 
+Amended 2026-10-31 (DL-270): the 512 KiB figure is only the prompt-truncation boundary. Per SP-337, an event record holds at most 16 KiB of inline body; larger tool output is stored in the payload store and the record carries a reference. The same applies to PP-023 (Dynamic Context Thresholds And Low Context Warning).
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
 Agent-visible context-budget contract:

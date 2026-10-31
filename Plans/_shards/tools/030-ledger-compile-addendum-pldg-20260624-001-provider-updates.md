@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2614-L11088
+Source lines: L2620-L11099
 
-Source SHA256: `d16b9cb18b7053ffe1e667aafbb44b7a8b635a960007b796d13117457029972b`
+Source SHA256: `9f8f951e268b5a9642675d8bc16560174ee3265592aa1c7c4d77e345c3e8f504`
 
 ---
 
@@ -2207,8 +2207,11 @@ plan_unit_id: T-042
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`webfetch` detects binary non-text responses by `Content-Type`, returns supported image types as capped inline
-  attachments, returns unsupported large media as metadata only, and keeps non-text responses out of HTML-to-Markdown conversion.'
+canonical_text: '`webfetch` detects binary non-text responses by `Content-Type`, returns supported image types as payload-store references
+  (SP-337) with only metadata or a small preview inline, returns unsupported large media as metadata only, and keeps non-text
+  responses out of HTML-to-Markdown conversion. Amended 2026-10-31 (DL-270): supported image types are stored in the payload
+  store (SP-337) and returned as content-hash references; only metadata or a preview within the 16 KiB inline-body limit
+  stays inline. Same rule as the webfetch binary-response bullet in section 3.5D.'
 gui_related: true
 gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
   activity, or visible rendering behavior.
@@ -2218,6 +2221,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Supported image MIME types and source shorthands remain preserved.
+- Supported images are returned as payload-store references, not inline attachment bodies (SP-337).
 - Unsupported or large binary media returns metadata only without downloading the body.
 - Non-text responses do not enter HTML-to-Markdown conversion.
 - Markdown remains the default content view for text fetches.
@@ -8010,6 +8014,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Per-project 500 MB, TTL, LRU, stable ordering, and change detection persistence are preserved.
+- Amended 2026-10-31 (DL-270): the 500 MB per-project limit is registered as a per-family disk budget (SP-340) and cached bodies are payload-store references (SP-337); see section 14. The setting is `web.fetch.cache-size`.
 - Question/questionnaire and TODO storage carry-through are not overwritten by web cache/activity payloads.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

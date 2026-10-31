@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-30T18:28:13Z",
+  "generated_at_utc": "2026-10-31T22:34:01Z",
   "index_path": "Plans/_shards/goal_runtime_system/00-index.md",
-  "index_sha256": "2b5190186c9e30e44d5eeaab1861135079e8e47f6083144707274e9a93e55904",
+  "index_sha256": "52660be474a30df2a7786ef94abdba246af4d87163fc3717a3d5c97a092a8ec3",
   "manifest_path": "Plans/_shards/goal_runtime_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/goal_runtime_system/001-preamble.md",
-      "sha256": "591e8347c630ffdb8f281cb46e4928e80563222699a7357680fa36a007953eb8",
+      "sha256": "29aabe0f131da4ad1a1a7e217fb7773eaef8aa1d58aaacf82999206dbc4a878c",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/goal_runtime_system/002-0.-scope.md",
-      "sha256": "605315d65a53500dc2f3158b4f277500b78df28ee0d982a622f479ebd0ac531e",
+      "sha256": "4c82c6b1b2aabd8ca15bb2ffe6c962a7198bb03258b11027dd82119e5e79a3c7",
       "shard_id": "002",
       "source_line_end": 17,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
-      "sha256": "96284e1233406baffd75569b51e00ce3d67041c929415047442c7ba73bc97ea0",
+      "sha256": "f06b9a7d554d3b8486a4b5b260a157bbc799b5e001c0d56449fc6a739c7cb210",
       "shard_id": "003",
       "source_line_end": 56,
       "source_line_start": 19,
@@ -35,7 +35,7 @@
     {
       "heading": "Goal V2 record and retired fields",
       "path": "Plans/_shards/goal_runtime_system/004-goal-v2-record-and-retired-fields.md",
-      "sha256": "4745cefbe49e15cfaffb53959675dd254e1d1c9bcda84eac5ecfa58101bd7a1c",
+      "sha256": "61a5b7cc97fe735065e0fea1159348ad14750c90d0d09b63601f2cf05aa4266b",
       "shard_id": "004",
       "source_line_end": 121,
       "source_line_start": 58,
@@ -44,7 +44,7 @@
     {
       "heading": "Durable host continuation",
       "path": "Plans/_shards/goal_runtime_system/005-durable-host-continuation.md",
-      "sha256": "89b09ccd583bd025d0a510e2581f0f38a52b6157ed6dcbd0bb15d2954c663896",
+      "sha256": "18835d3f72b82da7edd7eba9ce22eafa8fe991ae5ee8fbd86808fddd7653dd4a",
       "shard_id": "005",
       "source_line_end": 159,
       "source_line_start": 123,
@@ -53,7 +53,7 @@
     {
       "heading": "Goal change authority",
       "path": "Plans/_shards/goal_runtime_system/006-goal-change-authority.md",
-      "sha256": "64c84c7b5548736b6182f4af242f5194e3f1b1e7e0a1be2961b7f90b41470630",
+      "sha256": "c8b8f9a4a851d3f58d0a5ebfd2a246a1b01bd9bb5c857b7cd9bf9dbae4710dfc",
       "shard_id": "006",
       "source_line_end": 175,
       "source_line_start": 161,
@@ -62,7 +62,7 @@
     {
       "heading": "Goal Activity domain surface",
       "path": "Plans/_shards/goal_runtime_system/007-goal-activity-domain-surface.md",
-      "sha256": "0387764e99dd6f6cb8fc8e9f25e05496d313e8f018c1c80150e90b32f6662aaa",
+      "sha256": "7a6c06eb73435e034adbf918eb596de466f98f1c1b0c29281899c48ff781c815",
       "shard_id": "007",
       "source_line_end": 207,
       "source_line_start": 177,
@@ -71,7 +71,7 @@
     {
       "heading": "Internal workflow use of Goal V2",
       "path": "Plans/_shards/goal_runtime_system/008-internal-workflow-use-of-goal-v2.md",
-      "sha256": "5717f33c712af065ef06c4337391281a41714505e729b4a7022afc83715f6d69",
+      "sha256": "495391c1a95d2b362c3a31b60accde5c01c3047ba4e9903d834cd2943e05b479",
       "shard_id": "008",
       "source_line_end": 232,
       "source_line_start": 209,
@@ -80,7 +80,7 @@
     {
       "heading": "Retired Goal structure and negative ownership",
       "path": "Plans/_shards/goal_runtime_system/009-retired-goal-structure-and-negative-ownership.md",
-      "sha256": "cbc34b79bd5a3ab95585de2da1c6a7da994f6ceaf9734a0e39aad1d95a3a32d9",
+      "sha256": "911b8fa9dd551ca4151cf2e7a9d7b01430d014ebd6ce97ca5205018faac7e556",
       "shard_id": "009",
       "source_line_end": 248,
       "source_line_start": 234,
@@ -89,7 +89,7 @@
     {
       "heading": "Goal V2 exact commands and required result boundaries",
       "path": "Plans/_shards/goal_runtime_system/010-goal-v2-exact-commands-and-required-result-boundaries.md",
-      "sha256": "ac7fbc6a12bed86169873dbdec729e630606972767936573c506e3b98ef3e3bc",
+      "sha256": "3114432948e0a39d5a1257c4fe532fa8fee6219883acbe4526085bc41fe23a9d",
       "shard_id": "010",
       "source_line_end": 268,
       "source_line_start": 250,
@@ -98,7 +98,7 @@
     {
       "heading": "Goal V2 events",
       "path": "Plans/_shards/goal_runtime_system/011-goal-v2-events.md",
-      "sha256": "c00cd1fb16502f4eb689add5c836c5d014240af9563e0e06ccd751655f3b41c3",
+      "sha256": "cd2b5fd97ed224a6d5b2d75196302bb6d32b007c2fa806db37b970651523487f",
       "shard_id": "011",
       "source_line_end": 280,
       "source_line_start": 270,
@@ -107,7 +107,7 @@
     {
       "heading": "Goal V1 to V2 migration",
       "path": "Plans/_shards/goal_runtime_system/012-goal-v1-to-v2-migration.md",
-      "sha256": "085f3e4312eafe1ae6533c73a7a165c7cc0b365659ec86067743899969dadf8f",
+      "sha256": "d24c5127bc20831d9469dd88d0bf1a3e70480878d471b1f128e19195b391a410",
       "shard_id": "012",
       "source_line_end": 295,
       "source_line_start": 282,
@@ -116,7 +116,7 @@
     {
       "heading": "Goal V2 verification",
       "path": "Plans/_shards/goal_runtime_system/013-goal-v2-verification.md",
-      "sha256": "041b106e870f21edd4e51c19f511b5197da7f4afb19978393902538e6eb550df",
+      "sha256": "25361c5fec9fc6e141dc5264e09bbf0876e145dcc1ff751aacd404329043af14",
       "shard_id": "013",
       "source_line_end": 307,
       "source_line_start": 297,
@@ -125,7 +125,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/goal_runtime_system/014-2.-canonical-planunits.md",
-      "sha256": "c60fd53dd4f893e359026462b4f10a5cb34d2e5a7ff589307c33ee97b4e7e6ec",
+      "sha256": "8ab92da98226cdbf0f76c931b51578df4b824797586b07f69071340f1106f8ff",
       "shard_id": "014",
       "source_line_end": 781,
       "source_line_start": 309,
@@ -134,7 +134,7 @@
     {
       "heading": "Server command-gap owner closure - Goal handoff family (2026-09-01)",
       "path": "Plans/_shards/goal_runtime_system/015-server-command-gap-owner-closure-goal-handoff-family-2026-09-01.md",
-      "sha256": "3a354a53706241dc816aea830909680da1554510cc65bb7c91ed7b7e6dd60f98",
+      "sha256": "1cda3d38987cb31f8d6303a79b83697ac06d6365c51d1d98b46570741b99e949",
       "shard_id": "015",
       "source_line_end": 856,
       "source_line_start": 783,
@@ -143,7 +143,7 @@
     {
       "heading": "Remaining runtime integration addendum (2026-08-13)",
       "path": "Plans/_shards/goal_runtime_system/016-remaining-runtime-integration-addendum-2026-08-13.md",
-      "sha256": "74be78744589eb7e2ade8d893836b11cfb5670c8cfb2fc3f169be462875d3cec",
+      "sha256": "00d2eab1df0b78c6b8594bf1f432a6d875c4c4143e11dcd474139c792273e71b",
       "shard_id": "016",
       "source_line_end": 940,
       "source_line_start": 858,
@@ -152,7 +152,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/goal_runtime_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "d1e293d7cdcd9a913f3ccd25e5c74f16176810c7946600fa8634dfbb43d77441",
+      "sha256": "f173ad281e9226f28a3ae5d11f62529c545ef2b7cf24f0fe1820f420ff763eb4",
       "shard_id": "017",
       "source_line_end": 2623,
       "source_line_start": 942,
@@ -161,7 +161,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/goal_runtime_system/018-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "d7a53cf24f4be3dd20d389ead2e3715c150b5aed969ca71d048787df060b757a",
+      "sha256": "4aece6d1a5dbe8d8aa1c302c94861fb099fdc1569a2f2c2e673acea55d324fee",
       "shard_id": "018",
       "source_line_end": 3837,
       "source_line_start": 2625,
@@ -170,7 +170,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/goal_runtime_system/019-4.-integration-surfaces.md",
-      "sha256": "739a20c2573a90eb7ed9321001d050cbaf15effc7b8a191e56102199bc952dfe",
+      "sha256": "d3eade55fb668f10fb6c1b7b9dc7c2cb0ed98e9eb84df6a7b9020e00ebc022ec",
       "shard_id": "019",
       "source_line_end": 3847,
       "source_line_start": 3839,
@@ -179,7 +179,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/goal_runtime_system/020-5.-validation-and-acceptance.md",
-      "sha256": "ea37cc7b8bc6f9f8263188eab2e1c300e0a5d986845ac4e1c2950958bdd14de3",
+      "sha256": "c286ea7ae50b7b4fe059c39cfe237db900da5e2f4ce3bfa69edacd0431f4ef33",
       "shard_id": "020",
       "source_line_end": 3862,
       "source_line_start": 3849,
@@ -188,7 +188,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/goal_runtime_system/021-6.-plan-to-node-readiness.md",
-      "sha256": "a0221ad72fd3da97d029672770107f942240ce0a00cb19012a90bf151e424dc7",
+      "sha256": "1003375b952bfe8ca654fc7e8c228550c39d02d619d7c489f99c575f5f70e1c2",
       "shard_id": "021",
       "source_line_end": 3868,
       "source_line_start": 3864,
@@ -197,7 +197,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/goal_runtime_system/022-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "738bfe6b8cc2da20d0364d65e61aae5bd90d4f41ab9f3f99568e0d3a19171dea",
+      "sha256": "b582f756a2a75d2ef209c9f1c945e3fce1d43f688a401fc49e0c2c78d04484ec",
       "shard_id": "022",
       "source_line_end": 3889,
       "source_line_start": 3870,
@@ -206,7 +206,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/goal_runtime_system/023-8.-source-lineage-and-governance.md",
-      "sha256": "054e917e1b398074632f3e60732a6375417c6223ba8c8fd4458844e8a816cf4f",
+      "sha256": "661543afbd95917af65b57407f411f148fe9a0e1f5bc81360bc1ac7213f4871d",
       "shard_id": "023",
       "source_line_end": 3909,
       "source_line_start": 3891,
@@ -215,7 +215,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/goal_runtime_system/024-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "f8b7b75c6cc84916877955f09a6beb39cd87e47adc15a756ab5856253c5911cb",
+      "sha256": "412f98426c3a9d3edef41563297e7c1bf57d7f29d339c9dedfdc145c8bf436a7",
       "shard_id": "024",
       "source_line_end": 4105,
       "source_line_start": 3911,
@@ -224,7 +224,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/goal_runtime_system/025-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "4dd1251020554a99d55ae0a93dd953eb2ea7b8bc3e7652831bb3ff0c65f9dbeb",
+      "sha256": "885fc08409cf06fad0c3880109e4d40e29a1e616a73717053f1c291058a49a69",
       "shard_id": "025",
       "source_line_end": 4276,
       "source_line_start": 4107,
@@ -233,7 +233,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/goal_runtime_system/026-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "4422e6ea3080c79f30853e921ada9ecfbf1914fb434c3057016b24c4a7ad701f",
+      "sha256": "0f99e1665decb495a6d4d15814e75db237d0bfaad2f54a9b6a0d9325787e5826",
       "shard_id": "026",
       "source_line_end": 4418,
       "source_line_start": 4279,
@@ -242,7 +242,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/goal_runtime_system/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "3aa37256591c4dab56d6fd785b78033728140b9d01fd329901fa16bea848d8ca",
+      "sha256": "cf9f80c20af9108ef5fb78cb0af9e94c260e8343c7cf2f656596461db2729b3f",
       "shard_id": "027",
       "source_line_end": 5240,
       "source_line_start": 4420,
@@ -251,7 +251,7 @@
     {
       "heading": "Case L Durable Goal Recovery Consumer Addendum - 2026-07-17",
       "path": "Plans/_shards/goal_runtime_system/028-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md",
-      "sha256": "209160ac692a171a46202c7ee8c1248c008200d29c348c6841be0ffa5817a175",
+      "sha256": "4cecba1c72e20074b963864f1446875713f616d1152671fad9267e2e620eb6b0",
       "shard_id": "028",
       "source_line_end": 5381,
       "source_line_start": 5242,
@@ -260,7 +260,7 @@
     {
       "heading": "Additive Correction v4 \u2014 Goal Replay Lineage, Completion Guards, And Bound Plan Runs (2026-09-03)",
       "path": "Plans/_shards/goal_runtime_system/029-additive-correction-v4-goal-replay-lineage-completion-guards-and.md",
-      "sha256": "539941c64c7cb9d1f855d056471790509bbad570796f0336760db5257c568e42",
+      "sha256": "8078b76740d3cb8b1c6e387b91cf115454d26099d75df217f950e4de52121fa3",
       "shard_id": "029",
       "source_line_end": 5480,
       "source_line_start": 5383,
@@ -269,7 +269,7 @@
     {
       "heading": "Working Notebook Authority Boundary Addendum (2026-09-05)",
       "path": "Plans/_shards/goal_runtime_system/030-working-notebook-authority-boundary-addendum-2026-09-05.md",
-      "sha256": "5cd414ef7a421bef433c0768e0e4b2a1ce36133439d49f63161a3619d46ea120",
+      "sha256": "93b0d9ce6fe607db23565f455dacaffdbe3d4e9e7e18ff7123184b5219025bfa",
       "shard_id": "030",
       "source_line_end": 5519,
       "source_line_start": 5482,
@@ -278,7 +278,7 @@
     {
       "heading": "Cumulative v3 Goal Activity Detail and Plan Binding Specification (2026-09-07)",
       "path": "Plans/_shards/goal_runtime_system/031-cumulative-v3-goal-activity-detail-and-plan-binding-specificatio.md",
-      "sha256": "0f1861c1e342dc0f673e20565acec3b8852a54305ca7200a4802fc9ba02ed4a1",
+      "sha256": "d13873efdde0cf6ad1300237a95baf1e0fbe9057c89eb8c6a0d596790b8a3a55",
       "shard_id": "031",
       "source_line_end": 5916,
       "source_line_start": 5521,
@@ -287,124 +287,124 @@
     {
       "heading": "Goal body currentness and history",
       "path": "Plans/_shards/goal_runtime_system/032-goal-body-currentness-and-history.md",
-      "sha256": "921507a15fa4496378ed5ebecaa5d7bfd4af0f25c33ba388908568f4083ffc53",
+      "sha256": "01006b52ab6de30685d1d8f92b3cf24c873beba22b0a5f8c923bdf6bc220ad0e",
       "shard_id": "032",
-      "source_line_end": 6005,
+      "source_line_end": 6009,
       "source_line_start": 5919,
       "split_rule": "heading-##"
     },
     {
       "heading": "Current creation consumers and canonical Goal state",
       "path": "Plans/_shards/goal_runtime_system/033-current-creation-consumers-and-canonical-goal-state.md",
-      "sha256": "f111036a21498facd628589a73933377b3ad9e2c588772eb52ef1b63f5b3bf26",
+      "sha256": "f671cfaf892b763c2b2c2e2303a6db633b4a79432eaaf5b8b626fd86dca96a57",
       "shard_id": "033",
-      "source_line_end": 6017,
-      "source_line_start": 6007,
+      "source_line_end": 6021,
+      "source_line_start": 6011,
       "split_rule": "heading-##"
     },
     {
       "heading": "Current update consumers and accepted Goal state",
       "path": "Plans/_shards/goal_runtime_system/034-current-update-consumers-and-accepted-goal-state.md",
-      "sha256": "6d47609ccd92d1c72aee1121e218feb1a52cb246b3cd43b73554c047b999c118",
+      "sha256": "2c13e73d9fb5a91df679b9df9b8591f7d10c0fe6c671e2b8e4ec9a1017cf91ee",
       "shard_id": "034",
-      "source_line_end": 6111,
-      "source_line_start": 6019,
+      "source_line_end": 6115,
+      "source_line_start": 6023,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original Standard certification receipt",
       "path": "Plans/_shards/goal_runtime_system/035-original-standard-certification-receipt.md",
-      "sha256": "0456c1d1124e1b1ef54f4cfb49fe06cf10a47b954076a2b262f41b1b0b501842",
+      "sha256": "0ebf1d2220ee3a5757a2a1f412a109ed7e90c147ab940fa1437988e90e04c49d",
       "shard_id": "035",
-      "source_line_end": 6190,
-      "source_line_start": 6113,
+      "source_line_end": 6194,
+      "source_line_start": 6117,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original Goal creation command settlement",
       "path": "Plans/_shards/goal_runtime_system/036-original-goal-creation-command-settlement.md",
-      "sha256": "1cad7649c8653bfd5f20c1166983258b3cd1e2c72775aff7cb3287a79d16eb78",
+      "sha256": "b68407a99ade8fdec8d32272aa174ce04181811fe78d320442f823916e0606d3",
       "shard_id": "036",
-      "source_line_end": 6204,
-      "source_line_start": 6192,
+      "source_line_end": 6208,
+      "source_line_start": 6196,
       "split_rule": "heading-##"
     },
     {
       "heading": "GRS-066 - Original Goal creation command settlement",
       "path": "Plans/_shards/goal_runtime_system/037-grs-066-original-goal-creation-command-settlement.md",
-      "sha256": "ec6358072d84cbc6042a74736eb2faa3f17959a4355d2972873fed95836de7c1",
+      "sha256": "9efc0c2ad355e098b3f02deca823fdc2bd72fa1b3f35ac3e4c3c8b16d1b2bf3a",
       "shard_id": "037",
-      "source_line_end": 6269,
-      "source_line_start": 6206,
+      "source_line_end": 6273,
+      "source_line_start": 6210,
       "split_rule": "heading-##"
     },
     {
       "heading": "Passive original Goal creation observation",
       "path": "Plans/_shards/goal_runtime_system/038-passive-original-goal-creation-observation.md",
-      "sha256": "2dfd2a3238afd14f97a28b52145b3b5e22f2b71db9f7f521fa34170f24256068",
+      "sha256": "27f2d250eb3ad860081d4b8539030334152fb69251662f9091053354a5563f05",
       "shard_id": "038",
-      "source_line_end": 6343,
-      "source_line_start": 6270,
+      "source_line_end": 6347,
+      "source_line_start": 6274,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original Goal objective update acceptance and settlement",
       "path": "Plans/_shards/goal_runtime_system/039-original-goal-objective-update-acceptance-and-settlement.md",
-      "sha256": "e2de3f99828f2208ff310305af14e80e40b68299914fc2e30397209d61aa0950",
+      "sha256": "33ac609501d00e59be172fe09f0a90dd0276059cf2864e77ff65a7725fd88234",
       "shard_id": "039",
-      "source_line_end": 6996,
-      "source_line_start": 6344,
+      "source_line_end": 7000,
+      "source_line_start": 6348,
       "split_rule": "heading-##"
     },
     {
       "heading": "Current Workflow activation and certification child scope",
       "path": "Plans/_shards/goal_runtime_system/040-current-workflow-activation-and-certification-child-scope.md",
-      "sha256": "4ac137964d97b247d5b70c27f79bd77832791d23839be7119a12b6ac0e9b1804",
+      "sha256": "99e87fe184716b8f00140b4ce269a3e7c7f83285b2214ff9e098d1c901c49cc0",
       "shard_id": "040",
-      "source_line_end": 7689,
-      "source_line_start": 6999,
+      "source_line_end": 7693,
+      "source_line_start": 7003,
       "split_rule": "heading-##"
     },
     {
       "heading": "GRS-082 \u2014 Fresh Standard Workflow certification original source (2026-09-20)",
       "path": "Plans/_shards/goal_runtime_system/041-grs-082-fresh-standard-workflow-certification-original-source-20.md",
-      "sha256": "37e119529442ae844e3a06a757f917dd52889f891cdadb7924634f95b70fced2",
+      "sha256": "c482a72150fee116d57640cd47d44199c627a6e6090b4b73601d081039448b09",
       "shard_id": "041",
-      "source_line_end": 7786,
-      "source_line_start": 7692,
+      "source_line_end": 7790,
+      "source_line_start": 7696,
       "split_rule": "heading-##"
     },
     {
       "heading": "GRS-083 \u2014 Original certified producer composition and source-only authority (2026-09-21)",
       "path": "Plans/_shards/goal_runtime_system/042-grs-083-original-certified-producer-composition-and-source-only-.md",
-      "sha256": "2077348b04f5bcf201ed207057a9708743ef6ecd276161957a047b0f65ed34e9",
+      "sha256": "fa654c1de0723543267a0db6505630795780c4fb394ab203713111f755330126",
       "shard_id": "042",
-      "source_line_end": 7846,
-      "source_line_start": 7789,
+      "source_line_end": 7850,
+      "source_line_start": 7793,
       "split_rule": "heading-##"
     },
     {
       "heading": "GRS-084 \u2014 Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)",
       "path": "Plans/_shards/goal_runtime_system/043-grs-084-whole-certified-v3-event-identity-released-custody-nativ.md",
-      "sha256": "9f428b987638202885578d166f36d178517e05c891c2934aefea113f00e016c5",
+      "sha256": "cb5908f32df4c5f8aa46784fc833a0d15fb16c556bbbd5e4e139e0ad7d592b0e",
       "shard_id": "043",
-      "source_line_end": 7918,
-      "source_line_start": 7849,
+      "source_line_end": 7922,
+      "source_line_start": 7853,
       "split_rule": "heading-##"
     },
     {
       "heading": "GRS-085 \u2014 Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)",
       "path": "Plans/_shards/goal_runtime_system/044-grs-085-mandatory-started-cancelled-certified-prefix-projection-.md",
-      "sha256": "8f8e03e31b724b0616aeaf803803dd4eb9683b5267d7f4509fd262ef37cfd548",
+      "sha256": "19810472ba62c8a4e63d4f8778dc4d9091e593d11b70d6cc2b7b45a70d535128",
       "shard_id": "044",
-      "source_line_end": 7991,
-      "source_line_start": 7921,
+      "source_line_end": 7995,
+      "source_line_start": 7925,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 7991,
+    "line_count": 7995,
     "path": "Plans/Goal_Runtime_System.md",
-    "sha256": "3dda36e7c4edb65546f6d90c475dfa2303e5edb9874a1f2285f7592337887344"
+    "sha256": "d9aa643f592893374ef5d07ce59134c7ec0723ca690cfd9f1543b50c740f3b2f"
   }
 }

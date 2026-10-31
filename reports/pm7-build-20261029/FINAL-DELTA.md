@@ -19,3 +19,19 @@ Text/contract work only. Twelve rows add coverage to the previous 137: **149 row
 No demo host, hint, prefill, preview/sandbox workaround, no-storage guarantee or T3 mechanics becomes canon. No new setting, command, action, handler, binding, event, owner authority or stored family. Historical DL-258 remains the record; DL-259/FS-1 supersedes its hover dimming in every active consumer.
 
 No browsers, full gates, dry landing, landing lock, landing, baseline refresh or reseal. No ledger compiled. The 44d0 batch passed 15/15 focused/regeneration/guard checks; the PDF final follow-up passes 11/11 affected focused/regeneration/guard checks. PM7 schema cases are now 147. FO-9 finalization passes 15/15 focused/regeneration/guard checks, 33 isolated source cases/checks and 149 schema cases, closing all final-source pending markers. FO-10 adds 12/12 affected focused/regeneration/guard checks, 12 route-reason vectors (45 total source cases/checks) and four schema cases (153 total). Current results/hashes are in REPORT.md/verification.json.
+
+## DL-271 final feedback batch — 2026-10-31
+
+Six real product rows bring coverage to **155 rows / 775 cells**. Prior batches above retain their pinned scope.
+
+| Item | Product result | Boundary |
+|---|---|---|
+| FO-11 | Server Password is OpenCode's own HTTP Basic password, with existing execution-host keychain custody. | No provider-key hint, new credential realm or secret store. |
+| FO-12 | Protect asks for access details without a field count; requirements remain Backup-owner data. | No weakened required-value validation or fixed service field-count table. |
+| Unlock | Ask for your recovery phrase. | No six-word format, crypto change, raw recovery sample or fabricated unlock. |
+| Weak key | DSA/RSA-1024 cannot be chosen/defaulted/advanced/installed, even if already authorized/unlocked. | Existing shared SSH list; srv d1abe18d58 is merged through ed1f82fed7. Eligible displayed replacement is required before advance; install gates refuse weak keys before effects. |
+| Check requests | A current live invite initially says No requests yet and Check again. | Existing owner run only; FO-7 answered approval/rejection remains terminal. No fixed guest-answer delay. |
+| FO-14 | Explicit long-token wrap was missing from existing bounds/scroll rules; F3-663 now keeps tokens readable inside the note width and preserves vertical scroll/copy text. | No CSS values, independent renderer or browser proof. |
+| Excluded | FO-13 translation lookup/build-key checks; Studio oldKey/guestLater, seed data, concept-host fault states and artificial delays. | No product row or owner rule for these mechanics. |
+
+DL-271 is the sole new PlanUnit allocated by this feedback batch. Storage main683e603ac1 is incorporated with its DL-270 and reserved storage/command/GUI units intact. Prose conflicts were reread before companion reconciliation; no ledger compiled or reseal. The active settings union is 1010, Touch is 715 rows / 140 profiles and production wiring is 1270. The raw settings union includes the retired NieR override; it remains a migration input, not an active row. Main’s current migration run and landing baseline are inherited without refresh.

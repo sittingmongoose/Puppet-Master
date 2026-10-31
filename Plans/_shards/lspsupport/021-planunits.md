@@ -2,9 +2,9 @@
 
 Source: `Plans/LSPSupport.md`
 
-Source lines: L1084-L7028
+Source lines: L1085-L7029
 
-Source SHA256: `150495e57afa3942b172b935cc99e8247da54aa3b45896d72e9883a86c99b91e`
+Source SHA256: `960d3570dbedd40f82ebdd946c9b35b45ddc14d2f4b30dca7579f644b242acde`
 
 ---
 
@@ -5177,7 +5177,7 @@ plan_unit_id: LSPS-096
 unit_type: requirement
 status: accepted
 owner_doc: Plans/LSPSupport.md
-canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts.
+canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts. Amended 2026-10-31 (DL-270) - the snapshot is a typed evidence record in the evidence store (SP-339, SP-345), referenced from the gate report; the snapshots directory location is retired.
 gui_related: false
 gui_classification_reason: The unit defines LSP runtime, protocol, registry, verification, evidence, or implementation constraints rather than direct GUI presentation.
 split_recommended: false
@@ -5532,7 +5532,7 @@ plan_unit_id: LSPS-103
 unit_type: requirement
 status: accepted
 owner_doc: Plans/LSPSupport.md
-canonical_text: LSP snapshots are stored under .puppet-master/evidence/lsp-snapshots with unique gate or tier/session filenames and JSON object content containing captured_at, scope, project_root, and diagnostics.
+canonical_text: LSP snapshots are stored under .puppet-master/evidence/lsp-snapshots with unique gate or tier/session filenames and JSON object content containing captured_at, scope, project_root, and diagnostics. Amended 2026-10-31 (DL-270) - storage under .puppet-master/evidence/lsp-snapshots and per-run filenames are retired. LSP snapshots are no longer written as JSON files under .puppet-master/evidence/. Each snapshot is a typed evidence record in the canonical redb evidence family (value at most 16 KiB; a larger diagnostic list goes to the BLAKE3 payload store, SP-337). The GateReport carries the record reference. People open it through pm inspect, the in-app record inspector or pm export (JSON only on request). The object keys captured_at, scope, project_root and diagnostics remain the field set. Owners are SP-339, SP-340 and SP-345.
 gui_related: false
 gui_classification_reason: The unit defines LSP runtime, protocol, registry, verification, evidence, or implementation constraints rather than direct GUI presentation.
 split_recommended: false
@@ -5629,7 +5629,7 @@ plan_unit_id: LSPS-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/LSPSupport.md
-canonical_text: The gate runner invokes LspGateVerifier, which gets diagnostics, writes the snapshot JSON, attaches evidence to VerifierResult, and returns pass/fail while EvidenceStore may persist the path and GateReport criteria carry the evidence.
+canonical_text: The gate runner invokes LspGateVerifier, which gets diagnostics, writes the snapshot JSON, attaches evidence to VerifierResult, and returns pass/fail while EvidenceStore may persist the path and GateReport criteria carry the evidence. Amended 2026-10-31 (DL-270) - the verifier persists a typed evidence record instead of writing snapshot JSON, and attaches its reference to VerifierResult; EvidenceStore persists the record reference, not a path (SP-339). pm export is the only JSON path.
 gui_related: false
 gui_classification_reason: The unit defines LSP runtime, protocol, registry, verification, evidence, or implementation constraints rather than direct GUI presentation.
 split_recommended: false

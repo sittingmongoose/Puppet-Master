@@ -1047,7 +1047,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget.
+  Dashboard-hosted Usage widgets are consumers of the canonical UsageRecord projection and FinalGUISpec value-state matrix. A Usage widget may summarize token, context, cost, quota, cache, reasoning, provider_total, context_estimate, Antigravity credits, or provider pressure only when it carries value_state, source_class, source_confidence, settlement_status, projection_freshness, and reason for degraded/unknown/hidden/disabled values. If the Dashboard does not promote a Usage widget in a given build, the Add Widget catalog shows Usage unavailable rather than silently substituting a simplified spend widget. Amended 2026-10-31 (DL-270, UF-108): a Usage widget reads the redb rollups that update as each usage.event lands and never scans raw usage events; Dashboard and Usage share those rollups.
 gui_related: true
 gui_classification_reason: Dashboard widgets and Add Widget catalog behavior are visible GUI surfaces.
 depends_on: [WS-013, F3-418, UF-087]
@@ -1057,6 +1057,7 @@ acceptance_criteria:
   - Usage widget fixtures cover no-double-count behavior for cache and reasoning inclusive/exclusive semantics.
   - Add Widget catalog either exposes a named Usage widget with this contract or marks Usage widget hostability unavailable with a reason; it must not expose an unowned placeholder widget.
   - Dashboard widget rollups use usage_event_ref or UsageRecord aggregation refs and never timestamp/run/thread/tier-only joins for accounting identity.
+  - No Usage widget on Dashboard or the Usage page scans raw usage events or shows a usage retention window; each reads redb rollups per account, provider and model.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -1860,47 +1861,54 @@ canonical_text: 'A dashboard is a tab kind in the home centre (Plans/FinalGUISpe
   every widget command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361). Presets (D35, Jared: "With
   savable presets."): a person can save a board''s arrangement as their own preset, rename it and delete it. Presets
   belong to the person, not the project: they are kept in the per-user family `widget_presets:v1` and shown in Start
-  from on every dashboard of every project. A preset holds its id, its name, when it was saved, the board it was saved
-  from, the layout of the widgets shown at each board class (S, M, L and XL, WS-017), each widget''s size preset and
-  each widget''s configuration; it never holds the board''s view. A name is trimmed, with runs of white space made one,
-  at most 80 characters; the save offers the dashboard''s name made unique, and a preset with no name is called "Preset
-  <n>". Saving, renaming and deleting a preset are typed local actions with no command, receipt or event (ui.widget_preset.save,
-  ui.widget_preset.rename, ui.widget_preset.delete; lead ruling F2); applying one is Start from with set_id `user:<preset_id>`.
-  A board that started from a preset keeps its widgets when the preset is deleted. View (P2): each board has its own
-  range (5 hours, 24 hours, 7 days or 30 days) and scope (all accounts, work, personal, or one provider with accounts),
-  kept in its envelope and set from its Board menu. Changing them is view state, the typed local action ui.widget_board.set_view
-  with no receipt and no event (lead ruling F1), like the Usage page''s remembered Live / Paused. A widget that follows
-  its board reads the board''s range and scope; a range or scope set in a widget''s own configuration still wins, as
-  it does over the page''s on the Usage page (Plans/usage-feature.md#UF-060; D10 design section 3.5). A board has no
-  rooms and no room change, and it shows every widget placed on it at every disclosure level. Behaviour: inside the tab
-  the board is the Usage widget board, the same on every board as on the Usage page: its snapping grid and its track
-  count from the board''s own measured width, never the window (F3-638); its curated sizes and size presets (WS-017,
-  WS-018); its gestures, gravity and Tidy, each one settled transaction (WS-019, which DL-186 amends so that no dashboard
-  keeps its own settlement). The per-kind preset table tested at 400, 550 and 700 px of board width is WS-017''s one
-  per-kind preset table (DL-176). One widget transaction at a time holds across every board on the page. A board''s first
-  show plays the Usage board''s calm reading-order entrance, instant under Reduced Motion (P7); a board has no room film.
-  Boards sit on Home''s own tab surface, not the Usage page''s ground, and every look''s widget plates are drawn for
-  that surface (P11, F3-638). Live readings run on dashboards too, per board, under the Usage page''s idle rule, and
-  the Live choice is the Usage page''s one switch (P12, Plans/usage-feature.md#UF-107). A board that is not shown does
-  no work, live beats included, and catches up when it is shown again. Details on a dashboard card opens the Usage page
-  at the widget''s home room with that widget''s inspector open (P8), and a card''s rows that lead into a Usage room
-  open the Usage page at that room; neither changes the Usage page out of sight. Closing and named layouts (P6): closing
-  a dashboard tab closes the tab only, and its board keeps its key while the tab can be reopened. When a dashboard a
-  person made leaves the reopen list and is not open as a tab, its key, its set-aside copy and its name are deleted;
-  the built-in boards keep theirs. A named layout keeps the boards of the dashboard tabs it holds: saving it snapshots
-  each board''s envelope, or none, and applying it restores them, while a named layout saved before this applies as it
-  did. The snapshot is capped at 64 KB per named layout (lead ruling F3): a bigger save keeps the layout without its
-  boards, records how many bytes it left out and says so; Plans/storage-plan.md#SP-330 owns that record. The Guided Tour''s
-  snapshots take the Home board''s widgets with the panels, per project (Plans/Planning_Wizard.md#PWIZ-035). This supersedes
-  WS-009''s one Dashboard namespace and WS-013''s limit to some Usage widgets, both amended in place, and amends the
-  Home Workspace boundary addendum''s sentences that assume one dashboard. DL-186 retires the panels concept''s stand-in
-  board with its grid numbers and reset spans, and the conversion of `widget_layout:v1:dashboard` into the Home board;
-  their 2026-10-09 and 2026-10-10 text is kept below for lineage only. The Dashboard plus sub-row keeps Home, Metrics,
-  Monitoring, Agents and New dashboard inline; one Your dashboards row opens this project''s custom dashboards by name
-  with their widget counts and search above 7. Custom ids run from dash-1 to dash-9999: the next number is one above
-  the largest across open tabs, the reopen list, this project''s stored boards, still-unadopted unscoped stores, names
-  and live boards; beyond 9999 the open resolves to Home. An unknown board opens Home, dashboard:new creates one and
-  dashboard:current resolves to dashboard:home. Dashboard names are unique against built-ins and the project''s custom
+  from on every dashboard of every project. Amended 2026-10-31 (DL-270): `widget_presets:v1` and the per-board widget-layout
+  envelope are redb families under SP-340, each with a declared maximum value of 16 KiB, a typed or MessagePack encoding
+  (SP-339) and a disk budget. Each preset is its own value, not one record holding every preset; a preset larger than
+  the cap keeps its one record and holds its layout body by payload reference (SP-340, SP-337), not refused, and the
+  80-character name limit still applies. A preset holds its id, its name, when it was saved, the board it was saved from,
+  the layout of the widgets shown at each board class (S, M, L and XL, WS-017), each widget''s size preset and each widget''s
+  configuration; it never holds the board''s view. A name is trimmed, with runs of white space made one, at most 80 characters;
+  the save offers the dashboard''s name made unique, and a preset with no name is called "Preset <n>". Saving, renaming
+  and deleting a preset are typed local actions with no command, receipt or event (ui.widget_preset.save, ui.widget_preset.rename,
+  ui.widget_preset.delete; lead ruling F2); applying one is Start from with set_id `user:<preset_id>`. A board that started
+  from a preset keeps its widgets when the preset is deleted. View (P2): each board has its own range (5 hours, 24 hours,
+  7 days or 30 days) and scope (all accounts, work, personal, or one provider with accounts), kept in its envelope and
+  set from its Board menu. Changing them is view state, the typed local action ui.widget_board.set_view with no receipt
+  and no event (lead ruling F1), like the Usage page''s remembered Live / Paused. A widget that follows its board reads
+  the board''s range and scope; a range or scope set in a widget''s own configuration still wins, as it does over the
+  page''s on the Usage page (Plans/usage-feature.md#UF-060; D10 design section 3.5). A board has no rooms and no room
+  change, and it shows every widget placed on it at every disclosure level. Behaviour: inside the tab the board is the
+  Usage widget board, the same on every board as on the Usage page: its snapping grid and its track count from the board''s
+  own measured width, never the window (F3-638); its curated sizes and size presets (WS-017, WS-018); its gestures, gravity
+  and Tidy, each one settled transaction (WS-019, which DL-186 amends so that no dashboard keeps its own settlement).
+  The per-kind preset table tested at 400, 550 and 700 px of board width is WS-017''s one per-kind preset table (DL-176).
+  One widget transaction at a time holds across every board on the page. A board''s first show plays the Usage board''s
+  calm reading-order entrance, instant under Reduced Motion (P7); a board has no room film. Boards sit on Home''s own
+  tab surface, not the Usage page''s ground, and every look''s widget plates are drawn for that surface (P11, F3-638).
+  Live readings run on dashboards too, per board, under the Usage page''s idle rule, and the Live choice is the Usage
+  page''s one switch (P12, Plans/usage-feature.md#UF-107). A board that is not shown does no work, live beats included,
+  and catches up when it is shown again. Details on a dashboard card opens the Usage page at the widget''s home room
+  with that widget''s inspector open (P8), and a card''s rows that lead into a Usage room open the Usage page at that
+  room; neither changes the Usage page out of sight. Closing and named layouts (P6): closing a dashboard tab closes the
+  tab only, and its board keeps its key while the tab can be reopened. When a dashboard a person made leaves the reopen
+  list and is not open as a tab, its key, its set-aside copy and its name are deleted; the built-in boards keep theirs.
+  A named layout keeps the boards of the dashboard tabs it holds: saving it snapshots each board''s envelope, or none,
+  and applying it restores them, while a named layout saved before this applies as it did. The snapshot is capped at
+  64 KB per named layout (lead ruling F3): a bigger save keeps the layout without its boards, records how many bytes
+  it left out and says so; Plans/storage-plan.md#SP-330 owns that record. Amended 2026-10-31 (DL-270): the 64 KB cap
+  stays as the per-layout budget for saved boards, but no single stored value passes 16 KiB (SP-340, SP-337). The snapshot
+  is held as one value per board envelope, or as a content-addressed payload-store reference when a board''s envelope
+  is larger than 16 KiB, and the named layout record lists those references; the skip rule and boards_skipped_bytes are
+  unchanged. The Guided Tour''s snapshots take the Home board''s widgets with the panels, per project (Plans/Planning_Wizard.md#PWIZ-035).
+  This supersedes WS-009''s one Dashboard namespace and WS-013''s limit to some Usage widgets, both amended in place,
+  and amends the Home Workspace boundary addendum''s sentences that assume one dashboard. DL-186 retires the panels concept''s
+  stand-in board with its grid numbers and reset spans, and the conversion of `widget_layout:v1:dashboard` into the Home
+  board; their 2026-10-09 and 2026-10-10 text is kept below for lineage only. The Dashboard plus sub-row keeps Home,
+  Metrics, Monitoring, Agents and New dashboard inline; one Your dashboards row opens this project''s custom dashboards
+  by name with their widget counts and search above 7. Custom ids run from dash-1 to dash-9999: the next number is one
+  above the largest across open tabs, the reopen list, this project''s stored boards, still-unadopted unscoped stores,
+  names and live boards; beyond 9999 the open resolves to Home. An unknown board opens Home, dashboard:new creates one
+  and dashboard:current resolves to dashboard:home. Dashboard names are unique against built-ins and the project''s custom
   dashboards, and preset names against the person''s presets, using suffixes 2, 3 and so on; an empty or default dashboard
   name drops its stored entry. A project switch rebinds every mounted engine board whose tab survives, hidden boards
   too, reloads custom names and refreshes the catalog; a board unmounted by the switch writes to its prior project. Add
@@ -1933,7 +1941,7 @@ acceptance_criteria:
   - "New dashboard opens an empty board with the next unused number, named \"Dashboard <n>\"; Rename dashboard... and renaming its tab set the stored name through cmd.panel_tab.rename; Delete dashboard... asks first, closes the tab, drops it from the reopen list and forgets its key, set-aside copy and name; Home, Metrics, Monitoring and Agents offer neither Rename dashboard... nor Delete dashboard...."
   - "Reset widgets dispatches one cmd.widget.reset_layout { scope: 'room', room } that returns the board to its default set; each Start from row dispatches one cmd.widget.reset_layout with its set_id; Start from shows the sets in F3-638's four groups, This dashboard (default), Dashboard starter (host:dashboard), the 13 Usage room sets in room order, then the person's presets; the envelope stores every set_id but default."
   - "The Undo after Start from dispatches one cmd.widget.reset_layout { scope: 'room', room, restore_revision } with the board's committed layout revision just before that Start from and no set_id, only while its notice is up; the owner puts back exactly that revision's records, a restore is refused without dispatch when any other change was committed on the board since, except the preset hold's settling resizes, and Undo is disabled with its reason, and no workspace.layout_changed is emitted (amended 2026-10-10, lead ruling)."
-  - "Saving, renaming and deleting a preset dispatch no command and write only `widget_presets:v1`; a preset holds no view, appears in Start from on every dashboard of every project, and applying it dispatches cmd.widget.reset_layout with set_id user:<preset_id>."
+  - "Saving, renaming and deleting a preset dispatch no command and write only `widget_presets:v1`, plus a payload-store body for a layout over 16 KiB (SP-337); a preset holds no view, appears in Start from on every dashboard of every project, and applying it dispatches cmd.widget.reset_layout with set_id user:<preset_id>."
   - "Changing a board's range or scope runs ui.widget_board.set_view, writes only that board's envelope and dispatches no command, receipt or event; each board keeps its own range and scope."
   - "Add widget offers every Usage widget grouped by Usage room, and any other registered source's widgets under that source; a widget on the board cannot be added twice; no board offers an old Home widget; every widget command inside a dashboard tab names its board in `room`, changes only that board and emits no `workspace.layout_changed`; a panel or tab command changes no board."
   - "A board's first show plays the reading-order entrance, instant under Reduced Motion; a hidden board does no work; live readings run per board; boards are drawn on Home's tab surface in every look; Details opens the Usage page at the widget's home room with its inspector open."

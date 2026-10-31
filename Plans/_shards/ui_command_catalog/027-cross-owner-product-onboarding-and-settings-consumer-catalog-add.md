@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11246-L11506
+Source lines: L11248-L11510
 
-Source SHA256: `9ea4866153f0fa583750c83b6065aadc778647cfb80435f9bd2e802b9619edc3`
+Source SHA256: `715b489e7711ed6f4a709a6b542f4d10cf949f344c00a0c44d6cfb71960c9bcd`
 
 ---
 
@@ -28,6 +28,8 @@ and receipt/projection-only effects with an empty EventRecord set.
 | `cmd.client.pair.reject` | Reject Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::reject` | Settings pairing-request detail; Product Onboarding exact owner return |
 | `cmd.client.pair.cancel` | Cancel Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::cancel` | Settings pairing-progress detail; Product Onboarding exact owner return |
 | `cmd.client.revoke` | Revoke Client Trust | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_trust::revoke` | Settings paired-client detail; Doctor trust remediation route |
+
+Amended 2026-10-31 (DL-270, BRS-031): the `cmd.restore.preview` result also carries the last verified backup from the one backup-status record (its time, its verification level and its last event) and what restoring from it would lose; a newer backup that has not verified is shown beside it, never instead of it. The Settings Backup/Restore manager and the Doctor recovery route show these before the user confirms (F3-528, FinalGUISpec section 15.6); neither computes them. The typed result shape stays with Contracts_V0 and the backup schema.
 
 The three existing Project rows now bind exactly to
 `Plans/project_system_contracts.schema.json#/$defs/project_action_request` and

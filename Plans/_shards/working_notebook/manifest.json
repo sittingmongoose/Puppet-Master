@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "generated_at_utc": "2026-10-31T20:35:29Z",
   "index_path": "Plans/_shards/working_notebook/00-index.md",
-  "index_sha256": "241c24da554e3a2a1cf1192b2d0f1ea5d4d16c4003e06d7d42aa2c58dd1d6602",
+  "index_sha256": "dfd0b9624d502f447031a52c5516c9f5c9938c4e08645f23ca984007efdd4e3c",
   "manifest_path": "Plans/_shards/working_notebook/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/working_notebook/001-preamble.md",
-      "sha256": "35f65764fab6528c9fd1ec903991a171aabf9895a4421874f9e80a52c7ee4fdd",
+      "sha256": "d07f5c3386759dc2cfb095661499949050316994d0c588a835a5393495c1c281",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/working_notebook/002-0.-scope.md",
-      "sha256": "ab9d86b12ee4476e8cb800b95503c1c227c68101bd0e10e66ed143332d64b829",
+      "sha256": "ef809c25279ea3af75d132ce3e33851ee7d8277d1d34b9c919f2e9b037047d13",
       "shard_id": "002",
       "source_line_end": 44,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/working_notebook/003-1.-ownership-and-consumers.md",
-      "sha256": "0a32e310e2e336f88c3f2829746041fe6e1d17ffebde1eeb5a86dc6512cd8ecc",
+      "sha256": "9e35a46c575d85fd5e91ad0143ca64d4e33d95d85b7a10f60957f7cd1e151eb0",
       "shard_id": "003",
       "source_line_end": 72,
       "source_line_start": 46,
@@ -35,70 +35,70 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/working_notebook/004-2.-canonical-planunits.md",
-      "sha256": "f6a5e740307d032b9d41b7bf8132d900dea7055332ba743fdd6d8cf8688bf03c",
+      "sha256": "2bc542021cd1ef460619015bb2395a6398a4cfd8e4b3217c0b91335cab58de6e",
       "shard_id": "004",
-      "source_line_end": 784,
+      "source_line_end": 785,
       "source_line_start": 74,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/working_notebook/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "d0f72745732acd2066deeee61ec3049092e1d6e632455fa48b7a045399923a5a",
+      "sha256": "c4698f83f0bd87664ae49ea746e24d47f9853d1612f77f90cb68f314c9387f1b",
       "shard_id": "005",
-      "source_line_end": 830,
-      "source_line_start": 786,
+      "source_line_end": 831,
+      "source_line_start": 787,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/working_notebook/006-4.-integration-surfaces.md",
-      "sha256": "cb596f7cf8f46c2a6175ea9b3ebcae61170836d2670af79444560c4888cb0777",
+      "sha256": "58a4005af54a6265b2febcc8c80d849d99c74638e5f334556d2c4bdac1d85a6d",
       "shard_id": "006",
-      "source_line_end": 851,
-      "source_line_start": 832,
+      "source_line_end": 852,
+      "source_line_start": 833,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/working_notebook/007-5.-validation-and-acceptance.md",
-      "sha256": "6156007273ad0f7d52c62a70c7a7703d0833c44fa6b447bbbf045f624eeeae73",
+      "sha256": "a320073a66edebb9df14f016511b798ef7d74e4fb81c00598751d429871eaa21",
       "shard_id": "007",
-      "source_line_end": 859,
-      "source_line_start": 853,
+      "source_line_end": 860,
+      "source_line_start": 854,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/working_notebook/008-6.-plan-to-node-readiness.md",
-      "sha256": "34027f7e43c255f2c480452157d25bdfdd4bd05504ee3a14adee718a7a515a8d",
+      "sha256": "1f5fafdc9c5cbc0c347c672ce18edc1b382ecc0db180532109898c488976fe2a",
       "shard_id": "008",
-      "source_line_end": 865,
-      "source_line_start": 861,
+      "source_line_end": 866,
+      "source_line_start": 862,
       "split_rule": "heading-##"
     },
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/working_notebook/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "6929f766bf9f777f6fe993ccc63d47dd0263f2dd1ca90b6f4530fc6c43770180",
+      "sha256": "9b5b12a9405a9fadfd13bbe8a82798e131a2f3b84993f1c159e64bea0d72593c",
       "shard_id": "009",
-      "source_line_end": 873,
-      "source_line_start": 867,
+      "source_line_end": 874,
+      "source_line_start": 868,
       "split_rule": "heading-##"
     },
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/working_notebook/010-8.-source-lineage-and-governance.md",
-      "sha256": "75d8fd3f4d01109b1dac1b1f91a0401b110bfcddd062b7c43bae9cd9aff17b30",
+      "sha256": "dabe29f3570519f88c162bdb7f5753da4944aa89b0a0b60e231fd1da5abf4c98",
       "shard_id": "010",
-      "source_line_end": 879,
-      "source_line_start": 875,
+      "source_line_end": 880,
+      "source_line_start": 876,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 879,
+    "line_count": 880,
     "path": "Plans/Working_Notebook.md",
-    "sha256": "0cf913e129241c8826dd1adee740d0cdce435fd1df5a2da3c3e7be1a3bc71a5c"
+    "sha256": "5ed0e3762d8572c4b2a057943888015b1e9a5369176a97f627f787d7de995a7b"
   }
 }

@@ -239,7 +239,7 @@ Agents MUST NOT:
 
 ### PolicyRule: no_secrets_in_storage
 
-**Scope:** All persistent stores (seglog, redb, Tantivy indexes).
+**Scope:** All persistent stores (seglog, redb, Tantivy indexes, and, since DL-270, the content-addressed payload pack files (SP-337), the Parquet archive and DuckDB derived data (SP-341), and the render-page store (SP-338)). Tool output, file reads and images in these stores are checked for secrets under the same rule. Amended 2026-10-31 (DL-270).
 
 **Rule:** Persistent stores MUST NOT contain secrets (tokens, passwords, API keys, OAuth refresh tokens). Tokens live only in the OS credential store (platform keyring). Violations are P0 bugs requiring immediate remediation.
 
@@ -1757,9 +1757,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Decision_Policy.md
 canonical_text: >-
-  Persistent stores, including seglog, redb, and Tantivy indexes, must not
-  contain tokens, passwords, API keys, OAuth refresh tokens, credentials, or
-  other secrets; tokens live only in the OS credential store.
+  Persistent stores, including seglog, redb, Tantivy indexes, payload pack
+  files (SP-337), the Parquet archive (SP-341) and render-page stores (SP-338),
+  must not contain tokens, passwords, API keys, OAuth refresh tokens,
+  credentials, or other secrets; tokens live only in the OS credential store.
+  Amended 2026-10-31 (DL-270).
 gui_related: false
 gui_classification_reason: This unit defines storage safety policy.
 split_recommended: false

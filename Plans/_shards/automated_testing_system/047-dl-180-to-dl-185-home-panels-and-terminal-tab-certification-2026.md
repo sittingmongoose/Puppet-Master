@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5948-L6547
+Source lines: L5969-L6570
 
-Source SHA256: `c6a020b3dcd9310c03940a59fca04a218f2734d59ca3567dbb193deec919b6c0`
+Source SHA256: `69b11401415f362e9232dd09dc1258f63f85a66af5d8b1b4ce2f1320fdc7672c`
 
 ---
 
@@ -110,7 +110,9 @@ canonical_text: 'The home panels (DL-180) are certified by one matrix that repla
   surface and every look''s widget plates are checked on it; Details opens the Usage page at the widget''s home room
   with its inspector open; Agents keeps only its filter; a dashboard a person made that leaves the reopen list while
   closed loses its key, set-aside copy and name; a named layout restores its boards, and a save over 64 KB keeps the
-  layout without them and says how many bytes it left out. The chat (F3-637, F3-042, Plans/assistant-chat-design.md#ACD-500):
+  layout without them and says how many bytes it left out (Amended 2026-10-31 (DL-270): a redb value is at most 16 KiB
+  (SP-340), so a layout snapshot over that size is stored per board or in the payload store (SP-337) by the stored form
+  SP-330 gives; the case keeps the trimmed-bytes notice and asserts that stored form). The chat (F3-637, F3-042, Plans/assistant-chat-design.md#ACD-500):
   a popped-out chat starts back in its column after a restart; the left rail''s Chat entry shows or hides the column
   on every page (cmd.panel.switch); a stored Chat Layout value of Overlay or Detached is ignored and cleared on first
   read with no pop-out and no notice (Plans/Settings_System.md#SSYS-050); Keep the chat open in narrow windows is on

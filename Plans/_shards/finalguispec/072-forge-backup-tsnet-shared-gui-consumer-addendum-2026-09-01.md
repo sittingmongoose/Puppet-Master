@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37985-L38123
+Source lines: L38097-L38239
 
-Source SHA256: `9bba9ab7879355b93b484c57c5ce3985d82e729dc1dc215ae143d2597946531a`
+Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
 
 ---
 
@@ -22,19 +22,22 @@ plan_unit_id: F3-528
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
-  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access
-  connector state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections,
-  routes, currentness, availability, protected handoffs, ObservableWork phases, alerts, focus, and return
-  context without owning provider, source-control, backup, scheduler, encryption/key, connector, auth, Doctor,
-  notification-store, or status truth. Every packet action remains visibly truthful and unavailable until its
-  owner and central runtime integration exist. Amended 2026-10-09 (DL-162): in the left rail the
-  AutomationBinding selector is a field labelled Automation service that opens the chat picker (F3-621), never a
-  native select; picking runs ui.repository_automation.binding.select and changes nothing else. As
-  Forge_Integrations' route unit says, the field shows only when the project has several bindings; with one, the
-  rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30
-  (DL-257): the current family/variant and inventory census supersede earlier counts.
+canonical_text: 'Final GUI presents one canonical repository_automation side-panel occupant labeled Actions & Pipelines,
+  owner-routed Backup and Recovery components inside the K3 Settings/Files/Project contexts, and Remote Access connector
+  state in existing Settings/Onboarding/Doctor/status surfaces. It paints exact owner projections, routes, currentness,
+  availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
+  source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth. Every
+  packet action remains visibly truthful and unavailable until its owner and central runtime integration exist. Amended
+  2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation service that opens
+  the chat picker (F3-621), never a native select; picking runs ui.repository_automation.binding.select and changes nothing
+  else. As Forge_Integrations'' route unit says, the field shows only when the project has several bindings; with one,
+  the rail names the service as a fact beside the revision (owner, 2026-10-10). Amended Q22, Jared 2026-10-30 (DL-257):
+  the current family/variant and inventory census supersede earlier counts. Amended 2026-10-31 (DL-270, BRS-031): Data
+  Backup and Retention and RestorePreview also show the last verified backup, meaning the newest backup at Structure
+  verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
+  written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
+  one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
+  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.'
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -65,8 +68,9 @@ acceptance_criteria:
   refusal is non-mutating, and accepted emergency consent never displays a fictitious recovery point or enabled rollback.
   All command, preview, generation, and evidence rules remain Backup-owned.
 - Data Backup and Retention shows explicit Server or Project scope, protected coverage, destinations, encryption, Last
-  complete remote backup receipt time, verification/drill state, Recovery Kit status, `[Back Up Now] [Restore…] [Add
-  Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
+  complete remote backup receipt time, verification/drill state, Recovery Kit status, the last verified backup with its
+  time and last event and what a restore from it would lose (BRS-031, amended 2026-10-31, DL-270), `[Back Up Now] [Restore…]
+  [Add Destination]`, and truthful disabled reasons. Storage sign-in and decryption readiness remain separate.
 - Snapshot Browse is read-only and binds immutable repository/snapshot/capture-set identity. Download returns only to
   the initiating Client, extract requires an explicit authorized Host/path, compare binds immutable and current identities,
   export is disclosed as a non-restore artifact, and none activates or executes a Project.
