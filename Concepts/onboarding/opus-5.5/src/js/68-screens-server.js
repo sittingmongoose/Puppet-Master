@@ -61,6 +61,8 @@
      live only in O55.ephemeral (memory); the persisted session keeps generation/expiry/ids/trust, never raw code. */
   const setupCodes = new Map(); // one-time claim input; never part of S.sess
   const OR = () => O55.ownerResults;
+  /* demo hints (O55.flow.hint): ready choices for the steps that need a real Server, each taking a branch */
+  const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   const EPH = () => O55.ephemeral;
   const selfCandidate = (S) => 'candidate:' + U.slug(S.env.client.name);
   const claimChain = (S) => {
@@ -147,6 +149,7 @@
         const typed = String(sv.addr || '').trim().toLowerCase(), hit = typed === u.address, pub = kind === 'cloud' && !!typed && !privateAddress(typed);
         if (kind === 'cloud') out += C.note(T('server.wait.cloudPrivate'), 'info', 'lock');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudPrivateLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : pub ? '' : T(kind === 'cloud' ? 'server.wait.cloudHint' : 'connect.route.addressHint'), error: pub ? T('server.wait.cloudPublic') : '', invalid: pub, valid: hit });
+        out += H('s-wait:addr', kind === 'cloud' ? [{ label: u.address, outcome: 'works', fills: [['addr', u.address]] }, { label: '203.0.113.24', outcome: 'refused', fills: [['addr', '203.0.113.24']] }] : [{ label: u.address, outcome: 'works', fills: [['addr', u.address]] }, { label: '192.168.1.77', outcome: 'noAnswer', fills: [['addr', '192.168.1.77']] }], { when: !hit });
       } else if (!unclaimedFound(S)) {
         out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
@@ -260,6 +263,7 @@
       const st = F.state(S, 'claim:' + u.id);
       const failedCode = (st && st.state === 'failed') || sv.orClaimErr === 'setup_code_mismatch';
       out += C.field({ bind: 'code', label: T('server.confirm.codeLabel'), value: setupCodes.get(u.id) || '', placeholder: '482 913', hint: T('server.confirm.codeHint', { name: u.name }), error: failedCode ? T('server.confirm.codeWrong', { name: u.name }) : '', invalid: failedCode });
+      out += H('s-confirm:code', [{ label: u.setupCode, outcome: 'works', fills: [['code', u.setupCode]] }, { label: '000 000', outcome: 'wrong', fills: [['code', '000 000']] }], { when: !sv.orClaimOk });
       if (!sv.orClaimReq) { out += C.note(T('server.confirm.willLine', { name }), 'info', 'lock'); return out; }
       const ch = claimChain(S);
       out += C.phases([

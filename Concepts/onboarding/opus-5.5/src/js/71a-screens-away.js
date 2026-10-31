@@ -12,6 +12,8 @@
   const O55 = window.O55, C = O55.c, U = O55.util, F = O55.flow, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
   const E = () => O55.endpoint;
+  /* demo hints (O55.flow.hint): ready choices for an address or a step a real service would answer */
+  const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   const serverName = (S) => (O55.project ? O55.project.serverName(S) : '');
   /* the agreement that a web address puts the Server's sign-in page on the internet, for that one address (SCR-06) */
   const AW = (S) => (S.sess.away = S.sess.away || {});
@@ -53,11 +55,13 @@
       if (route === 'headscale') {
         const res = E().check(d.headscale_url, 'headscale'), w = E().hint(res, 'https://…');
         fields = C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok })
+          + H('away:headscale', [{ label: 'https://headscale.example.com', outcome: 'works', fills: [['headscale', 'https://headscale.example.com']] }, { label: 'http://headscale.example.com', outcome: 'wrong', fills: [['headscale', 'http://headscale.example.com']] }], { when: !res.ok })
           + `<p class="o55-hint" data-key="hs-next">${U.esc(T('away.headscaleNext', { name }))}</p>`;
       }
       if (route === 'reverse_proxy') {
         const res = E().check(d.proxy_hostname, 'proxy'), w = E().hint(res, 'https://…'), hosting = d.proxy_hosting || 'generate_for_server';
         fields = C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok });
+        fields += H('away:proxy', [{ label: 'pm.example.net', outcome: 'works', fills: [['proxy', 'pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !res.ok });
         fields += C.segmented({ do: 'hosting', value: hosting, label: T('away.proxy.hosting'), options: [{ v: 'generate_for_server', label: T('away.proxy.pm') }, { v: 'generate_only', label: T('away.proxy.generate') }, { v: 'existing_proxy', label: T('away.proxy.existing') }] });
         if (hosting !== 'existing_proxy') {
           fields += C.segmented({ do: 'tls', value: d.proxy_tls || 'lets_encrypt', label: T('away.proxy.tls'), options: [{ v: 'lets_encrypt', label: T('away.proxy.free') }, { v: 'existing_certificate', label: T('away.proxy.own') }] });
@@ -194,6 +198,7 @@
       onFail: (S2, res) => { liveSteps.delete(key); const cur = A(S); if (!cur || cur.id !== at.id || cur.step !== at.step) return; cur.state = 'failed'; cur.fail = { step: st.key, code: res.code }; S.save(); O55.ui.refresh(); }
     });
   }
+  const HINT_WORD = { denied: 'refused', expired: 'expired', needs_device_approval: 'refused', route_failed: 'noAnswer', registration_denied: 'refused', hs_unreachable: 'noAnswer', dns_mismatch: 'wrong', unreachable: 'noAnswer', certificate_failed: 'refused', live_failed: 'noAnswer', relay_unavailable: 'noAnswer' };
   const FAIL_WORDS = { denied: 'denied', expired: 'expired', needs_device_approval: 'deviceApproval', route_failed: 'routeFailed', registration_denied: 'hsDenied', hs_unreachable: 'hsUnreachable', unreachable: 'unreachable', dns_mismatch: 'dns', certificate_failed: 'cert', live_failed: 'live', relay_unavailable: 'relay' };
   def('away-setup', {
     seed: (S) => { seedServer(S, 'tailscale'); if (!needsSetup(S)) O55.draft.set(md(S), { remote_mode: 'tailscale', tailscale_control: 'hosted' }); if (!A(S)) { O55.draft.set(md(S), { review_confirmed: true }); begin(S, 'ready'); } S.save(); },
@@ -211,6 +216,9 @@
       if (a.state === 'pending' && st) out += C.note(st.wait || T('server.confirm.pendingHost'), 'info', 'server');
       if (a.link) out += `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>${F.copyNote('rlink')}<p class="o55-hint" data-key="rlink-hint">${U.esc(T('away.setup.rl.share'))}</p>`;
       if (a.state === 'failed' && a.fail) out += `<div class="o55-banner o55-banner-warn" data-key="awayfail">${C.small('lock', 18)}<span>${U.esc(T('away.setup.fail.' + (FAIL_WORDS[a.fail.code] || 'routeFailed'), { name, host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }))}</span></div>`;
+      /* the other answers the owner can give at a step, each tried once (failures.away_once) */
+      const fails = [...new Set(steps.slice(a.step || 0).flatMap((x) => x.fail || []))];
+      if (a.confirmed && !['done', 'later', 'failed'].includes(a.state)) out += H('away-setup:outcome', fails.map((code) => ({ label: T('away.setup.hint.' + code), outcome: HINT_WORD[code] || 'refused', act: ['demoOutcome', code] })));
       if (a.state === 'done') out += C.note(T('away.setup.done', { name }), 'ok', 'check');
       if (a.state === 'later') out += C.note(T('away.setup.laterNote'), 'info', 'rewind');
       return out;
@@ -233,6 +241,8 @@
         if (st.person === 'tsSignIn') O55.official.open(S, { name: 'Tailscale', url: 'https://login.tailscale.com/' });
         a.people[st.person] = true; a.state = 'idle'; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh();
       },
+      /* (demo: the owner answers the next step this way, once: failures.away_once, the Demo Studio hook) */
+      demoOutcome(S, code) { if (!HINT_WORD[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.away_once = code; O55.sound.play('tap'); O55.ui.refresh(); },
       retry(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) F.reset(S, stepKey(a, st)); a.state = 'idle'; a.fail = null; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh(); },
       /* Later: nothing more is set up now; the way in stays not set up and Settings finishes it (a clean finish) */
       later(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) O55.owners.cancelOp(stepKey(a, st)); a.state = 'later'; S.save(); O55.ui.refresh(); },

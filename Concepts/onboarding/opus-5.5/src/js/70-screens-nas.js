@@ -18,6 +18,8 @@
      done/fail/phase sounds in opts.sound (O55.flow.op): what discovery turns up is `found`, a wrong code or password
      is a soft `warn` (the field or banner says what to do), and an approval on the other device is `found`. */
   const SND = { found: { intensity: 0.55 } };
+  /* demo hints (O55.flow.hint): ready choices for steps a real device would answer, each taking a branch */
+  const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   const FOUND_SOUND = { done: 'found', intensity: 0.55 };
   /* A folder step is a click, so the generic tap (rank 30) is queued in the same moment. Move's own rank is 20 and
      would be dropped. Copy's rank (34) sits just above tap and under every outcome, so the step is the one sound. */
@@ -86,6 +88,7 @@
         if (n.manual) {
           const pBad = n.port != null && n.port !== '' && !portOk(n.port);
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port == null ? '22' : n.port, cls: 'o55-field-port', error: pBad ? T('nas.find.portBad') : '', invalid: pBad })}</div>`;
+          out += H('nas-find:addr', [{ label: '192.168.1.20', outcome: 'works', fills: [['addr', '192.168.1.20'], ['port', '22']] }, { label: '192.168.1.99', outcome: 'noAnswer', fills: [['addr', '192.168.1.99']] }, { label: '192.168.1.20:99999', outcome: 'wrong', fills: [['addr', '192.168.1.20'], ['port', '99999']] }], { when: !addrKnown(S, n.addr) || pBad });
         } else if (!st || st.state !== 'done') {
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
@@ -101,6 +104,7 @@
         if (n.shareManual) {
           const t = n.shareText || '', ok = !!typedShare(m, t);
           out += C.field({ bind: 'shareText', label: T('nas.find.shareLabel.' + m), value: t, placeholder: m === 'smb' ? '//nas.local/projects' : 'nas.local:/export/projects', hint: ok || !t ? T('nas.find.shareHint.' + m) : '', error: t && !ok ? T('nas.find.shareBad.' + m) : '', invalid: !!t && !ok, valid: ok });
+          out += H('nas-find:share-' + m, m === 'smb' ? [{ label: '//nas.local/projects', outcome: 'works', fills: [['shareText', '//nas.local/projects']] }, { label: 'nas.local/projects', outcome: 'wrong', fills: [['shareText', 'nas.local/projects']] }] : [{ label: 'nas.local:/export/projects', outcome: 'works', fills: [['shareText', 'nas.local:/export/projects']] }, { label: 'nas.local', outcome: 'wrong', fills: [['shareText', 'nas.local']] }], { when: !ok });
           out += `<div class="o55-sublinks" data-key="sharefound">${C.link(T('nas.find.shareFound'), 'shareManual', 'off')}</div>`;
         } else {
           out += C.group(T(m === 'smb' ? 'nas.find.shares' : 'nas.find.exports'), C.cards('share', S.env.shares.filter((s) => s.proto === m).map((s) => ({ v: s.id, glyph: 'folder', title: s.path, sub: (S.env.devices.find((d) => d.id === s.device) || {}).name })), n.share));
@@ -355,6 +359,7 @@
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
       if ((n.pwFails || 0) >= 2) out += C.note(T('nas.signin.lockout'), 'warn');
+      out += H('nas-signin:pw', [{ label: (d.user || 'jared') + ' · ' + T('nas.signin.hintAny'), outcome: 'works', fills: [['user', d.user || 'jared'], ['pw', 'correct horse']] }, { label: T('nas.signin.hintRefused'), outcome: 'wrong', act: ['demoRefused'] }], { when: !n.pwTyped });
       out += `<div class="o55-sublinks" data-key="self">${C.link(T('nas.signin.self'), 'selfOn')}</div>`;
       return out;
     },
@@ -365,6 +370,8 @@
       return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
     },
     do: {
+      /* (demo: the device refuses the next password once, as the wrongPassword situation does; the fields are filled) */
+      demoRefused(S) { const d = dev(S); S.env.failures = S.env.failures || {}; S.env.failures.nas_password_once = true; N(S).pwFailedOnce = false; O55.ui.fill('user', (d && d.user) || 'jared'); O55.ui.fill('pw', 'correct horse'); },
       selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); makeIfNeeded(S); },
       selfOff(S) { N(S).self = false; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('unsheet'); }, /* the public-key line folds away */
       /* The person adds the line on the device themselves. The concept's device receives it at this click (the demo's
@@ -592,6 +599,7 @@
           const v = pairCodes.get(tryId(S)) || '';
           out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
           out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += H('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['pmcode', 'AAAA-BBBB']] }]);
         }
         if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
       } else if (!n.paired) {
@@ -604,6 +612,7 @@
         }
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
       }
+      if (!fail && !n.paired) out += H('nas-pmpair:outcome', [['denied', 'refused'], ['expired', 'expired'], ['unreachable', 'noAnswer']].filter(([code]) => m !== 'code' || code === 'unreachable').map(([code, word]) => ({ label: T('connect.pair.hint.' + code), outcome: word, act: ['demoOutcome', code] })));
       if (fail) {
         const acts = PM_FAIL_ACTIONS[fail] || PM_FAIL_ACTIONS.unreachable;
         out += `<div class="o55-banner o55-banner-warn" data-key="pairfail-${U.esc(fail)}">${C.small('lock', 18)}<span>${U.esc(T('connect.pair.fail.' + fail, { name: p.name }))}</span></div>`
@@ -633,6 +642,8 @@
       /* a new request, never the old one's timer reset: the old try ends and its answers no longer count (SCR-15) */
       resend(S) { endPair(S, 'resend'); S.save(); startPmPair(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
       newRequest(S) { endPair(S, 'retry'); S.save(); startPmPair(S); O55.ui.refresh(); O55.sound.play('tap'); },
+      /* (demo: a new request that the concept's Server answers this way: failures.pair_once) */
+      demoOutcome(S, code) { if (!PM_FAIL_ACTIONS[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.pair_once = code; endPair(S, 'retry'); S.save(); startPmPair(S); O55.ui.refresh(); O55.sound.play('tap'); },
       checkCode(S) {
         const n = N(S), p = pmOf(S), at = { id: tryId(S), purpose: n.purpose };
         if (!stillThis(S, at)) return O55.ui.refresh();
@@ -715,6 +726,7 @@
       const st = F.state(S, key), refused = !!(st && st.state === 'failed' && st.code === 'wrong_password');
       /* (the computer that opens the share keeps its sign-in, as for any shared folder: not the SSH key's one-time password) */
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.smb.password'), value: '', hint: refused ? '' : T('nas.smb.passwordHintOn', { where: machine(S) }), error: refused ? T('nas.smb.wrong') : '', invalid: refused });
+      out += H('nas-smb:signin', [{ label: 'jared · ' + T('nas.signin.hintAny'), outcome: 'works', fills: [['user', 'jared'], ['pw', 'correct horse']] }, { label: T('nas.signin.hintRefused'), outcome: 'wrong', act: ['demoRefused'] }], { when: !n.pwTyped && !(st && st.state === 'done') });
       out += C.details(S, 'smbdomain', T('nas.smb.more'), C.field({ bind: 'domain', label: T('nas.smb.domain'), value: n.domain || '', hint: T('nas.smb.domainHint'), autocomplete: 'off' }));
       if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
@@ -730,6 +742,8 @@
         F.reset(S, key);
         F.op(S, key, 'cmd.project.source_location.test', [{ key: 'mount', ms: 900, fail: wrong ? () => 'wrong_password' : undefined }, { key: 'read', ms: 600 }], { payload: { share: sh.path, proto: 'smb', from: onServer(S) ? md(S).server_ref : S.env.here.id, user: String(n.user || '').trim(), domain: n.domain || null, readOnly: true } });
       },
+      /* (demo: the share refuses the next password once, the smbWrong situation's own flag; the fields are filled) */
+      demoRefused(S) { S.env.failures = S.env.failures || {}; S.env.failures.smb_password_once = true; O55.ui.fill('user', 'jared'); O55.ui.fill('pw', 'correct horse'); },
       use(S) { const n = N(S), sh = shareOf(S), prof = shareProfile(S, sh, String(n.user || '').trim(), n.domain); finishMounted(S, sh.path + '/' + (md(S).project_name || 'Project'), 'smb:' + prof + ':' + sh.path.replace(/^\/\//, ''), 'smb'); }
     },
     bind: {

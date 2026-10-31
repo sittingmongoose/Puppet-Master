@@ -266,6 +266,13 @@
         "newRequest": "Send a new request",
         "toList": "Back to the list",
         "reason": "Pairing didn't finish. Choose what to do next."
+      },
+      "hint": {
+        "denied": "Turned down",
+        "expired": "Runs out",
+        "unreachable": "Can't be reached",
+        "identity_mismatch": "Another computer answers",
+        "protocol_mismatch": "Another version"
       }
     },
     "ready": {
@@ -916,6 +923,19 @@
         "cert": "The certificate couldn't be set up for {host}. Check that {host} points here and that web traffic can get in, then try again.",
         "live": "The page opens, but live updates are blocked. Your proxy has to pass live connections through (WebSockets). Try again after fixing it.",
         "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later."
+      },
+      "hint": {
+        "denied": "Tailscale says no",
+        "expired": "Sign-in runs out",
+        "needs_device_approval": "Needs an admin's approval",
+        "route_failed": "Live connection fails",
+        "registration_denied": "Headscale says no",
+        "hs_unreachable": "Headscale can't be reached",
+        "dns_mismatch": "Address points elsewhere",
+        "unreachable": "Can't be reached",
+        "certificate_failed": "No certificate",
+        "live_failed": "Live updates blocked",
+        "relay_unavailable": "Link service down"
       }
     }
   },
@@ -1326,7 +1346,9 @@
       "selfNot": "The key isn't on {name} yet. Check that the whole line was added, then check again.",
       "selfTitle": "Add your key to {name} yourself",
       "selfTop": "Puppet Master checks it right after. No password needed.",
-      "selfOff": "Add it for me with my password instead"
+      "selfOff": "Add it for me with my password instead",
+      "hintAny": "any password",
+      "hintRefused": "A password it refuses"
     },
     "install": {
       "eyebrow": "Secure connection",
