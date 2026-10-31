@@ -18811,45 +18811,29 @@ plan_unit_id: SP-252
 unit_type: migration_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for
-  pm.product_onboarding.session.v2, with the exact closed owner schema deterministically bundled by
-  scripts/pm-onboarding-contracts.py. The session stores the bounded typed setup_draft choices once, plus exact
-  draft/queued/reviewed refs, revisions and canonical hash, current dependency-path state, actual Project commit
-  binding, provider/free-model progress, owner refs and continuation. Return contexts/snapshots keep refs rather
-  than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage paths consume the Onboarding owner, and
-  no Project or broad provider effect is inferred from draft persistence. v2 session-key/v1 values and older
-  Project/global keys are coordinator-only migration inputs. Unresolved drafts are unconfirmed; already
-  committed rows resume provider setup only after exact owner-result/receipt validation. Migration emits the
-  sole durable Storage migration receipt, reports exact disposition/stage/path/committed-resume counts with a
-  hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately pending
-  physical admission. No physical family, retention policy, native store, readiness or recovery certification is
-  added. The session's optional look_choice is merged per ui.onboarding.choose_look request, replacing only
-  fields the request sets; absent or null fields mean nothing chosen yet, and a resume repaints that stored
-  choice, NieR Mode included, with null fields falling back to F3-520's start rule; look_choice is never a
-  Settings value. Q22, Jared 2026-10-30 (DL-257): the optional closed session look_choice admits family nier and
-  the retained parts/background, with no independent nier_mode field. When reading an earlier session choice,
-  the existing onboarding migration consumes a true nier_mode as family nier in its stored light/dark mode,
-  removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged.
-  Conversion precedes validation of the current shape and is idempotent. Settings performs the separate retired
-  general.visual.nier-mode load migration under SSYS-043, including Auto resolution. No physical family, key,
-  policy or new migration writer is added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a
-  concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store
-  retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
-  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
-  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
-  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
-  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
-  and never native durability, a verified restore/credential or a native owner receipt; production
-  Storage/Settings CAS/readback/rollback rules are unchanged. H5: the onboarding owner holds one original
-  inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly
-  encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert.
-  Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and
-  restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing
-  fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities,
-  trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt,
-  authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no
-  new product action/DTO field is admitted.
+canonical_text: 'The existing onboarding_state family uses onboarding_state.v3:{onboarding_session_id} for pm.product_onboarding.session.v2,
+  with the exact closed owner schema deterministically bundled by scripts/pm-onboarding-contracts.py. The session stores
+  the bounded typed setup_draft choices once, plus exact draft/queued/reviewed refs, revisions and canonical hash, current
+  dependency-path state, actual Project commit binding, provider/free-model progress, owner refs and continuation. Return
+  contexts/snapshots keep refs rather than duplicate draft bodies. Eleven-stage/deferred-Project/six-stage paths consume
+  the Onboarding owner, and no Project or broad provider effect is inferred from draft persistence. v2 session-key/v1
+  values and older Project/global keys are coordinator-only migration inputs. Unresolved drafts are unconfirmed; already
+  committed rows resume provider setup only after exact owner-result/receipt validation. Migration emits the sole durable
+  Storage migration receipt, reports exact disposition/stage/path/committed-resume counts with a hashed per-row manifest,
+  and never replays owner work. Domain reconciliation remains separately pending physical admission. No physical family,
+  retention policy, native store, readiness or recovery certification is added. The session''s optional look_choice is
+  merged per ui.onboarding.choose_look request, replacing only fields the request sets; absent or null fields mean nothing
+  chosen yet, and a resume repaints that stored choice, NieR Mode included, with null fields falling back to F3-520''s
+  start rule; look_choice is never a Settings value. Q22, Jared 2026-10-30 (DL-257): the optional closed session look_choice
+  admits family nier and the retained parts/background, with no independent nier_mode field. When reading an earlier
+  session choice, the existing onboarding migration consumes a true nier_mode as family nier in its stored light/dark
+  mode, removes that legacy field and preserves parts/background; false/null leaves the selected family unchanged. Conversion
+  precedes validation of the current shape and is idempotent. Settings performs the separate retired general.visual.nier-mode
+  load migration under SSYS-043, including Auto resolution. No physical family, key, policy or new migration writer is
+  added. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state
+  basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes;
+  it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
   point shown to the user.
@@ -18859,18 +18843,33 @@ depends_on:
 - PWIZ-022
 unblocks: []
 acceptance_criteria:
-  - "The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing onboarding_state family; the registry contains the same 88 families and 24 retention policies."
-  - "New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id}, onboarding_state.v1:{project_id} and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read or current writes."
-  - "Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching draft identity/revision; the confirmed plan hash matches its canonical bytes."
-  - "A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation snapshots preserve only the exact references and phases."
-  - "Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not authorize Project/destination/history/repository/Settings/sync or broad provider mutation."
-  - "Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider failure; navigation never uncreates or recommits the Project."
-  - "The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain owner-defined; backend/forge/Server/Storage/Client axes are not conflated."
-  - "Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately validates every committed resume in the disposition manifest without synthesizing review or owner work."
-  - "The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending, never peer commit authority."
-  - "Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile roots, unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint content are excluded."
-  - "Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models; actual underlying owner result/receipt authority remains separate and no new physical family is admitted."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted."
+- The exact owner v2 session schema and required/nullable fields are deterministically bundled into the existing onboarding_state
+  family; the registry contains the same 88 families and 24 retention policies.
+- New writes use only onboarding_state.v3:{onboarding_session_id}; onboarding_state.v2:{onboarding_session_id}, onboarding_state.v1:{project_id}
+  and onboarding:v1 are read-once coordinator copy-forward inputs, never dual-read or current writes.
+- Missing state begins at welcome. A current queued draft has the closed bounded setup_draft choices with matching draft
+  identity/revision; the confirmed plan hash matches its canonical bytes.
+- A typed setup_draft is not an arbitrary plan/transcript body or a new physical family. Return contexts and continuation
+  snapshots preserve only the exact references and phases.
+- Bounded selected-source preflight/auth has its own current permission/consent/Client/revision fence and does not authorize
+  Project/destination/history/repository/Settings/sync or broad provider mutation.
+- Actual committed Project identity, listed/persisted owner result and receipt refs survive Close/resume and provider
+  failure; navigation never uncreates or recommits the Project.
+- The eleven-stage semantic graph, explicit Project-deferred path and six-stage connect-existing shortcut remain owner-defined;
+  backend/forge/Server/Storage/Client axes are not conflated.
+- Migration covers four/five/seven/nine-stage inputs, forces unresolved draft review unconfirmed, and separately validates
+  every committed resume in the disposition manifest without synthesizing review or owner work.
+- The domain reconciliation value references the sole terminal Storage migration receipt and remains physical-family-registration-pending,
+  never peer commit authority.
+- Redaction admits only bounded typed selections and non-secret owner refs; raw credentials/auth URLs/codes/profile roots,
+  unbounded path discovery, protected browser content, raw plan/transcript and Guided Tour live/checkpoint content are
+  excluded.
+- Standalone precommit authorizations, draft previews/rebinds and Project commit bindings are transport/read models;
+  actual underlying owner result/receipt authority remains separate and no new physical family is admitted.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H5: the onboarding owner holds one original inert-state basis
+  for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it
+  never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only
+  the modal’s own holds, preserves pre-existing inert nodes and restores focus/input.'
 validation_surfaces:
 - python3 scripts/pm-onboarding-contracts.py --check
 - tests/test_pm_onboarding_phases.py
@@ -19091,38 +19090,84 @@ plan_unit_id: SP-254
 unit_type: storage_security_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  `Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract groups as
-  public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup v2
-  retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence and
-  outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
+canonical_text: '`Plans/storage_value_registry.json` registers the September 1 Forge, Backup v2, and Go tsnet contract
+  groups as public durable metadata or explicit nonpersisted transport without claiming physical materialization. Backup
+  v2 retains destination/repository/policy/run/manifest, capture-barrier and phase-journal refs, schedule occurrence
+  and outbox refs, retention/browse/health, RecoverySet public, no-store Recovery Kit delivery-session metadata, migration,
   restore, and receipt records while snapshot/repository/export bytes remain in Backup-owned external custody and raw
-  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2
-  disposition without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup's
-  `pm.backup_restore_system.recovery_set_public.v2` is never Storage boot recovery `recovery_set_id`. Forge retains
-  provider-instance, repository-binding, independent automation-binding/shell, provider-native object, currentness,
-  and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential content; canonical shell state uses
-  `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor keys only through an
-  idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
+  Recovery Key/Kit/session payloads never persist. StorageMigrationCoordinator performs the explicit v1-to-v2 disposition
+  without manufacturing a key, source closure, verification, runtime, or provider readiness; Backup''s `pm.backup_restore_system.recovery_set_public.v2`
+  is never Storage boot recovery `recovery_set_id`. Forge retains provider-instance, repository-binding, independent
+  automation-binding/shell, provider-native object, currentness, and receipt refs without duplicating PAT/OAuth/SSH/private-CA/credential
+  content; canonical shell state uses `repository_automation.project_state.{project_id}` and reads the two GitHub predecessor
+  keys only through an idempotent fail-closed migration. Remote Access retains PM-owned connector/Server identity, configuration,
   generations, version/build/protocol facts, redacted authorization-operation metadata, route/health/migration/receipt
   refs, and an opaque `secure_state_ref`; connector IPC, protected URLs, raw tsnet state, tailnet identity, and node/auth/
-  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public
-  requests, results, errors, availability, receipts, and health/currentness projections and reject key/token/code,
-  protected/browser, private path/host, unsafe SCM configuration, and capture content. All three domains remain
-  receipt-only and Event Authority silent with `runtime_evidence=false`.
+  pre-auth/IPC keys are nonpersisted or external to ordinary redb/seglog. The registered transforms cover public requests,
+  results, errors, availability, receipts, and health/currentness projections and reject key/token/code, protected/browser,
+  private path/host, unsafe SCM configuration, and capture content. All three domains remain receipt-only and Event Authority
+  silent with `runtime_evidence=false`. DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction.
+  Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and sign in once
+  through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet
+  helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native Client
+  installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and Server
+  endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
+  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
+  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
+  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
+  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
+  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D6 A: the
+  human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official tool
+  sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure
+  credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
+  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
+  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
+  account of the same provider has a distinct identity.'
 gui_related: false
 gui_classification_reason: The unit defines storage custody, migration, redaction, and event-admission boundaries rather than visible presentation.
 depends_on: [SP-251, SP-253, BRS-012, BRS-016, FGI-012, RAS-015]
 unblocks: []
 acceptance_criteria:
-  - The storage registry remains schema-valid and this disposition-only transaction adds no physical-family rows; the current census follows the readiness validator and separately admitted Notebook additions. New classifications use contract_family_dispositions and do not claim a materialized family.
-  - Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected attachment/submission, and session payload.
-  - Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2` with the deterministic Storage boot `recovery_set_id` work-set identity.
-  - Forge persistence retains independent repository and automation binding identities/generations plus provider-instance and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH, private-CA, or protected-browser contents.
-  - repository_automation is the canonical automation shell key; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id} are read-only copy-forward aliases, canonical data wins, nonconflicting legacy fields merge only with a verified GitHub automation binding, and ambiguity quarantines with a typed migration receipt.
-  - Remote Access persists only public connector/Server identity, configuration, state enums, versions, redacted lifecycle/health and receipt facts plus opaque secure-state refs; raw connector state, host Tailscale state, tailnet identity/keys, reusable URLs/queries, cookies, protected browser content, and IPC secrets/payloads have no ordinary durable family.
-  - rt.backup_manifest_metadata.v1, rt.scm_forge_metadata.v1, and rt.server_remote_metadata.v1 cover their public requests/results/errors/availability/receipts/health and quarantine prohibited key/token/code/protected/browser/private-path/private-host/unsafe-SCM-config/capture input before persistence, indexing, export, help/copy, GUI, Chat, Usage, Doctor, or evidence reuse.
-  - Every touched disposition retains physical-family truth, `runtime_evidence=false`, and `receipt_only_no_eventrecord_pending_event_authority`; every transform remains `contract_only_no_runtime_evidence`.
+- The storage registry remains schema-valid and this disposition-only transaction adds no physical-family rows; the current
+  census follows the readiness validator and separately admitted Notebook additions. New classifications use contract_family_dispositions
+  and do not claim a materialized family.
+- Backup durable metadata binds the v2 aggregate and exact owner schema IDs, retains only public RecoverySet and no-store
+  delivery-session metadata, keeps repository/snapshot/export bytes external, and excludes every raw key, Kit, protected
+  attachment/submission, and session payload.
+- Backup migration maps every admissible v1 axis explicitly, quarantines ambiguity, and never equates `pm.backup_restore_system.recovery_set_public.v2`
+  with the deterministic Storage boot `recovery_set_id` work-set identity.
+- Forge persistence retains independent repository and automation binding identities/generations plus provider-instance
+  and provider-native object refs, never infers their equality, and never duplicates credential, authorization, SSH,
+  private-CA, or protected-browser contents.
+- repository_automation is the canonical automation shell key; github_actions.project_state.{project_id} and gha_panel_state.v1:{project_id}
+  are read-only copy-forward aliases, canonical data wins, nonconflicting legacy fields merge only with a verified GitHub
+  automation binding, and ambiguity quarantines with a typed migration receipt.
+- Remote Access persists only public connector/Server identity, configuration, state enums, versions, redacted lifecycle/health
+  and receipt facts plus opaque secure-state refs; raw connector state, host Tailscale state, tailnet identity/keys,
+  reusable URLs/queries, cookies, protected browser content, and IPC secrets/payloads have no ordinary durable family.
+- rt.backup_manifest_metadata.v1, rt.scm_forge_metadata.v1, and rt.server_remote_metadata.v1 cover their public requests/results/errors/availability/receipts/health
+  and quarantine prohibited key/token/code/protected/browser/private-path/private-host/unsafe-SCM-config/capture input
+  before persistence, indexing, export, help/copy, GUI, Chat, Usage, Doctor, or evidence reuse.
+- Every touched disposition retains physical-family truth, `runtime_evidence=false`, and `receipt_only_no_eventrecord_pending_event_authority`;
+  every transform remains `contract_only_no_runtime_evidence`.
+- 'DL-259, Jared 2026-10-31: D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on
+  Windows, macOS and Linux have their own built-in Tailscale connection and sign in once through the shared protected
+  auth owner, with no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning
+  PM process. A Server keeps one active node per stable server_id; a native Client installation keeps one active node
+  per stable client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified
+  configuration, process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate
+  active nodes. Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying
+  or a Server public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit,
+  off by default and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust
+  or work permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint
+  reachable through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed
+  host Tailscale stays external and unmanaged. D6 A: the human signs in on the initiating active device while the AI/tool
+  runs on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
+  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
+  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
+  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.'
 validation_surfaces:
   - Draft 2020-12 validation of Plans/storage_value_registry.json against Plans/storage_value_registry.schema.json
   - Draft 2020-12 validation of Plans/redaction_transform_registry.json against Plans/redaction_transform_registry.schema.json
@@ -27537,99 +27582,103 @@ plan_unit_id: SP-330
 unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: >-
-  The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0
-  (Plans/home_workspace_layout_v2.schema.json), under home_workspace_layout.v2:{project_id}:{workspace_tab_id}
-  in family home_workspace_layout_v2 with RP-CONFIG-CURRENT; it is the only Home layout authority (DL-180). It
-  holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named
-  layouts, a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers,
-  sessions, scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each
-  board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay,
-  menu, hover and drag state is never written. Every committed structural change validates, writes, reads back,
-  then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed
-  (CV-361); failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal
-  into a collapsed panel is one panel_expanded. View state, the chat column's shown and history_pinned, and a
-  terminal tab's ref moving to a new session are written with the record without a revision advance, receipt or
-  event. The first read without a v2 record converts the v1 record, else the Home part of layout:v1, through the
-  StorageMigrationCoordinator by the conversion table of this section: editor panels become panels holding their
-  editor tabs, the dashboard a panel with dashboard:home, each terminal section a bottom-row panel whose
-  workgroup panes become terminal tabs bound to their existing sessions, a docked or floating chat returns to
-  the fixed column (a popped-out chat starts in its column after restart), floating surfaces dock, an editor
-  panel's inactive browser session becomes a background browser tab there, and a hidden surface that holds
-  anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source yields
-  the default Home layout, the old record kept and a notice. The concept's pm.home.panels keys are lineage only.
-  The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504,
-  F3-637). Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across
-  projects and live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this
-  record; the dashboard boards inside a layout stay per project: each saved layout records the project it was
-  saved in, and outside that project its boards, a null board included, are skipped. The first read copies every
-  project's v2 named_layouts in once, two layouts with one name both kept and the later one numbered, and
-  named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the layout to the
-  per-person record and, as before, advances this record's revision by one with its receipt and its one
-  workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended
-  2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned,
-  shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id
-  to the board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the
-  layout, writes boards_skipped_bytes instead and says so; applying it writes each included board back to its
-  key only when the saved envelope belongs to the current project (null removes), skips another project's
-  envelope, and leaves a custom board not held by the applied layout unchanged with no event of its own; a
-  layout saved before applies as it did (D10 P6, lead ruling F3). The old Dashboard layout
-  widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console, whose
-  chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab's notification
-  mute is that tab's state (D38, lead ruling F5); both are written like view state. A named layout's boards
-  never name agents, which stores nothing (lead ruling F7). The chat column also keeps keep_open, the
-  narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's choice, not a
-  narrow-window state, and is written like view state. The chat_column fields width_px, history_pinned and
-  keep_open default to null, false and false; width_px is the message area's width, rounded to an integer of at
-  least 400 px without a fixed upper cap (G3), an undersized finite value stored at the minimum bound and null
-  the window's default. They are layout values, never Settings values. A changed width is one
-  cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one layout
-  event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing, and
-  double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed
-  actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is
-  absent. A named layout and Restore home layout keep all three; a project switch loads that project's own chat
-  column, or the defaults. Once at boot, the former chat.width (finite, rounded and clamped), chat.history value
-  pinned and chat.pinOpen true are carried into this project's layout and every other project's saved layout
-  only where the corresponding field is still at its default. Existing non-default values survive. The old keys
-  are dropped only after this project's layout is written, never while an unreadable record waits to be set
-  aside; old defaults null, flyout and false are just dropped. Amended 2026-10-29 (G1–G3; DL-254): chat message
-  width has no fixed 760 px maximum; store finite integer width ≥400 or null for default and dynamically clamp
-  rendering to current centre/page floors. Keep History pin/user width and narrow ladder. Activity Detail has no
-  saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B, Jared 2026-10-30: Activity
-  Detail’s restored Pin/unpin is session-only view state. It survives thread switches while the data follows the
-  selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row, receipt or
-  event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI
-  7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each
-  existing owner store retains a secret-free, key-isolated memory record for that visit and exposes
-  persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole
-  adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project
-  isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports
-  failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is
-  fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner
-  receipt; production Storage/Settings CAS/readback/rollback rules are unchanged.
+canonical_text: 'The Home layout of a project and workspace tab is one record, pm.home_workspace_layout.v2 2.0.0 (Plans/home_workspace_layout_v2.schema.json),
+  under home_workspace_layout.v2:{project_id}:{workspace_tab_id} in family home_workspace_layout_v2 with RP-CONFIG-CURRENT;
+  it is the only Home layout authority (DL-180). It holds the panel split tree, the tab records, a view-state block,
+  the chat column, the user''s saved named layouts, a closed-tab stack of at most 20, revision, updated_at and a migration
+  stamp, and never buffers, sessions, scrollback, browser history, chat messages, credentials or a dashboard''s widget
+  layout, which each board keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow,
+  overlay, menu, hover and drag state is never written. Every committed structural change validates, writes, reads back,
+  then advances revision by one, publishes one result and receipt and appends one workspace.layout_changed (CV-361);
+  failure rolls back with rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed
+  panel is one panel_expanded. View state, the chat column''s shown and history_pinned, and a terminal tab''s ref moving
+  to a new session are written with the record without a revision advance, receipt or event. The first read without a
+  v2 record converts the v1 record, else the Home part of layout:v1, through the StorageMigrationCoordinator by the conversion
+  table of this section: editor panels become panels holding their editor tabs, the dashboard a panel with dashboard:home,
+  each terminal section a bottom-row panel whose workgroup panes become terminal tabs bound to their existing sessions,
+  a docked or floating chat returns to the fixed column (a popped-out chat starts in its column after restart), floating
+  surfaces dock, an editor panel''s inactive browser session becomes a background browser tab there, and a hidden surface
+  that holds anything becomes a collapsed panel. The source stays read-only and is never reset; an unreadable source
+  yields the default Home layout, the old record kept and a notice. The concept''s pm.home.panels keys are lineage only.
+  The chat column''s popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
+  Amended 2026-10-17 (DL-230, Jared): the user''s saved named layouts belong to the person across projects and live in
+  one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the dashboard boards
+  inside a layout stay per project: each saved layout records the project it was saved in, and outside that project its
+  boards, a null board included, are skipped. The first read copies every project''s v2 named_layouts in once, two layouts
+  with one name both kept and the later one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named
+  writes the layout to the per-person record and, as before, advances this record''s revision by one with its receipt
+  and its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout. Amended
+  2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and
+  keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the board''s
+  envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout, writes boards_skipped_bytes
+  instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
+  the current project (null removes), skips another project''s envelope, and leaves a custom board not held by the applied
+  layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling F3). The old
+  Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is one tab, debug-console,
+  whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a terminal tab''s notification mute
+  is that tab''s state (D38, lead ruling F5); both are written like view state. A named layout''s boards never name agents,
+  which stores nothing (lead ruling F7). The chat column also keeps keep_open, the narrow-window pin ui.chat_column.keep_open
+  sets (UCC-203), off while absent; it is the person''s choice, not a narrow-window state, and is written like view state.
+  The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px is the message
+  area''s width, rounded to an integer of at least 400 px without a fixed upper cap (G3), an undersized finite value
+  stored at the minimum bound and null the window''s default. They are layout values, never Settings values. A changed
+  width is one cmd.workspace_layout.resize_surface { surface: ''chat'', width } structural commit, with one receipt,
+  one layout event and a new revision; a changed drag commits once on release, Escape or no movement commits nothing,
+  and double-click resets with width null. Both pins are view state with no receipt, event or revision; their typed actions
+  ui.chat_column.pin_history and ui.chat_column.keep_open accept the named boolean and toggle when it is absent. A named
+  layout and Restore home layout keep all three; a project switch loads that project''s own chat column, or the defaults.
+  Once at boot, the former chat.width (finite, rounded and clamped), chat.history value pinned and chat.pinOpen true
+  are carried into this project''s layout and every other project''s saved layout only where the corresponding field
+  is still at its default. Existing non-default values survive. The old keys are dropped only after this project''s layout
+  is written, never while an unreadable record waits to be set aside; old defaults null, flyout and false are just dropped.
+  Amended 2026-10-29 (G1–G3; DL-254): chat message width has no fixed 760 px maximum; store finite integer width ≥400
+  or null for default and dynamically clamp rendering to current centre/page floors. Keep History pin/user width and
+  narrow ladder. Activity Detail has no saved Pin/unpin state; full-height overlay is the constrained fallback. G1 B,
+  Jared 2026-10-30: Activity Detail’s restored Pin/unpin is session-only view state. It survives thread switches while
+  the data follows the selected thread; unpinned detail closes on a switch. It adds no persisted field, Settings row,
+  receipt or event; history_pinned remains solely History’s saved pin. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:'
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-186, DL-187, DL-188, SP-245, SP-273, F3-630, F3-635, WS-030, SMPFS-180]
 unblocks: [SP-332, CV-361]
 acceptance_criteria:
-  - "home_workspace_layout_v2 is the only family a Home layout write targets; the v1 family and layout:v1 are read only as conversion input."
-  - "Every valid record in Plans/home_workspace_layout_v2_fixtures.json validates against the schema and the semantic invariants, and every invalid case is rejected by the schema or by the invariant it names."
-  - "A structural change writes, reads back and only then advances revision by one and appends one workspace.layout_changed; a failure leaves the prior record byte-identical with a rolled_back=true receipt and no event; a reveal-only open writes nothing."
-  - "View-state writes, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new session never advance revision, take a receipt or append an event."
-  - "A newly created default layout, and the default written after an unreadable source, are at revision 0 with no event."
-  - "The fixture's v1 record (four editor panels, a dashboard, two terminal sections with workgroups and a floating chat) converts to exactly its expected_v2 record, the v1 record is unchanged afterwards and one migrated_from_v1 event is appended."
-  - "No v1 surface that holds a tab, a browser session or a terminal session is dropped: an inactive browser session becomes a background browser tab in its panel, and a hidden editor panel, dashboard or terminal section becomes a collapsed panel."
-  - "An unreadable v1 record yields the default Home layout with stamp default_after_unreadable_source, the old record kept unchanged and a notice; no source record is ever reset or deleted by the conversion."
-  - "No v2 record holds a buffer, scrollback, browser history, chat message, credential, dashboard widget layout, narrow state, overlay, menu or drag state."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a separate chat window."
-  - "No v2 record holds the chat's pop-out: Plans/home_workspace_layout_v2.schema.json rejects popped_out (fixture chat_popped_out_saved)."
-  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each included board's key only for the project the envelope was saved in, a null removing it only in the project the layout was saved in (DL-230), skips another project's envelope and leaves a custom board not held by the layout unchanged, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
-  - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
-  - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
-  - "A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open, set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
+- home_workspace_layout_v2 is the only family a Home layout write targets; the v1 family and layout:v1 are read only
+  as conversion input.
+- Every valid record in Plans/home_workspace_layout_v2_fixtures.json validates against the schema and the semantic invariants,
+  and every invalid case is rejected by the schema or by the invariant it names.
+- A structural change writes, reads back and only then advances revision by one and appends one workspace.layout_changed;
+  a failure leaves the prior record byte-identical with a rolled_back=true receipt and no event; a reveal-only open writes
+  nothing.
+- View-state writes, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new session never
+  advance revision, take a receipt or append an event.
+- A newly created default layout, and the default written after an unreadable source, are at revision 0 with no event.
+- The fixture's v1 record (four editor panels, a dashboard, two terminal sections with workgroups and a floating chat)
+  converts to exactly its expected_v2 record, the v1 record is unchanged afterwards and one migrated_from_v1 event is
+  appended.
+- 'No v1 surface that holds a tab, a browser session or a terminal session is dropped: an inactive browser session becomes
+  a background browser tab in its panel, and a hidden editor panel, dashboard or terminal section becomes a collapsed
+  panel.'
+- An unreadable v1 record yields the default Home layout with stamp default_after_unreadable_source, the old record kept
+  unchanged and a notice; no source record is ever reset or deleted by the conversion.
+- No v2 record holds a buffer, scrollback, browser history, chat message, credential, dashboard widget layout, narrow
+  state, overlay, menu or drag state.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
+  by this unit.
+- A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a
+  separate chat window.
+- 'No v2 record holds the chat''s pop-out: Plans/home_workspace_layout_v2.schema.json rejects popped_out (fixture chat_popped_out_saved).'
+- A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is
+  at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both;
+  applying it restores each included board's key only for the project the envelope was saved in, a null removing it only
+  in the project the layout was saved in (DL-230), skips another project's envelope and leaves a custom board not held
+  by the layout unchanged, with no event of its own; a named layout saved before 2026-10-10 applies unchanged.
+- A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its
+  state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is
+  in its state; neither write advances revision, takes a receipt or appends an event.
+- The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written.
+- A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open,
+  set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -28204,6 +28253,3 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Collaborative_Workflows.md#CWR-041, ContractName:Plans/Collaborative_Workflows.md#CWR-042, ContractName:Plans/Collaborative_Workflows.md#CWR-043
-
-
-QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a restored backup, verified credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted.

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28094-L28544
+Source lines: L28094-L28549
 
-Source SHA256: `6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc`
+Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
 
 ---
 
@@ -377,36 +377,34 @@ plan_unit_id: ACD-507
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
-  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role
-  props, helper marks, Activity agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and
-  sleeping empty lists share kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary
-  without activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused
-  shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has current-tool badge
-  and hands off with thinking placeholder, one Pip per reply. No added chat capability/welcome-back message.
-  Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall instead of delaying
-  dispatch. Parts use SSYS-056’s one transaction and app voice obeys master/chat mute. PC1/X3 sheet motion
-  (2026-10-29): a host drops in when its sheet opens, using the shared rig and installed parts. Dots, sleep and
-  happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes
-  step; live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps
-  to the settled state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks
-  remain static; acknowledgement stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7
-  Step4, 2026-10-30: the joined adapters are PM56_PIP and
-  PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet hosts, face lists
-  and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds hosted chat mute to
-  the same sound owner. The concept’s press helper acknowledges in the first painted frame and runs the existing
-  action in the next task without replaying a click; native ≤100 ms acknowledgment and one-commit acceptance are
-  unchanged. PMX kept-subtree slots preserve loader owner attributes while the transcript reconciles; they do
-  not admit a replacement observer or private loader. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16:
-  You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no
-  marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram
-  edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves
-  crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain
-  their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
-  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
-  fallback icon.
+canonical_text: 'PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared mark/row/empty/sheet
+  functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role props, helper marks, Activity
+  agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping empty lists share kit/parts. Host
+  watches at 420 ms, wonders while typing, oops on unusable primary without activation and cheers on success; blink changes,
+  stable last-pointer gaze, no random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish.
+  Pip in Orbit centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
+  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall
+  instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys master/chat mute. PC1/X3 sheet
+  motion (2026-10-29): a host drops in when its sheet opens, using the shared rig and installed parts. Dots, sleep and
+  happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes step;
+  live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled
+  state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement
+  stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, PM7 Step4, 2026-10-30: the joined adapters are
+  PM56_PIP and PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn. Sheet hosts, face
+  lists and Orbit use the shared kit rather than a second renderer. O55.sound.pip.chatMute binds hosted chat mute to
+  the same sound owner. The concept’s press helper acknowledges in the first painted frame and runs the existing action
+  in the next task without replaying a click; native ≤100 ms acknowledgment and one-commit acceptance are unchanged.
+  PMX kept-subtree slots preserve loader owner attributes while the transcript reconciles; they do not admit a replacement
+  observer or private loader. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head
+  and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
+  or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
+  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same
+  registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper
+  cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second
+  wand or fallback icon. DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35
+  (Glass 0.30, NieR 0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture
+  gates still apply.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -419,11 +417,21 @@ depends_on:
 - DR-072
 unblocks: []
 acceptance_criteria:
-  - "Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest behavior."
-  - "Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates."
-  - "Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and owner states."
-  - "All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
+- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest
+  behavior.
+- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates.
+- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and
+  owner states.
+- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
+  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
+  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
+  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+- 'DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
+  0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -456,6 +464,3 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-239, ContractName:Plans/Final
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
-
-
-QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized. H6: at the default narrow layout, 900 px and below folds chat to its existing 32 px edge strip under the centre-width ladder (C<480, with its hysteresis and explicit Keep open/peek rules). Suppress the hosted chat subtree’s painting/layout interaction while folded; a descendant visibility:visible must not expose a squeezed transcript, dock or composer. Open the chat/peek restores the same subtree at usable width, rather than a new chat instance. No folded/peek state is persisted and the saved message minimum, History and Activity Detail rules remain. Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview.

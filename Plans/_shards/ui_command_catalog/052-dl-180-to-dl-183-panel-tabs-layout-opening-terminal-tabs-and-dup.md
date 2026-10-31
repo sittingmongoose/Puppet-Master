@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L15048-L16120
+Source lines: L15167-L16230
 
-Source SHA256: `bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479`
+Source SHA256: `9acefb9159762fec111c86e6d075da46a5b71cf95b79a23705b801bc7b3c8dee`
 
 ---
 
@@ -992,41 +992,32 @@ plan_unit_id: UCC-204
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  cmd.editor.appearance.set is a shell_view command with normalization.kind none,
-  normalizes_to_contract F3-651 and no alias. Its typed request/result are
-  Plans/editor_appearance.schema.json; it changes only an existing editor tab's sparse appearance
-  fields under the Project/workspace context and owner-state guard. A null field clears its
-  override; a token-map null entry clears that key, revealing the next layer. Reset and quick sets
-  are one atomic patch, never one dispatch per field. The result is a bounded
-  applied/no_change/refused/failed receipt with owner readback, no domain event and no
-  workspace.layout_changed. No Project returns no_project_context and no write. All editors and All
-  terminals, Settings fields, wallpaper selection and resetting those Project values compose the
-  existing cmd.settings.transaction.preview and cmd.settings.transaction.apply with exact inventory
-  ids; the same CAS/permission/readback rules apply and no app-global fallback is admitted. This
-  terminal retains cmd.terminal.appearance.set and import retains
-  cmd.terminal.appearance.import_scheme. CS-102 and WM-093 enumerate typed local affordances and
-  producer bindings; local previews never run a shell command or modify a real file. No new shortcut
-  is added for Customize: More, Open Customize and Indentation are keyboard-reachable entry points.
-  Panel split/move keys retain UCC-200's Alt+Shift+arrows; the earlier concept Ctrl+Alt claim is
-  retired. Notification toast dismissal is view-local and moves a lasting notice into the inbox
-  without resolving it; inbox dismissal uses cmd.alert.dismiss, and Clear all composes that existing
-  command for the captured eligible ids/revisions, preserving truthful per-item refusals and keeping
-  arrivals after the capture. Existing notice action commands retain domain approval semantics. This
-  unit creates no bulk resolve or dismiss-all command. The retired visible app-theme preview has no
-  producer: cmd.theme.preview is retired, not an alias of cmd.settings.transaction.preview. Legacy
-  requests cannot open a timed theme trial or create a preview receipt. Activated theme changes
-  retain SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local
-  actions. Saved terminal preset Apply reuses cmd.terminal.appearance.set for This terminal and the
-  existing Settings preview/apply pair for All terminals. Its replacement adapter takes the complete
-  terminal reset_ids from Plans/appearance_quick_sets.json: This sends saved values plus null for
-  omitted ids; All sends saved values plus inventory defaults for omitted ids in one set preview. It
-  never runs reset and apply as two commits. Save, Rename, Delete and Undo are
-  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
-  ui.terminal.preset.undo, local library actions owned by F3-650/SP-331. There is no cmd.* preset
-  family, per-preset command, new event or shortcut.   Picker Back remains CS-100's local navigation.
-  Amended 2026-10-17 (DL-222): a Customize pick shows its new state in the click's frame; the one atomic
-  patch follows that frame (ACD-475). F6 adds no command.
+canonical_text: 'cmd.editor.appearance.set is a shell_view command with normalization.kind none, normalizes_to_contract
+  F3-651 and no alias. Its typed request/result are Plans/editor_appearance.schema.json; it changes only an existing
+  editor tab''s sparse appearance fields under the Project/workspace context and owner-state guard. A null field clears
+  its override; a token-map null entry clears that key, revealing the next layer. Reset and quick sets are one atomic
+  patch, never one dispatch per field. The result is a bounded applied/no_change/refused/failed receipt with owner readback,
+  no domain event and no workspace.layout_changed. No Project returns no_project_context and no write. All editors and
+  All terminals, Settings fields, wallpaper selection and resetting those Project values compose the existing cmd.settings.transaction.preview
+  and cmd.settings.transaction.apply with exact inventory ids; the same CAS/permission/readback rules apply and no app-global
+  fallback is admitted. This terminal retains cmd.terminal.appearance.set and import retains cmd.terminal.appearance.import_scheme.
+  CS-102 and WM-093 enumerate typed local affordances and producer bindings; local previews never run a shell command
+  or modify a real file. No new shortcut is added for Customize: More, Open Customize and Indentation are keyboard-reachable
+  entry points. Panel split/move keys retain UCC-200''s Alt+Shift+arrows; the earlier concept Ctrl+Alt claim is retired.
+  Notification toast dismissal is view-local and moves a lasting notice into the inbox without resolving it; inbox dismissal
+  uses cmd.alert.dismiss, and Clear all composes that existing command for the captured eligible ids/revisions, preserving
+  truthful per-item refusals and keeping arrivals after the capture. Existing notice action commands retain domain approval
+  semantics. This unit creates no bulk resolve or dismiss-all command. The retired visible app-theme preview has no producer:
+  cmd.theme.preview is retired, not an alias of cmd.settings.transaction.preview. Legacy requests cannot open a timed
+  theme trial or create a preview receipt. Activated theme changes retain SSYS-010’s internal Settings transaction; code-scheme
+  previews remain CS-102’s typed local actions. Saved terminal preset Apply reuses cmd.terminal.appearance.set for This
+  terminal and the existing Settings preview/apply pair for All terminals. Its replacement adapter takes the complete
+  terminal reset_ids from Plans/appearance_quick_sets.json: This sends saved values plus null for omitted ids; All sends
+  saved values plus inventory defaults for omitted ids in one set preview. It never runs reset and apply as two commits.
+  Save, Rename, Delete and Undo are ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
+  ui.terminal.preset.undo, local library actions owned by F3-650/SP-331. There is no cmd.* preset family, per-preset
+  command, new event or shortcut. Picker Back remains CS-100''s local navigation. Amended 2026-10-17 (DL-222): a Customize
+  pick shows its new state in the click''s frame; the one atomic patch follows that frame (ACD-475). F6 adds no command.'
 gui_related: true
 gui_classification_reason: Editor appearance and shared control dispatch.
 split_recommended: false

@@ -27,7 +27,7 @@ Owner: `pm7-plans`; source branch `t3/plans/pm7-plans-canon`, allocation checked
 | DL-253 | D14: processes and robot category glyphs; X1 | W6 |
 | DL-254 | Chat round: full Activity Detail, widths, Glass plates, clean ring | W7; G1–G3, G9 |
 | DL-255 | Work contracts, view-local clearing, deferred surfaces | W6/W7; G5–G7, G10 |
-| DL-256 | Demo Studio coverage and verification boundary | W8/W9; SND1, LAND1 |
+| DL-256 | Shared Pip sound quality and room | SND1; Q1 B, Jared 2026-10-31 |
 | F3-660 | One Pip brand and drawing kit | W1/W4; X1, X3, A1–A5 |
 | F3-661 | Project box A, keyboard and same-frame chip | W2; B1–B7 |
 | F3-662 | Universal loader | W5; X2, L1–L8 |
@@ -200,3 +200,16 @@ Queued ELI5 follow-up: both wizard and Tour bars reuse the existing global `gene
 QA2 N1 follow-up at GUI660: `O55.restore.reachKey(S)` and fixture `reachedFor` bind only the selected service/device; `repoint(S)` invalidates reach/access/unlock/copy/check state. `nas.unlocked` identifies the exact key, never a general boolean. Remote Link endpoint is absent from unrelated routes. These are concept helper names, not native DTO fields, credentials, command IDs or settings. DL-258 / PWIZ-029 record the strengthened identity boundary.
 
 Final publication join: foundations `12e764ef28` merged with GUI660 and canonical Plans as `833552622c`; `PMConcept7.html` rebuilt from source per PLAN, SHA-256 `66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673`. Existing dependency refresh follows host and Settings commits through one o55SyncDependents owner; no new public names. Published parity passes.
+
+| DL-259 | Product-only onboarding, D1–D8, ELI5, fields audit, free source v0.6.0, Q1/Q2 | Jared, 2026-10-31 |
+| DL-260 | Reserved: remove existing mainline Demo Studio canon after DL-259 | Q3 B, Jared 2026-10-31 |
+
+ELI5 bar bindings: `onboarding.interaction.mode`, `tour.interaction.mode`; shared `general.interaction.mode`; labels Plain English / Expert; existing Settings transaction preview/apply.
+
+DL-259 provider entries: `cursor_sdk` (key default; `cursor_cli` keeps browser default), `alibaba_token_plan` (own monthly-credit subscription/key, separate from Coding Plan/DashScope). No new setting or command.
+
+DL-259 connector context: `connector_owner=server|native_client`, `owner_client_id`, `client_runtime_kind=native_app`, `native_installation_ref`; native expected generations are Client/connector/policy/session. Server generation readers stay compatible.
+
+Q1 B shared Pip say/vocals: per-look kit room sends Basic/Friendly/Retro 0.35, Glass 0.30, NieR 0.16; one room per look, no stacked rooms; approximately 0.4 dB loudness bound.
+
+DR-081: one Free Models catalog and matching advanced disclosure. New local control families `onboarding.free_models.advanced`, `settings.free_models.advanced`; default closed, no action ID/command/setting. Three front providers only are pinned; the advanced remainder and count follow the current eligible catalog.

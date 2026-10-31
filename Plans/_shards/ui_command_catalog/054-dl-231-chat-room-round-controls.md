@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16295-L16699
+Source lines: L16405-L16802
 
-Source SHA256: `bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479`
+Source SHA256: `9acefb9159762fec111c86e6d075da46a5b71cf95b79a23705b801bc7b3c8dee`
 
 ---
 
@@ -95,59 +95,52 @@ plan_unit_id: UCC-208
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The chat port adds producers to existing commands and local actions, not new command identities (DL-232).
-  Plans open their exact version through cmd.chat.plan.open_version (UCC-176); files and diffs through
-  cmd.file.open; artifacts and documents through the subject routes of UCC-200; a child transcript through
-  cmd.agents.open_thread (UCC-188); browser addresses through cmd.browser.open_workspace_preview; and existing
-  terminal sessions through cmd.terminal.open. Every domain route carries CV-360 placement and reaches the one
-  opening module of F3-634, preserving revision/identity and user-versus-agent focus. A direct
-  cmd.panel_tab.open is used only where UCC-200 already permits it, including read-only editor buffers for
-  command output. cmd.editor.close_tab remains alias metadata for cmd.panel_tab.close and owns no second
-  handler. Host close and activation notifications update the chat's card state without another command. Chat
-  show/hide is cmd.panel.switch with panel_id chat; a resize commits once through
-  cmd.workspace_layout.resize_surface with surface chat and width, including null for reset. History pin is
-  ui.chat_column.pin_history with history_pinned; Keep open is ui.chat_column.keep_open with keep_open. These
-  two are typed local layout view-state actions with no receipt or event and never Settings writes. Menus,
-  sheets, hover previews, disclosure, tab body repaint and focus return dispatch no command. Wand setup opens
-  its existing app modal and its committed action keeps its own command. ELI5's per-chat override remains
-  cmd.chat.eli5.set; the product's All chats and Project default use Settings transactions over
-  general.interaction.eli5-default. Working style, master sound and naming use the same Settings preview/apply
-  transaction as their Settings rows, including when changed from chat; no chat-only mute, title-policy or take
-  command is minted. The compact command card offers only Open in Terminal for a live session, View output when
-  no session remains, and Rerun in Terminal under ACD-502. These retain UCC-201's identities and exact-session
-  behavior. Show Terminal and Focus remain their existing other-surface commands; the port adds no compact-card
-  producers for them; Insert command and retained-output candidates remain unavailable until their existing
-  admission. Thought Stream in Settings, New chat defaults and the composer capability menu uses the existing
-  Settings transaction over general.interaction.thought-stream (SSYS-055), with no new command identity, and so
-  does its Lines shown while thinking choice over general.interaction.thought-stream-lines from the same three
-  places (DL-234); arbitrary Demo Studio family takes receive no product command or production row. Candidate
-  exclusions for DL-218's Check It and Grill Me controls remain unchanged by this port; the concept proving a
-  click is not command admission. In integrated concept 59ca2d4382 the chat header's Keep History open uses
-  ui.chat_column.pin_history, its Keep open row uses ui.chat_column.keep_open and Pop out / Dock back consumes
-  UCC-203's existing route. Hosted opens use the Home bridge with D7 file gestures, D8 background agent tabs and
-  the centre's narrow rule. These JavaScript paths demonstrate concept routing only, not native typed dispatch.
-  The existing project-only Settings adapter persists Project default ELI5; All chats ELI5 remains session-only
-  and therefore does not prove the application-scope Settings transaction above. In that snapshot Thought Stream
-  changed only its shared preference and preview; the live thinking display it drives followed on 2026-10-23
-  (ACD-221, DL-234). PM7 S5: hosted Pip parts use the same admitted inventory row and Settings pair in every
-  host. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin with boolean pinned (default false), selected
-  thread_id, view_id, source scope and return-focus identity. It is view-local, has no
-  runtime/Settings/event/receipt write and uses no production mutation handler. Pinned detail follows thread
-  data across switches; unpinned detail closes on a switch. History pin remains separate; work actions use the
-  UCC-210 owners instead of chat-private aliases. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17:
-  hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select,
-  textarea, label or switch/radio/tab/slider semantics). Plain words, empty section space and the plate picture
-  do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains
-  eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing.
-  One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and
-  trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
-  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph
-  matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
-  shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding
-  arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s
-  result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run
-  cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
+canonical_text: 'The chat port adds producers to existing commands and local actions, not new command identities (DL-232).
+  Plans open their exact version through cmd.chat.plan.open_version (UCC-176); files and diffs through cmd.file.open;
+  artifacts and documents through the subject routes of UCC-200; a child transcript through cmd.agents.open_thread (UCC-188);
+  browser addresses through cmd.browser.open_workspace_preview; and existing terminal sessions through cmd.terminal.open.
+  Every domain route carries CV-360 placement and reaches the one opening module of F3-634, preserving revision/identity
+  and user-versus-agent focus. A direct cmd.panel_tab.open is used only where UCC-200 already permits it, including read-only
+  editor buffers for command output. cmd.editor.close_tab remains alias metadata for cmd.panel_tab.close and owns no
+  second handler. Host close and activation notifications update the chat''s card state without another command. Chat
+  show/hide is cmd.panel.switch with panel_id chat; a resize commits once through cmd.workspace_layout.resize_surface
+  with surface chat and width, including null for reset. History pin is ui.chat_column.pin_history with history_pinned;
+  Keep open is ui.chat_column.keep_open with keep_open. These two are typed local layout view-state actions with no receipt
+  or event and never Settings writes. Menus, sheets, hover previews, disclosure, tab body repaint and focus return dispatch
+  no command. Wand setup opens its existing app modal and its committed action keeps its own command. ELI5''s per-chat
+  override remains cmd.chat.eli5.set; the product''s All chats and Project default use Settings transactions over general.interaction.eli5-default.
+  Working style, master sound and naming use the same Settings preview/apply transaction as their Settings rows, including
+  when changed from chat; no chat-only mute, title-policy or take command is minted. The compact command card offers
+  only Open in Terminal for a live session, View output when no session remains, and Rerun in Terminal under ACD-502.
+  These retain UCC-201''s identities and exact-session behavior. Show Terminal and Focus remain their existing other-surface
+  commands; the port adds no compact-card producers for them; Insert command and retained-output candidates remain unavailable
+  until their existing admission. Thought Stream in Settings, New chat defaults and the composer capability menu uses
+  the existing Settings transaction over general.interaction.thought-stream (SSYS-055), with no new command identity,
+  and so does its Lines shown while thinking choice over general.interaction.thought-stream-lines from the same three
+  places (DL-234); Candidate exclusions for DL-218''s Check It and Grill Me controls remain unchanged by this port; the
+  concept proving a click is not command admission. In integrated concept 59ca2d4382 the chat header''s Keep History
+  open uses ui.chat_column.pin_history, its Keep open row uses ui.chat_column.keep_open and Pop out / Dock back consumes
+  UCC-203''s existing route. Hosted opens use the Home bridge with D7 file gestures, D8 background agent tabs and the
+  centre''s narrow rule. These JavaScript paths demonstrate concept routing only, not native typed dispatch. The existing
+  project-only Settings adapter persists Project default ELI5; All chats ELI5 remains session-only and therefore does
+  not prove the application-scope Settings transaction above. In that snapshot Thought Stream changed only its shared
+  preference and preview; the live thinking display it drives followed on 2026-10-23 (ACD-221, DL-234). PM7 S5: hosted
+  Pip parts use the same admitted inventory row and Settings pair in every host. G1 B (Jared 2026-10-30) restores ui.activity_detail.pin
+  with boolean pinned (default false), selected thread_id, view_id, source scope and return-focus identity. It is view-local,
+  has no runtime/Settings/event/receipt write and uses no production mutation handler. Pinned detail follows thread data
+  across switches; unpinned detail closes on a switch. History pin remains separate; work actions use the UCC-210 owners
+  instead of chat-private aliases. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming
+  starts only from an actual control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider
+  semantics). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control
+  gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real
+  partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet
+  hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip
+  and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s
+  kind glyph matches its sheet head; do not fork a second wand or fallback icon. Q16: You is the person alone, head and
+  shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control
+  or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not
+  puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional
+  agent strings and the single Pip primitive retain their existing meaning.'
 gui_related: true
 gui_classification_reason: Maps hosted chat controls to existing commands, Settings transactions and local
   actions.

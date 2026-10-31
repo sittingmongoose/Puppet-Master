@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5518-L5800
+Source lines: L5573-L5874
 
-Source SHA256: `d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2`
+Source SHA256: `a3397419c621ec7b5fdb2c61f6cb98ca95bcbc34b66d698ca4558fb2e38c9f63`
 
 ---
 
@@ -265,15 +265,34 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: 'Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated
+  future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted
+  EventRecord types. DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server
+  owner or the initiating native Client’s local connector. Request, result, error, availability, permission, IPC and
+  receipt preserve connector_owner, owner_client_id and the native installation reference. Native ownership has no owner
+  server_id; client/connector/policy/session generations replace Server/endpoint/route/trust generations for that local
+  operation. The native owner must equal the initiating Client; cross-owner returns fail closed. Server-owned records
+  and compatibility aliases retain their prior fences. Native Settings, onboarding and Doctor reuse the same handlers
+  and command IDs; they grant neither Server listeners/Funnel nor pairing/trust/work authority. Browser tabs cannot select
+  native ownership. All routes remain handler_unavailable until executable evidence exists.'
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
-- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false
+  inventory.
+- Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission
+  contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
+- 'DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
+  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
+  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
+  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
 validation_surfaces:
 - python3 scripts/pm-touch-closure-verify.py --json
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix

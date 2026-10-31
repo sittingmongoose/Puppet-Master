@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41960-L42405
+Source lines: L42072-L42514
 
-Source SHA256: `d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af`
+Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
 
 ---
 
@@ -388,32 +388,29 @@ plan_unit_id: F3-589
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  NieR Mode (SSYS-043, F3-441) covers every assistant chat surface (DL-144). With the NieR family selected, the
-  chat paints Basic under NieR's ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with
-  square caps and stepped acts, the status marks still distinct (needs you an inverted ink block with a paper
-  question mark and, under the Target brackets part, ink corner brackets; working the diamond loader under the
-  Diamond loaders part; idle and pending squares under the Square hairlines part). The capabilities wand stays
-  ink, with a lighter handle and a filled star, and its sparkles twinkle in held steps (F3-588, DL-146); agents
-  are PMConcept7's ink NieR puppets with the rigid visor band (F3-594); a setup sheet's step number is an
-  inverted ink square (F3-592); and the Ask Card's chosen answer is the menu cursor, with diamond spine marks
-  (F3-596). The installed parts land in the chat as follows: Menu cursor on menus, pickers, thread rows and wand
-  rows; Slice open on menus, dialogs and sheets; Text decode on the thread title at a thread switch and on the
-  head of an arriving assistant turn; Page wipe on a thread switch; Alert glitch, Scan sweep and Drifting
-  particles on alert toasts, refusals and failed steps; Pod companion above the composer, turning toward toasts;
-  Pod 042 in Chat as a persona that answers in Pod's voice; Quest banners on plan approved, build complete and
-  goal complete; Unit readouts and Block progress in the status bar and the context meter; Intel tooltips for
-  hover cards; Ink empty states; Save signal on saves. Each part stays individually switchable and silent while
-  another family is selected. In the chat the transcript stage counts as the app's ground, so the selected scene
-  shows behind the conversation as well as around the panels. A change from one scene to another cross-fades by
-  opacity over 520 ms, with neither scene ever drawn above its resting strength; reduced motion, and the Still
-  and Colors only presets, swap instantly. This cross-fade applies wherever a scene changes, PMConcept7
-  included. The chat adds no moving touches inside the scenes. Q22 promotes NieR Light and NieR Dark to
-  selectable product themes in the fifth family; Demo Studio mirrors that family. Amended 2026-10-29 (S7/S9, L7;
-  PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states,
-  Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip
-  does not animate; live sheet/onboarding Pip has eyes (X3). Amended Q22, Jared 2026-10-30 (DL-257): the fifth
-  NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls.
+canonical_text: 'NieR Mode (SSYS-043, F3-441) covers every assistant chat surface (DL-144). With the NieR family selected,
+  the chat paints Basic under NieR''s ink-and-parchment tables and fonts, and its icons draw no glow: ink tubes with
+  square caps and stepped acts, the status marks still distinct (needs you an inverted ink block with a paper question
+  mark and, under the Target brackets part, ink corner brackets; working the diamond loader under the Diamond loaders
+  part; idle and pending squares under the Square hairlines part). The capabilities wand stays ink, with a lighter handle
+  and a filled star, and its sparkles twinkle in held steps (F3-588, DL-146); agents are PMConcept7''s ink NieR puppets
+  with the rigid visor band (F3-594); a setup sheet''s step number is an inverted ink square (F3-592); and the Ask Card''s
+  chosen answer is the menu cursor, with diamond spine marks (F3-596). The installed parts land in the chat as follows:
+  Menu cursor on menus, pickers, thread rows and wand rows; Slice open on menus, dialogs and sheets; Text decode on the
+  thread title at a thread switch and on the head of an arriving assistant turn; Page wipe on a thread switch; Alert
+  glitch, Scan sweep and Drifting particles on alert toasts, refusals and failed steps; Pod companion above the composer,
+  turning toward toasts; Pod 042 in Chat as a persona that answers in Pod''s voice; Quest banners on plan approved, build
+  complete and goal complete; Unit readouts and Block progress in the status bar and the context meter; Intel tooltips
+  for hover cards; Ink empty states; Save signal on saves. Each part stays individually switchable and silent while another
+  family is selected. In the chat the transcript stage counts as the app''s ground, so the selected scene shows behind
+  the conversation as well as around the panels. A change from one scene to another cross-fades by opacity over 520 ms,
+  with neither scene ever drawn above its resting strength; reduced motion, and the Still and Colors only presets, swap
+  instantly. This cross-fade applies wherever a scene changes, PMConcept7 included. The chat adds no moving touches inside
+  the scenes. Q22 promotes NieR Light and NieR Dark to selectable product themes in the fifth family; Amended 2026-10-29
+  (S7/S9, L7; PM7): NieR parts win overlapping drawings: Diamond loaders (or existing fallback when off), Ink empty states,
+  Pod companion/voice. Parts never switch the universal brand/tray/icon/notification/loader. Static NieR Pip does not
+  animate; live sheet/onboarding Pip has eyes (X3). Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
+  independent-override wording; SSYS-043 owns migration and retained Adjust controls.'
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false

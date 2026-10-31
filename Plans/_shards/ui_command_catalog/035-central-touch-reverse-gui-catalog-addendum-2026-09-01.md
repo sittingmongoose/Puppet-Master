@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12197-L12466
+Source lines: L12292-L12579
 
-Source SHA256: `bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479`
+Source SHA256: `9acefb9159762fec111c86e6d075da46a5b71cf95b79a23705b801bc7b3c8dee`
 
 ---
 
@@ -257,15 +257,33 @@ plan_unit_id: UCC-152
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The 232 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
+canonical_text: 'The 232 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior,
+  sole future handler routes, deterministic returns, and no synthetic-control requirement. DL-259 D7 B, Jared 2026-10-31:
+  the existing Tailscale connector commands serve either their Server owner or the initiating native Client’s local connector.
+  Request, result, error, availability, permission, IPC and receipt preserve connector_owner, owner_client_id and the
+  native installation reference. Native ownership has no owner server_id; client/connector/policy/session generations
+  replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the initiating
+  Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior fences.
+  Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
 gui_related: true
 gui_classification_reason: This PlanUnit is the exact GUI reverse-coverage catalog for the remaining Touch commands.
 depends_on: [UCC-151, CS-074, FGI-013, RAS-015]
 unblocks: []
 acceptance_criteria:
 - All 232 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
-- Existing same-intent controls are rebound; nearby non-equivalent controls are not relabeled and no synthetic control is invented merely for coverage.
+- Existing same-intent controls are rebound; nearby non-equivalent controls are not relabeled and no synthetic control
+  is invented merely for coverage.
 - Disabled, keyboard, focus, accessibility, result/error, and exact-return behavior is evidenced before production certification.
+- 'DL-259 D7 B, Jared 2026-10-31: the existing Tailscale connector commands serve either their Server owner or the initiating
+  native Client’s local connector. Request, result, error, availability, permission, IPC and receipt preserve connector_owner,
+  owner_client_id and the native installation reference. Native ownership has no owner server_id; client/connector/policy/session
+  generations replace Server/endpoint/route/trust generations for that local operation. The native owner must equal the
+  initiating Client; cross-owner returns fail closed. Server-owned records and compatibility aliases retain their prior
+  fences. Native Settings, onboarding and Doctor reuse the same handlers and command IDs; they grant neither Server listeners/Funnel
+  nor pairing/trust/work authority. Browser tabs cannot select native ownership. All routes remain handler_unavailable
+  until executable evidence exists.'
 validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
 risk_class: reverse_gui_command_closure
 reasoning_tier: high

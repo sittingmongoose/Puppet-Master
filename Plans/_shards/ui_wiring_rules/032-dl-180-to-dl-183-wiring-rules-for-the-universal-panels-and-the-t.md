@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2189-L2838
+Source lines: L2261-L2938
 
-Source SHA256: `31ab8def06b0bea8e3a914d7a2299c766aa1a80e91dab405505a9f00a759b575`
+Source SHA256: `74dac4f6f54674ad1c838ac3b966346e4ed8f03d52721814dec75cee3350b2fd`
 
 ---
 
@@ -348,69 +348,88 @@ plan_unit_id: UIW-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040 through
-  UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path or typed
-  local action/non-dispatch disposition, and the corresponding production entry or reason it has none. Each
-  admitted editor setting and every retained customizer field has its own row; aliases and view-local
-  affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the runtime command
-  wiring inventory; a producer binding can reuse its canonical command entry only when the census names that
-  entry and exact argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit
-  in the census and the production exclusions notes. Required evidence includes the rendered pointer/keyboard
-  path, projected availability and disabled reason, request/result, readback, receipt/event delta, focus and
-  accessible names. Static source declarations certify neither native handlers nor the complete rendered census.
-  Every PM7 control must be classified, including Settings entry/scope/reset, token color channels/hex/reset,
-  preview/sample actions, wallpaper keys/default, notifications, DnD and each resize surface. Demo-only controls
-  and preview harnesses are outside the product census. Composite quick-set rows reference the one exact
-  field/value patch in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and
-  adapt it atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
-  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick
-  set. The round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local
-  library actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no
-  persistence. Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and
-  Off; the consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-222) adds no binding,
-  command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order
-  are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows
-  forwarding the original prompt's own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and
-  closed pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
-  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They create
-  no command, event or new action id. Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance
-  and shell control and every Settings control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows
-  included). Usage page controls that host no Settings row are classified by UCC-147's PM7 producer census, as
-  view_only or their existing command, and the left rail's local controls (the Owner dropdown, the publish fold,
-  the More tray, the Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or
-  wiring row; neither needs a row here. The earlier "every PM7 control" reads with those two owners.
-  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay remain
-  presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
-  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census
-  tombstones with no action, setting or production writer. Family controls bind the existing theme pair, and the
-  retained editor parts/background use the same live writer (Q22). PM7 B1/B2/B6, S5, D5/G4: shell census
-  includes each project row/shortcut, Pip entry/editor control, work status item and all three panel tabs;
-  WM-097 and pm7_control_bindings.json bind every command/local disposition. Decorative mark/loader are not
-  controls. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override
-  wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258; GUI
-  7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing
-  one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain
-  the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit
-  readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value,
-  credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a
-  concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store
-  retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
-  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
-  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
-  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
-  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
-  and never native durability, a verified restore/credential or a native owner receipt; production
-  Storage/Settings CAS/readback/rollback rules are unchanged.
+canonical_text: 'Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
+  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path or typed
+  local action/non-dispatch disposition, and the corresponding production entry or reason it has none. Each admitted
+  editor setting and every retained customizer field has its own row; aliases and view-local affordances never become
+  invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the runtime command wiring inventory; a producer binding
+  can reuse its canonical command entry only when the census names that entry and exact argument mapping. Its schema
+  is not relaxed for local controls: local exclusions are explicit in the census and the production exclusions notes.
+  Required evidence includes the rendered pointer/keyboard path, projected availability and disabled reason, request/result,
+  readback, receipt/event delta, focus and accessible names. Static source declarations certify neither native handlers
+  nor the complete rendered census. Every PM7 control must be classified, including Settings entry/scope/reset, token
+  color channels/hex/reset, preview/sample actions, wallpaper keys/default, notifications, DnD and each resize surface.
+  Demo-only controls and preview harnesses are outside the product census. Composite quick-set rows reference the one
+  exact field/value patch in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and
+  adapt it atomically to the existing writer. Reset/restore-default operations have an explicit exact id set distinct
+  from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick set. The round-3
+  bezel/background/mask fields and saved terminal preset controls are now enumerated. Local library actions explicitly
+  declare their SP-331-only persistence; picker Back explicitly declares no persistence. Terminal round 5 (DL-213) retires
+  the Flicker Amount bindings and narrows Bell to Follow look and Off; the consistency pass (DL-214) adds no binding,
+  command or stored state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold
+  and a Customize pick''s acknowledgement order are ACD-475''s; this census adds no row for them. The two bell Continue
+  controls are separate local census rows forwarding the original prompt''s own typed action. Setup retains PWIZ-021/UCC-106''s
+  ui.onboarding.start and closed pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023''s
+  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They create no command,
+  event or new action id. Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and
+  every Settings control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls
+  that host no Settings row are classified by UCC-147''s PM7 producer census, as view_only or their existing command,
+  and the left rail''s local controls (the Owner dropdown, the publish fold, the More tray, the Jujutsu head buttons,
+  strip keys) by F3-618 to F3-625, which add no command, action or wiring row; neither needs a row here. The earlier
+  "every PM7 control" reads with those two owners. ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay
+  remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route, detail id, command, new part
+  or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired non_dispatch census tombstones
+  with no action, setting or production writer. Family controls bind the existing theme pair, and the retained editor
+  parts/background use the same live writer (Q22). PM7 B1/B2/B6, S5, D5/G4: shell census includes each project row/shortcut,
+  Pip entry/editor control, work status item and all three panel tabs; WM-097 and pm7_control_bindings.json bind every
+  command/local disposition. Decorative mark/loader are not controls. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
+  NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round
+  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
+  through the existing one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference,
+  retain the factory-on or current effective choice rather than muting on every refresh. An explicit readable Project
+  value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
+  fabricates a saved value or authorizes a write. DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar
+  expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain
+  English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question
+  tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
+  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
+  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
+  tour_narration_only tag is retired. D6 A: the human signs in on the initiating active device while the AI/tool runs
+  on the selected execution host. Official tool sign-ins and private account roots stay with that tool on that host;
+  direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection
+  and Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets.
+  Protected returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing
+  account, host or route invalidates stale validation; another account of the same provider has a distinct identity.'
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "No new visible product control lacks a census row and exact owner/action route."
-  - "The census validates against its schema and references only existing inventory ids, catalog commands and production rows."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
+- No new visible product control lacks a census row and exact owner/action route.
+- The census validates against its schema and references only existing inventory ids, catalog commands and production
+  rows.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
+  through the existing one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference,
+  retain the factory-on or current effective choice rather than muting on every refresh. An explicit readable Project
+  value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
+  fabricates a saved value or authorizes a write.'
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D6 A: the human signs in on the initiating
+  active device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots
+  stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host.
+  Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name
+  booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -458,38 +477,32 @@ plan_unit_id: UIW-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: >-
-  The port's control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries carry
-  the actual hosted producer locations; they are not duplicated per renderer. Required forward coverage
-  checks the domain identity and revision, placement fields, one dispatch, availability and disabled
-  reason, exact-session terminal handoff, file click/double-click/modifiers and user-versus-agent focus.
-  Required reverse coverage checks host tab close and activation updating the corresponding chat card, a
-  stored preference updating both Settings and chat, a chat-sheet change updating its existing Settings
-  row, application/project/current-chat ELI5 separation, and switching chats without carrying another
-  chat's override. History default is checked on an unsaved workspace and a saved unpinned workspace,
-  preserving the saved false; changing that default never changes the current pin. History pin and Keep
-  open remain local no-event actions, resizing commits once, and menus/hover/disclosure/redraw dispatch
-  nothing. The guided-tour teaching surface remains isolated from the hosted chat during the accepted tour.
-  Demo Studio launches and concept fixture controls are not product producers. Source-hashed native
-  dispatcher, handler, scope/storage and accessibility proof remain required before certification; HTML
-  controls and browser checks satisfy only concept review. For integrated concept 59ca2d4382 the
-  reconciliation specifically includes run tabs active in any visible panel, captures delivered to the
-  original thread and composer destination after a thread switch, context actions on their own tab's
-  thread, and attachment identity plus bounded More Info. The surfaces lane reports these concept checks;
-  this unit is not a fresh browser or native verification receipt. The project-only adapter leaves
-  application ELI5 persistence pending, and Thought Stream preference/preview checks do not establish a
-  live reasoning renderer. The final hover press regression, carry-over layout sweep and films remain
-  pending the owning lanes. Astra's round-2 negative check leaves capture composer
-  attachment/list/insertion destination handling open: after the origin composer changes, these paths must
-  restore the saved destination or refuse before draft mutation. Isolated direct delivery is fixed;
-  retaining the originating thread alone does not pass the composer-destination case. Shared
-  editor-revealed state must also clear for collapsed or hidden Home bodies and when another page is in
-  front. Astra finds that shared state still stale in this snapshot, even though the separate run-card
-  visibility wrapper passes those cases. PM7 PC1/S5/G1: hosted chat keeps exact command/local identities
-  and Settings ownership while adding the Pip editor and Processes domain. Shared hover/overlay/rig
-  teardown applies; redraw/cheer/preview never creates a second commit or runtime. G1 B (Jared 2026-10-30)
-  restores the view-local ui.activity_detail.pin / chat.activity.pin; a pinned thread switch replaces the data
-  and cancels stale subscriptions, while an unpinned switch closes detail.
+canonical_text: 'The port''s control census follows UCC-208 and WM-096 (DL-232). Existing production-intent entries carry
+  the actual hosted producer locations; they are not duplicated per renderer. Required forward coverage checks the domain
+  identity and revision, placement fields, one dispatch, availability and disabled reason, exact-session terminal handoff,
+  file click/double-click/modifiers and user-versus-agent focus. Required reverse coverage checks host tab close and
+  activation updating the corresponding chat card, a stored preference updating both Settings and chat, a chat-sheet
+  change updating its existing Settings row, application/project/current-chat ELI5 separation, and switching chats without
+  carrying another chat''s override. History default is checked on an unsaved workspace and a saved unpinned workspace,
+  preserving the saved false; changing that default never changes the current pin. History pin and Keep open remain local
+  no-event actions, resizing commits once, and menus/hover/disclosure/redraw dispatch nothing. The guided-tour teaching
+  surface remains isolated from the hosted chat during the accepted tour. Source-hashed native dispatcher, handler, scope/storage
+  and accessibility proof remain required before certification; HTML controls and browser checks satisfy only concept
+  review. For integrated concept 59ca2d4382 the reconciliation specifically includes run tabs active in any visible panel,
+  captures delivered to the original thread and composer destination after a thread switch, context actions on their
+  own tab''s thread, and attachment identity plus bounded More Info. The surfaces lane reports these concept checks;
+  this unit is not a fresh browser or native verification receipt. The project-only adapter leaves application ELI5 persistence
+  pending, and Thought Stream preference/preview checks do not establish a live reasoning renderer. The final hover press
+  regression, carry-over layout sweep and films remain pending the owning lanes. Astra''s round-2 negative check leaves
+  capture composer attachment/list/insertion destination handling open: after the origin composer changes, these paths
+  must restore the saved destination or refuse before draft mutation. Isolated direct delivery is fixed; retaining the
+  originating thread alone does not pass the composer-destination case. Shared editor-revealed state must also clear
+  for collapsed or hidden Home bodies and when another page is in front. Astra finds that shared state still stale in
+  this snapshot, even though the separate run-card visibility wrapper passes those cases. PM7 PC1/S5/G1: hosted chat
+  keeps exact command/local identities and Settings ownership while adding the Pip editor and Processes domain. Shared
+  hover/overlay/rig teardown applies; redraw/cheer/preview never creates a second commit or runtime. G1 B (Jared 2026-10-30)
+  restores the view-local ui.activity_detail.pin / chat.activity.pin; a pinned thread switch replaces the data and cancels
+  stale subscriptions, while an unpinned switch closes detail.'
 gui_related: true
 gui_classification_reason: Defines forward and reverse verification for visible hosted chat controls.
 split_recommended: false
@@ -554,62 +567,58 @@ plan_unit_id: UIW-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: >-
-  W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use stable
-  IDs, never array positions. Menu open and local view changes write nothing; work mutations call owner handlers
-  after permissions/currentness and match keyboard/pointer requests. Reduced Motion and disabled states preserve
-  meaningful feedback without activation; ack ≤100 ms and commit once. Full Activity Detail replaces only the
-  small view; G1 B (Jared 2026-10-30) restores ui.activity_detail.pin / chat.activity.pin. Pin keeps detail open
-  across switches while data follows the new thread; unpinned detail closes on a switch, without a runtime or
-  Settings write. Resources subscribes only while visible; stale requests cannot leak samples across
-  Project/server/environment. One overlay/hover/loader/Pip kit and one work projection; no injection hooks,
-  synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30: System status is a small read-only
-  overlay popover, reached from the existing status-bar System status item and the Processes System services
-  link. ui.system_status.open and ui.system_status.close are typed local visibility actions, with
-  statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links
-  use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting
-  code.editing.lsp-server-catalog for language servers, system.mcp.server-list for MCP servers or
-  web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
-  controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
-  plate; unavailable owner navigation says why. WM-097’s optional concept_sources records pair stable control
-  families with the joined source paths and exact tokens. They witness source alignment only; native dispatcher,
-  owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes, work-panel tabs and
-  quit actions keep their stable IDs even when a concept data-action spelling differs. D7/D8/D13, PM7 companion
-  review fix1, 2026-10-30: WM-097’s reverse source-control census and action-specific local payload validation
-  close the visible work-detail controls. Local owner selection never dispatches cmd.agents.open_thread; actual
-  Assistant thread open, browser port open, scheduled Cancel and terminal Rerun use UCC-210’s existing owner
-  routes. Clipboard and owner-surface navigation are declared local actions. Missing control dispositions or
-  invalid local payloads fail focused checks; source anchors still certify no native signal or effect. G2/F3-1,
-  Jared follow-ups 2026-10-30: Activity Detail widens first, then at the column limit docks and squeezes
-  messages if at least 360 px remain, otherwise covers the transcript at full height. Notice stage placement
-  uses the one bell anchor and the theme menu’s resting top on every page with the inbox closed (selector
-  wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed); while the inbox is open
-  the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push. Other controls and the chat
-  head do not trigger clearance. F3-5: body/action/dismiss clicks on entering or leaving cards dispatch nothing
-  on every page, Usage included; pointer routing passes through, with no queued dispatch or late reactivation.
-  Reduced Motion settles placement/removal instantly. F3-6: read the authoritative inbox push after its sprout
-  owner opens it, using resting/destination height, and refresh it on content/height changes or resize; close
-  clears it. Bindings retain their existing owner routes and count; no geometry or entry-state field becomes a
-  persisted preference or runtime mutation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the
-  PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime
-  from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run
-  start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
-  occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry
-  and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no
-  work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority,
-  at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and
-  the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services,
-  which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project
-  says that nothing in this Project is running, above the shared rows; it does not look empty or report another
-  Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is
-  available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact
-  host/environment identity and stale disclosure remain authoritative; shared read scope creates no
-  Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual
-  control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider
-  semantics). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a
-  control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only
-  rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies
-  this behavior, with no per-sheet hover engine.
+canonical_text: 'W1–W9, B1–B6, S5, G1–G10. Every visible control in WM-097 has an exact census row; repeated rows use
+  stable IDs, never array positions. Menu open and local view changes write nothing; work mutations call owner handlers
+  after permissions/currentness and match keyboard/pointer requests. Reduced Motion and disabled states preserve meaningful
+  feedback without activation; ack ≤100 ms and commit once. Full Activity Detail replaces only the small view; G1 B (Jared
+  2026-10-30) restores ui.activity_detail.pin / chat.activity.pin. Pin keeps detail open across switches while data follows
+  the new thread; unpinned detail closes on a switch, without a runtime or Settings write. Resources subscribes only
+  while visible; stale requests cannot leak samples across Project/server/environment. One overlay/hover/loader/Pip kit
+  and one work projection; no injection hooks, synthetic resize or replacement observers. D11/G4, PM7 Step4, 2026-10-30:
+  System status is a small read-only overlay popover, reached from the existing status-bar System status item and the
+  Processes System services link. ui.system_status.open and ui.system_status.close are typed local visibility actions,
+  with statusbar.system_status, work.open_system_status and system_status.close binding families. Service owner links
+  use the existing ui.settings.route.open action and system_status.service.open_settings binding, selecting code.editing.lsp-server-catalog
+  for language servers, system.mcp.server-list for MCP servers or web.index.enable for the search index. They open Settings
+  and reveal the owner row without writing a value or controlling a service. The popover has close/Escape/outside closure,
+  return focus and the common overlay/Glass plate; unavailable owner navigation says why. WM-097’s optional concept_sources
+  records pair stable control families with the joined source paths and exact tokens. They witness source alignment only;
+  native dispatcher, owner, focus, storage and effect evidence stays partial until implemented. Pin/Processes, work-panel
+  tabs and quit actions keep their stable IDs even when a concept data-action spelling differs. D7/D8/D13, PM7 companion
+  review fix1, 2026-10-30: WM-097’s reverse source-control census and action-specific local payload validation close
+  the visible work-detail controls. Local owner selection never dispatches cmd.agents.open_thread; actual Assistant thread
+  open, browser port open, scheduled Cancel and terminal Rerun use UCC-210’s existing owner routes. Clipboard and owner-surface
+  navigation are declared local actions. Missing control dispositions or invalid local payloads fail focused checks;
+  source anchors still certify no native signal or effect. G2/F3-1, Jared follow-ups 2026-10-30: Activity Detail widens
+  first, then at the column limit docks and squeezes messages if at least 360 px remain, otherwise covers the transcript
+  at full height. Notice stage placement uses the one bell anchor and the theme menu’s resting top on every page with
+  the inbox closed (selector wrapper bottom plus its gap, not title-bar bottom; negative stage drop is allowed); while
+  the inbox is open the lead’s 2026-10-30 exception keeps the stage under that inbox via --pmn-push. Other controls and
+  the chat head do not trigger clearance. F3-5: body/action/dismiss clicks on entering or leaving cards dispatch nothing
+  on every page, Usage included; pointer routing passes through, with no queued dispatch or late reactivation. Reduced
+  Motion settles placement/removal instantly. F3-6: read the authoritative inbox push after its sprout owner opens it,
+  using resting/destination height, and refresh it on content/height changes or resize; close clears it. Bindings retain
+  their existing owner routes and count; no geometry or entry-state field becomes a persisted preference or runtime mutation.
+  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the
+  next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key
+  freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart
+  it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines
+  bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns
+  no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three
+  budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends
+  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
+  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
+  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
+  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
+  read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from
+  an actual control inside its affects region (button, input, select, textarea, label or switch/radio/tab/slider semantics).
+  Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same
+  feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its
+  plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.
+  DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -620,10 +629,32 @@ depends_on:
 - UIW-043
 unblocks: []
 acceptance_criteria:
-  - "Keyboard/pointer controls submit identical scoped typed requests and acknowledge within the stated timing/one-commit gate."
-  - "Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect."
-  - "Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private owner remains."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine."
+- Keyboard/pointer controls submit identical scoped typed requests and acknowledge within the stated timing/one-commit
+  gate.
+- Stale/disabled/unsupported targets retain an accessible exact reason and make no prohibited effect.
+- Closing/replacing the view releases overlays, rig/loader subscriptions and resource sampling; no injection/synthetic-resize/private
+  owner remains.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and
+  the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection.
+  Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not
+  restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you
+  lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw;
+  it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three
+  budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends
+  G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong
+  to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project
+  is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines
+  show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2
+  s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared
+  read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from
+  an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
+  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
+  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
+  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
+  with no per-sheet hover engine.'
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -655,6 +686,3 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Wi
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
-
-
-QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source, rather than an empty local-location field. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a restored backup, verified credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority. Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2248
+Source lines: L1781-L2373
 
-Source SHA256: `da86162c041087b873a136ee5f83ce37ff9dd2190909e318f6b0be2dec331f84`
+Source SHA256: `b28a3459e18dbf9c27eb0f80083009e575abcf210c03058510575afd642d861a`
 
 ---
 
@@ -115,60 +115,88 @@ plan_unit_id: PWIZ-021
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph
-  and the unchanged six-stage connect-existing shortcut. Before the context-specific reviewed commit, only
-  bounded read-only preflight and individually consented selected-source authentication may run. Project System
-  commits the selected existing owner command and required child receipts once, including Settings-owned exact-ID
-  copy/rebind and readback, before broad provider setup. The actual committed Project then enters provider_setup,
-  optional free_models_setup and truthful Ready. Explicit Project deferral skips both provider phases without
-  inventing a Project. UI choreography remains fourteen typed local actions (ui.onboarding.choose_look added
-  by DL-153), never an Onboarding backend or command family. Each ui.onboarding.choose_look request replaces
-  only the fields it sets in the session''s optional look_choice; absent or null fields mean nothing chosen
-  yet. A resumed setup repaints that stored look choice, NieR Mode included, and null fields fall back to F3-520''s
-  start rule; this session choice performs no Settings write before commit. The 2026-10-14 presentation updates
-  consume FinalGUISpec F3-655 (Planning Wizard theme matching) and F3-656 (onboarding art and the chosen look
-  through Create Project), with no new local action or commit authority. Amended 2026-10-17 (DL-228): the onboarding
-  concept''s owner table marks eight command ids as not canonical; none is catalogued, and onboarding ships
-  none of them. Each routes as follows until its owner admits an id: restoring a backup (cmd.restore.apply
-  in the concept) dispatches the Backup owner''s existing cmd.restore.server_full or cmd.restore.project_as_new
-  by the chosen scope, after cmd.restore.preview; installing a tool product (cmd.tool_product.install) is the
-  Installer owner''s cmd.installation.install; detecting installed provider tools (cmd.integration.connection.detect)
-  is cmd.tool.discover; probing a device (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check)
-  are the selected source''s cmd.project.source_location.test; and discovering or installing an SSH key (cmd.ssh_connection.keys.discover,
-  cmd.ssh_connection.key.install) and enabling a free-model route (cmd.free_models.route.enable) have no owner
-  command yet, so onboarding offers those steps as their owners'' own screens, reached through cmd.settings.open,
-  until the SSH and Models owners admit them. Amended 2026-10-29 (O1–O12; PM7): Onboarding presentation is
-  F3-663’s one Pip with family worlds, bounded shared physics/solved strings with implementation technique
-  open (O2 A, Jared 2026-10-30) and optional live voice/music; its former no-physics/no-loop presentation prohibition
-  is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding actions.
-  Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. O12 B (Jared 2026-10-30):
-  Creating Continue/Ready require both completed owner phases and the last block landing; Reduced Motion settles
-  instantly, and no landing claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and
-  changes no theme; click or keyboard activation changes the look through the existing typed local action and
-  persistence boundary. O1–O12/O7, PM7 Step4, 2026-10-30: joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice,
-  O55.tips and O55.pipOops consume the one Pip/sound/option-note owners. O55.ui.act/fill/tip/open are the lab-facing
-  adapters to the same real wizard actions and drafts; they confer no new product action or owner permission.
-  Choice explanations keep pm7ob-explainer and the existing typed action; post-commit examples require the
-  actual committed Project. Fixture twists/signinFailed are lab/source data, never alternate validation or
-  persisted event names. O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): Ready’s
-  tour action lets the shared Pip stage’s handOff() visibly lift before calling O55.finish for the unchanged
-  Tour; its handingOff guard prevents a second press. Reduced Motion finishes the handoff instantly. Creating
-  remains gated by current owner completion and the last block landing; touchdown audio is F3-599’s shared
-  cue and is never completion evidence. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point
-  to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery
-  credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then
-  the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
-  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
-  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication.
-  Show Unlock the backup only for a still-locked backup without an accepted unlock; name its selected place.
-  Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot
-  selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
-  boundaries remain mandatory; a concept Kit or seed never proves native unlock or restore. QA2 follow-up N1,
-  integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device, not a
-  reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its
-  old reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check
-  result stays bound to the service/device it authenticated and cannot advance a different current choice.
-  The concept reachKey/reachedFor projection is fixture state, never an owner credential or permission receipt.'
+canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
+  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only preflight
+  and individually consented selected-source authentication may run. Project System commits the selected existing owner
+  command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback, before broad
+  provider setup. The actual committed Project then enters provider_setup, optional free_models_setup and truthful Ready.
+  Explicit Project deferral skips both provider phases without inventing a Project. UI choreography remains fourteen
+  typed local actions (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or command family. Each
+  ui.onboarding.choose_look request replaces only the fields it sets in the session''s optional look_choice; absent or
+  null fields mean nothing chosen yet. A resumed setup repaints that stored look choice, NieR Mode included, and null
+  fields fall back to F3-520''s start rule; this session choice performs no Settings write before commit. The 2026-10-14
+  presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme matching) and F3-656 (onboarding art and the
+  chosen look through Create Project), with no new local action or commit authority. Amended 2026-10-17 (DL-228): the
+  onboarding concept''s owner table marks eight command ids as not canonical; none is catalogued, and onboarding ships
+  none of them. Each routes as follows until its owner admits an id: restoring a backup (cmd.restore.apply in the concept)
+  dispatches the Backup owner''s existing cmd.restore.server_full or cmd.restore.project_as_new by the chosen scope,
+  after cmd.restore.preview; installing a tool product (cmd.tool_product.install) is the Installer owner''s cmd.installation.install;
+  detecting installed provider tools (cmd.integration.connection.detect) is cmd.tool.discover; probing a device (cmd.ssh_connection.device.probe)
+  and checking a network share (cmd.storage.share.mount_check) are the selected source''s cmd.project.source_location.test;
+  and discovering or installing an SSH key (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling
+  a free-model route (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their
+  owners'' own screens, reached through cmd.settings.open, until the SSH and Models owners admit them. Amended 2026-10-29
+  (O1–O12; PM7): Onboarding presentation is F3-663’s one Pip with family worlds, bounded shared physics/solved strings
+  with implementation technique open (O2 A, Jared 2026-10-30) and optional live voice/music; its former no-physics/no-loop
+  presentation prohibition is superseded. Preserve every stage graph, commit/recovery boundary and the fourteen ui.onboarding
+  actions. Bubble is decorative aria-hidden; option question note is the one pm7ob-explainer. O12 B (Jared 2026-10-30):
+  Creating Continue/Ready require both completed owner phases and the last block landing; Reduced Motion settles instantly,
+  and no landing claims owner work completed. O6, Jared 2026-10-30: look-tile hover is silent and changes no theme; click
+  or keyboard activation changes the look through the existing typed local action and persistence boundary. O1–O12/O7,
+  PM7 Step4, 2026-10-30: joined presentation modules O55.pipStage/pipWorlds/pipScenes/pipVoice, O55.tips and O55.pipOops
+  consume the one Pip/sound/option-note owners. Choice explanations keep pm7ob-explainer and the existing typed action;
+  post-commit examples require the actual committed Project. O10/O12, PM7 Step4 final-source alignment, 2026-10-30 (integration
+  e9b15abc64): Ready’s tour action lets the shared Pip stage’s handOff() visibly lift before calling O55.finish for the
+  unchanged Tour; its handingOff guard prevents a second press. Reduced Motion finishes the handoff instantly. Creating
+  remains gated by current owner completion and the last block landing; touchdown audio is F3-599’s shared cue and is
+  never completion evidence. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup
+  before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage
+  place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder,
+  another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required fields.
+  Validate the locator/trust and reach/authenticate the selected place through its existing owner. An accepted Kit may
+  unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a still-locked backup
+  without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards. Repointing
+  invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected secret handling
+  and actual restore/Project commit boundaries remain mandatory; only a verified Backup owner result proves unlock or
+  restore. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
+  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates
+  its old reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check
+  result stays bound to the service/device it authenticated and cannot advance a different current choice. DL-259, Jared
+  2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not publish a website,
+  GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit always-on Server
+  setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types, China-region
+  AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding. The ordinary
+  This computer choice remains the easy local-work default. The wizard says AI accounts available in this setup, not
+  every AI. Existing Settings routes and owners retain the advanced capabilities. D4: confirm provider admission and
+  executable conformance immediately before building Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified
+  badges, warnings or caveats. This scheduling decision does not change per-account authentication, entitlement, health
+  or quota truth: Ready is the shared account owner’s current usable result, not merely signed in. D6 A: the human signs
+  in on the initiating active device while the AI/tool runs on the selected execution host. Official tool sign-ins and
+  private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s secure credential
+  store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
+  never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
+  and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
+  has a distinct identity. Audit FF-01..12: Review binds the exact provider/instance/account and repository or creation
+  target. GitHub Internal requires an eligible enterprise organization capability; personal repositories cannot be Internal.
+  Origin personal repositories are Private; eligible team codebases may be Private or Internal. GitLab uses the exact
+  personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized workspace and
+  explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project key, including
+  a supported personal Project. Azure Services binds organization and team Project; Server binds collection URI and team
+  Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private
+  repository privacy, not a fabricated Internal value; both hosted and self-managed choices require a real instance profile.
+  Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific naming
+  and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must match
+  the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences, with
+  expandable exact details and owner-routed Edit links. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor
+  SDK direct-provider entry, with API key as its default auth surface. A user key bills that user’s plan and a service-account
+  key its owning team; these remain distinct account/billing identities. cursor_cli keeps browser login as its default
+  and an advanced optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate
+  direct-provider entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity,
+  distinct from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding
+  Plan retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go
+  gateway. A label change never changes a saved provider/account ID. DL-259 P18/D5: any currently usable free route contributes
+  to the same AI readiness summary as a usable paid route. A free-only setup can be Ready; catalog presence or sign-in
+  alone still cannot prove usability.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -189,67 +217,98 @@ depends_on:
 - MS-122
 unblocks: []
 acceptance_criteria:
-- The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final
-  GUI uses the same definitions. These are dependencies, not eleven forced equally complex screens.
-- After a verified remote create with later local failure, automatic_preparation observes the retained Project
-  recovery result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider
-  routes open — and presents Continue Setup, Open Repository, and Delete Repository as owner-route projections;
-  no new local action mutates, and no silent re-create or silent delete occurs.
-- Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved
-  typed join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client
-  booleans never granting authority, and is otherwise visible but unavailable until current draft, permission,
-  recovery claim, central registration, wiring, and handler availability all hold for the resume command, or
-  while another attempt holds the one-active-resume claim; owner resume eligibility stays distinct from effective
-  dispatch availability and a verified created remote alone never forces available=true; replaying the original
-  idempotency key never resumes; Open Repository uses the verified binding through the real Forge open-in-browser
-  command; Delete Repository is separate explicit destructive intent consumed from the Forge FGI-021 delete
-  admission with its exact currentness and target-bound confirmation, never automatic, never Project-local,
-  and unavailable while the remote effect is unknown.
-- Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready
-  only from its reviewed usable owner route.
-- The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness
-  claim.
-- Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings
-  draft previews leave no Project, destination files, history, repository, clone, sync or Settings mutation.
-- Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced,
-  owner verified, and unrelated to broad AI-provider setup.
-- Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit
-  retains later still-valid choices.
-- Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System
-  3.1, never cmd.project.create or cmd.source_control.repository.init.
+- The eleven exact ordered stage IDs consume product_onboarding_contracts.schema.json main_stage_order; Final GUI uses
+  the same definitions. These are dependencies, not eleven forced equally complex screens.
+- After a verified remote create with later local failure, automatic_preparation observes the retained Project recovery
+  result under the PJCT-007 generic composition — the exact GitHub case via PJCT-008, other provider routes open — and
+  presents Continue Setup, Open Repository, and Delete Repository as owner-route projections; no new local action mutates,
+  and no silent re-create or silent delete occurs.
+- Continue Setup is enabled only with the explicit Project-owned recovery/resume transition and owner-resolved typed
+  join, contracted as cmd.project.resume_creation with a creation_recovery_resume_binding with client booleans never
+  granting authority, and is otherwise visible but unavailable until current draft, permission, recovery claim, central
+  registration, wiring, and handler availability all hold for the resume command, or while another attempt holds the
+  one-active-resume claim; owner resume eligibility stays distinct from effective dispatch availability and a verified
+  created remote alone never forces available=true; replaying the original idempotency key never resumes; Open Repository
+  uses the verified binding through the real Forge open-in-browser command; Delete Repository is separate explicit destructive
+  intent consumed from the Forge FGI-021 delete admission with its exact currentness and target-bound confirmation, never
+  automatic, never Project-local, and unavailable while the remote effect is unknown.
+- Connect-existing retains the exact six-stage shortcut, omits hidden Project/provider work, and claims Ready only from
+  its reviewed usable owner route.
+- The guided deferred-project path is explicit and has no Project identity/commit binding or provider-readiness claim.
+- Before commit, selections, Project metadata/folder/source browsing, bounded read-only checks, and Settings draft previews
+  leave no Project, destination files, history, repository, clone, sync or Settings mutation.
+- Selected-source authentication is just-in-time, separately permission/consent/currentness/Client fenced, owner verified,
+  and unrelated to broad AI-provider setup.
+- Review shows source, destination, work computer, name, copy summary, privacy, skips and stale checks; Edit retains
+  later still-valid choices.
+- Create Project, Add Project or Restore Project commits the exact reviewed draft/hash through Project System 3.1, never
+  cmd.project.create or cmd.source_control.repository.init.
 - Project registration is listed/persisted only after required child-owner results and Settings readback; acknowledgement,
   provisional identity, partial work and cancelled/failed work are not completion.
-- Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact
-  real Project binding.
-- Detected usable accounts and copied routes appear first and become Ready after current owner verification
-  without Connect/Use This Installation/Use This Provider/Open Installer.
+- Idempotent replay returns the same committed Project and owner results; provider_setup requires the exact real Project
+  binding.
+- Detected usable accounts and copied routes appear first and become Ready after current owner verification without Connect/Use
+  This Installation/Use This Provider/Open Installer.
 - Only selected external vendor CLI paths offer explicit official-source Install on the selected Host; API/SDK/shipped
   dependency paths never invent a provider-CLI Install.
-- Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying
-  account records and saved explicit model order remain canonical.
-- Every local action preserves exact revision/generation/return context and never claims a production receipt
-  or native owner success.
-- Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or
-  unfinished provider phase, and optional skip differs from whole-session Skip.
-- Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately
-  typed and permission bound.
+- Free Models is optional inside Onboarding after the paid-provider prompt, including after Skip; underlying account
+  records and saved explicit model order remain canonical.
+- Every local action preserves exact revision/generation/return context and never claims a production receipt or native
+  owner success.
+- Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished
+  provider phase, and optional skip differs from whole-session Skip.
+- Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately typed
+  and permission bound.
 - Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to
-  unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place,
-  backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder,
-  another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account and required
-  fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner.
-  An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup
-  only for a still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage
-  and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner recovery
-  prerequisites, approval, protected secret handling and actual restore/Project commit boundaries remain mandatory;
-  a concept Kit or seed never proves native unlock or restore.'
-- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
-  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder
-  invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check.
-  A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different
-  current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential or
-  permission receipt.'
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking to unlock it.
+  A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup payload, NAS
+  password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS, or a
+  cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust
+  and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot
+  bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name
+  its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and
+  snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
+  boundaries remain mandatory; only a verified Backup owner result proves unlock or restore.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device,
+  not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old
+  reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result
+  stays bound to the service/device it authenticated and cannot advance a different current choice.'
+- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
+  publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit
+  always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types,
+  China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding.
+  The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
+  setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D4: confirm provider admission
+  and executable conformance immediately before building Puppet Master. The wizard lists its provider choices without
+  unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account authentication,
+  entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not merely signed in.
+  D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution host. Official
+  tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by Puppet Master’s
+  secure credential store on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment
+  references, never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating
+  Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
+  account of the same provider has a distinct identity. Audit FF-01..12: Review binds the exact provider/instance/account
+  and repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal
+  repositories cannot be Internal. Origin personal repositories are Private; eligible team codebases may be Private or
+  Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds
+  an authorized workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an
+  actual project key, including a supported personal Project. Azure Services binds organization and team Project; Server
+  binds collection URI and team Project; selecting an existing repository carries its owner-resolved Project identity.
+  Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; both hosted and self-managed
+  choices require a real instance profile. Provider/owner changes invalidate incompatible visibility/container/auth choices;
+  current provider-specific naming and Git ref validation precede availability. The selected actual auth method and least-privilege
+  scopes must match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
+  with expandable exact details and owner-routed Edit links.'
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
+- 'DL-259 P18/D5: any currently usable free route contributes to the same AI readiness summary as a usable paid route.
+  A free-only setup can be Ready; catalog presence or sign-in alone still cannot prove usability.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -307,51 +366,55 @@ plan_unit_id: PWIZ-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
-  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact
-  path-correct progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and
-  receipt-backed migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage
-  records without fabricating review or replaying owner mutations; already committed rows resume only after real
-  Project-owner revalidation; it never becomes a full-page route or nested-modal owner branch. A first_run
-  window starts in Basic Dark and a settings_rerun window in the look on screen, each preselected and neither
-  changing a stored value (F3-520, DL-153); its wake, act card and curtain call take five styles, NieR's
-  whenever the NieR family is selected and otherwise the painted family's own (F3-600), sharing one trigger, end
-  state, snap and sound path and never holding input. FinalGUISpec F3-656 owns connected onboarding art and
-  F3-652 the shared Glass material; F3-654 supplies the settled contrast interpretation. These consume the same
-  semantic stages and Reduced Motion boundary. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
-  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2,
-  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs immediately in a
-  tray joined to that card, before sibling alternatives. One C.cards under slot owns the join, indentation and
-  line from the parent mark across all twelve affected screens. The parent opens into the tray in every look,
-  with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question note
-  first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question
-  control never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links,
-  Settings copy, remote routes/hosting/certificate fields, online service kind/address, device notes and
-  connection routes. Naming and Review display the same selected mounted/network source, rather than an empty
-  local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the current look.
-  Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does
-  Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional
-  sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
-  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the
-  operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains
-  a separate one-use protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress
-  string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces
-  the current bead and the current bead occupies no extra width. A highlight surrounds the name without covering
-  Pip. The speech tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible
-  diamond; NieR keeps its no-tail treatment. H5: the onboarding owner holds one original inert-state basis for
-  the entire open lifetime. Replacing an already-open screen acquires only newly encountered background nodes;
-  it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip path
-  removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. H1: explicit
-  lab open({screen}) invokes the screen owner’s seed(S), filling only missing fixture prerequisites; seed:false
-  opts out. Connect/NAS/online fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and
-  seedCommit are lab-only: no native Project receipt, authentication, permission or completed owner work is
-  inferred, no selected live input is overwritten, and no new product action/DTO field is admitted. Q1/Q2:
-  onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and
-  trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on
-  choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable
-  Project value wins when it binds; a genuinely refused bound write remains refused. No Project value,
-  credential, second mute key or durable sound preference is fabricated from an unreadable preview.
+canonical_text: 'Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
+  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact path-correct
+  progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and receipt-backed migration
+  from legacy provider-first, five-stage, seven-stage and predecessor nine-stage records without fabricating review or
+  replaying owner mutations; already committed rows resume only after real Project-owner revalidation; it never becomes
+  a full-page route or nested-modal owner branch. A first_run window starts in Basic Dark and a settings_rerun window
+  in the look on screen, each preselected and neither changing a stored value (F3-520, DL-153); its wake, act card and
+  curtain call take five styles, NieR''s whenever the NieR family is selected and otherwise the painted family''s own
+  (F3-600), sharing one trigger, end state, snap and sound path and never holding input. FinalGUISpec F3-656 owns connected
+  onboarding art and F3-652 the shared Glass material; F3-654 supplies the settled contrast interpretation. These consume
+  the same semantic stages and Reduced Motion boundary. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family
+  supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round 2, Jared 2026-10-30;
+  DL-258; GUI 7d586bad18: Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card,
+  before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across
+  all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping
+  lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own
+  choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work
+  origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service
+  kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source,
+  rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the
+  current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and
+  What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections:
+  More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints
+  and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain;
+  Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its
+  never-saved hint for SMB. Q4/Q10: there is one progress string. Chapter beads sit on and follow that string’s sag,
+  with chapter names below Pip’s feet; Pip replaces the current bead and the current bead occupies no extra width. A
+  highlight surrounds the name without covering Pip. The speech tail is cut from the bubble’s own fill/border as one
+  silhouette, never a separate visible diamond; NieR keeps its no-tail treatment. H5: the onboarding owner holds one
+  original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only newly encountered
+  background nodes; it never re-snapshots nodes already held by that modal as originally inert. Every close/finish/skip
+  path removes only the modal’s own holds, preserves pre-existing inert nodes and restores focus/input. Q1/Q2: onboarding
+  sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate.
+  Until the Settings owner supplies the applicable sound preference, retain the factory-on or current effective choice
+  rather than muting on every refresh. An explicit readable Project value wins when it binds; a genuinely refused bound
+  write remains refused. An unavailable Settings projection never fabricates a saved value or authorizes a write. DL-259,
+  Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through
+  the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect
+  the same effective state. Every opened onboarding question tip and prose help section has useful Plain English and
+  technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no
+  coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is
+  limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D8 A: onboarding has one FileSafe
+  switch, default on, covering command blocklist, write scope, security filter and pre-write safe points together. Individual
+  controls remain in Settings. The switch expresses a requested owner configuration, never approval to bypass a required
+  guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point persistence.
+  Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently
+  turns a guard off.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -359,17 +422,47 @@ depends_on:
 - PWIZ-021
 unblocks: []
 acceptance_criteria:
-  - "The setup flow remains one bounded modal with explicit outer margin, modal chrome, an input-blocking scrim that also inerts late-mounted body siblings, exactly one dialog accessibility surface named by the active stage or branch, an inert/ID-clean outgoing visual layer, focus containment, and exact initiating-control return (or verified active-application-tab return for automatic first-run open) across desktop, narrow, and short windows."
-  - "Progress and accessibility announcements use the exact active path denominator: the current eleven-stage semantic graph, its explicit Project-deferred variant, and six-stage connect-existing shortcut."
-  - "Close dismisses without completion, Skip records an explicit skipped session, Defer persists the exact resumable continuation before dismissal, and Details remains an ephemeral same-stage disclosure with no owner command."
-  - "The modal adds no route-history or breadcrumb chrome; typed Back remains local to its bounded stage/branch presentation."
-  - "The approximately `1.2-1.5 second` hero, `420-560 ms` step transitions, `60-80 ms` choreography stagger, `120-220 ms` microinteractions, approximately `700 ms` success settle, same-frame acknowledgement, interruption, reversal, resize, theme-switch, Retro stepped treatment, and reduced-motion settle are deterministic; the modal entrance keeps its layout bounds fixed and uses opacity/clipping so cross-family theme changes cannot push it outside the required outer margin."
-  - "Focus and screen-reader output follow semantic stage state and never background refresh order; the modal releases inertness before Guided Tour starts, and a failed Tour start restores the transferred application focus target without claiming a successful handoff."
-  - "Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the nine-/six-stage draft, requires an unconfirmed Review Setup Plan, and never reruns owner work."
-  - "The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted, stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes."
-  - "A first_run window paints Basic Dark from its first frame with Basic Dark preselected; a settings_rerun window keeps the look on screen preselected; neither dispatches cmd.theme.* or writes a setting (F3-520, DL-153)."
-  - "With NieR Mode painted the hero moments are NieR's; otherwise each family plays its own wake, act card and curtain call in both its variants; Reduced Motion and low resource show each moment's end state, and a key or a press snaps a running moment to it (F3-600, DL-153)."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock; follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one inert-state basis survives replacement; lab-only seeds confer no owner authority; unreadable Project state does not repeatedly mute the preview."
+- The setup flow remains one bounded modal with explicit outer margin, modal chrome, an input-blocking scrim that also
+  inerts late-mounted body siblings, exactly one dialog accessibility surface named by the active stage or branch, an
+  inert/ID-clean outgoing visual layer, focus containment, and exact initiating-control return (or verified active-application-tab
+  return for automatic first-run open) across desktop, narrow, and short windows.
+- 'Progress and accessibility announcements use the exact active path denominator: the current eleven-stage semantic
+  graph, its explicit Project-deferred variant, and six-stage connect-existing shortcut.'
+- Close dismisses without completion, Skip records an explicit skipped session, Defer persists the exact resumable continuation
+  before dismissal, and Details remains an ephemeral same-stage disclosure with no owner command.
+- The modal adds no route-history or breadcrumb chrome; typed Back remains local to its bounded stage/branch presentation.
+- The approximately `1.2-1.5 second` hero, `420-560 ms` step transitions, `60-80 ms` choreography stagger, `120-220 ms`
+  microinteractions, approximately `700 ms` success settle, same-frame acknowledgement, interruption, reversal, resize,
+  theme-switch, Retro stepped treatment, and reduced-motion settle are deterministic; the modal entrance keeps its layout
+  bounds fixed and uses opacity/clipping so cross-family theme changes cannot push it outside the required outer margin.
+- Focus and screen-reader output follow semantic stage state and never background refresh order; the modal releases inertness
+  before Guided Tour starts, and a failed Tour start restores the transferred application focus target without claiming
+  a successful handoff.
+- Legacy migration preserves decisions, warnings, and valid owner receipts, maps unresolved work into the nine-/six-stage
+  draft, requires an unconfirmed Review Setup Plan, and never reruns owner work.
+- The one-time domain migration receipt references the canonical storage migration receipt and reports exact accepted,
+  stale, dropped, quarantined, per-stage, and per-path counts without storing secret bytes.
+- A first_run window paints Basic Dark from its first frame with Basic Dark preselected; a settings_rerun window keeps
+  the look on screen preselected; neither dispatches cmd.theme.* or writes a setting (F3-520, DL-153).
+- With NieR Mode painted the hero moments are NieR's; otherwise each family plays its own wake, act card and curtain
+  call in both its variants; Reduced Motion and low resource show each moment's end state, and a key or a press snaps
+  a running moment to it (F3-600, DL-153).
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock;
+  follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one
+  inert-state basis survives replacement; unreadable Project state does not repeatedly mute the preview.'
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D8 A: onboarding has one FileSafe
+  switch, default on, covering command blocklist, write scope, security filter and pre-write safe points together. Individual
+  controls remain in Settings. The switch expresses a requested owner configuration, never approval to bypass a required
+  guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization or failed safe-point persistence.
+  Mandatory policy and effective guard state win; a refused change stays refused with a clear reason. No failure silently
+  turns a guard off.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -396,7 +489,6 @@ negative_constraints:
 - Do not overwrite saved Project or application layout.
 - Do not migrate an unresolved draft directly into confirmed Review or Automatic Preparation; do not replay completed
   Project work when a verified committed row resumes provider setup.
-
 ```
 
 ### PWIZ-023 - Guided Tour newbie-first real-application practice
@@ -406,51 +498,84 @@ plan_unit_id: PWIZ-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: >-
-  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard
-  order. The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees
-  it in simple words through Explain this reply simply, which adds one extra, simpler reply and leaves the
-  original unchanged (DL-126); the callout then points to the quick dot by the message box, which makes
-  later replies simple, and names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set
-  (DL-126, ACD-484, F3-581); practises the workspace panels of PWIZ-035 and performs a real widget action;
-  then describes the book-club goal, answers a meaningful question, reviews the plan, edits an answer, and
-  sees the specific consequence before the approval boundary. Planning is about half of meaningful
-  actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. Try it and Show Me share each mounted owner's handler and success predicate. Tour
-  state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned
-  Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets the
-  tour completely, and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip
-  restores captured state; Finish restores temporary layout by default or keeps it only on explicit
-  selection, then lands on the real Planning Wizard with the committed Project selected. While any restore
-  runs, the application's own notices about it stay quiet in every look and the Tour's closing note says
-  what was put back (F3-521, DL-153). Both predecessor controllers remain source lineage only. Guided
-  example/Teacher presentation is F3-656's; resume prompts and page notes consume F3-447's under-bell
-  staging. The F3-447 reading interval or interaction elsewhere tucks the prompt into F3-453's shared inbox;
-  this is placement, not a tour timeout, Skip, completion or approval. Continue forwards the original
-  prompt's own typed action: this tour's ui.guided_tour.resume with the existing
-  pm.guided_tour.action_request.v3 session, checkpoint and currentness validation. The separate setup prompt
-  retains PWIZ-021/UCC-106's ui.onboarding.start and pm.product_onboarding.action_request.v2 resume context.
-  Removal of either owner prompt removes its own bell entry. No new tour action or approval is added.
+canonical_text: 'Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard
+  order. The learner sends the supplied local question, reads Teacher''s same-conversation answer, and sees it in simple
+  words through Explain this reply simply, which adds one extra, simpler reply and leaves the original unchanged (DL-126);
+  the callout then points to the quick dot by the message box, which makes later replies simple, and names the ELI5 popup
+  behind the wand''s ELI5 row, where the chat''s choice is set (DL-126, ACD-484, F3-581); practises the workspace panels
+  of PWIZ-035 and performs a real widget action; then describes the book-club goal, answers a meaningful question, reviews
+  the plan, edits an answer, and sees the specific consequence before the approval boundary. Planning is about half of
+  meaningful actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the
+  tour''s actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and
+  49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is
+  redesigned, so no other tour work is planned until then. Try it and Show Me share each mounted owner''s handler and
+  success predicate. Tour state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned
+  Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets the tour completely,
+  and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state; Finish
+  restores temporary layout by default or keeps it only on explicit selection, then lands on the real Planning Wizard
+  with the committed Project selected. While any restore runs, the application''s own notices about it stay quiet in
+  every look and the Tour''s closing note says what was put back (F3-521, DL-153). Both predecessor controllers remain
+  source lineage only. Guided example/Teacher presentation is F3-656''s; resume prompts and page notes consume F3-447''s
+  under-bell staging. The F3-447 reading interval or interaction elsewhere tucks the prompt into F3-453''s shared inbox;
+  this is placement, not a tour timeout, Skip, completion or approval. Continue forwards the original prompt''s own typed
+  action: this tour''s ui.guided_tour.resume with the existing pm.guided_tour.action_request.v3 session, checkpoint and
+  currentness validation. The separate setup prompt retains PWIZ-021/UCC-106''s ui.onboarding.start and pm.product_onboarding.action_request.v2
+  resume context. Removal of either owner prompt removes its own bell entry. No new tour action or approval is added.
+  DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
 depends_on: [PWIZ-021, ACD-431, ACD-484]
 unblocks: []
 acceptance_criteria:
-  - The exact chapter order is `chat_teacher`, `workspace`, `planning_wizard`; neither the five-chapter controller nor Usage-first/Chat-final v2 is current.
-  - The top controls place `ELI5` beside `Pause` and `Skip Tour`, and the short opening explains ELI5 and Reduced Motion together.
-  - Reduced Motion uses the effective preference; adjustment routes to Settings and there is no Guided Tour-specific motion toggle.
-  - Chat opens first; the supplied question is sent through the real composer, the deterministic answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) adds one extra, simpler reply with the same facts while the original reply stays unchanged (DL-126).
-  - After that step the callout points to the quick dot (`cmd.chat.eli5.set`, later replies only) and names the ELI5 popup behind the wand's ELI5 row; neither rewrites the example answer (DL-126).
-  - Manual and Show Me practice share the same existing owner action and success predicate for the workspace panel steps (PWIZ-035) and a real widget action; choreography never invents success.
-  - Planning Wizard receives about half of meaningful actions and dwell time (amended 2026-10-17, DL-230; the accepted 20-step tour meets it; the tour contracts' floor is 40 percent), including goal, outcomes, meaningful answer, why, review, answer edit, and the specific shared-access consequence with unaffected outcomes held still.
-  - Unknown editor access remains unresolved; the tour uses the real Wizard names/modes and ends before approval with no work started.
-  - The deterministic novice reply never silently falls back to a provider, model, token, or AI plan.
-  - Every scene heading receives programmatic focus, and every callout measures, clamps, and remeasures its actual target across resize, scale, localization, movement, and route changes.
-  - Skip is always available and restores layout, Chat state, and focus; Finish defaults to restoration, accepts Keep only by explicit selection, and lands on the real Planning Wizard with the committed Project selected.
-  - While a restore runs, the application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153).
-  - Close/reload resumes the last safe checkpoint after owner-state revalidation without replaying work; checkpoints carry stable refs and never raw chat content, secrets, or transient animation geometry.
-  - Resume returns to the earliest unsatisfied prerequisite; a checkpoint that cannot be revalidated restores whatever of its basis is still resolvable and starts a fresh session with a plain notice instead of a dead-end recovery panel, and only a restoration failure offers Retry restore or start over.
-  - Run Onboarding Again discards the tour checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; Settings offers Resume Guided Tour only while a checkpoint can resume, beside Replay Guided Tour and Run Onboarding Again.
-  - Reduced Motion, low-resource, missing-target, squeezed-layout, interruption, process-exit, and replay states are covered.
+- The exact chapter order is `chat_teacher`, `workspace`, `planning_wizard`; neither the five-chapter controller nor
+  Usage-first/Chat-final v2 is current.
+- The top controls place `ELI5` beside `Pause` and `Skip Tour`, and the short opening explains ELI5 and Reduced Motion
+  together.
+- Reduced Motion uses the effective preference; adjustment routes to Settings and there is no Guided Tour-specific motion
+  toggle.
+- Chat opens first; the supplied question is sent through the real composer, the deterministic answer streams in the
+  same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) adds one extra, simpler reply
+  with the same facts while the original reply stays unchanged (DL-126).
+- After that step the callout points to the quick dot (`cmd.chat.eli5.set`, later replies only) and names the ELI5 popup
+  behind the wand's ELI5 row; neither rewrites the example answer (DL-126).
+- Manual and Show Me practice share the same existing owner action and success predicate for the workspace panel steps
+  (PWIZ-035) and a real widget action; choreography never invents success.
+- Planning Wizard receives about half of meaningful actions and dwell time (amended 2026-10-17, DL-230; the accepted
+  20-step tour meets it; the tour contracts' floor is 40 percent), including goal, outcomes, meaningful answer, why,
+  review, answer edit, and the specific shared-access consequence with unaffected outcomes held still.
+- Unknown editor access remains unresolved; the tour uses the real Wizard names/modes and ends before approval with no
+  work started.
+- The deterministic novice reply never silently falls back to a provider, model, token, or AI plan.
+- Every scene heading receives programmatic focus, and every callout measures, clamps, and remeasures its actual target
+  across resize, scale, localization, movement, and route changes.
+- Skip is always available and restores layout, Chat state, and focus; Finish defaults to restoration, accepts Keep only
+  by explicit selection, and lands on the real Planning Wizard with the committed Project selected.
+- While a restore runs, the application's own notices about it (a widget removed, a persona applied from the next turn)
+  stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153).
+- Close/reload resumes the last safe checkpoint after owner-state revalidation without replaying work; checkpoints carry
+  stable refs and never raw chat content, secrets, or transient animation geometry.
+- Resume returns to the earliest unsatisfied prerequisite; a checkpoint that cannot be revalidated restores whatever
+  of its basis is still resolvable and starts a fresh session with a plain notice instead of a dead-end recovery panel,
+  and only a restoration failure offers Retry restore or start over.
+- Run Onboarding Again discards the tour checkpoint, snapshot ref, resume affordance, and any restoration-pending notice;
+  Settings offers Resume Guided Tour only while a checkpoint can resume, beside Replay Guided Tour and Run Onboarding
+  Again.
+- Reduced Motion, low-resource, missing-target, squeezed-layout, interruption, process-exit, and replay states are covered.
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
 validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, real-application action observation, callout geometry, focus, Skip-restore, and completion-layout fixtures]
 risk_class: tour_fake_shell_or_layout_loss
 reasoning_tier: high

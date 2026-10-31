@@ -2060,11 +2060,8 @@
       "H8",
       "H9"
     ],
-    "queued_additions": [
-      "shared wizard/Tour ELI5 bar mode",
-      "ELI5/technical copy for every opened onboarding tip/help section"
-    ],
-    "queued_gui_ids": "await onboarding lane; do not hold current commit",
+    "queued_additions": [],
+    "queued_gui_ids": "Canonical shared mode bindings allocated; final source anchors follow the lead’s GUI-head signal.",
     "gap_memo": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/plans/QA2-ELI5-CANON-GAPS.md",
     "prior_integration": "7d586bad189b6fae24045430ef2d8e6d1ce0b091",
     "identity_repair": {
@@ -2087,5 +2084,35 @@
     "publication_sha256": "66ba0dd5a6fa83e2b48dc025261a5737850f696784be40a9eb2f071559410673",
     "publication_parity": "pass",
     "public_names_added_by_last_found_delta": []
+  },
+  "onboarding_2026_10_31": {
+    "decision_unit": "DL-259",
+    "source": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md",
+    "decider": "Jared",
+    "date": "2026-10-31",
+    "choices": {
+      "D1": "A",
+      "D2": "A",
+      "D3": "A",
+      "D4": "listed_without_caveat_verify_before_PM_build",
+      "D5": "A_refreshed_v0.6.0",
+      "D6": "A",
+      "D7": "B",
+      "D8": "A",
+      "Q1": "B_shared_voice_room_0.35_Glass_0.30_NieR_0.16",
+      "Q2": "A_below_open_inbox"
+    },
+    "provider_entry_ids": [
+      "cursor_sdk",
+      "alibaba_token_plan"
+    ],
+    "bar_binding_ids": [
+      "onboarding.interaction.mode",
+      "tour.interaction.mode"
+    ],
+    "next_separate_task": {
+      "decision_unit": "DL-260",
+      "ruling": "Q3 B"
+    }
   }
 }

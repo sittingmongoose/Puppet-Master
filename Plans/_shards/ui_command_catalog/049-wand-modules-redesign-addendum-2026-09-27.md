@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13706-L14844
+Source lines: L13819-L14963
 
-Source SHA256: `bc0161780c1a321ca6c9db2cecbf8f13ecc2e1a53e6ab47c2e5c95aa5e56f479`
+Source SHA256: `9acefb9159762fec111c86e6d075da46a5b71cf95b79a23705b801bc7b3c8dee`
 
 ---
 
@@ -490,40 +490,33 @@ plan_unit_id: UCC-170
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  The wand-module command census classifies all 196 product controls of the redesigned Assistant wand
-  modules: the commands audit's 197 less nine CONCEPT_DEMO_ONLY demo controls, plus the ELI5 dot,
-  "Explain this reply simply" and the "Pause all automations" switch, which the closure answers add
-  (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note (DL-138), plus the Chat Room setup check and run switch for
-  Pause between rounds (DL-231). Ask Everyone has No producer because Start starts round 1;
-  cmd.chat_room.next_round is only the user's start of a round at the switch-on between-round wait.
-  Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch is
-  cmd.collaboration.reconfigure with set_pause_between_rounds from chat_room_card or chat_room_panel
-  (UCC-207), taking effect at the next round boundary without cancelling a turn. Each control is
-  exactly one of Command (an existing row), Command revised (an existing row with a named revision),
-  New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No producer (retired
-  by a named decision, or not drawn in the product) or Open (a named unanswered card or follow-up;
-  none remains). Review and BrainStorm have no wand producer of cmd.collaboration.configure (DL-119).
-  End discussion is cmd.chat_room.end; advisor-note Dismiss is cmd.bsd.finding.dismiss; Don't wait is
-  cmd.bsd.catch_up.release; Turn off and Lock are cmd.chat.teach.revoke and cmd.chat.teach.set_lock;
-  memory and taught-rule Export is cmd.chat.memory.export; the Wonderer's Check it is
-  cmd.collaboration.research_lead; cmd.brainstorm.research_lead is its BrainStorm-only compatibility alias (DL-218). Send Findings To Agent is cmd.review.send_findings_to_agent
-  and fills the message box (DL-125). Every
-  Teach entry opens the Teach sheet (DL-127). Recovery buttons use Retry and Recover (DL-118). The
-  ELI5 sheet's choices and the ELI5 dot are cmd.chat.eli5.set with on, off or inherit from eli5_sheet
-  and composer; the wand's ELI5 row only opens the sheet; the sheet's All chats and project levels are
-  Settings on general.interaction.eli5-default; and "Explain this reply simply" is cmd.chat.eli5.explain_reply (DL-126). The "Pause all
-  automations" switch and Turn back on are cmd.runtime.automation_pause.set with paused true and
-  false (DL-136). The Crew Auto receipt's Change is cmd.chat.crew_auto.open_config from
-  crew_auto_receipt (DL-135). The Crew Auto sheet's primary is cmd.chat.crew_auto.set with scope
-  project; the chat's Crew Auto check is cmd.chat.crew_auto.set with scope thread and never opens the
-  sheet first; Allow Crews in this chat is retired into that check (DL-120, CWR-038). A Chat Room
-  message sent mid-round is cmd.collaboration.message with delivery_mode queue, or steer for Send now
-  (DL-112, CWR-024). No control is Open.
-  The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
-  state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with
-  taught_rule_check and obeys UCC-172's empty-composer, source-thread and no-send contract (DL-138).
-  Amended 2026-10-29 (PM7): S5: census now has 196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.
+canonical_text: 'The wand-module command census classifies all 196 product controls of the redesigned Assistant wand
+  modules: the accepted control census plus the ELI5 dot, "Explain this reply simply" and the "Pause all automations"
+  switch, which the closure answers add (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note
+  (DL-138), plus the Chat Room setup check and run switch for Pause between rounds (DL-231). Ask Everyone has No producer
+  because Start starts round 1; cmd.chat_room.next_round is only the user''s start of a round at the switch-on between-round
+  wait. Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch is cmd.collaboration.reconfigure
+  with set_pause_between_rounds from chat_room_card or chat_room_panel (UCC-207), taking effect at the next round boundary
+  without cancelling a turn. Each control is exactly one of Command (an existing row), Command revised (an existing row
+  with a named revision), New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No producer (retired
+  by a named decision, or not drawn in the product) or Open (a named unanswered card or follow-up; none remains). Review
+  and BrainStorm have no wand producer of cmd.collaboration.configure (DL-119). End discussion is cmd.chat_room.end;
+  advisor-note Dismiss is cmd.bsd.finding.dismiss; Don''t wait is cmd.bsd.catch_up.release; Turn off and Lock are cmd.chat.teach.revoke
+  and cmd.chat.teach.set_lock; memory and taught-rule Export is cmd.chat.memory.export; the Wonderer''s Check it is cmd.collaboration.research_lead;
+  cmd.brainstorm.research_lead is its BrainStorm-only compatibility alias (DL-218). Send Findings To Agent is cmd.review.send_findings_to_agent
+  and fills the message box (DL-125). Every Teach entry opens the Teach sheet (DL-127). Recovery buttons use Retry and
+  Recover (DL-118). The ELI5 sheet''s choices and the ELI5 dot are cmd.chat.eli5.set with on, off or inherit from eli5_sheet
+  and composer; the wand''s ELI5 row only opens the sheet; the sheet''s All chats and project levels are Settings on
+  general.interaction.eli5-default; and "Explain this reply simply" is cmd.chat.eli5.explain_reply (DL-126). The "Pause
+  all automations" switch and Turn back on are cmd.runtime.automation_pause.set with paused true and false (DL-136).
+  The Crew Auto receipt''s Change is cmd.chat.crew_auto.open_config from crew_auto_receipt (DL-135). The Crew Auto sheet''s
+  primary is cmd.chat.crew_auto.set with scope project; the chat''s Crew Auto check is cmd.chat.crew_auto.set with scope
+  thread and never opens the sheet first; Allow Crews in this chat is retired into that check (DL-120, CWR-038). A Chat
+  Room message sent mid-round is cmd.collaboration.message with delivery_mode queue, or steer for Send now (DL-112, CWR-024).
+  No control is Open. The Followed or Missed note is saved reply metadata, not an extra action. See which rule is view
+  state; Ask for a fix on message_chrome dispatches cmd.review.send_findings_to_agent with taught_rule_check and obeys
+  UCC-172''s empty-composer, source-thread and no-send contract (DL-138). Amended 2026-10-29 (PM7): S5: census now has
+  196 dispositions, adding wand Pip… → SSYS-056 editor (Settings disposition, no command). Earlier 195 totals are historical.'
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false
@@ -1082,30 +1075,43 @@ plan_unit_id: UCC-175
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  ELI5 has a project default that applies everywhere in the project, and a chat's override replaces it
-  for that chat only. A chat's ELI5 state resolves to the chat override, otherwise the project default,
-  otherwise the app default (DL-126). The app default is general.interaction.eli5-default and the chat
-  override is general.interaction.chat-eli5. The project level is the project scope of
-  general.interaction.eli5-default, persisted by Settings SSYS-028 (DL-138).
-  cmd.chat.eli5.set takes on, off or inherit in ELI5ThreadOverrideRequest; inherit deletes the chat
-  override so the chat follows the project default. A switch changes only the replies written after
-  it and never re-sends, regenerates or rewrites an earlier reply, so it never produces a second
-  response; a simpler version of a finished reply comes only from cmd.chat.eli5.explain_reply, as one
-  extra reply the user asks for, and the guided tour uses that command for its same-answer ELI5. The
-  new eli5_sheet surface and the ELI5 dot in composer produce cmd.chat.eli5.set, and the
-  wand's ELI5 row only opens the sheet. Expert and ELI5 dual copy is limited to tooltips and help.
+canonical_text: 'ELI5 has a project default that applies everywhere in the project, and a chat''s override replaces it
+  for that chat only. A chat''s ELI5 state resolves to the chat override, otherwise the project default, otherwise the
+  app default (DL-126). The app default is general.interaction.eli5-default and the chat override is general.interaction.chat-eli5.
+  The project level is the project scope of general.interaction.eli5-default, persisted by Settings SSYS-028 (DL-138).
+  cmd.chat.eli5.set takes on, off or inherit in ELI5ThreadOverrideRequest; inherit deletes the chat override so the chat
+  follows the project default. A switch changes only the replies written after it and never re-sends, regenerates or
+  rewrites an earlier reply, so it never produces a second response; a simpler version of a finished reply comes only
+  from cmd.chat.eli5.explain_reply, as one extra reply the user asks for, and the guided tour uses that command for its
+  same-answer ELI5. The new eli5_sheet surface and the ELI5 dot in composer produce cmd.chat.eli5.set, and the wand''s
+  ELI5 row only opens the sheet. Expert and ELI5 dual copy is limited to tooltips and help. DL-259, Jared 2026-10-31:
+  ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner,
+  with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
+  state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions,
+  including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
+  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help
+  (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
 gui_related: true
 gui_classification_reason: "Names the visible ELI5 sheet, its choices, the ELI5 dot by the message box and the wand row that opens the sheet."
 split_recommended: false
 depends_on: [UCC-172, UCC-174]
 unblocks: [UCC-170, CS-087, CDRY-023, WM-064, ATS-066]
 acceptance_criteria:
-  - "cmd.chat.eli5.set accepts exactly on, off and inherit, and inherit leaves the chat with no override."
-  - "A chat's ELI5 state resolves to the chat override, then the project default, then the app default."
-  - "No ELI5 switch re-sends, regenerates or rewrites an earlier reply or produces a second response."
-  - "The wand's ELI5 row opens the sheet and dispatches no command."
-  - "The guided tour's same-answer ELI5 dispatches cmd.chat.eli5.explain_reply, never cmd.chat.eli5.set."
+- cmd.chat.eli5.set accepts exactly on, off and inherit, and inherit leaves the chat with no override.
+- A chat's ELI5 state resolves to the chat override, then the project default, then the app default.
+- No ELI5 switch re-sends, regenerates or rewrites an earlier reply or produces a second response.
+- The wand's ELI5 row opens the sheet and dispatches no command.
+- The guided tour's same-answer ELI5 dispatches cmd.chat.eli5.explain_reply, never cmd.chat.eli5.set.
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

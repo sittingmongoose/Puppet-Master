@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4979-L5041
+Source lines: L4979-L5096
 
-Source SHA256: `d2db2056f525c4fdfc78402cacb9e201097260f5dc23724973f2f598d6e6c9b2`
+Source SHA256: `a3397419c621ec7b5fdb2c61f6cb98ca95bcbc34b66d698ca4558fb2e38c9f63`
 
 ---
 
@@ -33,26 +33,81 @@ plan_unit_id: CS-069
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: >-
-  Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
-  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six
-  Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler
-  destinations are contract targets and do not prove that a dispatcher or runtime handler exists. QA round 2,
-  Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined
-  choices reuse the existing fourteen onboarding local actions and selected owner routes. Lab screen seeding is
-  not product routing, authentication or Project commit. No new restore wrapper or onboarding command.
+canonical_text: 'Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
+  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six Onboarding,
+  Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler destinations are
+  contract targets and do not prove that a dispatcher or runtime handler exists. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen
+  onboarding local actions and selected owner routes. No new restore wrapper or onboarding command. DL-259, Jared 2026-10-31:
+  ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner,
+  with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective
+  state. Every opened onboarding question tip and prose help section has useful Plain English and technical versions,
+  including FileSafe, service differences, storage, remote access and AI/auth choices, assuming no coding experience.
+  Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help
+  (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
+  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
+  proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only and existing-proxy
+  validation are separate owner continuations; generating a file does not prove installation, public consent, DNS/TLS,
+  endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and
+  maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never
+  emits a generated-configuration record; neither branch silently substitutes a family. D7 B supersedes the former no-per-Client-node
+  restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and
+  sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned
+  Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native
+  Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and
+  Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
+  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
+  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
+  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
+  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
+  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged.'
 gui_related: true
 gui_classification_reason: The family governs Settings route, preview, apply, rollback, and export activation, disabled state, outcome, and exact return.
 depends_on: [CS-066, SSYS-018, SSYS-019]
 unblocks: [UIW-014]
 acceptance_criteria:
-  - "The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export."
-  - "Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1."
-  - "Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1."
-  - "The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation."
-  - "Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists."
-  - "No unregistered EventRecord is emitted or inferred."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined choices reuse the existing fourteen onboarding local actions and selected owner routes. Lab screen seeding is not product routing, authentication or Project commit. No new restore wrapper or onboarding command."
+- The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply,
+  cmd.settings.transaction.rollback, and cmd.settings.export.
+- Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json;
+  cmd.settings.open returns pm.settings_route_return.v1.
+- Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with
+  owner readback; export returns a non-secret pm.settings_export_manifest.v1.
+- The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or
+  remediation operation.
+- Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler
+  evidence; handler_unavailable remains truthful until executable proof exists.
+- No unregistered EventRecord is emitted or inferred.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7/H1/H5: backup location/Kit/unlock presentation and joined
+  choices reuse the existing fourteen onboarding local actions and selected owner routes. No new restore wrapper or onboarding
+  command.'
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired. D3 A: generated proxy settings support
+  Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected as an existing
+  proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only and existing-proxy
+  validation are separate owner continuations; generating a file does not prove installation, public consent, DNS/TLS,
+  endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy, nginx or traefik and
+  maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager but never
+  emits a generated-configuration record; neither branch silently substitutes a family. D7 B supersedes the former no-per-Client-node
+  restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale connection and
+  sign in once through the shared protected auth owner, with no separate Tailscale app install. The same signed PM-owned
+  Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id; a native
+  Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions and
+  Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state references
+  prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream access only
+  to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic private
+  listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval and reusable
+  connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded Tailscale
+  connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection. It
+  cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged.'
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_command_family_or_handler_claim_drift
 reasoning_tier: high

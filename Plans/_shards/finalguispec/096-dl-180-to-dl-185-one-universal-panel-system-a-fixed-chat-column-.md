@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45123-L47580
+Source lines: L45244-L47649
 
-Source SHA256: `d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af`
+Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
 
 ---
 
@@ -2361,64 +2361,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the
-  rule is Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo
-  controls, the home demos and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of
-  that one studio; no surface draws a demo panel of its own. The Demo Studio and every control in it are lab
-  only, in the pattern of Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command,
-  wiring row, saved value or test gate, never shown in the product's menus or Settings, and no canon number
-  comes from them. In the concept it opens above the one overlay root and below hover tags and the Guided Tour
-  (F3-635). It follows the bans (F3-648) and the looks (F3-647) like any surface. This supersedes the concept
-  practice of a demo panel per surface and changes no product unit. Amended 2026-10-29 (W8, SND1; PM7): One lab
-  Demo Studio covers Pip/loader/sound/parts, project box states/widths, expanded onboarding tips/errors and
-  Activity/Resources/quit. Owner APIs only, missing owners unavailable; no lab toolbar or magic demo errors in
-  product. SND1 B (Jared 2026-10-30): land on the sound tools’ measured level/texture numbers; Jared listens
-  later in the product. W8 normative Demo Studio matrix (2026-10-29; DL-256): one lab only, strings in
-  75-demo-studio.json, public owner APIs with unavailable controls when absent, 4.5:1 contrast in every look,
-  Reset Everything clears only OWNED keys. Pip section: marks/tiles/tray in all ten looks, mood stay-row firing
-  on every live Pip, Mark only, Swing/Think/Hop take, Every loader moment and Hold loaders. Sound board exposes
-  kit-by-look/choice, 42 events, 5 loops and Pip says input; SND1 B uses the sound tools’ numbers for landing,
-  with Jared’s listening deferred to the product. Onboarding: pip twist antigravityOnce, Oops cases
-  returning-name tastebook, Cursor refused key ≤11 characters and first Antigravity sign-in failure with real
-  retry state; Ask Pip opens a screen with its chosen ? note; pipRoughDay recipe. Chat: Adjust Pip beside Adjust
-  NieR, Full/Quiet/Still/Plain, Crew-host faces, Scheduled faces, Activity rows and Orbit moments, recorded pip
-  Crew run queued→done; remove pip-chat:v1 when product settings bind or give Reset explicit ownership while it
-  is still a lab key. Workspace/Title bar: calm, working, blocked, needs-you and unsaved as separate states,
-  long-name switch, real density widths full/1280/1024/860 and Open project menu. Activity: Busy, No asks,
-  Quiet, Many, Stale feed, After restart and Right-now; open Agents/Processes/Resources and thread Processes,
-  with several servers/environments; Quit…, Stop all and Numbers/Words. Extend busy recipe and add quitWithWork;
-  optional D9 notices use the real alert owner. No imported concept toolbar, fake product errors, second Demo
-  Studio, new product command or preference is authorized by these lab cases. Documentation retires the claim
-  that sample notices cannot fire and updates the recorded-example census from its actual registry. W8 review
-  D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception is 5.6
-  Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a hidden
-  .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run. This is
-  tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product dispatch.
-  Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset, {demo:true}) for
-  both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent behavior, then
-  delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do not run all
-  chains and are not a substitute. Current lab adapters are
-  O55.studio.pip/pipOnboarding/titlebar/activity/looks.pip and recipes pipRoughDay/quitWithWork. Onboarding
-  examples call O55.ui.act/fill/tip/open and refuse when unavailable; they do not write fields or call private
-  screen definitions. Hold loaders copy names only waits ending on their button; Mark only discloses the bar
-  owner’s approximately half-second layout pass per step. No lab trigger is admitted to product commands,
-  Settings or Touch. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source
-  confirmation 1030182542-5544). QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H1/H5/H7/Q19: one lab
-  Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit.
-  Recorded guides name the actual current control, including Schedule for …, and advance only after that
-  control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded
-  correction through the normal reply boundary; it does not simulate a native model promise. Natural user
-  choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep
-  DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command,
-  preference, persisted field or production wiring is authorized. Q18: when a concept page has no usable storage
-  at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated
-  memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and
-  O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’
-  corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage
-  whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing
-  persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native
-  durability, a verified restore/credential or a native owner receipt; production Storage/Settings
-  CAS/readback/rollback rules are unchanged.
+  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the rule is
+  Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo controls, the home demos
+  and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of that one studio; no surface
+  draws a demo panel of its own. The Demo Studio and every control in it are lab only, in the pattern of
+  Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command, wiring row, saved value or test
+  gate, never shown in the product's menus or Settings, and no canon number comes from them. In the concept it opens
+  above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
+  looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
+  product unit.
 gui_related: true
 gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of
   the product.
@@ -2433,7 +2384,6 @@ acceptance_criteria:
   - "Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws its own demo panel."
   - "No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or a control in it."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -2449,10 +2399,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/Decision_Log.md#DL-185
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
-  (D26)
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26)"
 preserved_exact_tokens:
 - Demo Studio
 negative_constraints:

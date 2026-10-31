@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33111-L33971
+Source lines: L33172-L34027
 
-Source SHA256: `d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af`
+Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
 
 ---
 
@@ -19,66 +19,62 @@ plan_unit_id: F3-460
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and
-  are the sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert
-  state. With no waiting notice the bell stands alone; otherwise the newest title and at most two
-  peeking cards form the stack, fanning on hover, with a rectangular unread badge. The inbox and
-  each card share glyph, source/time, title, body, actions and timer anatomy. Basic is a neutral
-  hairline plate with a restrained arrival and join. Friendly is a speech bubble pointing to the
-  bell, an app-icon glyph tile, soft pressed keys, dot timer, hopping join and mail light; its inbox
-  is a dotted tray with white/plum cards, not the old unsupported free-floating heading. Retro is a
-  console window with reverse-video severity, typed title, stepped block timer and CRT
-  opening/closing; Light uses perforated paper and no glow. Glass uses F3-652's menu material, with
-  condensation/stack-origin opening. NieR uses parchment/ink, the existing parts for headers,
-  glyphs, blocks, ground, cursor and brackets, stepped motion and no glow/blur. Arrivals,
-  warning/error, join and inbox open/close use the existing family sound kit only when notifications
-  and sound are enabled. Reduced Motion removes flights, springs, slides, typing, cursor blink,
-  twinkles and condensation while retaining meaning, timer/count and permitted sound. Terminal and
-  panel inline notices consume the same material but retain their own owner's placement and
-  dismissal; the restored-terminal notice does not gain the proposed eight-second auto-dismiss.
-  Setup-prompt arrival and joining follow F3-447, and the resulting entry belongs to F3-453's shared
-  inbox. The unread badge includes the owner-linked setup entry under F3-453; its Continue control
-  reuses that original prompt's action.
-  Amended 2026-10-17 (DL-228): while a blocking item is unresolved the stack keeps F3-453's attention ring,
-  drawn in each look's own form with no pill and no stripe; reading or filing never clears it. The arrival,
-  join and inbox open and close sounds are the notification category of F3-405's routing matrix, not the
-  onboarding and Guided Tour cue category. The empty inbox shows the look's caught-up line ("You're all caught
-  up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
-  over "Finished work, warnings and anything that needs you will land here." The bell's accessible name is
-  "Notifications: nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox
-  row carries its kind's mark before its title, beside it and never in its place (success complete, warning
-  warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
-  and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
-  Amended 2026-10-29 (A4, D9; PM7): Keep every in-app kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification branding become Pip; completion notices route through this alert owner and never add a second affordance.
-  A4 A, Jared 2026-10-30; joined PM7 review fix 4c49e10567: Friendly's .pmn-tile-pip draws one decorative
-  24 px PMLogo mark. The item's severity maps through the existing status key and PMLogo.moodFor:
-  info→idle, success→complete, warn→waiting, error→failed. Its kind glyph remains in .pmn-kind beside the
-  title's text node; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts,
-  banners and inbox rows repaint through the same fillTile owner in src/js/19-notify.js when the look changes.
-  F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page; its first card uses the
-  theme selector menu's resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
-  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls
-  and the chat head. F3-447 owns that anchor, the lead's open-inbox push exception and the entry/exit
-  click guard on every page (F3-5), including Usage's local pointer styling; no per-page or control-clearance
-  placement survives.
+canonical_text: 'The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and are
+  the sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert state. With no waiting notice
+  the bell stands alone; otherwise the newest title and at most two peeking cards form the stack, fanning on hover, with
+  a rectangular unread badge. The inbox and each card share glyph, source/time, title, body, actions and timer anatomy.
+  Basic is a neutral hairline plate with a restrained arrival and join. Friendly is a speech bubble pointing to the bell,
+  an app-icon glyph tile, soft pressed keys, dot timer, hopping join and mail light; its inbox is a dotted tray with
+  white/plum cards, not the old unsupported free-floating heading. Retro is a console window with reverse-video severity,
+  typed title, stepped block timer and CRT opening/closing; Light uses perforated paper and no glow. Glass uses F3-652''s
+  menu material, with condensation/stack-origin opening. NieR uses parchment/ink, the existing parts for headers, glyphs,
+  blocks, ground, cursor and brackets, stepped motion and no glow/blur. Arrivals, warning/error, join and inbox open/close
+  use the existing family sound kit only when notifications and sound are enabled. Reduced Motion removes flights, springs,
+  slides, typing, cursor blink, twinkles and condensation while retaining meaning, timer/count and permitted sound. Terminal
+  and panel inline notices consume the same material but retain their own owner''s placement and dismissal; the restored-terminal
+  notice does not gain the proposed eight-second auto-dismiss. Setup-prompt arrival and joining follow F3-447, and the
+  resulting entry belongs to F3-453''s shared inbox. The unread badge includes the owner-linked setup entry under F3-453;
+  its Continue control reuses that original prompt''s action. Amended 2026-10-17 (DL-228): while a blocking item is unresolved
+  the stack keeps F3-453''s attention ring, drawn in each look''s own form with no pill and no stripe; reading or filing
+  never clears it. The arrival, join and inbox open and close sounds are the notification category of F3-405''s routing
+  matrix, not the onboarding and Guided Tour cue category. The empty inbox shows the look''s caught-up line ("You''re
+  all caught up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
+  over "Finished work, warnings and anything that needs you will land here." The bell''s accessible name is "Notifications:
+  nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox row carries its kind''s
+  mark before its title, beside it and never in its place (success complete, warning warning, error failed, info info;
+  F3-658), lit and still; the dismiss is the close glyph in the same button and keeps its name Dismiss; the empty stack
+  shows the bell glyph; marks hold 3:1 on severity-tinted cards. Amended 2026-10-29 (A4, D9; PM7): Keep every in-app
+  kind mark beside its copy and the single title-bar notification entry. Only Friendly’s app tile and OS notification
+  branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
+  2026-10-30; joined PM7 review fix 4c49e10567: Friendly''s .pmn-tile-pip draws one decorative 24 px PMLogo mark. The
+  item''s severity maps through the existing status key and PMLogo.moodFor: info→idle, success→complete, warn→waiting,
+  error→failed. Its kind glyph remains in .pmn-kind beside the title''s text node; the tile is no additional control.
+  Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same fillTile owner in
+  src/js/19-notify.js when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
+  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
+  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
+  local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- The title bar renders the rightward notification stack and count badge between the title-bar page tabs
-  and the title-bar search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)|
-  <= 2 px, including stacked-width animation and page-tab overflow modes), and no other in-app surface
-  offers a standing notification affordance.
-- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an
-  alert store entry.
-- Durable notifications join the collapsed stack with a join animation, and the count badge renders the
-  unread count from the shared alert store.
-- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's
-  readable menu material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
+- The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar
+  search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)| <= 2 px, including stacked-width
+  animation and page-tab overflow modes), and no other in-app surface offers a standing notification affordance.
+- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry.
+- Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count
+  from the shared alert store.
+- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's readable menu
+  material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -128,7 +124,6 @@ owner_boundary_notes:
 - "F3-453 owns the shared alert store and ack/snooze lifecycle; F3-447 owns the ephemeral staging cap, ordering, time to live, and exit; F3-461 owns the sprout inbox panel and kind-specific action rows."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-461 - Notification Inbox Sprout Panel And Kind Action Rows
@@ -138,62 +133,62 @@ plan_unit_id: F3-461
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Clicking the title-bar notification stack expands a sprout inbox panel using the same
-  corner-origin sprout motion family as the chat popouts. Single-item dismiss animates a
-  height spring with a size-bounce while the panel is open; Clear all runs a bottom-to-top
-  collapse-up and then the panel sprout-closes with no empty flash; Esc and outside-click
-  close the panel. Cards render kind-specific compact action rows: HITL cards offer
-  Approve, Decline, Details, and Explain with Explain read-only; Permission cards offer
-  Deny, Once, Session, and Always with pattern edit on Always per the Permissions ladder;
-  FileSafe cards follow the FileSafe ladder with its 60s TTL; Concern cards require
-  rationale for dismiss, resolve, or acknowledge per the Contracts rationale rules; Usage
-  and Wizard cards carry their compact rows. Full questionnaire forms stay on owner
-  surfaces; title-bar cards expose compact action rows plus optional rationale or Explain
-  only. Details is the click-through label, and click-through routes via
-  primary_route_payload / cmd.alert.open_source with the Contracts route_kind enumeration
-  including toast. Dismissing a card never resolves the underlying blocker, and ephemeral
-  cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
-  so card bottoms are not clipped.
-  Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read beside Clear all: the
-  typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained item read
-  and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
-  the concept's dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the
-  inbox and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach
-  the ends, and ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves
-  focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
-  the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
-  "N more" and "Show less", and an action that opens a page reads "Open <page>".
-  Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store, deduplicated/coalesced by work
-  identity and completion generation, with one durable notice and its existing transient treatment. Agent
-  delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox is
-  explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert
-  content/acknowledgment/routing/focus remain here and in F3-453; no separate per-look inbox motion owner is
-  exempted. The retired #rsPanel is not evidence of live-inbox closure.
-  F3-1, Jared 2026-10-30, with the lead's explicit 2026-10-30 open-inbox exception (mail
-  1030131044-4c44, preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage
-  sits under it via the existing --pmn-push offset. When closed the stage returns tight below the title
-  bar at the bell, aligned to the theme menu’s resting top under its selector wrapper (F3-447). No
-  chat-head or control-clearance offset is added. The existing
-  inbox owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead's ruling,
-  not an added quote from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only
-  after PM6_SPROUT has opened the inbox and restored its layout visibility, on first open and every reopen.
-  Read its resting layout height, never the opening transform’s temporary bounding rectangle; during the
-  owner’s height spring use its destination height. Recompute after content/height changes and window
-  resize, and clear the offset on close. Preserve the existing gap (8 px in this concept), menu-sprout
-  ownership and the one stage; no page-local timer, list or persisted geometry is added.
+canonical_text: 'Clicking the title-bar notification stack expands a sprout inbox panel using the same corner-origin
+  sprout motion family as the chat popouts. Single-item dismiss animates a height spring with a size-bounce while the
+  panel is open; Clear all runs a bottom-to-top collapse-up and then the panel sprout-closes with no empty flash; Esc
+  and outside-click close the panel. Cards render kind-specific compact action rows: HITL cards offer Approve, Decline,
+  Details, and Explain with Explain read-only; Permission cards offer Deny, Once, Session, and Always with pattern edit
+  on Always per the Permissions ladder; FileSafe cards follow the FileSafe ladder with its 60s TTL; Concern cards require
+  rationale for dismiss, resolve, or acknowledge per the Contracts rationale rules; Usage and Wizard cards carry their
+  compact rows. Full questionnaire forms stay on owner surfaces; title-bar cards expose compact action rows plus optional
+  rationale or Explain only. Details is the click-through label, and click-through routes via primary_route_payload /
+  cmd.alert.open_source with the Contracts route_kind enumeration including toast. Dismissing a card never resolves the
+  underlying blocker, and ephemeral cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
+  so card bottoms are not clipped. Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read
+  beside Clear all: the typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained
+  item read and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
+  the concept''s dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the inbox
+  and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach the ends, and
+  ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves focus to the next; Enter
+  activates the row''s body (F3-447); Escape closes from anywhere and returns focus to the bell. A timed item shows its
+  countdown ("Expires in N s", FileSafe''s 60 s hold), a folded group offers "N more" and "Show less", and an action
+  that opens a page reads "Open <page>". Amended 2026-10-29 (D9; PM7): Completion delivery user uses this alert store,
+  deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
+  treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live #pmnPanel inbox
+  is explicitly a consumer of DR-079’s PM6_SPROUT lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
+  remain here and in F3-453; no separate per-look inbox motion owner is exempted. The retired #rsPanel is not evidence
+  of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
+  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
+  owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
+  from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after PM6_SPROUT has opened
+  the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
+  the opening transform’s temporary bounding rectangle; during the owner’s height spring use its destination height.
+  Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
+  (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
+  added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
+  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
 depends_on: [F3-460, F3-453]
 unblocks: []
 acceptance_criteria:
-- "Clicking the stack opens the sprout inbox with the corner-origin sprout motion family; Esc and outside-click close it."
-- "Single-item dismiss plays a height spring with size-bounce while the panel is open, and Clear all collapses items bottom-to-top before the panel sprout-closes with no empty flash."
-- "Kind-specific compact action rows render per card kind (HITL, Permission, FileSafe, Concern, Usage, Wizard), and full questionnaire forms remain on owner surfaces."
-- "Details click-through routes via primary_route_payload / cmd.alert.open_source, dismissing a card never resolves the underlying blocker, and ephemeral cards are X-dismiss only."
-- "The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Clicking the stack opens the sprout inbox with the corner-origin sprout motion family; Esc and outside-click close
+  it.
+- Single-item dismiss plays a height spring with size-bounce while the panel is open, and Clear all collapses items bottom-to-top
+  before the panel sprout-closes with no empty flash.
+- Kind-specific compact action rows render per card kind (HITL, Permission, FileSafe, Concern, Usage, Wizard), and full
+  questionnaire forms remain on owner surfaces.
+- Details click-through routes via primary_route_payload / cmd.alert.open_source, dismissing a card never resolves the
+  underlying blocker, and ephemeral cards are X-dismiss only.
+- The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

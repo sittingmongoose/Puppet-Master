@@ -900,7 +900,8 @@
           ]
         },
         "filesafe": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "DL-259 D8 A: one requested switch for command blocklist, write scope, security filter and pre-write safe points; effective mandatory/fail-closed policy still wins."
         },
         "online_mode": {
           "enum": [
@@ -1677,8 +1678,7 @@
               "repository_visibility": {
                 "enum": [
                   "private",
-                  "public",
-                  "internal"
+                  "public"
                 ]
               }
             }
@@ -1723,8 +1723,7 @@
               "repository_visibility": {
                 "enum": [
                   "private",
-                  "public",
-                  "internal"
+                  "public"
                 ]
               }
             }
@@ -1800,6 +1799,9 @@
               },
               "proxy_tls": {
                 "type": "null"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -1843,6 +1845,9 @@
               },
               "proxy_tls": {
                 "type": "null"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -1864,6 +1869,9 @@
                 "const": "check_existing_then_sign_in_once"
               },
               "headscale_url": {
+                "const": ""
+              },
+              "remote_endpoint": {
                 "const": ""
               }
             }
@@ -1887,6 +1895,9 @@
               },
               "headscale_url": {
                 "$ref": "#/$defs/https_url"
+              },
+              "remote_endpoint": {
+                "const": ""
               }
             }
           }
@@ -2031,6 +2042,143 @@
             "properties": {
               "repository_ref": {
                 "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "cursor_origin"
+              },
+              "repository_owner_scope": {
+                "const": "personal"
+              }
+            },
+            "required": [
+              "forge",
+              "repository_owner_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "const": "private"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "github"
+              },
+              "repository_owner_scope": {
+                "const": "personal"
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "repository_owner_scope",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_visibility": {
+                "enum": [
+                  "private",
+                  "public"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "enum": [
+                  "bitbucket_cloud",
+                  "bitbucket_data_center"
+                ]
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_container": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "forge": {
+                "const": "bitbucket_cloud"
+              },
+              "online_mode": {
+                "enum": [
+                  "new",
+                  "existing"
+                ]
+              }
+            },
+            "required": [
+              "forge",
+              "online_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "repository_project": {
+                "$ref": "#/$defs/bounded_nonsecret_non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "proxy_hosting": {
+                "enum": [
+                  "generate_for_server",
+                  "generate_only"
+                ]
+              }
+            },
+            "required": [
+              "proxy_hosting"
+            ]
+          },
+          "then": {
+            "properties": {
+              "proxy_kind": {
+                "enum": [
+                  "caddy",
+                  "nginx",
+                  "traefik"
+                ]
               }
             }
           }
@@ -10010,5 +10158,92 @@
         }
       ]
     }
+  },
+  "x-product-rulings": {
+    "owner_ref": "Plans/Decision_Log.md#DL-259",
+    "online_creation": "repository_only",
+    "advanced_routes": "Settings_only_with_pointer",
+    "provider_admission": "immediately_before_product_build",
+    "wizard_provider_caveats": false,
+    "grouped_source_routes": [
+      "new",
+      "existing",
+      "restore"
+    ],
+    "existing_subchoices": [
+      "local",
+      "online",
+      "other_device"
+    ],
+    "file_safe_group": [
+      "command_blocklist",
+      "write_scope",
+      "security_filter",
+      "pre_write_safe_points"
+    ],
+    "backup_offer": [
+      "NAS",
+      "Google Drive",
+      "OneDrive",
+      "Amazon S3",
+      "Backblaze B2",
+      "S3-compatible",
+      "SFTP",
+      "WebDAV"
+    ],
+    "backup_Settings": [
+      "Azure Blob",
+      "Google Cloud Storage",
+      "REST server"
+    ],
+    "free_catalog_source": "https://github.com/vava-nessa/free-coding-models/releases/tag/v0.6.0",
+    "free_catalog_read_date": "2026-10-31",
+    "excluded_free_offer": [
+      "github_models",
+      "cerebras",
+      "hugging_face",
+      "ollama_cloud"
+    ],
+    "broader_catalog_owner": "Plans/Models_System.md#MS-118",
+    "interaction_mode": {
+      "setting_id": "general.interaction.mode",
+      "default": "ELI5",
+      "labels": {
+        "ELI5": "Plain English",
+        "Expert": "Expert"
+      },
+      "surfaces": [
+        "onboarding_bar",
+        "guided_tour_bar"
+      ],
+      "dual_copy_scope": "tips_and_help_only"
+    },
+    "file_safe_bypass_allowed": false,
+    "credential_custody": "execution_host",
+    "native_client_tailnet": "built_in_no_separate_install",
+    "plain_browser_tailnet": "none_use_remote_link_or_device_private_path",
+    "onboarding_free_front": [
+      {
+        "provider": "openrouter",
+        "auth": "sign_in"
+      },
+      {
+        "provider": "groq",
+        "auth": "api_key"
+      },
+      {
+        "provider": "nvidia",
+        "auth": "api_key"
+      }
+    ],
+    "advanced_free_providers": {
+      "initially_open": false,
+      "controls_per_surface": 1,
+      "source": "current_eligible_Free_Models_catalog",
+      "fixed_list": false,
+      "fixed_count": false,
+      "Settings_matches": true
+    },
+    "usable_AI_summary": "all_current_usable_paid_and_free_routes"
   }
 }

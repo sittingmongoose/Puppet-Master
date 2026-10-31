@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14502
+Source lines: L4302-L14495
 
-Source SHA256: `4d7438497971839608473386d62b899d7dcd57f4dcdb53addb48bdaf990f683c`
+Source SHA256: `e41b607ab847e23a3732c947b7fb0886104ea5b74791ca2f743251066085d433`
 
 ---
 
@@ -7555,50 +7555,47 @@ plan_unit_id: DL-139
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  DL-139 records the owner decision of 2026-10-01, completed on 2026-10-02. The native desktop GUI compiles and ships only Slint's Skia
-  renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU (winit-skia), then Skia's
-  own CPU raster (winit-skia-software); FemtoVG and Slint's separate software renderer are not compiled or shipped.
-  Puppet Master carries its own extensions to Slint's Skia renderer for element blur, backdrop blur, gradient and
-  alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable rich text
-  (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked with
-  every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint
-  portability" notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could
-  not draw them no longer bind for those effects. Setup popups (the sheets of F3-566) take DL-114's extra blur: frosted
-  glass on the GPU path, solid on the CPU raster, with the scrim a flat tint and F3-431's blur budget opened for this
-  sheet blur only. The web GUI draws the terminal from the same Rust grid as a fixed, reused set of visible page-text
-  rows updated by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a
-  Leptos client drawn with browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the
-  Slint/WASM canvas web GUI. Both interfaces bind one shared Rust interface-model crate and one design-token source.
-  Added 2026-10-01/02: Slint remains the native UI framework (layout, input, focus, text editing, clipboard, drag and
-  drop, windows); the Skia extensions are a fixed, centrally implemented property set that screens use without
-  calling the renderer, and replacing Slint needs a new decision. When the GPU adapter is a software implementation
-  (llvmpipe or lavapipe, WARP, SwiftShader), Puppet Master always uses Skia's CPU raster, even when the Graphics
-  Engine setting or the SLINT_BACKEND override asks for the GPU, and then warns the user that no GPU was detected;
-  switching for this reason shows one quiet, non-blocking, one-time notice explaining why frosted panels look solid
-  (F3-033). The Skia CPU raster is a supported, tested path that starts without a GPU and stays fully usable with
-  motion unchanged, its only reductions being that backdrop blur is not drawn and frosted surfaces draw solid. After
-  GPU device or surface loss, a driver update or crash, or suspend and resume, Puppet Master rebuilds its drawing
-  surface without losing interface state and returns to the GPU automatically once it works again. Web text has no
-  ClearType guarantee and is checked on Windows for readability, selection and caret behavior at rest and during
-  transitions. The interfaces share behavior, not pixels, each with its own visual baselines (F3-583); the web
-  terminal tracks its own selection in the terminal grid's data, not with the browser's selection; and the web GUI
-  applies the UI Scale setting through one root-level CSS scale (CV-188). Development and test builds of both expose
-  test-build observability, never production builds (ATS-067). A GPUI fork was researched and rejected on
-  2026-10-02. Jared holds a Slint license, so no separate license cards are opened from the GPUI research's
-  licensing questions; this does not address Puppet Master's own license.
-  Jared said: "ok sounds like we are doing custom skia work and only using skia for desktop.  For web, you said we
-  should use a browser-native web client, what would you recommend?", then "I told the other thread to drop the
-  slint requirements since we are going to do custom code on skia to alleviate the shortcomings.", then "ok go with
-  Leptos, draft the decision card and spec edits.  Including the skia change, custom code, dropping FemtoVG then
-  cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended option each time: "Yes,
-  Skia only (Recommended)" (Slint's own software renderer goes too), "Yes, lift them now (Recommended)" (the
-  Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page text
-  (Recommended)" (web terminal). On the critique Jared chose "No, port normally" and "Yes, require it in test builds
-  (Recommended)"; on 2026-10-02 he said: "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.  Your recommendation.",
-  and in the question form typed "ignore the switch and warn the user that there is no gpu detected." and "I have a
-  license." The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local
-  daemon contract and the in-canvas float-layer name are unchanged.
+canonical_text: 'DL-139 records the owner decision of 2026-10-01, completed on 2026-10-02. The native desktop GUI compiles
+  and ships only Slint''s Skia renderer. Selection runs SLINT_BACKEND override, persisted preference, Skia on the GPU
+  (winit-skia), then Skia''s own CPU raster (winit-skia-software); FemtoVG and Slint''s separate software renderer are
+  not compiled or shipped. Puppet Master carries its own extensions to Slint''s Skia renderer for element blur, backdrop
+  blur, gradient and alpha masks, blend modes, saturate/contrast/brightness filters, ClearType text on Windows and selectable
+  rich text (F3-582), written to upstream quality, offered to Slint, carried as a Cargo patch until merged and re-checked
+  with every Slint upgrade; on the CPU raster backdrop blur is not drawn and frosted surfaces draw solid. "Slint portability"
+  notes that ban blur, backdrop blur, masks, blend modes or filter effects only because stock Slint could not draw them
+  no longer bind for those effects. Setup popups (the sheets of F3-566) take DL-114''s extra blur: frosted glass on the
+  GPU path, solid on the CPU raster, with the scrim a flat tint and F3-431''s blur budget opened for this sheet blur
+  only. The web GUI draws the terminal from the same Rust grid as a fixed, reused set of visible page-text rows updated
+  by diff (SMPFS-072 web exception), subject to the heavy-output speed tests. The web GUI is a Leptos client drawn with
+  browser elements and CSS and served by the trusted local daemon (F3-583); it replaces the Slint/WASM canvas web GUI.
+  Both interfaces bind one shared Rust interface-model crate and one design-token source. Added 2026-10-01/02: Slint
+  remains the native UI framework (layout, input, focus, text editing, clipboard, drag and drop, windows); the Skia extensions
+  are a fixed, centrally implemented property set that screens use without calling the renderer, and replacing Slint
+  needs a new decision. When the GPU adapter is a software implementation (llvmpipe or lavapipe, WARP, SwiftShader),
+  Puppet Master always uses Skia''s CPU raster, even when the Graphics Engine setting or the SLINT_BACKEND override asks
+  for the GPU, and then warns the user that no GPU was detected; switching for this reason shows one quiet, non-blocking,
+  one-time notice explaining why frosted panels look solid (F3-033). The Skia CPU raster is a supported, tested path
+  that starts without a GPU and stays fully usable with motion unchanged, its only reductions being that backdrop blur
+  is not drawn and frosted surfaces draw solid. After GPU device or surface loss, a driver update or crash, or suspend
+  and resume, Puppet Master rebuilds its drawing surface without losing interface state and returns to the GPU automatically
+  once it works again. Web text has no ClearType guarantee and is checked on Windows for readability, selection and caret
+  behavior at rest and during transitions. The interfaces share behavior, not pixels, each with its own visual baselines
+  (F3-583); the web terminal tracks its own selection in the terminal grid''s data, not with the browser''s selection;
+  and the web GUI applies the UI Scale setting through one root-level CSS scale (CV-188). Development and test builds
+  of both expose test-build observability, never production builds (ATS-067). A GPUI fork was researched and rejected
+  on 2026-10-02. Jared holds a Slint license, so no separate license cards are opened from the GPUI research''s licensing
+  questions; this does not address Puppet Master''s own license. Jared said: "ok sounds like we are doing custom skia
+  work and only using skia for desktop. For web, you said we should use a browser-native web client, what would you recommend?",
+  then "I told the other thread to drop the slint requirements since we are going to do custom code on skia to alleviate
+  the shortcomings.", then "ok go with Leptos, draft the decision card and spec edits. Including the skia change, custom
+  code, dropping FemtoVG then cpu(skia has cpu)." Jared then confirmed in the question form, choosing the recommended
+  option each time: "Yes, Skia only (Recommended)" (Slint''s own software renderer goes too), "Yes, lift them now (Recommended)"
+  (the Slint-portability bans), "Frosted on GPU, solid on CPU (Recommended)" (setup popups) and "Reused rows of page
+  text (Recommended)" (web terminal). On the critique Jared chose "No, port normally" and "Yes, require it in test builds
+  (Recommended)"; on 2026-10-02 he said: "Lets stick to Leptos for web, Slint for native, and keep the skia cpu fallback.
+  Your recommendation.", and in the question form typed "ignore the switch and warn the user that there is no gpu detected."
+  and "I have a license." The Slint and Rust version pins, the no-React and no-Tauri rule, the trusted local daemon contract
+  and the in-canvas float-layer name are unchanged.'
 gui_related: true
 gui_classification_reason: Records the owner decision on the desktop renderer set, the visual capabilities added to
   it, and the technology of the web GUI.
@@ -7670,30 +7667,28 @@ plan_unit_id: DL-140
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  DL-140 records the owner decision of 2026-10-01, extended on 2026-10-02 and approved on 2026-10-07. Every icon in
-  the assistant chat is drawn from one icon registry with one drawing per concept, reused everywhere, in the activity
-  bar's neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never a blur or
-  filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving like
-  the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
-  included; colour is reserved for status (amended on 2026-10-08 by DL-146, which draws the capabilities wand in its own
-  colours); module cards draw their marks lit and still. The wand is redrawn as a rod
-  with a star tip and the Fast-mode bolt is amber and strikes like lightning (F3-588). The halo approach stays after
-  DL-139 made blur available, because it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared
-  asked: "I really like the icons/animations used for the items in the chat activity bar.  They are kind of like
-  neon signs, each with unique animations.  Can you redesign the icons used everywhere else in that html concept to
-  match that style?  That includes the icons in the working animation(which arent far off now).  The icons next to the
-  thread activity history previews should convey to the user the status of that thread easily.  A lot of the icons
-  will be repeated so that is fine, you shouldnt make bespoke icons for artifacts everywhere it's needed when you
-  already have 1, if that makes sense." He answered "Ignite on hover (Recommended)",
-  "Per-glyph, bar included (Recommended)" and "Portable neon (Recommended)", later wrote "The magic wand looks more
-  like a magic pencil.  So that needs to be fixed.  Lightning bolt for fast mode should be colored and hopefully its
-  animated.  Most of it looked good from what I saw." and "I like option 3.  Also, the working animation with the
-  circle and ball, the ball should be orbiting on the circle, not on the outside of it.  And the lightning bolt, the
-  animation is a little off, maybe think of lighting being a crack, like you see lightning coming down from the
-  sky(even though it comes from the ground technically but that isnt how it looks).  Right now the lightning bolt just
-  kinda looks like it almost shakes which misses the opportunity to act like lightning.", and approved the result on
-  2026-10-07: "changes are approved, you can PM_Chat_Assistant_5.6_Pro_Standalone.html with your version"
+canonical_text: 'DL-140 records the owner decision of 2026-10-01, extended on 2026-10-02 and approved on 2026-10-07.
+  Every icon in the assistant chat is drawn from one icon registry with one drawing per concept, reused everywhere, in
+  the activity bar''s neon-sign look: a lit stroke over a halo of the same ink plus a soft glow behind the host, never
+  a blur or filter (F3-584). Ordinary controls ignite on hover or keyboard focus; status icons are always lit and moving
+  like the activity bar; concept icons are lit and still; each icon moves part by part in its own way, the activity bar
+  included; colour is reserved for status (amended on 2026-10-08 by DL-146, which draws the capabilities wand in its
+  own colours); module cards draw their marks lit and still. The wand is redrawn as a rod with a star tip and the Fast-mode
+  bolt is amber and strikes like lightning (F3-588). The halo approach stays after DL-139 made blur available, because
+  it costs the same on the Skia CPU raster and NieR Mode draws no glow. Jared asked: "I really like the icons/animations
+  used for the items in the chat activity bar. They are kind of like neon signs, each with unique animations. Can you
+  redesign the icons used everywhere else in that html concept to match that style? That includes the icons in the working
+  animation(which arent far off now). The icons next to the thread activity history previews should convey to the user
+  the status of that thread easily. A lot of the icons will be repeated so that is fine, you shouldnt make bespoke icons
+  for artifacts everywhere it''s needed when you already have 1, if that makes sense." He answered "Ignite on hover (Recommended)",
+  "Per-glyph, bar included (Recommended)" and "Portable neon (Recommended)", later wrote "The magic wand looks more like
+  a magic pencil. So that needs to be fixed. Lightning bolt for fast mode should be colored and hopefully its animated.
+  Most of it looked good from what I saw." and "I like option 3. Also, the working animation with the circle and ball,
+  the ball should be orbiting on the circle, not on the outside of it. And the lightning bolt, the animation is a little
+  off, maybe think of lighting being a crack, like you see lightning coming down from the sky(even though it comes from
+  the ground technically but that isnt how it looks). Right now the lightning bolt just kinda looks like it almost shakes
+  which misses the opportunity to act like lightning.", and approved the result on 2026-10-07: "changes are approved,
+  you can PM_Chat_Assistant_5.6_Pro_Standalone.html with your version"'
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
@@ -7896,18 +7891,16 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-043) covers every assistant chat surface,
-  with each installed part placed in the chat and the transcript stage counted as the app's ground so the scene
-  shows behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms,
-  never above either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no
-  moving touches inside the scenes. Q22 supersedes the earlier lab-only restriction: NieR Light and NieR Dark
-  are product themes, mirrored in Demo Studio (DL-257). Jared wrote "Dont forget about the new NieR mode found
-  in PMConcept7.html, that will impacting this once it is ported into PMoncept7(not your job) so might as well
-  address those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will
-  need to be done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.",
-  and on the two scene ideas "Also the images you sent me looked good.  Do 2 but not 1." Amended Q22, Jared
-  2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration
-  and retained Adjust controls.
+  DL-144 records the owner decisions of 2026-10-02. NieR Mode (SSYS-043) covers every assistant chat surface, with
+  each installed part placed in the chat and the transcript stage counted as the app's ground so the scene shows
+  behind the conversation (F3-589). A change from one scene to another cross-fades by opacity over 520 ms, never above
+  either scene's resting strength, everywhere a scene changes, PMConcept7 included; the chat adds no moving touches
+  inside the scenes. In the concept NieR Light and NieR Dark are Demo Studio themes (lab only, ACD-474); in the
+  product NieR Mode stays the Settings switch. Jared wrote "Dont forget about the new NieR mode found in
+  PMConcept7.html, that will impacting this once it is ported into PMoncept7(not your job) so might as well address
+  those changes now too.", then "might as well add the nier mode to the whole concept as well.  it will need to be
+  done eventually so might as well have you do it.  Make it a selectable theme in the demo studio.", and on the two
+  scene ideas "Also the images you sent me looked good.  Do 2 but not 1."
 gui_related: true
 gui_classification_reason: Records an owner decision on the assistant chat's visual design.
 split_recommended: false
@@ -7938,7 +7931,7 @@ preserved_exact_tokens:
   - "DL-144"
   - "Do 2 but not 1."
 negative_constraints:
-  - "Do not retain an independent NieR override or checkbox; Q22 makes it the fifth family via the existing theme owner."
+  - "Do not make NieR Mode a ninth selectable theme in the product."
   - "Do not add moving touches inside the scenes in the chat."
 owner_hints:
   - Plans/FinalGUISpec.md

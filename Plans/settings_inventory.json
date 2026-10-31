@@ -1091,14 +1091,15 @@
   {
    "id": "general.interaction.mode",
    "label": "How the app talks to me",
-   "desc": "Plain English hides jargon and rarely used controls.",
+   "desc": "Choose Plain English or Expert tips and help. The wizard and Guided Tour share this preference.",
    "type": "radio",
    "options": [
     "ELI5",
     "Expert"
    ],
    "option_labels": {
-    "ELI5": "Plain English"
+    "ELI5": "Plain English",
+    "Expert": "Expert"
    },
    "default": "ELI5",
    "scope": [

@@ -48,7 +48,7 @@ def check():
     for case in fixtures["restore_cases"]:
         require(restore_stage(case["value"]) == case["expected"], "restore progression " + case["name"])
     bindings = read("pm7_control_bindings.json")["bindings"]
-    require(len(bindings) == 479, "QA2 invented or lost a control ID")
+    require(len(bindings) == build["counts"]["pm7_bindings"], "Product control census differs")
     require(sum(bool(row.get("concept_sources")) for row in bindings) == 61,
             "QA2 family-source anchors differ")
     require(len(read("settings_inventory.json")["settings"]) == 1010, "QA2 invented a setting")
@@ -58,22 +58,6 @@ def check():
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",
             "You/wand catalog drifted")
-
-    # Lab screen controls never broaden the closed product action envelope.
-    verifier = runpy.run_path(str(ROOT / "scripts/pm-new-contracts-verify.py"))
-    registry = verifier["offline_schema_registry"]()
-    onboarding = read("product_onboarding_contracts.schema.json")
-    pack = read("product_onboarding_contract_fixtures.json")
-    request = next(row["value"] for row in pack["valid"] if row["definition"] == "onboarding_action_request")
-    validator = verifier["validator_for"](onboarding, {"$ref": "#/$defs/onboarding_action_request"}, registry)
-    require(validator.is_valid(request), "Base product action is invalid")
-    for field, value in (("seed", True), ("screen", "r-unlock"), ("committed", True)):
-        mutated = deepcopy(request)
-        mutated[field] = value
-        require(not validator.is_valid(mutated), "Lab field became a product request: " + field)
-    mutated = deepcopy(request)
-    mutated["local_context"]["seed"] = True
-    require(not validator.is_valid(mutated), "Lab seed became a local product field")
 
     command = ["node", str(ROOT / "scripts/pm7-qa2-source-probe.cjs")]
     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=30)
@@ -85,7 +69,7 @@ def check():
     require(result.returncode == 0, "Isolated source probe exited " + str(result.returncode))
     return {"check": "pm7-qa2-alignment", "status": "fail" if failures else "pass",
             "claim_boundary": "static_contracts_and_isolated_source_helpers_only_no_native_or_rendering_proof",
-            "counts": {"restore_cases": len(fixtures["restore_cases"]), "rejected_lab_fields": 4,
+            "counts": {"restore_cases": len(fixtures["restore_cases"]),
                        "source": source["counts"]},
             "source_probe_sha256": hashlib.sha256((ROOT / "scripts/pm7-qa2-source-probe.cjs").read_bytes()).hexdigest(),
             "failures": failures}

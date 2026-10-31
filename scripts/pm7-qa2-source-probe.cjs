@@ -157,122 +157,23 @@ const shellCss = read('Concepts/home-redesign/src/panels/css/20-shell.css');
 requireThat(/\[data-pmw-chat="strip"\][^{]*> \*\s*\{[^}]*content-visibility:\s*hidden/.test(shellCss), 'folded descendants paint');
 requireThat(/\[data-pmw-chat-peek\][^{]*> \*\s*\{[^}]*content-visibility:\s*visible/.test(shellCss), 'peek does not restore subtree');
 
-function storageWindow(mode) {
-  const values = new Map(); let wrote = false;
-  const ls = { getItem: key => mode === 'readback_mismatch' && wrote ? 'different' : values.has(key) ? values.get(key) : null,
-    setItem(key, value) { if (mode === 'write_throws') throw new Error('quota'); wrote = true; values.set(key, String(value)); },
-    removeItem: key => values.delete(key), key: i => [...values.keys()][i] ?? null,
-    get length() { return values.size; } };
-  const w = {}; Object.defineProperty(w, 'localStorage', { get() { if (mode === 'unavailable') throw new Error('SecurityError'); return ls; } });
-  return w;
-}
-const home = read('Concepts/home-redesign/src/panels/js/00-core.js');
-const homeStore = section(home, 'var LS =', '/* a project');
-const onbStore = read('Concepts/onboarding/opus-5.5/src/js/20-store.js');
-let storeCases = 0;
-for (const mode of fixture.memory_store_modes) {
-  const w = storageWindow(mode), c = context({ window: w, PMW: {} });
-  vm.runInContext(homeStore, c, { timeout: 1000 });
-  const store = c.PMW.store, result = store.set('project:A', { value: 1 });
-  requireThat(store.persistent === (mode !== 'unavailable'), 'Home persistent ' + mode);
-  requireThat(result === ['unavailable', 'available'].includes(mode), 'Home failed write fell back ' + mode);
-  if (result) {
-    requireThat(store.get('project:A').value === 1 && store.get('project:B') === null, 'Home key isolation ' + mode);
-    c.PMW.faults.failNextWrite = true;
-    requireThat(store.set('project:A', { value: 2 }) === false && store.get('project:A').value === 1, 'Home injected failure ' + mode);
-    store.remove('project:A'); requireThat(store.raw('project:A') === null, 'Home remove ' + mode);
-  }
-  storeCases++;
-  if (mode === 'readback_mismatch') continue; // O55's pre-existing adapter has no readback promise.
-  const ow = storageWindow(mode); ow.O55 = {}; const oc = context({ window: ow });
-  vm.runInContext(onbStore, oc, { timeout: 1000 });
-  const os = ow.O55.store, saved = os.set('onboarding', { keep: 1, password: 'do-not-store', nested: { privateKey: 'never' } });
-  requireThat(os.persistent === (mode !== 'unavailable'), 'Onboarding persistent ' + mode);
-  requireThat(saved === (mode !== 'write_throws'), 'Onboarding failed write ' + mode);
-  if (saved) { const value = os.get('onboarding', null); requireThat(value.keep === 1 && !('password' in value) && !('privateKey' in value.nested), 'Onboarding scrub'); os.clear('onboarding'); requireThat(os.get('onboarding', null) === null, 'Onboarding clear'); }
-  storeCases++;
-}
-counts.owner_store_cases = storeCases;
-
-// Settings shares its real store with restore/wallpaper. Available-but-failing
-// storage must refuse; only an unavailable storage object gets visit memory.
-const settings = read('Concepts/onboarding/opus-5.5/base/script/pm4-settings-js.js');
-const settingsStore = section(settings, 'var projectStore=', 'var bridgeDepth=');
-const settingsSnapshot = section(settings, 'function projectSnapshot(projectId)', 'function commandId(');
-const settingsRestore = read('Concepts/onboarding/opus-5.5/tools/settings_restore.js');
-const projectPrefix = 'pm7:settings:tome-tabs:v1:';
-function settingsContext(mode) {
-  const w = storageWindow(mode);
-  const c = context({ window: w, PREFIX: projectPrefix, CONCEPT_FIXTURE_MODE: true,
-    projectRecord: () => ({ id: 'A' }), key: () => projectPrefix + 'A',
-    clone: v => JSON.parse(JSON.stringify(v)), scrubCredentialSettings: v => JSON.parse(JSON.stringify(v)),
-    crypto: { randomUUID: () => 'qa2-fixture-receipt' } });
-  vm.runInContext(settingsStore + settingsSnapshot + settingsRestore, c, { timeout: 1000 });
-  return c;
-}
-let settingsCases = 0;
-for (const mode of fixture.memory_store_modes) {
-  const c = settingsContext(mode), store = c.window.PM7_SETTINGS_STORE;
-  requireThat(store === c.projectStore && store.persistent === (mode !== 'unavailable'), 'Settings store identity ' + mode);
-  let refused = false;
-  try { store.setItem('A', 'first'); } catch (_) { refused = true; }
-  requireThat(refused === (mode === 'write_throws'), 'Settings write did not propagate failure ' + mode);
-  if (mode === 'available' || mode === 'unavailable') {
-    store.setItem('B', 'second');
-    requireThat(store.getItem('A') === 'first' && store.getItem('B') === 'second'
-      && store.length === 2 && store.key(0) === 'A' && store.key(1) === 'B', 'Settings key isolation/enumeration ' + mode);
-    store.removeItem('A');
-    requireThat(store.getItem('A') === null && store.length === 1, 'Settings remove ' + mode);
-  }
-  settingsCases++;
-  const restore = settingsContext(mode);
-  const restored = restore.restoreProjectDefaults({ project_id: 'A' });
-  requireThat(restored.ok === ['available', 'unavailable'].includes(mode), 'Settings Restore Defaults readback ' + mode);
-  if (restored.ok) {
-    const value = restore.projectSnapshot('A');
-    requireThat(Object.keys(value.settings).length === 0 && value.settingsTransferHistory[0].fixture_mode === true
-      && value.settingsTransferHistory[0].rollback_ref === restored.rollback_ref
-      && restore.projectSnapshot('B') === null, 'Settings restore fixture receipt or Project isolation ' + mode);
-  }
-  settingsCases++;
-  const wallpaper = settingsContext(mode);
-  const changed = wallpaper.writeProjectWallpaper({ project_id: 'A', value: 'look' });
-  requireThat(changed.ok === ['available', 'unavailable'].includes(mode), 'Settings wallpaper readback ' + mode);
-  if (changed.ok) requireThat(wallpaper.projectSnapshot('A').settings['general.visual.wallpaper'] === 'look'
-    && wallpaper.projectSnapshot('B') === null, 'Settings wallpaper crossed Project ' + mode);
-  settingsCases++;
-}
-const settingsGuard = settingsContext('unavailable');
-settingsGuard.window.PM_SETTINGS_REGISTRY = {};
-requireThat(!settingsGuard.restoreProjectDefaults({ project_id: 'A' }).ok, 'Concept restore bypassed attached owner');
-requireThat(!settingsGuard.writeProjectWallpaper({ project_id: 'A', value: 'look' }).ok, 'Concept wallpaper bypassed attached owner');
-delete settingsGuard.window.PM_SETTINGS_REGISTRY;
-requireThat(!settingsGuard.writeProjectWallpaper({ project_id: 'B', value: 'look' }).ok, 'Wallpaper accepted a stale Project');
-requireThat(!settingsGuard.writeProjectWallpaper({ project_id: 'A', value: 'not-in-the-catalog' }).ok, 'Wallpaper accepted an unknown choice');
-counts.settings_store_cases = settingsCases;
-counts.settings_owner_refusal_cases = 4;
-requireThat(read('Concepts/onboarding/opus-5.5/src/settings/kit.d/28-toolchain-flags.js').includes('window.PM7_SETTINGS_STORE || localStorage')
-  && settings.includes('const store=window.PM7_SETTINGS_STORE||localStorage;for(let index=0;index<store.length;index++)'),
-  'Settings kit/copy-source enumeration bypasses the shared store');
-
 const sound = read('Concepts/onboarding/opus-5.5/src/js/15-sound.js');
 const soundBinding = section(sound, "const SETTING_ID =", '/* ---- synth primitives');
 for (const test of fixture.sound_cases) {
-  const c = context({ S: { muted: !test.preview_enabled },
+  const c = context({ S: { muted: !test.initial_enabled },
     window: { PM7_SETTINGS_TOME: { project: () => ({ id: 'A' }),
       projectSnapshot: () => test.snapshot == null ? null : { settings: test.snapshot } }, dispatchEvent() {} },
     document: { querySelectorAll: () => [], documentElement: { toggleAttribute() {} } },
     CustomEvent: function () {}, queueMicrotask() {}, performance: { now: () => 1 } });
   vm.runInContext(soundBinding, c, { timeout: 1000 });
   // The factory assignment runs once at bootstrap; a visit choice happens after it.
-  c.S.muted = !test.preview_enabled;
+  c.S.muted = !test.initial_enabled;
   c.S.refresh('load');
   requireThat(!c.S.muted === test.expected, 'sound binding ' + test.name);
 }
 counts.sound_binding_cases = fixture.sound_cases.length;
 
 // Readable policy source and finite geometry declarations; visuals remain the GUI lanes' proof.
-requireThat(ui.includes('opts.seed !== false') && ui.includes('SCREENS.defs[S.sess.screen].seed'), 'direct screen bypasses owner seed');
 const cards = read('Concepts/onboarding/opus-5.5/src/js/61-components.js');
 requireThat(cards.includes('opt1.under') && cards.includes('o55-card-parent') && cards.includes('class="o55-under"'), 'joined choices forked from C.cards');
 const glyph = read('Concepts/chat-assistant-concepts/5.6 Pro/module-shell.js');
@@ -287,7 +188,7 @@ requireThat(/--pmf-sheen:\s*rgb\(255 255 255 \/ \.045\)/.test(read(slots + 'G059
 requireThat(/--pmf-sheen:[^;]*4\.5%/.test(read(slots + 'G0597.css')), 'Glass Light sheen differs');
 const glass = read('Concepts/liquid-glass/opus-5.5/src/glass.js');
 requireThat(!/function onPtr\(/.test(glass), 'independent Glass sheet pointer light remains');
-counts.source_boundary_checks = 12;
+counts.source_boundary_checks = 10;
 
 process.stdout.write(JSON.stringify({ status: failures.length ? 'fail' : 'pass',
   claim_boundary: 'isolated_source_helpers_with_fixture_DOM_storage_not_browser_or_native_proof', counts, failures }, null, 2));

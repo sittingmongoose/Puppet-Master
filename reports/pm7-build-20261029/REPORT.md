@@ -1,3 +1,32 @@
+# DL-259 product-only onboarding amendment — 2026-10-31
+
+Branch `t3/plans/pm7-plans-canon`. **All 16 focused/generation/guard checks pass.** D1–D8, fields/provider corrections, shared ELI5 and two-version tips, current free-model source, Pip room Q1 B and inbox-placement Q2 A are applied. **20 owner/index docs; 85 existing unit bodies; new DL-259 and DR-081.** Prose preceded companions; no ledger was compiled.
+
+The latest D5 ruling supersedes the earlier exclusive shortlist: **OpenRouter, Groq and NVIDIA up front; other current eligible catalog providers behind one closed advanced control, in wizard and Settings.** No fixed remainder/list/count or prices. June inspection records remain historical. MiniMax M Plan/OpenCode Console aliases preserve IDs; new `cursor_sdk` and `alibaba_token_plan` entries retain distinct auth/billing identity. D4's four provider checks happen immediately before PM is built, with no wizard caveat.
+
+Q1 B: shared say/vocals send **0.35 after trim/pan, Glass 0.30, NieR 0.16**, into one per-look kit room registered before first voice; no stacked rooms; about 0.4 dB body-loudness bound. The 0.8 music send is not voice authority. Q2 A is attributed to Jared, 2026-10-31; toasts remain below the open inbox.
+
+| Product-only sweep | Removed | Kept and why |
+|---|---|---|
+| Page storage | Q18 visit-memory requirements, `PM7_SETTINGS_STORE`, concept Project keys and 51 production-wiring clauses; 3 schema cases and storage-only source probes | Native Storage/Settings failure, readback/CAS and refusal rules remain; no concept receipt becomes durability. |
+| Direct-screen shortcuts | `open({screen})` seeds, seedCommit/seed flags, sample validation thresholds, lab adapter/launch/document clauses | Real selected-source identities, current validation, dialog input/focus lifetime and one original inert basis. |
+| DL-256 | Studio matrix and build/landing workflow content | Shared Pip sound quality and Q1 room; real product sound. |
+| Mainline history | This branch's F3-649/DR-070/DL-144 additions reset to exact mainline blocks | Existing 14-document / 115-mention baseline is deferred to the separate Q3 B / DL-260 task; history is not silently rewritten. |
+| Work and visuals | No product behavior removed | Q13 60000 ms dock lines, needs-you retention, shared Resources, single You/wand/hover, joined choices, clean narrow chat and menu/dialog fixes are real product rules. |
+| Sources and fixtures | Demo-only guarantees removed | Approved visual concepts stay source lineage; fixtures proving real typed product contracts remain. No hints or sample keys added. |
+
+**Companions:** qualified Server/native Client request/result/error/availability/permission/IPC/receipt schemas and generation fences; legacy Server readers remain valid. Native-app browser, other-owner, wrong-generation, listener/Funnel negatives pass. TSN-005/006/009 use explicit current amendments while all pinned packet body hashes stay unchanged. Onboarding's Caddy generation maps exactly to the three generated proxy families; NPM stays existing-only. Forgejo/Gitea/Origin owner privacy cases pass. Two shared-mode and two advanced-disclosure binding families reuse existing Settings/auth owners and create no command, event or preference. Onboarding storage inline bundle is materialized and checked.
+
+**Current census:** 1010 settings; **483 bindings / 61 source families**; 715 Touch rows / 140 profiles; 1269 production entries; 22 status keys; 25 Pip parts; **7242 units / 96 indexed docs; 2957 shards / 99 sources**. Regeneration changes only 17 edited-source groups. All 17 full-checkout inputs and currentness symlink exist. All **392 prior artifact hashes remain unchanged**; the manifest now records 446 retained artifacts.
+
+**Coverage:** [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) has **119 real-product trace rows**, with owner, wiring, command, inventory and DRY columns plus companions. PlanUnit/setting/production references resolve. It excludes demo-only mechanics. The server final report arrived after this checked snapshot and is the next DL-259 delta. The independent audit, the fields final report and the lead's final GUI-name signal remain outstanding; no GUI/native/audio acceptance is inferred from these static checks.
+
+**Checks:** new-ruling packs (125+236 onboarding, 24+59 Tour, 110+107 Remote; 2+2 provider policy), PM7 (105 schema cases), canon, QA2 source helpers, NieR, Touch, wiring, exact TSN custody, both registries, onboarding storage, shards/index and guards pass. Draft-only helper/fixture/whitespace failures were corrected before this result. Raw `onb-rulings-*` artifacts are under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`; exact commands, exits and SHA-256 values are in `verification.json`.
+
+**No full gates, dry landing, landing, lock, reseal, baseline refresh or protected-governance edit.** Historical aggregate results below do not certify this amendment. Mail waiter stays off under the lead's direct-wake instruction. Next: the received server-owner delta, then separate DL-260 mainline cleanup, its own decision/commit/report table, followed by late source deltas.
+
+---
+
 # PM7 Plans lane — QA2 GUI660 close-out, 2026-10-31
 
 Branch: `t3/plans/pm7-plans-canon`. **Checked source `833552622c1f984e218b7cb2778b5aed1ab8e554`; all 14 relevant focused/generation checks PASS.** Canon commit `4be74f2f94da9b7bfd263572f542e488b1eb9b08` and prior QA2 commit `efdc45e16c` are included. GUI milestone `6609384fd0` and foundations publish `12e764ef28` are merged. All source commits are pushed to GitHub and NAS.

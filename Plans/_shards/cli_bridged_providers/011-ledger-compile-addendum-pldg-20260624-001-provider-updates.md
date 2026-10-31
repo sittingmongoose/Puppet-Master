@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1383-L1555
+Source lines: L1401-L1600
 
-Source SHA256: `9968da83a5c877ca320b91bf1930fa139efb3c57feff530454707fa7d0f1732c`
+Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
 
 ---
 
@@ -107,17 +107,36 @@ plan_unit_id: CBP-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  Claude Code and Cursor CLI-runtime routes require output-level prompt success, route-specific auth semantics, and protocol-correct automation. Claude Code uses first-party `claude.ai` session proof and print-mode probes rather than `claude doctor` as the noninteractive readiness gate; `--output-format=stream-json` requires `--verbose`. Cursor routes are split: `cursor-agent --print` browser-login/session or API-key execution, `agent acp` JSON-RPC stdio, native Cursor API/SDK/composer-api-style direct routes, and `opencode-cursor` as source-lineage/non-primary. ACP must not be invoked as `cursor-agent --print`.
+canonical_text: 'Claude Code and Cursor CLI-runtime routes require output-level prompt success, route-specific auth semantics,
+  and protocol-correct automation. Claude Code uses first-party `claude.ai` session proof and print-mode probes rather
+  than `claude doctor` as the noninteractive readiness gate; `--output-format=stream-json` requires `--verbose`. Cursor
+  routes are split: `cursor-agent --print` browser-login/session or API-key execution, `agent acp` JSON-RPC stdio, native
+  Cursor API/SDK/composer-api-style direct routes, and `opencode-cursor` as source-lineage/non-primary. ACP must not
+  be invoked as `cursor-agent --print`. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider
+  entry, with API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning
+  team; these remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced
+  optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider
+  entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct
+  from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan
+  retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway.
+  A label change never changes a saved provider/account ID.'
 gui_related: false
 gui_classification_reason: CLI/protocol/runtime readiness requirements rather than visual presentation.
 depends_on: [MS-113]
 unblocks: [MA-062, F3-400, ACD-424]
 acceptance_criteria:
-  - Claude Code readiness uses prompt output markers and route-specific session/auth state.
-  - Cursor ACP is treated as JSON-RPC stdio, separate from print-mode execution.
-  - Native Cursor API-key/SDK route remains primary direct-provider planning support after live verification.
-  - "`opencode-cursor` does not block native Cursor support."
+- Claude Code readiness uses prompt output markers and route-specific session/auth state.
+- Cursor ACP is treated as JSON-RPC stdio, separate from print-mode execution.
+- Native Cursor API-key/SDK route remains primary direct-provider planning support after live verification.
+- '`opencode-cursor` does not block native Cursor support.'
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -149,17 +168,25 @@ plan_unit_id: CBP-022
 unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  Codex/OpenAI, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax Coding Plan, and Z.AI/Zhipu coding-plan routes are not made active PM CLI-bridge requirements merely because local CLIs or OpenCode-routed probes exist. CLI probes may remain installation, optional-route, or source-lineage evidence, but direct-provider implementation readiness comes from the direct route's authenticated end-to-end prompt output and route contract.
+canonical_text: 'Codex/OpenAI, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax Coding Plan,
+  and Z.AI/Zhipu coding-plan routes are not made active PM CLI-bridge requirements merely because local CLIs or OpenCode-routed
+  probes exist. CLI probes may remain installation, optional-route, or source-lineage evidence, but direct-provider implementation
+  readiness comes from the direct route''s authenticated end-to-end prompt output and route contract. DL-259 D4, Jared
+  2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session identity,
+  OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build provider-conformance
+  checklist, not a wizard warning, badge or disabled choice.'
 gui_related: false
 gui_classification_reason: Provider-transport boundary and evidence disposition rather than visual presentation.
 depends_on: [MS-113]
 unblocks: [CV-292, PO-048]
 acceptance_criteria:
-  - Codex and OpenCode are not required CLI bridges for core provider support.
-  - GitHub Copilot direct hosted API readiness is not blocked by optional `copilot` or `gh copilot` CLI prompt behavior.
-  - OpenCode-server-routed providers are not direct-provider closure evidence.
-  - CLI probes are retained only as optional-route, install, or source-lineage evidence unless explicitly promoted.
+- Codex and OpenCode are not required CLI bridges for core provider support.
+- GitHub Copilot direct hosted API readiness is not blocked by optional `copilot` or `gh copilot` CLI prompt behavior.
+- OpenCode-server-routed providers are not direct-provider closure evidence.
+- CLI probes are retained only as optional-route, install, or source-lineage evidence unless explicitly promoted.
+- 'DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools rule, Kimi Code’s client/session
+  identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription credential. This is the pre-build
+  provider-conformance checklist, not a wizard warning, badge or disabled choice.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates

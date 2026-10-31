@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-30T23:48:08Z",
+  "generated_at_utc": "2026-10-31T02:26:04Z",
   "index_path": "Plans/_shards/decision_log/00-index.md",
-  "index_sha256": "de51461a7a4bc5a3caecc55acc6e41d946c088f1f2c52bc1f0bf938a888b99fb",
+  "index_sha256": "8312b78bc881b069dad20f94834cc9c610a569806f7f001f131e165131e3a700",
   "manifest_path": "Plans/_shards/decision_log/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/decision_log/001-preamble.md",
-      "sha256": "ec16c786b5098cccd64e45cd9457d71e39981c0b232f19158243a8c8304731d4",
+      "sha256": "671fe75a1b8c5c0b1b0957e28fba6385616482c865b8880eb0d48aacba606632",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/decision_log/002-purpose.md",
-      "sha256": "6a6951987a0f1668e9729d7616192b5ccda4b508286b8d7a0912518f72be417c",
+      "sha256": "26832c4cb72cc952558fb9f3843ecd08a886ea9add23c887b8a03314ddf9554d",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "Entries",
       "path": "Plans/_shards/decision_log/003-entries.md",
-      "sha256": "4c5009add6eb343ada751921dc29a30b09ab757e074d76d7269b2c26a61d7c7d",
+      "sha256": "b7e90a131d38362a7074bdeacdc64bb8b530935bdd5dce571ac475a87937603b",
       "shard_id": "003",
       "source_line_end": 4294,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/decision_log/004-owner-consumer-map.md",
-      "sha256": "3187c44b576b0464b0b38ae83695ecd0806ecfa8227b6a46d60342ae7e96b4e5",
+      "sha256": "cc778cd1a68211ae991696111c7cc13683547df52932c5581d9eed8842a71476",
       "shard_id": "004",
       "source_line_end": 4300,
       "source_line_start": 4296,
@@ -44,52 +44,52 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/decision_log/005-planunits.md",
-      "sha256": "92fd63ec23ea3f35ea05a9ec148ee455478be98713aef6e8215a0a2901438748",
+      "sha256": "59b1f166bcf9af26f1f8bab8ac68d9c559e3bccbabc0f276aa4e58f300d87799",
       "shard_id": "005",
-      "source_line_end": 14502,
+      "source_line_end": 14495,
       "source_line_start": 4302,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/decision_log/006-migration-coverage.md",
-      "sha256": "f9589b80fe4513524d76bccae236d766c6bb604862acf35ae383de3211faa9c9",
+      "sha256": "35cd7bbf1555394fc10d92e3e0a158998b1312d6605def2a8e39762ff1fcb6e5",
       "shard_id": "006",
-      "source_line_end": 14514,
-      "source_line_start": 14504,
+      "source_line_end": 14507,
+      "source_line_start": 14497,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "ea32c8fe2a936cee4ceb5fd4254bdf6f7bcec321162eee0bd1b4dbc8e3187953",
+      "sha256": "d88cb0b6d1f3bd68145331d91c66c46e73d09bde23c817bf2e3a51e2dbb703e6",
       "shard_id": "007",
-      "source_line_end": 14523,
-      "source_line_start": 14516,
+      "source_line_end": 14516,
+      "source_line_start": 14509,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "23b6c9131e8be75e830f4d2b1d0cb751cfa307f6dd14454649ec75a34d745c07",
+      "sha256": "5f31b78178ffe280d39f3e91c7fc7938c7d9adc060a0f7e248f0a6af478c96e3",
       "shard_id": "008",
-      "source_line_end": 18639,
-      "source_line_start": 14524,
+      "source_line_end": 18589,
+      "source_line_start": 14517,
       "split_rule": "heading-##"
     },
     {
       "heading": "QA round 2 \u2014 NieR is the fifth theme family (Jared, 2026-10-30, Q22)",
       "path": "Plans/_shards/decision_log/009-qa-round-2-nier-is-the-fifth-theme-family-jared-2026-10-30-q22.md",
-      "sha256": "5e59379f31eb864cc0ec8f884679215c188f01708b03e78a78e45480d98c0917",
+      "sha256": "43c62cb8fa11faa16918259ac338ce2f190ffd59a5adbe80424b0603d51b92a4",
       "shard_id": "009",
-      "source_line_end": 18943,
-      "source_line_start": 18644,
+      "source_line_end": 19106,
+      "source_line_start": 18594,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 18943,
+    "line_count": 19106,
     "path": "Plans/Decision_Log.md",
-    "sha256": "4d7438497971839608473386d62b899d7dcd57f4dcdb53addb48bdaf990f683c"
+    "sha256": "e41b607ab847e23a3732c947b7fb0886104ea5b74791ca2f743251066085d433"
   }
 }

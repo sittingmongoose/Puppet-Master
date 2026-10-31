@@ -1,3 +1,11 @@
+# Shared ELI5 gaps — resolved in canon by DL-259 (2026-10-31)
+
+Jared’s ruling is applied. Wizard and Guided Tour share global `general.interaction.mode`, default `ELI5`, labelled **Plain English / Expert**, through existing Settings preview/apply. Bindings are `onboarding.interaction.mode` and `tour.interaction.mode`. PWIZ-022/023, UCC-175, CS-069, WM-041, UIW-015, onboarding/Tour contracts and fixtures now agree. `ui.guided_tour.toggle_eli5` is a compatibility local adapter, not a second preference. DL-126’s tips/help-only limit and no rewrite of replies remain. Final GUI source anchors follow the lead’s GUI-head signal.
+
+The table below records the gaps before this amendment. The field audit has since been read; its real product corrections are included in DL-259. Historical snapshot line numbers remain locators for that audit, not current line pins.
+
+---
+
 # QA2 ELI5 additions — canon gap audit, 2026-10-30
 
 Source: Jared's two additions relayed by `pm7-build` in this thread on 2026-10-30. Snapshot: Plans worktree based on `e7ff5d4a6e7d818d53a8cf08117780527681358f` with the current QA2 alignment edits. This memo records the next amendment; it does not hold the current QA2 commit or invent GUI IDs before onboarding supplies them.

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27641-L28092
+Source lines: L27644-L28092
 
-Source SHA256: `6855b370360f50769b772c371539239be9d72a3abae4c0b51831a1d2eabcaecc`
+Source SHA256: `97f0830801e3e4fcefe200ae382f8f1f0a476659fdc671ccdb872f009f5cfbff`
 
 ---
 
@@ -246,73 +246,70 @@ plan_unit_id: ACD-501
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27). Colours: its
-  Basic, Friendly and Glass colours are fixed to PMConcept7's (all five families, their light/dark modes and
-  NieR type follow the host, DL-232); it follows PMConcept7's one look setting and NieR Mode setting and keeps
-  no theme store of its own, and its own names for colours, radii, surfaces and the code face map onto
-  PMConcept7's, so the look settings reach every chat surface. General code text follows
-  Plans/Decision_Log.md#DL-161, Plans/FinalGUISpec.md#F3-426, #F3-430 and Plans/DRY_Rules.md#DR-050. Under NieR
-  Mode it follows the rule for new surfaces of DL-152, Plans/Settings_System.md#SSYS-043,
-  Plans/FinalGUISpec.md#F3-598 and DR-056 (existing parts only, colours from the NieR tables, stepped motion),
-  and it draws no NieR scene, ground layer, NieR Mode editor or reboot plate of its own: PMConcept7's are the
-  only ones. Names: its class names, element ids and token names are namespaced so none of them collides with
-  PMConcept7's. Size: it sizes itself by its own column, and by its own window when popped out, never by the app
-  window: every width tier, breakpoint and pin rule it has (History, Activity Detail, the composer's selector
-  row) keys on its own container. Layers: its menus, popouts, sheets, drawers, toasts and drag ghosts open in
-  the page's one overlay root, in its one stacking order (Plans/DRY_Rules.md#DR-067); it appends no overlay of
-  its own to the page. Hover: PMConcept7's hover controller owns every hover tag in the chat
-  (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take PMConcept7's one hover grammar with
-  no hover effect of their own (Plans/DRY_Rules.md#DR-072, Plans/FinalGUISpec.md#F3-465); the chat draws no
-  second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453).
-  Bans: its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069,
-  Plans/FinalGUISpec.md#F3-648), among them the meta chips, the goal and to-do chips, the Ask Card's capsule
-  buttons, the attachment chips, the activity bar's capsule outline, the Read-only marker, the browser's session
-  tabs, the working card's left rail in the step colour, the model picker's active provider tab and the
-  browser's stale row; selection shows by the surface itself. Openings: its editor pane goes, everything it
-  opened there opens through ACD-500, and its inline Shell box becomes ACD-500's command card. Demo controls:
-  its Demo Studio, its guided examples and every other demo control fold into the one Demo Studio of PMConcept7
-  (Plans/DRY_Rules.md#DR-070, Plans/FinalGUISpec.md#F3-649), which stays lab only (ACD-474). Keys: keys the chat
-  answers without a modifier act only while focus is inside the chat, and Escape closes the innermost open thing
-  and stops there (F3-635, F3-568). Start: the ported chat opens no tab at start; the home layout is the layout
-  record's (SP-330). Pop out keeps the chat's History and Activity Detail with it (F3-637); the web client
-  offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's requirements to the
-  binding-by-reference of the 5.6 Pro concept and supersedes nothing else. Amended 2026-10-29 (G1–G3, PC1; PM7):
-  Pip parts/gaze/overlays reuse host owners. Chat width has no fixed 760 cap; Activity Detail has no small view.
-  G2, Jared follow-up 2026-10-30: widen first; at the column limit dock/squeeze if at least 360 px of messages
-  remain, otherwise cover at full column height. G1 B (Jared 2026-10-30): Pin preserves the full-size view
-  across thread switches while its contents follow the new thread; unpinned detail closes on a switch. History
-  and detail floating plates use one Glass menu token. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR
-  family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. QA round
-  2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
-  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain
-  words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the
-  same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real
-  partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no
-  per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the
-  glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or
-  fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel,
-  chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and
-  advance only after that control’s real example boundary. The teach-missed example owns its intended Send and
-  finishes its recorded correction through the normal reply boundary; it does not simulate a native model
-  promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial
-  Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo
-  product command, preference, persisted field or production wiring is authorized.
+canonical_text: 'The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27). Colours:
+  its Basic, Friendly and Glass colours are fixed to PMConcept7''s (all five families, their light/dark modes and NieR
+  type follow the host, DL-232); it follows PMConcept7''s one look setting and NieR Mode setting and keeps no theme store
+  of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7''s, so the look settings
+  reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161, Plans/FinalGUISpec.md#F3-426, #F3-430
+  and Plans/DRY_Rules.md#DR-050. Under NieR Mode it follows the rule for new surfaces of DL-152, Plans/Settings_System.md#SSYS-043,
+  Plans/FinalGUISpec.md#F3-598 and DR-056 (existing parts only, colours from the NieR tables, stepped motion), and it
+  draws no NieR scene, ground layer, NieR Mode editor or reboot plate of its own: PMConcept7''s are the only ones. Names:
+  its class names, element ids and token names are namespaced so none of them collides with PMConcept7''s. Size: it sizes
+  itself by its own column, and by its own window when popped out, never by the app window: every width tier, breakpoint
+  and pin rule it has (History, Activity Detail, the composer''s selector row) keys on its own container. Layers: its
+  menus, popouts, sheets, drawers, toasts and drag ghosts open in the page''s one overlay root, in its one stacking order
+  (Plans/DRY_Rules.md#DR-067); it appends no overlay of its own to the page. Hover: PMConcept7''s hover controller owns
+  every hover tag in the chat (Plans/FinalGUISpec.md#F3-523), and its cards, rows, tiles and icons take PMConcept7''s
+  one hover grammar with no hover effect of their own (Plans/DRY_Rules.md#DR-072, Plans/FinalGUISpec.md#F3-465); the
+  chat draws no second tag and keeps no native titles, and its Activity Bar previews stay its own bounded previews (ACD-453).
+  Bans: its pills and coloured side stripes are removed (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648), among
+  them the meta chips, the goal and to-do chips, the Ask Card''s capsule buttons, the attachment chips, the activity
+  bar''s capsule outline, the Read-only marker, the browser''s session tabs, the working card''s left rail in the step
+  colour, the model picker''s active provider tab and the browser''s stale row; selection shows by the surface itself.
+  Openings: its editor pane goes, everything it opened there opens through ACD-500, and its inline Shell box becomes
+  ACD-500''s command card. Demo controls: its Demo Studio, its guided examples and every other demo control fold into
+  the one Demo Studio of PMConcept7 (Plans/DRY_Rules.md#DR-070, Plans/FinalGUISpec.md#F3-649), which stays lab only (ACD-474).
+  Keys: keys the chat answers without a modifier act only while focus is inside the chat, and Escape closes the innermost
+  open thing and stops there (F3-635, F3-568). Start: the ported chat opens no tab at start; the home layout is the layout
+  record''s (SP-330). Pop out keeps the chat''s History and Activity Detail with it (F3-637); the web client offers no
+  Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port''s requirements to the binding-by-reference
+  of the 5.6 Pro concept and supersedes nothing else. Amended 2026-10-29 (G1–G3, PC1; PM7): Pip parts/gaze/overlays reuse
+  host owners. Chat width has no fixed 760 cap; Activity Detail has no small view. G2, Jared follow-up 2026-10-30: widen
+  first; at the column limit dock/squeeze if at least 360 px of messages remain, otherwise cover at full column height.
+  G1 B (Jared 2026-10-30): Pin preserves the full-size view across thread switches while its contents follow the new
+  thread; unpinned detail closes on a switch. History and detail floating plates use one Glass menu token. Amended Q22,
+  Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and
+  retained Adjust controls. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts
+  only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
+  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
+  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
+  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
+  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
+  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
 split_recommended: false
 depends_on: [DL-180, DL-185, DR-067, DR-069, DR-070, F3-635, F3-637, F3-648, F3-649, ACD-474, ACD-500]
 unblocks: [ATS-075]
 acceptance_criteria:
-  - "The ported chat's Basic, Friendly and Glass colours equal PMConcept7's, and PMConcept7's look settings reach every chat surface."
-  - "No class name, element id or token of the chat collides with PMConcept7's."
-  - "No chat layout rule reads the app window's width or height; every tier keys on the chat's own container."
-  - "Every chat menu, popout, sheet, drawer, toast and drag ghost opens in the page's one overlay root, and every hover tag in the chat comes from PMConcept7's hover controller."
-  - "No pill and no coloured side stripe remains in the chat in any look."
-  - "Every demo control of the chat is a section of the one Demo Studio and none is a product control."
-  - "Under NieR Mode the page draws one scene and one ground layer, and the chat adds none."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior, with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized."
+- The ported chat's Basic, Friendly and Glass colours equal PMConcept7's, and PMConcept7's look settings reach every
+  chat surface.
+- No class name, element id or token of the chat collides with PMConcept7's.
+- No chat layout rule reads the app window's width or height; every tier keys on the chat's own container.
+- Every chat menu, popout, sheet, drawer, toast and drag ghost opens in the page's one overlay root, and every hover
+  tag in the chat comes from PMConcept7's hover controller.
+- No pill and no coloured side stripe remains in the chat in any look.
+- Every demo control of the chat is a section of the one Demo Studio and none is a product control.
+- Under NieR Mode the page draws one scene and one ground layer, and the chat adds none.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q17: hover-to-light/dimming starts only from an actual control
+  inside its affects region (button, input, select, textarea, label, link, switch/radio/checkbox/tab/slider/spinbutton/combobox
+  semantics, or editable text). Plain words, empty section space and the plate picture do not dim the cast. Keyboard
+  focus on a control gives the same feedback; a plate-embedded control remains eligible. Scheduled highlights only rows/marks
+  with a real partner on its plate; markless rows dim nothing. One affectsOf/linkStyle owner supplies this behavior,
+  with no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours.
+  The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

@@ -2774,8 +2774,7 @@
         "feedback",
         "glass",
         "sound",
-        "preview_storage",
-        "modal_demo",
+        "modal_lifetime",
         "narrow_chat"
       ],
       "properties": {
@@ -3000,7 +2999,7 @@
               "const": true
             },
             "unreadable_snapshot": {
-              "const": "retain_visit_choice"
+              "const": "retain_effective_choice"
             },
             "readable_Project_wins": {
               "const": true
@@ -3013,44 +3012,12 @@
             }
           }
         },
-        "preview_storage": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "unavailable",
-            "persistent_flag",
-            "available_failed_write",
-            "native_durability_claim",
-            "Project_key_isolation"
-          ],
-          "properties": {
-            "unavailable": {
-              "const": "visit_memory"
-            },
-            "persistent_flag": {
-              "const": false
-            },
-            "available_failed_write": {
-              "const": "refuse_or_rollback"
-            },
-            "native_durability_claim": {
-              "const": false
-            },
-            "Project_key_isolation": {
-              "const": true
-            }
-          }
-        },
-        "modal_demo": {
+        "modal_lifetime": {
           "type": "object",
           "additionalProperties": false,
           "required": [
             "inert_basis",
-            "replace_reacquires_existing_holds",
-            "screen_seed",
-            "seed_false_optout",
-            "seed_is_product_request_field",
-            "launch_steps_Studio_aside"
+            "replace_reacquires_existing_holds"
           ],
           "properties": {
             "inert_basis": {
@@ -3058,18 +3025,6 @@
             },
             "replace_reacquires_existing_holds": {
               "const": false
-            },
-            "screen_seed": {
-              "const": "owner_missing_fixture_inputs_only"
-            },
-            "seed_false_optout": {
-              "const": true
-            },
-            "seed_is_product_request_field": {
-              "const": false
-            },
-            "launch_steps_Studio_aside": {
-              "const": true
             }
           }
         },
@@ -3100,6 +3055,64 @@
               "const": true
             }
           }
+        }
+      }
+    },
+    "PipVoiceRoomPolicy": {
+      "description": "Q1 B, Jared 2026-10-31: shared Pip voice room, static contract only.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "decision_ref",
+        "voice_paths",
+        "room_owner",
+        "send_by_family",
+        "stacked_rooms",
+        "approx_loudness_bound_db",
+        "new_preference",
+        "send_stage",
+        "room_registered_before_first_voice"
+      ],
+      "properties": {
+        "owner_ref": {
+          "const": "Plans/FinalGUISpec.md#F3-599"
+        },
+        "decision_ref": {
+          "const": "Plans/Decision_Log.md#DL-259"
+        },
+        "voice_paths": {
+          "const": [
+            "say",
+            "vocals"
+          ]
+        },
+        "room_owner": {
+          "const": "one_per_look_kit_room"
+        },
+        "send_by_family": {
+          "const": {
+            "basic": 0.35,
+            "friendly": 0.35,
+            "glass": 0.3,
+            "retro": 0.35,
+            "nier": 0.16
+          }
+        },
+        "stacked_rooms": {
+          "const": false
+        },
+        "approx_loudness_bound_db": {
+          "const": 0.4
+        },
+        "new_preference": {
+          "const": false
+        },
+        "send_stage": {
+          "const": "after_trim_and_pan"
+        },
+        "room_registered_before_first_voice": {
+          "const": true
         }
       }
     }

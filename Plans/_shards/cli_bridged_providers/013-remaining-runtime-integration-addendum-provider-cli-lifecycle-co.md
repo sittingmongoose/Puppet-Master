@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1641-L1758
+Source lines: L1686-L1813
 
-Source SHA256: `9968da83a5c877ca320b91bf1930fa139efb3c57feff530454707fa7d0f1732c`
+Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
 
 ---
 
@@ -68,23 +68,33 @@ plan_unit_id: CBP-028
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  CLI/provider bridges consume Shared Integration Runtime lifecycle state machines while retaining provider acquisition,
-  authentication ownership, compatibility, readiness, and normalized failure policy. Initial provider CLI acquisition is
-  explicit, official-source, and exact-Host/Environment only; installation, authentication, and route readiness remain
-  separate; post-consent lifecycle management is allowed only against the proven bound installation.
+canonical_text: 'CLI/provider bridges consume Shared Integration Runtime lifecycle state machines while retaining provider
+  acquisition, authentication ownership, compatibility, readiness, and normalized failure policy. Initial provider CLI
+  acquisition is explicit, official-source, and exact-Host/Environment only; installation, authentication, and route
+  readiness remain separate; post-consent lifecycle management is allowed only against the proven bound installation.
+  DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
+  in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
+  alternative inside Sign in with ChatGPT, not another top-level auth family.'
 gui_related: true
 gui_classification_reason: Provider Setup Required, authentication ownership, readiness state, recovery, and continuation consequences are user-visible provider setup behavior.
 depends_on: [SIR-002, SIR-003, SIR-006, SIR-009, SIR-011, CBP-008, CBP-011, CBP-012, CBP-014, CBP-020, CBP-021, CBP-024, CBP-026, BS-028]
 unblocks: []
 acceptance_criteria:
-  - Missing provider CLI demand returns typed provider_setup_required with exact Host/Environment and continuation evidence and never silently installs or cross-routes.
-  - ProviderReadinessProof keeps installation, executable, auth, account, entitlement, model, adapter, capability, generation, and Usage facts independent.
-  - Claude CLI and Antigravity CLI auth remain CLI-owned; PM-direct OAuth is not fabricated.
-  - Post-consent activation or rollback revalidates every dependent route while preserving in-flight installation-generation truth.
-  - Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
-  - Secret material is represented only by OS credential-store handles or non-secret CLI profile refs and never enters runtime/storage evidence.
-  - Native, WSL distribution, container, Kubernetes, and remote provider state is keyed by exact Host/Environment, and SQLite remains forbidden.
+- Missing provider CLI demand returns typed provider_setup_required with exact Host/Environment and continuation evidence
+  and never silently installs or cross-routes.
+- ProviderReadinessProof keeps installation, executable, auth, account, entitlement, model, adapter, capability, generation,
+  and Usage facts independent.
+- Claude CLI and Antigravity CLI auth remain CLI-owned; PM-direct OAuth is not fabricated.
+- Post-consent activation or rollback revalidates every dependent route while preserving in-flight installation-generation
+  truth.
+- Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
+- Secret material is represented only by OS credential-store handles or non-secret CLI profile refs and never enters
+  runtime/storage evidence.
+- Native, WSL distribution, container, Kubernetes, and remote provider state is keyed by exact Host/Environment, and
+  SQLite remains forbidden.
+- 'DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
+  in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
+  alternative inside Sign in with ChatGPT, not another top-level auth family.'
 validation_surfaces:
   - bounded markdown/YAML structure check for CBP-028
   - future provider_setup_required and stale-continuation fixtures

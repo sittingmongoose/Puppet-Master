@@ -4,7 +4,7 @@ Source: `Plans/CLI_Bridged_Providers.md`
 
 Source lines: L233-L413
 
-Source SHA256: `9968da83a5c877ca320b91bf1930fa139efb3c57feff530454707fa7d0f1732c`
+Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
 
 ---
 
@@ -151,7 +151,7 @@ and BSD Usage are never merged.
 
 Official CLI subscription authentication remains owned by the official CLI; PM launches
 and observes supported sign-in and stores only permitted references and state. Direct API
-credentials remain in PM secure credential custody. OpenCode server authentication is
+credentials remain in PM secure credential custody on the execution host. Human sign-in runs on the initiating active device; CLI sign-ins remain in that tool’s isolated root on the execution host (DL-259, D6 A). OpenCode server authentication is
 separate from model-provider credentials, and Cursor SDK execution/auth is separate from
 its quota telemetry.
 
@@ -187,5 +187,5 @@ Adapter classes and their honest limitations:
 | Server bridge | OpenCode server | PM binds the provider session as correlation, projects PM tools/MCP, normalizes events | the provider server may retain native session state, which stays noncanonical |
 | CLI bridge | Claude Code, Antigravity, Muse Code, coding CLIs | prefer host-tool execution; otherwise isolate process/workspace and reconcile | native plans/todos/subagents/tools may be partly opaque |
 
-OpenCode Go/Zen and similar plans are model/provider offerings; they are not the OpenCode
+OpenCode Go, OpenCode Console (formerly Zen) and similar offerings are model/provider offerings; they are not the OpenCode
 server control path.

@@ -32,13 +32,13 @@
     "pip_parts": 25,
     "default_parts": 24,
     "pip_size_sum": 61,
-    "control_bindings": 479,
+    "control_bindings": 483,
     "touch_rows": 715,
     "touch_profiles": 140,
     "production_wiring_entries": 1269,
-    "plan_units": 7240,
+    "plan_units": 7242,
     "indexed_docs": 96,
-    "shards": 2956,
+    "shards": 2957,
     "sharded_sources": 99,
     "pm7_bindings": 479,
     "pm7_source_families": 61,
@@ -46,226 +46,84 @@
   },
   "commands": [
     {
-      "label": "shard-generate",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "seconds": 2.238,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shard-generate.log",
-      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-contracts.json"
     },
     {
-      "label": "index-generate",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
+      "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "seconds": 34.864,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-generate.log",
-      "sha256": "83b69bad77a145cbf3bff482cc3a6567e9ca9a4974e92a5a6fd9248354748757",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-build.json"
     },
     {
-      "label": "qa2",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm7-qa2-alignment-check.py"
-      ],
+      "command": "python3 scripts/pm7-canon-check.py",
       "exit": 0,
-      "seconds": 0.902,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-qa2.log",
-      "sha256": "c145a63321acc395c7a25523affb2a7623dc067b9b213f7e9b7736ce1d010e48",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-canon.json"
     },
     {
-      "label": "nier",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm7-nier-theme-check.py"
-      ],
+      "command": "python3 scripts/pm7-qa2-alignment-check.py",
       "exit": 0,
-      "seconds": 7.803,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-nier.log",
-      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
-      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-qa2.json"
     },
     {
-      "label": "canon",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm7-canon-check.py"
-      ],
+      "command": "python3 scripts/pm7-nier-theme-check.py",
       "exit": 0,
-      "seconds": 10.645,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-canon.log",
-      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
-      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-nier.json"
     },
     {
-      "label": "pm7-build",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm7-build-check.py"
-      ],
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-pm7-build.log",
-      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61",
-      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-touch.json"
     },
     {
-      "label": "touch",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-touch-closure-verify.py"
-      ],
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit": 0,
-      "seconds": 1.85,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-touch.log",
-      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-wiring.json"
     },
     {
-      "label": "wiring",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-plans-verify.py",
-        "validate-wiring-matrix"
-      ],
+      "command": "python3 scripts/pm-forge-backup-acceptance-verify.py",
       "exit": 0,
-      "seconds": 0.988,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-wiring.log",
-      "sha256": "5928f3f7961400d2e1e8685a4fb52c3c200829c7fe6046c647ed25c7641232a5",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-tsn-release.json"
     },
     {
-      "label": "shards-check",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check"
-      ],
+      "command": "settings_inventory/storage_value_registry Draft202012 offline schema check",
       "exit": 0,
-      "seconds": 14.566,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
-      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-registries.json"
     },
     {
-      "label": "index-validate",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
+      "command": "python3 scripts/pm-onboarding-contracts.py --check",
       "exit": 0,
-      "seconds": 39.127,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-validate.log",
-      "sha256": "b9d4a03f5d4b9f3b053677470e459f84351a479f96a51029740f6b93f8da8340",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-storage.json"
     },
     {
-      "label": "onboarding-storage",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "scripts/pm-onboarding-contracts.py",
-        "--check"
-      ],
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "seconds": 0.724,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-storage.log",
-      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
-      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-generate.txt"
     },
     {
-      "label": "onboarding-builder",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "Concepts/onboarding/opus-5.5/tools/build.py",
-        "--publish-pm7",
-        "--check"
-      ],
+      "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "seconds": 40.973,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-onboarding-builder.log",
-      "sha256": "edc415fa7f579563670057059cf8193d3510c579b7a26974f43c39b6e6902398",
-      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-generate.txt"
     },
     {
-      "label": "retired-input-parser",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "Concepts/onboarding/opus-5.5/tools/settings_layer_retire.test.py"
-      ],
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "seconds": 0.165,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-retired-input-parser.log",
-      "sha256": "551b858429918aa10fef86629e8e512cc972d31d017ffdb5fba1e9ea6cf7c1f0",
-      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
-      "relevant_source_inputs_unchanged": true
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-check.txt"
     },
     {
-      "label": "chat-builder",
-      "argv": [
-        "nice",
-        "-n",
-        "19",
-        "python3",
-        "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
-        "--check"
-      ],
+      "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "seconds": 0.471,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-chat-builder.log",
-      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644",
-      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
-      "relevant_source_inputs_unchanged": true
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-validate.txt"
+    },
+    {
+      "command": "owned source/governance/prior-artifact guard",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-guard.json"
+    },
+    {
+      "command": "coverage PlanUnit/setting/production reference check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
   "dry": {
@@ -2274,6 +2132,276 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/verified-run-gates.stderr",
       "sha256": "6e6891131044cb110e7d9fe809e3e968fa2051c4cfdca2f7967a5e694c4beb09",
       "bytes": 4712
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-branch-concept-sweep.json",
+      "sha256": "7df03513c2551687c2f19292958b1bf44b9d2c043425fc71b74eca52e71234f3",
+      "bytes": 2387
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-branch-sweep-final.txt",
+      "sha256": "57c58ae6865faf37819b84dc59363747d664cfec846cc99893a1469eef26141c",
+      "bytes": 682
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-build-draft.json",
+      "sha256": "3df669eb5523c073cab32aae0b62a6f3ca8561284e35ef082b8f4f7e2c145422",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-build-final.json",
+      "sha256": "875bb8b39b9c8a431374814e4d36de6519d25c16d135b21b49c86353672d11ea",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-build-release.json",
+      "sha256": "875bb8b39b9c8a431374814e4d36de6519d25c16d135b21b49c86353672d11ea",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-canon-final.json",
+      "sha256": "b8f0a370e8bb1ef482f864d125ddb018179511aeb0449513c262bf6df9342c37",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-canon-release.json",
+      "sha256": "b8f0a370e8bb1ef482f864d125ddb018179511aeb0449513c262bf6df9342c37",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-contracts-draft.json",
+      "sha256": "a7058108e99a02420c037bcb033636fbbcbc81592f52630f294352137a3a974a",
+      "bytes": 740
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-contracts-final.json",
+      "sha256": "a04f3aefd78c8c049b0f7b1a9e8e00a034f5d4736dde91ad3cb600050d778b10",
+      "bytes": 500
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-contracts-recheck.json",
+      "sha256": "5ed30d27ab0ed6b0bda999e883634d45703bc37cd18c0d1162d064c2b1f6e0cb",
+      "bytes": 420
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-contracts-release.json",
+      "sha256": "13f0011683445972aae6468625c5fea2a813a699c60558f0b329d236cb9cc818",
+      "bytes": 500
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json",
+      "sha256": "76a892b78375b9f697bdc86c2e75f33d41fd50cec5b70b28ee65b8ef9422002f",
+      "bytes": 233
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-demo-candidates.json",
+      "sha256": "165c521c82d28cb28e63373147c9878da28f0571931d6c249f8b4d2ca9dd3e3d",
+      "bytes": 412146
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-build.json",
+      "sha256": "49413dcb90ea033cf8c69a933790a796f4649db546917da27e68f38c90d4b16e",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-canon.json",
+      "sha256": "413a4c42efdac53b7aa0bf029816db26acf0960679b896fdc39ef0a5201067a6",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-contracts.json",
+      "sha256": "13f0011683445972aae6468625c5fea2a813a699c60558f0b329d236cb9cc818",
+      "bytes": 500
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-guard.json",
+      "sha256": "2070dd759b3e29952ca52644df7195141983afbe9131a227f4bd5b9807cd264a",
+      "bytes": 212121
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-index-generate.txt",
+      "sha256": "2051aabaa7fe60278d6f1ca6d37537f503a63e20d052a39edafacd102ebc081d",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-index-validate.txt",
+      "sha256": "242ec596c9e6f01afb9508861786e4002de16113d8266601113cc723cb36957c",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-nier.json",
+      "sha256": "fca07d27f8b7b4f0130921ad7d34991103891a0e817500ae8b2ec282e9e7d9db",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-qa2.json",
+      "sha256": "a9274f0025d3903f26474489af1e73e0051f191c4b8d1e4a1c33b025fade6be9",
+      "bytes": 752
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-shards-check.txt",
+      "sha256": "497a3ae3d7d65ce06abaf3d65831c971c0da613024092818574ba7e7e43f8ab9",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-shards-generate.txt",
+      "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-storage.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-touch.json",
+      "sha256": "efa0dd5816c9f7095e5d8bfbdfa7527ed03c432d69ea1b8edd6fd79fe7c54e0e",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-final-wiring.json",
+      "sha256": "7d8f3287c5d9657d79c6913b374c3322a59f21f657596a1c18e174e1032a62e2",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-index-generate.txt",
+      "sha256": "574b3046fa7ae49db9a0910219f5d5e468f998a41f2655bdd3af4befb6d57f14",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-index-validate.txt",
+      "sha256": "f7973ffac1d12a27b1c50a5e9049e25bec22101131b94617c5850a2473b8a5e6",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-input-units.json",
+      "sha256": "cd9327d8efecc9be9bf8aabd985a012293839d66ef2078204f4d0bc3b1befcef",
+      "bytes": 136465
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-main-demo-inventory.json",
+      "sha256": "2f4b6d7aa50e6edbb0ff5bf2012fa98e986463cad23c5f6c2ed1e0e3452095ec",
+      "bytes": 1162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-nier-draft.json",
+      "sha256": "e692b0d988cbfdce8e0655e3646a570b732c60e376044bb1c6cea1da4f81b898",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-nier-final.json",
+      "sha256": "e692b0d988cbfdce8e0655e3646a570b732c60e376044bb1c6cea1da4f81b898",
+      "bytes": 638
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-prose-checkpoint.json",
+      "sha256": "866dfe50dde540bb273ad6b03ced1aa102c27789899bedadf6f43cf8d84a9c4c",
+      "bytes": 3304
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-prose-final.json",
+      "sha256": "e9ee7cc547ce784e3d4600368d0823632bd9103541582b6867ef4e393c477246",
+      "bytes": 2068
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-prose-first.json",
+      "sha256": "ef7d897394451721b964885ce6e7741d07f2f3982ad04056415323127f90ccae",
+      "bytes": 3436
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-prose-sweep-checkpoint.json",
+      "sha256": "ca9cbf43781814041c961acaa372aa6c8640b804f7a5d9d20439e55d2c03a8ea",
+      "bytes": 7592
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-qa2-draft.json",
+      "sha256": "a9274f0025d3903f26474489af1e73e0051f191c4b8d1e4a1c33b025fade6be9",
+      "bytes": 752
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-qa2-final.json",
+      "sha256": "a9274f0025d3903f26474489af1e73e0051f191c4b8d1e4a1c33b025fade6be9",
+      "bytes": 752
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-registries.json",
+      "sha256": "04280e21358b5389f5b5fb6aaeccbb63025c4d372fc1645b01308023569c0a02",
+      "bytes": 183
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-shards-check.txt",
+      "sha256": "497a3ae3d7d65ce06abaf3d65831c971c0da613024092818574ba7e7e43f8ab9",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-shards-generate-clean.txt",
+      "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-shards-generate.txt",
+      "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-storage-check.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-storage-materialize.json",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-touch.json",
+      "sha256": "efa0dd5816c9f7095e5d8bfbdfa7527ed03c432d69ea1b8edd6fd79fe7c54e0e",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-tsn-custody.json",
+      "sha256": "66e63b74ec230eccd7d86bea1f1281005e650ed5b7a1596407d6b91e10892c19",
+      "bytes": 765
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-tsn-release.json",
+      "sha256": "66e63b74ec230eccd7d86bea1f1281005e650ed5b7a1596407d6b91e10892c19",
+      "bytes": 765
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-wiring.json",
+      "sha256": "3c13ada36c985b6e551a849f403c461836877fc29f3b840b66190c9179b3a0fa",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-contracts.json",
+      "sha256": "a6175ce83df9d8249d1ced3a5521c23206a6ca8894c172ea15069fbd7f583f57",
+      "bytes": 500
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-guard.json",
+      "sha256": "520ed52d0abff5996029383abb6a6805ea1dc94af0a60ac68c8b671d389d5e86",
+      "bytes": 211536
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-generate.txt",
+      "sha256": "4e293157a599314a970c380f267663bdb1f8715776b7ef3f562b950246341308",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-index-validate.txt",
+      "sha256": "397474a54cbb02d0f04a51969be2215e37a0193b95bee8852691cb73ba0d7c44",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-check.txt",
+      "sha256": "497a3ae3d7d65ce06abaf3d65831c971c0da613024092818574ba7e7e43f8ab9",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-shards-generate.txt",
+      "sha256": "759f23d3bb7010a395c5b5e5571f284675f2b5123a0fa106f3dbcacde9e8ff5a",
+      "bytes": 115
     }
   ],
   "reviews": [
@@ -2330,7 +2458,7 @@
     ],
     "mail_waiter": "off by lead direct-wake instruction"
   },
-  "latest_amendment": "QA2 GUI660/N1 plus foundations publication; DL-258 / DR-080; all focused checks pass",
+  "latest_amendment": "DL259_product_only_onboarding_rulings",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -4668,8 +4796,258 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "verified_artifacts": 392,
-    "prior_manifest_artifacts_unchanged": 362,
-    "mismatches": 0
+    "verified_count": 446,
+    "prior_392_unchanged": true,
+    "recorded_at_utc": "2026-10-31T02:40:08.546450+00:00"
+  },
+  "historical_pre_DL259_commands": [
+    {
+      "label": "shard-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "seconds": 2.238,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shard-generate.log",
+      "sha256": "2a0b7aef784fed3d2bf20e2c200f7c2b283a859a401b9a954a3418bff7d8c865",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "index-generate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "seconds": 34.864,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-generate.log",
+      "sha256": "83b69bad77a145cbf3bff482cc3a6567e9ca9a4974e92a5a6fd9248354748757",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "qa2",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-qa2-alignment-check.py"
+      ],
+      "exit": 0,
+      "seconds": 0.902,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-qa2.log",
+      "sha256": "c145a63321acc395c7a25523affb2a7623dc067b9b213f7e9b7736ce1d010e48",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "nier",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-nier-theme-check.py"
+      ],
+      "exit": 0,
+      "seconds": 7.803,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-nier.log",
+      "sha256": "0f63f9d116ae2117e8788f70bf0db5e7ea579b740ef8e80088a18ce90322b8cf",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+    },
+    {
+      "label": "canon",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-canon-check.py"
+      ],
+      "exit": 0,
+      "seconds": 10.645,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-canon.log",
+      "sha256": "bbe164e9544f8898c38fc4cc4802e369e90709980ebc9469de5a570c58045b87",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+    },
+    {
+      "label": "pm7-build",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm7-build-check.py"
+      ],
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-pm7-build.log",
+      "sha256": "33cc391a68317808f50ad7324610483c5d5ddcfaab1cda5471e4dfe0ab970f61",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+    },
+    {
+      "label": "touch",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-touch-closure-verify.py"
+      ],
+      "exit": 0,
+      "seconds": 1.85,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-touch.log",
+      "sha256": "70357693268b9c5da96ba9bde07cb754336a0276a3fd61d8e055379bdcc34032",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "wiring",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-wiring-matrix"
+      ],
+      "exit": 0,
+      "seconds": 0.988,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-wiring.log",
+      "sha256": "5928f3f7961400d2e1e8685a4fb52c3c200829c7fe6046c647ed25c7641232a5",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "shards-check",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 14.566,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-shards-check.log",
+      "sha256": "7a03507e43cb3add9642f91b7fa80b6c98ba475af9dc3bab0b963b4ff6335f7f",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "index-validate",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "seconds": 39.127,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-index-validate.log",
+      "sha256": "b9d4a03f5d4b9f3b053677470e459f84351a479f96a51029740f6b93f8da8340",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "onboarding-storage",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "scripts/pm-onboarding-contracts.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.724,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-gui660-final-onboarding-storage.log",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "validated_source_commit": "4be74f2f94da9b7bfd263572f542e488b1eb9b08"
+    },
+    {
+      "label": "onboarding-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/build.py",
+        "--publish-pm7",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 40.973,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-publish-final-onboarding-builder.log",
+      "sha256": "edc415fa7f579563670057059cf8193d3510c579b7a26974f43c39b6e6902398",
+      "validated_source_commit": "833552622c1f984e218b7cb2778b5aed1ab8e554"
+    },
+    {
+      "label": "retired-input-parser",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/onboarding/opus-5.5/tools/settings_layer_retire.test.py"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-retired-input-parser.log",
+      "sha256": "551b858429918aa10fef86629e8e512cc972d31d017ffdb5fba1e9ea6cf7c1f0",
+      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+      "relevant_source_inputs_unchanged": true
+    },
+    {
+      "label": "chat-builder",
+      "argv": [
+        "nice",
+        "-n",
+        "19",
+        "python3",
+        "Concepts/chat-assistant-concepts/5.6 Pro/build.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.471,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/qa2-align-final-chat-builder.log",
+      "sha256": "6577d64462cdcb3017afb1f7ece925231900abc3d3815ccceb886252f5b17644",
+      "validated_source_commit": "efdc45e16cdd9a5c6bd87beaba93d7e8d6103be0",
+      "relevant_source_inputs_unchanged": true
+    }
+  ],
+  "onboarding_rulings": {
+    "base_commit": "a0250c0199189f8f7918b5d154d2f59bf94d9849",
+    "owner_docs": 20,
+    "modified_existing_unit_bodies": 85,
+    "new_units": [
+      "DL-259",
+      "DR-081"
+    ],
+    "prose_first": true,
+    "ledger_compiled": false,
+    "compile_witness": "not_applicable",
+    "source_snapshot": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-caddy-guard.json",
+    "coverage_rows": 119,
+    "coverage_independent_audit": "pending_lead",
+    "native_runtime_certification": false,
+    "next_separate_task": "srv final-report delta into DL-259, then DL-260 Q3 B mainline cleanup",
+    "draft_failures_fixed": [
+      "scratch YAML parsing/non-product-block guard",
+      "native auth fixture session generation",
+      "scope-array checker comparison",
+      "scratch JSON formatting span handling",
+      "new EOF/trailing whitespace"
+    ],
+    "protected_governance_changes": [],
+    "late_D3_check": "Caddy admitted in both preview/generate configuration payloads; NPM rejected in both. 110 positive/107 negative Remote cases pass."
   }
 }

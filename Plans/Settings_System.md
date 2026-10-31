@@ -886,46 +886,67 @@ plan_unit_id: SSYS-016
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  PMConcept7 (Concepts/PMConcept7.html) is the Settings look-and-behaviour reference under the
-  concept_fixture_only boundary; the concept is never the authored production owner. It may demonstrate the K3
-  geometry, 1010-row projection, later-packet manager additions, project/no-Project defaults, and command
-  previews, but fixture state, local browser storage, simulated receipts, and JavaScript handlers are not
-  runtime proof. Production targets Rust stable and Slint 1.17.1 using typed models, host-width layout states,
-  variable-height virtualization, explicit properties and focus state, precomputed theme tokens, native
-  animations, and opaque or pre-blurred known assets where they help performance; blur, backdrop blur, masks,
-  blend modes and filter effects drawn by Puppet Master's Skia renderer extensions (FinalGUISpec F3-582, DL-139)
-  are no longer excluded for portability. DOM selectors, :has, viewport-width CSS, localStorage, color-mix,
-  arbitrary backdrop blur, and CSS/JS motion in the concept are translation inputs, not production dependencies
-  of the Slint desktop; the Leptos web GUI (F3-583, DL-139) draws Settings with its own DOM and CSS from the
-  shared interface-model crate and design-token source, and the concept HTML is a design reference there, not
-  script to run under Leptos. This direction makes no portability, build, runtime, visual, performance or
-  accessibility claim and no certification claim. Amended Q22, Jared 2026-10-30 (DL-257): the current
-  family/variant and inventory census supersede earlier counts. QA round 2, Jared 2026-10-30; DL-258; GUI
-  7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each
-  existing owner store retains a secret-free, key-isolated memory record for that visit and exposes
-  persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole
-  adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project
-  isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports
-  failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is
-  fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner
-  receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. Q18 Settings concept adapter:
-  window.PM7_SETTINGS_STORE exposes persistent, getItem, setItem, removeItem, key(i) and length. Tome
-  load/save/reset/projectSnapshot, copy-source enumeration and restoreProjectDefaults/writeProjectWallpaper all
-  use it with the same readback rule. Existing project-key prefixes pm7:settings:tome-tabs:v1: and
-  pm7.settings.toolchain-flags.v1: remain Project-isolated; the latter is used by kit.d/28-toolchain-flags.js. A
-  per-visit Map is selected only if touching storage throws; persistent writes still throw/refuse/roll back on
-  failure. No browser-wide pm-lg-wallpaper preference is recreated and no native store is added. Source names
-  confirmed by pm7-found:1030225600-3f26.
+canonical_text: 'PMConcept7 (Concepts/PMConcept7.html) is the Settings look-and-behaviour reference under the concept_fixture_only
+  boundary; the concept is never the authored production owner. It may demonstrate the K3 geometry, 1010-row projection,
+  later-packet manager additions, project/no-Project defaults, and command previews, but fixture state, local browser
+  storage, simulated receipts, and JavaScript handlers are not runtime proof. Production targets Rust stable and Slint
+  1.17.1 using typed models, host-width layout states, variable-height virtualization, explicit properties and focus
+  state, precomputed theme tokens, native animations, and opaque or pre-blurred known assets where they help performance;
+  blur, backdrop blur, masks, blend modes and filter effects drawn by Puppet Master''s Skia renderer extensions (FinalGUISpec
+  F3-582, DL-139) are no longer excluded for portability. DOM selectors, :has, viewport-width CSS, localStorage, color-mix,
+  arbitrary backdrop blur, and CSS/JS motion in the concept are translation inputs, not production dependencies of the
+  Slint desktop; the Leptos web GUI (F3-583, DL-139) draws Settings with its own DOM and CSS from the shared interface-model
+  crate and design-token source, and the concept HTML is a design reference there, not script to run under Leptos. This
+  direction makes no portability, build, runtime, visual, performance or accessibility claim and no certification claim.
+  Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. QA
+  round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar
+  expose the same global general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain
+  English and Expert, and default ELI5. Both bars reflect the same effective state. Every opened onboarding question
+  tip and prose help section has useful Plain English and technical versions, including FileSafe, service differences,
+  storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints,
+  paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without
+  rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5
+  is a compatibility local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor
+  tour_narration_only tag is retired. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider
+  entry, with API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning
+  team; these remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced
+  optional CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider
+  entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct
+  from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan
+  retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway.
+  A label change never changes a saved provider/account ID. DL-259 D2 A, Jared 2026-10-31: Settings retains the explicit
+  always-on Server, manual private HTTPS, self-hosted Remote Link gateway, rarer SSH key types, China-region and local-server
+  AI routes, and repository object-format controls; onboarding provides context-correct pointers without exposing those
+  advanced choices.'
 gui_related: true
 gui_classification_reason: This unit governs the Settings visual reference and future Slint implementation direction.
 depends_on: [SSYS-003, SSYS-010]
 unblocks: [SSYS-017]
 acceptance_criteria:
-  - "PMConcept7 demonstrates Settings geometry, content and interactions and is labeled concept_fixture_only."
-  - "Production implementation does not hand-port the concept's browser persistence, JavaScript handlers or DOM/CSS-only mechanisms as runtime architecture; the Leptos web GUI (F3-583) uses its own DOM and CSS presentation over the shared interface model."
-  - "Any Slint acceptance claim requires fresh build/runtime/visual/accessibility/performance evidence under SSYS-017."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
+- PMConcept7 demonstrates Settings geometry, content and interactions and is labeled concept_fixture_only.
+- Production implementation does not hand-port the concept's browser persistence, JavaScript handlers or DOM/CSS-only
+  mechanisms as runtime architecture; the Leptos web GUI (F3-583) uses its own DOM and CSS presentation over the shared
+  interface model.
+- Any Slint acceptance claim requires fresh build/runtime/visual/accessibility/performance evidence under SSYS-017.
+- 'DL-259, Jared 2026-10-31: ELI5: the wizard bar and Guided Tour bar expose the same global general.interaction.mode
+  through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars
+  reflect the same effective state. Every opened onboarding question tip and prose help section has useful Plain English
+  and technical versions, including FileSafe, service differences, storage, remote access and AI/auth choices, assuming
+  no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt data stay single; dual copy
+  is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply
+  owns the preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
+- 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
+  default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
+  account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
+  does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan,
+  a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba Coding Plan and
+  DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
+  alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
+  a saved provider/account ID.'
+- 'DL-259 D2 A, Jared 2026-10-31: Settings retains the explicit always-on Server, manual private HTTPS, self-hosted Remote
+  Link gateway, rarer SSH key types, China-region and local-server AI routes, and repository object-format controls;
+  onboarding provides context-correct pointers without exposing those advanced choices.'
 validation_surfaces: [future Slint build and runtime evidence]
 risk_class: concept_fixture_promoted_as_runtime_proof
 reasoning_tier: high
@@ -2555,30 +2576,40 @@ plan_unit_id: SSYS-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  general.interaction.sound-effects defaults to on and is recommended on (DL-107); its description names the
-  chat header's speaker button as a quick mute for the same setting. general.interaction.queue-behavior defaults
-  to Queue and is recommended Queue, with Steer still offered (DL-108). No other key, scope or tier changes; the
-  chat header mute is a shared chrome control over general.interaction.sound-effects, not a new setting, which
-  keeps sound effects a grouped setting rather than a per-view toggle. Production motion honours
-  general.visual.reduce- animations as well as the operating system's reduced-motion preference (ACD-475).
-  Amended 2026-10-29 (O4, S3/S4; PM7): Setup voice, app chirps and setup music are options of the one pip-parts
-  row under the existing master sound; no chat/onboarding mute, volume or voice key. The single player owns
-  synthesis recipes and asset metadata. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding
-  sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture
-  gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the
-  person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins
-  when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key
-  or durable sound preference is fabricated from an unreadable preview.
+canonical_text: 'general.interaction.sound-effects defaults to on and is recommended on (DL-107); its description names
+  the chat header''s speaker button as a quick mute for the same setting. general.interaction.queue-behavior defaults
+  to Queue and is recommended Queue, with Steer still offered (DL-108). No other key, scope or tier changes; the chat
+  header mute is a shared chrome control over general.interaction.sound-effects, not a new setting, which keeps sound
+  effects a grouped setting rather than a per-view toggle. Production motion honours general.visual.reduce- animations
+  as well as the operating system''s reduced-motion preference (ACD-475). Amended 2026-10-29 (O4, S3/S4; PM7): Setup
+  voice, app chirps and setup music are options of the one pip-parts row under the existing master sound; no chat/onboarding
+  mute, volume or voice key. The single player owns synthesis recipes and asset metadata. QA round 2, Jared 2026-10-30;
+  DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing
+  one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference, retain the
+  factory-on or current effective choice rather than muting on every refresh. An explicit readable Project value wins
+  when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never fabricates
+  a saved value or authorizes a write. DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and
+  vocals everywhere Pip speaks, sends 0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each
+  look uses its one per-look kit room, registered before the first shared voice in every host, with no stacked rooms.
+  These restore the old voice’s own sends. Loudness remains within approximately 0.4 dB. The existing preference, gesture
+  and sound owner still gates playback.'
 gui_related: true
 gui_classification_reason: "Changes two user-visible setting defaults."
 split_recommended: false
 depends_on: [DL-107, DL-108]
 unblocks: []
 acceptance_criteria:
-  - "The inventory defaults general.interaction.sound-effects to true and general.interaction.queue-behavior to Queue."
-  - "No new sound or queue setting key exists."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview."
+- The inventory defaults general.interaction.sound-effects to true and general.interaction.queue-behavior to Queue.
+- No new sound or queue setting key exists.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
+  through the existing one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference,
+  retain the factory-on or current effective choice rather than muting on every refresh. An explicit readable Project
+  value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
+  fabricates a saved value or authorizes a write.'
+- 'DL-259, Jared 2026-10-31: Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends
+  0.35 after trim and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room,
+  registered before the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends.
+  Loudness remains within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -2988,66 +3019,70 @@ plan_unit_id: SSYS-043
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
-  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A
-  NieR family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then
-  cmd.settings.transaction.apply; no independent NieR switch or command remains. Adjust NieR opens the one
-  existing editor. general.visual.nier-parts (29 parts) and general.visual.nier-background remain its Adjust
-  rows, shown when general.visual.theme is NieR Light or NieR Dark, with hidden values retained. Basic High
-  contrast and Basic color scheme remain Basic-only; Glass and Retro controls remain confined to their own
-  families. Rendering reuses Basic CSS via data-theme='basic-<scheme>' plus html[data-o55-nier='on']; that
-  marker is derived only from family nier, never an independent override. PMLogo.look() returns nier-<scheme>.
-  NieR uses its existing precomputed palette and local fonts; its accent/font ownership while selected is
-  unchanged, and stored general appearance overrides resume where applicable after another family is selected.
-  general.visual.nier-mode is a retired migration-only key, removed from the active inventory. On load, stored
-  true selects the NieR theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through the
-  OS), preserving parts and background; false or absent preserves the existing family/mode. The old boolean is
-  then cleared, and repeating migration has no further effect. No second underlying family is saved to restore
-  later. The title-bar selector, Guided Tour Look menu, onboarding welcome and its Look menu all offer the same
-  five families in order basic, friendly, glass, retro, nier. Live family picks use the Settings transaction
-  pair; inside onboarding, choose_look on ui.onboarding.choose_look previews family/mode or retained NieR Adjust
-  values in the closed look_choice and persists only at the existing exact Project commit/finish boundary.
-  preview_nier and the independent nier_mode field are retired. Hover is silent and changes no theme; click or
-  keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and
-  ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No
-  manager_id, route, detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and
-  onboarding.nier.mode are retired non_dispatch census tombstones with no action, setting or production writer.
-  Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the
-  standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced
-  Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal
-  that changes no setting. The editor keeps Full install, Quiet, Still and Colors only presets, the eight
-  existing backgrounds (City Ruins default), focus containment, Escape and exact focus return. It is a popup
-  over the application and an in-window panel during onboarding. The explicit onboarding look is excluded from a
-  Settings copy into the new Project (SSYS-036); this now means the theme pair and the two retained NieR Adjust
-  rows. All motion obeys Animation speed and effective reduced motion; audio is gated by
-  general.interaction.sound-effects and the Notifications & Sounds owner’s one player. No game asset, game audio
-  or runtime color derivation is admitted. Legacy labels NieR Mode and Customize NieR Mode identify the retired
-  override presentation, not a separate product mode. Q22 visible copy is Adjust NieR, or Adjust NieR… in the
-  title-bar menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is
-  retained as historical source text only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q22/Q5/Q21
-  final-source alignment: five family menus and ten variants use the existing theme pair. The header look menu
-  is one bounded column; its option question control stays within its row. Adjust NieR is visible for NieR only;
-  title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing
-  wording, retained only as source lineage. Q22/QA2 registry join (DL-257/DL-258):
-  settings_inventory.retired_input_ids names migration-only historical keys outside the active settings array.
-  It contains general.visual.nier-mode, is disjoint from active row IDs, adds no ordinary row/control/writer and
-  does not count in the 1010-row census. Placement retirement validation may consume this explicit catalog;
-  arbitrary unknown IDs remain errors, and current Settings request IDs still reject the retired key.
+canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable theme family (nier), ordered after Basic,
+  Friendly, Glass and Retro. NieR Light (nier-light) and NieR Dark (nier-dark) complete ten built-in variants. A NieR
+  family pick uses general.visual.theme and the existing mode through cmd.settings.transaction.preview then cmd.settings.transaction.apply;
+  no independent NieR switch or command remains. Adjust NieR opens the one existing editor. general.visual.nier-parts
+  (29 parts) and general.visual.nier-background remain its Adjust rows, shown when general.visual.theme is NieR Light
+  or NieR Dark, with hidden values retained. Basic High contrast and Basic color scheme remain Basic-only; Glass and
+  Retro controls remain confined to their own families. Rendering reuses Basic CSS via data-theme=''basic-<scheme>''
+  plus html[data-o55-nier=''on'']; that marker is derived only from family nier, never an independent override. PMLogo.look()
+  returns nier-<scheme>. NieR uses its existing precomputed palette and local fonts; its accent/font ownership while
+  selected is unchanged, and stored general appearance overrides resume where applicable after another family is selected.
+  general.visual.nier-mode is a retired migration-only key, removed from the active inventory. On load, stored true selects
+  the NieR theme in the stored presentation mode (Light, Dark or Auto, resolving Auto through the OS), preserving parts
+  and background; false or absent preserves the existing family/mode. The old boolean is then cleared, and repeating
+  migration has no further effect. No second underlying family is saved to restore later. The title-bar selector, Guided
+  Tour Look menu, onboarding welcome and its Look menu all offer the same five families in order basic, friendly, glass,
+  retro, nier. Live family picks use the Settings transaction pair; inside onboarding, choose_look on ui.onboarding.choose_look
+  previews family/mode or retained NieR Adjust values in the closed look_choice and persists only at the existing exact
+  Project commit/finish boundary. preview_nier and the independent nier_mode field are retired. Hover is silent and changes
+  no theme; click or keyboard activation selects (O6). ui.settings.nier_editor.open, ui.settings.nier_editor.close and
+  ui.settings.nier_editor.replay remain presentation-only; nier.editor.open is the Adjust binding. No manager_id, route,
+  detail id, command, new part or event is added. shell.nier.mode, tour.nier.mode and onboarding.nier.mode are retired
+  non_dispatch census tombstones with no action, setting or production writer. Entering NieR uses its one Reboot moment
+  only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching
+  Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit
+  Play reboot moment remains a local rehearsal that changes no setting. The editor keeps Full install, Quiet, Still and
+  Colors only presets, the eight existing backgrounds (City Ruins default), focus containment, Escape and exact focus
+  return. It is a popup over the application and an in-window panel during onboarding. The explicit onboarding look is
+  excluded from a Settings copy into the new Project (SSYS-036); this now means the theme pair and the two retained NieR
+  Adjust rows. All motion obeys Animation speed and effective reduced motion; audio is gated by general.interaction.sound-effects
+  and the Notifications & Sounds owner’s one player. No game asset, game audio or runtime color derivation is admitted.
+  Legacy labels NieR Mode and Customize NieR Mode identify the retired override presentation, not a separate product
+  mode. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544).
+  The earlier label Adjust NieR look is retained as historical source text only. QA round 2, Jared 2026-10-30; DL-258;
+  GUI 7d586bad18: Q22/Q5/Q21 final-source alignment: five family menus and ten variants use the existing theme pair.
+  The header look menu is one bounded column; its option question control stays within its row. Adjust NieR is visible
+  for NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing
+  wording, retained only as source lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids
+  names migration-only historical keys outside the active settings array. It contains general.visual.nier-mode, is disjoint
+  from active row IDs, adds no ordinary row/control/writer and does not count in the 1010-row census. Placement retirement
+  validation may consume this explicit catalog; arbitrary unknown IDs remain errors, and current Settings request IDs
+  still reject the retired key.'
 gui_related: true
 gui_classification_reason: Governs the fifth NieR theme family, retained Adjust rows/editor, selectors and retired-override migration (Q22).
 split_recommended: false
 depends_on: [SSYS-009, SSYS-010, SSYS-036, SSYS-039, SSYS-041, F3-426, F3-441]
 unblocks: [F3-589, F3-598, F3-599]
 acceptance_criteria:
-  - "The family selectors expose Basic, Friendly, Glass, Retro and NieR, with ten variants and the same Project-scoped Settings owner."
-  - "The retired general.visual.nier-mode key is migration-only: true selects NieR in the stored mode and is cleared; false/absent preserves the selection; migration is idempotent."
-  - "The retained 29-part and background Adjust rows show only for a NieR theme, preserve values while hidden and reuse the one editor and local actions."
-  - "Onboarding uses choose_look, never preview_nier or nier_mode, and writes no Settings before its existing exact Project commit boundary."
-  - "The three removed checkbox bindings have non_dispatch tombstones, and no new command, event, key or manager is introduced."
-  - "Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting."
-  - "Basic-specific rows stay Basic-only; CSS reuse is not a logical Basic family selection."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q22/Q5/Q21 final-source alignment: five family menus and ten variants use the existing theme pair. The header look menu is one bounded column; its option question control stays within its row. Adjust NieR is visible for NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing wording, retained only as source lineage."
+- The family selectors expose Basic, Friendly, Glass, Retro and NieR, with ten variants and the same Project-scoped Settings
+  owner.
+- 'The retired general.visual.nier-mode key is migration-only: true selects NieR in the stored mode and is cleared; false/absent
+  preserves the selection; migration is idempotent.'
+- The retained 29-part and background Adjust rows show only for a NieR theme, preserve values while hidden and reuse
+  the one editor and local actions.
+- Onboarding uses choose_look, never preview_nier or nier_mode, and writes no Settings before its existing exact Project
+  commit boundary.
+- The three removed checkbox bindings have non_dispatch tombstones, and no new command, event, key or manager is introduced.
+- Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard
+  look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the
+  existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting.
+- Basic-specific rows stay Basic-only; CSS reuse is not a logical Basic family selection.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q22/Q5/Q21 final-source alignment: five family menus and ten
+  variants use the existing theme pair. The header look menu is one bounded column; its option question control stays
+  within its row. Adjust NieR is visible for NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned
+  rows. NieR Mode is retired user-facing wording, retained only as source lineage.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: nier_mode_settings_drift
@@ -4013,59 +4048,42 @@ plan_unit_id: SSYS-054
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  general.visual.wallpaper is a Project Settings select value rendered by F3-653's gallery: look is the default,
-  otherwise a stable shared catalog id. It appears after general.visual.theme-mode in Theme & colors for every
-  look, an explicit exception to SSYS-010's family-gated rows. Search includes Wallpaper, background and
-  backdrop. Its choice applies live and before the Project's first paint, with no restart or app-global store.
-  The gallery uses SSYS-009's preview/apply transaction over this exact id, as do any other owner-approved entry
-  points; an unknown requested id is refused without a write, while a stale stored id is drawn using Look's own
-  and disclosed. general.visual.glass-background-mode is retired after the coordinated 2026-10-15 publication,
-  drawn nowhere and interpreted only by SP-333's migration. The old Mesh/Depth/Minimal choices do not become
-  catalog aliases. Glass transparency stays a separate family-gated value. The wallpaper catalog is DR-073's one
-  registry; its options are not copied into a page-local list. The combined concept publication is recorded in
-  DL-203; native acceptance remains separate. Jared’s 2026-10-14 follow-up settles the replacement family’s
-  selection contract: the most recent accepted change wins. The wallpaper owner is the sole coordinator of
-  general.visual.wallpaper mutations through SSYS-009. A gallery pick supplies that id. A NieR background
-  control supplies only general.visual.nier-background; the same admitted Project transaction also sets
-  general.visual.wallpaper to look, making the newly chosen scene visible. The coordinator builds this exact
-  two-setting patch before preview, so the preview hash binds both effects; apply cannot race a later gallery
-  pick or leave half of the update committed. Both controls read the shared committed state. This adds no
-  timestamp, second wallpaper value, independent writer or command. Amended 2026-10-17 (DL-230, Jared): in the
-  gallery the arrows choose as they move; every arrow step is a gallery pick that supplies the reached id
-  through the same SSYS-009 transaction, Space or Enter choose too, and only the print's preparation waits for
-  the short pause after the last step (F3-653). The six scene ids and names are approved in F3-653; their
-  packaged editions are in the catalog. Withdrawn stored print ids use the existing disclosed stale-id fallback
-  and are never silently mapped to a different scene. An uncommitted NieR preview changes neither committed
-  setting and does not win precedence. The published concept corroborates this direction without admitting its
-  local-storage keys as native writers. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a
-  concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store
-  retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home
-  PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit
-  loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner
-  admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never
-  silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative
-  and never native durability, a verified restore/credential or a native owner receipt; production
-  Storage/Settings CAS/readback/rollback rules are unchanged. Q18 Settings concept adapter:
-  window.PM7_SETTINGS_STORE exposes persistent, getItem, setItem, removeItem, key(i) and length. Tome
-  load/save/reset/projectSnapshot, copy-source enumeration and restoreProjectDefaults/writeProjectWallpaper all
-  use it with the same readback rule. Existing project-key prefixes pm7:settings:tome-tabs:v1: and
-  pm7.settings.toolchain-flags.v1: remain Project-isolated; the latter is used by kit.d/28-toolchain-flags.js. A
-  per-visit Map is selected only if touching storage throws; persistent writes still throw/refuse/roll back on
-  failure. No browser-wide pm-lg-wallpaper preference is recreated and no native store is added. Source names
-  confirmed by pm7-found:1030225600-3f26.
+canonical_text: 'general.visual.wallpaper is a Project Settings select value rendered by F3-653''s gallery: look is the
+  default, otherwise a stable shared catalog id. It appears after general.visual.theme-mode in Theme & colors for every
+  look, an explicit exception to SSYS-010''s family-gated rows. Search includes Wallpaper, background and backdrop. Its
+  choice applies live and before the Project''s first paint, with no restart or app-global store. The gallery uses SSYS-009''s
+  preview/apply transaction over this exact id, as do any other owner-approved entry points; an unknown requested id
+  is refused without a write, while a stale stored id is drawn using Look''s own and disclosed. general.visual.glass-background-mode
+  is retired after the coordinated 2026-10-15 publication, drawn nowhere and interpreted only by SP-333''s migration.
+  The old Mesh/Depth/Minimal choices do not become catalog aliases. Glass transparency stays a separate family-gated
+  value. The wallpaper catalog is DR-073''s one registry; its options are not copied into a page-local list. The combined
+  concept publication is recorded in DL-203; native acceptance remains separate. Jared’s 2026-10-14 follow-up settles
+  the replacement family’s selection contract: the most recent accepted change wins. The wallpaper owner is the sole
+  coordinator of general.visual.wallpaper mutations through SSYS-009. A gallery pick supplies that id. A NieR background
+  control supplies only general.visual.nier-background; the same admitted Project transaction also sets general.visual.wallpaper
+  to look, making the newly chosen scene visible. The coordinator builds this exact two-setting patch before preview,
+  so the preview hash binds both effects; apply cannot race a later gallery pick or leave half of the update committed.
+  Both controls read the shared committed state. This adds no timestamp, second wallpaper value, independent writer or
+  command. Amended 2026-10-17 (DL-230, Jared): in the gallery the arrows choose as they move; every arrow step is a gallery
+  pick that supplies the reached id through the same SSYS-009 transaction, Space or Enter choose too, and only the print''s
+  preparation waits for the short pause after the last step (F3-653). The six scene ids and names are approved in F3-653;
+  their packaged editions are in the catalog. Withdrawn stored print ids use the existing disclosed stale-id fallback
+  and are never silently mapped to a different scene. An uncommitted NieR preview changes neither committed setting and
+  does not win precedence. The published concept corroborates this direction without admitting its local-storage keys
+  as native writers. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:'
 gui_related: true
 gui_classification_reason: Wallpaper setting and replacement of old Glass backgrounds.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "The gallery and search resolve the exact inventory id and Settings transaction in every look."
-  - "Invalid requested ids refuse without mutation; stale saved ids have the documented fallback."
-  - "An arrow step in the gallery writes general.visual.wallpaper through the same transaction as a pointer pick, and the latest step wins (DL-230)."
-  - "Publication retires the old background row and preserves each Project's independent committed choice."
-  - "Gallery pick then NieR background change shows the NieR choice; NieR background change then gallery pick shows the gallery choice. Project reload preserves the latest accepted result and a refused/stale change commits neither half."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
+- The gallery and search resolve the exact inventory id and Settings transaction in every look.
+- Invalid requested ids refuse without mutation; stale saved ids have the documented fallback.
+- An arrow step in the gallery writes general.visual.wallpaper through the same transaction as a pointer pick, and the
+  latest step wins (DL-230).
+- Publication retires the old background row and preserves each Project's independent committed choice.
+- Gallery pick then NieR background change shows the NieR choice; NieR background change then gallery pick shows the
+  gallery choice. Project reload preserves the latest accepted result and a refused/stale change commits neither half.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -4240,62 +4258,53 @@ plan_unit_id: SSYS-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  S1–S9, O4/O5, DL-239. Admit general.visual.pip-parts, one simple multiselect in App & Input > Theme &
-  colors after NieR. Stored per Project like NieR; scope global is applicability metadata, no
-  browser/app-global copy. The one shared registry defines parts/defaults/presets and On N / total meter:
-  Full (all except App voice), Quiet (work placements without reactions), Still (no motion), Plain (minimal
-  extras, never legacy puppets). No Classic or Pip master row. Mandatory brand, app icon, tray, universal
-  loader and notification faces are outside the part list; every individual agent/helper/Activity row
-  remains the single Pip primitive. Parts cover optional chat placements, faces/reactions, motion, look and
-  setup life/sound only. Two voice parts are Pip talks in setup (on) and Pip chirps in the app (off); Setup
-  music is on. All obey master sound and the chat mute; Reduced Motion preserves stored choices but stills
-  nonessential motion and never mutes. Animation speed scales allowed motion. NieR parts win overlapping
-  Diamond loader, Ink empty states and Pod companion/voice. First run without Project uses factory parts,
-  rerun reads its Project; no-Project preview writes nothing. Settings copy proposes the row like other
-  ordinary values, not NieR’s special transfer exclusion. The Settings row, wand Pip… and title-bar
-  Customize Pip… under NieR Mode open one editor, never inside onboarding. ui.settings.pip_editor.open,
-  ui.settings.pip_editor.close and ui.settings.pip_editor.replay are typed local actions that write
-  nothing; replay is Play: the team works. Parts and preset edits use cmd.settings.transaction.preview then
-  apply with the same value in all hosts, never pip-chat:v1. Editor focus is contained and returns to
-  opener; preview/exit timers/copies are released on close. The admitted stable part IDs/count are
-  enumerated below; Plans/pip_parts.json mirrors this contract and every GUI host reads the shared
-  registry. S1–S5 editor presentation: five groups titled Where Pip appears, Faces, Motion, Look and Sound.
-  Every part shows the one registry’s label, one-line help, displayed Size and On/Off state; On N / total
-  is derived from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team
-  preview shows the Project’s current parts/look; Play: the team works runs that same team from queued to
-  working to done, obeying Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks
-  still use the transaction pair. Help/size are presentation metadata from the shared Pip registry, not new
-  settings or real resource quotas. S1–S9 admitted registry: Plans/pip_parts.json is the machine mirror of
-  this accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit, plans, wand-menu,
-  empty-lists; Faces: state-faces, watches, wonders-while-typing, cheers, oops, gaze; Motion: blinks,
-  sway-and-physics, face-transitions, thinking-dots, idle-life; Look: seat-colours, role-props, strings,
-  cheeks-and-shine, setup-world-life; Sound: setup-voice, app-voice, setup-music. All parts default on
-  except app-voice; the default meter is On 24 / 25. Full = [sheet-hosts, status-faces, working-orbit,
-  plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops, gaze, blinks,
-  sway-and-physics, face-transitions, thinking-dots, idle-life, seat-colours, role-props, strings,
-  cheeks-and-shine, setup-world-life, setup-voice, setup-music]. Quiet = [status-faces, working-orbit,
-  plans, empty-lists, state-faces, seat-colours, role-props, strings]. Still = [sheet-hosts, status-faces,
-  working-orbit, plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops,
-  gaze, seat-colours, role-props, strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets
-  are exact values of the one multiselect; the meter always reads On N / 25. No Classic,
-  brand/tray/icon/loader/notification part or second primitive exists. S2/S3 (lead ruling 2026-10-30):
-  general.visual.pip-parts stores the shared registry’s part LABELS, such as Sheet hosts, in
-  options/default and every new Settings transaction, like general.visual.nier-parts. The 25 stable IDs and
-  ID-based presets in Plans/pip_parts.json remain registry/API identity; serialize each selected ID through
-  that same one-to-one id/label table before preview/apply. Compatibility reads may accept prior ID arrays
-  through the table, but new writes use labels. PipPartsSettingValue in
-  Plans/pm7_build_contracts.schema.json pins this label-valued multiselect; no second option table or store
-  is introduced. S2/S5/S9, PM7 Step4, 2026-10-30: PM_PIP_PARTS and PM_PIP_PARTS_STORE are the shared
-  registry/adapter; PM_PIP_EDITOR open/popup/close/replay is the single editor, installed by
-  kit.d/29-pip-editor.js. The Settings row emits o55-pip-editor and the chat’s pip-settings-open opens that
-  same editor; title/wand hosts use data-pip-local for the declared typed local actions. Registry def maps to
-  default_enabled, lowercase preset IDs to Full/Quiet/Still/Plain, and new Settings writes remain the 25
-  shared labels. pm7.pip-parts.changed is a concept change notification, not a new persisted event.
-  S1/S2/S6, PM7 companion review fix1, 2026-10-30 (Astra A5): all four preset arrays must equal
-  PM_PIP_PARTS.PRESETS through the lowercase-to-title-case name map, in registry order. Plain is exactly
-  empty. Quiet, Still and Full cannot silently replace one another; negative preset-drift fixtures enforce
-  the single-table boundary without changing stored LABELS.
+canonical_text: 'S1–S9, O4/O5, DL-239. Admit general.visual.pip-parts, one simple multiselect in App & Input > Theme
+  & colors after NieR. Stored per Project like NieR; scope global is applicability metadata, no browser/app-global copy.
+  The one shared registry defines parts/defaults/presets and On N / total meter: Full (all except App voice), Quiet (work
+  placements without reactions), Still (no motion), Plain (minimal extras, never legacy puppets). No Classic or Pip master
+  row. Mandatory brand, app icon, tray, universal loader and notification faces are outside the part list; every individual
+  agent/helper/Activity row remains the single Pip primitive. Parts cover optional chat placements, faces/reactions,
+  motion, look and setup life/sound only. Two voice parts are Pip talks in setup (on) and Pip chirps in the app (off);
+  Setup music is on. All obey master sound and the chat mute; Reduced Motion preserves stored choices but stills nonessential
+  motion and never mutes. Animation speed scales allowed motion. NieR parts win overlapping Diamond loader, Ink empty
+  states and Pod companion/voice. First run without Project uses factory parts, rerun reads its Project; no-Project preview
+  writes nothing. Settings copy proposes the row like other ordinary values, not NieR’s special transfer exclusion. The
+  Settings row, wand Pip… and title-bar Customize Pip… under NieR Mode open one editor, never inside onboarding. ui.settings.pip_editor.open,
+  ui.settings.pip_editor.close and ui.settings.pip_editor.replay are typed local actions that write nothing; replay is
+  Play: the team works. Parts and preset edits use cmd.settings.transaction.preview then apply with the same value in
+  all hosts, never a duplicate preference. Editor focus is contained and returns to opener; preview/exit timers/copies
+  are released on close. The admitted stable part IDs/count are enumerated below; Plans/pip_parts.json mirrors this contract
+  and every GUI host reads the shared registry. S1–S5 editor presentation: five groups titled Where Pip appears, Faces,
+  Motion, Look and Sound. Every part shows the one registry’s label, one-line help, displayed Size and On/Off state;
+  On N / total is derived from the admitted 25-part list below, mirrored in Plans/pip_parts.json. A live small-team preview
+  shows the Project’s current parts/look; Play: the team works runs that same team from queued to working to done, obeying
+  Reduced Motion and sound parts. Preview/replay writes nothing; preset/part picks still use the transaction pair. Help/size
+  are presentation metadata from the shared Pip registry, not new settings or real resource quotas. S1–S9 admitted registry:
+  Plans/pip_parts.json is the machine mirror of this accepted list. Where Pip appears: sheet-hosts, status-faces, working-orbit,
+  plans, wand-menu, empty-lists; Faces: state-faces, watches, wonders-while-typing, cheers, oops, gaze; Motion: blinks,
+  sway-and-physics, face-transitions, thinking-dots, idle-life; Look: seat-colours, role-props, strings, cheeks-and-shine,
+  setup-world-life; Sound: setup-voice, app-voice, setup-music. All parts default on except app-voice; the default meter
+  is On 24 / 25. Full = [sheet-hosts, status-faces, working-orbit, plans, wand-menu, empty-lists, state-faces, watches,
+  wonders-while-typing, cheers, oops, gaze, blinks, sway-and-physics, face-transitions, thinking-dots, idle-life, seat-colours,
+  role-props, strings, cheeks-and-shine, setup-world-life, setup-voice, setup-music]. Quiet = [status-faces, working-orbit,
+  plans, empty-lists, state-faces, seat-colours, role-props, strings]. Still = [sheet-hosts, status-faces, working-orbit,
+  plans, wand-menu, empty-lists, state-faces, watches, wonders-while-typing, cheers, oops, gaze, seat-colours, role-props,
+  strings, cheeks-and-shine, setup-voice, setup-music]. Plain = []. Presets are exact values of the one multiselect;
+  the meter always reads On N / 25. No Classic, brand/tray/icon/loader/notification part or second primitive exists.
+  S2/S3 (lead ruling 2026-10-30): general.visual.pip-parts stores the shared registry’s part LABELS, such as Sheet hosts,
+  in options/default and every new Settings transaction, like general.visual.nier-parts. The 25 stable IDs and ID-based
+  presets in Plans/pip_parts.json remain registry/API identity; serialize each selected ID through that same one-to-one
+  id/label table before preview/apply. Compatibility reads may accept prior ID arrays through the table, but new writes
+  use labels. PipPartsSettingValue in Plans/pm7_build_contracts.schema.json pins this label-valued multiselect; no second
+  option table or store is introduced. S2/S5/S9, PM7 Step4, 2026-10-30: PM_PIP_PARTS and PM_PIP_PARTS_STORE are the shared
+  registry/adapter; PM_PIP_EDITOR open/popup/close/replay is the single editor, installed by kit.d/29-pip-editor.js.
+  The Settings row emits o55-pip-editor and the chat’s pip-settings-open opens that same editor; title/wand hosts use
+  data-pip-local for the declared typed local actions. Registry def maps to default_enabled, lowercase preset IDs to
+  Full/Quiet/Still/Plain, and new Settings writes remain the 25 shared labels. pm7.pip-parts.changed is a concept change
+  notification, not a new persisted event. S1/S2/S6, PM7 companion review fix1, 2026-10-30 (Astra A5): all four preset
+  arrays must equal PM_PIP_PARTS.PRESETS through the lowercase-to-title-case name map, in registry order. Plain is exactly
+  empty. Quiet, Still and Full cannot silently replace one another; negative preset-drift fixtures enforce the single-table
+  boundary without changing stored LABELS.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4420,6 +4429,3 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-244, ContractName:Plans/Setti
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
-
-
-QA2 owner amendment (2026-10-30; DL-258; integration 7d586bad18): current requirements in this document’s amended units take precedence over earlier presentation descriptions. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a restored backup, verified credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No Project value, credential, second mute key or durable sound preference is fabricated from an unreadable preview. Q22/Q5/Q21 final-source alignment: five family menus and ten variants use the existing theme pair. The header look menu is one bounded column; its option question control stays within its row. Adjust NieR is visible for NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing wording, retained only as source lineage.

@@ -4517,7 +4517,7 @@
         "forge_account_ref": "account:forgejo:team",
         "repository_name": "same-name",
         "repository_description": "",
-        "repository_visibility": "internal",
+        "repository_visibility": "private",
         "repository_owner_scope": "organization",
         "repository_ref": "forge-repository:forgejo:team:same-name",
         "repository_container": "organization:team",
@@ -13823,6 +13823,34 @@
         "nier_mode": true
       },
       "expected_error": "Q22 uses family nier and the existing closed SetupDraft shape"
+    },
+    {
+      "name": "invalid.DL259.forgejo.internal",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "valid.setup_plan.jujutsu_with_forgejo_api_disabled_git_ready_external_automation",
+      "patch": {
+        "repository_visibility": "internal"
+      },
+      "expected_error": "DL-259 provider/owner privacy"
+    },
+    {
+      "name": "invalid.DL259.gitea.internal",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "valid.setup_plan.git_with_gitea_registered_oauth_and_distinct_instance",
+      "patch": {
+        "repository_visibility": "internal"
+      },
+      "expected_error": "DL-259 provider/owner privacy"
+    },
+    {
+      "name": "invalid.DL259.cursor_origin.internal",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
+      "patch": {
+        "repository_visibility": "internal",
+        "repository_owner_scope": "personal"
+      },
+      "expected_error": "DL-259 provider/owner privacy"
     }
   ],
   "resolved_owner_inputs": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32447-L33109
+Source lines: L32512-L33170
 
-Source SHA256: `d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af`
+Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
 
 ---
 
@@ -150,91 +150,88 @@ plan_unit_id: F3-447
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four
-  urgency levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store
-  entry; Notice lasts 3.4 s, Attention 5.2 s and Blocking 6.8 s before joining F3-453's lasting
-  inbox. Reading timers are not shortened by Animation speed; hovering any toast or focusing within
-  one holds every staged timer, with a visible remaining-time line. Newest is on top and at most
-  five stage together; overflow retires the oldest quiet notice or moves the oldest lasting notice
-  to the inbox immediately. Repeated words count on one card, and duplicate delivery of one event
-  produces one notice. Closing or swiping a staged lasting notice moves it to the inbox and never
-  resolves the underlying work; quiet dismissal removes it. Reduced Motion shows/removes end states
-  immediately and joins the inbox without flight. Settings Notifications off suppresses popup and
-  sound delivery but preserves lasting inbox items. How Alerts Appear selects Toast, Banner under
-  the title bar, or System Tray with no in-page popup; platform delivery retains its own
-  capability/permission rules. Setup/continue-tour prompts arrive under the bell, with new toasts
-  above; after 4.5 s of reading or the first press, key or wheel elsewhere they join the shared bell
-  inbox with their existing resume action. A newly presented prompt may arrive again. Tour page
-  notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier Jared #19 control-clearance
-  rule: on every page the notice stage hangs tight below the title bar at the bell. The first card starts
-  at the theme selector menu's resting top while the inbox is closed, not at a fixed distance below
-  the title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap's bottom plus MENU_GAP
-  (6 px); selector height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may
-  lift the stage with a negative drop to match the resting top. If no selector is drawn, preserve the
-  title-bar-based nonnegative-drop fallback. Native components use equivalent owner geometry, not a new
-  persisted DOM or placement field. Home panel strips and the chat head add no vertical clearance or
-  page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared's bf5115d9d9 fix):
-  while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset; the
-  inbox itself hangs from the bell. This open-inbox state exception is the lead's interpretation,
-  separate from Jared's quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar geometry changes
-  recompute the bell anchor, never reuse another page's coordinates. The stage remains inside the viewport;
-  if viewport height cannot contain the next card, older lasting notices join the bell first, then a new
-  lasting card joins it directly with its unread count retained. Only this viewport limit may shorten a
-  crowded quiet note to min(normal interval, max(1800 ms, half the normal interval rounded to ms)); overlap
-  with a control is not crowding or a filing reason. F3-460 owns material and F3-453 the lasting store.
-  F3-1/F3-5, final GUI 5abe285507, 2026-10-30: staged cards take no clicks while entering or leaving on
-  every page, Usage included. The guard applies before mounting and throughout entry/exit; delayed arrival
-  completion cannot reactivate a leaving card. Body, action and dismiss hit routing stay inactive, and the
-  pointer passes to the underlying control, subject to that control’s own availability. No entry/exit click
-  is queued for later dispatch. Reduced Motion becomes clickable only once placement has settled and
-  removes a dismissed card instantly; a still-pending or leaving card never accepts a click. Once settled, activating a toast's body opens what it is about
-  through the existing source action and marks that notice read. Activating its action button runs that
-  owner action and files any lasting notice quietly; it never also invokes the body's source-opening
-  action. Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance
-  scan, downward/sideways collision relocation or chat-head clearance may move this stage away from its
-  title-bar anchor, apart from the stated open-inbox exception. This supersedes the old control-clearance
-  placement rule, not urgency, reading holds, owner operations or
-  the shared inbox lifecycle.
-  Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at a time and the rest wait
-  in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading time with the
-  same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters in
-  the look's motion, Retro and NieR wiping in and the others sliding, and appears at once under Reduced
-  Motion. Closing a lasting banner files it in the inbox like a toast, so nothing is lost, and banners take
-  F3-460's arrival sounds; the concept's banner, which discards on close and plays no sound, is not adopted
-  there. A page's own quiet confirmation, Home's panel notes and Usage's notes included, is a Quiet notice
-  through this one staging under the bell (DL-193: Usage notices appear under the bell like every other page);
-  no page keeps a toast line of its own.
-  Amended 2026-10-29 (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store. OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you projection.
+canonical_text: 'All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency
+  levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
+  Attention 5.2 s and Blocking 6.8 s before joining F3-453''s lasting inbox. Reading timers are not shortened by Animation
+  speed; hovering any toast or focusing within one holds every staged timer, with a visible remaining-time line. Newest
+  is on top and at most five stage together; overflow retires the oldest quiet notice or moves the oldest lasting notice
+  to the inbox immediately. Repeated words count on one card, and duplicate delivery of one event produces one notice.
+  Closing or swiping a staged lasting notice moves it to the inbox and never resolves the underlying work; quiet dismissal
+  removes it. Reduced Motion shows/removes end states immediately and joins the inbox without flight. Settings Notifications
+  off suppresses popup and sound delivery but preserves lasting inbox items. How Alerts Appear selects Toast, Banner
+  under the title bar, or System Tray with no in-page popup; platform delivery retains its own capability/permission
+  rules. Setup/continue-tour prompts arrive under the bell, with new toasts above; after 4.5 s of reading or the first
+  press, key or wheel elsewhere they join the shared bell inbox with their existing resume action. A newly presented
+  prompt may arrive again. Tour page notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier
+  Jared #19 control-clearance rule: on every page the notice stage hangs tight below the title bar at the bell. The first
+  card starts at the theme selector menu''s resting top while the inbox is closed, not at a fixed distance below the
+  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap''s bottom plus MENU_GAP (6 px); selector
+  height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may lift the stage with a negative
+  drop to match the resting top. If no selector is drawn, preserve the title-bar-based nonnegative-drop fallback. Native
+  components use equivalent owner geometry, not a new persisted DOM or placement field. Home panel strips and the chat
+  head add no vertical clearance or page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared''s
+  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset;
+  the inbox itself hangs from the bell. This open-inbox state exception is the lead''s interpretation, separate from
+  Jared''s quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar
+  geometry changes recompute the bell anchor, never reuse another page''s coordinates. The stage remains inside the viewport;
+  if viewport height cannot contain the next card, older lasting notices join the bell first, then a new lasting card
+  joins it directly with its unread count retained. Only this viewport limit may shorten a crowded quiet note to min(normal
+  interval, max(1800 ms, half the normal interval rounded to ms)); overlap with a control is not crowding or a filing
+  reason. F3-460 owns material and F3-453 the lasting store. F3-1/F3-5, final GUI 5abe285507, 2026-10-30: staged cards
+  take no clicks while entering or leaving on every page, Usage included. The guard applies before mounting and throughout
+  entry/exit; delayed arrival completion cannot reactivate a leaving card. Body, action and dismiss hit routing stay
+  inactive, and the pointer passes to the underlying control, subject to that control’s own availability. No entry/exit
+  click is queued for later dispatch. Reduced Motion becomes clickable only once placement has settled and removes a
+  dismissed card instantly; a still-pending or leaving card never accepts a click. Once settled, activating a toast''s
+  body opens what it is about through the existing source action and marks that notice read. Activating its action button
+  runs that owner action and files any lasting notice quietly; it never also invokes the body''s source-opening action.
+  Read and filing do not acknowledge or resolve underlying work by implication. No control-avoidance scan, downward/sideways
+  collision relocation or chat-head clearance may move this stage away from its title-bar anchor, apart from the stated
+  open-inbox exception. This supersedes the old control-clearance placement rule, not urgency, reading holds, owner operations
+  or the shared inbox lifecycle. Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at
+  a time and the rest wait in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading
+  time with the same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters
+  in the look''s motion, Retro and NieR wiping in and the others sliding, and appears at once under Reduced Motion. Closing
+  a lasting banner files it in the inbox like a toast, so nothing is lost, and banners take F3-460''s arrival sounds;
+  the concept''s banner, which discards on close and plays no sound, is not adopted there. A page''s own quiet confirmation,
+  Home''s panel notes and Usage''s notes included, is a Quiet notice through this one staging under the bell (DL-193:
+  Usage notices appear under the bell like every other page); no page keeps a toast line of its own. Amended 2026-10-29
+  (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store.
+  OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you
+  projection. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
+  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond
-  the cap evicts the oldest.
-- Each urgency uses F3-447's specified lifetime; hover/focus holds every reading timer and Reduced Motion
-  changes only motion.
+- At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap evicts
+  the oldest.
+- Each urgency uses F3-447's specified lifetime; hover/focus holds every reading timer and Reduced Motion changes only
+  motion.
 - The newest toast stages on top of the staged set.
 - Ephemeral toasts never archive to the shared alert store and leave no store entry.
 - Under reduced motion, dismissal is instant with no exit animation.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - Usage has no bottom-right staging exception; every page routes notices beneath the bell.
 - Hover/focus pauses reading time; a sixth lasting notice is retained, never lost.
-- Toast body activation opens its source and marks it read; action activation dispatches only its own
-  action and quietly files a lasting notice, without resolving the source by dismissal.
-- Optional setup joins the existing inbox after its reading interval or interaction elsewhere, and its
-  resume action remains reachable there.
-- With the inbox closed, every page aligns the first card with the theme menu’s resting top, the selector
-  wrapper bottom plus its menu gap (6 px in 70b30f482f), even when this requires a negative stage drop.
-  Title-bar bottom is not substituted while the selector is drawn. Controls, chat head and Home strips do
-  not move it or cause direct filing. While the
-  inbox is open, the stage sits under that bell-anchored inbox using its existing push offset.
-- Entering and leaving cards accept no body/action/dismiss clicks on every page, Usage included; their
-  hit area passes through from first mount to settled arrival and throughout exit, with no queued activation.
-  Reduced Motion settles placement/removal instantly; pending placement is still guarded. Settled cards
-  keep their existing source/owner actions and read semantics.
+- Toast body activation opens its source and marks it read; action activation dispatches only its own action and quietly
+  files a lasting notice, without resolving the source by dismissal.
+- Optional setup joins the existing inbox after its reading interval or interaction elsewhere, and its resume action
+  remains reachable there.
+- With the inbox closed, every page aligns the first card with the theme menu’s resting top, the selector wrapper bottom
+  plus its menu gap (6 px in 70b30f482f), even when this requires a negative stage drop. Title-bar bottom is not substituted
+  while the selector is drawn. Controls, chat head and Home strips do not move it or cause direct filing. While the inbox
+  is open, the stage sits under that bell-anchored inbox using its existing push offset.
+- Entering and leaving cards accept no body/action/dismiss clicks on every page, Usage included; their hit area passes
+  through from first mount to settled arrival and throughout exit, with no queued activation. Reduced Motion settles
+  placement/removal instantly; pending placement is still guarded. Settled cards keep their existing source/owner actions
+  and read semantics.
+- 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  and entry/exit click guards remain.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -285,7 +282,6 @@ owner_boundary_notes:
 - "F3-460 owns the title-bar notification stack and count badge that hosts this staging area; this unit owns the ephemeral staging cap, ordering, time to live, and exit behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
-
 ```
 
 ### F3-448 - Status Bar Chip Inventory And Click Behaviors

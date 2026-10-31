@@ -902,57 +902,50 @@
   "sound_cases": [
     {
       "name": "factory_on",
-      "preview_enabled": true,
       "snapshot": null,
-      "expected": true
+      "expected": true,
+      "initial_enabled": true
     },
     {
       "name": "visit_mute_survives_unreadable",
-      "preview_enabled": false,
       "snapshot": null,
-      "expected": false
+      "expected": false,
+      "initial_enabled": false
     },
     {
       "name": "visit_on_survives_unreadable",
-      "preview_enabled": true,
       "snapshot": null,
-      "expected": true
+      "expected": true,
+      "initial_enabled": true
     },
     {
       "name": "readable_missing_uses_default",
-      "preview_enabled": false,
       "snapshot": {},
-      "expected": true
+      "expected": true,
+      "initial_enabled": false
     },
     {
       "name": "readable_off_wins",
-      "preview_enabled": true,
       "snapshot": {
         "general.interaction.sound-effects": false
       },
-      "expected": false
+      "expected": false,
+      "initial_enabled": true
     },
     {
       "name": "readable_on_wins",
-      "preview_enabled": false,
       "snapshot": {
         "general.interaction.sound-effects": true
       },
-      "expected": true
+      "expected": true,
+      "initial_enabled": false
     }
-  ],
-  "memory_store_modes": [
-    "unavailable",
-    "available",
-    "write_throws",
-    "readback_mismatch"
   ],
   "native_boundaries": {
     "new_onboarding_actions": 0,
     "new_work_commands": 0,
     "new_setting_keys": 0,
     "new_physical_families": 0,
-    "lab_seed_not_product_field": true,
     "visit_memory_not_native_receipt": true
   },
   "restore_reach_cases": [

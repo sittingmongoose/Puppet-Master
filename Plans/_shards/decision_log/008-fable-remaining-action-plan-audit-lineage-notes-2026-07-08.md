@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14524-L18639
+Source lines: L14517-L18589
 
-Source SHA256: `4d7438497971839608473386d62b899d7dcd57f4dcdb53addb48bdaf990f683c`
+Source SHA256: `e41b607ab847e23a3732c947b7fb0886104ea5b74791ca2f743251066085d433`
 
 ---
 
@@ -2959,73 +2959,67 @@ plan_unit_id: DL-238
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every look,
-  preserving each family’s own world/material. Expand to every real onboarding route, screen, choice and error,
-  about 44 screens and 203 tips. O2 A (Jared 2026-10-30): match the approved concept; implementation technique
-  is the implementer’s choice. Preserve solved strings, world materials, bounded shared life and
-  hidden/offscreen/drag pause behavior; an optimization must preserve the concept in recorded frame-by-frame
-  A/B. Retro Dark CRT and Retro Light paper have separate worlds and sound kits; approved music is not re-keyed.
-  Live synthesis uses the one sound player with recipe metadata, setup-voice and music parts; Reduced Motion
-  never mutes. O6 (Jared 2026-10-30): hovering a look tile plays no sound and changes no theme; click or
-  keyboard activation changes the theme. The question note is the one pm7ob-explainer. Pip marks the current
-  chapter. Ready hands strings to the first Tour callout, but O11 defers Tour redesign; Pod 042 remains
-  Tour/Chat narrator. O12 B (Jared 2026-10-30): Creating blocks follow completed owner phases, and Continue and
-  Ready wait for the last block to land. Reduced Motion settles the blocks instantly; animation never bypasses
-  an incomplete owner phase. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is
-  confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his
-  earlier explicit rulings. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual
-  backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential,
-  not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit
-  no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected
-  file/folder/device/account and required fields. Validate the locator/trust and reach/authenticate the selected
-  place through its existing owner. An accepted Kit may unlock that backup, but cannot bypass storage
-  authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name its
-  selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock
-  and snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual
-  restore/Project commit boundaries remain mandatory; a concept Kit or seed never proves native unlock or
-  restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card, before
-  sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across
-  all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or
-  overlapping lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys
-  stay in their own choice list, and the option, its radio and question control never overlap. Apply to backup
-  places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy, remote
-  routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and
-  Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9:
-  question controls answer pointer hover and keyboard focus in the current look. Remove duplicate
-  explanation-only disclosures (What is a Server?, the Connect proxy explanation, and What does Puppet Master
-  read? on Choose a key); put their information in the shared option tips. Keep functional sections: More about
-  keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity
-  fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s
-  shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains a separate one-use
-  protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress string. Chapter beads
-  sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces the current bead and
-  the current bead occupies no extra width. A highlight surrounds the name without covering Pip. The speech tail
-  is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond; NieR keeps its
-  no-tail treatment. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the
-  existing one player and trusted-gesture gate. No verified readable Project snapshot means an unbound preview:
-  retain the factory-on choice or the person’s current visit choice rather than muting it on each refresh. An
-  explicit readable Project value wins when it binds; a genuinely refused bound write remains refused. No
-  Project value, credential, second mute key or durable sound preference is fabricated from an unreadable
-  preview. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime. Replacing
-  an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already
-  held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds,
-  preserves pre-existing inert nodes and restores focus/input. H1: explicit lab open({screen}) invokes the
-  screen owner’s seed(S), filling only missing fixture prerequisites; seed:false opts out. Connect/NAS/online
-  fixtures have coherent identities, trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no
-  native Project receipt, authentication, permission or completed owner work is inferred, no selected live input
-  is overwritten, and no new product action/DTO field is admitted.
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. O1–O12: replace the troupe and NieR unit with one Pip across every
+  look, preserving each family’s own world/material. Expand to every real onboarding route, screen, choice and error,
+  about 44 screens and 203 tips. O2 A (Jared 2026-10-30): match the approved concept; implementation technique is the
+  implementer’s choice. Preserve solved strings, world materials, bounded shared life and hidden/offscreen/drag pause
+  behavior; an optimization must preserve the concept in recorded frame-by-frame A/B. Retro Dark CRT and Retro Light
+  paper have separate worlds and sound kits; approved music is not re-keyed. Live synthesis uses the one sound player
+  with recipe metadata, setup-voice and music parts; Reduced Motion never mutes. O6 (Jared 2026-10-30): hovering a look
+  tile plays no sound and changes no theme; click or keyboard activation changes the theme. The question note is the
+  one pm7ob-explainer. Pip marks the current chapter. Ready hands strings to the first Tour callout, but O11 defers Tour
+  redesign; Pod 042 remains Tour/Chat narrator. O12 B (Jared 2026-10-30): Creating blocks follow completed owner phases,
+  and Continue and Ready wait for the last block to land. Reduced Motion settles the blocks instantly; animation never
+  bypasses an incomplete owner phase. Jared decided these packet rows on 2026-10-30; every unmodified recommendation
+  is confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his earlier
+  explicit rulings. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual backup before asking
+  to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential, not a storage place, backup
+  payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit no-Kit path to a folder, another device/NAS,
+  or a cloud service. Continue waits for the selected file/folder/device/account and required fields. Validate the locator/trust
+  and reach/authenticate the selected place through its existing owner. An accepted Kit may unlock that backup, but cannot
+  bypass storage authentication. Show Unlock the backup only for a still-locked backup without an accepted unlock; name
+  its selected place. Select a copy, coverage and preview only afterwards. Repointing invalidates the former unlock and
+  snapshot selection. Owner recovery prerequisites, approval, protected secret handling and actual restore/Project commit
+  boundaries remain mandatory; only a verified Backup owner result proves unlock or restore. Q7/H2/H8: a selected choice’s
+  follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under slot owns
+  the join, indentation and line from the parent mark across all twelve affected screens. The parent opens into the tray
+  in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts put the parent question
+  note first inside the tray. Arrow keys stay in their own choice list, and the option, its radio and question control
+  never overlap. Apply to backup places/Kit, existing-work origins, work computer checks, sign-up links, Settings copy,
+  remote routes/hosting/certificate fields, online service kind/address, device notes and connection routes. Naming and
+  Review display the same selected mounted/network source, rather than an empty local-location field. Q3/Q8/Q9: question
+  controls answer pointer hover and keyboard focus in the current look. Remove duplicate explanation-only disclosures
+  (What is a Server?, the Connect proxy explanation, and What does Puppet Master read? on Choose a key); put their information
+  in the shared option tips. Keep functional sections: More about keeping versions contains FileSafe, Which proxy contains
+  the Caddy/NGINX/Traefik selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB
+  sign-in uses the operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password
+  remains a separate one-use protected flow; never reuse its never-saved hint for SMB. Q4/Q10: there is one progress
+  string. Chapter beads sit on and follow that string’s sag, with chapter names below Pip’s feet; Pip replaces the current
+  bead and the current bead occupies no extra width. A highlight surrounds the name without covering Pip. The speech
+  tail is cut from the bubble’s own fill/border as one silhouette, never a separate visible diamond; NieR keeps its no-tail
+  treatment. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects, through the existing one player
+  and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference, retain the factory-on
+  or current effective choice rather than muting on every refresh. An explicit readable Project value wins when it binds;
+  a genuinely refused bound write remains refused. An unavailable Settings projection never fabricates a saved value
+  or authorizes a write. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime.
+  Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already
+  held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves
+  pre-existing inert nodes and restores focus/input.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo shortcut."
-  - "The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split and no re-key; O2 preserves the concept while leaving implementation technique open."
-  - "Look-tile hover changes neither sound nor theme; click/keyboard activation changes the theme."
-  - "Creating Continue/Ready wait for both owner completion and the last block landing; Reduced Motion settles instantly, and Tour redesign stays deferred."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock; follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one inert-state basis survives replacement; lab-only seeds confer no owner authority; unreadable Project state does not repeatedly mute the preview."
+- All real routes/screens/options/errors have Pip scenes and asked-for tips; no flow is replaced by a demo shortcut.
+- The chapter rail, faces/gaze, world lifecycle and six recipe kits satisfy F3-663, including Retro split and no re-key;
+  O2 preserves the concept while leaving implementation technique open.
+- Look-tile hover changes neither sound nor theme; click/keyboard activation changes the theme.
+- Creating Continue/Ready wait for both owner completion and the last block landing; Reduced Motion settles instantly,
+  and Tour redesign stays deferred.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock;
+  follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one
+  inert-state basis survives replacement; unreadable Project state does not repeatedly mute the preview.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3450,20 +3444,17 @@ plan_unit_id: DL-246
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes, queue
-  and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over
-  ObservableWork and registry lineage, one row anatomy, ordering and needs-you set. No surface owns a
-  parallel runtime list/count. Authority: Jared decided D7 on 2026-10-28; this is an approved source-thread
-  decision, not an unanswered packet recommendation. D7, PM7 Step4 final-source alignment, 2026-10-30
-  (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup and agentSummary in src/js/48-work.js
-  are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail] keeps its four shelves
-  (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js keeps
-  its frame/filter. Both read PM_WORK and the same needs-you set; no AGENTS fixture array, private clock or
-  parallel transcript opener remains. list refreshes on change, patchTicks updates times/progress/output,
-  hidden lists catch up on show, and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home
-  keeps its short time form. These source adapters demonstrate the projection boundary without certifying
-  native runtime.
+canonical_text: 'Adopted 2026-10-29 for the PM7 build. D7: status panel is glance/triage; Agents rail is deep lanes,
+  queue and lineage; Home Agents board is a filtered agent view. All share OperationalAwareness over ObservableWork and
+  registry lineage, one row anatomy, ordering and needs-you set. No surface owns a parallel runtime list/count. Authority:
+  Jared decided D7 on 2026-10-28; this is an approved source-thread decision, not an unanswered packet recommendation.
+  D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): PM7_WORK_UI.list(host, options), agentGroup
+  and agentSummary in src/js/48-work.js are the shared row/filter/summary adapters. The rail #panel-agents [data-work-rail]
+  keeps its four shelves (Needs you, Active with lineage, Queued, Recently completed); Home dashboard:agents in 30-dashboard.js
+  keeps its frame/filter. Both read PM_WORK and the same needs-you set; the live owner projection and shared clock remain
+  the sole inputs. list refreshes on change, patchTicks updates times/progress/output, hidden lists catch up on show,
+  and destroy removes subscriptions/observers. Rail uses spelled-out ages; Home keeps its short time form. These source
+  adapters demonstrate the projection boundary without certifying native runtime.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -4040,85 +4031,51 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-054, ContractN
 
 
 
-### DL-256 - Demo Studio And Evidence Boundary
+### DL-256 - Shared Pip Sound Quality And Room
 
 ```yaml
 plan_unit_id: DL-256
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: >-
-  Adopted 2026-10-29 for the PM7 build. W8/W9, SND1, LAND1: the one lab-only Demo Studio gains
-  Pip/loader/moods/parts/sound, full onboarding errors/tips, project-box widths/states and background
-  Activity/Resources/quit scenarios using public owner APIs. No concept toolbar, injected runtime, innerHTML
-  hook or duplicate store becomes product. Missing APIs are unavailable. SND1 B (Jared 2026-10-30): sound lands
-  on the level/texture tools’ measured numbers; Jared listens later in the product, with no pre-landing
-  listening gate. LAND1 A confirms phase review artifacts and one final landing after Jared’s approval. Static
-  checks and concept recordings supply no native Rust/Slint, production-event or governance certification. No
-  reseal in this task. Jared decided these packet rows on 2026-10-30; every unmodified recommendation is
-  confirmed as his decision, and the decision IDs remain the amendment keys. X1, L1, S9, O11 and G4 retain his
-  earlier explicit rulings. W8’s concrete lab-only matrix is normative in F3-649: all named Pip/loader/sound
-  controls, 42 events/5 loops, antigravityOnce/tastebook/≤11-character key/Ask Pip/pipRoughDay, Adjust
-  Pip/presets/recorded pip run, five Project states and widths, Busy/No asks/Quiet/Many/Stale feed/After
-  restart/Right-now, all three tabs/multiple environments/Quit/Stop all/Numbers-Words and busy/quitWithWork. No
-  generic topic-only demo substitutes for that matrix; strings/contrast/OWNED reset and public API availability
-  remain required. W8 review D-1, lead-accepted PM7 Step4, 2026-10-30: the one named temporary DR-070 exception
-  is 5.6 Pro/pm7-port/js/50-demo-bridge.js, inherited from main since 2026-10-22. Its lab bridge presses a
-  hidden .demo-dialog .demo-trigger so PM56_EXT.action/app.js and the recorded-example/reset chains all run.
-  This is tracked DOM-coupling debt, not permission for other synthetic clicks, hidden controls or product
-  dispatch. Retirement requires the chat owner to expose one PM56_APP dispatcher taking (action, dataset,
-  {demo:true}) for both real clicks and the bridge; migrate every recorded example/reset chain, prove equivalent
-  behavior, then delete the hidden host/button and close this named exception. PM56_DEMO.trigger/reset alone do
-  not run all chains and are not a substitute. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view,
-  Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only
-  after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its
-  recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural
-  user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep
-  DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command,
-  preference, persisted field or production wiring is authorized. Q18: when a concept page has no usable storage
-  at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated
-  memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and
-  O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’
-  corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage
-  whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing
-  persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native
-  durability, a verified restore/credential or a native owner receipt; production Storage/Settings
-  CAS/readback/rollback rules are unchanged.
+canonical_text: 'SND1, Jared 2026-10-30: Pip uses the shared sound owner and the sound tools’ measured level/texture
+  envelope. Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim
+  and pan into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before
+  the first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains
+  within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback. The shared voice
+  remains subject to the existing sound, volume and motion/visibility gates.'
 gui_related: true
-gui_classification_reason: Defines visible PM7 presentation and interactions.
+gui_classification_reason: Defines shared Pip voice material and sound quality.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - "Every named F3-649 case/recipe is exposed in the one lab through public APIs or explicitly unavailable."
-  - "Words come from the Studio copy owner, contrast is 4.5:1 and Reset Everything clears only OWNED keys."
-  - "No lab trigger becomes a product preference/command/runtime. Sound acceptance uses the level/texture tools’ numbers; Jared listens later in the product, and LAND1 still requires his final landing approval."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: H1/H5/H7/Q19: one lab Studio opens seeded owner screens and steps aside when launching a panel, chat view, Stop all or Quit. Recorded guides name the actual current control, including Schedule for …, and advance only after that control’s real example boundary. The teach-missed example owns its intended Send and finishes its recorded correction through the normal reply boundary; it does not simulate a native model promise. Natural user choices may remain waiting, and finished examples need not be forced into an artificial Done label. Keep DR-070’s existing named hidden-bridge debt unchanged; no additional synthetic click, demo product command, preference, persisted field or production wiring is authorized. Q18: when a concept page has no usable storage at all (opaque-origin sandbox access throws), each existing owner store retains a secret-free, key-isolated memory record for that visit and exposes persistent:false. Home PMW.store.raw/get/set/remove and O55.store.get/set/clear/scrub remain their sole adapters; reload/new visit loses memory. Settings’ corresponding Project adapter must preserve Project isolation and ordinary owner admission. Available storage whose write/quota/readback fails still reports failure and rolls back: never silently switch a failing persistent store to memory. Visit-only success is fixture-local, non-authoritative and never native durability, a verified restore/credential or a native owner receipt; production Storage/Settings CAS/readback/rollback rules are unchanged."
+- The shared voice uses the SND1 measured envelope.
+- 'Q1 B, Jared 2026-10-31: the shared Pip voice, say and vocals everywhere Pip speaks, sends 0.35 after trim and pan
+  into its look’s room; Glass uses 0.30 and NieR 0.16. Each look uses its one per-look kit room, registered before the
+  first shared voice in every host, with no stacked rooms. These restore the old voice’s own sends. Loudness remains
+  within approximately 0.4 dB. The existing preference, gesture and sound owner still gates playback.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
+- Plans/pip_parts.json
 - python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
-risk_class: owner_drift
+risk_class: shared_sound_material
 reasoning_tier: high
-context_scope: pm7_build_20261029
+context_scope: shared_pip_voice_quality
 implementation_surfaces:
-- Plans/Decision_Log.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
 node_compile_hint:
   mode: owner_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- reports/pm7-build-20261029/IDS.md
-- Concepts/background-activity/opus-5.5/README.md
-- Concepts/Icon-Concepts/Opus5.5icon/README.md
-- Concepts/onboarding/opus-5.5-pip/README.md
-- Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
-- "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
-preserved_exact_tokens: []
+- /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md Q1 B
+- PM7 decisions SND1, Jared 2026-10-30
+preserved_exact_tokens:
+- SND1
+- Q1 B
 negative_constraints:
-- Do not treat concept JavaScript or static fixtures as native runtime certification.
+- Do not create a second Pip voice owner or bypass the applicable sound preference.
 owner_hints:
 - Plans/Decision_Log.md
 ```

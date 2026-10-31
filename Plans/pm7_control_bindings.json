@@ -9392,6 +9392,66 @@
           "concept_only": true
         }
       ]
+    },
+    {
+      "control_id": "onboarding.interaction.mode",
+      "surface": "onboarding_bar",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-022",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.interaction.mode"
+      ],
+      "payload": "DL-259: ELI5/Expert, labels Plain English/Expert; shared Settings state, default ELI5; tips/help only; no reply rewrite.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "tour.interaction.mode",
+      "surface": "guided_tour_bar",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-022",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.interaction.mode"
+      ],
+      "payload": "DL-259: ELI5/Expert, labels Plain English/Expert; shared Settings state, default ELI5; tips/help only; no reply rewrite.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "onboarding.free_models.advanced",
+      "surface": "Onboarding > Free Models",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
+      "disposition": "local",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "DL-259 D5 / DR-081: initially closed, one advanced control reveals other currently eligible Free Models providers from the shared catalog; ordinary view-local disclosure only. Individual setup retains exact provider/account owners.",
+      "no_production_reason": "Local disclosure has no native effect, Settings write or new action ID; existing provider setup commands retain mutations."
+    },
+    {
+      "control_id": "settings.free_models.advanced",
+      "surface": "Settings > Providers & Accounts > Free Models",
+      "owner_ref": "Plans/Settings_System.md#SSYS-016",
+      "disposition": "local",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "DL-259 D5 / DR-081: initially closed, one advanced control reveals other currently eligible Free Models providers from the shared catalog; ordinary view-local disclosure only. Individual setup retains exact provider/account owners.",
+      "no_production_reason": "Local disclosure has no native effect, Settings write or new action ID; existing provider setup commands retain mutations."
     }
   ],
   "held_controls": []

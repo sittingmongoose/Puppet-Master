@@ -1593,29 +1593,38 @@ plan_unit_id: SCS-022
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  The existing Source Control setup flow offers the object format when a repository is being created and shows the
-  discovered effective format when one already exists. It is one surface on the existing flow, not a separate wizard,
-  and it is bound to the exact Execution Host and Execution Environment the flow already binds. Every offered format
-  comes from an owner-owned format profile, so a choice is enabled or disabled by current capability evidence and
-  never by assumption; an uncertified or not-yet-known format is shown disabled with its reason rather than hidden or
-  silently substituted. The copy states that the object format of a repository is permanent once it is created, and
+canonical_text: 'The existing Source Control setup flow offers the object format when a repository is being created and
+  shows the discovered effective format when one already exists. It is one surface on the existing flow, not a separate
+  wizard, and it is bound to the exact Execution Host and Execution Environment the flow already binds. Every offered
+  format comes from an owner-owned format profile, so a choice is enabled or disabled by current capability evidence
+  and never by assumption; an uncertified or not-yet-known format is shown disabled with its reason rather than hidden
+  or silently substituted. The copy states that the object format of a repository is permanent once it is created, and
   confirming records that the user was shown it. Cancelling or abandoning setup records no chosen format anywhere. An
-  existing repository shows only what discovery found, and says the format is not yet known rather than showing the
-  engine default as though it had been observed.
+  existing repository shows only what discovery found, and says the format is not yet known rather than showing the engine
+  default as though it had been observed. DL-259, Jared 2026-10-31: D2 A: repository object-format selection and its
+  permanence acknowledgement belong in Settings, not onboarding. Existing-repository format observation, unknown/capability
+  handling and the Source Control owner’s safeguards remain unchanged.'
 gui_related: true
 gui_classification_reason: The unit is a visible setup-flow control, its disabled states and reasons, its discovered-format display and its permanence copy.
 depends_on: [SCS-004, SCS-005, SCS-015, SCS-018, JJI-006, JJI-021, JJI-022, DL-051]
 unblocks: []
 acceptance_criteria:
-  - The choice appears only on the existing Source Control setup flow, for a repository being created, and carries the same exact Execution Host and Execution Environment identity the flow already binds.
-  - Every offered or disabled format is backed by a `pm.source_control.repository_object_format_profile.v1` record; the flow offers no format it has no profile for.
-  - A disabled format shows a reason code from its profile, and an unknown capability state is shown as unknown rather than folded into supported or unsupported.
-  - Confirming a choice requires the acknowledged permanence copy, so `lifecycle_state=confirmed` carries a chosen format, `permanence_acknowledged=true` and at least one offered profile reference.
-  - Cancelling records no chosen format and no acknowledgement, and leaves nothing partially chosen behind.
-  - An existing repository carries a discovered format or an explicit unknown, and never a chosen format.
-  - The record changes no default object format, requests no cross-format migration, and claims no runtime evidence.
-  - Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version, or runtime capability; SCS-018 admission requirements apply.
+- The choice appears only on the existing Source Control setup flow, for a repository being created, and carries the
+  same exact Execution Host and Execution Environment identity the flow already binds.
+- Every offered or disabled format is backed by a `pm.source_control.repository_object_format_profile.v1` record; the
+  flow offers no format it has no profile for.
+- A disabled format shows a reason code from its profile, and an unknown capability state is shown as unknown rather
+  than folded into supported or unsupported.
+- Confirming a choice requires the acknowledged permanence copy, so `lifecycle_state=confirmed` carries a chosen format,
+  `permanence_acknowledged=true` and at least one offered profile reference.
+- Cancelling records no chosen format and no acknowledgement, and leaves nothing partially chosen behind.
+- An existing repository carries a discovered format or an explicit unknown, and never a chosen format.
+- The record changes no default object format, requests no cross-format migration, and claims no runtime evidence.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version, or
+  runtime capability; SCS-018 admission requirements apply.
+- 'DL-259, Jared 2026-10-31: D2 A: repository object-format selection and its permanence acknowledgement belong in Settings,
+  not onboarding. Existing-repository format observation, unknown/capability handling and the Source Control owner’s
+  safeguards remain unchanged.'
 validation_surfaces:
   - Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection
   - Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile

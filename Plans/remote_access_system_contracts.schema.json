@@ -1882,7 +1882,16 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_connector_configuration.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "implementation": {"const": "go_tsnet"},
         "helper_binary": {"const": "pm-tailnet-connector"},
@@ -1902,20 +1911,117 @@
         "expected_connector_revision": {"type": "integer", "minimum": 0},
         "current_connector_revision": {"type": "integer", "minimum": 0},
         "one_active_binding": {"const": true},
-        "node_scope": {"const": "one_per_server_id"},
-        "automatic_private_endpoint": {"const": true},
+        "node_scope": {
+          "enum": [
+            "one_per_server_id",
+            "one_per_native_client_id"
+          ]
+        },
+        "automatic_private_endpoint": {
+          "type": "boolean"
+        },
         "external_host_tailscale_adopted": {"const": false},
         "normal_title": {"const": "Tailscale"},
         "normal_subtitle": {"const": "Built into Puppet Master"},
-        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
       },
       "allOf": [
         {
           "if": {"properties": {"control_server_kind": {"const": "headscale"}}, "required": ["control_server_kind"]},
           "then": {"properties": {"headscale_origin_ref": {"$ref": "#/$defs/non_secret_ref"}}},
           "else": {"properties": {"headscale_origin_ref": {"type": "null"}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "node_scope": {
+                "const": "one_per_native_client_id"
+              },
+              "automatic_private_endpoint": {
+                "const": false
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              },
+              "node_scope": {
+                "const": "one_per_server_id"
+              },
+              "automatic_private_endpoint": {
+                "const": true
+              }
+            }
+          }
         }
-      ]
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_connector_process_projection": {
       "title": "TailscaleConnectorProcessProjection",
@@ -1944,7 +2050,16 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_connector_process_projection.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "connector_state": {"$ref": "#/$defs/tailscale_connector_state"},
         "process_state": {"enum": ["not_started", "starting", "running", "stopping", "stopped", "crashed", "blocked"]},
@@ -1959,12 +2074,103 @@
         "crash_isolation": {"const": "connector_process_only"},
         "goals_unaffected_by_connector_crash": {"const": true},
         "observed_at_utc": {"$ref": "#/$defs/timestamp"},
-        "freshness_ref": {"$ref": "#/$defs/non_secret_ref"}
-      }
+        "freshness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "server_id": {
+                "type": "null"
+              },
+              "connector_state": {
+                "not": {
+                  "enum": [
+                    "private_endpoint_starting",
+                    "private_endpoint_ready",
+                    "funnel_preflight",
+                    "funnel_starting",
+                    "funnel_ready"
+                  ]
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_authorization_session": {
       "title": "TailscaleAuthorizationSession",
-      "description": "Durable Server-owned hosted authorization metadata. Authorization URLs are one-time protected actions and are never persisted as reusable URL values.",
+      "description": "Durable Server-owned hosted authorization metadata. Authorization URLs are one-time protected actions and are never persisted as reusable URL values. DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -1996,7 +2202,16 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_authorization_session.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "authentication_operation_id": {"$ref": "#/$defs/stable_id"},
         "authorization_session_ref": {"$ref": "#/$defs/non_secret_ref"},
@@ -2017,7 +2232,34 @@
         "started_at_utc": {"$ref": "#/$defs/timestamp"},
         "expires_at_utc": {"$ref": "#/$defs/timestamp"},
         "completed_at_utc": {"$ref": "#/$defs/nullable_timestamp"},
-        "redacted_error_ref": {"$ref": "#/$defs/nullable_non_secret_ref"}
+        "redacted_error_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
       },
       "allOf": [
         {
@@ -2027,6 +2269,56 @@
         {
           "if": {"properties": {"authorized_client_id": {"type": "string"}}, "required": ["authorized_client_id"]},
           "then": {"properties": {"authorized_client_session_generation": {"type": "integer", "minimum": 0}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
         }
       ]
     },
@@ -2084,7 +2376,16 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_native_egress_policy.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "policy_id": {"$ref": "#/$defs/stable_id"},
         "allowed_endpoint_refs": {"$ref": "#/$defs/ref_list"},
@@ -2094,8 +2395,88 @@
         "ordinary_browser_enrolled": {"const": false},
         "pm_identity_required": {"const": true},
         "policy_generation": {"type": "integer", "minimum": 1},
-        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
-      }
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_funnel_projection": {
       "title": "TailscaleFunnelProjection",
@@ -2150,7 +2531,16 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_connector_ipc_envelope.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "request_id": {"$ref": "#/$defs/stable_id"},
         "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
@@ -2160,12 +2550,114 @@
         "deadline_at_utc": {"$ref": "#/$defs/timestamp"},
         "cancellation_ref": {"$ref": "#/$defs/non_secret_ref"},
         "authenticated_peer_ref": {"$ref": "#/$defs/non_secret_ref"},
-        "peer_validation": {"const": "owning_pm_server_only"},
+        "peer_validation": {
+          "enum": [
+            "owning_pm_server_only",
+            "owning_pm_native_client_only"
+          ]
+        },
         "payload_ref": {"$ref": "#/$defs/non_secret_ref"},
         "public_management_api": {"const": false},
         "general_localapi_exposed": {"const": false},
-        "redaction_profile": {"const": "connector_secrets_excluded"}
-      }
+        "redaction_profile": {"const": "connector_secrets_excluded"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "peer_validation": {
+                "const": "owning_pm_native_client_only"
+              },
+              "operation": {
+                "not": {
+                  "enum": [
+                    "ensure_private_endpoint",
+                    "funnel_preflight",
+                    "funnel_enable",
+                    "funnel_test",
+                    "funnel_disable"
+                  ]
+                }
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              },
+              "peer_validation": {
+                "const": "owning_pm_server_only"
+              }
+            }
+          }
+        }
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_connector_receipt": {
       "title": "TailscaleConnectorReceipt",
@@ -2185,7 +2677,16 @@
         "schema_id": {"const": "pm.remote_access_system.tailscale_connector_receipt.v1"},
         "schema_version": {"const": "1.0.0"},
         "receipt_id": {"$ref": "#/$defs/stable_id"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
         "server_endpoint_id": {"oneOf": [{"$ref": "#/$defs/server_endpoint_id"}, {"type": "null"}]},
         "remote_route_id": {"oneOf": [{"$ref": "#/$defs/remote_route_id"}, {"type": "null"}]},
@@ -2217,8 +2718,103 @@
         "raw_state_excluded": {"const": true},
         "authorization_url_excluded": {"const": true},
         "cookies_excluded": {"const": true},
-        "unredacted_query_excluded": {"const": true}
-      }
+        "unredacted_query_excluded": {"const": true},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "requested_route_class": {
+                "enum": [
+                  "none",
+                  "private"
+                ]
+              },
+              "effective_route_class": {
+                "enum": [
+                  "none",
+                  "private"
+                ]
+              },
+              "ingress_class": {
+                "const": "none"
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_connector_migration_record": {
       "title": "TailscaleConnectorMigrationRecord",
@@ -2283,20 +2879,142 @@
       "properties": {
         "schema_id": {"const": "pm.remote_access_system.tailscale_connector_security_policy.v1"},
         "schema_version": {"const": "1.0.0"},
-        "server_id": {"$ref": "#/$defs/server_id"},
+        "server_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "connector_id": {"$ref": "#/$defs/connector_id"},
-        "secure_state_owner": {"const": "server_owner_permissioned_secure_state"},
-        "allowed_secret_location": {"const": "server_secure_state_only"},
+        "secure_state_owner": {
+          "enum": [
+            "server_owner_permissioned_secure_state",
+            "native_client_owner_permissioned_secure_state"
+          ]
+        },
+        "allowed_secret_location": {
+          "enum": [
+            "server_secure_state_only",
+            "native_client_secure_state_only"
+          ]
+        },
         "forbidden_secret_sinks": {"type": "array", "const": ["project_vault", "ordinary_redb_projection", "seglog_event", "settings", "logs", "chat", "usage", "screenshot", "concept"]},
-        "local_ipc_peer_policy": {"const": "owning_pm_server_only"},
+        "local_ipc_peer_policy": {
+          "enum": [
+            "owning_pm_server_only",
+            "owning_pm_native_client_only"
+          ]
+        },
         "least_privilege": {"const": true},
         "public_management_api": {"const": false},
         "tailnet_identity_grants_pm_authority": {"const": false},
         "reset_requires_step_up": {"const": true},
         "reset_requires_current_preview": {"const": true},
         "logs_redacted": {"const": true},
-        "updated_at_utc": {"$ref": "#/$defs/timestamp"}
-      }
+        "updated_at_utc": {"$ref": "#/$defs/timestamp"},
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "secure_state_owner": {
+                "const": "native_client_owner_permissioned_secure_state"
+              },
+              "allowed_secret_location": {
+                "const": "native_client_secure_state_only"
+              },
+              "local_ipc_peer_policy": {
+                "const": "owning_pm_native_client_only"
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              },
+              "secure_state_owner": {
+                "const": "server_owner_permissioned_secure_state"
+              },
+              "allowed_secret_location": {
+                "const": "server_secure_state_only"
+              },
+              "local_ipc_peer_policy": {
+                "const": "owning_pm_server_only"
+              }
+            }
+          }
+        }
+      ],
+      "description": " DL-259 D7 B: owner-qualified Server or native Client installation; browser tabs have no built-in node."
     },
     "tailscale_connector_backup_policy": {
       "title": "TailscaleConnectorBackupPolicy",
@@ -2407,9 +3125,12 @@
         },
         "proxy_family": {
           "enum": [
+            "caddy",
             "nginx",
             "traefik"
-          ]
+          ],
+          "default": "caddy",
+          "description": "DL-259 D3 A: NPM is an existing-proxy route, not a generated configuration."
         },
         "deployment_form": {
           "enum": [
@@ -3283,7 +4004,14 @@
           "pattern": "^idem_[a-z0-9-]{12,120}$"
         },
         "server_id": {
-          "$ref": "#/$defs/server_id"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "connector_id": {
           "$ref": "#/$defs/connector_id"
@@ -3301,7 +4029,14 @@
           "$ref": "#/$defs/session_id"
         },
         "expected_generations": {
-          "$ref": "#/$defs/expected_generations"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/expected_generations"
+            },
+            {
+              "$ref": "#/$defs/native_connector_expected_generations"
+            }
+          ]
         },
         "permission_snapshot_id": {
           "type": "string",
@@ -3312,6 +4047,33 @@
         },
         "args": {
           "type": "object"
+        },
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
         }
       },
       "required": [
@@ -3325,6 +4087,80 @@
         "permission_snapshot_id",
         "return_context",
         "args"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref",
+              "client_id"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.remote_access.tailscale.connector.check",
+                  "cmd.remote_access.tailscale.connector.restart",
+                  "cmd.remote_access.tailscale.identity.reset",
+                  "cmd.remote_access.tailscale.disable",
+                  "cmd.remote_access.tailscale.headscale.start",
+                  "cmd.remote_access.tailscale.headscale.submit_registration",
+                  "cmd.remote_access.tailscale.login.resume",
+                  "cmd.remote_access.tailscale.login.start",
+                  "cmd.remote_access.tailscale.setup.start",
+                  "cmd.remote_access.tailscale.sign_out",
+                  "cmd.remote_access.tailscale.test"
+                ]
+              },
+              "server_id": {
+                "type": "null"
+              },
+              "expected_generations": {
+                "$ref": "#/$defs/native_connector_expected_generations"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              },
+              "expected_generations": {
+                "$ref": "#/$defs/expected_generations"
+              }
+            }
+          }
+        }
       ]
     },
     "command_payload": {
@@ -3935,7 +4771,10 @@
                       "minimum": 0
                     },
                     "operation_scope": {
-                      "const": "ensure_private_endpoint"
+                      "enum": [
+                        "ensure_private_endpoint",
+                        "connect_native_client"
+                      ]
                     }
                   },
                   "required": [
@@ -3948,6 +4787,43 @@
               "required": [
                 "server_id"
               ]
+            },
+            {
+              "if": {
+                "properties": {
+                  "connector_owner": {
+                    "const": "native_client"
+                  }
+                },
+                "required": [
+                  "connector_owner"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "args": {
+                    "properties": {
+                      "operation_scope": {
+                        "const": "connect_native_client"
+                      }
+                    },
+                    "required": [
+                      "operation_scope"
+                    ]
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "args": {
+                    "properties": {
+                      "operation_scope": {
+                        "const": "ensure_private_endpoint"
+                      }
+                    }
+                  }
+                }
+              }
             }
           ],
           "unevaluatedProperties": false
@@ -4258,9 +5134,11 @@
                       "properties": {
                         "proxy_kind": {
                           "enum": [
+                            "caddy",
                             "nginx",
                             "traefik"
-                          ]
+                          ],
+                          "default": "caddy"
                         },
                         "packaging": {
                           "enum": [
@@ -4340,9 +5218,11 @@
                       "properties": {
                         "proxy_kind": {
                           "enum": [
+                            "caddy",
                             "nginx",
                             "traefik"
-                          ]
+                          ],
+                          "default": "caddy"
                         },
                         "packaging": {
                           "enum": [
@@ -5133,7 +6013,14 @@
           "pattern": "^corr_[a-z0-9-]{12,80}$"
         },
         "server_id": {
-          "$ref": "#/$defs/server_id"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "connector_id": {
           "$ref": "#/$defs/connector_id"
@@ -5249,6 +6136,33 @@
             "changed"
           ],
           "additionalProperties": false
+        },
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
         }
       },
       "required": [
@@ -5263,7 +6177,89 @@
         "return_context",
         "output"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.remote_access.tailscale.connector.check",
+                  "cmd.remote_access.tailscale.connector.restart",
+                  "cmd.remote_access.tailscale.identity.reset",
+                  "cmd.remote_access.tailscale.disable",
+                  "cmd.remote_access.tailscale.headscale.start",
+                  "cmd.remote_access.tailscale.headscale.submit_registration",
+                  "cmd.remote_access.tailscale.login.resume",
+                  "cmd.remote_access.tailscale.login.start",
+                  "cmd.remote_access.tailscale.setup.start",
+                  "cmd.remote_access.tailscale.sign_out",
+                  "cmd.remote_access.tailscale.test"
+                ]
+              },
+              "server_id": {
+                "type": "null"
+              },
+              "output": {
+                "properties": {
+                  "visibility": {
+                    "enum": [
+                      "loopback",
+                      "private"
+                    ]
+                  },
+                  "actual_route_type": {
+                    "not": {
+                      "const": "tailscale_funnel"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "command_error": {
       "x-discriminator": "command_id",
@@ -5283,7 +6279,14 @@
           "pattern": "^corr_[a-z0-9-]{12,80}$"
         },
         "server_id": {
-          "$ref": "#/$defs/server_id"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "connector_id": {
           "$ref": "#/$defs/connector_id"
@@ -5354,6 +6357,33 @@
         },
         "disabled_reason": {
           "$ref": "#/$defs/command_disabled_reason"
+        },
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
         }
       },
       "required": [
@@ -5368,7 +6398,74 @@
         "message",
         "return_context"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.remote_access.tailscale.connector.check",
+                  "cmd.remote_access.tailscale.connector.restart",
+                  "cmd.remote_access.tailscale.identity.reset",
+                  "cmd.remote_access.tailscale.disable",
+                  "cmd.remote_access.tailscale.headscale.start",
+                  "cmd.remote_access.tailscale.headscale.submit_registration",
+                  "cmd.remote_access.tailscale.login.resume",
+                  "cmd.remote_access.tailscale.login.start",
+                  "cmd.remote_access.tailscale.setup.start",
+                  "cmd.remote_access.tailscale.sign_out",
+                  "cmd.remote_access.tailscale.test"
+                ]
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "integration_evidence": {
       "type": "object",
@@ -5417,7 +6514,14 @@
           "$ref": "#/$defs/command_id"
         },
         "server_id": {
-          "$ref": "#/$defs/server_id"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "connector_id": {
           "$ref": "#/$defs/connector_id"
@@ -5453,6 +6557,33 @@
         },
         "disabled_reason": {
           "$ref": "#/$defs/command_disabled_reason"
+        },
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
         }
       },
       "required": [
@@ -5529,6 +6660,71 @@
               "disabled_reason"
             ]
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.remote_access.tailscale.connector.check",
+                  "cmd.remote_access.tailscale.connector.restart",
+                  "cmd.remote_access.tailscale.identity.reset",
+                  "cmd.remote_access.tailscale.disable",
+                  "cmd.remote_access.tailscale.headscale.start",
+                  "cmd.remote_access.tailscale.headscale.submit_registration",
+                  "cmd.remote_access.tailscale.login.resume",
+                  "cmd.remote_access.tailscale.login.start",
+                  "cmd.remote_access.tailscale.setup.start",
+                  "cmd.remote_access.tailscale.sign_out",
+                  "cmd.remote_access.tailscale.test"
+                ]
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
+          }
         }
       ],
       "additionalProperties": false
@@ -5549,7 +6745,14 @@
           "pattern": "^perm_[a-z0-9-]{12,80}$"
         },
         "server_id": {
-          "$ref": "#/$defs/server_id"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/server_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "connector_id": {
           "$ref": "#/$defs/connector_id"
@@ -5595,6 +6798,33 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 128
+        },
+        "connector_owner": {
+          "enum": [
+            "server",
+            "native_client"
+          ],
+          "default": "server",
+          "description": "DL-259 D7 B. Omission is the legacy Server-owned reader; current records state the owner explicitly."
+        },
+        "owner_client_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/client_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client_runtime_kind": {
+          "enum": [
+            "native_app",
+            null
+          ]
+        },
+        "native_installation_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
         }
       },
       "required": [
@@ -5629,6 +6859,71 @@
             "required": [
               "reason_code"
             ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "connector_owner": {
+                "const": "native_client"
+              }
+            },
+            "required": [
+              "connector_owner"
+            ]
+          },
+          "then": {
+            "required": [
+              "connector_owner",
+              "owner_client_id",
+              "client_runtime_kind",
+              "native_installation_ref"
+            ],
+            "properties": {
+              "owner_client_id": {
+                "$ref": "#/$defs/client_id"
+              },
+              "client_runtime_kind": {
+                "const": "native_app"
+              },
+              "native_installation_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "command_id": {
+                "enum": [
+                  "cmd.remote_access.tailscale.connector.check",
+                  "cmd.remote_access.tailscale.connector.restart",
+                  "cmd.remote_access.tailscale.identity.reset",
+                  "cmd.remote_access.tailscale.disable",
+                  "cmd.remote_access.tailscale.headscale.start",
+                  "cmd.remote_access.tailscale.headscale.submit_registration",
+                  "cmd.remote_access.tailscale.login.resume",
+                  "cmd.remote_access.tailscale.login.start",
+                  "cmd.remote_access.tailscale.setup.start",
+                  "cmd.remote_access.tailscale.sign_out",
+                  "cmd.remote_access.tailscale.test"
+                ]
+              },
+              "server_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/server_id"
+              },
+              "owner_client_id": {
+                "type": "null"
+              },
+              "client_runtime_kind": {
+                "type": "null"
+              },
+              "native_installation_ref": {
+                "type": "null"
+              }
+            }
           }
         }
       ],
@@ -6416,6 +7711,34 @@
     },
     "RemoteAccessCommandResult": {
       "$ref": "#/$defs/command_result"
+    },
+    "native_connector_expected_generations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "client_generation",
+        "connector_generation",
+        "policy_generation",
+        "session_generation"
+      ],
+      "properties": {
+        "client_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "connector_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   },
   "x-contract-status": "specified_static_only",
@@ -7333,13 +8656,22 @@
     "settings_inventory_row_added": false,
     "connector_state_machine_ref": "#/$defs/tailscale_connector_state",
     "legacy_configuration_disposition": "migration_reader_only",
-    "private_endpoint": "automatic_and_independent_from_funnel",
-    "node_scope": "one_active_identity_per_server_id",
+    "private_endpoint": "Server_automatic_independent_from_funnel_native_Client_egress_only",
+    "node_scope": "one_active_identity_per_server_or_native_client_installation",
     "external_host_tailscale": "coexists_as_external_verified_endpoint_never_adopted",
     "event_authority": "no_connector_event_admitted_by_this_contract",
     "runtime_evidence": "not_proven",
     "runtime_scenarios_status": "NOT_RUN",
-    "requirement_refs": ["TSN-001", "TSN-002", "TSN-003", "TSN-004", "TSN-005", "TSN-006", "TSN-007", "TSN-008", "TSN-009", "TSN-010", "TSN-011", "TSN-012", "TSN-013", "TSN-014", "TSN-015", "TSN-016", "TSN-017", "TSN-018", "TSN-019", "TSN-020", "TSX-001", "TSX-002", "TSX-003", "TSX-004", "TSX-005"]
+    "requirement_refs": ["TSN-001", "TSN-002", "TSN-003", "TSN-004", "TSN-005", "TSN-006", "TSN-007", "TSN-008", "TSN-009", "TSN-010", "TSN-011", "TSN-012", "TSN-013", "TSN-014", "TSN-015", "TSN-016", "TSN-017", "TSN-018", "TSN-019", "TSN-020", "TSX-001", "TSX-002", "TSX-003", "TSX-004", "TSX-005"],
+    "decision_ref": "Plans/Decision_Log.md#DL-259",
+    "native_client_requires_separate_Tailscale_app": false,
+    "plain_browser_embedded_connection": false,
+    "plain_browser_routes": [
+      "remote_link",
+      "device_Tailscale_private_endpoint"
+    ],
+    "current_owner_field": "connector_owner",
+    "legacy_owner_default": "server"
   },
   "x-merged-source-sha256": {
     "Plans/remote_access_system_contracts.schema.json": "54a8288b6fd9d78995b1a541e6a9b82cd000bb0cd6de6bfd2ffbac8f395016e9",

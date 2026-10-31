@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36532-L37613
+Source lines: L36588-L37725
 
-Source SHA256: `d60b131bdb2fc2effecc109459cbc6cbc7365b54259b4d5f48e51b81a90027af`
+Source SHA256: `39c7b8f43bd24f10cdd1d6962a4bf293cafd9817496e2f11b8f62ecf30364790`
 
 ---
 
@@ -42,15 +42,14 @@ plan_unit_id: F3-519
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Final GUI renders Settings and operational Doctor with the selected K3 Tome Tabs geometry inside PMConcept7
-  shared chrome: a 250 px domain rail, 62 px top bar, workspace tabs, continuous document, 168 px page index,
-  350 px details inspector, manager destinations, and a 1040 px maximum ordinary document body, with the
-  host-width responsive states owned by SSYS-003. Mild theme and surrounding-chrome adaptation may change paint,
-  typography, shape, opacity, texture, and motion while preserving this information architecture. No Settings-
-  or Doctor-specific Back control or breadcrumb is added merely to fit the outer shell. All ten built-in
-  PMConcept7 themes render the same functional inventory and geometry contract. Amended Q22, Jared 2026-10-30
-  (DL-257): the current family/variant and inventory census supersede earlier counts.
+canonical_text: 'Final GUI renders Settings and operational Doctor with the selected K3 Tome Tabs geometry inside PMConcept7
+  shared chrome: a 250 px domain rail, 62 px top bar, workspace tabs, continuous document, 168 px page index, 350 px
+  details inspector, manager destinations, and a 1040 px maximum ordinary document body, with the host-width responsive
+  states owned by SSYS-003. Mild theme and surrounding-chrome adaptation may change paint, typography, shape, opacity,
+  texture, and motion while preserving this information architecture. No Settings- or Doctor-specific Back control or
+  breadcrumb is added merely to fit the outer shell. All ten built-in themes render the same functional inventory and
+  geometry contract. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede
+  earlier counts.'
 gui_related: true
 gui_classification_reason: This unit owns the visible K3 layout, PMConcept7 chrome fit, and theme adaptation.
 split_recommended: false
@@ -99,149 +98,176 @@ plan_unit_id: F3-520
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Product Onboarding is a beautiful, calm first impression presented as one bounded modal window
-  over a theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never
-  a full-page route or a replacement application surface. The modal consumes PWIZ-021''s exact eleven-stage
-  main journey welcome -> simple_path -> first_project -> source_control_setup -> server_storage_client ->
-  remote_access_setup -> review_setup_plan -> automatic_preparation -> provider_setup -> free_models_setup
-  -> ready. Choosing the connect-existing path uses the exact bounded six-stage shortcut welcome -> simple_path
-  -> remote_access_setup -> review_setup_plan -> automatic_preparation -> ready and does not fabricate empty
-  first_project, source_control_setup, server_storage_client, provider_setup, or free_models_setup stages.
-  Explicit Project Later uses the owner-defined deferred path, without a placeholder Project or provider setup.
-  The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered
-  families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox
-  remains (Q22). On a new install, when the window opens by itself because no Project exists yet, onboarding
-  always starts in Basic Dark, from its first frame, with Basic Dark preselected, whatever look was shown before;
-  stored values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception:
-  it starts in the look then shown, NieR Mode included, preselected, with no change of look as the window opens
-  (DL-153). The window''s hero moments take five styles, one per look family (F3-600). A persistent Look menu
-  (`Change the look`), carrying the same five-family choices, Light/Dark controls and NieR Adjust button, and
-  a sound control remain reachable in the onboarding header on every stage beyond welcome. Look selections
-  preview presentation without dispatching owner work. Before a verified current Project exists, Look and sound
-  changes, NieR Mode with its parts and background included, remain ephemeral and perform no durable Settings
-  write; after Project commit or connection to an existing Project, persistence requires that exact current
-  Project Settings binding. The ten-theme choice, the Look menu and the NieR Adjust editor panel emit one typed
-  local action, `ui.onboarding.choose_look` (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction:
-  the look is written with the Project at commit, and a look changed after the commit is written to that Project
-  through the same Settings binding when the window finishes or closes. The sound control consumes the Settings-owned
-  `general.interaction.sound-effects` effective pref (or its factory default while no Project exists), stays
-  keyboard-reachable with an explicit sound-off state, and audio is never the sole status signal; onboarding''s
-  cues are the onboarding and Guided Tour cue category of F3-599. In user language, the main journey welcomes
-  the person, chooses whether to begin here or connect to an existing Puppet Master, drafts how to create or
-  open their first project, chooses its safe version history, chooses the computer and storage places that
-  will do and hold the work, offers private access, reviews the complete setup plan, prepares only the approved
-  choices, and commits the approved Project once, offers paid-provider setup and then Free Models, and finishes
-  in a concise Ready state. First Project choices persist a bounded uncreated draft, including a fresh-settings
-  default or explicit Settings-owned copy preview. Before commit, only owner-authorized read-only preflight
-  and just-in-time authentication necessary for the selected source are allowed by PWIZ-021; broad provider
-  setup, enrollment, Connected Server pairing/trust, restore, repository creation or binding, filesystem writes,
-  and Project creation are not. The sole pre-Review pairing exception is PWIZ-029''s individually consented
-  Server-owned selected-source access to a chosen folder, backup, or network storage on another Puppet Master:
-  `cmd.client.pair.start` approval, code, or QR on the verified identity, recorded as `puppet_master` transport
-  with a non-secret device-and-path reference and bound `source_access_authorization_refs`, limited to read-only
-  browsing and validation of the chosen folder or backup under the current draft/session revision, hash, and
-  expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the
-  Connected Server. Source sign-in uses the protected MACS-005 first-time variant when no verified account
-  exists; it never invents a Project/account/repository identifier. Confirm and prepare validates the exact
-  current draft/hash and PJCT-007 commit binding; Automatic Preparation observes the Project owner''s one commit
-  chain and any Settings-owned post-commit rebind/apply results. When a remote repository was created and a
-  later step fails, Automatic Preparation keeps observing the same owner operation and shows the retained Project
-  recovery with the three owner-routed choices Continue Setup, Open Repository, and Delete Repository; each
-  choice stays disabled with its exact owner reason until its Project or Forge gates hold, an unknown remote
-  effect offers reconciliation only, and no setup commit binding or provider phase advances until the listed
-  persisted Project exists. Paid providers then use the actual committed Project, followed by Free Models after
-  paid readiness or explicit Skip. Each screen has one clear decision, one dominant primary action, short human
-  copy, automatic detection, safe defaults, and calm progressive disclosure. The First Project decision is
-  the deliberate exception to progressive hiding: its four equal aligned routes remain visible together so
-  no one must guess what a More menu conceals. Safe History is the beginner-facing local version timeline:
-  Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe adds
-  complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin
-  may hold a separate optional online copy without replacing local history. User-visible copy assumes no coding
-  or IDE knowledge: it uses familiar words and never exposes the internal term `shell`, raw command/route/schema
-  identifiers, owner names, host/environment vocabulary, provider matrices, diagnostics dashboards, network
-  topology, or unexplained source-control jargon. Optional owner-routed branches cover opening an existing
-  or online project, restoring a backup, keeping history locally or using a connected source service, discovering/pairing
-  or manually locating another computer, setting up a work computer, optional service help, and private-access
-  choices; advanced detail remains deferred or disclosed only when needed. Server, Storage, and this Client
-  are three independent placements; local/mounted folders, advanced SSH/SFTP sources, and backup sources remain
-  distinct. Every main stage has a scene-specific, theme-native cinematic composition rather than a generic
-  repeated fade. The five theme families use substantially different illustration systems and directing language--Basic
-  is an exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered spatial
-  composition, and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette.
-  The fifth family, NieR, has its own system, including its onboarding preview: NieR ink marionettes in original
-  line art and the NieR window touches of F3-598. The interruptible opening hero assembles the Puppet Master
-  identity in approximately 1.2-1.5 seconds without blocking input; step transitions use 420-560 ms, element
-  choreography uses 60-80 ms stagger, microinteractions use 120-220 ms, and success settles in approximately
-  700 ms. Reduced Motion preserves hierarchy with immediate state change or a very short opacity settle. Retro
-  uses deliberate stepped, no-scale motion and hard compact reveals; Basic, Friendly, and Glass use material-appropriate
-  easing and paint; NieR uses stepped, glow-free ink motion, and its hero moments, typed text and one-way large
-  exits are F3-598''s. Those moments do not hold input. A resumed onboarding repaints the session''s stored
-  look_choice, NieR Mode included, with null fields falling back to this unit''s start rule (DL-153). Amended
-  2026-10-17 (DL-228): in every look the application beneath stays still while the window is open: nothing
-  in it animates, takes focus or wakes until both the window and its exit have finished. Ready''s Enter answers
-  on the click''s frame; the Planning Wizard is drawn whole beneath the window, the window''s exit is the only
-  move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes this
-  rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup wizard
-  is its earlier name, and it sits directly below Restore home layout, the former Reset Layout. Amended 2026-10-29
-  (O1–O12; PM7): F3-663 supersedes the troupe, no-physics/no-loop prohibition and separately drawn spinner.
-  One Pip in distinct family worlds, bounded shared life and solved strings, with implementation technique
-  open under Jared’s O2 A ruling of 2026-10-30, six kits including Retro split, live voice/music through one
-  player. One option-anchored ? note is pm7ob-explainer. All real routes/errors/203 tips expand beyond the
-  small concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating Continue and
-  Ready wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow and
-  14 onboarding actions remain. O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/?
-  permits F3-663’s same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit
-  or entrance replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared
-  2026-10-30: hovering a look tile changes neither the theme nor sound. Click or keyboard activation requests
-  ui.onboarding.choose_look; this keeps the existing ephemeral/current-Project persistence boundary. Amended
-  Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns
-  migration and retained Adjust controls. Q22 visible copy is Adjust NieR, or Adjust NieR… in the title-bar
-  menu (foundations source confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as
-  historical source text only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q6/Q7: point to the actual
-  backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected recovery credential,
-  not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then the explicit
-  no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account
-  and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing
-  owner. An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the
-  backup only for a still-locked backup without an accepted unlock; name its selected place. Select a copy,
-  coverage and preview only afterwards. Repointing invalidates the former unlock and snapshot selection. Owner
-  recovery prerequisites, approval, protected secret handling and actual restore/Project commit boundaries
-  remain mandatory; a concept Kit or seed never proves native unlock or restore. Q7/H2/H8: a selected choice’s
-  follow-up belongs immediately in a tray joined to that card, before sibling alternatives. One C.cards under
-  slot owns the join, indentation and line from the parent mark across all twelve affected screens. The parent
-  opens into the tray in every look, with matching edges, no gap or overlapping lower corner/ring; narrow layouts
-  put the parent question note first inside the tray. Arrow keys stay in their own choice list, and the option,
-  its radio and question control never overlap. Apply to backup places/Kit, existing-work origins, work computer
-  checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service kind/address,
-  device notes and connection routes. Naming and Review display the same selected mounted/network source, rather
-  than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in
-  the current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation,
-  and What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep
-  functional sections: More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik
-  selector; identity fingerprints and Creating/restore receipts are data and remain. H3: SMB sign-in uses the
-  operating system’s shared-folder keychain; Puppet Master stores no password. The SSH add-key password remains
-  a separate one-use protected flow; never reuse its never-saved hint for SMB. H5: the onboarding owner holds
-  one original inert-state basis for the entire open lifetime. Replacing an already-open screen acquires only
-  newly encountered background nodes; it never re-snapshots nodes already held by that modal as originally
-  inert. Every close/finish/skip path removes only the modal’s own holds, preserves pre-existing inert nodes
-  and restores focus/input. H1: explicit lab open({screen}) invokes the screen owner’s seed(S), filling only
-  missing fixture prerequisites; seed:false opts out. Connect/NAS/online fixtures have coherent identities,
-  trust/key/source/sign-in examples. Seeds and seedCommit are lab-only: no native Project receipt, authentication,
-  permission or completed owner work is inferred, no selected live input is overwritten, and no new product
-  action/DTO field is admitted. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
-  through the existing one player and trusted-gesture gate. No verified readable Project snapshot means an
-  unbound preview: retain the factory-on choice or the person’s current visit choice rather than muting it
-  on each refresh. An explicit readable Project value wins when it binds; a genuinely refused bound write remains
-  refused. No Project value, credential, second mute key or durable sound preference is fabricated from an
-  unreadable preview. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to
-  the selected service or device, not a reusable signed-in/ready boolean. Choosing another source, service,
-  device, Kit or folder invalidates its old reach proof, protected access fields, unlock, copy selection and
-  completed bucket check. A late sign-in/check result stays bound to the service/device it authenticated and
-  cannot advance a different current choice. The concept reachKey/reachedFor projection is fixture state, never
-  an owner credential or permission receipt. A protected SSH key passphrase unlock belongs to that exact selected
-  key; changing keys requires that key’s own owner-proven access and never inherits another key’s unlock. The
-  Remote Link endpoint belongs only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale
-  or another route clears it from the reviewed draft. No stale endpoint enters an unrelated route.'
+canonical_text: 'Product Onboarding is a beautiful, calm first impression presented as one bounded modal window over
+  a theme-aware scrim, with the live PMConcept7 application still visibly present behind it; it is never a full-page
+  route or a replacement application surface. The modal consumes PWIZ-021''s exact eleven-stage main journey welcome
+  -> simple_path -> first_project -> source_control_setup -> server_storage_client -> remote_access_setup -> review_setup_plan
+  -> automatic_preparation -> provider_setup -> free_models_setup -> ready. Choosing the connect-existing path uses the
+  exact bounded six-stage shortcut welcome -> simple_path -> remote_access_setup -> review_setup_plan -> automatic_preparation
+  -> ready and does not fabricate empty first_project, source_control_setup, server_storage_client, provider_setup, or
+  free_models_setup stages. Explicit Project Later uses the owner-defined deferred path, without a placeholder Project
+  or provider setup. The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers
+  five ordered families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent
+  checkbox remains (Q22). On a new install, when the window opens by itself because no Project exists yet, onboarding
+  always starts in Basic Dark, from its first frame, with Basic Dark preselected, whatever look was shown before; stored
+  values are not changed. Run Onboarding Again (from Settings or the Home menu) is the one exception: it starts in the
+  look then shown, NieR Mode included, preselected, with no change of look as the window opens (DL-153). The window''s
+  hero moments take five styles, one per look family (F3-600). A persistent Look menu (`Change the look`), carrying the
+  same five-family choices, Light/Dark controls and NieR Adjust button, and a sound control remain reachable in the onboarding
+  header on every stage beyond welcome. Look selections preview presentation without dispatching owner work. Before a
+  verified current Project exists, Look and sound changes, NieR Mode with its parts and background included, remain ephemeral
+  and perform no durable Settings write; after Project commit or connection to an existing Project, persistence requires
+  that exact current Project Settings binding. The ten-theme choice, the Look menu and the NieR Adjust editor panel emit
+  one typed local action, `ui.onboarding.choose_look` (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction:
+  the look is written with the Project at commit, and a look changed after the commit is written to that Project through
+  the same Settings binding when the window finishes or closes. The sound control consumes the Settings-owned `general.interaction.sound-effects`
+  effective pref (or its factory default while no Project exists), stays keyboard-reachable with an explicit sound-off
+  state, and audio is never the sole status signal; onboarding''s cues are the onboarding and Guided Tour cue category
+  of F3-599. In user language, the main journey welcomes the person, chooses whether to begin here or connect to an existing
+  Puppet Master, drafts how to create or open their first project, chooses its safe version history, chooses the computer
+  and storage places that will do and hold the work, offers private access, reviews the complete setup plan, prepares
+  only the approved choices, and commits the approved Project once, offers paid-provider setup and then Free Models,
+  and finishes in a concise Ready state. First Project choices persist a bounded uncreated draft, including a fresh-settings
+  default or explicit Settings-owned copy preview. Before commit, only owner-authorized read-only preflight and just-in-time
+  authentication necessary for the selected source are allowed by PWIZ-021; broad provider setup, enrollment, Connected
+  Server pairing/trust, restore, repository creation or binding, filesystem writes, and Project creation are not. The
+  sole pre-Review pairing exception is PWIZ-029''s individually consented Server-owned selected-source access to a chosen
+  folder, backup, or network storage on another Puppet Master: `cmd.client.pair.start` approval, code, or QR on the verified
+  identity, recorded as `puppet_master` transport with a non-secret device-and-path reference and bound `source_access_authorization_refs`,
+  limited to read-only browsing and validation of the chosen folder or backup under the current draft/session revision,
+  hash, and expiry. The paired device stays a Source Location, backup source, or storage location and never becomes the
+  Connected Server. Source sign-in uses the protected MACS-005 first-time variant when no verified account exists; it
+  never invents a Project/account/repository identifier. Confirm and prepare validates the exact current draft/hash and
+  PJCT-007 commit binding; Automatic Preparation observes the Project owner''s one commit chain and any Settings-owned
+  post-commit rebind/apply results. When a remote repository was created and a later step fails, Automatic Preparation
+  keeps observing the same owner operation and shows the retained Project recovery with the three owner-routed choices
+  Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its exact owner reason until
+  its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no setup commit binding or
+  provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project,
+  followed by Free Models after paid readiness or explicit Skip. Each screen has one clear decision, one dominant primary
+  action, short human copy, automatic detection, safe defaults, and calm progressive disclosure. The First Project decision
+  is the deliberate exception to progressive hiding: its four equal aligned routes remain visible together so no one
+  must guess what a More menu conceals. Safe History is the beginner-facing local version timeline: Git is the recommended
+  local engine, Jujutsu is an alternative local engine with no account, FileSafe adds complementary local recovery points,
+  and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin may hold a separate optional online copy without
+  replacing local history. User-visible copy assumes no coding or IDE knowledge: it uses familiar words and never exposes
+  the internal term `shell`, raw command/route/schema identifiers, owner names, host/environment vocabulary, provider
+  matrices, diagnostics dashboards, network topology, or unexplained source-control jargon. Optional owner-routed branches
+  cover opening an existing or online project, restoring a backup, keeping history locally or using a connected source
+  service, discovering/pairing or manually locating another computer, setting up a work computer, optional service help,
+  and private-access choices; advanced detail remains deferred or disclosed only when needed. Server, Storage, and this
+  Client are three independent placements; local/mounted folders, advanced SSH/SFTP sources, and backup sources remain
+  distinct. Every main stage has a scene-specific, theme-native cinematic composition rather than a generic repeated
+  fade. The five theme families use substantially different illustration systems and directing language--Basic is an
+  exact instructional blueprint, Friendly is an organic storybook workspace, Glass is a layered spatial composition,
+  and Retro is a pixel/terminal sequence--rather than recoloring one shared image or silhouette. The fifth family, NieR,
+  has its own system, including its onboarding preview: NieR ink marionettes in original line art and the NieR window
+  touches of F3-598. The interruptible opening hero assembles the Puppet Master identity in approximately 1.2-1.5 seconds
+  without blocking input; step transitions use 420-560 ms, element choreography uses 60-80 ms stagger, microinteractions
+  use 120-220 ms, and success settles in approximately 700 ms. Reduced Motion preserves hierarchy with immediate state
+  change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact reveals; Basic,
+  Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion, and its hero
+  moments, typed text and one-way large exits are F3-598''s. Those moments do not hold input. A resumed onboarding repaints
+  the session''s stored look_choice, NieR Mode included, with null fields falling back to this unit''s start rule (DL-153).
+  Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window is open: nothing in
+  it animates, takes focus or wakes until both the window and its exit have finished. Ready''s Enter answers on the click''s
+  frame; the Planning Wizard is drawn whole beneath the window, the window''s exit is the only move, and the hand-over
+  never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes this rule. The Home options menu row is
+  named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup wizard is its earlier name, and it sits directly
+  below Restore home layout, the former Reset Layout. Amended 2026-10-29 (O1–O12; PM7): F3-663 supersedes the troupe,
+  no-physics/no-loop prohibition and separately drawn spinner. One Pip in distinct family worlds, bounded shared life
+  and solved strings, with implementation technique open under Jared’s O2 A ruling of 2026-10-30, six kits including
+  Retro split, live voice/music through one player. One option-anchored ? note is pm7ob-explainer. All real routes/errors/203
+  tips expand beyond the small concept. O12 B (Jared 2026-10-30) amends the former animation-never-gates rule: Creating
+  Continue and Ready wait for owner completion and the last block to land; Reduced Motion settles instantly. Real flow
+  and 14 onboarding actions remain. O11 defers the Tour. O7 (2026-10-29): preserving the settled scene during Details/?
+  permits F3-663’s same-stage choice preview, note-directed Pip and typed answer/idea cue; no choice commit or entrance
+  replay. The older settled-scene acceptance is read with this specific interaction. O6, Jared 2026-10-30: hovering a
+  look tile changes neither the theme nor sound. Click or keyboard activation requests ui.onboarding.choose_look; this
+  keeps the existing ephemeral/current-Project persistence boundary. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
+  NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. Q22 visible
+  copy is Adjust NieR, or Adjust NieR… in the title-bar menu (foundations source confirmation 1030182542-5544). The earlier
+  label Adjust NieR look is retained as historical source text only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
+  Q6/Q7: point to the actual backup before asking to unlock it. A Recovery Kit is an untrusted locator plus protected
+  recovery credential, not a storage place, backup payload, NAS password or cloud sign-in. Offer the Kit first, then
+  the explicit no-Kit path to a folder, another device/NAS, or a cloud service. Continue waits for the selected file/folder/device/account
+  and required fields. Validate the locator/trust and reach/authenticate the selected place through its existing owner.
+  An accepted Kit may unlock that backup, but cannot bypass storage authentication. Show Unlock the backup only for a
+  still-locked backup without an accepted unlock; name its selected place. Select a copy, coverage and preview only afterwards.
+  Repointing invalidates the former unlock and snapshot selection. Owner recovery prerequisites, approval, protected
+  secret handling and actual restore/Project commit boundaries remain mandatory; only a verified Backup owner result
+  proves unlock or restore. Q7/H2/H8: a selected choice’s follow-up belongs immediately in a tray joined to that card,
+  before sibling alternatives. One C.cards under slot owns the join, indentation and line from the parent mark across
+  all twelve affected screens. The parent opens into the tray in every look, with matching edges, no gap or overlapping
+  lower corner/ring; narrow layouts put the parent question note first inside the tray. Arrow keys stay in their own
+  choice list, and the option, its radio and question control never overlap. Apply to backup places/Kit, existing-work
+  origins, work computer checks, sign-up links, Settings copy, remote routes/hosting/certificate fields, online service
+  kind/address, device notes and connection routes. Naming and Review display the same selected mounted/network source,
+  rather than an empty local-location field. Q3/Q8/Q9: question controls answer pointer hover and keyboard focus in the
+  current look. Remove duplicate explanation-only disclosures (What is a Server?, the Connect proxy explanation, and
+  What does Puppet Master read? on Choose a key); put their information in the shared option tips. Keep functional sections:
+  More about keeping versions contains FileSafe, Which proxy contains the Caddy/NGINX/Traefik selector; identity fingerprints
+  and Creating/restore receipts are data and remain. H3: SMB sign-in uses the operating system’s shared-folder keychain;
+  Puppet Master stores no password. The SSH add-key password remains a separate one-use protected flow; never reuse its
+  never-saved hint for SMB. H5: the onboarding owner holds one original inert-state basis for the entire open lifetime.
+  Replacing an already-open screen acquires only newly encountered background nodes; it never re-snapshots nodes already
+  held by that modal as originally inert. Every close/finish/skip path removes only the modal’s own holds, preserves
+  pre-existing inert nodes and restores focus/input. Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
+  through the existing one player and trusted-gesture gate. Until the Settings owner supplies the applicable sound preference,
+  retain the factory-on or current effective choice rather than muting on every refresh. An explicit readable Project
+  value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
+  fabricates a saved value or authorizes a write. QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup
+  place is bound to the selected service or device, not a reusable signed-in/ready boolean. Choosing another source,
+  service, device, Kit or folder invalidates its old reach proof, protected access fields, unlock, copy selection and
+  completed bucket check. A late sign-in/check result stays bound to the service/device it authenticated and cannot advance
+  a different current choice. A protected SSH key passphrase unlock belongs to that exact selected key; changing keys
+  requires that key’s own owner-proven access and never inherits another key’s unlock. The Remote Link endpoint belongs
+  only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another route clears it from the reviewed
+  draft. No stale endpoint enters an unrelated route. DL-259, Jared 2026-10-31: D1 A: the online-service step creates
+  or selects a code repository; onboarding does not publish a website, GitHub Pages, GitLab Pages or another site. Local-only
+  Project choices remain valid. D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted
+  Remote Link gateway, rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a clear
+  context-correct pointer from onboarding. The ordinary This computer choice remains the easy local-work default. The
+  wizard says AI accounts available in this setup, not every AI. Existing Settings routes and owners retain the advanced
+  capabilities. D3 A: generated proxy settings support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy
+  Manager is existing-only: it can be selected as an existing proxy but never sent to a generation/install/export operation.
+  New-Server managed setup, export-only and existing-proxy validation are separate owner continuations; generating a
+  file does not prove installation, public consent, DNS/TLS, endpoint identity or live-route success. For generation,
+  onboarding proxy_kind is exactly caddy, nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The
+  existing-proxy branch may record nginx_proxy_manager but never emits a generated-configuration record; neither branch
+  silently substitutes a family. D4: confirm provider admission and executable conformance immediately before building
+  Puppet Master. The wizard lists its provider choices without unconfirmed/not-verified badges, warnings or caveats.
+  This scheduling decision does not change per-account authentication, entitlement, health or quota truth: Ready is the
+  shared account owner’s current usable result, not merely signed in. D6 A: the human signs in on the initiating active
+  device while the AI/tool runs on the selected execution host. Official tool sign-ins and private account roots stay
+  with that tool on that host; direct API keys are held by Puppet Master’s secure credential store on that host. Onboarding,
+  Settings, model selection and Usage share stable account/profile/host/environment references, never provider-name booleans
+  or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation and execution
+  host. Changing account, host or route invalidates stale validation; another account of the same provider has a distinct
+  identity. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and
+  Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with no
+  separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A
+  Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable client_id,
+  independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process,
+  IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native
+  Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public
+  listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged. D8 A: onboarding has one FileSafe switch, default on, covering command blocklist,
+  write scope, security filter and pre-write safe points together. Individual controls remain in Settings. The switch
+  expresses a requested owner configuration, never approval to bypass a required guard, an absent allowlist/baseline,
+  failed canonical-path resolution, failed initialization or failed safe-point persistence. Mandatory policy and effective
+  guard state win; a refused change stays refused with a clear reason. No failure silently turns a guard off. ELI5: the
+  wizard bar and Guided Tour bar expose the same global general.interaction.mode through the Settings owner, with values
+  ELI5 and Expert, labels Plain English and Expert, and default ELI5. Both bars reflect the same effective state. Every
+  opened onboarding question tip and prose help section has useful Plain English and technical versions, including FileSafe,
+  service differences, storage, remote access and AI/auth choices, assuming no coding experience. Screen copy, control
+  labels, exact fingerprints, paths and receipt data stay single; dual copy is limited to tips/help (DL-126). A mode
+  change updates an open tip without rewriting a chat reply. Existing cmd.settings.transaction.preview/apply owns the
+  preference; ui.guided_tour.toggle_eli5 is a compatibility local adapter to that shared preference, not a tour-only
+  setting or chat ELI5 command. The predecessor tour_narration_only tag is retired.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -262,191 +288,221 @@ unblocks:
 - F3-598
 - F3-599
 acceptance_criteria:
-- Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop
-  width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page
-  route.
-- The scrim blocks interaction with the application while the modal is active, including body-level surfaces
-  mounted after the modal opens; exactly one element exposes role=dialog and aria-modal=true, its accessible
-  name follows the active stage or owner-branch heading, the aria-hidden outgoing visual layer is inert and
-  contains no duplicate IDs, focus remains trapped inside, and Close/Escape returns to the exact initiating
-  application control or the verified active application tab for automatic first-run opening.
-- Welcome presents one immediate Begin setup/Get Started action whose availability is never delayed by the
-  hero sequence; main/connect-existing/deferred stage orders consume PWIZ-021's main_stage_order, connect_existing_stage_order,
-  and deferred_project_stage_order definitions by reference. Main has eleven semantic stages, with provider_setup
-  and free_models_setup after actual Project commit and before ready; a presentation may group them without
-  changing the owner phase boundary.
+- Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width;
+  narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route.
+- The scrim blocks interaction with the application while the modal is active, including body-level surfaces mounted
+  after the modal opens; exactly one element exposes role=dialog and aria-modal=true, its accessible name follows the
+  active stage or owner-branch heading, the aria-hidden outgoing visual layer is inert and contains no duplicate IDs,
+  focus remains trapped inside, and Close/Escape returns to the exact initiating application control or the verified
+  active application tab for automatic first-run opening.
+- Welcome presents one immediate Begin setup/Get Started action whose availability is never delayed by the hero sequence;
+  main/connect-existing/deferred stage orders consume PWIZ-021's main_stage_order, connect_existing_stage_order, and
+  deferred_project_stage_order definitions by reference. Main has eleven semantic stages, with provider_setup and free_models_setup
+  after actual Project commit and before ready; a presentation may group them without changing the owner phase boundary.
 - Choosing connect-existing follows exactly welcome, simple_path, remote_access_setup, review_setup_plan, automatic_preparation,
-  ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank
-  or inapplicable stages, while Back follows the same bounded shortcut in reverse.
-- The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition
-  box; entering it lands on the route chooser, never on a premature Review summary or a redundant Use nearby
-  devices/Find one I already use pre-step.
-- The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered
-  families, including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox
-  remains (Q22).
+  ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank or inapplicable
+  stages, while Back follows the same bounded shortcut in reverse.
+- The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering
+  it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already
+  use pre-step.
+- The bounded ten-theme choice appears at welcome before Project/infrastructure choices. It offers five ordered families,
+  including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
 - The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
-  (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner
-  route, no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit,
-  a later change through the same Settings binding when the window finishes or closes (DL-153).
-- 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including
-  NieR plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on
-  every stage; Look changes preview presentation without dispatching owner work and persist only through the
-  Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts`
-  and `general.visual.nier-background` (Q22)) with a verified current Project binding after commit or connection;
-  Project Later and every no-Project state allow only ephemeral preview without durable writes, while the sound
-  control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound
-  off — click to turn on` state, honors effective Reduced Motion, and audio never carries a status alone.'
-- The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR
-  as a menuitemradio family with its Adjust NieR button (Q22), which opens the NieR Mode editor as a panel
-  inside the onboarding window; the menu closes on Escape with focus returned to its button, and theme changes
-  settle without blocking input; the sound button is a real keyboard-focusable control exposing its on/off
-  state, and missing-audio handling follows the existing sound-control rule (hidden or labelled, never silent
-  failure).
-- Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and
-  the target owner's actual request, current permission, selected-source scope, consent, draft/session revision,
-  focus, Client/Host context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source
-  sign-in exception is not paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository
-  creation/binding, filesystem mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029
-  Server-owned `cmd.client.pair.start` approval/code/QR access to the chosen folder, backup, or network storage
-  on another Puppet Master, recorded as `puppet_master` with bound `source_access_authorization_refs` and limited
-  to read-only browsing and validation, leaving the after-Review Connected Server pairing rule unchanged.
-- Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and
-  approved-plan hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation
-  to observe current real results; stale, unconfirmed, or expanded plans dispatch nothing.
-- The first_project stage exposes four equal, aligned, keyboard-reachable choices together--Start a new project,
-  Open a folder here, Bring one from online, and Restore a backup--with no More project choices disclosure,
-  plus a working Project Later path. Each choice creates only a draft. Start fresh is the settings default;
-  explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never
-  bulk copies secrets, machine paths, runtime state, or account capability.
-- 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected
-  computer, while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented
-  as an account, website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
-- 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through
-  `cmd.project.new_local` and its backend-native child owner: local Git initializes only when the reviewed
-  draft selected Git, a reviewed Jujutsu choice routes through the existing Jujutsu owner route and is never
-  silently substituted with Git, and explicit no-history initializes no Git per PJCT-007 and Project_System.md:93;
-  local-engine selection uses the canonical Source Control owner, while GitHub, GitLab, Azure DevOps, Bitbucket,
-  and eligible Cursor Origin account verification, repository creation/selection, visibility, and binding remain
-  explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge, never as a no-host or
-  local-only preview.'
-- An online copy becomes ready only after both a current verified account identity and the exact repository
-  binding exist; Already connected must select and verify both and is never a no-op. Account creation, sign-in,
-  organization/namespace/workspace/project selection, repository name, allowed visibility, and optional repository
-  details follow the selected forge's owner contract rather than a generic one-field form.
-- Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP
-  source; Restore a backup has its own source and transport rather than reusing an ordinary folder path. Server
-  (where work runs), Storage (where files live), and this Client (the device in hand) remain visibly independent
-  choices.
-- 'Connect existing selects the route before discovery and pairing: Local or VPN looks on the local network
-  and on any VPN this device is already connected to, with no VPN switch and the line `You can connect through
-  a VPN too`, and asks for no private address by default; a usable active Tailscale tailnet needs no sign-in,
-  otherwise one protected built-in sign-in is offered and an official site is used only for explicit account
-  creation; Headscale takes its control URL and owner-managed enrollment; Reverse proxy accepts the existing
-  protected Puppet Master HTTPS URL rather than offering proxy generation; Puppet Master Remote Link remains
-  visible and accepts its link, QR, or short code. Manual Server identity/address entry appears only when safe
-  discovery cannot find the intended Server.'
-- A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never
-  grants trust; the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing
-  after Review confirmation.
+  (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
+  no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change
+  through the same Settings binding when the window finishes or closes (DL-153).
+- 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
+  plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
+  Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
+  `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
+  (Q22)) with a verified current Project binding after commit or connection; Project Later and every no-Project state
+  allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects`
+  effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
+  carries a status alone.'
+- The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR as a menuitemradio
+  family with its Adjust NieR button (Q22), which opens the NieR Mode editor as a panel inside the onboarding window;
+  the menu closes on Escape with focus returned to its button, and theme changes settle without blocking input; the sound
+  button is a real keyboard-focusable control exposing its on/off state, and missing-audio handling follows the existing
+  sound-control rule (hidden or labelled, never silent failure).
+- Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and the target
+  owner's actual request, current permission, selected-source scope, consent, draft/session revision, focus, Client/Host
+  context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source sign-in exception is not
+  paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository creation/binding, filesystem
+  mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029 Server-owned `cmd.client.pair.start`
+  approval/code/QR access to the chosen folder, backup, or network storage on another Puppet Master, recorded as `puppet_master`
+  with bound `source_access_authorization_refs` and limited to read-only browsing and validation, leaving the after-Review
+  Connected Server pairing rule unchanged.
+- Confirm and prepare at review_setup_plan validates the current path, revision, choices, consequences, and approved-plan
+  hash, dispatches the approved owner work exactly once, and only then permits automatic_preparation to observe current
+  real results; stale, unconfirmed, or expanded plans dispatch nothing.
+- The first_project stage exposes four equal, aligned, keyboard-reachable choices together--Start a new project, Open
+  a folder here, Bring one from online, and Restore a backup--with no More project choices disclosure, plus a working
+  Project Later path. Each choice creates only a draft. Start fresh is the settings default; explicit copy offers a searchable
+  real-Project picker, source-context summary and Settings preview, never bulk copies secrets, machine paths, runtime
+  state, or account capability.
+- 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer,
+  while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account,
+  website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
+- 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local`
+  and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
+  choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
+  initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
+  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection,
+  visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge,
+  never as a no-host or local-only preview.'
+- An online copy becomes ready only after both a current verified account identity and the exact repository binding exist;
+  Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project
+  selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract
+  rather than a generic one-field form.
+- Open a folder here distinguishes a local folder, an OS-mounted SMB/NFS location, and an Advanced SSH/SFTP source; Restore
+  a backup has its own source and transport rather than reusing an ordinary folder path. Server (where work runs), Storage
+  (where files live), and this Client (the device in hand) remain visibly independent choices.
+- 'Connect existing selects the route before discovery and pairing: Local or VPN looks on the local network and on any
+  VPN this device is already connected to, with no VPN switch and the line `You can connect through a VPN too`, and asks
+  for no private address by default; a usable active Tailscale tailnet needs no sign-in, otherwise one protected built-in
+  sign-in is offered and an official site is used only for explicit account creation; Headscale takes its control URL
+  and owner-managed enrollment; Reverse proxy accepts the existing protected Puppet Master HTTPS URL rather than offering
+  proxy generation; Puppet Master Remote Link remains visible and accepts its link, QR, or short code. Manual Server
+  identity/address entry appears only when safe discovery cannot find the intended Server.'
+- A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never grants trust;
+  the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing after Review confirmation.
 - Optional branches use one calm layer of progressive disclosure; read-only owner preflight and necessary selected-source
-  authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound
-  confirmation; no branch label, availability projection, or preview can satisfy that fence.
-- Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only
-  with an owner denominator, questions appear only when the current owner projection cannot choose safely,
-  and timers never synthesize work or readiness.
-- 'After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup,
-  Open Repository, and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches
-  only `cmd.project.resume_creation` with a fresh attempt identity under the one-active claim, Open Repository
-  dispatches only `cmd.forge.repository.open_in_browser` on the verified binding, and Delete Repository routes
-  only to the Forge FGI-021 `cmd.forge.repository.delete` admission with target-bound confirmation, never automatically
-  and never while the remote effect is unknown.'
-- 'Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled
-  until owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler
-  availability all hold; an unknown remote effect shows reconciliation only with no repeat create, delete,
-  or inferred identity; and no setup commit binding, paid-provider, or Free Models phase advances before the
-  listed persisted Project exists.'
-- Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve
-  the owner operation/work/dedupe identity across modal interruption and resume.
+  authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound confirmation;
+  no branch label, availability projection, or preview can satisfy that fence.
+- Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only with an
+  owner denominator, questions appear only when the current owner projection cannot choose safely, and timers never synthesize
+  work or readiness.
+- 'After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup, Open Repository,
+  and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches only `cmd.project.resume_creation`
+  with a fresh attempt identity under the one-active claim, Open Repository dispatches only `cmd.forge.repository.open_in_browser`
+  on the verified binding, and Delete Repository routes only to the Forge FGI-021 `cmd.forge.repository.delete` admission
+  with target-bound confirmation, never automatically and never while the remote effect is unknown.'
+- 'Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled until
+  owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler availability
+  all hold; an unknown remote effect shows reconciliation only with no repeat create, delete, or inferred identity; and
+  no setup commit binding, paid-provider, or Free Models phase advances before the listed persisted Project exists.'
+- Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve the owner
+  operation/work/dedupe identity across modal interruption and resume.
 - Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently
-  editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without
-  silently forcing storage or Client placement.
-- Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth
-  path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing
-  owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after
-  commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or
-  replays settled setup.
-- Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided
-  Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft;
-  a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases
-  inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff
-  and restores the saved workspace initiator/fallback.
-- The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run
-  setup wizard`) directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502;
-  amended 2026-10-17, DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source
-  surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine
-  or domain command.
-- Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE;
-  `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary
-  never appear as product copy.
+  editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently
+  forcing storage or Client placement.
+- Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free
+  Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers
+  explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing
+  Project, settled phases and exact continuation; resume never recreates it or replays settled setup.
+- Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without
+  trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project
+  stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour
+  starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace
+  initiator/fallback.
+- The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run setup wizard`)
+  directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502; amended 2026-10-17,
+  DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens
+  the same modal at Welcome, and does not create a second onboarding state machine or domain command.
+- Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`,
+  internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as
+  product copy.
 - 'Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation
-  attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections.
-  The visible shared explainer is the control''s actual `aria-controls` target and its active `aria-describedby`
-  target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped
-  treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy,
-  shape, iconography, and state rather than copy alone.'
-- All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm,
-  and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction
-  rules from one setup screen to the next.
-- 'One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation;
-  discovery, availability, capability, preview, refresh, and test-only results remain on the current choice
-  and never masquerade as completed setup. A recovery-required result is not auto-advanced: it presents the
-  explicit Continue Setup, Open Repository, and Delete Repository owner choices instead.'
-- Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead
-  of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing
-  and incoming headings never ghost through one another.
-- Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims
-  that all important systems or production owner work are ready.
+  attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The
+  visible shared explainer is the control''s actual `aria-controls` target and its active `aria-describedby` target;
+  obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment,
+  consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography,
+  and state rather than copy alone.'
+- All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow
+  footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from
+  one setup screen to the next.
+- 'One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery,
+  availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade
+  as completed setup. A recovery-required result is not auto-advanced: it presents the explicit Continue Setup, Open
+  Repository, and Delete Repository owner choices instead.'
+- Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying
+  its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings
+  never ghost through one another.
+- Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims that all
+  important systems or production owner work are ready.
 - Modal controls use the typed `ui.onboarding.*` local-action vocabulary and owner branches route only to already-canonical
   domain commands; no `cmd.onboarding.*` family or Final-GUI-owned mutation path is introduced.
-- 'The authored browser concept labels its persistence, projections, owner previews, receipts, readiness, and
-  native binding truthfully: browser choreography is concept simulation only, production owner work/readiness
-  remain false or unavailable, and no production or native Slint result is fabricated.'
-- 'Review is a live projection of the current draft: every route, placement, transport, Safe History engine,
-  online service/account/repository/visibility, pairing choice, skip, and consequence updates immediately when
-  the person goes Back and edits it; Review never displays stale defaults or marks an unconfigured connection
-  ready.'
-- Back, Close, Skip, Do this later, interruption, reversal, resize, and theme changes acknowledge in the same
-  frame and settle deterministically; Back works on every reversible stage including Ready, and Set up access
-  later persists a truthful resumable state. The modal entrance uses fixed-bounds opacity/clipping so a cross-family
-  theme switch cannot translate or scale the window outside its viewport margin.
-- At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without
-  a floating action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit
-  content region while its in-flow actions remain reachable and never cover the choices.
-- Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text
-  remain fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders,
-  duplicate Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent.
-- Every stage has a distinct visual scene and meaningful continuity of focus; the five theme families, and
-  the selected NieR family (rendered with Basic CSS), use different directing systems rather than paint-only
-  variants, all motion uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and
-  theme tokens, and essential storytelling does not require browser-only effects.
-- A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected, whatever
-  look was shown before and without changing stored values; Run Onboarding Again starts in the look then shown,
-  NieR Mode included, preselected, and never switches look as it opens (DL-153).
-- The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five
-  styles, one per look family, as F3-600 sets out.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected
-  unlock; follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections
-  remain; one inert-state basis survives replacement; lab-only seeds confer no owner authority; unreadable
-  Project state does not repeatedly mute the preview.'
-- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service
-  or device, not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder
-  invalidates its old reach proof, protected access fields, unlock, copy selection and completed bucket check.
-  A late sign-in/check result stays bound to the service/device it authenticated and cannot advance a different
-  current choice. The concept reachKey/reachedFor projection is fixture state, never an owner credential or
-  permission receipt. A protected SSH key passphrase unlock belongs to that exact selected key; changing keys
-  requires that key’s own owner-proven access and never inherits another key’s unlock. The Remote Link endpoint
-  belongs only to the Remote Link route; choosing Only at home/local-or-VPN, Tailscale or another route clears
-  it from the reviewed draft. No stale endpoint enters an unrelated route.'
+- 'The authored browser concept labels its persistence, projections, owner previews, receipts, readiness, and native
+  binding truthfully: browser choreography is concept simulation only, production owner work/readiness remain false or
+  unavailable, and no production or native Slint result is fabricated.'
+- 'Review is a live projection of the current draft: every route, placement, transport, Safe History engine, online service/account/repository/visibility,
+  pairing choice, skip, and consequence updates immediately when the person goes Back and edits it; Review never displays
+  stale defaults or marks an unconfigured connection ready.'
+- Back, Close, Skip, Do this later, interruption, reversal, resize, and theme changes acknowledge in the same frame and
+  settle deterministically; Back works on every reversible stage including Ready, and Set up access later persists a
+  truthful resumable state. The modal entrance uses fixed-bounds opacity/clipping so a cross-family theme switch cannot
+  translate or scale the window outside its viewport margin.
+- At the standard review viewport, each stage--including Review and Ready--fits within the bounded modal without a floating
+  action bar, obscured content, or required page scroll; short/narrow fallback may scroll one explicit content region
+  while its in-flow actions remain reachable and never cover the choices.
+- Cards, buttons, focus rings, hover elevation, explainer surfaces, headings, summaries, and consequence text remain
+  fully inside their clip/viewport bounds; no hover edge or sentence is cut off. Decorative yellow reminders, duplicate
+  Apply Setup panels, sticky blue confirmation boxes, and left-edge color-rail callouts are absent.
+- Every stage has a distinct visual scene and meaningful continuity of focus; the five theme families, and the selected
+  NieR family (rendered with Basic CSS), use different directing systems rather than paint-only variants, all motion
+  uses Slint-portable opacity, translation, scale, clipping/masking, vector shapes, and theme tokens, and essential storytelling
+  does not require browser-only effects.
+- A new install's onboarding starts in Basic Dark from its first frame with Basic Dark preselected, whatever look was
+  shown before and without changing stored values; Run Onboarding Again starts in the look then shown, NieR Mode included,
+  preselected, and never switches look as it opens (DL-153).
+- The wake at the window's opening, the act card at a chapter's end and the curtain call at Ready take five styles, one
+  per look family, as F3-600 sets out.
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Backup is located/reached before required protected unlock;
+  follow-ups are joined to their parent; explanation-only duplicates are removed while functional sections remain; one
+  inert-state basis survives replacement; unreadable Project state does not repeatedly mute the preview.'
+- 'QA2 follow-up N1, integration 6609384fd0; DL-258: A reached backup place is bound to the selected service or device,
+  not a reusable signed-in/ready boolean. Choosing another source, service, device, Kit or folder invalidates its old
+  reach proof, protected access fields, unlock, copy selection and completed bucket check. A late sign-in/check result
+  stays bound to the service/device it authenticated and cannot advance a different current choice. A protected SSH key
+  passphrase unlock belongs to that exact selected key; changing keys requires that key’s own owner-proven access and
+  never inherits another key’s unlock. The Remote Link endpoint belongs only to the Remote Link route; choosing Only
+  at home/local-or-VPN, Tailscale or another route clears it from the reviewed draft. No stale endpoint enters an unrelated
+  route.'
+- 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
+  publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. D2 A: explicit
+  always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer SSH key types,
+  China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer from onboarding.
+  The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
+  setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D3 A: generated proxy settings
+  support Caddy, NGINX and Traefik, with Caddy the default. Nginx Proxy Manager is existing-only: it can be selected
+  as an existing proxy but never sent to a generation/install/export operation. New-Server managed setup, export-only
+  and existing-proxy validation are separate owner continuations; generating a file does not prove installation, public
+  consent, DNS/TLS, endpoint identity or live-route success. For generation, onboarding proxy_kind is exactly caddy,
+  nginx or traefik and maps to reverse_proxy_configuration.proxy_family. The existing-proxy branch may record nginx_proxy_manager
+  but never emits a generated-configuration record; neither branch silently substitutes a family. D4: confirm provider
+  admission and executable conformance immediately before building Puppet Master. The wizard lists its provider choices
+  without unconfirmed/not-verified badges, warnings or caveats. This scheduling decision does not change per-account
+  authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable result, not
+  merely signed in. D6 A: the human signs in on the initiating active device while the AI/tool runs on the selected execution
+  host. Official tool sign-ins and private account roots stay with that tool on that host; direct API keys are held by
+  Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and Usage share stable
+  account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns are
+  bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
+  invalidates stale validation; another account of the same provider has a distinct identity. D7 B supersedes the former
+  no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in Tailscale
+  connection and sign in once through the shared protected auth owner, with no separate Tailscale app install. The same
+  signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per stable server_id;
+  a native Client installation keeps one active node per stable client_id, independent of Projects, windows, tabs, sessions
+  and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization, egress and secure-state
+  references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide bounded Dial/stream
+  access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server nodes retain the automatic
+  private listener; Funnel remains Server-only, explicit, off by default and unavailable on Headscale. Human approval
+  and reusable connection identity do not grant PM pairing/trust or work permission. A plain browser tab has no embedded
+  Tailscale connection: it needs Remote Link or a private endpoint reachable through the device’s own Tailscale connection.
+  It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale stays external and unmanaged. D8 A:
+  onboarding has one FileSafe switch, default on, covering command blocklist, write scope, security filter and pre-write
+  safe points together. Individual controls remain in Settings. The switch expresses a requested owner configuration,
+  never approval to bypass a required guard, an absent allowlist/baseline, failed canonical-path resolution, failed initialization
+  or failed safe-point persistence. Mandatory policy and effective guard state win; a refused change stays refused with
+  a clear reason. No failure silently turns a guard off. ELI5: the wizard bar and Guided Tour bar expose the same global
+  general.interaction.mode through the Settings owner, with values ELI5 and Expert, labels Plain English and Expert,
+  and default ELI5. Both bars reflect the same effective state. Every opened onboarding question tip and prose help section
+  has useful Plain English and technical versions, including FileSafe, service differences, storage, remote access and
+  AI/auth choices, assuming no coding experience. Screen copy, control labels, exact fingerprints, paths and receipt
+  data stay single; dual copy is limited to tips/help (DL-126). A mode change updates an open tip without rewriting a
+  chat reply. Existing cmd.settings.transaction.preview/apply owns the preference; ui.guided_tour.toggle_eli5 is a compatibility
+  local adapter to that shared preference, not a tour-only setting or chat ELI5 command. The predecessor tour_narration_only
+  tag is retired.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"

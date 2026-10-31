@@ -1134,21 +1134,22 @@
           "RP-PROJECTION-3GEN",
           "Q-CRITICAL"
         ],
-        "hold_rule": "Active routes, connector identity/configuration generations, redacted authorization-operation metadata, public-ingress policy, migration journals/receipts, tests, recovery, and backup refs hold required values.",
+        "hold_rule": "Active routes, connector identity/configuration generations, redacted authorization-operation metadata, public-ingress policy, migration journals/receipts, tests, recovery, and backup refs hold required values. Current holds include the explicit connector owner role and stable Server or native Client installation identity.",
         "expiry_rule": "Old route/connector generations and bounded process/health projections compact only after migration commit, reconnect convergence, rollback release, secure-state reference release, and reference release."
       },
       "redaction_transform_ids": [
         "rt.server_remote_metadata.v1",
         "rt.auth_browser_session_exclusion.v1"
       ],
-      "migration_rule": "The former pm.remote_access_system.tailscale_route_configuration.v1 is a read-only compatibility input to the connector migration record, never a continuing writer or host-state import. The migration binds one connector_id to one server_id, preserves only non-secret route intent and redacted refs, emits a domain receipt distinct from the sole terminal Storage migration receipt, and never ingests or clones host Tailscale state, node/auth/pre-auth keys, reusable authorization URLs, cookies, IPC secrets, or tailnet identity.",
+      "migration_rule": "The former pm.remote_access_system.tailscale_route_configuration.v1 is a read-only compatibility input to the connector migration record, never a continuing writer or host-state import. The migration binds one connector_id to one server_id, preserves only non-secret route intent and redacted refs, emits a domain receipt distinct from the sole terminal Storage migration receipt, and never ingests or clones host Tailscale state, node/auth/pre-auth keys, reusable authorization URLs, cookies, IPC secrets, or tailnet identity. DL-259 preserves this legacy migration as Server-owned; it never clones a Server identity into a native Client. Fresh native Client ownership binds one connector_id to its stable owner_client_id and native installation reference.",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
       "runtime_evidence": false,
-      "rationale": "Remote route and PM-owned connector configuration, identity, redacted authorization-operation metadata, policy/projection, health, migration, and receipt facts are durable public values and remain physically unregistered. secure_state_ref is an opaque Server-owned reference only; raw tsnet state and key material are outside ordinary redb/seglog custody.",
+      "rationale": "Remote route and PM-owned connector configuration, identity, redacted authorization-operation metadata, policy/projection, health, migration, and receipt facts are durable public values and remain physically unregistered. secure_state_ref is an opaque Server-owned reference only; raw tsnet state and key material are outside ordinary redb/seglog custody. DL-259 D7 B qualifies current connector ownership by Server or native Client installation. Non-secret metadata and opaque secure-state refs remain owner-local; native Client keys never move into Server state. No physical family is admitted by this amendment.",
       "source_refs": [
         "Plans/Remote_Access_System.md",
-        "Plans/remote_access_system_contracts.schema.json"
+        "Plans/remote_access_system_contracts.schema.json",
+        "Plans/Decision_Log.md#DL-259"
       ]
     },
     {
@@ -14680,7 +14681,8 @@
                 ]
               },
               "filesafe": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "DL-259 D8 A: one requested switch for command blocklist, write scope, security filter and pre-write safe points; effective mandatory/fail-closed policy still wins."
               },
               "online_mode": {
                 "enum": [
@@ -15457,8 +15459,7 @@
                     "repository_visibility": {
                       "enum": [
                         "private",
-                        "public",
-                        "internal"
+                        "public"
                       ]
                     }
                   }
@@ -15503,8 +15504,7 @@
                     "repository_visibility": {
                       "enum": [
                         "private",
-                        "public",
-                        "internal"
+                        "public"
                       ]
                     }
                   }
@@ -15580,6 +15580,9 @@
                     },
                     "proxy_tls": {
                       "type": "null"
+                    },
+                    "remote_endpoint": {
+                      "const": ""
                     }
                   }
                 }
@@ -15623,6 +15626,9 @@
                     },
                     "proxy_tls": {
                       "type": "null"
+                    },
+                    "remote_endpoint": {
+                      "const": ""
                     }
                   }
                 }
@@ -15644,6 +15650,9 @@
                       "const": "check_existing_then_sign_in_once"
                     },
                     "headscale_url": {
+                      "const": ""
+                    },
+                    "remote_endpoint": {
                       "const": ""
                     }
                   }
@@ -15667,6 +15676,9 @@
                     },
                     "headscale_url": {
                       "$ref": "#/$defs/onboarding__https_url"
+                    },
+                    "remote_endpoint": {
+                      "const": ""
                     }
                   }
                 }
@@ -15811,6 +15823,143 @@
                   "properties": {
                     "repository_ref": {
                       "$ref": "#/$defs/onboarding__bounded_nonsecret_non_empty_string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "forge": {
+                      "const": "cursor_origin"
+                    },
+                    "repository_owner_scope": {
+                      "const": "personal"
+                    }
+                  },
+                  "required": [
+                    "forge",
+                    "repository_owner_scope"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "repository_visibility": {
+                      "const": "private"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "forge": {
+                      "const": "github"
+                    },
+                    "repository_owner_scope": {
+                      "const": "personal"
+                    },
+                    "online_mode": {
+                      "enum": [
+                        "new",
+                        "existing"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "forge",
+                    "repository_owner_scope",
+                    "online_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "repository_visibility": {
+                      "enum": [
+                        "private",
+                        "public"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "forge": {
+                      "enum": [
+                        "bitbucket_cloud",
+                        "bitbucket_data_center"
+                      ]
+                    },
+                    "online_mode": {
+                      "enum": [
+                        "new",
+                        "existing"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "forge",
+                    "online_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "repository_container": {
+                      "$ref": "#/$defs/onboarding__bounded_nonsecret_non_empty_string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "forge": {
+                      "const": "bitbucket_cloud"
+                    },
+                    "online_mode": {
+                      "enum": [
+                        "new",
+                        "existing"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "forge",
+                    "online_mode"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "repository_project": {
+                      "$ref": "#/$defs/onboarding__bounded_nonsecret_non_empty_string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "proxy_hosting": {
+                      "enum": [
+                        "generate_for_server",
+                        "generate_only"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "proxy_hosting"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "proxy_kind": {
+                      "enum": [
+                        "caddy",
+                        "nginx",
+                        "traefik"
+                      ]
                     }
                   }
                 }
