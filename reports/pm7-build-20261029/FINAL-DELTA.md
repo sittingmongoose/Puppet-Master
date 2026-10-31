@@ -1,6 +1,6 @@
 # Final source delta at 44d0d3a1b1 — 2026-10-31
 
-Text/contract work only. Ten rows add coverage to the previous 137: **147 rows / 735 required cells**. FO-9 is a covered owner invariant with a pending final implementation. No WIP commit is merged. The prior GLM result stays pinned to its reviewed head.
+Text/contract work only. Eleven rows add coverage to the previous 137: **148 rows / 740 required cells**. FO-9 is a covered owner invariant with a pending final implementation. No WIP commit is merged. The prior GLM result stays pinned to its reviewed head.
 
 | Item | Source and product result | Owner / companion |
 |---|---|---|
@@ -13,8 +13,8 @@ Text/contract work only. Ten rows add coverage to the previous 137: **147 rows /
 | FS-1 | Current generator and Scheduled partner rules accent affected marks/lines only; no hover dimming or Pip body/seat/label recolouring. State-based quiet remains. | F3-566/F3-595/ACD-501 and their command/wiring consumers; DR-044; feedback schema and 4 source checks |
 | FS-2 | Fixed paper words count actual insets; final chapter keeps clear of You after offsets. Compact omits model lines intentionally; full retains one. | F3-595/DR-044; plate_text; no source constants, new mode or forced Retro model line |
 | FX-1 Terminal | 229cbf9eae's workgroup/pane paths contradict DL-181/UCC-201 retirement. Lead 1031172232-d3b6 and 1031172424-3930 confirm these are dead code and will be reverted. | No Terminal/workgroup rows, rule changes or commands. Existing panel-tab rename/inline running-session close remain exact. |
-| FX-1 PDF | Await foundations' final source; the preview-specific timing/no-storage inference is not a product rule. | No new PDF row yet. APR-003/F3-635/ACD-500 and existing export route stay exact pending final. |
+| FX-1 PDF | Final d8df03ac18 read after the 44d0 batch was pushed. Failed export/print closes its unusable temporary window and reports no PDF; opening print is no file proof. | APR-003/F3-635/ACD-500/DL-259 and DR-020; existing cmd.chat.plan.export row; PDFExportReceiptPolicy plus 3 schema cases. No preview reasons or new command. |
 
 No demo host, hint, prefill, preview/sandbox workaround, no-storage guarantee or T3 mechanics becomes canon. No new setting, command, action, handler, binding, event, owner authority or stored family. Historical DL-258 remains the record; DL-259/FS-1 supersedes its hover dimming in every active consumer.
 
-No browsers, full gates, dry landing, landing lock, landing, baseline refresh or reseal. No ledger compiled. 15/15 focused/regeneration/guard checks pass; 24 isolated source checks/cases and 144 schema cases pass. REPORT.md/verification.json pin all results and immutable hashes.
+No browsers, full gates, dry landing, landing lock, landing, baseline refresh or reseal. No ledger compiled. The 44d0 batch passed 15/15 focused/regeneration/guard checks; the PDF final follow-up passes 11/11 affected focused/regeneration/guard checks. PM7 schema cases are now 147. Current results/hashes are in REPORT.md/verification.json.

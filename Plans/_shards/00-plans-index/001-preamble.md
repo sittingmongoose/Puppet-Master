@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L40
+Source lines: L1-L43
 
-Source SHA256: `eab4c07dbbf19c9fa39399eed05bf118781554f200a443fedc1784c2f97c1da4`
+Source SHA256: `cca991848793334baab5badf3e04ac8db6a18e4082e6200940d78820638387ed`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-10-31: DL-259 FX-1 final keeps PDF export receipts truthful: a failed print/export closes its unusable temporary window, reports that no PDF was made, and never treats opening print as file-creation proof. Exact Plan revision and existing artifact command/receipt ownership remain.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Assistant_Plan_Runtime.md#APR-003, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/DRY_Rules.md#DR-020
 
 - 2026-10-31: DL-259 final product delta preserves provider identity-only rows, selected-card help visibility, same-screen protected input, answered pairing, full Copy acknowledgment and verified partial Creating phases. FS-1 supersedes cast dimming with accent-only emphasis; FS-2 preserves readable paper/chapter labels and intentional names-only compact plates.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-259, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/Server_System.md#SRV-004, ContractName:Plans/FinalGUISpec.md#F3-182, ContractName:Plans/FinalGUISpec.md#F3-595

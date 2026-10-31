@@ -19055,7 +19055,12 @@ canonical_text: 'Jared 2026-10-31: canonical Plans specify real product behavior
   User-supplied job text retains the existing bounded fit. BrainStorm’s final chapter name keeps a visible gap from You
   after all placement offsets; labels never run together. Preserve the richest-mode-that-fits and no-scale/no-scroll
   yield rules: compact means names only and intentionally omits model lines, including Retro; full mode retains its model
-  line. This adds no new plate mode, glyph, status or model-selection behavior.'
+  line. This adds no new plate mode, glyph, status or model-selection behavior. DL-259 FX-1 final, 2026-10-31: an export/print
+  attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt
+  and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created.
+  A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure
+  or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command,
+  receipt family or platform-detection mechanism.'
 gui_related: true
 gui_classification_reason: Sets actual onboarding choices, shared explanation controls, native connection setup and Pip/notice
   presentation.
@@ -19274,6 +19279,11 @@ acceptance_criteria:
   If export or printing is unavailable, blocked or fails before producing a file, say plainly that no PDF was made and
   keep the exact Plan revision unchanged. The existing artifact owner’s verified result is the only success evidence;
   cancellation and failure cannot produce a successful export receipt.'
+- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
+  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
+  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
+  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
+  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
 validation_surfaces:
 - python3 scripts/pm7-onboarding-rulings-check.py
 - python3 scripts/pm-new-contracts-verify.py
@@ -19316,6 +19326,8 @@ source_lineage:
 - 'PM7 final product delta at 44d0d3a1b1: final-onb FO-4–9, srv/fields/found/chatpip reports; FO-9 b75da99bef and FX-1
   229cbf9eae are WIP source evidence, not final implementation acceptance. Historical DL-258 Q17 is superseded by FS-1;
   DL-181 workgroup retirement remains.'
+- 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
+  1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
 preserved_exact_tokens:
 - D1 A
 - D2 A

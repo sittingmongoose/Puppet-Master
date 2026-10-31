@@ -1,3 +1,17 @@
+# Plans lane — FX-1 final PDF receipt follow-up, 2026-10-31
+
+**11/11 affected focused/regeneration/guard checks PASS.** Branch `t3/plans/pm7-plans-canon`, parent `3d4ce5c0d35222bd1f214b80043d934c218fed74` already pushed to both remotes. Foundations final source `d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b` and its report were read on the lead's final mail. The final GUI branch is not merged here; the lead owns that integration. The resulting full canon head is mailed after push.
+
+**One added product row: FX-1-PDF.** Coverage is **148 rows / 740 required cells**. Existing APR-003/F3-635/ACD-500 export owners, DR-020 and DL-259 now require a truthful result/receipt and visible failure notice when no PDF was made, cleanup of an unusable temporary print window, and no file-creation claim merely because print opened. Exact Plan revision, artifact command and receipt family stay unchanged. No preview, no-storage, timing, T3 or browser-policy mechanism becomes canon. Terminal/workgroup dead paths remain excluded and retired.
+
+**Companions:** existing `assistant.redesign.w_020.chat_plan_export` / `cmd.chat.plan.export` receives the result acceptance check. Static PDFExportReceiptPolicy adds three cases: one positive and two false-success refusals. PM7 now has **147 schema cases**. Five existing units in six owner/index documents change; five regenerated source groups all correspond to edited owners. No new request field, setting, command, handler, binding, event, storage family or receipt identity.
+
+**Validation:** PM7 build/canon, product/source boundary, wiring and 148-row coverage pass. Earlier 24 source checks still pass within canon verification; the final PDF GUI is read as source, not executed or visually certified. Shards generate/check at **2,958 / 99 sources**; index generate/validate at **7,243 units / 96 documents / 29,084 acceptance units** and runtime certification remains incomplete. Settings1,010, status22, Pip25, bindings483, Touch715/140 and production1,269 remain unchanged. All earlier **603** artifact hashes and historical Decision Log bytes outside DL-259 are preserved. Manifest now has **616 immutable artifacts (13 new text files)**, SHA-256 `4991a5f4770971fe37dccce31c147bb2d8ce08310e04c81370da2e06bec6e833`; `fx1-final-guard.txt` pins current changed source bytes.
+
+**Pending:** FO-9 final source/merge/checks only. Its verified-phase owner rule is already covered. No browsers, full gates, dry landing, landing, lock, baseline refresh or reseal. No ledger compiled. T3 mailbox ringing is registered, with no waiter required. The preceding 44d0 batch and its 15/15 checks remain historical below.
+
+---
+
 # Plans lane — final text delta at 44d0d3a1b1, 2026-10-31
 
 **Complete for the current source delta. 15/15 focused/regeneration/guard checks PASS.** Branch `t3/plans/pm7-plans-canon`; integration `44d0d3a1b11166dbec82de1cba9c09eb72993b59` merged by fast-forward. The full resulting head is mailed after push. No WIP commit is merged. Coverage is **147 real product rows / 735 required cells**; ten rows add FO-4–9, FS-1 and the three plate observations. The independent GLM result remains pinned to its earlier reviewed canon, not an exhaustive audit of this delta.

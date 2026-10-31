@@ -3422,6 +3422,22 @@
           "second_Retro_fit_engine": false
         }
       }
+    },
+    "PDFExportReceiptPolicy": {
+      "description": "DL-259 FX-1 final. Static outcome/feedback rule; not a native request or platform-detection API.",
+      "const": {
+        "decision_ref": "Plans/Decision_Log.md#DL-259",
+        "owner_ref": "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "contract_scope": "static_PDF_export_receipt_policy_only",
+        "existing_command": "cmd.chat.plan.export",
+        "receipt_uses_actual_artifact_owner_result": true,
+        "print_flow_opened_proves_file_created": false,
+        "no_file_claims_successful_PDF": false,
+        "failure_notice_names_no_PDF": true,
+        "unusable_temporary_print_window_closed": true,
+        "failure_cancel_changes_exact_Plan_revision": false,
+        "new_command_receipt_or_platform_detection": false
+      }
     }
   }
 }

@@ -115,7 +115,8 @@ async function main() {
   counts.copy_help_source_checks = 2;
   return { status: failures.length ? 'fail' : 'pass', counts, failures,
     claim_boundary: 'static_and_isolated_source_functions_only_no_browser_native_pixel_or_WIP_acceptance',
-    pending_final_sources: ['FO-9', 'FX-1_PDF'] };
+    pending_final_sources: ['FO-9'],
+    resolved_final_source: { 'FX-1_PDF': 'd8df03ac1820a7cb68d0d1b4897eeb03fa228a6b' } };
 }
 main().then(result => {
   process.stdout.write(JSON.stringify(result, null, 2));

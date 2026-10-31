@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6208,
+      "line_count": 6211,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "eab4c07dbbf19c9fa39399eed05bf118781554f200a443fedc1784c2f97c1da4",
+      "sha256": "cca991848793334baab5badf3e04ac8db6a18e4082e6200940d78820638387ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 28483,
+      "line_count": 28533,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 491,
       "plan_unit_ids": [
@@ -1474,7 +1474,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "e31d9325d8c0ba56206e7e2bd489e634a5a9fcd7d03e0252a235f1e60ccf6648",
+      "sha256": "f844135b97b3285cd88b3f0e377906be3dc72329a13056057c7b0e966720a041",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 488,
@@ -1755,7 +1755,7 @@
         "Plans/ToDo_Runtime.md",
         "Plans/assistant-chat-design.md"
       ],
-      "line_count": 1882,
+      "line_count": 1897,
       "path": "Plans/Assistant_Plan_Runtime.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -1803,7 +1803,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "419cd8888dee1eb1707dbf17f1e0691363f45bc621bcec47828d2309adeb7af8",
+      "sha256": "fce1177bd7799621d305c9163a93c8337696c0c909aeaf89de93d541a0af2cc6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -5796,7 +5796,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 19418,
+      "line_count": 19430,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 239,
       "plan_unit_ids": [
@@ -6206,7 +6206,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "9ffbab09290d907d8c413ab1a8652f1d99100320cc64d4ac3c624fe00c695abd",
+      "sha256": "473092890d44ade59ccb8017ed991d94ca3e579bb6186ac06494c6347e8529f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 239
@@ -6572,7 +6572,7 @@
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 4790,
+      "line_count": 4802,
       "path": "Plans/DRY_Rules.md",
       "plan_unit_count": 70,
       "plan_unit_ids": [
@@ -6670,7 +6670,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "33c880dff592ebd1ae75e5ebd6bf80dc8d519ba2bb9c3205753ffe4e4ed8b5de",
+      "sha256": "2007ad15f3711117dfb73bb39bda1534957740a1994f0bb8c9c0ea8fa14147b9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69,
@@ -7783,7 +7783,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 51076,
+      "line_count": 51087,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 653,
       "plan_unit_ids": [
@@ -8582,7 +8582,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "d3b7ff7fb0b512c5fe7512b279719d162f1292a086dc68fc3f60d91b7afa8753",
+      "sha256": "554a3e44f283353e36c4e7e4aac06544dff2a7ec0b7a2e00cccd84b5abd72f0f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 645,
@@ -21051,7 +21051,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-31T17:35:04Z",
+  "generated_at_utc": "2026-10-31T17:44:01Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
