@@ -48170,8 +48170,19 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         if(w){
           w.document.write(printDocument(r));
           w.document.close();
-          try{ w.print(); }catch(e){}
-          result='opened the browser print pipeline — whether a PDF was written is the browser’s decision, not this page’s';
+          /* FX-1: a sandboxed preview without allow-modals (T3's file preview) ignores print() at once, and the window it
+             opened is sandboxed too, so it stayed open with no print dialog. A page with no storage whose print() comes
+             straight back is that case: the window closes and the receipt and a note say no PDF was made. */
+          var t0=Date.now(), threw=false;
+          try{ w.print(); }catch(e){ threw=true; }
+          var noStorage=(function(){ try{ localStorage.getItem('pm56-print'); return false; }catch(e){ return true; } })();
+          if(threw||(noStorage&&Date.now()-t0<150)){
+            try{ w.close(); }catch(e){}
+            result='this preview blocks the print dialog (a sandboxed page), so no PDF was produced; open the page in a browser to print it';
+            ctx.toast('Print unavailable here','This preview blocks the print dialog, so no PDF was made. Open the page in a browser to print it.');
+          } else {
+            result='opened the browser print pipeline — whether a PDF was written is the browser’s decision, not this page’s';
+          }
         } else {
           result='the browser blocked the print window — no PDF was produced';
         }
