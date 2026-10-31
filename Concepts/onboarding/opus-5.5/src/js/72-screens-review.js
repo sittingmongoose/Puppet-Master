@@ -432,7 +432,7 @@
     S.sess.commit = { state: 'none' };
     S.save(); O55.ui.go('review');
   }
-  const REASON_COPY = { central_dispatch_unavailable: 'waitingHost', concurrent_resume_active: 'claimBusy', forge_owner_gated: 'deleteGated', no_verified_binding: 'noBinding', remote_unknown_reconcile_only: 'unknownOnly', no_verified_remote_identity: 'noRemote', no_verified_recovery: 'noRemote', stale_setup_binding: 'stale', stale_generation: 'stale', stale_nonce: 'mismatch', stale_composition: 'stale', recovery_mismatch: 'mismatch', pending_no_result: 'pending', resume_armed: 'armed', delete_adopted: 'deleted', delete_not_confirmed: 'confirmFirst', open_unavailable: 'openUnavailable', unknown_command: 'openUnavailable', needs_review_confirmation: 'openUnavailable' };
+  const REASON_COPY = { central_dispatch_unavailable: 'waitingHost', concurrent_resume_active: 'claimBusy', forge_owner_gated: 'deleteGated', no_verified_binding: 'noBinding', remote_unknown_reconcile_only: 'unknownOnly', no_verified_remote_identity: 'noRemote', no_verified_recovery: 'noRemote', stale_setup_binding: 'stale', stale_generation: 'stale', stale_nonce: 'mismatch', stale_composition: 'stale', recovery_mismatch: 'mismatch', pending_no_result: 'pending', resume_armed: 'armed', delete_adopted: 'deleted', repository_deleted: 'deleted', delete_not_confirmed: 'confirmFirst', open_unavailable: 'openUnavailable', unknown_command: 'openUnavailable', needs_review_confirmation: 'openUnavailable' };
   function reasonCopy(code) { return T('creating.recovery.reasons.' + (REASON_COPY[code] || 'other')); }
   /* Plain recovery status; technical IDs live only in the details disclosure below it. */
   function githubStatus(S) {
@@ -464,20 +464,27 @@
     }
     if (cm.state === 'recovery') {
       const r = cm.recovery, repo = repoDisplay(S);
-      const gC = PR().effectiveContinue(O55.ownerResults, cm, d), gO = PR().effectiveOpen(cm), gD = PR().effectiveDelete(cm);
+      const gC = PR().effectiveContinue(O55.ownerResults, cm, d), gO = PR().effectiveOpen(cm), gD = PR().effectiveDelete(cm, O55.ownerResults);
       let out = `<div class="o55-banner o55-banner-warn" data-key="recovery">${C.small('cloud', 18)}<span>${U.esc(T(R + 'notice', { repo, service: svc }))}</span></div>`;
       if (cm.settingsPublishError) out += C.note(T('creating.settingsPublishError'), 'warn', 'stack');
-      out += `<div class="o55-actions" data-key="routes">${btn(T(R + 'continue'), 'continueSetup', !gC.available, reasonCopy(gC.reason))}`
-        + `${btn(T(R + 'open'), 'openRepo', !gO.available, reasonCopy(gO.reason))}${btn(T(R + 'delete'), 'deleteRepo', !gD.available, reasonCopy(gD.reason))}</div>`;
-      out += `<p class="o55-hint" data-key="routereasons">${U.esc(reasonCopy(gC.reason))} · ${U.esc(reasonCopy(gD.reason))}</p>`;
-      if (cm.deleteConfirm) {
+      /* the online copy deleted: the half-made setup can only start again from a fresh review */
+      if (cm.deleteReceipt) {
+        out += `<p class="o55-hint" data-key="deleted">${U.esc(T(R + 'reasons.deleted', { repo, service: svc }))}</p>`
+          + `<div class="o55-actions" data-key="safechoices">${O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`;
+      } else {
+        out += `<div class="o55-actions" data-key="routes">${btn(T(R + 'continue'), 'continueSetup', !gC.available, reasonCopy(gC.reason))}`
+          + `${btn(T(R + 'open'), 'openRepo', !gO.available, reasonCopy(gO.reason))}${btn(T(R + 'delete'), 'deleteRepo', !gD.available, reasonCopy(gD.reason))}</div>`;
+        const why = Array.from(new Set([gC, gD].filter((g) => !g.available).map((g) => reasonCopy(g.reason))));
+        if (why.length) out += `<p class="o55-hint" data-key="routereasons">${U.esc(why.join(' · '))}</p>`;
+      }
+      if (cm.deleteConfirm && !cm.deleteReceipt) {
         out += `<div class="o55-confirm" data-key="deleteconfirm"><span>${U.esc(T(R + 'deleteConfirm', { repo, service: svc }))}</span>`
           + `<span class="o55-hint">${U.esc(T(R + 'deleteWarn'))}</span> `
           + `${O55.ui.btn({ label: T(R + 'deleteYes'), do: 'confirmDelete', cls: 'o55-small' }, 'o55-primary')} `
           + `${O55.ui.btn({ label: T(R + 'deleteNo'), do: 'cancelDelete', cls: 'o55-small' }, 'o55-ghost')}</div>`;
       }
-      if (cm.deleteReceipt) out += `<p class="o55-hint" data-key="deleted">${U.esc(T(R + 'reasons.deleted'))}</p>`;
-      out += `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
+      if (!cm.deleteReceipt) out += `<div class="o55-actions" data-key="recheck">${again}</div>`;
+      out += note;
       const rows = [['original command', r.original_command_id], ['original instance', r.original_command_instance_id],
         ['original key', r.original_idempotency_key], ['terminal result', r.original_terminal_result_ref],
         ['terminal digest', r.original_terminal_result_sha256], ['recovery', r.recovery_id],
@@ -566,18 +573,16 @@
       continueSetup(S) {
         const cm = S.sess.commit, gate = PR().effectiveContinue(O55.ownerResults, cm, md(S));
         if (!gate.available) { cm.routeNote = gate.reason; S.save(); O55.ui.refresh(); return; }
-        const arm = PR().armResumeRequest(O55.ownerResults, cm, md(S));
-        if (!arm.ok) { cm.routeNote = arm.reason; S.save(); O55.ui.refresh(); return; }
-        const g = PR().effectiveContinue(O55.ownerResults, cm, md(S));
-        cm.routeNote = g.available ? 'resume_armed' : g.reason;
-        S.save(); O55.ui.refresh();
+        /* (open only where the concept owner host stands in: its answer to this attempt finishes the setup) */
+        cm.routeNote = null; S.save(); O55.sound.play('tap');
+        return adoptResumePhase(S);
       },
       openRepo(S) {
         const cm = S.sess.commit, g = PR().effectiveOpen(cm);
         cm.routeNote = g.reason; S.save(); O55.ui.refresh();
       },
       deleteRepo(S) {
-        const cm = S.sess.commit, g = PR().effectiveDelete(cm);
+        const cm = S.sess.commit, g = PR().effectiveDelete(cm, O55.ownerResults);
         if (!g.available) { cm.routeNote = g.reason; S.save(); O55.ui.refresh(); return; }
         cm.deleteConfirm = true; cm.routeNote = null; S.save(); O55.ui.refresh();
       },
@@ -587,7 +592,7 @@
         if (!b.ok) { cm.routeNote = b.reason; S.save(); O55.ui.refresh(); return; }
         const v = PR().adoptDeleteResult(OR, cm, d, OR.take(cm.or_delete.id));
         if (!v.ok) { cm.routeNote = v.reason; S.save(); O55.ui.refresh(); return; }
-        cm.deleteConfirm = false; cm.routeNote = 'delete_adopted'; S.save(); O55.sound.play('success', SND.success); O55.ui.refresh();
+        cm.deleteConfirm = false; cm.routeNote = null; S.save(); O55.sound.play('success', SND.success); O55.ui.refresh();
       },
       rename(S) {
         if (PR().isGithubRemoteChain(md(S))) return reviewFresh(S);

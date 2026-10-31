@@ -13,13 +13,18 @@
     const ck = S.sess.ui.check;
     if (ck && (ck.state === 'done' || (ck.state === 'running' && O55.owners.opState('preflight:this_device')))) return;
     S.sess.ui.check = { state: 'running', done: [] }; S.save();
+    /* (a run started over meanwhile is not this one: its redraw can flush a fresh open that replaces the session, which
+       has no check of its own; tipmatch hit it opening screens one after another) */
+    const sess = S.sess;
     O55.owners.dispatch('cmd.project.source_location.test', { target: 'this_device' }, S.ctx(), () =>
       O55.owners.operation('preflight:this_device', [{ key: 'space', ms: 420 }, { key: 'history', ms: 380 }, { key: 'net', ms: 360 }], (st) => {
+        if (S.sess !== sess) return;
         const had = (S.sess.ui.check && S.sess.ui.check.done || []).length;
         S.sess.ui.check = { state: st.state, done: st.phases.filter((p) => p.status === 'done').map((p) => p.key), current: st.current };
         S.save();
         if (S.sess.screen !== 'where') return;
         O55.ui.refresh();
+        if (S.sess !== sess || !S.sess.ui.check) return;
         /* a chip that flips to its tick ticks with it, climbing; the last one is the finding (only while the chips show) */
         const n = S.sess.ui.check.done.length;
         if (S.open && n > had && (S.sess.ui.where || 'this') === 'this') O55.sound.play(st.state === 'done' ? 'found' : 'phase', st.state === 'done' ? FOUND : { step: n, intensity: 0.25 + 0.15 * n });

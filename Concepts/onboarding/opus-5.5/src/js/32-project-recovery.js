@@ -13,7 +13,9 @@
    - Remote verdicts arrive only as deliberately injected owner-shaped results adopted through the shared
      O55.ownerResults seam (operation/target/generation/nonce/postcondition gates). Transport timers never
      fabricate a remote outcome, and concept booleans never grant dispatch authority: without a host the
-     concept always fails closed.
+     concept always fails closed. The one stand-in is the concept owner host (30-owners.js), which answers
+     for the missing host on the published page: a recovery it reported opens Continue Setup and Delete
+     Repository only as its own route projection says, and only while it is still the one answering.
    Consumed owner-shaped result fields are documented in
    reports/packet-integration-completion-20260926/project-concept-consumer.md. */
 (function () {
@@ -72,6 +74,10 @@
   }
   function validBinding(b) {
     return !!b && nonEmpty(b.provider) && nonEmpty(b.normalized_host) && nonEmpty(b.account_id) && nonEmpty(b.provider_repository_id);
+  }
+  /* the recovery was reported by the concept owner host, and that host still stands in (no real host, not turned off) */
+  function standIn(OR, r) {
+    return !!(r && r.stand_in && OR && typeof OR.conceptOn === 'function' && OR.conceptOn());
   }
   function sameBinding(a, b) {
     return !!a && !!b && a.provider === b.provider && a.normalized_host === b.normalized_host &&
@@ -138,7 +144,7 @@
       settled_effects: settled, remaining_effects: remaining, active_resume_claim: null,
       composition_revision: res.composition_revision, composition_sha256: res.composition_sha256,
       route_availability: res.route_availability || derivedRoutes(state),
-      failure_reason: res.failure_reason || null };
+      failure_reason: res.failure_reason || null, stand_in: res.concept === true };
     cm.or_resume = null; cm.resumeAttempt = null; cm.deleteConfirm = false; cm.deleteReceipt = null;
     /* An accepted terminal report lists the Project at once: no recovery round is needed. */
     if (res.accepted === true && state === 'verified_created' && nonEmpty(res.listed_project_id)) {
@@ -237,6 +243,8 @@
       (claim.attempt_command_instance_id === cm.resumeAttempt.instance && claim.attempt_idempotency_key === cm.resumeAttempt.key);
     if (!draftCurrent) return { available: false, reason: 'stale_setup_binding' };
     if (!claimLive) return { available: false, reason: 'concurrent_resume_active' };
+    if (cm.deleteReceipt) return { available: false, reason: 'repository_deleted' };
+    if (standIn(OR, r) && retained.available === true) return { available: true, reason: 'concept_host' };
     return { available: false, reason: retained.reason === 'concurrent_resume_active' ? 'concurrent_resume_active' : 'central_dispatch_unavailable' };
   }
   function effectiveOpen(cm) {
@@ -244,23 +252,26 @@
     if (!r || r.remote_effect_state !== 'verified_created' || !validBinding(r.repository_binding)) {
       return { available: false, reason: 'no_verified_binding' };
     }
+    if (cm.deleteReceipt) return { available: false, reason: 'repository_deleted' };
     const retained = (r.route_availability || {}).open_repository || {};
     if (retained.available === false) return { available: false, reason: retained.reason || 'no_verified_binding' };
     return { available: false, reason: 'central_dispatch_unavailable' };
   }
-  function effectiveDelete(cm) {
+  function effectiveDelete(cm, OR) {
     const r = cm.recovery;
     if (!r) return { available: false, reason: 'no_verified_binding' };
     if (r.remote_effect_state === 'unknown') return { available: false, reason: 'remote_unknown_reconcile_only' };
     if (r.remote_effect_state !== 'verified_created' || !validBinding(r.repository_binding)) {
       return { available: false, reason: 'no_verified_binding' };
     }
+    if (cm.deleteReceipt) return { available: false, reason: 'repository_deleted' };
+    if (standIn(OR, r) && ((r.route_availability || {}).delete_repository || {}).available === true) return { available: true, reason: 'concept_host' };
     return { available: false, reason: 'forge_owner_gated' };
   }
 
   function beginDeleteRequest(OR, cm, d) {
-    const g = effectiveDelete(cm);
-    if (g.reason !== 'forge_owner_gated' || !cm.deleteConfirm) return { ok: false, reason: cm.deleteConfirm ? g.reason : 'delete_not_confirmed' };
+    const g = effectiveDelete(cm, OR);
+    if (!(g.available || g.reason === 'forge_owner_gated') || !cm.deleteConfirm) return { ok: false, reason: cm.deleteConfirm ? g.reason : 'delete_not_confirmed' };
     if (!cm.or_delete) cm.or_delete = OR.begin(REPOSITORY_DELETE, { project: d.project_draft_ref, generation: d.project_draft_revision });
     return { ok: true, request: cm.or_delete };
   }

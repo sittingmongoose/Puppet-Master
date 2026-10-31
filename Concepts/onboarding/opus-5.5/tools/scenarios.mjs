@@ -925,6 +925,42 @@ def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore sto
   await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
 });
 /* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
+/* situation githubHalfMade: GitHub makes the copy, then this computer's part stops once (the lead, 2026-10-31: "Resume
+   and delete after a partial creation stay unanswered"); the concept host answers Continue Setup and Delete Repository */
+async function toHalfMade(d, A) {
+  await d.openOnboarding(); await conceptOn(d); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 8000); await d.primary();
+  await d.primary(); await d.primary(); await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'recovery'", 'GitHub copy made, setup stopped', 20000);
+  A.ok(await d.state(() => /was created on GitHub, but the rest of the setup didn't finish/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says the copy was made and the rest did not finish');
+  A.ok(await d.state(() => !window.O55.S.sess.commit.projectId), 'no Project is published yet');
+  const dis = (a) => d.page.evaluate((x) => { const b = document.querySelector(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="${x}"]`); return !b ? 'missing' : b.getAttribute('aria-disabled') === 'true' || b.disabled ? 'off' : 'on'; }, a);
+  A.eq(await dis('continueSetup'), 'on', 'Continue Setup can be pressed'); A.eq(await dis('deleteRepo'), 'on', 'Delete Repository can be pressed');
+  A.eq(await dis('openRepo'), 'off', 'Open Repository stays off in the preview');
+}
+def('pr38', 'fresh+githubHalfMade', 'Situation githubHalfMade: Continue Setup finishes the half-made GitHub Project (the concept host answers the resume)', async (d, A) => {
+  await toHalfMade(d, A);
+  await d.act('continueSetup');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'set up', 10000);
+  const r = await d.state(() => { const cm = window.O55.S.sess.commit, rc = cm.recovery; return { pid: cm.projectId, left: rc.remaining_effects.length, claim: !!rc.active_resume_claim, seq: cm.resumeAttempt && cm.resumeAttempt.sequence, origKey: cm.original.key, resumeKey: cm.resumeAttempt && cm.resumeAttempt.key }; });
+  A.ok(!!r.pid, 'the Project is published'); A.eq(r.left, 0, 'nothing left to do'); A.ok(r.claim, 'one resume claim held');
+  A.ok(r.seq >= 2 && r.resumeKey !== r.origKey, 'a fresh resume attempt, never the original key');
+  await readyPrimary(d); await d.primary(); A.ok(['protect', 'ai'].includes(await d.screen()), 'then on past Creating (' + await d.screen() + ')');
+});
+def('pr39', 'fresh+githubHalfMade', 'Situation githubHalfMade: Delete Repository deletes only the online copy (the concept host answers), then the setup starts again from Review', async (d, A) => {
+  await toHalfMade(d, A);
+  await d.act('deleteRepo'); await d.act('cancelDelete');
+  A.ok(await d.state(() => !window.O55.S.sess.commit.deleteConfirm && !window.O55.S.sess.commit.deleteReceipt), 'Keep it keeps the copy');
+  await d.act('deleteRepo'); await d.act('confirmDelete');
+  A.ok(await d.state(() => !!window.O55.S.sess.commit.deleteReceipt), 'the delete is answered');
+  A.ok(await d.state(() => window.O55.S.sess.commit.state === 'recovery' && !window.O55.S.sess.commit.projectId), 'nothing is published or rolled back on this computer');
+  A.ok(await d.state(() => /is deleted from GitHub/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says the copy is deleted');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="continueSetup"], #pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="checkAgain"]')), 'no Continue Setup or Check again after the copy is gone');
+  await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'Review setup again goes back to Review');
+  await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'created on the fresh attempt', 20000);
+  A.ok(await d.state(() => !!window.O55.S.sess.commit.projectId), 'the fresh attempt publishes the Project');
+});
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
@@ -953,7 +989,8 @@ def('j1', 'fresh', 'Keep your work safe offers Git or Jujutsu in plain sight; Ju
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-seg button.o55-on[data-arg="git"]')), 'Git is the default');
   A.ok(!(await d.state(() => /jujutsu/i.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-key="r-online"]').textContent))), 'not offered as an online copy');
   await d.act('backend', 'jujutsu');
-  A.ok(await d.state(() => /not a website or an account/.test(document.querySelector('[data-key="hist-hint"]').textContent) && /GitHub/.test(document.querySelector('[data-key="hist-hint"]').textContent)), 'says what Jujutsu is, and that it works with GitHub');
+  /* (the plain-language rewrite, 0b2972b647: no service named, "No account needed") */
+  A.ok(await d.state(() => { const t = document.querySelector('[data-key="hist-hint"]').textContent; return /records every change/.test(t) && /online services still work/.test(t) && /No account needed/.test(t); }), 'says what Jujutsu is, that online services still work with it, and that it needs no account');
   A.eq((await d.draft('main')).history_backend, 'jujutsu', 'draft records jujutsu');
   await d.primary(); A.eq(await d.screen(), 'review', 'review');
   A.ok(await d.state(() => /Jujutsu/.test(document.querySelector('#pm-o55-onboarding [data-key="rv-history"]') ? document.querySelector('#pm-o55-onboarding [data-key="rv-history"]').textContent : document.body.textContent)), 'Review names Jujutsu');
@@ -1305,7 +1342,10 @@ def('lc4', 'keyWorks', "On a Server the NAS key is the Server's own, not this co
   await toNewServer(d, A); A.eq(await d.screen(), 'begin', 'Project chapter'); await d.primary();
   await d.type('name', 'Book club website'); await d.act('storage', 'network_location'); A.eq(await d.screen(), 'nas-find', 'a network drive');
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
-  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000);
+  /* (pm7-srv's SSH profile, 6bfe6653e6: a Server has no account of its own to assume, so the person names it first) */
+  A.eq(await d.screen(), 'nas-key', 'Choose a key'); A.ok(await d.state(() => !!document.querySelector('#o55f-sshUser')), 'asks which account on Home NAS the Server signs in to');
+  await d.type('sshUser', 'jared');
+  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys', 6000);
   A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="k-ed"]') && !!document.querySelector('.o55-card.o55-on[data-arg="new"]')), "this laptop's keys are not offered; a key is made on the Server");
   A.ok(!/this computer/.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-lead').textContent)), 'the lead names the Server');
 });
@@ -1322,7 +1362,10 @@ def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it aw
   A.eq(await d.screen(), 'away', 'asked about away from home first');
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'then the preview');
   await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('restore:') && v.state === 'done')", 'restored', 12000);
-  A.ok(await d.state(() => Object.entries(window.O55.S.sess.ops).some(([k, v]) => k.startsWith('restore:') && v.phases.some((p) => p.key === 'remote'))), 'the access is set up as part of the restore');
+  /* (pm7-srv, SCR-13, 7d26440bcc: the way in is not set up inside the restore; it is its own confirmed step after it) */
+  A.ok(await d.state(() => !Object.entries(window.O55.S.sess.ops).some(([k, v]) => k.startsWith('restore:') && v.phases.some((p) => p.key === 'remote'))), 'the restore itself sets up no way in');
+  await d.untilScreen('away-setup', 8000);
+  A.eq(await d.state(() => (window.O55.S.sess.awaySetup || {}).then || null), 'r-done', 'then the way in from away is its own step, and goes on to Restored');
 });
 
 /* ---------------------------------------------------------------------------------------------- runner */
