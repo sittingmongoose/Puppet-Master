@@ -29,13 +29,20 @@
   const BASES = ['fresh', 'returning'];
   const GROUPS = [
     { id: 'computer', ids: ['lowResource', 'noKeys'] },
-    { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'readOnly'] },
+    { id: 'nas', ids: ['homeNasPm', 'keyWorks', 'hostChanged', 'wrongPassword', 'keyRefused', 'selfKeyMissing', 'readOnly', 'smbWrong'] },
     { id: 'online', ids: ['nameTaken', 'flaky'], one: true },
     { id: 'ai', ids: ['cliMissing', 'signedOut', 'copiedUnavailable', 'remoteAi', 'noAi'], one: true },
     /* Pip's rough moments (W3): a browser sign-in that does not finish the first time; the second try works. They stack
        with every other group (the fixtures' signin_once) */
-    { id: 'pip', ids: ['antigravityOnce', 'githubSigninOnce'] }
+    { id: 'pip', ids: ['antigravityOnce', 'githubSigninOnce'] },
+    /* failure paths that work on the second try (the lead's ruling; onb's fixtures, one-shot like the rest): a restore
+       that stops part-way once, a pairing request that runs out */
+    { id: 'restore', ids: ['restoreFails'] },
+    { id: 'pairing', ids: ['pairExpires'] }
   ];
+  /* a twist is listed only when onboarding's fixtures have its scenario, so a list can name one before its fixture lands */
+  GROUPS.forEach((g) => { if (O55.fixtures) g.ids = g.ids.filter((id) => !!O55.fixtures.SCENARIOS[id]); });
+  for (let i = GROUPS.length - 1; i >= 0; i--) if (!GROUPS[i].ids.length) GROUPS.splice(i, 1);
   /* twists that describe the same thing two ways: picking one takes the other out (symmetric) */
   const CLASH = {};
   [['keyWorks', 'keyRefused'], ['keyWorks', 'selfKeyMissing'], ['keyWorks', 'noKeys'], ['homeNasPm', 'keyWorks'],
@@ -76,7 +83,7 @@
   const SCREEN_CHAPTERS = [
     ['welcome', ['welcome', 'look']],
     ['computer', ['where', 's-kind', 's-wait', 's-confirm', 's-ready', 'c-route', 'c-review', 'c-pair', 'c-ready', 'r-source', 'r-unlock', 'r-pick', 'r-preview', 'r-done']],
-    ['project', ['begin', 'ex-folder', 'ex-repos', 'nas-find', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'nas-folder', 'nas-smb', 'nas-nfs', 'nas-mounted', 'name', 'like', 'safe', 'online-service', 'online-signin', 'online-details', 'away', 'review', 'creating', 'protect']],
+    ['project', ['begin', 'ex-folder', 'ex-repos', 'nas-find', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'nas-folder', 'nas-smb', 'nas-nfs', 'nas-mounted', 'name', 'like', 'safe', 'online-service', 'online-signin', 'online-details', 'away', 'review', 'creating', 'away-setup', 'protect']],
     ['ai', ['ai', 'ai-all', 'ai-none', 'free']],
     ['ready', ['ready']]
   ];
