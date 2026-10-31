@@ -183169,7 +183169,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* an account's name: who it is; a key has none, so its number (or, for a provider's second way, which key it is) */
   const accLabel = (e) => e.who || (e.method === 'server' ? T('ai.acct.server') : e.family === 'api_key' && e.n === 1 ? T('ai.acct.altKey', { product: e.product }) : T('ai.acct.key', { n: e.n || 1 }));
   function billLine(S, e) {
-    const extra = [e.workspace || '', e.entity ? T('ai.ctx.billing.via', { who: e.entity }) : ''].filter(Boolean);
+    /* "through" names an organization's plan only: a personal plan is the account itself (Opus review m11) */
+    const extra = [e.workspace || '', e.entity && e.entity !== e.who ? T('ai.ctx.billing.via', { who: e.entity }) : ''].filter(Boolean);
     let b;
     if (e.method === 'server') b = e.mode === 'attached' ? T('ai.bill.attached', { address: e.endpoint || '' }) : T('ai.bill.managed', { host: e.hostRole === 'this_device' ? T('where.this.title').toLowerCase() : e.hostName });
     else if (e.plan) b = e.plan;
@@ -183658,7 +183659,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: {
       route(S, id) {
         const r = FR().find((x) => x.id === id), a = A(S), f = a.freeRoutes;
-        if (r.needs === 'key') { a.freeRows[id] = Object.assign(a.freeRows[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal'); return; }
+        if (r.needs === 'key') {
+          a.freeRows[id] = Object.assign(a.freeRows[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal');
+          /* inside More free options' own scroller, the opened row's name and its field's label stay in view with the field
+             (Opus review m12): the row's top is brought to the top of the list */
+          requestAnimationFrame(() => {
+            const box = S.root && S.root.querySelector('[data-key="free-more"]'), row = box && box.querySelector(`[data-key="fr-${id}"]`);
+            if (box && row) box.scrollTop += row.getBoundingClientRect().top - box.getBoundingClientRect().top;
+          });
+          return;
+        }
         f[id] = 'working'; S.save(); O55.ui.refresh();
         /* a route with nothing to enter (Kilo, LLM7, OVHcloud's sandbox) is simply turned on */
         if (r.needs === 'signin') O55.official.open(S, { name: r.provider, url: O55.fixtures.OFFICIAL.free[r.id] || null });
