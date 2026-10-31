@@ -5,14 +5,14 @@
    parchment, square, hairline, stepped); no colour literal is needed for it. Motion is transform and opacity; Reduce
    Motion gets the end state. */
 
-/* ---------------------------------------------------------------- Adjust NieR on the NieR tile (65-screens-welcome.js adjustNier) */
+/* ---------------------------------------------------------------- Adjust NieR on the look screen (65-screens-welcome.js adjustNier) */
 .o55-nieradjust { grid-column: 2; grid-row: 2; justify-self: start; align-self: end; margin: 0 0 4px; gap: 7px; }
 .o55-nieradjust .o55-sg { opacity: 0.85; }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] .o55-nieradjust { border-color: var(--o55-line); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
 
 /* ---------------------------------------------------------------- Pick a look: Light / Dark over the five tiles */
 .o55-lookgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "mode ." "tiles tiles"; align-items: center; gap: 12px 16px; margin-top: -8px; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "mode mode" "tiles tiles"; align-items: center; gap: 12px 16px; margin-top: -8px; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-lookmode { grid-area: mode; margin: 0; }
 #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-lookgrid > .o55-tiles { grid-area: tiles; }
 
@@ -77,24 +77,66 @@ html[data-motion="reduced"] .o55-nierpanel.o55-nierpanel-in { animation: none; }
   .o55-nierpanel.o55-nierpanel-in { animation: none; }
 }
 
-/* ---------------------------------------------------------------- NieR, the fifth look (Q22, 2026-10-30)
-   Its tile spans the grid's width under the other four: its scene on the left with the check on the scene's top right
-   corner (where the four tiles carry theirs), its name and line on the right, its ? on the name's line at the card's
-   right edge, and, while it is the chosen look, Adjust NieR at the card's bottom right beside its own ?. The scene is
-   shorter than the four tiles' so the five end inside the first view. */
-.o55-opt-tile-wide { grid-column: 1 / -1; position: relative; }
-.o55-opt-tile-wide > .o55-tile { grid-template-columns: minmax(0, 42%) minmax(0, 1fr); grid-template-rows: auto auto minmax(30px, 1fr); column-gap: 12px; align-items: start; }
-.o55-opt-tile-wide > .o55-tile > .o55-tileart { grid-row: 1 / span 3; grid-column: 1; height: var(--o55-tileart-wide-h, 70px); margin-bottom: 0; }
-.o55-opt-tile-wide > .o55-tile > .o55-tilename { grid-column: 2; padding: 4px 30px 0 4px; }
-/* the scene's right edge is the tile's padding (8 px) plus 42% of its content box; the check sits 8 px inside it */
-.o55-opt-tile-wide > .o55-tile > .o55-check { right: auto; left: calc(8px + (100% - 16px) * 0.42 - 28px); }
-.o55-opt-tile-wide > .o55-tile > .o55-tilesub { grid-column: 2; padding-right: 8px; }
-/* (the option's own ? is its last child: after Adjust NieR and Adjust's ? while NieR is the chosen look) */
-#pm-o55-onboarding .o55-opt-tile-wide > .o55-tipq:not(.o55-tipq-adjust) { position: absolute; top: 11px; right: 11px; }
-#pm-o55-onboarding .o55-opt-tile-wide > .o55-nieradjust { position: absolute; right: 38px; bottom: 10px; margin: 0; min-height: 0; height: 26px; padding: 0 10px; font-size: 12px; white-space: nowrap; z-index: 1; }
-#pm-o55-onboarding .o55-opt-tile-wide > .o55-tipq-adjust { position: absolute; right: 11px; bottom: 13px; width: 19px; height: 19px; font-size: 10.5px; z-index: 1; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-opt-tile-wide { --o55-tileart-wide-h: 64px; }
+/* ---------------------------------------------------------------- Pick a look: five equal tiles, three over two
+   (QA2 review M2: NieR as a short strip under four big tiles read as tacked on, and the footer cut it). A six-column
+   grid: each tile spans two columns, and Retro and NieR, the second row, sit in its middle. The five fit the first view
+   at every window size (the window is min(1080px, 100vw - 48px) by min(720px, 100vh - 48px), 10-window.css): the
+   picture shrinks with the window's height, and the line under each name gives way first to one line, then to screen
+   readers only (it stays part of the tile's name). The ? sits on the name's line, the check on the picture's corner. */
+#pm-o55-onboarding .o55-lookgrid > .o55-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; --o55-tileart-h: 84px; }
+#pm-o55-onboarding .o55-lookgrid > .o55-tiles > .o55-opt-tile { grid-column: span 2; }
+#pm-o55-onboarding .o55-lookgrid > .o55-tiles > .o55-opt-tile:nth-child(4) { grid-column: 2 / span 2; }
+#pm-o55-onboarding .o55-lookgrid > .o55-tiles > .o55-opt-tile:nth-child(5) { grid-column: 4 / span 2; }
+#pm-o55-onboarding .o55-lookgrid .o55-tile { gap: 2px; padding: 6px 6px 9px; }
+#pm-o55-onboarding .o55-lookgrid .o55-tileart { margin-bottom: 4px; }
+#pm-o55-onboarding .o55-lookgrid .o55-tilename { padding-right: 24px; }
+#pm-o55-onboarding .o55-lookgrid .o55-tilesub { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+#pm-o55-onboarding .o55-lookgrid .o55-tile > .o55-check { top: 12px; right: 12px; }
+#pm-o55-onboarding .o55-lookgrid .o55-opt-tile > .o55-tile + .o55-tipq { top: calc(var(--o55-tileart-h) + 9px); right: 8px; }
+@media (max-height: 747px) { #pm-o55-onboarding .o55-lookgrid > .o55-tiles { --o55-tileart-h: 64px; } }
+@media (max-height: 687px) {
+  #pm-o55-onboarding .o55-lookgrid > .o55-tiles { --o55-tileart-h: 48px; }
+  #pm-o55-onboarding .o55-lookgrid .o55-tilesub { -webkit-line-clamp: 1; }
+}
+@media (max-height: 627px) { #pm-o55-onboarding .o55-lookgrid > .o55-tiles { --o55-tileart-h: 38px; } }
+#pm-o55-onboarding[data-o55-layout="short"] .o55-lookgrid > .o55-tiles { --o55-tileart-h: 26px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid > .o55-tiles { --o55-tileart-h: 40px; }
+@media (max-height: 627px) {
+  #pm-o55-onboarding .o55-lookgrid .o55-tilesub { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+/* a narrow window (the stage over the content) has the least height: the five sit in one row, with smaller pictures
+   when the window is short; in a phone-width pane each name has the tile's width and its ? sits on the picture */
+#pm-o55-onboarding .o55-lookgrid { container: lookgrid / inline-size; }
+#pm-o55-onboarding .o55-lookgrid :is(.o55-opt-tile, .o55-tile) { min-width: 0; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid > .o55-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid > .o55-tiles > .o55-opt-tile:nth-child(n) { grid-column: auto; }
+@media (max-height: 759px) { #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid > .o55-tiles { --o55-tileart-h: 30px; } }
+@container lookgrid (max-width: 479px) {
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid .o55-tilename { padding-right: 0; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid .o55-opt-tile > .o55-tile + .o55-tipq { top: 10px; left: 10px; right: auto; width: 18px; height: 18px; font-size: 10px; }
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid .o55-tile > .o55-check { top: 10px; right: 10px; width: 16px; height: 16px; }
+}
+/* the smallest phones: a 50 px tile has room for the ? or the check, not both; the chosen tile keeps its ring */
+@container lookgrid (max-width: 299px) {
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid > .o55-tiles { --o55-tileart-h: 26px; }
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid .o55-tile > .o55-check { display: none; }
+  #pm-o55-onboarding[data-o55-layout="narrow"] .o55-lookgrid .o55-opt-tile > .o55-tile + .o55-tipq { top: 7px; left: 7px; width: 15px; height: 15px; font-size: 9px; }
+}
+/* Adjust NieR keeps to Light / Dark's line: in a narrow pane it is its icon, its name kept for screen readers */
+@container lookgrid (max-width: 459px) {
+  .o55-lookgrid .o55-lookmode-adjust > .o55-nieradjust { padding: 0 9px; }
+  .o55-lookgrid .o55-lookmode-adjust > .o55-nieradjust > span { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+#pm-o55-onboarding:is([data-o55-layout="short"], [data-o55-layout="narrow"]) .o55-lookgrid .o55-tilesub { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Adjust NieR, while NieR is the chosen look, at the end of Light / Dark's line */
+.o55-lookmode-adjust { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+.o55-lookmode-adjust > .o55-nieradjust { margin: 0; min-height: 0; height: 30px; padding: 0 11px; font-size: 12.5px; white-space: nowrap; }
 /* Under NieR's cursor part a chosen or hovered tile is an ink bar (11-window-nier.css): the ? and Adjust NieR that sit on
    it turn over to paper on ink, as a badge inside a bar does, so they never vanish into it (Q22) */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt-tile > .o55-tile:is(.o55-on, [data-o55fx-cursor]) ~ :is(.o55-tipq, .o55-nieradjust) { color: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); background: transparent; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt-tile > .o55-tile:is(.o55-on, [data-o55fx-cursor]) ~ :is(.o55-tipq, .o55-nieradjust):is(:hover, [aria-expanded="true"]) { color: var(--o55-nier-ink); background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); outline-color: var(--o55-nier-on-ink); }
+/* The look menu's rows under NieR's cursor part: the chosen (or hovered) row's ink bar is the whole row, option and ?,
+   the ? turned over to paper (QA2 review m1); the option inside draws no bar of its own */
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu > .o55-lookopt:is([aria-checked="true"], :hover) { background: transparent !important; border-color: transparent !important; color: inherit !important; }
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); background: transparent; }

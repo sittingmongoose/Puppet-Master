@@ -444,7 +444,7 @@
     var own = r.querySelector('[data-wpk-own]');
     if (def) own.setAttribute('data-wpk-id', def); else own.removeAttribute('data-wpk-id');
     own.setAttribute('data-wpk-own', inNier() && !def ? 'nier' : fam);
-    var lookName = inNier() && !def ? 'NieR Mode' : (LOOK_NAMES[fam] || 'This look');
+    var lookName = inNier() && !def ? 'NieR' : (LOOK_NAMES[fam] || 'This look');
     /* in the opaque looks Settings itself covers most of the wallpaper: say where it shows */
     var note = w ? w.name + ' shows in every look, in its light or dark print.' + (fam === 'glass' ? '' : ' Home and Usage show the most of it.')
       : def ? lookName + ' shows ' + byId[def].name + ' until you choose another.' : lookName + ' keeps its own background until you choose one.';
