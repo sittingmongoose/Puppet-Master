@@ -376,9 +376,13 @@
     S.save();
     return sv.runReqs[sv.pairGen];
   }
+  /* A run approved or turned down is finished (FO-7): its result was used once, so it is never taken again and its
+     generation asks for nothing more. A new code starts a new generation, and that one can bring a real new request. */
+  function endGuestRun(S, gen, how) { const sv = S.sess.server; sv.runDone = sv.runDone || {}; sv.runDone[gen] = how; sv.runErr = null; }
+  const runDone = (S) => (S.sess.server.runDone || {})[S.sess.server.pairGen];
   function pollGuestRun(S) {
     const sv = S.sess.server;
-    if (!inviteOpen(S)) return;
+    if (!inviteOpen(S) || runDone(S)) return;
     if ((sv.candidates || []).some((c) => c.state === 'waiting' && c.gen === sv.pairGen)) return;
     const req = ensureRunReq(S);
     const res = OR().take(req.id);
@@ -403,6 +407,7 @@
     if (!v.ok) { sv.approveErr = v.reason; S.save(); O55.ui.refresh(); if (showing('s-ready')) O55.sound.play('warn'); return; } /* its note is always a warning */
     sv.approveErr = null;
     c.state = 'approved';
+    endGuestRun(S, c.gen, 'approved');
     const trustId = res.trust.id;
     sv.paired = (sv.paired || []).concat([{ id: trustId, name: c.name }]);
     S.save(); O55.ui.refresh();
@@ -453,7 +458,8 @@
             + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.ready.staleReq', { name: c.name }))}</span></span></div>`;
         }
       });
-      if (!shownWaiting && inviteOpen(S)) {
+      if (!shownWaiting && inviteOpen(S) && runDone(S)) card += `<p class="o55-hint" data-key="norun">${U.esc(T('server.ready.runDone'))}</p>`;
+      else if (!shownWaiting && inviteOpen(S)) {
         card += `<p class="o55-hint" data-key="norun">${U.esc(T('server.ready.noRequests'))}</p>`;
         if (sv.runErr && sv.runErr !== 'host_unavailable' && sv.runErr !== 'pending_no_result') card += C.note(pendingCopy(sv.runErr), 'warn', 'phone');
         else card += `<div class="o55-sublinks" data-key="checkrun">${C.link(T('server.ready.retry'), 'checkRun')}</div>`;
@@ -494,7 +500,7 @@
         if (!c || c.state !== 'waiting') return;
         F.op(S, 'deny:' + c.id, 'cmd.client.pair.reject', [{ key: 'reject', ms: 500 }], {
           payload: { server: sv.id, pairing_candidate_id: c.id, reason: 'declined_by_owner' }, sound: { done: 'unsheet' }, /* the request row folds away */
-          onDone: () => { if (EPH()) EPH().clearWords(id); sv.candidates = sv.candidates.filter((x) => x.id !== id); S.save(); O55.ui.refresh(); }
+          onDone: () => { if (EPH()) EPH().clearWords(id); endGuestRun(S, c.gen, 'denied'); sv.candidates = sv.candidates.filter((x) => x.id !== id); S.save(); O55.ui.refresh(); }
         });
       },
       newCode(S) { newInvite(S); O55.ui.refresh(); O55.sound.play('reveal'); }, /* rotates the invite only: trusted devices stay paired; a new code and QR are drawn */
