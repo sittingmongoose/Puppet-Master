@@ -64,7 +64,7 @@
     const a = S.sess.ai, h = host(S), w = way(p, o.row);
     a.seq = (a.seq || 0) + 1;
     const same = (a.list || []).filter((e) => e.provider === p.id && e.method === w.auth && (e.family || null) === (w.family || null)).length;
-    return { id: 'acct-' + p.id + '-' + a.seq, provider: p.id, settings: p.settings, method: w.auth, family: w.family || null, product: w.product,
+    return { id: 'acct-' + p.id + '-' + a.seq, provider: p.id, entry: w.entry || p.entry || p.id, settings: p.settings, method: w.auth, family: w.family || null, product: w.product,
       who: o.who || null, plan: o.plan || null, n: same + 1, bill: w.bill, custody: w.custody || p.custody, host: h.id, hostName: h.name, hostRole: h.role,
       workspace: o.workspace || null, entity: o.entity || null, mode: o.mode || null, endpoint: o.endpoint || null,
       via: o.via, at: new Date().toISOString(), state: 'ready' };
@@ -563,8 +563,8 @@
   function freeRow(S, r) {
     const st = freeState(S, r); if (!st) return '';
     const rec = A(S).freeRows[r.id] || {}, acct = A(S).freeAccounts[r.id];
-    let meta = acct ? T('free.via', { provider: r.provider, who: acct }) : st === 'needs' || st === 'keyEntry' || st === 'keyChecking' ? T('free.notConnected', { provider: r.provider }) : r.provider;
-    let pill = ['needs', r.needs === 'signin' ? T('free.needsSignin') : T('free.needsSetup')], action = { label: r.needs === 'signin' ? T('free.signIn') : T('free.setup'), do: 'route', arg: r.id }, extra = '';
+    let meta = acct ? T('free.via', { provider: r.provider, who: acct }) : r.needs === 'none' && st === 'needs' ? T('free.noAccountNeeded', { provider: r.provider }) : st === 'needs' || st === 'keyEntry' || st === 'keyChecking' ? T('free.notConnected', { provider: r.provider }) : r.provider;
+    let pill = ['needs', r.needs === 'signin' ? T('free.needsSignin') : T('free.needsSetup')], action = { label: r.needs === 'signin' ? T('free.signIn') : r.needs === 'none' ? T('free.turnOn') : T('free.setup'), do: 'route', arg: r.id }, extra = '';
     if (st === 'ready') { pill = ['ready', T('free.ready')]; action = null; }
     if (st === 'working') { pill = ['wait', T('chrome.working')]; action = null; }
     if (st === 'limited') { pill = ['needs', T('free.limited')]; meta = T('free.limitedMeta', { provider: r.provider }); action = { label: T('free.retry'), do: 'retry', arg: r.id }; }
@@ -574,7 +574,9 @@
       extra = `<div class="o55-rowextra" data-key="fk-${r.id}">` + keyArea(S, { bind: 'fkey:' + r.id, key: r.id, arg: r.id, op: 'fkey:' + r.id + ':' + (rec.attempt || 0), name: r.provider,
         typed: rec.keyTyped, checking: st === 'keyChecking', check: 'fkeyCheck', from: r.keyFrom, fromDo: 'fkeyFrom', cancel: 'fcancel' }) + '</div>';
     }
-    return `<div class="o55-provider" data-key="fr-${r.id}" data-state="${st}">` + C.row({ key: r.id, glyph: 'stack', title: r.name, meta, state: pill, action, tip: 'route:' + r.id }) + extra + '</div>';
+    /* a More free options row stays compact until it is set up: its name, its action and its ? */
+    const quiet = r.more && st === 'needs';
+    return `<div class="o55-provider" data-key="fr-${r.id}" data-state="${st}">` + C.row({ key: r.id, glyph: 'stack', title: r.name, meta: quiet ? '' : meta, state: quiet ? null : pill, action, tip: 'route:' + r.id }) + extra + '</div>';
   }
   def('free', {
     chapter: 'ai', stage: 'free_models_setup', charmSlot: 'free',
@@ -584,7 +586,11 @@
     lead: () => T('free.lead'),
     body(S) {
       A(S);
-      let out = FR().map((r) => freeRow(S, r)).join('');
+      let out = FR().filter((r) => !r.more).map((r) => freeRow(S, r)).join('');
+      /* the rest of the community list, behind one quiet closed disclosure that scrolls inside itself (Jared: "Show the
+         3 upfront, hide the others behind some kind of advanced option") */
+      const more = FR().filter((r) => r.more);
+      if (more.length) out += C.details(S, 'freeMore', T('free.more'), `<div class="o55-providers" data-key="free-more" style="max-height:min(44vh,360px);overflow-y:auto;overscroll-behavior:contain">${more.map((r) => freeRow(S, r)).join('')}</div>`);
       if (readyIds(S).length) out += C.note(T('free.paidFirst'), 'info', 'spark');
       out += `<div class="o55-sublinks" data-key="attr">${C.link(T('free.attribution'), 'attribution')}</div>`;
       return out;
@@ -595,8 +601,9 @@
         const r = FR().find((x) => x.id === id), a = A(S), f = a.freeRoutes;
         if (r.needs === 'key') { a.freeRows[id] = Object.assign(a.freeRows[id] || {}, { state: 'keyEntry' }); S.save(); O55.ui.refresh(); O55.sound.play('reveal'); return; }
         f[id] = 'working'; S.save(); O55.ui.refresh();
-        O55.official.open(S, { name: r.provider, url: O55.fixtures.OFFICIAL.free[r.id] || null });
-        F.op(S, 'free:' + id + ':' + Date.now(), 'cmd.free_models.route.enable', [{ key: 'enable', ms: 1400 }], { quiet: true, payload: { route: id, underlying_provider: r.provider, setup: 'sign_in' },
+        /* a route with nothing to enter (Kilo, LLM7, OVHcloud's sandbox) is simply turned on */
+        if (r.needs === 'signin') O55.official.open(S, { name: r.provider, url: O55.fixtures.OFFICIAL.free[r.id] || null });
+        F.op(S, 'free:' + id + ':' + Date.now(), 'cmd.free_models.route.enable', [{ key: 'enable', ms: r.needs === 'none' ? 800 : 1400 }], { quiet: true, payload: { route: id, underlying_provider: r.provider, setup: r.needs === 'none' ? 'no_credential' : 'sign_in' },
           onDone: () => { f[id] = 'ready'; a.freeAccounts[id] = r.who || null; a.free = 'setup'; S.save(); O55.ui.refresh(); } });
       },
       fkeyFrom(S, id) { const r = FR().find((x) => x.id === id); if (r && r.keyFrom) O55.official.open(S, { kind: 'page', name: r.keyFrom.name, url: r.keyFrom.url }); },
@@ -633,7 +640,7 @@
   const CUSTODY = { cli: 'cli_profile', store: 'os_keychain', server: 'opencode_server' };
   function accountsPart(S) {
     return A(S).list.filter((e) => e.state === 'ready').map((e) => ({
-      account_id: e.id, provider_entry_id: e.settings, onboarding_provider_id: e.provider, display_name: accLabel(e), display_identity: e.who || null,
+      account_id: e.id, provider_entry_id: e.entry || e.settings, settings_provider_id: e.settings, onboarding_provider_id: e.provider, display_name: accLabel(e), display_identity: e.who || null,
       auth_method: e.method === 'key' ? 'api_key' : e.method === 'server' ? 'server_profile' : 'oauth', auth_family: e.family || null,
       custody: CUSTODY[e.custody] || 'os_keychain', host: { id: e.host, name: e.hostName, role: e.hostRole }, billing: e.bill, plan_label: e.plan || null,
       workspace: e.workspace, billing_entity: e.entity, profile_mode: e.mode === 'managed' ? 'managed_server' : e.mode === 'attached' ? 'attach_existing_server' : null,

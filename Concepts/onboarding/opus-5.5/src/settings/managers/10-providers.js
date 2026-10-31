@@ -224,6 +224,8 @@
     const fixture = (D && D.providers) || [];
     const have = new Set(state.providers.map(p => p.id));
     fixture.forEach(fx => { if (!have.has(fx.id)) state.providers.push(clone(fx)); });
+    /* free routes the fixture added since this list was saved (More free options) join it, off */
+    if (Array.isArray(state.freeRoutes)) ((D && D.freeRoutes) || []).forEach(fr => { if (!state.freeRoutes.some(x => x.id === fr.id)) state.freeRoutes.push(clone(fr)); });
     const order = fixture.map(p => p.id);
     state.providers.sort((x, y) => (order.includes(x.id) ? order.indexOf(x.id) : 1e3) - (order.includes(y.id) ? order.indexOf(y.id) : 1e3));
     state.providers.forEach(migrateProvider);
@@ -254,7 +256,7 @@
       if (p.kind === 'CLI') { p.installed = installed.has(p.id); (p.readiness = p.readiness || {}).installed = p.installed; }
     });
     res.accounts.forEach(a => {
-      const p = find(a.provider_entry_id); if (!p) return;
+      const p = find(a.settings_provider_id || a.provider_entry_id); if (!p) return;
       const acc = { id: 'onb-' + String(a.account_id).replace(/[^A-Za-z0-9-]/g, '-'), nickname: a.display_name, identity: a.display_identity || a.display_name, active: true, default: false,
         method: a.auth_method === 'api_key' ? (p.keyOnlyFor ? 'API key' : 'Plan credential') : a.auth_method === 'server_profile' ? (a.profile_mode === 'attach_existing_server' ? 'Attached server' : 'Managed server') : p.kind === 'CLI' ? 'Provider CLI sign-in' : `${p.name.split(' /')[0]} sign-in`,
         health: 'Healthy', usage: { text: '', windows: {} }, props: {} };
@@ -274,6 +276,8 @@
       if (fr.state === 'limit_reached') r.signIn = 'Limit reached; used again once it resets';
     });
     all().forEach(p => { if (p.id !== 'free-models') recompute(p); });
+    /* Free Models is Ready only when onboarding turned a route on */
+    const fm = find('free-models'); if (fm) fm.status = routesOn() ? 'active' : 'setup';
     syncFree();
     return true;
   }
@@ -930,14 +934,18 @@
   POLICY_IDS.forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
 
   function routesSection() {
-    const items = routes().map(r => ({
+    const item = r => ({
       title: routeName(r), pill: PM51.status(routeStatus(r)),
-      meta: r.enabled ? `${r.models.length ? r.models.join(', ') : 'No models yet'} · ${r.limit}` : `Off · ${r.limit}`,
+      meta: r.enabled ? [r.models.length ? r.models.join(', ') : 'No models yet', r.limit].filter(Boolean).join(' · ') : ['Off', r.limit].filter(Boolean).join(' · '),
       note: r.status === 'attention' ? r.signIn : '',
       end: PM51.toggle(!!r.enabled, { action: 'pm51-providers-route-toggle', data: { route: r.id }, label: routeName(r) }),
       action: 'pm51-providers-route', data: { route: r.id }
-    }));
-    return PM51.section({ title: 'Free routes', help: 'Each route signs in with its own service. Limits can change without notice, so they are tried in this order.', body: PM51.list(items) });
+    });
+    /* the three onboarding offers first; the rest of the community list behind one closed "More free options", open
+       only once one of them is on (Jared, 2026-10-31) */
+    const main = routes().filter(r => !r.more), more = routes().filter(r => r.more);
+    const body = PM51.list(main.map(item)) + (more.length ? PM51.advanced(PM51.list(more.map(item)), { label: 'More free options', open: more.some(r => r.enabled) }) : '');
+    return PM51.section({ title: 'Free routes', help: 'Each route signs in with its own service. Limits can change without notice, so they are tried in this order.', body });
   }
 
   /* OpenCode on your computer: the server itself. Its sign-in is the server's; model plans (Go, Zen) are separate. */

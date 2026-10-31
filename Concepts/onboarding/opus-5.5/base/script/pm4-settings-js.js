@@ -1314,6 +1314,27 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     { id: 'free-openrouter', name: 'OpenRouter Free Models', provider: 'OpenRouter', enabled: true, status: 'active', signIn: 'Uses configured OpenRouter key', models: ['Free coder route', 'Free general route'], priority: 1, limit: 'Provider-defined availability', terms: 'Models and limits can change without notice.' },
     { id: 'free-groq', name: 'Groq Free Plan', provider: 'Groq', enabled: true, status: 'active', signIn: 'API key healthy', models: ['Fast general model'], priority: 4, limit: 'Rate-limited', terms: 'Free plan limits apply; a reached limit waits for its reset.' },
     { id: 'free-nvidia', name: 'NVIDIA Free Models', provider: 'NVIDIA', enabled: false, status: 'disabled', signIn: 'Not set up', models: ['Free coding model'], priority: null, limit: 'Rate-limited', terms: 'Free models from NVIDIA\'s API catalog; limits apply.' },
+    /* More free options: the rest of free-coding-models v0.6.0 a person can start free, shown behind one closed disclosure */
+    { id: 'free-pollinations', name: 'Pollinations AI', provider: 'Pollinations AI', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-dashscope', name: 'Alibaba DashScope', provider: 'Alibaba DashScope', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-kilo', name: 'Kilo', provider: 'Kilo', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-onomeo', name: 'onomeo', provider: 'onomeo', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-ovh', name: 'OVHcloud AI Endpoints', provider: 'OVHcloud AI Endpoints', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-scaleway', name: 'Scaleway', provider: 'Scaleway', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-cloudflare', name: 'Cloudflare Workers AI', provider: 'Cloudflare Workers AI', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-opencode', name: 'OpenCode Zen free models', provider: 'OpenCode Zen free models', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-requesty', name: 'Requesty', provider: 'Requesty', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-google', name: 'Google AI Studio', provider: 'Google AI Studio', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-llm7', name: 'LLM7', provider: 'LLM7', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-routeway', name: 'Routeway', provider: 'Routeway', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-mistral', name: 'Mistral', provider: 'Mistral', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-orcarouter', name: 'OrcaRouter', provider: 'OrcaRouter', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-runcrate', name: 'Runcrate', provider: 'Runcrate', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-sambanova', name: 'SambaNova', provider: 'SambaNova', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-vercel', name: 'Vercel AI Gateway', provider: 'Vercel AI Gateway', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-novita', name: 'Novita AI', provider: 'Novita AI', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-codestral', name: 'Codestral', provider: 'Codestral', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-siliconflow', name: 'SiliconFlow', provider: 'SiliconFlow', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
   ];
 
   const webRoutes = [

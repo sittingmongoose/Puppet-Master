@@ -22,27 +22,29 @@
      - custody: cli (the vendor program keeps its own sign-in on the AI computer, MA-070), store (Puppet Master keeps
        it in that computer's keychain), server (OpenCode keeps its model accounts itself).
      - who / plan: what this fixture's sign-in reports back (the account and, where the vendor reports it, its plan).
-     - aka: former or familiar names, matched by search (P15). */
+     - aka: former or familiar names, matched by search (P15).
+     - entry: canon's provider_entry_id where Plans names one (Multi-Account §4.1; cursor_sdk and alibaba_token_plan from
+       the plans lane, 2026-10-31); otherwise this concept's id stands for it. */
   const PROVIDERS = [
-    { id: 'claude', settings: 'claude-code', name: 'Claude', product: 'Claude plan', bill: 'plan', auth: 'signin', cli: 'claude', vendor: 'Anthropic', likely: 1, pair: 'anthropic-api',
+    { id: 'claude', entry: 'claude_code_cli', settings: 'claude-code', name: 'Claude', product: 'Claude plan', bill: 'plan', auth: 'signin', cli: 'claude', vendor: 'Anthropic', likely: 1, pair: 'anthropic-api',
       remote: 'paste', custody: 'cli', who: ['jared@example.com', 'jared@studio.example'], plan: 'Claude Pro' },
-    { id: 'codex', settings: 'openai-codex', name: 'ChatGPT / Codex', product: 'ChatGPT plan', bill: 'plan', auth: 'signin', family: 'chatgpt', cli: null, vendor: 'OpenAI', likely: 2,
+    { id: 'codex', entry: 'codex', settings: 'openai-codex', name: 'ChatGPT / Codex', product: 'ChatGPT plan', bill: 'plan', auth: 'signin', family: 'chatgpt', cli: null, vendor: 'OpenAI', likely: 2,
       remote: 'device', custody: 'store', who: ['jared@example.com', 'jared@studio.example'], plan: 'ChatGPT Plus',
       alt: { auth: 'key', bill: 'use', family: 'api_key', product: 'OpenAI API' }, keyFrom: { name: 'the OpenAI API dashboard', url: 'https://platform.openai.com/api-keys' } },
-    { id: 'antigravity', settings: 'antigravity', name: 'Google Antigravity', product: 'Antigravity plan', bill: 'plan', auth: 'signin', cli: 'agy', vendor: 'Google', likely: 3, pair: 'gemini-api',
+    { id: 'antigravity', entry: 'antigravity_cli', settings: 'antigravity', name: 'Google Antigravity', product: 'Antigravity plan', bill: 'plan', auth: 'signin', cli: 'agy', vendor: 'Google', likely: 3, pair: 'gemini-api',
       remote: 'paste', custody: 'cli', who: ['jared@gmail.com', 'jared@studio.example'] },
-    { id: 'cursor', settings: 'cursor-cli', name: 'Cursor', product: 'Cursor plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Cursor', likely: 4, custody: 'store',
+    { id: 'cursor', entry: 'cursor_sdk', settings: 'cursor-cli', name: 'Cursor', product: 'Cursor plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Cursor', likely: 4, custody: 'store',
       keyFrom: { name: 'your Cursor dashboard', url: 'https://cursor.com/dashboard/api' },
-      alt: { auth: 'signin', cli: 'cursor-agent', bill: 'plan', product: 'Cursor plan', custody: 'cli' }, who: ['jared@example.com', 'jared@studio.example'] },
+      alt: { auth: 'signin', cli: 'cursor-agent', bill: 'plan', product: 'Cursor plan', custody: 'cli', entry: 'cursor_cli' }, who: ['jared@example.com', 'jared@studio.example'] },
     { id: 'grok', settings: 'grok', name: 'Grok Build', product: 'Grok Build plan', bill: 'plan', auth: 'signin', cli: 'grok', vendor: 'xAI', pair: 'xai-api',
       remote: 'device', custody: 'cli', who: ['jared@example.com', 'jared@studio.example'] },
     { id: 'muse', settings: 'muse', name: 'Muse Code', product: 'Muse Code plan', bill: 'plan', auth: 'signin', cli: 'muse', vendor: 'Meta', pair: 'meta-api',
       custody: 'cli', who: ['jared@example.com', 'jared@studio.example'] },
-    { id: 'copilot', settings: 'github-copilot', name: 'GitHub Copilot', product: 'Copilot plan', bill: 'plan', auth: 'signin', cli: null, vendor: 'GitHub',
+    { id: 'copilot', entry: 'github_copilot', settings: 'github-copilot', name: 'GitHub Copilot', product: 'Copilot plan', bill: 'plan', auth: 'signin', cli: null, vendor: 'GitHub',
       remote: 'device', custody: 'store', context: 'billing', who: ['jared-p', 'jared-studio'] },
     { id: 'qwen-coding', settings: 'qwen-coding', name: 'Alibaba Coding Plan', aka: 'Qwen Coding Plan', product: 'Alibaba Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
       custody: 'store', keyFrom: { name: "Alibaba Cloud's Coding Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/coding-plan', guide: true } },
-    { id: 'qwen-token', settings: 'qwen-token', name: 'Alibaba Token Plan', aka: 'Qwen Token Plan', product: 'Alibaba Token Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
+    { id: 'qwen-token', entry: 'alibaba_token_plan', settings: 'qwen-token', name: 'Alibaba Token Plan', aka: 'Qwen Token Plan', product: 'Alibaba Token Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Alibaba',
       custody: 'store', keyFrom: { name: "Alibaba Cloud's Token Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/token-plan-overview', guide: true } },
     { id: 'zai', settings: 'zai-coding', name: 'Z.AI Coding Plan', aka: 'GLM Coding Plan Zhipu', product: 'Z.AI Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Z.AI',
       custody: 'store', keyFrom: { name: 'your Z.AI API keys page', url: 'https://z.ai/manage-apikey/apikey-list' } },
@@ -58,11 +60,11 @@
        (Managed Server: installs OpenCode on the AI computer with consent, starts it, checks it) or attaches to one the
        person already runs (its address and, if it asks for one, its own username and password). Its model accounts
        stay in OpenCode. */
-    { id: 'opencode-runtime', settings: 'opencode', name: 'OpenCode server', product: 'OpenCode server', bill: 'own', auth: 'server', cli: 'opencode', vendor: 'OpenCode', custody: 'server' },
+    { id: 'opencode-runtime', entry: 'opencode', settings: 'opencode', name: 'OpenCode server', product: 'OpenCode server', bill: 'own', auth: 'server', cli: 'opencode', vendor: 'OpenCode', custody: 'server' },
     { id: 'anthropic-api', settings: 'anthropic-api', name: 'Anthropic API', product: 'Anthropic API', bill: 'use', auth: 'key', cli: null, pair: 'claude', vendor: 'Anthropic',
       custody: 'store', context: 'workspace', workspaces: ['Default workspace', 'Side projects'], keyFrom: { name: 'the Claude Console', url: 'https://platform.claude.com/settings/keys' } },
     /* (freeLimits: AI Studio keys have free limits until billing is on, so a Ready line never says "billed by use") */
-    { id: 'gemini-api', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', freeLimits: true, auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
+    { id: 'gemini-api', entry: 'gemini', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', freeLimits: true, auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
       custody: 'store', keyFrom: { name: 'Google AI Studio', url: 'https://aistudio.google.com/api-keys' } },
     { id: 'vertex', settings: 'vertex', name: 'Vertex AI', product: 'Google Cloud', bill: 'use', auth: 'key', cli: null, vendor: 'Google',
       custody: 'store', context: 'project', keyFrom: { name: "Google Cloud's API key guide", url: 'https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/start/api-keys', guide: true } },
@@ -93,7 +95,7 @@
     signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
     forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com' },
     forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },
-    free: { 'free-openrouter': 'https://openrouter.ai' },
+    free: { 'free-openrouter': 'https://openrouter.ai', 'free-runcrate': 'https://www.runcrate.ai' },
     backup: { gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com' }
   };
 
@@ -109,7 +111,32 @@
       /* the key works, and this account is at its limit when it is first checked: Retry now, never a reconnect */
       limitedOnce: true },
     { id: 'free-nvidia', name: 'NVIDIA free models', provider: 'NVIDIA', needs: 'key', keyFrom: { name: "NVIDIA's API catalog", url: 'https://build.nvidia.com' } },
-    { id: 'free-github-models', name: 'GitHub Models', provider: 'GitHub', retired: true }
+    { id: 'free-github-models', name: 'GitHub Models', provider: 'GitHub', retired: true },
+    /* More free options (Jared, 2026-10-31: "Show the 3 upfront, hide the others behind some kind of advanced option"):
+       the rest of free-coding-models v0.6.0 a person can start free, behind one closed disclosure; each set up like any
+       other route (its key, its sign-in, or nothing to enter), with the key page the list names */
+    ...[
+      ['free-pollinations', 'Pollinations AI', 'key', 'https://enter.pollinations.ai'],
+      ['free-dashscope', 'Alibaba DashScope', 'key', 'https://modelstudio.console.alibabacloud.com'],
+      ['free-kilo', 'Kilo', 'none', 'https://kilo.ai'],
+      ['free-onomeo', 'onomeo', 'key', 'https://onomeo.com/dashboard'],
+      ['free-ovh', 'OVHcloud AI Endpoints', 'none', 'https://endpoints.ai.cloud.ovh.net'],
+      ['free-scaleway', 'Scaleway', 'key', 'https://console.scaleway.com/iam/api-keys'],
+      ['free-cloudflare', 'Cloudflare Workers AI', 'key', 'https://dash.cloudflare.com'],
+      ['free-opencode', 'OpenCode Zen free models', 'key', 'https://opencode.ai/auth'],
+      ['free-requesty', 'Requesty', 'key', 'https://app.requesty.ai/api-keys'],
+      ['free-google', 'Google AI Studio', 'key', 'https://aistudio.google.com/apikey'],
+      ['free-llm7', 'LLM7', 'none', 'https://token.llm7.io'],
+      ['free-routeway', 'Routeway', 'key', 'https://routeway.ai'],
+      ['free-mistral', 'Mistral', 'key', 'https://console.mistral.ai/api-keys'],
+      ['free-orcarouter', 'OrcaRouter', 'key', 'https://www.orcarouter.ai'],
+      ['free-runcrate', 'Runcrate', 'signin', 'https://www.runcrate.ai'],
+      ['free-sambanova', 'SambaNova', 'key', 'https://cloud.sambanova.ai/apis'],
+      ['free-vercel', 'Vercel AI Gateway', 'key', 'https://vercel.com/ai-gateway'],
+      ['free-novita', 'Novita AI', 'key', 'https://novita.ai/settings/key-management'],
+      ['free-codestral', 'Codestral', 'key', 'https://console.mistral.ai/api-keys'],
+      ['free-siliconflow', 'SiliconFlow', 'key', 'https://cloud.siliconflow.cn/account/ak']
+    ].map(([id, name, needs, url]) => ({ id, name, provider: name, needs, more: true, keyFrom: { name: name + "'s key page", url }, who: needs === 'signin' ? 'jared-p' : undefined }))
   ];
 
   function folders() {

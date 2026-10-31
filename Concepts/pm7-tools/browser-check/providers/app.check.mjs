@@ -89,6 +89,15 @@ export const tests = {
 		await t.check('P13: Settings shows the Claude account onboarding connected', /jared@example\.com/.test(txt), txt.slice(0, 600));
 		await t.check('P13: the demo\'s example accounts are not shown for this Project', !/Work Claude|Playty Team/.test(txt), txt.slice(0, 600));
 		await t.shot('settings-after-onboarding', 'Settings › Providers & Accounts right after onboarding connected Claude, Cursor and ChatGPT');
+		const filt = W.frame.locator('#panel-settings input[placeholder="Filter services"]:visible').first();
+		if (await filt.count()) { await filt.click(); await filt.pressSequentially('Free', { delay: 20 }); await W.frame.waitForTimeout(800); }
+		const freeSvc = W.frame.locator('#panel-settings').getByText('Free Models', { exact: true }).first();
+		if (await freeSvc.count()) { await freeSvc.click(); await W.frame.waitForTimeout(1500); }
+		const ftxt = ((await W.frame.locator('#panel-settings').innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
+		await t.check('Settings free routes: the three upfront, More free options closed', /OpenRouter free models/.test(ftxt) && /Groq free plan/.test(ftxt) && /NVIDIA free models/.test(ftxt) && /More free options/.test(ftxt) && !/Pollinations/.test(ftxt), ftxt.slice(ftxt.indexOf('Free routes'), ftxt.indexOf('Free routes') + 400));
+		await t.check('Settings free routes: nothing D5 removed', !/Cerebras|Hugging Face|GitHub Models/.test(ftxt), 'removed route named');
+		await t.check('Settings: Free Models is not "Ready" with no route on', !/Ready · 0 of/.test(ftxt), 'Ready with 0 routes on');
+		await t.shot('settings-free-routes', 'Settings › Free Models: three routes upfront, More free options closed');
 		const st = await W.frame.evaluate(() => { const S = window.PM51 && window.PM51.state ? window.PM51.state : null; return S ? null : null; });
 		void st;
 	}

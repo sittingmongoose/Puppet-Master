@@ -1266,6 +1266,11 @@
           "title": "NVIDIA free models",
           "text": "Free AI models from NVIDIA, with limits. Get a key from NVIDIA's API catalog.",
           "expert": "NVIDIA API catalog (NIM) endpoints with free inference for listed models; an NVIDIA API key; rate limits apply."
+        },
+        "group:route": {
+          "title": "Free option",
+          "text": "A free option from the community list. Set it up with that company's key or sign-in, or just turn it on where none is needed.",
+          "expert": "A free route from free-coding-models (v0.6.0), set up through its own provider's key, sign-in, or no credential; limits are the provider's."
         }
       },
       "ready": {

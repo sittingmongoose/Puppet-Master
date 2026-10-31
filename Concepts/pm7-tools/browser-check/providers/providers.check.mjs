@@ -269,7 +269,7 @@ export const tests = {
 		const kept = await t.page.evaluate(() => { const s = window.O55.store.get('onboarding', {}); return { acc: !!(s.ai && s.ai.accounts && s.ai.accounts['qwen-token']), list: ((s.ai && s.ai.list) || []).map((e) => e.provider) }; });
 		await t.check('P17: after a reload the saved session still has Token Plan', kept.acc && kept.list.includes('qwen-token'), JSON.stringify(kept));
 		const finish = await t.page.evaluate(() => { const r = window.O55.handoff && window.O55.handoff.build ? window.O55.handoff.build(window.O55.S, {}) : null; return r ? { accounts: r.accounts, free: r.free_routes } : null; });
-		await t.check('P13: the result carries the account with Settings\' provider id', !!finish && (finish.accounts || []).some((a) => a.provider_entry_id === 'qwen-token' && a.custody === 'os_keychain' && a.auth_method === 'api_key'), JSON.stringify(finish).slice(0, 400));
+		await t.check('P13: the result carries the account with Settings\' provider id', !!finish && (finish.accounts || []).some((a) => a.provider_entry_id === 'alibaba_token_plan' && a.settings_provider_id === 'qwen-token' && a.custody === 'os_keychain' && a.auth_method === 'api_key'), JSON.stringify(finish).slice(0, 400));
 		await t.check('P13: no key text in the result', !JSON.stringify(finish || {}).includes(FAKE_KEY), 'key text in result');
 		void W2;
 	}
@@ -309,6 +309,41 @@ export const tests = {
 		await act(W, 'anthropic-api', 'keyCheck').click();
 		await waitRow(t, W, 'anthropic-api', /Needs a choice|Ready/, 'offline once: the next check goes through');
 		await t.check('outcome words present', true);
+	}
+	,
+	// Jared 2026-10-31: "Show the 3 upfront, hide the others behind some kind of advanced option"
+	async 'free models: More free options, closed, scrolls inside, fits a small window'(t) {
+		await t.viewport(860, 620);
+		const W = await open(t, 'free');
+		await W.frame.waitForSelector(`${ROOT} [data-key="fr-free-openrouter"]`, { timeout: 10000 });
+		await t.check('closed by default: none of the more routes is shown', (await W.frame.locator(`${ROOT} [data-key="fr-free-pollinations"]`).count()) === 0, 'more routes visible before opening');
+		const toggle = W.frame.locator(`${ROOT} [data-o55-do="details"][data-arg="freeMore"]`);
+		await t.visible(toggle, 'one quiet "More free options" control');
+		await toggle.click(); await W.frame.waitForTimeout(600);
+		const box = W.$('[data-key="free-more"]');
+		const m = await box.evaluate((el) => ({ sh: el.scrollHeight, ch: el.clientHeight, n: el.querySelectorAll('[data-key^="fr-"]').length, txt: el.innerText }));
+		await t.check('opened: the rest of the community list (20 routes)', m.n === 20, JSON.stringify({ n: m.n }));
+		await t.check('it scrolls inside itself', m.sh > m.ch + 20, JSON.stringify(m).slice(0, 120));
+		await t.check('nothing D5 removed is offered', !/Cerebras|Hugging Face|Ollama|GitHub Models/.test(m.txt), m.txt.slice(0, 200));
+		await t.check('no limits or prices in the list', !/\$|req\/day|per day|tokens|RPM/i.test(m.txt), m.txt.slice(0, 200));
+		const ov = await W.frame.evaluate(() => { const win = document.querySelector('#pm-o55-onboarding .o55-win'), box = document.querySelector('#pm-o55-onboarding [data-key="free-more"]'); const wr = win.getBoundingClientRect(), br = box.getBoundingClientRect(); return { winX: win.scrollWidth - win.clientWidth, boxX: box.scrollWidth - box.clientWidth, inside: br.left >= wr.left - 1 && br.right <= wr.right + 1, rowH: (box.querySelector('[data-key^="fr-"]') || box).getBoundingClientRect().height }; });
+		await t.check('at 860x620 the list sits inside the window with no sideways overflow', ov.winX <= 0 && ov.boxX <= 0 && ov.inside, JSON.stringify(ov));
+		await t.check('more rows are compact (one line each)', ov.rowH <= 72, JSON.stringify(ov));
+		await t.shot('free-more-860', 'Free Models at 860x620 with More free options open: the list scrolls inside the window');
+		const kilo = freeBox(W, 'free-kilo');
+		await kilo.scrollIntoViewIfNeeded();
+		await kilo.locator('[data-o55-do="route"]').click();
+		let g = ''; const u = Date.now() + 5000; while (Date.now() < u) { g = await kilo.innerText(); if (/Ready/.test(g)) break; await W.frame.waitForTimeout(250); }
+		await t.check('a route with nothing to enter turns on (Kilo)', /Ready/.test(g), g);
+		const pol = freeBox(W, 'free-pollinations');
+		await pol.scrollIntoViewIfNeeded();
+		await pol.locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(500);
+		await t.visible(pol.locator('.o55-demohint'), 'a key route has its demo hint');
+		await pol.locator('[data-o55-do="demoHint"]').filter({ hasText: 'demo-key-0000-1111-2222' }).click(); await W.frame.waitForTimeout(300);
+		await pol.locator('[data-o55-do="fkeyCheck"]').click();
+		const u2 = Date.now() + 6000; while (Date.now() < u2) { g = await pol.innerText(); if (/Ready/.test(g)) break; await W.frame.waitForTimeout(250); }
+		await t.check('a key route set up with the sample key reaches Ready (Pollinations)', /Ready/.test(g), g);
+		await t.viewport(1920, 1080);
 	}
 };
 

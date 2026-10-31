@@ -3929,7 +3929,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function configuredModels(){
     const r=window.PM_ONBOARDING_RESULT;
     if(!r||!r.project||r.project.id!==window.PM_ACTIVE_PROJECT_ID||!Array.isArray(r.accounts)) return D.models;
-    const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.provider_entry_id]).filter(Boolean));
+    const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.settings_provider_id||a.provider_entry_id]).filter(Boolean));
     return D.models.filter(m=>ok.has(m.provider));
   }
   function filteredModels(){
