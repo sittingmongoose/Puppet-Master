@@ -204,11 +204,7 @@
       F.op(S, 'pairreach:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], { payload: { server: s.id, method: 'code' } });
       return;
     }
-    /* situation pairExpires: this request is left unanswered until it runs out (a few seconds here, ten minutes for
-       real), so the expired state can be seen without the wait; Send it again asks afresh and the next one works */
-    const f = S.env.failures || {}, expire = d.connection_pairing === 'approval' && f.pair_expires_once;
-    if (expire) { f.pair_expires_once = false; c.pairStart = Date.now() - 600000 + 9000; S.save(); }
-    const mid = d.connection_pairing === 'qr' ? { key: 'qr', ms: 1900 } : expire ? { key: 'approve', ms: 9200, fail: () => 'expired' } : { key: 'approve', ms: 2800 };
+    const mid = d.connection_pairing === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
     F.op(S, 'pair:' + s.id, 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload: { server: s.id, method: d.connection_pairing }, sound: PAIR_SOUND, onDone: done });
   }
   def('c-pair', {
@@ -239,8 +235,6 @@
           const t = F.countdown((c.pairStart || Date.now()) + 600000);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
-        const pst = F.state(S, 'pair:' + s.id);
-        if (pst && pst.state === 'failed' && pst.code === 'expired') out += C.note(T('connect.pair.expired'), 'warn', 'phone') + `<div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: s.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: s.name }))}</span></div>`;
       }
       if (c.paired) out += C.note(T('connect.pair.done', { name: s.name }), 'ok', 'check');
@@ -249,13 +243,7 @@
     mounted(S) { startPair(S); if (!S.sess.connect.paired && cd(S).connection_pairing === 'approval') F.ticker(S, 'c-pair', 1000, () => S.sess.connect.paired); },
     foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'next', disabled: !S.sess.connect.paired, reason: T('connect.pair.phases.approve', { device: (server(S) || {}).approver || '' }) } }),
     do: {
-      resend(S) {
-        const s = server(S), st = F.state(S, 'pair:' + s.id);
-        S.sess.connect.pairStart = Date.now(); S.save();
-        /* (an expired request is asked again from the start) */
-        if (st && st.state === 'failed') { F.reset(S, 'pair:' + s.id); startPair(S); }
-        O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: s.approver }), S.root.querySelector('.o55-win'));
-      },
+      resend(S) { const s = server(S); S.sess.connect.pairStart = Date.now(); S.save(); O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: s.approver }), S.root.querySelector('.o55-win')); },
       checkCode(S) {
         const s = server(S), c = S.sess.connect;
         const ok = String(c.code || '').replace(/[\s-]/g, '').toUpperCase() === String(s.code).replace(/-/g, '');

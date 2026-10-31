@@ -197,7 +197,8 @@
     /* the three failures a first-time person can meet that had no way to happen here (the lead, 2026-10-30) */
     smbWrong: { label: 'Shared folder refuses the first password', apply(e) { e.failures.smb_password_once = true; } },
     restoreFails: { label: 'A restore stops part-way once', apply(e) { e.failures.restore_once = true; } },
-    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_expires_once = true; } }
+    /* (the Server lane's pairing outcomes, SCR-15: failures.pair_once fires once at the approval step) */
+    pairExpires: { label: 'A pairing request expires', apply(e) { e.failures.pair_once = 'expired'; } }
   };
 
   O55.fixtures = {

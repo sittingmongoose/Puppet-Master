@@ -916,17 +916,7 @@ def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore sto
   A.eq((await d.primaryInfo()).label, 'Try again', 'Try again');
   await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
 });
-def('pr37', 'fresh+pairExpires', 'Situation pairExpires: the approval request runs out in seconds; Send it again pairs', async (d, A) => {
-  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
-  await until(d, "!!document.querySelector('#pm-o55-onboarding [data-o55-do=\"pickServer\"]')", 'found', 6000);
-  await d.act('pickServer', 'pm:home'); await d.primary(); await d.primary();
-  A.eq(await d.screen(), 'c-pair', 'Pairing');
-  await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('pair:') && v.state === 'failed' && v.code === 'expired')", 'expired', 15000);
-  A.ok(await d.state(() => /request expired/.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)').textContent)), 'it says the request expired');
-  await d.act('resend');
-  await until(d, "window.O55.S.sess.connect.paired === true", 'paired on the second request', 10000);
-  await d.primary(); A.eq(await d.screen(), 'c-ready', 'Connected');
-});
+/* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
 def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
