@@ -2704,9 +2704,11 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(id==='general.visual.theme'){
       const mode=String(value||'').trim().split(/\s+/).pop();
       if(/^(light|dark)$/i.test(mode))writes['general.visual.theme-mode']=cap(mode);
-    }else if(id==='general.visual.theme-mode'&&!/^auto$/i.test(String(value))){
+    }else if(id==='general.visual.theme-mode'){
+      /* Auto (QA2 m2): the Theme's word follows what the computer paints, written in the same batch, so Auto stays */
       const family=String(state.settings['general.visual.theme']||'Basic Dark').trim().split(/\s+/)[0]||'Basic';
-      writes['general.visual.theme']=family+' '+cap(value);
+      const scheme=/^auto$/i.test(String(value))?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):String(value);
+      writes['general.visual.theme']=family+' '+cap(scheme);
     }
     if(id==='general.visual.theme'||id==='general.visual.theme-mode'){
       const candidate={...(state.settings||{}),...writes},current=Number(state.settings['general.visual.glass-transparency']);
