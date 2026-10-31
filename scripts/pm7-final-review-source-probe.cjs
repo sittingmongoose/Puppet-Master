@@ -113,10 +113,54 @@ async function main() {
   requireThat(/:is\(\.o55-card, \.o55-toggle\)\[data-o55fx-cursor\][^{]*\{[^}]*background-size:\s*calc\(100% - [^)]+\) 100% !important/.test(nier),
     'FO-5 selected/hovered NieR question retains its protected contrast region');
   counts.copy_help_source_checks = 2;
+
+  // FO-9: execute the merged checklist projection and its actual stage block/count consumer.
+  // The fixture's accepted-owner effects are inputs, never invented by the presentation.
+  const reviewSource = read('Concepts/onboarding/opus-5.5/src/js/72-screens-review.js');
+  const phases = section(reviewSource, 'function phasesFor(S)', 'const PH_MS =');
+  const scenes = read('Concepts/onboarding/opus-5.5/src/js/55-scenes.js');
+  const creating = section(scenes, '    creating: {', '    protect:');
+  for (const test of fixture.Creating_phase_cases) {
+    const S = { draft: { project_mode: test.project_mode || 'new', project_transport: 'nas',
+      history_backend: 'git', online_mode: 'new',
+      settings_transfer: { mode: test.settings_copy ? 'copy_from_project' : 'fresh' } },
+      sess: { commit: { key: 'operation', state: test.owner_done ? 'done' : 'failed', transportDone: true,
+        recovery: { settled_effects: test.settled_effects, remote_effect_state: test.remote_effect_state } } },
+      env: { here: { git: test.history_installed !== false, jj: false } } };
+    const transport = { phases: test.empty_transport ? [] : Object.keys(test.expected).map(key => ({ key, status: 'done' })) };
+    const phaseContext = vm.createContext({ S, md: s => s.draft,
+      F: { state: () => transport }, PR: () => ({ isGithubRemoteChain: () => true }),
+      O55: {}, phaseNow: () => null, forgeName: () => 'GitHub' });
+    vm.runInContext(phases, phaseContext, { timeout: 1000 });
+    phaseContext.O55.review = { phasesFor: phaseContext.phasesFor, shownPhases: phaseContext.shownPhases,
+      shownDone: s => s.sess.commit.state === 'done' };
+    vm.runInContext('globalThis.creatingScene = ({' + creating + '}).creating;', phaseContext, { timeout: 1000 });
+    const actual = phaseContext.shownPhases(S);
+    requireThat(JSON.stringify(Object.fromEntries(actual.map(p => [p.key, p.status]))) === JSON.stringify(test.expected),
+      'FO-9 accepted phase projection ' + test.name);
+    const blocks = phaseContext.creatingScene.props(S);
+    requireThat(JSON.stringify(blocks.map(b => b.id.replace(/^b-/, ''))) === JSON.stringify(test.done_keys),
+      'FO-9 block set matches settled phases ' + test.name);
+    const progress = phaseContext.creatingScene.vars(S);
+    requireThat(progress.done === test.done_keys.length && progress.total === actual.length,
+      'FO-9 progress agrees with checks and blocks ' + test.name);
+    if (test.resume) {
+      S.sess.commit.recovery.settled_effects = { source_preparation: true, remote_repository_create: true,
+        history_init: true, registry_publication: true };
+      S.sess.commit.state = 'done'; // Explicitly accepted complete owner result in this vector.
+      const next = phaseContext.creatingScene.props(S);
+      requireThat(next.length === actual.length && blocks.every(old => next.some(b => b.id === old.id)) &&
+        phaseContext.creatingScene.vars(S).done === actual.length,
+        'FO-9 later accepted resume preserves settled block identities');
+    }
+  }
+  counts.Creating_phase_cases = fixture.Creating_phase_cases.length;
+  counts.Creating_resume_checks = fixture.Creating_phase_cases.filter(test => test.resume).length;
   return { status: failures.length ? 'fail' : 'pass', counts, failures,
-    claim_boundary: 'static_and_isolated_source_functions_only_no_browser_native_pixel_or_WIP_acceptance',
-    pending_final_sources: ['FO-9'],
-    resolved_final_source: { 'FX-1_PDF': 'd8df03ac1820a7cb68d0d1b4897eeb03fa228a6b' } };
+    claim_boundary: 'static_and_isolated_source_functions_only_no_browser_native_pixel_or_runtime_acceptance',
+    pending_final_sources: [],
+    resolved_final_source: { 'FX-1_PDF': 'd8df03ac1820a7cb68d0d1b4897eeb03fa228a6b',
+      'FO-9': '503368802df57c9d35660d0a89dea15df01afc53' } };
 }
 main().then(result => {
   process.stdout.write(JSON.stringify(result, null, 2));

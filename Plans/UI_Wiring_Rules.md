@@ -1193,7 +1193,13 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   feedback and answered pairing are local view state, not extra onboarding commands or owner transitions. Follow PWIZ-022’s
   protected-field lifetime, SRV-004’s terminal pairing-result handling, F3-182’s acknowledgment interval and PWIZ-021’s
   verified Creating phases. Existing typed local actions and domain approval/recovery/export routes remain; refresh never
-  resubmits a consumed result or marks an unexecuted phase complete.'
+  resubmits a consumed result or marks an unexecuted phase complete. DL-259 FO-9 final, 2026-10-31: Creating’s recovery
+  feedback consumes PWIZ-021/PJCT-007’s current accepted owner result. Continue Setup retains the existing cmd.project.resume_creation
+  owner route and its fresh-attempt/retained-recovery fence, never the original creation key. Check again consumes the
+  applicable current owner observation/recovery result; neither action nor refresh may mark unexecuted phases complete
+  or manufacture Project publication. Checklist, block count and stage progress agree on verified settled effects. Existing
+  fourteen local actions, exact return, permission and owner-result adoption rules remain; no new phase, recheck or recovery
+  command is admitted.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -1327,6 +1333,12 @@ acceptance_criteria:
   handling, F3-182’s acknowledgment interval and PWIZ-021’s verified Creating phases. Existing typed local actions and
   domain approval/recovery/export routes remain; refresh never resubmits a consumed result or marks an unexecuted phase
   complete.'
+- 'DL-259 FO-9 final, 2026-10-31: Creating’s recovery feedback consumes PWIZ-021/PJCT-007’s current accepted owner result.
+  Continue Setup retains the existing cmd.project.resume_creation owner route and its fresh-attempt/retained-recovery
+  fence, never the original creation key. Check again consumes the applicable current owner observation/recovery result;
+  neither action nor refresh may mark unexecuted phases complete or manufacture Project publication. Checklist, block
+  count and stage progress agree on verified settled effects. Existing fourteen local actions, exact return, permission
+  and owner-result adoption rules remain; no new phase, recheck or recovery command is admitted.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -1348,6 +1360,9 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
+  shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
+  report FO-9 final.'
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

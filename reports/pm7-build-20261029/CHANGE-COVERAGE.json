@@ -1565,14 +1565,14 @@
     },
     {
       "id": "FO-9",
-      "change": "Partial GitHub Creating checks/blocks show verified owner effects only; unexecuted/unproven phases stay pending",
-      "owner": "PWIZ-021; F3-520; DL-259",
-      "wiring": "UIW-015; WM-041 (existing owner effect/recovery projection)",
-      "commands": "CS-069; UCC-106 (existing recovery handoffs, no new phase command)",
+      "change": "Partial/unclear GitHub Creating checks, completed blocks and stage progress share verified owner effects; remaining phases stay pending until a later accepted recovery result",
+      "owner": "PWIZ-021; F3-520; F3-663; PJCT-007; DL-259",
+      "wiring": "UIW-015; WM-041; WM-058; catalog.project_resume_creation (existing exact owner recovery route)",
+      "commands": "CS-069; UCC-106; UCC-165; cmd.project.resume_creation (Continue Setup; existing fresh-attempt recovery fence)",
       "settings": "none needed: temporary presentation/entry state, no preference",
-      "dry": "DR-080",
-      "companions": "FinalReviewPolicy.partial_Creating; b75da99bef reviewed as WIP, not merged or accepted",
-      "state": "owner_rule_covered_pending_final_FO9_source"
+      "dry": "DR-080 (one verified phase projection); DR-020 (one owner/result authority)",
+      "companions": "FinalReviewPolicy.partial_Creating; 8 actual merged phase/scene vectors plus 1 stable-block resume check; final 503368802d merged at d5a370fc98",
+      "state": "covered_by_current_contract_final_source_merged"
     },
     {
       "id": "FS-1",
@@ -1850,7 +1850,7 @@
     "FS_FO_numbered_findings_posted": false
   },
   "final_review_delta": {
-    "merged_GUI_head": "44d0d3a1b11166dbec82de1cba9c09eb72993b59",
+    "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
     "decision_ref": "DL-259",
     "new_rows": [
       "FO-4",
@@ -1867,13 +1867,7 @@
     ],
     "rows": 148,
     "required_cells": 740,
-    "pending_final_sources": {
-      "FO-9": {
-        "wip_head": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
-        "branch": "t3/a5d8f094",
-        "state": "owner invariant covered; implementation final/merge/checks awaited"
-      }
-    },
+    "pending_final_sources": {},
     "FX1_Terminal_workgroup": "Excluded: lead 1031172424-3930 confirms dead code to be reverted. DL-181/UCC-201 retirement and existing tab rename/inline close stay exact; no rows or commands restored.",
     "demo_mechanics_added": false,
     "browser_or_native_acceptance_claim": false,
@@ -1888,7 +1882,7 @@
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
-        "sha256": "033cf21287599881ce1491f409619421ba888d8903d7daf392d1fa7ab77540ec"
+        "sha256": "d05cf6ced63c1d32b93d1bda1777e2886d8975fe1d62a5a8723c506d54ea4841"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
@@ -1908,7 +1902,17 @@
         "head": "d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b",
         "source": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "rule": "actual artifact outcome, no false PDF receipt; preview mechanisms excluded",
-        "merged_into_plans_GUI_input": false
+        "merged_into_plans_GUI_input": true
+      },
+      "FO-9": {
+        "head": "503368802df57c9d35660d0a89dea15df01afc53",
+        "source": [
+          "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "Concepts/onboarding/opus-5.5/src/js/55-scenes.js"
+        ],
+        "completes_WIP": "b75da99bef0482b28af4dd7bcb447d91a945cb3b",
+        "merged_GUI_head": "d5a370fc9888317c51525b2fb80b82d590e2e86c",
+        "state": "final source merged and isolated phase/scene checks pass; browser/native acceptance not claimed"
       }
     }
   }
