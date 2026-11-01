@@ -88,7 +88,7 @@
   const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
   /* (a web address of your own puts the Server's sign-in page on the internet: Review says so again, SCR-06) */
   const remoteWill = (d) => (d.remote_mode === 'reverse_proxy' ? T('review.will.remotePublic', { host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }) : T('review.will.remote'));
-  const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? (d.tailscale_control === 'headscale' ? T('connect.route.tailscale.headscale') + (d.headscale_url ? ' · ' + String(d.headscale_url).replace(/^https:\/\//, '').replace(/\/$/, '') : '') : 'Tailscale') : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
+  const remoteLabel = (d, S) => (d.remote_mode === 'local_or_vpn' ? T(S && (S.sess.server || {}).kind === 'cloud' ? 'away.vpn.title' : 'away.home.title') : d.remote_mode === 'tailscale' ? (d.tailscale_control === 'headscale' ? T('connect.route.tailscale.headscale') + (d.headscale_url ? ' · ' + String(d.headscale_url).replace(/^https:\/\//, '').replace(/\/$/, '') : '') : 'Tailscale') : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
   /* The online copy as the plan holds it (FF-10): the service and its server, where it lives (the owner and, where the
      service has them, its project), and who can see it, in the service's own words; the rest of the plan for it in a
@@ -141,7 +141,7 @@
       let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
-        if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
+        if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d, S), 'away'));
         const willLater = [['seed', T('review.will.noProject')]].concat(needsRemote(d) ? [['globe', remoteWill(d)]] : []);
         out += C.group(T('review.willTitle', { button: buttonLabel(d) }), `<ul class="o55-will">${willLater.map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('')}</ul>`);
         return out;
@@ -164,7 +164,7 @@
       if (S.sess.backup.dest) safe += row('backup', O55.backup.whereLine(S, S.sess.backup.dest, S.sess.backup.sub) + ' · ' + T('review.backupLater'), 'backup'); else notSet.push(T('safe.backup.title').toLowerCase());
       if (S.sess.ui.backupDropped) safe += C.note(T('review.backupDropped', { name: O55.backup.label(S, 'nas') }), 'warn', 'vault');
       out += C.group(T('review.groups.safe'), safe);
-      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
+      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d, S), 'away'));
       if (notSet.length) out += `<p class="o55-hint" data-key="notset">${U.esc(T('review.notSet', { list: notSet.join(', ') }))}</p>`;
       /* anything the plan still lacks, with the way to the screen that supplies it */
       const miss = O55.draft.missing(d)[0];

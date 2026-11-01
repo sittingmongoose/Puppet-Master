@@ -386,7 +386,7 @@
       const n = N(S);
       if (n.self) { const mk = F.state(S, 'sshmake:' + dev(S).id); return { primary: { label: T('nas.signin.selfCheck'), do: 'selfCheck', disabled: n.key === 'new' && !(mk && mk.state === 'done'), reason: T('nas.install.phases.make') } }; }
       const ready = F.nonEmpty(n.user) && n.pwTyped;
-      return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
+      return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.needBoth'), reasonFor: F.nonEmpty(n.user) ? '[data-key="field-pw"]' : '[data-key="field-user"]' } };
     },
     do: {
       selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); makeIfNeeded(S); },
@@ -611,7 +611,7 @@
         out += C.note(T('nas.pmpair.why', { name: p.name }), 'info', 'link');
         return out + C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
           { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: p.name }), tag: T('chrome.recommended') },
-          { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name }) },
+          { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name, address: p.address || (dev(S) || {}).address || '' }) },
           { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
         ], m, { label: T('connect.review.confirmTitle') }));
       }
@@ -622,7 +622,7 @@
         if (reached && !fail) {
           const v = pairCodes.get(tryId(S)) || '';
           out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeFirst'), reasonFor: '[data-key="field-pmcode"]' }, 'o55-secondary')}</div>`;
           out += H('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['pmcode', 'AAAA-BBBB']] }]);
         }
         if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
@@ -702,7 +702,7 @@
       let out = `<div class="o55-crumbs" data-key="crumbs">${C.small('server', 14)} ${U.esc(d.name)} <span aria-hidden="true">›</span> ${crumbs}${O55.tips.q('group:cd')}</div>${O55.tips.explainer('group:cd')}`;
       out += `<div class="o55-treelist" role="listbox" aria-label="${U.esc(T('nas.folder.title', { name: d.name }))}" data-key="list">`
         + (kids.length ? kids.map(({ name, isNew }) => `<button type="button" class="o55-treeitem${isNew ? ' o55-new' : ''}" role="option" data-o55-do="cd" data-arg="${U.esc(at + '/' + name)}" data-pm-hover-exempt="true" data-key="f-${U.esc(U.slug(name))}">${C.small('folder', 16)}<span>${U.esc(name)}</span>${isNew ? `<span class="o55-tag">${U.esc(T('nas.folder.newFolder'))}</span>` : ''}</button>`).join('') : `<p class="o55-hint">${U.esc(T('nas.folder.empty'))}</p>`) + '</div>';
-      if (n.adding) out += `<div class="o55-fieldrow" data-key="newf">${C.field({ bind: 'newName', label: T('nas.folder.newName'), value: n.newName || '', hint: T('nas.folder.newNote') })}${O55.ui.btn({ label: T('chrome.done'), do: 'addFolder', cls: 'o55-small', disabled: !F.nonEmpty(n.newName), reason: T('nas.folder.newName') }, 'o55-secondary')}</div>`;
+      if (n.adding) out += `<div class="o55-fieldrow" data-key="newf">${C.field({ bind: 'newName', label: T('nas.folder.newName'), value: n.newName || '', hint: T('nas.folder.newNote') })}${O55.ui.btn({ label: T('chrome.done'), do: 'addFolder', cls: 'o55-small', disabled: !F.nonEmpty(n.newName), reason: T('nas.folder.nameFirst'), reasonFor: '[data-key="field-newName"]' }, 'o55-secondary')}</div>`;
       else out += `<div class="o55-sublinks" data-key="add">${C.link(T('nas.folder.newFolder'), 'adding')}</div>`;
       if (readOnlyAt(S, at)) out += C.note(T('nas.folder.readOnly', { user: n.user || d.user }), 'warn', 'lock');
       else out += C.note(n.viaPm ? T('nas.install.donePaired', { name: d.name }) : T('nas.install.done'), 'ok', 'lock');
@@ -756,7 +756,7 @@
       if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
-    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
+    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T(shareOf(S) ? 'nas.smb.needBoth' : 'missing.storage') } }; },
     do: {
       check(S) {
         const n = N(S), sh = shareOf(S); if (!sh) return;

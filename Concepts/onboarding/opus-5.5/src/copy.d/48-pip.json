@@ -109,8 +109,8 @@
         },
         "pairing:code": {
           "title": "Enter the code it shows",
-          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand.",
-          "expert": "Pairing by code: the Server's page shows a short one-time code; entering it here proves this device is with you before it is trusted."
+          "text": "Read the code on a device that already uses it (Settings › Server & Project Location › Pair a device), or on its own page at home, and type it here. Good when no other device is at hand.",
+          "expert": "Pairing by code: the one-time 8-character code from Pair a device in Settings, or the Server's own page; entering it proves this device is with you before it is trusted."
         },
         "pairing:qr": {
           "title": "Scan its QR code",
@@ -416,8 +416,8 @@
       "c-pair": {
         "field:code": {
           "title": "Code from your Puppet Master",
-          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you.",
-          "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
+          "text": "The 8 letters and numbers from Pair a device in its Settings, or its own page, like A7K9-M2Q4. It proves this device is with you.",
+          "expert": "The one-time pairing code shown by Pair a device (Settings) or the Server's page (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
           "title": "Send a new one",
@@ -461,9 +461,9 @@
           "expert": "Install the Server package for that machine's platform; it shows up here by itself once it is running."
         },
         "copy:install": {
-          "title": "Copy the install line",
-          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands.",
-          "expert": "Copies the install command for that machine's terminal (shell)."
+          "title": "Copy the line",
+          "text": "Copies the line, to paste on that computer if you reach it from this one. Otherwise type it there.",
+          "expert": "Copies the install command; run it on the target computer (paste over SSH or a remote session)."
         },
         "group:guide": {
           "title": "Open the install guide",
@@ -1127,6 +1127,11 @@
           "title": "Headscale address",
           "text": "The https:// address of your Headscale server, like https://headscale.example.com.",
           "expert": "Headscale control URL (https)."
+        },
+        "pick:vpn": {
+          "title": "Only through a VPN",
+          "text": "A computer you rent online is never on your home network. Choose this only if your devices already reach it over a VPN or private network you run. Nothing is opened to the internet.",
+          "expert": "An existing VPN or private network route to the cloud Server only; no Puppet Master remote route is configured and nothing is exposed publicly."
         }
       },
       "review": {
@@ -1528,7 +1533,7 @@
         },
         "field:pmcode": {
           "title": "Code from the device",
-          "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4.",
+          "text": "The 8 letters and numbers its Puppet Master shows under Pair a device, like A7K9-M2Q4.",
           "expert": "The one-time pairing code the device's Puppet Master shows (8 characters)."
         },
         "resend": {
@@ -1586,7 +1591,7 @@
         },
         "later": {
           "title": "Do this later",
-          "text": "Stops here without setting it up. Everything else keeps working at home. Finish it any time in Settings.",
+          "text": "Stops here without setting it up. Nothing else changes. Finish it any time in Settings.",
           "expert": "Leaves the route not set up; Settings › Server & Project Location › Away From Home resumes it."
         },
         "person:tsSignIn": {
@@ -1618,6 +1623,16 @@
           "title": "Copy the short code",
           "text": "Copies the short code, easier to type on a phone than the link.",
           "expert": "Copies the Remote Link's short code (the owner resolves it to the same link)."
+        },
+        "useTailscale": {
+          "title": "Use Tailscale instead",
+          "text": "Stops the web address and sets up Tailscale: private, nothing opened to the internet, no address record or proxy. It asks you first.",
+          "expert": "Abandons the proxy route and starts the built-in Tailscale setup for this Server; asks for confirmation before any step runs."
+        },
+        "copy:dnsip": {
+          "title": "Copy the address",
+          "text": "Copies the address to put in the name's A record.",
+          "expert": "Copies the public IPv4 for the A record."
         }
       }
     },
@@ -1828,7 +1843,8 @@
         "route:headscale": "Your own Headscale. Very handy.",
         "route:reverse_proxy": "Your own web address. Smart.",
         "route:remote_link": "A Remote Link, then.",
-        "typing": "Ooh, an address. Type away."
+        "typing": "Ooh, an address. Type away.",
+        "pick:vpn": "Your own VPN. Tidy."
       },
       "review": {
         "enter": "Let me check everything…",
@@ -2015,7 +2031,8 @@
           "codeWrong": "That setup code doesn't match.",
           "ownerFail": "The Server turned that step down.",
           "evidenceMissing": "I couldn't confirm that step finished.",
-          "pendingHost": "No answer from the Server yet…"
+          "pendingHost": "No answer from the Server yet…",
+          "tickWords": "Compare the words, then tick the box."
         },
         "ready": {
           "staleReq": "That request used the old code.",
@@ -2023,7 +2040,8 @@
           "wrongTarget": "That answer was meant for someone else!",
           "replayAdopt": "That answer was used already.",
           "codeMissing": "We need a new code first.",
-          "wordsMissing": "I can't see its words. Ask again?"
+          "wordsMissing": "I can't see its words. Ask again?",
+          "tickWords": "Check the words first, then tick."
         }
       },
       "restore": {
@@ -2154,7 +2172,9 @@
             "unreachable": "The internet can't reach it yet.",
             "dns": "That name doesn't point here yet.",
             "live": "Live updates are blocked there.",
-            "relay": "The Remote Link isn't answering."
+            "relay": "The Remote Link isn't answering.",
+            "dnsSet": "That name points somewhere else.",
+            "liveFile": "Live updates are blocked."
           }
         }
       },
@@ -2232,7 +2252,8 @@
           "codeWrong": "Code accepted!",
           "ownerFail": "Accepted this time!",
           "evidenceMissing": "Confirmed. All good.",
-          "pendingHost": "There it is. Answered!"
+          "pendingHost": "There it is. Answered!",
+          "tickWords": "Words checked. Approve away!"
         },
         "ready": {
           "staleReq": "New request. Much better.",
@@ -2240,7 +2261,8 @@
           "wrongTarget": "Right device this time.",
           "replayAdopt": "All sorted.",
           "codeMissing": "Fresh code. Go!",
-          "wordsMissing": "There are the words."
+          "wordsMissing": "There are the words.",
+          "tickWords": "Words checked!"
         }
       },
       "restore": {
@@ -2371,7 +2393,9 @@
             "unreachable": "Reachable now. Hooray!",
             "dns": "The name points home now!",
             "live": "Live updates flow now!",
-            "relay": "Remote Link is up!"
+            "relay": "Remote Link is up!",
+            "dnsSet": "The name points home now!",
+            "liveFile": "Live updates flow now!"
           }
         }
       },

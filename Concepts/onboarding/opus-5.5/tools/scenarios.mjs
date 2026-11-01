@@ -1110,6 +1110,17 @@ def('srv6', 'fresh', 'Away from home by Tailscale: the sign-in runs out; Try aga
   A.ok(await d.state(() => { const a = window.O55.S.sess.awaySetup; return a.state === 'waiting' && !a.people.tsSignIn && !a.done.includes('signin'); }), 'Try again waits for a fresh sign-in; nothing goes on');
   await d.act('person', 'tsSignIn'); await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'done'", 'set up after the fresh sign-in', 20000); A.ok(true, 'then it finishes');
 });
+/* RV-10: a rented cloud computer is never on the home network: its away step starts on Tailscale, and its private
+   choice is a VPN you already use, never Only at home */
+def('srv7', 'fresh', 'A new cloud Server: away from home starts on Tailscale; the private choice reads Only through a VPN you already use', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
+  await d.act('kind', 'cloud'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting'); await d.primary();
+  A.eq(await d.screen(), 's-confirm', 'confirm'); await d.type('code', '482 913'); await d.primary(); await finishServerSetup(d, A); await d.primary();
+  A.eq(await d.screen(), 'begin', 'Project chapter'); await d.act('later'); A.eq(await d.screen(), 'away', 'away from home');
+  const st = await d.state(() => ({ mode: window.O55.S.sess.drafts.main.remote_mode, cards: [...document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]')].map((b) => b.getAttribute('data-arg') + ':' + b.getAttribute('aria-checked') + ':' + ((b.querySelector('.o55-cardtitle') || {}).textContent || '')) }));
+  A.ok(st.mode === 'tailscale' && st.cards.includes('anywhere:true:Also away from home'), 'Tailscale is preselected: ' + JSON.stringify(st));
+  A.ok(st.cards.some((c) => /^vpn:false:Only through a VPN you already use/.test(c)) && !st.cards.some((c) => /Only at home/.test(c)), 'the private choice is a VPN you already use: ' + JSON.stringify(st.cards));
+});
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);

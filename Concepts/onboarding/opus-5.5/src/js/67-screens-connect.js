@@ -341,7 +341,7 @@
       out += C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
         /* (which device approves is the Server's to say, once it knows this one: before pairing nothing names it, SCR-16) */
         { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: s.name || '' }), tag: T('chrome.recommended') },
-        { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: s.name || '' }) },
+        { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: s.name || '', address: s.address || '' }) },
         { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
       ], d.connection_pairing, { label: T('connect.review.confirmTitle') }));
       return out;
@@ -398,7 +398,7 @@
         if (reached && !fail) {
           const v = typed.get(r.id) || '';
           out += C.field({ bind: 'code', label: T('connect.pair.codeLabel', { name: s.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: s.name }) : '', invalid: cs && cs.state === 'failed' });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeFirst'), reasonFor: '[data-key="field-code"]' }, 'o55-secondary')}</div>`;
           out += H('c-pair:code', [{ label: s.code || 'A7K9-M2Q4', outcome: 'works', fills: [['code', s.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['code', 'AAAA-BBBB']] }]);
           const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p>`;

@@ -412,7 +412,8 @@
   /* An action button with a tip of its own (Try again, Check again, Trust this device) has its ? beside it (b.tip: false
      for none, or another id); in the footer the ? stays beside the button and its explainer opens in the content */
   function btn(b, cls, inFoot) {
-    const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
+    /* (b.reasonFor: the control a refused press points to, brought into view with its reason: RV-19) */
+    const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"${b.reasonFor ? ` data-reason-for="${U.esc(b.reasonFor)}"` : ''}` : '';
     const tid = b.tip === false || !O55.tips ? null : b.tip || O55.tips.exact(b.do, b.arg);
     /* (b.by: a group's note that describes this button, its ? drawn beside the question it answers) */
     const by = tid || (b.by && O55.tips ? b.by : null);
@@ -574,7 +575,11 @@
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
+    /* a refusal's reason still showing outlives a redraw (a screen's own 1 s refresh took it away mid-read: RV-19); it
+       goes back where it was and its fade carries on from where it was */
+    const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     U.morph(layer, paneHtml(def));
+    if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
@@ -783,6 +788,8 @@
       O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
       if (!skin('refused', t)) O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
+      const rf = t.getAttribute('data-reason-for'), rt = rf && t.closest('.o55-layer') && t.closest('.o55-layer').querySelector(rf);
+      if (rt) rt.scrollIntoView({ block: 'center', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
       const said = reason && O55.pipOops && O55.pipOops.match(reason, S.sess.screen);
       if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '' } } });
       return;
@@ -818,7 +825,7 @@
     const layer = t.closest('.o55-layer'); if (!layer) return;
     let tip = layer.querySelector('.o55-reason');
     if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
-    tip.textContent = reason; tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
+    tip.textContent = reason; tip.style.animationDelay = ''; tip.dataset.at = String(performance.now()); tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */
   const TYPE_MS = 120;
