@@ -5,7 +5,7 @@
         "provider:claude": {
           "title": "Claude",
           "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate choice.",
-          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider."
+          "expert": "Claude Code CLI with its own browser sign-in to a Claude plan, personal or a company's; the CLI keeps its sign-in on the execution host. The Anthropic API, Console keys included, is a separate provider."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
@@ -80,7 +80,7 @@
         "provider:anthropic-api": {
           "title": "Anthropic API",
           "text": "Anthropic's API, with a key from the Claude Console. Separate from a Claude plan.",
-          "expert": "Anthropic API key (sk-ant-…) from the Claude Console. A key that isn't tied to one workspace asks which workspace to use."
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console. Each key belongs to one workspace."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
@@ -198,11 +198,6 @@
           "title": "Whose Copilot plan",
           "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one to use.",
           "expert": "Whose Copilot plan this account uses: your own or an organization's."
-        },
-        "group:workspace": {
-          "title": "Workspace",
-          "text": "Your key works in more than one Anthropic workspace. Pick the one to use.",
-          "expert": "Workspace context for a key that isn't scoped to one workspace."
         },
         "ocMode:managed": {
           "title": "Let Puppet Master run it",
@@ -1891,7 +1886,8 @@
       },
       "ready": {
         "enter": "We're ready. Let's make something!",
-        "later": "All set. Make a Project whenever!"
+        "later": "All set. Make a Project whenever!",
+        "noAi": "No AI yet. Add one in Settings and I'll start thinking."
       },
       "nas-find": {
         "enter": "Looking on your network…",
@@ -2134,13 +2130,15 @@
         "signinFail": "Oh no. That sign-in didn't go through.",
         "skipNote": "No AI yet, so I'll nap. Add one later.",
         "unavailable": "That account isn't here. Sign in again?",
-        "pasteBad": "Hmm, that code didn't take."
+        "pasteBad": "Hmm, that code didn't take.",
+        "offline": "No internet here. Connect, then try again."
       },
       "like": {
         "unavailable": "That account isn't on this computer."
       },
       "free": {
-        "limited": "That one's reached its limit for now."
+        "limited": "That one's reached its limit for now.",
+        "limitedMeta": "That one's reached its limit for now."
       },
       "away": {
         "setup": {
@@ -2351,13 +2349,15 @@
         "signinFail": "Signed in! Second time lucky.",
         "skipNote": "Power! I can think now.",
         "unavailable": "Signed in here too. Good.",
-        "pasteBad": "Code accepted!"
+        "pasteBad": "Code accepted!",
+        "offline": "Back online. That worked!"
       },
       "like": {
         "unavailable": "Signed in. All set!"
       },
       "free": {
-        "limited": "Its limit reset. Ready!"
+        "limited": "Its limit reset. Ready!",
+        "limitedMeta": "Its limit reset. Ready!"
       },
       "away": {
         "setup": {

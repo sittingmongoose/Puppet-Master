@@ -1325,9 +1325,11 @@
     "installOn": "Install on {host}",
     "signIn": "Sign In",
     "key": "Enter API Key",
-    "keyLabel": "API key for {name}",
+    "keyLabel": "{name} API key",
+    "keyLabelApi": "{name} key",
+    "tokenLabel": "{name} API token",
     "keyHint": "Paste the key, not your password. Kept in {where}. Never shown again.",
-    "keyBad": "That key wasn't accepted. Check it's the right key for {name}, then try again.",
+    "keyBad": "That key wasn't accepted. Check it's the right {label}, then try again.",
     "verify": "Check key",
     "installAsk": "Install {name} on {host}? It uses {vendor}'s official installer.",
     "installGo": "Install",
@@ -1336,7 +1338,7 @@
       "install": "Installing",
       "verify": "Checking it works"
     },
-    "signinWait": "Finish signing in in your browser.",
+    "signinWait": "Finish signing in with your browser.",
     "notReady": "Not signed in",
     "seeAll": "See all providers",
     "allTitle": "All providers",
@@ -1356,7 +1358,8 @@
       "cursor": "A Cursor API key, or Cursor's browser sign-in",
       "copilot": "The Copilot plan on your GitHub account",
       "qwen-coding": "Qwen and other models, with the plan's own key",
-      "qwen-token": "Not the Coding Plan",
+      "qwen-token": "Its own key, separate from the Coding Plan",
+      "zai": "GLM models, with the plan's own key",
       "kimi": "Kimi Code's own key, not Kimi Open Platform",
       "minimax": "Formerly the MiniMax Coding Plan",
       "anthropic-api": "Separate from a Claude plan",
@@ -1367,7 +1370,7 @@
       "xai-api": "Separate from Grok Build",
       "muse": "Muse Code plan, not the Meta Model API",
       "meta-api": "Separate from Muse Code",
-      "opencode-go": "Not the OpenCode server",
+      "opencode-go": "OpenCode's models, with a key from the OpenCode Console",
       "opencode-zen": "Formerly OpenCode Zen",
       "opencode-runtime": "Runs OpenCode itself. Its model accounts stay in OpenCode."
     },
@@ -1382,7 +1385,7 @@
     "keyFrom": "Get a key from {name}",
     "offline": "This computer is offline, so nothing could be checked. Connect to the internet, then try again.",
     "cancel": "Cancel",
-    "signinWaitOn": "Finish signing in in this device's browser. The sign-in is kept on {host}.",
+    "signinWaitOn": "Finish signing in with this device's browser. The sign-in is kept on {host}.",
     "signinWaitPill": "Waiting for you",
     "own": "Your own setup",
     "ownSub": "A server you run, or one Puppet Master runs for you.",
@@ -1390,7 +1393,8 @@
     "acct": {
       "key": "Key {n}",
       "altKey": "{product} key",
-      "server": "OpenCode server",
+      "oneKey": "Key added",
+      "manyKeys": "{n} keys",
       "many": "{n} accounts"
     },
     "bill": {
@@ -1400,7 +1404,12 @@
       "attached": "Your server at {address}"
     },
     "addAnother": "Add another {name} account",
+    "addAnotherKey": "Add another {name} key",
     "adding": "Adding another account",
+    "addingKey": "Adding another key",
+    "removeAskServer": "Remove this OpenCode server from Puppet Master?",
+    "noMatch": "Nothing matches “{q}”.",
+    "installTool": "Install {tool}",
     "remove": "Remove",
     "removeAsk": "Remove {who} from Puppet Master? Your {vendor} account itself stays as it is.",
     "removeGo": "Remove",
@@ -1413,13 +1422,9 @@
         "org": "{org} (organization)",
         "via": "through {who}"
       },
-      "workspace": {
-        "title": "This key works in more than one workspace. Which one should it use?",
-        "default": "Default workspace"
-      },
       "project": {
         "label": "Google Cloud project ID (optional)",
-        "hint": "Leave it empty if your key isn't tied to a project.",
+        "hint": "Only needed if you use a Google Cloud project. Its ID is on the Google Cloud console's welcome page.",
         "named": "Project {project}"
       }
     },
@@ -1457,7 +1462,7 @@
     "skipped": "Skipped for now.",
     "alt": {
       "codex": "Use an OpenAI API key instead",
-      "cursor": "Sign in in the browser instead"
+      "cursor": "Sign in with the browser instead"
     },
     "main": {
       "codex": "Sign in with ChatGPT instead",
@@ -1512,11 +1517,18 @@
     "retiredMeta": "{provider} closed this service. Choose another.",
     "more": "More free options",
     "turnOn": "Turn on",
-    "noAccountNeeded": "{provider} · no account needed"
+    "noAccountNeeded": "{provider} · no account needed",
+    "noAccount": "No account needed",
+    "needsKey": "Needs a key",
+    "needsToken": "Needs an API token and account ID",
+    "turnOff": "Turn off",
+    "moreN": "{n} more free options",
+    "accountId": "{provider} account ID"
   },
   "ready": {
     "eyebrow": "Ready",
     "title": "You're ready",
+    "titleNoAi": "Almost ready",
     "lead": "{name} is set up.",
     "leadLater": "Puppet Master is set up. Create a Project whenever you like.",
     "project": "Project",

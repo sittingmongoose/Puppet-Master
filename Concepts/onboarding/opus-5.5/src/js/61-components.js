@@ -141,7 +141,8 @@
         + options.filter(Boolean).map((opt1) => {
           /* {sep}: a line of words between two kinds of choice in one list (a Recovery Kit file, then the places) */
           if (opt1.sep) return `<p class="o55-choicesep" data-key="sep-${esc(opt1.key || 'sep')}">${esc(opt1.sep)}</p>`;
-          const on = opt1.v === selected, id = action + ':' + opt1.v;
+          /* (opt1.tip false: a choice with no ? of its own, where its question already carries the group's) */
+          const on = opt1.v === selected, id = opt1.tip === false ? null : action + ':' + opt1.v;
           const dis = opt1.disabled ? ` aria-disabled="true" data-disabled-reason="${esc(opt1.reason || '')}"` : '';
           return opt(id, `<button type="button" class="o55-card${on ? ' o55-on' : ''}${opt1.quiet ? ' o55-card-quiet' : ''}${opt1.under ? ' o55-card-parent' : ''}" role="radio" aria-checked="${on}" data-o55-do="${esc(action)}" data-arg="${esc(opt1.v)}"${dis}${described(id)}${U.attrs(X)} data-key="card-${esc(opt1.key || opt1.v)}">`
             + (opt1.glyph ? glyph(opt1.glyph) : '') + `<span class="o55-cardtext"><span class="o55-cardtitle">${esc(opt1.title)}</span>`
