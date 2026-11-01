@@ -130,6 +130,7 @@
     out += row('backup', b.dest ? O55.backup.label(S, b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
     return out;
   }
+  const noAi = (S) => !!O55.ai && !O55.ai.readyIds(S).length && !O55.ai.freeReady(S);
   def('ready', {
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'ready', beat: 'curtain' }),
@@ -144,10 +145,12 @@
       if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
       /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
+        if (noAi(S)) return; /* (no confetti for setup that can't plan yet) */
         O55.art.celebrate(st, { big: true, count: 46, at: [240, 260], under: A.famCall && A.famCall.lettered ? A.famCall.lettered(st && st.querySelector('.o55-scene-wrap:not(.o55-out) svg.o55-scene')) : null }); } });
     },
     eyebrow: () => T('ready.eyebrow'),
-    title: () => T('ready.title'),
+    /* no AI and no free models: Puppet Master can't plan yet, so it isn't "You're ready" (Opus p60) */
+    title: (S) => T(noAi(S) ? 'ready.titleNoAi' : 'ready.title'),
     lead: (S) => (md(S).project_mode !== 'later' && S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),
     body(S) {
       const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');

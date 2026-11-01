@@ -1322,7 +1322,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     { id: 'free-ovh', name: 'OVHcloud AI Endpoints', provider: 'OVHcloud AI Endpoints', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
     { id: 'free-scaleway', name: 'Scaleway', provider: 'Scaleway', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
     { id: 'free-cloudflare', name: 'Cloudflare Workers AI', provider: 'Cloudflare Workers AI', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
-    { id: 'free-opencode', name: 'OpenCode Zen free models', provider: 'OpenCode Zen free models', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
+    { id: 'free-opencode', name: 'OpenCode Console free models', provider: 'OpenCode Console', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
     { id: 'free-requesty', name: 'Requesty', provider: 'Requesty', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
     { id: 'free-google', name: 'Google AI Studio', provider: 'Google AI Studio', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },
     { id: 'free-llm7', name: 'LLM7', provider: 'LLM7', more: true, enabled: false, status: 'disabled', signIn: 'Not set up', models: [], priority: null, limit: '', terms: '' },

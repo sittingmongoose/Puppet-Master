@@ -201,6 +201,7 @@ html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding .o55-under { border-c
 .o55-provider[data-state="ready"] .o55-row { border-color: color-mix(in srgb, var(--accent-lime) 45%, var(--o55-line)); }
 .o55-rowextra { display: grid; gap: 8px; margin: -2px 0 0; padding: 10px 14px 12px 62px; border: 1px solid var(--o55-line); border-top: 0; border-radius: 0 0 var(--o55-card-r) var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 3%, transparent); font-size: 13.5px; color: var(--text-secondary); }
 .o55-provider:has(.o55-rowextra) > .o55-row { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.o55-addhead { color: var(--text-primary); font-weight: 600; }
 
 /* toast (browser opened, copied) */
 .o55-toast { position: absolute; left: 50%; bottom: 84px; z-index: 6; max-width: min(460px, calc(100% - 40px)); padding: 10px 14px; border-radius: 10px; background: var(--text-primary); color: var(--background); font: 600 13px/1.4 var(--body-font); transform: translate(-50%, 8px); opacity: 0; pointer-events: none; }
