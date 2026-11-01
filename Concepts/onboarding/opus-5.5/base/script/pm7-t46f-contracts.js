@@ -8,7 +8,7 @@
   "requirements":["GUI-001","GUI-002","GUI-003","GUI-004","GUI-005","GUI-006","GUI-007","GUI-008","BGUI-001","BGUI-002","BGUI-003","BGUI-004","BGUI-005"],
   "activity_bar_migration":{"canonical_id":"repository_automation","aliases":["github_actions","gh-actions","git"],"panel_id_preserved":"panel-git","position_order_width_hidden_keyboard_and_undocked_state_preserved_by_alias" : true},
   "source_control":{"single_occupant":true,"engines":["git","jj_git"],"git_staging_visible_only_for_git":true,"jj_operation_history_distinct_from_backup":true},
-  "automation":{"single_occupant":true,"providers":["github","gitlab","azure_devops","bitbucket","forgejo","gitea","origin_connected_checks","generic_git"],"origin_actions_engine_fabricated":false,"missing_step_api_invents_steps":false},
+  "automation":{"single_occupant":true,"providers":["github","gitlab","azure_devops","bitbucket","forgejo","gitea","generic_git"],"missing_step_api_invents_steps":false},
   "backup":{"single_owner_projection":true,"account_and_decryption_state_separate":true,"browse_is_read_only":true,"secret_fixture_values_present":false},
   "pipeline_open_in_browser":{
     "command_id":"cmd.forge.pipeline.open_in_browser",
@@ -27,8 +27,8 @@
       {"service":"forgejo","provider":"forgejo","service_kind":"forgejo_actions"},
       {"service":"gitea","provider":"gitea","service_kind":"gitea_actions"}
     ],
-    "origin_unavailable":{"service":"origin","reason":"github_automation_binding_unavailable","official_destination_kind":null,"carries_binding_refs":false,"count_as_valid_requests":false,"detail":"Mirror checks follow FGI-014's admitted-provider safeguards (exact target, no duplicate mirror): a check belongs only to the actual connected GitHub service binding with GitHub's official UI, which has no exact fixture here, so the three open_in_browser destinations stay preview-disabled with no destination kind and no refs"},
     "binding_choices":"bitbucket Pipelines reads as bitbucket_cloud (Data Center has no Pipelines); instance variants stay owner and probe truth and are not asserted here",
+    "github_binding_unavailable":{"service":"github","reason":"github_automation_binding_unavailable","official_destination_kind":null,"carries_binding_refs":false,"count_as_valid_requests":false,"detail":"Without the exact connected GitHub automation binding (FGI-014: exact target, no duplicate mirror), the three open_in_browser destinations stay preview-disabled with no destination kind and no refs"},
     "official_ui_origin":{"source":"profile_allowlisted_allowed_origin_ref","may_differ_from_normalized_api_host":true,"hardcoded_hosts_or_urls":false},
     "generic_no_service":{"label":"Connect automation","setup_intent":{"ui_action_id":"ui.settings.route.open","availability":"available","domain":"source","workspace":"source-manager"},"official_destination_kind":null,"carries_binding_refs":false,"dispatches_pipeline_request":false,"detail":"Connect automation is a setup/local navigation intent resolving through the existing Settings Source Control Code Services route (owner Hosting Services) with a working concept handler; it carries no destination kind and no refs and dispatches no pipeline request"},
     "generic_preview_disabled_controls":{"disabled_reason":"automation_service_not_configured","carries_binding_refs":false,"count_as_valid_requests":false,"detail":"remaining no-service controls (Open job/logs, Retry, Open artifacts in service, Review gate, Open service settings) stay preview-disabled with automation_service_not_configured, carry no destination kind or refs, and are not valid requests"},

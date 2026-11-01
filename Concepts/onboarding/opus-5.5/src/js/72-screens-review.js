@@ -12,7 +12,9 @@
   const PR = () => O55.projectRecovery;
   const md = (S) => S.sess.drafts.main;
   const P = () => O55.project;
-  const forgeName = (d) => O55.safe.forgeName(d.forge, d.forge_provider_variant);
+  /* (a plan whose service is to be chosen again, R6, names none) */
+  const unchosen = (d) => !d.forge || d.forge === 'none';
+  const forgeName = (d) => (unchosen(d) ? T('review.serviceToChoose') : O55.safe.forgeName(d.forge, d.forge_provider_variant));
   const FLOW = ['where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
   /* No numeric priority: O55.sound ranks coinciding events itself. The reviewed
      commit is one designed moment: Create sounds `commit` and carries the change to Creating (go silent); the Project
@@ -79,7 +81,7 @@
     const d = md(S);
     if (newNasFolder(S)) return T('review.begins.deviceNew', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref });
     if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
-    if (d.project_mode === 'existing_online') return T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
+    if (d.project_mode === 'existing_online') return unchosen(d) || !d.repository_ref ? T('review.begins.onlineAgain') : T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
     if (d.project_mode === 'restore') return T('review.begins.restore', { project: d.project_name });
     return T('review.begins.new');
   }
@@ -130,7 +132,7 @@
     if (d.project_mode !== 'later') nodes.push({ icon: 'folder', label: T('art.labels.files'), sub: d.storage_mode === 'with_server' ? P().serverName(S).toLowerCase() : T('art.labels.documents') });
     nodes.push({ icon: d.server_mode === 'this_device' ? 'computer' : 'server', label: T('art.labels.worksHere'), sub: whereWork(S).toLowerCase().slice(0, 18) });
     nodes.push({ icon: 'person', label: T('art.labels.you'), sub: T('art.labels.thisDevice') });
-    return { nodes, online: d.online_mode === 'new' ? forgeName(d) : null, backup: S.sess.backup.dest ? O55.backup.label(S, S.sess.backup.dest) : null, inherit: d.settings_transfer.mode === 'copy_from_project' ? (S.sess.like && S.sess.like.name) || '' : null };
+    return { nodes, online: d.online_mode === 'new' && !unchosen(d) ? forgeName(d) : null, backup: S.sess.backup.dest ? O55.backup.label(S, S.sess.backup.dest) : null, inherit: d.settings_transfer.mode === 'copy_from_project' ? (S.sess.like && S.sess.like.name) || '' : null };
   }
 
   /* ------------------------------------------------------------------ review */
@@ -186,7 +188,8 @@
       const fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null, kind = d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git';
       /* (a Project copied from its online home arrives with its history: Opus p74) */
       let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : d.project_mode === 'existing_online' ? T('review.savedExisting', { kind }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
-      if (d.online_mode !== 'none') {
+      if (d.online_mode !== 'none' && (!d.forge || d.forge === 'none')) safe += row('online', T('review.serviceToChoose'), 'online-service');
+      else if (d.online_mode !== 'none') {
         const existing = d.project_mode === 'existing_online', at = existing ? 'ex-repos' : 'online-details';
         const used = !existing && O55.safe.nameTaken(S, d.repository_name, d);
         safe += row('online', serviceLine(d) + ' · ' + livesAt(S, d) + '/' + d.repository_name + (used ? ' · ' + T('review.nameUsed') : ''), at);
@@ -204,10 +207,10 @@
       const will = [];
       if (d.project_mode === 'new') will.push(['folder', T('review.will.folder', { path: filesAt(S) })]);
       if (d.project_mode === 'existing_local') will.push(['folder', T('review.will.useFolder', { path: filesAt(S) })]);
-      if (d.project_mode === 'existing_online') will.push(['cloud', T('review.will.clone', { service: forgeName(d) })]);
+      if (d.project_mode === 'existing_online' && !unchosen(d)) will.push(['cloud', T('review.will.clone', { service: forgeName(d) })]);
       if (d.project_mode === 'restore') will.push(['rewind', T('review.will.restore')]);
       will.push(['history', T(d.project_mode === 'existing_online' ? 'review.will.historyKept' : 'review.will.history')]);
-      if (d.online_mode === 'new') will.push(['cloud', T('review.will.online', { service: forgeName(d), privacy: privacyLine(S, d).toLowerCase() })]);
+      if (d.online_mode === 'new' && d.forge && d.forge !== 'none') will.push(['cloud', T('review.will.online', { service: forgeName(d), privacy: privacyLine(S, d).toLowerCase() })]);
       if (d.settings_transfer.mode === 'copy_from_project') will.push(['stack', T('review.will.settings', { project: (S.sess.like && S.sess.like.name) || '' })]);
       if (needsRemote(d)) will.push(['globe', remoteWill(d)]);
       if (d.server_mode !== 'this_device') will.push(['server', T('review.will.server', { server: P().serverName(S) })]);

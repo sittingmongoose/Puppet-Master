@@ -56,30 +56,36 @@
     }
     if (d.project_mode === 'later' && d.settings_transfer.mode !== 'start_fresh') d.settings_transfer = create().settings_transfer;
     if (d.online_mode === 'none') {
+      d.forge_retired = null;
       Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null });
     } else {
-      const KINDS = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed'] };
-      /* a service no longer offered (a plan from before Jared's 2026-11-01 removals) is as if none was chosen: GitHub,
-         asked again, with nothing of the old one's sign-in, place or Project carried over */
-      if (d.forge !== 'none' && !KINDS[d.forge]) Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null, repository_owner_scope: 'personal', repository_container: '', repository_project: '' });
-      if (d.forge === 'none') d.forge = 'github';
-      const variants = KINDS[d.forge];
-      if (!variants.includes(d.forge_provider_variant)) d.forge_provider_variant = variants[0];
-      /* a hosted variant's own address; a server the person names is never filled in for them (FF-08: no example host) */
-      if (!/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url)) d.forge_instance_url = O55.fixtures.hostedUrl(d.forge, d.forge_provider_variant);
-      if (!d.forge_account_action) d.forge_account_action = 'sign_in_during_setup';
-      if (!d.repository_name) d.repository_name = U.slug(d.project_name) || 'new-project';
-      const vis = allowedVisibility(d);
-      /* a visibility the owner no longer allows (Internal after a switch to a personal account, FF-02) falls back to
-         the most private one, never to a wider one */
-      if (d.forge === 'azure_devops') d.repository_visibility = null;
-      else if (!vis.includes(d.repository_visibility)) d.repository_visibility = vis[0] || 'private';
-      /* a Forgejo or Gitea server's profile follows its address and the sign-in actually used (FF-12) */
-      if ((d.forge === 'forgejo' || d.forge === 'gitea') && d.forge_instance_url) {
-        const p = instanceProfile(d), was = d.forge_instance_profile;
-        if (was && was.instance_id === p.instance_id && was.auth_method === p.auth_method) p.credential_ref = was.credential_ref;
-        d.forge_instance_profile = p;
-      } else d.forge_instance_profile = null;
+      /* (Opus R6, Sol re-audit) a plan or saved draft naming a service or kind no longer offered (Jared's 2026-11-01
+         removals, DL-273) names nothing Puppet Master offers: its service and kind, address, account, Project,
+         credentials, authorization refs and Review all go, and the person chooses the service, its address and the
+         account again (forge_retired, a draft-only marker never exported, keeps the service unpicked until then). An
+         address is never kept as if it were a server of its own. */
+      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || (d.forge_provider_variant && !KINDS[d.forge].includes(d.forge_provider_variant)))) retire(d);
+      if (!(d.forge === 'none' && d.forge_retired)) {
+        if (d.forge !== 'none') d.forge_retired = null; /* (a service chosen again) */
+        if (d.forge === 'none') d.forge = 'github';
+        const variants = KINDS[d.forge];
+        if (!variants.includes(d.forge_provider_variant)) d.forge_provider_variant = variants[0];
+        /* a hosted variant's own address; a server the person names is never filled in for them (FF-08: no example host) */
+        if (!/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url)) d.forge_instance_url = O55.fixtures.hostedUrl(d.forge, d.forge_provider_variant);
+        if (!d.forge_account_action) d.forge_account_action = 'sign_in_during_setup';
+        if (!d.repository_name) d.repository_name = U.slug(d.project_name) || 'new-project';
+        const vis = allowedVisibility(d);
+        /* a visibility the owner no longer allows (Internal after a switch to a personal account, FF-02) falls back to
+           the most private one, never to a wider one */
+        if (d.forge === 'azure_devops') d.repository_visibility = null;
+        else if (!vis.includes(d.repository_visibility)) d.repository_visibility = vis[0] || 'private';
+        /* a Forgejo or Gitea server's profile follows its address and the sign-in actually used (FF-12) */
+        if ((d.forge === 'forgejo' || d.forge === 'gitea') && d.forge_instance_url) {
+          const p = instanceProfile(d), was = d.forge_instance_profile;
+          if (was && was.instance_id === p.instance_id && was.auth_method === p.auth_method) p.credential_ref = was.credential_ref;
+          d.forge_instance_profile = p;
+        } else d.forge_instance_profile = null;
+      }
     }
     /* remote access (#16-#23) */
     const clearRemote = () => Object.assign(d, { tailscale_control: null, tailscale_account_action: null, headscale_url: '', proxy_kind: null, proxy_hosting: null, proxy_hostname: '', proxy_tls: null });
@@ -112,6 +118,17 @@
     return d;
   }
 
+  /* the services and kinds offered (Jared 2026-11-01: Forgejo and Gitea on servers of their own only, DL-273) */
+  const KINDS = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed'] };
+  const offered = (forge, variant) => !!KINDS[forge] && (!variant || KINDS[forge].includes(variant));
+  function retire(d) {
+    d.forge_retired = { forge: d.forge, variant: d.forge_provider_variant || null };
+    Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null,
+      forge_account_ref: '', repository_ref: '', repository_visibility: null, repository_owner_scope: 'personal', repository_container: '', repository_project: '',
+      source_access_authorization_refs: [], review_confirmed: false });
+    if (d.online_mode === 'existing') d.repository_name = '';
+    d.forge_auth_method = null;
+  }
   /* what the service allows for the chosen owner and project (O55.forgeRules: one row per service) */
   function allowedVisibility(d) { return O55.forgeRules.visibility(envOf(), d); }
 
@@ -155,6 +172,8 @@
     if (d.server_mode !== 'this_device' && !d.server_ref) r.push({ field: 'server_ref', key: 'missing.server' });
     if (d.project_mode === 'new' && !String(d.project_name || '').trim()) r.push({ field: 'project_name', key: 'missing.name' });
     if (d.project_mode === 'existing_local' && !d.project_source_ref) r.push({ field: 'project_source_ref', key: 'missing.folder' });
+    /* (a service to choose again comes before the Project on it: R6) */
+    if (d.online_mode !== 'none' && (!d.forge || d.forge === 'none')) r.push({ field: 'forge', key: 'missing.service', screen: 'online-service' });
     if (d.project_mode === 'existing_online' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
     if (d.project_mode === 'restore' && !d.backup_source_ref) r.push({ field: 'backup_source_ref', key: 'missing.backup' });
     if (d.storage_mode === 'network_location' && !d.storage_location) r.push({ field: 'storage_location', key: 'missing.storage' });
@@ -187,5 +206,5 @@
     }
   }
 
-  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility };
+  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility, offered, KINDS };
 })();

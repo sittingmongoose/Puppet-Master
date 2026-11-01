@@ -141,6 +141,7 @@
     "backupFolder": "Choose the folder the backup is in first.",
     "storage": "Choose where on the network the files will live.",
     "signin": "Sign in to the online service first.",
+    "service": "Choose where the online copy lives again: the service this plan named isn't offered any more.",
     "server": "Choose your Puppet Master first.",
     "azureProject": "Choose the Azure DevOps project first.",
     "remoteLink": "Paste the Remote Link first.",
@@ -642,6 +643,7 @@
       "title": "Where should the online copy live?",
       "titleSource": "Where is the Project stored?",
       "lead": "Pick the website that keeps your online copy.",
+      "retired": "The service this plan named isn't offered any more. Choose where the copy lives, then sign in there.",
       "github": {
         "title": "GitHub",
         "sub": "Most popular. Free for private Projects."
@@ -1200,6 +1202,7 @@
       "new": "A new, empty Project",
       "existing_local": "Folder {path}",
       "existing_online": "{repo} from {service}",
+      "onlineAgain": "A Project kept online, once you choose its service again",
       "restore": "Backup of {project}",
       "device": "Files on {device}",
       "deviceNew": "A new, empty folder: {device}",
@@ -1226,6 +1229,7 @@
     },
     "checked": "Checked just now",
     "nameUsed": "name already used there",
+    "serviceToChoose": "Choose the service again",
     "changed": "{what} changed since you chose it. Take a look.",
     "create": "Create Project",
     "add": "Add Project",
