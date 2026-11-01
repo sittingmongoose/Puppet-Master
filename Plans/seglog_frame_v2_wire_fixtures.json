@@ -563,7 +563,7 @@
   "group_cases": [
     {
       "id": "one_member_group_with_commit_frame",
-      "qualification": "A wire and recovery vector built from the schema-only base event: storage.integrity_detected is barrier-class, so this is a one-member barrier group sealed at the event's persisted_at_utc. It pins the commit frame bytes, the eleven receipt fields and the group digest; complete custody rows (producer-semantic digest, value commitment, segment ref) are rebuilt by their own recipes and are not part of this vector.",
+      "qualification": "A wire and recovery vector built from the schema-only base event: storage.integrity_detected is barrier-class, so this is a one-member barrier group sealed at the event's persisted_at_utc. It pins the commit frame bytes, the eleven receipt fields and the group digest; complete custody rows (producer-semantic digest, value commitment, segment ref) are rebuilt by their own recipes and are not part of this vector. A producer-valid vector that rebuilds complete custody rows is deferred to the native custody tests (DL-270 open items).",
       "segment_generation": 4,
       "segment_name": "segment-4",
       "storage_instance_id": "store-1",

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L17314
+Source lines: L14505-L17317
 
-Source SHA256: `7fbf21b62c6bfb2e32c574d168bb8e1473d05c6834c591eb5ab9d6d23ddac348`
+Source SHA256: `c7f3c0e766f2f5505202868f0ecc0fcb940d18e89ed44d86ef3180d872cb1bcf`
 
 ---
 
@@ -2772,10 +2772,13 @@ canonical_text: >-
   SP-346 for SeglogFrameV2's reserved compression descriptor and the sealed segment container, SP-347 for the
   commit frame and its receipt fields, the First append receipt custody section and CV-339 rewritten to SP-336's
   publication and recovery sequence, the data-root paths in SP-015, and the storage registry's storage_profile
-  with its schema, holding each family's file, group and value limit and the budget values. Only the governance
-  reseal remains outside it. Card 4's 150 ms applies to warm and cold opens alike. Spec_Lock's forbid_sqlite is
-  unchanged. The option labels are the cards' words; the four requirements, thresholds and mechanics are the
-  review's reading, not Jared's words.
+  with its schema, holding each family's file, group and value limit and the budget values. The companion audits
+  left three items for implementation, not planning: a producer-valid fixture that rebuilds complete custody rows
+  from frames; native crash, power-loss and recovery tests of the commit-frame sequence on all three operating
+  systems; and recertifying the pinned goal_certified_event_coordinator_contracts profile against SP-336 before
+  its route is enabled. Only the governance reseal remains outside it. Card 4's 150 ms applies to warm and cold
+  opens alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four
+  requirements, thresholds and mechanics are the review's reading, not Jared's words.
 gui_related: false
 gui_classification_reason: "Records owner decisions on storage, compression and durability."
 split_recommended: false

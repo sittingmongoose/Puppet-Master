@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28242-L29139
+Source lines: L28242-L29140
 
-Source SHA256: `74eb16143a7c77409b21f3b509f9b20a8a8da3a65a1d2f46d48109da5a421b3c`
+Source SHA256: `2d739b93e09867793b4a90f1ec4bd159a7fd7c4f1247c3dfdf17ff22a4d4bc23`
 
 ---
 
@@ -120,18 +120,19 @@ canonical_text: >-
   structural changes. Restoring a backup rebuilds custody rows beyond its redb snapshot from the restored
   segments' commit frames. A durability checkpoint, a full flush of the active segment and of packs written since
   the last one followed by a durable redb commit, starts within 1 s of the first acknowledgement it would cover,
-  and whenever 8 MiB of acknowledged segment bytes or 64 MiB of non-durable redb writes are outstanding, before
-  every manifest publication and at clean shutdown; these are fixed owner values in the storage registry's
-  storage_profile. Every durable redb commit, in either redb file, follows a full flush of the segments and packs
-  written since the last one, so no durable row outlives the frames it depends on, and an ordinary group lost on
-  macOS leaves no durable trace; each such commit holds the group gate from its flush until it returns, so no
-  group is acknowledged in between. On macOS the checkpoint bounds what a power loss can drop to about the last
-  second of ordinary groups; on every OS it bounds redb's non-durable backlog. These are healthy-operation
-  targets: while a checkpoint is overdue, running late or failing, new acknowledgements wait for it, so slow or
-  failing I/O stretches the window only by the stall; a failed checkpoint is an I/O failure that storage health
-  shows, retried until it succeeds. This sequence supersedes Case L's per-group manifest promotion and its
-  redb-commit issuance boundary; storage-plan's First append receipt custody section and CV-339 follow it, and
-  SP-347 defines the commit frame. Pinned contract snapshots that still describe the earlier sequence, such as
+  and once 8 MiB of acknowledged segment bytes or 64 MiB of non-durable redb writes are outstanding, so a backlog
+  passes those amounts only by the transaction in flight, before every manifest publication and at clean shutdown;
+  these are fixed owner values in the storage registry's storage_profile. Every durable redb commit, in either
+  redb file, follows a full flush of the segments and packs written since the last one, so no durable row outlives
+  the frames it depends on, and an ordinary group lost on macOS leaves no durable trace; each such commit holds
+  the group gate from its flush until it returns, so no group is acknowledged in between. On macOS the checkpoint
+  bounds what a power loss can drop to about the last second of ordinary groups; on every OS it bounds redb's
+  non-durable backlog. These are healthy-operation targets: while a checkpoint is overdue, running late or
+  failing, new acknowledgements wait for it, so slow or failing I/O stretches the window only by the stall; a
+  failed checkpoint is an I/O failure that storage health shows, retried until it succeeds. This sequence
+  supersedes Case L's per-group manifest promotion and its redb-commit issuance boundary; storage-plan's First
+  append receipt custody section and CV-339 follow it, and SP-347 defines the commit frame. Pinned contract
+  snapshots that still describe the earlier sequence, such as
   goal_certified_event_coordinator_contracts/protocol.md (F5b, F5c and its post-append prerequisite), keep their
   bytes until their owners recertify them; SP-336 governs where they differ, and the routes they describe are not
   built as written: an implementation follows SP-336 and the profile is recertified before that route is enabled.
@@ -150,7 +151,7 @@ acceptance_criteria:
   - "After a simulated power cut nothing is reordered or corrupted, no barrier-class group is lost, and only on macOS may ordinary groups after the last full flush be missing."
   - "Receipt-custody rows rebuilt after a crash are identical to the ones exposed before it."
   - "A group is issued exactly when its commit frame is durable, by the writer's sync or by recovery's flush: one whose frame survives is issued with the receipts sealed in it, and one whose frame does not survive is treated as never issued, which on macOS can include an acknowledged ordinary group lost within its class."
-  - "In healthy operation on macOS a checkpoint starts within 1 s of the first acknowledgement it covers and before 64 MiB of non-durable redb writes accumulate; while one is overdue or failing, no new acknowledgement is given."
+  - "In healthy operation on macOS a checkpoint starts within 1 s of the first acknowledgement it covers and once 64 MiB of non-durable redb writes accumulate; while one is overdue or failing, no new acknowledgement is given."
   - "After a macOS power loss no durable row refers to a missing ordinary group."
   - "A durable redb commit never persists a row that depends on a group acknowledged after its full flush, in either redb file."
 validation_surfaces:

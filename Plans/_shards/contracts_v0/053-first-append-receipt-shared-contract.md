@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L22256-L22438
 
-Source SHA256: `a6b1b6b2eed63893c74c97da0bc1d804c2e86284ab200ca8ee0645173411e2c9`
+Source SHA256: `85012c321555a183ad29262b9f0d3a9eb2efb81a212028f4e777082c8341fc61`
 
 ---
 
@@ -130,7 +130,7 @@ SP-286 preserves verified older restore with existing risk/disclosure/confirmati
 
 The authenticated owner call supplies its actual operation identity and exact native event/scoped idempotency/semantic tuple. The writer issues a transient capability bound to those facts, the completed restore journal/epoch/boundary and current accepted lease revision, for exactly one logical publication. Freeze/revalidate actual owner acceptance and current controls before the group's commit frame is written. Amended 2026-10-31 (DL-270): the commit frame carries the compact `restore_admission` with the group's terms (SP-347); the capability is consumed at this publication, not at receipt delivery. Retrying a published capability returns its same publication and cannot append another group. No successful receipt or dependent terminal escapes before that commit frame is durable (SP-336).
 
-Amended 2026-10-31 (DL-270): there is no state between publication and issuance (SP-336, SP-347). On in-place restart, current Storage/coordinator authority authenticates the same selected protected root and current restore occurrence; a group whose commit frame is durable replays the original eleven fields, and a group without one after recovery's flush is treated as never issued on this root, so Case L-2 truncates its tail; no receipt of it survives and nothing durable refers to it (SP-336), which separates it from restored old work, whose receipts may have authorized effects outside the restored image, and its owner may accept the operation again only as a new logical operation through a new session's fresh-operation admission. Lost transient capabilities, old lease and owner-request handles are not reconstructed. A restored pending image or different restore occurrence cannot reuse an older admission. Missing actual protected origin/journal/current controls fences new appends; a repaired matching hash alone is insufficient.
+Amended 2026-10-31 (DL-270): there is no state between publication and issuance (SP-336, SP-347). On in-place restart, current Storage/coordinator authority authenticates the same selected protected root and current restore occurrence; a group whose commit frame is durable replays the original eleven fields, and a group without one after recovery's flush is treated as never issued on this root, so Case L-2 truncates an unacknowledged tail at the active segment's end, while a damaged frame before later valid groups is a proven hole under its loss rules; no receipt of it survives and nothing durable refers to it (SP-336), which separates it from restored old work, whose receipts may have authorized effects outside the restored image, and its owner may accept the operation again only as a new logical operation through a new session's fresh-operation admission. Lost transient capabilities, old lease and owner-request handles are not reconstructed. A restored pending image or different restore occurrence cannot reuse an older admission. Missing actual protected origin/journal/current controls fences new appends; a repaired matching hash alone is insufficient.
 
 Event-specific producers must adopt their actual accepted-operation interface and retain their own identity semantics. This shared contract supplies no native operation ID recipe, sequence-gap exception, automatic event admission or permission to relabel lost work. The first-native v2 group and same physical issued-receipt family with strict stored v2, exact retained v1/v2 readers and the explicit selector map activate together under SP-286's existing migration contract. No separate durable restore journal, accepted-operation registry, capability store or historical source mirror is created.
 
@@ -160,7 +160,7 @@ acceptance_criteria:
   - Exact eleven receipt and four original-result fields remain unchanged; only committed first issuance yields a successful acknowledgement.
   - Current group v2 has required closed restore admission and exact ordered uint64/UTF-8 MessagePack digest bytes without coercion.
   - Only actual owner/session authority supplies new-operation admission; retry inputs and repaired hashes cannot replace it.
-  - A protected publication consumes one capability; an in-place restart finds each group issued or never issued (SP-336), first-mints nothing and preserves replay.
+  - A protected publication consumes one capability; an in-place restart finds each group's issuance recoverable from its commit frame or absent (SP-336), first-mints nothing, keeps the loss and restore fences and preserves replay.
   - Retained identity/custody joins reject contradictions without reacquiring retired source or rerunning domain actions.
   - Full-value commitment uses the exact domain/version/codec/schema-bound complete EventRecord map; framing and producer-semantic digests are not substitutes.
   - Original request/result shapes and exact v1/v2 dispatch preserve types; legacy selectors never imply full-value proof or new v1 writer fallback.

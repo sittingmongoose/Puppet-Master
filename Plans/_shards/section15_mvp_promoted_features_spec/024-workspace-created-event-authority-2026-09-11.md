@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L11644-L11877
 
-Source SHA256: `f693ab1df396be761fe401bf1a8d61b0ff90dadce7bb90685a187513f199daaa`
+Source SHA256: `588085228c4d9a47552eddf473850387c26efa6cd1a9326bea58c18da3450f17`
 
 ---
 
@@ -112,8 +112,8 @@ current group/source/dedupe/restore checks. Missing or conflicting custody keeps
 the operation recovery-required under the existing failure behavior. A proper
 subset, lost previously issued custody, restored old pending request or ambiguous
 original group stays fenced under that behavior. After an in-place restart,
-recovery finds each group issued or never issued (SP-286) without reconstructing
-old transient capabilities. A verified older restore does not make omitted
+recovery finds each group's issuance recoverable or absent (SP-286, SP-336), keeping
+the loss and restore fences, without reconstructing old transient capabilities. A verified older restore does not make omitted
 creation work fresh: only an actual newly accepted owner creation after the
 coordinator's completed restore occurrence/session may use its fresh-operation
 admission, and lost or restored creation requests, reserved workspace identities

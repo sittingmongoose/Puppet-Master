@@ -11745,8 +11745,8 @@ current group/source/dedupe/restore checks. Missing or conflicting custody keeps
 the operation recovery-required under the existing failure behavior. A proper
 subset, lost previously issued custody, restored old pending request or ambiguous
 original group stays fenced under that behavior. After an in-place restart,
-recovery finds each group issued or never issued (SP-286) without reconstructing
-old transient capabilities. A verified older restore does not make omitted
+recovery finds each group's issuance recoverable or absent (SP-286, SP-336), keeping
+the loss and restore fences, without reconstructing old transient capabilities. A verified older restore does not make omitted
 creation work fresh: only an actual newly accepted owner creation after the
 coordinator's completed restore occurrence/session may use its fresh-operation
 admission, and lost or restored creation requests, reserved workspace identities
@@ -12009,8 +12009,9 @@ Missing or conflicting custody keeps the path unavailable under the existing
 failure behavior; it never proves no effect, restores the old generation or
 repeats the reset. A proper subset, lost previously issued custody, restored old
 pending request or ambiguous original group stays fenced under that behavior.
-After an in-place restart, recovery finds each group issued or never issued (SP-286)
-without reconstructing old transient capabilities. A verified older
+After an in-place restart, recovery finds each group's issuance recoverable or absent
+(SP-286, SP-336), keeping the loss and restore fences, without reconstructing old
+transient capabilities. A verified older
 restore does not make omitted reset work fresh: only an actual newly accepted
 owner reset after the coordinator's completed restore occurrence/session may use
 its fresh-operation admission, and lost or restored reset requests and pending
