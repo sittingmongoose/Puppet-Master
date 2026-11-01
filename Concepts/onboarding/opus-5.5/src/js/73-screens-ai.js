@@ -244,8 +244,10 @@
     if (adding) {
       const word = pill && (pill[0] !== 'needs' || st === 'context') ? pill[1] : '', said = ['signingIn', 'signinFailed'].includes(st) ? meta : '';
       const cancel = C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false }), go = (action ? btnIn(action.label, action.do, action.arg, 'primary') : '') + (st === 'signinFailed' ? cancel : '');
-      extra = ex('adding', `<div class="o55-inline" data-key="addhead-${p.id}"><strong class="o55-addhead">${U.esc(T(w.auth === 'key' ? 'ai.addingKey' : 'ai.adding'))}</strong>${word ? `<span class="o55-hint">${U.esc(word)}</span>` : ''}</div>`
-        + (said ? `<span class="o55-hint">${U.esc(said)}</span>` : '') + (go ? `<div class="o55-inline" data-key="addgo-${p.id}">${go}</div>` : '') + inner
+      /* (a failed added sign-in is a fault Pip reads, data-pip-fault: its words sit under the Ready row, pm7-onb RV-11) */
+      const pf = st === 'signinFailed' ? ' data-pip-fault' : '';
+      extra = ex('adding', `<div class="o55-inline" data-key="addhead-${p.id}"><strong class="o55-addhead">${U.esc(T(w.auth === 'key' ? 'ai.addingKey' : 'ai.adding'))}</strong>${word ? `<span class="o55-hint"${pf}>${U.esc(word)}</span>` : ''}</div>`
+        + (said ? `<span class="o55-hint"${pf}>${U.esc(said)}</span>` : '') + (go ? `<div class="o55-inline" data-key="addgo-${p.id}">${go}</div>` : '') + inner
         + (st === 'context' ? `<div class="o55-sublinks" data-key="addcancel-${p.id}">${cancel}</div>` : ''));
       pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = null;
     }

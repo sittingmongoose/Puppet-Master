@@ -2053,7 +2053,8 @@
             "denied": "Oh. They said no over there.",
             "expired": "Oh, that request ran out of time.",
             "identity_mismatch": "Wait! That's not the right computer.",
-            "protocol_mismatch": "We speak different versions."
+            "protocol_mismatch": "We speak different versions.",
+            "reason": "Pairing didn't finish yet."
           }
         }
       },
@@ -2153,7 +2154,10 @@
             "cursor_origin": "That name won't do there. See the rule under it?"
           },
           "nameReserved": "That name's kept for the service itself.",
-          "branchRule": "That branch name won't do yet."
+          "branchRule": "That branch name won't do yet.",
+          "azure": {
+            "routeMissing": "I can't make one from here."
+          }
         }
       },
       "safe": {
@@ -2203,6 +2207,13 @@
         "skipNote": "No AI yet, so I'll nap. Add one later.",
         "unavailable": "That account isn't here. Sign in again?",
         "pasteBad": "Hmm, that code didn't take.",
+        "keyRevoked": "That key's been switched off.",
+        "expired": {
+          "body": "That sign-in ran out. Sign in again?"
+        },
+        "oc": {
+          "fail": "No server answered there."
+        },
         "offline": "No internet here. Connect, then try again."
       },
       "like": {
@@ -2298,7 +2309,8 @@
             "denied": "Approved this time!",
             "expired": "Fresh request. Approved!",
             "identity_mismatch": "The right one this time.",
-            "protocol_mismatch": "Same version now. Paired!"
+            "protocol_mismatch": "Same version now. Paired!",
+            "reason": "Paired after all!"
           }
         }
       },
@@ -2398,7 +2410,10 @@
             "cursor_origin": "That name works there now!"
           },
           "nameReserved": "A name of its own. Good.",
-          "branchRule": "That branch name works!"
+          "branchRule": "That branch name works!",
+          "azure": {
+            "routeMissing": "Ah, now we can!"
+          }
         }
       },
       "safe": {
@@ -2448,6 +2463,13 @@
         "skipNote": "Power! I can think now.",
         "unavailable": "Signed in here too. Good.",
         "pasteBad": "Code accepted!",
+        "keyRevoked": "A fresh key. It works!",
+        "expired": {
+          "body": "Signed in again. Lovely."
+        },
+        "oc": {
+          "fail": "The server answered!"
+        },
         "offline": "Back online. That worked!"
       },
       "like": {
@@ -2737,7 +2759,8 @@
         }
       }
     },
-    "cheerFallback": "There we go!"
+    "cheerFallback": "There we go!",
+    "oopsFallback": "Hmm, something's not right yet."
   },
   "ai": {
     "signinFail": {

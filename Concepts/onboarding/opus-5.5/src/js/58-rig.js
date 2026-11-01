@@ -400,7 +400,9 @@
     addProp(spec, instant) {
       const P = PW.PROPS[spec.kind];
       if (!P) return null;
-      const g = el('g', { class: 'pst-prop', 'data-kind': spec.kind }, this.gProps);
+      /* made invisible and placed before the browser can paint it: a new group has no transform or opacity of its own until
+         render() gives it one, so the QR, laptop or server painted clipped at the stage's top-left for 3 frames (FA-10) */
+      const g = el('g', { class: 'pst-prop', 'data-kind': spec.kind, opacity: '0' }, this.gProps);
       const pr = { spec, el: g, strs: [], state: 'in', a: 0, av: 0, len: 0, lenv: 0, ax: 0, axv: 0, scale: spec.scale || 1, sv: 0, op: 0, born: this.t, key: '', settled: !!instant };
       this.props.set(spec.id, pr);
       this.drawProp(pr);
@@ -410,7 +412,31 @@
         pr.av = (Math.random() - .5) * this.fam.kick * 2;
         this.sfx(spec.preview ? 'ghost' : 'lower', { x: tgt.ax, len: clamp(tgt.len, 0, 400) });
       }
+      this.placeProp(pr);
       return pr;
+    }
+    /* where a prop hangs this frame, its strings and its opacity (render(); and addProp, so a new prop is never painted
+       before it is placed) */
+    placeProp(pr) {
+      const Lay = this.L;
+      const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1));
+      const tieMid = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
+      const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
+      pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
+      const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
+      pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
+      pr.el.setAttribute('opacity', R(pr.op));
+      // once a block is set down its strings are unhooked: they go slack, lift away and fade
+      const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
+      const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
+      pr.ties.forEach((t, i) => {
+        const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
+        const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+        pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
+        pr.strs[i].setAttribute('opacity', R(strOp));
+        pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
+      });
     }
     drawProp(pr) {
       const key = JSON.stringify(pr.spec.params || {}) + '|' + pr.spec.kind;
@@ -420,7 +446,7 @@
       pr.el.innerHTML = d.svg;
       pr.ties = d.ties; pr.foot = d.foot;
       const n = d.ties.length;
-      while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none' }, this.gPropStr));
+      while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
       const w = this.w, f = this.famName;
       const col = f === 'glass' ? (w.scheme === 'dark' ? 'rgba(246,248,252,.5)' : 'rgba(12,15,21,.38)') : f === 'basic' ? w.line : f === 'retro' ? (this.tube === 'phosphor' ? w.mid : '#5B544A') : f === 'nier' ? w.ink : TH()[this.theme].str;
@@ -809,26 +835,7 @@
         this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
-      this.props.forEach((pr) => {
-        const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1));
-        const tieMid = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
-        const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
-        const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
-        pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
-        const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
-        pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
-        pr.el.setAttribute('opacity', R(pr.op));
-        // once a block is set down its strings are unhooked: they go slack, lift away and fade
-        const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
-        const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
-        pr.ties.forEach((t, i) => {
-          const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-          const top = [pr.ax + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
-          pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
-          pr.strs[i].setAttribute('opacity', R(strOp));
-          pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
-        });
-      });
+      this.props.forEach((pr) => this.placeProp(pr));
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
@@ -841,7 +848,7 @@
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
         this.lastZ = this.t;
-        const e = el('g', { class: 'pst-p' }, this.gFx);
+        const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx);
         const font = this.tube === 'phosphor' ? 'VT323, monospace' : this.tube ? "'IBM Plex Mono', monospace" : 'system-ui,sans-serif';
         e.innerHTML = `<text font-family="${font}" font-weight="800" font-size="${this.tube ? 22 : 16}" fill="${this.w.text}">z</text>`;
         this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });

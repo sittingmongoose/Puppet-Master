@@ -14,6 +14,9 @@
   const O55 = window.O55;
   const md = (S) => S.sess.drafts.main;
   const FACES = {"welcome":{"asleep":"sleep","wake":"happy","wakeAgain":"happy","resumed":"happy","returning":"happy"},"look":{"enter":"idle","keep":"watch","pickFamily:basic":"watch","pickFamily:friendly":"happy","pickFamily:glass":"wonder","pickFamily:retro":"happy","pickNier":"watch","pickMode:light":"watch","pickMode:dark":"watch","nierOff":"happy"},"where":{"enter":"watch","pick:this":"happy","pick:connect":"watch","pick:server":"watch","checking":"think","checked":"happy","offline":"watch"},"c-route":{"enter":"think","found":"wonder","group:pickServer":"happy","route:local_or_vpn":"watch","route:tailscale":"watch","route:reverse_proxy":"wonder","route:remote_link":"watch","typing":"wonder"},"c-review":{"enter":"watch","pairing:approval":"watch","pairing:code":"happy","pairing:qr":"happy"},"c-pair":{"enter":"watch","waiting":"think","qr":"think","typing":"wonder","checking":"think","done":"happy"},"c-ready":{"enter":"happy","empty":"watch","createNew":"happy","group:pickProject":"watch"},"s-kind":{"enter":"watch","kind:nas":"happy","kind:cloud":"wonder","kind:pc":"watch"},"s-wait":{"enter":"think","found":"happy","typing":"wonder","copied":"happy"},"s-confirm":{"enter":"watch","typing":"wonder","group:suggest":"happy","working":"think","selfMatch":"watch","done":"happy"},"s-ready":{"enter":"happy","waiting":"watch","approved":"happy","denied":"watch","newCode":"happy"},"r-source":{"enter":"watch","source:kit":"happy","source:folder":"watch","source:nas":"watch","source:cloud":"watch","typing":"wonder"},"r-unlock":{"enter":"watch","typing":"wonder","unlocked":"happy"},"r-pick":{"enter":"watch","group:pick":"watch"},"r-preview":{"enter":"watch","working":"think","done":"happy"},"r-done":{"enter":"happy","group:pickProject":"watch","createNew":"happy"},"begin":{"enter":"watch","server":"watch","pick:new":"happy","pick:existing":"watch","pick:restore":"happy","sub:folder":"watch","sub:online":"watch","sub:device":"watch","later":"happy"},"ex-folder":{"enter":"watch","reading":"think","hasHistory":"happy","noHistory":"happy"},"name":{"empty":"watch","typing":"wonder","named":"happy","group:suggest":"happy","loc:auto":"watch","loc:custom":"watch","loc:network":"wonder","storage:with_server":"happy","storage:this_device":"watch","storage:network_location":"watch"},"like":{"enter":"watch","pick:fresh":"happy","group:pick":"watch"},"online-service":{"enter":"watch","enterSource":"watch","pick:github":"happy","pick:gitlab":"watch","pick:azure_devops":"watch","pick:bitbucket_cloud":"watch","pick:forgejo":"watch","pick:gitea":"watch","pick:github_enterprise":"watch","pick:cursor_origin":"wonder","typing":"wonder"},"online-signin":{"enter":"watch","known":"happy","waiting":"think","code":"watch","typing":"wonder","create":"watch","done":"happy"},"online-details":{"enter":"watch","typing":"wonder","available":"happy","vis:private":"watch","vis:public":"watch","vis:internal":"watch"},"ex-repos":{"enter":"watch","typing":"wonder","group:pick":"happy","empty":"watch"},"safe":{"enter":"idle","backend:git":"watch","backend:jujutsu":"wonder","install":"watch","keeps":"happy","filesafe":"watch","filesafeOn":"happy","filesafeOff":"watch","online":"watch","backup":"watch","bdest:nas":"watch","bdest:gdrive":"watch","bdest:onedrive":"watch","bdest:s3":"happy","bdest:sftp":"watch","bdest:none":"watch","sync":"happy"},"away":{"enter":"watch","pick:home":"happy","pick:anywhere":"happy","route:headscale":"watch","route:reverse_proxy":"wonder","route:remote_link":"watch","typing":"wonder"},"review":{"enter":"watch","checked":"happy","later":"watch","changed":"wonder","group:edit":"watch"},"creating":{"folder":"think","history":"think","historyInstall":"think","clone":"think","restore":"think","device":"think","online":"think","settings":"think","remote":"think","check":"think","last":"think","done":"happy","doneLater":"happy","closeOk":"watch"},"protect":{"enter":"watch","step:signin":"watch","step:test":"think","step:kit":"watch","step:kitTest":"watch","step:policy":"happy","working":"think","done":"happy"},"ai":{"checking":"watch","none":"sleep","one":"happy","many":"happy","installing":"think","signingIn":"think","typing":"wonder","testing":"watch","free":"watch"},"ai-all":{"enter":"watch","typing":"wonder"},"ai-none":{"enter":"watch","pick:sub":"watch","pick:api":"watch","pick:free":"happy"},"free":{"enter":"watch","working":"think","ready":"happy"},"ready":{"enter":"happy","later":"happy","noAi":"watch"},"nas-find":{"enter":"think","group:device":"watch","method:ssh":"watch","method:smb":"watch","method:nfs":"watch","method:mounted":"happy","sshOff":"watch","pm":"happy","typing":"wonder"},"nas-identity":{"enter":"watch","known":"happy","trusted":"happy"},"nas-key":{"enter":"watch","looking":"think","group:pick":"watch","works":"happy","locked":"watch","notAdded":"watch","pick:new":"happy","typing":"wonder","testing":"think"},"nas-signin":{"enter":"watch","typing":"wonder","self":"watch"},"nas-install":{"enter":"think","done":"happy"},"nas-pmpair":{"enter":"watch","waiting":"think","typing":"wonder","done":"happy"},"nas-folder":{"enter":"watch","storage":"watch","typing":"wonder"},"nas-smb":{"enter":"watch","typing":"wonder","checking":"think"},"nas-nfs":{"enter":"think","done":"happy"},"nas-mounted":{"enter":"watch","group:volume":"watch"}};
+  /* a name Pip says, cut with an ellipsis where it is too long for its bubble, never mid-word with nothing to show it (m4:
+     "“Connected server p”. Lovely.") */
+  const clip = (t, n) => { t = String(t || ''); if (t.length <= n) return t; const c = t.slice(0, n - 1), sp = c.lastIndexOf(' '); return (sp > n * 0.6 ? c.slice(0, sp) : c).trimEnd() + '…'; };
   const lines = (scr) => { const m = O55.tx('pip.say.' + scr); return m && typeof m === 'object' ? m : {}; };
   const fill = (s, v) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => (v && v[k] != null ? v[k] : m));
   const line = (scr, id, v) => { const t = lines(scr)[id]; return t ? fill(t, v) : ''; };
@@ -87,7 +90,7 @@
       vars: (S) => ({ begin: S.sess.ui.begin || 'new' })
     },
     'ex-folder': { props: one('folder'), state: (S) => (S.sess.folderInfo ? (S.sess.folderInfo.history ? 'hasHistory' : 'noHistory') : 'enter') },
-    name: { props: (S) => [P('sign', 'sign', { params: { text: (md(S).project_name || '').trim() } })], state: (S) => ((md(S).project_name || '').trim() ? 'named' : 'empty'), vars: (S) => ({ name: (md(S).project_name || '').trim().slice(0, 18) }) },
+    name: { props: (S) => [P('sign', 'sign', { params: { text: (md(S).project_name || '').trim() } })], state: (S) => ((md(S).project_name || '').trim() ? 'named' : 'empty'), vars: (S) => ({ name: clip((md(S).project_name || '').trim(), 24) }) },
     like: { props: (S, h) => [P(h === 'pick:fresh' || (!h && md(S).settings_transfer.mode !== 'copy_from_project') ? 'page' : 'settings', 'side', { preview: !!h })], vars: (S) => ({ from: md(S).settings_transfer.mode === 'copy_from_project' ? 'copy' : 'fresh' }) },
     'online-service': { props: one('forge'), vars: (S) => ({ service: md(S).forge || 'github' }) },
     'online-signin': { props: two('forge', 'key'), state: (S) => { const si = S.sess.signin || {}; return si.state === 'done' ? 'done' : si.state === 'waiting' ? 'waiting' : si.state === 'code' ? 'code' : si.state === 'create' ? 'create' : 'enter'; }, vars: (S) => ({ service: (S.sess.signin || {}).name || forgeName(S) }) },
@@ -195,9 +198,10 @@
     if (id === 'welcome') out.wakeSay = say;
     if (o.oops) {
       out.pip.mood = o.oops.face === 'oops' && !part('oops') ? 'idle' : o.oops.face;
-      out.say = O55.t('pip.oops.' + o.oops.key, v);
+      /* (a fault with no line of its own still shows: Pip says the general one, never a key; RV-6) */
+      out.say = o.oops.key ? O55.t('pip.oops.' + o.oops.key, v) : O55.t('pip.oopsFallback');
       out.label = O55.t('pip.stage.labels.oops');
-      out.oops = o.oops.key;
+      out.oops = o.oops.key || 'unknown';
     }
     return out;
   }
@@ -216,13 +220,15 @@
   const FACE = {
     'server.confirm.pendingHost': 'think', 'protect.pendingHost': 'think', 'creating.recovery.pending': 'think',
     'creating.recovery.reasons.waitingHost': 'think', 'creating.recovery.reasons.claimBusy': 'think', 'creating.recovery.reasons.pending': 'think',
-    'ai.skipNote': 'sleep',
+    'ai.skipNote': 'sleep', 'online.details.azure.routeMissing': 'think',
     /* a server with sign-up turned off is information, not a problem: Pip thinks it through, never worries (footage review m6) */
     'online.signin.admin': 'think'
   };
   /* states that show as information, not as a fault, are still read where they are written (a note, a row's line) */
   /* (a refused press's reason, .o55-reason, is told to Pip by the press itself: 60-ui-core.js renderScene's refused) */
-  const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-rowmeta, .o55-tag, .o55-phdetail';
+  /* ([data-pip-fault]: words a screen shows as a fault in an element of its own style, such as an added account's failed
+     sign-in under a Ready row, RV-17; Pip read nothing there and kept saying the row was ready) */
+  const WHERE = '.o55-err, .o55-note, .o55-banner, .o55-pill-fail, .o55-rowmeta, .o55-tag, .o55-phdetail, [data-pip-fault]';
   let table = null;
   const flat = (node, pre, out) => {
     Object.keys(node || {}).forEach((k) => { const v = node[k], key = pre ? pre + '.' + k : k; if (typeof v === 'string') out.push(key); else if (v && typeof v === 'object') flat(v, key, out); });
@@ -253,6 +259,18 @@
     const ns = screen ? NS(screen) + '.' : null, own = ns && hits.find((r) => r.key.indexOf(ns) === 0);
     return (own || hits[0]).key;
   }
+  /* any fault the screen shows, whether or not Pip has a line for it (a field's error, a warning banner, a failed row, an
+     invalid field): while one shows, Pip is not glad yet. A fault replaced by another one Pip has no line for used to read
+     as put right, and Pip cheered a revoked key with "That key works. Power!" (RV-6) */
+  const FAULT = '.o55-err, .o55-banner-warn, .o55-pill-fail, [aria-invalid="true"], [data-pip-fault]';
+  function faultShown(scope) {
+    if (!scope) return false;
+    for (const el of scope.querySelectorAll(FAULT)) {
+      if (el.closest('.o55-out, [hidden], .o55-explainer') || !el.getClientRects().length) continue;
+      if (el.matches('[aria-invalid="true"]') || (el.textContent || '').trim()) return true;
+    }
+    return false;
+  }
   /* the first state the current screen shows, in reading order: { key, face, el } or null */
   function read(scope) {
     if (!scope) return null;
@@ -267,5 +285,5 @@
   /* a line that is missing is never shown as its key (FO-13: "pip.cheer.endpoint.path" on screen): a cheer without its own
      line says the general one, and build.py --check fails on any pip.oops key without its pip.cheer twin */
   const said = (k, fb) => { const v = O55.tx(k); return typeof v === 'string' && v ? v : fb ? O55.t(fb) : ''; };
-  O55.pipOops = { read, match, face: (key) => FACE[key] || 'oops', line: (key) => said('pip.oops.' + key, null), cheer: (key) => said('pip.cheer.' + key, 'pip.cheerFallback') };
+  O55.pipOops = { read, match, faultShown, face: (key) => FACE[key] || 'oops', line: (key) => said('pip.oops.' + key, null), cheer: (key) => said('pip.cheer.' + key, 'pip.cheerFallback') };
 })();

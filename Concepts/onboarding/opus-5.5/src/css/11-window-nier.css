@@ -93,10 +93,10 @@ html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !import
    dimmed, read as a broken render: films M8). The footer holds still: the new screen's footer is whole from its first
    frame and lies over the old one, so Back and Continue never blink. */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-st,
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-card, .o55-row, .o55-tile),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-card, .o55-row, .o55-tile, .o55-opt > .o55-tipq),
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-promise li { animation-name: o55nw-in; animation-timing-function: step-end; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-st,
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-card, .o55-row, .o55-tile) { animation-name: o55nw-in-back; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-card, .o55-row, .o55-tile, .o55-opt > .o55-tipq) { animation-name: o55nw-in-back; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main.o55-st { animation-name: o55nw-fade; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-foot.o55-st { animation: none; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-pane > .o55-layer:is(.o55-out-fwd, .o55-out-back) { animation: o55nw-out 220ms step-end both; }
@@ -459,9 +459,9 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-cold] .o55-eye
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-st { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + var(--i, 0) * var(--o55-stagger)) both; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main.o55-st { animation-name: o55nw-fade; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] :is(.o55-eyebrow, .o55-title, .o55-foot) { animation: none; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-card, .o55-row, .o55-tile) { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-card, .o55-row, .o55-tile, .o55-opt > .o55-tipq) { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-promise li { animation: o55nw-in var(--o55-step) step-end calc(440ms - .3 * var(--o55-step) + var(--ci, 0) * 80ms) both; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :is(.o55-st, .o55-main :is(.o55-card, .o55-row, .o55-tile), .o55-promise li) { animation-play-state: paused !important; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :is(.o55-st, .o55-main :is(.o55-card, .o55-row, .o55-tile, .o55-opt > .o55-tipq), .o55-promise li) { animation-play-state: paused !important; }
 
 /* ============================================================================== H3: the rail walk, the counter roll */
 /* The current chapter's ink block walks the rail (66-nier-window.js railWalk): a block of the same size steps from the

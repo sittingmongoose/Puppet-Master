@@ -451,7 +451,16 @@
      layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
-  let lastOops = null, cheering = null;
+  let lastOops = null, cheering = null, lastLine = null, holdLineT = null, holdCheerT = null, lastSuccess = null;
+  /* every cheer Pip has said, for the kit's checks (a cheer's words can also be a screen's own line, so text alone can't tell) */
+  const cheerLog = [];
+  /* Pip's cheer means something succeeded (RV-11): an operation finished or an owner's answer was adopted
+     (o55:succeeded, 62-flow.js F.op and 30-owners.js adopt), never an error leaving the screen */
+  window.addEventListener('o55:succeeded', (e) => {
+    const d = e.detail || {};
+    lastSuccess = { at: performance.now(), startedAt: d.startedAt != null ? d.startedAt : performance.now(), screen: d.screen || (S.sess && S.sess.screen) };
+    if (S.open) O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 0);
+  });
   function stageOf() {
     const host = S.root && S.root.querySelector('.o55-stage');
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
@@ -474,6 +483,9 @@
     if (!oops && o && o.refused) oops = o.refused;
     const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg && (r.reason == null || (n.getAttribute('data-disabled-reason') || '') === r.reason))) /* (p35: a reason that changed is not still refused) */;
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
+    /* a fault still shows that Pip has no line for: Pip stays on it (its general line) instead of cheering the one it
+       replaced; a cheer comes only when the screen shows no fault at all (RV-6) */
+    if (!oops && layer && !layer.classList.contains('o55-hold') && O55.pipOops.faultShown(layer)) oops = { key: null, face: 'oops' };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
     /* a look only looked at: Pip's bubble types its line without its voice (Jared's O6, "no sound on hover"); the line
@@ -485,19 +497,65 @@
     /* The cheer is for the owner's result, not for the error leaving the screen: while a retry is under way (an
        operation running, a wait's loader showing) Pip thinks with the screen, and cheers once it has succeeded; a
        second failure brings the oops back (Astra M01) */
-    const pending = !oops && lastOops && (/^(signingIn|installing|testing|checking|working|waiting|looking|reading)$/.test(spec.lineId) || spec.pip.mood === 'think'
-      || Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('.o55-ldwrap, [data-pip-loader]')));
-    const cheer = !oops && !pending && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
-    if (oops) lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null }; else if (!pending) lastOops = null;
+    /* RV-11: the cheer needs a real success for the thing that failed. A fault read from a banner, a note or a row waits
+       for an operation or an owner's answer that succeeded after it appeared (a retry); a field's error, for that field
+       to be there again, filled and without it (or such a success); a refused press, for that press to go through. A
+       fault that only left (another way chosen, a skip, a token instead of a sign-in) is no success: Pip goes quiet. */
+    const now = performance.now();
+    if (lastOops && lastOops.screen !== S.sess.screen) lastOops = null;
+    let cheer = null;
+    if (oops) {
+      const same = lastOops && lastOops.key === oops.key;
+      const fieldEl = oops.el && oops.el.closest && oops.el.closest('.o55-field[data-key]');
+      /* (a success while the fault still shows did not put it right: it never counts later) */
+      let since = same ? lastOops.since : now; if (lastSuccess && lastSuccess.at >= since) since = lastSuccess.at + 1;
+      lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null, since, field: same ? lastOops.field : (fieldEl ? fieldEl.getAttribute('data-key') : null) };
+    } else if (lastOops) {
+      const won = !!(lastSuccess && lastSuccess.at >= lastOops.since && lastSuccess.startedAt >= lastOops.since - 100 && lastSuccess.screen === S.sess.screen);
+      let ok = won, gone = false;
+      if (lastOops.refused) {
+        const r = lastOops.refused, c = layer && Array.from(layer.querySelectorAll('[data-o55-do]')).find((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg);
+        ok = ok || !!(c && c.getAttribute('aria-disabled') !== 'true'); gone = !c;
+      } else if (lastOops.field) {
+        const f = layer && layer.querySelector(`.o55-field[data-key="${CSS.escape(lastOops.field)}"]`), i = f && f.querySelector('input, textarea');
+        ok = ok || !!(f && i && i.type !== 'password' && String(i.value || '').trim() && !f.querySelector('.o55-err'));
+        gone = !f;
+      }
+      /* typing over a taken name makes it free at its first letter, and bad/name? breaks the rule a letter later; a refused
+         Continue goes through at the first letter of a new name or code too: a field's or a refused press's cheer waits
+         until the typing stops and is said only if it is still right then (FA-9) */
+      const typing = S.typedAt ? performance.now() - S.typedAt : Infinity;
+      if (ok && !won && (lastOops.field || lastOops.refused) && typing < 1200) {
+        ok = false;
+        O55.motion.real.clearTimeout(holdCheerT); holdCheerT = O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 1250 - typing);
+      }
+      /* (a field or a control away while something runs, such as a key being checked, is not the person moving on) */
+      /* (some screens redraw into their waiting state a moment before the operation registers: the waiting pill or Pip's
+         waiting line count too, 73-screens-ai.js keyCheck) */
+      const running = Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('[aria-busy="true"], .o55-ldwrap, [data-pip-loader], .o55-pill-wait'))
+        || /^(signingIn|installing|testing|checking|working|waiting|looking|reading|connecting)$/.test(spec.lineId || '') || (spec.pip && spec.pip.mood === 'think');
+      if (ok && lastOops.face === 'oops') { cheer = lastOops; lastOops = null; }
+      else if (ok || (gone && !running) || now - lastOops.since > 30000) lastOops = null; /* put right without a cheer of its own, moved on, or long ago */
+    }
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
-    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
        world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
        change on click. It is a little too busy with it changing on hover") */
     st.tryOn(null);
+    /* while the person types, Pip keeps the line it said for typing: the screen's own line (looking, found) waits until the
+       typing pauses, so the bubble does not flip at each key (m13, Connect: "Type it in. I'll go and knock." / "Looking f…"
+       / "Type it in."). A fault or a cheer still speaks at once; a screen whose stage answers each letter (Name) is left be */
+    const sdef = SCREENS.defs[S.sess.screen], typingNow = !!S.typedAt && performance.now() - S.typedAt < 1200;
+    const singing = !!(sdef && sdef.typing && S.pipTyping && sdef.typing(S, S.pipTyping));
+    if (typingNow && !singing && !oops && !cheer && !cheering && lastLine && lastLine.screen === S.sess.screen && lastLine.lineId === 'typing' && spec.lineId !== 'typing') {
+      spec.say = lastLine.say; spec.lineId = 'typing'; if (lastLine.mood) spec.pip.mood = lastLine.mood;
+      if (!holdLineT) holdLineT = O55.motion.real.setTimeout(() => { holdLineT = null; if (S.open) renderScene(); }, 1250);
+    }
+    lastLine = { say: spec.say, lineId: spec.lineId, mood: spec.pip && spec.pip.mood, screen: S.sess.screen };
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);
@@ -507,6 +565,25 @@
     /* (a switch of Plain English and Expert puts the other version in place at once: no retyping, no jump) */
     st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
+  /* the column's top, held from the moment the screen comes in (p76); a window resize centres it again */
+  function holdColumn(layer) {
+    if (!layer) return;
+    layer.removeAttribute('data-col-held');
+    const c = layer.querySelector('.o55-scroll > .o55-content'), sc = c && c.parentElement;
+    if (!c || !sc) return;
+    const top = Math.max(0, Math.round(c.offsetTop - sc.offsetTop)); /* (layout offsets: the window's opening scale does not count) */
+    layer.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
+  }
+  window.addEventListener('resize', () => { const l = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); if (l) holdColumn(l); });
+  /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
+  O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
+  O55.ui.cheerLog = () => cheerLog.slice();
+  /* the presses that leave a failed thing for another way, a skip or a cancel: whatever succeeds after one is not the
+     failed thing put right, so a waiting cheer goes (RV-11; the lead, 2026-11-01: every flow where the person moves on,
+     such as RV-13's Use Tailscale instead, whose Tailscale step otherwise cheered the failed web address). A retry is
+     never one of them. */
+  const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
+    'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
   O55.pipStage.holdsTip = holdsTip;
 
@@ -620,7 +697,14 @@
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
     O55.tips.write(layer); armLoaders(layer);
-    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
+    holdColumn(layer);
+    /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
+       space for 7-10 frames before their cards) */
+    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => {
+      n.style.setProperty('--ci', i);
+      const q = n.parentElement && n.parentElement.classList.contains('o55-opt') ? n.parentElement.querySelector(':scope > .o55-tipq') : null;
+      if (q) q.style.setProperty('--ci', i);
+    });
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
@@ -808,6 +892,7 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
+    if (MOVED_ON.has(action)) O55.ui.movedOn();
     /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
@@ -833,6 +918,7 @@
   function onInput(e) { const t = e.target.closest('[data-o55-bind]'); if (t) typed(t, e.type, e); }
   /* a bound field changed (typing, or O55.ui.fill): type is 'input' or 'change', e the event or null */
   function typed(t, type, e) {
+    if (type === 'input') S.typedAt = performance.now(); /* (Pip keeps its typing line while this is recent: renderScene) */
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     /* typing ticks quietly in the family's material (never for a protected field); a screen whose stage answers each
@@ -1200,6 +1286,7 @@
     if (el) { press(el, null); return true; }
     const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
     if (!fn) return false;
+    if (MOVED_ON.has(action)) O55.ui.movedOn();
     fn(S, want, null, null);
     return true;
   }

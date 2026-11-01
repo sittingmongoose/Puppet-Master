@@ -316,6 +316,108 @@ def pip_key_problems() -> list[str]:
     return problems
 
 
+# Fault copy Pip deliberately has no line for, each with its reason (pip_fault_problems).
+PIP_FAULT_EXEMPT = {
+    'away.proxy.public': 'a consent warning before a web address is set up, not a fault',
+    'ai.skipped': "shown with ai.skipNote in the same note, which is Pip's (nap) line",
+    'endpoint.added': "the endpoint check's hint for an accepted address, not an error",
+    'nas.install.fail.notAllowedFix': "the explanation under the not_allowed banner, whose own line is Pip's",
+    'nas.install.fail.showKey': 'a button label kept under nas.install.fail, never a failure code the banner shows',
+}
+
+
+def pip_fault_problems() -> list[str]:
+    """Every fault the screens show has Pip's line (RV-6: a revoked key had none, so Pip read the screen as put right and
+    cheered the key it had before). Collected from the screens' code: a field's error (and a why/err/msg variable that
+    feeds one), a warn/fail note, a warn banner's own words (a key built with + expands one level, button labels aside),
+    a failed row's title or words (either may carry the line), a refused press's missing.* reason."""
+    copy = copy_json()
+
+    def leaves(node, pre=''):
+        out = {}
+        for k, v in (node or {}).items():
+            if isinstance(v, dict):
+                out.update(leaves(v, pre + k + '.'))
+            else:
+                out[pre + k] = v
+        return out
+
+    strings = {k for k, v in leaves(copy).items() if isinstance(v, str)}
+    oops = set(leaves(copy.get('pip', {}).get('oops')))
+    has_line = lambda k: k in oops or k.rsplit('.', 1)[0] in oops
+    T = r"(?:\bT|O55\.t|O55\.talk\.t)\(\s*'([a-zA-Z0-9_.]+)'(\s*\+)?"
+    js_all = {p.name: p.read_text(encoding='utf-8') for p in sorted((SRC / 'js').glob('6*.js')) + sorted((SRC / 'js').glob('7*.js'))}
+    labels = {m.group(1) for js in js_all.values() for m in re.finditer(r"label:\s*" + T, js)}
+    labels |= {m.group(1) for js in js_all.values() for m in re.finditer(r"label:\s*'([a-z][a-zA-Z0-9_.]+\.[a-zA-Z0-9_.]+)'", js)}  # T(a.label) tables
+
+    def keys_of(k, dyn, rest='', js=''):
+        if not dyn:
+            return [k] if k in strings else []
+        # a key built with +: the suffixes the expression names (quoted words, and the values of a table it indexes, such
+        # as TS_FAIL[t.fail]); every child of the prefix only when it names none
+        depth, end = 1, 0
+        for i, ch in enumerate(rest):
+            depth += ch == '('
+            depth -= ch == ')'
+            if depth == 0:
+                end = i
+                break
+        expr = rest[:end] if end else rest[:200]
+        named = set(re.findall(r"'([A-Za-z0-9_]+)'", expr))
+        for table in re.findall(r"\b([A-Z][A-Z0-9_]+)\[", expr):
+            m = re.search(r"\b" + table + r"\s*=\s*\{([^}]*)\}", js)
+            if m:
+                named |= set(re.findall(r":\s*'([A-Za-z0-9_]+)'", m.group(1)))
+        if named:
+            return [k + n for n in sorted(named) if k + n in strings]
+        return [s2 for s2 in strings if s2.startswith(k) and '.' not in s2[len(k):] and s2 not in labels and not s2.startswith('pip.')]
+
+    def called(expr, js):
+        # an error that a local function of the screen's file returns (const err = nameError(d); error: branchError(d)):
+        # that function's body, so its copy keys count as the field's (FA-9: the name and branch rules had no Pip line)
+        m = re.match(r"\s*!*\s*([a-z][A-Za-z0-9_]*)\(", expr)
+        if not m:
+            return ''
+        f = (re.search(r"\bfunction\s+" + m.group(1) + r"\s*\([^)]*\)\s*\{(.{0,1200}?)\n\s*\}", js, re.S)
+             or re.search(r"\bconst\s+" + m.group(1) + r"\s*=\s*\([^)]*\)\s*=>\s*([^\n]{0,400})", js))
+        return f.group(1) if f else ''
+
+    groups = []  # (where, [keys]): satisfied when any key has Pip's line
+    for name, js in js_all.items():
+        for m in re.finditer(r"\berror:\s*([^,}\n]{0,240})", js):
+            for src in (m.group(1), called(m.group(1), js)):
+                for t in re.finditer(T, src):
+                    groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), src[t.end():], js)]
+        for m in re.finditer(r"(?:const|let)\s+(?:why|err|error|msg|problem|fail\w*)\s*=\s*([^;]{0,400})", js):
+            for t in re.finditer(T, m.group(1)):
+                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)))]
+            body = called(m.group(1), js)
+            for t in re.finditer(T, body):
+                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), body[t.end():], js)]
+        for m in re.finditer(r"C\.note\(\s*" + T + r"[^;]{0,160}?,\s*'(?:warn|fail|error)'", js):
+            groups += [(f'{name} warn note', [k]) for k in keys_of(m.group(1), bool(m.group(2)), js[m.end(2) if m.group(2) else m.end():], js)]
+        for m in re.finditer(r'o55-banner-warn"[^`]*?</span>', js):
+            for t in re.finditer(T, m.group(0)):
+                groups += [(f'{name} warn banner', [k]) for k in keys_of(t.group(1), bool(t.group(2)), m.group(0)[t.end():], js)]
+        for line in js.split('\n'):
+            if "pill = ['fail'" in line:
+                ks = [k for t in re.finditer(r"(?:pill = \['fail',\s*|meta = )" + T, line) for k in keys_of(t.group(1), bool(t.group(2)))]
+                if ks:
+                    groups.append((f'{name} failed row', ks))
+        for m in re.finditer(r"reason:\s*" + T, js):
+            if m.group(1).startswith('missing.'):
+                groups += [(f'{name} refused press', [k]) for k in keys_of(m.group(1), bool(m.group(2)))]
+    # every missing.* message is a refused press's reason by convention, wherever its screen builds it
+    groups += [('a refused press (missing.*)', [k]) for k in sorted(strings) if k.startswith('missing.')]
+    problems, seen = [], set()
+    for where, ks in groups:
+        if any(has_line(k) or k in PIP_FAULT_EXEMPT for k in ks) or tuple(ks) in seen:
+            continue
+        seen.add(tuple(ks))
+        problems.append(f"fault copy without Pip's line: pip.oops.{' or pip.oops.'.join(ks)} ({where})")
+    return problems
+
+
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
@@ -358,6 +460,7 @@ def lint_sources() -> list[str]:
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
     problems.extend(pip_key_problems())
+    problems.extend(pip_fault_problems())
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())

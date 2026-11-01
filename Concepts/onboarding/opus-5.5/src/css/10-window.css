@@ -133,12 +133,18 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 
 /* body: stage + pane */
 .o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
-.o55-stage { position: relative; overflow: hidden; border-right: 1px solid var(--o55-line); background: var(--background); }
+/* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
+   and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
+   painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
+.o55-stage { position: relative; overflow: hidden; overflow: clip; border-right: 1px solid var(--o55-line); background: var(--background); }
 .o55-pane { position: relative; overflow: hidden; min-height: 0; }
 .o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
+/* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
+   column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
+.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top, auto); margin-bottom: auto; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }
