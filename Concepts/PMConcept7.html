@@ -312683,7 +312683,11 @@ try {
      is synced in the frame the cover starts to lift, so the chips are there for the whole reveal (landing review GL-2).
      Other busy spells (a page slide, a Usage room change, the open onboarding window) defer nothing, and a strip inside
      the onboarding window never waits (GL-1). Nothing here is read from style or layout. */
-  var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
+  /* p77 (Opus pass 2, 2026-11-01): a wizard screen that is leaving (.o55-layer.o55-out) is parked too. Its strips' chips are
+     in the window's lens layer, not in the screen, so they stayed on the spot while the next screen came in under them
+     (Glass Dark: the QNAP tab's chip over "Set up truenas.local" for 10 frames; Basic and Friendly until the old screen
+     was removed). The wizard's layers are HOT, so the class that starts the leave is synced after that frame's layout. */
+  var STRIP_PARKED = '.pmed-prepared, [hidden], #pm-o55-onboarding .o55-layer.o55-out', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
   /* B6 packet 1, the Basic path (2026-10-16): a strip inside a content-visibility: auto section the browser is skipping
      (the editor's Customize groups out of view) is not drawn, and any read of it (its scroller walk, its box, even
@@ -312821,7 +312825,7 @@ try {
       queueSync();
     }, 140);
   }
-  var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
+  var HOT = '#pm-o55-onboarding .o55-pane > .o55-layer, [data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';
   /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
      first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
@@ -312859,6 +312863,8 @@ try {
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
          the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
       if (recs[i].type === 'childList' && recs[i].removedNodes.length) for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
+      /* a strip removed with its chip still shown (a wizard screen replaced while it was held): the chip goes in this frame */
+      if (!hot && recs[i].type === 'childList' && recs[i].removedNodes.length) lenses.forEach(function (L, s) { if (!s.isConnected && L.rect) hot = true; });
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
