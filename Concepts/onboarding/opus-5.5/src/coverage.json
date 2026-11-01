@@ -1,7 +1,7 @@
 {
- "generated_from": "Plans/product_onboarding_contracts.schema.json at 2e5c733aeb (t3/plans/pm7-plans-canon, DL-273)",
+ "generated_from": "Plans/product_onboarding_contracts.schema.json at d6b9619fe3 (t3/plans/pm7-plans-canon, DL-273)",
  "setup_plan_fields": 63,
- "conditionals": 34,
+ "conditionals": 32,
  "unmapped_fields": [],
  "unmapped_conditionals": [],
  "fields": [
@@ -97,13 +97,13 @@
   },
   {
    "field": "forge",
-   "schema": "enum [\"none\", \"github\", \"gitlab\", \"azure_devops\", \"bitbucket_cloud\", \"bitbucket_data_center\", \"forgejo\", \"gitea\", \"cursor_origin\"]",
+   "schema": "enum [\"none\", \"github\", \"gitlab\", \"azure_devops\", \"bitbucket_cloud\", \"bitbucket_data_center\", \"forgejo\", \"gitea\"]",
    "mapped": "online-service: GitHub card + Other services list"
   },
   {
    "field": "forge_provider_variant",
    "schema": "constraint",
-   "mapped": "online-service: .com / self-managed / Services / Server / Cloud / Data Center / Gitea Cloud"
+   "mapped": "online-service: .com / self-managed / Services / Server / Cloud / Data Center"
   },
   {
    "field": "forge_instance_url",
@@ -416,8 +416,8 @@
     "online_mode in [\"new\", \"existing\"]"
    ],
    "then": [
-    "forge in [\"github\", \"gitlab\", \"azure_devops\", \"bitbucket_cloud\", \"bitbucket_data_center\", \"forgejo\", \"gitea\", \"cursor_origin\"]",
-    "forge_provider_variant in [\"hosted\", \"self_managed\", \"cloud\", \"data_center\", \"preview\", \"forgejo_self_managed\", \"gitea_self_managed\", \"gitea_cloud\"]",
+    "forge in [\"github\", \"gitlab\", \"azure_devops\", \"bitbucket_cloud\", \"bitbucket_data_center\", \"forgejo\", \"gitea\"]",
+    "forge_provider_variant in [\"hosted\", \"self_managed\", \"cloud\", \"data_center\", \"forgejo_self_managed\", \"gitea_self_managed\"]",
     "forge_instance_url~https_url",
     "forge_account_action in [\"sign_in_during_setup\", \"create_account_during_setup\", \"already_connected\"]",
     "forge_account_ref~bounded_nonsecret_string",
@@ -503,19 +503,6 @@
   {
    "n": 14,
    "if": [
-    "forge=\"cursor_origin\""
-   ],
-   "then": [
-    "forge_provider_variant=\"preview\"",
-    "forge_instance_url=\"https://origin.cursor.com\"",
-    "repository_visibility in [\"private\", \"internal\"]"
-   ],
-   "else": null,
-   "mapped": "online-details (Cursor Origin): private / internal, no public"
-  },
-  {
-   "n": 15,
-   "if": [
     "forge=\"forgejo\""
    ],
    "then": [
@@ -527,12 +514,12 @@
    "mapped": "online-service (Forgejo): server address -> instance profile"
   },
   {
-   "n": 16,
+   "n": 15,
    "if": [
     "forge=\"gitea\""
    ],
    "then": [
-    "forge_provider_variant in [\"gitea_self_managed\", \"gitea_cloud\"]",
+    "forge_provider_variant in [\"gitea_self_managed\"]",
     "forge_instance_profile:(constraint)",
     "repository_visibility in [\"private\", \"public\"]"
    ],
@@ -540,7 +527,7 @@
    "mapped": "online-service (Gitea): server address -> instance profile"
   },
   {
-   "n": 17,
+   "n": 16,
    "if": [
     "remote_mode=\"none\""
    ],
@@ -559,7 +546,7 @@
    "mapped": "away > Not now clears every remote field"
   },
   {
-   "n": 18,
+   "n": 17,
    "if": [
     "remote_mode=\"local_or_vpn\""
    ],
@@ -577,7 +564,7 @@
    "mapped": "c-route / away > On this network / Local or VPN"
   },
   {
-   "n": 19,
+   "n": 18,
    "if": [
     "remote_mode=\"tailscale\""
    ],
@@ -596,7 +583,7 @@
    "mapped": "c-route / away > Tailscale"
   },
   {
-   "n": 20,
+   "n": 19,
    "if": [
     "remote_mode=\"tailscale\"",
     "tailscale_control=\"hosted\""
@@ -610,7 +597,7 @@
    "mapped": "c-route / away > Tailscale hosted: sign in once"
   },
   {
-   "n": 21,
+   "n": 20,
    "if": [
     "remote_mode=\"tailscale\"",
     "tailscale_control=\"headscale\""
@@ -624,7 +611,7 @@
    "mapped": "c-route / away > Tailscale > Headscale address"
   },
   {
-   "n": 22,
+   "n": 21,
    "if": [
     "remote_mode=\"reverse_proxy\""
    ],
@@ -640,7 +627,7 @@
    "mapped": "c-route / away > My own web address: https address"
   },
   {
-   "n": 23,
+   "n": 22,
    "if": [
     "journey=\"connect_existing\"",
     "remote_mode=\"reverse_proxy\""
@@ -655,7 +642,7 @@
    "mapped": "c-route > My own web address (connect): manual address, no proxy setup on this device"
   },
   {
-   "n": 24,
+   "n": 23,
    "if": [
     "remote_mode=\"remote_link\""
    ],
@@ -675,7 +662,7 @@
    "mapped": "c-route / away > Remote Link: paste the link"
   },
   {
-   "n": 25,
+   "n": 24,
    "if": [
     "forge_account_action=\"already_connected\""
    ],
@@ -686,7 +673,7 @@
    "mapped": "online-signin: an already connected account row carries its account ref"
   },
   {
-   "n": 26,
+   "n": 25,
    "if": [
     "online_mode=\"existing\"",
     "review_confirmed=true"
@@ -698,19 +685,7 @@
    "mapped": "ex-online: the reviewed online Project carries its repository ref"
   },
   {
-   "n": 27,
-   "if": [
-    "forge=\"cursor_origin\"",
-    "repository_owner_scope=\"personal\""
-   ],
-   "then": [
-    "repository_visibility=\"private\""
-   ],
-   "else": null,
-   "mapped": "online-details (Cursor Origin): your own copy is private only (forgeRules visibility)"
-  },
-  {
-   "n": 28,
+   "n": 26,
    "if": [
     "forge=\"github\"",
     "repository_owner_scope=\"personal\"",
@@ -723,7 +698,7 @@
    "mapped": "online-details (GitHub): your own copy is private or public; internal only for an organization (forgeRules visibility)"
   },
   {
-   "n": 29,
+   "n": 27,
    "if": [
     "forge in [\"bitbucket_cloud\", \"bitbucket_data_center\"]",
     "online_mode in [\"new\", \"existing\"]"
@@ -735,7 +710,7 @@
    "mapped": "online-details / ex-repos (Bitbucket): a workspace or Data Center project is required (forgeRules.needs, the pick carries it)"
   },
   {
-   "n": 30,
+   "n": 28,
    "if": [
     "forge=\"bitbucket_cloud\"",
     "online_mode in [\"new\", \"existing\"]"
@@ -747,7 +722,7 @@
    "mapped": "online-details / ex-repos (Bitbucket Cloud): a project in the workspace is required (forgeRules.needs, the pick carries it)"
   },
   {
-   "n": 31,
+   "n": 29,
    "if": [
     "proxy_hosting in [\"generate_only\"]"
    ],
@@ -758,7 +733,7 @@
    "mapped": "away > My own web address: Puppet Master makes the settings file for Caddy (default), NGINX or Traefik (draft normalize)"
   },
   {
-   "n": 32,
+   "n": 30,
    "if": [
     "remote_mode=\"remote_link\"",
     "journey=\"connect_existing\""
@@ -770,7 +745,7 @@
    "mapped": "c-route > Remote Link (connect): the link is required (draft remoteMissing)"
   },
   {
-   "n": 33,
+   "n": 31,
    "if": [
     "journey=\"new_or_local\"",
     "remote_mode=\"reverse_proxy\""
