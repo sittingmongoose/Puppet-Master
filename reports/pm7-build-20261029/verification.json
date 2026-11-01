@@ -4203,6 +4203,111 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/shards-after.txt",
       "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8",
       "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/strict-live-scan.json",
+      "sha256": "1b4991131e99314bc696f281d6817e6225584ae0b4d367cccc17ff87437aa2e2",
+      "bytes": 105
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/strict-contract-proof.py",
+      "sha256": "a5dfcf4f0bf46595e2931c6c848145ae62eb82b89ab17eb5ba9b2d13a3b0d210",
+      "bytes": 5515
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/strict-contract-proof.json",
+      "sha256": "3379b9490ca0fff148e6e66b8d758f0b291329bfc92411dca4cae5f2530979ab",
+      "bytes": 548
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/unit-preservation-v2.json",
+      "sha256": "321e885f9057c4dad9bfbdb49d4a48e1a36021c9f05edb9463236e67b5a516d7",
+      "bytes": 289
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/mirror-check.json",
+      "sha256": "6ba226cc4d1b18ec61bc15eff1e48b9055e4620d0298f470f050ade8ec2e9a4e",
+      "bytes": 481
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/focused-runner.py",
+      "sha256": "ab7f4fff49f394cc981a511144bb13e769b06cc5668478a67739f036fac8205d",
+      "bytes": 1487
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/focused-status.json",
+      "sha256": "d16a1526b68b8a557698c17c1111529f86ae1df2a07c5922e5233d648cbb5531",
+      "bytes": 1919
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/new-contracts-v2.json",
+      "sha256": "0e8eda069719736e8357d6d92e4dacff5cd176cd4e4fa81b5da02d51b90aedc5",
+      "bytes": 7372
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/build-result-v2.json",
+      "sha256": "b730605a3f07190c6f13e9965fc1e83f1a2cdf8398494ae519fa6cf6beaedb13",
+      "bytes": 400
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/new-contracts-v2.stdout.txt",
+      "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/new-contracts-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/rulings-v2.stdout.txt",
+      "sha256": "cfddb2116f2fb6efa8b50090a4780bcc2b5fde6ca09674906a79acbf040cc470",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/rulings-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/storage-v2.stdout.txt",
+      "sha256": "f3249cf54fb0ae81c2b1892d3b4d886942a08b4b9eede71174049149c1d1bc6b",
+      "bytes": 118
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/storage-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/onboarding-v2.stdout.txt",
+      "sha256": "3cf549af81aa83e510dc2a90371fee16cd4cd45065ad8b7b9caa4778ee0f99cd",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/onboarding-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/shards-v2.stdout.txt",
+      "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/shards-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/index-v2.stdout.txt",
+      "sha256": "f3278fd7c329367579ff8abd20a64d89705835c2b56ba9b4fe44bef0b2315941",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/index-v2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
     }
   ],
   "reviews": [
@@ -4253,7 +4358,7 @@
     "scratch": "No scratch/worktree/branch created. Detached dry runner finished; cited text proof and full reports/exports retained.",
     "T3_mail_delivery": "rings; no waiter"
   },
-  "latest_amendment": "PM7 landing companion repair,2026-11-01; no new product rule",
+  "latest_amendment": "DL-273 unnamed Forgejo policy, 2026-11-01; current proof in DL273_live_correction, historical checkpoints retain their commit scope.",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -9444,7 +9549,91 @@
     "historical_input_hash_scope": "Historical source_hashes bind their recorded commit, not the corrected current report bytes. The live report manifest binds current corrected report files; original reports remain in Git history.",
     "retained_external_artifacts_unchanged": 811,
     "protected_label_matches": 0,
-    "fresh_checks": "pending",
-    "final_dry": "pending"
+    "fresh_checks": "pass",
+    "final_dry": "pending_audit",
+    "source_commit": "15d912994b391d3e48639f85f756b242f0d32fbf",
+    "base_commit": "07dbf437860b1a1fd560b9b4dbcfcfb863490f68",
+    "fields_final": "a5c103cbf6",
+    "focused_commands": [
+      {
+        "name": "new-contracts-v2",
+        "argv": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "validate-new-contracts",
+          "--report",
+          "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/new-contracts-v2.json"
+        ],
+        "started_at": "2026-11-01T18:18:58.738130+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:21:33.331598+00:00"
+      },
+      {
+        "name": "rulings-v2",
+        "argv": [
+          "python3",
+          "scripts/pm7-onboarding-rulings-check.py"
+        ],
+        "started_at": "2026-11-01T18:21:33.334381+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:21:49.631099+00:00"
+      },
+      {
+        "name": "storage-v2",
+        "argv": [
+          "python3",
+          "scripts/pm-storage-profile-check.py"
+        ],
+        "started_at": "2026-11-01T18:21:49.634716+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:21:50.065604+00:00"
+      },
+      {
+        "name": "onboarding-v2",
+        "argv": [
+          "python3",
+          "scripts/pm-onboarding-contracts.py",
+          "--check"
+        ],
+        "started_at": "2026-11-01T18:21:50.068395+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:21:50.652896+00:00"
+      },
+      {
+        "name": "shards-v2",
+        "argv": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "started_at": "2026-11-01T18:21:50.655559+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:22:02.189218+00:00"
+      },
+      {
+        "name": "index-v2",
+        "argv": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "started_at": "2026-11-01T18:22:02.191797+00:00",
+        "exit_code": 0,
+        "finished_at": "2026-11-01T18:22:31.312849+00:00"
+      }
+    ],
+    "coverage_rows": 213,
+    "required_cells": 1065,
+    "mirror_fields": 63,
+    "mirror_conditionals": 34,
+    "mirror_unmapped": 0,
+    "changed_existing_units": 8,
+    "added_units": [
+      "DL-273"
+    ],
+    "audit": "A1 FGI-015 corrected; awaiting lead final findings",
+    "fresh_artifacts": 21
   }
 }

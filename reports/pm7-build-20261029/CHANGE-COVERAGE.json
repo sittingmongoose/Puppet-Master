@@ -2730,13 +2730,14 @@
       "commands": "CS-069; UCC-106; ui.onboarding.next; cmd.forge.repository.list (existing ids and owner fences)",
       "settings": "none needed: provider admission policy, no preference or key change",
       "dry": "DR-005",
-      "companions": "Twelve enum occurrences narrowed across Forge/onboarding/embedded storage schemas; Forgejo adapter host_class self_managed only; five generic hosted-profile refusal cases and two Gitea Cloud controls. Fields coverage mirror follows the pushed source SHA.",
-      "state": "covered_by_current_contract_fields_mirror_pending",
+      "companions": "Twelve enum occurrences narrowed across Forge/onboarding/embedded storage schemas; Forgejo adapter host_class self_managed only; five generic hosted-profile refusal cases and two Gitea Cloud controls. Fields a5c103cbf6/f59b3e7c8e mirror is merged; 63 fields /34 conditionals /0 unmapped.",
+      "state": "covered_by_current_contract_fields_mirror_merged",
       "decision_ref": "DL-273",
       "source_refs": [
         "Jared 2026-11-01 via lead1101175626-78dd and1101175823-8b4a: unnamed hosted-provider removal, AI-written Projects reason, restricted tokens left for now.",
         "Source proposal3e1842da40cf2e03b48ad62687f95600fcf1d329 (2026-09-02), not a Jared approval.",
-        "fields8762cda61a658081878344ddff95f9916c1aa0f0; f2a9b7a252f589b68cf2862b6b6a2a7c482dfff0"
+        "fields8762cda61a658081878344ddff95f9916c1aa0f0; f2a9b7a252f589b68cf2862b6b6a2a7c482dfff0",
+        "fields mirror f59b3e7c8e and final a5c103cbf6, matching unchanged source schema2e5c733aeb"
       ]
     }
   ],
@@ -3254,8 +3255,8 @@
     ],
     "coverage_rows": 213,
     "required_cells": 1065,
-    "fields_source": "8762cda61a658081878344ddff95f9916c1aa0f0",
-    "fields_coverage_mirror": "pending_source_SHA",
+    "fields_source": "a5c103cbf6",
+    "fields_coverage_mirror": "f59b3e7c8e_merged",
     "new_commands_bindings_settings": 0,
     "new_product_rule": "hosted_Forgejo_not_offered",
     "reason": "PM Projects are AI-written; hosting terms must allow them.",
@@ -3264,6 +3265,8 @@
       "date": "2026-09-02",
       "Jared_approval": false
     },
-    "strict_live_label_cleanup": true
+    "strict_live_label_cleanup": true,
+    "live_label_matches": 0,
+    "protected_label_matches": 0
   }
 }

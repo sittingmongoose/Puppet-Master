@@ -1,17 +1,17 @@
 # Plans lane — DL-273 unnamed-policy correction, 2026-11-01
 
-**Source correction in progress.** Main07dbf43786 and fieldsf2a9b7a252 are merged. DL-273 records that hosted Forgejo is not offered, Forgejo is a server the person runs, and hosting terms must permit AI-written Projects. Restricted-token support remains open and deliberately left for now, with current account-based behavior unchanged.
+**Fresh focused checks pass.** Main07dbf43786 and final fieldsa5c103cbf6 are merged. DL-273 records that hosted Forgejo is not offered, Forgejo is a server the person runs, and hosting terms must permit AI-written Projects. Restricted-token support remains open and deliberately left for now, with current account-based behavior unchanged.
 
 | Area | Change / state |
 |---|---|
 | **Owners** | FGI-011/015, PWIZ-021/024, DR-005, UIW-015, WM-041, DL-272/273 and index: one policy and no offered hosted Forgejo route. Audit A1 corrected FGI-015 rule and acceptance text. |
-| **Companions** | Twelve enum occurrences removed across the two schema owners and onboarding_state’s embedded schema; Forgejo adapter host_class is self_managed only. Five generic invalid hosted-profile cases and two retained Gitea Cloud controls. No ordinary command, setting, binding or census change. |
-| **Coverage** | 213 rows /1065 required cells; DL273-OWN-SERVER-FORGEJO maps prose, wiring, commands, settings and DRY. Fields mirror merge and fresh focused proof follow. |
+| **Companions** | Twelve enum occurrences removed across the two schema owners and onboarding_state’s embedded schema; Forgejo adapter host_class is self_managed only. Five generic invalid hosted-profile cases and two retained Gitea Cloud controls. Counterfactual proof confirms all five formerly admitted values are now refused; only the intended schema paths differ. No ordinary command, setting, binding or census change. |
+| **Coverage** | 213 rows /1065 required cells; DL273-OWN-SERVER-FORGEJO maps prose, wiring, commands, settings and DRY. Fields mirror is merged (63 fields /34 conditionals /0 unmapped); all fresh focused checks pass. |
 | **Live reports** | Removed the host label from the live bundle and allocation mirrors. Historical report copies receive this dated correction; Git history and 811 prior captured artifacts remain. Current report-byte hashes are regenerated in the live correction manifest. |
 | **Provenance** | Earlier hosted variant entered the source proposal on 2026-09-02 in3e1842da40; that was not a Jared ruling. DL-273 supersedes that proposal. |
 | **Protected scope** | No matching label or old variant was found in tracked protected evidence or migration snapshots. Spec_Lock, auto_decisions, evidence, readiness, snapshot and baseline remain main’s bytes. |
 
-Fresh regeneration/focused checks and the lead’s audit must finish before the requested final dry. No browser, landing lock, landing or reseal. Raw proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/`.
+Regeneration and focused checks pass: 41 contract pairs,1601 positives,4206 negatives,13 internal checks; onboarding rulings/storage/materializer/shards/index, the final page build, mirror comparison, metadata preservation, schema counterfactuals and zero-label scan. The mirror comparison normalizes only its checkout-local generated_from metadata to the committed portable label; no file is rewritten. The lead’s remaining audit findings are awaited before the requested final dry. Checked/source head `15d912994b391d3e48639f85f756b242f0d32fbf`; full dry pending. No browser, landing lock, landing or reseal. Raw proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/`.
 
 ---
 
