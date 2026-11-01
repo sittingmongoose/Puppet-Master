@@ -1,3 +1,28 @@
+# Plans lane — footage review close-out, 2026-11-01
+
+**17/17 effective focused/generation/guard checks PASS.** Canonical/source commit `9a205b1c162b3fa4039558f75b32017d4ed2d443` is pushed to both remotes. It includes integration `7d2dd568be` and main `34b9ab2843`. The final report-only head is mailed after push. The [adjudication table](FOOTAGE-ADJUDICATION.md) maps every one of the **54** product items to its source and owner. [Coverage](CHANGE-COVERAGE.md) is **209 rows / 1045 required cells**.
+
+| Area | Result |
+|---|---|
+| **Owners** | 26 existing units amended, five added: DL-272, CS-108, UCC-213, WM-099, UIW-047; 17 owner/index documents. Prose preceded schemas/fixtures/wiring. No ledger compiled. |
+| **Rulings** | No Jared ruling changed. MA-047’s universal timeout and the blanket pre-Review auth block were stale canon; device expiry follows its provider and RV-3 is an explicit native-Client auth action. Route/Project/trust mutations retain Review/commit/permission fences. Pairing display format is distinct from Remote Link’s deferred protocol. |
+| **Command** | `cmd.free_models.route.disable` has one Models owner/handler, one shared producer, closed request/result and 12 shape cases. It disables only the exact route for future choices; credentials, other routes, saved order and dispatched work remain. Native handler/effect/persistence/receipt proof is still required. |
+| **Census** | **1010 settings; 485 binding records / 63 source families; 716 Touch rows / 141 profiles; 1271 production rows; 22 status keys.** No new ordinary setting or event family. |
+| **Page** | The existing `ai.accounts.provider-connections` description changed. Settings consumes the inventory, so the page was rebuilt with `--publish-pm7` and `--check` passes. Only generated `Concepts/PMConcept7.html` differs from the merged GUI sources. |
+| **Checks** | 161 PM7 cases, 12 route-shape cases, 89 retained final-source cases and 33 footage-source cases pass. Main’s storage companion check passes on301 families/profiles,12 groups and5 planned families. Touch, wiring, product-only boundary/history, onboarding contracts, shards and index pass. |
+| **Derived** | **7275 indexed units / 96 docs / 29328 acceptance units; 2977 shards / 99 sources.** No WorkNodes/NodeSeeds created; runtime readiness remains incomplete. |
+| **Merges** | Integration clean; main had **919 derived-only conflicts**, regenerated. No owner/companion/protected conflict. SP-346/SP-347 and the prior storage units remain. |
+
+**One question for Jared:** [FORGEJO-RESTRICTED-TOKEN-IDENTITY](OWNER-QUESTIONS.md): should repository-restricted Forgejo tokens work without the account identity used by the current sign-in/listing flow, and what replaces that identity/selection? Current behavior remains; no support choice is made. Codeberg naming/admission is excluded from this batch, not decided. No question is silently converted into a default.
+
+All main Spec_Lock, auto-decisions, `.evidence`, migration `pds-20261101-002-current-planunit-snapshot` and the baseline recorded at `40e8ccd704` remain byte-exact. **No full gates, dry landing, browser, lock, landing, snapshot/baseline refresh or reseal.** Editing canon makes the inherited seal stale as expected; that is a reseal request for the lead/assigned governance lane, not a repair performed here.
+
+Draft-check corrections are resolved: Touch id format, source-harness imports/named denial, a numeric Node exit code, and the preservation guard’s baseline/token/generated-source scope. Initial diagnostics are retained; no final failure is waived. Stage/contrast/indicator rules have no CSS values or pixel claim. Demo/Studio hints, seeds, host behavior and timings add no product row. The older GLM review remains pinned to its earlier source; no new independent/native/visual/audio acceptance is inferred.
+
+[verification.json](verification.json) records **729** artifact hashes; all **685** prior artifacts remain exact, plus **48** current input hashes. Manifest SHA-256 `df66fe67698296a42604b27f587c08ef3c7bb8633b1cb6532e5aa867f65ee84e`. Cited raw proof under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/`: `footage-guard-v2.json` SHA `8b793d096e0bbeca102db9d349493a695d70d1eb20a0bc5dfbffadb2341b2b25`; `footage-final-source.txt` SHA `17dffe302f61947abb2b47cc7554c515163120d51f9cc08e60fc7274cf9ea01b`; `footage-main-preservation.json` SHA `923ea65dbd6143b2be9db9e63eaa8eee7436a02a5ce493f644a6f8158d229ee4`. Owned text scratch is removed; cited evidence/guards remain. No browser/server was started. Mail rings this T3 thread.
+
+---
+
 # Plans lane — footage code checkpoint, 2026-11-01
 
 **17/17 effective focused/generation/guard checks PASS.** Integration7d2dd568be and main34b9ab2843 are incorporated. DL-272 covers54 footage items; coverage209 rows/1045 cells. The five new units are DL-272, CS-108, UCC-213, WM-099 and UIW-047. One new primary command disables an exact Free Models route; existing auth commands serve the native-Client sign-in. Counts:1010 settings,485 bindings/63 source families,716 Touch/141 profiles,1271 production,7275 indexed units/96docs/29328 acceptance units,2977 shards/99sources.
