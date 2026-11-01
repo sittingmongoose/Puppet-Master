@@ -2088,6 +2088,18 @@
         },
         "details": {
           "taken": "That name's already taken there.",
+          "nameRule": {
+            "github": "It won't take that name. The rule's just under it.",
+            "gitlab": "It won't take that name. The rule's just under it.",
+            "azure_devops": "It won't take that name. The rule's just under it.",
+            "bitbucket_cloud": "It won't take that name. The rule's just under it.",
+            "bitbucket_data_center": "It won't take that name. The rule's just under it.",
+            "forgejo": "It won't take that name. The rule's just under it.",
+            "gitea": "It won't take that name. The rule's just under it.",
+            "cursor_origin": "It won't take that name. The rule's just under it."
+          },
+          "nameReserved": "That name's kept for itself. Another one?",
+          "branchRule": "That branch name won't work. The rule's under it.",
           "azure": {
             "routeMissing": "I can't make one from here."
           }
@@ -2317,6 +2329,18 @@
         },
         "details": {
           "taken": "That name's free. Lovely.",
+          "nameRule": {
+            "github": "That name works, and it's free. Lovely.",
+            "gitlab": "That name works, and it's free. Lovely.",
+            "azure_devops": "That name works, and it's free. Lovely.",
+            "bitbucket_cloud": "That name works, and it's free. Lovely.",
+            "bitbucket_data_center": "That name works, and it's free. Lovely.",
+            "forgejo": "That name works, and it's free. Lovely.",
+            "gitea": "That name works, and it's free. Lovely.",
+            "cursor_origin": "That name works, and it's free. Lovely."
+          },
+          "nameReserved": "That one's free to use. Lovely.",
+          "branchRule": "That branch name works.",
           "azure": {
             "routeMissing": "Ah, now we can!"
           }

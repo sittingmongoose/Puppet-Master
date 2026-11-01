@@ -960,6 +960,39 @@ def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made without the copy', 25000); await sleep(3000);
   const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ')');
 });
+def('pr50', 'fresh', "FA-9: a taken name, then bad/name? typed over it or chosen: Pip never says the name is free while the field shows an error; it says the rule's line, and cheers once the name passes the rule and is free", async (d, A) => {
+  await d.openOnboarding(); await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-details' })); await d.settle(); await sleep(1500);
+  const free = (l) => l.some((x) => /free|Lovely/i.test(x)), rule = (l) => l.some((x) => /won't take that name/.test(x));
+  await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
+  /* typed: the first letter is a free, valid name; the cheer waits until the typing stops */
+  await pipLines(d); await d.type('repo', 'b', { settle: false }); await d.type('repo', 'ad/name?', { clear: false, settle: false }); await sleep(3000);
+  let l = await pipSaid(d); A.ok(!free(l) && rule(l), "typed over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
+  await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
+  await pipLines(d); await d.act('demoHint', 'online-details:name|1'); await sleep(3000);
+  l = await pipSaid(d); A.ok(!free(l) && rule(l), "the bad/name? chip over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
+  await pipLines(d); await d.type('repo', 'book-club-site-ok'); await sleep(3000);
+  l = await pipSaid(d); A.ok(l.some((x) => /works, and it's free/.test(x)), 'a good name: the cheer (' + JSON.stringify(l) + ')');
+});
+def('pr51', 'fresh', 'FA-10: in Friendly, Glass and NieR, every prop and particle Pip\'s stage adds on Review, pairing and Ready is hidden or placed when it is inserted, and no frame shows one without its place', async (d, A) => {
+  await d.openOnboarding();
+  for (const look of ['friendly-dark', 'glass-dark', 'nier-dark']) {
+    await d.page.evaluate((l) => { const [f, m] = l.split('-'); window.O55.ui.applyLook(f, m); }, look); await sleep(look.startsWith('nier') ? 4000 : 1500);
+    await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-route' })); await sleep(2000);
+    const r = await d.page.evaluate(async () => {
+      const host = document.querySelector('#pm-o55-onboarding'), rec = [];
+      const mo = new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1 && n.matches('g.pst-prop, g.pst-p')) rec.push({ kind: n.getAttribute('data-kind') || 'particle', t: n.getAttribute('transform'), op: n.getAttribute('opacity') }); })));
+      mo.observe(host, { childList: true, subtree: true });
+      let late = 0;
+      for (const s of ['c-review', 'c-pair', 'c-ready']) {
+        window.O55.ui.go(s); const t0 = performance.now();
+        while (performance.now() - t0 < 1400) { await new Promise((res) => requestAnimationFrame(res)); host.querySelectorAll('g.pst-prop, g.pst-p').forEach((g) => { const o = g.getAttribute('opacity'); if ((o == null || +o > 0.02) && !g.getAttribute('transform')) late++; }); }
+      }
+      mo.disconnect(); return { n: rec.length, unplaced: rec.filter((x) => !x.t && x.op !== '0'), late };
+    });
+    A.ok(r.n > 0 && !r.unplaced.length, `${look}: ${r.n} new, each hidden or placed when inserted (${JSON.stringify(r.unplaced.slice(0, 3))})`);
+    A.eq(r.late, 0, `${look}: frames with a visible prop or particle not yet placed`);
+  }
+});
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
 const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);

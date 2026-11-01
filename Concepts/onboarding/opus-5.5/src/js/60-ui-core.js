@@ -450,7 +450,7 @@
      layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
-  let lastOops = null, cheering = null, lastLine = null, holdLineT = null, lastSuccess = null;
+  let lastOops = null, cheering = null, lastLine = null, holdLineT = null, holdCheerT = null, lastSuccess = null;
   /* Pip's cheer means something succeeded (RV-11): an operation finished or an owner's answer was adopted
      (o55:succeeded, 62-flow.js F.op and 30-owners.js adopt), never an error leaving the screen */
   window.addEventListener('o55:succeeded', (e) => {
@@ -517,6 +517,13 @@
         const f = layer && layer.querySelector(`.o55-field[data-key="${CSS.escape(lastOops.field)}"]`), i = f && f.querySelector('input, textarea');
         ok = ok || !!(f && i && i.type !== 'password' && String(i.value || '').trim() && !f.querySelector('.o55-err'));
         gone = !f;
+        /* typing over a taken name makes it free at its first letter, and bad/name? breaks the rule a letter later: the
+           field's cheer waits until the typing stops and is said only if the field is still right then (FA-9) */
+        const typing = S.typedAt ? performance.now() - S.typedAt : Infinity;
+        if (ok && !won && typing < 1200) {
+          ok = false;
+          O55.motion.real.clearTimeout(holdCheerT); holdCheerT = O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 1250 - typing);
+        }
       }
       /* (a field or a control away while something runs, such as a key being checked, is not the person moving on) */
       /* (some screens redraw into their waiting state a moment before the operation registers: the waiting pill or Pip's

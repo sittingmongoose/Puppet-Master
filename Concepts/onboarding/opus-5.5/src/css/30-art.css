@@ -216,7 +216,8 @@
 #pm-o55-onboarding .pst[data-fam="nier"][data-scheme="light"] { background: #ccc8b1; color: #211f1b; --np: #ccc8b1; --nbox: rgba(62, 59, 51, .94); --ntext: #dcd8c2; }
 #pm-o55-onboarding .pst[data-fam="nier"][data-scheme="dark"] { background: #2f2d26; color: #d1cdb7; --np: #2f2d26; --nbox: rgba(214, 210, 190, .95); --ntext: #2a2822; }
 #pm-o55-onboarding .pst-ntop { position: absolute; left: 6px; right: 6px; top: 6px; display: flex; justify-content: space-between; gap: 10px; }
-#pm-o55-onboarding .pst-decode { font-family: 'PM NieR Mono', 'JetBrains Mono', ui-monospace, monospace; opacity: .7; white-space: nowrap; overflow: hidden; }
+/* clipped without being a scroll container, as the stage itself (FO-15): NieR's decode line could be scrolled inside the stage */
+#pm-o55-onboarding .pst-decode { font-family: 'PM NieR Mono', 'JetBrains Mono', ui-monospace, monospace; opacity: .7; white-space: nowrap; overflow: hidden; overflow: clip; }
 #pm-o55-onboarding .pst-nlab { position: absolute; right: 6px; bottom: 6px; display: flex; gap: 18px; padding: 5px 8px; border: 1px solid currentColor; }
 #pm-o55-onboarding .pst-ncoord { font-family: 'PM NieR Mono', ui-monospace, monospace; letter-spacing: .1em; opacity: .75; }
 #pm-o55-onboarding .pst-nlab b { font-weight: 600; transition: background .2s; }

@@ -37,6 +37,10 @@ const MEASURE = async (s, ids, defined) => {
   const layout = root.getAttribute('data-o55-layout');
   const L = root.querySelector(`.o55-pane > .o55-layer[data-screen="${s}"]:not(.o55-out)`);
   if (!L) return { missing: true };
+  /* the stage's base is taken once the window has finished opening: a look's first screen measured mid-opening read the
+     window's own scale-in (1-2 px) and Retro's unfolding (the overlay 114,273 then 24,24) as the stage moving */
+  const win = root.querySelector('.o55-win');
+  for (let i = 0; i < 40 && (root.classList.contains('o55-opening') || (win && win.getAnimations && win.getAnimations().some((x) => x.playState === 'running'))); i++) await sleep2(100);
   const over = (els) => els.filter(Boolean).filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.className.split(' ')[0] + ' ' + e.scrollWidth + '>' + e.clientWidth);
   /* where the stage is painted: its rect, the overlay's (Pip's world rides on it), and every scrolled box from the stage up */
   const anchor = () => {

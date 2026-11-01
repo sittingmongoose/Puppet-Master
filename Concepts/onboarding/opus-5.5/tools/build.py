@@ -372,14 +372,28 @@ def pip_fault_problems() -> list[str]:
             return [k + n for n in sorted(named) if k + n in strings]
         return [s2 for s2 in strings if s2.startswith(k) and '.' not in s2[len(k):] and s2 not in labels and not s2.startswith('pip.')]
 
+    def called(expr, js):
+        # an error that a local function of the screen's file returns (const err = nameError(d); error: branchError(d)):
+        # that function's body, so its copy keys count as the field's (FA-9: the name and branch rules had no Pip line)
+        m = re.match(r"\s*!*\s*([a-z][A-Za-z0-9_]*)\(", expr)
+        if not m:
+            return ''
+        f = (re.search(r"\bfunction\s+" + m.group(1) + r"\s*\([^)]*\)\s*\{(.{0,1200}?)\n\s*\}", js, re.S)
+             or re.search(r"\bconst\s+" + m.group(1) + r"\s*=\s*\([^)]*\)\s*=>\s*([^\n]{0,400})", js))
+        return f.group(1) if f else ''
+
     groups = []  # (where, [keys]): satisfied when any key has Pip's line
     for name, js in js_all.items():
         for m in re.finditer(r"\berror:\s*([^,}\n]{0,240})", js):
-            for t in re.finditer(T, m.group(1)):
-                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), m.group(1)[t.end():], js)]
+            for src in (m.group(1), called(m.group(1), js)):
+                for t in re.finditer(T, src):
+                    groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), src[t.end():], js)]
         for m in re.finditer(r"(?:const|let)\s+(?:why|err|error|msg|problem|fail\w*)\s*=\s*([^;]{0,400})", js):
             for t in re.finditer(T, m.group(1)):
                 groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)))]
+            body = called(m.group(1), js)
+            for t in re.finditer(T, body):
+                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), body[t.end():], js)]
         for m in re.finditer(r"C\.note\(\s*" + T + r"[^;]{0,160}?,\s*'(?:warn|fail|error)'", js):
             groups += [(f'{name} warn note', [k]) for k in keys_of(m.group(1), bool(m.group(2)), js[m.end(2) if m.group(2) else m.end():], js)]
         for m in re.finditer(r'o55-banner-warn"[^`]*?</span>', js):

@@ -78,7 +78,7 @@
       const w = this.w, hues = Object.values(w.hues);
       for (let i = 0; i < n; i++) {
         const kind = kinds[i % kinds.length], a = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 120;
-        const e = el('g', { class: 'pst-p' }, this.gFx);
+        const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx);
         const c = hues[i % hues.length];
         let sh = '';
         if (kind === 'star') sh = `<path d="M0 -7Q1 -1 7 0Q1 1 0 7Q-1 1 -7 0Q-1 -1 0 -7Z" fill="${c}"/>`;
@@ -103,7 +103,7 @@
     badge(pr, at) {
       const w = this.w, sc = pr ? this.propTarget(pr).sc : this.L.propScale;
       const off = pr ? [34 * sc, -30 * sc] : [0, -50 * sc];
-      const mk = (html) => { const e = el('g', { class: 'pst-p' }, this.gFx); e.innerHTML = html; return e; };
+      const mk = (html) => { const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx); e.innerHTML = html; return e; };
       const ring = mk(`<circle r="11" fill="none" stroke="${w.accent}" stroke-width="1.5"/>`);
       const chk = mk(`<circle r="11" fill="${w.accent}" stroke="${w.bg}" stroke-width="2"/><path d="M-5 .5L-1.6 3.9L5.2 -3.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`);
       [[ring, 'ring', .8], [chk, 'check', 1.5]].forEach(([e, kind, max]) => this.fx.push({ e, kind, x: at[0] + off[0], y: at[1] + off[1], vx: 0, vy: 0, r: 0, vr: 0, life: 0, max, g: 0, follow: pr || null, off }));
@@ -113,7 +113,7 @@
       this.sfx('confetti');
       const w = this.w, Lay = this.L, f = this.famName, hues = f === 'basic' ? [w.accent, w.line] : Object.values(w.hues);
       for (let i = 0; i < n; i++) {
-        const e = el('g', { class: 'pst-p' }, this.gFx), c = hues[i % hues.length];
+        const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx), c = hues[i % hues.length];
         e.innerHTML = f === 'glass' ? `<circle r="${3 + Math.random() * 5}" fill="#fff" fill-opacity=".18" stroke="#fff" stroke-opacity=".8" stroke-width="1"/>`
           : this.tube === 'phosphor' ? (i % 3 ? `<rect x="-2.5" y="-2.5" width="5" height="5" fill="${c}"/>` : `<text font-family="VT323, monospace" font-size="16" fill="${w.bright}" text-anchor="middle">${'*+$#'[i % 4]}</text>`)
           : this.tube === 'teletype' ? `<circle r="3.4" fill="${i % 4 ? w.hole : w.red}" stroke="${w.rule}" stroke-width=".8"/>`
