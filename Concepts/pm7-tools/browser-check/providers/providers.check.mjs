@@ -422,5 +422,39 @@ export const tests = {
 		const all = await W.frame.locator(ROOT).innerText();
 		await t.check('no fallback without a destination', !/Open your browser and sign in there, then come back/.test(all), 'generic toast text present');
 	}
+	,
+	// RV-9 sweep: a sign-in that didn't finish, was offline, or has expired is over. Sign in again opens the
+	// vendor's page afresh as a new try whose browser step waits for the person again; the old try's result is dropped.
+	async 'RV-9: Sign in again is a fresh sign-in, its old completion cleared'(t) {
+		const opens = (W) => W.frame.evaluate(() => window.O55.owners.log.filter((e) => e.id === 'cmd.auth_profile.open_official_page').length);
+		const rec = (W, id) => W.frame.evaluate((id) => {
+			const S = window.O55.S, r = S.sess.ai.accounts[id] || {}, k = 'signin:' + id + ':' + (r.attempt || 0), op = (S.sess.ops || {})[k];
+			return { attempt: r.attempt || 0, state: r.state, failCode: r.failCode || null, remote: r.remote || null, op: op ? op.state : null, phases: op ? op.phases.map((p) => p.key + '=' + p.status).join(',') : '', accounts: S.sess.ai.list.filter((e) => e.provider === id).length };
+		}, id);
+		const CASES = [['antigravityOnce', 'antigravity', /Didn't sign in/, 'did not finish'], ['aiOffline', 'antigravity', /offline/, 'offline'], ['claudeExpired', 'claude', /Sign-in expired/, 'expired']];
+		for (const [scenario, id, failed, why] of CASES) {
+			const W = why === 'expired' ? await open(t, 'ai', { scenario }) : await toAll(t, { scenario });
+			if (await act(W, id, 'install').count()) { await act(W, id, 'install').click(); await screenDone(W); await W.$(`[data-o55-do="installGo"][data-arg="${id}"]`).click(); await waitRow(t, W, id, /Not signed in/, `${why}: ${id} installed, ready to sign in`, 12000); }
+			if (why !== 'expired') { await act(W, id, 'signin').click(); }
+			await waitRow(t, W, id, failed, `${why}: the row says the sign-in is over`, 8000);
+			const before = await rec(W, id), o1 = await opens(W);
+			await t.check(`${why}: nothing connected`, before.accounts === 0 && (why === 'expired' || before.op === 'failed'), JSON.stringify(before));
+			await act(W, id, 'signin').click(); await W.frame.waitForTimeout(200);
+			const fresh = await rec(W, id), o2 = await opens(W), txt = await rowText(W, id);
+			await t.check(`${why}: Sign in again opens the vendor's page again`, o2 === o1 + 1, `opens ${o1} -> ${o2}`);
+			await t.check(`${why}: a new try, cleared (new attempt, no old code or fallback)`, fresh.attempt === before.attempt + 1 && fresh.state === 'signingIn' && !fresh.failCode && !fresh.remote, JSON.stringify(fresh));
+			await t.check(`${why}: its browser step waits for the person again`, /^browser=(active|waiting),verify=waiting$/.test(fresh.phases) && fresh.op === 'running', fresh.phases);
+			await t.check(`${why}: the row waits for the person, not Ready`, /Waiting for you/.test(txt) && !/\bReady\b/.test(txt), txt.slice(0, 200));
+			await waitRow(t, W, id, /Ready/, `${why}: the person's new sign-in completes it`, 8000);
+		}
+		// a try left for "Browser didn't open?" never completes the row by itself: only the pasted code does
+		const W = await toAll(t);
+		if (await act(W, 'antigravity', 'install').count()) { await act(W, 'antigravity', 'install').click(); await screenDone(W); await W.$('[data-o55-do="installGo"][data-arg="antigravity"]').click(); }
+		await waitRow(t, W, 'antigravity', /Not signed in/, 'fallback: antigravity ready to sign in', 12000);
+		await act(W, 'antigravity', 'signin').click(); await W.frame.waitForTimeout(300);
+		await W.$('[data-o55-do="noBrowser"][data-arg="antigravity"]').click(); await W.frame.waitForTimeout(3200);
+		const left = await rec(W, 'antigravity');
+		await t.check('fallback: the browser try it replaced does not finish it', left.state === 'signingIn' && left.remote === 'paste' && left.accounts === 0, JSON.stringify(left));
+	}
 };
 
