@@ -145,7 +145,11 @@ html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding .o55-under { border-c
 #pm-o55-onboarding[data-family="retro"] .o55-treeitem { border-radius: 0; font-family: var(--display-font); font-size: 13px; }
 
 /* banners and notes */
-.o55-banner-warn { background: color-mix(in srgb, var(--accent-orange) 13%, transparent); }
+/* a warning banner (p28, Opus pass 2: the changed-ID warning): its edge in the warning colour in every look, as NieR
+   Mode's, so it reads as a warning on any ground. Glass's frost is blue, and the 13% wash over it painted grey-blue (Glass
+   Dark 42,50,86, Glass Light 207,212,222), so Glass washes it at 40% */
+.o55-banner-warn { background: color-mix(in srgb, var(--accent-orange) 13%, transparent); box-shadow: inset 0 0 0 1px var(--accent-orange); }
+#pm-o55-onboarding[data-family="glass"] .o55-banner-warn { background: color-mix(in srgb, var(--accent-orange) 40%, transparent); }
 .o55-banner-warn .o55-sg { color: var(--accent-orange); }
 .o55-note-ok .o55-sg { color: var(--accent-lime); }
 .o55-preview { padding: 12px 14px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--o55-accent) 7%, transparent); }
