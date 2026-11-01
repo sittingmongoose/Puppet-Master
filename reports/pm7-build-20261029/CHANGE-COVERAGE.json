@@ -2748,8 +2748,8 @@
       "commands": "CS-073; UCC-106; cmd.integration.connection.add; cmd.forge.repository.list (existing ids, no new command)",
       "settings": "none needed: no hosted-service preference row exists; Source Control manager consumes FGI admission, inventory count unchanged",
       "dry": "DR-005",
-      "companions": "Gitea cloud variant removed from Forge/onboarding/embedded storage enums; adapter self-managed host class; prior cloud controls now negative fixtures. Fields mirror follows schema SHA.",
-      "state": "companions_authored_checks_and_fields_pending",
+      "companions": "Gitea cloud variant removed from Forge/onboarding/embedded storage enums; adapter self-managed host class; prior cloud controls now negative fixtures. Fields99226a97b5 mirror matches d6b9619fe3:63 fields/32 conditionals/0 unmapped.",
+      "state": "covered_by_current_contract_fields_mirror_merged",
       "decision_ref": "DL-273"
     },
     {
@@ -2761,7 +2761,7 @@
       "settings": "none needed: no ordinary setting row exists for this integration; retired provider UI leaves shared manager identity and Cursor AI settings unchanged",
       "dry": "DR-005; generic_git/generic_host remain transport-only and cannot restore retired service authority",
       "companions": "Provider enums/matrices, CLI operation profile and two Egolite obligations removed; active fixture pack retired; shared tests rehomed; Teacher topic removed; Touch715/140; original acceptance packet amended without source-body hash changes.",
-      "state": "companions_authored_checks_and_fields_pending",
+      "state": "covered_by_current_contract_fields_mirror_merged",
       "decision_ref": "DL-273"
     }
   ],
@@ -3280,7 +3280,7 @@
     "coverage_rows": 215,
     "required_cells": 1075,
     "fields_source": "a5c103cbf6",
-    "fields_coverage_mirror": "pending_new_schema_SHA",
+    "fields_coverage_mirror": "99226a97b5_merged",
     "new_commands_bindings_settings": 0,
     "new_product_rule": "hosted_Forgejo_not_offered",
     "reason": "PM Projects are AI-written; hosting terms must allow them.",
@@ -3313,7 +3313,8 @@
     "contract_pairs": 40,
     "provider_profiles": 11,
     "egolite_active_requirements": 13,
-    "Teacher_topics": 46
+    "Teacher_topics": 46,
+    "additional_Gitea_variant_enum_slots_removed": 12
   },
   "historical_DL273_first_removal": {
     "decision_ref": "DL-273",

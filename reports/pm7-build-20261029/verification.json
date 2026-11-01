@@ -10542,7 +10542,7 @@
   },
   "DL273_additional_removals": {
     "prose_commit": "1d84dffe0b",
-    "phase": "companions_authored_focused_rerun_in_progress",
+    "phase": "focused_pass_final_grep_then_audit",
     "coverage_rows": 215,
     "required_cells": 1075,
     "retired_units": [
@@ -10569,6 +10569,23 @@
     "source_packet_body_hashes_unchanged": true,
     "current_packet_amendments": 16,
     "first_focused_results": "Touch and packet custody pass; storage passes; new-contracts/rulings corrected after empty schema branches and Teacher-topic pin. Readiness92 vs88 grows only currentness source drift (67 vs63).",
-    "final_dry": "pending"
+    "final_dry": "pending",
+    "source_fields_final": "f226e60851",
+    "active_positive_cases": 1593,
+    "active_negative_cases": 3926,
+    "internal_self_tests": 13,
+    "provider_fixture_gate_tests": 9,
+    "mirror_fields": 63,
+    "mirror_conditionals": 32,
+    "mirror_unmapped": 0,
+    "focused_results": "contracts/rulings/Touch/packet/storage/build/wiring/shards/index/provider-gate pass",
+    "index_units": 7276,
+    "index_acceptance_units": 29354,
+    "docs": 96,
+    "shards": 2977,
+    "shard_sources": 99,
+    "format_repair": "Standard profile headings and compliance note restored; index validate PASS; nine ORI units stay retired.",
+    "grep_pending": "One obsolete Cursor_Origin reference in a defensive mirror-check explanation; fields cleaning it. Active schema/positive fixture matches zero.",
+    "obsolete_contract_reference": "cleaned by f226e60851 without changing guard"
   }
 }

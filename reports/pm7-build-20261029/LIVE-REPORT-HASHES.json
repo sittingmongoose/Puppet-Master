@@ -2,10 +2,10 @@
   "schema_id": "pm7.live_report_hashes.v1",
   "decision_ref": "DL-273",
   "recorded_at": "2026-11-01",
-  "scope": "Current live report bytes. Historical input hashes keep their commit-scoped meaning. REPORT.md and verification.json are excluded to avoid cycles; Git binds them.",
+  "scope": "Current report bytes. Historical input hashes retain their commit scope. REPORT.md and verification.json are excluded to avoid cycles; Git binds them.",
   "files": {
-    "reports/pm7-build-20261029/CHANGE-COVERAGE.json": "792d0e9e06935aae16f3cd388681399f50624ada670acb81148a502820767aa5",
-    "reports/pm7-build-20261029/CHANGE-COVERAGE.md": "813ba15d45cd6a9c1cf660e7f42b2dd65156a1a5db0ed3d044b4d901b1f7ea6f",
+    "reports/pm7-build-20261029/CHANGE-COVERAGE.json": "aeec579645393ba4dd40d8a14723e8cec2c78d36ce84696f409092238660601b",
+    "reports/pm7-build-20261029/CHANGE-COVERAGE.md": "be45e37dc0eb75688dc6a9ac03dd4250d54e66ea5d34cab8a0d9e46d2af28128",
     "reports/pm7-build-20261029/COVERAGE-AUDIT-RESPONSE.md": "b3d6f949bae7ff89bd5ed35926af13c3b536fc4ffb7630760aa64344223b5b68",
     "reports/pm7-build-20261029/DEMO-CLEANUP.md": "a48ae372f82b95e4dd79f95d956191bf2f7ef8ea861f8b6d2d502fbe1072016d",
     "reports/pm7-build-20261029/FINAL-DELTA.md": "a207d0faab9ff5ba0ba77e59768fed23e95ec92ed6d547336d93164bcea50b7f",

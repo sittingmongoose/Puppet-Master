@@ -5592,12 +5592,12 @@
       "gui_related_counts": {
         "True": 9
       },
-      "heading_count": 10,
+      "heading_count": 19,
       "implementation_surfaces": [
         "Plans/Forge_Integrations.md",
         "Plans/Source_Control_System.md"
       ],
-      "line_count": 436,
+      "line_count": 470,
       "path": "Plans/Cursor_Origin_Integration.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -5625,7 +5625,7 @@
         "origin_visibility_overclaim_or_partial_api_data_loss",
         "origin_webhook_replay_or_api_drift"
       ],
-      "sha256": "de34c4afdfbede5a034d54bc907908920a1f74d40f91615861f5192f987e563e",
+      "sha256": "59ff156cb3fc076e506f833e6100d34c2e8828cf53340a0c9169e8ac9b783981",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "retired": 9
@@ -21088,7 +21088,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-01T19:54:48Z",
+  "generated_at_utc": "2026-11-01T20:11:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
