@@ -253,6 +253,24 @@
     skipOnBack: (S) => SI(S).state === 'done'
   });
 
+  /* (Opus R6, Sol re-audit) a session saved before Jared's 2026-11-01 removals is resumed through the same rule as a plan:
+     each draft is normalized (a retired service or kind invalidates its service, address, account, Project, credentials,
+     authorization refs and Review), and for the main plan the old choice is not preselected, its sign-in is over, the
+     accounts recorded for retired servers go, an unfinished commit starts again from Review, and a screen of the old
+     service's own steps gives way to choosing the service */
+  O55.onOpen = (O55.onOpen || []).concat([(S) => {
+    const drafts = (S.sess && S.sess.drafts) || {};
+    Object.keys(drafts).forEach((k) => { if (drafts[k] && typeof drafts[k] === 'object') O55.draft.normalize(drafts[k]); });
+    const d = drafts.main; if (!d || !d.forge_retired) return;
+    const ol = OL(S); ol.forge = null; ol.variant = null;
+    if (S.sess.signin && S.sess.signin.kind === 'forge') S.sess.signin = {};
+    Object.keys(S.sess.forgeAccounts || {}).forEach((key) => { const [f, v] = key.split('|'); if (!O55.draft.offered(f, v)) delete S.sess.forgeAccounts[key]; });
+    if (S.sess.commit && !['running', 'done'].includes(S.sess.commit.state)) S.sess.commit = { state: 'none' };
+    if (['online-signin', 'online-details', 'ex-repos'].includes(S.sess.screen)) S.sess.screen = 'online-service';
+    else if (S.sess.screen === 'creating' && S.sess.commit.state === 'none') S.sess.screen = 'review';
+    S.save();
+  }]);
+
   /* ================================================================== which service */
   const VARIANTS = {
     github: [['hosted', 'GitHub.com'], ['self_managed', null]], gitlab: [['hosted', 'GitLab.com'], ['self_managed', 'otherServer']],
@@ -269,7 +287,9 @@
   function serviceChoice(S) {
     const d = md(S), ol = OL(S);
     const planned = d.forge && d.forge !== 'none' ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
-    const sel = ol.forge || planned || 'github', same = !!planned && sel === planned;
+    /* (R6) after a retired service the person chooses again: nothing is picked for them */
+    const sel = ol.forge || planned || (d.forge_retired ? null : 'github'), same = !!planned && sel === planned;
+    if (!sel) return { sel: null, forge: null, variant: null, key: '', typed: null, asks: false, address: '', url: '', ok: false, words: { hint: '', error: '', reason: T('missing.service') } };
     let variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (same ? (d.forge === 'bitbucket_data_center' ? 'data_center' : d.forge_provider_variant) : null);
     const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && variant === 'data_center' ? 'bitbucket_data_center' : sel;
     if (!variant || (sel !== 'bitbucket_cloud' && !(VARIANTS[forge] || []).some(([v]) => v === variant))) variant = sel === 'bitbucket_cloud' ? 'cloud' : (VARIANTS[forge] || [['hosted']])[0][0];
@@ -306,7 +326,8 @@
     lead: () => T('online.service.lead'),
     body(S) {
       const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant;
-      let out = C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
+      let out = md(S).forge_retired && !sel ? C.note(T('online.service.retired'), 'info', 'cloud') : '';
+      out += C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
       /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
       let under = '';
       if (sel !== 'github' && sel !== 'github_enterprise') {

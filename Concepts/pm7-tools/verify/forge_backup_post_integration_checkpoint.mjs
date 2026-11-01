@@ -166,7 +166,7 @@ try {
   await page.locator('#panel-source [data-pm7-scm-engine="git"]').click();
   await page.locator('[data-ab-id="repository_automation"]').click();
   await page.waitForTimeout(650);
-  const expectedOptions = ['github', 'gitlab', 'azure', 'bitbucket', 'forgejo', 'gitea', 'origin', 'generic'];
+  const expectedOptions = ['github', 'gitlab', 'azure', 'bitbucket', 'forgejo', 'gitea', 'generic'];
   const automation = { options: await page.locator('#pm7AutomationService option').evaluateAll(nodes => nodes.map(node => node.value)), profiles: {} };
   for (const service of expectedOptions) {
     await page.locator('#pm7AutomationService').selectOption(service);
@@ -180,11 +180,10 @@ try {
     bitbucket: ['Bitbucket Pipelines', 'Pipeline → step'],
     forgejo: ['Forgejo Actions', 'Workflow → job → step'],
     gitea: ['Gitea Actions', 'when supported'],
-    origin: ['Connected checks', 'Checks supplied by GitHub'],
     generic: ['No automation service', 'No definitions are fabricated', 'Connect automation']
   };
   const failedProfiles = Object.entries(profileRules).filter(([service, terms]) => !containsAllInsensitive(automation.profiles[service], terms)).map(([service]) => service);
-  check('provider_selector_is_exact_and_profiles_are_native', exact(automation.options, expectedOptions) && failedProfiles.length === 0 && !automation.profiles.origin.includes('Origin Actions'), { options: automation.options, failed_profiles: failedProfiles, excerpts: Object.fromEntries(Object.entries(automation.profiles).map(([key, value]) => [key, value.replace(/\s+/g, ' ').slice(0, 500)])) });
+  check('provider_selector_is_exact_and_profiles_are_native', exact(automation.options, expectedOptions) && failedProfiles.length === 0 && !automation.options.includes('origin'), { options: automation.options, failed_profiles: failedProfiles, excerpts: Object.fromEntries(Object.entries(automation.profiles).map(([key, value]) => [key, value.replace(/\s+/g, ' ').slice(0, 500)])) });
 
   await page.evaluate(async () => {
     if (window.PM_HOVER_TAG_CONTROLLER?.settle) await window.PM_HOVER_TAG_CONTROLLER.settle(document.getElementById('panel-git'));

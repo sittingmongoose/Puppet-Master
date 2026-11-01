@@ -120,14 +120,13 @@
       visibility: (o) => (o.publicAccess ? ['private', 'public'] : ['private']),
       nameRule: (n) => (!n ? 'empty' : n.length > 128 ? 'long' : !/^[A-Za-z0-9][A-Za-z0-9 ._-]*$/.test(n) ? 'chars' : null),
       slug: (n) => slugOf(n), spaces: 'keep', auth: { data_center: ['browser', 'token'] } },
-    /* Forgejo is a server of the person's or their group's own, at the address they type. No hosted Forgejo is offered:
-       its terms don't fit AI-written Projects (Jared 2026-11-01, DL-273) */
+    /* Forgejo is a server of the person's or their group's own, at the address they type (Jared 2026-11-01, DL-273) */
     { id: 'forgejo', name: 'Forgejo', variants: ['forgejo_self_managed'], token: true,
       personal: true, owner: 'organization',
       /* a copy is private or public; an organization's own profile visibility can narrow who sees a public one */
       visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',
       auth: { forgejo_self_managed: ['token'] } },
-    /* Gitea is a server of the person's or their group's own too; its hosted service is not offered (Jared 2026-11-01) */
+    /* Gitea is a server of the person's or their group's own too, at the address they type (Jared 2026-11-01, DL-273) */
     { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed'], token: true,
       personal: true, owner: 'organization',
       visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',

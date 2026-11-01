@@ -192,8 +192,7 @@ const LANE_E = (() => {
   }
 
   /* the automation bindings this project has (Forge_Integrations: binding selection shows only when several exist;
-     owner, 2026-10-10). The demo project tastebook pushes to GitHub and the Origin mirror, whose checks are GitHub's
-     own (the shell's "Origin checks" view is the fallback when the GitHub binding is unavailable), so it has one:
+     owner, 2026-10-10). The demo project tastebook pushes to GitHub, whose checks are GitHub's own, so it has one:
      GitHub Actions. The shell's select lists every service it can draw; ?bindings=github,gitlab (any of its values)
      gives the page that project instead, to review the picker. */
   function bindings(sel) {
