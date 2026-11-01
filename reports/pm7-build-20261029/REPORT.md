@@ -1,3 +1,11 @@
+# Plans lane — footage code checkpoint, 2026-11-01
+
+**17/17 effective focused/generation/guard checks PASS.** Integration7d2dd568be and main34b9ab2843 are incorporated. DL-272 covers54 footage items; coverage209 rows/1045 cells. The five new units are DL-272, CS-108, UCC-213, WM-099 and UIW-047. One new primary command disables an exact Free Models route; existing auth commands serve the native-Client sign-in. Counts:1010 settings,485 bindings/63 source families,716 Touch/141 profiles,1271 production,7275 indexed units/96docs/29328 acceptance units,2977 shards/99sources.
+
+Both page publish and builder check pass after the existing AI account-manager description changed. No other GUI source edit. All main governance, current migration and baseline bytes remain exact; no refresh or reseal. No browser, full gates, dry landing or lock. FOOTAGE-ADJUDICATION.md lists source/owner mappings; one Forgejo restricted-token identity question remains for Jared, with no answer implied. The final hash-manifest/report checkpoint follows this code commit. Earlier results below remain pinned to their source.
+
+---
+
 # Plans lane — footage review batch in progress, 2026-11-01
 
 Integration `7d2dd568be` and main `34b9ab2843` are incorporated. Main brings SP-346/SP-347, DL-270 companions, its governance reseal, the baseline recorded at `40e8ccd704` and current migration `pds-20261101-002-current-planunit-snapshot`. Protected governance, snapshot and baseline are exact main; none is refreshed. The only merge conflicts were **919 generated shard/index paths**, resolved by regeneration. Owner-unit preservation passes: **7161 top-level units**, no overlapping changed unit or ID collision. DL-272 is free for the footage alignment record.

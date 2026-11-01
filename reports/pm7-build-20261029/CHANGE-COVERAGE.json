@@ -1705,6 +1705,980 @@
       "dry": "DR-080 (one option-note owner, no per-family renderer fork)",
       "companions": "OnboardingCredentialFeedbackPolicy.question_note_layout; owner source e69d9377ed read; no CSS-specific or browser proof claimed",
       "state": "covered_by_current_contract"
+    },
+    {
+      "id": "FOOTAGE-RV-2",
+      "change": "Self-approval compares the initiating device’s own identity words with those the Server derived from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different words cannot grant trust.",
+      "owner": "SRV-004; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-3",
+      "change": "A native Client explicitly signs in once to its selected Tailscale or Headscale through the protected auth owner before Connect lists Servers on that network; reuse a current owner-verified sign-in. Network choice, Client identity and generation fence the return. This grants neither PM pairing nor a Server listener.",
+      "owner": "RAS-014; DL-272",
+      "wiring": "UIW-047; WM-099; catalog.auth_profile_sign_in; onboarding.tailnet.sign_in",
+      "commands": "cmd.auth_profile.sign_in (existing auth owner; no native payload widening)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+          "sha256": "e6ef79e3c454ab17461e41b35b12b7ef2958a8053e21b416a68c26bb22bc6593"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-4",
+      "change": "The generated proxy configuration is available to download and copy on the setup step that asks the person to install it. Caddy, NGINX and Traefik share the existing Settings generator; an existing proxy, including Nginx Proxy Manager, gets no generated file. Certificates remain on the person’s systems.",
+      "owner": "RAS-005; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_generate; catalog.remote_access_proxy_export; catalog.remote_access_proxy_test",
+      "commands": "cmd.remote_access.proxy.generate; cmd.remote_access.proxy.export; cmd.remote_access.proxy.test (existing owners; Copy/download local)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js",
+          "sha256": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-5",
+      "change": "SSH identity confirmation shows the fingerprint for comparison with a source the person already trusts, such as the device’s settings or its administrator. If it cannot be confirmed, Stop and ask; the picture or a reachable address is not verification. Username means the account allowed to connect by SSH.",
+      "owner": "SSYS-042; DL-272",
+      "wiring": "UIW-015; WM-041 (shared SSH identity/account setup owner)",
+      "commands": "none needed: existing trust/stop/account actions; no new key or install command",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js",
+          "sha256": "f992da517b5845e6106dbf8f288182ab8724fd9f395771994f4bdc03528c8281"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-8",
+      "change": "Restored Goals and schedules stay paused. A way in explicitly set up and activated after restore is reported active from its separate Remote Access result; restoring old configuration never activates it by itself.",
+      "owner": "SRV-013; DL-272",
+      "wiring": "UIW-015; WM-041; SRV-013 (restore and separate explicit remote-activation results)",
+      "commands": "none needed: existing restore and remote activation commands stay separate",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-9",
+      "change": "An expired or denied sign-in is over: retry returns to the person’s sign-in with its old answer and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work and rejecting late results from superseded attempts.",
+      "owner": "PWIZ-025; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js",
+          "sha256": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-10",
+      "change": "A new cloud Server defaults to Tailscale. Its alternative private route is an existing VPN/private network, not the home network; route wording and review describe how that Server is actually reached.",
+      "owner": "PWIZ-025; DL-272",
+      "wiring": "UIW-015; WM-041 (existing Remote Access flow and truthful result projection)",
+      "commands": "none needed: existing remote owner commands and local draft/copy actions suffice",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js",
+          "sha256": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-13",
+      "change": "A proxy DNS failure gives the required A-record value from the route owner. A live-connection failure for generated configuration says to keep the generated file intact and enable WebSockets in any upstream proxy. The failed proxy flow also offers Tailscale, with its own explicit setup/consent; changing route is not success.",
+      "owner": "RAS-005; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_generate; catalog.remote_access_proxy_export; catalog.remote_access_proxy_test",
+      "commands": "cmd.remote_access.proxy.generate; cmd.remote_access.proxy.export; cmd.remote_access.proxy.test (existing owners; Copy/download local)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js",
+          "sha256": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-18",
+      "change": "Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup codes remain distinct protected owner material.",
+      "owner": "SRV-004; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+          "sha256": "e6ef79e3c454ab17461e41b35b12b7ef2958a8053e21b416a68c26bb22bc6593"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-19",
+      "change": "A refused Approve action tells the person to compare the identity words and tick their match confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same reason without granting trust.",
+      "owner": "F3-663; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/60-ui-core.js",
+          "sha256": "c72d4d7a15db01b5612a82f16348b2e2a08b5c73b7743769316524967cb079df"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-M10-REMOTE-LINK",
+      "change": "A newly issued Remote Link is shown with its owner-issued short code and QR, with copy actions for its output. This adds no code alphabet, length, normalization or expiry rule; REMOTE-CODE-1 remains the pre-build authority.",
+      "owner": "RAS-014; DL-272",
+      "wiring": "UIW-015; WM-041 (existing Remote Access flow and truthful result projection)",
+      "commands": "none needed: existing remote owner commands and local draft/copy actions suffice",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js",
+          "sha256": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-READY-REMOTE-LATER",
+      "change": "Ready says when a way in was left for later and does not mark that route active or undo the committed Project.",
+      "owner": "PWIZ-025; DL-272",
+      "wiring": "UIW-015; WM-041 (existing Remote Access flow and truthful result projection)",
+      "commands": "none needed: existing remote owner commands and local draft/copy actions suffice",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/74-screens-ready.js",
+          "sha256": "57d0d7e0e625db7262d2d2c1e8e435c4e825e29731a411c8fe558ba2d5f58798"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-PAIR-DENIED-NAME",
+      "change": "A Server card names the device whose request was turned down, preserves the answered generation, and offers a new request without changing earlier granted trust.",
+      "owner": "SRV-004; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-PAIR-CLIENT-WORDS",
+      "change": "A Client waiting for approval shows its own identity words to compare on the approving device; Server identity words are not substituted for the Client’s.",
+      "owner": "SRV-004; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
+      "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+          "sha256": "e6ef79e3c454ab17461e41b35b12b7ef2958a8053e21b416a68c26bb22bc6593"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-VPN-REVIEW",
+      "change": "Review describes a VPN-found Server as reached through the current VPN rather than the home network. Reachability still grants no pairing or work authority.",
+      "owner": "PWIZ-025; DL-272",
+      "wiring": "UIW-015; WM-041 (existing Remote Access flow and truthful result projection)",
+      "commands": "none needed: existing remote owner commands and local draft/copy actions suffice",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+          "sha256": "e6ef79e3c454ab17461e41b35b12b7ef2958a8053e21b416a68c26bb22bc6593"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-REMOTE-LINK-ERROR",
+      "change": "Remote Link input guidance and refusal refer to a link or code, not a generic web address. Nonblank draft text is still unverified until the Remote Link owner resolves it.",
+      "owner": "RAS-014; DL-272",
+      "wiring": "UIW-015; WM-041 (existing Remote Access flow and truthful result projection)",
+      "commands": "none needed: existing remote owner commands and local draft/copy actions suffice",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/36-endpoint.js",
+          "sha256": "d8d8d5efd3e0aedfa0caad9ddf2a6fbd1609c770e9710f86d178d168f08530e4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-1",
+      "change": "When the sign-in browser cannot open, each provider row identifies the actual page usable on another device and the code where that method needs one, with Open the page and Copy address. It waits for the protected owner result and remains cancellable.",
+      "owner": "MA-045; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-17",
+      "change": "While another account or key is being added, the provider’s existing accounts stay Ready and visible. The new sign-in, key or choice is an addition under that row; Cancel abandons only the addition and preserves the existing accounts.",
+      "owner": "MA-045; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-ANTHROPIC-WORKSPACE",
+      "change": "An Anthropic API key already belongs to one workspace; setup asks no extra workspace-selection question. It retains that key’s actual account and workspace identity.",
+      "owner": "MA-046; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-API-KEY-COUNTS",
+      "change": "API-key connections are named and counted as keys: Key added, a count of keys and Add another provider key, rather than inventing extra human accounts.",
+      "owner": "MA-046; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-FREE-SIGNIN",
+      "change": "Free Models sign-in waits for the person through the underlying provider’s protected auth flow, offers the actual page/Open/Copy fallback and Cancel, and drops late results after cancel or a fresh attempt. Existing accounts and saved model order are preserved.",
+      "owner": "MS-121; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-FREE-DISABLE",
+      "change": "A set-up Free Models route offers Turn off through cmd.free_models.route.disable. Models resolves the exact route, underlying provider and current policy scope, then disables that route for future selections through its sole owner. It preserves underlying credentials, other routes, saved order and already-dispatched work. Refusal or an unavailable owner makes no accepted change.",
+      "owner": "MS-121; DL-272",
+      "wiring": "WM-099; UIW-047; onboarding.free_models.route.disable",
+      "commands": "CS-108; UCC-213; cmd.free_models.route.disable",
+      "settings": "none needed: exact Models route policy; ai.models.provider-enabled is a different whole-provider preference",
+      "dry": "DR-020; MS-121; EP-107 (one Models policy owner; in-flight isolation)",
+      "companions": "Plans/free_models_route_contracts.schema.json; 4 valid/8 invalid shapes; exact source dispatch and retained-other-route cases",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-CLOUDFLARE-CREDENTIAL",
+      "change": "Cloudflare Workers AI setup asks for its Cloudflare API token and account ID. The token is protected credential input; the account ID is identifying context, not a second secret or an optional key substitute.",
+      "owner": "MA-046; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-OPENCODE-SERVER-IDENTITY",
+      "change": "An OpenCode server connection is named by where it runs. Removal asks Remove this OpenCode server from Puppet Master? and removes the connection through the existing owner; it is not a request to delete that computer or its provider accounts.",
+      "owner": "PO-009; DL-272",
+      "wiring": "UIW-015; WM-041 (existing integration connection identity/removal owner)",
+      "commands": "none needed: existing integration connection management action; no new owner route",
+      "settings": "ai.accounts.provider-connections (existing integration manager action)",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-READY-NO-AI",
+      "change": "With neither a usable AI account nor a usable Free Models route, Ready is titled Almost ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts as AI.",
+      "owner": "MS-122; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/74-screens-ready.js",
+          "sha256": "57d0d7e0e625db7262d2d2c1e8e435c4e825e29731a411c8fe558ba2d5f58798"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-CURSOR-CLI-SIGNIN",
+      "change": "Cursor’s CLI browser-sign-in route installs the CLI on the execution host through the existing consented component owner when needed, then authenticates it. The separate Cursor SDK key route remains separate.",
+      "owner": "CBP-021; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-CREDENTIAL-REPLACEMENT",
+      "change": "Typing a replacement key or code clears the previous value’s refusal presentation. The new value remains unverified and must pass the current owner check; editing is not a successful sign-in or credential validation.",
+      "owner": "MA-046; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js",
+          "sha256": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-PROVIDER-KEY-LABEL",
+      "change": "A key field identifies its provider and credential type, and its refusal names that same key. API tokens retain their token label; server HTTP Basic passwords never become provider API keys.",
+      "owner": "MA-046; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "sha256": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-12",
+      "change": "A service’s name-in-use refusal stays bound to that exact service/instance, owner/place and name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change the name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create a fresh reviewed attempt, never resume authority for a refused effect.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-REVIEW-FIRST-MISSING",
+      "change": "Review leads with the first missing prerequisite and its owner-correct Fix action. It cannot lead with Checked above a plan that cannot be committed.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-14",
+      "change": "Private under an organization, group, workspace or team means its members permitted to see private Projects plus people explicitly added, not every member and not Only you. Only you applies only to a personal owner; Data Center copy follows its Project permissions.",
+      "owner": "FGI-011; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-15",
+      "change": "Source-control Browser didn’t open? names the real authorization or verification page and offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting an old authorization result.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-16",
+      "change": "Self-managed source-control addresses use the shared endpoint validator. An empty address is missing; a bare valid host is normalized with https:// for use; a rejected address gives its actual reason by the field and Continue. No example or typed address proves identity or authentication.",
+      "owner": "FGI-015; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/36-endpoint.js",
+          "sha256": "d8d8d5efd3e0aedfa0caad9ddf2a6fbd1609c770e9710f86d178d168f08530e4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV-20",
+      "change": "Source-control sign-in explains the actual reach of that auth method before a token is entered. Puppet Master acts on the selected Project, but the grant may reach more repositories; copy must not promise that every token is repository-restricted. Provider and instance least-privilege checks remain.",
+      "owner": "FGI-015; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P73-BITBUCKET-REF",
+      "change": "A Bitbucket Cloud repository address and reference use workspace/repository. Its grouping Project remains selected metadata and is not inserted into that path.",
+      "owner": "FGI-011; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P74-DEVICE-EXPIRY",
+      "change": "Device-code expiry and polling follow the actual provider response and its required cadence, not a universal five-minute timeout. Current service lifetimes are GitLab 300 seconds and GitHub/Microsoft 900 seconds; countdown and retry use the issued code’s lifetime without extending an expired code.",
+      "owner": "MA-047; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "ai.accounts.provider-connections (existing manager action; no new field preference)",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P74-GITHUB-TOKEN",
+      "change": "The guided GitHub token route leads with fine-grained tokens and discloses its actual repository reach for create versus selected-existing use. A supported classic-token alternative retains its broader disclosed grant; no sample credential is canon.",
+      "owner": "FGI-015; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P74-IMPORT-HISTORY",
+      "change": "Bringing in a Project preserves its source history. Import does not describe the existing Project as newly empty or replace its history with a new initial history.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P74-READY-ONLINE",
+      "change": "Ready lists the online copy actually created or brought in, from the settled owner result. Skipped or failed online work is not listed as completed.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/74-screens-ready.js",
+          "sha256": "57d0d7e0e625db7262d2d2c1e8e435c4e825e29731a411c8fe558ba2d5f58798"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P74-BACK-SELECTION",
+      "change": "Back within the same service preserves the selected Project while its context remains current; a changed service, instance or owner still invalidates incompatible selection and auth proof.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P21-NEW-NAS-FOLDER",
+      "change": "A Project targeted at a new NAS folder is described as a new, empty folder. Creating makes that selected folder through its filesystem/Project owners after confirmation, before publication; browsing, naming and Review create nothing.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P63-ACTION-COPY",
+      "change": "Review’s lead and Creating’s title describe the actual create, add, bring-in or restore action; they do not call every journey Create a Project.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js",
+          "sha256": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-GLM1-SERVICE-LEAD",
+      "change": "The online-service lead asks which website keeps the online copy and works for every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-M6-SIGNUP-NOTE",
+      "change": "A self-managed service’s sign-up-disabled information is neutral guidance, not an authentication failure or a Pip fault. Account authorization still requires the normal owner result.",
+      "owner": "FGI-015; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-M7-AZURE-KIND",
+      "change": "An Azure team Project shows Uses Git as the human-readable type. Its actual GUID remains owner identity but is not substituted for that type label.",
+      "owner": "FGI-011; DL-272",
+      "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
+      "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-M8-CHECK-TOKEN",
+      "change": "The token validation action says Check token and checks the current protected input through the existing auth owner. Opening a token form or typing a token does not mark it Ready.",
+      "owner": "PWIZ-024; DL-272",
+      "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
+      "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020 (one protected auth/credential owner)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js",
+          "sha256": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV6-RV11-PIP-SUCCESS",
+      "change": "Pip’s success feedback requires a corresponding operation or owner answer that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected when typing settles; an unrelated or earlier success cannot clear a later fault.",
+      "owner": "F3-663; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/60-ui-core.js",
+          "sha256": "c72d4d7a15db01b5612a82f16348b2e2a08b5c73b7743769316524967cb079df"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/62-flow.js",
+          "sha256": "468b6e6be7ba0aae2208668c61c4b5b537166a068165f7203042bf6651da6bff"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/30-owners.js",
+          "sha256": "060186db7f22893cc491febbf0642dcc84c5c3d17d5376be1382f7ffb1a82aa1"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-FO-15",
+      "change": "The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes still respond to real window resizing and the existing narrow/short layouts.",
+      "owner": "F3-663; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/10-window.css",
+          "sha256": "b0d45dfc6d7e9d75f7724ff88fd4dfa0e945d633fdad15f967f92c1745307d9a"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/30-art.css",
+          "sha256": "de365d2fa119241875dd4109d490b13415e5f3e39d88936a64ff5ac1292df706"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-T03-LOCAL-WORK",
+      "change": "The This computer tip says where Puppet Master performs the work and keeps local Project/history/runs. AI providers, the online copy and backup destinations remain separate choices; it must not promise that all data and services stay on this computer.",
+      "owner": "PWIZ-022; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "general.interaction.mode (existing labels/help mode; no new preference)",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json",
+          "sha256": "a9e10f1c00bfc7ec4409d0375e5fcee3da4b78262b27fef0ef57a6f48a3bc3d1"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-T05-GITHUB-REACH",
+      "change": "The GitHub access tip distinguishes the chosen Project on which Puppet Master operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access promise. Only tips/help have Plain English and technical versions.",
+      "owner": "PWIZ-022; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "general.interaction.mode (existing labels/help mode; no new preference)",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json",
+          "sha256": "a9e10f1c00bfc7ec4409d0375e5fcee3da4b78262b27fef0ef57a6f48a3bc3d1"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P70-RADIO-RING",
+      "change": "An unselected radio/check ring remains distinguishable on its actual card surface in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused states remain distinct.",
+      "owner": "F3-663; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/10-window.css",
+          "sha256": "b0d45dfc6d7e9d75f7724ff88fd4dfa0e945d633fdad15f967f92c1745307d9a"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P32-REFUSED-FIELD",
+      "change": "A refused field has a readable invalid edge in every look, including a prefixed/wrapped field, without hiding keyboard focus or relying on its colour alone for the reason.",
+      "owner": "F3-663; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/10-window.css",
+          "sha256": "b0d45dfc6d7e9d75f7724ff88fd4dfa0e945d633fdad15f967f92c1745307d9a"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/12-components.css",
+          "sha256": "da008c10d30edf10ea65caeae3140f4ba3d86a25159c81d27fc7d64e89e45a52"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-P28-WARNING-BANNER",
+      "change": "A warning banner remains visually identifiable and its warning text/icon readable against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility rules.",
+      "owner": "F3-663; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "none needed: temporary workflow or presentation state, no preference",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/12-components.css",
+          "sha256": "da008c10d30edf10ea65caeae3140f4ba3d86a25159c81d27fc7d64e89e45a52"
+        }
+      ]
+    },
+    {
+      "id": "FOOTAGE-RV7-M6-CHIP",
+      "change": "A selected chapter or segmented-control chip follows its own strip when labels, explanation mode or content move that strip. It stays aligned through layout/resize and Reduced Motion rather than waiting for a later selection or paint. Shared indicator geometry owns the behavior.",
+      "owner": "F3-039; DL-272",
+      "wiring": "none needed: existing shared renderer and feedback only",
+      "commands": "none needed: existing action identity and effect ownership remain",
+      "settings": "general.interaction.mode (existing labels/help mode; no new preference)",
+      "dry": "DR-020; DR-080 (shared owner/projection)",
+      "companions": "Footage source read at7d2dd568be; static owner/reference coverage only",
+      "state": "covered_existing_or_amended_product_contract",
+      "source_refs": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/css/10-window.css",
+          "sha256": "b0d45dfc6d7e9d75f7724ff88fd4dfa0e945d633fdad15f967f92c1745307d9a"
+        },
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/60-ui-core.js",
+          "sha256": "c72d4d7a15db01b5612a82f16348b2e2a08b5c73b7743769316524967cb079df"
+        },
+        {
+          "path": "Concepts/liquid-glass/opus-5.5/src/glass.js",
+          "sha256": "39f9bf527c76dfd3912a938e93bc57548b33009ab63be135747be2d8e46ab525"
+        }
+      ]
     }
   ],
   "sources": [
@@ -1791,7 +2765,14 @@
     "FF-21",
     "FF-22"
   ],
-  "owner_questions": [],
+  "owner_questions": [
+    {
+      "id": "FORGEJO-RESTRICTED-TOKEN-IDENTITY",
+      "question": "Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection?",
+      "state": "awaiting_Jared",
+      "source": "Lead footage batch RV-20; fields final report9cff802c16; no new capability decision in canon."
+    }
+  ],
   "prototype_cleanup": {
     "decision": "DL-260",
     "demo_only_rows_added": 0,
@@ -2072,5 +3053,89 @@
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
       "sha256": "f866c649afbf3c680bc2fd5a0cb2ed262217bfb19007622f258dda76b52a6bad"
     }
+  },
+  "footage_review": {
+    "decision_ref": "DL-272",
+    "GUI_head": "7d2dd568be76874ff8b4d3e82bad3701226d248c",
+    "main": "34b9ab2843954f0bf52e7748ca87dbc8662efeaf",
+    "baseline_recorded_at": "40e8ccd704",
+    "migration_run": "pds-20261101-002-current-planunit-snapshot",
+    "source_batch_sha256": "71083a4d47a2e46fbb149336334aa37b52665ea7142fb2ebeb53593f28361f9f",
+    "new_rows": [
+      "FOOTAGE-RV-2",
+      "FOOTAGE-RV-3",
+      "FOOTAGE-RV-4",
+      "FOOTAGE-RV-5",
+      "FOOTAGE-RV-8",
+      "FOOTAGE-RV-9",
+      "FOOTAGE-RV-10",
+      "FOOTAGE-RV-13",
+      "FOOTAGE-RV-18",
+      "FOOTAGE-RV-19",
+      "FOOTAGE-M10-REMOTE-LINK",
+      "FOOTAGE-READY-REMOTE-LATER",
+      "FOOTAGE-PAIR-DENIED-NAME",
+      "FOOTAGE-PAIR-CLIENT-WORDS",
+      "FOOTAGE-VPN-REVIEW",
+      "FOOTAGE-REMOTE-LINK-ERROR",
+      "FOOTAGE-RV-1",
+      "FOOTAGE-RV-17",
+      "FOOTAGE-ANTHROPIC-WORKSPACE",
+      "FOOTAGE-API-KEY-COUNTS",
+      "FOOTAGE-FREE-SIGNIN",
+      "FOOTAGE-FREE-DISABLE",
+      "FOOTAGE-CLOUDFLARE-CREDENTIAL",
+      "FOOTAGE-OPENCODE-SERVER-IDENTITY",
+      "FOOTAGE-READY-NO-AI",
+      "FOOTAGE-CURSOR-CLI-SIGNIN",
+      "FOOTAGE-CREDENTIAL-REPLACEMENT",
+      "FOOTAGE-PROVIDER-KEY-LABEL",
+      "FOOTAGE-RV-12",
+      "FOOTAGE-REVIEW-FIRST-MISSING",
+      "FOOTAGE-RV-14",
+      "FOOTAGE-RV-15",
+      "FOOTAGE-RV-16",
+      "FOOTAGE-RV-20",
+      "FOOTAGE-P73-BITBUCKET-REF",
+      "FOOTAGE-P74-DEVICE-EXPIRY",
+      "FOOTAGE-P74-GITHUB-TOKEN",
+      "FOOTAGE-P74-IMPORT-HISTORY",
+      "FOOTAGE-P74-READY-ONLINE",
+      "FOOTAGE-P74-BACK-SELECTION",
+      "FOOTAGE-P21-NEW-NAS-FOLDER",
+      "FOOTAGE-P63-ACTION-COPY",
+      "FOOTAGE-GLM1-SERVICE-LEAD",
+      "FOOTAGE-M6-SIGNUP-NOTE",
+      "FOOTAGE-M7-AZURE-KIND",
+      "FOOTAGE-M8-CHECK-TOKEN",
+      "FOOTAGE-RV6-RV11-PIP-SUCCESS",
+      "FOOTAGE-FO-15",
+      "FOOTAGE-T03-LOCAL-WORK",
+      "FOOTAGE-T05-GITHUB-REACH",
+      "FOOTAGE-P70-RADIO-RING",
+      "FOOTAGE-P32-REFUSED-FIELD",
+      "FOOTAGE-P28-WARNING-BANNER",
+      "FOOTAGE-RV7-M6-CHIP"
+    ],
+    "new_product_rows": 54,
+    "rows": 209,
+    "required_cells": 1045,
+    "new_command": "cmd.free_models.route.disable",
+    "new_production_entries": 1,
+    "new_bindings": 2,
+    "new_Touch_rows": 1,
+    "new_Touch_profiles": 1,
+    "Jared_rulings_changed": false,
+    "excluded": [
+      "Codeberg naming or hosted-service decision",
+      "Demo/Studio situations, hints, prefills, concept owners and artificial delays"
+    ],
+    "known_canon_corrections": [
+      "MA-047 and walkthrough: provider-owned expiry replaces universal5-minute timeout",
+      "RAS-014/PWIZ-021/025: explicit native-Client auth exception, no discovery/login conflation"
+    ],
+    "questions": [
+      "FORGEJO-RESTRICTED-TOKEN-IDENTITY"
+    ]
   }
 }

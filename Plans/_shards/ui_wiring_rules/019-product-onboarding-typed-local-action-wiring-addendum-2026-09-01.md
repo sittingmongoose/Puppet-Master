@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1403
+Source lines: L1024-L1413
 
-Source SHA256: `bf85fac4055a8edc70399ddc80f3d071d210eba1c16e1e89e966e5c3a787cd09`
+Source SHA256: `65f4cfe10f682e9c5ecd0439527f0cbc3ba37e57cb39b17477c9105ae4be12fe`
 
 ---
 
@@ -196,7 +196,12 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before
   prior authorization/unlock and before advance/install. Initial live-invitation waiting says No requests yet with Check
   again, while answered runs keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary
-  command, handler, request field or trust/permission bypass.'
+  command, handler, request field or trust/permission bypass.
+
+
+  DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
+  additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
+  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -347,6 +352,9 @@ acceptance_criteria:
   refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
   says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
   and owner routes; no new primary command, handler, request field or trust/permission bypass.'
+- 'DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
+  additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
+  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -378,6 +386,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2477-L2669
+Source lines: L2517-L2779
 
-Source SHA256: `70230b5a0db987a76e35b0843e5bffd023830aeb87c7653326ffad1cf64b8f2e`
+Source SHA256: `43afd9782df493d15cb8f7af32472d3408033d845b36dd360ada685ab69dde34`
 
 ---
 
@@ -68,7 +68,51 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   choice before any navigation, draft acceptance or owner dispatch; refusal has no partial effect or crash. Untouched
   defaults, Review Edit and resumed choices use that same interpretation. Protect Connect and restore destination Continue
   likewise recheck their displayed owner prerequisites at activation. Existing domain permission, exact identity, generation
-  and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.'
+  and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.
+
+
+  DL-272 RV-12, 2026-11-01: A service’s name-in-use refusal stays bound to that exact service/instance, owner/place and
+  name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change the
+  name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create a
+  fresh reviewed attempt, never resume authority for a refused effect.
+
+
+  DL-272 REVIEW-FIRST-MISSING, 2026-11-01: Review leads with the first missing prerequisite and its owner-correct Fix
+  action. It cannot lead with Checked above a plan that cannot be committed.
+
+
+  DL-272 RV-15, 2026-11-01: Source-control Browser didn’t open? names the real authorization or verification page and
+  offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting
+  an old authorization result.
+
+
+  DL-272 P74-IMPORT-HISTORY, 2026-11-01: Bringing in a Project preserves its source history. Import does not describe
+  the existing Project as newly empty or replace its history with a new initial history.
+
+
+  DL-272 P74-READY-ONLINE, 2026-11-01: Ready lists the online copy actually created or brought in, from the settled owner
+  result. Skipped or failed online work is not listed as completed.
+
+
+  DL-272 P74-BACK-SELECTION, 2026-11-01: Back within the same service preserves the selected Project while its context
+  remains current; a changed service, instance or owner still invalidates incompatible selection and auth proof.
+
+
+  DL-272 P21-NEW-NAS-FOLDER, 2026-11-01: A Project targeted at a new NAS folder is described as a new, empty folder.
+  Creating makes that selected folder through its filesystem/Project owners after confirmation, before publication; browsing,
+  naming and Review create nothing.
+
+
+  DL-272 P63-ACTION-COPY, 2026-11-01: Review’s lead and Creating’s title describe the actual create, add, bring-in or
+  restore action; they do not call every journey Create a Project.
+
+
+  DL-272 GLM1-SERVICE-LEAD, 2026-11-01: The online-service lead asks which website keeps the online copy and works for
+  every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.
+
+
+  DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
+  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
   projection, and defer behavior.
@@ -153,6 +197,30 @@ acceptance_criteria:
   that same interpretation. Protect Connect and restore destination Continue likewise recheck their displayed owner prerequisites
   at activation. Existing domain permission, exact identity, generation and currentness gates remain authoritative; a
   visually enabled button alone never authorizes owner work.'
+- 'DL-272 RV-12, 2026-11-01: A service’s name-in-use refusal stays bound to that exact service/instance, owner/place
+  and name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change
+  the name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create
+  a fresh reviewed attempt, never resume authority for a refused effect.'
+- 'DL-272 REVIEW-FIRST-MISSING, 2026-11-01: Review leads with the first missing prerequisite and its owner-correct Fix
+  action. It cannot lead with Checked above a plan that cannot be committed.'
+- 'DL-272 RV-15, 2026-11-01: Source-control Browser didn’t open? names the real authorization or verification page and
+  offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting
+  an old authorization result.'
+- 'DL-272 P74-IMPORT-HISTORY, 2026-11-01: Bringing in a Project preserves its source history. Import does not describe
+  the existing Project as newly empty or replace its history with a new initial history.'
+- 'DL-272 P74-READY-ONLINE, 2026-11-01: Ready lists the online copy actually created or brought in, from the settled
+  owner result. Skipped or failed online work is not listed as completed.'
+- 'DL-272 P74-BACK-SELECTION, 2026-11-01: Back within the same service preserves the selected Project while its context
+  remains current; a changed service, instance or owner still invalidates incompatible selection and auth proof.'
+- 'DL-272 P21-NEW-NAS-FOLDER, 2026-11-01: A Project targeted at a new NAS folder is described as a new, empty folder.
+  Creating makes that selected folder through its filesystem/Project owners after confirmation, before publication; browsing,
+  naming and Review create nothing.'
+- 'DL-272 P63-ACTION-COPY, 2026-11-01: Review’s lead and Creating’s title describe the actual create, add, bring-in or
+  restore action; they do not call every journey Create a Project.'
+- 'DL-272 GLM1-SERVICE-LEAD, 2026-11-01: The online-service lead asks which website keeps the online copy and works for
+  every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.'
+- 'DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
+  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -183,6 +251,8 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here

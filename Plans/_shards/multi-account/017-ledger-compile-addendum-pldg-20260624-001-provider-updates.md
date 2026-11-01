@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L840-L4805
+Source lines: L840-L4870
 
-Source SHA256: `185f12fa418f7e444b74dc909a5256219e6fb6617c7899976d584badffc2879c`
+Source SHA256: `7b49d74ae8d0974f1f9ad8bcca364f11f5cc39eaa18d8ac81ac05b9b3114764d`
 
 ---
 
@@ -2933,7 +2933,17 @@ canonical_text: 'Authentication walkthroughs define PM-side orchestration around
   API keys are held by Puppet Master’s secure credential store on that host. Onboarding, Settings, model selection and
   Usage share stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected
   returns are bound to the exact operation, initiating Client/session/generation and execution host. Changing account,
-  host or route invalidates stale validation; another account of the same provider has a distinct identity.'
+  host or route invalidates stale validation; another account of the same provider has a distinct identity.
+
+
+  DL-272 RV-1, 2026-11-01: When the sign-in browser cannot open, each provider row identifies the actual page usable
+  on another device and the code where that method needs one, with Open the page and Copy address. It waits for the protected
+  owner result and remains cancellable.
+
+
+  DL-272 RV-17, 2026-11-01: While another account or key is being added, the provider’s existing accounts stay Ready
+  and visible. The new sign-in, key or choice is an addition under that row; Cancel abandons only the addition and preserves
+  the existing accounts.'
 gui_related: true
 gui_classification_reason: The unit covers user-visible auth path disclosure, expiry notification, and recovery actions.
 split_recommended: false
@@ -2953,6 +2963,12 @@ acceptance_criteria:
   stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
   are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
   route invalidates stale validation; another account of the same provider has a distinct identity.'
+- 'DL-272 RV-1, 2026-11-01: When the sign-in browser cannot open, each provider row identifies the actual page usable
+  on another device and the code where that method needs one, with Open the page and Copy address. It waits for the protected
+  owner result and remains cancellable.'
+- 'DL-272 RV-17, 2026-11-01: While another account or key is being added, the provider’s existing accounts stay Ready
+  and visible. The new sign-in, key or choice is an addition under that row; Cancel abandons only the addition and preserves
+  the existing accounts.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2966,6 +2982,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0029
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Authentication flow walkthroughs
 - redirect
@@ -3002,7 +3020,29 @@ canonical_text: 'API-key setup lets the user select API Key, enter the key in a 
   on that host. Onboarding, Settings, model selection and Usage share stable account/profile/host/environment references,
   never provider-name booleans or copied secrets. Protected returns are bound to the exact operation, initiating Client/session/generation
   and execution host. Changing account, host or route invalidates stale validation; another account of the same provider
-  has a distinct identity.'
+  has a distinct identity.
+
+
+  DL-272 ANTHROPIC-WORKSPACE, 2026-11-01: An Anthropic API key already belongs to one workspace; setup asks no extra
+  workspace-selection question. It retains that key’s actual account and workspace identity.
+
+
+  DL-272 API-KEY-COUNTS, 2026-11-01: API-key connections are named and counted as keys: Key added, a count of keys and
+  Add another provider key, rather than inventing extra human accounts.
+
+
+  DL-272 CLOUDFLARE-CREDENTIAL, 2026-11-01: Cloudflare Workers AI setup asks for its Cloudflare API token and account
+  ID. The token is protected credential input; the account ID is identifying context, not a second secret or an optional
+  key substitute.
+
+
+  DL-272 CREDENTIAL-REPLACEMENT, 2026-11-01: Typing a replacement key or code clears the previous value’s refusal presentation.
+  The new value remains unverified and must pass the current owner check; editing is not a successful sign-in or credential
+  validation.
+
+
+  DL-272 PROVIDER-KEY-LABEL, 2026-11-01: A key field identifies its provider and credential type, and its refusal names
+  that same key. API tokens retain their token label; server HTTP Basic passwords never become provider API keys.'
 gui_related: true
 gui_classification_reason: The unit covers the visible API-key setup flow and secure input behavior.
 split_recommended: false
@@ -3022,6 +3062,18 @@ acceptance_criteria:
   stable account/profile/host/environment references, never provider-name booleans or copied secrets. Protected returns
   are bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or
   route invalidates stale validation; another account of the same provider has a distinct identity.'
+- 'DL-272 ANTHROPIC-WORKSPACE, 2026-11-01: An Anthropic API key already belongs to one workspace; setup asks no extra
+  workspace-selection question. It retains that key’s actual account and workspace identity.'
+- 'DL-272 API-KEY-COUNTS, 2026-11-01: API-key connections are named and counted as keys: Key added, a count of keys and
+  Add another provider key, rather than inventing extra human accounts.'
+- 'DL-272 CLOUDFLARE-CREDENTIAL, 2026-11-01: Cloudflare Workers AI setup asks for its Cloudflare API token and account
+  ID. The token is protected credential input; the account ID is identifying context, not a second secret or an optional
+  key substitute.'
+- 'DL-272 CREDENTIAL-REPLACEMENT, 2026-11-01: Typing a replacement key or code clears the previous value’s refusal presentation.
+  The new value remains unverified and must pass the current owner check; editing is not a successful sign-in or credential
+  validation.'
+- 'DL-272 PROVIDER-KEY-LABEL, 2026-11-01: A key field identifies its provider and credential type, and its refusal names
+  that same key. API tokens retain their token label; server HTTP Basic passwords never become provider API keys.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3035,6 +3087,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0030
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - API Key
 - secure input field
@@ -3064,11 +3118,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: 'OAuth device-code setup requests a provider device code, shows the device code, verification URL, and
-  QR code, lets the user complete authorization outside PM, polls for the token every five seconds for up to five minutes,
-  stores refresh tokens in the OS credential store, keeps short-lived access tokens in memory only, and exposes clear
-  retry on failure. DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling
-  device-code login in ChatGPT security settings first, or the corresponding workspace permission by its administrator.
-  This remains an alternative inside Sign in with ChatGPT, not another top-level auth family.'
+  QR code, lets the user complete authorization outside PM, polls according to the provider-issued interval, slowdown
+  response and expires_in, never a global five-minute cap, stores refresh tokens in the OS credential store, keeps short-lived
+  access tokens in memory only, and exposes clear retry on failure. DL-259 D6, Jared 2026-10-31: the Codex remote/headless
+  device-code alternative requires enabling device-code login in ChatGPT security settings first, or the corresponding
+  workspace permission by its administrator. This remains an alternative inside Sign in with ChatGPT, not another top-level
+  auth family.
+
+
+  DL-272 P74-DEVICE-EXPIRY, 2026-11-01: Device-code expiry and polling follow the actual provider response and its required
+  cadence, not a universal five-minute timeout. Current service lifetimes are GitLab 300 seconds and GitHub/Microsoft
+  900 seconds; countdown and retry use the issued code’s lifetime without extending an expired code.'
 gui_related: true
 gui_classification_reason: The unit covers visible device-code, URL, QR, timeout, and retry behavior.
 split_recommended: false
@@ -3085,6 +3145,9 @@ acceptance_criteria:
 - 'DL-259 D6, Jared 2026-10-31: the Codex remote/headless device-code alternative requires enabling device-code login
   in ChatGPT security settings first, or the corresponding workspace permission by its administrator. This remains an
   alternative inside Sign in with ChatGPT, not another top-level auth family.'
+- 'DL-272 P74-DEVICE-EXPIRY, 2026-11-01: Device-code expiry and polling follow the actual provider response and its required
+  cadence, not a universal five-minute timeout. Current service lifetimes are GitLab 300 seconds and GitHub/Microsoft
+  900 seconds; countdown and retry use the issued code’s lifetime without extending an expired code.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3098,18 +3161,20 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0031
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Sign in with [Provider]
 - device code
 - verification URL
 - QR code
-- 5 seconds
-- 5 minutes
 - refresh token
 - short-lived access token
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'DL-272 P74: the global 5 seconds / 5 minutes setup timeout is superseded by provider-issued cadence and expiry; retained
+  only as source history.'
 owner_boundary_notes:
 - OAuth authorization remains provider/browser-native while PM orchestrates polling and credential storage.
 owner_hints:

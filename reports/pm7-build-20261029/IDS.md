@@ -221,3 +221,15 @@ DR-081: one Free Models catalog and matching advanced disclosure. New local cont
 | DL-271 | FO-11/FO-12, recovery-phrase wording, unconditional weak-key refusal and initial request-waiting state | Lead1031214952-2d19; checked free on branch and storage main683e603ac1; allocated above DL-270 |
 
 Storage main683e603ac1 brings DL-270, SP-335..345, UF-108, BRS-031, RAS-016, CS-107, UCC-212, F3-666/667, WM-098, UIW-046, DR-082/083 and SSYS-058, plus its named requirement/fixture IDs. This batch allocates DL-271 only and none collides. The active settings union is 1010; retired general.visual.nier-mode stays migration-only. Production wiring is 1270 with assistant.chat.history.load_older; Touch remains 715 rows / 140 profiles.
+
+
+## Footage batch — DL-272, 2026-11-01
+
+Main34b9ab2843 owns SP-346/SP-347 and the earlier storage ids. This batch allocates **DL-272**, **CS-108**, **UCC-213**, **WM-099**, **UIW-047**; each was checked free after both merges. No new F3, DR, SSYS, glyph or ordinary setting id.
+
+- Command: `cmd.free_models.route.disable`; sole future handler `handlers::models::disable_free_route`; no new event.
+- Production/control binding: `onboarding.free_models.route.disable` (shared wizard renderer, including Settings-guided rerun).
+- Existing auth command/control: `cmd.auth_profile.sign_in` via `catalog.auth_profile_sign_in`; binding `onboarding.tailnet.sign_in`.
+- Touch: `TOUCH-FREEROUTE-001`, profile `TCP-FREE-MODELS-ROUTE-DISABLE`, partial until native owner/effect proof.
+- Request/result: `Plans/free_models_route_contracts.schema.json#/$defs/disable_request` / `disable_result`; fields preserve route, underlying provider, policy scope, catalog/policy generations, actor/origin and idempotency.
+- Census: settings1010; bindings485/63 source families; Touch716/141; production1271. Shared status keys22 remain.

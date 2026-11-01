@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5588-L27215
+Source lines: L5588-L27225
 
-Source SHA256: `dedbe112e3a163f5db7b5dc3a1a550406aade0981b97598d7efee2304e8d3982`
+Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
 
 ---
 
@@ -2130,12 +2130,16 @@ plan_unit_id: F3-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Global spacing, border, active indicator, divider, hard-shadow, and density metrics define
-  compact shell layout and panel behavior at desktop and collapsed sizes.
-  Amended 2026-10-09 (DL-184): the active indicator token is no longer a 3px left-edge accent stripe; selection is a
-  fill or an outline on the element's own box, the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read:
-  the fused tab silhouette), the NieR square cursor or Retro reverse video (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
+canonical_text: 'Global spacing, border, active indicator, divider, hard-shadow, and density metrics define compact shell
+  layout and panel behavior at desktop and collapsed sizes. Amended 2026-10-09 (DL-184): the active indicator token is
+  no longer a 3px left-edge accent stripe; selection is a fill or an outline on the element''s own box, the seated tab
+  chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused tab silhouette), the NieR square cursor or Retro
+  reverse video (F3-648). The density metric no longer assumes a bottom panel; Home''s density follows F3-636 (DL-180).
+
+
+  DL-272 RV7-M6-CHIP, 2026-11-01: A selected chapter or segmented-control chip follows its own strip when labels, explanation
+  mode or content move that strip. It stays aligned through layout/resize and Reduced Motion rather than waiting for
+  a later selection or paint. Shared indicator geometry owns the behavior.'
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2143,10 +2147,14 @@ split_recommended: false
 depends_on: [DL-184, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-272 RV7-M6-CHIP, 2026-11-01: A selected chapter or segmented-control chip follows its own strip when labels, explanation
+  mode or content move that strip. It stays aligned through layout/resize and Reduced Motion rather than waiting for
+  a later selection or paint. Shared indicator geometry owns the behavior.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -2159,7 +2167,9 @@ node_compile_hint:
   mode: spacing_and_density_tokens
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0033
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - "XS"
 - "SM"

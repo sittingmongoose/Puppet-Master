@@ -748,7 +748,20 @@ canonical_text: 'An onboarding online copy is an optional hosted Git destination
   real instance profile. Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific
   naming and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must
   match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
-  with expandable exact details and owner-routed Edit links.'
+  with expandable exact details and owner-routed Edit links.
+
+
+  DL-272 RV-14, 2026-11-01: Private under an organization, group, workspace or team means its members permitted to see
+  private Projects plus people explicitly added, not every member and not Only you. Only you applies only to a personal
+  owner; Data Center copy follows its Project permissions.
+
+
+  DL-272 P73-BITBUCKET-REF, 2026-11-01: A Bitbucket Cloud repository address and reference use workspace/repository.
+  Its grouping Project remains selected metadata and is not inserted into that path.
+
+
+  DL-272 M7-AZURE-KIND, 2026-11-01: An Azure team Project shows Uses Git as the human-readable type. Its actual GUID
+  remains owner identity but is not substituted for that type label.'
 gui_related: true
 gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification, and exact disabled reasons in Product Onboarding.
 depends_on: [FGI-001, FGI-003, FGI-006, FGI-008, SCS-011]
@@ -812,13 +825,25 @@ acceptance_criteria:
   visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
   selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
   target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
+- 'DL-272 RV-14, 2026-11-01: Private under an organization, group, workspace or team means its members permitted to see
+  private Projects plus people explicitly added, not every member and not Only you. Only you applies only to a personal
+  owner; Data Center copy follows its Project permissions.'
+- 'DL-272 P73-BITBUCKET-REF, 2026-11-01: A Bitbucket Cloud repository address and reference use workspace/repository.
+  Its grouping Project remains selected metadata and is not inserted into that path.'
+- 'DL-272 M7-AZURE-KIND, 2026-11-01: An Azure team Project shows Uses Git as the human-readable type. Its actual GUID
+  remains owner identity but is not substituted for that type label.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider-specific positive/negative fixtures, future protected-auth and repository-binding owner-return fixtures]
 risk_class: onboarding_forge_account_repository_or_provider_requirement_drift
 reasoning_tier: high
 context_scope: onboarding_forge_provider_binding
 implementation_surfaces: [Plans/Forge_Integrations.md, future forge facade, future Product Onboarding owner adapter]
 node_compile_hint: {mode: forge_onboarding_binding_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user-correction:2026-09-01-forge-onboarding-requirements, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+source_lineage:
+- user-correction:2026-09-01-forge-onboarding-requirements
+- Plans/product_onboarding_contracts.schema.json
+- Concepts/pm7-tools/onboarding_cinematic_source.py
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [github, gitlab, azure_devops, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin, Private, Internal, already_connected]
 negative_constraints:
   - Do not treat a selected provider or verified account as a repository binding.
@@ -1028,7 +1053,26 @@ canonical_text: 'The required provider-profile set is exactly github_cloud, gith
   value; both hosted and self-managed choices require a real instance profile. Provider/owner changes invalidate incompatible
   visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
   selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
-  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.
+
+
+  DL-272 RV-16, 2026-11-01: Self-managed source-control addresses use the shared endpoint validator. An empty address
+  is missing; a bare valid host is normalized with https:// for use; a rejected address gives its actual reason by the
+  field and Continue. No example or typed address proves identity or authentication.
+
+
+  DL-272 RV-20, 2026-11-01: Source-control sign-in explains the actual reach of that auth method before a token is entered.
+  Puppet Master acts on the selected Project, but the grant may reach more repositories; copy must not promise that every
+  token is repository-restricted. Provider and instance least-privilege checks remain.
+
+
+  DL-272 P74-GITHUB-TOKEN, 2026-11-01: The guided GitHub token route leads with fine-grained tokens and discloses its
+  actual repository reach for create versus selected-existing use. A supported classic-token alternative retains its
+  broader disclosed grant; no sample credential is canon.
+
+
+  DL-272 M6-SIGNUP-NOTE, 2026-11-01: A self-managed service’s sign-up-disabled information is neutral guidance, not an
+  authentication failure or a Pip fault. Account authorization still requires the normal owner result.'
 gui_related: true
 gui_classification_reason: The matrix supplies setup cards, permission labels, precise disabled reasons, trust prompts, admin forms, and external-only navigation.
 depends_on: [FGI-014, GAAAF-015, SIR-033]
@@ -1062,6 +1106,17 @@ acceptance_criteria:
   and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must match
   the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences, with
   expandable exact details and owner-routed Edit links.'
+- 'DL-272 RV-16, 2026-11-01: Self-managed source-control addresses use the shared endpoint validator. An empty address
+  is missing; a bare valid host is normalized with https:// for use; a rejected address gives its actual reason by the
+  field and Continue. No example or typed address proves identity or authentication.'
+- 'DL-272 RV-20, 2026-11-01: Source-control sign-in explains the actual reach of that auth method before a token is entered.
+  Puppet Master acts on the selected Project, but the grant may reach more repositories; copy must not promise that every
+  token is repository-restricted. Provider and instance least-privilege checks remain.'
+- 'DL-272 P74-GITHUB-TOKEN, 2026-11-01: The guided GitHub token route leads with fine-grained tokens and discloses its
+  actual repository reach for create versus selected-existing use. A supported classic-token alternative retains its
+  broader disclosed grant; no sample credential is canon.'
+- 'DL-272 M6-SIGNUP-NOTE, 2026-11-01: A self-managed service’s sign-up-disabled information is neutral guidance, not
+  an authentication failure or a Pip fault. Account authorization still requires the normal owner result.'
 validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider matrix/trust/admin fixtures]
 risk_class: capability_matrix_scope_trust_or_admin_authority_conflation
 reasoning_tier: high
@@ -1069,17 +1124,19 @@ context_scope: provider_capability_auth_trust_and_admin_matrix
 implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future capability catalog and admin adapters]
 node_compile_hint: {mode: static_matrix_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:7-13
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:31-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
-  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:90-140
-  - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
-  - source_ref:corrected-slice:machine__provider_profiles.json__part-001__lines-000001-000220.txt:1-220
-  - source_ref:corrected-slice:machine__provider_profiles.json__part-002__lines-000201-000420.txt:201-420
-  - source_ref:corrected-slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt:401-620
-  - source_ref:corrected-slice:machine__provider_profiles.json__part-004__lines-000601-000692.txt:601-692
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:7-13
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:31-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
+- source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:90-140
+- source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
+- source_ref:corrected-slice:machine__provider_profiles.json__part-001__lines-000001-000220.txt:1-220
+- source_ref:corrected-slice:machine__provider_profiles.json__part-002__lines-000201-000420.txt:201-420
+- source_ref:corrected-slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt:401-620
+- source_ref:corrected-slice:machine__provider_profiles.json__part-004__lines-000601-000692.txt:601-692
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker, auth_methods, credential_access]
 negative_constraints:
   - Do not use one GitHub-compatible boolean, universal username/password form, global TLS bypass, or cross-origin Authorization.

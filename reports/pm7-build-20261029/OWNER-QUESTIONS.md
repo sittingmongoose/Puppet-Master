@@ -1,3 +1,11 @@
+# Current owner question — footage review, 2026-11-01
+
+**One question for Jared:** FORGEJO-RESTRICTED-TOKEN-IDENTITY. Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection?
+
+RV-20’s actual-grant disclosure is recorded in FGI-015/PWIZ-022. Existing account-based authentication remains; repository-restricted/no-identity support is neither selected nor rejected by this batch. D4’s pre-build provider verification stays as ruled. Codeberg naming remains outside this lane’s batch.
+
+---
+
 # DL-259 owner rulings — Jared, 2026-10-31
 
 **All four owner questions are answered.** REMOTE-CODE-1 intentionally schedules protocol verification immediately before building PM; it is not an unanswered owner choice or a wizard caveat. Source: DECISIONS-ONBOARDING.md, “Owner questions, Jared 2026-10-31”. No new command, payload field, setting, event or storage family is admitted.

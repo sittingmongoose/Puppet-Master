@@ -1,0 +1,192 @@
+{
+  "schema_id": "pm.free_models_route_contract_fixtures.v1",
+  "owner_refs": [
+    "Plans/Models_System.md#MS-121",
+    "Plans/Commands_System.md#CS-108"
+  ],
+  "claim_boundary": "static_shapes_only_no_native_certification",
+  "valid": [
+    {
+      "name": "exact_route_disable",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "expected_generation": 7,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer"
+      }
+    },
+    {
+      "name": "owner_disabled",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 8,
+        "outcome": "disabled",
+        "receipt_ref": "receipt-ref",
+        "error": null
+      }
+    },
+    {
+      "name": "idempotent_already_disabled",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 7,
+        "outcome": "already_disabled",
+        "receipt_ref": "receipt-ref",
+        "error": null
+      }
+    },
+    {
+      "name": "refused_without_effect",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 7,
+        "outcome": "refused",
+        "receipt_ref": null,
+        "error": "permission_denied"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "no_policy_generation",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer"
+      }
+    },
+    {
+      "name": "no_secret_in_policy_command",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "expected_generation": 7,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer",
+        "raw_credential": true
+      }
+    },
+    {
+      "name": "disable_is_not_enable",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.enable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "expected_generation": 7,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer"
+      }
+    },
+    {
+      "name": "no_implicit_scope",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "",
+        "catalog_generation": 4,
+        "expected_generation": 7,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer"
+      }
+    },
+    {
+      "name": "no_missing_provider_binding",
+      "definition": "disable_request",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "expected_generation": 7,
+        "actor_id": "actor-ref",
+        "idempotency_key": "operation-ref",
+        "origin": "pointer"
+      }
+    },
+    {
+      "name": "no_success_without_receipt",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 8,
+        "outcome": "disabled",
+        "receipt_ref": null,
+        "error": null
+      }
+    },
+    {
+      "name": "no_success_with_refusal",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 8,
+        "outcome": "disabled",
+        "receipt_ref": "receipt-ref",
+        "error": "permission_denied"
+      }
+    },
+    {
+      "name": "refusal_requires_reason",
+      "definition": "disable_result",
+      "value": {
+        "command_id": "cmd.free_models.route.disable",
+        "route_id": "route-ref",
+        "underlying_provider_id": "provider-ref",
+        "policy_scope_ref": "policy-ref",
+        "catalog_generation": 4,
+        "generation": 8,
+        "outcome": "refused",
+        "receipt_ref": "receipt-ref",
+        "error": null
+      }
+    }
+  ]
+}

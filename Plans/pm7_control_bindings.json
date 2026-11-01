@@ -9450,6 +9450,57 @@
       "setting_ids": [],
       "payload": "DL-259 D5 / DR-081: initially closed, one advanced control reveals other currently eligible Free Models providers from the shared catalog; ordinary view-local disclosure only. Individual setup retains exact provider/account owners.",
       "no_production_reason": "Local disclosure has no native effect, Settings write or new action ID; existing provider setup commands retain mutations."
+    },
+    {
+      "control_id": "onboarding.free_models.route.disable",
+      "surface": "Onboarding / Settings-guided rerun > Free Models > route Turn off",
+      "owner_ref": "Plans/Models_System.md#MS-121",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.free_models.route.disable"
+      ],
+      "production_entries": [
+        "onboarding.free_models.route.disable"
+      ],
+      "setting_ids": [],
+      "payload": "CS-108/UCC-213: exact route/provider/policy scope and expected catalog/policy generations. Models policy action, not whole-provider preference or credential revocation.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js",
+          "tokens": [
+            "routeOff(S, id)",
+            "cmd.free_models.route.disable"
+          ],
+          "concept_only": true
+        }
+      ]
+    },
+    {
+      "control_id": "onboarding.tailnet.sign_in",
+      "surface": "Connect > selected native Client Tailscale/Headscale network > Sign in",
+      "owner_ref": "Plans/Remote_Access_System.md#RAS-014",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.auth_profile.sign_in"
+      ],
+      "production_entries": [
+        "catalog.auth_profile_sign_in"
+      ],
+      "setting_ids": [],
+      "payload": "DL-272 RV-3: explicit native-Client protected auth through its existing auth/connector owners before the Server list. Exact Client/network/generation/return; no new DTO, listener, Project mutation or pairing grant.",
+      "no_production_reason": "",
+      "concept_sources": [
+        {
+          "path": "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js",
+          "tokens": [
+            "tsSignIn(S, outcome)",
+            "native_client_node",
+            "cmd.auth_profile.sign_in"
+          ],
+          "concept_only": true
+        }
+      ]
     }
   ],
   "held_controls": []

@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/free_models_route_contracts.schema.json",
+  "title": "Models exact-route disable intent and owner result",
+  "description": "DL-272 CS-108/UCC-213. Static production-intent shapes; no handler, native effect or new event is certified. Policy scope and current catalog bindings are verified by the Models owner, never inferred from display labels.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/disable_request"
+    },
+    {
+      "$ref": "#/$defs/disable_result"
+    }
+  ],
+  "$defs": {
+    "route_command_id": {
+      "enum": [
+        "cmd.free_models.route.disable"
+      ]
+    },
+    "error_code": {
+      "enum": [
+        null,
+        "stale_generation",
+        "unknown_route",
+        "scope_mismatch",
+        "permission_denied",
+        "owner_unavailable",
+        "storage_read_only"
+      ]
+    },
+    "disable_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "route_id",
+        "underlying_provider_id",
+        "policy_scope_ref",
+        "catalog_generation",
+        "expected_generation",
+        "actor_id",
+        "idempotency_key",
+        "origin"
+      ],
+      "properties": {
+        "command_id": {
+          "$ref": "#/$defs/route_command_id"
+        },
+        "route_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "underlying_provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "policy_scope_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actor_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "origin": {
+          "enum": [
+            "pointer",
+            "keyboard",
+            "automation"
+          ]
+        }
+      }
+    },
+    "disable_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "route_id",
+        "underlying_provider_id",
+        "policy_scope_ref",
+        "catalog_generation",
+        "generation",
+        "outcome",
+        "receipt_ref",
+        "error"
+      ],
+      "properties": {
+        "command_id": {
+          "$ref": "#/$defs/route_command_id"
+        },
+        "route_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "underlying_provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "policy_scope_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "catalog_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outcome": {
+          "enum": [
+            "disabled",
+            "already_disabled",
+            "refused"
+          ]
+        },
+        "receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "error": {
+          "$ref": "#/$defs/error_code"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "disabled",
+                  "already_disabled"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "error": {
+                "enum": [
+                  "stale_generation",
+                  "unknown_route",
+                  "scope_mismatch",
+                  "permission_denied",
+                  "owner_unavailable",
+                  "storage_read_only"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

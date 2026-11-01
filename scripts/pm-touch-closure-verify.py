@@ -676,6 +676,9 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     ]:
         add(profile, kind, schema_enum_actions(
             "Plans/pm7_build_contracts.schema.json", "/$defs/" + definition + "/enum"))
+    # DL-272: one Models route command, sourced from its closed owner enum.
+    add("TCP-FREE-MODELS-ROUTE-DISABLE", "command", schema_enum_actions(
+        "Plans/free_models_route_contracts.schema.json", "/$defs/route_command_id/enum"))
     reused_owner_profiles = {
         "cmd.browser.open_workspace_preview": "TCP-PM7-BROWSER-OPEN",
         "cmd.chat.schedule_message.cancel": "TCP-PM7-SCHEDULE-CANCEL",
@@ -1874,13 +1877,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # PM7 adds eleven production entries over main's 1259: the merged denominator
     # is 1270; PM7's existing 715 Touch rows and 140 profiles remain unchanged.
     exact_resolved_denominators = {
-        "row_count": 715,
+        "row_count": 716,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 140,
+        "profile_count": 141,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1270,
+        "production_wiring_entry_count": 1271,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

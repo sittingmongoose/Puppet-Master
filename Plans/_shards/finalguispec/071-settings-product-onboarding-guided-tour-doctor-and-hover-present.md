@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36658-L38095
+Source lines: L36668-L38123
 
-Source SHA256: `dedbe112e3a163f5db7b5dc3a1a550406aade0981b97598d7efee2304e8d3982`
+Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
 
 ---
 
@@ -336,7 +336,16 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current
   owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate,
   approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
-  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.
+
+
+  DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners
+  across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client
+  sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures.
+  PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
+  and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
+  per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
+  host, prefill, artificial wait or Studio behavior.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -643,6 +652,13 @@ acceptance_criteria:
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
   request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+- 'DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners
+  across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client
+  sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures.
+  PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
+  and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
+  per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
+  host, prefill, artificial wait or Studio behavior.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -700,6 +716,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - welcome
 - simple_path

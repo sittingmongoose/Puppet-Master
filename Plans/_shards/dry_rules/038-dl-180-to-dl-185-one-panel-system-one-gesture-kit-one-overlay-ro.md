@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3581-L4839
+Source lines: L3593-L4863
 
-Source SHA256: `6619f5c128250a6a9db8b53a12861de3504308a6db538c56b6eaab402935ec77`
+Source SHA256: `a3e2f1ce14094c7c94c9949634cbf96e77a2518c2f3096ebff97e9a46fc10116`
 
 ---
 
@@ -1153,7 +1153,13 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   rather than separate timer-driven completion state. DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection
   feeds Creating’s checklist, block set, block count and stage progress. Incomplete/unclear results retain pending phases
   until a later accepted owner result settles them; no timer, refresh or separate scene counter promotes them. Project
-  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.'
+  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.
+
+
+  DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
+  reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
+  projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
+  or indicator engine.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -1179,6 +1185,10 @@ acceptance_criteria:
   count and stage progress. Incomplete/unclear results retain pending phases until a later accepted owner result settles
   them; no timer, refresh or separate scene counter promotes them. Project recovery remains PJCT-007’s existing owner
   route, with no second resume command or duplicate remote create.'
+- 'DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
+  reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
+  projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
+  or indicator engine.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -1201,6 +1211,8 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.
