@@ -1017,7 +1017,7 @@
       "stdout_sha256": "145cf734151315d994d9d0230c3e9754d25197519cff25256aab95575ec66b04"
     }
   ],
-  "compiled_at_utc": "2026-11-01T04:33:41.453247+00:00",
+  "compiled_at_utc": "2026-11-01T04:50:40.440613+00:00",
   "currentness": {
     "baseline_manifest": {
       "CURRENT_EVENT_SOURCE_INVENTORY.json": "50364d11ead164b9ee27e142720c894d3f3499764b8df0190e3feea73822762c",
@@ -1094,7 +1094,7 @@
   },
   "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261101",
   "frozen_main": "1e761d0448c5",
-  "head_at_compile": "1e761d0448c5901a9f1e01f8bb53de7820e0b79b",
+  "head_at_compile": "6184fc74e37c646297b646aede7cd92319cad730",
   "inherited_findings_classification": {
     "audit-governance": {
       "audit_closure": 201,
@@ -1185,12 +1185,17 @@
           "scripts/pm-implementation-readiness.py"
         ]
       ],
+      "new_printed_rows_explained": "All of these are readiness rows present in the complete before export (before/readiness.json, 80 rows). The detailed run-gates failure list held 50 of the 80 readiness rows before and holds all 23 after, so they appear as printed rows only because the list now covers every remaining row. No failure is new.",
       "printed_rows_after": 13,
       "printed_rows_before": 73,
       "removed_printed_rows": 64
     }
   },
   "outputs": {
+    "REVIEW-BRIEF.md": {
+      "bytes": 4222,
+      "sha256": "39b749408c8e741516de55251fcfb54ddf0367073bc04be7f3a6ca1985b97034"
+    },
     "after/audit-governance.command.json": {
       "bytes": 1026,
       "sha256": "01878bb3b059004c0e3bbc6bed55c11da42343060cb42491bf49a69c2bd2514c"
@@ -1879,13 +1884,17 @@
       "bytes": 646,
       "sha256": "6e3a7a59721525a9825cfdd56ee1180bec389b3879ee6fce54fd2b6eec489ca1"
     },
+    "comparison/final-currentness-validate.out": {
+      "bytes": 694,
+      "sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+    },
     "comparison/normalized-comparison.json": {
-      "bytes": 1082,
-      "sha256": "7d3fb3d0b6de0c6b0e2f75838869b1384784028510d88c361888d64c5920a05b"
+      "bytes": 1427,
+      "sha256": "1a44d6d3f2b0639177ebd126e28bf4af98d0c2493387afdbb3e1711e7d5c9145"
     },
     "compile_records.py": {
-      "bytes": 16427,
-      "sha256": "c6cc04c8addbaff85af1d7e257b2ff8851164571eb1cd5d16c8b29668edc0910"
+      "bytes": 16873,
+      "sha256": "7578ad7ad55559fd9f6bd00b19cdbb41752034e9e16451c7de8e83672cc911b3"
     },
     "currentness-1/CURRENT_EVENT_SOURCE_INVENTORY.json": {
       "bytes": 102008,
@@ -1969,7 +1978,7 @@
     },
     "proof/checkpoint-pin-verification-after-refresh.json": {
       "bytes": 1262,
-      "sha256": "76a591e64ec69fe461214f93b83c0ecacc1b16b90a5e27731237f2904ab20a45"
+      "sha256": "db70583eb2a685ae447ba57050851d034f5cdfd295b86000da9500f40b761970"
     },
     "proof/checkpoint-pin-verification-before.json": {
       "bytes": 1255,
@@ -2000,8 +2009,8 @@
       "sha256": "071e45dcc165160c3806f828201e9f7045eb319d2171f7854d52b42689981974"
     },
     "proof/inventory-after.json": {
-      "bytes": 4086970,
-      "sha256": "5f393744c3f618409f3043c4e5c5e19cc7cddfe21f5fbf11191a75fb998c6124"
+      "bytes": 4088248,
+      "sha256": "3efc071299967b6a12695da07f45f0aae94befe8d1b7f554dea0ba7608cfd8fc"
     },
     "proof/inventory-before.json": {
       "bytes": 4087000,
@@ -2097,7 +2106,7 @@
     "pnc019_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
     "shard_bodies_or_paths_changed": [],
     "symlinks_unchanged": true,
-    "tracked_regular_file_count": 17120
+    "tracked_regular_file_count": 17126
   },
   "schema_id": "pm.governance.reseal.execution_evidence.v1",
   "status": "prepared_not_landed"

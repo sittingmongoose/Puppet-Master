@@ -71,7 +71,7 @@ All 55 `event_authority_currentness_source_drift` rows are gone. Run 002 keeps o
 
 The aggregates keep audit closure 201, PRD planning runtime contracts 1,240 and PM7 GUI fixtures 3, plus those readiness and run-002 rows. That is unchanged from 2026-10-29.
 
-The normalized comparison finds no new failure in either aggregate. Run-gates shows four printed readiness rows it did not print before: the denominator, contract-depth, legacy fixture-root and self-test rows. All four are in the complete before export. They appear only because run-gates printed 10 of 80 readiness rows before and prints all 23 after.
+The normalized comparison finds no new failure in either aggregate. Run-gates shows four printed readiness rows it did not print before: the denominator, contract-depth, legacy fixture-root and self-test rows. All four are in the complete before export. They appear only because the detailed run-gates failure list held 50 of the 80 readiness rows before and holds all 23 after.
 
 ## Refresh results
 
@@ -100,6 +100,19 @@ The denominator remains `UNKNOWN_OPEN`:
 Final validator receipt SHA-256: `4745247092bae7ecb84843f80c461d45b709856de3142a87b8ffbe151d46e8f3`. Final 15-file manifest SHA-256: `39d73676503166affd7673e9105fe6cc1ca2b247b7ccaa2d821eaac0f90656ca`.
 
 DL-188 was verify-only. The PNC-019 certification receipt is byte-identical before and after, SHA-256 `49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29`. Both admission pins match, the checkpoint module is unchanged, and no harness ran.
+
+## Baseline-bound landing comparison
+
+The comparison runs on the committed branch against frozen `origin/main`. Its baseline is `reports/landing-checks/baseline.json`, SHA-256 `53c3ab31…`, recorded at `00f1d5f383`. During the run, the prepared local currentness edition is moved aside, so the check selects the baseline-bound 15-file edition from the shared checkout; afterwards the prepared edition is restored and validated.
+
+At `6184fc74e3` it reported nothing that stops the landing:
+- run-gates and audit-governance 1,526 (baseline 6,514);
+- plan migration passes;
+- the only new rows are governance staleness on files this branch edits.
+
+Those rows are four `event_authority_currentness_source_drift` rows, for the evidence bundle and `Spec_Lock.json`, and two buildability-report rows. They are measured against the old edition and clear once the prepared edition is installed in the shared checkout after the first checked push.
+
+The comparison is repeated on every later commit of this branch, and its verdict is kept under `comparison/`. It is valid only for the SHA it names.
 
 ## Landing instructions
 
