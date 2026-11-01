@@ -1169,7 +1169,13 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   existing execution-host credential owner. Backup form requirements come from the chosen family/auth method, not a second
   count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection and action guards,
   and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting versus answered
-  state; copy changes do not create another validator or trust writer.'
+  state; copy changes do not create another validator or trust writer.
+
+
+  DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
+  auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
+  corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
+  it never revokes provider credentials or rewrites other routes.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -1200,6 +1206,10 @@ acceptance_criteria:
   method, not a second count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection
   and action guards, and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting
   versus answered state; copy changes do not create another validator or trust writer.'
+- 'DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
+  auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
+  corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
+  it never revokes provider credentials or rewrites other routes.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1228,6 +1238,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer
@@ -4723,7 +4735,13 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   rather than separate timer-driven completion state. DL-259 FO-9 final, 2026-10-31: one verified settled-effect projection
   feeds Creating’s checklist, block set, block count and stage progress. Incomplete/unclear results retain pending phases
   until a later accepted owner result settles them; no timer, refresh or separate scene counter promotes them. Project
-  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.'
+  recovery remains PJCT-007’s existing owner route, with no second resume command or duplicate remote create.
+
+
+  DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
+  reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
+  projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
+  or indicator engine.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -4749,6 +4767,10 @@ acceptance_criteria:
   count and stage progress. Incomplete/unclear results retain pending phases until a later accepted owner result settles
   them; no timer, refresh or separate scene counter promotes them. Project recovery remains PJCT-007’s existing owner
   route, with no second resume command or duplicate remote create.'
+- 'DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
+  reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
+  projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
+  or indicator engine.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -4771,6 +4793,8 @@ source_lineage:
 - 'PM7 FO-9 final 503368802df57c9d35660d0a89dea15df01afc53 (completes b75da99bef), merged GUI d5a370fc98: 72-screens-review.js
   shownPhases and 55-scenes.js creating props/vars are source lineage, not native API names. Lead 1031175210-c5f1; fields
   report FO-9 final.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.
@@ -4844,7 +4868,7 @@ DL-270 gives each storage rule one owning unit, and a few numbers appear in more
 
 | Rule | Single owner | What only the owner states | Known consumers (point only) |
 |---|---|---|---|
-| Sealed-segment compression | `Plans/storage-plan.md` SP-335 | zstd level 3 in about 256 KiB blocks, level 9 in 1 MiB frames, the ceiling of level 9, the active segment's `flags=0`, the SeglogFrameV2 compression flag, codec id and dictionary id | `Plans/Contracts_V0.md` (frame wire form), RAS-016 (cites the ceiling), SP-337 (cites the level for text payloads) |
+| Sealed-segment compression | `Plans/storage-plan.md` SP-335 | zstd level 3 in about 256 KiB blocks, level 9 in 1 MiB blocks, the ceiling of level 9, the active segment's `flags=0`; SP-346 owns the sealed container bytes and the reserved compression descriptor (amended 2026-11-01, DL-270) | `Plans/Contracts_V0.md` (frame wire form), RAS-016 (cites the ceiling), SP-337 (cites the level for text payloads) |
 | Durability | SP-336 | one data sync per ordinary group, the barrier-class events, the three full-flush calls and F_BARRIERFSYNC, batching of streamed output, atomic store creation, redb quick repair | `Plans/Executor_Protocol.md` final flush, SP-236, SP-286 |
 | Payloads | SP-337 | the 16 KiB inline cap, the BLAKE3 id, pack files, the base64 admission error, reference counts, garbage collection holds | `Plans/Tools.md` (T-168), `Plans/Contracts_V0.md` web payloads, `Plans/Prompt_Pipeline.md` (PP-070), `Plans/Project_Output_Artifacts.md`, SP-331 background images, SP-343 media |
 | Chat pages | SP-338 (store, page limits, open-path gate numbers) and `Plans/assistant-chat-design.md` ACD-242 (load-older paging in the chat) | 50-item pages of at most 256 KiB, thread_head, hot tail, first page 150 ms at p95, warm or cold, at most 2 MiB read | `Plans/FinalGUISpec.md` F3-416, DR-052, SP-344 |

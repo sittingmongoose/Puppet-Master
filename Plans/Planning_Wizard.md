@@ -1997,7 +1997,19 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   API key or the person’s Puppet Master sign-in. Its hint states that distinction and identifies credential custody in
   the OS keychain on the selected execution host, through the existing credential owner. Optional server auth stays optional
   when the server needs none. Protected entry, secret-free readback and exact host/account binding remain; an API-key-only
-  hint is used only on an actual API-key field.'
+  hint is used only on an actual API-key field.
+
+
+  DL-272 RV-1/RV-17 and Free Models, 2026-11-01: provider setup remains post-Project-commit. Existing Ready accounts
+  stay usable while another account/key is added; Cancel removes only that addition. MA-045/046 own protected fallback
+  pages, credential-specific labels and execution-host custody. MS-121 owns waiting/cancellable Free Models sign-in and
+  the exact route Turn off action; MS-122 keeps Almost ready when no paid or free route is usable. No new ordinary setting
+  or credentials inside the wrapper.
+
+
+  DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
+  list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
+  writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2143,6 +2155,14 @@ acceptance_criteria:
   distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
   credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
   and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
+- 'DL-272 RV-1/RV-17 and Free Models, 2026-11-01: provider setup remains post-Project-commit. Existing Ready accounts
+  stay usable while another account/key is added; Cancel removes only that addition. MA-045/046 own protected fallback
+  pages, credential-specific labels and execution-host custody. MS-121 owns waiting/cancellable Free Models sign-in and
+  the exact route Turn off action; MS-122 keeps Almost ready when no paid or free route is usable. No new ordinary setting
+  or credentials inside the wrapper.'
+- 'DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
+  list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
+  writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2192,6 +2212,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -2275,7 +2297,17 @@ canonical_text: 'Product Onboarding uses one bounded modal window over the visib
   The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
   or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
   in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
-  submission reads the current protected value and rechecks its existing owner requirements.'
+  submission reads the current protected value and rechecks its existing owner requirements.
+
+
+  DL-272 T03-LOCAL-WORK, 2026-11-01: The This computer tip says where Puppet Master performs the work and keeps local
+  Project/history/runs. AI providers, the online copy and backup destinations remain separate choices; it must not promise
+  that all data and services stay on this computer.
+
+
+  DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
+  operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
+  promise. Only tips/help have Plain English and technical versions.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -2333,6 +2365,12 @@ acceptance_criteria:
   its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control
   until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential
   or validation proof; submission reads the current protected value and rechecks its existing owner requirements.'
+- 'DL-272 T03-LOCAL-WORK, 2026-11-01: The This computer tip says where Puppet Master performs the work and keeps local
+  Project/history/runs. AI providers, the online copy and backup destinations remain separate choices; it must not promise
+  that all data and services stay on this computer.'
+- 'DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
+  operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
+  promise. Only tips/help have Plain English and technical versions.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -2355,6 +2393,8 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 negative_constraints:
 - Do not block input on animation.
 - Do not require browser-only effects.
@@ -2534,7 +2574,51 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   choice before any navigation, draft acceptance or owner dispatch; refusal has no partial effect or crash. Untouched
   defaults, Review Edit and resumed choices use that same interpretation. Protect Connect and restore destination Continue
   likewise recheck their displayed owner prerequisites at activation. Existing domain permission, exact identity, generation
-  and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.'
+  and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.
+
+
+  DL-272 RV-12, 2026-11-01: A service’s name-in-use refusal stays bound to that exact service/instance, owner/place and
+  name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change the
+  name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create a
+  fresh reviewed attempt, never resume authority for a refused effect.
+
+
+  DL-272 REVIEW-FIRST-MISSING, 2026-11-01: Review leads with the first missing prerequisite and its owner-correct Fix
+  action. It cannot lead with Checked above a plan that cannot be committed.
+
+
+  DL-272 RV-15, 2026-11-01: Source-control Browser didn’t open? names the real authorization or verification page and
+  offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting
+  an old authorization result.
+
+
+  DL-272 P74-IMPORT-HISTORY, 2026-11-01: Bringing in a Project preserves its source history. Import does not describe
+  the existing Project as newly empty or replace its history with a new initial history.
+
+
+  DL-272 P74-READY-ONLINE, 2026-11-01: Ready lists the online copy actually created or brought in, from the settled owner
+  result. Skipped or failed online work is not listed as completed.
+
+
+  DL-272 P74-BACK-SELECTION, 2026-11-01: Back within the same service preserves the selected Project while its context
+  remains current; a changed service, instance or owner still invalidates incompatible selection and auth proof.
+
+
+  DL-272 P21-NEW-NAS-FOLDER, 2026-11-01: A Project targeted at a new NAS folder is described as a new, empty folder.
+  Creating makes that selected folder through its filesystem/Project owners after confirmation, before publication; browsing,
+  naming and Review create nothing.
+
+
+  DL-272 P63-ACTION-COPY, 2026-11-01: Review’s lead and Creating’s title describe the actual create, add, bring-in or
+  restore action; they do not call every journey Create a Project.
+
+
+  DL-272 GLM1-SERVICE-LEAD, 2026-11-01: The online-service lead asks which website keeps the online copy and works for
+  every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.
+
+
+  DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
+  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
   projection, and defer behavior.
@@ -2619,6 +2703,30 @@ acceptance_criteria:
   that same interpretation. Protect Connect and restore destination Continue likewise recheck their displayed owner prerequisites
   at activation. Existing domain permission, exact identity, generation and currentness gates remain authoritative; a
   visually enabled button alone never authorizes owner work.'
+- 'DL-272 RV-12, 2026-11-01: A service’s name-in-use refusal stays bound to that exact service/instance, owner/place
+  and name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change
+  the name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create
+  a fresh reviewed attempt, never resume authority for a refused effect.'
+- 'DL-272 REVIEW-FIRST-MISSING, 2026-11-01: Review leads with the first missing prerequisite and its owner-correct Fix
+  action. It cannot lead with Checked above a plan that cannot be committed.'
+- 'DL-272 RV-15, 2026-11-01: Source-control Browser didn’t open? names the real authorization or verification page and
+  offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting
+  an old authorization result.'
+- 'DL-272 P74-IMPORT-HISTORY, 2026-11-01: Bringing in a Project preserves its source history. Import does not describe
+  the existing Project as newly empty or replace its history with a new initial history.'
+- 'DL-272 P74-READY-ONLINE, 2026-11-01: Ready lists the online copy actually created or brought in, from the settled
+  owner result. Skipped or failed online work is not listed as completed.'
+- 'DL-272 P74-BACK-SELECTION, 2026-11-01: Back within the same service preserves the selected Project while its context
+  remains current; a changed service, instance or owner still invalidates incompatible selection and auth proof.'
+- 'DL-272 P21-NEW-NAS-FOLDER, 2026-11-01: A Project targeted at a new NAS folder is described as a new, empty folder.
+  Creating makes that selected folder through its filesystem/Project owners after confirmation, before publication; browsing,
+  naming and Review create nothing.'
+- 'DL-272 P63-ACTION-COPY, 2026-11-01: Review’s lead and Creating’s title describe the actual create, add, bring-in or
+  restore action; they do not call every journey Create a Project.'
+- 'DL-272 GLM1-SERVICE-LEAD, 2026-11-01: The online-service lead asks which website keeps the online copy and works for
+  every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.'
+- 'DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
+  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -2649,6 +2757,8 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here
@@ -2803,7 +2913,28 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   with Check again. Checking re-reads the current owner run; a real arriving request also updates that view. This neutral
   state is not an error and invents no candidate, approval or trust. Continue retains its existing Server-ready gates.
   Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed request stays answered, and a fresh request
-  requires the existing new-code/new-generation route.'
+  requires the existing new-code/new-generation route.
+
+
+  DL-272 RV-9, 2026-11-01: An expired or denied sign-in is over: retry returns to the person’s sign-in with its old answer
+  and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work and
+  rejecting late results from superseded attempts.
+
+
+  DL-272 RV-10, 2026-11-01: A new cloud Server defaults to Tailscale. Its alternative private route is an existing VPN/private
+  network, not the home network; route wording and review describe how that Server is actually reached.
+
+
+  DL-272 READY-REMOTE-LATER, 2026-11-01: Ready says when a way in was left for later and does not mark that route active
+  or undo the committed Project.
+
+
+  DL-272 VPN-REVIEW, 2026-11-01: Review describes a VPN-found Server as reached through the current VPN rather than the
+  home network. Reachability still grants no pairing or work authority.
+
+
+  DL-272 RV-3: the native Client’s explicit protected Sign in precedes its chosen network’s Server list under RAS-014/015;
+  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -2845,9 +2976,9 @@ acceptance_criteria:
 - The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected
   browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never
   inherited by another Client merely because the durable operation continues.
-- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery.
-  Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review
-  confirmation and return to the exact originating row/focus/generation.
+- Connect-existing is route-first. Before Review, bounded discovery and the explicit native-Client sign-in of DL-272
+  RV-3 may run; endpoint mutation/test, Server identity acceptance and PM pairing/trust still require confirmed Review
+  and exact return/currentness.
 - '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices
   with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable
   stays a valid truthful plan and never fabricates Actions.'
@@ -2977,6 +3108,17 @@ acceptance_criteria:
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
   request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+- 'DL-272 RV-9, 2026-11-01: An expired or denied sign-in is over: retry returns to the person’s sign-in with its old
+  answer and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work
+  and rejecting late results from superseded attempts.'
+- 'DL-272 RV-10, 2026-11-01: A new cloud Server defaults to Tailscale. Its alternative private route is an existing VPN/private
+  network, not the home network; route wording and review describe how that Server is actually reached.'
+- 'DL-272 READY-REMOTE-LATER, 2026-11-01: Ready says when a way in was left for later and does not mark that route active
+  or undo the committed Project.'
+- 'DL-272 VPN-REVIEW, 2026-11-01: Review describes a VPN-found Server as reached through the current VPN rather than
+  the home network. Reachability still grants no pairing or work authority.'
+- 'DL-272 RV-3: the native Client’s explicit protected Sign in precedes its chosen network’s Server list under RAS-014/015;
+  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -3012,6 +3154,10 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - restore_existing_pm_data
 - Restore a backup
@@ -3025,15 +3171,15 @@ preserved_exact_tokens:
 - expected_event_types=[]
 negative_constraints:
 - This recovery/connector consumer does not add, remove or reorder PWIZ-021's current stage graph.
-- Do not run recovery, connector, repository, filesystem, Server, pairing, trust or route mutation before confirmed
-  Review. PWIZ-021 alone admits necessary selected-source authentication and read-only preflight; this consumer
-  neither forbids that narrow admission nor broadens it into other account/forge mutations.
+- Do not run recovery, connector, repository, filesystem, Server, pairing, trust or route mutation before confirmed Review.
+  PWIZ-021 admits selected-source authentication/read-only preflight and DL-272 RV-3 admits only explicit native-Client
+  connection sign-in; this consumer neither forbids that narrow admission nor broadens it into other account/forge mutations.
 - Do not model the PM connector as a full Tailscale install, host daemon, sidecar, WSL node, Project node, or reusable
   host session.
 - Do not merge Bootstrap Full Server recovery with the Product Project-restore route.
 - Do not conflate Forgejo with Gitea or repository hosting with automation binding.
-- Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs,
-  Chat, Usage, or agent context.
+- Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs, Chat,
+  Usage, or agent context.
 - Do not claim native/runtime/provider/recovery/security completion from Plans, schemas, fixtures, or PMConcept7.
 owner_boundary_notes:
 - Planning Wizard owns Product Onboarding orchestration, local draft/session/continuation, and owner projection;

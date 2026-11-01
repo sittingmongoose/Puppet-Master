@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19387-L19546
+Source lines: L19387-L19551
 
-Source SHA256: `bd04085c76b5641bda17f4bbb1b4699b473c0a7c7b4cc7e8a01886127f4582f4`
+Source SHA256: `0ab5c8cd5b08fb152674e39aafe8a06ee023160392e5a1f1734ce1a0860660d1`
 
 ---
 
@@ -120,12 +120,17 @@ canonical_text: >-
   for remote transport. Where earlier text conflicts, DL-270 and those units win. A sweep of every plan document
   by a reading wave, with verification, brought the other owners into line in the same landing, including the
   commands, settings, GUI, wiring and DRY companions. DL-270 adds no settings row: budgets, thresholds and cache
-  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Still pending: SeglogFrameV2's
-  exact codec and dictionary byte fields and the receipt fields its commit frame carries; rewriting the Case L
-  proof tables to SP-336's publication and recovery sequence; the data-root paths (SP-015); and the registry,
-  schema and fixture companions, including the budget values. Card 4's 150 ms applies to warm and cold opens
-  alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four requirements,
-  thresholds and mechanics are the review's reading, not Jared's words.
+  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Its companions landed after it:
+  SP-346 for SeglogFrameV2's reserved compression descriptor and the sealed segment container, SP-347 for the
+  commit frame and its receipt fields, the First append receipt custody section and CV-339 rewritten to SP-336's
+  publication and recovery sequence, the data-root paths in SP-015, and the storage registry's storage_profile
+  with its schema, holding each family's file, group and value limit and the budget values. The companion audits
+  left three items for implementation, not planning: a producer-valid fixture that rebuilds complete custody rows
+  from frames; native crash, power-loss and recovery tests of the commit-frame sequence on all three operating
+  systems; and recertifying the pinned goal_certified_event_coordinator_contracts profile against SP-336 before
+  its route is enabled. Only the governance reseal remains outside it. Card 4's 150 ms applies to warm and cold
+  opens alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four
+  requirements, thresholds and mechanics are the review's reading, not Jared's words.
 gui_related: false
 gui_classification_reason: "Records owner decisions on storage, compression and durability."
 split_recommended: false

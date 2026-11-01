@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L3081-L3144
+Source lines: L3091-L3211
 
-Source SHA256: `bf85fac4055a8edc70399ddc80f3d071d210eba1c16e1e89e966e5c3a787cd09`
+Source SHA256: `65f4cfe10f682e9c5ecd0439527f0cbc3ba37e57cb39b17477c9105ae4be12fe`
 
 ---
 
@@ -72,3 +72,60 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-098, ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/UI_Command_Catalog.md#UCC-212
+
+
+### UIW-047 — Footage return fences and route-disable wiring
+
+```yaml
+plan_unit_id: UIW-047
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: 'UIW-047. cmd.free_models.route.disable. DL-272: WM-099 and CS-108 own the single new route-disable producer
+  and command. Keyboard and pointer carry the same route/provider/policy scope and expected catalog/policy generations.
+  Refusal, readonly storage, unknown target, stale result or missing owner leaves accepted configuration unchanged. Its
+  result refreshes the same originating row; it never revokes another account, changes model order or cancels in-flight
+  work. Existing Sign in/fallback/cancel/retry routes retain protected input custody, initiating Client/control network,
+  operation and return-generation fences; no raw code or token enters ordinary persistence. One shared feedback owner
+  preserves Ready accounts during additions and supplies current reasons and truthful outcomes.'
+gui_related: true
+gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
+split_recommended: false
+depends_on:
+- DL-272
+- MS-121
+- MA-045
+unblocks: []
+acceptance_criteria:
+- 'DL-272: WM-099 and CS-108 own the single new route-disable producer and command. Keyboard and pointer carry the same
+  route/provider/policy scope and expected catalog/policy generations. Refusal, readonly storage, unknown target, stale
+  result or missing owner leaves accepted configuration unchanged. Its result refreshes the same originating row; it
+  never revokes another account, changes model order or cancels in-flight work. Existing Sign in/fallback/cancel/retry
+  routes retain protected input custody, initiating Client/control network, operation and return-generation fences; no
+  raw code or token enters ordinary persistence. One shared feedback owner preserves Ready accounts during additions
+  and supplies current reasons and truthful outcomes.'
+validation_surfaces:
+- python3 scripts/pm7-canon-check.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: owner_identity_and_truthful_feedback
+reasoning_tier: high
+context_scope: pm7_footage_review_20261101
+implementation_surfaces:
+- Plans/UI_Wiring_Rules.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
+- Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+preserved_exact_tokens:
+- UIW-047
+- cmd.free_models.route.disable
+negative_constraints:
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
+  fixture.
+owner_hints:
+- Plans/UI_Wiring_Rules.md
+```

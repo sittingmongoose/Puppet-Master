@@ -117,6 +117,7 @@ async function main() {
   // FO-9: execute the merged checklist projection and its actual stage block/count consumer.
   // The fixture's accepted-owner effects are inputs, never invented by the presentation.
   const reviewSource = read('Concepts/onboarding/opus-5.5/src/js/72-screens-review.js');
+  const newDirectory = section(reviewSource, 'function newNasFolder(S)', 'function beginsAs(S)');
   const phases = section(reviewSource, 'function phasesFor(S)', 'const PH_MS =');
   const scenes = read('Concepts/onboarding/opus-5.5/src/js/55-scenes.js');
   const creating = section(scenes, '    creating: {', '    protect:');
@@ -131,7 +132,7 @@ async function main() {
     const phaseContext = vm.createContext({ S, md: s => s.draft,
       F: { state: () => transport }, PR: () => ({ isGithubRemoteChain: () => true }),
       O55: {}, phaseNow: () => null, forgeName: () => 'GitHub' });
-    vm.runInContext(phases, phaseContext, { timeout: 1000 });
+    vm.runInContext(newDirectory + phases, phaseContext, { timeout: 1000 });
     phaseContext.O55.review = { phasesFor: phaseContext.phasesFor, shownPhases: phaseContext.shownPhases,
       shownDone: s => s.sess.commit.state === 'done' };
     vm.runInContext('globalThis.creatingScene = ({' + creating + '}).creating;', phaseContext, { timeout: 1000 });
@@ -329,13 +330,14 @@ async function main() {
     const S = { sess: { server: { runErr: test.owner_pending ? 'pending_no_result' : null } } };
     const wc = vm.createContext({ T: text, U: { esc: value => value },
       C: { link: (label, action) => label + '[' + action + ']', note: value => value },
-      inviteOpen: () => test.invite_live, runDone: () => test.answered, pendingCopy: value => value });
+      inviteOpen: () => test.invite_live, runDone: () => test.answered, pendingCopy: value => value, GUEST: { name: 'Invited device' } });
     vm.runInContext('function waitingView(S, shownWaiting) { let card = ""; const sv = S.sess.server; ' +
       waitingSource + ' return card; }', wc, { timeout: 1000 });
     const result = wc.waitingView(S, test.shown_waiting);
     if (test.expected === 'initial') requireThat(result.includes('No requests yet') && result.includes('Check again') &&
       !result.includes(text('server.ready.runDone')), 'DL-271 neutral initial request wait ' + test.name);
-    else if (test.expected === 'answered') requireThat(result.includes(text('server.ready.runDone')) &&
+    else if (test.expected === 'answered') requireThat(result.includes(text(test.answered === 'denied' ? 'server.ready.runDenied' : 'server.ready.runDone', { name: 'Invited device' })) &&
+      (test.answered !== 'denied' || result.includes('Invited device')) &&
       !result.includes('Check again') && !result.includes('No requests yet'), 'DL-271 answered request remains terminal ' + test.name);
     else requireThat(result === '', 'DL-271 no initial-wait fiction ' + test.name);
   }

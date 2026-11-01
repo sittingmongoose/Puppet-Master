@@ -180,7 +180,26 @@ canonical_text: 'Pairing uses an explicit pairing_session_id, explicit pairing_c
   Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
-  request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+  request stays answered, and a fresh request requires the existing new-code/new-generation route.
+
+
+  DL-272 RV-2, 2026-11-01: Self-approval compares the initiating device’s own identity words with those the Server derived
+  from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different
+  words cannot grant trust.
+
+
+  DL-272 RV-18, 2026-11-01: Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or
+  the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server
+  installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup
+  codes remain distinct protected owner material.
+
+
+  DL-272 PAIR-DENIED-NAME, 2026-11-01: A Server card names the device whose request was turned down, preserves the answered
+  generation, and offers a new request without changing earlier granted trust.
+
+
+  DL-272 PAIR-CLIENT-WORDS, 2026-11-01: A Client waiting for approval shows its own identity words to compare on the
+  approving device; Server identity words are not substituted for the Client’s.'
 gui_related: true
 gui_classification_reason: Pairing prompts, fingerprint confirmation, Client lists, access scopes, expiry, and revocation are user-visible workflows.
 depends_on: [SRV-002, SRV-003]
@@ -201,6 +220,17 @@ acceptance_criteria:
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
   request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+- 'DL-272 RV-2, 2026-11-01: Self-approval compares the initiating device’s own identity words with those the Server derived
+  from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different
+  words cannot grant trust.'
+- 'DL-272 RV-18, 2026-11-01: Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or
+  the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server
+  installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup
+  codes remain distinct protected owner material.'
+- 'DL-272 PAIR-DENIED-NAME, 2026-11-01: A Server card names the device whose request was turned down, preserves the answered
+  generation, and offers a new request without changing earlier granted trust.'
+- 'DL-272 PAIR-CLIENT-WORDS, 2026-11-01: A Client waiting for approval shows its own identity words to compare on the
+  approving device; Server identity words are not substituted for the Client’s.'
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future stolen expired revoked access tests]
 risk_class: client_trust_or_revocation_bypass
 reasoning_tier: high
@@ -215,6 +245,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [ClientTrustRecord, PairingRun, pairing_candidate_id, ClientAccessPolicy, ServerTrustRecord, RevocationRecord, SessionRecord, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke]
 negative_constraints: [Do not treat route possession as trust., Do not leave revoked sessions active., Do not persist raw pairing or session secrets in ordinary events.]
 owner_hints: [Plans/Server_System.md, Plans/Permissions_System.md, Plans/FileSafe.md]
@@ -829,7 +861,11 @@ canonical_text: 'Server consumes Backup/Restore policy and run contracts through
   then separate cmd.server.bootstrap.start must complete for the actual local Server, its durable roots/mounts and immutable
   execution baseline before cmd.restore.server_full. Backup maintenance/recovery authority, exact-target verification,
   paused restore and separate pairing/remote activation remain required. Reuse current verified prerequisites when already
-  satisfied; dormant capability alone is never a claim or bootstrap receipt.'
+  satisfied; dormant capability alone is never a claim or bootstrap receipt.
+
+
+  DL-272 RV-8, 2026-11-01: Restored Goals and schedules stay paused. A way in explicitly set up and activated after restore
+  is reported active from its separate Remote Access result; restoring old configuration never activates it by itself.'
 gui_related: true
 gui_classification_reason: Schedule, bootstrap recovery, endpoint provenance, reconnect, disabled, and recovery-safe states are visible Server and Onboarding projections.
 depends_on: [SRV-002, SRV-004, SRV-007, SRV-008, SRV-009, BRS-012, BRS-015, BRS-016, RAS-015, SIR-005, SIR-006, SIR-007, SIR-011]
@@ -867,6 +903,9 @@ acceptance_criteria:
   Backup maintenance/recovery authority, exact-target verification, paused restore and separate pairing/remote activation
   remain required. Reuse current verified prerequisites when already satisfied; dormant capability alone is never a claim
   or bootstrap receipt.'
+- 'DL-272 RV-8, 2026-11-01: Restored Goals and schedules stay paused. A way in explicitly set up and activated after
+  restore is reported active from its separate Remote Access result; restoring old configuration never activates it by
+  itself.'
 validation_surfaces:
   - Plans/server_system_contracts.schema.json
   - Plans/server_system_contract_fixtures.json
@@ -890,6 +929,8 @@ source_lineage:
 - packet:13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md#TSX-002
 - packet:13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md#TSX-004
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [server_id, schedule occurrence ID, Server Catalog, recovery-safe, PM connector, Funnel, external host Tailscale, "expected_event_types=[]"]
 negative_constraints:
   - Do not create a Backup scheduler, encryption owner, restore engine, or retention reducer in Server System.

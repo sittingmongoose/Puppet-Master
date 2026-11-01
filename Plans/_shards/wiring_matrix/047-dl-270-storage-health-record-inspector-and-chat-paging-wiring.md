@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L7084-L7165
+Source lines: L7094-L7232
 
-Source SHA256: `a8d6df41d489b3bce1e2d759a43766013436ff30bb387cc304ff8e58d668edb7`
+Source SHA256: `6f6fb5f7c346af71ebed1bfde5eb374670e8dbb80ad74ad39fe2c88764ba4f8d`
 
 ---
 
@@ -90,3 +90,60 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212, ContractName:Plans/UI_Wiring_Rules.md#UIW-046
+
+
+### WM-099 — Footage auth and Free Models route producers
+
+```yaml
+plan_unit_id: WM-099
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: 'WM-099. DL-272: onboarding.free_models.route.disable is the shared Free Models row’s Turn off control,
+  including the Settings-guided rerun of that same renderer. It dispatches cmd.free_models.route.disable to handlers::models::disable_free_route
+  using CS-108’s typed request/result; native dispatch remains unavailable until its owner exists. CS-108’s typed request
+  and result own the payload contract. Existing catalog.auth_profile_sign_in handles the native-Client protected Sign
+  in and browser fallback with exact Client/control-network/return identity; connector writes remain RAS-015’s owner.
+  Pair approval, repository/name retry, endpoint checks, proxy configuration file and download/copy keep their existing
+  owners and local action dispositions; no second handler or event is introduced.'
+gui_related: true
+gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
+split_recommended: false
+depends_on:
+- DL-272
+- MS-121
+- MA-045
+unblocks: []
+acceptance_criteria:
+- 'DL-272: onboarding.free_models.route.disable is the shared Free Models row’s Turn off control, including the Settings-guided
+  rerun of that same renderer. It dispatches cmd.free_models.route.disable to handlers::models::disable_free_route using
+  CS-108’s typed request/result; native dispatch remains unavailable until its owner exists. CS-108’s typed request and
+  result own the payload contract. Existing catalog.auth_profile_sign_in handles the native-Client protected Sign in
+  and browser fallback with exact Client/control-network/return identity; connector writes remain RAS-015’s owner. Pair
+  approval, repository/name retry, endpoint checks, proxy configuration file and download/copy keep their existing owners
+  and local action dispositions; no second handler or event is introduced.'
+validation_surfaces:
+- python3 scripts/pm7-canon-check.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: owner_identity_and_truthful_feedback
+reasoning_tier: high
+context_scope: pm7_footage_review_20261101
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
+- Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+preserved_exact_tokens:
+- WM-099
+- cmd.free_models.route.disable
+negative_constraints:
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
+  fixture.
+owner_hints:
+- Plans/Wiring_Matrix.md
+```

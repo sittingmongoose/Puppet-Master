@@ -1209,7 +1209,12 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before
   prior authorization/unlock and before advance/install. Initial live-invitation waiting says No requests yet with Check
   again, while answered runs keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary
-  command, handler, request field or trust/permission bypass.'
+  command, handler, request field or trust/permission bypass.
+
+
+  DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
+  additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
+  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -1360,6 +1365,9 @@ acceptance_criteria:
   refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
   says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
   and owner routes; no new primary command, handler, request field or trust/permission bypass.'
+- 'DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
+  additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
+  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -1391,6 +1399,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
@@ -3142,3 +3152,60 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md#WM-098, ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/UI_Command_Catalog.md#UCC-212
+
+
+### UIW-047 — Footage return fences and route-disable wiring
+
+```yaml
+plan_unit_id: UIW-047
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: 'UIW-047. cmd.free_models.route.disable. DL-272: WM-099 and CS-108 own the single new route-disable producer
+  and command. Keyboard and pointer carry the same route/provider/policy scope and expected catalog/policy generations.
+  Refusal, readonly storage, unknown target, stale result or missing owner leaves accepted configuration unchanged. Its
+  result refreshes the same originating row; it never revokes another account, changes model order or cancels in-flight
+  work. Existing Sign in/fallback/cancel/retry routes retain protected input custody, initiating Client/control network,
+  operation and return-generation fences; no raw code or token enters ordinary persistence. One shared feedback owner
+  preserves Ready accounts during additions and supplies current reasons and truthful outcomes.'
+gui_related: true
+gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
+split_recommended: false
+depends_on:
+- DL-272
+- MS-121
+- MA-045
+unblocks: []
+acceptance_criteria:
+- 'DL-272: WM-099 and CS-108 own the single new route-disable producer and command. Keyboard and pointer carry the same
+  route/provider/policy scope and expected catalog/policy generations. Refusal, readonly storage, unknown target, stale
+  result or missing owner leaves accepted configuration unchanged. Its result refreshes the same originating row; it
+  never revokes another account, changes model order or cancels in-flight work. Existing Sign in/fallback/cancel/retry
+  routes retain protected input custody, initiating Client/control network, operation and return-generation fences; no
+  raw code or token enters ordinary persistence. One shared feedback owner preserves Ready accounts during additions
+  and supplies current reasons and truthful outcomes.'
+validation_surfaces:
+- python3 scripts/pm7-canon-check.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: owner_identity_and_truthful_feedback
+reasoning_tier: high
+context_scope: pm7_footage_review_20261101
+implementation_surfaces:
+- Plans/UI_Wiring_Rules.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
+- Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+preserved_exact_tokens:
+- UIW-047
+- cmd.free_models.route.disable
+negative_constraints:
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
+  fixture.
+owner_hints:
+- Plans/UI_Wiring_Rules.md
+```

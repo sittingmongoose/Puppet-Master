@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L761-L3441
+Source lines: L761-L3451
 
-Source SHA256: `54574da3179ac453e0f6d6918bae52cf2dbc7a1b7f808d132bf9f5a8c53cc406`
+Source SHA256: `a25abc5983444a442ffc5e1046fd673b284538cb02e67a2acec042fe8ba926aa`
 
 ---
 
@@ -410,7 +410,12 @@ canonical_text: 'OpenCode has separate server-level auth and provider-level auth
   Its hint states that distinction and identifies credential custody in the OS keychain on the selected execution host,
   through the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry,
   secret-free readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key
-  field.'
+  field.
+
+
+  DL-272 OPENCODE-SERVER-IDENTITY, 2026-11-01: An OpenCode server connection is named by where it runs. Removal asks
+  Remove this OpenCode server from Puppet Master? and removes the connection through the existing owner; it is not a
+  request to delete that computer or its provider accounts.'
 gui_related: false
 gui_classification_reason: This unit defines auth realm mapping rather than visual presentation.
 split_recommended: false
@@ -428,6 +433,9 @@ acceptance_criteria:
   distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
   credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
   and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
+- 'DL-272 OPENCODE-SERVER-IDENTITY, 2026-11-01: An OpenCode server connection is named by where it runs. Removal asks
+  Remove this OpenCode server from Puppet Master? and removes the connection through the existing owner; it is not a
+  request to delete that computer or its provider accounts.'
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -445,6 +453,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
   - "Server-level auth"
   - "OPENCODE_SERVER_PASSWORD"

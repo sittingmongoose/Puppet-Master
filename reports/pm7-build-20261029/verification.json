@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+  "source_commit": "7d2dd568be76874ff8b4d3e82bad3701226d248c",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,107 +23,119 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-10-31T22:46:44.650694+00:00",
+  "recorded_at_utc": "2026-11-01T07:41:32.874028+00:00",
   "native_runtime_certification": false,
-  "step4": "latest_accepted_source_aligned_focused_checks_pass",
+  "step4": "footage_source_and_companions_aligned_focused_pass",
   "counts": {
     "settings": 1010,
     "status_keys": 22,
     "pip_parts": 25,
     "default_parts": 24,
     "pip_size_sum": 61,
-    "control_bindings": 483,
-    "touch_rows": 715,
-    "touch_profiles": 140,
-    "production_wiring_entries": 1270,
-    "plan_units": 7268,
+    "control_bindings": 485,
+    "touch_rows": 716,
+    "touch_profiles": 141,
+    "production_wiring_entries": 1271,
+    "plan_units": 7275,
     "indexed_docs": 96,
-    "shards": 2964,
+    "shards": 2977,
     "sharded_sources": 99,
-    "pm7_bindings": 483,
-    "pm7_source_families": 61,
+    "pm7_bindings": 485,
+    "pm7_source_families": 63,
     "shard_sources": 99,
-    "coverage_rows": 155,
-    "coverage_required_cells": 775,
-    "acceptance_units": 29242,
+    "coverage_rows": 209,
+    "coverage_required_cells": 1045,
+    "acceptance_units": 29328,
     "schema_cases": 161,
-    "final_review_source_cases": 89
+    "final_review_source_cases": 89,
+    "free_route_schema_cases": 12,
+    "footage_source_cases": 33
   },
   "commands": [
     {
-      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-publish.txt"
-    },
-    {
-      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-builder.txt"
-    },
-    {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-shards-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-shards-generate.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-index-generate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-index-generate.txt"
+    },
+    {
+      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-publish.txt"
+    },
+    {
+      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-builder.txt"
     },
     {
       "command": "python3 scripts/pm7-build-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-pm7-build.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-build.txt"
     },
     {
       "command": "python3 scripts/pm7-canon-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-canon-v2.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-canon.txt"
     },
     {
-      "command": "python3 scripts/pm7-demo-canon-check.py",
+      "command": "python3 scripts/pm7-demo-canon-check.py --history-base 4c974773cb",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-product-boundary.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-boundary.txt"
     },
     {
       "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-onboarding-rulings.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-rulings.txt"
     },
     {
       "command": "python3 scripts/pm-touch-closure-verify.py --json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-touch.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-touch.txt"
     },
     {
       "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-wiring.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-wiring.txt"
+    },
+    {
+      "command": "python3 scripts/pm-storage-profile-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-storage.txt"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-shards-check.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-shards.txt"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-index-validate.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-index.txt"
     },
     {
-      "command": "node scripts/pm7-final-review-source-probe.cjs",
+      "command": "python3 scripts/pm-free-models-route-verify.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-source-v2.json"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-route.txt"
     },
     {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-guard-v2.py",
+      "command": "node scripts/pm7-footage-source-probe.cjs",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-guard.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-source.txt"
     },
     {
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-check-coverage.py",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-coverage-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-coverage.txt"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-coverage-initial.json"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard-v2.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard-v2.json"
     }
   ],
   "dry": {
@@ -188,7 +200,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "Historical GLM PASS pinned to17e87e52e0: 0/13 findings open. That review does not cover later source deltas. Current storage/DL-271 delta has15 effective focused/generation/guard checks PASS, no new review or runtime certification.",
+  "review_status": "Historical GLM result remains pinned to17e87e52e0; no review or runtime/native/visual claim for the later footage delta. Current focused checks pass.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -3599,6 +3611,226 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-source.json",
       "sha256": "e69238604c38871b1a05084435fe7d6b6358891382dc901fc83067a19558b9a2",
       "bytes": 963
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-before-canon.txt",
+      "sha256": "4c42023326bf964568d931b4117257b354f41cedb6a6590939cbeab15838cf0c",
+      "bytes": 775
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-canon-initial.json",
+      "sha256": "7bd907e7314e5eee3f2f3737f498c1769bd0b04873c9d7435e2ab974cd120378",
+      "bytes": 568
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-canon-v2.json",
+      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-canon-v3.json",
+      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-copy-changes.json",
+      "sha256": "1243ae98b9e40bfff73bb6aacb6898e16c8e2b4d24d6f1ef7108275880ee4f6d",
+      "bytes": 74847
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-coverage-check.py",
+      "sha256": "ac6227a393f29f63dabeedbd8655baca1f20e6f04e1b59b52d00e3be80377933",
+      "bytes": 6155
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-coverage-initial.json",
+      "sha256": "60b7e71bb501cd79c146eccd6c30ce822939910d00b8af24c6aa6af484350e3c",
+      "bytes": 469
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-boundary.txt",
+      "sha256": "ef1d5da824a4fa3ecc85f73b03aa539e0c1e93749d47ac3ffcbbb89f8afcf111",
+      "bytes": 267
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-build.txt",
+      "sha256": "80a16c82b06bab7d24cdfc2cb128dc0da3a5327fbf18dabef33b3e8c2fcaf91e",
+      "bytes": 858
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-builder.txt",
+      "sha256": "49a537408fb6909c0ed5c529de6f8d66d9c832d25adba49c04bece2eb89d638f",
+      "bytes": 582
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-canon.txt",
+      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-focused.json",
+      "sha256": "9f012a3c3ce3f4f78da556552858e14c81061bfc7668a037a2e1cac2dacd9fd7",
+      "bytes": 2197
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-generation.json",
+      "sha256": "0d8dfc789341ffb58dc198d06b37702a1bf263fe5c89eb4628e3c49feead6593",
+      "bytes": 871
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-index-generate.txt",
+      "sha256": "ace9f40a4f181c1fb78bc068f30326763bdb390f60847d6d059b1c95e96f75ef",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-index.txt",
+      "sha256": "a4b770554a369b0432b0223dba132065ffd1bc667c55b298b711b0e0f29fa8b7",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-publish.txt",
+      "sha256": "900e41597c2846ad512405eccb85d250805ff1ee2a91ebd2ae146606a84cb68c",
+      "bytes": 695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-route.txt",
+      "sha256": "b02a058407f5e6ce8dc4a3c203c4d2880857b107eca7f5afe9d337276d957f2d",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-rulings.txt",
+      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-shards-generate.txt",
+      "sha256": "aae6d1a457d1cb6e9c237509a528cd41edac35e9cde4d71db88669839d5c8c86",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-shards.txt",
+      "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-source.txt",
+      "sha256": "17dffe302f61947abb2b47cc7554c515163120d51f9cc08e60fc7274cf9ea01b",
+      "bytes": 362
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-storage.txt",
+      "sha256": "f3249cf54fb0ae81c2b1892d3b4d886942a08b4b9eede71174049149c1d1bc6b",
+      "bytes": 118
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-touch.txt",
+      "sha256": "5d2bf154c6351f53efb6588b52d1356fe9600402a94e19ed887b72bba03ac27c",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-final-wiring.txt",
+      "sha256": "7fcbc59cd2a17483868759cbb3e9eb1bc7b272d6eeb963f674f3e1f28aa1586d",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-free-route-initial.json",
+      "sha256": "b02a058407f5e6ce8dc4a3c203c4d2880857b107eca7f5afe9d337276d957f2d",
+      "bytes": 162
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard-initial.json",
+      "sha256": "65ae3c73ee8ba023c2e3b5b97dd88a05463cc8458713219e21fbdc009a7efc75",
+      "bytes": 14306
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard-v2.json",
+      "sha256": "8b793d096e0bbeca102db9d349493a695d70d1eb20a0bc5dfbffadb2341b2b25",
+      "bytes": 3911
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard-v2.py",
+      "sha256": "02e480d58e50abaed82b0edfffbb5108ed42ba08c796426a216c14a6a2c368f2",
+      "bytes": 5240
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-guard.py",
+      "sha256": "bf12687412bffe56aec778184a369c15da23390a7c78bed960893cc676c962da",
+      "bytes": 5092
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-integration-merge.txt",
+      "sha256": "5a126e986d3cdba70b62bb1964a2aa8d8771c51eabddc38ef6915544d32e49a7",
+      "bytes": 2738
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-items.json",
+      "sha256": "f9ae6282945fb274b3e83583b3fe888d43fb8fc01164eb5cda323f5e68af94b0",
+      "bytes": 22110
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-main-generation.json",
+      "sha256": "09af39fb5787f8b1d622312a5dda3ede932614d84091d7581cbe69c29405e4aa",
+      "bytes": 423
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-main-index.txt",
+      "sha256": "46dd66a8bbcc5c6197bf6006def73e5a064d97c73bbfcb92ca2a4019ef98579a",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-main-merge.txt",
+      "sha256": "981aea450cd4b475e1e4e3c68162accff72e55255433a363084d6d6109ba6008",
+      "bytes": 173562
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-main-preservation.json",
+      "sha256": "923ea65dbd6143b2be9db9e63eaa8eee7436a02a5ce493f644a6f8158d229ee4",
+      "bytes": 501
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-main-shards.txt",
+      "sha256": "aae6d1a457d1cb6e9c237509a528cd41edac35e9cde4d71db88669839d5c8c86",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-prose-checkpoint.json",
+      "sha256": "2641af3dcb600a25e8eedec9ad6f336bc9eedd453915a9eaada4e24a6afbcf58",
+      "bytes": 2115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-refs.json",
+      "sha256": "88587683735b629bf9a2aac845f33aeaf798eb0736d905eb897eea5bb53eccb0",
+      "bytes": 293
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-source-initial.json",
+      "sha256": "17dffe302f61947abb2b47cc7554c515163120d51f9cc08e60fc7274cf9ea01b",
+      "bytes": 362
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-source-initial.stderr.txt",
+      "sha256": "09da069221d9637963d666ae74bd19e9009534c695114f97bc2744e6f017cdce",
+      "bytes": 939
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-source-packet.md",
+      "sha256": "71083a4d47a2e46fbb149336334aa37b52665ea7142fb2ebeb53593f28361f9f",
+      "bytes": 6170
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-source-v2.json",
+      "sha256": "17dffe302f61947abb2b47cc7554c515163120d51f9cc08e60fc7274cf9ea01b",
+      "bytes": 362
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-touch-initial.json",
+      "sha256": "44fc947acab8360af2e86796aec7d921ed0818ca07f785e5a9f108b58bfa95ae",
+      "bytes": 3027
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/footage-touch-v2.json",
+      "sha256": "5d2bf154c6351f53efb6588b52d1356fe9600402a94e19ed887b72bba03ac27c",
+      "bytes": 2905
     }
   ],
   "reviews": [
@@ -3646,10 +3878,10 @@
   "cleanup": {
     "owned_browsers_started": 0,
     "owned_servers_started": 0,
-    "scratch": "owned text scratch removed after final proof; cited raw proof and portable guards retained",
-    "T3_mail_delivery": "rings; no waiter needed"
+    "scratch": "owned footage text scratch removed after proof; cited raw evidence and portable guards retained",
+    "T3_mail_delivery": "rings; no waiter"
   },
-  "latest_amendment": "DL271_storage_main_and_weak_key_final",
+  "latest_amendment": "DL272_footage_review_final",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -4994,7 +5226,7 @@
     "future_full_check_owner": "lead landing check",
     "evidence_repair": "Interim manifest write replaced this pass wiring log; read-only wiring check rerun passed; manifest rebuilt and every retained hash verified. Product source unchanged."
   },
-  "latest_GUI_input": "ed1f82fed710d7f2c1b6eaec7437dbe087371e47",
+  "latest_GUI_input": "7d2dd568be76874ff8b4d3e82bad3701226d248c",
   "historical_GUI5abe_commands": [
     {
       "argv": [
@@ -5975,7 +6207,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "3030c0061b1efb54de065694d2d7d4f6578b58ec",
+  "canonical_source_commit": "9a205b1c162b3fa4039558f75b32017d4ed2d443",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": false,
   "dry_landing_run_for_QA2": false,
@@ -5987,10 +6219,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 653,
+    "prior_count": 685,
     "all_prior_hashes_unchanged": true,
-    "current_count": 685,
-    "claim": "Every retained artifact has a SHA-256; newly recorded artifacts also have byte counts. Initial diagnostics are immutable historical failures, not final failures."
+    "current_count": 729,
+    "claim": "Every artifact has a SHA-256; new artifacts also have byte counts. Initial diagnostics remain historical, final commands are separate passing records."
   },
   "historical_pre_DL259_commands": [
     {
@@ -6323,7 +6555,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "Latest accepted GUI input; canonical owner/companion bytes are exact at3030c0061b. Final source-test and report files are pinned by this bundle and the head mailed after push.",
+  "source_commit_role": "GUI input at7d2dd568be; exact canonical/source implementation snapshot at9a205b1c162b3fa4039558f75b32017d4ed2d443. Final report-only head is mailed after push.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -8130,6 +8362,229 @@
       "scripts/pm7-qa2-alignment-check.py": "351c88c079b5d4ebdfe88add12cf2f68c739d2a66fa6d022127bc7b54fc6d2db",
       "scripts/pm7-qa2-source-probe.cjs": "b8b5a91b118abd41f5a972fbb957d2ee4d33dbbe52acba74420d67c876a212e4",
       "scripts/pm_full_thread_semantics.py": "495a0229b1d8f9422071c69b83e6995408cc92885b45bdd8e0a49aaacb1d7d9f"
+    }
+  },
+  "historical_pre_footage_commands": [
+    {
+      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-publish.txt"
+    },
+    {
+      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-builder.txt"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-shards-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-index-generate.txt"
+    },
+    {
+      "command": "python3 scripts/pm7-build-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-pm7-build.txt"
+    },
+    {
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-canon-v2.json"
+    },
+    {
+      "command": "python3 scripts/pm7-demo-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-product-boundary.txt"
+    },
+    {
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-onboarding-rulings.txt"
+    },
+    {
+      "command": "python3 scripts/pm-touch-closure-verify.py --json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-touch.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-wiring.txt"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-shards-check.txt"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-index-validate.txt"
+    },
+    {
+      "command": "node scripts/pm7-final-review-source-probe.cjs",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-source-v2.json"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-merge-guard-v2.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-guard.txt"
+    },
+    {
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-check-coverage.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/storage-weak-final-coverage.txt"
+    }
+  ],
+  "historical_pre_footage_counts": {
+    "settings": 1010,
+    "status_keys": 22,
+    "pip_parts": 25,
+    "default_parts": 24,
+    "pip_size_sum": 61,
+    "control_bindings": 483,
+    "touch_rows": 715,
+    "touch_profiles": 140,
+    "production_wiring_entries": 1270,
+    "plan_units": 7268,
+    "indexed_docs": 96,
+    "shards": 2964,
+    "sharded_sources": 99,
+    "pm7_bindings": 483,
+    "pm7_source_families": 61,
+    "shard_sources": 99,
+    "coverage_rows": 155,
+    "coverage_required_cells": 775,
+    "acceptance_units": 29242,
+    "schema_cases": 161,
+    "final_review_source_cases": 89
+  },
+  "footage_final": {
+    "canonical_source_commit": "9a205b1c162b3fa4039558f75b32017d4ed2d443",
+    "GUI_input": "7d2dd568be76874ff8b4d3e82bad3701226d248c",
+    "main": "34b9ab2843954f0bf52e7748ca87dbc8662efeaf",
+    "decision_ref": "DL-272",
+    "amended_units": 26,
+    "new_units": [
+      "DL-272",
+      "CS-108",
+      "UCC-213",
+      "WM-099",
+      "UIW-047"
+    ],
+    "owner_index_documents": 17,
+    "source_items": 54,
+    "new_product_rows": 54,
+    "coverage_rows": 209,
+    "coverage_required_cells": 1045,
+    "new_command": "cmd.free_models.route.disable",
+    "sole_future_handler": "handlers::models::disable_free_route",
+    "production_row": "onboarding.free_models.route.disable",
+    "native_auth_binding": "onboarding.tailnet.sign_in",
+    "request_result_ref": "Plans/free_models_route_contracts.schema.json",
+    "new_native_auth_payload": false,
+    "new_event_families": 0,
+    "new_ordinary_settings": 0,
+    "settings_desc_changed": "ai.accounts.provider-connections",
+    "Settings_inventory_consumed_by_page": true,
+    "page_rebuilt_and_checked": true,
+    "only_GUI_change_after_integration": "Concepts/PMConcept7.html",
+    "main_governance_exact": true,
+    "migration_run": "pds-20261101-002-current-planunit-snapshot",
+    "baseline_recorded_at": "40e8ccd704",
+    "baseline_snapshot_reseal_refreshed": false,
+    "merge_conflicts": {
+      "integration": 0,
+      "main_prose_and_companions": 0,
+      "protected": 0,
+      "derived_regenerated": 919
+    },
+    "Jared_rulings_changed": false,
+    "stale_canon_amended": [
+      "MA-047 and walkthrough global device-code timeout",
+      "RAS-014/PWIZ-021/025 blanket pre-Review sign-in restriction"
+    ],
+    "source_cases": {
+      "retained_final_review": 89,
+      "new_footage": 33
+    },
+    "new_route_fixtures": {
+      "valid": 4,
+      "invalid": 8
+    },
+    "storage_companions": {
+      "families": 301,
+      "profiles": 301,
+      "groups": 12,
+      "planned_families": 5
+    },
+    "owner_questions": [
+      "FORGEJO-RESTRICTED-TOKEN-IDENTITY"
+    ],
+    "excluded": [
+      "Codeberg naming/admission choice",
+      "Demo/Studio situations, hints, prefills, concept-only hosts/timings"
+    ],
+    "diagnostics_resolved": [
+      "Touch ID format corrected to TOUCH-FREEROUTE-001",
+      "Isolated source imports newNasFolder and named denied-answer copy; neither is a product defect",
+      "Footage probe exitCode uses numeric status; all source vectors had already passed",
+      "Guard checks new/lost exact tokens against baseline, retaining inherited lineage gaps; settings_inventory is an intentionally changed generated source"
+    ],
+    "source_hashes": {
+      "Concepts/liquid-glass/opus-5.5/src/glass.js": "39f9bf527c76dfd3912a938e93bc57548b33009ab63be135747be2d8e46ab525",
+      "Concepts/onboarding/opus-5.5/src/copy.d/48-pip.json": "a9e10f1c00bfc7ec4409d0375e5fcee3da4b78262b27fef0ef57a6f48a3bc3d1",
+      "Concepts/onboarding/opus-5.5/src/css/10-window.css": "b0d45dfc6d7e9d75f7724ff88fd4dfa0e945d633fdad15f967f92c1745307d9a",
+      "Concepts/onboarding/opus-5.5/src/css/12-components.css": "da008c10d30edf10ea65caeae3140f4ba3d86a25159c81d27fc7d64e89e45a52",
+      "Concepts/onboarding/opus-5.5/src/css/30-art.css": "de365d2fa119241875dd4109d490b13415e5f3e39d88936a64ff5ac1292df706",
+      "Concepts/onboarding/opus-5.5/src/js/30-owners.js": "060186db7f22893cc491febbf0642dcc84c5c3d17d5376be1382f7ffb1a82aa1",
+      "Concepts/onboarding/opus-5.5/src/js/36-endpoint.js": "d8d8d5efd3e0aedfa0caad9ddf2a6fbd1609c770e9710f86d178d168f08530e4",
+      "Concepts/onboarding/opus-5.5/src/js/60-ui-core.js": "c72d4d7a15db01b5612a82f16348b2e2a08b5c73b7743769316524967cb079df",
+      "Concepts/onboarding/opus-5.5/src/js/62-flow.js": "468b6e6be7ba0aae2208668c61c4b5b537166a068165f7203042bf6651da6bff",
+      "Concepts/onboarding/opus-5.5/src/js/67-screens-connect.js": "e6ef79e3c454ab17461e41b35b12b7ef2958a8053e21b416a68c26bb22bc6593",
+      "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js": "53282bda9a3d7c17c2b46c900439ea65095c6a1087342b6e6414e12b938cc6b2",
+      "Concepts/onboarding/opus-5.5/src/js/70-screens-nas.js": "f992da517b5845e6106dbf8f288182ab8724fd9f395771994f4bdc03528c8281",
+      "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js": "bad9b2882681203b3ed1ad1ecb81ea62e1125065806f850beae57ece585504b4",
+      "Concepts/onboarding/opus-5.5/src/js/71a-screens-away.js": "5644ee653b241ae2fb9e05df3993c8df3d9458351f34d7deb42277274ef5ed1c",
+      "Concepts/onboarding/opus-5.5/src/js/72-screens-review.js": "80f7c2ebe310201d41d1f18960743e8d0744d67619d58f751eb159303addae45",
+      "Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js": "d2734864f23d6939d635f47255290d35ec7b499ec3ea0222be55b73866331e9f",
+      "Concepts/onboarding/opus-5.5/src/js/74-screens-ready.js": "57d0d7e0e625db7262d2d2c1e8e435c4e825e29731a411c8fe558ba2d5f58798",
+      "Plans/00-plans-index.md": "2666eefaecc40b1d036fb83f5b4fbd8f87887e402f9606be79bcb01a968185b1",
+      "Plans/CLI_Bridged_Providers.md": "14848fb74a4cec851913f354270a3e30a71dad6dd4ef753ade4e4d4158c3cd78",
+      "Plans/Commands_System.md": "ff3540dbfd76c19d85589fb950b3d7bfe55fce2014828371ac5267075e4e6669",
+      "Plans/DRY_Rules.md": "a3e2f1ce14094c7c94c9949634cbf96e77a2518c2f3096ebff97e9a46fc10116",
+      "Plans/Decision_Log.md": "0ab5c8cd5b08fb152674e39aafe8a06ee023160392e5a1f1734ce1a0860660d1",
+      "Plans/FinalGUISpec.md": "dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7",
+      "Plans/Forge_Integrations.md": "b1edff36b08464b94189c616619f92ff7515340d39acf916604ac8b6feb88034",
+      "Plans/Models_System.md": "e166a547b4c202398c5d95ec3bd4321106b13314c3a950dc87df244f6aa6f78f",
+      "Plans/Multi-Account.md": "7b49d74ae8d0974f1f9ad8bcca364f11f5cc39eaa18d8ac81ac05b9b3114764d",
+      "Plans/Planning_Wizard.md": "43afd9782df493d15cb8f7af32472d3408033d845b36dd360ada685ab69dde34",
+      "Plans/Provider_OpenCode.md": "a25abc5983444a442ffc5e1046fd673b284538cb02e67a2acec042fe8ba926aa",
+      "Plans/Remote_Access_System.md": "be737da0ebe752ece1f87018ec1a9e6a840ebacc8c0b447e16d8040b23c58546",
+      "Plans/Server_System.md": "b867fd9d6dff6c9ddd274c0f57b4036bdd3207414fe98bbb7b0992f803f1c87e",
+      "Plans/Settings_System.md": "799a73e4551ff33e12b9086c0c68606b5677ddb1d9242c06c2064240f8ddf33c",
+      "Plans/UI_Command_Catalog.md": "58f83244b3fcf1b934e8ab6d0da92f96dd35f392d00f61307daedf8535af9cca",
+      "Plans/UI_Wiring_Rules.md": "65f4cfe10f682e9c5ecd0439527f0cbc3ba37e57cb39b17477c9105ae4be12fe",
+      "Plans/Wiring_Matrix.md": "6f6fb5f7c346af71ebed1bfde5eb374670e8dbb80ad74ad39fe2c88764ba4f8d",
+      "Plans/Wiring_Matrix.production.json": "dd82a6d56f665a3d164caf0cc16e284f6e21db69914f9663f96c9969a2276f5b",
+      "Plans/free_models_route_contract_fixtures.json": "b6a25830b3bab59e63d870969a8700b42f2bf4bf732b2acb48a14b30abb931cb",
+      "Plans/free_models_route_contracts.schema.json": "82e676e979364948b95dc5dd51fdbcb22a68ca18717d4e79802d35d8a6e672af",
+      "Plans/pm7_build_contracts.fixtures.json": "de1eb82a6405749c9f2328f02a7d6cb081c7507e35a13d70dbf46067836d43ab",
+      "Plans/pm7_control_bindings.json": "05e3b687294699c259ba1ea92b4abfbaef62f10193ab0ef5d6c52fcfce605384",
+      "Plans/product_onboarding_contracts.schema.json": "8068861bda03040c07b117c0e29532dbb383fc66558969b104820374cd416f1f",
+      "Plans/settings_inventory.json": "aaaccacf1864e49f93e3b3fe901cb0823993b0519fad963fa11186ec50559d82",
+      "Plans/touch_closure.json": "9b9ce36d86a88e05198de7815674719e501facd8723ddf1c47b7c8bab585898f",
+      "scripts/pm-free-models-route-verify.py": "60c97a0657ef3606f06d4ed0b1c2fcd308a918b5e4e4f4cebf73d475efd63ff3",
+      "scripts/pm-touch-closure-verify.py": "da2e552bfccc0f620c0e884c67bca145423f798430d6ffd5bd9173c3363f9e7a",
+      "scripts/pm7-canon-check.py": "0a28e8fcb88dd3583fd2922f347342d6b310dca765ffb7116fb9258a9128aba8",
+      "scripts/pm7-final-review-source-probe.cjs": "5bc8c5f657eae16877d9c0eba56cb7c70a48ca3e226940a977e8b13d0e84fc49",
+      "scripts/pm7-footage-source-probe.cjs": "dccfd7ebe3bfa4c2388920a5e3a2129605c357a7f235b20714cf581c72d1dc55",
+      "scripts/pm7-qa2-alignment-check.py": "b8d63dbac31ac54b4f833aa56d64041cd530c4e6a22d30e75c376df75f86dcd7"
     }
   }
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2671-L3049
+Source lines: L2781-L3195
 
-Source SHA256: `70230b5a0db987a76e35b0843e5bffd023830aeb87c7653326ffad1cf64b8f2e`
+Source SHA256: `43afd9782df493d15cb8f7af32472d3408033d845b36dd360ada685ab69dde34`
 
 ---
 
@@ -143,7 +143,28 @@ canonical_text: 'After safe local Server claim, Bootstrap may offer one `restore
   with Check again. Checking re-reads the current owner run; a real arriving request also updates that view. This neutral
   state is not an error and invents no candidate, approval or trust. Continue retains its existing Server-ready gates.
   Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed request stays answered, and a fresh request
-  requires the existing new-code/new-generation route.'
+  requires the existing new-code/new-generation route.
+
+
+  DL-272 RV-9, 2026-11-01: An expired or denied sign-in is over: retry returns to the person’s sign-in with its old answer
+  and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work and
+  rejecting late results from superseded attempts.
+
+
+  DL-272 RV-10, 2026-11-01: A new cloud Server defaults to Tailscale. Its alternative private route is an existing VPN/private
+  network, not the home network; route wording and review describe how that Server is actually reached.
+
+
+  DL-272 READY-REMOTE-LATER, 2026-11-01: Ready says when a way in was left for later and does not mark that route active
+  or undo the committed Project.
+
+
+  DL-272 VPN-REVIEW, 2026-11-01: Review describes a VPN-found Server as reached through the current VPN rather than the
+  home network. Reachability still grants no pairing or work authority.
+
+
+  DL-272 RV-3: the native Client’s explicit protected Sign in precedes its chosen network’s Server list under RAS-014/015;
+  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.'
 gui_related: true
 gui_classification_reason: This unit defines visible Bootstrap recovery choice, onboarding owner phases, provider
   choices, protected handoffs, progress, exact return, and disabled/error states.
@@ -185,9 +206,9 @@ acceptance_criteria:
 - The Server-owned connector authorization/setup operation survives refresh, Client loss, and Client change. Protected
   browser contents, cookies, codes, and credentials remain bound to an authorized current Client handoff and are never
   inherited by another Client merely because the durable operation continues.
-- Connect-existing remains route-first and pre-Review activity remains cached or explicitly bounded read-only discovery.
-  Connector authorization, endpoint mutation/test, Server identity verification, and pairing happen only after Review
-  confirmation and return to the exact originating row/focus/generation.
+- Connect-existing is route-first. Before Review, bounded discovery and the explicit native-Client sign-in of DL-272
+  RV-3 may run; endpoint mutation/test, Server identity acceptance and PM pairing/trust still require confirmed Review
+  and exact return/currentness.
 - '`Bring one from online` and optional online copy expose Forgejo and Gitea as separate forge provider/instance choices
   with exact custom endpoint/trust/account identity. Repository hosting and automation binding may differ; Git-ready/API-unavailable
   stays a valid truthful plan and never fabricates Actions.'
@@ -317,6 +338,17 @@ acceptance_criteria:
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
   request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+- 'DL-272 RV-9, 2026-11-01: An expired or denied sign-in is over: retry returns to the person’s sign-in with its old
+  answer and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work
+  and rejecting late results from superseded attempts.'
+- 'DL-272 RV-10, 2026-11-01: A new cloud Server defaults to Tailscale. Its alternative private route is an existing VPN/private
+  network, not the home network; route wording and review describe how that Server is actually reached.'
+- 'DL-272 READY-REMOTE-LATER, 2026-11-01: Ready says when a way in was left for later and does not mark that route active
+  or undo the committed Project.'
+- 'DL-272 VPN-REVIEW, 2026-11-01: Review describes a VPN-found Server as reached through the current VPN rather than
+  the home network. Reachability still grants no pairing or work authority.'
+- 'DL-272 RV-3: the native Client’s explicit protected Sign in precedes its chosen network’s Server list under RAS-014/015;
+  all other mutation/approval/commit fences remain. Source-control token permissions and runtime access remain distinct.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -352,6 +384,10 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - restore_existing_pm_data
 - Restore a backup
@@ -365,15 +401,15 @@ preserved_exact_tokens:
 - expected_event_types=[]
 negative_constraints:
 - This recovery/connector consumer does not add, remove or reorder PWIZ-021's current stage graph.
-- Do not run recovery, connector, repository, filesystem, Server, pairing, trust or route mutation before confirmed
-  Review. PWIZ-021 alone admits necessary selected-source authentication and read-only preflight; this consumer
-  neither forbids that narrow admission nor broadens it into other account/forge mutations.
+- Do not run recovery, connector, repository, filesystem, Server, pairing, trust or route mutation before confirmed Review.
+  PWIZ-021 admits selected-source authentication/read-only preflight and DL-272 RV-3 admits only explicit native-Client
+  connection sign-in; this consumer neither forbids that narrow admission nor broadens it into other account/forge mutations.
 - Do not model the PM connector as a full Tailscale install, host daemon, sidecar, WSL node, Project node, or reusable
   host session.
 - Do not merge Bootstrap Full Server recovery with the Product Project-restore route.
 - Do not conflate Forgejo with Gitea or repository hosting with automation binding.
-- Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs,
-  Chat, Usage, or agent context.
+- Do not expose protected authentication or Recovery Key content in durable Onboarding state, recordings, logs, Chat,
+  Usage, or agent context.
 - Do not claim native/runtime/provider/recovery/security completion from Plans, schemas, fixtures, or PMConcept7.
 owner_boundary_notes:
 - Planning Wizard owns Product Onboarding orchestration, local draft/session/continuation, and owner projection;

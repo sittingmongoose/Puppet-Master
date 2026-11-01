@@ -232,9 +232,9 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### 2.1 File locations and directory layout
 
-All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state still lives under `.puppet-master/` inside the workspace when the feature is inherently project-local.
+All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state is written in plan text as `.puppet-master/` paths when the feature is inherently project-local; amended 2026-11-01 (DL-270), those paths resolve under the data root by the rule below (SP-015), and only project files that people or Git use stay in the workspace.
 
-Amended 2026-10-31 (DL-270): placement follows SP-345. On macOS every store directory sits inside a directory whose name ends in `.noindex`, so the macOS root becomes a `.noindex` directory under Application Support (the exact name is fixed with SP-015) and the plain `~/Library/Application Support/puppet-master` example no longer applies to store roots; on Windows the root is under AppData; on Linux it is the XDG data directory, and the `~/.puppet-master/` home-directory example no longer applies to store roots either. Stores use few large pack files. PM changes no Spotlight, Defender or Windows Search setting. This covers PM's own app data only: PM never writes a `.noindex` directory or any other marker into a user's project folder, and SP-345 treats the `.puppet-master/` managed state as outside the user's repository.
+Amended 2026-10-31 (DL-270): placement follows SP-345 and SP-015. The data root is `~/Library/Application Support/puppet-master.noindex/` on macOS, `%LOCALAPPDATA%/puppet-master/` (the user's Local AppData, which does not roam) on Windows and `$XDG_DATA_HOME/puppet-master/` (by default `~/.local/share/puppet-master/`) on Linux; the earlier examples above (`~/.puppet-master/`, `%APPDATA%/puppet-master` and the plain Application Support path) no longer name a store root. Project-scoped stores live under `<data root>/projects/<project_id>/`: a plan path written `.puppet-master/project/state/<x>` resolves to `<data root>/projects/<project_id>/state/<x>`, and one written `.puppet-master/cache/<x>` to `<data root>/projects/<project_id>/cache/<x>`. Every other `.puppet-master/` path in the plans names a project file that people or Git use (plans, requirements, contracts, configuration, commands, skills, worktrees, artifacts, interview output, evidence files and agent output) and stays in the project's `.puppet-master/` folder; the `.puppet-master/state/*.json` mirrors are retired (SP-339). PM adds no `.noindex` directory or other marker inside a user's project folder. Stores use few large pack files, and PM changes no Spotlight, Defender or Windows Search setting.
 
 | Path (relative to app data root) | Purpose |
 |----------------------------------|---------|
@@ -262,7 +262,7 @@ Regex-index n-gram hashing uses xxHash (`xxh3`) through the `xxhash-rust` crate 
 
 Regex-index compression and metadata policy: each posting list is a Roaring Bitmap (`roaring` crate) over `u32` file IDs, highly compressed for dense and sparse sets, and supports fast intersection/union (`/union`) for multi-n-gram queries. `index_meta.json` carries `anchor_sha: string | null` (Git HEAD SHA, null for non-Git), `build_timestamp_utc` as ISO-8601 with Z, `schema_version: u32` starting at 1 and incremented on format-breaking changes, `file_count: u32`, `generation: u64`, `case_sensitive_fs: bool`, `roaring_format: "portable"`, and `checksums` as per-file xxh3 hex strings exactly shaped `{ "file_map": "<hex>", "lookup": "<hex>", "postings": "<hex>" }`. Dirty file lists are in-memory only per `/Q19`.
 
-Remote Git regex-index cache policy: on remote project open, PM stores the local Git cache under `.puppet-master/cache/r/{hash8}/git/`, with remote submodules under `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` and submodule repositories under `git/modules/{submodule_path}/`. Clone mode may be full, shallow, or partial (`/shallow/partial`), but bare-clones are the storage shape: PM may run `git clone --bare ssh://remote_host/path/to/repo` or `git -c core.sshCommand="ssh -J remote_host" clone --bare`, where `core.sshCommand`, `remote_host`, `//remote_host/path/to/repo`, and remote `URL` handling are recorded for reproducibility. If auth or `/network` topology means the repository is only reachable from the remote host, PM initiates the clone remotely and streams a `git bundle` over SSH; if that fails, it falls back to the non-Git remote path.
+Remote Git regex-index cache policy: on remote project open, PM stores the local Git cache under `.puppet-master/cache/r/{hash8}/git/`, with remote submodules under `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` and submodule repositories under `git/modules/{submodule_path}/`. Clone mode may be full, shallow, or partial (`/shallow/partial`), but bare-clones are the storage shape: PM may run `git clone --bare ssh://remote_host/path/to/repo` or `git -c core.sshCommand="ssh -J remote_host" clone --bare`, where `core.sshCommand`, `remote_host`, `//remote_host/path/to/repo`, and remote `URL` handling are recorded for reproducibility. If auth or `/network` topology means the repository is only reachable from the remote host, PM initiates the clone remotely and streams a `git bundle` over SSH; if that fails, it falls back to the non-Git remote path. Amended 2026-10-31 (DL-270): these `.puppet-master/cache/...` paths are project-scoped stores and resolve to `<data root>/projects/<project_id>/cache/...` (SP-015).
 
 Remote-project storage split: Git-backed remote projects keep local Git cache, dirty staging, and regex-index snapshots under the cache root, while non-Git remote projects use the remote-build/local-query path below. Storage records that split without re-owning remote-search behavior, remote-only settings, or `/admin` controls, which remain governed by `Plans/GitHub_Integration.md`.
 
@@ -274,7 +274,7 @@ Remote submodule and verification policy: CRITICAL FIX for bare-clone and recurs
 
 During bare-clone index builds that enumerate files with `git ls-tree` / `ls-tree`, PM detects case-insensitive filesystems, deduplicates entries by lowercased path, keeps the first entry encountered, and logs a `case-collisions` warning when later entries collapse to the same normalized path.
 
-Remote dirty-file locality and re-anchor policy: dirty remote content is staged locally at `.puppet-master/cache/r/{hash8}/dirty/{relative_path}` so ripgrep can verify dirty files from local storage and keep the near-zero-SSH-during-grep guarantee. Content arrives with the file-change notification for files up to 1 MB or through background prefetch for larger files; if grep outruns that prefetch, PM may block briefly and then fall back to SSH ripgrep for that file. This near-zero policy SUPERSEDES any absolute zero-SSH claim for >1 MB dirty files. The dirty staging area is merged into the next re-anchor build before clearing.
+Remote dirty-file locality and re-anchor policy: dirty remote content is staged locally at `.puppet-master/cache/r/{hash8}/dirty/{relative_path}` so ripgrep can verify dirty files from local storage and keep the near-zero-SSH-during-grep guarantee. Content arrives with the file-change notification for files up to 1 MB or through background prefetch for larger files; if grep outruns that prefetch, PM may block briefly and then fall back to SSH ripgrep for that file. This near-zero policy SUPERSEDES any absolute zero-SSH claim for >1 MB dirty files. The dirty staging area is merged into the next re-anchor build before clearing. Amended 2026-10-31 (DL-270): these `.puppet-master/cache/...` paths are project-scoped stores and resolve to `<data root>/projects/<project_id>/cache/...` (SP-015).
 
 Remote editor/search storage treats `remote proxy`, SSHFS-style, and `SSHFS` access as capability profiles over one remote project identity, not separate path authorities. Each profile records whether file-watch is native, proxied, or polling-derived; stale or disconnected remote search snapshots are `/read-only` until refresh, while dirty remote buffers remain local pending-sync state until the effective destination confirms write success.
 
@@ -307,7 +307,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.
 | `.puppet-master/project/state/regex_index/gen-{N}/file_map.bin` | `u32 file_id -> relative path` mapping, forward-slash normalized |
 | `.puppet-master/project/state/regex_index/gen-{N}/index_meta.json` | Snapshot metadata: anchor, schema version, checksums, generation, compatibility flags |
 
-Amended 2026-10-31 (DL-270): these project-scoped stores move from the project root to the app data root, keyed by project (SP-015, SP-345); the paths in this table are the pre-DL-270 layout and are not operative, and the exact app-data paths are fixed with SP-015. PM writes no `.noindex` directory or other marker into the user's project folder.
+Amended 2026-10-31 (DL-270): these are project-scoped stores, so each path in this table resolves under the data root: `.puppet-master/project/state/regex_index/...` is `<data root>/projects/<project_id>/state/regex_index/...` (SP-015, SP-345). PM writes no `.noindex` directory or other marker into the user's project folder.
 
 ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md
 
@@ -3251,7 +3251,20 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The exact macOS and project-local paths are still to be fixed in this unit."
+canonical_text: >-
+  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as
+  managed .puppet-master paths when inherently project-local and which resolves under the data root as below.
+  Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending
+  .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including
+  regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a
+  .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application
+  Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on
+  Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped
+  stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x>
+  resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data
+  root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and
+  stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use
+  and stays in the project folder.
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false
@@ -3949,7 +3962,7 @@ canonical_text: >-
   MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently
   validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain
   separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
-  2026-10-31 (DL-270): SP-335 adds a compressed profile for sealed segments, and SP-339 retires the always-on JSON
+  2026-10-31 (DL-270): SP-335 compresses sealed segments as whole blocks in a sealed container (SP-346), SP-347 adds the group commit control frame, and SP-339 retires the always-on JSON
   mirrors; the active segment keeps flags zero.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
@@ -17233,13 +17246,13 @@ The prefix is exactly 48 bytes, packed without host alignment. Offsets are zero-
 | 8 | 1 | `frame_version` | `2` |
 | 9 | 2 | `header_length` | Encoded header bytes; at most `4096` before semantic validation |
 | 11 | 4 | `payload_length` | Stored full EventRecord bytes; at most `16777216` before semantic validation |
-| 15 | 1 | `flags` | `0` on the active segment: uncompressed, no other bits admitted. Amended 2026-10-31 (DL-270, SP-335): a sealed, repacked segment may set a compression flag bit, and its frames then carry a codec id and a dictionary id; their byte placement is the SP-335 schema companion. The active segment stays `0`. |
+| 15 | 1 | `flags` | `0` for an EventRecord frame. Amended 2026-10-31 (DL-270): bit 1 (`0x02`) marks the group commit control frame (SP-347); bit 0 (`0x01`) is reserved for the write-time compression descriptor at +44 (SP-346) and stays `unsupported_flags` until a later decision admits it; other bits are unsupported. Sealed segments are compressed as whole blocks in a container, so their frames keep these flags. |
 | 16 | 8 | `segment_generation` | Exact uint64 matching selected segment authority |
-| 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present |
+| 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present. Amended 2026-11-01 (DL-270): a commit control frame (flags bit 1) carries exactly the sequence of the frame before it (SP-347). |
 | 32 | 4 | `header_crc32` | CRC of exact stored header bytes |
 | 36 | 4 | `payload_crc32` | CRC of exact stored payload bytes |
 | 40 | 4 | `prefix_crc32` | CRC of all 48 prefix bytes with bytes 40 through 43 zeroed |
-| 44 | 4 | `reserved` | `0` |
+| 44 | 4 | `reserved` | `0`. Amended 2026-10-31 (DL-270): when flags bit 0 is admitted, +44 is `payload_codec`, +45 is `0` and +46 to +47 is `dictionary_id` (SP-346); with bit 0 clear all four bytes stay `0`. |
 
 Sequence zero is representable; absence of a prior verified record is separate state and MUST NOT be represented by a fabricated sequence-zero cursor. Generation and sequence MUST NOT narrow to u32, signed i64, or binary64. Length admission uses checked remaining-file bounds. Frame end is `start + 48 + header_length + payload_length` only after those bounds pass.
 
@@ -17269,20 +17282,20 @@ Validation order is mandatory:
 
 1. Check magic.
 2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
-3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): the frame also admits SP-335's compressed profile, a flags bit with a codec id and a dictionary id, for sealed segments; the active segment stays `flags=0`.
+3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): flags admits `0` and bit 1 (`0x02`), the group commit control frame, whose header must be the control header or the frame is `control_header_mismatch` (SP-347); bit 0 (`0x01`) reserves the write-time compression descriptor at +44 and stays `unsupported_flags` until a later decision admits it (SP-346). Sealed segments are compressed as whole blocks in a sealed container, so the frames they hold are unchanged.
 4. Enforce header/payload caps and checked remaining-file bounds.
-5. Match selected segment generation and strict sequence progression.
+5. Match selected segment generation and strict sequence progression. Amended 2026-11-01 (DL-270), SP-347: progression is strictly increasing between EventRecord frames; a control frame's sequence equals the sequence of the frame before it, and a control frame that is first in a segment or follows another control frame is corrupt. Resynchronization applies the same rule.
 6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
 7. Validate payload CRC over exact stored bytes.
-8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-10-31 (DL-270, SP-335): on a sealed, repacked segment a set compression flag selects the decoder by codec id; zstd (level 3 blocks, level 9 cold frames) is the only admitted transform, and the dictionary id names any dictionary. An unknown codec or dictionary id is Unsupported and is never guessed.
-9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission.
-10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set.
+8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-11-01 (DL-270, SP-346): no frame transform is admitted, so the transform stays identity and a frame with flags bit 0 has already stopped at step 3 as `unsupported_flags`; a sealed segment is compressed as whole blocks in its container, which decodes to the original frame bytes before this order runs.
+9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission. Amended 2026-11-01 (DL-270), SP-347: a control frame's header must be the control header and its payload decodes as the closed commit payload instead; it is never dispatched as an EventRecord, and replay skips it.
+10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set. Amended 2026-11-01 (DL-270), SP-347: a control frame's event_id is exactly `seglog_commit:<segment_generation>:<sequence_id>` of its own prefix, and its members are exactly the EventRecord frames between the previous valid commit frame, or the end of a proven hole when that is later, and itself, in order. Frames before a hole whose own commit frame is damaged are issued by no later commit frame, and the damage is loss at or below the watermark; a complete group after the hole validates on its own.
 
 Missing required schema identity/version is malformed, not a future-version escape. Unsupported registered versions, unknown family mapping, and unavailable validation authority halt admission as `Unsupported` or `ResourceUnavailable`, not corruption. Semantic, no-secret, registry, scope-policy, and idempotency admission remain mandatory owner obligations. A caller-supplied validator, generation, previous sequence, or seen-ID set does not prove native custody of that authority.
 
 ##### Recovery and compatibility limits
 
-A pure decoder changes no cursor, checkpoint, file, row, owner state, or watermark. A loss scan MUST first prove corruption at the failed offset; a valid frame cannot be designated loss. Trust a current-profile frame length only after prefix CRC, version/flags/reserved, caps/file bounds, and generation/sequence checks. It yields a one-frame hole only when the computed next boundary passes every validation check. Otherwise scan bytewise to the first fully validated candidate or return the exact range to EOF. Corrupt magic lookalikes and incomplete candidates are not survivors. An unsupported frame/header/envelope/family or resource failure halts scanning without cursor advancement; it cannot be skipped to reach later supported data.
+A pure decoder changes no cursor, checkpoint, file, row, owner state, or watermark. A loss scan MUST first prove corruption at the failed offset; a valid frame cannot be designated loss. Trust a current-profile frame length only after prefix CRC, version/flags/reserved, caps/file bounds, and generation/sequence checks. Amended 2026-11-01 (DL-270, SP-347): the sequence check admits a control frame carrying exactly the prior frame's sequence, as in step 5, so a scan after a hole re-admits commit frames. It yields a one-frame hole only when the computed next boundary passes every validation check. Otherwise scan bytewise to the first fully validated candidate or return the exact range to EOF. Corrupt magic lookalikes and incomplete candidates are not survivors. An unsupported frame/header/envelope/family or resource failure halts scanning without cursor advancement; it cannot be skipped to reach later supported data.
 
 The first-profile reader set is frame `2`, header `1`, EventRecord `2.0.0`, and explicitly registered current payload readers. Future frame/header/flags/compression support requires explicit version/profile admission. Old/new storage incompatibility follows Case L-1 registered version metadata, never lexical semantic-version comparison or try-anyway. Generation-1 compatibility readers, including their supported `none | lz4` payload compression, remain separate; a first native writer never emits generation 1 or mixes it into a V2 segment. Normal append still refuses `projector_replay_only`.
 
@@ -17300,6 +17313,8 @@ Loss disposition is closed:
 | No later valid candidate | truncate only if wholly unacknowledged tail; otherwise preserve/seal | remainder unavailable; mutation blocked |
 | Any possible loss at/below durable watermark | never clean or silently accepted | global integrity block until verified backup restore or separately governed future loss acceptance |
 
+Amended 2026-10-31 (DL-270, SP-336, SP-347): the durable watermark is the end of the last valid commit frame. Groups past the manifest's latest publication that end in a valid commit frame are issued, and adopting them rebuilds their missing custody rows from that frame; member frames after the last valid commit frame are an unacknowledged tail, truncated with any invalid EOF and never adopted as a new group. On macOS, ordinary groups missing after a power loss within their durability class are not loss at or below the watermark (SP-336).
+
 SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
 
 #### Manifest, append acknowledgement, and sequence authority
@@ -17308,7 +17323,7 @@ SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
 
 Append success, as amended 2026-10-31 (DL-270, SP-336): an ordinary commit group succeeds after one data sync of its complete segment bytes (`F_BARRIERFSYNC` on macOS), with the durable watermark carried in the segment's own frames. Barrier-class events (approvals, safe points, receipts the UI waits on) get a full flush: `F_FULLFSYNC`, `FlushFileBuffers` or `fdatasync`. Atomic manifest promotion and parent-directory synchronization apply at creation, rotation and other structural changes, not per group. The earlier rule of two barriers per append (segment `sync_all`, then manifest watermark promotion plus parent-directory synchronization) is retired.
 
-After this durability barrier, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
+After this durability barrier, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`; since DL-270 that custody is the group's durable commit frame, and the custody rows follow without a sync of their own (SP-336, SP-347). `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
 
 Sequence ranges are durably leased in blocks of 4,096 before issuance; unused IDs after crash are abandoned, never reused. Gaps are legal only with closed reason `allocator_lease_abandoned | corruption_loss | retention_compaction`.
 
@@ -17330,7 +17345,7 @@ SourceRef: `SEG-D-012` through `SEG-D-016`, `Case-L:L-013`, `Case-L:L-028`
 
 Every destructive/namespace-changing recovery persists a same-directory intent with deterministic recovery ID, target preimage hash/length, exact postcondition, and manifest precondition before mutation. Restart applies from the precondition, continues from the exact postcondition, or fails closed on a third state. Semantic recovery events dedupe by deterministic ID.
 
-Rotation seals pending groups, persists intent, closes/renames the old active, creates `.opening`, promotes one new active, publishes the manifest, and removes the intent. Startup resolves zero/two-active states from intent+manifest+ranges; ambiguity fails closed, never by mtime.
+Rotation seals pending groups, persists intent, closes/renames the old active, creates `.opening`, promotes one new active, publishes the manifest, and removes the intent. Startup resolves zero/two-active states from intent+manifest+ranges; ambiguity fails closed, never by mtime. Amended 2026-10-31 (DL-270): before any manifest publication the segments it covers are fully flushed and a synced redb commit makes the custody rows of their groups durable, so recovery never needs a commit frame from before the manifest's latest publication (SP-336, SP-347).
 
 Tail truncation records target length and prefix/tail hashes, truncates only matching preimage, synchronizes file, publishes watermark/recovery epoch, and dedupes the barrier recovery event. Active midstream corruption seals degraded; closed corruption never changes bytes.
 
@@ -17720,7 +17735,7 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after the group's single segment sync makes its commit frame durable (amended 2026-11-01, DL-270, SP-336, SP-347), with manifest and directory durability at structural changes and SP-286 custody following; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
   Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
   watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
   stores atomically.
@@ -21696,7 +21711,7 @@ For exactly `storage.seglog_append_observability_writer.v1@1.0.0` and `storage.s
 
 When a caller claims that an available complete original or metadata EventRecord is the exact originally issued value, this retained-value path explicitly adopts `storage.first_append_receipt.resolve_full_value.v1` using only the closed `full_value_request = {event: <that available complete original value>}` and `full_value_result` in `Plans/event_append_receipt_contracts.schema.json`. Require actual v2 custody, exact original event ID, CV-339's full-value commitment and equality of the returned original receipt/segment ref to the actual selected originals. No payload reconstruction, caller hash, semantic-only receipt or v1 backfill supplies that stronger claim. Tuple-only original receipt replay keeps its existing semantic route; this adoption does not convert every receipt read into a source read or weaken independently required native original-source checks.
 
-Lost acknowledgement after real issuance returns the exact stored original receipt. A missing result or metadata checkpoint does not mint another first acknowledgement. Only the actual never-issued complete current protected group may first-mint through `storage.first_append_receipt.issue.v2` after SP-286's complete source/group/dedupe/restore and both-barrier checks. Invoke the shared owner within the existing held writer context without reacquiring its lock, bypassing its guards or opening a second issuer. An unissued original group must settle before the metadata append can replace it, and unissued metadata must settle before dependent prefix certification. Previously issued loss, partial custody, a restored pending image or contradictory protected origin fences the obligation; no age, source-presence claim or guessed receipt repairs it. A restored absence cannot turn an old original or metadata identity into fresh work. Genuine new native original appends retain SP-286's actual fresh-owner/restore-occurrence admission; retrying a preserved observer obligation is not a new accepted original operation.
+Lost acknowledgement after real issuance returns the exact stored original receipt. A missing result or metadata checkpoint does not mint another first acknowledgement. Only the actual never-issued complete current protected group may first-mint through `storage.first_append_receipt.issue.v2` after SP-286's complete source/group/dedupe/restore checks, at its commit frame's sync (SP-336, SP-347). Invoke the shared owner within the existing held writer context without reacquiring its lock, bypassing its guards or opening a second issuer. An unissued original group must settle before the metadata append can replace it, and unissued metadata must settle before dependent prefix certification. Previously issued loss, partial custody, a restored pending image or contradictory protected origin fences the obligation; no age, source-presence claim or guessed receipt repairs it. A restored absence cannot turn an old original or metadata identity into fresh work. Genuine new native original appends retain SP-286's actual fresh-owner/restore-occurrence admission; retrying a preserved observer obligation is not a new accepted original operation.
 
 Before above-prefix certification, recheck every required original/meta receipt/result against the actual selected immutable custody, adopted original-to-metadata mapping, complete retained source/frame/watermark evidence, floor/prior-prefix CAS, scope/identity/dedupe, current writer/maintenance authority and independently derived whole prefix candidate after all dependent helpers. Keep these facts held through the canonical prefix transaction; only its real durable commit releases the pending source dependency and permits later disposable progress. Receipt issuance or metadata append that really occurred survives a later prefix refusal. No new cross-store atomicity is asserted.
 
@@ -22189,7 +22204,7 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Share
 
 ## First append receipt custody
 
-SP-286 defines Storage's shared first-acknowledgement prerequisite under DL-045. CV-339 owns its shared shapes, exact digest bytes and caller interfaces. This contract preserves the existing eleven-field `AppendReceipt`, four-field `original_append_result`, two source durability barriers and EventRecord semantics. It adds one canonical issued-receipt family and five explicitly scoped Storage bindings. Event-specific owners must separately adopt the resolver and complete their own producer, consumer, checkpoint, recovery and withdrawal contracts; this shared prerequisite grants no event-family admission or automatic depth closure.
+SP-286 defines Storage's shared first-acknowledgement prerequisite under DL-045. CV-339 owns its shared shapes, exact digest bytes and caller interfaces. This contract preserves the existing eleven-field `AppendReceipt`, four-field `original_append_result` and EventRecord semantics; since DL-270 its two source durability barriers are replaced by SP-336's single segment sync, with each group's terms carried in its commit frame (SP-347). It adds one canonical issued-receipt family and five explicitly scoped Storage bindings. Event-specific owners must separately adopt the resolver and complete their own producer, consumer, checkpoint, recovery and withdrawal contracts; this shared prerequisite grants no event-family admission or automatic depth closure.
 
 ### Canonical issued-only family and lifetime
 
@@ -22199,7 +22214,7 @@ The family is `canonical_non_rebuildable`, with mandatory backup. The sole canon
 
 A row contains only issued custody: exact Storage/event/scoped idempotency/type/producer-semantic identities, immutable `group_digest`, required `original_segment_ref`, required nonnullable `first_append_receipt`, required `original_event_value_commitment` for new v2 values, and `redaction_profile = no_secrets`, alongside its schema fields. It has no prepared/pending phase, payload copy or nullable receipt. Initial issuance authenticates Storage's original opaque segment-ref binding to the receipt's original `segment_generation` and `segment_name`; the same row retains that original ref. Later resolution reconstructs the existing four-field original result from `event_id`, `sequence_id`, `original_segment_ref` as `segment_ref`, and `byte_offset`. No new mapping family is created, and the original result is never changed to a current compacted locator.
 
-The unchanged `RP-EVENT-IDENTITY-APPROOT@1.0.0` applies: app-data-root lifetime, `retention_mode = indefinite`, `anchor_kind = creation`, `retain_indefinitely = true`, null TTL/cardinality/byte ceilings, `overflow_action = fail_closed`, `hold_eligible = false`, `expiry_action = none`. Existing lifetime-scoped event/idempotency identity requires the original successful result for that same lifetime. This retains content-free acknowledgement evidence, not raw payloads. Derived dedupe indexes remain derived and cannot rebuild first acknowledgement time. Loss of this canonical family requires truthful loss disclosure and unresolved mutation fencing. Its `tier_0_launch_critical` classification is the explicit shared prerequisite for the already required durable acknowledgement/startup boundary; it neither edits nor implies additions to `critical_family_ids` or `mvp_required_family_ids` arrays.
+The unchanged `RP-EVENT-IDENTITY-APPROOT@1.0.0` applies: app-data-root lifetime, `retention_mode = indefinite`, `anchor_kind = creation`, `retain_indefinitely = true`, null TTL/cardinality/byte ceilings, `overflow_action = fail_closed`, `hold_eligible = false`, `expiry_action = none`. Existing lifetime-scoped event/idempotency identity requires the original successful result for that same lifetime. Amended 2026-11-01 (DL-270): on macOS that holds once a full flush covers the receipt; an ordinary receipt lost before that goes with its group (Crash and uncertainty behavior). This retains content-free acknowledgement evidence, not raw payloads. Derived dedupe indexes remain derived and cannot rebuild first acknowledgement time. Loss of this canonical family requires truthful loss disclosure and unresolved mutation fencing. Its `tier_0_launch_critical` classification is the explicit shared prerequisite for the already required durable acknowledgement/startup boundary; it neither edits nor implies additions to `critical_family_ids` or `mvp_required_family_ids` arrays.
 
 ### Explicit stored-value and call-selector activation
 
@@ -22211,7 +22226,7 @@ Every new all-member issuance after activation writes strict v2, including a leg
 
 ### Original complete value commitment and final issuance
 
-At the actual first issuance, compute CV-339's exact domain/version/codec-bound commitment from each independently authenticated ORIGINAL complete EventRecord value, including `sequence_id`, `observed_at_utc` and `persisted_at_utc`, every required-present null and every nested value. Store that commitment with the original receipt in the SAME all-member canonical transaction. The complete original frame/header/CRC/source/group/dedupe and both barriers still require their own original owner verification. A current index value, producer-semantic digest, supplied witness or detached validator return cannot supply the original value.
+At the actual first issuance, compute CV-339's exact domain/version/codec-bound commitment from each independently authenticated ORIGINAL complete EventRecord value, including `sequence_id`, `observed_at_utc` and `persisted_at_utc`, every required-present null and every nested value. Store that commitment with the original receipt in the SAME all-member canonical transaction. The complete original frame/header/CRC/source/group/dedupe and the group's durable commit frame still require their own original owner verification. A current index value, producer-semantic digest, supplied witness or detached validator return cannot supply the original value. Amended 2026-10-31 (DL-270): issuance is the group's durable commit frame (SP-336, SP-347), so the final guard runs before the commit frame is written; the custody transaction that stores the commitment follows the sync, and a rebuild after a crash recomputes the identical commitment from the group's own durable member frames.
 
 The value selected from a source/validation helper must exactly join the actual admitted original owner source/group before preparation and again before publication. Independently bind the complete expected custody row set to that source before later helpers. Validate every pending row and transaction, then compare the exact typed expected rows, pending/postimage/transaction, selected preimage, actual original source/owner/restore/gate facts and any caller predicate after all dependent validators and copies. Schema validity and host-language equality alone are insufficient: booleans, integers, integral floats and signed zero preserve distinct canonical types/bytes. No dependent resolver follows the final complete guard before the original owner's atomic issuance. A later backup, output or domain refusal preserves an already real issuance; it does not erase or restamp it.
 
@@ -22221,33 +22236,39 @@ For the activated `storage.boot_recovery` lane, SP-291/SP-292 bind positive actu
 
 ### Protected last group and immutable promotion terms
 
-The manifest at `storage/seglog/manifest.v1.msgpack` carries the complete latest protected `active_durable_group` using CV-339's closed version `2.0.0` definition. This is the first native writer contract for this group custody. The retained `active_durable_group_v1_reader` describes an earlier external draft only; its presence does not establish deployed native v1 data, a native migration edge or a fallback writer. The manifest remains disk-first publication/recovery control and never a second EventRecord source.
+Rewritten 2026-10-31 for DL-270 (SP-336, SP-347): per-group manifest promotion and the separately synced redb issuance transaction are retired; the pre-DL-270 text is in the repository history.
 
-Assign `commit_group_id` once at actual seal within the Storage instance, check it against existing group/receipt identity and reject conflicting reuse. Exact-publication retry preserves it; timestamps are not its identity. All member event IDs and sequence IDs are unique, ordered by strictly increasing sequence and physical position. Their complete frame ranges tile the group's span and end exactly at `durable_end_offset`; a group never spans two segments. Validate native frame identity, CRC, bounds, schema and exact bytes before issuance, not just hashes supplied by a projection. CV-339 defines the exact group digest tuple and compact restore-admission bytes.
+The manifest at `storage/seglog/manifest.v1.msgpack` carries `active_durable_group` using CV-339's closed version `2.0.0` definition. This is the first native writer contract for this group custody. The retained `active_durable_group_v1_reader` describes an earlier external draft only; its presence does not establish deployed native v1 data, a native migration edge or a fallback writer. The manifest is published only at creation, rotation and structural changes, so `active_durable_group` records the last issued group at the manifest's latest publication, which is where recovery starts scanning; the latest issued group is the last valid commit frame within the durable tail. Before any manifest publication, the segments it covers are fully flushed and a synced redb commit makes durable the custody rows of every group up to that point, so recovery never needs a commit frame from before the manifest's latest publication. The manifest remains disk-first publication/recovery control and never a second EventRecord source.
 
-`active_durable_group.manifest_generation` is the immutable generation at that group's actual promotion; it equals the enclosing selected manifest generation at first publication. After issuance, later maintenance may advance the enclosing manifest generation while preserving the entire group unchanged. The protected group records the last append group, not the active segment's current capacity. Current segment/watermark metadata remains separately authoritative. A fresh empty store may have no current group; after promotion, only the next actual append group may replace it, after complete receipt issuance. Rotation can preserve a group pointing into the just-sealed segment. An unissued group cannot undergo maintenance. First mint requires the original promotion still be the actual current generation with exact source/watermark correspondence; a later maintenance generation with missing custody violates the gate and fences recovery. Retained issued-receipt replay does not require that old manifest generation to remain current.
+Assign `commit_group_id` once at actual seal within the Storage instance, check it against existing group/receipt identity and reject conflicting reuse. Exact-publication retry preserves it; timestamps are not its identity. All member event IDs and sequence IDs are unique, ordered by strictly increasing sequence and physical position. The member frames tile the group's span, which ends exactly at `durable_end_offset`; the group's commit frame (SP-347) begins there and is not a member, and the segment's durable watermark is the commit frame's end. A group never spans two segments. Validate native frame identity, CRC, bounds, schema and exact bytes before writing the commit frame, not just hashes supplied by a projection. CV-339 defines the exact group digest tuple and compact restore-admission bytes.
 
-Case L-2 seal and allocation rules remain exact: ordinary sealing on the first of 10 ms, 64 records or 1 MiB; immediate `barrier` commit for existing barrier-required inputs; 4,096-ID durable leases before sequence issuance; unused leased IDs abandoned after crash and never reused; only `allocator_lease_abandoned | corruption_loss | retention_compaction` gap reasons. Existing 48-byte frame prefix, 4 KiB header and namespace synchronization requirements remain unchanged, except that SeglogFrameV2 admits SP-335's compression flag, codec id and dictionary id for sealed segments. The inline body of a record is capped at 16 KiB (SP-337); larger bodies are payload-store references. The 16 MiB figure is no longer an admitted inline size (Amended 2026-10-31, DL-270). The digest's representation bounds create no event-size cap, oversized-frame exception or new sequence-gap reason. Recovery processes any required ordered groups under the same gate without inventing gaps or changing original EventRecord bytes.
+A group's `manifest_generation`, in its commit frame and in `active_durable_group`, is the manifest generation current when the group was sealed. Later maintenance may advance the manifest generation while every issued group stays unchanged. Current segment metadata remains separately authoritative, and the in-segment watermark is the last valid commit frame. A fresh empty store has no issued group. Rotation can preserve the last group pointing into the just-sealed segment. No maintenance runs inside a group's write-and-sync window (the group gate below). Retained issued-receipt replay does not require an old manifest generation to remain current.
+
+Case L-2 seal and allocation rules remain exact: ordinary sealing on the first of 10 ms, 64 records or 1 MiB; immediate `barrier` commit for existing barrier-required inputs; 4,096-ID durable leases before sequence issuance; unused leased IDs abandoned after crash and never reused; only `allocator_lease_abandoned | corruption_loss | retention_compaction` gap reasons. A commit frame repeats the sequence of the frame before it and uses no lease ID (SP-347). The existing 48-byte frame prefix, 4 KiB header and namespace synchronization requirements remain unchanged, except that commit frames set flags bit 1 (SP-347) and the write-time compression descriptor stays reserved (SP-346). The inline body of a record is capped at 16 KiB (SP-337); larger bodies are payload-store references, and the 16 MiB figure is only an outer frame bound. The digest's representation bounds create no event-size cap, oversized-frame exception or new sequence-gap reason. Recovery processes any required ordered groups under the same gate without inventing gaps or changing original EventRecord bytes.
 
 ### Publication, first issuance and complete group exclusion
 
+Rewritten 2026-10-31 for DL-270 (SP-336, SP-347): per-group manifest promotion and the separately synced redb issuance transaction are retired; the pre-DL-270 text is in the repository history.
+
 Under the existing writer gate, validate current normal writer/schema/registry/no-secret/scope/permission/dedupe admission, actual append input durability class, all source frames and exact original segment bindings. Global/scoped dedupe values and the existing checkpoint must agree with the verified actual source tail. Application partition is exactly `app`; project partition is `project~` plus unpadded base64url of exact UTF-8 project ID. Native idempotency keys remain nonempty. This contract changes no EventRecord producer-semantic digest recipe.
 
-Seal the actual complete group. Complete frame writes and active-segment `sync_all`, then atomically publish its complete terms with the manifest watermark and synchronize the parent directory. These remain the two source durability barriers. After both succeed, durably commit ALL member custody rows in ONE redb transaction before exposing any successful receipt or releasing any receipt-dependent terminal write. No cross-redb/seglog transaction is asserted. `acknowledged_at_utc` is the UTC time selected for that first successful durable issuance transaction; the complete group shares one selected time. It is not delivery time or `persisted_at_utc`, which remains commit-group seal time. A tentative timestamp in an uncommitted candidate is not a receipt. Amended 2026-10-31 (DL-270): SP-336's publication and recovery sequence supersedes the two per-group source barriers and the redb-commit issuance boundary in this subsection: an ordinary group is issued exactly when its commit frame, which carries every receipt field and the seal-time acknowledged_at_utc, is durable after one segment sync, and its custody rows follow without their own sync and are rebuilt from that frame after a crash. This paragraph and the rules below that assume per-group manifest promotion, durable custody before exposure or fencing of absent rows for a durable commit frame are the pre-DL-270 protocol; rewriting their proof tables to SP-336 is a pending companion.
+Seal the actual complete group: write every member frame, then the group's commit frame (SP-347), whose payload carries every member's receipt terms and the group's `acknowledged_at_utc`, selected once at seal; from then on those terms are immutable. Then make one data sync of the active segment: `F_BARRIERFSYNC` for an ordinary group on macOS, `fdatasync` on Linux and `FlushFileBuffers` on Windows, and a full flush for a barrier-class group. The group is issued when its commit frame is durable: normally when that sync returns, which is its first successful issuance, or, if the process dies first, when recovery's flush makes a surviving commit frame durable, with the terms sealed in it (Crash and uncertainty behavior). `acknowledged_at_utc` is the time carried in the frame, not delivery time; `persisted_at_utc` remains commit-group seal time. Receipts are exposed, and receipt-dependent terminal writes released, only after the sync. Then commit all member custody rows in one redb transaction without a sync of its own; they become durable at the next durability checkpoint (SP-336). Every durable redb commit, in either redb file and of any family, is preceded by a full flush of the active segment and of any payload pack written since the last full flush, so no durable row outlives the frames it depends on; it holds the group gate from that flush until the durable commit returns, so no group is acknowledged, and no row depending on an unflushed group commits, in between. Writers that commit often commit without durability and let the checkpoint make them durable. A barrier-class group commits its custody rows durably before acknowledging. No cross-redb/seglog transaction is asserted, and the manifest is not published per group.
 
-The held gate binds actual source/control identity and generation, manifest/group/source bytes, original segment mappings, complete current dedupe admission, selected store, gate lease/revision and canonical custody preimage. Revalidate those actual owner values immediately before the atomic commit. An independently repaired mapping/candidate or source/dedupe/barrier set still invalidates the attempt when held facts changed. Validate the exact all-member row set against independently authenticated source and owner terms, not merely mutual hashes or a caller row. Prevent precommit disclosure and verify committed custody before release.
+The held gate binds actual source/control identity and generation, group/source bytes, original segment mappings, complete current dedupe admission, selected store, gate lease/revision and canonical custody preimage. Revalidate those actual owner values immediately before writing the commit frame. An independently repaired mapping/candidate or source/dedupe set still invalidates the attempt when held facts changed. Validate the exact all-member terms against independently authenticated source and owner terms, not merely mutual hashes or a caller row. Disclose nothing before the sync, and verify the commit frame's terms before release.
 
-`storage.first_append_receipt.group_gate.v2` encloses every operation that could replace, advance or lose an unissued current group: next append, manifest/source generation advance, recovery publication, intent resumption, rotation, compaction/retirement and the recovery event's own append. Startup checks it before those operations or mutation admission. Both source advance and retirement authenticate the complete current-group rows and immutable receipt/group terms; an `issued` phase marker alone is insufficient. Revalidate current source/dedupe for such mutations even after issuance. Once that admitted retirement completes, passive original receipt reads do not reacquire retired source controls.
+`storage.first_append_receipt.group_gate.v2` encloses each group's write-and-sync window, from its first member frame to its commit frame's sync, every durable redb commit's window from its full flush to its return, and every operation that could replace, advance or lose that group inside it: next append, manifest/source generation advance, recovery publication, intent resumption, rotation, compaction/retirement and the recovery event's own append. Startup checks it before those operations or mutation admission. Both source advance and retirement authenticate the issued groups' commit frames and immutable receipt terms; an `issued` phase marker alone is insufficient. Revalidate current source/dedupe for such mutations even after issuance. Once an admitted retirement completes, passive original receipt reads do not reacquire retired source controls.
 
-Current-group rows are either all absent with authenticated never-issued authority, or all present and exactly compatible with one completed issuance. Amended 2026-10-31 (DL-270): under SP-336, rows absent for a group whose commit frame is durable are rebuilt from that frame, not fenced; rows without a durable commit frame fence. A proper subset, mixed first timestamps, duplicate keys, mixed Storage identities, conflicting group/receipt terms, or evidence that absent rows were previously issued is corruption/loss/backup skew. Fence rather than filling missing rows or minting a second first acknowledgement. Previously issued rows remain immutable on retries.
+Recovery checks custody against the groups it scans, from the manifest's latest publication through the durable tail. For each such group the custody rows are either all present and exactly equal to the terms of its durable commit frame, or all absent, in which case recovery rebuilds them from the frame, and no custody row may name a sequence beyond the last valid commit frame. A proper subset, mixed first timestamps, duplicate keys, mixed Storage identities, rows that differ from their commit frame, rows beyond the durable tail, or evidence that a commit frame covered by a full flush was lost is corruption/loss/backup skew. Fence rather than filling missing rows from anything but the group's own commit frame or minting a second first acknowledgement. Rows for groups before the manifest's latest publication, including groups whose source was lawfully retired or compacted (Case L-3), replay from the rows alone and need no frame (Retained original receipt resolution). Issued rows remain immutable on retries.
 
 ### Crash and uncertainty behavior
 
-Before manifest promotion there is no successful receipt. Amended 2026-10-31 (DL-270): under SP-336 the issuance boundary is the durable commit frame, and the manifest is promoted only at creation, rotation and structural changes. Valid unacknowledged tail frames follow existing Case L-2 recovery and acquire their first actual recovery group/class/publication; do not assert an earlier acknowledged group existed. An OS-visible manifest rename with unknown directory synchronization is not prior durability proof. Authenticate the actually selected old/new state and establish both actual barriers.
+Rewritten 2026-10-31 for DL-270 (SP-336, SP-347): per-group manifest promotion and the separately synced redb issuance transaction are retired; the pre-DL-270 text is in the repository history.
 
-After both source barriers but before issuance, the intact last protected group's original terms permit first mint at the subsequent actual issuance time only after revalidation and actual barrier establishment. Preserve original coordinates and promotion generation. After issuance, lost caller delivery or an interrupted domain terminal commit returns the exact stored original receipt. Domain owners independently reconcile action execution and original terminal outcome; the generic reader does not rerun the action.
+Recovery runs under the recovery gate and first makes the active segment, and any payload pack written since the last full flush, durable with a full flush before it classifies anything. Frame validity alone does not prove that a sync returned: a process killed between write and sync can leave complete, valid frames in the operating system's cache, and an operating-system crash or power loss can keep or drop them. After that flush, a group whose valid commit frame lies within the durable tail is issued, whether or not its original sync returned; when it did not, its receipts were never exposed, and a retry under the same idempotency key returns them. Member frames after the last valid commit frame are an unissued tail that existing Case L-2 recovery truncates, provided no custody row or full flush covers them. No recoverable issuance of those operations survives: they were never acknowledged or, on macOS, belong to an ordinary group acknowledged and then lost within its class, and either way they may be retried as new work under their idempotency keys. Do not assert an earlier acknowledged group existed. An OS-visible write or rename with unknown synchronization is not durability proof.
 
-Corrupt/ambiguous source, loss at or below the watermark, missing protected terms or lost issued authority follows existing integrity and verified-restore fencing. Missing old receipts cannot be reconstructed from the current clock, index, current locator or arbitrary surviving frames. Only an authenticated never-issued protected group has the first-mint route. A recovery event blocked by this gate does not bypass it: use existing persistent recovery intent/report and read-only disclosure until its append is valid, without inventing an event or converting an unknown barrier into success. Buffered redb commits, OS visibility and self-consistent supplied hashes do not establish native durability/authentication.
+Recovery rebuilds every missing custody row before it admits appends or answers receipt requests. The eleven receipt fields come from the group's commit frame; event_id, scope partition, event type, idempotency key and the complete original EventRecord come from the authenticated member frame, from which `producer_semantic_digest` and `original_event_value_commitment` are recomputed by their existing recipes; `group_digest` is recomputed from the group's frames (CV-339); `original_segment_ref` is the segment's opaque ref, recorded in the manifest's segment inventory when the segment was created, a structural publication; and `storage_instance_id` and `redaction_profile` come from the store. A rebuilt row must equal, byte for byte, the row the original custody transaction would have written. A barrier-class group's rebuilt rows commit durably before its receipt is returned or any dependent write released, and a `storage.boot_recovery` group's rebuilt receipt row advances the Boot floor in the same durable transaction, exactly as its original publication would have (SP-291, SP-292). After issuance, lost caller delivery or an interrupted domain terminal commit returns the exact stored original receipt from its custody rows. Domain owners independently reconcile action execution and original terminal outcome; the generic reader does not rerun the action.
+
+On macOS an ordinary group acknowledged after `F_BARRIERFSYNC` may be missing after a power loss, with nothing reordered or corrupted (SP-336's durability classes); the durability checkpoint bounds this to about the last second of ordinary groups. Because every durable redb commit follows a full flush, no custody row, dedupe row, domain row or other durable state can refer to such a group, and every receipt that authorizes a mutation or an external effect is barrier-class (Case L-2). The group and its identities are lost within the durability class: its sequence IDs read as `allocator_lease_abandoned`, and a later append under one of its idempotency keys is admitted as new work. That is not a replacement first receipt, because no durable trace of the lost one exists for it to replace; the rule against minting a replacement applies to every identity whose receipt a full flush has covered. Only an in-process caller can hold such a receipt, since every durable row and every barrier-class dependent follows a full flush and receipts the UI waits on are barrier-class, and in-process callers end with the power cut; were one presented, resolve answers unavailable. Corrupt or ambiguous source, loss of anything a full flush covered, missing commit-frame terms or lost issued authority beyond the durability class follows existing integrity and verified-restore fencing. Missing receipts cannot be reconstructed from the current clock, index, current locator or arbitrary surviving frames, only from their group's commit frame. A recovery event blocked by the gate does not bypass it: use existing persistent recovery intent/report and read-only disclosure until its append is valid, without inventing an event or converting an unknown sync into success. Buffered redb commits, OS visibility and self-consistent supplied hashes do not establish native durability or authentication.
 
 ### Retained original receipt resolution
 
@@ -22265,7 +22286,7 @@ Exact v1 rows retain their original semantic replay but have no full-value witne
 
 ### Settled authority backup and confirmed rollback
 
-`storage.first_append_receipt.backup_gate.v2` joins the existing shared-boundary backup mechanism. Settle the current group's complete issuance first, then hold the group gate or an equivalent coherent canonical snapshot boundary through capture of selected source/manifest/store identity and all required issued custody. A supported authority backup contains no pending group. Verify complete custody, original generation bounds and source/identity coherence; reject proper subsets, missing required older rows and source/custody epoch skew. Existing canonical backup membership, staging, synchronization, verification and journaled offline restore remain required. Amended 2026-10-31 (DL-270): this gate is BRS-031's brief capture barrier. It records one consistent point and is released well under a second. Sealed segments and payload packs copy in the background, redb copies from a read snapshot, and no writer lock is held while copying.
+`storage.first_append_receipt.backup_gate.v2` joins the existing shared-boundary backup mechanism. Settle the current group's complete issuance first, then hold the group gate or an equivalent coherent canonical snapshot boundary through capture of selected source/manifest/store identity and all required issued custody. A supported authority backup contains no pending group. Verify complete custody, original generation bounds and source/identity coherence; reject proper subsets, missing required older rows and source/custody epoch skew. Existing canonical backup membership, staging, synchronization, verification and journaled offline restore remain required. Amended 2026-10-31 (DL-270): this gate is BRS-031's brief capture barrier. It records one consistent point and is released well under a second. Sealed segments and payload packs copy in the background, redb copies from a read snapshot, and no writer lock is held while copying. Settling means the current group's commit frame is durable and its custody rows are committed, so the redb read snapshot and the recorded segment offset agree. The active segment is captured as its exact prefix up to the recorded offset, read through a handle opened at the capture point; the segment is append-only below that offset, and rotation renames it without rewriting it, so concurrent appends never change the copied bytes; on restore, recovery still rebuilds any custody row missing beyond the snapshot from the restored segments' commit frames (SP-336).
 
 A settled older backup can still omit receipts issued later on the live root. Restoring it does not prove those identities were never issued. Preserve supported older-backup restore and the exact existing `data_loss_risk.class = none | post_backup_writes_will_be_lost | unknown_due_corruption`; non-`none` requires explicit confirmation with boundary/family disclosure. The recovery shell's confirmation binds the selected backup identity and exact bytes/hash, exact current canonical source/custody bytes/hash, verified restored boundary, risk class and affected family identities. A changed selected backup or current boundary requires fresh confirmation. Capture verified readable `pre_restore` authority, or quarantine exact unreadable current bytes, through the existing coordinator before promotion. Verified pre-restore authority may preserve/resolve an exact historical receipt through its owner; unreadable quarantine cannot prove absence.
 
@@ -22279,15 +22300,17 @@ After verified terminal restore/reopen, `StorageRecoveryCoordinator` establishes
 
 A transient capability binds actual owner ID/operation ID and complete accepted-operation digest, event ID, scope partition, event type, idempotency key, producer-semantic digest, completed restore occurrence/journal/epoch/boundary, current acceptance lease revision and one logical publication ID. Callers supply neither its authority nor replacement owner records. Freeze and revalidate owner acceptance, current lease revision, restore control and source/dedupe/segment terms under the existing writer gate. Any late change revokes the attempt even if rows/hashes are repaired. Native owner identity recipes remain with the actual owner, not fixture-generated IDs.
 
-The protected group carries CV-339's closed `restore_admission` with complete ordered admitted members; null applies to an ordinary in-place root without this restore path. Duplicate event IDs, owner-operation pairs or scoped type/key identities, inconsistent owner joins, or incomplete member coverage fail before publication. A legal ordinary group may carry complete admission, while barrier inputs still seal immediately. The binding contains no raw request/payload, UI claim, pending receipt or nullable first acknowledgement.
+The protected group carries CV-339's closed `restore_admission` with complete ordered admitted members; null applies to an ordinary in-place root without this restore path. Duplicate event IDs, owner-operation pairs or scoped type/key identities, inconsistent owner joins, or incomplete member coverage fail before publication. A legal ordinary group may carry complete admission, while barrier inputs still seal immediately. The binding contains no raw request/payload, UI claim, pending receipt or nullable first acknowledgement. Amended 2026-10-31 (DL-270): the group's commit frame carries it (SP-347), since the manifest is no longer published per group.
 
-Consume the capability for exactly one logical publication at the canonical source/group watermark/digest/admission promotion boundary. Complete the existing source and manifest/directory sync barriers, then keep all receipts/dependent terminals withheld until group-atomic issuance. Before successful promotion, retries revalidate the same owner operation/session. After promotion, retry resolves that same publication and cannot publish another event/group. A consumed capability never authorizes a second group; all source advancement remains gated until custody completes.
+Consume the capability for exactly one logical publication: the group whose commit frame carries its `restore_admission` (SP-347). Revalidate the owner operation/session and current controls immediately before writing that commit frame; its sync is the issuance (SP-336), and all receipts and dependent terminals stay withheld until then. Before the commit frame is durable, retries revalidate the same owner operation/session. After it, retry resolves that same publication and cannot publish another event/group. A consumed capability never authorizes a second group, and source advancement stays gated until the group is issued.
 
 ### In-place restart after admitted promotion
 
-After protected promotion but before first issuance, an in-place restart loses transient capabilities, accepted-operation adapters and old session leases. Authenticate the actual same current root and selected protected manifest, actual current restore occurrence/journal/epoch and current mutation controls through Storage startup/coordinator authority. The compact canonical group proves the writer's prior admission join; do not reconstruct/reacquire the lost transient capability or original owner request. Revalidate complete source/group/member/dedupe/segment terms, establish both actual barriers and first-mint the entire group once. The successful new issuance time is its first acknowledgement because no prior receipt was issued. A later crash after issuance replays the identical retained eleven fields.
+Rewritten 2026-10-31 for DL-270 (SP-336, SP-347): per-group manifest promotion and the separately synced redb issuance transaction are retired; the pre-DL-270 text is in the repository history.
 
-Protected origin must come from the existing selected-store/manifest owner, never a caller's repaired source or matching hash alone. If actual root/journal/epoch/origin is unavailable or contradictory, fence pending first mint until the owner resolves it. The protected admission remains resolvable while the group is unissued. This adds no durable journal, historical snapshot service or indefinite transient-capability retention.
+There is no promoted-but-unissued state: after recovery's flush an in-place restart finds each group either issued, with a durable commit frame whose receipts replay identically, or treated as never issued on this root, with no surviving commit frame. When no custody row or full flush covers such a group, its unacknowledged tail at the active segment's end is truncated by Case L-2, no receipt of it survives and nothing durable refers to it (SP-336), which on macOS can include an acknowledged ordinary group lost within its class; that separates it from restored old work, whose receipts may have authorized effects outside the restored image. A damaged frame before later valid groups is instead a proven hole that keeps Case L-2's loss fences, and a missing frame that custody rows or a full flush covered fences as corruption, loss or backup skew. Its operations may be retried under their idempotency keys, and a fresh post-restore operation is accepted again only as a new logical operation through a new session's fresh-operation admission, which still refuses restored old work. A restart loses transient capabilities, accepted-operation adapters and old session leases. Authenticate the actual same current root and selected manifest, actual current restore occurrence/journal/epoch and current mutation controls through Storage startup/coordinator authority before resuming appends; do not reconstruct or reacquire a lost transient capability or original owner request.
+
+Protected origin must come from the existing selected-store/manifest owner, never a caller's repaired source or matching hash alone. If actual root/journal/epoch/origin is unavailable or contradictory, fence new appends until the owner resolves it. This adds no durable journal, historical snapshot service or indefinite transient-capability retention.
 
 A restored pending image is never an in-place restart of that protected root. A newly completed restore cannot reuse an older occurrence's admission for a new group. Covered issued rows still replay; fresh publication needs the new actual restore occurrence and a newly accepted operation. This distinction preserves confirmed rollback while forbidding replacement acknowledgement for lost old work. Existing native post-loss sequence leases/source adoption/gap classification remain prerequisites; this contract adds no allocator or recovery gap reason.
 
@@ -22295,7 +22318,7 @@ A restored pending image is never an in-place restart of that protected root. A 
 
 **First-open ordering.** Phase 1's prohibition on projectors and redb product writers does not postpone this narrow Storage control/receipt table. Under the existing root continuity/version checks, aggregate lock and coordinator exclusion, materialize the compatible protected-group parser, table and all five active bindings and the explicit compatibility map before the first successful seglog append, including a startup recovery event. Genuine first-run proof permits an empty table and null current group; existing continuity evidence with missing authority never becomes a fresh empty root. Preserve Case L-1's existing version ceilings, first-run tests, migration journal/backup/stamp-last/readback and recovery admission. This foundation bootstrap does not activate settings/session/product writers, projections or analytics.
 
-Existing-store activation verifies its supported preimage and completes the compatible parser/table/gate installation through the actual StorageMigrationCoordinator before new receipt-dependent appends. Its journal, protected backup and canonical migration receipt are existing coordinator authority, not successful seglog events required to create their own first-receipt table. Do not require a receipt-dependent migration/recovery success event before the prerequisite is active. If an actual supported migration edge cannot establish this ordering, fence and retain existing journal/report evidence; do not fabricate a bootstrap receipt or waive the gate. After activation, any such event follows normal current source/dedupe admission and both barriers plus custody. Broader product-schema open, projectors and analytics remain in their existing later build/startup phases.
+Existing-store activation verifies its supported preimage and completes the compatible parser/table/gate installation through the actual StorageMigrationCoordinator before new receipt-dependent appends. Its journal, protected backup and canonical migration receipt are existing coordinator authority, not successful seglog events required to create their own first-receipt table. Do not require a receipt-dependent migration/recovery success event before the prerequisite is active. If an actual supported migration edge cannot establish this ordering, fence and retain existing journal/report evidence; do not fabricate a bootstrap receipt or waive the gate. After activation, any such event follows normal current source/dedupe admission, SP-336's segment sync with its commit frame (SP-347) and custody. Broader product-schema open, projectors and analytics remain in their existing later build/startup phases.
 
 `StorageMigrationCoordinator` activates compatible manifest parsing, exact value schema/table, all five active bindings and the explicit compatibility map and writer/recovery exclusion together through existing preflight, protected backup, verified target commit and rollback. No new append is enabled before the whole prerequisite is installed. Legacy records receive no fabricated historical receipt. Legacy unacknowledged-tail adoption must prove unacknowledged status under existing recovery, not infer it from absent custody. Missing exact older receipt authority fences receipt-dependent recovery.
 
@@ -22312,34 +22335,35 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   Storage retains the exact first successful eleven-field AppendReceipt in the canonical
-  event_append_receipt_custody family after both source durability barriers and before exposure.
-  The existing writer gate protects the complete last promoted v2 group through one durable
-  all-member issuance transaction and authenticates complete current custody before source advance
-  or retirement. Retained original replay is independent of old source controls. Settled backup,
-  confirmed older restore, unavailable missing-original retries, actual fresh-owner admission and
-  compact protected-group restart follow the detailed First append receipt custody contract.
-  CV-339 owns the exact shared shapes, digest bytes and caller interfaces. This is a shared
-  technical prerequisite only; event-specific adoption and native proof remain separate. New strict
-  stored v2 retains the original complete EventRecord value commitment, exact v1/v2 read dispatch
-  and explicit legacy-selector compatibility; full-value resolution is independently adopted.
-  Amended 2026-10-31 (DL-270): SP-336's publication and recovery sequence applies: an ordinary group's receipt is
-  issued when its commit frame, carrying every receipt field and the seal-time acknowledged_at_utc, is durable
-  after one segment sync; its custody rows commit without their own sync and are rebuilt identically from that
-  frame after a crash. A barrier-class group keeps a full flush and commits its custody rows durably before
-  acknowledging.
+  event_append_receipt_custody family. Since DL-270 (SP-336, SP-347) an ordinary group is issued exactly when its
+  commit frame, carrying every member's receipt terms and the seal-time acknowledged_at_utc, is durable after one
+  segment sync; receipts are exposed only after that sync; the custody rows then commit without a sync of their
+  own and are rebuilt identically from the frame after a crash, once recovery's flush has made the surviving
+  frames durable; every durable redb commit follows a full flush of the segments and packs written since the last
+  one. The lifetime replay guarantee covers every receipt a full flush has covered; on macOS an ordinary receipt
+  that no full flush covered can be lost with its group in a power cut, after which resolve answers unavailable
+  for it and its idempotency key is admitted as new work (SP-336). A barrier-class group keeps a full flush and
+  commits its custody rows durably before acknowledging. The writer gate encloses each group's write-and-sync
+  window and authenticates issued groups' commit frames before source advance or retirement. Retained original
+  replay is independent of old source controls. Settled backup, confirmed older restore, unavailable
+  missing-original retries, actual fresh-owner admission and in-place restart follow the detailed First append
+  receipt custody contract. CV-339 owns the exact shared shapes, digest bytes and caller interfaces. This is a
+  shared technical prerequisite only; event-specific adoption and native proof remain separate. New strict stored
+  v2 retains the original complete EventRecord value commitment, exact v1/v2 read dispatch and explicit
+  legacy-selector compatibility; full-value resolution is independently adopted.
 gui_related: false
 gui_classification_reason: Defines Storage receipt custody and internal restore admission; existing recovery-shell disclosure remains separately owned.
 depends_on: [SP-230, SP-235, SP-236, CV-318, DL-045]
 unblocks: []
 acceptance_criteria:
-  - Both source barriers precede one durable complete-group custody commit; no receipt or dependent terminal write escapes earlier. Amended 2026-10-31 (DL-270): under SP-336 an ordinary group's receipt follows its durable commit frame after one segment sync, and its custody commit needs no sync of its own.
-  - Original eleven receipt fields and four-field result remain immutable across retries, source relocation and lost delivery.
-  - Current-group loss, subset custody, repaired held mappings/dedupe, contradictory identities or late owner/session changes fence.
-  - Settled older restore preserves covered receipts but cannot mint a replacement for missing delivered work.
-  - Actual new owner acceptance is distinct from retry input; protected v2 admission survives in-place loss of transient handles without inventing prior acknowledgement.
-  - Settled backup, current restore controls, explicit migration/withdrawal and unchanged app-root identity lifetime remain mandatory.
-  - Strict stored v2 is derived from actual original full values in the all-member transaction; final typed row/source/output guards follow every dependent helper.
-  - Explicit legacy selectors enter the installed v2 owner without new v1 issuance; exact old rows remain immutable and full-value proof never backfills or downgrades.
+  - "An ordinary group is issued when its commit frame is durable after one segment sync; no receipt or dependent terminal write escapes earlier, and its custody rows follow without their own sync and are rebuilt identically from the frame after a crash (SP-336, SP-347)."
+  - "Original eleven receipt fields and four-field result remain immutable across retries, source relocation and lost delivery."
+  - "Subset custody, rows that differ from or lack a durable commit frame, repaired held mappings/dedupe, contradictory identities or late owner/session changes fence; a group missing within its durability class resolves as lost, not corrupt."
+  - "Settled older restore preserves covered receipts but cannot mint a replacement for missing delivered work."
+  - "Actual new owner acceptance is distinct from retry input; an in-place restart finds each group's issuance recoverable from its commit frame or absent, invents no prior acknowledgement and keeps the loss and restore fences."
+  - "Settled backup, current restore controls, explicit migration/withdrawal and unchanged app-root identity lifetime remain mandatory."
+  - "Strict stored v2 is derived from actual original full values carried in the group's commit frame; final typed row/source/output guards follow every dependent helper."
+  - "Explicit legacy selectors enter the installed v2 owner without new v1 issuance; exact old rows remain immutable and full-value proof never backfills or downgrades."
 validation_surfaces:
   - Plans/event_append_receipt_contract_fixtures.json
   - Plans/event_append_receipt_contracts.schema.json
@@ -23184,11 +23208,11 @@ Failed capture/CAS/commit/readback never reports success. Reconcile the original
 
 ### First-receipt adoption and crash cuts
 
-For this exact Hold barrier producer, install and use `storage.first_append_receipt.issue.v1`, `storage.first_append_receipt.resolve.v1`, `storage.first_append_receipt.group_gate.v1` and `storage.first_append_receipt.backup_gate.v1` with the current SP-286/CV-339 schemas, exact canonical receipt table/key and protected-group contract. Pending completion additionally requires the strict stored writer `2.0.0`, exact retained `1.0.0`/`2.0.0` readers and explicit `storage.first_append_receipt.resolve_full_value.v1`. The shared four-entry legacy call-selector map routes the older selectors to the active writer; a legacy selector or semantic reader does not supply full-value proof. Missing, downgraded or withdrawn required Hold binding fences its dependent append/completion. The common owner authenticates complete actual group/source/frame/segment mapping/dedupe/durability class and both barriers; all member first receipts commit atomically before any Hold terminal release. Hold does not create or widen that shared custody.
+For this exact Hold barrier producer, install and use `storage.first_append_receipt.issue.v1`, `storage.first_append_receipt.resolve.v1`, `storage.first_append_receipt.group_gate.v1` and `storage.first_append_receipt.backup_gate.v1` with the current SP-286/CV-339 schemas, exact canonical receipt table/key and protected-group contract. Pending completion additionally requires the strict stored writer `2.0.0`, exact retained `1.0.0`/`2.0.0` readers and explicit `storage.first_append_receipt.resolve_full_value.v1`. The shared four-entry legacy call-selector map routes the older selectors to the active writer; a legacy selector or semantic reader does not supply full-value proof. Missing, downgraded or withdrawn required Hold binding fences its dependent append/completion. The common owner authenticates complete actual group/source/frame/segment mapping/dedupe/durability class and the group's durable commit frame (SP-336, SP-347); all member first receipts are issued together by that frame before any Hold terminal release. Hold does not create or widen that shared custody.
 
 Before any source construction, selection copy, target resolution or receipt helper, bind the actual complete canonical pending transition and producer intent, the actual SIR/receipt/shared owner identities and complete current caller facts. Capture exact producer input and original Storage assignments independently of source/event candidate helpers. Authenticate the entire newly prepared shared owner and exact source records before exposing that owner. For an existing owner, the complete unchanged local predicate runs inside the actual shared source-install and first-issuance publication boundaries, followed by the shared owner's own final predicates. This is a real held owner/domain exclusion requirement; matching detached resolver returns or a caller-only check before shared preparation cannot substitute. No copied owner, repaired working intent or substituted typed target may authorize a different source event.
 
-Before source/manifest promotion there is no receipt. Valid unacknowledged tail adoption follows Case L-2 and SP-286's actual recovery group/publication/class; OS visibility or an unknown directory barrier is not prior acknowledgement. After both barriers but before issuance, only an authenticated never-issued intact protected current group can first-mint at the actual later issuance time, with original coordinates/promotion terms and group-wide guard. Proper subsets, missing issued authority, source/epoch skew or ambiguous origin fence instead of filling missing receipts. After issuance but before Hold terminal commit or caller delivery, resolve the exact stored original eleven fields and continue the original pending operation without another append or first acknowledgement. Source advance/retirement and recovery events remain under the complete group gate.
+Before its commit frame is durable a group has no receipt, and once it is durable the group is issued (SP-336, SP-347). An unacknowledged tail is truncated under Case L-2 and never adopted as a new group; OS visibility or an unknown sync is not prior acknowledgement. There is no state between those two, so no group first-mints after a restart; a group's missing custody rows are rebuilt only from its own durable commit frame, with its original coordinates and group-wide guard. Proper subsets, missing issued authority, source/epoch skew or ambiguous origin fence instead of filling missing receipts. After issuance but before Hold terminal commit or caller delivery, resolve the exact stored original eleven fields and continue the original pending operation without another append or first acknowledgement. Source advance/retirement and recovery events remain under the complete group gate.
 
 A four-field dedupe result, current index locator, newer manifest, retry clock or receipt-shaped body cannot reconstruct the original receipt. Lost volatile append maps must resolve the exact surviving complete EventRecord through actual current source/SP-278 authority. Once issued, pass that independently authenticated complete value to `storage.first_append_receipt.resolve_full_value.v1`; its exact three-field witness and every returned copy must equal the actual canonical v2 custody projection, including all eleven original receipt fields, original opaque segment ref and domain/version/codec-bound original-event commitment. Recheck actual owner identity, current facts, original pending intent and complete current event at staging and final terminal publication. Exact typed-byte equality is required; matching semantic fields or numerically equal Boolean/float substitutions cannot establish original value equality. Missing current event or v2 witness refuses; retained v1 semantic replay remains a separate supported reader and is never backfilled or used as a full-value fallback.
 
@@ -23433,7 +23457,7 @@ Payload remains exactly its current schema, including seven failure classes, fou
 
 The new producer `storage.integrity_finding_capture.v1` runs only in the Storage validation/recovery coordinator under the actual root identity, aggregate ownership and stable source boundary. Bind storage instance, root generation/fingerprint, manifest precondition generation/hash, and target segment generation/name/state/hash/length before any separately authorized repair. The narrow report-writing capability never authorizes source mutation. Viewer, unsupported, root-mismatch and lost-lock modes cannot persist a finding or append; user approval cannot substitute for this authority.
 
-Adopt the exact current Case L-2 first profile rather than defining another codec. It has the packed 48-byte little-endian prefix, header CRC at +32, payload CRC at +36, prefix CRC at +40, and uint64 sequence at +24. The header is exactly `[1, event_id, event_type, schema_id, schema_version, payload_schema_id, scope_kind, project_id]`. The payload is canonical MessagePack of the complete closed EventRecord with all required-present nulls. Prefix/header/payload CRC32/ISO-HDLC, flags=0, caps, canonical numeric/string/container representation, reader/version dispatch and no generation-1 fallback follow Case L-2 unchanged. The 4 KiB header and 16 MiB inline payload caps are existing transport caps, not numeric-domain changes. Amended 2026-10-31 (DL-270): flags=0 is the profile of the active segment only. Sealed segments may carry SP-335's compression flag with codec and dictionary ids, validated before decode. The inline body of a record is capped at 16 KiB (SP-337), larger bodies being payload-store references, so 16 MiB is only an outer frame bound and never an admitted body size.
+Adopt the exact current Case L-2 first profile rather than defining another codec. It has the packed 48-byte little-endian prefix, header CRC at +32, payload CRC at +36, prefix CRC at +40, and uint64 sequence at +24. The header is exactly `[1, event_id, event_type, schema_id, schema_version, payload_schema_id, scope_kind, project_id]`. The payload is canonical MessagePack of the complete closed EventRecord with all required-present nulls. Prefix/header/payload CRC32/ISO-HDLC, flags=0, caps, canonical numeric/string/container representation, reader/version dispatch and no generation-1 fallback follow Case L-2 unchanged. The 4 KiB header and 16 MiB inline payload caps are existing transport caps, not numeric-domain changes. Amended 2026-10-31 (DL-270): flags=0 is the profile of every EventRecord frame; commit frames set bit 1 (SP-347), and sealed segments are compressed as whole blocks in a sealed container (SP-346), so their frames keep their bytes. The inline body of a record is capped at 16 KiB (SP-337), larger bodies being payload-store references, so 16 MiB is only an outer frame bound and never an admitted body size.
 
 Execute the existing mandatory stages in order: magic; complete prefix and prefix CRC; version/reserved/flags; caps and checked remaining-file bounds; generation and strict sequence; header CRC/decode; payload CRC; identity decompression bounds; full EventRecord/payload schema and scope admission; duplicate header/envelope/prefix identity and persisted-ID checks. A transient observation records the actual first failed stage/code and marks later stages unrun. No caller-provided decoder object, scan digest or all-true witness can replace actual byte validation against independently held original source-owner facts.
 
@@ -23607,7 +23631,7 @@ acceptance_criteria:
   existing family/policy/event objects, critical/MVP arrays and governance gates.
 - Use existing RP-AUTHORITY-INDEFINITE as an explicit technical source-lineage class assignment with
   exact mandatory backup, hold, migration and withdrawal custody.
-- Keep durable finding pending until actual safe source/manifest barriers and first-receipt custody
+- Keep durable finding pending until the group's durable commit frame (SP-336, SP-347) and first-receipt custody
   establish completion; no duplicate append, repair or report rollback.
 - Qualify shared original full-value custody adoption as a separate Integrity-specific prerequisite;
   old receipt-shaped/static capture values do not prove it.
@@ -24027,13 +24051,13 @@ Before new capture, the actual StorageMigrationCoordinator must install the exac
 
 Original coordinator admission independently freezes the complete original root/source preimage, actor, action input, prepared complete allowed postcondition and required actual Integrity/backup/control evidence before replaceable plan, selection, copy, validation or result helpers. Input and identity hashes are commitments to that admitted original input, not self-authenticating permissions. The compact prepared capsule is durably captured before attaching/starting the existing native intent. Restore additionally binds the actual coordinator's original reservation and selected artifact before physical work; it neither invents another restore occurrence nor starts one from supplied receipt-shaped data.
 
-Only the six existing actions are accepted. `adopt_valid_tail` preserves the segment and completes authentic required adopted-group first issuance before advancing another group/source. `seal_degraded` preserves bytes while sealing the active segment through the original namespace/manifest owner and does not clear integrity loss. `truncate_unacknowledged_tail` retains the exact proved prefix and removes only the wholly unacknowledged EOF interval, after required valid-tail/group settlement. `exclude_proven_range` preserves physical bytes and all unrelated frames, gaps, exclusions and evidence while changing only the authorized proven source-selection terms. `restore_verified_backup` uses the actual selected supported artifact, original risk and confirmation, pre-restore/quarantine protection, staging and existing completed restore journal. `block_mutation` persists/verifies the original protective block, preserves segment and manifest bytes, and never converts inability to append a report into permission to mutate. Exact action proof variants and all existing payload/aftermath cross-products are defined by the closed custody and existing event schemas. No new loss-acceptance route is introduced.
+Only the six existing actions are accepted. `adopt_valid_tail` preserves the segment and, since DL-270, adopts only complete groups whose valid commit frames are already durable, rebuilding their missing custody rows from those frames before advancing another group/source (SP-336, SP-347). `seal_degraded` preserves bytes while sealing the active segment through the original namespace/manifest owner and does not clear integrity loss. `truncate_unacknowledged_tail` retains the exact proved prefix and removes only the wholly unacknowledged EOF interval, after required valid-tail/group settlement. `exclude_proven_range` preserves physical bytes and all unrelated frames, gaps, exclusions and evidence while changing only the authorized proven source-selection terms. `restore_verified_backup` uses the actual selected supported artifact, original risk and confirmation, pre-restore/quarantine protection, staging and existing completed restore journal. `block_mutation` persists/verifies the original protective block, preserves segment and manifest bytes, and never converts inability to append a report into permission to mutate. Exact action proof variants and all existing payload/aftermath cross-products are defined by the closed custody and existing event schemas. No new loss-acceptance route is introduced.
 
 At entry to the original physical publisher, before its first returning helper, independently capture the complete actual coordinator controls, initial and selected Store/root identities and contents, operation and permitted image. This includes the actual selected-backup token and the retired-controls gate. Independently derive the entire permitted adopted-tail or original restore transition before the corresponding owner call; bind only genuine newly issued opaque identities afterward, without adopting helper-returned contents as their own expectation. After every returning helper, including the last preimage equality predicate, a final pure typed predicate must compare the complete prepared candidate, original operation/capsule, actual source/preimage, native intent and protected controls/files/backup artifacts against the original permitted transition. No replaceable helper may run between that predicate and publication of the physical image, effect origin and physical-done/count/phase transition. A changed candidate refuses before publication. Full-object comparison includes unrelated files and original backup selection/risk/confirmation values; selected projection equality alone is insufficient. Genuine earlier adopted-tail issuance, confirmation, backup or native restore-occurrence effects survive a later dependent refusal and remain governed by their original owners. Do not roll them back or redispatch a consumed restore occurrence to make a retry succeed.
 
 The original physical receipt is durably captured before frozen event input and before this event's own AppendReceipt. It preserves the complete six-action proof and original postcondition, with `first_effect_observed_at_utc` meaning the first successfully durably captured verification/receipt observation; it is not an assertion of unknowable earliest execution time. It remains immutable afterward. Physical post-manifest proof excludes later Recovery or Boot event append, so no receipt hash depends on its own future event. Freeze original actor/time and complete producer input from the authentic physical receipt before any event-construction helper; a coherently rewritten helper return cannot replace the original actor or action.
 
-Publish only through the actual SP-286/CV-339 shared append owner with complete current original source/group/backup/permission/maintenance and restore gates. Before source publication, resume the same intent; after both source barriers but before issuance, authenticate the never-issued original protected group and issue once; after actual issuance, replay the same original eleven-field receipt. Recovered assignments require explicit original full-value/current-source authority, not semantic-only receipt data or current timestamps. Independently derive the whole terminal candidate before helper validation, then recheck original physical receipt, frozen producer, complete original current EventRecord, full-value witness, same actual owner and pending preimage immediately before durable compact publication. Genuine source/receipt effects survive a later terminal refusal. An unsafe append sink leaves effect-durable/append-pending authority and mutation fences in place.
+Publish only through the actual SP-286/CV-339 shared append owner with complete current original source/group/backup/permission/maintenance and restore gates. Before its group's commit frame is durable, resume the same intent; once it is durable the group is issued (SP-336, SP-347), so replay the same original eleven-field receipt, rebuilding missing custody rows only from that commit frame. Recovered assignments require explicit original full-value/current-source authority, not semantic-only receipt data or current timestamps. Independently derive the whole terminal candidate before helper validation, then recheck original physical receipt, frozen producer, complete original current EventRecord, full-value witness, same actual owner and pending preimage immediately before durable compact publication. Genuine source/receipt effects survive a later terminal refusal. An unsafe append sink leaves effect-durable/append-pending authority and mutation fences in place.
 
 For a newly completed actual restore occurrence only, the actual Recovery-owner accepted-operation adapter may bind the existing SP-286 transient acceptance to that original completed journal, selected backup/boundary/epoch, compact action and physical receipt, frozen event/scoped idempotency/semantic tuple, and current native acceptance revision. This publishes the just-completed result; it does not repeat physical restore. Old pending restored images, copied journals, later occurrences and lost previously issued authority cannot first-mint through it. If the distinction cannot be proved, publication remains pending. Original full-root restore must preserve pending compact custody and its actual journal/receipt authority across promotion; file copying is not proof of that native protection.
 
@@ -27256,7 +27280,7 @@ Each agent has exactly one terminal event. Two terminal events that race carry t
 
 For every append of the seven families, `storage.coordination_append.v1@1.0.0` and its caller `AgentCoordinator` explicitly adopt SP-286/CV-339's `storage.first_append_receipt.resolve.v2`. The request is the original admitted EventRecord identity and semantic request under the existing replay policy, not a caller custody row, locator or receipt: the actual original event ID, scoped idempotency key and authored payload of the original coordination event, in the actual same Storage instance. Storage authenticates the actual global and scoped identity, the source semantic tuple and the canonical issued custody. The returned eleven-field AppendReceipt and the retained four-field `original_append_result` must join the original event and sequence and the Storage-owned original segment reference and offset. The exact original durability class is the required synced barrier. A newer locator, timestamp, supplied digest or four-field dedupe result alone cannot satisfy it.
 
-After a lost acknowledgement, the coordinator returns the resolved original receipt and appends nothing new. An uncertain append stays fenced until Storage resolves the original identity, and the coordinator appends no later event for that agent before then. If Storage's own reconciliation establishes that no original event exists, only the original append identity is retried, through the unchanged shared idempotency route with the same original input; that is not a first-mint request. The coordinator never asks for a first mint from a missing receipt, lost delivery, tail absence or a supplied never-issued flag. Only Storage's own writer reaches `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete current protected group, after the original source barrier and complete current group, source, dedupe and restore checks. Missing or conflicting custody keeps the call recovery-required under the existing failure behavior. A proper subset, lost previously issued custody, a restored old pending request or an ambiguous original group stays fenced. In-place restart after actual protected promotion follows SP-286's original group handoff, without reconstructing old transient capabilities. Amended 2026-10-31 (DL-270): the original source barrier is the group's single data sync (SP-336); no per-group manifest barrier is required. Coordination events are barrier-class, so the group gets a full flush. SP-286 custody checks are unchanged.
+After a lost acknowledgement, the coordinator returns the resolved original receipt and appends nothing new. An uncertain append stays fenced until Storage resolves the original identity, and the coordinator appends no later event for that agent before then. If Storage's own reconciliation establishes that no original event exists, only the original append identity is retried, through the unchanged shared idempotency route with the same original input; that is not a first-mint request. The coordinator never asks for a first mint from a missing receipt, lost delivery, tail absence or a supplied never-issued flag. Only Storage's own writer issues, inside the group's write-and-sync window: the group is issued when its commit frame is durable (SP-336, SP-347), after its complete current group, source, dedupe and restore checks. Missing or conflicting custody keeps the call recovery-required under the existing failure behavior. A proper subset, lost previously issued custody, a restored old pending request or an ambiguous original group stays fenced. After an in-place restart, recovery finds each group issued, with a surviving commit frame, or treated as never issued, with an uncovered unacknowledged tail at the active end truncated and its operations retried under their idempotency keys, while a proven hole or a covered missing frame stays fenced (SP-286, SP-336), without reconstructing old transient capabilities. Amended 2026-10-31 (DL-270): the original source barrier is the group's single data sync (SP-336); no per-group manifest barrier is required. Coordination events are barrier-class, so the group gets a full flush. SP-286 custody checks are unchanged.
 
 A verified older restore does not make omitted coordination work fresh. The coordinator keeps no durable pending coordination request, so a restore brings none back and nothing is replayed. Only an actual newly accepted coordination event after the coordinator's completed restore occurrence and session may use SP-286's fresh-operation admission. That covers the crash detector's `process_lost` resolution of an agent the restored store still shows as non-terminal (OSI-438). Lost or restored requests are never renamed or reaccepted as new events.
 
@@ -28302,20 +28326,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  DL-270 card 1. SeglogFrameV2 admits a compression profile now, before any writer ships: a flags bit that marks a
-  compressed payload, a codec id and a dictionary id, so compression can be switched on later without a format
-  migration. The active segment keeps the Case L-2 flags=0 uncompressed profile, so recovering the live segment
-  never depends on a dictionary. When a segment closes, a background job repacks it into seekable zstd level 3
-  blocks of about 256 KiB with a sequence and thread index, verifies that the repacked copy decodes to the same
-  EventRecord bytes, sequence and order, and only then retires the uncompressed bytes. Cold segments use zstd
-  level 9 in seekable 1 MiB frames; deep archives, exports and backups may use zstd long-distance matching with a
-  2^27 window. PM never compresses above level 9: level 19 measured 3-11% smaller for about 40 times the CPU.
-  Repacking and compression run only on sealed data, never on the commit path and never under the aggregate
-  canonical-store lock. Write-time compression with trained dictionaries may be enabled later behind the same
-  flag. OpenZL is a cold-tier prototype only, behind its own codec id, revisited at OpenZL 1.0. Measured on real
-  Codex and Claude Code history: 3.4-7.2 times smaller at 64 KB-1 MiB block granularity, a 50-message page still
-  opening in under 1 ms, for about 25-40 ms of one idle core per MB repacked. The exact codec and dictionary byte
-  fields are a schema and fixture companion of this unit.
+  DL-270 card 1. SeglogFrameV2 reserves a compression descriptor now, before any writer ships: a flags bit that
+  marks a compressed payload, a codec id and a dictionary id (SP-346), so compression can be switched on later
+  without a format migration; until a later decision admits it, a frame with that bit set is unsupported. The
+  active segment keeps the Case L-2 flags=0 uncompressed profile, so recovering the live segment never depends on
+  a dictionary. When a segment closes, a background job repacks it into a sealed container (SP-346) of seekable
+  zstd level 3 blocks of about 256 KiB with a sequence and thread index, verifies that the repacked copy decodes
+  to the same EventRecord bytes, sequence and order, and only then retires the uncompressed bytes. Cold segments
+  use zstd level 9 in seekable 1 MiB frames; deep archives, exports and backups may use zstd long-distance
+  matching with a 2^27 window. PM never compresses above level 9: level 19 measured 3-11% smaller for about 40
+  times the CPU. Repacking and compression run only on sealed data, never on the commit path and never under the
+  aggregate canonical-store lock. Write-time compression with trained dictionaries may be enabled later behind the
+  same flag. OpenZL is a cold-tier prototype only, behind its own codec id, revisited at OpenZL 1.0. Measured on
+  real Codex and Claude Code history: 3.4-7.2 times smaller at 64 KB-1 MiB block granularity, a 50-message page
+  still opening in under 1 ms, for about 25-40 ms of one idle core per MB repacked. SP-346 defines the exact
+  descriptor and container bytes.
 gui_related: false
 gui_classification_reason: "Defines the event log's stored byte profile and background repack; no visible surface."
 split_recommended: false
@@ -28386,16 +28411,38 @@ canonical_text: >-
   member's receipt fields, with acknowledged_at_utc chosen once when the group is sealed, and from then on those
   fields are immutable; one data sync of the segment makes the commit frame durable, and that is the issuance
   boundary, so the group is issued exactly when its commit frame is durable; receipts are exposed only after that
-  sync; the receipt-custody rows are then committed in redb without a sync of their own and become durable with
-  the next synced commit. Recovery scans from the last manifest checkpoint: a group whose valid commit frame lies
-  within the durable tail is issued, and its missing custody rows are rebuilt from that frame, identical to the
-  ones exposed; a group without a valid commit frame was never issued, and Case L-2 truncates its tail; custody
-  rows without a durable commit frame are corruption and fence. A barrier-class group also takes a full flush and
+  sync; the receipt-custody rows are then committed in redb without a sync of their own and become durable at the
+  next durability checkpoint. Recovery first makes the active segment and recent packs durable with a full flush,
+  because a frame can survive a process crash without its sync having returned, then scans from the last manifest
+  checkpoint: a group whose valid commit frame lies within the durable tail is issued, and its missing custody
+  rows are rebuilt from that frame, identical to the ones exposed; a group without a valid commit frame after that
+  flush is treated as never issued, and Case L-2 truncates its tail; on macOS that includes an ordinary group
+  acknowledged and then lost to a power cut within its class, which recovery cannot tell apart, and because
+  nothing durable and nothing barrier-class can refer to such a group, its identities are released and a retry
+  under one of its keys is new work; custody rows without a durable commit frame are corruption and fence, within
+  the range recovery scans; rows for groups before the manifest's latest publication, including lawfully retired
+  or compacted source (Case L-3), replay from the rows alone. A barrier-class group also takes a full flush and
   commits its custody rows durably before acknowledging. The manifest is promoted only at creation, rotation and
   structural changes. Restoring a backup rebuilds custody rows beyond its redb snapshot from the restored
-  segments' commit frames. This sequence supersedes Case L's per-group manifest promotion and its redb-commit
-  issuance boundary in storage-plan's publication subsection and in CV-339; rewriting the Case L proof tables to
-  match is a pending companion. On Linux and Windows every acknowledged group survives power loss.
+  segments' commit frames. A durability checkpoint, a full flush of the active segment and of packs written since
+  the last one followed by a durable redb commit, starts within 1 s of the first acknowledgement it would cover,
+  and once 8 MiB of acknowledged segment bytes or 64 MiB of non-durable redb writes are outstanding, so a backlog
+  passes those amounts only by the transaction in flight, before every manifest publication and at clean shutdown;
+  these are fixed owner values in the storage registry's storage_profile. Every durable redb commit, in either
+  redb file, follows a full flush of the segments and packs written since the last one, so no durable row outlives
+  the frames it depends on, and an ordinary group lost on macOS leaves no durable trace; each such commit holds
+  the group gate from its flush until it returns, so no group is acknowledged in between. On macOS the checkpoint
+  bounds what a power loss can drop to about the last second of ordinary groups; on every OS it bounds redb's
+  non-durable backlog. These are healthy-operation targets: while a checkpoint is overdue, running late or
+  failing, new acknowledgements wait for it, so slow or failing I/O stretches the window only by the stall; a
+  failed checkpoint is an I/O failure that storage health shows, retried until it succeeds. This sequence
+  supersedes Case L's per-group manifest promotion and its redb-commit issuance boundary; storage-plan's First
+  append receipt custody section and CV-339 follow it, and SP-347 defines the commit frame. Pinned contract
+  snapshots that still describe the earlier sequence, such as
+  goal_certified_event_coordinator_contracts/protocol.md (F5b, F5c and its post-append prerequisite), keep their
+  bytes until their owners recertify them; SP-336 governs where they differ, and the routes they describe are not
+  built as written: an implementation follows SP-336 and the profile is recertified before that route is enabled.
+  On Linux and Windows every acknowledged group survives power loss.
 gui_related: false
 gui_classification_reason: "Defines commit durability and store creation; no visible surface."
 split_recommended: false
@@ -28409,7 +28456,10 @@ acceptance_criteria:
   - "After kill -9, torn writes or a crash while a store is created, no acknowledged group is lost, duplicated or corrupted."
   - "After a simulated power cut nothing is reordered or corrupted, no barrier-class group is lost, and only on macOS may ordinary groups after the last full flush be missing."
   - "Receipt-custody rows rebuilt after a crash are identical to the ones exposed before it."
-  - "A group is issued exactly when its commit frame is durable: a crash before that sync leaves it never issued, and a crash after it leaves it issued with identical receipts."
+  - "A group is issued exactly when its commit frame is durable, by the writer's sync or by recovery's flush: one whose frame survives is issued with the receipts sealed in it, and one whose frame does not survive is treated as never issued, which on macOS can include an acknowledged ordinary group lost within its class."
+  - "In healthy operation on macOS a checkpoint starts within 1 s of the first acknowledgement it covers and once 64 MiB of non-durable redb writes accumulate; while one is overdue or failing, no new acknowledgement is given."
+  - "After a macOS power loss no durable row refers to a missing ordinary group."
+  - "A durable redb commit never persists a row that depends on a group acknowledged after its full flush, in either redb file."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -28521,18 +28571,20 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   DL-270 card 4. Each thread has a derived, rebuildable render-page store: a thread_head record (counts, the
-  newest page and display state), sealed pages of 50 items stored as zstd-compressed blocks of at most 256 KiB,
-  and a hot tail of unsealed items. Each item in a page carries a display header: role, kind, timestamps, a short
-  summary, summaries of collapsed sections, and references to attachments and payloads. The chat renders from
-  headers and loads full bodies from the event log or payload store only when they are expanded or scrolled to.
-  Opening a thread reads thread_head, the hot tail and the newest page, and never replays the thread's events. Run
-  views and agent transcripts that show a thread's items read the same pages. The pages are a registry-declared
-  derived family rebuilt from seglog when their format changes. ACD-242 makes load-older paging mandatory over
-  these pages. A CI benchmark that fails the build gates the open path on a 100k-event thread: first page within
-  150 ms at p95, warm or cold, reading at most 2 MiB, as card 4 says. A jump to an older item resolves its page
-  from thread_head's page index and loads a bounded window around it; sequential load-older is for adjacent
-  scrolling. Measured: a prototype opened the newest 50 of 100k real Codex events in 5.9-6.7 ms, reading about 200
-  KB, against 2.3 s to replay; full records in place of display headers overflowed 99 of 2,000 pages.
+  newest page and display state), one small page-index row per sealed page (its sequence range and item count),
+  sealed pages of 50 items stored as zstd-compressed blocks of at most 256 KiB, split into chunk rows of at most
+  16 KiB that one range scan reads back (SP-340), and a hot tail of unsealed items. Each item in a page carries a
+  display header: role, kind, timestamps, a short summary, summaries of collapsed sections, and references to
+  attachments and payloads. The chat renders from headers and loads full bodies from the event log or payload
+  store only when they are expanded or scrolled to. Opening a thread reads thread_head, the hot tail and the
+  newest page, and never replays the thread's events. Run views and agent transcripts that show a thread's items
+  read the same pages. The pages are a registry-declared derived family rebuilt from seglog when their format
+  changes. ACD-242 makes load-older paging mandatory over these pages. A CI benchmark that fails the build gates
+  the open path on a 100k-event thread: first page within 150 ms at p95, warm or cold, reading at most 2 MiB, as
+  card 4 says. A jump to an older item resolves its page from the page-index rows and loads a bounded window
+  around it; sequential load-older is for adjacent scrolling. Measured: a prototype opened the newest 50 of 100k
+  real Codex events in 5.9-6.7 ms, reading about 200 KB, against 2.3 s to replay; full records in place of display
+  headers overflowed 99 of 2,000 pages.
 gui_related: true
 gui_classification_reason: "Determines how fast a long chat opens and how older messages page in."
 split_recommended: false
@@ -28544,6 +28596,7 @@ acceptance_criteria:
   - "Pages rebuild from seglog after a format change, and losing them loses no canonical data."
   - "A page holds display headers and references, not full bodies."
   - "A jump to any item reads a bounded number of pages, however far back it is."
+  - "No render-page value, thread_head, page-index row or page chunk, exceeds 16 KiB."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -28658,17 +28711,18 @@ canonical_text: >-
   a derived file is rebuilt instead, and a canonical file is compacted by copying its live records into a new file
   that is swapped in during a brief pause within SP-342's limits. Families that keep a whole document under one
   key, such as settings:v1 and config:v1, split it into per-key rows or store it by reference; the storage
-  registry records which. Each storage family has a disk budget. Budgets, the fragmentation threshold and cache
-  sizes are fixed owner values, shown read-only, not settings. Storage health (F3-457) shows usage, budget,
-  reclaimable bytes and the last store compaction, with a verified reclaim action that sends the existing
-  cmd.storage.compaction.request with the current retention policy reference. Derived families are held within
-  their budgets by eviction and rebuild. Canonical budgets are advisory: a canonical family at or over its budget
-  raises a notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes
-  canonical history because of a budget. Daily usage totals are a canonical family (UF-108). The budget values are
-  owner values here until the storage registry companion, which is pending, holds them. Measured: 128-130 of 301
-  redb families stored JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store
-  returned no space until compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk,
-  against 109.6 s for SQLite VACUUM, whose disk use peaked at 4.71 GB, 1.5 times the database.
+  registry's storage_profile records which. Each storage family has a disk budget. Budgets, the fragmentation
+  threshold and cache sizes are fixed owner values, shown read-only, not settings. Storage health (F3-457) shows
+  usage, budget, reclaimable bytes and the last store compaction, with a verified reclaim action that sends the
+  existing cmd.storage.compaction.request with the current retention policy reference. Derived families are held
+  within their budgets by eviction and rebuild. Canonical budgets are advisory: a canonical family at or over its
+  budget raises a notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes
+  canonical history because of a budget. Daily usage totals are a canonical family (UF-108). The storage
+  registry's storage_profile holds the values: each family's redb file, storage group and value limit, and twelve
+  storage groups with advisory canonical and hard derived budgets. Measured: 128-130 of 301 redb families stored
+  JSON text; redb held 1-8 KiB values at 1.56 times their size; deleting half a store returned no space until
+  compact(); compacting a 3 GB store took 21.7 s with 328 MB of RAM and no extra disk, against 109.6 s for SQLite
+  VACUUM, whose disk use peaked at 4.71 GB, 1.5 times the database.
 gui_related: true
 gui_classification_reason: "Storage health shows usage, budgets, reclaimable bytes and a reclaim action."
 split_recommended: false
@@ -28681,6 +28735,7 @@ acceptance_criteria:
   - "Storage health shows each family's usage against its budget and its reclaimable bytes."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-storage-profile-check.py"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: redb_bloat_and_fragmentation
 reasoning_tier: high
@@ -28957,8 +29012,9 @@ canonical_text: >-
   the first read of every new file cost 4.2-5.4 ms more, which the Windows test attributes to Defender (inferred).
   This covers the app data root and every store under it, including project-scoped stores, which live under the
   app data root keyed by project (SP-015); PM adds no .noindex directory or other marker inside a user's project
-  folder. PM changes no system setting and asks for no Defender exclusion. The exact paths are a companion change
-  in SP-015 and the documents that name them.
+  folder. PM changes no system setting and asks for no Defender exclusion. SP-015 names the exact roots:
+  ~/Library/Application Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ on Windows and
+  $XDG_DATA_HOME/puppet-master/ on Linux, with project-scoped stores under <data root>/projects/<project_id>/.
 gui_related: false
 gui_classification_reason: "Defines where data is stored; no visible surface."
 split_recommended: false
@@ -28996,6 +29052,162 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not rely on .metadata_never_index or the not-content-indexed flag."
   - "Do not change system indexer or antivirus settings."
+owner_hints:
+  - "Plans/storage-plan.md"
+```
+
+### SP-346 - Frame Compression Descriptor And The Sealed Segment Container
+
+```yaml
+plan_unit_id: SP-346
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  DL-270 card 1 companion: the exact byte fields. Per-frame descriptor, reserved now and admitted later: in the
+  48-byte SeglogFrameV2 prefix, flags bit 0 (0x01) marks a compressed payload; byte +44 is payload_codec (1 =
+  zstd; 0 and 2-255 unassigned), byte +45 is reserved and 0, and bytes +46 to +47 are dictionary_id, an unsigned
+  little-endian 16-bit id (0 = no dictionary; 1-65535 name trained dictionaries kept durable in the store's
+  dictionary table and never reused). With bit 0 clear, bytes +44 to +47 stay 0 as today. With bit 0 set,
+  payload_length and payload_crc32 cover the stored compressed bytes, and decoding yields the canonical
+  MessagePack EventRecord within the existing caps. Until a later decision admits a write-time compression
+  profile, a frame with bit 0 set is unsupported_flags, so first-profile writers and readers are unchanged. Sealed
+  segment container: when a segment closes, segment repack writes <segment>.pmz with a 96-byte little-endian
+  header: magic PMSEGZ1 followed by a zero byte at 0; container_version 1 at 8; codec 1 (zstd) at 9; level at 10,
+  3 warm or 9 cold; container_flags at 11, bit 0 marking the archive form; block_target_bytes (u32) at 12, 262,144
+  warm or 1,048,576 cold; dictionary_id (u16) at 16; reserved u16 0 at 18; block_count (u32) at 20;
+  segment_generation (u64) at 24; source_length (u64) at 32; source_sha256 (32 bytes) at 40; index_offset (u64) at
+  72; header_crc32 (u32) at 80, over the header with bytes 80 to 83 zeroed; and 12 reserved zero bytes at 84. Then
+  come block_count complete zstd frames, each with content size and checksum and each decompressing to a byte
+  range of the source segment that starts and ends on frame boundaries, and at index_offset the block index: a
+  canonical MessagePack array of [source_offset, source_length, block_offset, block_length, first_sequence,
+  last_sequence, thread_ids], followed by its CRC-32, the zlib (ISO-HDLC) CRC of the index bytes stored
+  little-endian, which ends the file. Repack verifies that the blocks decompress, in order, to exactly
+  source_length bytes whose SHA-256 is source_sha256 and that every frame re-validates, and rebuilds the block
+  index from the decoded frames, requiring every entry's offsets, lengths, sequence range and thread set to equal
+  the written index; only then does it rename the container into place, sync the parent directory and retire the
+  source. Frames inside a container keep their original bytes, so flags stay 0 apart from commit frames (SP-347).
+  Cold repack rewrites a container at level 9 with 1 MiB blocks. The archive form (container_flags bit 0) is one
+  long-distance zstd stream with a 2^27 window and no block index, for exports and backups only, never a live read
+  path: its header has block_count 1, block_target_bytes 0 and index_offset 0, and the single zstd frame, with
+  content size and checksum, runs from byte 96 to the end of the file. Readers find a sequence or a thread through
+  the block index and decompress only those blocks; the sealed_segment_index planned family caches that index.
+  Plans/seglog_frame_v2_wire_fixtures.json container_cases hold warm, cold and archive containers of the group
+  fixture's segment; compressed bytes depend on the zstd version, so readers verify the header, index, CRCs and
+  decompressed SHA-256, never compressed-byte equality.
+gui_related: false
+gui_classification_reason: "Defines stored byte layouts; no visible surface."
+split_recommended: false
+depends_on: [SP-335, SP-236]
+unblocks: []
+acceptance_criteria:
+  - "A frame with flags bit 0 set is unsupported_flags until a write-time compression profile is admitted."
+  - "With flags bit 0 clear, prefix bytes +44 to +47 are zero, as the existing reserved fixture proves."
+  - "A container's blocks decompress, in order, to bytes whose SHA-256 equals source_sha256 before the source segment is retired."
+  - "No block splits a frame, and every frame in a container re-validates byte for byte."
+  - "The archive form is never opened on a live read path."
+  - "A container whose block index disagrees with its decoded frames never replaces its source."
+  - "An archive container's header has block_count 1, block_target_bytes 0 and index_offset 0."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: seglog_container_format_drift
+reasoning_tier: high
+context_scope: dl270_frame_companions
+implementation_surfaces:
+  - "Plans/storage-plan.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/seglog_frame_v2_wire_fixtures.json"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-335"
+  - "Plans/storage-plan.md#SP-336"
+preserved_exact_tokens:
+  - "PMSEGZ1"
+  - "payload_codec"
+  - "dictionary_id"
+  - "source_sha256"
+  - "unsupported_flags"
+negative_constraints:
+  - "Do not admit flags bit 0 without a later decision admitting a write-time compression profile."
+  - "Do not retire a source segment before its container verifies."
+owner_hints:
+  - "Plans/storage-plan.md"
+```
+
+### SP-347 - The Group Commit Control Frame
+
+```yaml
+plan_unit_id: SP-347
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  DL-270 card 2 companion: the commit frame of SP-336's publication sequence. A commit group ends with a control
+  frame: a SeglogFrameV2 frame with flags bit 1 (0x02) whose header is [1, event_id, "pm.seglog.group_commit",
+  "pm.seglog.control.v1", "1.0.0", "pm.seglog.group_commit.v1", "application", null], with event_id
+  seglog_commit:<segment_generation>:<last_sequence>. Its sequence_id equals the sequence of the group's last
+  member: the strictly-greater rule applies between EventRecord frames, and a control frame carries exactly the
+  sequence of the frame before it. Its payload is canonical MessagePack of a map with commit_group_id,
+  segment_name, segment_generation, manifest_generation (the manifest generation current at seal),
+  durability_class (ordinary or barrier), acknowledged_at_utc (selected once at seal, RFC 3339 UTC with
+  milliseconds), first_sequence, last_sequence members, an array of [event_id, sequence_id, byte_offset] in
+  sequence order, and restore_admission, null or CV-339's closed object for a group published through a restore
+  occurrence's fresh-operation admission. Each member's eleven AppendReceipt fields follow from it: the group
+  fields, the member triple, durability_state synced (CV-339), and durable_end_offset, the end of the group's last
+  member frame, where the commit frame begins. A frame with bit 1 and any other header is control_header_mismatch;
+  bits 0 and 1 together are unsupported_flags while bit 0 is unadmitted. Readers skip control frames when
+  replaying EventRecords and use them for issuance, receipts and recovery only; a valid commit frame within the
+  durable tail marks its group issued (SP-336). CV-339's group_digest is unchanged: its members tile the span from
+  durable_start_offset, the first member frame's offset, to durable_end_offset, and the commit frame, which is not
+  a member, begins exactly at durable_end_offset; the commit frame does not store the digest, its own CRCs protect
+  its bytes, and every custody row must equal its terms. The segment's durable watermark is the end of its last
+  valid commit frame. Plans/seglog_frame_v2_wire_fixtures.json group_cases hold a one-member group with its commit
+  frame, the receipts it yields and its group digest, plus a torn and a missing commit frame that leave the group
+  unissued; it is a wire and recovery vector, a one-member barrier group built from the schema-only base event,
+  and complete custody rows are rebuilt by their own recipes.
+gui_related: false
+gui_classification_reason: "Defines a stored control frame; no visible surface."
+split_recommended: false
+depends_on: [SP-336, SP-286]
+unblocks: []
+acceptance_criteria:
+  - "Every member's eleven AppendReceipt fields rebuild identically from its group's commit frame."
+  - "A commit frame's sequence equals the sequence of the frame before it, and EventRecord sequences stay strictly increasing."
+  - "A frame with flags bit 1 and a non-control header fails as control_header_mismatch."
+  - "Replay of EventRecords skips control frames."
+  - "A group published through restore admission carries its restore_admission in its commit frame, and every group's group_digest recomputes from its own frames."
+  - "The fixture group's receipts and group digest reproduce from its bytes."
+validation_surfaces:
+  - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: group_commit_frame_drift
+reasoning_tier: high
+context_scope: dl270_frame_companions
+implementation_surfaces:
+  - "Plans/storage-plan.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/seglog_frame_v2_wire_fixtures.json"
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+  - "Plans/storage-plan.md#SP-335"
+  - "Plans/storage-plan.md#SP-336"
+preserved_exact_tokens:
+  - "pm.seglog.group_commit"
+  - "pm.seglog.control.v1"
+  - "control_header_mismatch"
+  - "acknowledged_at_utc"
+negative_constraints:
+  - "Do not give a control frame its own EventRecord sequence."
+  - "Do not replay a control frame as an EventRecord."
 owner_hints:
   - "Plans/storage-plan.md"
 ```

@@ -8376,13 +8376,18 @@ plan_unit_id: MS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: After an actual Project owner commit, first-run onboarding initializes provider/model setup with
-  a paid-provider-first posture. Detected usable accounts and copied routes are verified and become Ready automatically
-  without a Connect or Use This Provider gate. Authentication alone does not prove entitlement, billing, trust,
-  capability, route, quota or readiness. Free Models and the retained exact token Fee models appear after that paid-provider
-  prompt, including after explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121
-  retain canonical provider/model/account identity, exact underlying setup returns, paid-first default ordering,
-  explicit user overrides, truthful eligibility and no recommendation/quality-ranking scope.
+canonical_text: 'After an actual Project owner commit, first-run onboarding initializes provider/model setup with a paid-provider-first
+  posture. Detected usable accounts and copied routes are verified and become Ready automatically without a Connect or
+  Use This Provider gate. Authentication alone does not prove entitlement, billing, trust, capability, route, quota or
+  readiness. Free Models and the retained exact token Fee models appear after that paid-provider prompt, including after
+  explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121 retain canonical provider/model/account
+  identity, exact underlying setup returns, paid-first default ordering, explicit user overrides, truthful eligibility
+  and no recommendation/quality-ranking scope.
+
+
+  DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
+  ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
+  as AI.'
 gui_related: true
 gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10
   copy, and readiness labels.
@@ -8402,12 +8407,15 @@ acceptance_criteria:
   prove it.
 - Free Models top-10 and fallback behavior continues to preserve paid-first defaults and explicit user ordering.
 - Free Models setup labels and availability reasons map through MS-121 and underlying provider/account state.
-- Recommendation, quality-rank, coding-strength, online-review, local-learning, and benchmark/probe-calibration
-  language remains absent from this first-run flow.
-- Both provider_setup and free_models_setup require the actual committed Project context; copied routes or cached
-  credentials never substitute for current owner readiness.
-- Skipping the paid-provider prompt still offers optional Set Up Free Models; no second credential model or retired
-  cmd.onboarding.free_models command is created.
+- Recommendation, quality-rank, coding-strength, online-review, local-learning, and benchmark/probe-calibration language
+  remains absent from this first-run flow.
+- Both provider_setup and free_models_setup require the actual committed Project context; copied routes or cached credentials
+  never substitute for current owner readiness.
+- Skipping the paid-provider prompt still offers optional Set Up Free Models; no second credential model or retired cmd.onboarding.free_models
+  command is created.
+- 'DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
+  ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
+  as AI.'
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - future first-run provider sequencing fixtures
@@ -8436,6 +8444,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 source_atom_ids:
 - atom-0016
 - atom-0033
@@ -8485,17 +8495,41 @@ plan_unit_id: MS-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Free Models availability states are derived from underlying provider/account/model/setup/quota/policy facts and exposed through compact friendly labels while retaining canonical skip and pressure reasons. Normal unavailable reason priority is `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, then `Unknown`, with `Multiple issues` when no single reason dominates. Setup actions delegate to the exact underlying PM provider/account setup surface, carry return context to the originating Free Models row/list, refresh eligibility on return, and keep saved top-10 order unchanged.
+canonical_text: 'Free Models availability states are derived from underlying provider/account/model/setup/quota/policy
+  facts and exposed through compact friendly labels while retaining canonical skip and pressure reasons. Normal unavailable
+  reason priority is `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, then `Unknown`,
+  with `Multiple issues` when no single reason dominates. Setup actions delegate to the exact underlying PM provider/account
+  setup surface, carry return context to the originating Free Models row/list, refresh eligibility on return, and keep
+  saved top-10 order unchanged.
+
+
+  DL-272 FREE-SIGNIN, 2026-11-01: Free Models sign-in waits for the person through the underlying provider’s protected
+  auth flow, offers the actual page/Open/Copy fallback and Cancel, and drops late results after cancel or a fresh attempt.
+  Existing accounts and saved model order are preserved.
+
+
+  DL-272 FREE-DISABLE, 2026-11-01: A set-up Free Models route offers Turn off through cmd.free_models.route.disable.
+  Models resolves the exact route, underlying provider and current policy scope, then disables that route for future
+  selections through its sole owner. It preserves underlying credentials, other routes, saved order and already-dispatched
+  work. Refusal or an unavailable owner makes no accepted change.'
 gui_related: true
 gui_classification_reason: Defines user-visible availability labels, setup actions, compact row reasons, and detail expansion behavior.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Compact rows show one top plain reason or `Multiple issues`, while expanded details may show current skip reason, underlying provider/account, last checked time, last successful route if known, cooldown/Retry now state if known, and source/ref.
-  - "Setup labels map to account state: `Sign in`, `Set up provider`, or `Reconnect`."
-  - Setup cancel or failed auth returns to the originating Free Models row/list, keeps saved top-10 unchanged, refreshes eligibility if possible, and shows `Still needs sign-in` or `Could not connect` without separate notification.
-  - Friendly availability labels map to canonical failure/pressure/receipt records and never replace source identity.
+- Compact rows show one top plain reason or `Multiple issues`, while expanded details may show current skip reason, underlying
+  provider/account, last checked time, last successful route if known, cooldown/Retry now state if known, and source/ref.
+- 'Setup labels map to account state: `Sign in`, `Set up provider`, or `Reconnect`.'
+- Setup cancel or failed auth returns to the originating Free Models row/list, keeps saved top-10 unchanged, refreshes
+  eligibility if possible, and shows `Still needs sign-in` or `Could not connect` without separate notification.
+- Friendly availability labels map to canonical failure/pressure/receipt records and never replace source identity.
+- 'DL-272 FREE-SIGNIN, 2026-11-01: Free Models sign-in waits for the person through the underlying provider’s protected
+  auth flow, offers the actual page/Open/Copy fallback and Cancel, and drops late results after cancel or a fresh attempt.
+  Existing accounts and saved model order are preserved.'
+- 'DL-272 FREE-DISABLE, 2026-11-01: A set-up Free Models route offers Turn off through cmd.free_models.route.disable.
+  Models resolves the exact route, underlying provider and current policy scope, then disables that route for future
+  selections through its sole owner. It preserves underlying credentials, other routes, saved order and already-dispatched
+  work. Refusal or an unavailable owner makes no accepted change.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Free Models availability reason mapping fixtures
@@ -8514,7 +8548,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+- Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 source_atom_ids: [atom-0084, atom-0085, atom-0086, atom-0088, atom-0089, atom-0090, atom-0114, atom-0115, atom-0119, atom-0120, atom-0123, atom-0127, atom-0130, atom-0132, atom-0134, atom-0136, atom-0161, atom-0163, atom-0165, atom-0167, atom-0169, atom-0170, atom-0173, atom-0174, atom-0228, atom-0232, atom-0236, atom-0240, atom-0244, atom-0248, atom-0251, atom-0255, atom-0257, atom-0259, atom-0261, atom-0263, atom-0265, atom-0266, atom-0267, atom-0269, atom-0270, atom-0271, atom-0285, atom-0286]
 preserved_exact_tokens:
   - "Needs sign-in"

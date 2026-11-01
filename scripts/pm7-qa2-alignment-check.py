@@ -49,11 +49,11 @@ def check():
         require(restore_stage(case["value"]) == case["expected"], "restore progression " + case["name"])
     bindings = read("pm7_control_bindings.json")["bindings"]
     require(len(bindings) == build["counts"]["pm7_bindings"], "Product control census differs")
-    require(sum(bool(row.get("concept_sources")) for row in bindings) == 61,
+    require(sum(bool(row.get("concept_sources")) for row in bindings) == 63,
             "QA2 family-source anchors differ")
     require(len(read("settings_inventory.json")["settings"]) == 1010, "QA2 invented a setting")
     require(len(read("glyph_catalog.json")["status_marks"]) == 22, "QA2 invented a status key")
-    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1270, "QA2/DL-270 production wiring union differs")
+    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1271, "QA2/DL-270 production wiring union differs")
     actor = read("glyph_catalog.json")["qa2_actor_presentation"]
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",

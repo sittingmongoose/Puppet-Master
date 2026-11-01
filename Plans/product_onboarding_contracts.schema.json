@@ -10330,5 +10330,22 @@
     "existing_proxy_generates_configuration": false,
     "cloud_claim_address_input": false,
     "cloud_unclaimed_network_discovery": false
+  },
+  "x-footage-review": {
+    "decision_ref": "Plans/Decision_Log.md#DL-272",
+    "native_client_sign_in": {
+      "command_id": "cmd.auth_profile.sign_in",
+      "owner_ref": "Plans/Remote_Access_System.md#RAS-014",
+      "phase": "explicit_auth_before_Server_list",
+      "cached_projection_starts_auth": false,
+      "requires_human_action": true,
+      "native_client_and_control_network_bound": true,
+      "grants_PM_pairing_or_Server_listener": false,
+      "new_native_payload": false
+    },
+    "device_code_expiry_owner": "provider_issued_interval_and_expires_in",
+    "pairing_display_form": "XXXX-XXXX",
+    "remote_link_grammar": "deferred_by_REMOTE-CODE-1",
+    "provider_addition_preserves_Ready_accounts": true
   }
 }

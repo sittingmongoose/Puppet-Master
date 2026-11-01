@@ -3563,10 +3563,10 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `settings:v1` | Durable app settings and preferences | On save |
+| `settings:v1` | Durable app settings and preferences. Amended 2026-11-01 (DL-270), SP-340: stored as one row per setting at its next schema version (storage registry `storage_profile.whole_document_keys`) | On save |
 | `settings_recents:v1` | Recently edited setting ids, most-recent-first, deduped, cap 8, for the Settings Recents shelf | On change (debounced 300ms) |
 | `settings_suggestions_dismissed:v1` | Dismissed Suggested-shelf entries with dismissal timestamps and driving-signal scope (project or global); entries expire after 90 days | On change |
-| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
+| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior). Amended 2026-11-01 (DL-270), SP-340: stored as one row per config section at its next schema version (storage registry `storage_profile.whole_document_keys`); the struct in memory is unchanged | On change (debounced 200ms) |
 | `chat_state:v1` | Unsent input text and active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
 | `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |
@@ -7707,12 +7707,16 @@ plan_unit_id: F3-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Global spacing, border, active indicator, divider, hard-shadow, and density metrics define
-  compact shell layout and panel behavior at desktop and collapsed sizes.
-  Amended 2026-10-09 (DL-184): the active indicator token is no longer a 3px left-edge accent stripe; selection is a
-  fill or an outline on the element's own box, the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read:
-  the fused tab silhouette), the NieR square cursor or Retro reverse video (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
+canonical_text: 'Global spacing, border, active indicator, divider, hard-shadow, and density metrics define compact shell
+  layout and panel behavior at desktop and collapsed sizes. Amended 2026-10-09 (DL-184): the active indicator token is
+  no longer a 3px left-edge accent stripe; selection is a fill or an outline on the element''s own box, the seated tab
+  chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused tab silhouette), the NieR square cursor or Retro
+  reverse video (F3-648). The density metric no longer assumes a bottom panel; Home''s density follows F3-636 (DL-180).
+
+
+  DL-272 RV7-M6-CHIP, 2026-11-01: A selected chapter or segmented-control chip follows its own strip when labels, explanation
+  mode or content move that strip. It stays aligned through layout/resize and Reduced Motion rather than waiting for
+  a later selection or paint. Shared indicator geometry owns the behavior.'
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7720,10 +7724,14 @@ split_recommended: false
 depends_on: [DL-184, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'DL-272 RV7-M6-CHIP, 2026-11-01: A selected chapter or segmented-control chip follows its own strip when labels, explanation
+  mode or content move that strip. It stays aligned through layout/resize and Reduced Motion rather than waiting for
+  a later selection or paint. Shared indicator geometry owns the behavior.'
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -7736,7 +7744,9 @@ node_compile_hint:
   mode: spacing_and_density_tokens
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0033"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0033
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - "XS"
 - "SM"
@@ -36983,7 +36993,16 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   no device request has arrived, Your Server is ready shows No requests yet with Check again. Checking re-reads the current
   owner run; a real arriving request also updates that view. This neutral state is not an error and invents no candidate,
   approval or trust. Continue retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection:
-  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+  a completed request stays answered, and a fresh request requires the existing new-code/new-generation route.
+
+
+  DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners
+  across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client
+  sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures.
+  PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
+  and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
+  per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
+  host, prefill, artificial wait or Studio behavior.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37290,6 +37309,13 @@ acceptance_criteria:
   request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
   retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
   request stays answered, and a fresh request requires the existing new-code/new-generation route.'
+- 'DL-272 footage alignment, 2026-11-01: preserve the current Server/Remote Access, source-control and provider owners
+  across the wizard. SRV-004 owns matching Client identity and answered pairing; RAS-014 owns explicit native-Client
+  sign-in before listing and opaque Remote Link output; RAS-005 owns in-step proxy files and actionable route failures.
+  PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
+  and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
+  per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
+  host, prefill, artificial wait or Studio behavior.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37347,6 +37373,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -50932,7 +50960,37 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
   scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
   including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
-  content version.'
+  content version.
+
+
+  DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match
+  confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same
+  reason without granting trust.
+
+
+  DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer
+  that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still
+  shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected
+  when typing settles; an unrelated or earlier success cannot clear a later fault.
+
+
+  DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover
+  and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes
+  still respond to real window resizing and the existing narrow/short layouts.
+
+
+  DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface
+  in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused
+  states remain distinct.
+
+
+  DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped
+  field, without hiding keyboard focus or relying on its colour alone for the reason.
+
+
+  DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
+  against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
+  rules.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51009,6 +51067,24 @@ acceptance_criteria:
   is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
   applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
   adds no second note renderer or per-family content version.'
+- 'DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match
+  confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same
+  reason without granting trust.'
+- 'DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer
+  that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still
+  shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected
+  when typing settles; an unrelated or earlier success cannot clear a later fault.'
+- 'DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover
+  and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes
+  still respond to real window resizing and the existing narrow/short layouts.'
+- 'DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface
+  in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused
+  states remain distinct.'
+- 'DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped
+  field, without hiding keyboard focus or relying on its colour alone for the reason.'
+- 'DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
+  against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
+  rules.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -51046,6 +51122,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

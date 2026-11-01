@@ -4,6 +4,7 @@ from pathlib import Path
 from copy import deepcopy
 import json
 import runpy
+import subprocess
 import sys
 
 import jsonschema
@@ -18,6 +19,13 @@ def read(name):
 
 def check():
     failures = []
+
+    footage = subprocess.run(["node", str(ROOT / "scripts/pm7-footage-source-probe.cjs")], capture_output=True, text=True, timeout=30)
+    if footage.returncode:
+        failures.append("Footage source: " + (footage.stderr.strip() or footage.stdout.strip()))
+
+    route_report = runpy.run_path(str(ROOT / "scripts/pm-free-models-route-verify.py"))["check"]()
+    failures.extend("Models route: " + item for item in route_report["failures"])
 
     qa2_report = runpy.run_path(str(ROOT / "scripts/pm7-qa2-alignment-check.py"))["check"]()
     failures.extend("QA2: " + item for item in qa2_report["failures"])

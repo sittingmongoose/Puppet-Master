@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1401-L1600
+Source lines: L1401-L1610
 
-Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
+Source SHA256: `14848fb74a4cec851913f354270a3e30a71dad6dd4ef753ade4e4d4158c3cd78`
 
 ---
 
@@ -119,7 +119,12 @@ canonical_text: 'Claude Code and Cursor CLI-runtime routes require output-level 
   entry for Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct
   from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan
   retained as a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway.
-  A label change never changes a saved provider/account ID.'
+  A label change never changes a saved provider/account ID.
+
+
+  DL-272 CURSOR-CLI-SIGNIN, 2026-11-01: Cursor’s CLI browser-sign-in route installs the CLI on the execution host through
+  the existing consented component owner when needed, then authenticates it. The separate Cursor SDK key route remains
+  separate.'
 gui_related: false
 gui_classification_reason: CLI/protocol/runtime readiness requirements rather than visual presentation.
 depends_on: [MS-113]
@@ -137,6 +142,9 @@ acceptance_criteria:
   DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search
   alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label change never changes
   a saved provider/account ID.'
+- 'DL-272 CURSOR-CLI-SIGNIN, 2026-11-01: Cursor’s CLI browser-sign-in route installs the CLI on the execution host through
+  the existing consented component owner when needed, then authenticates it. The separate Cursor SDK key route remains
+  separate.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -146,11 +154,13 @@ context_scope: claude_cursor_cli_boundaries
 implementation_surfaces: [Plans/CLI_Bridged_Providers.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Models_System.md]
 node_compile_hint: {mode: claude_cursor_cli_verification_boundaries, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - pldg-20260624-001-provider-updates:atom-0061
-  - pldg-20260624-001-provider-updates:atom-0084
-  - pldg-20260624-001-provider-updates:atom-0086
-  - pldg-20260624-001-provider-updates:atom-0097
-  - pldg-20260624-001-provider-updates:atom-0104
+- pldg-20260624-001-provider-updates:atom-0061
+- pldg-20260624-001-provider-updates:atom-0084
+- pldg-20260624-001-provider-updates:atom-0086
+- pldg-20260624-001-provider-updates:atom-0097
+- pldg-20260624-001-provider-updates:atom-0104
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 source_atom_ids: [atom-0061, atom-0064, atom-0065, atom-0071, atom-0072, atom-0073, atom-0075, atom-0076, atom-0077, atom-0078, atom-0079, atom-0080, atom-0082, atom-0084, atom-0085, atom-0086, atom-0087, atom-0089, atom-0090, atom-0097, atom-0100, atom-0102, atom-0104]
 preserved_exact_tokens: ["claude-ok", "claude-stream-low-ok", "--output-format=stream-json requires --verbose", "claude doctor", "Raw mode is not supported on the current process.stdin", "cursor-agent", "agent acp", "cursor_login", "cursor-oauth-ok", "cursor-oauth-json-ok", "cursor-acp-ok", "apiKeySource: login", "composer-2.5-fast", "opencode-cursor", "14-model fallback catalog"]
 negative_constraints:

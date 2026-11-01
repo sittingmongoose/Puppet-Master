@@ -1948,11 +1948,14 @@ canonical_text: >-
   sequence, the redb read snapshots and the payload references, and then releases, within 250 ms at p99. Sealed
   segments and payload packs are immutable and copy in the background, incrementally, while PM keeps running; redb
   copies from a read snapshot; derived families are not backed up and rebuild on restore. No backup holds the
-  writer lock for its copy. PM keeps one backup-status record, which every surface that shows backup state reads:
-  the last complete backup, its verification level, and what a restore from the newest backup at Structure
-  verified or higher would lose, its time and its last event. A newer backup that has not verified is shown beside
-  it, never instead of it. Where each surface shows it belongs to that surface's owner. A test proves the captured
-  point is consistent across every store.
+  writer lock for its copy. The active segment is copied as its exact prefix up to the recorded point, through a
+  handle opened at the capture; it is append-only below that point and rotation renames it without rewriting it,
+  so appends that continue meanwhile never change the copied bytes, and restore rebuilds any custody row past the
+  redb snapshot from the restored commit frames (SP-336). PM keeps one backup-status record, which every surface
+  that shows backup state reads: the last complete backup, its verification level, and what a restore from the
+  newest backup at Structure verified or higher would lose, its time and its last event. A newer backup that has
+  not verified is shown beside it, never instead of it. Where each surface shows it belongs to that surface's
+  owner. A test proves the captured point is consistent across every store.
 gui_related: true
 gui_classification_reason: "Shows the last verified backup and what a restore would lose."
 split_recommended: false
@@ -1962,6 +1965,7 @@ acceptance_criteria:
   - "A backup never holds the writer lock while it copies."
   - "The capture barrier records one consistent point across all stores within 250 ms at p99."
   - "Every surface that shows backup state reads the one backup-status record, including the last verified backup and what a restore from it would lose."
+  - "A backup taken while appends continue restores exactly its recorded point."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2475
+Source lines: L1781-L2515
 
-Source SHA256: `70230b5a0db987a76e35b0843e5bffd023830aeb87c7653326ffad1cf64b8f2e`
+Source SHA256: `43afd9782df493d15cb8f7af32472d3408033d845b36dd360ada685ab69dde34`
 
 ---
 
@@ -227,7 +227,19 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   API key or the person’s Puppet Master sign-in. Its hint states that distinction and identifies credential custody in
   the OS keychain on the selected execution host, through the existing credential owner. Optional server auth stays optional
   when the server needs none. Protected entry, secret-free readback and exact host/account binding remain; an API-key-only
-  hint is used only on an actual API-key field.'
+  hint is used only on an actual API-key field.
+
+
+  DL-272 RV-1/RV-17 and Free Models, 2026-11-01: provider setup remains post-Project-commit. Existing Ready accounts
+  stay usable while another account/key is added; Cancel removes only that addition. MA-045/046 own protected fallback
+  pages, credential-specific labels and execution-host custody. MS-121 owns waiting/cancellable Free Models sign-in and
+  the exact route Turn off action; MS-122 keeps Almost ready when no paid or free route is usable. No new ordinary setting
+  or credentials inside the wrapper.
+
+
+  DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
+  list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
+  writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -373,6 +385,14 @@ acceptance_criteria:
   distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
   credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
   and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
+- 'DL-272 RV-1/RV-17 and Free Models, 2026-11-01: provider setup remains post-Project-commit. Existing Ready accounts
+  stay usable while another account/key is added; Cancel removes only that addition. MA-045/046 own protected fallback
+  pages, credential-specific labels and execution-host custody. MS-121 owns waiting/cancellable Free Models sign-in and
+  the exact route Turn off action; MS-122 keeps Almost ready when no paid or free route is usable. No new ordinary setting
+  or credentials inside the wrapper.'
+- 'DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
+  list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
+  writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -422,6 +442,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -505,7 +527,17 @@ canonical_text: 'Product Onboarding uses one bounded modal window over the visib
   The action clears the field when it consumes the input; leaving/recreating the screen, changing its service/method/target
   or explicit cancel/reset clears it too. Keep that input only in the protected entry control until consumption, never
   in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential or validation proof;
-  submission reads the current protected value and rechecks its existing owner requirements.'
+  submission reads the current protected value and rechecks its existing owner requirements.
+
+
+  DL-272 T03-LOCAL-WORK, 2026-11-01: The This computer tip says where Puppet Master performs the work and keeps local
+  Project/history/runs. AI providers, the online copy and backup destinations remain separate choices; it must not promise
+  that all data and services stay on this computer.
+
+
+  DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
+  operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
+  promise. Only tips/help have Plain English and technical versions.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -563,6 +595,12 @@ acceptance_criteria:
   its service/method/target or explicit cancel/reset clears it too. Keep that input only in the protected entry control
   until consumption, never in ordinary draft/session persistence, receipts or logs. A filled/masked flag is not a credential
   or validation proof; submission reads the current protected value and rechecks its existing owner requirements.'
+- 'DL-272 T03-LOCAL-WORK, 2026-11-01: The This computer tip says where Puppet Master performs the work and keeps local
+  Project/history/runs. AI providers, the online copy and backup destinations remain separate choices; it must not promise
+  that all data and services stay on this computer.'
+- 'DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
+  operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
+  promise. Only tips/help have Plain English and technical versions.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -585,6 +623,8 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - 'DL-260 source lineage only: C.cards with its under slot and o55-under/o55-card-parent classes implement the shared
   joined-choice tray; these source APIs/classes are not native product contracts.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 negative_constraints:
 - Do not block input on animation.
 - Do not require browser-only effects.

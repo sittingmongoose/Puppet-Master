@@ -40,7 +40,7 @@
     {
       "id": "G08",
       "name": "Shared admission.",
-      "required_predicate": "Finish every existing protected group's complete original first-receipt issuance before maintenance changes, carrier seal or source selection. New compaction lifecycle groups are one-event barrier groups and preserve both actual source barriers plus the one original all-member receipt transaction. New receipt/full-value adoption is explicitly installed on the same actual Store. Legacy v1 retained semantic replay remains supported only in its existing role; v1 cannot be backfilled or used as full-value proof."
+      "required_predicate": "Finish every existing protected group's complete original first-receipt issuance before maintenance changes, carrier seal or source selection. New compaction lifecycle groups are one-event barrier groups: each takes SP-336's full flush with its commit frame (SP-347) and commits its all-member receipt rows durably before acknowledging (amended 2026-11-01, DL-270). New receipt/full-value adoption is explicitly installed on the same actual Store. Legacy v1 retained semantic replay remains supported only in its existing role; v1 cannot be backfilled or used as full-value proof."
     },
     {
       "id": "G09",

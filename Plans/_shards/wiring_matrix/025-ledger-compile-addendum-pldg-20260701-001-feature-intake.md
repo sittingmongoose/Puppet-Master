@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4154
+Source lines: L3496-L4164
 
-Source SHA256: `a8d6df41d489b3bce1e2d759a43766013436ff30bb387cc304ff8e58d668edb7`
+Source SHA256: `6f6fb5f7c346af71ebed1bfde5eb374670e8dbb80ad74ad39fe2c88764ba4f8d`
 
 ---
 
@@ -195,7 +195,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before prior authorization/unlock and
   before advance/install. Initial live-invitation waiting says No requests yet with Check again, while answered runs
   keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary command, handler, request
-  field or trust/permission bypass.'
+  field or trust/permission bypass.
+
+
+  DL-272: existing auth/browser/credential/Project/remote/pairing producers retain current payload, permission, generation
+  and receipt fences across the footage corrections. Native-Client Sign in before listing is an explicit auth action,
+  not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -413,6 +418,9 @@ acceptance_criteria:
   refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
   says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
   and owner routes; no new primary command, handler, request field or trust/permission bypass.'
+- 'DL-272: existing auth/browser/credential/Project/remote/pairing producers retain current payload, permission, generation
+  and receipt fences across the footage corrections. Native-Client Sign in before listing is an explicit auth action,
+  not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -468,6 +476,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
