@@ -2721,6 +2721,22 @@
       "source_refs": [
         "Concepts/onboarding/opus-5.5/src/js/61-components.js and src/css/10-window.css at 0cf2bf59e4; found report 47389ffc10; final-onb FO-19"
       ]
+    },
+    {
+      "id": "DL273-CODEBERG",
+      "change": "Remove Codeberg and hosted Forgejo choices; Forgejo is self-managed only. Repository-restricted token support remains open and deliberately left for now, with existing account-based behavior unchanged.",
+      "owner": "DL-273; FGI-011; PWIZ-021; PWIZ-024",
+      "wiring": "WM-041; UIW-015; catalog.forge_repository_list (existing route consumes the narrowed owner schema)",
+      "commands": "CS-069; UCC-106; ui.onboarding.next; cmd.forge.repository.list (existing ids and owner fences)",
+      "settings": "none needed: provider admission policy, no preference or key change",
+      "dry": "DR-005",
+      "companions": "Forge/profile and onboarding enums; onboarding_state embedded schema; five DL273 refusal cases and two retained Gitea controls. Fields coverage mirror follows the pushed source SHA.",
+      "state": "covered_by_current_contract_fields_mirror_pending",
+      "decision_ref": "DL-273",
+      "source_refs": [
+        "Jared 2026-11-01 via PM7 lead: Yes remove it.; we can leave it for now.",
+        "fields8762cda61a658081878344ddff95f9916c1aa0f0"
+      ]
     }
   ],
   "sources": [
@@ -2811,14 +2827,11 @@
     {
       "id": "FORGEJO-RESTRICTED-TOKEN-IDENTITY",
       "question": "Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection?",
-      "state": "awaiting_Jared",
-      "source": "Lead footage batch RV-20; fields final report9cff802c16; no new capability decision in canon."
-    },
-    {
-      "id": "CODEBERG-NAMING-ADMISSION",
-      "question": "What Codeberg naming and hosted-service admission should product canon use? The lead retains this choice for Jared; no answer is applied here.",
-      "state": "awaiting_Jared",
-      "source": "Lead 1101140232-5344, 2026-11-01; fields report holds Codeberg naming for Jared."
+      "state": "open_left_for_now",
+      "source": "Lead footage batch RV-20; fields final report9cff802c16; no new capability decision in canon.",
+      "decision_ref": "DL-273",
+      "answer": "we can leave it for now.",
+      "current_behavior": "unchanged_account_based_flow"
     }
   ],
   "prototype_cleanup": {
@@ -3216,5 +3229,33 @@
     "source_cases_added": 25,
     "source_cases_total": 58,
     "demo_only_FO17_excluded": true
+  },
+  "resolved_owner_questions": [
+    {
+      "id": "CODEBERG-NAMING-ADMISSION",
+      "question": "What Codeberg naming and hosted-service admission should product canon use? The lead retains this choice for Jared; no answer is applied here.",
+      "state": "decided_removed",
+      "source": "Lead 1101140232-5344, 2026-11-01; fields report holds Codeberg naming for Jared.",
+      "decision_ref": "DL-273",
+      "answer": "Yes remove it.",
+      "decided_at": "2026-11-01"
+    }
+  ],
+  "DL273": {
+    "decision_ref": "DL-273",
+    "Codeberg": "removed",
+    "Forgejo_variant": "forgejo_self_managed",
+    "restricted_tokens": "open_left_for_now",
+    "provider_variant_enums_removed": 12,
+    "Forgejo_host_class_narrowed": true,
+    "new_rows": [
+      "DL273-CODEBERG"
+    ],
+    "coverage_rows": 213,
+    "required_cells": 1065,
+    "fields_source": "8762cda61a658081878344ddff95f9916c1aa0f0",
+    "fields_coverage_mirror": "pending_source_SHA",
+    "new_commands_bindings_settings": 0,
+    "new_product_rule": "hosted_Forgejo_not_offered"
   }
 }

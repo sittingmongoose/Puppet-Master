@@ -19705,7 +19705,13 @@ canonical_text: 'DL-272 records the PM7 lead’s 2026-11-01 footage batch at int
   long values wrap in their pane with a fingerprint’s hash whole on its own line after its algorithm when needed.
   PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
   Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
-  Jared’s open questions.'
+  Jared’s open questions.
+
+
+  Disposition amended by DL-273, Jared 2026-11-01: Codeberg’s question is closed by removal of hosted Forgejo.
+  Repository-restricted Forgejo tokens were deliberately left for now, preserving the existing account-based
+  flow; this is a decided deferral, not an unanswered request for immediate approval. The preceding footage
+  history remains unchanged.'
 gui_related: true
 gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
 split_recommended: false
@@ -19729,6 +19735,10 @@ acceptance_criteria:
   PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
   Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
   Jared’s open questions.'
+- 'Disposition amended by DL-273, Jared 2026-11-01: Codeberg’s question is closed by removal of hosted Forgejo.
+  Repository-restricted Forgejo tokens were deliberately left for now, preserving the existing account-based flow;
+  this is a decided deferral, not an unanswered request for immediate approval. The preceding footage history remains
+  unchanged.'
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-plan-index.py validate
@@ -19748,6 +19758,8 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens:
 - DL-272
 - DL-126
@@ -19759,4 +19771,76 @@ negative_constraints:
   fixture.
 owner_hints:
 - Plans/Decision_Log.md
+```
+
+
+### DL-273 — Codeberg removed; restricted Forgejo tokens left for now
+
+```yaml
+plan_unit_id: DL-273
+unit_type: decision_record
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared decided on 2026-11-01: Codeberg — "Yes remove it." Hosted Forgejo is not offered in onboarding
+  or Settings; Forgejo is a self-managed server only, using forgejo_self_managed. Remove forgejo_cloud from the
+  current Forge instance/adapter profiles, onboarding profiles/setup plans and their embedded Onboarding storage
+  schema. Current profiles require the actual self-managed server address and normal owner verification; retiring
+  a choice creates no implicit address, account, credential or repository authority. Other providers and Gitea’s
+  admitted variants remain unchanged. Jared’s answer on Forgejo repository-restricted tokens was "we can leave it
+  for now." That support question is deliberately deferred, with the existing account-based flow unchanged; no support
+  is admitted or permanently rejected. This closes DL-272’s Codeberg question and records the restricted-token deferral
+  as decided.'
+gui_related: true
+gui_classification_reason: Changes the Forgejo choices shown in onboarding and Settings while preserving the deferred
+  authentication flow.
+split_recommended: false
+depends_on:
+- DL-272
+unblocks: []
+acceptance_criteria:
+- 'DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only forgejo_self_managed
+  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired forgejo_cloud
+  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
+  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
+  and repository selection remain unchanged, with no new restricted-token support admitted.'
+- Published and embedded current profiles reject forgejo_cloud, while self-managed Forgejo and the remaining Gitea
+  variants retain valid cases.
+- Existing command ids, credential custody, permission/generation checks, storage-family identity and Project review/commit
+  fences remain unchanged.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-new-contracts
+- python3 scripts/pm7-onboarding-rulings-check.py
+- python3 scripts/pm-onboarding-contracts.py --check
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_instance_admission
+reasoning_tier: high
+context_scope: pm7_codeberg_decision_20261101
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/Planning_Wizard.md
+- Plans/forge_integration_contracts.schema.json
+- Plans/product_onboarding_contracts.schema.json
+- Plans/storage_value_registry.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
+preserved_exact_tokens:
+- Codeberg
+- forgejo_cloud
+- forgejo_self_managed
+- Yes remove it.
+- we can leave it for now.
+negative_constraints:
+- Do not offer hosted Forgejo under another label or infer a hosted endpoint.
+- Do not admit repository-restricted token support from a deliberate deferral.
+- Do not alter protected governance artifacts, migration snapshots or the landing baseline.
+owner_hints:
+- Plans/Forge_Integrations.md
+- Plans/Planning_Wizard.md
 ```

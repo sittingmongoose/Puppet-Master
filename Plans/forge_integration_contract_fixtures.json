@@ -8452,6 +8452,104 @@
         "produced_at_utc": "2026-09-01T12:00:01Z",
         "expires_at_utc": "2026-09-01T12:05:00Z"
       }
+    },
+    {
+      "name": "DL273.Gitea_cloud_instance_retained",
+      "definition": "provider_instance_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_instance_profile.v1",
+        "instance_id": "instance:gitea:dl273-cloud-control",
+        "provider": "gitea",
+        "provider_variant": "gitea_cloud",
+        "normalized_host": "gitea-actions.example.invalid",
+        "web_base_url": "https://gitea-actions.example.invalid",
+        "api_root": "https://gitea-actions.example.invalid/api",
+        "api_base_path": "/api/v1",
+        "ssh_host": "gitea-actions.example.invalid",
+        "ssh_port": 22,
+        "private_ca_ref": "trust-ca:gitea:actions",
+        "known_host_proof_ref": "known-host-proof:gitea:new-actions-enabled-admin",
+        "account_id": "account:gitea:new-actions-enabled-admin",
+        "organization_locator": "engineering",
+        "detected_product": "gitea",
+        "product_version": "1.24.0",
+        "api_schema_version": "v1.1",
+        "api_state": "available",
+        "git_transport_state": "available",
+        "actions_state": "enabled",
+        "actions_capability_ref": "capability:gitea:actions:new-actions-enabled-admin",
+        "auth_method": "pat_ref",
+        "oauth_registration_ref": null,
+        "credential_access": "administration",
+        "credential_ref": "credential:gitea:new-actions-enabled-admin",
+        "transport_api_independent": true,
+        "redirect_credential_policy": "strip_authorization_on_origin_change",
+        "restricted_network_target_policy": "deny_localhost_and_metadata_unless_explicitly_approved",
+        "currentness_ref": "currentness:gitea:new-actions-enabled-admin",
+        "discovered_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "DL273.Gitea_cloud_adapter_retained",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitea",
+        "provider_variant": "gitea_cloud",
+        "host_class": "cloud",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "actions",
+        "auth_methods": [
+          "pat_ref",
+          "oauth_pkce",
+          "ssh_ref"
+        ],
+        "required_capabilities": [
+          "repository",
+          "transport"
+        ],
+        "optional_capabilities": [
+          "review",
+          "checks",
+          "pipelines",
+          "automation",
+          "repository_policy",
+          "runner_administration",
+          "releases",
+          "release_assets",
+          "issues",
+          "webhooks"
+        ],
+        "version_or_tier_gate": "signed-catalog:gitea:supported-version-matrix",
+        "official_page_route_ref": "official-route:gitea:instance",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:self-host:gitea:generation-12",
+        "unsupported_reason_codes": [
+          "api_disabled",
+          "version_unsupported",
+          "actions_disabled"
+        ],
+        "product_family": "gitea",
+        "supported_api_schema_versions": [
+          "v1",
+          "v1.1"
+        ],
+        "instance_contract_ref": "contract:forge-instance:gitea:v1",
+        "version_detection_strategy": "bounded_safe_read_then_signed_catalog_match",
+        "api_git_transport_independent": true,
+        "oauth_pkce_requires_registered_instance": true,
+        "actions_capability_states": [
+          "enabled",
+          "disabled",
+          "no_runner",
+          "no_workflow",
+          "insufficient_permission",
+          "unsupported",
+          "unknown"
+        ]
+      }
     }
   ],
   "invalid": [
@@ -10576,6 +10674,33 @@
         "file_safe_decision_ref": null,
         "browser_handoff": null
       }
+    },
+    {
+      "name": "DL273.hosted_Forgejo_instance_retired",
+      "definition": "provider_instance_profile",
+      "base_valid": "old-api-disabled-git-ready",
+      "patch": {
+        "provider_variant": "forgejo_cloud"
+      },
+      "expected_error": "DL-273 removes hosted Forgejo from current instance profiles"
+    },
+    {
+      "name": "DL273.hosted_Forgejo_adapter_retired",
+      "definition": "provider_adapter_profile",
+      "base_valid": "forgejo_distinct_provider_adapter_profile",
+      "patch": {
+        "provider_variant": "forgejo_cloud"
+      },
+      "expected_error": "DL-273 removes hosted Forgejo from current adapter profiles"
+    },
+    {
+      "name": "DL273.Forgejo_cloud_host_class_retired",
+      "definition": "provider_adapter_profile",
+      "base_valid": "forgejo_distinct_provider_adapter_profile",
+      "patch": {
+        "host_class": "cloud"
+      },
+      "expected_error": "DL-273 makes Forgejo a self-managed server only"
     }
   ],
   "semantic_counterexamples": [

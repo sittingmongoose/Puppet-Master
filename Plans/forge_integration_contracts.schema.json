@@ -774,8 +774,7 @@
             "properties": {
               "provider_variant": {
                 "enum": [
-                  "forgejo_self_managed",
-                  "forgejo_cloud"
+                  "forgejo_self_managed"
                 ]
               },
               "detected_product": {
@@ -3192,14 +3191,12 @@
             "properties": {
               "provider_variant": {
                 "enum": [
-                  "forgejo_self_managed",
-                  "forgejo_cloud"
+                  "forgejo_self_managed"
                 ]
               },
               "host_class": {
                 "enum": [
-                  "self_managed",
-                  "cloud"
+                  "self_managed"
                 ]
               },
               "review_noun": {

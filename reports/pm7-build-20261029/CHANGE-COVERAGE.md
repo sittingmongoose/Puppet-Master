@@ -1,6 +1,6 @@
 # PM7 real-product change coverage
 
-Current input: integration `0cf2bf59e4`, storage/reseal main `34b9ab2843`. **212 rows / 1060 required owner/wiring/commands/settings/DRY cells**. Each none-needed cell states why; source refs in the JSON are lineage only. Static coverage does not certify native/rendering behavior. The older GLM review stays pinned to its original revision.
+Current input: main `93bd26fa26` plus snapshot `07dbf43786` and fields `8762cda61a`. **213 rows / 1065 required owner/wiring/commands/settings/DRY cells**. Each none-needed cell states why; source refs in the JSON are lineage only. Static coverage does not certify native/rendering behavior. The older GLM review stays pinned to its original revision.
 
 | ID | Real product change | Owner prose | Wiring | Commands | Settings inventory | DRY | Companions/proof | State |
 |---|---|---|---|---|---|---|---|---|
@@ -218,8 +218,10 @@ Current input: integration `0cf2bf59e4`, storage/reseal main `34b9ab2843`. **212
 | FO-18 | With no usable AI account or Free Models route, Almost ready has no celebration or celebratory sound in any family or Light/Dark variant. | MS-122; F3-520; F3-598; F3-600; F3-663; DL-272 | none needed: Ready observes the existing AI readiness projection | none needed: suppressing a celebration adds no semantic action | none needed: readiness is an owner result, not a preference | DR-080; DR-020 | pm7-footage-source-probe.cjs: 14 Ready eligibility cases, including all ten looks and usable free AI; existing contracts unchanged | covered_by_current_contract_final_source_merged |
 | FO-19 | Long detail values wrap inside the pane; a fingerprint breaks after the algorithm when needed, keeping its complete hash together on its own line and preserving comparison/copy data. | PWIZ-022; F3-520; F3-663; DL-272 | none needed: existing shared detail renderer and identity-confirmation route remain | none needed: display wrapping neither changes a command nor grants trust | none needed: readable details are not a preference | DR-080 | pm7-footage-source-probe.cjs: 4 shared-renderer formatting/value-preservation cases; no pixel or layout claim | covered_by_current_contract_final_source_merged |
 
+| DL273-CODEBERG | Remove Codeberg and hosted Forgejo choices; Forgejo is self-managed only. Repository-restricted token support remains open and deliberately left for now, with existing account-based behavior unchanged. | DL-273; FGI-011; PWIZ-021; PWIZ-024 | WM-041; UIW-015; catalog.forge_repository_list (existing route consumes the narrowed owner schema) | CS-069; UCC-106; ui.onboarding.next; cmd.forge.repository.list (existing ids and owner fences) | none needed: provider admission policy, no preference or key change | DR-005 | Forge/profile and onboarding enums; onboarding_state embedded schema; five DL273 refusal cases and two retained Gitea controls. Fields coverage mirror follows the pushed source SHA. | covered_by_current_contract_fields_mirror_pending |
+
 The footage batch contributes 54 rows under DL-272. Models Turn off is one scoped command, not a provider-wide preference or account removal. Main’s SP-346/SP-347 and reseal/snapshot/baseline are inherited; no governance artifact is refreshed.
 
 The final FO-16/FO-18/FO-19 delta adds three rows, bringing current coverage to 212 rows / 1060 cells. FO-17 is concept-only and adds no product row.
 
-Open for Jared: FORGEJO-RESTRICTED-TOKEN-IDENTITY (RV-20) and CODEBERG-NAMING-ADMISSION, as retained by the lead. Existing account-based behavior remains and neither question is answered by this batch.
+DL-273, Jared 2026-11-01: Codeberg is removed, closing CODEBERG-NAMING-ADMISSION. FORGEJO-RESTRICTED-TOKEN-IDENTITY remains open and deliberately left for now; current account-based behavior is unchanged. The additional product row brings current coverage to 213 rows / 1065 cells. Earlier batch totals above are historical.

@@ -39,7 +39,7 @@
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 236,
+    "invalid_case_count": 243,
     "valid_setup_plan_count": 17,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
@@ -14056,6 +14056,48 @@
         "proxy_kind": "nginx_proxy_manager"
       },
       "expected_error": "CERT-1 permits configuration-file/export or existing proxy only, with no certificate choice; NPM is existing-only."
+    },
+    {
+      "name": "DL273.hosted_Forgejo_onboarding_profile_retired",
+      "definition": "onboarding_forge_instance_profile",
+      "value": {
+        "provider": "forgejo",
+        "provider_variant": "forgejo_cloud",
+        "instance_id": "forge-instance:forgejo:team",
+        "web_base_url": "https://forgejo.example.test/team",
+        "api_root": "https://forgejo.example.test/team/api",
+        "api_base_path": "/api/v1",
+        "ssh_url": "ssh://forgejo.example.test:2222/team",
+        "ssh_port": 2222,
+        "private_ca_ref": "trust-ca:forgejo:team",
+        "known_host_proof_ref": "known-host-proof:forgejo:team",
+        "detected_product": "forgejo",
+        "product_version_ref": "product-version:forgejo:team:cached",
+        "api_schema_ref": "api-schema:forgejo:team:cached",
+        "api_state_ref": "api-state:forgejo:team:disabled",
+        "git_transport_state_ref": "git-transport-state:forgejo:team:available",
+        "actions_state_ref": "actions-state:forgejo:team:disabled",
+        "actions_capability_ref": "actions-capability:forgejo:team:cached",
+        "auth_method": "ssh_ref",
+        "oauth_registration_ref": null,
+        "credential_ref": "credential:forgejo:team:ssh",
+        "automation_binding_ref": "automation-binding:github:external-for-forgejo",
+        "currentness_ref": "currentness:forgejo:team:cached",
+        "probe_performed": false,
+        "redirect_credential_policy": "strip_authorization_on_origin_change",
+        "restricted_network_target_policy": "deny_localhost_and_metadata_unless_explicitly_approved"
+      },
+      "expected_error": "DL-273 removes hosted Forgejo from onboarding profiles"
+    },
+    {
+      "name": "DL273.hosted_Forgejo_setup_plan_retired",
+      "definition": "onboarding_setup_plan",
+      "base_valid": "valid.setup_plan.jujutsu_with_forgejo_api_disabled_git_ready_external_automation",
+      "patch": {
+        "forge_provider_variant": "forgejo_cloud",
+        "forge_instance_profile.provider_variant": "forgejo_cloud"
+      },
+      "expected_error": "DL-273 removes hosted Forgejo from current setup plans"
     }
   ],
   "resolved_owner_inputs": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4164
+Source lines: L3496-L4176
 
-Source SHA256: `6f6fb5f7c346af71ebed1bfde5eb374670e8dbb80ad74ad39fe2c88764ba4f8d`
+Source SHA256: `18262730a6ac59ebeeb4cf0c88704a98d4666c497d7f1b29b4014608e7994b3a`
 
 ---
 
@@ -200,7 +200,13 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
 
   DL-272: existing auth/browser/credential/Project/remote/pairing producers retain current payload, permission, generation
   and receipt fences across the footage corrections. Native-Client Sign in before listing is an explicit auth action,
-  not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.'
+  not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.
+
+
+  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted
+  variants. Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile
+  or plan. Existing local actions and Forge/auth/Project command routes remain, and refuse a retired variant
+  before accepting or dispatching it. No new handler, command, setting or trust writer is added.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -421,6 +427,10 @@ acceptance_criteria:
 - 'DL-272: existing auth/browser/credential/Project/remote/pairing producers retain current payload, permission, generation
   and receipt fences across the footage corrections. Native-Client Sign in before listing is an explicit auth action,
   not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.'
+- 'DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted variants.
+  Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
+  local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
+  it. No new handler, command, setting or trust writer is added.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -478,6 +488,8 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:

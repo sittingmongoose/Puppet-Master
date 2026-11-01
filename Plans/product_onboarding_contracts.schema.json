@@ -170,7 +170,6 @@
         "provider_variant": {
           "enum": [
             "forgejo_self_managed",
-            "forgejo_cloud",
             "gitea_self_managed",
             "gitea_cloud"
           ]
@@ -276,8 +275,7 @@
             "properties": {
               "provider_variant": {
                 "enum": [
-                  "forgejo_self_managed",
-                  "forgejo_cloud"
+                  "forgejo_self_managed"
                 ]
               },
               "detected_product": {
@@ -933,7 +931,6 @@
                 "data_center",
                 "preview",
                 "forgejo_self_managed",
-                "forgejo_cloud",
                 "gitea_self_managed",
                 "gitea_cloud"
               ]
@@ -1431,7 +1428,6 @@
                   "data_center",
                   "preview",
                   "forgejo_self_managed",
-                  "forgejo_cloud",
                   "gitea_self_managed",
                   "gitea_cloud"
                 ]
@@ -1645,8 +1641,7 @@
             "properties": {
               "forge_provider_variant": {
                 "enum": [
-                  "forgejo_self_managed",
-                  "forgejo_cloud"
+                  "forgejo_self_managed"
                 ]
               },
               "forge_instance_profile": {

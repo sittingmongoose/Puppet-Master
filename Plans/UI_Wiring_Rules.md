@@ -1214,7 +1214,13 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
 
   DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
   additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
-  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
+  The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.
+
+
+  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted
+  variants. Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile
+  or plan. Existing local actions and Forge/auth/Project command routes remain, and refuse a retired variant
+  before accepting or dispatching it. No new handler, command, setting or trust writer is added.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
 split_recommended: false
@@ -1368,6 +1374,10 @@ acceptance_criteria:
 - 'DL-272: preserve exact owner target/generation and protected return for native-Client Sign in, browser fallback, provider
   additions, retry and source-control Review. New input clears only old refusal feedback, never validation authority.
   The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.'
+- 'DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted variants.
+  Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
+  local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
+  it. No new handler, command, setting or trust writer is added.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
@@ -1401,6 +1411,8 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.

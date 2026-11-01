@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2540-L2802
+Source lines: L2557-L2836
 
-Source SHA256: `2b2be4d1210e776c10436696f140de02e007d7c4326cdf90321344bc852282c4`
+Source SHA256: `bca46d52289ecdc78cff843b7d711ef8767367b474cab0281d25e7bafd6dc704`
 
 ---
 
@@ -38,8 +38,8 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   an authorized workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an
   actual project key, including a supported personal Project. Azure Services binds organization and team Project; Server
   binds collection URI and team Project; selecting an existing repository carries its owner-resolved Project identity.
-  Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; both hosted and self-managed
-  choices require a real instance profile. Provider/owner changes invalidate incompatible visibility/container/auth choices;
+  Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
+  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth choices;
   current provider-specific naming and Git ref validation precede availability. The selected actual auth method and least-privilege
   scopes must match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
   with expandable exact details and owner-routed Edit links. DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google
@@ -112,7 +112,16 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
 
 
   DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
-  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
+  through the existing auth owner. Opening a token form or typing a token does not mark it Ready.
+
+
+  DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only
+  forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
+  variants. A retired forgejo_cloud value is not a valid current instance, adapter or setup-plan profile and
+  grants no account, repository or connection authority. Returning to a self-managed choice still requires its
+  explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
+  existing account-based identification, authentication and repository selection remain unchanged, with no new
+  restricted-token support admitted.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
   projection, and defer behavior.
@@ -163,8 +172,8 @@ acceptance_criteria:
   policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility;
   Data Center resolves an actual project key, including a supported personal Project. Azure Services binds organization
   and team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
-  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; both hosted
-  and self-managed choices require a real instance profile. Provider/owner changes invalidate incompatible visibility/container/auth
+  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
+  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth
   choices; current provider-specific naming and Git ref validation precede availability. The selected actual auth method
   and least-privilege scopes must match the saved instance profile. Review shows privacy, target/instance, branch and
   material creation consequences, with expandable exact details and owner-routed Edit links.'
@@ -221,6 +230,12 @@ acceptance_criteria:
   every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.'
 - 'DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
   through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
+- 'DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only forgejo_self_managed
+  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired forgejo_cloud
+  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
+  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
+  and repository selection remain unchanged, with no new restricted-token support admitted.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -253,6 +268,8 @@ source_lineage:
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here

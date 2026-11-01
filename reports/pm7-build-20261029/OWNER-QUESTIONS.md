@@ -1,13 +1,13 @@
-# Current owner questions — final delta, 2026-11-01
+# Current owner disposition — DL-273, Jared 2026-11-01
 
-**Two questions remain Jared’s**, per lead mail 1101140232-5344. This delta makes no choice on either.
+**One support question remains open, deliberately left for now.** No further answer is requested for this amendment.
 
-| ID | Question | Disposition |
+| ID | Jared’s answer | Current disposition |
 |---|---|---|
-| **FORGEJO-RESTRICTED-TOKEN-IDENTITY** | Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection? | Existing account-based behavior remains; support is neither selected nor rejected. RV-20’s actual-grant disclosure remains in FGI-015/PWIZ-022. |
-| **CODEBERG-NAMING-ADMISSION** | What Codeberg naming and hosted-service admission should product canon use? | The lead retains this choice for Jared. No naming/admission change is applied. |
+| **CODEBERG-NAMING-ADMISSION** | “Yes remove it.” | Closed: no hosted Forgejo choice; Forgejo is self-managed only. Published and stored profiles follow FGI-011. |
+| **FORGEJO-RESTRICTED-TOKEN-IDENTITY** | “we can leave it for now.” | Still open and unchanged. Existing account-based identification, authentication and repository selection remain; no restricted-token support is added or permanently rejected. |
 
-D4’s pre-build provider verification remains as ruled. FO-16/FO-18/FO-19 add no owner question or capability decision.
+Source: the PM7 lead’s 2026-11-01 message carrying Jared’s answers; recorded in Plans/Decision_Log.md#DL-273. DL-272’s earlier open-question record is annotated with this disposition. D4’s pre-build provider verification remains as ruled.
 
 ---
 

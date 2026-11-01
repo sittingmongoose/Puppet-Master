@@ -1,3 +1,13 @@
+# Plans lane — DL-273 follow-up in progress, 2026-11-01
+
+**Focused checks pass.** Based on landed main93bd26fa26, snapshot07dbf43786 and fields8762cda61a. DL-273 records Codeberg removed and restricted Forgejo tokens deliberately left for now. Owner prose preceded schemas/fixtures. The12 hosted-variant enum occurrences and Forgejo’s Cloud host classification are removed; the Onboarding materializer matches its owner exactly.
+
+Coverage is **213 rows /1065 cells**. Full contract validation passes41 pairs/1601 positives/4206 negatives; five formerly accepted retired cases are now refused, and two Gitea Cloud controls remain valid. Storage profiles, onboarding rulings, shards, index and preservation checks pass. No ordinary setting, command, binding or census count changes. Main’s protected artifacts are unchanged.
+
+Next: fields updates its coverage mirror from the pushed source SHA, then the final build/focused checks and requested dry landing run. Current raw proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/codeberg-20261101/`.
+
+---
+
 # Plans lane — landing repair close-out, 2026-11-01
 
 **Dry landing exit 1: zero blocking items, no timeouts.** Exact checked/source commit `4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4` is pushed to both remotes, on integration `7f3eecce64`, with main unchanged at `34b9ab2843`. All 18 items from the lead’s dry report are cleared. Final report-only head is mailed after push.

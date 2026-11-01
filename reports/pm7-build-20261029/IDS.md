@@ -233,3 +233,8 @@ Main34b9ab2843 owns SP-346/SP-347 and the earlier storage ids. This batch alloca
 - Touch: `TOUCH-FREEROUTE-001`, profile `TCP-FREE-MODELS-ROUTE-DISABLE`, partial until native owner/effect proof.
 - Request/result: `Plans/free_models_route_contracts.schema.json#/$defs/disable_request` / `disable_result`; fields preserve route, underlying provider, policy scope, catalog/policy generations, actor/origin and idempotency.
 - Census: settings1010; bindings485/63 source families; Touch716/141; production1271. Shared status keys22 remain.
+
+
+## Codeberg follow-up — DL-273, Jared 2026-11-01
+
+Allocated **DL-273**, checked free on landed main93bd26fa26 plus snapshot07dbf43786 and fields8762cda61a. Codeberg/hosted Forgejo is removed; Forgejo exposes only forgejo_self_managed. Repository-restricted token support is deliberately left for now, preserving the current account-based flow. No new F3, DR, SSYS, command, setting, control, glyph or event id.

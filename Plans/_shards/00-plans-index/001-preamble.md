@@ -2,15 +2,18 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L58
+Source lines: L1-L61
 
-Source SHA256: `9978998b4ddcb0e12f72f52eb6f6cb3c9549e16780faafef8c27524304b2ec6a`
+Source SHA256: `c3f93ce56ce8b60206ff65f53aabac482ab87f1a6242fd79ddea16170a5fc71e`
 
 ---
 
 # Plans Index (authoritative map)
 
-- 2026-11-01: DL-272 final FO-16/FO-18/FO-19 delta: another choice ends the old refusal without a cheer; no usable AI or Free Models keeps Almost ready calm in every look; long detail values wrap with a fingerprint hash whole on its own line when needed. Existing validation, identity confirmation and O12 gates remain. Codeberg and Forgejo restricted-token questions stay open for Jared.
+- 2026-11-01: DL-273 records Jared’s answers: remove Codeberg/hosted Forgejo; Forgejo is self-managed only. Published and embedded profile variants follow FGI-011; existing commands, settings and owner verification remain. Repository-restricted Forgejo token support is deliberately left for now with the current account-based flow unchanged.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Forge_Integrations.md#FGI-011, ContractName:Plans/Planning_Wizard.md#PWIZ-024
+
+- 2026-11-01: DL-272 final FO-16/FO-18/FO-19 delta: another choice ends the old refusal without a cheer; no usable AI or Free Models keeps Almost ready calm in every look; long detail values wrap with a fingerprint hash whole on its own line when needed. Existing validation, identity confirmation and O12 gates remain. DL-273 subsequently closes Codeberg by removal and records restricted-token support as deliberately left for now.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-272, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/Models_System.md#MS-122, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/DRY_Rules.md#DR-080
 
 - 2026-11-01: DL-272 aligns the footage review with real product owners: truthful identity, auth/addition/retry/expiry, source-control names/privacy/access, proxy/restore status and fixed readable wizard feedback. CS-108/UCC-213 and WM-099/UIW-047 add exact-route Free Models Turn off, preserving credentials, other routes and in-flight work. D7, certificate custody, product-only canon and deferred Remote Link protocol remain; restricted Forgejo tokens remain an owner question.
