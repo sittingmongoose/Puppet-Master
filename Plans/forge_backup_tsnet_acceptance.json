@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "created_at": "2026-09-05T00:00:00Z",
   "packet_id": "PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01.zip",
-  "claim_boundary": "Static exact-source custody and owner-reference validation only. All scenarios and requirement mappings remain NOT_RUN; this artifact is not native, provider, network, security, backup/restore, performance, accessibility, visual, motion, readiness, or certification evidence. DL-259 current_requirement_amendments supersede the indicated historical packet clauses; preserved packet bodies and joins remain source custody only, not current authority on those clauses.",
+  "claim_boundary": "Preserved source-proposal custody, not proof that Jared selected a hosted service or that a scenario ran. Current owner canon and current_requirement_amendments supersede the original proposal bodies; DL-273 retires unselected hosted offerings while retaining shared safeguards. No runtime or native proof.",
   "source_files": {
     "acceptance_scenarios": {
       "logical_path": "machine/acceptance_scenarios.json",
@@ -5904,6 +5904,162 @@
       ],
       "requirement": "Windows/macOS/Linux native PM apps ship their own signed Go/tsnet helper and sign in once, without a separate Tailscale install or host-network mutation. Plain browsers use Remote Link or a private endpoint reachable through the device’s Tailscale.",
       "acceptance": "Prove owner-isolated native-app connection, protected sign-in continuity and the browser boundary; static contract fixtures do not prove runtime behavior."
+    },
+    {
+      "requirement_id": "AUTH-003",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Server_System.md#SRV-013",
+        "Plans/Release_Supply_Chain.md#RSC-015",
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "SCM-001",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Source_Control_System.md#SCS-001",
+        "Plans/Source_Control_System.md#SCS-013",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "SCM-003",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "SCM-008",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Source_Control_System.md#SCS-014",
+        "Plans/Project_System.md#PJCT-004",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "FORGE-001",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "FORGE-002",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "FORGE-003",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "FORGE-009",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Source_Control_System.md#SCS-013",
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "GUI-004",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/FinalGUISpec.md#F3-528",
+        "Plans/Forge_Integrations.md#FGI-004",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "GUI-005",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/FinalGUISpec.md#F3-528",
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "MAT-001",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/GitLab_Integration.md#GLI-001",
+        "Plans/Azure_DevOps_Integration.md#ADO-001",
+        "Plans/Bitbucket_Integration.md#BBI-001",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "MAT-003",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Shared_Integration_Runtime.md#SIR-033",
+        "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-015",
+        "Plans/Forge_Integrations.md#FGI-012",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
+    },
+    {
+      "requirement_id": "TEST-001",
+      "decision_ref": "Plans/Decision_Log.md#DL-273",
+      "owner_plan_units": [
+        "Plans/Automated_Testing_System.md#ATS-043",
+        "Plans/Backup_Restore_System.md#BRS-010",
+        "Plans/Remote_Access_System.md#RAS-015",
+        "Plans/Forge_Integrations.md#FGI-014",
+        "Plans/Decision_Log.md#DL-273"
+      ],
+      "requirement": "DL-273 retires only this preserved proposal’s Cursor Origin native/mirror/CLI/setup/auth/review/webhook/inspection requirements. They admit no current provider or operation. Gitea and Forgejo are self-managed only. Remaining generic Git, mirror, platform, auth, permission, currentness and publication safeguards stay with their existing owners; generic_git and generic_host cannot restore retired service authority. Cursor AI remains unchanged.",
+      "acceptance": "Current providers and exact capabilities come from the narrowed Forge owner; the provider matrix has eleven profiles. No retired service/profile/inspector dispatch is possible. Source scenarios remain historical NOT_RUN input, not executable acceptance for a retired service. Shared transport/auth/mirror safeguards and all unrelated requirements remain intact."
     }
   ]
 }

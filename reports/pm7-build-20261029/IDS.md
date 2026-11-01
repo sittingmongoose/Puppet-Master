@@ -238,3 +238,6 @@ Main34b9ab2843 owns SP-346/SP-347 and the earlier storage ids. This batch alloca
 ## Own-server Forgejo follow-up — DL-273, Jared 2026-11-01
 
 Allocated **DL-273**, checked free on landed main93bd26fa26 plus snapshot07dbf43786 and fields8762cda61a. hosted Forgejo is removed; Forgejo exposes only forgejo_self_managed. Repository-restricted token support is deliberately left for now, preserving the current account-based flow. No new F3, DR, SSYS, command, setting, control, glyph or event id.
+
+
+DL-273 additional ruling, Jared 2026-11-01: Gitea is self-managed only; Cursor Origin source control is removed, while Cursor AI is unchanged. ORI-001..009 remain retired anchors, never reusable ids. ui.origin.preview.open / TCP-ORIGIN-LOCAL / TOUCH-ORILOC-001 retire; no command, setting, control-binding, glyph or event id is added. Touch715 rows/140 profiles. Current coverage215 rows/1075 cells. Source requirements ORI-002/ORI-020 retire from the Egolite sidecar; these are source-namespace requirement ids, not new PlanUnit allocations.

@@ -113433,7 +113433,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-01T19:22:30Z",
+  "generated_at_utc": "2026-11-01T19:54:48Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -147698,7 +147698,7 @@
       "reasoning_tier": "high",
       "risk_class": "provider_instance_admission",
       "source_location": {
-        "heading": "DL-273 — Own-server Forgejo and hosting eligibility; restricted tokens left for now",
+        "heading": "DL-273 — Retire unselected hosted offerings; keep self-managed services and defer restricted tokens",
         "heading_level": 3,
         "heading_line": 19777,
         "line": 19779,
@@ -169315,14 +169315,14 @@
       "unit_type": "command_binding"
     },
     {
-      "context_scope": "origin_and_provider_specific_operation_profiles",
+      "context_scope": "admitted_provider_specific_operation_profiles",
       "gui_related": true,
       "owner_doc": "Plans/Forge_Integrations.md",
       "plan_unit_id": "FGI-014",
       "reasoning_tier": "high",
       "risk_class": "provider_parity_fabrication_mirror_duplicate_effect_or_platform_overclaim",
       "source_location": {
-        "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
+        "heading": "FGI-014 - Admitted Provider Operation Profiles",
         "heading_level": 3,
         "heading_line": 1189,
         "line": 1191,

@@ -2730,7 +2730,7 @@
       "commands": "CS-069; UCC-106; ui.onboarding.next; cmd.forge.repository.list (existing ids and owner fences)",
       "settings": "none needed: provider admission policy, no preference or key change",
       "dry": "DR-005",
-      "companions": "Twelve enum occurrences narrowed across Forge/onboarding/embedded storage schemas; Forgejo adapter host_class self_managed only; five generic hosted-profile refusal cases and two Gitea Cloud controls. Fields a5c103cbf6/f59b3e7c8e mirror is merged; 63 fields /34 conditionals /0 unmapped.",
+      "companions": "Forgejo self-managed admission remains; current DL-273 also retires Gitea Cloud and Cursor Origin source control in the two following rows. Former Gitea Cloud positive controls are now refusal cases.",
       "state": "covered_by_current_contract_fields_mirror_merged",
       "decision_ref": "DL-273",
       "source_refs": [
@@ -2739,6 +2739,30 @@
         "fields8762cda61a658081878344ddff95f9916c1aa0f0; f2a9b7a252f589b68cf2862b6b6a2a7c482dfff0",
         "fields mirror f59b3e7c8e and final a5c103cbf6, matching unchanged source schema2e5c733aeb"
       ]
+    },
+    {
+      "id": "DL273-GITEA-SELF-MANAGED",
+      "change": "Remove Gitea Cloud. Gitea is a server the person runs; its actual address, account, repository and capabilities still require owner verification.",
+      "owner": "DL-273; FGI-011/015; PWIZ-021/024; SSYS-026; F3-520",
+      "wiring": "WM-041; UIW-015; existing Forge/auth connection routes consume narrowed profiles",
+      "commands": "CS-073; UCC-106; cmd.integration.connection.add; cmd.forge.repository.list (existing ids, no new command)",
+      "settings": "none needed: no hosted-service preference row exists; Source Control manager consumes FGI admission, inventory count unchanged",
+      "dry": "DR-005",
+      "companions": "Gitea cloud variant removed from Forge/onboarding/embedded storage enums; adapter self-managed host class; prior cloud controls now negative fixtures. Fields mirror follows schema SHA.",
+      "state": "companions_authored_checks_and_fields_pending",
+      "decision_ref": "DL-273"
+    },
+    {
+      "id": "DL273-RETIRED-SOURCE-CONTROL",
+      "change": "Remove Cursor Origin source control and native/mirror profiles, setup/auth/CLI/review/webhook/UI/inspector/migration offers. Keep Cursor AI and independent generic Git transport.",
+      "owner": "DL-273; ORI-001..009 retired; FGI-001/014/015; SCS-001/011/015; F3-520/528/529; SSYS-026",
+      "wiring": "WM-041; UIW-015; retire TOUCH-ORILOC-001, TCP-ORIGIN-LOCAL and ui.origin.preview.open; remove retired reverse consumers",
+      "commands": "CS-073; UCC-106; shared Forge/auth/install commands remain; local inspector action retired without a domain command or alias",
+      "settings": "none needed: no ordinary setting row exists for this integration; retired provider UI leaves shared manager identity and Cursor AI settings unchanged",
+      "dry": "DR-005; generic_git/generic_host remain transport-only and cannot restore retired service authority",
+      "companions": "Provider enums/matrices, CLI operation profile and two Egolite obligations removed; active fixture pack retired; shared tests rehomed; Teacher topic removed; Touch715/140; original acceptance packet amended without source-body hash changes.",
+      "state": "companions_authored_checks_and_fields_pending",
+      "decision_ref": "DL-273"
     }
   ],
   "sources": [
@@ -3244,6 +3268,54 @@
     }
   ],
   "DL273": {
+    "decision_ref": "DL-273",
+    "hosted_forgejo": "removed",
+    "Forgejo_variant": "forgejo_self_managed",
+    "restricted_tokens": "open_left_for_now",
+    "provider_variant_enums_removed": 12,
+    "Forgejo_host_class_narrowed": true,
+    "new_rows": [
+      "DL273-OWN-SERVER-FORGEJO"
+    ],
+    "coverage_rows": 215,
+    "required_cells": 1075,
+    "fields_source": "a5c103cbf6",
+    "fields_coverage_mirror": "pending_new_schema_SHA",
+    "new_commands_bindings_settings": 0,
+    "new_product_rule": "hosted_Forgejo_not_offered",
+    "reason": "PM Projects are AI-written; hosting terms must allow them.",
+    "source_proposal_origin": {
+      "commit": "3e1842da40cf2e03b48ad62687f95600fcf1d329",
+      "date": "2026-09-02",
+      "Jared_approval": false
+    },
+    "strict_live_label_cleanup": true,
+    "live_label_matches": 0,
+    "protected_label_matches": 0,
+    "additional_ruling": "Jared 2026-11-01: You can remove both.; lead1101190655-f8ab",
+    "Gitea_variant": "gitea_self_managed",
+    "Origin_source_control": "retired",
+    "Cursor_AI": "unchanged",
+    "retired_ori_units": [
+      "ORI-001",
+      "ORI-002",
+      "ORI-003",
+      "ORI-004",
+      "ORI-005",
+      "ORI-006",
+      "ORI-007",
+      "ORI-008",
+      "ORI-009"
+    ],
+    "retired_touch": "TOUCH-ORILOC-001/TCP-ORIGIN-LOCAL/ui.origin.preview.open",
+    "touch_rows": 715,
+    "touch_profiles": 140,
+    "contract_pairs": 40,
+    "provider_profiles": 11,
+    "egolite_active_requirements": 13,
+    "Teacher_topics": 46
+  },
+  "historical_DL273_first_removal": {
     "decision_ref": "DL-273",
     "hosted_forgejo": "removed",
     "Forgejo_variant": "forgejo_self_managed",

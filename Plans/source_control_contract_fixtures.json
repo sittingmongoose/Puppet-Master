@@ -474,7 +474,7 @@
         "schema_id": "pm.source_control.projection.v1",
         "repository_context_ref": "repository-context:jj:1",
         "scm_backend": "jujutsu",
-        "forge_provider": "cursor_origin",
+        "forge_provider": "gitea",
         "currentness": "degraded",
         "sections": [
           "changes",
@@ -2179,47 +2179,259 @@
       "name": "effective_capability_unknown_remains_distinct_and_shared",
       "definition": "effective_operation_capability",
       "value": {
-        "schema_id": "pm.source_control.effective_operation_capability.v1", "capability_id": "capability:publish:alpha", "operation": "publish", "repository_context_ref": "repository-context:alpha", "remote_binding_ref": "remote:alpha:origin", "forge_binding_ref": "forge-binding:origin:alpha", "automation_binding_ref": "automation-binding:github:alpha", "revision_ref": "revision:git:alpha:41",
-        "inputs": {"product_support": "supported", "adapter_implementation": "implemented", "instance_version_tier_feature": "configured", "credential_scopes": "unknown", "repository_branch_permissions": "unknown", "pm_policy": "allowed", "locks_revision": "current", "connectivity": "online"},
-        "support_state": "unknown", "support_evidence_refs": ["evidence:capability-probe:alpha"], "freshness": {"state": "unknown", "capability_revision": 41, "observed_at_utc": "2026-09-01T15:00:00Z", "expires_at_utc": null}, "availability": "unknown", "remediation_refs": ["route:source-control-capability-refresh"], "consumer_classes": ["gui", "command_palette", "natural_language", "agents", "doctor", "dispatch"], "execution_recheck_required": true, "cached_permission_authorizes_mutation": false, "evaluated_at_utc": "2026-09-01T15:00:00Z"
+        "schema_id": "pm.source_control.effective_operation_capability.v1",
+        "capability_id": "capability:publish:alpha",
+        "operation": "publish",
+        "repository_context_ref": "repository-context:alpha",
+        "remote_binding_ref": "remote:alpha:origin",
+        "forge_binding_ref": "forge-binding:origin:alpha",
+        "automation_binding_ref": "automation-binding:github:alpha",
+        "revision_ref": "revision:git:alpha:41",
+        "inputs": {
+          "product_support": "supported",
+          "adapter_implementation": "implemented",
+          "instance_version_tier_feature": "configured",
+          "credential_scopes": "unknown",
+          "repository_branch_permissions": "unknown",
+          "pm_policy": "allowed",
+          "locks_revision": "current",
+          "connectivity": "online"
+        },
+        "support_state": "unknown",
+        "support_evidence_refs": [
+          "evidence:capability-probe:alpha"
+        ],
+        "freshness": {
+          "state": "unknown",
+          "capability_revision": 41,
+          "observed_at_utc": "2026-09-01T15:00:00Z",
+          "expires_at_utc": null
+        },
+        "availability": "unknown",
+        "remediation_refs": [
+          "route:source-control-capability-refresh"
+        ],
+        "consumer_classes": [
+          "gui",
+          "command_palette",
+          "natural_language",
+          "agents",
+          "doctor",
+          "dispatch"
+        ],
+        "execution_recheck_required": true,
+        "cached_permission_authorizes_mutation": false,
+        "evaluated_at_utc": "2026-09-01T15:00:00Z"
       }
     },
     {
       "name": "remote_fanout_records_per_target_partial_outcomes",
       "definition": "remote_operation_target",
       "value": {
-        "schema_id": "pm.source_control.remote_operation_target.v1", "operation_id": "publish:alpha:42", "project_id": "project:alpha", "repository_id": "repo:alpha", "remote_id": "remote:alpha:origin", "forge_instance_id": "instance:cursor-origin", "account_id": "account:origin:alpha", "revision_ref": "revision:git:alpha:42", "fetch_url": "ssh://origin.example.invalid/alpha.git",
+        "schema_id": "pm.source_control.remote_operation_target.v1",
+        "operation_id": "publish:alpha:42",
+        "project_id": "project:alpha",
+        "repository_id": "repo:alpha",
+        "remote_id": "remote:alpha:origin",
+        "forge_instance_id": "instance:cursor-origin",
+        "account_id": "account:origin:alpha",
+        "revision_ref": "revision:git:alpha:42",
+        "fetch_url": "ssh://origin.example.invalid/alpha.git",
         "push_targets": [
-          {"target_id": "remote-target:origin", "push_url": "ssh://origin.example.invalid/alpha.git", "refspecs": ["refs/heads/main:refs/heads/main"], "preview_ref": "preview:push:origin", "idempotency_key": "idempotency:push:origin:42", "outcome": "succeeded"},
-          {"target_id": "remote-target:upstream", "push_url": "ssh://github.example.invalid/alpha.git", "refspecs": ["refs/heads/main:refs/heads/main"], "preview_ref": "preview:push:upstream", "idempotency_key": "idempotency:push:upstream:42", "outcome": "rejected"}
+          {
+            "target_id": "remote-target:origin",
+            "push_url": "ssh://origin.example.invalid/alpha.git",
+            "refspecs": [
+              "refs/heads/main:refs/heads/main"
+            ],
+            "preview_ref": "preview:push:origin",
+            "idempotency_key": "idempotency:push:origin:42",
+            "outcome": "succeeded"
+          },
+          {
+            "target_id": "remote-target:upstream",
+            "push_url": "ssh://github.example.invalid/alpha.git",
+            "refspecs": [
+              "refs/heads/main:refs/heads/main"
+            ],
+            "preview_ref": "preview:push:upstream",
+            "idempotency_key": "idempotency:push:upstream:42",
+            "outcome": "rejected"
+          }
         ],
-        "review_binding_ref": "review-binding:github:alpha", "selection_snapshot_generation": 12, "fanout_atomic": false, "mirror_duplicate_push_allowed": false, "identity_equivalence_from_shared_commits": false
+        "review_binding_ref": "review-binding:github:alpha",
+        "selection_snapshot_generation": 12,
+        "fanout_atomic": false,
+        "mirror_duplicate_push_allowed": false,
+        "identity_equivalence_from_shared_commits": false
       }
     },
     {
       "name": "jujutsu_semantics_have_no_hidden_git_mapping",
       "definition": "backend_operation_semantics",
-      "value": {"schema_id": "pm.source_control.backend_operation_semantics.v1", "backend": "jujutsu", "visible_concepts": ["current_at", "change_id", "commit_id", "describe", "new", "edit", "split", "squash", "abandon", "bookmarks_tracking", "conflicts", "workspaces", "operation_history"], "operation_history_kind": "jj_operation_log_distinct_from_source_history_and_backup", "adoption_requires_preview": true, "hidden_cross_backend_mapping": false, "colocated_lock_and_import_export_coordination": true}
+      "value": {
+        "schema_id": "pm.source_control.backend_operation_semantics.v1",
+        "backend": "jujutsu",
+        "visible_concepts": [
+          "current_at",
+          "change_id",
+          "commit_id",
+          "describe",
+          "new",
+          "edit",
+          "split",
+          "squash",
+          "abandon",
+          "bookmarks_tracking",
+          "conflicts",
+          "workspaces",
+          "operation_history"
+        ],
+        "operation_history_kind": "jj_operation_log_distinct_from_source_history_and_backup",
+        "adoption_requires_preview": true,
+        "hidden_cross_backend_mapping": false,
+        "colocated_lock_and_import_export_coordination": true
+      }
     },
     {
       "name": "gitlab_merge_request_preserves_native_status_and_extensions",
       "definition": "normalized_remote_record",
-      "value": {"schema_id": "pm.source_control.normalized_remote_record.v1", "record_kind": "ReviewRequest", "provider_kind": "gitlab", "instance_id": "instance:gitlab:self-managed", "account_id": "account:gitlab:alpha", "repository_id": "provider-repo:gitlab:481", "immutable_external_id": "mr:12", "raw_status": "opened", "normalized_status": "open", "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "canonical_url": "https://gitlab.example.invalid/group/repo/-/merge_requests/12", "canonical_url_origin": "provider_supplied", "url_absent_reason": null, "observed_at_utc": "2026-09-01T15:01:00Z", "native_object_label": "Merge request", "vendor_extensions": {"approval_policy_ref": "approval-policy:gitlab:12", "child_pipeline_refs": ["pipeline:child:9"]}, "vendor_extensions_preserved": true}
+      "value": {
+        "schema_id": "pm.source_control.normalized_remote_record.v1",
+        "record_kind": "ReviewRequest",
+        "provider_kind": "gitlab",
+        "instance_id": "instance:gitlab:self-managed",
+        "account_id": "account:gitlab:alpha",
+        "repository_id": "provider-repo:gitlab:481",
+        "immutable_external_id": "mr:12",
+        "raw_status": "opened",
+        "normalized_status": "open",
+        "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "canonical_url": "https://gitlab.example.invalid/group/repo/-/merge_requests/12",
+        "canonical_url_origin": "provider_supplied",
+        "url_absent_reason": null,
+        "observed_at_utc": "2026-09-01T15:01:00Z",
+        "native_object_label": "Merge request",
+        "vendor_extensions": {
+          "approval_policy_ref": "approval-policy:gitlab:12",
+          "child_pipeline_refs": [
+            "pipeline:child:9"
+          ]
+        },
+        "vendor_extensions_preserved": true
+      }
     },
     {
       "name": "timeout_after_acceptance_enters_exact_reconciliation",
       "definition": "external_effect_reconciliation",
-      "value": {"schema_id": "pm.source_control.external_effect_reconciliation.v1", "operation_id": "review-create:alpha:12", "operation_kind": "review_create", "intended_target_ref": "forge-binding:origin:alpha", "precondition_refs": ["expected-head:alpha:12", "permission:review-create:12"], "intent_recorded_before_call": true, "provider_idempotency_supported": false, "idempotency_key": null, "state": "outcome_unknown", "exact_reconciliation_evidence_refs": ["correlation:origin:review-create:12"], "blind_retry_allowed": false, "successful_cli_exit_proves_remote_state": false, "force_guard": {"force_requested": false, "expected_head_ref": null, "lease_ref": null, "dangerous_action_policy_ref": null}, "accepted_request_distinct_from_durable_outcome": true}
+      "value": {
+        "schema_id": "pm.source_control.external_effect_reconciliation.v1",
+        "operation_id": "review-create:alpha:12",
+        "operation_kind": "review_create",
+        "intended_target_ref": "forge-binding:origin:alpha",
+        "precondition_refs": [
+          "expected-head:alpha:12",
+          "permission:review-create:12"
+        ],
+        "intent_recorded_before_call": true,
+        "provider_idempotency_supported": false,
+        "idempotency_key": null,
+        "state": "outcome_unknown",
+        "exact_reconciliation_evidence_refs": [
+          "correlation:origin:review-create:12"
+        ],
+        "blind_retry_allowed": false,
+        "successful_cli_exit_proves_remote_state": false,
+        "force_guard": {
+          "force_requested": false,
+          "expected_head_ref": null,
+          "lease_ref": null,
+          "dangerous_action_policy_ref": null
+        },
+        "accepted_request_distinct_from_durable_outcome": true
+      }
     },
     {
       "name": "one_home_server_observer_fans_out_to_many_clients",
       "definition": "observation_subscription_contract",
-      "value": {"schema_id": "pm.source_control.observation_subscription.v1", "subscription_id": "subscription:forge:alpha", "home_server_id": "server:home:alpha", "authorized_binding_ref": "forge-binding:github:alpha", "underlying_worker_key": "worker:observation:github:alpha", "client_projection_refs": ["projection:client:desktop", "projection:client:web", "projection:undocked:automation"], "one_underlying_worker": true, "webhook": {"optional_accelerator": true, "authenticated": true, "replay_checked": true, "ordering_checked": true}, "poll_reconciliation_available": true, "public_ingress_enabled_for_webhook": false, "cache_key_parts": ["instance_id", "account_id", "repository_id", "revision_id"], "discard_stale_selection_results": true, "governors": ["pagination", "log_streams", "retry_jitter", "http_429_backoff", "inactive_subscriptions"]}
+      "value": {
+        "schema_id": "pm.source_control.observation_subscription.v1",
+        "subscription_id": "subscription:forge:alpha",
+        "home_server_id": "server:home:alpha",
+        "authorized_binding_ref": "forge-binding:github:alpha",
+        "underlying_worker_key": "worker:observation:github:alpha",
+        "client_projection_refs": [
+          "projection:client:desktop",
+          "projection:client:web",
+          "projection:undocked:automation"
+        ],
+        "one_underlying_worker": true,
+        "webhook": {
+          "optional_accelerator": true,
+          "authenticated": true,
+          "replay_checked": true,
+          "ordering_checked": true
+        },
+        "poll_reconciliation_available": true,
+        "public_ingress_enabled_for_webhook": false,
+        "cache_key_parts": [
+          "instance_id",
+          "account_id",
+          "repository_id",
+          "revision_id"
+        ],
+        "discard_stale_selection_results": true,
+        "governors": [
+          "pagination",
+          "log_streams",
+          "retry_jitter",
+          "http_429_backoff",
+          "inactive_subscriptions"
+        ]
+      }
     },
     {
       "name": "truenas_home_wsl_checkout_and_remote_forge_route_by_owner",
       "definition": "source_operation_routing_and_agent_boundary",
-      "value": {"schema_id": "pm.source_control.routing_and_agent_boundary.v1", "repository_context_ref": "repository-context:truenas-wsl-forgejo", "local_filesystem_route": {"source_location_execution_environment_ref": "environment:wsl:ubuntu", "selected_installation_ref": "installation:git:wsl:ubuntu", "worktree_or_workspace_manager_ref": "manager:worktree:wsl", "file_safe_decision_ref": "filesafe:decision:alpha"}, "hosting_api_route": {"egress_host_ref": "host:truenas:home", "forge_adapter_ref": "adapter:forgejo:instance-a", "credential_ref": "credential-lease:forgejo:alpha", "assumes_checkout_present": false, "git_credential_interchangeable": false}, "cli_hosting_route": {"installation_profile_ref": "installation:origin-cli:wsl", "explicit_repository_target": "repository:origin:alpha", "current_working_branch_default_used": false}, "durable_receipt_home_server_ref": "server:truenas:home", "worker_becomes_project_authority": false, "agent_summary": {"compact_typed_actions": true, "structured_blockers": true, "whole_registry_or_log_dump": false, "same_registered_commands": true, "ui_scraping_substitute": false, "alternate_account_fallback": false}, "automated_mutation": {"exact_task_policy_ref": "policy:task:publish", "approval_ref": "approval:publish:alpha", "protected_branch_bypass": false, "ci_cost_trigger_disclosed": true, "runner_is_execution_host_without_configuration": false}}
+      "value": {
+        "schema_id": "pm.source_control.routing_and_agent_boundary.v1",
+        "repository_context_ref": "repository-context:truenas-wsl-forgejo",
+        "local_filesystem_route": {
+          "source_location_execution_environment_ref": "environment:wsl:ubuntu",
+          "selected_installation_ref": "installation:git:wsl:ubuntu",
+          "worktree_or_workspace_manager_ref": "manager:worktree:wsl",
+          "file_safe_decision_ref": "filesafe:decision:alpha"
+        },
+        "hosting_api_route": {
+          "egress_host_ref": "host:truenas:home",
+          "forge_adapter_ref": "adapter:forgejo:instance-a",
+          "credential_ref": "credential-lease:forgejo:alpha",
+          "assumes_checkout_present": false,
+          "git_credential_interchangeable": false
+        },
+        "cli_hosting_route": {
+          "installation_profile_ref": "installation:origin-cli:wsl",
+          "explicit_repository_target": "repository:origin:alpha",
+          "current_working_branch_default_used": false
+        },
+        "durable_receipt_home_server_ref": "server:truenas:home",
+        "worker_becomes_project_authority": false,
+        "agent_summary": {
+          "compact_typed_actions": true,
+          "structured_blockers": true,
+          "whole_registry_or_log_dump": false,
+          "same_registered_commands": true,
+          "ui_scraping_substitute": false,
+          "alternate_account_fallback": false
+        },
+        "automated_mutation": {
+          "exact_task_policy_ref": "policy:task:publish",
+          "approval_ref": "approval:publish:alpha",
+          "protected_branch_bypass": false,
+          "ci_cost_trigger_disclosed": true,
+          "runner_is_execution_host_without_configuration": false
+        }
+      }
     },
     {
       "name": "git_source_graph_is_bounded_identity_safe_and_virtualized",
@@ -2859,35 +3071,45 @@
       "name": "source_graph_never_claims_shared_commit_identity_authority",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"identity_authority.shared_commit_authoritative": true},
+      "patch": {
+        "identity_authority.shared_commit_authoritative": true
+      },
       "expected_error": "repository identity remains owner-bound"
     },
     {
       "name": "source_graph_cannot_hydrate_without_a_bound",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"virtualization.unbounded_hydration": true},
+      "patch": {
+        "virtualization.unbounded_hydration": true
+      },
       "expected_error": "source graph pages remain bounded"
     },
     {
       "name": "git_source_graph_cannot_use_jujutsu_change_graph",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"graph_kind": "jujutsu_change_graph"},
+      "patch": {
+        "graph_kind": "jujutsu_change_graph"
+      },
       "expected_error": "backend-native graph kind"
     },
     {
       "name": "jujutsu_source_graph_requires_stable_change_reference",
       "definition": "source_graph_projection",
       "base_valid": "jujutsu_source_graph_preserves_change_identity_and_history_boundaries",
-      "patch": {"nodes.0.stable_change_ref": null},
+      "patch": {
+        "nodes.0.stable_change_ref": null
+      },
       "expected_error": "Jujutsu change identity is preserved"
     },
     {
       "name": "source_graph_does_not_merge_backup_history",
       "definition": "source_graph_projection",
       "base_valid": "jujutsu_source_graph_preserves_change_identity_and_history_boundaries",
-      "patch": {"history_separation.backup_history_separate": false},
+      "patch": {
+        "history_separation.backup_history_separate": false
+      },
       "expected_error": "Backup history remains owner-separated"
     },
     {
@@ -2946,7 +3168,9 @@
       "name": "source_graph_returned_count_must_equal_the_emitted_nodes",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"page.returned_count": 3},
+      "patch": {
+        "page.returned_count": 3
+      },
       "semantic_rule": "source_graph_returned_count_not_equal_to_emitted_nodes",
       "expected_error": "returned_count must equal the number of nodes the page actually emitted"
     },
@@ -2954,7 +3178,9 @@
       "name": "source_graph_returned_count_must_not_exceed_the_requested_page_size",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"page.page_size": 1},
+      "patch": {
+        "page.page_size": 1
+      },
       "semantic_rule": "source_graph_returned_count_exceeds_page_size",
       "expected_error": "returned_count must not exceed the requested page_size"
     },
@@ -2962,7 +3188,9 @@
       "name": "source_graph_node_ref_must_be_unique_within_one_page",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"nodes.1.node_ref": "graph-node:git:alpha:43"},
+      "patch": {
+        "nodes.1.node_ref": "graph-node:git:alpha:43"
+      },
       "semantic_rule": "source_graph_duplicate_node_ref_in_page",
       "expected_error": "two nodes on one page cannot share a node_ref, whatever their revision_ref values"
     },
@@ -3308,63 +3536,81 @@
       "name": "source_graph_static_fixture_is_not_runtime_evidence",
       "definition": "source_graph_projection",
       "base_valid": "git_source_graph_is_bounded_identity_safe_and_virtualized",
-      "patch": {"runtime_evidence_claimed": true},
+      "patch": {
+        "runtime_evidence_claimed": true
+      },
       "expected_error": "static graph fixture does not prove runtime"
     },
     {
       "name": "unknown_capability_cannot_be_flattened_to_unsupported",
       "definition": "effective_operation_capability",
       "base_valid": "effective_capability_unknown_remains_distinct_and_shared",
-      "patch": {"availability": "unsupported"},
+      "patch": {
+        "availability": "unsupported"
+      },
       "expected_error": "unknown is not unsupported"
     },
     {
       "name": "cached_permission_never_authorizes_mutation",
       "definition": "effective_operation_capability",
       "base_valid": "effective_capability_unknown_remains_distinct_and_shared",
-      "patch": {"cached_permission_authorizes_mutation": true},
+      "patch": {
+        "cached_permission_authorizes_mutation": true
+      },
       "expected_error": "backend must recheck current permission"
     },
     {
       "name": "multi_remote_push_is_not_atomic",
       "definition": "remote_operation_target",
       "base_valid": "remote_fanout_records_per_target_partial_outcomes",
-      "patch": {"fanout_atomic": true},
+      "patch": {
+        "fanout_atomic": true
+      },
       "expected_error": "fanout outcomes are target-specific"
     },
     {
       "name": "jujutsu_action_cannot_hide_git_mutation",
       "definition": "backend_operation_semantics",
       "base_valid": "jujutsu_semantics_have_no_hidden_git_mapping",
-      "patch": {"hidden_cross_backend_mapping": true},
+      "patch": {
+        "hidden_cross_backend_mapping": true
+      },
       "expected_error": "JJ is not a hidden Git commit or stash"
     },
     {
       "name": "gitlab_review_cannot_be_labeled_pull_request",
       "definition": "normalized_remote_record",
       "base_valid": "gitlab_merge_request_preserves_native_status_and_extensions",
-      "patch": {"native_object_label": "Pull request"},
+      "patch": {
+        "native_object_label": "Pull request"
+      },
       "expected_error": "provider-native object vocabulary is preserved"
     },
     {
       "name": "effect_unknown_cannot_blind_retry",
       "definition": "external_effect_reconciliation",
       "base_valid": "timeout_after_acceptance_enters_exact_reconciliation",
-      "patch": {"blind_retry_allowed": true},
+      "patch": {
+        "blind_retry_allowed": true
+      },
       "expected_error": "reconcile exact evidence before retry"
     },
     {
       "name": "webhook_cannot_enable_public_ingress",
       "definition": "observation_subscription_contract",
       "base_valid": "one_home_server_observer_fans_out_to_many_clients",
-      "patch": {"public_ingress_enabled_for_webhook": true},
+      "patch": {
+        "public_ingress_enabled_for_webhook": true
+      },
       "expected_error": "Funnel or public ingress is never enabled only for webhook delivery"
     },
     {
       "name": "agent_summary_cannot_dump_whole_registry",
       "definition": "source_operation_routing_and_agent_boundary",
       "base_valid": "truenas_home_wsl_checkout_and_remote_forge_route_by_owner",
-      "patch": {"agent_summary.whole_registry_or_log_dump": true},
+      "patch": {
+        "agent_summary.whole_registry_or_log_dump": true
+      },
       "expected_error": "agents consume compact typed actions and blockers"
     },
     {

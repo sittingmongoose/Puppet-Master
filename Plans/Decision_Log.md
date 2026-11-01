@@ -19774,7 +19774,7 @@ owner_hints:
 ```
 
 
-### DL-273 — Own-server Forgejo and hosting eligibility; restricted tokens left for now
+### DL-273 — Retire unselected hosted offerings; keep self-managed services and defer restricted tokens
 
 ```yaml
 plan_unit_id: DL-273

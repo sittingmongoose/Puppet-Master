@@ -1186,7 +1186,7 @@ compile_disposition: extend_existing_owner
 
 ## Provider Operation And Capability-Matrix Depth Repair - 2026-09-02
 
-### FGI-014 - Origin And Provider-Specific Operation Profiles
+### FGI-014 - Admitted Provider Operation Profiles
 
 ```yaml
 plan_unit_id: FGI-014
@@ -1246,7 +1246,7 @@ validation_surfaces:
 - and multi-forge routing fixtures
 risk_class: provider_parity_fabrication_mirror_duplicate_effect_or_platform_overclaim
 reasoning_tier: high
-context_scope: origin_and_provider_specific_operation_profiles
+context_scope: admitted_provider_specific_operation_profiles
 implementation_surfaces:
 - Plans/Forge_Integrations.md
 - Plans/forge_integration_contracts.schema.json

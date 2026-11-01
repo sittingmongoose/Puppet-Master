@@ -71,9 +71,6 @@
       "$ref": "#/$defs/provider_capability_matrix"
     },
     {
-      "$ref": "#/$defs/origin_cli_operation_profile"
-    },
-    {
       "$ref": "#/$defs/hosted_administration_surface"
     },
     {
@@ -111,8 +108,7 @@
         "bitbucket_data_center",
         "forgejo",
         "gitea",
-        "generic_host",
-        "cursor_origin"
+        "generic_host"
       ]
     },
     "authority_role": {
@@ -798,8 +794,7 @@
             "properties": {
               "provider_variant": {
                 "enum": [
-                  "gitea_self_managed",
-                  "gitea_cloud"
+                  "gitea_self_managed"
                 ]
               },
               "detected_product": {
@@ -2214,24 +2209,6 @@
           "format": "date-time"
         }
       },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "provider": {
-                "const": "cursor_origin"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "valid_for_seconds": {
-                "const": 300
-              }
-            }
-          }
-        }
-      ],
       "additionalProperties": false
     },
     "token_lease": {
@@ -2296,24 +2273,6 @@
           ]
         }
       },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "provider": {
-                "const": "cursor_origin"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "ttl_seconds": {
-                "maximum": 900
-              }
-            }
-          }
-        }
-      ],
       "additionalProperties": false
     },
     "signed_webhook_delivery": {
@@ -2407,24 +2366,6 @@
           ]
         }
       },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "provider": {
-                "const": "cursor_origin"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "signature_algorithm": {
-                "const": "ed25519"
-              }
-            }
-          }
-        }
-      ],
       "additionalProperties": false
     },
     "api_compatibility": {
@@ -3054,28 +2995,6 @@
           "if": {
             "properties": {
               "provider": {
-                "const": "cursor_origin"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "provider_variant": {
-                "const": "preview"
-              },
-              "host_class": {
-                "const": "preview_hosted"
-              },
-              "review_noun": {
-                "const": "pull_request"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "provider": {
                 "const": "gitlab"
               }
             }
@@ -3238,14 +3157,12 @@
             "properties": {
               "provider_variant": {
                 "enum": [
-                  "gitea_self_managed",
-                  "gitea_cloud"
+                  "gitea_self_managed"
                 ]
               },
               "host_class": {
                 "enum": [
-                  "self_managed",
-                  "cloud"
+                  "self_managed"
                 ]
               },
               "review_noun": {
@@ -3336,7 +3253,6 @@
         "license_tier_limit",
         "missing_scope",
         "organization_access_denied",
-        "origin_cli_missing_on_selected_environment",
         "pipeline_disabled",
         "pipelines_not_a_data_center_capability",
         "plan_limit",
@@ -7905,8 +7821,6 @@
         "operation_admission",
         "account_password_allowed",
         "ordinary_admin_scope_grant",
-        "native_windows_origin_cli_support",
-        "origin_windows_fallbacks",
         "implicit_wsl_enable",
         "provider_specific_facts"
       ],
@@ -7923,8 +7837,6 @@
             "bitbucket_data_center",
             "forgejo",
             "gitea",
-            "cursor_origin_native",
-            "cursor_origin_github_mirror",
             "generic_git"
           ]
         },
@@ -7962,9 +7874,7 @@
               "instance_supported_PAT_or_enterprise_auth",
               "instance_OAuth_PKCE_when_registered",
               "guided_scoped_PAT",
-              "official_Origin_CLI_browser_auth",
               "verified_Git_credential_helper",
-              "Origin_CLI_profile",
               "GitHub_API_profile_for_GitHub_owned_features",
               "scoped_HTTPS_Git_credentials",
               "scoped_SSH_agent"
@@ -8001,22 +7911,6 @@
         "ordinary_admin_scope_grant": {
           "const": false
         },
-        "native_windows_origin_cli_support": {
-          "enum": [
-            "not_applicable",
-            "unverified"
-          ]
-        },
-        "origin_windows_fallbacks": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "enum": [
-              "WSL",
-              "remote_compatible_host"
-            ]
-          }
-        },
         "implicit_wsl_enable": {
           "const": false
         },
@@ -8039,9 +7933,6 @@
               "forgejo_distinct_versioned_adapter",
               "gitea_distinct_versioned_adapter",
               "actions_enabled_runner_and_operations_probed_independently",
-              "origin_authoritative_git_read_write",
-              "origin_cli_profile_not_cursor_agent_auth",
-              "origin_mirror_github_write_review_ci_authority",
               "generic_git_transport_only",
               "jj_never_cloud_hosting_account",
               "no_fabricated_pr_or_ci"
@@ -8113,66 +8004,6 @@
               },
               "automation_service": {
                 "type": "null"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "profile_id": {
-                "const": "cursor_origin_native"
-              }
-            },
-            "required": [
-              "profile_id"
-            ]
-          },
-          "then": {
-            "properties": {
-              "native_windows_origin_cli_support": {
-                "const": "unverified"
-              },
-              "origin_windows_fallbacks": {
-                "type": "array",
-                "minItems": 2,
-                "maxItems": 2,
-                "allOf": [
-                  {
-                    "contains": {
-                      "const": "WSL"
-                    }
-                  },
-                  {
-                    "contains": {
-                      "const": "remote_compatible_host"
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "profile_id": {
-                "not": {
-                  "const": "cursor_origin_native"
-                }
-              }
-            },
-            "required": [
-              "profile_id"
-            ]
-          },
-          "then": {
-            "properties": {
-              "native_windows_origin_cli_support": {
-                "const": "not_applicable"
-              },
-              "origin_windows_fallbacks": {
-                "maxItems": 0
               }
             }
           }
@@ -8280,8 +8111,8 @@
         },
         "profiles": {
           "type": "array",
-          "minItems": 13,
-          "maxItems": 13,
+          "minItems": 11,
+          "maxItems": 11,
           "items": {
             "$ref": "#/$defs/provider_matrix_profile"
           },
@@ -8410,30 +8241,6 @@
               "contains": {
                 "properties": {
                   "profile_id": {
-                    "const": "cursor_origin_native"
-                  }
-                },
-                "required": [
-                  "profile_id"
-                ]
-              }
-            },
-            {
-              "contains": {
-                "properties": {
-                  "profile_id": {
-                    "const": "cursor_origin_github_mirror"
-                  }
-                },
-                "required": [
-                  "profile_id"
-                ]
-              }
-            },
-            {
-              "contains": {
-                "properties": {
-                  "profile_id": {
                     "const": "generic_git"
                   }
                 },
@@ -8448,125 +8255,6 @@
           "$ref": "#/$defs/non_secret_ref"
         },
         "no_github_compatible_boolean": {
-          "const": true
-        },
-        "runtime_support_claimed": {
-          "const": false
-        }
-      }
-    },
-    "origin_cli_operation_profile": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "adapter_ref",
-        "pinned_cli_version_ref",
-        "operations",
-        "json_output_required",
-        "explicit_repository_head_base_target",
-        "current_working_branch_defaults_allowed",
-        "source_checkout_separate_from_read_only_review",
-        "create_push_requires_publication_preview",
-        "cursor_agent_auth_proves_origin_access",
-        "mirror_github_authority_preserved",
-        "duplicate_ci_dispatch_allowed",
-        "github_workflow_files_are_tree_content",
-        "runtime_support_claimed"
-      ],
-      "properties": {
-        "schema_id": {
-          "const": "pm.forge.origin_cli_operation_profile.v1"
-        },
-        "adapter_ref": {
-          "$ref": "#/$defs/non_secret_ref"
-        },
-        "pinned_cli_version_ref": {
-          "$ref": "#/$defs/non_secret_ref"
-        },
-        "operations": {
-          "type": "array",
-          "uniqueItems": true,
-          "minItems": 22,
-          "items": {
-            "enum": [
-              "pr_list",
-              "pr_view",
-              "pr_create",
-              "pr_diff",
-              "pr_checks",
-              "pr_edit",
-              "pr_ready",
-              "pr_draft",
-              "review_approve",
-              "review_request_changes",
-              "review_comment",
-              "review_thread_reply",
-              "review_thread_resolve",
-              "review_thread_reopen",
-              "merge",
-              "close",
-              "reopen",
-              "stale_version_refresh",
-              "clone",
-              "fetch",
-              "pull",
-              "push"
-            ]
-          },
-          "allOf": [
-            {
-              "contains": {
-                "const": "pr_list"
-              }
-            },
-            {
-              "contains": {
-                "const": "pr_create"
-              }
-            },
-            {
-              "contains": {
-                "const": "review_thread_resolve"
-              }
-            },
-            {
-              "contains": {
-                "const": "stale_version_refresh"
-              }
-            },
-            {
-              "contains": {
-                "const": "push"
-              }
-            }
-          ]
-        },
-        "json_output_required": {
-          "const": true
-        },
-        "explicit_repository_head_base_target": {
-          "const": true
-        },
-        "current_working_branch_defaults_allowed": {
-          "const": false
-        },
-        "source_checkout_separate_from_read_only_review": {
-          "const": true
-        },
-        "create_push_requires_publication_preview": {
-          "const": true
-        },
-        "cursor_agent_auth_proves_origin_access": {
-          "const": false
-        },
-        "mirror_github_authority_preserved": {
-          "const": true
-        },
-        "duplicate_ci_dispatch_allowed": {
-          "const": false
-        },
-        "github_workflow_files_are_tree_content": {
           "const": true
         },
         "runtime_support_claimed": {
@@ -8953,8 +8641,6 @@
             "bitbucket_data_center",
             "forgejo",
             "gitea",
-            "cursor_origin_native",
-            "cursor_origin_github_mirror",
             "generic_git"
           ]
         },
@@ -9075,8 +8761,6 @@
                 "bitbucket_data_center",
                 "forgejo",
                 "gitea",
-                "cursor_origin_native",
-                "cursor_origin_github_mirror",
                 "generic_git"
               ]
             },

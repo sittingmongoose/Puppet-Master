@@ -68,7 +68,6 @@ CONTRACT_PAIRS = (
     ("Plans/external_research_contracts.schema.json", "Plans/external_research_contract_fixtures.json"),
     ("Plans/final_gui_interaction_contracts.schema.json", "Plans/final_gui_interaction_contract_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/forge_integration_contract_fixtures.json"),
-    ("Plans/forge_integration_contracts.schema.json", "Plans/cursor_origin_integration_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/gitlab_integration_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/azure_devops_integration_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/bitbucket_integration_fixtures.json"),
@@ -127,7 +126,7 @@ CONTRACT_PAIRS = (
 # 38 -> 39 on 2026-09-27: the scheduling and quota resume pair above.
 # 39 -> 40 on 2026-09-27: the collaborative workflows pair above.
 # 40 -> 41 on 2026-09-27: the assistant chat pair above.
-EXPECTED_CONTRACT_PAIR_COUNT = 41
+EXPECTED_CONTRACT_PAIR_COUNT = 40
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"

@@ -8463,7 +8463,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.cancel",
       "ui_element_id": "catalog.auth_profile_cancel",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.auth_profile_open_official_page": {
       "acceptance_checks": [
@@ -8644,7 +8644,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.retry",
       "ui_element_id": "catalog.auth_profile_retry",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.auth_profile_revoke": {
       "acceptance_checks": [
@@ -8759,7 +8759,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.select",
       "ui_element_id": "catalog.auth_profile_select",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.auth_profile_sign_in": {
       "acceptance_checks": [
@@ -8824,7 +8824,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.sign_in",
       "ui_element_id": "catalog.auth_profile_sign_in",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
     },
     "catalog.auth_profile_sign_out": {
       "acceptance_checks": [
@@ -8881,7 +8881,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.sign_out",
       "ui_element_id": "catalog.auth_profile_sign_out",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.auth_profile_submit_code": {
       "acceptance_checks": [
@@ -8938,7 +8938,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.submit_code",
       "ui_element_id": "catalog.auth_profile_submit_code",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.auth_profile_transfer_apply": {
       "acceptance_checks": [
@@ -9111,7 +9111,7 @@
       ],
       "ui_command_id": "cmd.auth_profile.verify",
       "ui_element_id": "catalog.auth_profile_verify",
-      "ui_location": "Forge/Cursor Origin provider setup and owner-routed Doctor remediation"
+      "ui_location": "Forge provider setup and owner-routed Doctor remediation"
     },
     "catalog.authentication_cancel": {
       "ui_element_id": "catalog.authentication_cancel",
@@ -35555,7 +35555,7 @@
       ],
       "ui_command_id": "cmd.installation.select",
       "ui_element_id": "catalog.installation_select",
-      "ui_location": "Settings provider actions, Cursor Origin setup, Forge setup, Doctor owner-routed remediation"
+      "ui_location": "Settings provider actions, Forge setup, Doctor owner-routed remediation"
     },
     "catalog.installation_update": {
       "ui_element_id": "catalog.installation_update",

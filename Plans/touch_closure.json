@@ -3704,7 +3704,6 @@
       ],
       "return_route": "Exact provider/repository/review/pipeline and caller focus.",
       "reverse_consumers": [
-        "Plans/Cursor_Origin_Integration.md",
         "Plans/GitLab_Integration.md",
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Bitbucket_Integration.md",
@@ -3729,7 +3728,6 @@
       ],
       "test_refs": [
         "Plans/forge_integration_contract_fixtures.json",
-        "Plans/cursor_origin_integration_fixtures.json",
         "Plans/gitlab_integration_fixtures.json",
         "Plans/azure_devops_integration_fixtures.json",
         "Plans/bitbucket_integration_fixtures.json",
@@ -4170,13 +4168,12 @@
       "wiring_status": "specified",
       "production_or_simulation": "Static select schema/fixtures and existing lifecycle specification only; select catalog/wiring/handler/activation/runtime proof absent. Central production-intent wiring is specified; native runtime evidence remains absent.",
       "gui_triggers": [
-        "Settings provider actions, Cursor Origin setup, Forge setup, Doctor owner-routed remediation"
+        "Settings provider actions, Forge setup, Doctor owner-routed remediation"
       ],
       "return_route": "Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement plus exact continuation; runtime activation/focus/continuation settlement unproved.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Forge_Integrations.md",
-        "Plans/Cursor_Origin_Integration.md",
         "Plans/newtools.md",
         "Plans/Release_Supply_Chain.md"
       ],
@@ -4237,7 +4234,6 @@
       "return_route": "Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement; runtime focus settlement unproved.",
       "reverse_consumers": [
         "Plans/Forge_Integrations.md",
-        "Plans/Cursor_Origin_Integration.md",
         "Plans/GitLab_Integration.md",
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Bitbucket_Integration.md"
@@ -4407,14 +4403,13 @@
       "wiring_status": "specified",
       "production_or_simulation": "Static owner schema/fixtures and central production-intent wiring only; native protected-auth/provider execution, durable identity allocation and runtime proof are absent.",
       "gui_triggers": [
-        "Forge/Cursor Origin provider setup and owner-routed Doctor remediation",
+        "Forge provider setup and owner-routed Doctor remediation",
         "Product Onboarding selected-source sign-in before commit through MACS-005",
         "Product Onboarding paid-provider/underlying-Free-Models setup after actual Project commit"
       ],
       "return_route": "Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved.",
       "reverse_consumers": [
         "Plans/Forge_Integrations.md",
-        "Plans/Cursor_Origin_Integration.md",
         "Plans/newtools.md",
         "Plans/Settings_System.md",
         "Plans/Planning_Wizard.md",
@@ -4782,50 +4777,6 @@
       "migration_refs": [],
       "test_refs": [
         "Plans/Named_Plan_System.md#NPLAN-002",
-        "scripts/pm-touch-closure-verify.py"
-      ],
-      "evidence_refs": [
-        "concept_simulation_not_native_runtime"
-      ]
-    },
-    {
-      "profile_id": "TCP-ORIGIN-LOCAL",
-      "requirement_refs": [
-        "Plans/Cursor_Origin_Integration.md#ORI-008"
-      ],
-      "owner_plan": "Plans/Cursor_Origin_Integration.md",
-      "plan_unit": "ORI-008",
-      "dry_contract_ref": "Plans/Cursor_Origin_Integration.md#ORI-008",
-      "payload_schema_ref": "typed cursor_origin Preview projection target",
-      "result_schema_ref": "local Preview inspector route state",
-      "error_schema_ref": "Preview eligibility or owner projection unavailable",
-      "availability_rule": "Current Cursor Origin Preview eligibility and owner projection are required.",
-      "permission_gate": "Read-only Preview insertion; no dedicated subsystem, connection, installation, auth, SCM, or Forge mutation authority.",
-      "disabled_reason_rule": "Expose Preview ineligibility, setup, stale projection, or owner unavailability.",
-      "handler_owner": "Cursor Origin Preview local inspector route; native handler is absent.",
-      "handler_status": "specified",
-      "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 brief Preview insertion only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
-      "gui_triggers": [
-        "Cursor Origin Preview Inspect control"
-      ],
-      "return_route": "Originating Project/Settings route and focus.",
-      "reverse_consumers": [
-        "Plans/Planning_Wizard.md"
-      ],
-      "event_refs": [
-        "none_local_presentation_action"
-      ],
-      "receipt_refs": [
-        "none_local_presentation_action"
-      ],
-      "observable_work": [],
-      "persistence_refs": [],
-      "migration_refs": [
-        "no dedicated Origin onboarding subsystem"
-      ],
-      "test_refs": [
-        "Plans/Cursor_Origin_Integration.md#ORI-008",
         "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
@@ -11459,14 +11410,6 @@
       "ui.named_plan.inspect",
       "partial",
       "Concept local inspector exists; native Slint owner projection route is absent."
-    ],
-    [
-      "TOUCH-ORILOC-001",
-      "TCP-ORIGIN-LOCAL",
-      "ui_action",
-      "ui.origin.preview.open",
-      "partial",
-      "Concept Preview inspector exists; native Slint route and current eligibility evidence are absent."
     ],
     [
       "TOUCH-PERFLOC-001",

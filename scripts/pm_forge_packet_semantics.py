@@ -161,7 +161,7 @@ def _admission(v: dict) -> list[str]:
             check('admin_not_ready', not available or row.get('write_state') == 'ready')
             check('admin_permission_mismatch', row.get('permission_ref') == permission.get('permission_snapshot_ref'))
         check('admin_instance_mismatch', surface.get('instance_profile_ref') == v.get('instance_profile_ref'))
-        expected_provider = {'github_cloud':'github','github_enterprise':'github','gitlab_saas':'gitlab','gitlab_self_managed':'gitlab','azure_devops_services':'azure_devops','azure_devops_server':'azure_devops','cursor_origin_native':'cursor_origin','cursor_origin_github_mirror':'github'}.get(v.get('provider_profile'), v.get('provider_profile'))
+        expected_provider = {'github_cloud':'github','github_enterprise':'github','gitlab_saas':'gitlab','gitlab_self_managed':'gitlab','azure_devops_services':'azure_devops','azure_devops_server':'azure_devops'}.get(v.get('provider_profile'), v.get('provider_profile'))
         check('admin_provider_mismatch', surface.get('provider') == expected_provider)
         check('write_authority_mismatch', v.get('matrix_dimension') == 'secrets_variables' and v.get('permission_scope') == 'remote_side_effect')
     return sorted(failures)

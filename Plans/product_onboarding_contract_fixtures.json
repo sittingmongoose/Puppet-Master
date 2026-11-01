@@ -39,7 +39,7 @@
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 243,
+    "invalid_case_count": 239,
     "valid_setup_plan_count": 17,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
@@ -4205,83 +4205,6 @@
         "repository_owner_scope": "organization",
         "repository_ref": "forge-repository:gitlab:team:jujutsu-project",
         "repository_container": "group:team",
-        "repository_project": "",
-        "repository_default_branch": "main",
-        "repository_initialize_readme": false,
-        "repository_gitignore": "automatic",
-        "repository_license": "none",
-        "server_mode": "this_device",
-        "server_connection_mode": "discover",
-        "server_ref": "server:this-device",
-        "server_trust_confirmed": false,
-        "storage_mode": "with_server",
-        "storage_transport": "mounted",
-        "storage_location": "",
-        "client_mode": "this_device",
-        "remote_mode": "none",
-        "remote_more": false,
-        "include_vpn_networks": false,
-        "connection_pairing": "approval",
-        "tailscale_control": null,
-        "tailscale_account_action": null,
-        "headscale_url": "",
-        "remote_endpoint": "",
-        "proxy_kind": null,
-        "proxy_hosting": null,
-        "proxy_hostname": "",
-        "proxy_tls": null,
-        "source_more": false,
-        "review_confirmed": false,
-        "project_draft_ref": "draft:onboarding-project-1",
-        "project_draft_revision": 3,
-        "settings_transfer": {
-          "mode": "start_fresh",
-          "source_project_id": null,
-          "source_revision": null,
-          "draft_preview_ref": null,
-          "draft_preview_sha256": null,
-          "explicit_choice_setting_ids": [],
-          "settings_applied": false
-        },
-        "preflight_result_refs": [],
-        "source_access_authorization_refs": [],
-        "project_created": false
-      }
-    },
-    {
-      "name": "valid.setup_plan.git_with_cursor_origin_internal",
-      "definition": "onboarding_setup_plan",
-      "value": {
-        "schema_id": "pm.product_onboarding.setup_plan.v2",
-        "planned_only": true,
-        "applied": false,
-        "journey": "new_or_local",
-        "theme_family": "glass",
-        "theme_mode": "dark",
-        "project_mode": "existing_online",
-        "project_name": "Origin project",
-        "project_source_ref": "",
-        "backup_source_ref": "",
-        "project_transport": "local",
-        "backup_transport": "local",
-        "local_location_mode": "automatic",
-        "local_location": "",
-        "local_history": true,
-        "history_backend": "git",
-        "filesafe": true,
-        "online_mode": "existing",
-        "forge": "cursor_origin",
-        "forge_provider_variant": "preview",
-        "forge_instance_url": "https://origin.cursor.com",
-        "forge_instance_profile": null,
-        "forge_account_action": "already_connected",
-        "forge_account_ref": "account:cursor-origin:person",
-        "repository_name": "origin-project",
-        "repository_description": "",
-        "repository_visibility": "internal",
-        "repository_owner_scope": "organization",
-        "repository_ref": "forge-repository:cursor-origin:origin-project",
-        "repository_container": "organization:example",
         "repository_project": "",
         "repository_default_branch": "main",
         "repository_initialize_readme": false,
@@ -12016,33 +11939,6 @@
       "supersedes": "invalid.setup_plan.online_copy_requires_repository_binding"
     },
     {
-      "name": "invalid.setup_plan.cursor_origin_rejects_public_repository",
-      "definition": "onboarding_setup_plan",
-      "expected_error": "Cursor Origin Preview repositories are Private or Internal, never Public",
-      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
-      "patch": {
-        "repository_visibility": "public"
-      }
-    },
-    {
-      "name": "invalid.setup_plan.cursor_origin_requires_preview_variant",
-      "definition": "onboarding_setup_plan",
-      "expected_error": "Cursor Origin is a real hosted Preview forge with provider variant preview",
-      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
-      "patch": {
-        "forge_provider_variant": "hosted"
-      }
-    },
-    {
-      "name": "invalid.setup_plan.cursor_origin_requires_real_host",
-      "definition": "onboarding_setup_plan",
-      "expected_error": "Cursor Origin binds its real hosted forge instance",
-      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
-      "patch": {
-        "forge_instance_url": "https://github.com"
-      }
-    },
-    {
       "name": "invalid.setup_plan.azure_rejects_repository_visibility",
       "definition": "onboarding_setup_plan",
       "expected_error": "Azure DevOps visibility belongs to the project and is not a repository private/public choice",
@@ -12085,15 +11981,6 @@
       "base_valid": "valid.setup_plan.jujutsu_with_gitlab_self_managed_internal",
       "patch": {
         "forge_instance_url": "http://gitlab.example.test"
-      }
-    },
-    {
-      "name": "invalid.setup_plan.rejects_origin_preview_as_provider_identity",
-      "definition": "onboarding_setup_plan",
-      "expected_error": "Cursor Origin uses forge=cursor_origin, not an origin_preview pseudo-provider",
-      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
-      "patch": {
-        "forge": "origin_preview"
       }
     },
     {
@@ -13967,16 +13854,6 @@
       "expected_error": "DL-259 provider/owner privacy"
     },
     {
-      "name": "invalid.DL259.cursor_origin.internal",
-      "definition": "onboarding_setup_plan",
-      "base_valid": "valid.setup_plan.git_with_cursor_origin_internal",
-      "patch": {
-        "repository_visibility": "internal",
-        "repository_owner_scope": "personal"
-      },
-      "expected_error": "DL-259 provider/owner privacy"
-    },
-    {
       "name": "DL259.remote_setup_not_in_Creating",
       "definition": "automatic_preparation_owner_projection",
       "base_valid": "DL259.postcommit_remote_setup_observes_owner",
@@ -14098,6 +13975,83 @@
         "forge_instance_profile.provider_variant": "hosted"
       },
       "expected_error": "DL-273 removes hosted Forgejo from current setup plans"
+    },
+    {
+      "name": "DL273.retired_source_control_setup_refused",
+      "definition": "onboarding_setup_plan",
+      "value": {
+        "schema_id": "pm.product_onboarding.setup_plan.v2",
+        "planned_only": true,
+        "applied": false,
+        "journey": "new_or_local",
+        "theme_family": "glass",
+        "theme_mode": "dark",
+        "project_mode": "existing_online",
+        "project_name": "Origin project",
+        "project_source_ref": "",
+        "backup_source_ref": "",
+        "project_transport": "local",
+        "backup_transport": "local",
+        "local_location_mode": "automatic",
+        "local_location": "",
+        "local_history": true,
+        "history_backend": "git",
+        "filesafe": true,
+        "online_mode": "existing",
+        "forge": "cursor_origin",
+        "forge_provider_variant": "preview",
+        "forge_instance_url": "https://origin.cursor.com",
+        "forge_instance_profile": null,
+        "forge_account_action": "already_connected",
+        "forge_account_ref": "account:cursor-origin:person",
+        "repository_name": "origin-project",
+        "repository_description": "",
+        "repository_visibility": "internal",
+        "repository_owner_scope": "organization",
+        "repository_ref": "forge-repository:cursor-origin:origin-project",
+        "repository_container": "organization:example",
+        "repository_project": "",
+        "repository_default_branch": "main",
+        "repository_initialize_readme": false,
+        "repository_gitignore": "automatic",
+        "repository_license": "none",
+        "server_mode": "this_device",
+        "server_connection_mode": "discover",
+        "server_ref": "server:this-device",
+        "server_trust_confirmed": false,
+        "storage_mode": "with_server",
+        "storage_transport": "mounted",
+        "storage_location": "",
+        "client_mode": "this_device",
+        "remote_mode": "none",
+        "remote_more": false,
+        "include_vpn_networks": false,
+        "connection_pairing": "approval",
+        "tailscale_control": null,
+        "tailscale_account_action": null,
+        "headscale_url": "",
+        "remote_endpoint": "",
+        "proxy_kind": null,
+        "proxy_hosting": null,
+        "proxy_hostname": "",
+        "proxy_tls": null,
+        "source_more": false,
+        "review_confirmed": false,
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "settings_transfer": {
+          "mode": "start_fresh",
+          "source_project_id": null,
+          "source_revision": null,
+          "draft_preview_ref": null,
+          "draft_preview_sha256": null,
+          "explicit_choice_setting_ids": [],
+          "settings_applied": false
+        },
+        "preflight_result_refs": [],
+        "source_access_authorization_refs": [],
+        "project_created": false
+      }
     }
   ],
   "resolved_owner_inputs": {

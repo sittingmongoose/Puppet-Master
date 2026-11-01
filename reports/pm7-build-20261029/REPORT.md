@@ -2,7 +2,7 @@
 
 Jared’s additional answer is recorded in the unlanded DL-273: Gitea is self-managed only and Cursor Origin source control is removed. Cursor AI remains unchanged. Nine ORI owner anchors are retired in place with no operational offering; generic Git/mirror/auth safeguards remain in their existing owners. The lead approved this retirement treatment in1101191011-e8cd.
 
-Prose phase is complete across owner/index/crosswalk/command/settings/DRY/wiring/GUI units. Companion narrowing, the dedicated inspector’s removal, fixture changes, source merge, fresh checks and a delta audit/dry follow. The prior green checks below certify the earlier source, not this amendment.
+Prose phase is complete across15 owner/index/crosswalk/command/settings/DRY/wiring/GUI documents, pushed at1d84dffe0b. Companions narrow to11 provider profiles and13 retained Egolite requirements, remove the dedicated inspector (Touch715/140), retire the service fixture pack and its Teacher topic (46 remaining), and amend13 imported acceptance clauses without changing source bodies. Touch, packet custody and storage pass. Corrected contract/rulings validation is running; source merge, delta audit and final dry follow. The prior green checks below certify the earlier source, not this amendment.
 
 The former source packet is hash-pinned historical input. Its existing current_requirement_amendments layer will supersede the retired offers; source-body hashes and protected governance will not be refreshed. No browser, landing lock or landing.
 

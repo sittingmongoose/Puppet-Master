@@ -499,14 +499,14 @@
       "definition": "signed_webhook_delivery",
       "value": {
         "schema_id": "pm.forge.signed_webhook_delivery.v1",
-        "provider": "cursor_origin",
+        "provider": "gitea",
         "delivery_id": "origin-delivery:1",
         "repository_binding_ref": "forge-binding:origin:1",
         "received_at_utc": "2026-08-31T13:04:00Z",
         "provider_timestamp_utc": "2026-08-31T13:03:58Z",
         "raw_body_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "signature_key_id": "origin-jwks:key-4",
-        "signature_algorithm": "ed25519",
+        "signature_algorithm": "hmac_sha256",
         "verification_state": "verified_before_parse",
         "replay_state": "fresh",
         "dedupe_state": "new",
@@ -519,8 +519,8 @@
       "definition": "api_compatibility",
       "value": {
         "schema_id": "pm.forge.api_compatibility.v1",
-        "provider": "cursor_origin",
-        "provider_variant": "preview",
+        "provider": "gitea",
+        "provider_variant": "gitea_self_managed",
         "adapter_version": "0.1.0",
         "openapi_or_contract_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "catalog_generation": 9,
@@ -5283,8 +5283,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "github_direct_api_no_gh_requirement"
@@ -5308,8 +5306,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "enterprise_instance_version_sso_policy"
@@ -5333,8 +5329,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
@@ -5358,8 +5352,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
@@ -5383,8 +5375,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "azure_repos_and_pipelines_separate",
@@ -5409,8 +5399,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "azure_server_versioned_onprem_profile",
@@ -5435,8 +5423,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "bitbucket_cloud_current_oauth_or_scoped_api_token",
@@ -5460,8 +5446,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "bitbucket_data_center_no_cloud_pipelines_inheritance"
@@ -5485,8 +5469,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "forgejo_distinct_versioned_adapter",
@@ -5511,66 +5493,10 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "gitea_distinct_versioned_adapter",
               "actions_enabled_runner_and_operations_probed_independently"
-            ]
-          },
-          {
-            "profile_id": "cursor_origin_native",
-            "review_vocabulary": "Pull request",
-            "automation_service": null,
-            "authentication_methods": [
-              "official_Origin_CLI_browser_auth",
-              "verified_Git_credential_helper"
-            ],
-            "git_transport": [
-              "clone",
-              "fetch",
-              "push"
-            ],
-            "transport_authority_independent_of_api": true,
-            "capability_default": "unknown_until_supported_evidence",
-            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
-            "account_password_allowed": false,
-            "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "unverified",
-            "origin_windows_fallbacks": [
-              "WSL",
-              "remote_compatible_host"
-            ],
-            "implicit_wsl_enable": false,
-            "provider_specific_facts": [
-              "origin_authoritative_git_read_write",
-              "origin_cli_profile_not_cursor_agent_auth"
-            ]
-          },
-          {
-            "profile_id": "cursor_origin_github_mirror",
-            "review_vocabulary": "Pull request",
-            "automation_service": "GitHub Actions through mapped GitHub binding",
-            "authentication_methods": [
-              "Origin_CLI_profile",
-              "GitHub_API_profile_for_GitHub_owned_features"
-            ],
-            "git_transport": [
-              "clone",
-              "fetch",
-              "push"
-            ],
-            "transport_authority_independent_of_api": true,
-            "capability_default": "unknown_until_supported_evidence",
-            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
-            "account_password_allowed": false,
-            "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
-            "implicit_wsl_enable": false,
-            "provider_specific_facts": [
-              "origin_mirror_github_write_review_ci_authority"
             ]
           },
           {
@@ -5591,8 +5517,6 @@
             "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
             "account_password_allowed": false,
             "ordinary_admin_scope_grant": false,
-            "native_windows_origin_cli_support": "not_applicable",
-            "origin_windows_fallbacks": [],
             "implicit_wsl_enable": false,
             "provider_specific_facts": [
               "generic_git_transport_only",
@@ -5603,49 +5527,6 @@
         ],
         "github_regression_inventory_ref": "inventory:github:retained-actions-and-sections",
         "no_github_compatible_boolean": true,
-        "runtime_support_claimed": false
-      }
-    },
-    {
-      "name": "origin_cli_operations_are_explicit_and_mirror_safe",
-      "definition": "origin_cli_operation_profile",
-      "value": {
-        "schema_id": "pm.forge.origin_cli_operation_profile.v1",
-        "adapter_ref": "adapter:cursor-origin:cli",
-        "pinned_cli_version_ref": "catalog:origin-cli:verified-version",
-        "operations": [
-          "pr_list",
-          "pr_view",
-          "pr_create",
-          "pr_diff",
-          "pr_checks",
-          "pr_edit",
-          "pr_ready",
-          "pr_draft",
-          "review_approve",
-          "review_request_changes",
-          "review_comment",
-          "review_thread_reply",
-          "review_thread_resolve",
-          "review_thread_reopen",
-          "merge",
-          "close",
-          "reopen",
-          "stale_version_refresh",
-          "clone",
-          "fetch",
-          "pull",
-          "push"
-        ],
-        "json_output_required": true,
-        "explicit_repository_head_base_target": true,
-        "current_working_branch_defaults_allowed": false,
-        "source_checkout_separate_from_read_only_review": true,
-        "create_push_requires_publication_preview": true,
-        "cursor_agent_auth_proves_origin_access": false,
-        "mirror_github_authority_preserved": true,
-        "duplicate_ci_dispatch_allowed": false,
-        "github_workflow_files_are_tree_content": true,
         "runtime_support_claimed": false
       }
     },
@@ -7701,8 +7582,6 @@
           "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
           "account_password_allowed": false,
           "ordinary_admin_scope_grant": false,
-          "native_windows_origin_cli_support": "not_applicable",
-          "origin_windows_fallbacks": [],
           "implicit_wsl_enable": false,
           "provider_specific_facts": [
             "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
@@ -7762,8 +7641,6 @@
           "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
           "account_password_allowed": false,
           "ordinary_admin_scope_grant": false,
-          "native_windows_origin_cli_support": "not_applicable",
-          "origin_windows_fallbacks": [],
           "implicit_wsl_enable": false,
           "provider_specific_facts": [
             "github_direct_api_no_gh_requirement"
@@ -7823,8 +7700,6 @@
           "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
           "account_password_allowed": false,
           "ordinary_admin_scope_grant": false,
-          "native_windows_origin_cli_support": "not_applicable",
-          "origin_windows_fallbacks": [],
           "implicit_wsl_enable": false,
           "provider_specific_facts": [
             "github_direct_api_no_gh_requirement"
@@ -7959,8 +7834,6 @@
           "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
           "account_password_allowed": false,
           "ordinary_admin_scope_grant": false,
-          "native_windows_origin_cli_support": "not_applicable",
-          "origin_windows_fallbacks": [],
           "implicit_wsl_enable": false,
           "provider_specific_facts": [
             "forgejo_distinct_versioned_adapter",
@@ -8095,8 +7968,6 @@
           "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
           "account_password_allowed": false,
           "ordinary_admin_scope_grant": false,
-          "native_windows_origin_cli_support": "not_applicable",
-          "origin_windows_fallbacks": [],
           "implicit_wsl_enable": false,
           "provider_specific_facts": [
             "bitbucket_data_center_no_cloud_pipelines_inheritance"
@@ -8452,104 +8323,6 @@
         "produced_at_utc": "2026-09-01T12:00:01Z",
         "expires_at_utc": "2026-09-01T12:05:00Z"
       }
-    },
-    {
-      "name": "DL273.Gitea_cloud_instance_retained",
-      "definition": "provider_instance_profile",
-      "value": {
-        "schema_id": "pm.forge.provider_instance_profile.v1",
-        "instance_id": "instance:gitea:dl273-cloud-control",
-        "provider": "gitea",
-        "provider_variant": "gitea_cloud",
-        "normalized_host": "gitea-actions.example.invalid",
-        "web_base_url": "https://gitea-actions.example.invalid",
-        "api_root": "https://gitea-actions.example.invalid/api",
-        "api_base_path": "/api/v1",
-        "ssh_host": "gitea-actions.example.invalid",
-        "ssh_port": 22,
-        "private_ca_ref": "trust-ca:gitea:actions",
-        "known_host_proof_ref": "known-host-proof:gitea:new-actions-enabled-admin",
-        "account_id": "account:gitea:new-actions-enabled-admin",
-        "organization_locator": "engineering",
-        "detected_product": "gitea",
-        "product_version": "1.24.0",
-        "api_schema_version": "v1.1",
-        "api_state": "available",
-        "git_transport_state": "available",
-        "actions_state": "enabled",
-        "actions_capability_ref": "capability:gitea:actions:new-actions-enabled-admin",
-        "auth_method": "pat_ref",
-        "oauth_registration_ref": null,
-        "credential_access": "administration",
-        "credential_ref": "credential:gitea:new-actions-enabled-admin",
-        "transport_api_independent": true,
-        "redirect_credential_policy": "strip_authorization_on_origin_change",
-        "restricted_network_target_policy": "deny_localhost_and_metadata_unless_explicitly_approved",
-        "currentness_ref": "currentness:gitea:new-actions-enabled-admin",
-        "discovered_at_utc": "2026-09-01T12:00:00Z"
-      }
-    },
-    {
-      "name": "DL273.Gitea_cloud_adapter_retained",
-      "definition": "provider_adapter_profile",
-      "value": {
-        "schema_id": "pm.forge.provider_adapter_profile.v1",
-        "provider": "gitea",
-        "provider_variant": "gitea_cloud",
-        "host_class": "cloud",
-        "account_container_kind": "organization",
-        "repository_container_kind": "repository",
-        "review_noun": "pull_request",
-        "pipeline_noun": "actions",
-        "auth_methods": [
-          "pat_ref",
-          "oauth_pkce",
-          "ssh_ref"
-        ],
-        "required_capabilities": [
-          "repository",
-          "transport"
-        ],
-        "optional_capabilities": [
-          "review",
-          "checks",
-          "pipelines",
-          "automation",
-          "repository_policy",
-          "runner_administration",
-          "releases",
-          "release_assets",
-          "issues",
-          "webhooks"
-        ],
-        "version_or_tier_gate": "signed-catalog:gitea:supported-version-matrix",
-        "official_page_route_ref": "official-route:gitea:instance",
-        "structured_cli_fallback": false,
-        "self_host_catalog_ref": "catalog:self-host:gitea:generation-12",
-        "unsupported_reason_codes": [
-          "api_disabled",
-          "version_unsupported",
-          "actions_disabled"
-        ],
-        "product_family": "gitea",
-        "supported_api_schema_versions": [
-          "v1",
-          "v1.1"
-        ],
-        "instance_contract_ref": "contract:forge-instance:gitea:v1",
-        "version_detection_strategy": "bounded_safe_read_then_signed_catalog_match",
-        "api_git_transport_independent": true,
-        "oauth_pkce_requires_registered_instance": true,
-        "actions_capability_states": [
-          "enabled",
-          "disabled",
-          "no_runner",
-          "no_workflow",
-          "insufficient_permission",
-          "unsupported",
-          "unknown"
-        ]
-      }
     }
   ],
   "invalid": [
@@ -8698,15 +8471,6 @@
       "expected_error": "native Windows Origin installation remains unverified"
     },
     {
-      "name": "origin_create_push_cannot_bypass_publication_preview",
-      "definition": "origin_cli_operation_profile",
-      "base_valid": "origin_cli_operations_are_explicit_and_mirror_safe",
-      "patch": {
-        "create_push_requires_publication_preview": false
-      },
-      "expected_error": "create --push is gated by the same publication preview and approval"
-    },
-    {
       "name": "secret_metadata_never_allows_value_readback",
       "definition": "hosted_administration_surface",
       "base_valid": "hosted_admin_actions_are_independently_gated",
@@ -8731,7 +8495,7 @@
       "value": {
         "schema_id": "pm.forge.installation_token_lease.v1",
         "token_lease_id": "token-lease:bad",
-        "provider": "cursor_origin",
+        "provider": "gitea",
         "installation_ref": "installation:origin:1",
         "repository_binding_ref": "forge-binding:origin:1",
         "scope_grant_refs": [
@@ -8750,7 +8514,7 @@
       "expected_error": "verification must be represented by a closed state",
       "value": {
         "schema_id": "pm.forge.signed_webhook_delivery.v1",
-        "provider": "cursor_origin",
+        "provider": "gitea",
         "delivery_id": "origin-delivery:bad",
         "repository_binding_ref": "forge-binding:origin:1",
         "received_at_utc": "2026-08-31T13:04:00Z",
@@ -8775,7 +8539,7 @@
         "command_id": "cmd.origin.review.create",
         "command_instance_id": "command:bad",
         "operation_id": "operation:bad",
-        "provider": "cursor_origin",
+        "provider": "gitea",
         "repository_binding_ref": "forge-binding:origin:1",
         "requested_authority_role": "authority",
         "effective_authority_role": "authority",
@@ -10701,6 +10465,145 @@
         "host_class": "cloud"
       },
       "expected_error": "DL-273 makes Forgejo a self-managed server only"
+    },
+    {
+      "name": "DL273.Gitea_cloud_instance_refused",
+      "definition": "provider_instance_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_instance_profile.v1",
+        "instance_id": "instance:gitea:dl273-cloud-control",
+        "provider": "gitea",
+        "provider_variant": "gitea_cloud",
+        "normalized_host": "gitea-actions.example.invalid",
+        "web_base_url": "https://gitea-actions.example.invalid",
+        "api_root": "https://gitea-actions.example.invalid/api",
+        "api_base_path": "/api/v1",
+        "ssh_host": "gitea-actions.example.invalid",
+        "ssh_port": 22,
+        "private_ca_ref": "trust-ca:gitea:actions",
+        "known_host_proof_ref": "known-host-proof:gitea:new-actions-enabled-admin",
+        "account_id": "account:gitea:new-actions-enabled-admin",
+        "organization_locator": "engineering",
+        "detected_product": "gitea",
+        "product_version": "1.24.0",
+        "api_schema_version": "v1.1",
+        "api_state": "available",
+        "git_transport_state": "available",
+        "actions_state": "enabled",
+        "actions_capability_ref": "capability:gitea:actions:new-actions-enabled-admin",
+        "auth_method": "pat_ref",
+        "oauth_registration_ref": null,
+        "credential_access": "administration",
+        "credential_ref": "credential:gitea:new-actions-enabled-admin",
+        "transport_api_independent": true,
+        "redirect_credential_policy": "strip_authorization_on_origin_change",
+        "restricted_network_target_policy": "deny_localhost_and_metadata_unless_explicitly_approved",
+        "currentness_ref": "currentness:gitea:new-actions-enabled-admin",
+        "discovered_at_utc": "2026-09-01T12:00:00Z"
+      }
+    },
+    {
+      "name": "DL273.Gitea_cloud_adapter_refused",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "gitea",
+        "provider_variant": "gitea_cloud",
+        "host_class": "cloud",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "actions",
+        "auth_methods": [
+          "pat_ref",
+          "oauth_pkce",
+          "ssh_ref"
+        ],
+        "required_capabilities": [
+          "repository",
+          "transport"
+        ],
+        "optional_capabilities": [
+          "review",
+          "checks",
+          "pipelines",
+          "automation",
+          "repository_policy",
+          "runner_administration",
+          "releases",
+          "release_assets",
+          "issues",
+          "webhooks"
+        ],
+        "version_or_tier_gate": "signed-catalog:gitea:supported-version-matrix",
+        "official_page_route_ref": "official-route:gitea:instance",
+        "structured_cli_fallback": false,
+        "self_host_catalog_ref": "catalog:self-host:gitea:generation-12",
+        "unsupported_reason_codes": [
+          "api_disabled",
+          "version_unsupported",
+          "actions_disabled"
+        ],
+        "product_family": "gitea",
+        "supported_api_schema_versions": [
+          "v1",
+          "v1.1"
+        ],
+        "instance_contract_ref": "contract:forge-instance:gitea:v1",
+        "version_detection_strategy": "bounded_safe_read_then_signed_catalog_match",
+        "api_git_transport_independent": true,
+        "oauth_pkce_requires_registered_instance": true,
+        "actions_capability_states": [
+          "enabled",
+          "disabled",
+          "no_runner",
+          "no_workflow",
+          "insufficient_permission",
+          "unsupported",
+          "unknown"
+        ]
+      }
+    },
+    {
+      "name": "DL273.retired_source_control_adapter_refused",
+      "definition": "provider_adapter_profile",
+      "value": {
+        "schema_id": "pm.forge.provider_adapter_profile.v1",
+        "provider": "cursor_origin",
+        "provider_variant": "preview",
+        "host_class": "preview_hosted",
+        "account_container_kind": "organization",
+        "repository_container_kind": "repository",
+        "review_noun": "pull_request",
+        "pipeline_noun": "checks",
+        "auth_methods": [
+          "app_installation",
+          "jit_token",
+          "cli_session_ref"
+        ],
+        "required_capabilities": [
+          "repository",
+          "review",
+          "transport"
+        ],
+        "optional_capabilities": [
+          "review_threads",
+          "review_versions",
+          "checks",
+          "mirror",
+          "apps",
+          "webhooks"
+        ],
+        "version_or_tier_gate": "signed_preview_eligibility_catalog",
+        "official_page_route_ref": "official-page:cursor-origin:install-app",
+        "structured_cli_fallback": true,
+        "self_host_catalog_ref": null,
+        "unsupported_reason_codes": [
+          "preview_not_eligible",
+          "adapter_contract_unknown",
+          "origin_cli_missing_on_selected_environment"
+        ]
+      }
     }
   ],
   "semantic_counterexamples": [

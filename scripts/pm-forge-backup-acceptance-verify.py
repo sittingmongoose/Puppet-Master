@@ -198,8 +198,8 @@ def validate(data: dict[str, Any], schema: dict[str, Any], source_root: Path | N
     requirements_by_id = {row.get("id"): row for row in requirements if isinstance(row, dict)}
     amendments = data.get("current_requirement_amendments", [])
     amended_ids = [row.get("requirement_id") for row in amendments if isinstance(row, dict)]
-    if amended_ids != ["TSN-005", "TSN-006", "TSN-009"]:
-        add(failures, "current_amendment_set_invalid", "DL-259 must amend exactly TSN-005/006/009 in order")
+    if amended_ids != ['TSN-005', 'TSN-006', 'TSN-009', 'AUTH-003', 'SCM-001', 'SCM-003', 'SCM-008', 'FORGE-001', 'FORGE-002', 'FORGE-003', 'FORGE-009', 'GUI-004', 'GUI-005', 'MAT-001', 'MAT-003', 'TEST-001']:
+        add(failures, "current_amendment_set_invalid", "DL-259 and DL-273 current amendments must retain the exact ordered decision scope")
     for amendment in amendments:
         if not isinstance(amendment, dict):
             continue

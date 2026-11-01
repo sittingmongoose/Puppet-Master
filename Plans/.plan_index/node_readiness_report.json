@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3204,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-01T19:22:30Z",
+  "generated_at_utc": "2026-11-01T19:54:48Z",
   "gui_related_units": {
     "count": 3691,
     "units": [
@@ -11999,7 +11999,7 @@
         "owner_doc": "Plans/Decision_Log.md",
         "plan_unit_id": "DL-273",
         "source_location": {
-          "heading": "DL-273 — Own-server Forgejo and hosting eligibility; restricted tokens left for now",
+          "heading": "DL-273 — Retire unselected hosted offerings; keep self-managed services and defer restricted tokens",
           "heading_level": 3,
           "heading_line": 19777,
           "line": 19779,
@@ -20975,7 +20975,7 @@
         "owner_doc": "Plans/Forge_Integrations.md",
         "plan_unit_id": "FGI-014",
         "source_location": {
-          "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
+          "heading": "FGI-014 - Admitted Provider Operation Profiles",
           "heading_level": 3,
           "heading_line": 1189,
           "line": 1191,
@@ -44902,7 +44902,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "a3e28ef8aaa7ebe8158f7e1c8ee3e20dcb110924fd39902154259b6792a99773",
+        "expected": "a77be2aa9d450569e302aa5986feb5ec3fbab1a4ff476113d59f9e0cb3654ec9",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -44950,7 +44950,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "dd82a6d56f665a3d164caf0cc16e284f6e21db69914f9663f96c9969a2276f5b",
+        "expected": "7646eff95ca21a12ede96b4be3c2a8193365a951f0ac77c6248855140ef5c0fa",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -45159,6 +45159,14 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/final_gui_interaction_contracts.schema.json"
       },
       {
@@ -45228,6 +45236,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/touch_closure.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/touch_closure_action_sources.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

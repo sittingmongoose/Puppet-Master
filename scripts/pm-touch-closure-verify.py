@@ -539,7 +539,6 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         },
         "TCP-CAPTURE-LOCAL": {"ui.capture.policy.inspect"},
         "TCP-NAMED-LOCAL": {"ui.named_plan.inspect"},
-        "TCP-ORIGIN-LOCAL": {"ui.origin.preview.open"},
         "TCP-PERF-LOCAL": {"ui.performance.evidence.inspect"},
         "TCP-PLANNING-LOCAL": {"ui.planning_wizard.open"},
         "TCP-PROJECT-SYNC-LOCAL": {
@@ -1877,10 +1876,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # PM7 adds eleven production entries over main's 1259: the merged denominator
     # is 1270; PM7's existing 715 Touch rows and 140 profiles remain unchanged.
     exact_resolved_denominators = {
-        "row_count": 716,
+        "row_count": 715,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 141,
+        "profile_count": 140,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1271,
