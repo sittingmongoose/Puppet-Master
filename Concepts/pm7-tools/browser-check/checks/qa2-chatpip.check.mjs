@@ -7,23 +7,13 @@
 //     no message may be bound as a technical identifier.
 // F6: Studio > Chat > Guided examples > To-Dos > Parallel outputs; Build; Open workspace; Studio > Chat > Reset chat. The
 //     Batch 16 workspace must not throw while its artifacts are reset (console errors fail the run).
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 
 const CONTAINER = 'article,section,div,p,ul,ol,li,table,form,header,footer,nav,main,aside,button,input,select,textarea';
 
-async function frameFor(t, mode) {
-	if (mode === 'normal') { await t.app.open(); return t.page.mainFrame(); }
-	const html = path.join(t.run.dir, 'sandbox-qa2.html');
-	fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%;overflow:hidden}iframe{border:0;width:100vw;height:100vh;display:block}</style><iframe sandbox="allow-scripts allow-popups allow-forms allow-modals" src="${t.cfg.pageUrl}${t.cfg.pageUrl.includes('?') ? '&' : '?'}cb=${Date.now()}&o55=off"></iframe>`);
-	await t.goto(pathToFileURL(html).href, { settleMs: 1000 });
-	let f = null;
-	for (let i = 0; i < 150 && !f; i++) { f = t.page.frames().find((x) => /PMConcept7|cb=/.test(x.url()) && x !== t.page.mainFrame()); if (!f) await t.page.waitForTimeout(200); }
-	await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000 });
-	await t.check('sandbox: opaque origin, storage blocked', await f.evaluate(() => { try { localStorage.getItem('x'); return false; } catch (e) { return true; } }));
-	return f;
-}
+// the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
+const frameFor = (t, mode) => t.app.open({ sandbox: mode === 'sandbox', settleMs: 1000 });
+// a case runs on its own surface unless --set sandbox picks the other one
+const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 async function glassDark(t, f) {
 	// NieR is its own switch over a family (a check run before this one may have left it on)
 	await f.evaluate(async () => { if (window.PM_NIER && PM_NIER.on()) await PM_NIER.set(false, { persist: false }); PM_THEME.setFamily('glass', { persist: false }); PM_THEME.setMode('dark', { persist: false }); });
@@ -104,8 +94,8 @@ async function f6(t, mode) {
 }
 
 export const tests = {
-	'F5 normal': (t) => f5(t, 'normal'),
-	'F5 sandbox': (t) => f5(t, 'sandbox'),
-	'F6 normal': (t) => f6(t, 'normal'),
-	'F6 sandbox': (t) => f6(t, 'sandbox')
+	'F5 normal': on('normal', f5),
+	'F5 sandbox': on('sandbox', f5),
+	'F6 normal': on('normal', f6),
+	'F6 sandbox': on('sandbox', f6)
 };

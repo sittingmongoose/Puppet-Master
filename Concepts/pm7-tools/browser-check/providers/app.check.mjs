@@ -1,27 +1,20 @@
 // What onboarding connected reaches the app (provider-login audit P13): after Enter Puppet Master, Settings › Providers &
 // Accounts lists exactly the accounts onboarding connected for that Project, the Usage page and the model picker read
 // the same roster, and the Guided Tour reads truthfully with none, one or several accounts. Real clicks; obvious test
-// text for keys. Run with --set page=<build> [--set surface=normal|sandbox].
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+// text for keys. Run with --set page=<build> [--set sandbox=1] (a normal page by default).
 
 const FAKE_KEY = 'TEST-NOT-A-REAL-KEY-0000';
 const ROOT = '#pm-o55-onboarding';
 
-async function open(t, screen, { scenario = '', surface = t.args.surface || 'normal' } = {}) {
-	const q = `cb=${Date.now()}&o55=screen=${screen}${scenario ? '&o55scenario=' + scenario : ''}`;
-	const src = `${t.cfg.pageUrl}${t.cfg.pageUrl.includes('?') ? '&' : '?'}${q}`;
-	if (surface === 'sandbox') {
-		const html = path.join(t.run.dir, `sandbox-${Date.now()}.html`);
-		fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%}</style><iframe sandbox="allow-scripts allow-downloads allow-popups" src="${src}"></iframe>`);
-		await t.goto(pathToFileURL(html).href, { settleMs: 1500 });
-	} else {
-		await t.goto(src, { settleMs: 500 });
-		await t.page.evaluate(() => { try { Object.keys(localStorage).filter((k) => /^pm|o55|pm51|settings/i.test(k)).forEach((k) => localStorage.removeItem(k)); } catch (_) {} });
-		await t.goto(src, { settleMs: 1500 });
+async function open(t, screen, { scenario = '', surface = t.app.sandboxed(false) ? 'sandbox' : 'normal' } = {}) {
+	const query = `o55=screen=${screen}${scenario ? '&o55scenario=' + scenario : ''}`;
+	if (surface === 'normal') {
+		/* each test starts from a fresh visit: the onboarding and Settings records an earlier test saved are cleared */
+		await t.app.open({ onboarding: true, query, sandbox: false });
+		await t.root.evaluate(() => { try { Object.keys(localStorage).filter((k) => /^pm|o55|pm51|settings/i.test(k)).forEach((k) => localStorage.removeItem(k)); } catch (_) {} });
 	}
-	const frame = surface === 'sandbox' ? t.page.frames().find((f) => f !== t.page.mainFrame()) : t.page.mainFrame();
+	/* the sandbox is T3's file preview, at t.openInSandbox's default flags, as the kit opens it */
+	const frame = await t.app.open({ onboarding: true, query, settleMs: 1500, sandbox: surface === 'sandbox' });
 	await frame.waitForFunction(() => window.O55 && window.O55.S && window.O55.S.open && document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 30000 });
 	return { frame, $: (sel) => frame.locator(`${ROOT} ${sel}`).first(), any: (sel) => frame.locator(sel).first() };
 }

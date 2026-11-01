@@ -4,23 +4,13 @@
 // at full opacity, the lit marks take the accent outline (a filter), the unlit ones none, and a lit Pip keeps its own
 // colour. Then the other sheets with a plate (Review, BrainStorm, Chat Room, ELI5) and Scheduled's manager.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/hover-light.check.mjs [--set page=<build>]
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 
 const LOOKS = (process.env.HL_LOOKS || 'retro-light,retro-dark,glass-dark,friendly-light,nier-dark').split(',');
 
-async function frameFor(t, mode) {
-	if (mode === 'normal') { await t.app.open(); return t.page.mainFrame(); }
-	const html = path.join(t.run.dir, 'sandbox-light.html');
-	fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%;overflow:hidden}iframe{border:0;width:100vw;height:100vh;display:block}</style><iframe sandbox="allow-scripts allow-popups allow-forms allow-modals" src="${t.cfg.pageUrl}${t.cfg.pageUrl.includes('?') ? '&' : '?'}cb=${Date.now()}&o55=off"></iframe>`);
-	await t.goto(pathToFileURL(html).href, { settleMs: 1000 });
-	let f = null;
-	for (let i = 0; i < 150 && !f; i++) { f = t.page.frames().find((x) => x !== t.page.mainFrame() && /cb=/.test(x.url())); if (!f) await t.page.waitForTimeout(200); }
-	await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000 });
-	await t.check('sandbox: storage blocked', await f.evaluate(() => { try { localStorage.getItem('x'); return false; } catch (e) { return true; } }));
-	return f;
-}
+// the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
+const frameFor = (t, mode) => t.app.open({ sandbox: mode === 'sandbox', settleMs: 1000 });
+// a case runs on its own surface unless --set sandbox picks the other one
+const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 async function look(t, f, name) {
 	const [family, mode] = name.split('-'), nier = family === 'nier';
 	await f.evaluate(async ([fam, m, n]) => { if (window.PM_NIER) await PM_NIER.set(n, { persist: false }); if (!n) PM_THEME.setFamily(fam, { persist: false }); PM_THEME.setMode(m, { persist: false }); }, [family, mode, nier]);
@@ -84,10 +74,10 @@ async function crew(t, mode) {
 
 // Reduced Motion: the emphasis comes and goes in one step (no transition on the marks or the job card's edge)
 async function reduced(t) {
-	await t.app.open();
+	const f = await t.app.open();
 	await t.emulate({ reducedMotion: 'reduce' });
-	await openSheet(t, t.page.mainFrame(), 'collab-open-configure', 'crew');
-	const d = await t.page.evaluate(() => { const s = document.querySelector('#pmOverlayRoot > .pmx-sheet:not(.pmx-ghost)'); const m = s.querySelector('.pmx-plate .pmx-p-mark'), p = s.querySelector('.pmx-plate .pmx-p-paper'); return [m && getComputedStyle(m).transitionDuration, p && getComputedStyle(p).transitionDuration]; });
+	await openSheet(t, f, 'collab-open-configure', 'crew');
+	const d = await f.evaluate(() => { const s = document.querySelector('#pmOverlayRoot > .pmx-sheet:not(.pmx-ghost)'); const m = s.querySelector('.pmx-plate .pmx-p-mark'), p = s.querySelector('.pmx-plate .pmx-p-paper'); return [m && getComputedStyle(m).transitionDuration, p && getComputedStyle(p).transitionDuration]; });
 	await t.check('Reduced Motion: no transition on the emphasis', d.every((v) => !v || v.split(',').every((x) => parseFloat(x) === 0)), JSON.stringify(d));
 }
 
@@ -126,9 +116,9 @@ async function others(t, mode) {
 }
 
 export const tests = {
-	'crew normal': (t) => crew(t, 'normal'),
-	'crew sandbox': (t) => crew(t, 'sandbox'),
-	'other sheets normal': (t) => others(t, 'normal'),
-	'other sheets sandbox': (t) => others(t, 'sandbox'),
+	'crew normal': on('normal', crew),
+	'crew sandbox': on('sandbox', crew),
+	'other sheets normal': on('normal', others),
+	'other sheets sandbox': on('sandbox', others),
 	'reduced motion': (t) => reduced(t)
 };

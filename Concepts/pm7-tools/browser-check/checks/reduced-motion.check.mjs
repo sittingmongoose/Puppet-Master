@@ -3,9 +3,9 @@
 export default async function (t) {
 	await t.emulate({ reducedMotion: 'reduce' });
 	await t.app.open();
-	await t.check('prefers-reduced-motion after load', () => t.page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
+	await t.check('prefers-reduced-motion after load', () => t.root.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
 	await t.app.open();
-	await t.check('prefers-reduced-motion after reload', () => t.page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
+	await t.check('prefers-reduced-motion after reload', () => t.root.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
 	await t.visible('main.primary-content', 'main content visible');
 	await t.emulate({ reducedMotion: 'no-preference' });
 }

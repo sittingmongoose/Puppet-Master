@@ -1,26 +1,14 @@
 // FO-5 (Jared's Q3 and Q9 kind): under NieR a chosen or hovered option is an ink bar; every ? on the screen must stay
 // visible (not ink on ink) and clickable (on top). Every onboarding screen, NieR Light and Dark: each option that has a ?
 // is clicked in turn, then every ? on the screen is checked, with the pointer still on the clicked option (its menu
-// cursor) and again with the pointer away (chosen alone). --set sandbox=1 runs it in a sandboxed iframe (no storage).
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+// cursor) and again with the pointer away (chosen alone). --set sandbox=1 runs it in T3's sandbox, as every check.
 
 const MODES = ['light', 'dark'];
 
 export default async function (t) {
-	let f = t.page;
-	if (t.args.sandbox) {
-		const html = path.join(t.run.dir, 'sandbox-nier.html');
-		const src = t.cfg.pageUrl + (t.cfg.pageUrl.includes('?') ? '&' : '?') + 'o55=screen=welcome&cb=' + Date.now();
-		fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%}</style><iframe sandbox="allow-scripts" src="${src}"></iframe>`);
-		await t.goto(pathToFileURL(html).href, { settleMs: 500 });
-		f = t.page.frames().find((x) => x !== t.page.mainFrame());
-		await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
-	} else {
-		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
-		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
-	}
+	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
+	const sandboxed = f !== t.page.mainFrame();
+	await f.waitForFunction(() => !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
 	await f.waitForTimeout(2500);
 	const screens = await f.evaluate(() => Object.keys(window.O55.screens.defs));
 	const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
@@ -50,8 +38,7 @@ export default async function (t) {
 				}, [LAYER, i]);
 				if (!target || target.disabled) continue;
 				await f.waitForTimeout(250);
-				const pt = t.args.sandbox ? target : target;
-				await t.page.mouse.click(pt.x, pt.y);
+				await t.page.mouse.click(target.x, target.y);   // the sandbox fills the page: its coordinates are the page's
 				optionsClicked++;
 				await f.waitForTimeout(900);
 				if ((await f.evaluate(() => window.O55.S.sess.screen)) !== id) continue;
@@ -97,7 +84,7 @@ export default async function (t) {
 				// the two screens Jared's frames came from: keep a look at a chosen card with its ?
 				if ((id === 'c-route' || id === 'nas-key') && i === (id === 'c-route' ? 0 : 1)) {
 					const box = await f.evaluate((L) => { const c = document.querySelector(L + ' .o55-opt > .o55-card.o55-on'); if (!c) return null; const b = c.parentElement.getBoundingClientRect(); return { x: b.left - 6, y: b.top - 6, width: b.width + 12, height: b.height + 12 }; }, LAYER);
-					if (box && !t.args.sandbox) await t.crop(`nier-${mode}-${id}-chosen`, box, `NieR ${mode}, ${id}: the chosen card's ? on its paper strip`);
+					if (box && !sandboxed) await t.crop(`nier-${mode}-${id}-chosen`, box, `NieR ${mode}, ${id}: the chosen card's ? on its paper strip`);
 				}
 			}
 		}
