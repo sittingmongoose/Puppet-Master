@@ -3595,10 +3595,10 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `settings:v1` | Durable app settings and preferences | On save |
+| `settings:v1` | Durable app settings and preferences. Amended 2026-11-01 (DL-270), SP-340: stored as one row per setting at its next schema version (storage registry `storage_profile.whole_document_keys`) | On save |
 | `settings_recents:v1` | Recently edited setting ids, most-recent-first, deduped, cap 8, for the Settings Recents shelf | On change (debounced 300ms) |
 | `settings_suggestions_dismissed:v1` | Dismissed Suggested-shelf entries with dismissal timestamps and driving-signal scope (project or global); entries expire after 90 days | On change |
-| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
+| `config:v1` | Full app config struct subordinate to `settings:v1`, not a competing global config key (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior). Amended 2026-11-01 (DL-270), SP-340: stored as one row per config section at its next schema version (storage registry `storage_profile.whole_document_keys`); the struct in memory is unchanged | On change (debounced 200ms) |
 | `chat_state:v1` | Unsent input text and active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
 | `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |

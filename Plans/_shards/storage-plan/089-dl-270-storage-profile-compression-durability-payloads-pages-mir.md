@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28228-L29086
+Source lines: L28239-L29126
 
-Source SHA256: `d79f442317365d1fbac46fd3b6ad59cd86c82a418d54bddd9665be24869f514d`
+Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
 
 ---
 
@@ -105,19 +105,29 @@ canonical_text: >-
   member's receipt fields, with acknowledged_at_utc chosen once when the group is sealed, and from then on those
   fields are immutable; one data sync of the segment makes the commit frame durable, and that is the issuance
   boundary, so the group is issued exactly when its commit frame is durable; receipts are exposed only after that
-  sync; the receipt-custody rows are then committed in redb without a sync of their own and become durable with
-  the next synced commit. Recovery scans from the last manifest checkpoint: a group whose valid commit frame lies
-  within the durable tail is issued, and its missing custody rows are rebuilt from that frame, identical to the
-  ones exposed; a group without a valid commit frame was never issued, and Case L-2 truncates its tail; custody
-  rows without a durable commit frame are corruption and fence. A barrier-class group also takes a full flush and
-  commits its custody rows durably before acknowledging. The manifest is promoted only at creation, rotation and
-  structural changes. Restoring a backup rebuilds custody rows beyond its redb snapshot from the restored
-  segments' commit frames. Before any manifest publication the segments it covers are fully flushed and a synced
-  redb commit makes their groups' custody rows durable, and every synced redb commit that makes custody rows
-  durable follows a full flush of the segments they reference, so a custody row never outlives its commit frame.
-  This sequence supersedes Case L's per-group manifest promotion and its redb-commit issuance boundary;
-  storage-plan's First append receipt custody section and CV-339 follow it, and SP-347 defines the commit frame.
-  On Linux and Windows every acknowledged group survives power loss.
+  sync; the receipt-custody rows are then committed in redb without a sync of their own and become durable at the
+  next durability checkpoint. Recovery first makes the active segment and recent packs durable with a full flush,
+  because a frame can survive a process crash without its sync having returned, then scans from the last manifest
+  checkpoint: a group whose valid commit frame lies within the durable tail is issued, and its missing custody
+  rows are rebuilt from that frame, identical to the ones exposed; a group without a valid commit frame was never
+  issued, and Case L-2 truncates its tail; custody rows without a durable commit frame are corruption and fence. A
+  barrier-class group also takes a full flush and commits its custody rows durably before acknowledging. The
+  manifest is promoted only at creation, rotation and structural changes. Restoring a backup rebuilds custody rows
+  beyond its redb snapshot from the restored segments' commit frames. A durability checkpoint, a full flush of the
+  active segment and of packs written since the last one followed by a durable redb commit, runs at most 1 s after
+  the first acknowledgement it would cover, whenever 8 MiB of acknowledged segment bytes or 64 MiB of non-durable
+  redb writes are outstanding, before every manifest publication and at clean shutdown; these are fixed owner
+  values in the storage registry's storage_profile. Every durable redb commit, in either redb file, follows a full
+  flush of the segments and packs written since the last one, so no durable row outlives the frames it depends on,
+  and an ordinary group lost on macOS leaves no durable trace. On macOS the checkpoint bounds what a power loss
+  can drop to about the last second of ordinary groups; on every OS it bounds redb's non-durable backlog. A failed
+  checkpoint is an I/O failure: new acknowledgements stop, storage health shows the fault, and the checkpoint
+  retries until it succeeds. This sequence supersedes Case L's per-group manifest promotion and its redb-commit
+  issuance boundary; storage-plan's First append receipt custody section and CV-339 follow it, and SP-347 defines
+  the commit frame. Pinned contract snapshots that still describe the earlier sequence, such as
+  goal_certified_event_coordinator_contracts/protocol.md (F5b, F5c and its post-append prerequisite), keep their
+  bytes until their owners recertify them; SP-336 governs where they differ. On Linux and Windows every
+  acknowledged group survives power loss.
 gui_related: false
 gui_classification_reason: "Defines commit durability and store creation; no visible surface."
 split_recommended: false
@@ -131,7 +141,9 @@ acceptance_criteria:
   - "After kill -9, torn writes or a crash while a store is created, no acknowledged group is lost, duplicated or corrupted."
   - "After a simulated power cut nothing is reordered or corrupted, no barrier-class group is lost, and only on macOS may ordinary groups after the last full flush be missing."
   - "Receipt-custody rows rebuilt after a crash are identical to the ones exposed before it."
-  - "A group is issued exactly when its commit frame is durable: a crash before that sync leaves it never issued, and a crash after it leaves it issued with identical receipts."
+  - "A group is issued exactly when its commit frame is durable, by the writer's sync or by recovery's flush: a group whose commit frame does not survive was never issued, and one whose frame survives is issued with the receipts sealed in it."
+  - "On macOS no acknowledged ordinary group stays uncovered by a full flush for more than 1 s while PM runs, and redb's non-durable backlog never exceeds 64 MiB."
+  - "After a macOS power loss no durable row refers to a missing ordinary group."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -243,18 +255,20 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   DL-270 card 4. Each thread has a derived, rebuildable render-page store: a thread_head record (counts, the
-  newest page and display state), sealed pages of 50 items stored as zstd-compressed blocks of at most 256 KiB,
-  and a hot tail of unsealed items. Each item in a page carries a display header: role, kind, timestamps, a short
-  summary, summaries of collapsed sections, and references to attachments and payloads. The chat renders from
-  headers and loads full bodies from the event log or payload store only when they are expanded or scrolled to.
-  Opening a thread reads thread_head, the hot tail and the newest page, and never replays the thread's events. Run
-  views and agent transcripts that show a thread's items read the same pages. The pages are a registry-declared
-  derived family rebuilt from seglog when their format changes. ACD-242 makes load-older paging mandatory over
-  these pages. A CI benchmark that fails the build gates the open path on a 100k-event thread: first page within
-  150 ms at p95, warm or cold, reading at most 2 MiB, as card 4 says. A jump to an older item resolves its page
-  from thread_head's page index and loads a bounded window around it; sequential load-older is for adjacent
-  scrolling. Measured: a prototype opened the newest 50 of 100k real Codex events in 5.9-6.7 ms, reading about 200
-  KB, against 2.3 s to replay; full records in place of display headers overflowed 99 of 2,000 pages.
+  newest page and display state), one small page-index row per sealed page (its sequence range and item count),
+  sealed pages of 50 items stored as zstd-compressed blocks of at most 256 KiB, split into chunk rows of at most
+  16 KiB that one range scan reads back (SP-340), and a hot tail of unsealed items. Each item in a page carries a
+  display header: role, kind, timestamps, a short summary, summaries of collapsed sections, and references to
+  attachments and payloads. The chat renders from headers and loads full bodies from the event log or payload
+  store only when they are expanded or scrolled to. Opening a thread reads thread_head, the hot tail and the
+  newest page, and never replays the thread's events. Run views and agent transcripts that show a thread's items
+  read the same pages. The pages are a registry-declared derived family rebuilt from seglog when their format
+  changes. ACD-242 makes load-older paging mandatory over these pages. A CI benchmark that fails the build gates
+  the open path on a 100k-event thread: first page within 150 ms at p95, warm or cold, reading at most 2 MiB, as
+  card 4 says. A jump to an older item resolves its page from the page-index rows and loads a bounded window
+  around it; sequential load-older is for adjacent scrolling. Measured: a prototype opened the newest 50 of 100k
+  real Codex events in 5.9-6.7 ms, reading about 200 KB, against 2.3 s to replay; full records in place of display
+  headers overflowed 99 of 2,000 pages.
 gui_related: true
 gui_classification_reason: "Determines how fast a long chat opens and how older messages page in."
 split_recommended: false
@@ -266,6 +280,7 @@ acceptance_criteria:
   - "Pages rebuild from seglog after a format change, and losing them loses no canonical data."
   - "A page holds display headers and references, not full bodies."
   - "A jump to any item reads a bounded number of pages, however far back it is."
+  - "No render-page value, thread_head, page-index row or page chunk, exceeds 16 KiB."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -404,6 +419,7 @@ acceptance_criteria:
   - "Storage health shows each family's usage against its budget and its reclaimable bytes."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+  - "python3 scripts/pm-storage-profile-check.py"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: redb_bloat_and_fragmentation
 reasoning_tier: high
@@ -749,14 +765,20 @@ canonical_text: >-
   come block_count complete zstd frames, each with content size and checksum and each decompressing to a byte
   range of the source segment that starts and ends on frame boundaries, and at index_offset the block index: a
   canonical MessagePack array of [source_offset, source_length, block_offset, block_length, first_sequence,
-  last_sequence, thread_ids], followed by its CRC32. Repack verifies that the blocks decompress, in order, to
-  exactly source_length bytes whose SHA-256 is source_sha256 and that every frame re-validates; only then does it
-  rename the container into place, sync the parent directory and retire the source. Frames inside a container keep
-  their original bytes, so flags stay 0 apart from commit frames (SP-347). Cold repack rewrites a container at
-  level 9 with 1 MiB blocks. The archive form (container_flags bit 0) is one long-distance zstd stream with a 2^27
-  window and no block index, for exports and backups only, never a live read path. Readers find a sequence or a
-  thread through the block index and decompress only those blocks; the sealed_segment_index planned family caches
-  that index.
+  last_sequence, thread_ids], followed by its CRC-32, the zlib (ISO-HDLC) CRC of the index bytes stored
+  little-endian, which ends the file. Repack verifies that the blocks decompress, in order, to exactly
+  source_length bytes whose SHA-256 is source_sha256 and that every frame re-validates, and rebuilds the block
+  index from the decoded frames, requiring every entry's offsets, lengths, sequence range and thread set to equal
+  the written index; only then does it rename the container into place, sync the parent directory and retire the
+  source. Frames inside a container keep their original bytes, so flags stay 0 apart from commit frames (SP-347).
+  Cold repack rewrites a container at level 9 with 1 MiB blocks. The archive form (container_flags bit 0) is one
+  long-distance zstd stream with a 2^27 window and no block index, for exports and backups only, never a live read
+  path: its header has block_count 1, block_target_bytes 0 and index_offset 0, and the single zstd frame, with
+  content size and checksum, runs from byte 96 to the end of the file. Readers find a sequence or a thread through
+  the block index and decompress only those blocks; the sealed_segment_index planned family caches that index.
+  Plans/seglog_frame_v2_wire_fixtures.json container_cases hold warm, cold and archive containers of the group
+  fixture's segment; compressed bytes depend on the zstd version, so readers verify the header, index, CRCs and
+  decompressed SHA-256, never compressed-byte equality.
 gui_related: false
 gui_classification_reason: "Defines stored byte layouts; no visible surface."
 split_recommended: false
@@ -768,6 +790,8 @@ acceptance_criteria:
   - "A container's blocks decompress, in order, to bytes whose SHA-256 equals source_sha256 before the source segment is retired."
   - "No block splits a frame, and every frame in a container re-validates byte for byte."
   - "The archive form is never opened on a live read path."
+  - "A container whose block index disagrees with its decoded frames never replaces its source."
+  - "An archive container's header has block_count 1, block_target_bytes 0 and index_offset 0."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -818,13 +842,17 @@ canonical_text: >-
   milliseconds), first_sequence, last_sequence members, an array of [event_id, sequence_id, byte_offset] in
   sequence order, and restore_admission, null or CV-339's closed object for a group published through a restore
   occurrence's fresh-operation admission. Each member's eleven AppendReceipt fields follow from it: the group
-  fields, the member triple, durability_state synced (CV-339), and durable_end_offset, which is the commit frame's
-  end offset. A frame with bit 1 and any other header is control_header_mismatch; bits 0 and 1 together are
-  unsupported_flags while bit 0 is unadmitted. Readers skip control frames when replaying EventRecords and use
-  them for issuance, receipts and recovery only; a valid commit frame within the durable tail marks its group
-  issued (SP-336). CV-339's group_digest is computed over the member frames and the commit frame, with
-  durable_start_offset the first member frame's offset and durable_end_offset the commit frame's end; the commit
-  frame does not store it.
+  fields, the member triple, durability_state synced (CV-339), and durable_end_offset, the end of the group's last
+  member frame, where the commit frame begins. A frame with bit 1 and any other header is control_header_mismatch;
+  bits 0 and 1 together are unsupported_flags while bit 0 is unadmitted. Readers skip control frames when
+  replaying EventRecords and use them for issuance, receipts and recovery only; a valid commit frame within the
+  durable tail marks its group issued (SP-336). CV-339's group_digest is unchanged: its members tile the span from
+  durable_start_offset, the first member frame's offset, to durable_end_offset, and the commit frame, which is not
+  a member, begins exactly at durable_end_offset; the commit frame does not store the digest, its own CRCs protect
+  its bytes, and every custody row must equal its terms. The segment's durable watermark is the end of its last
+  valid commit frame. Plans/seglog_frame_v2_wire_fixtures.json group_cases hold a one-member group with its commit
+  frame, the receipts it yields and its group digest, plus a torn and a missing commit frame that leave the group
+  unissued.
 gui_related: false
 gui_classification_reason: "Defines a stored control frame; no visible surface."
 split_recommended: false
@@ -836,6 +864,7 @@ acceptance_criteria:
   - "A frame with flags bit 1 and a non-control header fails as control_header_mismatch."
   - "Replay of EventRecords skips control frames."
   - "A group published through restore admission carries its restore_admission in its commit frame, and every group's group_digest recomputes from its own frames."
+  - "The fixture group's receipts and group digest reproduce from its bytes."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"

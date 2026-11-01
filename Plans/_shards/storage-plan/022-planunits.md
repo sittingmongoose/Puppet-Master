@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2393-L15116
+Source lines: L2393-L15129
 
-Source SHA256: `d79f442317365d1fbac46fd3b6ad59cd86c82a418d54bddd9665be24869f514d`
+Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
 
 ---
 
@@ -869,7 +869,20 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x> resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data root>/projects/<project_id>/cache/<x>. Every other .puppet-master/ path names a project file that people or Git use and stays in the project folder."
+canonical_text: >-
+  Storage uses one app data root for core stores and for project-scoped runtime state, which plan text writes as
+  managed .puppet-master paths when inherently project-local and which resolves under the data root as below.
+  Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending
+  .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including
+  regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a
+  .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application
+  Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on
+  Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped
+  stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x>
+  resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data
+  root>/projects/<project_id>/cache/<x>. .puppet-master/state/ in a project holds no store, mirror or backup and
+  stays reserved (SP-339, SP-345). Every other .puppet-master/ path names a project file that people or Git use
+  and stays in the project folder.
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false

@@ -2518,7 +2518,7 @@
         "future security adapter registry",
         "future verify dispatcher"
       ],
-      "line_count": 1885,
+      "line_count": 1889,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -2590,7 +2590,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "07a022e57e4df50d14c4c7b2181f4918966a0185e4b8bb855f575d0ca9d62ae1",
+      "sha256": "6002da6dea1341f27afab6acb3629cc7ab33a16470d2ae62535beb65eb209673",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -5195,7 +5195,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "55901c62bd087dc2eb82235744227af6409316701045e7a62e31172e9a5f725a",
+      "sha256": "772d57c067ba915ccb4c89054571abf6b1c61da337c5235d39bb04022e5a58e7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 357
@@ -6611,7 +6611,7 @@
         "storage_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "49134c67314bfefc583eb849bd15fe37b9f0749f7dd33fa68d4ea0071cec1fbf",
+      "sha256": "3412358c99fb9da8e72f992c957aac928d158366ee4ec18b5af39c05e6da4328",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -6859,7 +6859,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "31d7944fd7cf5059b2ea73848576a806f372d662746e378d3028c3221a4a679b",
+      "sha256": "53177422e4cdf2995dc14215311395ee6a552cf1ee04dbfb673e098f71c1cfd7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 128
@@ -8511,7 +8511,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "36eabcb14eb7e960991b74f723867457cca4603e8f9099f2423c4dbdad87a696",
+      "sha256": "f0e476c92bcea5670fd72f18cd221cbbe9683e184a1695ba6f4ff12823b3de74",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 642,
@@ -14978,7 +14978,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "1e299088a3d0037ce0196eb4ed10991ab66deb43a6e7b8a7412fbe5b54facd7b",
+      "sha256": "e1d796098e6ac6f42202fed33903fe8c953025b0a15fc8de08abd58ae6f8b07e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50,
@@ -18243,7 +18243,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29086,
+      "line_count": 29126,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 335,
       "plan_unit_ids": [
@@ -18703,7 +18703,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "d79f442317365d1fbac46fd3b6ad59cd86c82a418d54bddd9665be24869f514d",
+      "sha256": "1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 331,
@@ -18977,6 +18977,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+        "python3 scripts/pm-storage-profile-check.py",
         "python3 scripts/pm-storage-recovery-contracts.py --self-test",
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
@@ -20997,7 +20998,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-01T01:07:04Z",
+  "generated_at_utc": "2026-11-01T01:40:41Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

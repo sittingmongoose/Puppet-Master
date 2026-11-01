@@ -18,7 +18,8 @@
     "retention_policies",
     "redaction_transform_registry_ref",
     "contract_family_dispositions",
-    "families"
+    "families",
+    "storage_profile"
   ],
   "properties": {
     "$schema": {
@@ -981,7 +982,8 @@
         "groups",
         "family_profiles",
         "planned_families",
-        "whole_document_keys"
+        "whole_document_keys",
+        "maintenance"
       ],
       "properties": {
         "schema_id": {
@@ -1065,7 +1067,20 @@
                 ]
               },
               "storage_group": {
-                "type": "string"
+                "enum": [
+                  "event_log",
+                  "payloads",
+                  "conversations",
+                  "runs_and_goals",
+                  "usage",
+                  "settings_and_layout",
+                  "projects_and_sources",
+                  "coordination_and_storage",
+                  "search_and_indexes",
+                  "analytics_archive",
+                  "caches",
+                  "system"
+                ]
               },
               "encoding_target": {
                 "enum": [
@@ -1085,7 +1100,51 @@
                 "minimum": 1,
                 "maximum": 16384
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "redb_file": {
+                      "enum": [
+                        "canonical",
+                        "derived"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "redb_file"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "max_value_bytes"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "redb_file": {
+                      "enum": [
+                        "file",
+                        "seglog"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "redb_file"
+                  ]
+                },
+                "then": {
+                  "not": {
+                    "required": [
+                      "max_value_bytes"
+                    ]
+                  }
+                }
+              }
+            ]
           }
         },
         "planned_families": {
@@ -1117,7 +1176,20 @@
                 ]
               },
               "storage_group": {
-                "type": "string"
+                "enum": [
+                  "event_log",
+                  "payloads",
+                  "conversations",
+                  "runs_and_goals",
+                  "usage",
+                  "settings_and_layout",
+                  "projects_and_sources",
+                  "coordination_and_storage",
+                  "search_and_indexes",
+                  "analytics_archive",
+                  "caches",
+                  "system"
+                ]
               },
               "max_value_bytes": {
                 "type": "integer",
@@ -1165,6 +1237,102 @@
               "note": {
                 "type": "string",
                 "minLength": 1
+              }
+            }
+          }
+        },
+        "maintenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_units",
+            "redb_cache_bytes",
+            "store_compaction",
+            "durability_checkpoint"
+          ],
+          "properties": {
+            "owner_units": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "redb_cache_bytes": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "canonical",
+                "derived"
+              ],
+              "properties": {
+                "canonical": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "derived": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "store_compaction": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min_file_to_live_ratio",
+                "min_reclaimable_bytes",
+                "idle_rule",
+                "schedule"
+              ],
+              "properties": {
+                "min_file_to_live_ratio": {
+                  "type": "number",
+                  "exclusiveMinimum": 1
+                },
+                "min_reclaimable_bytes": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "idle_rule": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schedule": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "durability_checkpoint": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "max_age_ms",
+                "max_unflushed_segment_bytes",
+                "max_nondurable_redb_bytes",
+                "also_before"
+              ],
+              "properties": {
+                "max_age_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "max_unflushed_segment_bytes": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "max_nondurable_redb_bytes": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "also_before": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
               }
             }
           }

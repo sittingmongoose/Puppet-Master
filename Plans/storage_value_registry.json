@@ -115594,8 +115594,8 @@
         "group_id": "caches",
         "label": "Caches",
         "canonical_budget_bytes": null,
-        "derived_budget_bytes": 17179869184,
-        "holds": "remote Git caches and other caches; the saved web pages cache follows web.fetch.cache-size"
+        "derived_budget_bytes": null,
+        "holds": "remote Git caches, held by the global cache size limit in storage-plan's remote cache eviction rules, and the saved web pages cache, held by web.fetch.cache-size; the group adds no budget of its own"
       },
       {
         "group_id": "system",
@@ -116546,7 +116546,7 @@
       },
       "storage_compaction_index_snapshot": {
         "redb_file": "file",
-        "storage_group": "search_and_indexes",
+        "storage_group": "coordination_and_storage",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "unchanged"
       },
@@ -116641,7 +116641,7 @@
       },
       "goal_cancel_terminal_audit": {
         "redb_file": "canonical",
-        "storage_group": "settings_and_layout",
+        "storage_group": "runs_and_goals",
         "encoding_target": "json_canonical",
         "encoding_note": "json_canonical stays: the stored-profile union is pinned by scripts/pm-implementation-readiness.py; it moves when its owner bumps the profile and the pin",
         "max_value_bytes": 16384
@@ -117704,9 +117704,9 @@
         "redb_file": "derived",
         "storage_group": "conversations",
         "max_value_bytes": 16384,
-        "key_shape": "render_page:v1:{thread_id}:{page_seq} and render_page_head:v1:{thread_id}",
+        "key_shape": "render_page_head:v1:{thread_id}, render_page_index:v1:{thread_id}:{page_seq} and render_page:v1:{thread_id}:{page_seq}:{chunk}",
         "authority_class": "derived_rebuildable",
-        "note": "thread_head, sealed 50-item pages and the hot tail; rebuilt from seglog; registered by its own admission landing"
+        "note": "thread_head, one page-index row per sealed page, sealed 50-item pages split into chunk rows of at most 16 KiB that one range scan reads, and the hot tail; rebuilt from seglog; registered by its own admission landing"
       },
       {
         "family_id": "payload_pack_index",
@@ -117762,6 +117762,31 @@
         "layout": "per_key_rows",
         "note": "one row per config section (permissions, shortcuts, LSP registry, Search defaults, file manager) at its next schema version; tool_permissions stays a projection of the TOML files"
       }
-    ]
+    ],
+    "maintenance": {
+      "owner_units": [
+        "SP-336",
+        "SP-340"
+      ],
+      "redb_cache_bytes": {
+        "canonical": 268435456,
+        "derived": 134217728
+      },
+      "store_compaction": {
+        "min_file_to_live_ratio": 1.5,
+        "min_reclaimable_bytes": 268435456,
+        "idle_rule": "no run, agent turn, import, export or backup in progress and no user input for 5 minutes",
+        "schedule": "evaluated at startup and every 6 hours with the janitor; a pass that stops being idle abandons its copy and retries at the next idle window"
+      },
+      "durability_checkpoint": {
+        "max_age_ms": 1000,
+        "max_unflushed_segment_bytes": 8388608,
+        "max_nondurable_redb_bytes": 67108864,
+        "also_before": [
+          "every manifest publication",
+          "clean shutdown"
+        ]
+      }
+    }
   }
 }

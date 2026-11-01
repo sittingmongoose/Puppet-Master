@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17069-L18032
+Source lines: L17082-L18045
 
-Source SHA256: `d79f442317365d1fbac46fd3b6ad59cd86c82a418d54bddd9665be24869f514d`
+Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
 
 ---
 
@@ -177,7 +177,7 @@ The prefix is exactly 48 bytes, packed without host alignment. Offsets are zero-
 | 11 | 4 | `payload_length` | Stored full EventRecord bytes; at most `16777216` before semantic validation |
 | 15 | 1 | `flags` | `0` for an EventRecord frame. Amended 2026-10-31 (DL-270): bit 1 (`0x02`) marks the group commit control frame (SP-347); bit 0 (`0x01`) is reserved for the write-time compression descriptor at +44 (SP-346) and stays `unsupported_flags` until a later decision admits it; other bits are unsupported. Sealed segments are compressed as whole blocks in a container, so their frames keep these flags. |
 | 16 | 8 | `segment_generation` | Exact uint64 matching selected segment authority |
-| 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present |
+| 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present. Amended 2026-11-01 (DL-270): a commit control frame (flags bit 1) carries exactly the sequence of the frame before it (SP-347). |
 | 32 | 4 | `header_crc32` | CRC of exact stored header bytes |
 | 36 | 4 | `payload_crc32` | CRC of exact stored payload bytes |
 | 40 | 4 | `prefix_crc32` | CRC of all 48 prefix bytes with bytes 40 through 43 zeroed |
@@ -213,18 +213,18 @@ Validation order is mandatory:
 2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
 3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): flags admits `0` and bit 1 (`0x02`), the group commit control frame, whose header must be the control header or the frame is `control_header_mismatch` (SP-347); bit 0 (`0x01`) reserves the write-time compression descriptor at +44 and stays `unsupported_flags` until a later decision admits it (SP-346). Sealed segments are compressed as whole blocks in a sealed container, so the frames they hold are unchanged.
 4. Enforce header/payload caps and checked remaining-file bounds.
-5. Match selected segment generation and strict sequence progression.
+5. Match selected segment generation and strict sequence progression. Amended 2026-11-01 (DL-270), SP-347: progression is strictly increasing between EventRecord frames; a control frame's sequence equals the sequence of the frame before it, and a control frame that is first in a segment or follows another control frame is corrupt. Resynchronization applies the same rule.
 6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
 7. Validate payload CRC over exact stored bytes.
-8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-10-31 (DL-270, SP-335): on a sealed, repacked segment a set compression flag selects the decoder by codec id; zstd (level 3 blocks, level 9 cold frames) is the only admitted transform, and the dictionary id names any dictionary. An unknown codec or dictionary id is Unsupported and is never guessed.
-9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission.
-10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set.
+8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-11-01 (DL-270, SP-346): no frame transform is admitted, so the transform stays identity and a frame with flags bit 0 has already stopped at step 3 as `unsupported_flags`; a sealed segment is compressed as whole blocks in its container, which decodes to the original frame bytes before this order runs.
+9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission. Amended 2026-11-01 (DL-270), SP-347: a control frame's header must be the control header and its payload decodes as the closed commit payload instead; it is never dispatched as an EventRecord, and replay skips it.
+10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set. Amended 2026-11-01 (DL-270), SP-347: a control frame's event_id is exactly `seglog_commit:<segment_generation>:<sequence_id>` of its own prefix, and its members are exactly the EventRecord frames since the previous commit frame, in order.
 
 Missing required schema identity/version is malformed, not a future-version escape. Unsupported registered versions, unknown family mapping, and unavailable validation authority halt admission as `Unsupported` or `ResourceUnavailable`, not corruption. Semantic, no-secret, registry, scope-policy, and idempotency admission remain mandatory owner obligations. A caller-supplied validator, generation, previous sequence, or seen-ID set does not prove native custody of that authority.
 
 ##### Recovery and compatibility limits
 
-A pure decoder changes no cursor, checkpoint, file, row, owner state, or watermark. A loss scan MUST first prove corruption at the failed offset; a valid frame cannot be designated loss. Trust a current-profile frame length only after prefix CRC, version/flags/reserved, caps/file bounds, and generation/sequence checks. It yields a one-frame hole only when the computed next boundary passes every validation check. Otherwise scan bytewise to the first fully validated candidate or return the exact range to EOF. Corrupt magic lookalikes and incomplete candidates are not survivors. An unsupported frame/header/envelope/family or resource failure halts scanning without cursor advancement; it cannot be skipped to reach later supported data.
+A pure decoder changes no cursor, checkpoint, file, row, owner state, or watermark. A loss scan MUST first prove corruption at the failed offset; a valid frame cannot be designated loss. Trust a current-profile frame length only after prefix CRC, version/flags/reserved, caps/file bounds, and generation/sequence checks. Amended 2026-11-01 (DL-270, SP-347): the sequence check admits a control frame carrying exactly the prior frame's sequence, as in step 5, so a scan after a hole re-admits commit frames. It yields a one-frame hole only when the computed next boundary passes every validation check. Otherwise scan bytewise to the first fully validated candidate or return the exact range to EOF. Corrupt magic lookalikes and incomplete candidates are not survivors. An unsupported frame/header/envelope/family or resource failure halts scanning without cursor advancement; it cannot be skipped to reach later supported data.
 
 The first-profile reader set is frame `2`, header `1`, EventRecord `2.0.0`, and explicitly registered current payload readers. Future frame/header/flags/compression support requires explicit version/profile admission. Old/new storage incompatibility follows Case L-1 registered version metadata, never lexical semantic-version comparison or try-anyway. Generation-1 compatibility readers, including their supported `none | lz4` payload compression, remain separate; a first native writer never emits generation 1 or mixes it into a V2 segment. Normal append still refuses `projector_replay_only`.
 
