@@ -182275,7 +182275,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       },
       /* (demo: the owner answers the next step this way, once: failures.away_once, the Demo Studio hook) */
       demoOutcome(S, code) { if (!HINT_WORD[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.away_once = code; O55.sound.play('tap'); O55.ui.refresh(); },
-      retry(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) F.reset(S, stepKey(a, st)); a.state = 'idle'; a.fail = null; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh(); },
+      /* RV-9 (FA-7): a Tailscale sign-in that ran out or was turned down is over. Try again goes back to the person's own
+         sign-in, cleared (its step, its answer and their "signed in"), so a fresh sign-in page opens; any other failure
+         asks its own step again */
+      retry(S) {
+        const a = A(S); if (!a) return;
+        const steps = plan(S), st = steps[a.step], code = a.fail && a.fail.code;
+        const back = code === 'expired' || code === 'denied' ? steps.findIndex((x) => x.person === 'tsSignIn') : -1;
+        if (back >= 0 && back < a.step) {
+          const gone = steps.slice(back, a.step + 1);
+          gone.forEach((x) => F.reset(S, stepKey(a, x)));
+          a.done = a.done.filter((k) => !gone.some((x) => x.key === k));
+          a.people = Object.assign({}, a.people); delete a.people.tsSignIn;
+          a.step = back;
+        } else if (st) F.reset(S, stepKey(a, st));
+        a.state = 'idle'; a.fail = null; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh();
+      },
       /* Later: nothing more is set up now; the way in stays not set up and Settings finishes it (a clean finish) */
       later(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) O55.owners.cancelOp(stepKey(a, st)); a.state = 'later'; S.save(); O55.ui.refresh(); },
       next(S) { const a = A(S); O55.ui.go((a && a.then) || 'ready'); }

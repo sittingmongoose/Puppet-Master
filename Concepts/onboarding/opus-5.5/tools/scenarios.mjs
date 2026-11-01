@@ -1097,6 +1097,19 @@ def('srv5', 'fresh', 'Connect by Tailscale: this device signs in once (turned do
   await d.act('pickServer', 'pm:home'); await d.primary(); A.eq(await d.screen(), 'c-review', 'review'); await d.primary();
   A.eq(await d.screen(), 'c-pair', 'pairing'); await until(d, 'window.O55.S.sess.connect.paired', 'approved', 9000); A.ok(true, 'signed in once, then paired');
 });
+/* RV-9 (FA-7): an away Tailscale sign-in that ran out: Try again asks for a fresh sign-in, nothing goes on before it */
+def('srv6', 'fresh', 'Away from home by Tailscale: the sign-in runs out; Try again goes back to a fresh sign-in, then it finishes', async (d, A) => {
+  await toNewServer(d, A); await d.act('later'); await d.act('pick', 'anywhere'); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'away-setup', 'the access is prepared');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'waiting'", 'waits for the Tailscale sign-in', 12000);
+  await d.act('demoHint', 'away-setup:outcome|1'); /* (the demo answer: Sign-in runs out) */
+  await d.act('person', 'tsSignIn'); await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'failed'", 'ran out', 15000);
+  A.ok(/ran out before it finished/.test(await layerText(d)), 'it says the sign-in ran out');
+  await d.act('retry');
+  await new Promise((f) => setTimeout(f, 2000));
+  A.ok(await d.state(() => { const a = window.O55.S.sess.awaySetup; return a.state === 'waiting' && !a.people.tsSignIn && !a.done.includes('signin'); }), 'Try again waits for a fresh sign-in; nothing goes on');
+  await d.act('person', 'tsSignIn'); await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'done'", 'set up after the fresh sign-in', 20000); A.ok(true, 'then it finishes');
+});
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
