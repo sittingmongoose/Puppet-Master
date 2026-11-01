@@ -2775,6 +2775,18 @@
       "companions": "Published/stored onboarding schemas reject retired choices; fields e47045096f applies one offered-set invalidation rule on entry/resume and reports43/43 regressions on each page mode. Expanded admission proof checks current selectors/profiles, schema refusal and shared guards. No source-only marker becomes a canonical setup field.",
       "state": "covered_by_current_contract_fields_source_and_static_proof",
       "decision_ref": "DL-273"
+    },
+    {
+      "id": "DL273-RETIRED-ACTIVATION",
+      "change": "Every Source Control service action rechecks current admission against its effective choice, including saved or uncommitted controls and incoming actions. A retired provider/variant cannot start sign-in, discovery, setup or other service work; an unpicked main draft grants no exception.",
+      "owner": "DL-273; PWIZ-024; F3-520",
+      "wiring": "UIW-015; WM-041; existing producers check the effective admitted selection before their sole owner handoff and settle refusal locally",
+      "commands": "CS-073; UCC-106; existing ui.onboarding.next and service/auth owner routes; no new command, intent or handler",
+      "settings": "none needed: Source Control admission is an owner rule, not a user preference or new setting key",
+      "dry": "DR-005; entry, resume, availability and activation consume one current admission gate",
+      "companions": "Current admitted Forgejo request remains valid; replacing only choice with the former service is refused at the choice enum. Fields6070cf7d54 validates saved controls and every service/sign-in activation, and reports52/52 on both page modes; independent genuine-old-picker re-check pending. No schema/key/command/mirror shape changes.",
+      "state": "source_and_typed_refusal_pass_independent_R6_recheck_pending",
+      "decision_ref": "DL-273"
     }
   ],
   "sources": [
@@ -3354,6 +3366,30 @@
       "phase": "combined_static_pass_independent_recheck_and_dry_pending",
       "admission_proof_sha256": "2ba43c70a7750a7911239ec3002a6fdd2978546368aefd0e06af763dc7b43f4d",
       "built_page_sha256": "8c90002c6d1b26fd254913e07c79d5f26e0be778609aec53819e5900ec4633fe"
+    },
+    "activation_followup": {
+      "source_finding": "R6 genuine old picker saved before Continue",
+      "owner_units": [
+        "PWIZ-024",
+        "F3-520",
+        "UCC-106",
+        "CS-073",
+        "UIW-015",
+        "WM-041",
+        "DR-005",
+        "DL-273"
+      ],
+      "coverage_rows": 217,
+      "required_cells": 1085,
+      "new_setting_or_command": false,
+      "source_commit": "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+      "fields_source": "6070cf7d54",
+      "focused_commands_passed": 8,
+      "typed_choice_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-typed-choice-proof.json",
+      "positive_cases": 1593,
+      "negative_cases": 3926,
+      "index_acceptance_units": 29366,
+      "independent_recheck": "pending at corrected combined candidate"
     }
   },
   "historical_DL273_first_removal": {

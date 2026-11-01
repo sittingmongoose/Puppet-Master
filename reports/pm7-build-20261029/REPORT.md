@@ -1,3 +1,21 @@
+# Plans lane — corrected R6 candidate, 2026-11-01
+
+**Corrected source f778ff41ee includes fields 6070cf7d54; all eight focused checks PASS.** The genuine saved-picker R6 case remained open at 5274; the corrected combined pin goes to the lead for independent closure before the next final dry.
+
+| Area | Result |
+|---|---|
+| **Canon / commands / wiring / DRY** | Eight existing units plus the dated index line require Source Control admission at entry/resume and activation for actual draft, saved/uncommitted control and incoming-action selections. No retired selection starts auth, discovery, setup or owner work. Cursor AI remains independent. |
+| **Companion proof** | Current admitted Forgejo request is valid; changing only choice to the former service fails the choice enum. Contracts 40/1593 positive/3926 negative/13 self-tests PASS. Existing schemas/Settings keys/commands/handlers/returns stay. |
+| **Source** | Fields6070 validates partial saved controls and rejects retired picks, kinds, Continue and sign-in actions. Fields reports 52/52 in each page mode. Build --check passes; no additional page rebuild needed after the prose/fixture amendment. |
+| **Coverage / census / derived** | 217 rows/1085 required cells; 1010 settings; 485 bindings/63 families; 715 Touch/140 profiles; 1271 production; 22 status keys. Index 7276 units/29366 acceptance units/96 docs; 2977 shards/99 sources. |
+| **First dry / custody** | 5274 dry exit1/blocking0/infra0, all new/branch rows staleness; original 3 aggregates+5 exports frozen. It does not close the R6 behavior gap. The next dry uses a fresh directory after auditor closure. |
+
+[RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md) distinguishes the independently closed findings and remaining re-check. [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) and [RETIRED-SERVICES.md](RETIRED-SERVICES.md) include the real activation rule. Source-only markers and concept APIs remain outside product canon. The fresh v5 proof is captured on the committed combined pin after this report checkpoint; its exact source/hash is mailed.
+
+Protected governance, fixed qualification inputs, snapshot and baseline remain unchanged. No browser/server started by Plans; no landing lock, landing, reseal or refresh. T3 mail rings this thread.
+
+---
+
 # Plans lane — combined removal source passes, 2026-11-01
 
 **Combined source 6f26c09b7b is pushed to both remotes. Expanded admission, build and mirror proof PASS.** Fields e47045096f is merged with all local Plans repairs. The lead's independent combined re-check and the final dry landing remain.

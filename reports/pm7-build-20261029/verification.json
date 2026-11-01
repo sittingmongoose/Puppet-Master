@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-11-01T21:18:08.494830+00:00",
+  "recorded_at_utc": "2026-11-01T21:54:43.866018+00:00",
   "native_runtime_certification": false,
   "step4": "landing_companions_repaired_full_dry_exit1_zero_blockers",
   "counts": {
@@ -43,16 +43,16 @@
     "pm7_bindings": 485,
     "pm7_source_families": 63,
     "shard_sources": 99,
-    "coverage_rows": 216,
-    "coverage_required_cells": 1080,
-    "acceptance_units": 29358,
+    "coverage_rows": 217,
+    "coverage_required_cells": 1085,
+    "acceptance_units": 29366,
     "schema_cases": 161,
     "final_review_source_cases": 89,
     "free_route_schema_cases": 12,
     "footage_source_cases": 58,
     "new_contract_pairs": 40,
     "new_contract_positive_cases": 1593,
-    "new_contract_negative_cases": 3925
+    "new_contract_negative_cases": 3926
   },
   "commands": [
     {
@@ -163,8 +163,11 @@
     }
   ],
   "dry": {
-    "state": "pending_combined_recheck_then_final_dry",
-    "checked_combined_source": "6f26c09b7b1d699cbaa8f48bc161bb8ce4c11995"
+    "state": "pending_independent_R6_closure_then_fresh_final_dry",
+    "historical_checked_head": "5274b07d5ea76206b18aa2760cbdabe9ce76db5c",
+    "historical_exit_code": 1,
+    "historical_blocking": 0,
+    "historical_infrastructure": []
   },
   "failed_aggregate_groups": [
     "validate_audit_closure",
@@ -187,7 +190,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "R1-R4/R7 independently closed at691; all local repairs and R5/R6 source now merged at6f26c09b7b. Expanded admission/build/mirror PASS; independent combined re-check pending.",
+  "review_status": "R1-R5/R7-R9 independently closed at5274; R6 remained there in a genuine old-picker partial session. Corrected6070 source plus f778 activation clarification await the final independent re-check.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -5128,6 +5131,311 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-combined-checkpoint.py",
       "sha256": "5a7a93169a64202d750d23cfba042808a44195a9b70fe7e9ac51905becd59acb",
       "bytes": 9850
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-amendment.py",
+      "sha256": "cf144ab4d3b7a0193e905dd2241a490153265740194e4e906c7c3074246a35fc",
+      "bytes": 9146
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-build.stderr.txt",
+      "sha256": "9809668389545da3e732787adaf7262fd6cfa7ebac11199c9d2c18281f05fc10",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-build.stdout.txt",
+      "sha256": "0c294a0785360b68dd69a262966d254c1f82e17279f306e28f8f9ae10bb39771",
+      "bytes": 36
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-canon.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-canon.stdout.txt",
+      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056",
+      "bytes": 415
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-commit-binding.json",
+      "sha256": "88d674aaa8d47ca9162b045d0bb807f8a88fe634538fc92b12a5433d455d9862",
+      "bytes": 308
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-contracts.json",
+      "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
+      "bytes": 7228
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-contracts.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-contracts.stdout.txt",
+      "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-final/dry-runner.py",
+      "sha256": "d127eb4a2df35fd5afe6cd663027a07001364bfad2a59fd7bb4f7e64ab516aeb",
+      "bytes": 2368
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-focused-runner.py",
+      "sha256": "2b090fa25c3072047026a2454b7c14a336b0683aee2e0684912498a84f4d0fd7",
+      "bytes": 2887
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-focused-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-focused-runner.stdout.txt",
+      "sha256": "93ccb3991c9cdbcbd88342af3f6cc466686a4e7919bdf1dcacb829d9798e358d",
+      "bytes": 4192
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-focused-status.json",
+      "sha256": "93ccb3991c9cdbcbd88342af3f6cc466686a4e7919bdf1dcacb829d9798e358d",
+      "bytes": 4192
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-index-generate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-index-generate.stdout.txt",
+      "sha256": "e684234cdf4c571c19930eaa68994c37adec75034d767cb4687841be54963754",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-index-validate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-index-validate.stdout.txt",
+      "sha256": "ff85ce3d8541fd417743ebc4397e61cc8dc6ad60fd799d8821aff91b76feb3ab",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-original-unit-hashes.json",
+      "sha256": "414ad2d3e85eda8f11929da50b782c775de7e09ffcabdde34882e08b28bf9a7c",
+      "bytes": 647
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-rulings.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-rulings.stdout.txt",
+      "sha256": "084f3a3064252f466bc2165277f71f5aa6207c406b2073cd99a44bb46bce0416",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-shards-check.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-shards-check.stdout.txt",
+      "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-shards-generate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-shards-generate.stdout.txt",
+      "sha256": "aae6d1a457d1cb6e9c237509a528cd41edac35e9cde4d71db88669839d5c8c86",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-touch.json",
+      "sha256": "c106ab91a3b5395c653e73a2591df05782409fb15fde7295e83b3723003330f6",
+      "bytes": 2962
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-touch.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-touch.stdout.txt",
+      "sha256": "e6f59594e44c18c5a9cae5a4dd696b58e682f5279d01a48a14ebf3851ac078ef",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-typed-choice-proof.json",
+      "sha256": "f7e622c48af5f9832e9529944db3dea3c530b6b8e1b5c82dfcea634e45f1f4ee",
+      "bytes": 505
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-wiring.json",
+      "sha256": "17b8179515242b06949db018249fd69936ae5367baf9cd1bb8412f4d8fff3063",
+      "bytes": 1014
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-wiring.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-wiring.stdout.txt",
+      "sha256": "81447a78ef4070071a7bb479021e7cda975d155d6311b5904b80e1d8f4926f27",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.py",
+      "sha256": "386ccde074a71555a8aff77b2d71c999a6743e4a396d4bc783fdabb226c7bc34",
+      "bytes": 14307
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry-result.json",
+      "sha256": "fbc39c387613209ce6d24c6c23989c5962b5f4d10530fdfa26b4e4d0c3eeb57c",
+      "bytes": 1669
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry-runner.stdout.txt",
+      "sha256": "1acea7757e774ab3320ba6b800f210317a2d68aeb0ed14407f34d1fc83bb0592",
+      "bytes": 1733
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry-status.json",
+      "sha256": "fbc39c387613209ce6d24c6c23989c5962b5f4d10530fdfa26b4e4d0c3eeb57c",
+      "bytes": 1669
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry.json",
+      "sha256": "d900373dcecde7ea16fc6079dfbab4428eb0b82e145ea289acd6f1b1d031d9a5",
+      "bytes": 8738527
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/fields-R6-final-mail.txt",
+      "sha256": "83bf602ef3de67ff5da6b4330cdb58b1c1a6c9cbc5cb3afa6f364c3183d8dfb4",
+      "bytes": 2148
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/first-dry-capture-manifest.json",
+      "sha256": "d89fe79e509e8258a4a503035a399c31e5837b5c3b59061ff7d7729221e144dc",
+      "bytes": 3596
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/first-dry-summary.json",
+      "sha256": "55e1f0b5dfa526108e56baa950d1cfb67886a007de4a5e895bddd61ac10971d4",
+      "bytes": 3195
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-audit-at5274-mail.txt",
+      "sha256": "b34c1ebdd5bdd80ee9e0ccf6b970fc51fe447dae950cb00229016bdbc96360c4",
+      "bytes": 926
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-genuine-partial-resume-at5274.json",
+      "sha256": "a91544138f2666072b5bc434baad436a31901143f0aa11a6f712f98e36e56916",
+      "bytes": 13774
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/audit-governance.json",
+      "sha256": "a30563977a5a7c1a2e441c9b38f4c24f4bf292f755a9715362cae892f9238b7f",
+      "bytes": 249341
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/exports/validate-evidence.json",
+      "sha256": "b148d2dc982f2ff47ddbd2ed9d963fe1fca3e6e29897d3bb16d5a347ae90849d",
+      "bytes": 770407
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/exports/validate-implementation-readiness.json",
+      "sha256": "7d72644c331a612c8a83cf6ff6d23470fe6f6adb6defc974fdd526f64e6b85e3",
+      "bytes": 26153
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/exports/validate-plan-graph.json",
+      "sha256": "57493a836deeef86461110c35379285b40933ee1f82173a3708eb842d29c93cd",
+      "bytes": 768618
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/exports/validate-plan-migration.json",
+      "sha256": "e24b5f5d0bd49e973bf84e6913dc95d475f24651de51ed4e0cf5a8813b52430a",
+      "bytes": 57833
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+      "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e",
+      "bytes": 382073
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/plan-migration-validate.json",
+      "sha256": "04b73fff492b20a248dc6f6c0d60c7c259b28492f26f6df9eb013f2ae382dbc2",
+      "bytes": 2062320
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/landing-check-reports/run-gates.json",
+      "sha256": "da32501ec2584a2034e0d91966db2e05ae13211f8d8656b41f2cc81cddc14977",
+      "bytes": 140199
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-evidence.json",
+      "sha256": "2707134592a933f5091de572496e013ba84b0974c0a2b0ad9c858581321eded2",
+      "bytes": 793875
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-evidence.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-evidence.stdout.txt",
+      "sha256": "5a12b1e577c7cae544670600b0ac27c954c5ee53744ec4fdadc011e21b798074",
+      "bytes": 791931
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-final-tree.json",
+      "sha256": "ebac9a1fded37f3d99d8c089d4f3f547f8b2342296a314d925dc6f7b21612ff5",
+      "bytes": 319
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-plan-graph.json",
+      "sha256": "e6b85c86b3e856355f0c723777f34aee431be25bcac2be7523a079874c00a79d",
+      "bytes": 792060
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-plan-graph.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-plan-graph.stdout.txt",
+      "sha256": "9bed3430c006e03a97bab1c52c460dc4c78e32ea0860b11880fa3cefa691067d",
+      "bytes": 791933
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/preflight-reference-comparison.json",
+      "sha256": "4bc5b67bf303f68145af6893779e76b398c3a235791261cea946dc9f0d41b75b",
+      "bytes": 896
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-activation-checkpoint.py",
+      "sha256": "8a3a2d59287f5f4595b8af8bd935cba0776075a3e05f9c44aa50ba16c26ee6d5",
+      "bytes": 11264
     }
   ],
   "reviews": [
@@ -7504,7 +7812,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "6f26c09b7b1d699cbaa8f48bc161bb8ce4c11995",
+  "canonical_source_commit": "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": true,
   "dry_landing_run_for_QA2": true,
@@ -7516,10 +7824,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 980,
+    "prior_count": 991,
     "all_prior_hashes_unchanged": true,
-    "current_count": 991,
-    "claim": "All prior manifest entries retained verbatim. Final combined admission/build/mirror/input proof is captured separately; full dry pending."
+    "current_count": 1052,
+    "claim": "All prior records retained verbatim; first dry captures independently hash-checked before this writer. Corrected activation proof is separate; final dry pending."
   },
   "historical_pre_DL259_commands": [
     {
@@ -7852,7 +8160,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "source_commit retains historical GUI/integration provenance. Current combined source and expanded admission/build proof is canonical_source_commit; subsequent report-only metadata does not change product/validator bytes.",
+  "source_commit_role": "source_commit retains historical integration provenance. canonical_source_commit is the corrected R6 activation source with exact focused source hashes; subsequent report-only metadata is identified separately.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -11202,9 +11510,9 @@
   },
   "DL273_additional_removals": {
     "prose_commit": "1d84dffe0b",
-    "phase": "combined_static_pass_awaiting_independent_recheck",
-    "coverage_rows": 216,
-    "required_cells": 1080,
+    "phase": "corrected_R6_activation_focused_pass_v5_and_independent_recheck_pending",
+    "coverage_rows": 217,
+    "required_cells": 1085,
     "retired_units": [
       "ORI-001",
       "ORI-002",
@@ -11229,10 +11537,10 @@
     "source_packet_body_hashes_unchanged": true,
     "current_packet_amendments": 16,
     "first_focused_results": "Touch and packet custody pass; storage passes; new-contracts/rulings corrected after empty schema branches and Teacher-topic pin. Readiness92 vs88 grows only currentness source drift (67 vs63).",
-    "final_dry": "pending independent combined re-check",
-    "source_fields_final": "e47045096f",
+    "final_dry": "wait for independent R6 closure; use activation-final directory, never overwrite first captures",
+    "source_fields_final": "6070cf7d54",
     "active_positive_cases": 1593,
-    "active_negative_cases": 3925,
+    "active_negative_cases": 3926,
     "internal_self_tests": 13,
     "provider_fixture_gate_tests": 9,
     "mirror_fields": 63,
@@ -11240,32 +11548,22 @@
     "mirror_unmapped": 0,
     "focused_results": "contracts/rulings/Touch/packet/storage/build/wiring/shards/index/provider-gate pass",
     "index_units": 7276,
-    "index_acceptance_units": 29358,
+    "index_acceptance_units": 29366,
     "docs": 96,
     "shards": 2977,
     "shard_sources": 99,
     "format_repair": "Standard profile headings and compliance note restored; index validate PASS; nine ORI units stay retired.",
     "obsolete_contract_reference": "cleaned by f226e60851 without changing the guard",
-    "source_commit": "6f26c09b7b1d699cbaa8f48bc161bb8ce4c11995",
+    "source_commit": "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
     "final_contracts_report": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.json",
       "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
       "exit_code": 0
     },
     "admission_proof": {
-      "state": "pass",
-      "checked_source_commit": "6f26c09b7b1d699cbaa8f48bc161bb8ce4c11995",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v4.json",
-      "sha256": "2ba43c70a7750a7911239ec3002a6fdd2978546368aefd0e06af763dc7b43f4d",
-      "top_level_schemas_scanned": 178,
-      "positive_cases_scanned": 1593,
-      "active_unit_records_scanned": 6839,
-      "active_alias_or_obligation_hits": 0,
-      "provider_counterfactual_refusals": 4,
-      "presentation_guard_refusals": 3,
-      "first_removed_host_label_hits": 0,
-      "tracked_plan_report_files_scanned": 8781,
-      "raw_built_page_alias_hits": 0
+      "state": "v5 capture follows this committed checkpoint",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.json",
+      "scope": "Static DTO/selector/profile/admission consistency; separate independent R6 transition closure required."
     },
     "last_positive_fixture_reference": "Hyphenated instance id in shared fan-out case rehomed to admitted Gitea at6195bc8658; partial-result, publication and identity guards unchanged.",
     "historical_admission_proof_at619": {
@@ -11387,7 +11685,7 @@
       "sha256": "e645ca26f1623683ad7f05e5763f8012bb72ca4122087feaeaf4f21e39db04d6"
     },
     "retired_extra_Windows_negative": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retired-windows-negative.json",
-    "built_page_sha256": "8c90002c6d1b26fd254913e07c79d5f26e0be778609aec53819e5900ec4633fe",
+    "built_page_sha256": "40f251570542ff0f68cea445e3ba010759f3f783e31267593f9c033d01101a15",
     "build_check_exit_code": 0,
     "mirror_proof": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/combined-mirror-proof.json",
@@ -11405,15 +11703,256 @@
       "copied": 0
     },
     "fields_regression_claim": {
-      "source": "e47045096f",
-      "mail_capture": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/fields-final-source-mail.txt",
-      "old_build_failures_per_page_mode": 19,
-      "new_checks_per_page_mode": 43,
+      "source": "6070cf7d54",
+      "checks_per_page_mode": 52,
       "modes": [
         "sandbox",
         "normal"
       ],
-      "claim_owner": "fields; not a Plans browser run"
+      "claim_owner": "fields",
+      "mail_capture": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/fields-R6-final-mail.txt"
+    },
+    "historical_admission_proof_at6f26": {
+      "state": "pass",
+      "checked_source_commit": "6f26c09b7b1d699cbaa8f48bc161bb8ce4c11995",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v4.json",
+      "sha256": "2ba43c70a7750a7911239ec3002a6fdd2978546368aefd0e06af763dc7b43f4d",
+      "top_level_schemas_scanned": 178,
+      "positive_cases_scanned": 1593,
+      "active_unit_records_scanned": 6839,
+      "active_alias_or_obligation_hits": 0,
+      "provider_counterfactual_refusals": 4,
+      "presentation_guard_refusals": 3,
+      "first_removed_host_label_hits": 0,
+      "tracked_plan_report_files_scanned": 8781,
+      "raw_built_page_alias_hits": 0
+    },
+    "historical_dry_at5274": {
+      "checked_commit": "5274b07d5ea76206b18aa2760cbdabe9ce76db5c",
+      "exit_code": 1,
+      "blocking": 0,
+      "infrastructure": [],
+      "baseline_currency": {
+        "age_days": 0.03,
+        "ancestor": true,
+        "base": "origin/main",
+        "base_commit": "07dbf437860b1a1fd560b9b4dbcfcfb863490f68",
+        "baseline_commit": "93bd26fa26ec5d230f87bfdb09cb591c1b98e156",
+        "max_age_days": 7,
+        "reason": "its commit 93bd26fa26ec is an ancestor of the base origin/main (07dbf437860b) and 0.03 days older than it, within 7",
+        "rule_two_applies": true
+      },
+      "checks": {
+        "audit-governance": {
+          "status": "fail",
+          "failure_total": 5584,
+          "baseline_failure_total": 5578
+        },
+        "plan-migration-validate": {
+          "status": "fail",
+          "failure_total": 7224,
+          "baseline_failure_total": 0
+        },
+        "run-gates": {
+          "status": "fail",
+          "failure_total": 5584,
+          "baseline_failure_total": 5578
+        }
+      },
+      "new_rows": 7236,
+      "new_nonstaleness_rows": [],
+      "on_branch_rows": 7434,
+      "on_branch_nonstaleness_rows": [],
+      "grown_buckets": [
+        {
+          "baseline_count": 63,
+          "bucket": "audit-governance|implementation_readiness|event_authority_currentness_source_drift|",
+          "count": 69,
+          "stale": true
+        },
+        {
+          "baseline_count": 63,
+          "bucket": "run-gates|validate_implementation_readiness|event_authority_currentness_source_drift|",
+          "count": 69,
+          "stale": true
+        }
+      ],
+      "grown_subchecks": [
+        {
+          "baseline_reported": 88,
+          "check": "audit-governance",
+          "reported": 94,
+          "sampled": 94,
+          "stale": true,
+          "subcheck": "implementation_readiness",
+          "truncated": false
+        },
+        {
+          "baseline_reported": 0,
+          "check": "plan-migration-validate",
+          "reported": 7224,
+          "sampled": 7224,
+          "stale": false,
+          "subcheck": "",
+          "truncated": false
+        },
+        {
+          "baseline_reported": 88,
+          "check": "run-gates",
+          "keyed_from_export": true,
+          "reported": 94,
+          "sampled": 50,
+          "stale": true,
+          "subcheck": "validate_implementation_readiness",
+          "truncated": false
+        }
+      ],
+      "excused_by_kind": {
+        "artifact_hash_stale": 48,
+        "audit_closure_validator_error": 29,
+        "current_snapshot_batch_doc_invalid": 1,
+        "current_snapshot_coverage_not_exact_same_document_planunit_set": 15,
+        "current_snapshot_live_bytes_mismatch": 34,
+        "current_snapshot_live_line_count_mismatch": 28,
+        "current_snapshot_live_sha256_mismatch": 34,
+        "current_snapshot_live_span_metadata_mismatch": 6997,
+        "current_snapshot_span_byte_range_invalid": 16,
+        "current_snapshot_span_sha256_mismatch": 65,
+        "event_authority_currentness_source_drift": 58,
+        "pnc019_source_hash_stale": 12,
+        "stale_batch_report_sha256_after": 73,
+        "stale_hash": 22,
+        "storage_value_registry_spec_lock_hash_stale": 2
+      },
+      "retained_aggregate_reports": 3,
+      "retained_complete_exports": 5,
+      "report_sha256": "d900373dcecde7ea16fc6079dfbab4428eb0b82e145ea289acd6f1b1d031d9a5",
+      "claim": "This source dry is nonblocking, but R6 remains open in the independent behavior audit. A later corrected source requires a new dry; original captures are frozen here."
+    },
+    "activation_followup": {
+      "owner_units": [
+        "PWIZ-024",
+        "F3-520",
+        "UCC-106",
+        "CS-073",
+        "UIW-015",
+        "WM-041",
+        "DR-005",
+        "DL-273"
+      ],
+      "focused_commands": [
+        {
+          "name": "activation-contracts",
+          "argv": [
+            "python3",
+            "scripts/pm-plans-verify.py",
+            "validate-new-contracts",
+            "--report",
+            "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-contracts.json"
+          ],
+          "started_at": "2026-11-01T21:46:11.176509+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:17.191573+00:00"
+        },
+        {
+          "name": "activation-canon",
+          "argv": [
+            "python3",
+            "scripts/pm7-canon-check.py"
+          ],
+          "started_at": "2026-11-01T21:48:17.196077+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:26.900336+00:00"
+        },
+        {
+          "name": "activation-rulings",
+          "argv": [
+            "python3",
+            "scripts/pm7-onboarding-rulings-check.py"
+          ],
+          "started_at": "2026-11-01T21:48:26.904408+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:44.641815+00:00"
+        },
+        {
+          "name": "activation-shards-check",
+          "argv": [
+            "python3",
+            "scripts/pm-shard-plans.py",
+            "--check",
+            "--config",
+            "Plans/sharding_config.json"
+          ],
+          "started_at": "2026-11-01T21:48:44.646448+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:57.164039+00:00"
+        },
+        {
+          "name": "activation-touch",
+          "argv": [
+            "python3",
+            "scripts/pm-plans-verify.py",
+            "validate-touch-closure",
+            "--report",
+            "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-touch.json"
+          ],
+          "started_at": "2026-11-01T21:48:57.169845+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:59.008712+00:00"
+        },
+        {
+          "name": "activation-wiring",
+          "argv": [
+            "python3",
+            "scripts/pm-plans-verify.py",
+            "validate-wiring-matrix",
+            "--report",
+            "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-wiring.json"
+          ],
+          "started_at": "2026-11-01T21:48:59.013496+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:48:59.732723+00:00"
+        },
+        {
+          "name": "activation-index-validate",
+          "argv": [
+            "python3",
+            "scripts/pm-plan-index.py",
+            "validate"
+          ],
+          "started_at": "2026-11-01T21:48:59.737342+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:49:36.783718+00:00"
+        },
+        {
+          "name": "activation-build",
+          "argv": [
+            "python3",
+            "Concepts/onboarding/opus-5.5/tools/build.py",
+            "--check"
+          ],
+          "started_at": "2026-11-01T21:49:36.788246+00:00",
+          "exit_code": 0,
+          "finished_at": "2026-11-01T21:50:12.486000+00:00"
+        }
+      ],
+      "source_binding": {
+        "checked_commit": "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+        "focused_report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-focused-status.json",
+        "source_file_count": 10,
+        "all_committed_source_hashes_match": true,
+        "commands_passed": 8
+      },
+      "typed_refusal": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-typed-choice-proof.json",
+        "sha256": "f7e622c48af5f9832e9529944db3dea3c530b6b8e1b5c82dfcea634e45f1f4ee"
+      },
+      "field_source": "6070cf7d54",
+      "genuine_predecessor_probe": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-genuine-partial-resume-at5274.json",
+        "sha256": "a91544138f2666072b5bc434baad436a31901143f0aa11a6f712f98e36e56916"
+      },
+      "new_setting_or_command_or_schema_field": false
     }
   },
   "historical_pre_DL273_additional_counts": {
@@ -11446,5 +11985,5 @@
   },
   "historical_pre_DL273_additional_review_status": "Independent Sol 6.1 max audit: zero open blockers, majors or minors at 7a133bfc8bc61aedc868ce09b646033148310aad",
   "historical_pre_DL273_additional_source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
-  "current_live_report_manifest_sha256": "00519b8bf766e186cb4914200d58eb9bf8ad4c225233de9f0a36f058a012d7bb"
+  "current_live_report_manifest_sha256": "96e2ca56a82389233795f3c64e7fe5d4a55833b88e158820405eea959fe0e80b"
 }

@@ -1,3 +1,15 @@
+# R6 activation follow-up at corrected source, 2026-11-01
+
+Source f778ff41ee includes fields 6070cf7d54 and the eight-unit activation clarification. Eight focused commands and the isolated typed-choice test PASS. The independent genuine old-picker case remained open at5274b07d5e; a new re-check at the corrected combined pin is required before final dry.
+
+- Saved/uncommitted control choices are validated independently of the main draft, including typed addresses and the sign-in state. Every Source Control service activation rechecks current admission before auth or owner work.
+- Owner prose preceded the new refusal fixture. One admitted request remains valid and changing only its choice to the former service fails the current enum. No new command, action, key, handler or schema field.
+- Coverage217 rows/1085 required cells. Field mirror remains63 fields/32 conditionals/0 unmapped, with unchanged schema bytes.
+- The first5274 dry completed exit1/blocking0/infra0:7236 new staleness rows,7434 branch staleness rows,2 explicitly stale growth buckets and0 nonstaleness growth. Three aggregate reports and five exports are frozen. It does not close the behavioral R6 gap.
+- Source fields reports 52/52 on each page mode. Independent re-check and the subsequent final dry remain pending; earlier static proof cannot replace the source transition check.
+
+---
+
 # DL-273 independent re-audit response, 2026-11-01
 
 Current local repair source: 4ebf8691fa, pushed after focused checks. The lead's Sol review independently closed R1–R4/R7 at 691f51c37f. R8/R9 and the wider consumer sweep are now repaired locally and await the combined re-check. R5/R6 source e47045096f is now merged at 6f26c09b7b. Expanded admission/build/mirror proof PASS; combined independent re-check and final dry remain pending.
