@@ -86,6 +86,9 @@
 
   /* A deterministic QR-style drawing (finder squares + seeded modules). Concept art for pairing cards; the code and
      link beside it carry the same information, so nothing depends on scanning it. */
+  /* The camera's viewfinder for pairing by QR: the frame and its scan line, the caption below them (FA-3: never
+     crossed by the frame). live false: the camera is not scanning yet, but the space is held (m16). */
+  F.viewfinder = (caption, live) => `<div class="o55-viewfinder${live ? '' : ' o55-vf-idle'}" data-key="vf" role="img" aria-label="${U.esc(caption)}"><div class="o55-vf-cam">${live ? '<span class="o55-vf-line"></span>' : ''}</div><span class="o55-vf-text" aria-hidden="true">${U.esc(caption)}</span></div>`;
   F.qr = function qr(seed, size) {
     const n = 25, cell = (size || 148) / n, r = U.rng(seed);
     let rects = '';

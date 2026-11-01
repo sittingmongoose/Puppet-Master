@@ -13,7 +13,7 @@
   const chapterOf = (S) => (N(S).purpose === 'backup' && (S.sess.restore || {}).scope !== 'project' ? 'computer' : 'project');
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
-  const words = (seed) => O55.art.identity(seed).words.join(' ');
+  const words = (seed) => [...new Set(O55.art.identity(seed).words)].join(' '); /* (never one word twice: m5) */
   /* No numeric priority: O55.sound ranks coinciding events itself. Owner operations name their
      done/fail/phase sounds in opts.sound (O55.flow.op): what discovery turns up is `found`, a wrong code or password
      is a soft `warn` (the field or banner says what to do), and an approval on the other device is `found`. */
@@ -37,7 +37,7 @@
   }
   /* the picture follows the screen: as many keys as were found, the chosen one lit, a new key when one is chosen */
   const sceneParams = (S, extra) => {
-    const ks = keyring(S), sel = N(S).key || (dev(S) ? defaultKey(S) : null);
+    const ks = keyring(S), sel = (usableKey(S, N(S).key) && N(S).key) || (dev(S) ? defaultKey(S) : null);
     return Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '',
       keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new', paired: !!N(S).viaPm }, extra || {});
   };
@@ -56,7 +56,7 @@
     if (!dev(S)) { const pick = (id === 'nas-pmpair' && S.env.devices.find((x) => x.pm)) || S.env.devices.find((x) => x.ssh); if (pick) n.device = pick.id; }
     const d = dev(S), step = SEED_STEP[id] || 0;
     if (d && step >= 1 && !n.trusted) { n.trusted = true; knownHosts(S)[hostId(S)] = d.hostKey; }
-    if (d && step >= 2 && !n.key) n.key = defaultKey(S);
+    if (d && step >= 2 && !usableKey(S, n.key)) n.key = defaultKey(S);
     if (d && step >= 3 && !n.installed) { if (n.key === 'new') makeNewKey(S); authorize(S, d, n.key); n.installed = true; }
     S.save();
   }
@@ -141,7 +141,7 @@
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
         /* another device ends what was started for the one before (its pairing request is cancelled with the owner) */
         if (n.device !== id) { if (n.pairAsked && !n.paired) O55.nas.endPair(S, 'target_changed'); Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, pairFail: null, user: '', userEdit: false, opKey: null }); delete n.code; }
-        n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = h.key; }
+        n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = usableKey(S, h.key) ? h.key : null; }
         S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
       },
       checkAgain(S) {
@@ -187,13 +187,17 @@
       let out = C.identity(d.hostKey, words(d.hostKey), d.name + ' · ' + d.address);
       if (hs === 'known' || n.trusted) out += C.note(hs === 'known' ? T('nas.identity.known', { name: d.name }) : T('chrome.alreadyDone'), 'ok', 'check');
       if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedTitle', { name: d.name }))}</span></div>`;
-      out += C.details(S, 'fp', T('nas.identity.details'), C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : [])));
+      /* RV-5: the fingerprint is what to compare (a device's own settings show it, never Puppet Master's picture), so
+         it is in plain view, not folded away */
+      out += `<div data-key="fp">${C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : []))}</div>`;
       return out;
     },
     foot(S) {
       const hs = hostState(S), n = N(S);
       if (hs === 'changed' && !n.acceptedNew) return { secondary: [{ label: T('nas.identity.trustNew'), do: 'trustNew' }], primary: { label: T('nas.identity.stop'), do: 'stop' } };
-      return { primary: { label: hs === 'known' || n.trusted ? T('chrome.continue') : T('nas.identity.confirm'), do: 'trust' } };
+      if (hs === 'known' || n.trusted) return { primary: { label: T('chrome.continue'), do: 'trust' } };
+      /* (can't confirm it: Stop is right beside Yes, RV-5) */
+      return { secondary: [{ label: T('nas.identity.stop'), do: 'stop' }], primary: { label: T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
       trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
@@ -268,10 +272,22 @@
     if (!keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     N(S).key = 'k-pm';
   }
+  /* An old key type (DSA, RSA-1024) is refused first and always: even one the device already accepts is never chosen,
+     preselected, verified or added (plans review of the weak-key branch). usableKey says whether a key id may be used. */
+  const WEAK = /^(dsa|rsa-1024)/;
+  const weakKey = (S, id) => { const k = id && keyring(S).find((x) => x.id === id); return !!(k && WEAK.test(k.type || '')); };
+  const usableKey = (S, id) => !!id && !weakKey(S, id);
+  /* The one gate before any advance or install: a weak key kept from before (the SSH settings, a resumed session, a
+     screen opened straight) is dropped for the default, which is never weak, and nothing installed for it counts.
+     False means the caller stops and goes back to Choose a key, where the refusal shows. */
+  function keyGate(S) {
+    const n = N(S); if (!weakKey(S, n.key)) return true;
+    Object.assign(n, { key: defaultKey(S), installed: false, opKey: null, unlocked: null }); S.save(); return false;
+  }
   function keyStatus(S, k) {
     const d = dev(S);
+    if (WEAK.test(k.type || '')) return 'old';
     if (authorizedFor(S, d, k.id)) return 'works';
-    if (/^(dsa|rsa-1024)/.test(k.type)) return 'old';
     if (k.passphrase && N(S).unlocked !== k.id) return 'locked'; /* (unlocked for that key only: QA2 review N1's sweep) */
     return 'notAdded';
   }
@@ -293,7 +309,7 @@
         : `<p class="o55-locline" data-key="acct">${C.small('person', 16)}<span>${U.esc(T('nas.key.account', { name: d.name, user, address: hostId(S) }))}</span>${C.link(T('nas.key.accountChange'), 'userEdit')}</p>`;
       if (!user) return acct;
       if (!st || st.state !== 'done') return acct + F.phases(S, keysKey(S), ['discover', 'probe'], { discover: T('nas.key.looking'), probe: T('nas.key.testing', { name: d.name }) });
-      const sel = n.key || defaultKey(S);
+      const sel = usableKey(S, n.key) ? n.key : defaultKey(S);
       const keys = keyring(S).map((k) => {
         const s = keyStatus(S, k);
         const tag = { works: T('nas.key.works', { name: d.name }), notAdded: T('nas.key.notAdded', { name: d.name }), locked: T('nas.key.locked'), old: T('nas.key.oldTag') }[s];
@@ -316,13 +332,13 @@
     mounted(S) { const d = dev(S); if (!sshUser(S)) return; F.op(S, keysKey(S), 'cmd.ssh_connection.keys.discover', [{ key: 'discover', ms: 700 }, { key: 'probe', ms: 1000 }], { payload: { device: d.id, address: d.address, port: sshPort(S), user: sshUser(S), profile: profileId(S), publicOnly: true }, sound: FOUND_SOUND }); },
     foot(S) { const st = F.state(S, keysKey(S)), user = sshUser(S); return { primary: { label: T('chrome.continue'), do: 'next', disabled: !user || !(st && st.state === 'done'), reason: user ? T('nas.key.looking') : T('nas.key.accountNeeded', { name: dname(S), where: machine(S) }) } }; },
     do: {
-      pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
+      pick(S, v, el) { if (!usableKey(S, v)) return; N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
       userEdit(S) { N(S).userEdit = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-sshUser'); if (i) i.focus(); },
       /* a deliberate cancel closes the sheet (it is not an error; the note under the keys says what it means) */
       passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('unsheet'); O55.ui.refresh(); },
       passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('warn'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = N(S).key; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
       next(S) {
-        const n = N(S); n.key = n.key || defaultKey(S);
+        const n = N(S); keyGate(S); if (!n.key) n.key = defaultKey(S); /* (what the list shows chosen is what goes on) */
         const k = keyring(S).find((x) => x.id === n.key);
         if (k && k.passphrase && n.unlocked !== k.id) { S.sess.ui.sheet = 'passphrase'; S.save(); O55.ui.refresh(); seeSheet(S); return; }
         S.save();
@@ -378,12 +394,14 @@
       /* The person adds the line on the device themselves. The concept's device receives it at this click (the demo's
          stand-in for their step) unless the scenario says it is not there yet; the check that follows is real either way. */
       selfCheck(S) {
+        if (!keyGate(S)) return O55.ui.go('nas-key');
         const n = N(S), d = dev(S);
         if (S.env.failures.self_key_missing_once && !n.selfTried) n.selfTried = true;
         else authorize(S, d, n.key);
         n.selfMissing = false; S.save(); O55.ui.go('nas-install', { verifyOnly: true, selfAdded: true });
       },
       add(S) {
+        if (!keyGate(S)) return O55.ui.go('nas-key');
         const i = S.root.querySelector('#o55f-pw'), pw = i ? i.value : '';
         if (i) i.value = '';
         /* (the demo's wrong password is refused like any wrong one; the password itself is never kept) */
@@ -465,6 +483,7 @@
     return (n.key === 'new' || !k ? ['make'] : k.passphrase ? ['unlock'] : []).concat(['add', 'verify', 'perms']);
   }
   function run(S) {
+    if (!keyGate(S)) return O55.ui.go('nas-key');
     const n = N(S), d = dev(S), order = phaseOrder(S);
     if (!n.opKey) { n.opKey = 'sshinstall:' + n.device + opSuffix(S) + ':' + (n.key || 'new'); S.save(); }
     const failFor = {
@@ -615,7 +634,7 @@
           const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
-        if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
+        if (m === 'qr' && !fail && st && st.state === 'running') out += F.viewfinder(T('connect.pair.qrAim', { name: p.name }), waiting); /* (m16, FA-3) */
       }
       if (!fail && !n.paired) out += H('nas-pmpair:outcome', [['denied', 'refused'], ['expired', 'expired'], ['unreachable', 'noAnswer']].filter(([code]) => m !== 'code' || code === 'unreachable').map(([code, word]) => ({ label: T('connect.pair.hint.' + code), outcome: word, act: ['demoOutcome', code] })));
       if (fail) {
@@ -785,7 +804,7 @@
     const n = S.sess.nas; if (!n || !n.device) return;
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
     if (n.trusted) knownHosts(S)[hostId(S)] = d.hostKey;
-    if (n.installed && n.key) authorize(S, d, n.key);
+    if (keyGate(S) && n.installed && n.key) authorize(S, d, n.key);
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);

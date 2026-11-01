@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L922-L4910
 
-Source SHA256: `666fbd8284d458baa27327e4936c48fb4d045935fb4dd14399a1c76d6259d857`
+Source SHA256: `d88bd32eee2d947b3b4f63806d74c34f24399e24967033c200d31e08c9da97b9`
 
 ---
 
@@ -2720,7 +2720,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use worktree-conflicts.json or canonical storage without conflating conflict cleanup with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use typed rows in the canonical redb family (SP-340) with no JSON state file (SP-339), without conflating conflict cleanup with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -2754,7 +2754,7 @@ source_lineage:
 preserved_exact_tokens:
 - "Merge conflicts"
 - "conflict worktrees"
-- "worktree-conflicts.json"
+- "canonical redb family"
 - "in-memory-only initial release"
 negative_constraints:
 - "Conflict worktrees must not be cleaned up as ordinary successful worktrees."

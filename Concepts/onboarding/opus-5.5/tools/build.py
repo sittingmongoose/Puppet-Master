@@ -350,24 +350,41 @@ def pip_fault_problems() -> list[str]:
     labels = {m.group(1) for js in js_all.values() for m in re.finditer(r"label:\s*" + T, js)}
     labels |= {m.group(1) for js in js_all.values() for m in re.finditer(r"label:\s*'([a-z][a-zA-Z0-9_.]+\.[a-zA-Z0-9_.]+)'", js)}  # T(a.label) tables
 
-    def keys_of(k, dyn):
+    def keys_of(k, dyn, rest='', js=''):
         if not dyn:
             return [k] if k in strings else []
+        # a key built with +: the suffixes the expression names (quoted words, and the values of a table it indexes, such
+        # as TS_FAIL[t.fail]); every child of the prefix only when it names none
+        depth, end = 1, 0
+        for i, ch in enumerate(rest):
+            depth += ch == '('
+            depth -= ch == ')'
+            if depth == 0:
+                end = i
+                break
+        expr = rest[:end] if end else rest[:200]
+        named = set(re.findall(r"'([A-Za-z0-9_]+)'", expr))
+        for table in re.findall(r"\b([A-Z][A-Z0-9_]+)\[", expr):
+            m = re.search(r"\b" + table + r"\s*=\s*\{([^}]*)\}", js)
+            if m:
+                named |= set(re.findall(r":\s*'([A-Za-z0-9_]+)'", m.group(1)))
+        if named:
+            return [k + n for n in sorted(named) if k + n in strings]
         return [s2 for s2 in strings if s2.startswith(k) and '.' not in s2[len(k):] and s2 not in labels and not s2.startswith('pip.')]
 
     groups = []  # (where, [keys]): satisfied when any key has Pip's line
     for name, js in js_all.items():
         for m in re.finditer(r"\berror:\s*([^,}\n]{0,240})", js):
             for t in re.finditer(T, m.group(1)):
-                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)))]
+                groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)), m.group(1)[t.end():], js)]
         for m in re.finditer(r"(?:const|let)\s+(?:why|err|error|msg|problem|fail\w*)\s*=\s*([^;]{0,400})", js):
             for t in re.finditer(T, m.group(1)):
                 groups += [(f'{name} field error', [k]) for k in keys_of(t.group(1), bool(t.group(2)))]
         for m in re.finditer(r"C\.note\(\s*" + T + r"[^;]{0,160}?,\s*'(?:warn|fail|error)'", js):
-            groups += [(f'{name} warn note', [k]) for k in keys_of(m.group(1), bool(m.group(2)))]
+            groups += [(f'{name} warn note', [k]) for k in keys_of(m.group(1), bool(m.group(2)), js[m.end(2) if m.group(2) else m.end():], js)]
         for m in re.finditer(r'o55-banner-warn"[^`]*?</span>', js):
             for t in re.finditer(T, m.group(0)):
-                groups += [(f'{name} warn banner', [k]) for k in keys_of(t.group(1), bool(t.group(2)))]
+                groups += [(f'{name} warn banner', [k]) for k in keys_of(t.group(1), bool(t.group(2)), m.group(0)[t.end():], js)]
         for line in js.split('\n'):
             if "pill = ['fail'" in line:
                 ks = [k for t in re.finditer(r"(?:pill = \['fail',\s*|meta = )" + T, line) for k in keys_of(t.group(1), bool(t.group(2)))]

@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L3568-L3625
 
-Source SHA256: `35d1512263810cd671e3c64529e82dd4eaee8b11fcf78a5b0aace7fc6c7328f4`
+Source SHA256: `f932a74573f86d7dc4a4bfa3088531138d1c22add1185e7613ed76ae56a3abe9`
 
 ---
 
@@ -51,7 +51,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Agent coordination
 
-- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; optional debug mirrors may exist, but they are not the source of truth.
+- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; no mirror file is written, and coordination state is read through `pm inspect` and `pm export` (SP-339, DL-270).
 - **What:** (1) **Canonical coordination projection (cross-platform):** Implement `AgentCoordinator` over child-run state, lineage, current file activity, and platform/runtime metadata projected from seglog/redb. Register agents before execution, update status during execution from hooks/provider events/tool activity, unregister or terminally resolve after execution. **This enables cross-platform coordination** without making `active-agents.json` the canon. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update canonical coordination state periodically. (4) **Conflict prevention:** Check projected coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected.
 - **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution by resolving the child run through canonical status projection. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
 

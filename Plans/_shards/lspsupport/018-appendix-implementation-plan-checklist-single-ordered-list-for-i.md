@@ -4,7 +4,7 @@ Source: `Plans/LSPSupport.md`
 
 Source lines: L853-L908
 
-Source SHA256: `150495e57afa3942b172b935cc99e8247da54aa3b45896d72e9883a86c99b91e`
+Source SHA256: `960d3570dbedd40f82ebdd946c9b35b45ddc14d2f4b30dca7579f644b242acde`
 
 ---
 
@@ -57,7 +57,7 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 ### Phase 4: Optional (§9.1)
 
 - [ ] **Optional LSP diagnostics gate:** Verification criterion at tier boundaries: "No LSP errors in scope" (or "no errors; warnings allowed"). Configurable per tier (e.g. Verification tab). See feature-list §4 Verification gates.
-- [ ] **Optional LSP snapshot in evidence:** When collecting evidence for a run, attach LSP diagnostics snapshot (file, line, severity, message, source) for project or changed files; store under .puppet-master/evidence/.
+- [ ] **Optional LSP snapshot in evidence:** When collecting evidence for a run, attach LSP diagnostics snapshot (file, line, severity, message, source) for project or changed files; store as a typed evidence record in the Puppet Master evidence store (SP-339, SP-345), not as files under .puppet-master/evidence/; JSON only on request through pm export.
 - [ ] **Optional subagent selection from LSP:** When files in scope have LSP errors for a language, prefer subagent that matches that language (e.g. rust-engineer for Rust errors).
 - [ ] **Optional/recommended Chat:** "Fix all" / quick fixes from Chat; "Rename X to Y" from Chat (LSP Rename symbol with confirmation); "Where is this used?" (Find references in Chat or References panel); "Format this file" (LSP Format document); Copy type/signature to Chat from editor hover.
 - [ ] **Optional:** Promote lsp tool to MVP (Tools.md): agents can call lsp.references, lsp.definition, lsp.hover; optionally lsp.rename with user approval. Remove or relax OPENCODE_EXPERIMENTAL_LSP_TOOL gate when ready.

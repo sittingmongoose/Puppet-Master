@@ -3674,7 +3674,13 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   web-address/Remote Link field or typed-address alternative gets its own actionable reason before a hidden Server-list
   prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip use the same cause and
   common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness gates
-  remain unchanged; no new action or dispatch is added.'
+  remain unchanged; no new action or dispatch is added. DL-271, 2026-10-31: the existing onboarding/authentication routes
+  distinguish OpenCode server passwords from provider API keys and retain execution-host credential custody (PO-009).
+  Protect’s required fields remain Backup-owner data; its speech is count-neutral and Unlock asks for the recovery phrase
+  without a word-count contract. Shared SSH-key eligibility refuses DSA/RSA-1024 before prior authorization/unlock and
+  before advance/install. Initial live-invitation waiting says No requests yet with Check again, while answered runs
+  keep FO-7’s terminal state. These use existing local actions and owner routes; no new primary command, handler, request
+  field or trust/permission bypass.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
@@ -3886,6 +3892,12 @@ acceptance_criteria:
   a hidden Server-list prompt; the found-list prompt is reserved for that list. Continue’s disabled feedback and Pip
   use the same cause and common screen copy. The fourteen typed actions, envelopes, owner routes and validation/permission/currentness
   gates remain unchanged; no new action or dispatch is added.'
+- 'DL-271, 2026-10-31: the existing onboarding/authentication routes distinguish OpenCode server passwords from provider
+  API keys and retain execution-host credential custody (PO-009). Protect’s required fields remain Backup-owner data;
+  its speech is count-neutral and Unlock asks for the recovery phrase without a word-count contract. Shared SSH-key eligibility
+  refuses DSA/RSA-1024 before prior authorization/unlock and before advance/install. Initial live-invitation waiting
+  says No requests yet with Check again, while answered runs keep FO-7’s terminal state. These use existing local actions
+  and owner routes; no new primary command, handler, request field or trust/permission bypass.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
@@ -3937,6 +3949,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
 preserved_exact_tokens:
@@ -7064,3 +7080,86 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-255, ContractName:Plans/UI_Co
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+## DL-270 storage health, record inspector and chat paging wiring
+
+| Producer | Command | Disposition and target |
+|---|---|---|
+| settings.storage_retention.open, Settings > Advanced > Storage & Retention | `cmd.settings.open_storage_retention` | Existing row. The destination gains the Storage health section (SP-340); the section is a read-only projection, not a row. |
+| Storage health > Reclaim space | `cmd.storage.compaction.request` | Existing row settings.storage_retention.compaction_request, shown as Reclaim space in Storage health (no settings row is relabelled); one action for the whole storage instance, with the result shown per storage group (store compaction is redb `compact()`). No second reclaim or compact command. |
+| Storage diagnostics > Value row > Open value, which is the record inspector's entry (F3-666) | `cmd.storage.open_value` | Existing row storage.value.open gains the record-tab, decoded-field, redaction and viewer-mode checks. No new inspector command. |
+| Any other control that opens a record in the inspector (a Ledger row, a log or audit row, a Raw view, Show raw data) | `cmd.storage.open_value` | One row per interactive element, each with its own ui_element_id, location and disabled projection and the same command and handler. Added by the owner document that defines the control; none is added here. |
+| Chat history > Load 50 older (the fallback row), and the history list's near-top auto-load | `cmd.chat.load_older` | New production-intent row assistant.chat.history.load_older; sole future handlers::chat::load_older. One request fetches one sealed 50-item page from the render-page store. |
+| Opening a chat thread | `cmd.chat.open_thread` | Existing row catalog.chat_open_thread gains the check that opening reads thread_head, the hot tail and the newest page and never replays events. |
+| Expanding a collapsed section or tool output | `cmd.chat.toggle_message_details` | Existing row catalog.chat_toggle_message_details gains the check that the body loads on demand from the event log or payload store. |
+| Last verified backup and what a restore would lose (Backup manager, Project and Server cards) | none (read-only projection) | No row. Refreshed by a completed `cmd.backup.verify`; catalog.backup_verify gains the reverse-consumer check. |
+| Usage Ledger rows and drill-through | `cmd.usage.export`, `cmd.nav.open_usage_subject` | Existing rows gain the check that they resolve through the indexed ledger projection, never a raw scan or usage.jsonl (UF-108). |
+
+`pm db dump`, `pm inspect`, `pm tail` and `pm export` are command-line tools, not UICommands, and have no row here; bulk export stays with `pm export`; copying one shown, redacted record as JSON is part of the record tab under `cmd.storage.open_value` (F3-666), with no row of its own. No new event is proposed: the new row is receipt-only, and the reclaim result rides the existing storage_maintenance_operation row and storage.compaction_lifecycle_changed event.
+
+### WM-098 - Storage Health, Record Inspector And Chat Paging Wiring
+
+```yaml
+plan_unit_id: WM-098
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  DL-270 (SP-338, SP-339, SP-340, ACD-242, BRS-031) adds one production-intent row to
+  Plans/Wiring_Matrix.production.json and amends eight existing ones; it adds no EventRecord, no peer reclaim,
+  compact or inspector command and no Touch row. assistant.chat.history.load_older dispatches cmd.chat.load_older
+  (sole handler handlers::chat::load_older) from the Load 50 older button and the history list's near-top threshold,
+  one request fetching one sealed 50-item page from the thread's render-page store. Reclaim space is the existing
+  settings.storage_retention.compaction_request and keeps cmd.storage.compaction.request; the Storage health section
+  is reached through settings.storage_retention.open. Storage health (about eight user-facing storage groups, each with one budget; usage against disk budget, reclaimable bytes,
+  last compaction), the Last verified backup line and the restore-loss line are read-only projections with no
+  command and no row (UIW-046). The record inspector opens a record through the existing cmd.storage.open_value; each
+  further control that opens a record in it is its own element row on that command and handler, added by the owner
+  document that defines the control. catalog.chat_open_thread reads thread_head, the hot tail and the newest page and
+  never replays events; catalog.chat_toggle_message_details loads a body on demand; a completed cmd.backup.verify
+  refreshes the Last verified backup line; the Usage Ledger rows resolve through an indexed projection. pm db dump,
+  pm inspect, pm tail and pm export are command-line tools and have no row. Every row keeps its planned-handler and
+  unavailable-candidate boundary: these are product wiring requirements, not native dispatcher, handler or storage
+  evidence.
+gui_related: true
+gui_classification_reason: Wires the visible Storage health actions, the record inspector entry and the chat Load 50 older control.
+split_recommended: false
+depends_on: [DL-270, SP-338, SP-339, SP-340, ACD-242, BRS-031, UF-108, UCC-212, CS-107, WM-096]
+unblocks: []
+acceptance_criteria:
+  - "The Load 50 older control has one command, one sole handler, a disabled reason from the closed set and a reverse consumer."
+  - "Reclaim space reuses cmd.storage.compaction.request; no second reclaim or compact command is registered."
+  - "Storage health and the Last verified backup line are projections with no production row."
+  - "Opening a thread and loading older pages never replay events, and the Load 50 older control is required, not optional."
+  - "The inspector opens through cmd.storage.open_value and writes no mirror file."
+validation_surfaces:
+  - "python3 scripts/pm-plans-verify.py validate-wiring-matrix"
+  - "python3 scripts/pm-new-contracts-verify.py"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_wiring_projection_vs_command_drift
+reasoning_tier: high
+context_scope: dl270_storage_wiring
+implementation_surfaces:
+  - "Plans/Wiring_Matrix.md"
+  - "Plans/Wiring_Matrix.production.json"
+node_compile_hint:
+  mode: static_wiring_intent_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-270"
+preserved_exact_tokens:
+  - "cmd.chat.load_older"
+  - "cmd.storage.compaction.request"
+  - "cmd.storage.open_value"
+  - "Load 50 older"
+  - "pm db dump"
+negative_constraints:
+  - "Do not register a second reclaim, compact or inspector command."
+  - "Do not give a read-only projection a production row or a fabricated command."
+  - "Do not claim native or event admission from production-intent wiring."
+owner_hints:
+  - "Plans/Wiring_Matrix.md"
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/UI_Command_Catalog.md#UCC-212, ContractName:Plans/UI_Wiring_Rules.md#UIW-046

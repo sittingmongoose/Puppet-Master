@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L8925-L8997
+Source lines: L8932-L9005
 
-Source SHA256: `1b0bdcb55e15169ccc9818d10fdfa505b8801844413f8974f20d3b041f1ef208`
+Source SHA256: `2d8d35c569a7e8c83623a981274b5a4ae8a47984adc41958fa9c13bdf9326d9b`
 
 ---
 
@@ -46,6 +46,7 @@ acceptance_criteria:
   - Headscale Funnel is inapplicable rather than unhealthy. A missing optional backup destination, disabled optional route, intentionally disabled WSL, or unconfigured Funnel does not degrade unrelated product health.
   - Remediation routes only to exact Backup or Remote Access owner actions. Protected unlock/key operations are never Doctor actions; connector identity reset is destructive, previewed, confirmed, generation-fenced, and unavailable without its owner command.
   - Cached, stale, migrated, static, or concept state is never called a fresh check. Close/detach leaves owner ObservableWork alive and re-entry rejoins it; fresh owner results alone replace findings.
+  - "Amended 2026-10-31 (DL-270): backup repository and snapshot findings also project the last verified backup and what a restore from it would lose (its time and last event), read from the BRS-031 owner. Writer/lock health means repository-side locks only; a backup never holds PM's writer lock while copying (BRS-031)."
   - Doctor admits no semantic-domain EventRecord and no packet command family. Owner commands consumed from remediation stay handler_unavailable and event-silent with expected_event_types=[] until separately integrated and admitted.
 validation_surfaces:
   - Plans/doctor_contracts.schema.json

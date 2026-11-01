@@ -71,6 +71,8 @@ Per-project memory stores (deterministic default):
 - Assistant Memory Tantivy index: `.puppet-master/project/state/assistant_memory_index/`
 - Assistant Memory USearch index: `.puppet-master/project/state/assistant_memory_vectors.usearch`
 
+Amended 2026-10-31 (DL-270): these project-local paths are a layout reference only. SP-345 places every store directory per OS (inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux) and keeps the project scope as a subfolder. Its exact paths are a companion change in SP-015 and the documents that name them. That change also updates the AMS-007 preserved_exact_tokens and acceptance criterion and the `system.redb` path above; until then the paths stay as written.
+
 Note: This document does not change the canonical system-storage default in `Plans/storage-plan.md` (app-global redb layout). The `system.redb` path above is the project-state reference path for memory-local packaging/project-scoped state mode.
 
 Rule: Assistant memory MUST use separate physical stores from system state stores to avoid writer contention and coupling.
@@ -200,6 +202,7 @@ Canonical mapping:
 - Vector entry -> `MemoryGist.id`
 - Persist ANN state in `assistant_memory_vectors.usearch` via serialize/deserialize
 - Persist `gist_id -> vector_slot` mapping (and tombstone state) in `assistant_memory.redb`
+- Amended 2026-10-31 (DL-270): the `gist_id -> vector_slot` mapping and ANN tombstone state are derived and rebuildable, so they live in a separate derived redb file next to `assistant_memory_vectors.usearch`, not in `assistant_memory.redb` (SP-340: canonical and derived families live in two redb files). The derived file can be deleted and rebuilt from canonical gists and is not backed up (BRS-031). `assistant_memory.redb` holds canonical gists only.
 
 Deterministic embed text:
 - `embed_text = kind + "\n" + join(tags) + "\n" + join(claims[].text)` (exclude `details`)
@@ -374,7 +377,7 @@ Required UI elements:
 - Actions per gist: `Verify`, `Edit`, `Pin/Unpin`, `Discard`; `Edit` is a versioned claim edit through `cmd.chat.memory.edit` that resets the gist to `Unverified` (AMS-048)
 - Half-life controls: per-gist half-life override and per-kind default editor; the per-kind editor is a link to the Settings row `memory.retention.half-life-by-kind` through `cmd.settings.open`, with no memory command of its own (AMS-048)
 - “What’s in capsule now” preview with token estimate and hard-cap indicator; its display label is "See what your next message will include" (AMS-047)
-- Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists
+- Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists, compact and reclaim (a link to storage health, opened through `cmd.settings.open_storage_retention`; memory defines no command of its own)
 - Export: one Export action exports the gists, the taught rules or both through the artifact owner with `cmd.chat.memory.export {scope}` (DL-130, AMS-052)
 
 Rule: The Gist Review panel MUST surface verification_state prominently and MUST make “Verify” and “Discard” first-class actions.
@@ -401,6 +404,7 @@ Required operations:
 4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
 6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
+7. Store compaction (amended 2026-10-31, DL-270): follow SP-340's store compaction under the maintenance lease, only while PM is idle and fragmentation passes its threshold: the derived memory redb file is rebuilt, and `assistant_memory.redb` is compacted by copying its live records into a new file swapped in during a brief pause, then the reclaimed bytes are verified. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
 
 Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-in-memo.md
@@ -2390,7 +2394,7 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- A giant chat/session file is compacted or paged before app crash.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.
@@ -2398,7 +2402,7 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- A giant chat/session file is compacted or paged before app crash.
+- A giant chat/session thread opens through mandatory load-older paging from the derived render-page store (SP-338, ACD-242), never by replaying its events; the first page of a 100k-event thread arrives within 150 ms at p95, warm or cold, reading at most 2 MiB. Conversation compaction alone does not satisfy this.
 - Memory search timeout returns degraded result, not hung turn.
 - Project ledger facts are not injected as personal memory.
 - Superseded/stale memory cannot silently override current Plan canon.

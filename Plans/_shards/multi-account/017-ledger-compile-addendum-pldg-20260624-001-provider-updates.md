@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L840-L4806
+Source lines: L840-L4805
 
-Source SHA256: `21313ef39113eff15e627a0f7265d0349a3c443825de4807478ba4b5dbdefc18`
+Source SHA256: `185f12fa418f7e444b74dc909a5256219e6fb6617c7899976d584badffc2879c`
 
 ---
 
@@ -625,8 +625,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Account registry, active index, cooldowns, and usage cache live in redb or a temporary app-data JSON until redb,
-  while usage and rate-limit events live in seglog. Account selection and env/config wiring are part of the Provider
+  Account registry, active index, cooldowns, and usage cache live in redb only, in the canonical or derived family SP-340 assigns, as MessagePack or typed fields, with no JSON state
+  file (SP-339), while usage and rate-limit events live in seglog. Account selection and env/config wiring are part of the Provider
   contract. GUI and usage views are UX requirements only, with no Iced/Slint lock-in from this document. The historical
   Rust/Iced and platform_specs.rs context is preserved as source context, while future native auth for Codex, Copilot,
   and Gemini uses OpenCode PR #11832-style stores and per-request context.
@@ -638,7 +638,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Storage alignment remains redb plus seglog, with temporary JSON only as an interim app-data option.
+- Storage alignment is redb plus seglog, with no JSON state files or interim JSON option (SP-339, SP-340). Amended 2026-10-31 (DL-270).
 - Provider abstraction owns account selection and env/config wiring.
 - Historical Rust/Iced wording is preserved as source context and does not authorize legacy app recreation.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -3484,7 +3484,6 @@ preserved_exact_tokens:
 - enabled
 - supports_family_pooling
 - default_model_id_raw
-- pm/state.json
 - pm/logs/
 - pm/projections/
 - pm/backups/

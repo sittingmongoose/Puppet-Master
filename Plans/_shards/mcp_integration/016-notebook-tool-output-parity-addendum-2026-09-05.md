@@ -2,9 +2,9 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L2800-L2835
+Source lines: L2801-L2836
 
-Source SHA256: `22868e7bba7c3acc240c3063bb40c425789141e6115ffc06e9d058965d7563a5`
+Source SHA256: `8334adc8510cc12885d4956906f9705cf38eeebb797c65d513f9b7bacfbd6d48`
 
 ---
 

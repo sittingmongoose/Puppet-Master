@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2025-L2232
+Source lines: L2029-L2238
 
-Source SHA256: `e7aa2b010c748593bb7c5f4615faa78dac656603b0f0a9d14793cbff7d5eefce`
+Source SHA256: `fe048767cd39d62ee7e90db30eefc91a6c7a6d35a4e06679ac041404fe28a050`
 
 ---
 
@@ -42,6 +42,8 @@ Artifact browsing consumes storage-owned `storage_instance_id`, `root_generation
 In compatible lock-conflict viewer mode, Runtime Artifacts is a frozen, manually refreshable read snapshot. It may inspect/copy/export only within FileSafe and permission policy; view-local changes are visibly ephemeral. Apply, restore, retry, delete, retention/hold mutation, settings/history persistence, dispatch, provider calls requiring receipts, and every other durable/runtime/external mutation remain discoverable where useful but disabled with `storage_read_only`. Permission approval cannot widen this storage gate. Promotion is never automatic and the panel only reflects the storage-owned full-revalidation result. A newer-format store exposes metadata-only compatibility diagnostics, not the Runtime Artifacts viewer. `root_mismatch`, `root_unavailable`, `fallback_diverged`, or inability to prove a coherent snapshot yields the owner viewer/blocked posture and never an apparently empty artifact list.
 
 Runtime Artifacts diagnostics do not create a generic verify, repair, salvage, force-open, or `try_anyway` action. `Retry storage` is an owner admission probe only; it neither repairs bytes nor automatically resumes a blocked artifact action.
+
+Amended 2026-10-31 (DL-270): per-group usage, disk budget, reclaimable bytes, last compaction and the verified reclaim action are storage-owned (SP-340), shown on the page that `cmd.settings.open_storage_retention` opens (F3-457), and the last verified backup is backup-owned (BRS-031). Runtime Artifacts links to that page and shows none of it panel-locally.
 
 Permission-denied artifact actions consume the permission-owned blocked payload (`blocked_family`, `blocked_reason_code`, ordered `allowed_action_ids[]`, `permission_snapshot_id?`, `approval_scope_key?`, `executed: false`) and do not collapse denial, approval required, storage read-only, integrity block, or preflight drift into generic failure.
 

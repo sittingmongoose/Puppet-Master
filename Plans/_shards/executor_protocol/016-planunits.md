@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L1002-L5911
+Source lines: L1004-L5914
 
-Source SHA256: `3fd4b170772eafe0d813cf29d7e5407613a7bad1baddbb2a7d5c9f8fa649f92a`
+Source SHA256: `d0cc39238102b109a3cf45f7cb5551f742116c3e1753b99b2711bfbec9e96b66`
 
 ---
 
@@ -1957,7 +1957,7 @@ plan_unit_id: EP-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: Executor storage and usage alignment consumes storage-plan and usage-feature owner sections; receipts carry checkpoint-marker, run.completed.usage, bounded usage.jsonl compatibility retirement, lock-path/FileSafe/worktree path alignment, and budget-exceeded split.
+canonical_text: Executor storage and usage alignment consumes storage-plan and usage-feature owner sections; receipts carry checkpoint-marker, run.completed.usage, bounded usage.jsonl compatibility retirement, lock-path/FileSafe/worktree path alignment, and budget-exceeded split. Amended 2026-10-31 (DL-270), usage.jsonl is retired as a live file (SP-339, UF-108); receipts carry usage.event refs and point at redb daily rollups, and the compatibility-retirement path now means pm export on request. Boundary decisions cite the Owner / Consumer Map.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -1996,6 +1996,7 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - bounded usage.jsonl compatibility retirement path remains explicit.
+- 'Amended 2026-10-31 (DL-270): the retirement path means usage.jsonl is no longer a live file (SP-339, UF-108); pm export writes JSONL on request.'
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:

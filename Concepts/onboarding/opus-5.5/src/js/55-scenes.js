@@ -209,7 +209,9 @@
   const FACE = {
     'server.confirm.pendingHost': 'think', 'protect.pendingHost': 'think', 'creating.recovery.pending': 'think',
     'creating.recovery.reasons.waitingHost': 'think', 'creating.recovery.reasons.claimBusy': 'think', 'creating.recovery.reasons.pending': 'think',
-    'ai.skipNote': 'sleep', 'online.details.azure.routeMissing': 'think'
+    'ai.skipNote': 'sleep', 'online.details.azure.routeMissing': 'think',
+    /* a server with sign-up turned off is information, not a problem: Pip thinks it through, never worries (footage review m6) */
+    'online.signin.admin': 'think'
   };
   /* states that show as information, not as a fault, are still read where they are written (a note, a row's line) */
   /* (a refused press's reason, .o55-reason, is told to Pip by the press itself: 60-ui-core.js renderScene's refused) */

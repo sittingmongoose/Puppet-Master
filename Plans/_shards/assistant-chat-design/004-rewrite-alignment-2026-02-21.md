@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L32-L47
 
-Source SHA256: `f844135b97b3285cd88b3f0e377906be3dc72329a13056057c7b0e966720a041`
+Source SHA256: `daff80e144848e214adc7055bb6c52c866dd17ec7d7dce53ef2875d02a733dd6`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `f844135b97b3285cd88b3f0e377906be3dc72329a13056057c7b0e966720a041
 This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md` with the following reconciled assumptions:
 
 - **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
-- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
+- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack. Amended 2026-10-31 (DL-270): there is no JSONL mirror; storage/jsonl is retired (SP-339). People read stored state through pm db dump, pm inspect, pm tail and pm export; only pm export writes JSONL or JSON, on request.
 - **UI:** Rust + Slint (Skia renderer) remain the intended native desktop shell implementation; the web GUI is the Rust Leptos client (`Plans/FinalGUISpec.md` F3-583, DL-139). The behavior and data contracts in this plan apply to both frontends.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
 - **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.

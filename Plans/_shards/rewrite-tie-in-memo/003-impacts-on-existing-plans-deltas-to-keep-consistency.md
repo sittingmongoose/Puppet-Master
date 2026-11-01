@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L89-L139
 
-Source SHA256: `d90337f35c544f1a4a65da7bf5aa52ca2017d36c42e07d8331ec8159e2f72066`
+Source SHA256: `3abc641ce316c72a894a8507d216526468d06a9c256ba3e09ea7a9d46cd0d46d`
 
 ---
 
@@ -28,8 +28,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md
 ### Storage consistency
 - All run/session/artifact/checkpoint persistence and event emission must align with **Plans/storage-plan.md** (seglog writer, redb schema, projector pipeline, analytics scan).
-- When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, or both.
-- **Plans/storage-plan.md** -- Canonical storage checklist (seglog, redb schema, projectors, analytics); other plans that persist state or emit events should reference it and call out seglog vs redb.
+- When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, payload-store references, render-page store pages, Parquet archives, Tantivy indexes, or a combination, citing the DL-270 storage profile units SP-337 to SP-341 in Plans/storage-plan.md.
+- **Plans/storage-plan.md** -- Canonical storage checklist (seglog, redb schema, projectors, analytics); other plans that persist state or emit events should reference it and call out seglog vs redb. Amended 2026-10-31 (DL-270): the checklist also covers the DL-270 storage profile (SP-335..SP-345 at the end of Plans/storage-plan.md): compression, durability, payload store, render pages, no always-on JSON copies, redb limits, analytics, engines, media, gates, placement.
 - Document annotation work reuses the existing bundle `/note` persistence and event model in **Plans/storage-plan.md** (`/storage-plan.md`); do not invent a second annotation storage path for the rewrite.
 
 ### Plans likely needing the most rewrite-aware edits

@@ -334,24 +334,32 @@
      they dirty) flush once the drag ends: the ResizeObserver does not refire for a size that has settled. */
   var heldTargets = new Map(), heldScopes = [], heldTimer = 0, heldBox = false;
   function dragHeld() { return !!(document.body && document.body.classList.contains('pm-resizing')); }
+  function flushHeld() {
+    heldTimer = 0;
+    if (dragHeld()) { flushHeldSoon(); return; }
+    var targets = heldTargets, scopes = heldScopes, box = heldBox;
+    heldTargets = new Map(); heldScopes = []; heldBox = false;
+    /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
+       lazySync, with the tab ink under it (Muse review m4) */
+    if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
+    scopes.forEach(function (s) { dirtyScope(s); });
+    if (targets.size) mountMeasured(targets);
+    if (targets.size || scopes.length) lazySync(false);
+    scheduleBakes();
+    /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
+       no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
+    liftFlat();
+  }
   function flushHeldSoon() {
     if (heldTimer) return;
-    heldTimer = setTimeout(function () {
-      heldTimer = 0;
-      if (dragHeld()) { flushHeldSoon(); return; }
-      var targets = heldTargets, scopes = heldScopes, box = heldBox;
-      heldTargets = new Map(); heldScopes = []; heldBox = false;
-      /* the project box changed width during the drag: its tabs' chip is placed after the next layout, never through
-         lazySync, with the tab ink under it (Muse review m4) */
-      if (box) afterLayout(function () { syncAll(); try { if (window.PM7_PAGE_TAB_INK && window.PM7_PAGE_TAB_INK.resync) window.PM7_PAGE_TAB_INK.resync(); } catch (e) { /* hidden under the switcher */ } });
-      scopes.forEach(function (s) { dirtyScope(s); });
-      if (targets.size) mountMeasured(targets);
-      if (targets.size || scopes.length) lazySync(false);
-      scheduleBakes();
-      /* A drag that ends back on geometry whose rim is still in the ring cache remounts from the cache:
-         no bake is queued and no flight ever finishes, so nothing else lifts the drag flattening. */
-      liftFlat();
-    }, 160);
+    heldTimer = setTimeout(flushHeld, 160);
+  }
+  /* The shell dispatches PM_DRAGEND after it drops pm-resizing and commits the drag; flushing there
+     instead of waiting out the poll returns the rims up to 160ms sooner. The timer stays as the
+     fallback for hosts without the shell registry and for any end path that skips dispatch. */
+  function flushHeldNow() {
+    if (heldTimer) { clearTimeout(heldTimer); heldTimer = 0; }
+    flushHeld();
   }
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     if (!isGlass()) return;
@@ -1372,7 +1380,9 @@
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
-      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
+      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
+      /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
+      follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true },
     /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
        choices (pm7-terminal-customizer). In-flow indicators that slide with their own content (the home panels'
@@ -2013,9 +2023,41 @@
     m.lay = lay;
     return m;
   }
+  /* RV-7 (2026-10-31): a strip its neighbours place moves without resizing when one of them changes width. The wizard's
+     step rail sits centred between the window's brand and its header controls, so Plain English <-> Expert or the
+     window's width moved the rail 18-29 px while its chip stayed where it was: for good in Basic and Friendly, whose chip
+     is in the window's lens layer, and for 1-7 frames in Glass, until the next sheet sync. A strip's follow(strip) names
+     the boxes whose size places it; when one of them changes size, the strip is synced in that delivery, after the
+     frame's own layout and before its paint, so the chip moves in the frame the rail does (as the page tabs follow the
+     project box, in start()). A first report, or one with no change of size, syncs nothing. */
+  var followers = new Map(), followSize = new WeakMap(), followed = new WeakSet();
+  var followWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    var due = [];
+    entries.forEach(function (en) {
+      var b = en.borderBoxSize && en.borderBoxSize[0], size = b ? Math.round(b.inlineSize * 2) + 'x' + Math.round(b.blockSize * 2) : Math.round(en.contentRect.width * 2) + 'x' + Math.round(en.contentRect.height * 2);
+      var was = followSize.get(en.target); followSize.set(en.target, size);
+      var set = followers.get(en.target); if (!set) return;
+      set.forEach(function (x) { if (!x.isConnected) set.delete(x); else if (was !== undefined && was !== size && due.indexOf(x) < 0) due.push(x); });
+      if (!set.size) { followers.delete(en.target); followWatch.unobserve(en.target); }
+    });
+    if (!due.length || !switchOn()) return;
+    if (dragHeld()) { due.forEach(function (x) { heldScopes.push(x); }); flushHeldSoon(); return; }
+    due.forEach(function (x) { settleStrips.add(x); });
+    syncPending();
+  }) : null;
+  function followStrip(strip, cfg) {
+    if (!followWatch || !cfg.follow || followed.has(strip)) return;
+    followed.add(strip);
+    cfg.follow(strip).forEach(function (e) {
+      if (!e) return;
+      var set = followers.get(e); if (!set) { followers.set(e, set = new Set()); followWatch.observe(e); }
+      set.add(strip);
+    });
+  }
   function syncStripNow(cfg, strip, m) {
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
+    followStrip(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
       /* pressed, not yet chosen by the app: hold the lens there until the app makes any choice. This app switches on
@@ -2868,6 +2910,7 @@
   }
   function start() {
     ensureDefs(); viewportVars(); knobFilter(); readSwitch();
+    if (window.PM_ON_DRAGEND) window.PM_ON_DRAGEND(flushHeldNow);
     window.addEventListener('resize', viewportVars);
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });

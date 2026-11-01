@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17042-L18002
+Source lines: L17069-L18030
 
-Source SHA256: `b1d9cb820ae57d87ca779ef9868fd73102c42f9072d075f53d8522b04f69e832`
+Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
 
 ---
 
@@ -117,7 +117,7 @@ SourceRef: `PD-L-01`, `PD-L-02`, `PD-L-03`, `L018-C1`, `CL-L-005`, `CL-L-006`, `
 
 Backup refs are path-independent `backup:{backup_id}`. A completed backup has closed manifest authority containing relative files, SHA-256 and size, store/app versions, root identity, backup kind, and one durable seglog boundary `{segment_generation, segment_name, byte_offset, sequence_id}`. Backup kinds are `baseline | rolling | clean_shutdown | pre_migration | pre_restore | manual`.
 
-Backup capture pauses new canonical mutations, crosses the seglog durable barrier, lets required projectors commit through the boundary or marks them disposable/stale, closes canonical handles, copies only canonical stores into same-filesystem staging, writes/verifies the manifest last, synchronizes files/directories, atomically promotes, and reopens. JSONL/Tantivy and other derived stores rebuild after restore.
+Backup capture holds the writer only for a brief capture barrier (at most 250 ms at p99) that crosses the seglog durable barrier and records one consistent point across the stores (seglog sequence, redb read snapshots, payload references), then releases. Sealed segments and payload packs, which are immutable, copy in the background and incrementally into same-filesystem staging while PM keeps running; redb copies from a read snapshot; derived families are not backed up. No writer lock is held and canonical handles stay open while copying. The manifest is still written and verified last, files and directories are synchronized, and the backup is atomically promoted. Tantivy and other derived stores rebuild after restore. Amended 2026-10-31 (DL-270, BRS-031): the old sequence that paused canonical mutations and closed canonical handles for the whole copy no longer applies. One backup-status record, read by every surface that shows backup state, shows the newest backup at Structure verified or higher with its verification level, and what a restore from it would lose; a newer backup that has not verified is shown beside it, never instead of it.
 
 Restore selection occurs in the startup recovery shell; `StorageRecoveryCoordinator` executes offline with canonical stores closed:
 
@@ -157,7 +157,7 @@ ContractRef: ContractName:Plans/storage_recovery_contracts.schema.json#/$defs/mi
 
 #### MVP verification, repair, and salvage invocation boundary
 
-The approved MVP exposes read-only metadata diagnostics plus the startup recovery shell operations above. It does not expose a generic user- or support-invocable live verify/repair/salvage command, a Doctor mutation mode, an in-place store editor, or a bypass token. `Retry storage` and retry-recovery actions re-run closed admission/verification gates; they do not repair bytes. Backup restore remains offline and journaled. Internal migration, restore, compaction, quarantine, and any future salvage algorithm remain coordinator-owned maintenance operations under the aggregate lock and maintenance lease. Adding a generic repair/salvage command is a new product decision requiring Contracts/command/wiring/security ownership; consumers MUST NOT invent one from diagnostics wording.
+The approved MVP exposes read-only metadata diagnostics plus the startup recovery shell operations above. It does not expose a generic user- or support-invocable live verify/repair/salvage command, a Doctor mutation mode, an in-place store editor, or a bypass token. `Retry storage` and retry-recovery actions re-run closed admission/verification gates; they do not repair bytes. Backup restore remains offline and journaled. Internal migration, restore, compaction, quarantine, and any future salvage algorithm remain coordinator-owned maintenance operations under the aggregate lock and maintenance lease. Adding a generic repair/salvage command is a new product decision requiring Contracts/command/wiring/security ownership; consumers MUST NOT invent one from diagnostics wording. Amended 2026-10-31 (DL-270): `pm db dump`, `pm inspect`, `pm tail` and `pm export` (SP-339) are read-only command-line reads, not User Commands, and mint no `cmd.*` id; the in-app record inspector opens through the existing `cmd.storage.open_value`. The reclaim action in storage health is the existing owner-routed `cmd.storage.compaction.request` under the maintenance lease (SP-340). None of these is repair or salvage, so this boundary stands.
 
 SourceRef: `PD-L-04`, `PD-L-05`, `PD-L-06`, `CL-L-009`, `CL-L-010`, `CL-L-011`, `Case-L:L-025`, `Case-L:L-031`, `Case-L:L-032`
 
@@ -175,7 +175,7 @@ The prefix is exactly 48 bytes, packed without host alignment. Offsets are zero-
 | 8 | 1 | `frame_version` | `2` |
 | 9 | 2 | `header_length` | Encoded header bytes; at most `4096` before semantic validation |
 | 11 | 4 | `payload_length` | Stored full EventRecord bytes; at most `16777216` before semantic validation |
-| 15 | 1 | `flags` | `0`; uncompressed, no other bits admitted |
+| 15 | 1 | `flags` | `0` on the active segment: uncompressed, no other bits admitted. Amended 2026-10-31 (DL-270, SP-335): a sealed, repacked segment may set a compression flag bit, and its frames then carry a codec id and a dictionary id; their byte placement is the SP-335 schema companion. The active segment stays `0`. |
 | 16 | 8 | `segment_generation` | Exact uint64 matching selected segment authority |
 | 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present |
 | 32 | 4 | `header_crc32` | CRC of exact stored header bytes |
@@ -211,12 +211,12 @@ Validation order is mandatory:
 
 1. Check magic.
 2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
-3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission.
+3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): the frame also admits SP-335's compressed profile, a flags bit with a codec id and a dictionary id, for sealed segments; the active segment stays `flags=0`.
 4. Enforce header/payload caps and checked remaining-file bounds.
 5. Match selected segment generation and strict sequence progression.
 6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
 7. Validate payload CRC over exact stored bytes.
-8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed.
+8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-10-31 (DL-270, SP-335): on a sealed, repacked segment a set compression flag selects the decoder by codec id; zstd (level 3 blocks, level 9 cold frames) is the only admitted transform, and the dictionary id names any dictionary. An unknown codec or dictionary id is Unsupported and is never guessed.
 9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission.
 10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set.
 
@@ -246,14 +246,11 @@ SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
 
 #### Manifest, append acknowledgement, and sequence authority
 
-`storage/seglog/manifest.v1.msgpack` is disk-first publication/recovery control metadata, never a second EventRecord source. It records manifest/recovery generation, segment inventory/hashes/ranges/states, active durable commit watermark/group digest, sequence lease/high-water mark, excluded ranges, retired inputs, and survivor-prefix digest.
+`storage/seglog/manifest.v1.msgpack` is disk-first publication/recovery control metadata, never a second EventRecord source. It records manifest/recovery generation, segment inventory/hashes/ranges/states, a last checkpoint of the active durable commit watermark/group digest, sequence lease/high-water mark, excluded ranges, retired inputs, and survivor-prefix digest. Amended 2026-10-31 (DL-270, SP-336): the current durable commit watermark and group digest live in the segment's own frames, and recovery validates frames forward from the last manifest checkpoint. The manifest is written and synced only at segment creation, rotation and other structural changes, not once per group.
 
-Append success requires two barriers:
+Append success, as amended 2026-10-31 (DL-270, SP-336): an ordinary commit group succeeds after one data sync of its complete segment bytes (`F_BARRIERFSYNC` on macOS), with the durable watermark carried in the segment's own frames. Barrier-class events (approvals, safe points, receipts the UI waits on) get a full flush: `F_FULLFSYNC`, `FlushFileBuffers` or `fdatasync`. Atomic manifest promotion and parent-directory synchronization apply at creation, rotation and other structural changes, not per group. The earlier rule of two barriers per append (segment `sync_all`, then manifest watermark promotion plus parent-directory synchronization) is retired.
 
-1. complete frame writes plus active-segment `sync_all`;
-2. atomic manifest watermark promotion plus parent-directory synchronization.
-
-After these two source durability barriers, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
+After this durability barrier, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
 
 Sequence ranges are durably leased in blocks of 4,096 before issuance; unused IDs after crash are abandoned, never reused. Gaps are legal only with closed reason `allocator_lease_abandoned | corruption_loss | retention_compaction`.
 
@@ -297,7 +294,8 @@ Minimum event-class defaults:
 | Non-authority security diagnostics and migration/recovery operational history | 2,555 days; 2,000,000/project | expired unheld rows only; otherwise fail closed |
 | Runtime/run/node/attempt | 365 days after run completion; 1,000,000/run and 5,000,000/project | successor compaction |
 | Chat content | indefinite while thread exists; 250,000/thread | roll linked successor; never evict content silently |
-| Usage/ordinary telemetry | 90 days; 2,000,000/project | compact expired unheld rows |
+| Detailed usage records (`usage.event`; amended 2026-10-31, DL-270) | the `ai.usage.usage-retention` window (90 days by default); no count eviction | compact expired unheld rows from the event log and the Parquet archive; daily usage totals per account, provider and model are kept forever (SP-341, UF-108) |
+| Ordinary telemetry (not usage) | 90 days; 2,000,000/project | compact expired unheld rows |
 | `seglog.event_appended` | 7 days; 500,000/instance | compact expired unheld rows |
 | Coordination | 180 days after run completion; 1,000,000/project | compact expired unheld rows |
 | Released safe points | 90 days after last hold release; 64/run and 2,048/project | oldest eligible only; retained hash summary 365 days after its first durable publication (DL-069) |
@@ -308,9 +306,9 @@ The 19 `runtime_artifact.*` event histories named in DL-075 are assigned `RP-AUT
 
 Expiry is inclusive at `anchor + ttl`. Count order is `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. Legal hold, recovery/preserved/recent-run anchor, live ref, backup, rollback, or maintenance ref overrides age/count eligibility. Latest 25 terminal runs/project receive the automatic `recent_run` anchor; becoming 26th clears only that automatic anchor.
 
-Janitor runs after lock/recovery at startup and every 6 hours, processing at most 10,000 keys or 512 MiB per pass with a durable cursor and frozen cutoff. Compaction evaluates every 24 hours and at 20% reclaimable, 1 GiB reclaimable, or priority deletion intent.
+Janitor runs after lock/recovery at startup and every 6 hours, processing at most 10,000 keys or 512 MiB per pass with a durable cursor and frozen cutoff. Compaction evaluates every 24 hours and at 20% reclaimable, 1 GiB reclaimable, or priority deletion intent. Amended 2026-10-31 (DL-270): that sentence is the retention-compaction trigger (successor generations). Store compaction, redb `compact()`, is separate (SP-340): it runs under the maintenance lease only while PM is idle and when fragmentation, file bytes against live bytes, passes a threshold. The idle rule, the fragmentation threshold and the schedule are fixed owner values in the storage registry, shown read-only in storage health, not settings; each run reports the space it returned.
 
-The search-first Settings inventory exposes `Advanced > Storage & Retention`. It permits user configuration of history, diagnostic, and released-safe-point windows only at or above the owner minima; attempts to shorten below those minima are rejected with the owner reason. It shows effective chat/runtime/diagnostic/safe-point policies, the latest-25-run preservation default, compaction/storage-pressure status, and read-only legal-hold/quarantine state. Legal-hold set/clear remains the protected `storage.legal_hold.manage` command rather than an ordinary toggle; manual compaction is an owner-routed maintenance request and cannot bypass eligibility, hold, or maintenance-lease rules.
+The search-first Settings inventory exposes `Advanced > Storage & Retention`. It permits user configuration of history, diagnostic, and released-safe-point windows only at or above the owner minima; attempts to shorten below those minima are rejected with the owner reason. It shows effective chat/runtime/diagnostic/safe-point policies, the latest-25-run preservation default, compaction/storage-pressure status, and read-only legal-hold/quarantine state. Amended 2026-10-31 (DL-270): it also shows storage health (SP-340, F3-457): for each of about eight user-facing storage groups named by the storage registry, disk usage against its budget, reclaimable bytes and the last compaction, with one reclaim action that sends the existing `cmd.storage.compaction.request` for the whole storage instance, also returns redb free space, and shows its result per group. Legal-hold set/clear remains the protected `storage.legal_hold.manage` command rather than an ordinary toggle; manual compaction is an owner-routed maintenance request and cannot bypass eligibility, hold, or maintenance-lease rules.
 
 SourceRef: `PD-L005-01` through `PD-L005-07`, `PD-SCHEMA-01`, `Case-L:L-005`
 
@@ -573,7 +571,7 @@ Storage persists FileSafe transaction phases exactly:
 
 Only verified `committed` and `rolled_back` resolve automatically. `recovery_required` retains mutation fence, transaction, safe-point, worktree, and blocked holds. Contracts owns outcomes/reason enums; storage MUST NOT record `restored_clean` without exact target digest or `restore_failed` without exact pre-restore rollback digest.
 
-Snapshot manifests/blobs live content-addressed under the resolved storage root outside the worktree; events/values contain refs/hashes, never file bodies. Remote projects keep custody on the authorized remote with no silent local fallback. Safe-point hold refs include attempt, blocked episode, nonterminal restore transaction, preserved run, and legal hold.
+Snapshot manifests/blobs live content-addressed under the resolved storage root outside the worktree; events/values contain refs/hashes, never file bodies. Amended 2026-10-31 (DL-270, SP-337): snapshot blobs are objects in the BLAKE3 payload store's append-only pack files, reference-counted, with garbage collection honouring holds and backups; content-defined chunking applies to them. There is no separate blob store and no file per blob, and safe-point records keep payload refs and hashes only. Remote projects keep custody on the authorized remote with no silent local fallback. Safe-point hold refs include attempt, blocked episode, nonterminal restore transaction, preserved run, and legal hold.
 
 Required-MVP storage family routing also includes these distinct materialized families and keys:
 
@@ -602,7 +600,7 @@ Owner acceptance is fixture/oracle based; prose or green governance alone is not
 Mandatory global outcomes:
 
 - no ordinary-open half-migrated/mixed restore state;
-- no acknowledged append without segment+manifest+directory barriers;
+- no acknowledged ordinary group without its single data sync and in-segment watermark, and no barrier-class acknowledgement without a full flush; manifest and directory barriers apply at creation, rotation and structural changes (DL-270, SP-336);
 - no mutation without a surviving synced safe-point/checkpoint/approval prerequisite;
 - no sequence reuse; every gap has a closed reason;
 - repeated recovery over identical bytes yields the same survivor set, IDs, manifest, and projection aftermath;
@@ -665,6 +663,9 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
+  watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
+  stores atomically.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false
@@ -674,7 +675,7 @@ acceptance_criteria:
   - Exact prefix offsets and independent CRC vectors, shortest type-preserving MessagePack, full required-null envelope, numeric/cap refusal, strict identity checks, and unsupported/resource scan stops satisfy the Case L-2 first profile.
   - Normative byte closure grants no native codec, I/O, lock, fsync, recovery, integrity-producer adoption or depth/readiness pass.
   - Payload/framing bit flips in active and closed segments yield the exact documented loss unit and identical survivors on rerun.
-  - No append reports success before both durable barriers, required parent-directory synchronization, and SP-286 durable first-receipt custody.
+  - No ordinary group reports success before its one data sync with the watermark in the segment (full flush for barrier-class events), and SP-286 durable first-receipt custody. Parent-directory synchronization applies at creation, rotation and structural changes, with no per-group manifest sync (DL-270, SP-336).
   - Safe-point/checkpoint/approval barrier fault injection proves no downstream mutation without a surviving synced receipt.
   - Rotation, truncation, janitor, and compaction crash cuts converge with one semantic recovery episode and unchanged closed-source hashes.
   - Checkpoints never use timestamps and rebuilt projections with a hole remain health degraded with exact provenance.

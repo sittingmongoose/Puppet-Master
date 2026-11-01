@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1051-L8799
+Source lines: L1052-L8804
 
-Source SHA256: `54280821ea1b3d8c648e6af69123fae7b415edcc5c536e7f58aac106408d4674`
+Source SHA256: `6036b30a812233edbf0bef2b245d12421f646cdbda6669ab390587c28def4e7d`
 
 ---
 
@@ -3123,7 +3123,7 @@ plan_unit_id: SMPFS-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Long chat and runtime lists use virtualization while preserving keyboard navigation, focus recovery, anchor-to-message behavior, sticky status elements, selection, and search result navigation.
+canonical_text: Long chat and runtime lists use virtualization while preserving keyboard navigation, focus recovery, anchor-to-message behavior, sticky status elements, selection, and search result navigation. Chat threads page older items from SP-338's derived render-page store with mandatory load-older paging (ACD-242); opening a chat never replays events, and an anchor or search jump to an unloaded item loads its page first.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -3583,7 +3583,11 @@ plan_unit_id: SMPFS-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Debug and run surfaces are part of the broader workbench story; remote run/debug follows requested/effective disclosure, derived shard hints cannot become shipped behavior without owner-doc contracts, and JSONL/logsearch diagnostics remain future hints until reconciled.
+canonical_text: >-
+  Debug and run surfaces are part of the broader workbench story; remote run/debug follows requested/effective
+  disclosure, derived shard hints cannot become shipped behavior without owner-doc contracts, and logsearch
+  diagnostics remain a future hint until reconciled. Amended 2026-10-31 (DL-270, SP-339): no JSONL mirror is kept;
+  diagnostics read stored state through pm tail, pm inspect, pm db dump and on-request pm export.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false

@@ -8,7 +8,7 @@
   const cd = (S) => S.sess.drafts.connect;
   const allServers = (S) => S.env.pmServers.concat(S.env.vpnServers || []);
   const server = (S, id) => allServers(S).find((s) => s.id === (id || cd(S).server_ref)) || null;
-  const words = (seed) => O55.art.identity(seed).words.join(' ');
+  const words = (seed) => [...new Set(O55.art.identity(seed).words)].join(' '); /* (never one word twice: m5) */
   const nProjects = (n) => T(n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
   /* No numeric priority: O55.sound ranks coinciding events itself. Owner operations name their
      done/fail/phase sounds in opts.sound (O55.flow.op); a typed address that names a Server
@@ -57,11 +57,33 @@
     if (kind === 'link') return O55.endpoint.checkLink(v).ok ? S.env.pmServers[0] : null;
     return null;
   }
+  /* m1: the Server as this route reaches it: its own web address, or its name alone on Tailscale and a Remote Link
+     (never the home-network address on a route chosen for away) */
+  const viaLine = (S, s) => { const d = cd(S); if (d.remote_mode === 'reverse_proxy' && d.proxy_hostname) return s.name + ' · ' + String(d.proxy_hostname).replace(/^https:\/\//, ''); return d.remote_mode === 'tailscale' || d.remote_mode === 'remote_link' ? s.name : s.name + ' · ' + s.address; };
+  /* The one-time sign-in of this device to the chosen Tailscale (hosted, or the typed Headscale): per device and per
+     network, so another route or a step back keeps it. */
+  const hsOk = (d) => O55.endpoint.check(d.headscale_url, 'headscale').ok;
+  const tsKey = (d) => (d.tailscale_control === 'headscale' ? (hsOk(d) ? 'headscale:' + O55.endpoint.check(d.headscale_url, 'headscale').url : null) : 'hosted');
+  const tsState = (S) => { const k = tsKey(cd(S)); return k ? ((S.sess.connect.tsAuth || {})[k] || null) : null; };
+  const tsReady = (S) => { const t = tsState(S); return !!(t && t.state === 'done'); };
+  const TS_FAIL = { denied: 'denied', expired: 'expired' };
+  function tsSignInBlock(S) {
+    const d = cd(S), t = tsState(S), hs = d.tailscale_control === 'headscale';
+    if (!tsKey(d)) return '';
+    let out = '';
+    if (t && t.state === 'failed') out += `<div class="o55-banner o55-banner-warn" data-key="tsfail">${C.small('lock', 18)}<span>${U.esc(T('connect.route.tailscale.' + (hs && t.fail === 'denied' ? 'hsDenied' : TS_FAIL[t.fail] || 'denied')))}</span></div>`;
+    if (t && t.state === 'running') out += F.phases(S, 'tslogin:' + tsKey(d), ['signin'], { signin: T(hs ? 'connect.route.tailscale.signingInHs' : 'connect.route.tailscale.signingIn') });
+    else out += `<div class="o55-inline" data-key="tssignin">${O55.ui.btn({ label: T(hs ? 'connect.route.tailscale.signInHs' : 'away.setup.person.tsSignIn'), do: 'tsSignIn', cls: 'o55-small', tip: 'tsSignIn' }, 'o55-primary')}</div>`;
+    if (!(t && t.state === 'running')) out += H('c-route:tssignin', [{ label: T('connect.route.tailscale.hint.ok'), outcome: 'works', act: ['tsSignIn', 'ok'] },
+      { label: T(hs ? 'away.setup.hint.registration_denied' : 'away.setup.hint.denied'), outcome: 'refused', act: ['tsSignIn', 'denied'] }, { label: T('away.setup.hint.expired'), outcome: 'expired', act: ['tsSignIn', 'expired'] }]);
+    return out;
+  }
   /* Why Continue waits, in words this route can act on (FO-10). Where the route's own address finds the Puppet Master
      (a web address, a Remote Link, an address typed instead of the list), what that address still needs comes first:
      "Choose your Puppet Master" there would name a list the screen does not show. */
   function routeReason(S) {
     const d = cd(S), miss = O55.draft.missing(d), own = { reverse_proxy: 'proxy_hostname', remote_link: 'remote_endpoint' }[d.remote_mode];
+    if (d.remote_mode === 'tailscale' && tsKey(d) && !tsReady(S)) return T(d.tailscale_control === 'headscale' ? 'connect.route.tailscale.signInFirstHs' : 'connect.route.tailscale.signInFirst');
     const m = (own && miss.find((x) => x.field === own)) || miss[0];
     if (m && m.field === 'server_ref' && d.remote_mode === 'local_or_vpn' && S.sess.connect.manual) return T(String(S.sess.connect.addr || '').trim() ? 'connect.route.addrNoAnswer' : 'connect.route.addrMissing');
     return m ? T(m.key) : '';
@@ -213,10 +235,13 @@
       let under = '';
       if (mode === 'tailscale') {
         under += C.segmented({ do: 'tsControl', value: d.tailscale_control || 'hosted', label: T('connect.route.tailscale.title'), options: [{ v: 'hosted', label: T('connect.route.tailscale.hosted') }, { v: 'headscale', label: T('connect.route.tailscale.headscale') }] });
-        if (d.tailscale_control === 'headscale') { const res = O55.endpoint.check(d.headscale_url, 'headscale'), w = O55.endpoint.hint(res, 'https://…'); under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok }) + H('c-route:headscale', [{ label: 'https://headscale.example.com', outcome: 'works', fills: [['headscale', 'https://headscale.example.com']] }, { label: 'http://headscale.example.com', outcome: 'wrong', fills: [['headscale', 'http://headscale.example.com']] }], { when: !res.ok }); }
-        under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: 'Tailscale', quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
+        if (d.tailscale_control === 'headscale') { const res = O55.endpoint.check(d.headscale_url, 'headscale'), w = O55.endpoint.hint(res, ''); under += C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok }) + H('c-route:headscale', [{ label: 'https://headscale.example.com', outcome: 'works', fills: [['headscale', 'https://headscale.example.com']] }, { label: 'http://headscale.example.com', outcome: 'wrong', fills: [['headscale', 'http://headscale.example.com']] }], { when: !res.ok }); }
+        /* RV-3 (D7 B): this device signs in to Tailscale (or the person's Headscale) once, through the protected auth
+           owner; only then does the list show the Puppet Masters on it */
+        if (tsReady(S)) under += C.cards('pickServer', S.env.pmServers.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: d.tailscale_control === 'headscale' ? 'Headscale' : 'Tailscale', quiet: true })), d.server_ref, { cls: 'o55-choices-quiet', label: T('connect.route.found') });
+        else under += tsSignInBlock(S);
       } else if (mode === 'reverse_proxy') {
-        const hit = resolveAddress(S, d.proxy_hostname, 'proxy'), w = O55.endpoint.hint(O55.endpoint.check(d.proxy_hostname, 'proxy'), 'https://…');
+        const hit = resolveAddress(S, d.proxy_hostname, 'proxy'), w = O55.endpoint.hint(O55.endpoint.check(d.proxy_hostname, 'proxy'), '');
         under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
         under += H('c-route:proxy', [{ label: 'https://pm.example.net', outcome: 'works', fills: [['proxy', 'https://pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !hit });
         /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
@@ -259,6 +284,23 @@
         O55.ui.refresh();
       },
       /* another control server is another way in: a request sent the other way ends and the review asks again */
+      /* the sign-in page opens; the auth owner signs this device in (arg: a demo hint's answer, given once) */
+      tsSignIn(S, outcome) {
+        const d = cd(S), k = tsKey(d), c = S.sess.connect; if (!k) return;
+        const t = (c.tsAuth || {})[k]; if (t && (t.state === 'running' || t.state === 'done')) return;
+        if (outcome && outcome !== 'ok') { S.env.failures = S.env.failures || {}; S.env.failures.ts_signin_once = outcome; }
+        const hs = d.tailscale_control === 'headscale';
+        O55.official.open(S, { name: hs ? 'Headscale' : 'Tailscale', url: hs ? O55.endpoint.check(d.headscale_url, 'headscale').url : 'https://login.tailscale.com/' });
+        c.tsAuth = Object.assign({}, c.tsAuth, { [k]: { state: 'running' } }); S.save();
+        F.reset(S, 'tslogin:' + k);
+        F.op(S, 'tslogin:' + k, 'cmd.auth_profile.sign_in', [{ key: 'signin', ms: 1400, fail: () => { const f = S.env.failures || {}, code = f.ts_signin_once; if (!code) return null; f.ts_signin_once = null; return code; } }], {
+          payload: { service: hs ? 'headscale' : 'tailscale', subject: 'native_client_node', client: S.env.client.id, control_url: hs ? O55.endpoint.check(d.headscale_url, 'headscale').url : null },
+          sound: { fail: 'warn' },
+          onDone: () => { c.tsAuth = Object.assign({}, c.tsAuth, { [k]: { state: 'done' } }); S.save(); O55.ui.refresh(); },
+          onFail: (S2, res) => { c.tsAuth = Object.assign({}, c.tsAuth, { [k]: { state: 'failed', fail: (res && res.code) || 'denied' } }); S.save(); O55.ui.refresh(); }
+        });
+        O55.ui.refresh();
+      },
       tsControl(S, v) { if (cd(S).tailscale_control !== v) { endRun(S, 'route_changed'); unconfirm(S); } O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },
       /* an address is kept as typed while the person types; the one it will use (https:// in front) goes on (SCR-09) */
       next(S) {
@@ -278,7 +320,7 @@
   });
 
   /* ------------------------------------------------------------------ C2: review and confirm */
-  const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T('connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
+  const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T(d.tailscale_control === 'headscale' ? 'connect.route.tailscale.headscale' : 'connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
   def('c-review', {
     seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
@@ -345,7 +387,7 @@
     body(S) {
       const s = server(S) || {}, d = cd(S), c = S.sess.connect, m = d.connection_pairing, r = runOf(S);
       const labels = { reach: T('connect.pair.phases.reach', { name: s.name }), approve: T('connect.pair.phases.approveAny', { name: s.name }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('connect.pair.phases.trust') };
-      let out = C.identity(s.seed || s.id, words(s.seed || s.id), s.name + ' · ' + s.address);
+      let out = C.identity(s.seed || s.id, words(s.seed || s.id), viaLine(S, s));
       if (paired(S)) return out + C.note(T('connect.pair.done', { name: s.name }), 'ok', 'check');
       if (!r) return out;
       const fail = c.fail && c.fail.run === r.id ? c.fail.code : expired(r) ? 'expired' : null;
@@ -370,7 +412,9 @@
           const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
-        if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: s.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: s.name }))}</span></div>`;
+        /* m16: the viewfinder holds its place from the first phase (it scans once reached), so nothing jumps; FA-3: its
+           caption is a row of its own under the camera */
+        if (m === 'qr' && !fail && st && st.state === 'running') out += F.viewfinder(T('connect.pair.qrAim', { name: s.name }), waiting);
       }
       if (fail) out += failPane(S, s, fail);
       /* the other answers a Server can give, each a new request answered that way */

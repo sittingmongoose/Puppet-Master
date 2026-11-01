@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Policy.md`
 
-Source lines: L464-L3293
+Source lines: L464-L3295
 
-Source SHA256: `72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d`
+Source SHA256: `b6f1362ed05b4bcee76fb6d1326d496a23d2214f5ddab53b8b7d0e0dc3c479f1`
 
 ---
 
@@ -1304,9 +1304,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Decision_Policy.md
 canonical_text: >-
-  Persistent stores, including seglog, redb, and Tantivy indexes, must not
-  contain tokens, passwords, API keys, OAuth refresh tokens, credentials, or
-  other secrets; tokens live only in the OS credential store.
+  Persistent stores, including seglog, redb, Tantivy indexes, payload pack
+  files (SP-337), the Parquet archive (SP-341) and render-page stores (SP-338),
+  must not contain tokens, passwords, API keys, OAuth refresh tokens,
+  credentials, or other secrets; tokens live only in the OS credential store.
+  Amended 2026-10-31 (DL-270).
 gui_related: false
 gui_classification_reason: This unit defines storage safety policy.
 split_recommended: false

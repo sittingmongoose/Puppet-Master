@@ -175,7 +175,12 @@ canonical_text: 'Pairing uses an explicit pairing_session_id, explicit pairing_c
   re-adopt the consumed result as a new request or show a false used-answer warning. The answered view offers a fresh
   code/request rather than Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
   matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
-  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
+  remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.
+  DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived,
+  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
+  request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
+  retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
+  request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 gui_related: true
 gui_classification_reason: Pairing prompts, fingerprint confirmation, Client lists, access scopes, expiry, and revocation are user-visible workflows.
 depends_on: [SRV-002, SRV-003]
@@ -191,6 +196,11 @@ acceptance_criteria:
   Check again for the completed one. A fresh invitation starts a new generation; exact Server/Client/session/generation,
   matching-identity confirmation, permission, expiry and genuine replay rejection remain. Rejecting a later request cannot
   remove a Client already approved by an earlier request. A view marker never grants trust or bypasses the Server owner.'
+- 'DL-271 initial request waiting, 2026-10-31: while the current invitation is live and no device request has arrived,
+  Your Server is ready shows No requests yet with Check again. Checking re-reads the current owner run; a real arriving
+  request also updates that view. This neutral state is not an error and invents no candidate, approval or trust. Continue
+  retains its existing Server-ready gates. Keep it distinct from DL-259 FO-7’s answered approval/rejection: a completed
+  request stays answered, and a fresh request requires the existing new-code/new-generation route.'
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future stolen expired revoked access tests]
 risk_class: client_trust_or_revocation_bypass
 reasoning_tier: high
@@ -201,6 +211,10 @@ source_lineage:
 - source_ref:normalized-register:server-first-2026-08-31:R03
 - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
 - 'PM7 srv FO-7 40899806fb: endGuestRun/runDone/pollGuestRun source-only terminal-view guard.'
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens: [ClientTrustRecord, PairingRun, pairing_candidate_id, ClientAccessPolicy, ServerTrustRecord, RevocationRecord, SessionRecord, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke]
 negative_constraints: [Do not treat route possession as trust., Do not leave revoked sessions active., Do not persist raw pairing or session secrets in ordinary events.]
 owner_hints: [Plans/Server_System.md, Plans/Permissions_System.md, Plans/FileSafe.md]

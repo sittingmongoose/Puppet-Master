@@ -343,6 +343,14 @@
         "guestLater": {
           "title": "The other device answers later",
           "sub": "On Your Server is ready, no request shows for about 15 seconds: Check again finds none, then the device's request arrives."
+        },
+        "oldKeyWorks": {
+          "title": "Home NAS already takes the old key",
+          "sub": "The old DSA key is already on Home NAS and named for it in this computer's SSH settings. Choose a key still shows it as too weak to use and recommends a new key."
+        },
+        "oldKeyLocked": {
+          "title": "An old locked key named for Home NAS",
+          "sub": "This computer's SSH settings name an old DSA key, locked with a passphrase, for Home NAS. Choose a key refuses it before asking for its passphrase and recommends a new key."
         }
       },
       "screens": {

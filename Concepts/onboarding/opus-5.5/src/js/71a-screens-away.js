@@ -19,6 +19,17 @@
   const AW = (S) => (S.sess.away = S.sess.away || {});
   const consented = (S) => { const d = md(S); return d.remote_mode !== 'reverse_proxy' || (!!AW(S).publicFor && AW(S).publicFor === E().check(d.proxy_hostname, 'proxy').url); };
   const KIND_NAME = { caddy: 'Caddy', nginx: 'NGINX', traefik: 'Traefik' };
+  /* RV-4: the settings file itself, on the step that waits for it: Settings' own builder (PM51.sysAway, the file Away
+     From Home shows), pointed at the new Server. Download saves it; Copy is for a proxy's paste-in settings. */
+  /* (octet-stream: a browser keeps these names as they are, never Caddyfile.txt) */
+  const FILE_NAME = { caddy: 'Caddyfile', nginx: 'puppet-master.conf', traefik: 'puppet-master.yml' };
+  function proxyFile(S) {
+    const d = md(S), A2 = window.PM51 && window.PM51.sysAway;
+    if (!A2 || typeof A2.awayConfig !== 'function' || !FILE_NAME[d.proxy_kind]) return null;
+    const u = ((S.sess.server || {}).kind === 'cloud' ? S.env.unclaimedCloud : S.env.unclaimed) || {};
+    const host = String(d.proxy_hostname || '').replace(/^https:\/\//, '').replace(/\/$/, '');
+    try { return { name: FILE_NAME[d.proxy_kind], text: A2.awayConfig({ proxy: KIND_NAME[d.proxy_kind], domain: host }, u.address) }; } catch (_) { return null; }
+  }
   /* Opened straight (Demo Studio's Open at one screen): what the Server steps would have left, a new Server set up and
      this computer trusted, and a Project that has a name (so Review can be confirmed); away-setup also gets its run */
   function seedServer(S, way) {
@@ -53,13 +64,13 @@
       const route = mode === 'tailscale' && d.tailscale_control === 'headscale' ? 'headscale' : mode;
       let fields = '';
       if (route === 'headscale') {
-        const res = E().check(d.headscale_url, 'headscale'), w = E().hint(res, 'https://…');
+        const res = E().check(d.headscale_url, 'headscale'), w = E().hint(res, '');
         fields = C.field({ bind: 'headscale', label: T('connect.route.tailscale.headscaleLabel'), value: d.headscale_url, placeholder: 'https://headscale.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok })
           + H('away:headscale', [{ label: 'https://headscale.example.com', outcome: 'works', fills: [['headscale', 'https://headscale.example.com']] }, { label: 'http://headscale.example.com', outcome: 'wrong', fills: [['headscale', 'http://headscale.example.com']] }], { when: !res.ok })
           + `<p class="o55-hint" data-key="hs-next">${U.esc(T('away.headscaleNext', { name }))}</p>`;
       }
       if (route === 'reverse_proxy') {
-        const res = E().check(d.proxy_hostname, 'proxy'), w = E().hint(res, 'https://…'), hosting = d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : 'generate_only';
+        const res = E().check(d.proxy_hostname, 'proxy'), w = E().hint(res, ''), hosting = d.proxy_hosting === 'existing_proxy' ? 'existing_proxy' : 'generate_only';
         fields = C.field({ bind: 'proxy', label: T('away.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: w.hint, error: w.error, invalid: !!w.error, valid: res.ok });
         fields += H('away:proxy', [{ label: 'pm.example.net', outcome: 'works', fills: [['proxy', 'pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !res.ok });
         /* Puppet Master writes the settings file; the person's proxy runs it and keeps their certificate (Jared, C1) */
@@ -186,7 +197,12 @@
         liveSteps.delete(key);
         const cur = A(S); if (!cur || cur.id !== at.id || cur.step !== at.step || cur.state !== 'running') return; /* (not this run's step any more) */
         cur.done.push(st.key); cur.step += 1; cur.state = 'idle';
-        if (st.key === 'create') cur.link = 'pm-remote-link:' + U.slug(serverName(S) || 'server') + '/' + Math.random().toString(36).slice(2, 6).toUpperCase();
+        if (st.key === 'create') {
+          cur.link = 'pm-remote-link:' + U.slug(serverName(S) || 'server') + '/' + Math.random().toString(36).slice(2, 6).toUpperCase();
+          /* m10: the short code beside the link, for typing on a phone (Connect's field takes either) */
+          const AB = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', pick = () => AB[Math.floor(Math.random() * AB.length)];
+          cur.code = Array.from({ length: 4 }, pick).join('') + '-' + Array.from({ length: 4 }, pick).join('');
+        }
         if (cur.step >= steps.length) { cur.state = 'done'; S.save(); O55.ui.refresh(); if (S.open && S.sess.screen === 'away-setup') O55.sound.play('success', { intensity: 0.8 }); return; }
         S.save(); run(S); O55.ui.refresh();
       },
@@ -207,9 +223,15 @@
       let out = C.phases(steps.map((st, i) => ({ key: st.key, label: st.label, status: (a.done || []).includes(st.key) ? 'done' : a.state === 'failed' && a.fail && a.fail.step === st.key ? 'failed' : i === a.step && ['running', 'waiting', 'pending'].includes(a.state) ? 'active' : 'waiting' })));
       const st = steps[a.step];
       if (!a.confirmed) out += C.note(d.remote_mode === 'reverse_proxy' ? T('away.proxy.public', { name }) : T('away.setup.ask', { name }), d.remote_mode === 'reverse_proxy' ? 'warn' : 'info', 'globe');
-      if (a.state === 'waiting' && st) out += `<p class="o55-hint" data-key="wait-${U.esc(st.key)}">${U.esc(st.wait || '')}</p>`;
+      const pf = a.state === 'waiting' && st && st.person === 'installed' ? proxyFile(S) : null;
+      if (a.state === 'waiting' && st) out += `<p class="o55-hint" data-key="wait-${U.esc(st.key)}">${U.esc(pf ? T('away.setup.px.installWaitHere', { kind: KIND_NAME[d.proxy_kind] || 'Caddy' }) : st.wait || '')}</p>`;
+      if (pf) out += `<div class="o55-codeline" data-key="pxfile"><code>${U.esc(pf.text)}</code>${F.copyBtn(pf.text, 'pxfile')}</div>${F.copyNote('pxfile')}`
+        + `<div class="o55-sublinks" data-key="pxdownload">${O55.tips.opt('download:pxfile', `<a class="o55-btn o55-secondary o55-small" data-key="pxdl" download="${U.esc(pf.name)}" href="data:application/octet-stream;charset=utf-8,${encodeURIComponent(pf.text)}" data-pm-hover-exempt="true">${U.esc(T('away.setup.px.download'))}</a>`, 'o55-opt-inline', 'span')}</div>`;
       if (a.state === 'pending' && st) out += C.note(st.wait || T('server.confirm.pendingHost'), 'info', 'server');
-      if (a.link) out += `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>${F.copyNote('rlink')}<p class="o55-hint" data-key="rlink-hint">${U.esc(T('away.setup.rl.share'))}</p>`;
+      if (a.link) out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
+        + `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>`
+        + (a.code ? `<div class="o55-codeline" data-key="rcode"><code>${U.esc(a.code)}</code>${F.copyBtn(a.code, 'rcode')}</div>` : '') + `</div></div>`
+        + F.copyNote('rlink') + F.copyNote('rcode') + `<p class="o55-hint" data-key="rlink-hint">${U.esc(T('away.setup.rl.share'))}</p>`;
       if (a.state === 'failed' && a.fail) out += `<div class="o55-banner o55-banner-warn" data-key="awayfail">${C.small('lock', 18)}<span>${U.esc(T('away.setup.fail.' + (FAIL_WORDS[a.fail.code] || 'routeFailed'), { name, host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }))}</span></div>`;
       /* the other answers the owner can give at a step, each tried once (failures.away_once) */
       const fails = [...new Set(steps.slice(a.step || 0).flatMap((x) => x.fail || []))];

@@ -139,7 +139,7 @@ Each OpenCode row in PM is a `Server Profile` with one of two modes:
 
 This profile model replaces the older single-instance connection assumption. PM may track multiple OpenCode server profiles at once, and every request freezes the chosen `connection_profile_id` before execution.
 
-Profile roots may be represented as `/profiles/<connection_profile_id>/` or a concrete provider-root `.../profiles/<connection_profile_id>/`; each profile is a per-unit runtime surface with PM sidecar state under `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+Profile roots may be represented as `/profiles/<connection_profile_id>/` or a concrete provider-root `.../profiles/<connection_profile_id>/`; each profile is a per-unit runtime surface whose PM sidecar state is held as typed fields or MessagePack in the canonical redb family; `pm/state.json` is only the lineage name of the retired per-profile JSON state file (SP-339), and `pm/logs/`, `pm/projections/` and `pm/backups/` are derived exports or backup output. People read profile state through `pm db dump`, `pm inspect` or `pm export`. Amended 2026-10-31 (DL-270, SP-339).
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
@@ -987,7 +987,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints.
+  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints. Amended 2026-10-31 (DL-270, SP-339): per-profile sidecar state is typed or MessagePack in the canonical redb family; `pm/state.json` stays here only as the lineage name of the retired JSON state file.
 gui_related: false
 gui_classification_reason: This unit defines server profile connection data and ownership rather than visual presentation.
 split_recommended: false
@@ -1153,8 +1153,14 @@ plan_unit_id: PO-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
-canonical_text: >-
-  OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth and callback endpoints.
+canonical_text: 'OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials
+  to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth
+  and callback endpoints. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials,
+  the Password field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in.
+  Its hint states that distinction and identifies credential custody in the OS keychain on the selected execution host,
+  through the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry,
+  secret-free readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key
+  field.'
 gui_related: false
 gui_classification_reason: This unit defines auth realm mapping rather than visual presentation.
 split_recommended: false
@@ -1163,9 +1169,15 @@ depends_on:
   - "CV-125"
 unblocks: []
 acceptance_criteria:
-  - "Server Provider Auth Realm Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Server Provider Auth Realm Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer
+  boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
+- 'DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the Password field asks
+  for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in. Its hint states that
+  distinction and identifies credential custody in the OS keychain on the selected execution host, through the existing
+  credential owner. Optional server auth stays optional when the server needs none. Protected entry, secret-free readback
+  and exact host/account binding remain; an API-key-only hint is used only on an actual API-key field.'
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -1178,7 +1190,11 @@ node_compile_hint:
   mode: opencode_auth_realm_mapping
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
   - "Server-level auth"
   - "OPENCODE_SERVER_PASSWORD"

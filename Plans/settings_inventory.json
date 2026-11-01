@@ -5420,7 +5420,7 @@
   {
    "id": "ai.usage.usage-retention",
    "label": "Keep usage history for",
-   "desc": "How long detailed usage records are kept before being archived and compacted.",
+   "desc": "How long detailed usage records are kept. Older ones are removed; daily totals are kept.",
    "type": "select",
    "options": [
     "30d",
@@ -10787,7 +10787,7 @@
   {
    "id": "code.execution.ssh-keys",
    "label": "SSH keys",
-   "desc": "Keys Puppet Master signs in with: a name, the type, and where the private half is kept. Only the public half is ever read.",
+   "desc": "Keys Puppet Master signs in with: a name, the type, and where the private half is kept. Only the public half is ever read. Choose a key marks DSA and RSA-1024 Too weak to use and will not select or install them, even if already authorized.",
    "type": "list",
    "default": [],
    "scope": [

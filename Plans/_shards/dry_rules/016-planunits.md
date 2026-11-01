@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2008
+Source lines: L265-L2022
 
-Source SHA256: `93145b08570f8d45c2cd48fab76318b3c7aaa7d213fccc6195d7c264566fed4f`
+Source SHA256: `29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be`
 
 ---
 
@@ -910,7 +910,12 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   selects the actionable current-route reason from the same validation results that govern its existing Continue. One
   reason projection serves disabled feedback and Pip; a screen never adds a second validator or error store merely to
   reorder missing fields. Prefer the selected visible address input’s reason over an unresolved choice on a hidden list
-  (PWIZ-025). Displaying a better reason cannot grant connection, pairing, Ready or work authority.'
+  (PWIZ-025). Displaying a better reason cannot grant connection, pairing, Ready or work authority. DL-271, 2026-10-31:
+  credential hints are selected by credential realm (OpenCode server auth versus provider key), with custody from the
+  existing execution-host credential owner. Backup form requirements come from the chosen family/auth method, not a second
+  count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection and action guards,
+  and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting versus answered
+  state; copy changes do not create another validator or trust writer.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -936,6 +941,11 @@ acceptance_criteria:
   validator or error store merely to reorder missing fields. Prefer the selected visible address input’s reason over
   an unresolved choice on a hidden list (PWIZ-025). Displaying a better reason cannot grant connection, pairing, Ready
   or work authority.'
+- 'DL-271, 2026-10-31: credential hints are selected by credential realm (OpenCode server auth versus provider key),
+  with custody from the existing execution-host credential owner. Backup form requirements come from the chosen family/auth
+  method, not a second count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection
+  and action guards, and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting
+  versus answered state; copy changes do not create another validator or trust writer.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -960,6 +970,10 @@ source_lineage:
 - PM7 FO-10 final 03a02a178b1c386488b4a6f7865f9172cca7990c, merged integration 619cd29955; lead 1031184303-22ee and srv/final-onb
   FO-10 reports. 67-screens-connect.js routeReason/c-route foot and pip.oops copy keys are source lineage, not native
   API/error-grammar admission.
+- 'PM7 final batch, lead 1031214952-2d19 (2026-10-31), integration 2819a3def0: FO-11 2a3661f021; FO-12/Unlock 4c6305553d;
+  weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
+  situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
+  refusal.'
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer

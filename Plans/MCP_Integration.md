@@ -2137,6 +2137,7 @@ depends_on: [MI-025, MI-032, MI-033, MI-034, MI-035, MI-036, MI-037, MI-038]
 unblocks: []
 acceptance_criteria:
   - MCPToolSchemaRecord persists record_id, server_id, tool_name, schema_version, schema_sha256, source_kind, discovered_at_ms, expires_at_ms, compatibility_state, and provider_projection_ref?.
+  - Amended 2026-10-31 (DL-270) - the record names no store for the schema body, which may reach the 64 KiB cap. The body lives in the content-addressed payload store (SP-337). The record, a redb value of at most 16 KiB (SP-340), carries a BLAKE3 payload reference and byte size beside schema_sha256. Cache eviction releases the reference; payload garbage collection keeps any body that a hold, a backup or a retained prior schema_version still reaches. The family's disk budget and reclaimable bytes are reported by storage health (SP-340).
   - Resolver returns tool_schema_ref, schema_source, compatibility_state, cache_state, refresh_attempted, blocked_reason_code?, and settlement_receipt_ref?.
   - Schema cache defaults to ttl_ms = 3600000, max_records_per_server = 1000, and eviction order expired, incompatible, least_recently_used.
   - initialize_timeout_ms defaults to 10000, tool_call_timeout_ms defaults to 120000, heartbeat_interval_ms defaults to 15000, and interrupt_grace_ms defaults to 3000.

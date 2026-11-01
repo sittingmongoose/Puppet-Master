@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2139-L2264
+Source lines: L2153-L2278
 
-Source SHA256: `93145b08570f8d45c2cd48fab76318b3c7aaa7d213fccc6195d7c264566fed4f`
+Source SHA256: `29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be`
 
 ---
 
@@ -22,7 +22,7 @@ compatibility services for the same responsibility.
 | `CapabilityProvisioner` | Non-provider `Off`/`Auto`/`On` provisioning execution | Tools owns capability policy and registries; Permissions and Release Supply Chain independently authorize | `ProgressiveCapabilityRegistry` as a runtime service, provider-CLI auto-installer |
 | `EnvironmentConnectionSupervisor` | One fenced transport supervisor per exact Environment | Domain owners retain domain data and synchronization truth; Multi-Account retains auth policy | `DomainSyncCoordinator`, global connection singleton, feature-local reconnect manager |
 | `ThreadCommandOutbox` | Durable ordered logical commands, idempotency, retry, and acknowledgement refs | Assistant Chat and Goal owners retain command semantics; Storage owns persistence | Per-surface outbox, `ThreadProjectionStore` as a command owner |
-| `ProjectionReplayCoordinator` | Cursor replay/snapshot selection, live-before-replay buffering, and fenced convergence | Storage owns retained history and snapshots; each domain owns its projection | `ReplaySnapshotCoordinator`, per-page replay coordinator |
+| `ProjectionReplayCoordinator` | Cursor replay/snapshot selection, live-before-replay buffering, and fenced convergence | Storage owns retained history and snapshots; each domain owns its projection | `ReplaySnapshotCoordinator`, per-page replay coordinator Amended 2026-10-31 (DL-270): opening a chat never invokes this coordinator. Chat open reads the derived render pages (thread_head, sealed 50-item pages, hot tail) under SP-338 and ACD-242, with load-older paging; this coordinator serves live catch-up and cursor convergence only, and no per-thread replay on open is registered here. |
 | `StreamCoalescer` | Adaptive presentation batching without dropping canonical events | Event and domain owners retain canonical ordering and durability | Feature-local token/progress coalescer that changes canonical history |
 | `RuntimeResourceGovernor` | Shared policy/admission with enforcement on the exact Execution Host | Run Modes and domain owners provide policy inputs; the host enforces effective limits | `ResourceGovernor`, per-feature scheduler/admission governor |
 | `ObservableWork` | Shared truthful phase, wait, progress, cancellation, and outcome projection | Domain owners retain operation semantics and terminal evidence | Feature-local work/progress state machine or spinner-as-truth |
