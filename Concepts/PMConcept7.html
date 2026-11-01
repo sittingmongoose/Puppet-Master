@@ -181551,7 +181551,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      completion handler in O55.official.handlers (sessions store names, not functions). */
   O55.official = {
     handlers: {},
-    signIn(S, o) { S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
+    /* (R6: no sign-in starts for a service or kind not offered, whatever the session says) */
+    signIn(S, o) { if (o.kind === 'forge' && !O55.draft.offered(o.service, md(S).forge_provider_variant)) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
     accountFor,
     /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
        only when the concept knows the real one. */
@@ -181588,6 +181589,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   O55.official.handlers.restoreCloud = (S, login) => { if (S.sess.restore) { S.sess.restore.reachedFor = 'cloud:' + ((S.sess.signin || {}).service || ''); S.sess.restore.account = login || null; } };
 
   const SI = (S) => S.sess.signin || {};
+  /* the sign-in in the session is for a service and kind still offered (a forge one), or for a cloud account */
+  const siOffered = (S) => { const si = SI(S); if (si.kind !== 'forge') return true; const [f, v] = String(si.instance_key || si.service || '').split('|'); return O55.draft.offered(si.service, v || null) && f === si.service; };
   /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */
   function signinUrl(S, si) { return si.kind === 'forge' ? O55.official.forgeUrl(S, si.service) : (O55.fixtures.OFFICIAL.backup[si.service] || null); }
   function deviceFor(S, si) {
@@ -181611,6 +181614,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      server's profile says how Puppet Master signs in there (FF-12) */
   function completeSignIn(S, login, action, quiet, method) {
     const si = SI(S);
+    if (!siOffered(S)) return false;
     if (!login || (si.kind === 'forge' && si.instance_key !== instanceKey(md(S)))) return false;
     si.state = 'done'; si.account = login;
     if (si.kind === 'forge') {
@@ -181723,18 +181727,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: {
       useKnown(S) {},
       another(S) { SI(S).another = true; S.save(); O55.ui.refresh(); },
-      signIn(S) { const si = SI(S); si.state = 'waiting'; si.remote = null; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); O55.sound.play('tap'); waitForBrowser(S); },
+      signIn(S) { if (!siOffered(S)) return; const si = SI(S); si.state = 'waiting'; si.remote = null; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); O55.sound.play('tap'); waitForBrowser(S); },
       /* the page stays in sight with its address; a new wait for it, as a device code's (RV-15) */
-      showLink(S) { const si = SI(S); dropToast(S); si.remote = 'link'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
+      showLink(S) { if (!siOffered(S)) return; const si = SI(S); dropToast(S); si.remote = 'link'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
       openPage(S) { const si = SI(S), url = pageUrl(S, si); if (url) O55.official.open(S, { name: si.name, url }); },
       copyPage(S) { const si = SI(S), url = pageUrl(S, si); if (!url) return; U.copyText(url); O55.sound.play('copy'); O55.ui.toast(T('ai.remote.copied', { url: bare(url) })); },
-      code(S) { const si = SI(S); dropToast(S); si.state = 'code'; si.remote = null; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
-      newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
+      code(S) { if (!siOffered(S)) return; const si = SI(S); dropToast(S); si.state = 'code'; si.remote = null; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
+      newCode(S) { if (!siOffered(S)) return; const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       tokenOff(S) { const si = SI(S); si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
       tokenCheck(S) {
+        if (!siOffered(S)) return;
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
         si.tokenTyped = false; si.attempt = (si.attempt || 0) + 1; F.reset(S, 'token:' + si.service);
         const mine = { service: si.service, instance_key: si.instance_key, attempt: si.attempt };
@@ -181771,6 +181776,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
     const drafts = (S.sess && S.sess.drafts) || {};
     Object.keys(drafts).forEach((k) => { if (drafts[k] && typeof drafts[k] === 'object') O55.draft.normalize(drafts[k]); });
+    /* the session's own state is checked whatever the draft holds (a card picked and closed before Continue) */
+    const offeredKey = (key) => { const [f, v] = String(key || '').split('|'); return O55.draft.offered(f, v || null); };
+    let touched = cleanOnline(S);
+    if (S.sess.signin && S.sess.signin.kind === 'forge' && !siOffered(S)) { S.sess.signin = {}; touched = true; }
+    ['forgeAccounts', 'refusedNames'].forEach((m) => Object.keys(S.sess[m] || {}).forEach((key) => { if (!offeredKey(key)) { delete S.sess[m][key]; touched = true; } }));
+    if (touched && S.sess.screen === 'online-signin' && !(S.sess.signin && S.sess.signin.service)) S.sess.screen = 'online-service';
+    if (touched) S.save();
     const d = drafts.main; if (!d || !d.forge_retired) return;
     const ol = OL(S); ol.forge = null; ol.variant = null;
     if (S.sess.signin && S.sess.signin.kind === 'forge') S.sess.signin = {};
@@ -181788,6 +181800,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* (Forgejo and Gitea are only ever a server of their own: no hosted choice, so no kind to pick, just its address) */
     forgejo: [['forgejo_self_managed', 'otherServer']], gitea: [['gitea_self_managed', 'otherServer']]
   };
+  /* the cards the service screen offers and each card's kinds (Bitbucket's card holds Cloud and Data Center) */
+  const CARDS = ['github', 'github_enterprise', 'gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea'];
+  const kindsOf = (sel) => (sel === 'bitbucket_cloud' ? ['cloud', 'data_center'] : sel === 'github_enterprise' ? ['self_managed'] : (VARIANTS[sel] || []).map(([v]) => v));
+  /* (Opus R6, Sol re-audit) choices the person made on the screen but never committed are kept only while offered: a
+     card, a kind and the addresses typed for each are checked here, on resume and before each reading */
+  function cleanOnline(S) {
+    const ol = OL(S); let changed = false;
+    if (ol.forge != null && !CARDS.includes(ol.forge)) { ol.forge = null; ol.variant = null; changed = true; }
+    if (ol.variant != null && !(ol.forge ? kindsOf(ol.forge) : CARDS.flatMap(kindsOf)).includes(ol.variant)) { ol.variant = null; changed = true; }
+    Object.keys(ol.addresses || {}).forEach((k) => { const [c, v] = k.split('|'); if (!CARDS.includes(c) || !kindsOf(c).includes(v)) { delete ol.addresses[k]; changed = true; } });
+    return changed;
+  }
   /* a server the person names: a self-managed one or Data Center (FF-08: never an example) */
   const needsAddress = (forge, variant) => O55.fixtures.needsAddress(forge, variant);
   /* The service, variant and address this screen shows, its Continue checks and next() uses: one reading, so the button is
@@ -181795,6 +181819,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      next() read and foot() didn't). Unset, it is the plan's own service, variant and address (a Review Fix, a resumed
      run), else GitHub; an untouched variant is the service's first. */
   function serviceChoice(S) {
+    cleanOnline(S);
     const d = md(S), ol = OL(S);
     const planned = d.forge && d.forge !== 'none' ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
     /* (R6) after a retired service the person chooses again: nothing is picked for them */
@@ -181859,13 +181884,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: c.words.reason } };
     },
     do: {
-      pick(S, v, el) { const ol = OL(S); ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
+      pick(S, v, el) { if (!CARDS.includes(v)) return; const ol = OL(S); ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
       others(S) { OL(S).others = !OL(S).others; S.save(); O55.ui.refresh(); },
-      variant(S, v) { OL(S).variant = v; S.save(); O55.ui.refresh(); showAddress(S); },
+      variant(S, v) { if (!kindsOf(serviceChoice(S).sel).includes(v)) return; OL(S).variant = v; S.save(); O55.ui.refresh(); showAddress(S); },
       notNow(S) { O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
       next(S) {
         const ol = OL(S), d = md(S), c = serviceChoice(S), forge = c.forge, variant = c.variant;
-        if (!c.ok) return; /* (refused with its reason, as the button shows) */
+        if (!c.ok || !O55.draft.offered(forge, variant)) return; /* (refused with its reason, as the button shows; never a service or kind not offered) */
         const url = c.asks ? c.url : '', mode = ol.purpose === 'source' ? 'existing' : 'new';
         const patch = { online_mode: mode, forge, forge_provider_variant: variant, forge_instance_url: url };
         /* another service, server or use: its sign-in, chosen Project, owner, project, visibility and sign-in method go
