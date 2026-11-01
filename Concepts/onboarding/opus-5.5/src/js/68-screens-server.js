@@ -15,7 +15,8 @@
   /* A rented computer is claimed with the one-time setup code its cloud provider's console shows once Puppet Master is
      installed there: no address to type and no setup page on the internet (Jared, C2 A, 2026-10-31). It is named as
      what it is, not by its address. */
-  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') }) : S.env.unclaimed);
+  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') })
+    : S.sess.server.kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed);
   /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
      from the name the person gives it) */
   const reachedAt = (S) => unclaimed(S).address;
@@ -233,7 +234,9 @@
     const trustId = res.trust.id;
     const name = serverNameOf(S).trim();
     sv.claimed = true; sv.id = u.id; sv.displayName = name; sv.selfTrustId = trustId; sv.orApproveErr = null; S.save();
-    O55.draft.set(md(S), { server_mode: 'new_server', server_ref: sv.id, server_trust_confirmed: true, storage_mode: 'with_server', remote_mode: md(S).remote_mode === 'none' ? 'local_or_vpn' : md(S).remote_mode });
+    O55.draft.set(md(S), { server_mode: 'new_server', server_ref: sv.id, server_trust_confirmed: true, storage_mode: 'with_server', remote_mode: md(S).remote_mode === 'none' ? (cloud(S) ? 'tailscale' : 'local_or_vpn') : md(S).remote_mode });
+    /* RV-10: a rented computer is never on the home network: reaching it from your devices starts on Tailscale */
+    if (cloud(S) && md(S).remote_mode === 'tailscale' && !md(S).tailscale_control) O55.draft.set(md(S), { tailscale_control: 'hosted' });
     S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 's-confirm') O55.ui.go('s-ready'); });
     O55.ui.refresh();
     if (showing('s-confirm')) O55.sound.play('success', SND.claimed); /* the Server is set up and this computer trusted: the banner says so */
@@ -291,19 +294,19 @@
       const running = [ch.claim, ch.boot, ch.reach, ch.ok].some((st) => st && st.state === 'running');
       if (running) return { primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
       if (!sv.orClaimReq) {
-        const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeHintCloud' : 'server.confirm.codeHint', { name: u.name }) : '';
-        return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
+        const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeFirstCloud' : 'server.confirm.codeFirst', { name: u.name }) : '';
+        return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason, reasonFor: !F.nonEmpty(name) ? '[data-key="field-name"]' : '[data-key="field-code"]' } };
       }
       if (!sv.orClaimOk || !sv.orBootOk || !sv.orRunOk) {
         /* A wrong setup code is not a pending adoption. Check again only retries the owner result, so a corrected
            code could never be sent. Set up Server submits it again; a pending owner keeps Check again. */
         if (!sv.orClaimOk && sv.orClaimErr === 'setup_code_mismatch') {
-          const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeHintCloud' : 'server.confirm.codeHint', { name: u.name }) : '';
-          return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason } };
+          const reason = !F.nonEmpty(name) ? T('name.empty') : !F.nonEmpty(setupCodes.get(u.id)) ? T(cloud(S) ? 'server.confirm.codeFirstCloud' : 'server.confirm.codeFirst', { name: u.name }) : '';
+          return { primary: { label: T('server.confirm.button'), do: 'confirm', disabled: !!reason, reason, reasonFor: !F.nonEmpty(name) ? '[data-key="field-name"]' : '[data-key="field-code"]' } };
         }
         return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
       }
-      if (!sv.selfConfirmed || !(EPH() && EPH().getWords('self:' + u.id))) return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf', disabled: true, reason: T('server.confirm.matchWords') } };
+      if (!sv.selfConfirmed || !(EPH() && EPH().getWords('self:' + u.id))) return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf', disabled: true, reason: T('server.confirm.tickWords'), reasonFor: '[data-key="selfmatch"]' } };
       if (F.state(S, 'selfapprove:' + u.id) && !sv.orApproveErr) return { primary: { label: T('server.confirm.retry'), do: 'retry' } };
       return { primary: { label: T('server.confirm.approveSelf'), do: 'approveSelf' } };
     },
@@ -367,7 +370,9 @@
     const sv = S.sess.server;
     sv.pairGen = (sv.pairGen || 0) + 1;
     /* memory-only code: never written to the persisted session (finding 5). A reload loses it by design. */
-    if (EPH()) EPH().setInvite(sv.pairGen, 'P' + Math.floor(1000 + Math.random() * 8999) + '-' + ['K7Q', 'M2X', 'W9T'][Math.floor(Math.random() * 3)]);
+    /* RV-18: the same 8-character form as Pair a device in Settings and Connect's code field (A7K9-M2Q4) */
+    const AB = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', four = () => Array.from({ length: 4 }, () => AB[Math.floor(Math.random() * AB.length)]).join('');
+    if (EPH()) EPH().setInvite(sv.pairGen, four() + '-' + four());
     sv.pairUntil = Date.now() + 600000;
     sv.inviteId = 'pairingrun:' + (sv.id || 'pm:new') + ':' + sv.pairGen;
     sv.runReqs = sv.runReqs || {}; sv.runOk = sv.runOk || {};
@@ -455,7 +460,7 @@
           card += `<div class="o55-row" data-key="cand-${U.esc(U.slug(c.id))}">${C.small('phone', 18)}`
             + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.ready.waiting', { name: c.name }))}</span>`
             + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span>`
-            + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.confirmWords'), tip: 'group:approve', note: false }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small', tip: 'group:deny', note: false }, 'o55-secondary')}</span></div>`
+            + `<span class="o55-pairbtns">${O55.ui.btn({ label: T('server.ready.approve'), do: 'approve', arg: c.id, cls: 'o55-small', disabled: !canApprove, reason: c.confirmed ? T('chrome.working') : T('server.ready.tickWords'), reasonFor: c.confirmed ? null : `[data-key="match-${U.slug(c.id)}"]`, tip: 'group:approve', note: false }, 'o55-primary')}${O55.ui.btn({ label: T('server.ready.deny'), do: 'deny', arg: c.id, cls: 'o55-small', tip: 'group:deny', note: false }, 'o55-secondary')}</span></div>`
             + O55.tips.explainer('group:approve') + O55.tips.explainer('group:deny');
           card += `<p class="o55-hint" data-key="candhint-${U.esc(U.slug(c.id))}">${U.esc(T('server.ready.waitingHint', { name: c.name }))}</p>`;
           card += `<div class="o55-checkline" data-key="match-${U.esc(U.slug(c.id))}"><button type="button" role="checkbox" aria-checked="${c.confirmed ? 'true' : 'false'}" class="o55-check${c.confirmed ? ' is-on' : ''}" data-o55-do="match" data-arg="${U.esc(c.id)}" data-pm-hover-exempt="true">${c.confirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.ready.confirmWords'))}</span>${O55.tips.q('group:match')}</div>${O55.tips.explainer('group:match')}`;
@@ -682,7 +687,7 @@
         + F.hint('r-unlock:phrase', [{ label: S.env.recoveryPhrase, outcome: 'works', fills: [['phrase', S.env.recoveryPhrase]] }, { label: O55.fixtures.DEMO.wrongPhrase, outcome: 'wrong', fills: [['phrase', O55.fixtures.DEMO.wrongPhrase]] }], { when: !r.unlocked })
         + (r.unlocked ? C.note(T('chrome.alreadyDone'), 'ok', 'check') : '');
     },
-    foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'unlock', disabled: !R(S).unlocked && !R(S).typed, reason: T('restore.unlock.label') } }),
+    foot: (S) => ({ primary: { label: T('chrome.continue'), do: 'unlock', disabled: !R(S).unlocked && !R(S).typed, reason: T('restore.unlock.first'), reasonFor: '[data-key="field-phrase"]' } }),
     do: {
       unlock(S) {
         const r = R(S);

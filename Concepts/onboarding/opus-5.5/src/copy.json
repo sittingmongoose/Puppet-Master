@@ -247,7 +247,7 @@
       },
       "code": {
         "title": "Enter the code it shows",
-        "sub": "Open {name}'s page and read its code"
+        "sub": "On a device that already uses {name}: Settings › Server & Project Location › Pair a device. At home, also {address}/pair."
       },
       "qr": {
         "title": "Scan its QR code",
@@ -296,7 +296,8 @@
         "unreachable": "Can't be reached",
         "identity_mismatch": "Another computer answers",
         "protocol_mismatch": "Another version"
-      }
+      },
+      "codeFirst": "Type the code first."
     },
     "ready": {
       "eyebrow": "Connected",
@@ -351,16 +352,19 @@
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "linux": [
-        "Open a terminal on it: the window where you type commands",
-        "Paste this line and press Enter"
+        "Open a terminal on that computer: the window where you type commands",
+        "Type this line there and press Enter",
+        "It shows a setup code: keep it open"
       ],
       "windows": [
-        "Download Puppet Master for Windows on that computer",
-        "Open it and choose Run as a Server"
+        "On that computer, open get.puppetmaster.app and download Puppet Master for Windows",
+        "Open it and choose Run as a Server",
+        "It shows a setup code: keep it open"
       ],
       "macos": [
-        "Download Puppet Master for Mac on that computer",
-        "Open it and choose Run as a Server"
+        "On that computer, open get.puppetmaster.app and download Puppet Master for Mac",
+        "Open it and choose Run as a Server",
+        "It shows a setup code: keep it open"
       ],
       "guide": "Open the install guide",
       "command": "curl -fsSL https://get.puppetmaster.app/server | sh"
@@ -435,7 +439,10 @@
       ],
       "codeHintCloud": "The one-time code your cloud provider's console shows, like 482 913",
       "selfOwn": "This device: {words}",
-      "selfGot": "{name} received: {words}"
+      "selfGot": "{name} received: {words}",
+      "tickWords": "Compare both lines, then tick 'The words match' to approve.",
+      "codeFirst": "Type the setup code from {name}'s setup page first.",
+      "codeFirstCloud": "Type the one-time code from your cloud provider's console first."
     },
     "ready": {
       "eyebrow": "New Server",
@@ -463,7 +470,8 @@
       "staleAdopt": "That answer was for an old code. Nothing was trusted. The device can ask again with the current code.",
       "wrongTarget": "That answer was for a different device or Server. Nothing was trusted.",
       "replayAdopt": "That answer was already used. Nothing more was trusted.",
-      "runDone": "That request is answered. To add another device, choose New code."
+      "runDone": "That request is answered. To add another device, choose New code.",
+      "tickWords": "Compare the words with the device's, then tick the box under them to approve."
     }
   },
   "restore": {
@@ -506,7 +514,8 @@
       "leadAt": "The backup on {where} is locked. Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "label": "Recovery phrase",
       "hint": "Like: river candle orbit maple quiet lantern",
-      "wrong": "That phrase doesn't unlock this backup."
+      "wrong": "That phrase doesn't unlock this backup.",
+      "first": "Type the recovery phrase first."
     },
     "pick": {
       "eyebrow": "Restore",
@@ -1108,7 +1117,9 @@
         "unreachable": "{host} can't be reached from the internet. Your router or cloud firewall may need to let web traffic in, or your internet plan may share its address. Tailscale works without any of this.",
         "dns": "{host} doesn't point to {name} yet. Change its address record where you bought the name, then try again. Changes can take a while.",
         "live": "The page opens, but live updates are blocked. Your proxy has to pass live connections through (WebSockets). Try again after fixing it.",
-        "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later."
+        "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later.",
+        "dnsSet": "{host} doesn't point to {name} yet. Where you bought the name, set its A record to {ip}, then try again. Changes can take a while.",
+        "liveFile": "The page opens, but live updates are blocked. Use the settings file exactly as made. If something sits in front of your proxy, like Cloudflare, turn on WebSockets there, then try again."
       },
       "hint": {
         "denied": "Tailscale says no",
@@ -1121,7 +1132,12 @@
         "unreachable": "Can't be reached",
         "live_failed": "Live updates blocked",
         "relay_unavailable": "Link service down"
-      }
+      },
+      "useTailscale": "Use Tailscale instead"
+    },
+    "vpn": {
+      "title": "Only through a VPN you already use",
+      "sub": "A rented computer isn't on your home network. Your devices reach it over a VPN or private network you already run."
     }
   },
   "review": {
@@ -1672,7 +1688,8 @@
       "selfNot": "The key isn't on {name} yet. Check that the whole line was added, then check again.",
       "selfTitle": "Add your key to {name} yourself",
       "selfTop": "Puppet Master checks it right after. No password needed.",
-      "selfOff": "Add it for me with my password instead"
+      "selfOff": "Add it for me with my password instead",
+      "needBoth": "Type the account and its password first."
     },
     "install": {
       "eyebrow": "Secure connection",
@@ -1716,7 +1733,8 @@
       "newNote": "The folder is made when you create the Project.",
       "readOnly": "This folder is read-only for {user}. Choose another.",
       "use": "Use this folder",
-      "empty": "Empty folder"
+      "empty": "Empty folder",
+      "nameFirst": "Type a folder name first."
     },
     "smb": {
       "eyebrow": "Shared folder",
@@ -1735,7 +1753,8 @@
       "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
       "more": "More sign-in options",
       "domain": "Domain or workgroup",
-      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise."
+      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise.",
+      "needBoth": "Type the shared folder's account and password first."
     },
     "nfs": {
       "eyebrow": "NFS share",
