@@ -208,7 +208,8 @@
       if (req.operation === 'cmd.client.pair.start') {
         res.pairing_run = { id: ref + ':pairing-run', state: 'waiting', server: req.server, candidate: req.candidate, generation: req.generation, expires_at: Date.now() + 120000 };
         let words = 'river candle orbit';
-        try { const w = window.O55.art.identity(String(req.server) + ':' + String(req.candidate)).words; if (w && w.length) words = w.slice(0, 3).join(' '); } catch (_) {}
+        /* (m5: three different words, never one twice) */
+        try { const w = window.O55.art.identity(String(req.server) + ':' + String(req.candidate)).words; if (w && w.length) words = [...new Set(w)].slice(0, 3).join(' '); } catch (_) {}
         res.identity = { words };
       } else if (req.operation === 'cmd.client.pair.approve') {
         res.trust = { id: ref + ':trust', server: req.server, client: req.client, candidate: req.candidate, run_id: req.run_id };

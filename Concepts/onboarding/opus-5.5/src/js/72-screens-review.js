@@ -88,7 +88,7 @@
   const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
   /* (a web address of your own puts the Server's sign-in page on the internet: Review says so again, SCR-06) */
   const remoteWill = (d) => (d.remote_mode === 'reverse_proxy' ? T('review.will.remotePublic', { host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }) : T('review.will.remote'));
-  const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? 'Tailscale' : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
+  const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? (d.tailscale_control === 'headscale' ? T('connect.route.tailscale.headscale') + (d.headscale_url ? ' · ' + String(d.headscale_url).replace(/^https:\/\//, '').replace(/\/$/, '') : '') : 'Tailscale') : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
   /* The online copy as the plan holds it (FF-10): the service and its server, where it lives (the owner and, where the
      service has them, its project), and who can see it, in the service's own words; the rest of the plan for it in a
@@ -747,7 +747,7 @@
       if (st && st.state === 'running') return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
       if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.stepUp'), do: 'stepUp' } };
       if (kitGated(next) && st && st.state === 'done' && b['orErr_' + next]) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.retry'), do: 'retry' } };
-      const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
+      const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('protect.checkKit'), policy: T('protect.steps.policy') }[next];
       const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(famOf(S), acc(S));
       return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step', disabled: waiting, reason: T('protect.accessMissing') } };
     },

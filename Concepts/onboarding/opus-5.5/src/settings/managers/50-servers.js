@@ -485,10 +485,11 @@
   const PROXIES = [['Caddy', 'Caddy (free certificate, simplest)'], ['NGINX', 'NGINX'], ['Traefik', 'Traefik'], ['Nginx Proxy Manager', 'Nginx Proxy Manager']];
   const wayName = d => (WAYS.find(w => w.kind === d.kind) || {}).title || 'this way in';
   const tailName = () => `${slugHost(homeServer().name)}.example-tailnet.ts.net`;
-  function awayConfig(d) {
-    const up = `${homeServer().address}:8443`;
-    if (d.proxy === 'Traefik' || d.proxy === 'NGINX') return proxyConfig(d.domain, d.proxy);
-    if (d.proxy === 'Nginx Proxy Manager') return `# Nginx Proxy Manager › Proxy Hosts › Add (example)\nDomain names: ${d.domain}\nScheme: http   Forward host: ${homeServer().address}   Port: 8443\nWebsockets support: on\nSSL: Request a new certificate, Force SSL`;
+  /* (addr: the Server the file sends visitors to; the onboarding wizard passes the new Server's own address, RV-4) */
+  function awayConfig(d, addr) {
+    const at = addr || homeServer().address, up = `${at}:8443`;
+    if (d.proxy === 'Traefik' || d.proxy === 'NGINX') return proxyConfig(d.domain, d.proxy, at);
+    if (d.proxy === 'Nginx Proxy Manager') return `# Nginx Proxy Manager › Proxy Hosts › Add (example)\nDomain names: ${d.domain}\nScheme: http   Forward host: ${at}   Port: 8443\nWebsockets support: on\nSSL: Request a new certificate, Force SSL`;
     return `# Caddyfile (example)\n${d.domain} {\n  reverse_proxy ${up}\n}`;
   }
   function awayDetails(d) {
@@ -623,6 +624,8 @@
   }
 
   /* Source Control's Git sign-in uses the same keys and steps. */
+  /* the proxy settings file, shared with onboarding's away setup (RV-4: Download and Copy on its step) */
+  PM51.sysAway = { awayConfig };
   PM51.sysSsh = { keys, keyById, keyUses, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
   /* ---------- Home & Location -------------------------------------------- */
@@ -1046,10 +1049,10 @@
       primaryLabel: primary ? primary.label : '', onPrimary: primary ? wrap => primary.run(wrap) : null
     });
   }
-  function proxyConfig(name, proxy) {
+  function proxyConfig(name, proxy, addr) {
     return proxy === 'Traefik'
-      ? `# Traefik dynamic config (example)\nhttp:\n  routers:\n    puppet-master:\n      rule: "Host(\`${name}\`)"\n      service: puppet-master\n      tls:\n        certResolver: letsencrypt\n  services:\n    puppet-master:\n      loadBalancer:\n        servers:\n          - url: "http://${homeServer().address}:8443"`
-      : `# NGINX server block (example)\nserver {\n  server_name ${name};\n  listen 443 ssl http2;\n  location / {\n    proxy_pass http://${homeServer().address}:8443;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n  }\n}`;
+      ? `# Traefik dynamic config (example)\nhttp:\n  routers:\n    puppet-master:\n      rule: "Host(\`${name}\`)"\n      service: puppet-master\n      tls:\n        certResolver: letsencrypt\n  services:\n    puppet-master:\n      loadBalancer:\n        servers:\n          - url: "http://${addr || homeServer().address}:8443"`
+      : `# NGINX server block (example)\nserver {\n  server_name ${name};\n  listen 443 ssl http2;\n  location / {\n    proxy_pass http://${addr || homeServer().address}:8443;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n  }\n}`;
   }
   function checkSteps(r) {
     const R = ra(), home = homeServer();
