@@ -423,6 +423,65 @@ export const tests = {
 		await t.check('no fallback without a destination', !/Open your browser and sign in there, then come back/.test(all), 'generic toast text present');
 	}
 	,
+	// RV-17 (Opus second pass): Add another never makes a connected row read as signed out. The row keeps its Ready pill
+	// and its account line; the new sign-in, key or choice is set up under it, headed "Adding another account".
+	async 'RV-17: Add another keeps the row Ready with its accounts while the new one is set up'(t) {
+		const W = await toAll(t, { scenario: 'signedOut' });
+		const head = async (id) => {
+			const pill = ((await W.$(`[data-key="pv-${id}"] > .o55-row .o55-pill`).innerText({ timeout: 2000 }).catch(() => '')) || '').trim();
+			const meta = ((await W.$(`[data-key="pv-${id}"] > .o55-row .o55-rowmeta`).innerText({ timeout: 2000 }).catch(() => '')) || '').trim();
+			const adding = ((await W.$(`[data-key="adding-${id}"]`).innerText({ timeout: 1000 }).catch(() => '')) || '').replace(/\s+/g, ' ');
+			return { pill, meta, adding };
+		};
+		const kept = async (id, who, step, name) => {
+			const h = await head(id);
+			return t.check(name, /^Ready$/.test(h.pill) && h.meta.includes(who) && /Adding another account/.test(h.adding) && step.test(h.adding) && !/Not signed in/.test(h.pill + h.meta), JSON.stringify(h), { target: row(W, id) });
+		};
+		const add = async (id) => { await act(W, id, 'manage').click(); await screenDone(W); await W.$(`[data-o55-do="addAnother"][data-arg="${id}"]`).click(); await screenDone(W); };
+		// Claude: a browser sign-in
+		await act(W, 'claude', 'signin').click();
+		await waitRow(t, W, 'claude', /(?=.*Ready)(?=.*jared@example\.com)/, 'Claude Ready with its account', 9000);
+		await add('claude');
+		await kept('claude', 'jared@example.com', /Sign In/, 'Claude: Add another keeps Ready and jared@example.com; Sign In is under it');
+		await t.crop('adding-claude', row(W, 'claude'), 'Claude Ready with its account while another is added under it');
+		await act(W, 'claude', 'signin').click(); await W.frame.waitForTimeout(400);
+		await kept('claude', 'jared@example.com', /Waiting for you/, 'Claude: while the new sign-in waits, the row is still Ready with its account');
+		await W.$('[data-o55-do="cancelSignin"][data-arg="claude"]').click(); await screenDone(W);
+		let h = await head('claude');
+		await t.check('Claude: Cancel during the new sign-in ends the addition; the row is as it was', /^Ready$/.test(h.pill) && h.meta.includes('jared@example.com') && !h.adding, JSON.stringify(h));
+		await add('claude');
+		await W.$('[data-o55-do="cancelAdd"][data-arg="claude"]').click(); await screenDone(W);
+		h = await head('claude');
+		await t.check('Claude: Cancel before signing in ends the addition', /^Ready$/.test(h.pill) && !h.adding, JSON.stringify(h));
+		await add('claude');
+		await act(W, 'claude', 'signin').click();
+		await waitRow(t, W, 'claude', /2 accounts: jared@example\.com, jared@studio\.example/, 'Claude: the new account joins the first');
+		// Codex: its other way, a key, added under a ChatGPT account
+		await waitRow(t, W, 'codex', /Not signed in/, 'Codex ready to sign in');
+		await act(W, 'codex', 'signin').click();
+		await waitRow(t, W, 'codex', /Ready/, 'Codex Ready with ChatGPT', 9000);
+		const codexWho = (await head('codex')).meta;
+		await add('codex');
+		await W.$('[data-o55-do="useAlt"][data-arg="codex"]').click(); await screenDone(W);
+		await t.visible(W.$('#o55f-key-codex'), 'Codex: the key field is under the row');
+		await kept('codex', codexWho.split(' · ')[0], /API key for OpenAI API/, 'Codex: while a key is entered, the row is still Ready with its ChatGPT account');
+		await W.$('[data-o55-do="cancelAdd"][data-arg="codex"]').click(); await screenDone(W);
+		// Copilot: the second sign-in asks whose plan, under the first account
+		await waitRow(t, W, 'copilot', /Not signed in/, 'Copilot ready to sign in');
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'Copilot asks whose plan', 9000);
+		await W.$('[data-o55-do="entity"][data-arg="copilot|book-club-crew"]').click();
+		await waitRow(t, W, 'copilot', /(?=.*Ready)(?=.*through book-club-crew)/, 'Copilot Ready through book-club-crew');
+		await add('copilot');
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'Copilot: the second sign-in asks whose plan', 9000);
+		await kept('copilot', 'jared-p', /Needs a choice/, 'Copilot: while the second account asks whose plan, the row is still Ready with jared-p');
+		await t.check('Copilot: the first account keeps its plan line', (await head('copilot')).meta.includes('through book-club-crew'), (await head('copilot')).meta);
+		await t.crop('adding-copilot', row(W, 'copilot'), 'Copilot Ready with jared-p while the second account asks whose plan');
+		await W.$('[data-o55-do="entity"][data-arg="copilot|jared-studio"]').click();
+		await waitRow(t, W, 'copilot', /2 accounts: jared-p, jared-studio/, 'Copilot: both accounts once the second is chosen');
+	}
+	,
 	// RV-9 sweep: a sign-in that didn't finish, was offline, or has expired is over. Sign in again opens the
 	// vendor's page afresh as a new try whose browser step waits for the person again; the old try's result is dropped.
 	async 'RV-9: Sign in again is a fresh sign-in, its old completion cleared'(t) {

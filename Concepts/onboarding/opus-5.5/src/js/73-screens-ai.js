@@ -180,7 +180,8 @@
     const fromCopy = cp && cp.providers.includes(p.id);
     let meta = T('ai.pairs.' + p.id) !== 'ai.pairs.' + p.id ? T('ai.pairs.' + p.id) : p.product;
     let pill = null, action = null, extra = '';
-    const ex = (k, html) => `<div class="o55-rowextra" data-key="${k}-${p.id}">${html}</div>`;
+    let inner = '';
+    const ex = (k, html) => { inner = html; return `<div class="o55-rowextra" data-key="${k}-${p.id}">${html}</div>`; };
     if (st === 'checking') pill = ['wait', T('ai.checking')];
     if (st === 'ready') {
       pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = { label: T('ai.manage'), do: 'manage', arg: p.id };
@@ -221,8 +222,19 @@
       extra = ex('ph', F.phases(S, k, order, { launch: T('ai.oc.phase.launch', { host: hostName(S) }), connect: T('ai.oc.phase.connect'), health: T('ai.oc.phase.health'), discover: T('ai.oc.phase.discover') }));
     }
     if (st === 'connectFailed') { pill = ['fail', T('ai.oc.failTitle')]; meta = T('ai.oc.fail'); action = { label: T('chrome.tryAgain'), do: 'server', arg: p.id }; }
+    /* adding another account (RV-17): the row stays Ready with the accounts it has, and the new sign-in or key is set
+       up under it, headed as an addition, so nothing reads as signed out */
+    const adding = !!r.adding && st !== 'ready' && accts(S, p).length > 0;
+    if (adding) {
+      const word = pill && (pill[0] !== 'needs' || st === 'context') ? pill[1] : '', said = ['signingIn', 'signinFailed'].includes(st) ? meta : '';
+      const cancel = C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false }), go = (action ? btnIn(action.label, action.do, action.arg, 'primary') : '') + (st === 'signinFailed' ? cancel : '');
+      extra = ex('adding', `<div class="o55-inline" data-key="addhead-${p.id}"><strong class="o55-addhead">${U.esc(T('ai.adding'))}</strong>${word ? `<span class="o55-hint">${U.esc(word)}</span>` : ''}</div>`
+        + (said ? `<span class="o55-hint">${U.esc(said)}</span>` : '') + (go ? `<div class="o55-inline" data-key="addgo-${p.id}">${go}</div>` : '') + inner
+        + (st === 'context' ? `<div class="o55-sublinks" data-key="addcancel-${p.id}">${cancel}</div>` : ''));
+      pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = null;
+    }
     const lead = `<span class="o55-plogo" style="--plh:${U.hash(p.vendor) % 360}" aria-hidden="true"><span class="o55-plogo-l">${U.esc(pname(p).slice(0, 1))}</span><span class="o55-plogo-m">${U.esc(mono(p))}</span></span>`;
-    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${st}">` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action, tip: 'provider:' + p.id }) + extra + '</div>';
+    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${adding ? 'ready' : st}"${adding ? ` data-adding="${st}"` : ''}>` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action, tip: 'provider:' + p.id }) + extra + '</div>';
   }
 
   /* a Ready provider's accounts: each one, Remove it (wrong account), or add another of the same provider */
@@ -379,7 +391,10 @@
       cancelSignin(S, id) {
         const p = prov(id), r = R(S, id);
         O55.owners.dispatch('cmd.auth_profile.cancel', { provider_entry_id: p.settings, operation_ref: 'signin:' + id + ':' + (r.attempt || 0), client_id: S.env.client.id }, S.ctx(), () => ({ ok: true }));
-        r.attempt = (r.attempt || 0) + 1; r.remote = null; r.state = accts(S, p).length && !r.adding ? 'ready' : null; S.save(); O55.ui.refresh();
+        r.attempt = (r.attempt || 0) + 1; r.remote = null;
+        /* while adding another account, Cancel ends the addition: the row is as it was, Ready with its accounts */
+        if (r.adding && accts(S, p).length) return O55.screens.defs.ai.do.cancelAdd(S, id);
+        r.state = null; S.save(); O55.ui.refresh();
       },
       noBrowser(S, id) {
         const p = prov(id), r = R(S, id);
