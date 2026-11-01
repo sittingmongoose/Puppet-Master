@@ -175953,6 +175953,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
   let lastOops = null, cheering = null, lastLine = null, holdLineT = null, holdCheerT = null, lastSuccess = null;
+  /* every cheer Pip has said, for the kit's checks (a cheer's words can also be a screen's own line, so text alone can't tell) */
+  const cheerLog = [];
   /* Pip's cheer means something succeeded (RV-11): an operation finished or an owner's answer was adopted
      (o55:succeeded, 62-flow.js F.op and 30-owners.js adopt), never an error leaving the screen */
   window.addEventListener('o55:succeeded', (e) => {
@@ -176038,7 +176040,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
-    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
@@ -176076,6 +176078,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   window.addEventListener('resize', () => { const l = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); if (l) holdColumn(l); });
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
+  O55.ui.cheerLog = () => cheerLog.slice();
   /* the presses that leave a failed thing for another way, a skip or a cancel: whatever succeeds after one is not the
      failed thing put right, so a waiting cheer goes (RV-11; the lead, 2026-11-01: every flow where the person moves on,
      such as RV-13's Use Tailscale instead, whose Tailscale step otherwise cheered the failed web address). A retry is

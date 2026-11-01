@@ -947,7 +947,7 @@ def('pr48', 'homeNasPm', 'RV-11: a pairing turned down, then Choose another way:
   await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="demoHint"][data-arg="nas-pmpair:outcome|0"]', 'the turned-down demo answer');
   await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key^=\"pairfail\"]')", 'turned down', 12000); await sleep(1500);
   await pipLines(d); await d.act('another'); await sleep(3000);
-  const l = await pipSaid(d); A.ok(!l.some((x) => /Approved|this time/i.test(x)), 'no cheer after Choose another way (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Approved|this time/i.test(x)), 'no cheer after Choose another way (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the online copy: Pip does not say "Back online"', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
@@ -960,7 +960,7 @@ def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the
   await until(d, "window.O55.S.sess.commit && window.O55.S.sess.commit.code === 'network'", 'network failure', 25000); await sleep(1500);
   await pipLines(d); await d.act('askSkip'); await d.act('skipOnline');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made without the copy', 25000); await sleep(3000);
-  const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr50', 'fresh', "FA-9: a taken name, then bad/name? typed over it or chosen: Pip never says the name is free while the field shows an error; it says the rule's line, and cheers once the name passes the rule and is free", async (d, A) => {
   await d.openOnboarding(); await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-details' })); await d.settle(); await sleep(1500);
@@ -968,12 +968,12 @@ def('pr50', 'fresh', "FA-9: a taken name, then bad/name? typed over it or chosen
   await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
   /* typed: the first letter is a free, valid name; the cheer waits until the typing stops */
   await pipLines(d); await d.type('repo', 'b', { settle: false }); await d.type('repo', 'ad/name?', { clear: false, settle: false }); await sleep(3000);
-  let l = await pipSaid(d); A.ok(!free(l) && rule(l), "typed over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
+  let l = await pipSaid(d); A.ok(!free(l) && rule(l), "typed over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
   await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
   await pipLines(d); await d.act('demoHint', 'online-details:name|1'); await sleep(3000);
-  l = await pipSaid(d); A.ok(!free(l) && rule(l), "the bad/name? chip over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
+  l = await pipSaid(d); A.ok(!free(l) && rule(l), "the bad/name? chip over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
   await pipLines(d); await d.type('repo', 'book-club-site-ok'); await sleep(3000);
-  l = await pipSaid(d); A.ok(l.some((x) => /works there now|works, and it's free/.test(x)), 'a good name: the cheer (' + JSON.stringify(l) + ')');
+  l = await pipSaid(d); A.ok(l.some((x) => /works there now|works, and it's free/.test(x)), 'a good name: the cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr51', 'fresh', 'FA-10: in Friendly, Glass and NieR, every prop and particle Pip\'s stage adds on Review, pairing and Ready is hidden or placed when it is inserted, and no frame shows one without its place', async (d, A) => {
   await d.openOnboarding();
@@ -997,12 +997,9 @@ def('pr51', 'fresh', 'FA-10: in Friendly, Glass and NieR, every prop and particl
 });
 /* The other lanes' flows against RV-11 (the lead, 2026-11-01, merging integration 5069ba382d): a working fix still cheers,
    moving on never does. A cheer is any line Pip says that is one of the page's own pip.cheer lines. */
-const cheerRx = (d) => d.page.evaluate(() => { const out = []; const walk = (n) => { if (typeof n === 'string') out.push(n); else if (n && typeof n === 'object') Object.values(n).forEach(walk); };
-  walk(window.O55.tx('pip.cheer')); out.push(window.O55.t('pip.cheerFallback'));
-  /* (a cheer whose words are also a screen's own line, such as the AI list's "Power! I can think now.", is that line) */
-  const say = new Set(); const walk2 = (n) => { if (typeof n === 'string') say.add(n); else if (n && typeof n === 'object') Object.values(n).forEach(walk2); }; walk2(window.O55.tx('pip.say'));
-  return out.filter((t) => !say.has(t)).map((t) => '^' + t.split(/\{[A-Za-z]+\}/).map((x) => x.replace(/[.*+?^$()|[\]\\]/g, '\\$&')).join('.*?') + '$'); });
-const cheersIn = (lines, rx) => lines.filter((x) => rx.some((r) => new RegExp(r).test(x)));
+/* (a mark in Pip's cheer log, O55.ui.cheerLog; the cheers since a mark, by the key Pip cheered and the words) */
+const cheerRx = (d) => d.page.evaluate(() => window.O55.ui.cheerLog().length);
+const cheersSince = (d, mark) => d.page.evaluate((m) => window.O55.ui.cheerLog().slice(m).map((c) => c.key + ': ' + c.text), mark);
 async function awayUntil(d, want, ms = 30000) {
   const t0 = Date.now();
   while (Date.now() - t0 < ms) {
@@ -1030,7 +1027,7 @@ def('pr52', 'fresh', "RV-19 with RV-11: Approve refused until the words are tick
   await until(d, 'window.O55.S.sess.server.orRunOk', 'pairing ready for the words', 8000);
   const rx = await cheerRx(d); await d.page.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-foot .o55-primary').click()); await sleep(1500); /* (a real press on the refused control) */
   await pipLines(d); await d.act('selfMatch'); await sleep(2600);
-  const l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'ticking the words: a cheer (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'ticking the words: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr53', 'fresh', 'RV-3 with RV-11: Connect by Tailscale turned down, then signed in: Pip cheers', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
@@ -1039,26 +1036,26 @@ def('pr53', 'fresh', 'RV-3 with RV-11: Connect by Tailscale turned down, then si
   const rx = await cheerRx(d); await pipLines(d);
   await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="tsSignIn"]', 'Sign in to Tailscale');
   await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key=\"under-tailscale\"] [data-o55-do=\"pickServer\"]')", 'signed in', 8000); await sleep(2600);
-  const l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'signed in after the refusal: a cheer (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'signed in after the refusal: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr54', 'fresh', 'RV-9 with RV-11: the away Tailscale sign-in runs out; Try again and a fresh sign-in finish it: Pip cheers', async (d, A) => {
   await toNewServer(d, A); await d.act('later'); await d.act('pick', 'anywhere'); await d.primary(); await d.primary();
   await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'waiting'", 'waits for the sign-in', 12000);
   await d.act('demoHint', 'away-setup:outcome|1'); await d.act('person', 'tsSignIn'); await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'failed'", 'ran out', 15000); await sleep(1500);
   const rx = await cheerRx(d); await pipLines(d); await d.act('retry'); await awayUntil(d, ['done']); await sleep(2600);
-  const l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'set up after the fresh sign-in: a cheer (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'set up after the fresh sign-in: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr55', 'fresh', "RV-13 and RV-4 with RV-11: the web address's check fails; Try again and it works: Pip cheers", async (d, A) => {
   await toProxyAway(d, A, 'dns_mismatch'); await sleep(1500);
   const rx = await cheerRx(d); await pipLines(d); await d.act('retry'); await awayUntil(d, ['done']); await sleep(2600);
-  const l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'the web address works after Try again: a cheer (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'the web address works after Try again: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr56', 'fresh', 'RV-13 with RV-11: the web address fails; Use Tailscale instead and its steps succeed: Pip does not cheer the web address', async (d, A) => {
   await toProxyAway(d, A, 'dns_mismatch'); await sleep(1500);
   const rx = await cheerRx(d); await pipLines(d); await d.act('useTailscale');
   await awayUntil(d, ['waiting', 'done']); await sleep(2600);
   A.ok(await d.state(() => (window.O55.S.sess.awaySetup.done || []).length > 0), 'a Tailscale step succeeded');
-  const l = await pipSaid(d); A.eq(cheersIn(l, rx).length, 0, 'cheers after choosing Tailscale instead (' + JSON.stringify(l) + ')');
+  const l = await pipSaid(d); A.eq((await cheersSince(d, rx)).length, 0, 'cheers after choosing Tailscale instead (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 def('pr57', 'fresh', "RV-17 with RV-11: adding another account fails, then Sign in again works: Pip cheers; it fails again, Cancel, and another provider's sign-in works: Pip does not cheer the cancelled one", async (d, A) => {
   await d.openOnboarding(); await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'ai' })); await d.settle(); await sleep(1500);
@@ -1070,27 +1067,27 @@ def('pr57', 'fresh', "RV-17 with RV-11: adding another account fails, then Sign 
   await failNext(); await d.act('manage', 'antigravity'); await d.act('addAnother', 'antigravity'); await d.act('signin', 'antigravity');
   await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signinFailed'", 'the added sign-in failed', 12000); await sleep(1500);
   await pipLines(d); await d.act('signin', 'antigravity'); await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'ready' && !window.O55.S.sess.ai.accounts.antigravity.adding", 'added', 12000); await sleep(2600);
-  let l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'the added account signed in: a cheer (' + JSON.stringify(l) + ')');
+  let l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'the added account signed in: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
   await failNext(); if (!(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="addAnother"][data-arg="antigravity"]')))) await d.act('manage', 'antigravity');
   await d.act('addAnother', 'antigravity'); await d.act('signin', 'antigravity');
   await until(d, "(window.O55.S.sess.ai.accounts.antigravity||{}).state === 'signinFailed'", 'failed again', 12000); await sleep(1500);
   const other = await d.state(() => { const b = [...document.querySelectorAll('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="signin"]')].find((n) => n.getAttribute('data-arg') !== 'antigravity'); return b ? b.getAttribute('data-arg') : null; });
-  await pipLines(d); await d.act('cancelAdd', 'antigravity'); await sleep(800);
+  const rx2 = await cheerRx(d); await pipLines(d); await d.act('cancelAdd', 'antigravity'); await sleep(800);
   A.ok(!!other, 'another provider to sign in: ' + other);
   if (other) { await d.act('signin', other); await until(d, `(window.O55.S.sess.ai.accounts[${JSON.stringify(other)}]||{}).state === 'ready'`, other + ' ready', 15000); }
-  await sleep(2600); l = await pipSaid(d); A.eq(cheersIn(l, rx).length, 0, 'cheers after Cancel and another provider (' + JSON.stringify(l) + ')');
+  await sleep(2600); l = await pipSaid(d); A.eq((await cheersSince(d, rx2)).length, 0, 'cheers after Cancel and another provider (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx2)) + ')');
 });
 def('pr58', 'nameTaken', "RV-12 with RV-11: GitHub refuses the name: Skip the online copy gets no cheer; changing the name in its field does", async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
   await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed', 8000); await d.primary();
   await d.primary(); await d.primary(); await githubAttempt(d, A, 'name_taken'); await sleep(1500);
   const rx = await cheerRx(d); await pipLines(d); await d.act('skipOnline'); await sleep(3000);
-  let l = await pipSaid(d); A.eq(cheersIn(l, rx).length, 0, 'cheers after Skip the online copy (' + JSON.stringify(l) + ')');
+  let l = await pipSaid(d); A.eq((await cheersSince(d, rx)).length, 0, 'cheers after Skip the online copy (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
   A.eq(await d.screen(), 'review', 'back to Review without the copy');
   await d.page.evaluate(() => { window.O55.draft.set(window.O55.S.sess.drafts.main, { online_mode: 'new' }); window.O55.ui.go('online-details'); }); await d.settle(); await sleep(1500);
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="repo"]') && !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-err')), 'the refused name shows as used in its field');
   await pipLines(d); await d.type('repo', 'book-club-site-2'); await sleep(3000);
-  l = await pipSaid(d); A.ok(cheersIn(l, rx).length > 0, 'a new name in the field: a cheer (' + JSON.stringify(l) + ')');
+  l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'a new name in the field: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
 });
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
