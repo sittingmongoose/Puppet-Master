@@ -89,8 +89,30 @@
   const listeners = new Set();
   const emit = (ev) => { listeners.forEach((fn) => { try { fn(ev); } catch (_) {} }); };
 
-  function allowed(id, ctx) {
+  /* (Opus R6, Sol re-audit) Source control acts only for a service and kind still offered, whoever calls. A cmd.forge.*
+     command is for the plan's service; a cmd.auth_profile.* command is for a forge when its payload names one
+     (forge_target) or when a source-control screen sends it for a forge sign-in (or, on the plan's own screens, for the
+     plan's service). Every other auth profile (Cursor the AI provider, the backup drives) is never judged here. */
+  const SOURCE_SCREENS = new Set(['online-service', 'online-signin', 'online-details', 'ex-repos']);
+  function forgeTarget(id, payload) {
+    const p = payload || {}, S = O55.S;
+    if (p.forge_target) return p.forge_target;
+    if (!S || !S.sess) return null;
+    const d = S.sess.drafts && S.sess.drafts.main, plan = d ? { forge: d.forge, variant: d.forge_provider_variant || null } : null;
+    if (/^cmd\.forge\./.test(id)) return plan;
+    if (!/^cmd\.auth_profile\./.test(id) || !SOURCE_SCREENS.has(S.sess.screen)) return null;
+    const si = S.sess.signin || {};
+    if (si.kind === 'forge') { const [f, v] = String(si.instance_key || '').split('|'); return { forge: si.service, variant: v || null, keyForge: f }; }
+    return S.sess.screen === 'online-details' || S.sess.screen === 'ex-repos' ? plan : null;
+  }
+  function forgeRefusal(id, payload) {
+    const t = forgeTarget(id, payload), offered = O55.draft && O55.draft.offered;
+    if (!t || !offered) return null;
+    return offered(t.forge, t.variant) && (!t.keyForge || t.keyForge === t.forge) ? null : 'service_not_offered';
+  }
+  function allowed(id, ctx, payload) {
     const row = TABLE[id]; if (!row) return { ok: false, reason: 'unknown_command' };
+    const notOffered = forgeRefusal(id, payload); if (notOffered) return { ok: false, reason: notOffered };
     const s = ctx || {};
     if (row.phase === 'tour_local' || PRECOMMIT.has(row.phase)) return { ok: true };
     if (row.phase === 'server_setup') return s.serverConfirmed || (row.selectedSource && s.sourcePairConfirmed) ? { ok: true } : { ok: false, reason: 'needs_server_confirmation' };
@@ -103,7 +125,7 @@
   /* dispatch(id, payload, ctx) -> Promise<result>. `run` is the fixture implementation for that command. */
   async function dispatch(id, payload, ctx, run) {
     const row = TABLE[id] || { owner: '?', phase: '?' };
-    const gate = allowed(id, ctx);
+    const gate = allowed(id, ctx, payload);
     const entry = { t: Math.round(performance.now()), id, owner: row.owner, phase: row.phase, canonical: row.canonical !== false, ok: gate.ok, reason: gate.reason || null };
     log.push(entry); if (log.length > 500) log.shift();
     if (!gate.ok) { emit({ type: 'refused', entry }); return { ok: false, refused: true, reason: gate.reason }; }
