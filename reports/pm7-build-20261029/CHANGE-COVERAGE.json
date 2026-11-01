@@ -608,7 +608,7 @@
     },
     {
       "id": "SCR-07",
-      "change": "PM generates proxy configuration; certificates/signing stay on the person’s systems",
+      "change": "PM generates proxy configuration; certificates/signing stay on the person\u2019s systems",
       "owner": "RAS-005; PWIZ-025; DL-259",
       "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_preview; catalog.remote_access_proxy_generate",
       "commands": "cmd.remote_access.proxy.preview; cmd.remote_access.proxy.generate; CS-074; UCC-152",
@@ -807,7 +807,7 @@
     {
       "id": "P07",
       "change": "OpenCode server is managed/existing runtime, not website login",
-      "owner": "CBP-022; MA-012; Provider_OpenCode section 5.1–5.3",
+      "owner": "CBP-022; MA-012; Provider_OpenCode section 5.1\u20135.3",
       "wiring": "UIW-014; existing OpenCode runtime/profile owner flow",
       "commands": "none needed: no website login; existing runtime/profile setup (CBP-022)",
       "settings": "ai.accounts.provider-connections (existing manager); no new row",
@@ -1708,7 +1708,7 @@
     },
     {
       "id": "FOOTAGE-RV-2",
-      "change": "Self-approval compares the initiating device’s own identity words with those the Server derived from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different words cannot grant trust.",
+      "change": "Self-approval compares the initiating device\u2019s own identity words with those the Server derived from the received candidate; both are labelled, and approval requires explicit matching confirmation. Missing or different words cannot grant trust.",
       "owner": "SRV-004; DL-272",
       "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
       "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
@@ -1742,7 +1742,7 @@
     },
     {
       "id": "FOOTAGE-RV-4",
-      "change": "The generated proxy configuration is available to download and copy on the setup step that asks the person to install it. Caddy, NGINX and Traefik share the existing Settings generator; an existing proxy, including Nginx Proxy Manager, gets no generated file. Certificates remain on the person’s systems.",
+      "change": "The generated proxy configuration is available to download and copy on the setup step that asks the person to install it. Caddy, NGINX and Traefik share the existing Settings generator; an existing proxy, including Nginx Proxy Manager, gets no generated file. Certificates remain on the person\u2019s systems.",
       "owner": "RAS-005; DL-272",
       "wiring": "UIW-015; WM-041; catalog.remote_access_proxy_generate; catalog.remote_access_proxy_export; catalog.remote_access_proxy_test",
       "commands": "cmd.remote_access.proxy.generate; cmd.remote_access.proxy.export; cmd.remote_access.proxy.test (existing owners; Copy/download local)",
@@ -1759,7 +1759,7 @@
     },
     {
       "id": "FOOTAGE-RV-5",
-      "change": "SSH identity confirmation shows the fingerprint for comparison with a source the person already trusts, such as the device’s settings or its administrator. If it cannot be confirmed, Stop and ask; the picture or a reachable address is not verification. Username means the account allowed to connect by SSH.",
+      "change": "SSH identity confirmation shows the fingerprint for comparison with a source the person already trusts, such as the device\u2019s settings or its administrator. If it cannot be confirmed, Stop and ask; the picture or a reachable address is not verification. Username means the account allowed to connect by SSH.",
       "owner": "SSYS-042; DL-272",
       "wiring": "UIW-015; WM-041 (shared SSH identity/account setup owner)",
       "commands": "none needed: existing trust/stop/account actions; no new key or install command",
@@ -1793,7 +1793,7 @@
     },
     {
       "id": "FOOTAGE-RV-9",
-      "change": "An expired or denied sign-in is over: retry returns to the person’s sign-in with its old answer and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work and rejecting late results from superseded attempts.",
+      "change": "An expired or denied sign-in is over: retry returns to the person\u2019s sign-in with its old answer and completion cleared and a fresh owner attempt. Other failures retry their own step, preserving settled work and rejecting late results from superseded attempts.",
       "owner": "PWIZ-025; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -1848,7 +1848,7 @@
     },
     {
       "id": "FOOTAGE-RV-18",
-      "change": "Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or the Server’s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup codes remain distinct protected owner material.",
+      "change": "Pairing codes are obtained from Settings > Server & Project Location > Pair a device, or the Server\u2019s reachable pairing page, and use the same XXXX-XXXX display form across those surfaces. Desktop Server installation gives the address to open and tells the person to keep its one-time setup code shown. Pairing and setup codes remain distinct protected owner material.",
       "owner": "SRV-004; DL-272",
       "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
       "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
@@ -1941,7 +1941,7 @@
     },
     {
       "id": "FOOTAGE-PAIR-CLIENT-WORDS",
-      "change": "A Client waiting for approval shows its own identity words to compare on the approving device; Server identity words are not substituted for the Client’s.",
+      "change": "A Client waiting for approval shows its own identity words to compare on the approving device; Server identity words are not substituted for the Client\u2019s.",
       "owner": "SRV-004; DL-272",
       "wiring": "UIW-015; WM-041; catalog.client_pair_start; catalog.client_pair_approve; catalog.client_pair_reject",
       "commands": "cmd.client.pair.start; cmd.client.pair.approve; cmd.client.pair.reject (existing exact candidate/generation gates)",
@@ -2009,7 +2009,7 @@
     },
     {
       "id": "FOOTAGE-RV-17",
-      "change": "While another account or key is being added, the provider’s existing accounts stay Ready and visible. The new sign-in, key or choice is an addition under that row; Cancel abandons only the addition and preserves the existing accounts.",
+      "change": "While another account or key is being added, the provider\u2019s existing accounts stay Ready and visible. The new sign-in, key or choice is an addition under that row; Cancel abandons only the addition and preserves the existing accounts.",
       "owner": "MA-045; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2026,7 +2026,7 @@
     },
     {
       "id": "FOOTAGE-ANTHROPIC-WORKSPACE",
-      "change": "An Anthropic API key already belongs to one workspace; setup asks no extra workspace-selection question. It retains that key’s actual account and workspace identity.",
+      "change": "An Anthropic API key already belongs to one workspace; setup asks no extra workspace-selection question. It retains that key\u2019s actual account and workspace identity.",
       "owner": "MA-046; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2060,7 +2060,7 @@
     },
     {
       "id": "FOOTAGE-FREE-SIGNIN",
-      "change": "Free Models sign-in waits for the person through the underlying provider’s protected auth flow, offers the actual page/Open/Copy fallback and Cancel, and drops late results after cancel or a fresh attempt. Existing accounts and saved model order are preserved.",
+      "change": "Free Models sign-in waits for the person through the underlying provider\u2019s protected auth flow, offers the actual page/Open/Copy fallback and Cancel, and drops late results after cancel or a fresh attempt. Existing accounts and saved model order are preserved.",
       "owner": "MS-121; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2145,7 +2145,7 @@
     },
     {
       "id": "FOOTAGE-CURSOR-CLI-SIGNIN",
-      "change": "Cursor’s CLI browser-sign-in route installs the CLI on the execution host through the existing consented component owner when needed, then authenticates it. The separate Cursor SDK key route remains separate.",
+      "change": "Cursor\u2019s CLI browser-sign-in route installs the CLI on the execution host through the existing consented component owner when needed, then authenticates it. The separate Cursor SDK key route remains separate.",
       "owner": "CBP-021; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2162,7 +2162,7 @@
     },
     {
       "id": "FOOTAGE-CREDENTIAL-REPLACEMENT",
-      "change": "Typing a replacement key or code clears the previous value’s refusal presentation. The new value remains unverified and must pass the current owner check; editing is not a successful sign-in or credential validation.",
+      "change": "Typing a replacement key or code clears the previous value\u2019s refusal presentation. The new value remains unverified and must pass the current owner check; editing is not a successful sign-in or credential validation.",
       "owner": "MA-046; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2200,7 +2200,7 @@
     },
     {
       "id": "FOOTAGE-RV-12",
-      "change": "A service’s name-in-use refusal stays bound to that exact service/instance, owner/place and name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change the name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create a fresh reviewed attempt, never resume authority for a refused effect.",
+      "change": "A service\u2019s name-in-use refusal stays bound to that exact service/instance, owner/place and name through Details, Review and retry; a redraw or fresh Review cannot call it available. Creating offers Change the name and Review again. GitHub may offer Skip the online copy only before any remote effect; these choices create a fresh reviewed attempt, never resume authority for a refused effect.",
       "owner": "PWIZ-024; DL-272",
       "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
       "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
@@ -2255,7 +2255,7 @@
     },
     {
       "id": "FOOTAGE-RV-15",
-      "change": "Source-control Browser didn’t open? names the real authorization or verification page and offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting an old authorization result.",
+      "change": "Source-control Browser didn\u2019t open? names the real authorization or verification page and offers Open the page and Copy address with a fresh fenced wait. It clears stale browser-opened feedback without accepting an old authorization result.",
       "owner": "PWIZ-024; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2331,7 +2331,7 @@
     },
     {
       "id": "FOOTAGE-P74-DEVICE-EXPIRY",
-      "change": "Device-code expiry and polling follow the actual provider response and its required cadence, not a universal five-minute timeout. Current service lifetimes are GitLab 300 seconds and GitHub/Microsoft 900 seconds; countdown and retry use the issued code’s lifetime without extending an expired code.",
+      "change": "Device-code expiry and polling follow the actual provider response and its required cadence, not a universal five-minute timeout. Current service lifetimes are GitLab 300 seconds and GitHub/Microsoft 900 seconds; countdown and retry use the issued code\u2019s lifetime without extending an expired code.",
       "owner": "MA-047; DL-272",
       "wiring": "UIW-015; WM-041; catalog.auth_profile_sign_in; catalog.auth_profile_verify; catalog.auth_profile_cancel",
       "commands": "cmd.auth_profile.sign_in; cmd.auth_profile.verify; cmd.auth_profile.cancel (existing protected owner)",
@@ -2437,7 +2437,7 @@
     },
     {
       "id": "FOOTAGE-P63-ACTION-COPY",
-      "change": "Review’s lead and Creating’s title describe the actual create, add, bring-in or restore action; they do not call every journey Create a Project.",
+      "change": "Review\u2019s lead and Creating\u2019s title describe the actual create, add, bring-in or restore action; they do not call every journey Create a Project.",
       "owner": "PWIZ-024; DL-272",
       "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
       "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
@@ -2471,7 +2471,7 @@
     },
     {
       "id": "FOOTAGE-M6-SIGNUP-NOTE",
-      "change": "A self-managed service’s sign-up-disabled information is neutral guidance, not an authentication failure or a Pip fault. Account authorization still requires the normal owner result.",
+      "change": "A self-managed service\u2019s sign-up-disabled information is neutral guidance, not an authentication failure or a Pip fault. Account authorization still requires the normal owner result.",
       "owner": "FGI-015; DL-272",
       "wiring": "UIW-015; WM-041; FGI-011 (existing selected-source/Project commit routes)",
       "commands": "CS-069; UCC-106 (existing draft, auth and Project actions; no new primary)",
@@ -2522,7 +2522,7 @@
     },
     {
       "id": "FOOTAGE-RV6-RV11-PIP-SUCCESS",
-      "change": "Pip’s success feedback requires a corresponding operation or owner answer that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected when typing settles; an unrelated or earlier success cannot clear a later fault.",
+      "change": "Pip\u2019s success feedback requires a corresponding operation or owner answer that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected when typing settles; an unrelated or earlier success cannot clear a later fault.",
       "owner": "F3-663; DL-272",
       "wiring": "none needed: existing shared renderer and feedback only",
       "commands": "none needed: existing action identity and effect ownership remain",
@@ -2547,7 +2547,7 @@
     },
     {
       "id": "FOOTAGE-FO-15",
-      "change": "The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes still respond to real window resizing and the existing narrow/short layouts.",
+      "change": "The guide\u2019s stage stays fixed within its allocated layout: focus, keyboard navigation, hover and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes still respond to real window resizing and the existing narrow/short layouts.",
       "owner": "F3-663; DL-272",
       "wiring": "none needed: existing shared renderer and feedback only",
       "commands": "none needed: existing action identity and effect ownership remain",
@@ -2682,7 +2682,7 @@
     },
     {
       "id": "FO-16",
-      "change": "Choosing another option ends the previous option’s refusal feedback without a cheer; the original rejection and new selection’s validation remain.",
+      "change": "Choosing another option ends the previous option\u2019s refusal feedback without a cheer; the original rejection and new selection\u2019s validation remain.",
       "owner": "PWIZ-022; F3-520; F3-663; DL-272",
       "wiring": "UIW-015; WM-041 (existing local choice and feedback owner; no new route)",
       "commands": "none needed: existing selection actions keep their identity and validation",
@@ -2756,12 +2756,24 @@
       "id": "DL273-RETIRED-SOURCE-CONTROL",
       "change": "Remove Cursor Origin source control and native/mirror profiles, setup/auth/CLI/review/webhook/UI/inspector/migration offers. Keep Cursor AI and independent generic Git transport.",
       "owner": "DL-273; ORI-001..009 retired; FGI-001/014/015; SCS-001/011/015; F3-520/528/529; SSYS-026",
-      "wiring": "WM-041; UIW-015; retire TOUCH-ORILOC-001, TCP-ORIGIN-LOCAL and ui.origin.preview.open; remove retired reverse consumers",
-      "commands": "CS-073; UCC-106; shared Forge/auth/install commands remain; local inspector action retired without a domain command or alias",
+      "wiring": "WM-041; UIW-015; retire TOUCH-ORILOC-001, TCP-ORIGIN-LOCAL and ui.origin.preview.open; remove retired reverse consumers; catalog.source_control_repository_clone, catalog.jujutsu_git_clone and TCP-SIR-CONNECTION retain their owners with current Source Control/admitted Forge consumers",
+      "commands": "CS-073; UCC-106; shared Forge/auth/install commands remain; local inspector action retired without a domain command or alias; CS-070/UCC-148 keep cmd.source_control.repository.clone and cmd.jujutsu.git.clone with unchanged sole handlers/results/returns",
       "settings": "none needed: no ordinary setting row exists for this integration; retired provider UI leaves shared manager identity and Cursor AI settings unchanged",
       "dry": "DR-005; generic_git/generic_host remain transport-only and cannot restore retired service authority",
-      "companions": "Provider enums/matrices, CLI operation profile and two Egolite obligations removed; active fixture pack retired; shared tests rehomed; Teacher topic removed; Touch715/140; original acceptance packet amended without source-body hash changes.",
-      "state": "covered_by_current_contract_fields_mirror_merged",
+      "companions": "Provider enums/matrices, CLI operation profile and two Egolite obligations removed; active fixture pack retired; shared tests rehomed; Teacher topic removed; Touch715/140; original acceptance packet amended without source-body hash changes. F3-529 presentation uses admitted_mirror_write_through and a provider-wide badge guard; NAS/WSL routing uses admitted GitHub/gh; retirement/routing and retained credential/update tests cover the thirteen-contract bundle; PM7 census pins715/140. ATS-020/043,TCME coverage and other active consumer text use admitted choices and retirement refusals; positive mirror/webhook/probe records use admitted Gitea, and one obsolete Windows-only negative is retired.",
+      "state": "local_repairs_pass_source_R5_R6_pending",
+      "decision_ref": "DL-273"
+    },
+    {
+      "id": "DL273-RETIRED-DRAFTS",
+      "change": "A saved onboarding draft for a retired Source Control service or hosted variant invalidates its selection, address, account, repository, credential/authorization references and Review; require explicit admitted service/address/account selection, never silently relabel a hosted tenant as self-managed.",
+      "owner": "DL-273; PWIZ-024; F3-520",
+      "wiring": "WM-041; UIW-015; existing onboarding entry/resume and Review routes consume the same Forge admission and validation owner",
+      "commands": "UCC-106; ui.onboarding.next; existing owner validation and Review gates, no new command",
+      "settings": "none needed: saved onboarding admission policy, no ordinary preference or new key",
+      "dry": "DR-005; one admission/invalidation rule for entry and resume",
+      "companions": "Published and stored onboarding schemas already reject retired values. GUI retirement normalization/resume regression proof is supplied by fields under R6; no concept function name becomes canon.",
+      "state": "owner_and_contracts_covered_source_fix_pending",
       "decision_ref": "DL-273"
     }
   ],
@@ -2789,7 +2801,7 @@
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
       "sha256": "2883ce8c1dbf81a41d3412cdf5de4f97fb97fb8960229961f313100c0f6647f5",
-      "state": "latest C1–C4 owner-answer report read in full; C1 draft/hosting aligned; C2 code-only UI aligned; C3/C4 accepted owner rules retained"
+      "state": "latest C1\u2013C4 owner-answer report read in full; C1 draft/hosting aligned; C2 code-only UI aligned; C3/C4 accepted owner rules retained"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/prov/REPORT.md",
@@ -2983,12 +2995,12 @@
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/onb/REPORT.md",
         "sha256": "62466a26b582db2eb8c2e39c3a34e2b7e7e7c51058043be4aaf8376b8e1fed9e",
-        "consulted": "Integration checks and GLM Name/Kept in amendment, report lines18–43"
+        "consulted": "Integration checks and GLM Name/Kept in amendment, report lines18\u201343"
       },
       {
         "path": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/fields/REPORT.md",
         "sha256": "e3282964b52b8b5f0f5430fdd9d499b813453ea5d60826b7f5c2b9c788239afc",
-        "consulted": "GLM online-service blocker and same-kind sweep, report lines246–251"
+        "consulted": "GLM online-service blocker and same-kind sweep, report lines246\u2013251"
       }
     ],
     "demo_rules_added": false,
@@ -3314,7 +3326,33 @@
     "provider_profiles": 11,
     "egolite_active_requirements": 13,
     "Teacher_topics": 46,
-    "additional_Gitea_variant_enum_slots_removed": 12
+    "additional_Gitea_variant_enum_slots_removed": 12,
+    "additional_retirement_audit": {
+      "findings": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "source_fixes": "R5/R6 owned by fields; other findings patched in Plans/tests",
+      "coverage_rows": 216,
+      "required_cells": 1080,
+      "active_positive_cases_scanned": 1593,
+      "top_level_schemas_scanned": 178,
+      "live_unit_fields_scanned": 6839,
+      "local_repair_source": "4ebf8691fa0e570ad3747bfc5c45c32c842766e3",
+      "local_focused_commands_passed": 7,
+      "active_contract_negatives": 3925,
+      "pending_source_findings": [
+        "R5",
+        "R6"
+      ]
+    }
   },
   "historical_DL273_first_removal": {
     "decision_ref": "DL-273",

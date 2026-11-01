@@ -1,3 +1,24 @@
+# Plans lane — local retirement audit repairs pass, 2026-11-01
+
+**Local repair source 4ebf8691fa is pushed to both remotes. All seven focused checks pass.** The lead's independent review closed R1–R4/R7 at691f51c37f. R8/R9 are now repaired locally; R5/R6 GUI source remains with fields. The final combined re-check and dry landing are pending.
+
+| Area | Current result |
+|---|---|
+| **Owners / ruling** | DL-273 remains Jared's one unlanded removal decision. Current testing/capture, Source Control/Git/Jujutsu, GUI, catalog, wiring and DRY consumers admit current providers and retirement refusals. Nine ORI anchors stay retired; shared mirror/auth/currentness/publication guards remain. |
+| **Saved drafts** | PWIZ-024/F3-520/DR-005 invalidate retired service/variant/address, identity/credential/authorization refs and Review; require explicit admitted selection and fresh checks. Source R6 remains pending fields. |
+| **Commands / wiring / Settings** | Clone/shared lifecycle IDs, sole handlers, typed results and exact returns stay. Retired manager consumers removed. Census1010 settings,485 bindings/63 families,715 Touch rows/140 profiles,1271 production rows,22 status keys. |
+| **Focused checks** | Contracts40/1593 positive/3925 negative/13 self-tests PASS. Canon, rulings, shards, Touch, wiring and index PASS. Related retirement/routing9,credential5,installation12 tests PASS. One obsolete service-only Windows negative retired; other rejected cases and shared guards retained. |
+| **Coverage / derived** | 216 product rows/1080 required cells;7276 units/29358 acceptance units/96 docs;2977 shards/99 sources. No WorkNodes/NodeSeeds created. |
+| **Broader proof** | 178 top-level schemas,1593 positive cases and6839 current nondecision/nonretired unit records scanned. No retired service obligation remains after classifying2 actual native-custody origin checks. Fixed source/history, Git remote names, HTTP Origin and native Origin records keep their separate meanings. |
+
+[RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md) maps R1–R9. [RETIRED-SERVICES.md](RETIRED-SERVICES.md) lists the exact scope. [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) covers all five required columns. Focused source hashes bind691f51c37f and4ebf8691fa through separate commit-binding captures under /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/.
+
+The earlier6195 admission proof below used narrower name matching; the independent audit found bare-service active aliases and consumer obligations outside that scope. It is historical focused evidence, not final removal closure. The final proof will include active option/profile identities and saved-draft refusal, after fields source is merged.
+
+Protected governance, fixed qualification inputs, current snapshot and baseline remain untouched. No browser, server, landing lock, landing, reseal or baseline refresh. T3 mail rings this thread.
+
+---
+
 # Plans lane — DL-273 additional removals ready for re-check, 2026-11-01
 
 **Combined source 6195bc8658 is pushed to both remotes. Focused checks and strict admission proof PASS.** The lead's independent delta re-check and the final dry landing are pending. Earlier audit/dry results below certify their recorded source only.
