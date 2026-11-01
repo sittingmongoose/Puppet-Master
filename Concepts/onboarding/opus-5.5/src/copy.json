@@ -204,7 +204,18 @@
         "sub": "Reach it from anywhere with Tailscale",
         "hosted": "Tailscale account",
         "headscale": "My own Headscale server",
-        "headscaleLabel": "Headscale address"
+        "headscaleLabel": "Headscale address",
+        "signInHs": "Sign in to your Headscale",
+        "signingIn": "Signing this device in to Tailscale",
+        "signingInHs": "Signing this device in to your Headscale",
+        "signInFirst": "Sign in to Tailscale on this device first.",
+        "signInFirstHs": "Sign in to your Headscale on this device first.",
+        "denied": "Tailscale didn't sign this device in. Nothing was connected. Try again.",
+        "expired": "The sign-in ran out before it finished. Try again for a fresh one.",
+        "hsDenied": "Your Headscale didn't let this device in. Check with whoever runs it, then try again.",
+        "hint": {
+          "ok": "Tailscale says yes"
+        }
       },
       "proxy": {
         "title": "My own web address",
@@ -216,7 +227,7 @@
         "title": "Puppet Master Remote Link",
         "sub": "Paste the link or type the code your Server shows",
         "label": "Remote Link or its code",
-        "where": "Your Server shows it in Settings › Server & Project Location › Away From Home"
+        "where": "Your Server shows its link and short code when Remote Link is set up, and in Settings › Server & Project Location › Away From Home"
       },
       "local": "On this network",
       "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well.",
@@ -403,7 +414,7 @@
       "ownerFail": "The Server didn't accept that step ({reason}). Nothing was trusted. Try again.",
       "evidenceMissing": "The Server's answer was missing its proof. Nothing was trusted. Try again.",
       "selfTitle": "This device wants to pair",
-      "selfHint": "Compare these words with what this device shows. Nothing is paired until you approve.",
+      "selfHint": "Both lines should show the same words. Tick only if they do. If they differ, another device asked: don't approve.",
       "matchWords": "The words match",
       "approveSelf": "Approve this device",
       "willLine": "{name} becomes your Server, this device is paired with it, and only devices you approve can use it.",
@@ -422,7 +433,9 @@
         "Office computer",
         "Home server"
       ],
-      "codeHintCloud": "The one-time code your cloud provider's console shows, like 482 913"
+      "codeHintCloud": "The one-time code your cloud provider's console shows, like 482 913",
+      "selfOwn": "This device: {words}",
+      "selfGot": "{name} received: {words}"
     },
     "ready": {
       "eyebrow": "New Server",
@@ -542,7 +555,9 @@
       "enter": "Enter Puppet Master",
       "open": "Open a Project",
       "create": "Create a new Project",
-      "paused": "Goals, schedules and outside access stay paused until you turn them on in Settings."
+      "paused": "Goals, schedules and outside access stay paused until you turn them on in Settings.",
+      "pausedWork": "Goals and schedules stay paused until you turn them on in Settings.",
+      "awayOn": "Reaching {name} away from home is on: you set it up just now."
     }
   },
   "begin": {
@@ -1074,12 +1089,14 @@
         "dns": "Checking {host} points to {name}",
         "reach": "Checking it can be reached from the internet",
         "reaches": "Checking {host} reaches {name}",
-        "test": "Testing sign-in, the app and the live connection"
+        "test": "Testing sign-in, the app and the live connection",
+        "download": "Download settings file",
+        "installWaitHere": "Here is the settings file. Download or copy it, add it to your {kind}, then press I've added it. It stays in Settings › Server & Project Location › Away From Home too. Certificates stay with your proxy."
       },
       "rl": {
         "create": "{name} is making its link",
         "test": "Testing the link",
-        "share": "Open this link on your other devices. Each one still asks you to approve it."
+        "share": "On your other devices choose Connect this device, then paste the link, type the short code or scan this. Each one still asks you to approve it."
       },
       "fail": {
         "denied": "Tailscale didn't allow it. Nothing was set up. Try again, or do this later.",
@@ -1577,7 +1594,7 @@
     "identity": {
       "eyebrow": "Check the device",
       "title": "Is this your device?",
-      "lead": "Every device has its own picture. Check it matches what {name} shows in its settings, if you can.",
+      "lead": "Compare the fingerprint below with one you already trust, like {name}'s own settings or whoever set it up. If you can't confirm it, stop and ask them.",
       "known": "You've connected to {name} before — same ID",
       "confirm": "Yes, this is my device",
       "changedTitle": "{name}'s ID has changed",
@@ -1630,7 +1647,7 @@
       "title": "Sign in to {name} once",
       "lead": "Only to add your key. After this, no password is needed.",
       "user": "Username",
-      "userHint": "The name you use for {name}'s web page",
+      "userHint": "The account allowed to connect to {name} by SSH. Ask its owner if you're not sure.",
       "password": "Password",
       "passwordHint": "Used once to add your key. Never saved.",
       "button": "Add my key",
@@ -1694,7 +1711,7 @@
       "lead": "Puppet Master checks it can read the folder.",
       "user": "Username",
       "password": "Password",
-      "passwordHint": "Your computer keeps it in its keychain, as it does for any shared folder. Puppet Master never stores it.",
+      "passwordHint": "The computer doing the work keeps it in its own password store. Puppet Master never stores it.",
       "check": "Check access",
       "phases": {
         "mount": "Opening the shared folder",

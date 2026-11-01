@@ -7,7 +7,7 @@
   'use strict';
   const O55 = window.O55, C = O55.c, U = O55.util, F = O55.flow, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
-  const words = (seed) => O55.art.identity(seed).words.join(' ');
+  const words = (seed) => [...new Set(O55.art.identity(seed).words)].join(' '); /* (never one word twice: m5) */
 
   const PLATFORMS = { nas: ['truenas', 'unraid', 'synology', 'qnap'], cloud: ['linux'], pc: ['windows', 'macos', 'linux'] };
   /* the computer being set up: a rented cloud computer is reached by its address, never found on the home network */
@@ -55,6 +55,8 @@
   const H = (id, items, o) => (F.hint ? F.hint(id, items, o) : '');
   const EPH = () => O55.ephemeral;
   const selfCandidate = (S) => 'candidate:' + U.slug(S.env.client.name);
+  /* the words this device works out from its own pairing key (the concept's identity art, as the Server's are) */
+  const mineWords = (S, u) => { try { return [...new Set(O55.art.identity(String(u.id) + ':' + selfCandidate(S)).words)].slice(0, 3).join(' '); } catch (_) { return ''; } };
   const claimChain = (S) => {
     const u = unclaimed(S);
     return { claim: F.state(S, 'claim:' + u.id), boot: F.state(S, 'bootstrap:' + u.id), reach: F.state(S, 'selfpair:' + u.id), ok: F.state(S, 'selfapprove:' + u.id) };
@@ -268,11 +270,16 @@
       if (err && err !== 'setup_code_mismatch') out += C.note(pendingCopy(err), err === 'host_unavailable' || err === 'pending_no_result' ? 'info' : 'warn', 'server');
       /* This Client's own waiting request: visible candidate identity confirmation, never auto-approved. */
       if (sv.orRunOk && !sv.claimed) {
+        /* RV-2: two copies to compare, both true on every route here (a NAS, a PC, a cloud computer): the words this
+           device works out from its own pairing key, and the words the Server worked out from the request it received.
+           Nothing else shows them (a cloud console shows only the code). A different line means another device asked. */
         const w = (EPH() && EPH().getWords('self:' + u.id)) || '';
+        const own = mineWords(S, u);
         out += `<div class="o55-row" data-key="selfcand">${C.small('computer', 18)}`
           + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.confirm.selfTitle'))}</span>`
-          + `<span class="o55-rowmeta">${U.esc(w || T('server.ready.wordsMissing'))}</span></span></div>`;
-        out += `<p class="o55-hint" data-key="selfhint">${U.esc(T('server.confirm.selfHint'))}</p>`;
+          + `<span class="o55-rowmeta" data-key="selfown">${U.esc(T('server.confirm.selfOwn', { words: own }))}</span>`
+          + `<span class="o55-rowmeta" data-key="selfgot">${U.esc(w ? T('server.confirm.selfGot', { name, words: w }) : T('server.ready.wordsMissing'))}</span></span></div>`;
+        out += `<p class="o55-hint" data-key="selfhint">${U.esc(T('server.confirm.selfHint', { name }))}</p>`;
         out += `<div class="o55-checkline" data-key="selfmatch"><button type="button" role="checkbox" aria-checked="${sv.selfConfirmed ? 'true' : 'false'}" class="o55-check${sv.selfConfirmed ? ' is-on' : ''}" data-o55-do="selfMatch" data-pm-hover-exempt="true">${sv.selfConfirmed ? C.small('check', 13) : ''}</button><span>${U.esc(T('server.confirm.matchWords'))}</span>${O55.tips.q('selfMatch')}</div>${O55.tips.explainer('selfMatch')}`;
       }
       return out;
@@ -383,6 +390,8 @@
   function pollGuestRun(S) {
     const sv = S.sess.server;
     if (!inviteOpen(S) || runDone(S)) return;
+    /* m5: a device already paired does not ask again with a new code (the concept's one nearby device is the guest) */
+    if ((sv.paired || []).some((p) => p.client === GUEST.id || p.name === GUEST.name)) return;
     if ((sv.candidates || []).some((c) => c.state === 'waiting' && c.gen === sv.pairGen)) return;
     const req = ensureRunReq(S);
     const res = OR().take(req.id);
@@ -409,7 +418,7 @@
     c.state = 'approved';
     endGuestRun(S, c.gen, 'approved');
     const trustId = res.trust.id;
-    sv.paired = (sv.paired || []).concat([{ id: trustId, name: c.name }]);
+    sv.paired = (sv.paired || []).concat([{ id: trustId, name: c.name, client: GUEST.id }]);
     S.save(); O55.ui.refresh();
     if (showing('s-ready')) O55.sound.play('success', SND.approved); /* the device moves into the paired list */
   }
@@ -807,8 +816,12 @@
       const r = R(S), b = S.env.fullBackups.find((x) => x.id === r.pick) || S.env.fullBackups[0], projects = b.projectList.map((name) => ({ id: U.slug(name), name }));
       let out = C.group(T('ready.project'), C.cards('pickProject', projects.map((p) => ({ v: p.id, glyph: 'folder', title: p.name })), r.open || projects[0].id));
       out += O55.tips.opt('createNew', `<button type="button" class="o55-card o55-card-link" data-o55-do="createNew" data-o55-sound="self" data-pm-hover-exempt="true" data-key="create">${C.glyph('seed')}<span class="o55-cardtext"><span class="o55-cardtitle">${U.esc(T('restore.done.create'))}</span></span><span class="o55-cardarrow" aria-hidden="true">›</span></button>`);
-      /* (it came back paused: recovery-safe, SCR-13) */
-      out += C.note(T('restore.done.paused'), 'info', 'power');
+      /* (it came back paused: recovery-safe, SCR-13). RV-8: reaching it from away is its own activation (canon: paused
+         restore, separate remote activation), so a way in set up just now is named as on; goals and schedules stay
+         paused. Without one, outside access stays paused with them. */
+      const a = S.sess.awaySetup, awayOn = !!(a && a.then === 'r-done' && a.state === 'done');
+      out += C.note(T(awayOn ? 'restore.done.pausedWork' : 'restore.done.paused'), 'info', 'power');
+      if (awayOn) out += C.note(T('restore.done.awayOn', { name: S.sess.server.displayName || 'Home NAS' }), 'ok', 'globe');
       return out;
     },
     foot(S) {
