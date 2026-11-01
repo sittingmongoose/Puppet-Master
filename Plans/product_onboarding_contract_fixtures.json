@@ -50,7 +50,6 @@
     "remote_link_connect_setup_plan_count": 1,
     "local_safe_history_without_online_copy_setup_plan_count": 2,
     "local_safe_history_with_online_copy_setup_plan_count": 3,
-    "cursor_origin_setup_plan_count": 1,
     "setup_plan_exact_field_negative_count": 8,
     "setup_plan_connection_semantics_negative_count": 16,
     "setup_plan_source_semantics_negative_count": 19,
@@ -11995,7 +11994,7 @@
     {
       "name": "invalid.action.rejects_origin_preview_pseudo_choice",
       "definition": "onboarding_action_request",
-      "expected_error": "Cursor Origin is selected through forge_cursor_origin and not an origin_preview pseudo-flow",
+      "expected_error": "DL-273 retirement: no former service selection or pseudo-flow is admitted",
       "base_valid": "valid.request.more_ways",
       "patch": {
         "choice": "origin_preview"

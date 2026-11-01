@@ -419,7 +419,9 @@ canonical_text: 'Consumer docs for orchestration, routing, runtime identity, app
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Saved-draft entry and resume consume the same Forge admission and PWIZ-024 invalidation rule. A retired service cannot keep credentials, authorization or Review authority by being relabelled as another variant or provider.'
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -439,6 +441,8 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: Every saved onboarding entry/resume path consumes the owner retirement rule; no second alias or migration path carries retired service identity or approval into an admitted choice.'
+
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

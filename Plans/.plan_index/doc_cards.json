@@ -5761,7 +5761,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 19859,
+      "line_count": 19863,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 243,
       "plan_unit_ids": [
@@ -6179,7 +6179,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "2f301f70b777f3b38e7619786f9a96c3751d6b99c40b2514137caf247954f917",
+      "sha256": "6403ed6ad1d0b8179235557204c48f1145c924b1c16e7fc9bac378135344da1b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 243
@@ -6548,7 +6548,7 @@
         "scripts/pm-server-command-gap-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 5061,
+      "line_count": 5065,
       "path": "Plans/DRY_Rules.md",
       "plan_unit_count": 72,
       "plan_unit_ids": [
@@ -6650,7 +6650,7 @@
         "storage_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "b9dedc7fea74f0dc423055ac0a8a152845146be233c472052853e60c9a259e00",
+      "sha256": "e201a74616baa4a718587a08dd882d49bcbc61a191d22a1429a5e2e608fb4c66",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71,
@@ -7763,7 +7763,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 51799,
+      "line_count": 51803,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 655,
       "plan_unit_ids": [
@@ -8566,7 +8566,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "ee87cd10e44cab812acbcd8fd3d7d3cc886ea1f73a3d19c9be5fdef34ead7831",
+      "sha256": "79830d6e942b478d579e35b5ce40bd172bfab68fa92f2e082b82fbe94cc3a6c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 647,
@@ -14409,7 +14409,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 3853,
+      "line_count": 3857,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -14469,7 +14469,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "18f868fbe0b8206017ffe7c5b5d42057ce506adeed4804309deaab95ace7db30",
+      "sha256": "0bbfb856a08c1fd7fdb24e31710f1e722666877f7cab290722cc81156374885e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30,
@@ -21088,7 +21088,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-01T20:11:25Z",
+  "generated_at_utc": "2026-11-01T20:37:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

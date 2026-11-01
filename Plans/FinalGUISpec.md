@@ -37013,7 +37013,9 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -37333,6 +37335,8 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: A retired saved Source Control selection requires explicit admitted selection and fresh owner verification; the GUI cannot show its old authorization or Review as current.'
+
 validation_surfaces:
 - Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
   eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
@@ -38457,8 +38461,8 @@ canonical_text: 'The Source Control header identifies repository/workspace plus 
   action that carries exact project, repository, immutable revision, Backup-owner route, deep link, currentness, accessibility,
   and return-context identity into the Backup owner; it never requests restore, starts restore, or mutates Source Control
   or Backup state. Provider-native headings and names remain GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket
-  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and Origin checks never
-  imply Origin Actions. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
+  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and checks from an admitted provider never
+  imply an unproven automation service. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
   preview, and Restore this file. Artifacts distinguishes provider CI artifacts, Puppet Master runtime outputs, and Backup
   exports while preserving expiry, checksum, provenance, explicit import/download, and never auto-executing a download.
   Testing/Run & Debug may link checks and reproduction receipts but does not treat remote CI as local proof. Assistant
@@ -38586,8 +38590,8 @@ negative_constraints:
 - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git
   mutation.
 - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
-- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin
-  blanket read-only.
+- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or infer provider-wide
+  read-only status from one unavailable action.
 - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner
   registration.
 - Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler,

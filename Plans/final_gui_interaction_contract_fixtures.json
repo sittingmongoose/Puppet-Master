@@ -634,7 +634,7 @@
           "publish_preview_fields": [
             "actual_push_destination",
             "refspecs",
-            "origin_mirror_write_through",
+            "admitted_mirror_write_through",
             "protection",
             "ci_and_cost_effects"
           ],
@@ -643,7 +643,7 @@
           "expected_head_guard": true,
           "remote_limit_reasons_visible": true,
           "outcome_unknown_distinct_from_failure": true,
-          "blanket_origin_read_only_badge": false
+          "blanket_provider_read_only_badge": false
         },
         "automation_sections": [
           "current_revision_checks",
@@ -1922,8 +1922,8 @@
       "expected": "rejected"
     },
     {
-      "case_id": "origin_gets_blanket_read_only_badge",
-      "json_pointer": "/contracts/7/review_and_publication/blanket_origin_read_only_badge",
+      "case_id": "one_unavailable_action_cannot_make_provider_read_only",
+      "json_pointer": "/contracts/7/review_and_publication/blanket_provider_read_only_badge",
       "replacement": true,
       "expected": "rejected"
     },

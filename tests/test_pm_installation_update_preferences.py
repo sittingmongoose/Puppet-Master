@@ -25,7 +25,7 @@ class InstallationUpdatePreferenceTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.schema = json.loads((ROOT / "Plans/egolite_retained_requirement_contracts.schema.json").read_text())
         cls.fixtures = json.loads((ROOT / "Plans/egolite_retained_requirement_contract_fixtures.json").read_text())
-        aggregate = next(case["instance"] for case in cls.fixtures["valid"] if case["name"] == "aggregate_all_15")
+        aggregate = next(case["instance"] for case in cls.fixtures["valid"] if case["name"] == "aggregate_all_13")
         cls.baseline = next(record for record in aggregate["contracts"] if record["requirement_id"] == "IRT-008")
         cls.validator = Draft202012Validator({
             "$schema": cls.schema["$schema"], "$defs": cls.schema["$defs"], "$ref": "#/$defs/irt_008",

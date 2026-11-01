@@ -47,7 +47,7 @@ class CredentialAttachmentLifetimeTests(unittest.TestCase):
             case["name"]: case["instance"]
             for case in cls.fixtures["valid"]
         }
-        cls.aggregate = cls.positives["aggregate_all_15"]
+        cls.aggregate = cls.positives["aggregate_all_13"]
         cls.credential = next(
             contract
             for contract in cls.aggregate["contracts"]

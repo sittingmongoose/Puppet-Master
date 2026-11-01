@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38423-L38670
+Source lines: L38427-L38674
 
-Source SHA256: `ee87cd10e44cab812acbcd8fd3d7d3cc886ea1f73a3d19c9be5fdef34ead7831`
+Source SHA256: `79830d6e942b478d579e35b5ce40bd172bfab68fa92f2e082b82fbe94cc3a6c5`
 
 ---
 
@@ -45,8 +45,8 @@ canonical_text: 'The Source Control header identifies repository/workspace plus 
   action that carries exact project, repository, immutable revision, Backup-owner route, deep link, currentness, accessibility,
   and return-context identity into the Backup owner; it never requests restore, starts restore, or mutates Source Control
   or Backup state. Provider-native headings and names remain GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket
-  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and Origin checks never
-  imply Origin Actions. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
+  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and checks from an admitted provider never
+  imply an unproven automation service. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
   preview, and Restore this file. Artifacts distinguishes provider CI artifacts, Puppet Master runtime outputs, and Backup
   exports while preserving expiry, checksum, provenance, explicit import/download, and never auto-executing a download.
   Testing/Run & Debug may link checks and reproduction receipts but does not treat remote CI as local proof. Assistant
@@ -174,8 +174,8 @@ negative_constraints:
 - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git
   mutation.
 - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
-- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin
-  blanket read-only.
+- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or infer provider-wide
+  read-only status from one unavailable action.
 - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner
   registration.
 - Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler,

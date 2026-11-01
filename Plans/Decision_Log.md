@@ -19796,7 +19796,9 @@ canonical_text: 'Jared decided on 2026-11-01 that hosted Forgejo is not offered:
   source control, its native/mirror profiles and its dedicated inspector are retired. Cursor as an AI provider is unchanged.
   These hosted offerings were agent proposals, not selections Jared made; Gitea Cloud applicable terms could not be read,
   while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
-  and cannot restore a retired service, review, CI, auth or mirror capability.'
+  and cannot restore a retired service, review, CI, auth or mirror capability.
+
+  DL-273, Jared 2026-11-01: Retired services and hosted variants cannot return through saved onboarding drafts. Their selection, address, account, repository, credential and authorization references and Review confirmation are invalidated, followed by explicit admitted service/address/account selection and fresh owner checks; never silently relabel a hosted tenant as self-managed.'
 gui_related: true
 gui_classification_reason: Changes the Forgejo choices shown in onboarding and Settings while preserving the deferred
   authentication flow.
@@ -19818,6 +19820,8 @@ acceptance_criteria:
   These hosted offerings were agent proposals, not selections Jared made; Gitea Cloud applicable terms could not be read,
   while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
   and cannot restore a retired service, review, CI, auth or mirror capability.'
+- 'DL-273: A saved draft for a retired service or hosted variant grants no authority after loading or resuming; PWIZ-024 requires explicit admitted selection and current validation before Review.'
+
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-new-contracts
 - python3 scripts/pm7-onboarding-rulings-check.py

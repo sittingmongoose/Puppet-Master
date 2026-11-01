@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2565-L2850
+Source lines: L2565-L2854
 
-Source SHA256: `18f868fbe0b8206017ffe7c5b5d42057ce506adeed4804309deaab95ace7db30`
+Source SHA256: `0bbfb856a08c1fd7fdb24e31710f1e722666877f7cab290722cc81156374885e`
 
 ---
 
@@ -125,7 +125,9 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: A saved onboarding draft with a retired Source Control service or hosted variant is not relabelled as an admitted provider. Its service, variant, address, account, repository, credential and authorization references and Review confirmation are invalidated. The person explicitly selects an admitted service, address and account before current owner checks and Review can succeed.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection,
   and defer behavior.
@@ -241,6 +243,8 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: Loading or resuming a draft for a retired service clears its obsolete selection and associated authority references and Review; it requires explicit admitted service/address/account selection and fresh owner validation, never a hosted-to-self-managed relabel.'
+
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
