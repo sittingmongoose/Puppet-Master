@@ -127,19 +127,15 @@
       /* a copy is private or public; an organization's own profile visibility can narrow who sees a public one */
       visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',
       auth: { forgejo_self_managed: ['token'] } },
-    { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed', 'gitea_cloud'], token: true,
+    /* Gitea is a server of the person's or their group's own too; its hosted service is not offered (Jared 2026-11-01) */
+    { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed'], token: true,
       personal: true, owner: 'organization',
       visibility: () => ['private', 'public'], nameRule: giteaName, spaces: 'dash',
-      auth: { gitea_cloud: ['browser', 'token'], gitea_self_managed: ['token'] } },
-    { id: 'cursor_origin', name: 'Cursor Origin', variants: ['preview'], preview: true, address: 'https://origin.cursor.com',
-      personal: true, owner: 'team',
-      /* a person's own copy is always private; a team's may be private or internal; never public in onboarding */
-      visibility: (o) => (o.scope === 'organization' ? ['private', 'internal'] : ['private']),
-      nameRule: (n) => gitBasic(n, 100), spaces: 'dash', auth: { preview: ['browser'] } }
+      auth: { gitea_self_managed: ['token'] } },
   ];
-  /* the address a hosted variant always has (a self-managed one is typed; Gitea Cloud's is the team's own) */
-  const HOSTED_URL = { github: 'https://github.com', gitlab: 'https://gitlab.com', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org', cursor_origin: 'https://origin.cursor.com' };
-  const variantNeedsAddress = (forge, variant) => /self_managed|data_center|gitea_cloud/.test(variant || '') || forge === 'bitbucket_data_center';
+  /* the address a hosted variant always has (a self-managed one is typed) */
+  const HOSTED_URL = { github: 'https://github.com', gitlab: 'https://gitlab.com', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org' };
+  const variantNeedsAddress = (forge, variant) => /self_managed|data_center/.test(variant || '') || forge === 'bitbucket_data_center';
 
   /* Official pages the onboarding opens in the browser. Only addresses the concept is sure of: a service missing here
      opens its page without the concept naming an address, and a self-managed service uses the address the person typed.
@@ -149,7 +145,7 @@
     /* a device sign-in's page, where the concept knows it (the code itself comes from the vendor) */
     device: { copilot: 'github.com/login/device', codex: 'auth.openai.com/codex/device', grok: 'accounts.x.ai/device' },
     signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
-    forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com' },
+    forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/' },
     forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },
     free: { 'free-openrouter': 'https://openrouter.ai', 'free-runcrate': 'https://www.runcrate.ai' },
     backup: { gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com' }
@@ -307,10 +303,8 @@
           repos: [{ id: '87', name: 'build-tools', owner: 'PROJ', container: 'PROJ', scope: 'organization', private: true, updated: 'last month' }], taken: [], signup: false },
         /* Forgejo: the account on the person's own server (the address they type) */
         forgejo: { accounts: [], login: 'jared', owners: [{ id: 'home-lab-crew', name: 'home-lab-crew', profile: 'limited' }], repos: [{ id: '12', name: 'nas-scripts', owner: 'home-lab-crew', container: 'home-lab-crew', scope: 'organization', private: true, updated: '2 days ago' }], taken: [], signup: false },
-        gitea: { accounts: [], login: 'jared', owners: [{ id: 'platyr', name: 'platyr' }], repos: [{ id: '5', name: 'notes', owner: 'jared', container: '', private: true, updated: 'last week' }], taken: [], signup: false,
-          instances: { gitea_self_managed: { login: 'jared', owners: [], repos: [{ id: '3', name: 'home-wiki', owner: 'jared', container: '', private: true, updated: 'last month' }], taken: [], signup: true } } },
-        /* a person's own Origin copies, and the team they belong to */
-        cursor_origin: { accounts: [], login: 'jared', owners: [{ id: 'platyr', name: 'Platyr' }], repos: [{ id: 'orp_7Hq2', name: 'scratchpad', owner: 'jared', container: '', private: true, updated: 'yesterday' }], taken: [], signup: true }
+        /* Gitea: the account on the person's own server (the address they type) */
+        gitea: { accounts: [], login: 'jared', owners: [], repos: [{ id: '3', name: 'home-wiki', owner: 'jared', container: '', private: true, updated: 'last month' }], taken: [], signup: true },
       },
       /* each backup is kept in one exact place (a folder, a device, a cloud service, a bucket): a restore lists only the
          ones at the place pointed to (FF-15) */
@@ -434,7 +428,7 @@
       const own = (w.instances || {})[variant];
       return own ? Object.assign({}, none, { signup: w.signup }, own) : Object.assign({}, none, w);
     },
-    /* the address a hosted variant always has; '' where it is typed (a self-managed server, or a team's Gitea Cloud) */
+    /* the address a hosted variant always has; '' where it is typed (a server of its own) */
     hostedUrl: (forge, variant) => (variantNeedsAddress(forge, variant) ? '' : HOSTED_URL[variant] || HOSTED_URL[forge] || ''),
     needsAddress: variantNeedsAddress,
     /* a one-shot sign-in failure, used up by the try it fails (signin_once) */

@@ -58,10 +58,13 @@
     if (d.online_mode === 'none') {
       Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null });
     } else {
+      const KINDS = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed'] };
+      /* a service no longer offered (a plan from before Jared's 2026-11-01 removals) is as if none was chosen: GitHub,
+         asked again, with nothing of the old one's sign-in, place or Project carried over */
+      if (d.forge !== 'none' && !KINDS[d.forge]) Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null, repository_owner_scope: 'personal', repository_container: '', repository_project: '' });
       if (d.forge === 'none') d.forge = 'github';
-      const variants = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] }[d.forge];
+      const variants = KINDS[d.forge];
       if (!variants.includes(d.forge_provider_variant)) d.forge_provider_variant = variants[0];
-      if (d.forge === 'cursor_origin') d.forge_instance_url = 'https://origin.cursor.com';
       /* a hosted variant's own address; a server the person names is never filled in for them (FF-08: no example host) */
       if (!/^https:\/\/[^\s/?#]+/.test(d.forge_instance_url)) d.forge_instance_url = O55.fixtures.hostedUrl(d.forge, d.forge_provider_variant);
       if (!d.forge_account_action) d.forge_account_action = 'sign_in_during_setup';
@@ -113,7 +116,7 @@
   function allowedVisibility(d) { return O55.forgeRules.visibility(envOf(), d); }
 
   /* The sign-in a server offers decides the profile's method: a hosted service with a sign-in app registered for Puppet
-     Master (Gitea Cloud) signs in in the browser (OAuth with PKCE); another server, with none, by an access
+     Master signs in in the browser (OAuth with PKCE); a server with none (Forgejo and Gitea), by an access
      token the person makes there (kept by the credential owner). The method actually used is saved (forge_auth_method).
      A server installed under a path (https://example.org/git) keeps it; the API and SSH details are the usual ones until
      the Forge owner's probe after sign-in (probe_performed false). */

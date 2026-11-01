@@ -27,8 +27,8 @@
     { id: 'defaults', label: 'Defaults & Safety' },
     { id: 'actions', label: 'Actions & Pipelines' }
   ];
-  const VERB = { github: 'Connect GitHub', 'github-enterprise': 'Connect GitHub Enterprise', gitlab: 'Connect GitLab', 'gitlab-self': 'Connect GitLab', azure: 'Connect Azure DevOps', 'azure-server': 'Connect Azure DevOps Server', bitbucket: 'Connect Bitbucket', 'bitbucket-dc': 'Connect Bitbucket', forgejo: 'Connect Forgejo', gitea: 'Connect Gitea', 'cursor-origin': 'Connect Cursor Origin', 'generic-git': 'Add repository' };
-  const API = { github: 'api.github.com', gitlab: 'gitlab.com/api/v4', azure: 'dev.azure.com', bitbucket: 'api.bitbucket.org/2.0', 'cursor-origin': 'origin.cursor.com' };
+  const VERB = { github: 'Connect GitHub', 'github-enterprise': 'Connect GitHub Enterprise', gitlab: 'Connect GitLab', 'gitlab-self': 'Connect GitLab', azure: 'Connect Azure DevOps', 'azure-server': 'Connect Azure DevOps Server', bitbucket: 'Connect Bitbucket', 'bitbucket-dc': 'Connect Bitbucket', forgejo: 'Connect Forgejo', gitea: 'Connect Gitea', 'generic-git': 'Add repository' };
+  const API = { github: 'api.github.com', gitlab: 'gitlab.com/api/v4', azure: 'dev.azure.com', bitbucket: 'api.bitbucket.org/2.0' };
   const TOOL_USES = { git: 'Branches', jj: 'Bookmarks', 'git-lfs': 'Large files' };
   const TOOL_PATH = { git: '/usr/bin/git', jj: '/usr/local/bin/jj', 'git-lfs': '/usr/bin/git-lfs' };
   const TOOL_HELP = { git: 'Git names its lines of work branches.', jj: 'Jujutsu names its lines of work bookmarks.', 'git-lfs': 'Keeps big files out of the main history.' };
@@ -108,7 +108,6 @@
       { label: 'Accounts', help: 'You can sign in with more than one.', value: f.accounts ? String(f.accounts) : 'None', muted: !f.accounts },
       { label: 'Reviews are called', help: 'What this service names a code review.', value: f.reviewLabel },
       { label: 'Automation', help: 'What runs builds and tests on this service.', value: f.automationLabel },
-      f.modes ? { label: 'Mode', help: 'Native keeps the code on Cursor Origin. Mirrored copies it from GitHub.', control: PM51.segmented(f.mode || f.modes[0], f.modes, { action: 'pm51-source-mode', data: { id: f.id }, label: 'Cursor Origin mode' }) } : null,
       { label: 'Connection', help: on ? (f.lastCheck ? `Checked ${f.lastCheck}` : 'Not checked yet') : 'Nothing to check until it is connected', action: { label: 'Check connection', icon: 'test', action: 'pm51-source-check', data: { id: f.id } } }
     ];
     const account = on ? f.defaultAccount : 'you';
@@ -396,7 +395,6 @@
     onSave: data => { const f = byId(data.id); if (!f) return false; PM51.setSel(ID, f.id); saveState(); refresh(); connectPanel(f, false); }
   }));
   PM51.on('source-connect', el => { const f = byId(ds(el, 'id')); if (f) connectPanel(f, false); });
-  PM51.on('source-mode', el => { const f = byId(ds(el, 'id')); if (!f) return; f.mode = ds(el, 'value'); saveState(); refresh(); });
   PM51.on('source-address', el => {
     const f = byId(ds(el, 'id')); if (!f) return;
     const label = f.addressLabel || 'Service address'; const generic = f.kind === 'generic';
@@ -497,7 +495,7 @@
   }
   /* ---------- guided: connecting a code service, and how Git signs in -------------------------------------------- */
   /* the same paths the onboarding gives (online.signin.tokenHow); Bitbucket Cloud's API tokens live in the Atlassian account */
-  const TOKEN_WHERE = { github: 'Settings › Developer settings › Personal access tokens › Fine-grained tokens', 'github-enterprise': 'Settings › Developer settings › Personal access tokens › Fine-grained tokens', gitlab: 'your avatar › Edit profile › Access › Personal access tokens', 'gitlab-self': 'your avatar › Edit profile › Access › Personal access tokens', azure: 'User settings › Personal access tokens', 'azure-server': 'User settings › Personal access tokens', bitbucket: 'your profile picture › Account settings › Security › Create and manage API tokens', 'bitbucket-dc': 'your profile › Manage account › HTTP access tokens', forgejo: 'Settings › Applications', gitea: 'Settings › Applications', 'cursor-origin': 'Settings › Access tokens' };
+  const TOKEN_WHERE = { github: 'Settings › Developer settings › Personal access tokens › Fine-grained tokens', 'github-enterprise': 'Settings › Developer settings › Personal access tokens › Fine-grained tokens', gitlab: 'your avatar › Edit profile › Access › Personal access tokens', 'gitlab-self': 'your avatar › Edit profile › Access › Personal access tokens', azure: 'User settings › Personal access tokens', 'azure-server': 'User settings › Personal access tokens', bitbucket: 'your profile picture › Account settings › Security › Create and manage API tokens', 'bitbucket-dc': 'your profile › Manage account › HTTP access tokens', forgejo: 'Settings › Applications', gitea: 'Settings › Applications' };
   const hostOf = f => f.instanceUrl ? String(f.instanceUrl).replace(/^https?:\/\//, '').replace(/\/.*$/, '') : f.id === 'github' ? 'github.com' : f.id === 'gitlab' ? 'gitlab.com' : f.id === 'bitbucket' ? 'bitbucket.org' : f.id === 'azure' ? 'ssh.dev.azure.com' : (API[f.id] || f.name);
   const sys = () => PM51.sysSsh;
   /* the one-time default: a service that already pushes over SSH names the key it uses */

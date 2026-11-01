@@ -799,18 +799,13 @@
         },
         "pick:gitea": {
           "title": "Gitea",
-          "text": "A small service people run on their own servers, or rent as Gitea Cloud. Pick it if your team already uses one.",
-          "expert": "Gitea Cloud at your team's own address (browser sign-in or a token), or a self-hosted Gitea at its https address (a personal access token)."
+          "text": "A small service people run on their own servers. Pick it if your account is on a Gitea server, then type its address.",
+          "expert": "A Gitea instance at its https address, signed in with a personal access token."
         },
         "pick:github_enterprise": {
           "title": "GitHub Enterprise",
           "text": "GitHub run by your company on its own server. Pick it if your company gave you its address.",
           "expert": "GitHub Enterprise Server (self-managed): needs its https address; you sign in on that server."
-        },
-        "pick:cursor_origin": {
-          "title": "Cursor Origin",
-          "text": "Cursor's own service for keeping projects online. It is still a preview, so it may change.",
-          "expert": "Cursor Origin (preview): a Git remote hosted by Cursor. Expect changes while it is a preview."
         },
         "notNow": {
           "title": "Not now",
@@ -819,12 +814,12 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else (for Gitea, a hosted one). Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it), self-managed / Data Center (its own https address, run by an organisation or by you), Gitea Cloud (a dedicated instance per team, at its own address)."
+          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else. Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), or self-managed / Data Center (its own https address, run by an organisation or by you)."
         },
         "field:address": {
           "title": "Server address",
-          "text": "Where that server lives, starting with https://, like https://git.example.com. For Gitea Cloud, the address your team was given.",
+          "text": "Where that server lives, starting with https://, like https://git.example.com.",
           "expert": "The instance's base URL (https only, a path such as /git is kept), used for its sign-in and API. Never filled in for you."
         },
         "group:pick": {
@@ -920,7 +915,7 @@
         "group:owner": {
           "title": "Where it lives",
           "text": "Your own account, or a place you share with others: an organization, group, workspace or project. Pick the one the Project belongs to.",
-          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key, Origin team."
+          "expert": "Owner or namespace in the provider's terms: user or organization, GitLab group/subgroup, Azure DevOps organization or collection, Bitbucket workspace, Data Center project key."
         },
         "group:azOrg": {
           "title": "Organization",
@@ -954,8 +949,8 @@
         },
         "vis:internal": {
           "title": "A wider group",
-          "text": "More people than just you, but nobody outside: your company on GitHub, everyone signed in to a GitLab server, or your team on Cursor Origin.",
-          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com); Origin team members. Never for a personal owner, Forgejo, Gitea or Bitbucket."
+          "text": "More people than just you, but nobody outside: your company on GitHub, or everyone signed in to a GitLab server.",
+          "expert": "internal: GitHub enterprise members; GitLab self-managed signed-in users (not GitLab.com). Never for a personal owner, Forgejo, Gitea or Bitbucket."
         },
         "field:desc": {
           "title": "Description",
@@ -1812,7 +1807,6 @@
         "pick:forgejo": "Forgejo. Where shall we find yours?",
         "pick:gitea": "Gitea. Small and tidy.",
         "pick:github_enterprise": "Your company's GitHub. Got it.",
-        "pick:cursor_origin": "Cursor Origin. Still a preview!",
         "typing": "Ooh, your own server's address."
       },
       "online-signin": {
@@ -2150,8 +2144,7 @@
             "bitbucket_cloud": "That name won't do there. See the rule under it?",
             "bitbucket_data_center": "That name won't do there. See the rule under it?",
             "forgejo": "That name won't do there. See the rule under it?",
-            "gitea": "That name won't do there. See the rule under it?",
-            "cursor_origin": "That name won't do there. See the rule under it?"
+            "gitea": "That name won't do there. See the rule under it?"
           },
           "nameReserved": "That name's kept for the service itself.",
           "branchRule": "That branch name won't do yet.",
@@ -2406,8 +2399,7 @@
             "bitbucket_cloud": "That name works there now!",
             "bitbucket_data_center": "That name works there now!",
             "forgejo": "That name works there now!",
-            "gitea": "That name works there now!",
-            "cursor_origin": "That name works there now!"
+            "gitea": "That name works there now!"
           },
           "nameReserved": "A name of its own. Good.",
           "branchRule": "That branch name works!",
