@@ -43,8 +43,7 @@ async function applyLook(t, f, look, bad) {
 }
 
 export default async function (t) {
-	await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
-	const f = t.page;
+	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });   // the page, or T3's sandbox (--set sandbox=1)
 	await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
 	const screen = await f.evaluate(() => { try { window.O55.ui.go('nas-find', { noHistory: true }); } catch (e) { /* reported below */ } return window.O55.S.sess.screen; });
 	await t.check('the screen opens (nas-find)', screen === 'nas-find', `screen ${screen}`, { hard: true });

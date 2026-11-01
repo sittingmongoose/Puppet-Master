@@ -57,8 +57,8 @@ const LOOK_NOW = (L) => {
 
 export default async function (t) {
 	const only = t.args.only ? String(t.args.only).split(',') : null, depth = Number(t.args.depth || 3);
-	await t.app.open();
-	const chapters = await t.page.evaluate(() => window.O55.studio.SCREEN_CHAPTERS.map(([, ids]) => ids).flat());
+	let f = await t.app.open();   // the page, or T3's sandbox (--set sandbox=1)
+	const chapters = await f.evaluate(() => window.O55.studio.SCREEN_CHAPTERS.map(([, ids]) => ids).flat());
 	const cases = chapters.filter((id) => !only || only.includes(id)).map((id) => ({ screen: id, twist: null }));
 	if (String(t.args.extras) !== '0') {
 		for (const [tw, ids] of EXTRAS) for (const id of ids) if (!only || only.includes(id)) cases.push({ screen: id, twist: tw });
@@ -69,29 +69,29 @@ export default async function (t) {
 		const name = c.screen + (c.twist ? ' (' + c.twist + ')' : '') + (c.pre && c.pre.length ? ' [' + c.pre.map((x) => x.filter(Boolean).join(' ')).join(', ') + ']' : '');
 		/* each case from a clean record: a walk that left a Project being created would otherwise send the next open to
 		   Creating (by design: a Project being made is never abandoned half-made) */
-		await t.page.evaluate(() => { try { localStorage.clear(); } catch (_) {} });
-		await t.app.open();
-		await t.page.evaluate(() => window.O55.studio.open('onboarding'));
-		await t.page.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
+		await f.evaluate(() => { try { localStorage.clear(); } catch (_) {} });
+		f = await t.app.open();
+		await f.evaluate(() => window.O55.studio.open('onboarding'));
+		await f.waitForSelector('#pmds-sheet [data-pmds-do="open-screen"]', { timeout: 15000 });
 		/* the situation, by its chips: Fresh computer, every twist off, then this case's twist */
-		await t.page.click('#pmds-sheet [data-pmds-do="pick-base"][data-arg="fresh"]');
+		await f.click('#pmds-sheet [data-pmds-do="pick-base"][data-arg="fresh"]');
 		for (let i = 0; i < 12; i++) {
-			const on = t.page.locator('#pmds-sheet [data-pmds-do="pick-twist"][aria-checked="true"]');
+			const on = f.locator('#pmds-sheet [data-pmds-do="pick-twist"][aria-checked="true"]');
 			if (!(await on.count())) break;
 			await on.first().click(); await t.page.waitForTimeout(150);
 		}
-		if (c.twist) { const chip = t.page.locator(`#pmds-sheet [data-pmds-do="pick-twist"][data-arg="${c.twist}"]`); if (!(await chip.count())) { t.check(`${name}: the situation is listed`, false, 'no chip'); continue; } await chip.click(); }
-		const sit = await t.page.evaluate(() => window.O55.studio.currentSituation());
-		const row = t.page.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${c.screen}"]`);
+		if (c.twist) { const chip = f.locator(`#pmds-sheet [data-pmds-do="pick-twist"][data-arg="${c.twist}"]`); if (!(await chip.count())) { t.check(`${name}: the situation is listed`, false, 'no chip'); continue; } await chip.click(); }
+		const sit = await f.evaluate(() => window.O55.studio.currentSituation());
+		const row = f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${c.screen}"]`);
 		if ((await row.getAttribute('aria-disabled')) === 'true') { t.check(`${name}: on this page`, false, 'its row is off'); continue; }
 		await row.scrollIntoViewIfNeeded(); await row.click();
-		const opened = await t.page.waitForFunction((s) => window.O55.S.open && window.O55.S.sess && window.O55.S.sess.screen === s, c.screen, { timeout: 15000 }).then(() => true, () => false);
-		if (!opened) { t.check(`${name}: opens from its row`, false, 'screen ' + (await t.page.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen))); continue; }
+		const opened = await f.waitForFunction((s) => window.O55.S.open && window.O55.S.sess && window.O55.S.sess.screen === s, c.screen, { timeout: 15000 }).then(() => true, () => false);
+		if (!opened) { t.check(`${name}: opens from its row`, false, 'screen ' + (await f.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen))); continue; }
 		for (const [act, arg] of c.pre || []) {
 			const sel = `${LAYER} [data-o55-do="${act}"]` + (arg != null ? `[data-arg="${arg}"]` : '');
 			/* (a control that shows once the screen is waiting, such as c-pair's Use a code instead, is waited for) */
-			const shown = await t.page.waitForSelector(sel, { state: 'visible', timeout: 10000 }).then(() => true, () => false);
-			const el = t.page.locator(sel);
+			const shown = await f.waitForSelector(sel, { state: 'visible', timeout: 10000 }).then(() => true, () => false);
+			const el = f.locator(sel);
 			if (!shown) { t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s'); break; }
 			await el.first().scrollIntoViewIfNeeded(); await el.first().click();
 		}
@@ -99,7 +99,7 @@ export default async function (t) {
 		let t0 = Date.now(), pressed = new Map(), trail = [];
 		let last = null, changedAt = Date.now(), end = null, now = null;
 		while (Date.now() - t0 < 90000) {
-			now = await t.page.evaluate(LOOK_NOW, LAYER);
+			now = await f.evaluate(LOOK_NOW, LAYER);
 			if (now.closed) { end = path.join(' > ') + ' > finished (the window closed)'; break; }
 			if (now.screen !== path[path.length - 1]) {
 				path.push(now.screen);

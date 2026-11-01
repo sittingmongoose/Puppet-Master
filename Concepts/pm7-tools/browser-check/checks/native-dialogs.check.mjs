@@ -69,11 +69,10 @@ async function exportPdf(t, f, tag, sandboxed) {
 }
 
 export default async function (t) {
-	for (const where of ['normal page', 'sandboxed preview']) {
-		let f;
-		if (where === 'normal page') { await t.app.open(); f = t.page.mainFrame(); }
-		else f = await t.openInSandbox(t.cfg.pageUrl + (t.cfg.pageUrl.includes('?') ? '&' : '?') + 'o55=off&cb=' + Date.now(), { ready: '.app-shell' });
-		await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1', null, { timeout: 60000 });
+	// both surfaces, unless --set sandbox picks one
+	for (const surface of t.app.surfaces()) {
+		const where = surface === 'sandbox' ? 'sandboxed preview' : 'normal page';
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		await watchNative(f);
 		await oldTerminalOutOfReach(t, f, where);
 		await exportPdf(t, f, where, where === 'sandboxed preview');

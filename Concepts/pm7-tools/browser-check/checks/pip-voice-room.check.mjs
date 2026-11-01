@@ -3,21 +3,11 @@
 // one player's offline render has a tail with the room and none dry; a real click, then Pip's voice live, raises no
 // page error.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/pip-voice-room.check.mjs [--set page=<build>]
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 
-async function frameFor(t, mode) {
-	if (mode === 'normal') { await t.app.open(); return t.page.mainFrame(); }
-	const html = path.join(t.run.dir, 'sandbox-voice.html');
-	fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%;overflow:hidden}iframe{border:0;width:100vw;height:100vh;display:block}</style><iframe sandbox="allow-scripts allow-popups allow-forms allow-modals" src="${t.cfg.pageUrl}${t.cfg.pageUrl.includes('?') ? '&' : '?'}cb=${Date.now()}&o55=off"></iframe>`);
-	await t.goto(pathToFileURL(html).href, { settleMs: 1000 });
-	let f = null;
-	for (let i = 0; i < 150 && !f; i++) { f = t.page.frames().find((x) => x !== t.page.mainFrame() && /cb=/.test(x.url())); if (!f) await t.page.waitForTimeout(200); }
-	await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000 });
-	await t.check('sandbox: storage blocked', await f.evaluate(() => { try { localStorage.getItem('x'); return false; } catch (e) { return true; } }));
-	return f;
-}
+// the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
+const frameFor = (t, mode) => t.app.open({ sandbox: mode === 'sandbox', settleMs: 1000 });
+// a case runs on its own surface unless --set sandbox picks the other one
+const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
 async function voiceRoom(t, mode) {
 	const f = await frameFor(t, mode);
@@ -44,6 +34,6 @@ async function voiceRoom(t, mode) {
 }
 
 export const tests = {
-	'voice room normal': (t) => voiceRoom(t, 'normal'),
-	'voice room sandbox': (t) => voiceRoom(t, 'sandbox')
+	'voice room normal': on('normal', voiceRoom),
+	'voice room sandbox': on('sandbox', voiceRoom)
 };

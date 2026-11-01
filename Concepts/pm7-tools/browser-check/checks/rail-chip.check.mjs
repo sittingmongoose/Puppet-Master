@@ -128,8 +128,7 @@ async function pass(t, f, kind, steps, sizes, out) {
 }
 
 export default async function (t) {
-	await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
-	const f = t.page;
+	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });   // the page, or T3's sandbox (--set sandbox=1)
 	await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win .o55-raillist'), null, { timeout: 60000 });
 	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });   // --set motion=reduce: under Reduce Motion
 	const go = (ids) => f.evaluate((pick) => {

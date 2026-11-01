@@ -3,25 +3,15 @@
 // 1390 and 1920 sizes: no paper line is cut (its text is no wider than its box) and no two labels on one baseline are
 // closer than 4 px, in Crew, Review, BrainStorm and Chat Room.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/plate-text.check.mjs [--set page=<build>]
-import fs from 'node:fs';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 
 const LOOKS = ['retro-light', 'retro-dark', 'basic-light', 'glass-dark', 'friendly-light', 'nier-dark'];
 const SIZES = [[1390, 900], [1920, 1080]];
 const KINDS = ['crew', 'review', 'brainstorm', 'chat_room'];
 
-async function frameFor(t, mode) {
-	if (mode === 'normal') { await t.app.open(); return t.page.mainFrame(); }
-	const html = path.join(t.run.dir, 'sandbox-plate.html');
-	fs.writeFileSync(html, `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;height:100%;overflow:hidden}iframe{border:0;width:100vw;height:100vh;display:block}</style><iframe sandbox="allow-scripts allow-popups allow-forms allow-modals" src="${t.cfg.pageUrl}${t.cfg.pageUrl.includes('?') ? '&' : '?'}cb=${Date.now()}&o55=off"></iframe>`);
-	await t.goto(pathToFileURL(html).href, { settleMs: 1000 });
-	let f = null;
-	for (let i = 0; i < 150 && !f; i++) { f = t.page.frames().find((x) => x !== t.page.mainFrame() && /cb=/.test(x.url())); if (!f) await t.page.waitForTimeout(200); }
-	await f.waitForFunction(() => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000 });
-	await t.check('sandbox: storage blocked', await f.evaluate(() => { try { localStorage.getItem('x'); return false; } catch (e) { return true; } }));
-	return f;
-}
+// the page, or T3's sandbox at t.openInSandbox's default flags (an opaque origin, no storage, no modals), as the kit opens it
+const frameFor = (t, mode) => t.app.open({ sandbox: mode === 'sandbox', settleMs: 1000 });
+// a case runs on its own surface unless --set sandbox picks the other one
+const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 async function look(t, f, name) {
 	const [family, mode] = name.split('-'), nier = family === 'nier';
 	await f.evaluate(async ([fam, m, n]) => { if (window.PM_NIER) await PM_NIER.set(n, { persist: false }); if (!n) PM_THEME.setFamily(fam, { persist: false }); PM_THEME.setMode(m, { persist: false }); }, [family, mode, nier]);
@@ -71,6 +61,6 @@ async function plates(t, mode) {
 }
 
 export const tests = {
-	'plates normal': (t) => plates(t, 'normal'),
-	'plates sandbox': (t) => plates(t, 'sandbox')
+	'plates normal': on('normal', plates),
+	'plates sandbox': on('sandbox', plates)
 };
