@@ -403,7 +403,15 @@
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
   const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
+  /* the unclaimed Server a new-Server route finds, named as the kind and NAS brand it is (GLM-2, p3) */
+  const NAS_HOST = { unraid: 'tower.local', synology: 'diskstation.local', qnap: 'qnap-nas.local' };
+  function unclaimedFor(env, kind, platform) {
+    if (kind === 'cloud') return env.unclaimedCloud;
+    if (kind === 'pc') return Object.assign({}, env.unclaimed, env.unclaimedPc || {});
+    const h = NAS_HOST[platform]; return h ? Object.assign({}, env.unclaimed, { name: h, address: h, seed: env.unclaimed.seed + ':' + platform }) : env.unclaimed;
+  }
   O55.fixtures = {
+    unclaimedFor,
     PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders, DEMO,
     make(scenario) {
       const e = base();

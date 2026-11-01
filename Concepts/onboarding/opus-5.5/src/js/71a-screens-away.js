@@ -26,7 +26,7 @@
   function proxyFile(S) {
     const d = md(S), A2 = window.PM51 && window.PM51.sysAway;
     if (!A2 || typeof A2.awayConfig !== 'function' || !FILE_NAME[d.proxy_kind]) return null;
-    const kind = (S.sess.server || {}).kind, u = (kind === 'cloud' ? S.env.unclaimedCloud : kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed) || {};
+    const sv = S.sess.server || {}, u = O55.fixtures.unclaimedFor(S.env, sv.kind || 'nas', sv.platform) || {};
     const host = String(d.proxy_hostname || '').replace(/^https:\/\//, '').replace(/\/$/, '');
     try { return { name: FILE_NAME[d.proxy_kind], text: A2.awayConfig({ proxy: KIND_NAME[d.proxy_kind], domain: host }, u.address) }; } catch (_) { return null; }
   }
@@ -234,7 +234,7 @@
       if (pf) out += `<div class="o55-codeline" data-key="pxfile"><code>${U.esc(pf.text)}</code>${F.copyBtn(pf.text, 'pxfile')}</div>${F.copyNote('pxfile')}`
         + `<div class="o55-sublinks" data-key="pxdownload">${O55.tips.opt('download:pxfile', `<a class="o55-btn o55-secondary o55-small" data-key="pxdl" download="${U.esc(pf.name)}" href="data:application/octet-stream;charset=utf-8,${encodeURIComponent(pf.text)}" data-pm-hover-exempt="true">${U.esc(T('away.setup.px.download'))}</a>`, 'o55-opt-inline', 'span')}</div>`;
       if (a.state === 'pending' && st) out += C.note(st.wait || T('server.confirm.pendingHost'), 'info', 'server');
-      if (a.link) out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
+      if (a.link && a.state !== 'failed') out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
         + `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>`
         + (a.code ? `<div class="o55-codeline" data-key="rcode"><code>${U.esc(a.code)}</code>${F.copyBtn(a.code, 'rcode')}</div>` : '') + `</div></div>`
         + F.copyNote('rlink') + F.copyNote('rcode') + `<p class="o55-hint" data-key="rlink-hint">${U.esc(T('away.setup.rl.share'))}</p>`;

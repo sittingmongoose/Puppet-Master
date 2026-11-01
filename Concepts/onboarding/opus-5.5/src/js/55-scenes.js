@@ -56,18 +56,23 @@
       state(S) { const st = op(S, 'check:here'); return st && st.state === 'running' ? 'checking' : st && st.state === 'done' ? (S.env.here.internet ? 'checked' : 'offline') : 'enter'; },
       vars: (S) => ({ prop: WHERE[S.sess.ui.where || 'this'] })
     },
-    'c-route': { props: (S, h) => { const m = cdr(S).remote_mode, c = choice(h, 'route', m || 'local_or_vpn'); return [P('laptop', 'pairA'), P(far(c.v) ? 'globe' : 'house', 'pairB', { preview: c.preview && far(c.v) !== far(m) })]; }, state: () => 'enter' },
+    'c-route': { props: (S, h) => { const m = cdr(S).remote_mode, c = choice(h, 'route', m || 'local_or_vpn'); return [P('laptop', 'pairA'), P(far(c.v) ? 'globe' : 'house', 'pairB', { preview: c.preview && far(c.v) !== far(m) })]; }, state: () => 'enter', state: (S) => { const op = (S.sess.ops || {})['discover:connect:' + (S.env.here.vpn ? 'vpn' : 'lan')]; return op && op.state === 'done' ? 'found' : 'enter'; } },
     'c-review': { props: (S, h) => { const c = choice(h, 'pairing', cdr(S).connection_pairing || 'approval'); return [P('phone', 'pairA'), P({ qr: 'qr', code: 'key' }[c.v] || 'idcard', 'pairB', { preview: c.preview })]; }, vars: (S) => ({ method: cdr(S).connection_pairing || 'approval' }) },
-    'c-pair': { props: two('idcard', 'qr') },
-    'c-ready': { props: () => [P('laptop', 'pairA'), P('server', 'pairB')] },
+    /* (p5: Pip follows each step's progress with the lines already written for it) */
+    'c-pair': { props: two('idcard', 'qr'), state: (S) => { const c = S.sess.connect || {}, m = cdr(S).connection_pairing; return c.paired ? 'done' : m === 'qr' ? 'qr' : m === 'approval' ? 'waiting' : 'enter'; } },
+    'c-ready': { props: () => [P('laptop', 'pairA'), P('server', 'pairB')], state: (S) => { const s = (S.env.pmServers || []).find((x) => x.id === cdr(S).server_ref); return s && !(s.projects || []).length ? 'empty' : 'enter'; } },
     's-kind': { props: (S, h) => { const c = choice(h, 'kind', (S.sess.server && S.sess.server.kind) || 'nas'); return [P({ cloud: 'cloud', pc: 'server' }[c.v] || 'nas', 'side', { preview: c.preview })]; }, vars: (S) => ({ kind: (S.sess.server && S.sess.server.kind) || 'nas' }) },
-    's-wait': { props: two('nas', 'key') },
-    's-confirm': { props: two('server', 'key'), vars: (S) => ({ name: (S.sess.server && S.sess.server.displayName) || '' }) },
-    's-ready': { props: () => [P('server', 'pairA'), P('qr', 'pairB'), P('phone', 'hi')] },
+    's-wait': { props: two('nas', 'key'), state: (S) => { const sv = S.sess.server || {}, op = (S.sess.ops || {})['discover:server:' + (sv.kind || 'nas')]; return sv.kind !== 'cloud' && op && op.state === 'done' ? 'found' : 'enter'; } },
+    's-confirm': { props: two('server', 'key'), vars: (S) => ({ name: (S.sess.server && S.sess.server.displayName) || '' }),
+      state: (S) => { const sv = S.sess.server || {}; return sv.claimed ? 'done' : sv.orRunOk ? 'selfMatch' : sv.orClaimReq && !sv.orClaimErr ? 'working' : 'enter'; } },
+    's-ready': { props: () => [P('server', 'pairA'), P('qr', 'pairB'), P('phone', 'hi')],
+      state: (S) => { const sv = S.sess.server || {}, done = (sv.runDone || {})[sv.pairGen]; return done === 'approved' ? 'approved' : done === 'denied' ? 'denied' : (sv.candidates || []).some((c) => c.state === 'waiting' && c.gen === sv.pairGen) ? 'waiting' : 'enter'; } },
     'r-source': { props: (S, h) => { const c = choice(h, 'source', (S.sess.restore && S.sess.restore.source) || 'kit'); return [P('restore', 'pairA'), P({ folder: 'folder', nas: 'nas', cloud: 'cloud' }[c.v] || 'kit', 'pairB', { preview: c.preview })]; }, vars: (S) => ({ source: (S.sess.restore && S.sess.restore.source) || 'kit' }) },
     'r-unlock': { props: two('kit', 'lock') },
     'r-pick': { props: two('restore', 'clipboard') },
-    'r-preview': { props: one('restore'), work: true },
+    'r-preview': { props: one('restore'), work: true, state: (S) => { const r = S.sess.restore || {}, st = (S.sess.ops || {})['restore:' + r.pick]; return st && st.state === 'done' ? 'done' : st && st.state === 'running' ? 'working' : 'enter'; } },
+    /* (p6: the way in being set up: Pip says what each moment is) */
+    'away-setup': { props: () => [P('house', 'pairA'), P('globe', 'pairB')], state: (S) => { const a = S.sess.awaySetup || {}; return a.state === 'done' ? 'done' : a.state === 'later' ? 'later' : a.state === 'waiting' ? 'waiting' : a.state === 'running' ? 'working' : 'enter'; } },
     'r-done': { props: () => [P('restore', 'pairA'), P('page', 'pairB')] },
     begin: {
       props(S, h) {
@@ -95,7 +100,7 @@
       },
       vars: (S) => ({ kind: md(S).history_backend === 'jujutsu' ? 'jujutsu' : 'git' })
     },
-    away: { props: (S, h) => { const any = h ? h !== 'pick:home' : !['local_or_vpn', 'none'].includes(md(S).remote_mode); return any ? [P('house', 'pairA', { preview: !!h }), P('globe', 'pairB', { preview: !!h })] : [P('house', 'side', { preview: !!h })]; },
+    away: { props: (S, h) => { const any = h ? h !== 'pick:home' && h !== 'pick:vpn' : !['local_or_vpn', 'none'].includes(md(S).remote_mode); return any ? [P('house', 'pairA', { preview: !!h }), P('globe', 'pairB', { preview: !!h })] : [P('house', 'side', { preview: !!h })]; },
       vars: (S) => ({ mode: ['local_or_vpn', 'none'].includes(md(S).remote_mode) ? 'home' : 'anywhere' }) },
     review: { props: (S) => [P('clipboard', 'side', { params: { ticks: ticks(S), rows: 4 } })], state: (S) => (md(S).project_mode === 'later' ? 'later' : ticks(S) >= 4 ? 'checked' : 'enter'), vars: (S) => ({ done: ticks(S), total: 4 }) },
     creating: {
@@ -151,7 +156,7 @@
     'nas-signin': { props: () => [P('nas', 'pairA'), P('key', 'pairB'), P('lock', 'hi', { scale: 0.8 })] },
     /* the owner's own operation key (70-screens-nas.js installKey: kept from when it started) */
     'nas-install': { props: nasWith('key'), work: true, state: (S) => { const n = S.sess.nas || {}, st = op(S, n.opKey || 'sshinstall:' + (n.device || '') + ':' + (n.key || 'new')); return (st && st.state === 'done') || n.installed ? 'done' : 'enter'; } },
-    'nas-pmpair': { props: nasWith('qr') },
+    'nas-pmpair': { props: nasWith('qr'), state: (S) => { const n = S.sess.nas || {}; return n.paired ? 'done' : n.pairAsked && (n.pairing || 'approval') === 'approval' ? 'waiting' : 'enter'; } },
     'nas-folder': { props: nasWith('folder'), state: (S) => ((S.sess.nas || {}).purpose === 'storage' ? 'storage' : 'enter'), vars: (S) => ({ path: String((S.sess.nas || {}).at || '').split('/').pop() }) },
     'nas-smb': { props: nasWith('folder') },
     'nas-nfs': { props: nasWith('folder') },
@@ -169,7 +174,9 @@
     let props = [];
     try { props = sc.props(S, o.hover || null) || []; } catch (e) { props = []; }
     let lid = h || (sc.state ? sc.state(S) : 'enter');
-    if (o.typing && has(id, 'typing')) lid = 'typing';
+    /* (p25: a field with a line of its own gets it: typing:<bind>) */
+    if (o.typing && has(id, 'typing:' + o.typing)) lid = 'typing:' + o.typing;
+    else if (o.typing && has(id, 'typing')) lid = 'typing';
     let mood = (FACES[id] && FACES[id][lid]) || (h ? 'watch' : 'idle');
     /* Pip parts (S9, onboarding and the chat only): watches, wonders-while-typing, oops, role-props */
     const part = O55.pipStage.h.part;

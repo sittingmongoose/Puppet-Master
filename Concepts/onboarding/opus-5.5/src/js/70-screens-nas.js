@@ -93,7 +93,7 @@
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
-            .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+            .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
           const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
           about = '';
@@ -186,7 +186,7 @@
       const d = dev(S), hs = hostState(S), n = N(S);
       let out = C.identity(d.hostKey, words(d.hostKey), d.name + ' · ' + d.address);
       if (hs === 'known' || n.trusted) out += C.note(hs === 'known' ? T('nas.identity.known', { name: d.name }) : T('chrome.alreadyDone'), 'ok', 'check');
-      if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedTitle', { name: d.name }))}</span></div>`;
+      if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedWarn', { name: d.name }))}</span></div>`; /* (p28: not the title again) */
       /* RV-5: the fingerprint is what to compare (a device's own settings show it, never Puppet Master's picture), so
          it is in plain view, not folded away */
       out += `<div data-key="fp">${C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : []))}</div>`;
@@ -201,7 +201,8 @@
     },
     do: {
       trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
-      trustNew(S) { N(S).acceptedNew = true; S.save(); O55.ui.refresh(); },
+      /* (p23: I reset it is the trust itself: the new ID is kept and the key step follows) */
+      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       stop(S) { O55.ui.back(); }
     }
   });
@@ -533,6 +534,8 @@
   /* The Server owner's pairing, as on Connect: the device's identity first, then approval from a device that already
      uses it, its code or its QR. Nothing is paired until the owner reports approval, no SSH key is added, and the
      person may use SSH instead. Turning away from a pairing cancels it and records nothing. */
+  /* (p20: the device the work already runs on is not another network drive for it) */
+  const workOn = (S) => { const p = (S.env.pmServers || []).find((x) => x.id === md(S).server_ref); return md(S).server_mode !== 'this_device' && p ? p.device : null; };
   const pmOf = (S) => { const d = dev(S); if (!d) return null; return S.env.pmServers.find((p) => p.device === d.id) || { id: 'pm:' + d.id, name: d.name, address: d.address, seed: d.hostKey, approver: '', code: '' }; };
   const pairKey = (S, part) => 'pmpair' + (part || '') + ':' + N(S).device + ':' + (N(S).pairTry || 0);
   const PAIR_MS = 600000;
@@ -630,6 +633,7 @@
         out += F.phases(S, pairKey(S), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
         const st = F.state(S, pairKey(S));
         const waiting = !fail && st && st.state === 'running' && (st.phases || []).some((ph) => (ph.key === 'approve' || ph.key === 'qr') && ph.status === 'active');
+        if (waiting && m === 'approval') { let w = ''; try { w = [...new Set(O55.art.identity(String(p.id) + ':candidate:' + U.slug(S.env.client.name)).words)].slice(0, 3).join(' '); } catch (_) {} out += `<p class="o55-hint" data-key="mywords">${U.esc(T('connect.pair.yourWords', { name: p.name, words: w }))}</p>`; } /* (M2) */
         if (waiting && m === 'approval') {
           const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
@@ -656,7 +660,8 @@
     foot(S) {
       const n = N(S);
       if (!n.pairAsked) return { secondary: [{ label: T('nas.pmpair.useSsh'), do: 'useSsh' }], primary: { label: T('nas.pmpair.pair'), do: 'pair' } };
-      if (!n.paired) return { secondary: [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: n.pairFail || pairExpired(S) ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }) } };
+      const paneHasAnother = (PM_FAIL_ACTIONS[(n.pairFail && n.pairFail.code) || n.pairFail] || []).some((x) => x.do === 'another'); /* (p22: once) */
+      if (!n.paired) return { secondary: paneHasAnother ? [] : [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: n.pairFail || pairExpired(S) ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }) } };
       const ps = F.state(S, pairKey(S, 'perms'));
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(ps && ps.state === 'done'), reason: T('chrome.working') } };
     },

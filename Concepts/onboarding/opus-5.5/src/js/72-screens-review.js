@@ -78,7 +78,7 @@
   function filesAt(S) {
     const d = md(S);
     if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref;
-    if (d.storage_mode === 'with_server') return T('name.withServer', { name: P().serverName(S) });
+    if (d.storage_mode === 'with_server') return P().serverName(S); /* (p14: "Files kept in · Garage Pi") */
     if (d.storage_mode === 'network_location') return d.storage_location.replace(/^[a-z]+:/, '');
     if (d.local_location_mode === 'custom' && d.local_location) return d.local_location;
     return P().docsPath(S, d.project_name);

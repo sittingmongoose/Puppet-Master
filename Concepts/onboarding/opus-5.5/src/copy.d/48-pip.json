@@ -1368,6 +1368,11 @@
           "title": "Create a Project now",
           "text": "Goes back to make your first Project now. What you already set up stays as it is.",
           "expert": "Returns to Begin to create the first Project now; what's already set up is kept."
+        },
+        "summary:away": {
+          "title": "Away from home",
+          "text": "Reaching it when you're out isn't set up yet. Finish it any time in Settings.",
+          "expert": "The remote route was left for later; Settings › Server & Project Location › Away From Home sets it up."
         }
       },
       "nas-find": {
@@ -1523,13 +1528,13 @@
       "nas-pmpair": {
         "useSsh": {
           "title": "Use SSH instead",
-          "text": "Connect with a key instead of pairing. Only needed if you would rather not pair with its Puppet Master.",
-          "expert": "Use SSH with a key instead of pairing with the device's Puppet Master."
+          "text": "Connect with a key instead of pairing. Helps when the device answers but its Puppet Master doesn't.",
+          "expert": "Use SSH with a key instead of pairing with the device's Puppet Master; works when SSH is reachable and Puppet Master isn't."
         },
         "another": {
           "title": "Choose another way",
-          "text": "Pick a different way to approve this computer, like a code instead of a request.",
-          "expert": "Choose another pairing method (code or QR instead of approval)."
+          "text": "Pick a different way to approve this computer.",
+          "expert": "Choose another pairing method."
         },
         "field:pmcode": {
           "title": "Code from the device",
@@ -1587,7 +1592,7 @@
         "start": {
           "title": "Set it up",
           "text": "Starts setting up the way you chose to reach your Server away from home. Each step says what it is doing.",
-          "expert": "Starts the Remote Access owner's setup for the reviewed route; each step is a separate owner command."
+          "expert": "Starts setting up the reviewed way in; each step runs and reports on its own."
         },
         "later": {
           "title": "Do this later",
@@ -1712,7 +1717,8 @@
         "group:suggest": "That name suits it.",
         "working": "Making it yours…",
         "selfMatch": "Same words? Then tick the box.",
-        "done": "It's yours now!"
+        "done": "It's yours now!",
+        "typing:code": "A code! Read it carefully."
       },
       "s-ready": {
         "enter": "Your Server is ready! Bring friends.",
@@ -1934,7 +1940,8 @@
         "notAdded": "That key isn't on it yet. I'll add it.",
         "pick:new": "A brand-new key, just for me!",
         "typing": "A passphrase. I won't peek.",
-        "testing": "Testing the key…"
+        "testing": "Testing the key…",
+        "typing:sshUser": "Which account? Type away."
       },
       "nas-signin": {
         "enter": "Just once, to add your key.",
@@ -1968,6 +1975,13 @@
       "nas-mounted": {
         "enter": "Which drive is it on?",
         "group:volume": "That drive? Easy."
+      },
+      "away-setup": {
+        "enter": "Let's set up the way in.",
+        "working": "Setting it up…",
+        "waiting": "Your turn. I'll wait.",
+        "done": "Done! Reachable away from home.",
+        "later": "Later is fine. It keeps."
       }
     },
     "oops": {
@@ -2032,7 +2046,9 @@
           "ownerFail": "The Server turned that step down.",
           "evidenceMissing": "I couldn't confirm that step finished.",
           "pendingHost": "No answer from the Server yet…",
-          "tickWords": "Compare the words, then tick the box."
+          "tickWords": "Compare the words, then tick the box.",
+          "codeFirst": "I need the setup code first.",
+          "codeFirstCloud": "I need the console's code first."
         },
         "ready": {
           "staleReq": "That request used the old code.",
@@ -2041,7 +2057,10 @@
           "replayAdopt": "That answer was used already.",
           "codeMissing": "We need a new code first.",
           "wordsMissing": "I can't see its words. Ask again?",
-          "tickWords": "Check the words first, then tick."
+          "tickWords": "Check the words first, then tick.",
+          "staleApprove": "That answer was for an earlier request.",
+          "wrongApprove": "That answer was meant for someone else!",
+          "wrongClaim": "That answer was for another Server!"
         }
       },
       "restore": {
@@ -2069,7 +2088,8 @@
           }
         },
         "identity": {
-          "changedTitle": "Wait! Its ID has changed."
+          "changedTitle": "Wait! Its ID has changed.",
+          "changedWarn": "Wait! That fingerprint is new."
         },
         "key": {
           "passEmpty": "I need the passphrase first.",
@@ -2188,7 +2208,9 @@
         "path": "Just the address, nothing after it.",
         "query": "Nothing after a ? or a #, please.",
         "short": "That's too short for a Remote Link.",
-        "long": "That's too long for a Remote Link."
+        "long": "That's too long for a Remote Link.",
+        "linkSpaces": "No spaces in a link, please.",
+        "linkScheme": "That's a web address, not the link."
       }
     },
     "cheer": {
@@ -2253,7 +2275,9 @@
           "ownerFail": "Accepted this time!",
           "evidenceMissing": "Confirmed. All good.",
           "pendingHost": "There it is. Answered!",
-          "tickWords": "Words checked. Approve away!"
+          "tickWords": "Words checked. Approve away!",
+          "codeFirst": "Got the code!",
+          "codeFirstCloud": "Got the code!"
         },
         "ready": {
           "staleReq": "New request. Much better.",
@@ -2262,7 +2286,10 @@
           "replayAdopt": "All sorted.",
           "codeMissing": "Fresh code. Go!",
           "wordsMissing": "There are the words.",
-          "tickWords": "Words checked!"
+          "tickWords": "Words checked!",
+          "staleApprove": "Current answer. All good.",
+          "wrongApprove": "Right device this time.",
+          "wrongClaim": "Right Server this time."
         }
       },
       "restore": {
@@ -2290,7 +2317,8 @@
           }
         },
         "identity": {
-          "changedTitle": "New ID trusted. Carry on."
+          "changedTitle": "New ID trusted. Carry on.",
+          "changedWarn": "New ID trusted. Carry on."
         },
         "key": {
           "passEmpty": "Unlocked. Thank you!",
@@ -2409,7 +2437,9 @@
         "path": "All clear now.",
         "query": "Nice and clean!",
         "short": "That fits now!",
-        "long": "That fits now!"
+        "long": "That fits now!",
+        "linkSpaces": "That link looks right!",
+        "linkScheme": "That's the link!"
       }
     },
     "oopsAny": {
