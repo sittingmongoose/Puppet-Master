@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L265-L2058
 
-Source SHA256: `eff67b42326af9f8db77404ad46ca47c8f27c4eab707ad1f51be345cd095044a`
+Source SHA256: `08ee186752cc01d0c87586113e20efa00b71c9310c490fa113cc7e7e5254caf5`
 
 ---
 
@@ -187,7 +187,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0004
-- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+- 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens:
 - orchestration

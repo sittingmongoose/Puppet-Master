@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L1781-L2555
 
-Source SHA256: `bca46d52289ecdc78cff843b7d711ef8767367b474cab0281d25e7bafd6dc704`
+Source SHA256: `24865422702cec8e4b3b3384e63636d852a2a8d75ccfea33b632dc7e88973ab5`
 
 ---
 
@@ -242,9 +242,9 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   writes, endpoint mutation or PM trust before their existing commit/Review boundaries.
 
 
-  DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only
+  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only
   forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
-  variants. A retired forgejo_cloud value is not a valid current instance, adapter or setup-plan profile and
+  variants. A retired hosted variant value is not a valid current instance, adapter or setup-plan profile and
   grants no account, repository or connection authority. Returning to a self-managed choice still requires its
   explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
   existing account-based identification, authentication and repository selection remain unchanged, with no new
@@ -402,8 +402,8 @@ acceptance_criteria:
 - 'DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
   list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
   writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
-- 'DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired forgejo_cloud
+- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed
+  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired hosted variant
   value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
   authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
   Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
@@ -459,7 +459,7 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
-- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+- 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens:
 - Continue Setup

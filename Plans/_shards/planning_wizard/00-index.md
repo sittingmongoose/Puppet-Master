@@ -1,40 +1,40 @@
 # Shard Index: Plans/Planning_Wizard.md
 
-Generated: 2026-11-01T17:59:53Z
+Generated: 2026-11-01T18:17:54Z
 
-Source SHA256: `bca46d52289ecdc78cff843b7d711ef8767367b474cab0281d25e7bafd6dc704`
+Source SHA256: `24865422702cec8e4b3b3384e63636d852a2a8d75ccfea33b632dc7e88973ab5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L5 `780d826ff30dc30f38007a896e8d206b4448f44495ce697ad3b41a1d3e2d3812`
-- [002 - 0. Scope](002-0.-scope.md) L7-L9 `8b748e2b553000d62b1420e881f941e268ccd3bbc2ea90d3c9f769c47d91feb5`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L16 `2b46c5b8c828d0a0f6edcf99a99e49809feb3f4056b66353a97202a0e2f7d99f`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L19-L97 `cb186751f317a8f7c7b51549d72391ae34cae634d5fc61c0e978a3e186f1f3e9`
-- [005 - GUI approval and Plan Compile launch repair addendum (2026-07-02)](005-gui-approval-and-plan-compile-launch-repair-addendum-2026-07-02.md) L99-L1154 `474b87e009dae825fa6827c3d2fe6c1ee665282edf0280f2eab46343a213588f`
-- [006 - Assistant redesign: BSD, Wonderer and Grill Me in the Planning Wizard start flow (2026-09-03)](006-assistant-redesign-bsd-wonderer-and-grill-me-in-the-planning-wiz.md) L1158-L1241 `f27912b8c36af08468cf0edb24b39a70f96a184847a920de94e008a8bf5f833d`
-- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L1243-L1245 `31c4a2d010ee4404fa616fc9e9e04b07d8aefc25704a830546db80b51b624640`
-- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L1248-L1250 `5e882c7d6289ce65312482b486df3b625636346e9d3bd5e9e57cb5c4d9b30c4a`
-- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L1253-L1255 `69449e36663237ccfddf299ef915efa0fc4ab91bee0768c490629c44d2ed5319`
-- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L1258-L1262 `5afbd06095689ab5badce5fee5edd6e3abcea8b587d59f026ed6b9b18a21755a`
-- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L1265-L1267 `2bd7834cdc88203425713f8a6d9b1b6ff8ca66ef3e211112d5225f8ded378305`
-- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L1270-L1272 `3eab7246823248da2f38309105328dd71dbb7f10eacbf40c904a3e3b111d7391`
-- [013 - Ledger Compile Addendum - pldg-20260622-001-fff](013-ledger-compile-addendum-pldg-20260622-001-fff.md) L1274-L1319 `a8e2ae3e4fc66a43fe7ddfd86f339b5ff1596819d73dd7b733de5bdb42c6d0eb`
-- [014 - Ledger Compile Addendum - pldg-20260626-001-feature-name](014-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1322-L1472 `97f7dc3d1bb6b976b2f90665854d6398ff382c6ca65e51198af66eb3ceb4c77b`
-- [015 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1474-L1562 `0caf579f6c67c371fd86c9b3ea2292317640d66d91c22892878243c7d58d3654`
-- [016 - Implementation Readiness Gate Addendum - 2026-07-05](016-implementation-readiness-gate-addendum-2026-07-05.md) L1564-L1636 `ace981035edc7c62a6beec30d9bf362534e766bba73fa21d48516ea6d4199dfe`
-- [017 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1637-L1643 `3a04c93fa674aff0b11c48f79398e5ef21dd929feace085b244577c3b2c25d87`
-- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1645-L1654 `eb404c44b69655ad617d28e4b35de2f2686f6d342cc38e310f3ce966ac454925`
-- [019 - PMConcept6 Concept Promotion Addendum - 2026-07-11](019-pmconcept6-concept-promotion-addendum-2026-07-11.md) L1656-L1711 `53b19f281e3cc5d3760f50c43a976f640d8056409a385f0eda5534b47d980de2`
-- [020 - PMConcept6 Shell Sweep Addendum - 2026-07-16](020-pmconcept6-shell-sweep-addendum-2026-07-16.md) L1713-L1769 `336841e8e65df06726d734236d0bd00aea38f59713ebff4e63849da99d45fd37`
-- [021 - PMConcept7 Concept Promotion Addendum - 2026-07-23](021-pmconcept7-concept-promotion-addendum-2026-07-23.md) L1771-L1773 `8de7bc4439d713b003dedde4fe15ae6aa8dfcd2142706e71e6b91a7878a9e2a1`
-- [022 - Named Plan consumer scope (2026-09-27)](022-named-plan-consumer-scope-2026-09-27.md) L1775-L1779 `d4000fbc0494f0095d6f37d060f3d2266e63d618fd0c8b1004957a8057e74311`
-- [023 - Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)](023-product-onboarding-and-guided-tour-owner-addendum-reconciled-202.md) L1781-L2555 `b27106c1eac8b3e36341c21f7ec50f1bafeec2749d346613c25ee52ecf444996`
-- [024 - Product Onboarding route-and-review correction addendum - 2026-09-01](024-product-onboarding-route-and-review-correction-addendum-2026-09-.md) L2557-L2836 `cd00ed23c36f78b33350c7b515d3ceacc1568d4039332c55bd6b685ef8397530`
-- [025 - Forge/Backup/tsnet Product Onboarding consumer addendum - 2026-09-01](025-forge-backup-tsnet-product-onboarding-consumer-addendum-2026-09-.md) L2838-L3252 `614e6b5ae68a82ec2693168fd8d1d7cc1bcef80d25a9de3167a61daa0df47efe`
-- [026 - Notebook Topic Research Addendum (2026-09-05)](026-notebook-topic-research-addendum-2026-09-05.md) L3254-L3287 `29d8cb80f7af9d2821e7c941d4514fd8d939e513ebe9fab01714e62e271203f3`
-- [027 - DL-036 research and audit decision review in planning - 2026-09-09](027-dl-036-research-and-audit-decision-review-in-planning-2026-09-09.md) L3290-L3378 `afbd5c57533cf126731142c11d007e8c1a97bbd1b2b0a0906981bfec089a47f5`
-- [028 - Bounded Seal Acceptance Addendum - 2026-09-17](028-bounded-seal-acceptance-addendum-2026-09-17.md) L3380-L3496 `a77ab2718b9b3d93471bd3d1fa3aeffa63d6c221fbb60e4e7861aab1d369eda9`
-- [029 - Files reached through another Puppet Master addendum - 2026-09-25](029-files-reached-through-another-puppet-master-addendum-2026-09-25.md) L3498-L3610 `425ca886b0865e50bb437e7dd1bb1f7ad47be7c623e83f9417d84c6a59df3bed`
-- [030 - DL-180 — The Tour's Workspace Chapter Teaches Panels (2026-10-09)](030-dl-180-the-tour-s-workspace-chapter-teaches-panels-2026-10-09.md) L3612-L3840 `9b625e776b2000569564e3d276ea47adac34be772d06ca2d40c684be8ff2d77f`
+- [001 - Preamble](001-preamble.md) L1-L5 `5d8d7d801004a34c4db81f9e3022af66b9b2972daa55db43600b40af32457a29`
+- [002 - 0. Scope](002-0.-scope.md) L7-L9 `eb07b931551b669e8223893f23b02260d16803bd675122f3ea69dbcf2bc2c0a6`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L16 `43f98af805dc12bfc3b1a702e1040ab244ceba40a2e15e7e5b1b5462d1886f53`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L19-L97 `5801ebc3375ab95d417bf50b580227a4b9d72ef2d947bc5705465bdce834f643`
+- [005 - GUI approval and Plan Compile launch repair addendum (2026-07-02)](005-gui-approval-and-plan-compile-launch-repair-addendum-2026-07-02.md) L99-L1154 `b9547509b8d732af5ce42aba8c072938695c4bebffc0c02071b66c4ff62dad6e`
+- [006 - Assistant redesign: BSD, Wonderer and Grill Me in the Planning Wizard start flow (2026-09-03)](006-assistant-redesign-bsd-wonderer-and-grill-me-in-the-planning-wiz.md) L1158-L1241 `d08125089076c274bdf0d57d910e76c7e80afe65f0eaae60f673fa575583a568`
+- [007 - 3. Contracts, Schemas, Events, Or Data Shapes](007-3.-contracts-schemas-events-or-data-shapes.md) L1243-L1245 `de44bac4796f55c6458822586a253913270631d1db4ab3cb848969005fa2135a`
+- [008 - 4. Integration Surfaces](008-4.-integration-surfaces.md) L1248-L1250 `b78a08deb5dcd7831e3e7eca9e6a7669c7db9de1c9db078da61f177bdbad230b`
+- [009 - 5. Validation And Acceptance](009-5.-validation-and-acceptance.md) L1253-L1255 `4948a57b8d5cdac8e0cc17e6f51bb01d9ec47d501a8633fb9f1eb4ac96337245`
+- [010 - 6. Plan-To-Node Readiness](010-6.-plan-to-node-readiness.md) L1258-L1262 `92dc1fb06107d23e480b5663d890e849d8fac926b454bce765c521c693d20085`
+- [011 - 7. Deferred, Retired, Compatibility, And Non-Goals](011-7.-deferred-retired-compatibility-and-non-goals.md) L1265-L1267 `cd8a1c7617ddab23e787ebc836c2666cf734dda175485d051fdc7147e22127bf`
+- [012 - 8. Source Lineage And Governance](012-8.-source-lineage-and-governance.md) L1270-L1272 `a99b67d434f73abcb86ba43aaabcd0bb914f7038ef6e12e34ad37c3ed151829e`
+- [013 - Ledger Compile Addendum - pldg-20260622-001-fff](013-ledger-compile-addendum-pldg-20260622-001-fff.md) L1274-L1319 `7af05e1d5689dffb089aed5ade20c49cb7a0ea7afcfa69a5f986a42b14322721`
+- [014 - Ledger Compile Addendum - pldg-20260626-001-feature-name](014-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1322-L1472 `b4fd14b43b59e5e247354df5421f83828063a284852dcb51b90d400f084a08de`
+- [015 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](015-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L1474-L1562 `9e3bd801ad16f91c5c39edf53a1d899986f646bfedc185a4a5b5c512af420df3`
+- [016 - Implementation Readiness Gate Addendum - 2026-07-05](016-implementation-readiness-gate-addendum-2026-07-05.md) L1564-L1636 `a12936ab954ed8178565d7220d1a237bf0b9a2e439d0ab1d28b313c422122630`
+- [017 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](017-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1637-L1643 `b65499e40c069d82bf4b27809f8c1230acffe3e2526049727a90610ba4e569e7`
+- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1645-L1654 `d3b4cd4604136e9b8ce12d646ae1207313d564bc80040f731ebd4b7284b468a5`
+- [019 - PMConcept6 Concept Promotion Addendum - 2026-07-11](019-pmconcept6-concept-promotion-addendum-2026-07-11.md) L1656-L1711 `55ea88bd52b48b82f7e58504aab799b01c1cf9d4e1dbb1e37c0fc565470bf05e`
+- [020 - PMConcept6 Shell Sweep Addendum - 2026-07-16](020-pmconcept6-shell-sweep-addendum-2026-07-16.md) L1713-L1769 `271de84710b89175c1d15144577515305ca099a633eeb8bf02a42956c39ca3c2`
+- [021 - PMConcept7 Concept Promotion Addendum - 2026-07-23](021-pmconcept7-concept-promotion-addendum-2026-07-23.md) L1771-L1773 `4ae5212fba73f6bf33a21a753edb79c2f4f39568c7f73ecc05960b3a6b7d4669`
+- [022 - Named Plan consumer scope (2026-09-27)](022-named-plan-consumer-scope-2026-09-27.md) L1775-L1779 `651c1a7f30ce1328a9315081eeb6c88d715a2c5438408404a2af72d0b86f42bb`
+- [023 - Product Onboarding and Guided Tour owner addendum (reconciled 2026-09-10)](023-product-onboarding-and-guided-tour-owner-addendum-reconciled-202.md) L1781-L2555 `a974aff1ab30d8f7f4ca69b65e33f1875727abc34aa9d316e865402a2307c935`
+- [024 - Product Onboarding route-and-review correction addendum - 2026-09-01](024-product-onboarding-route-and-review-correction-addendum-2026-09-.md) L2557-L2836 `d3b00532a1ced9d36bf14b9f8609dd0e7c6ce398bd86c0c5f3d343f05f166b39`
+- [025 - Forge/Backup/tsnet Product Onboarding consumer addendum - 2026-09-01](025-forge-backup-tsnet-product-onboarding-consumer-addendum-2026-09-.md) L2838-L3252 `2ec2fbb32a1d86000183c330dc595f8bab424bda37f6e51690bab46de7002b30`
+- [026 - Notebook Topic Research Addendum (2026-09-05)](026-notebook-topic-research-addendum-2026-09-05.md) L3254-L3287 `9a19d3492dae1578eeb058308bd76c632fd940d685dae7ab08ad7f9aebf815a1`
+- [027 - DL-036 research and audit decision review in planning - 2026-09-09](027-dl-036-research-and-audit-decision-review-in-planning-2026-09-09.md) L3290-L3378 `53be008e6735e8f670e682f23998051b82233b542b9b51ae7c3fbcd4780cc52e`
+- [028 - Bounded Seal Acceptance Addendum - 2026-09-17](028-bounded-seal-acceptance-addendum-2026-09-17.md) L3380-L3496 `522f9111860fe14ace1dfc8f2045e3fbfc25211870b3374a178fb92e15e6100a`
+- [029 - Files reached through another Puppet Master addendum - 2026-09-25](029-files-reached-through-another-puppet-master-addendum-2026-09-25.md) L3498-L3610 `6f91a2610323223488ed3f0df106b002d10f3db25117c268824bf08543078709`
+- [030 - DL-180 — The Tour's Workspace Chapter Teaches Panels (2026-10-09)](030-dl-180-the-tour-s-workspace-chapter-teaches-panels-2026-10-09.md) L3612-L3840 `dcec04b2edf4df708571d8cc0bf1d817ff6dd4b4b009042ee3feeec292902ffd`

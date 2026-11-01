@@ -10676,25 +10676,25 @@
       }
     },
     {
-      "name": "DL273.hosted_Forgejo_instance_retired",
+      "name": "DL273.Forgejo_hosted_instance_refused",
       "definition": "provider_instance_profile",
       "base_valid": "old-api-disabled-git-ready",
       "patch": {
-        "provider_variant": "forgejo_cloud"
+        "provider_variant": "hosted"
       },
       "expected_error": "DL-273 removes hosted Forgejo from current instance profiles"
     },
     {
-      "name": "DL273.hosted_Forgejo_adapter_retired",
+      "name": "DL273.Forgejo_hosted_adapter_refused",
       "definition": "provider_adapter_profile",
       "base_valid": "forgejo_distinct_provider_adapter_profile",
       "patch": {
-        "provider_variant": "forgejo_cloud"
+        "provider_variant": "hosted"
       },
       "expected_error": "DL-273 removes hosted Forgejo from current adapter profiles"
     },
     {
-      "name": "DL273.Forgejo_cloud_host_class_retired",
+      "name": "DL273.Forgejo_hosted_class_refused",
       "definition": "provider_adapter_profile",
       "base_valid": "forgejo_distinct_provider_adapter_profile",
       "patch": {

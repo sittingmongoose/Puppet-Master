@@ -4,7 +4,7 @@
 
 | ID | Jared’s answer | Current disposition |
 |---|---|---|
-| **CODEBERG-NAMING-ADMISSION** | “Yes remove it.” | Closed: no hosted Forgejo choice; Forgejo is self-managed only. Published and stored profiles follow FGI-011. |
+| **HOSTED-FORGEJO-ADMISSION** | “Yes remove it.” | Closed: no hosted Forgejo choice; Forgejo is self-managed only. Published and stored profiles follow FGI-011/015. Hosting terms must permit AI-written Projects. |
 | **FORGEJO-RESTRICTED-TOKEN-IDENTITY** | “we can leave it for now.” | Still open and unchanged. Existing account-based identification, authentication and repository selection remain; no restricted-token support is added or permanently rejected. |
 
 Source: the PM7 lead’s 2026-11-01 message carrying Jared’s answers; recorded in Plans/Decision_Log.md#DL-273. DL-272’s earlier open-question record is annotated with this disposition. D4’s pre-build provider verification remains as ruled.

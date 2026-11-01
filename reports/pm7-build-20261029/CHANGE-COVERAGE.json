@@ -2723,19 +2723,20 @@
       ]
     },
     {
-      "id": "DL273-CODEBERG",
-      "change": "Remove Codeberg and hosted Forgejo choices; Forgejo is self-managed only. Repository-restricted token support remains open and deliberately left for now, with existing account-based behavior unchanged.",
-      "owner": "DL-273; FGI-011; PWIZ-021; PWIZ-024",
+      "id": "DL273-OWN-SERVER-FORGEJO",
+      "change": "Forgejo is a server the person runs; hosted Forgejo is not offered. Hosting terms must permit AI-written Projects. Restricted-token support is deliberately left for now, with current account-based behavior unchanged.",
+      "owner": "DL-273; FGI-011; FGI-015; PWIZ-021; PWIZ-024",
       "wiring": "WM-041; UIW-015; catalog.forge_repository_list (existing route consumes the narrowed owner schema)",
       "commands": "CS-069; UCC-106; ui.onboarding.next; cmd.forge.repository.list (existing ids and owner fences)",
       "settings": "none needed: provider admission policy, no preference or key change",
       "dry": "DR-005",
-      "companions": "Forge/profile and onboarding enums; onboarding_state embedded schema; five DL273 refusal cases and two retained Gitea controls. Fields coverage mirror follows the pushed source SHA.",
+      "companions": "Twelve enum occurrences narrowed across Forge/onboarding/embedded storage schemas; Forgejo adapter host_class self_managed only; five generic hosted-profile refusal cases and two Gitea Cloud controls. Fields coverage mirror follows the pushed source SHA.",
       "state": "covered_by_current_contract_fields_mirror_pending",
       "decision_ref": "DL-273",
       "source_refs": [
-        "Jared 2026-11-01 via PM7 lead: Yes remove it.; we can leave it for now.",
-        "fields8762cda61a658081878344ddff95f9916c1aa0f0"
+        "Jared 2026-11-01 via lead1101175626-78dd and1101175823-8b4a: unnamed hosted-provider removal, AI-written Projects reason, restricted tokens left for now.",
+        "Source proposal3e1842da40cf2e03b48ad62687f95600fcf1d329 (2026-09-02), not a Jared approval.",
+        "fields8762cda61a658081878344ddff95f9916c1aa0f0; f2a9b7a252f589b68cf2862b6b6a2a7c482dfff0"
       ]
     }
   ],
@@ -3188,7 +3189,7 @@
     "new_Touch_profiles": 1,
     "Jared_rulings_changed": false,
     "excluded": [
-      "Codeberg naming or hosted-service decision",
+      "hosted Forgejo naming or hosted-service decision",
       "Demo/Studio situations, hints, prefills, concept owners and artificial delays"
     ],
     "known_canon_corrections": [
@@ -3224,7 +3225,7 @@
     "Jared_rulings_changed": false,
     "open_questions": [
       "FORGEJO-RESTRICTED-TOKEN-IDENTITY",
-      "CODEBERG-NAMING-ADMISSION"
+      "HOSTED-FORGEJO-ADMISSION"
     ],
     "source_cases_added": 25,
     "source_cases_total": 58,
@@ -3232,30 +3233,37 @@
   },
   "resolved_owner_questions": [
     {
-      "id": "CODEBERG-NAMING-ADMISSION",
-      "question": "What Codeberg naming and hosted-service admission should product canon use? The lead retains this choice for Jared; no answer is applied here.",
+      "id": "HOSTED-FORGEJO-ADMISSION",
+      "question": "May hosted Forgejo be offered?",
       "state": "decided_removed",
-      "source": "Lead 1101140232-5344, 2026-11-01; fields report holds Codeberg naming for Jared.",
+      "source": "Jared 2026-11-01 via lead1101175626-78dd and1101175823-8b4a.",
       "decision_ref": "DL-273",
-      "answer": "Yes remove it.",
+      "answer": "Hosted Forgejo is not offered. Forgejo is a server the person runs. Hosting terms must permit AI-written Projects.",
       "decided_at": "2026-11-01"
     }
   ],
   "DL273": {
     "decision_ref": "DL-273",
-    "Codeberg": "removed",
+    "hosted_forgejo": "removed",
     "Forgejo_variant": "forgejo_self_managed",
     "restricted_tokens": "open_left_for_now",
     "provider_variant_enums_removed": 12,
     "Forgejo_host_class_narrowed": true,
     "new_rows": [
-      "DL273-CODEBERG"
+      "DL273-OWN-SERVER-FORGEJO"
     ],
     "coverage_rows": 213,
     "required_cells": 1065,
     "fields_source": "8762cda61a658081878344ddff95f9916c1aa0f0",
     "fields_coverage_mirror": "pending_source_SHA",
     "new_commands_bindings_settings": 0,
-    "new_product_rule": "hosted_Forgejo_not_offered"
+    "new_product_rule": "hosted_Forgejo_not_offered",
+    "reason": "PM Projects are AI-written; hosting terms must allow them.",
+    "source_proposal_origin": {
+      "commit": "3e1842da40cf2e03b48ad62687f95600fcf1d329",
+      "date": "2026-09-02",
+      "Jared_approval": false
+    },
+    "strict_live_label_cleanup": true
   }
 }

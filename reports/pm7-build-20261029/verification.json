@@ -8899,7 +8899,7 @@
       "FORGEJO-RESTRICTED-TOKEN-IDENTITY"
     ],
     "excluded": [
-      "Codeberg naming/admission choice",
+      "hosted Forgejo naming/admission choice",
       "Demo/Studio situations, hints, prefills, concept-only hosts/timings"
     ],
     "diagnostics_resolved": [
@@ -9096,7 +9096,7 @@
     "Jared_rulings_changed": false,
     "open_questions": [
       "FORGEJO-RESTRICTED-TOKEN-IDENTITY",
-      "CODEBERG-NAMING-ADMISSION"
+      "HOSTED-FORGEJO-ADMISSION"
     ],
     "source_cases_added": 25,
     "source_cases_total": 58,
@@ -9434,5 +9434,17 @@
     "landing_lock_or_landing_performed": false,
     "prior_artifacts_unchanged": 761,
     "result_bundle": "reports/pm7-build-20261029/LANDING-REPAIR.json"
+  },
+  "DL273_live_correction": {
+    "decision_ref": "DL-273",
+    "date": "2026-11-01",
+    "policy": "hosted Forgejo not offered; Forgejo is a server the person runs; hosting terms must permit AI-written Projects",
+    "restricted_tokens": "open_left_for_now",
+    "source_proposal_origin": "3e1842da40cf2e03b48ad62687f95600fcf1d329, 2026-09-02; not a Jared ruling",
+    "historical_input_hash_scope": "Historical source_hashes bind their recorded commit, not the corrected current report bytes. The live report manifest binds current corrected report files; original reports remain in Git history.",
+    "retained_external_artifacts_unchanged": 811,
+    "protected_label_matches": 0,
+    "fresh_checks": "pending",
+    "final_dry": "pending"
   }
 }

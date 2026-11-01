@@ -14058,11 +14058,11 @@
       "expected_error": "CERT-1 permits configuration-file/export or existing proxy only, with no certificate choice; NPM is existing-only."
     },
     {
-      "name": "DL273.hosted_Forgejo_onboarding_profile_retired",
+      "name": "DL273.Forgejo_hosted_onboarding_profile_refused",
       "definition": "onboarding_forge_instance_profile",
       "value": {
         "provider": "forgejo",
-        "provider_variant": "forgejo_cloud",
+        "provider_variant": "hosted",
         "instance_id": "forge-instance:forgejo:team",
         "web_base_url": "https://forgejo.example.test/team",
         "api_root": "https://forgejo.example.test/team/api",
@@ -14090,12 +14090,12 @@
       "expected_error": "DL-273 removes hosted Forgejo from onboarding profiles"
     },
     {
-      "name": "DL273.hosted_Forgejo_setup_plan_retired",
+      "name": "DL273.Forgejo_hosted_setup_plan_refused",
       "definition": "onboarding_setup_plan",
       "base_valid": "valid.setup_plan.jujutsu_with_forgejo_api_disabled_git_ready_external_automation",
       "patch": {
-        "forge_provider_variant": "forgejo_cloud",
-        "forge_instance_profile.provider_variant": "forgejo_cloud"
+        "forge_provider_variant": "hosted",
+        "forge_instance_profile.provider_variant": "hosted"
       },
       "expected_error": "DL-273 removes hosted Forgejo from current setup plans"
     }

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19553-L19846
+Source lines: L19553-L19847
 
-Source SHA256: `6f6e09d623e872da088895304461090993351a89a0f5bbc8d7c39f8a8eb6209d`
+Source SHA256: `672b27c878256c2cf3c7b2d874d42329ea4290a525a66dcc3b023afc9c286bed`
 
 ---
 
@@ -162,11 +162,11 @@ canonical_text: 'DL-272 records the PM7 lead’s 2026-11-01 footage batch at int
   feedback without a cheer; no usable AI or Free Models means calm Almost ready in every look with no celebration;
   long values wrap in their pane with a fingerprint’s hash whole on its own line after its algorithm when needed.
   PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
-  Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
+  Settings rows or trust authority result. hosted Forgejo naming/admission and Forgejo restricted-token support remain
   Jared’s open questions.
 
 
-  Disposition amended by DL-273, Jared 2026-11-01: Codeberg’s question is closed by removal of hosted Forgejo.
+  Disposition amended by DL-273, Jared 2026-11-01: hosted Forgejo’s question is closed by removal of hosted Forgejo.
   Repository-restricted Forgejo tokens were deliberately left for now, preserving the existing account-based
   flow; this is a decided deferral, not an unanswered request for immediate approval. The preceding footage
   history remains unchanged.'
@@ -191,9 +191,9 @@ acceptance_criteria:
   refusal feedback without a cheer; no usable AI or Free Models means calm Almost ready in every look with no celebration;
   long values wrap in their pane with a fingerprint’s hash whole on its own line after its algorithm when needed.
   PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
-  Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
+  Settings rows or trust authority result. hosted Forgejo naming/admission and Forgejo restricted-token support remain
   Jared’s open questions.'
-- 'Disposition amended by DL-273, Jared 2026-11-01: Codeberg’s question is closed by removal of hosted Forgejo.
+- 'Disposition amended by DL-273, Jared 2026-11-01: hosted Forgejo’s question is closed by removal of hosted Forgejo.
   Repository-restricted Forgejo tokens were deliberately left for now, preserving the existing account-based flow;
   this is a decided deferral, not an unanswered request for immediate approval. The preceding footage history remains
   unchanged.'
@@ -216,7 +216,7 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
-- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+- 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens:
 - DL-272
@@ -232,22 +232,23 @@ owner_hints:
 ```
 
 
-### DL-273 — Codeberg removed; restricted Forgejo tokens left for now
+### DL-273 — Own-server Forgejo and hosting eligibility; restricted tokens left for now
 
 ```yaml
 plan_unit_id: DL-273
 unit_type: decision_record
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Jared decided on 2026-11-01: Codeberg — "Yes remove it." Hosted Forgejo is not offered in onboarding
-  or Settings; Forgejo is a self-managed server only, using forgejo_self_managed. Remove forgejo_cloud from the
-  current Forge instance/adapter profiles, onboarding profiles/setup plans and their embedded Onboarding storage
-  schema. Current profiles require the actual self-managed server address and normal owner verification; retiring
-  a choice creates no implicit address, account, credential or repository authority. Other providers and Gitea’s
-  admitted variants remain unchanged. Jared’s answer on Forgejo repository-restricted tokens was "we can leave it
-  for now." That support question is deliberately deferred, with the existing account-based flow unchanged; no support
-  is admitted or permanently rejected. This closes DL-272’s Codeberg question and records the restricted-token deferral
-  as decided.'
+canonical_text: 'Jared decided on 2026-11-01 that hosted Forgejo is not offered: Forgejo is a server the person
+  runs, represented only by forgejo_self_managed. A hosting provider whose terms forbid AI-generated Projects is
+  not useful to Puppet Master, because Puppet Master’s Projects are AI-written; such a host is ineligible. The earlier
+  hosted variant entered the source proposal in commit 3e1842da40 on 2026-09-02, not through a Jared ruling. Current
+  instance, adapter, onboarding and embedded storage profiles admit only the own-server Forgejo variant and require
+  the real address and normal owner verification, with no implicit account or repository authority. Gitea’s admitted
+  variants remain unchanged. On repository-restricted Forgejo tokens Jared said "we can leave it for now." That
+  question remains open and deliberately deferred; the existing account-based flow stays unchanged and no support
+  is admitted or permanently rejected. This closes DL-272’s hosted-provider admission question and records the restricted-token
+  deferral as decided.'
 gui_related: true
 gui_classification_reason: Changes the Forgejo choices shown in onboarding and Settings while preserving the deferred
   authentication flow.
@@ -256,16 +257,14 @@ depends_on:
 - DL-272
 unblocks: []
 acceptance_criteria:
-- 'DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired forgejo_cloud
-  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
-  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
-  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
-  and repository selection remain unchanged, with no new restricted-token support admitted.'
-- Published and embedded current profiles reject forgejo_cloud, while self-managed Forgejo and the remaining Gitea
-  variants retain valid cases.
-- Existing command ids, credential custody, permission/generation checks, storage-family identity and Project review/commit
-  fences remain unchanged.
+- Forgejo choices and current profiles expose only forgejo_self_managed, for a server the person runs. There is
+  no offered hosted Forgejo route.
+- The same narrowed admission applies to the Forge owner, onboarding and its stored schema; providers whose terms
+  forbid AI-written Projects are ineligible.
+- Repository-restricted token support remains open and left for now; existing account-based identification, authentication
+  and repository selection remain unchanged.
+- The source proposal’s 2026-09-02 introduction is not recorded as a Jared approval. Existing commands, settings,
+  credentials and Project/permission/generation fences remain.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-new-contracts
 - python3 scripts/pm7-onboarding-rulings-check.py
@@ -274,7 +273,7 @@ validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 risk_class: provider_instance_admission
 reasoning_tier: high
-context_scope: pm7_codeberg_decision_20261101
+context_scope: pm7_own_server_forgejo_decision_20261101
 implementation_surfaces:
 - Plans/Forge_Integrations.md
 - Plans/Planning_Wizard.md
@@ -286,17 +285,19 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
-  it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
+- 'Jared 2026-11-01 via PM7 lead messages1101175626-78dd and1101175823-8b4a: unnamed own-server Forgejo rule, terms
+  compatibility with AI-written Projects, and restricted-token support left for now.'
+- Git commit3e1842da40cf2e03b48ad62687f95600fcf1d329, 2026-09-02, introduces the earlier hosted variant as source
+  material; not a Jared ruling.
+- Fields8762cda61a658081878344ddff95f9916c1aa0f0 andf2a9b7a252f589b68cf2862b6b6a2a7c482dfff0, source lineage only.
 preserved_exact_tokens:
-- Codeberg
-- forgejo_cloud
 - forgejo_self_managed
-- Yes remove it.
+- AI-written
 - we can leave it for now.
 negative_constraints:
-- Do not offer hosted Forgejo under another label or infer a hosted endpoint.
-- Do not admit repository-restricted token support from a deliberate deferral.
+- Do not offer hosted Forgejo or infer a hosted endpoint.
+- Do not admit a hosting provider whose terms forbid AI-written Projects.
+- Do not turn the deferred restricted-token question into new supported behavior.
 - Do not alter protected governance artifacts, migration snapshots or the landing baseline.
 owner_hints:
 - Plans/Forge_Integrations.md

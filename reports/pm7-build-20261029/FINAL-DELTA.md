@@ -39,7 +39,7 @@ DL-271 is the sole new PlanUnit allocated by this feedback batch. Storage main68
 
 ## DL-272 footage review, 2026-11-01
 
-Integration7d2dd568be and main34b9ab2843 are incorporated. The 54 new real-product rows bring coverage to209/1045 cells. MA-047 and its walkthrough now use provider-owned device-code lifetime; RAS-014/PWIZ-021/025 admit only explicit native-Client sign-in before its Server list, with all route/trust/Project mutation fences retained. No Jared ruling changes. Pairing display form never pins Remote Link’s deferred protocol. Codeberg remains outside the batch.
+Integration7d2dd568be and main34b9ab2843 are incorporated. The 54 new real-product rows bring coverage to209/1045 cells. MA-047 and its walkthrough now use provider-owned device-code lifetime; RAS-014/PWIZ-021/025 admit only explicit native-Client sign-in before its Server list, with all route/trust/Project mutation fences retained. No Jared ruling changes. Pairing display form never pins Remote Link’s deferred protocol. hosted Forgejo remains outside the batch.
 
 CS-108/UCC-213 and WM-099/UIW-047 define cmd.free_models.route.disable, its sole Models handler, typed shapes and shared producer. Native effect/persistence/receipt remain unproved. Census1010 settings,485 bindings/63 source families,716 Touch/141 profiles,1271 production. Existing account-manager description changes and the page was rebuilt with --publish-pm7; --check passes. No other GUI source was edited.
 
@@ -60,4 +60,4 @@ All **13 effective focused/generation/guard commands pass**. The source probe no
 
 The first index validation overlapped generation and reported stale artifacts. Its failed output is retained; the serial rerun after generation passes. No failure is waived. All 729 prior evidence hashes remain exact. No merge conflict, Jared ruling change, browser/full-gate/dry run, landing/lock or reseal. Main’s protected artifacts, snapshot and baseline remain exact.
 
-FO-17’s direct-open machinery is concept-only and excluded. Codeberg naming/admission and Forgejo restricted-token identity remain Jared’s two questions. Earlier report sections record their earlier input revisions and are not new acceptance claims.
+FO-17’s direct-open machinery is concept-only and excluded. hosted Forgejo naming/admission and Forgejo restricted-token identity remain Jared’s two questions. Earlier report sections record their earlier input revisions and are not new acceptance claims.

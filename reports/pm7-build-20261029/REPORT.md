@@ -1,10 +1,17 @@
-# Plans lane — DL-273 follow-up in progress, 2026-11-01
+# Plans lane — DL-273 unnamed-policy correction, 2026-11-01
 
-**Focused checks pass.** Based on landed main93bd26fa26, snapshot07dbf43786 and fields8762cda61a. DL-273 records Codeberg removed and restricted Forgejo tokens deliberately left for now. Owner prose preceded schemas/fixtures. The12 hosted-variant enum occurrences and Forgejo’s Cloud host classification are removed; the Onboarding materializer matches its owner exactly.
+**Source correction in progress.** Main07dbf43786 and fieldsf2a9b7a252 are merged. DL-273 records that hosted Forgejo is not offered, Forgejo is a server the person runs, and hosting terms must permit AI-written Projects. Restricted-token support remains open and deliberately left for now, with current account-based behavior unchanged.
 
-Coverage is **213 rows /1065 cells**. Full contract validation passes41 pairs/1601 positives/4206 negatives; five formerly accepted retired cases are now refused, and two Gitea Cloud controls remain valid. Storage profiles, onboarding rulings, shards, index and preservation checks pass. No ordinary setting, command, binding or census count changes. Main’s protected artifacts are unchanged.
+| Area | Change / state |
+|---|---|
+| **Owners** | FGI-011/015, PWIZ-021/024, DR-005, UIW-015, WM-041, DL-272/273 and index: one policy and no offered hosted Forgejo route. Audit A1 corrected FGI-015 rule and acceptance text. |
+| **Companions** | Twelve enum occurrences removed across the two schema owners and onboarding_state’s embedded schema; Forgejo adapter host_class is self_managed only. Five generic invalid hosted-profile cases and two retained Gitea Cloud controls. No ordinary command, setting, binding or census change. |
+| **Coverage** | 213 rows /1065 required cells; DL273-OWN-SERVER-FORGEJO maps prose, wiring, commands, settings and DRY. Fields mirror merge and fresh focused proof follow. |
+| **Live reports** | Removed the host label from the live bundle and allocation mirrors. Historical report copies receive this dated correction; Git history and 811 prior captured artifacts remain. Current report-byte hashes are regenerated in the live correction manifest. |
+| **Provenance** | Earlier hosted variant entered the source proposal on 2026-09-02 in3e1842da40; that was not a Jared ruling. DL-273 supersedes that proposal. |
+| **Protected scope** | No matching label or old variant was found in tracked protected evidence or migration snapshots. Spec_Lock, auto_decisions, evidence, readiness, snapshot and baseline remain main’s bytes. |
 
-Next: fields updates its coverage mirror from the pushed source SHA, then the final build/focused checks and requested dry landing run. Current raw proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/codeberg-20261101/`.
+Fresh regeneration/focused checks and the lead’s audit must finish before the requested final dry. No browser, landing lock, landing or reseal. Raw proof: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/`.
 
 ---
 
@@ -23,7 +30,7 @@ Next: fields updates its coverage mirror from the pushed source SHA, then the fi
 
 [LANDING-REPAIR.md](LANDING-REPAIR.md) has the cause/fix table; [LANDING-REPAIR.json](LANDING-REPAIR.json) has exact counts and 15 source hashes. [verification.json](verification.json), SHA-256 `8331acdccf57e22e74e62d9883689612d8da567347b83ce7b5362709bcaa379a`, retains **811 artifact hashes**, with all **761 prior hashes unchanged**. Full dry: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json`, SHA-256 `850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f`.
 
-Spec_Lock, auto_decisions, `.evidence`, `.implementation_readiness`, migration snapshot and baseline remain exactly main’s. No reseal, snapshot/baseline refresh, landing or landing lock. The expected stale seals and four old generated pointers remain for the lead’s report to Jared and the assigned governance refresh. Codeberg/Forgejo decisions remain Jared’s. The detached runner is complete; no browser, server, temporary worktree or temporary branch was created for this repair. T3 mail rings this thread.
+Spec_Lock, auto_decisions, `.evidence`, `.implementation_readiness`, migration snapshot and baseline remain exactly main’s. No reseal, snapshot/baseline refresh, landing or landing lock. The expected stale seals and four old generated pointers remain for the lead’s report to Jared and the assigned governance refresh. hosted Forgejo/Forgejo decisions remain Jared’s. The detached runner is complete; no browser, server, temporary worktree or temporary branch was created for this repair. T3 mail rings this thread.
 
 Earlier checkpoints retain their original inputs and findings.
 
@@ -43,7 +50,7 @@ Earlier checkpoints retain their original inputs and findings.
 | **Derived** | 7275 units / 29340 acceptance units / 96 indexed docs; 2977 shards / 99 sources. | Generator, shard check and index validation pass. Runtime readiness remains incomplete. |
 | **Page** | No consumed Settings input changed; no rebuild. The merged page passes --check. | No Concepts file changed after integration. |
 
-**Questions remain Jared’s:** Codeberg naming/admission and Forgejo restricted-token identity, recorded in [OWNER-QUESTIONS.md](OWNER-QUESTIONS.md). No ruling is changed. FO-17’s concept-only direct-open mechanism stays out of canon and coverage. No merge or ruling conflict was found.
+**Questions remain Jared’s:** hosted Forgejo naming/admission and Forgejo restricted-token identity, recorded in [OWNER-QUESTIONS.md](OWNER-QUESTIONS.md). No ruling is changed. FO-17’s concept-only direct-open mechanism stays out of canon and coverage. No merge or ruling conflict was found.
 
 **Checks:** the source probe now has **58 cases / 25 added**. PM7’s 161 schema cases, canon, onboarding-rulings contracts, product-only boundary/history, coverage, preservation, shards and index checks pass. I initially started index validation before generation finished; the stale-artifact result is retained as a diagnostic. Its serial rerun passes, with no failure waived.
 
@@ -70,7 +77,7 @@ Earlier checkpoints below retain their original inputs and findings.
 | **Derived** | **7275 indexed units / 96 docs / 29328 acceptance units; 2977 shards / 99 sources.** No WorkNodes/NodeSeeds created; runtime readiness remains incomplete. |
 | **Merges** | Integration clean; main had **919 derived-only conflicts**, regenerated. No owner/companion/protected conflict. SP-346/SP-347 and the prior storage units remain. |
 
-**One question for Jared:** [FORGEJO-RESTRICTED-TOKEN-IDENTITY](OWNER-QUESTIONS.md): should repository-restricted Forgejo tokens work without the account identity used by the current sign-in/listing flow, and what replaces that identity/selection? Current behavior remains; no support choice is made. Codeberg naming/admission is excluded from this batch, not decided. No question is silently converted into a default.
+**One question for Jared:** [FORGEJO-RESTRICTED-TOKEN-IDENTITY](OWNER-QUESTIONS.md): should repository-restricted Forgejo tokens work without the account identity used by the current sign-in/listing flow, and what replaces that identity/selection? Current behavior remains; no support choice is made. hosted Forgejo naming/admission is excluded from this batch, not decided. No question is silently converted into a default.
 
 All main Spec_Lock, auto-decisions, `.evidence`, migration `pds-20261101-002-current-planunit-snapshot` and the baseline recorded at `40e8ccd704` remain byte-exact. **No full gates, dry landing, browser, lock, landing, snapshot/baseline refresh or reseal.** Editing canon makes the inherited seal stale as expected; that is a reseal request for the lead/assigned governance lane, not a repair performed here.
 

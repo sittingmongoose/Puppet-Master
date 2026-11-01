@@ -235,6 +235,6 @@ Main34b9ab2843 owns SP-346/SP-347 and the earlier storage ids. This batch alloca
 - Census: settings1010; bindings485/63 source families; Touch716/141; production1271. Shared status keys22 remain.
 
 
-## Codeberg follow-up — DL-273, Jared 2026-11-01
+## Own-server Forgejo follow-up — DL-273, Jared 2026-11-01
 
-Allocated **DL-273**, checked free on landed main93bd26fa26 plus snapshot07dbf43786 and fields8762cda61a. Codeberg/hosted Forgejo is removed; Forgejo exposes only forgejo_self_managed. Repository-restricted token support is deliberately left for now, preserving the current account-based flow. No new F3, DR, SSYS, command, setting, control, glyph or event id.
+Allocated **DL-273**, checked free on landed main93bd26fa26 plus snapshot07dbf43786 and fields8762cda61a. hosted Forgejo is removed; Forgejo exposes only forgejo_self_managed. Repository-restricted token support is deliberately left for now, preserving the current account-based flow. No new F3, DR, SSYS, command, setting, control, glyph or event id.

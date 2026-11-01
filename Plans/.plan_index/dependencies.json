@@ -113643,7 +113643,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-01T18:00:26Z",
+  "generated_at_utc": "2026-11-01T18:18:45Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -147901,14 +147901,14 @@
       "unit_type": "decision_record"
     },
     {
-      "context_scope": "pm7_codeberg_decision_20261101",
+      "context_scope": "pm7_own_server_forgejo_decision_20261101",
       "gui_related": true,
       "owner_doc": "Plans/Decision_Log.md",
       "plan_unit_id": "DL-273",
       "reasoning_tier": "high",
       "risk_class": "provider_instance_admission",
       "source_location": {
-        "heading": "DL-273 — Codeberg removed; restricted Forgejo tokens left for now",
+        "heading": "DL-273 — Own-server Forgejo and hosting eligibility; restricted tokens left for now",
         "heading_level": 3,
         "heading_line": 19777,
         "line": 19779,
@@ -169500,8 +169500,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 876,
-        "line": 878,
+        "heading_line": 882,
+        "line": 884,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169517,8 +169517,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 917,
-        "line": 919,
+        "heading_line": 923,
+        "line": 925,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169534,8 +169534,8 @@
       "source_location": {
         "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
         "heading_level": 3,
-        "heading_line": 962,
-        "line": 964,
+        "heading_line": 968,
+        "line": 970,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169551,8 +169551,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 1028,
-        "line": 1030,
+        "heading_line": 1034,
+        "line": 1036,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169568,8 +169568,8 @@
       "source_location": {
         "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
         "heading_level": 3,
-        "heading_line": 1172,
-        "line": 1174,
+        "heading_line": 1180,
+        "line": 1182,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169585,8 +169585,8 @@
       "source_location": {
         "heading": "FGI-017 - Conditional Additional Review Service Admission",
         "heading_level": 3,
-        "heading_line": 1242,
-        "line": 1244,
+        "heading_line": 1250,
+        "line": 1252,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169602,8 +169602,8 @@
       "source_location": {
         "heading": "FGI-018 - Typed Merge Strategy On The Forge Merge Request",
         "heading_level": 3,
-        "heading_line": 1316,
-        "line": 1318,
+        "heading_line": 1324,
+        "line": 1326,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169619,8 +169619,8 @@
       "source_location": {
         "heading": "FGI-019 - Policy Evaluation Requeue That Degrades Truthfully",
         "heading_level": 3,
-        "heading_line": 1361,
-        "line": 1363,
+        "heading_line": 1369,
+        "line": 1371,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169636,8 +169636,8 @@
       "source_location": {
         "heading": "FGI-020 - Provider Neutral Vote And Reviewer Carrier",
         "heading_level": 3,
-        "heading_line": 1404,
-        "line": 1406,
+        "heading_line": 1412,
+        "line": 1414,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169653,8 +169653,8 @@
       "source_location": {
         "heading": "FGI-021 - Repository Delete And Hosted CI Command Closure",
         "heading_level": 3,
-        "heading_line": 1477,
-        "line": 1479,
+        "heading_line": 1485,
+        "line": 1487,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -169670,8 +169670,8 @@
       "source_location": {
         "heading": "FGI-022 - Review Edit And Runner Read Producer Closure",
         "heading_level": 3,
-        "heading_line": 1532,
-        "line": 1534,
+        "heading_line": 1540,
+        "line": 1542,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",

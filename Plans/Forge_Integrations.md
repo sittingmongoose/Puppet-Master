@@ -763,13 +763,17 @@ canonical_text: 'An onboarding online copy is an optional hosted Git destination
   remains owner identity but is not substituted for that type label.
 
 
-  DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only
+  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only
   forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
-  variants. A retired forgejo_cloud value is not a valid current instance, adapter or setup-plan profile and
+  variants. A retired hosted variant value is not a valid current instance, adapter or setup-plan profile and
   grants no account, repository or connection authority. Returning to a self-managed choice still requires its
   explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
   existing account-based identification, authentication and repository selection remain unchanged, with no new
-  restricted-token support admitted.'
+  restricted-token support admitted.
+
+
+  DL-273, Jared 2026-11-01: Puppet Master’s Projects are AI-written. A hosting provider whose terms forbid AI-
+  generated Projects is ineligible; the Forgejo option is only a server the person runs.'
 gui_related: true
 gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification, and exact disabled reasons in Product Onboarding.
 depends_on: [FGI-001, FGI-003, FGI-006, FGI-008, SCS-011]
@@ -840,12 +844,14 @@ acceptance_criteria:
   Its grouping Project remains selected metadata and is not inserted into that path.'
 - 'DL-272 M7-AZURE-KIND, 2026-11-01: An Azure team Project shows Uses Git as the human-readable type. Its actual GUID
   remains owner identity but is not substituted for that type label.'
-- 'DL-273, Jared 2026-11-01: Codeberg and every hosted Forgejo choice are removed. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired forgejo_cloud
+- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed
+  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired hosted variant
   value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
   authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
   Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
   and repository selection remain unchanged, with no new restricted-token support admitted.'
+- 'DL-273, Jared 2026-11-01: Puppet Master’s Projects are AI-written. A hosting provider whose terms forbid AI-generated
+  Projects is ineligible; the Forgejo option is only a server the person runs.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider-specific positive/negative fixtures, future protected-auth and repository-binding owner-return fixtures]
 risk_class: onboarding_forge_account_repository_or_provider_requirement_drift
 reasoning_tier: high
@@ -858,7 +864,7 @@ source_lineage:
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
-- 'Jared 2026-11-01 via PM7 lead: Codeberg — Yes remove it.; Forgejo repository-restricted tokens — we can leave
+- 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
 preserved_exact_tokens: [github, gitlab, azure_devops, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin, Private, Internal, already_connected]
 negative_constraints:
@@ -1066,7 +1072,8 @@ canonical_text: 'The required provider-profile set is exactly github_cloud, gith
   compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure Services binds
   organization and team Project; Server binds collection URI and team Project; selecting an existing repository carries
   its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal
-  value; both hosted and self-managed choices require a real instance profile. Provider/owner changes invalidate incompatible
+  value; Forgejo is self-managed only, while Gitea retains hosted and self-managed choices. Each requires a real instance
+  profile (DL-273). Provider/owner changes invalidate incompatible
   visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
   selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
   target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.
@@ -1117,7 +1124,8 @@ acceptance_criteria:
   explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project key, including
   a supported personal Project. Azure Services binds organization and team Project; Server binds collection URI and team
   Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private
-  repository privacy, not a fabricated Internal value; both hosted and self-managed choices require a real instance profile.
+  repository privacy, not a fabricated Internal value; Forgejo is self-managed only, while Gitea retains hosted and
+  self-managed choices. Each requires a real instance profile (DL-273).
   Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific naming
   and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must match
   the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences, with

@@ -59,7 +59,7 @@
 | P28-WARNING-BANNER | src/css/12-components.css | F3-663 | new clarification |
 | RV7-M6-CHIP | src/css/10-window.css,60-ui-core.js,glass.js | F3-039 | new clarification |
 
-One open question: Forgejo repository-restricted tokens without account identity. Codeberg is excluded, not decided. Pairing display form is distinct from deferred Remote Link grammar. Stage/ring/edge/warning/chip entries amend existing GUI rules, with no CSS/token values and no visual claim. Demo mechanisms and timing are excluded.
+One open question: Forgejo repository-restricted tokens without account identity. hosted Forgejo is excluded, not decided. Pairing display form is distinct from deferred Remote Link grammar. Stage/ring/edge/warning/chip entries amend existing GUI rules, with no CSS/token values and no visual claim. Demo mechanisms and timing are excluded.
 
 
 ## Final delta at 0cf2bf59e4
@@ -70,4 +70,4 @@ One open question: Forgejo repository-restricted tokens without account identity
 | FO-18 | 74-screens-ready.js; onb f2ade7f878; final-onb finding | MS-122; F3-520/598/600/663; DR-080 | Gate every family’s Ready celebration on usable AI; Almost ready remains calm. |
 | FO-19 | 61-components.js; 10-window.css; found47389ffc10; final-onb finding | PWIZ-022; F3-663; DR-080 | Bound long detail values, with a whole fingerprint hash after its algorithm when wrapping is needed; retain exact trust data. |
 
-No Jared ruling changes. The prior 54-row adjudication remains as recorded; the three final rows are additional. FO-17’s direct-open setup is concept-only and excluded. Codeberg and restricted Forgejo tokens remain Jared’s questions.
+No Jared ruling changes. The prior 54-row adjudication remains as recorded; the three final rows are additional. FO-17’s direct-open setup is concept-only and excluded. hosted Forgejo and restricted Forgejo tokens remain Jared’s questions.
