@@ -396,13 +396,13 @@
       "definition": "mirror_topology",
       "value": {
         "schema_id": "pm.forge.mirror_topology.v1",
-        "mirror_id": "mirror:origin-github:1",
+        "mirror_id": "mirror:gitea-github:1",
         "mode": "inbound_mirror",
         "source_binding_ref": "forge-binding:github:1",
-        "destination_binding_ref": "forge-binding:origin:1",
+        "destination_binding_ref": "forge-binding:gitea:1",
         "authority_binding_ref": "forge-binding:github:1",
-        "requested_mode": "github_inbound_origin_mirror",
-        "effective_mode": "github_inbound_origin_mirror",
+        "requested_mode": "inbound_mirror",
+        "effective_mode": "inbound_mirror",
         "revision_fence": "git-oid:1111111111111111111111111111111111111111",
         "dedupe_key": "mirror-dedupe:delivery-44",
         "lag_state": "behind",
@@ -500,12 +500,12 @@
       "value": {
         "schema_id": "pm.forge.signed_webhook_delivery.v1",
         "provider": "gitea",
-        "delivery_id": "origin-delivery:1",
-        "repository_binding_ref": "forge-binding:origin:1",
+        "delivery_id": "gitea-delivery:1",
+        "repository_binding_ref": "forge-binding:gitea:1",
         "received_at_utc": "2026-08-31T13:04:00Z",
         "provider_timestamp_utc": "2026-08-31T13:03:58Z",
         "raw_body_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        "signature_key_id": "origin-jwks:key-4",
+        "signature_key_id": "hmac-key:gitea:4",
         "signature_algorithm": "hmac_sha256",
         "verification_state": "verified_before_parse",
         "replay_state": "fresh",
@@ -524,7 +524,7 @@
         "adapter_version": "0.1.0",
         "openapi_or_contract_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "catalog_generation": 9,
-        "probe_id": "probe:origin:1",
+        "probe_id": "probe:gitea:1",
         "endpoints": [
           {
             "name": "repositories.read",
@@ -8462,15 +8462,6 @@
       "expected_error": "Data Center does not inherit Cloud Pipelines"
     },
     {
-      "name": "origin_windows_path_cannot_be_claimed_native_from_wsl_docs",
-      "definition": "provider_capability_matrix",
-      "base_valid": "minimum_provider_capability_and_auth_matrix_is_explicit",
-      "patch": {
-        "profiles.10.native_windows_origin_cli_support": "verified"
-      },
-      "expected_error": "native Windows Origin installation remains unverified"
-    },
-    {
       "name": "secret_metadata_never_allows_value_readback",
       "definition": "hosted_administration_surface",
       "base_valid": "hosted_admin_actions_are_independently_gated",
@@ -8532,20 +8523,20 @@
     {
       "name": "forge_command_namespace_must_be_neutral",
       "definition": "command_receipt",
-      "expected_error": "provider-specific Origin command namespace is forbidden",
+      "expected_error": "provider-specific command namespaces cannot bypass the canonical Forge owner",
       "value": {
         "schema_id": "pm.forge.command_receipt.v1",
         "receipt_id": "receipt:bad",
-        "command_id": "cmd.origin.review.create",
+        "command_id": "cmd.gitea.review.create",
         "command_instance_id": "command:bad",
         "operation_id": "operation:bad",
         "provider": "gitea",
-        "repository_binding_ref": "forge-binding:origin:1",
+        "repository_binding_ref": "forge-binding:gitea:1",
         "requested_authority_role": "authority",
         "effective_authority_role": "authority",
         "review_revision_ref": null,
         "expected_binding_generation": 1,
-        "credential_or_grant_ref": "grant:origin:1",
+        "credential_or_grant_ref": "grant:gitea:1",
         "idempotency_key": "idempotency:bad",
         "outcome": "blocked",
         "observable_work_id": null,

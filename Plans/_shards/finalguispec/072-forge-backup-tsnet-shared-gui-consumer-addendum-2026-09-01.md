@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38203-L38426
+Source lines: L38203-L38425
 
-Source SHA256: `79830d6e942b478d579e35b5ce40bd172bfab68fa92f2e082b82fbe94cc3a6c5`
+Source SHA256: `55e7754cd783ef95f76a8a73a2d19cdb114826e9ae55a5cd61a9a40cbc4fc468`
 
 ---
 
@@ -91,8 +91,7 @@ acceptance_criteria:
   and external/unsupported explanation. Capability refresh never reorders icons or jumps focus.
 - Provider headings remain native: GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions only when the
     selected binding proves them. Forgejo and Gitea use distinct instance/capability profiles; API-disabled/Git-ready
-    remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; Origin never fabricates
-    `Origin Actions`.
+    remains truthful; Bitbucket Data Center without configured CI says `Connect automation service`; no remote name or check observation creates a hosted automation service.
 - Backup presentation reuses exact owner-routed `DestinationCard`, `ScopeCoverageSummary`, `SnapshotBrowser`, `RestorePreview`,
   `RecoveryKitHandoff`, `VerificationBadge`, `RetentionPreview`, and `ObservableWorkProgress` components. It creates
   no Backup Activity Bar occupant, page owner, command family, engine, scheduler, or notification center.
@@ -207,7 +206,7 @@ negative_constraints:
 - Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic
   host shell.
 - Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or
-  Origin checks with an Origin-hosted CI engine.
+  check observations with a separately authorized hosted CI engine.
 - Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser
   content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
 - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.

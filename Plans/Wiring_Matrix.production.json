@@ -36895,7 +36895,7 @@
     },
     "catalog.jujutsu_git_clone": {
       "ui_element_id": "catalog.jujutsu_git_clone",
-      "ui_location": "Product Onboarding > First project; Settings > SCM and Origin",
+      "ui_location": "Product Onboarding > First project; Settings > Source Control",
       "ui_command_id": "cmd.jujutsu.git.clone",
       "handler_location": "handlers::jujutsu::git_clone",
       "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
@@ -58108,7 +58108,7 @@
     },
     "catalog.source_control_repository_clone": {
       "ui_element_id": "catalog.source_control_repository_clone",
-      "ui_location": "Product Onboarding > First project; Settings > SCM and Origin",
+      "ui_location": "Product Onboarding > First project; Settings > Source Control",
       "ui_command_id": "cmd.source_control.repository.clone",
       "handler_location": "handlers::source_control::repository_clone",
       "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",

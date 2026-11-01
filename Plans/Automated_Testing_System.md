@@ -1668,6 +1668,9 @@ canonical_text: >-
   tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish
   layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain
   required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct.
+  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
+  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+
 gui_related: true
 gui_classification_reason: Validates modal onboarding, optional three-chapter tour, owner-return states, accessibility, errors, and truthful Doctor/Health presentation.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, ACD-484, T-088, T-089, MI-028, MI-029, F2-155, DL-180]
@@ -1687,7 +1690,7 @@ acceptance_criteria:
   - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v2` across the owner-defined states/progress modes with exact session/draft/Project-commit/path/target/review/hash/continuation fences; stale results cannot replace state, and this phase cannot begin broad provider setup before actual Project commit.
   - Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections cannot carry production readiness, native execution, or a production receipt.
   - Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted, exported, replayed, or exposed to agents/adapters.
-  - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and optional Origin Preview selections without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
+  - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and current admitted-provider selections, with retired service or hosted-variant inputs refused under DL-273/PWIZ-024 without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
   - Draft choices cause zero mutation. Only exact precommit read/source-auth admission permits those existing owner commands; current Review permits at most one Project commit chain, and matching terminal results advance without repeated Continue/confirm clicks. Tests reject acknowledgement-only, unlisted/unpersisted, wrong-Project/hash and unsettled selected-Settings results as commit proof.
   - Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes Guided Tour secondary and optional; tour terminal behavior is validated against PWIZ-023's default restoration or explicit Keep followed by the real Planning Wizard, and exact Skip restoration.
   - Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler exists.
@@ -3966,6 +3969,9 @@ canonical_text: >-
   handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not
   exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with
   expected_event_types=[] until their native and Event Authority evidence exists.
+  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
+  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+
 gui_related: true
 gui_classification_reason: The matrix validates visible Source Control and Actions & Pipelines provider projection, migration, capability, disabled-reason, accessibility, and recovery behavior as well as non-GUI contract/security boundaries.
 depends_on: [ATS-020, ATS-041, FGI-012, FGI-013, SCS-013]
@@ -3974,7 +3980,7 @@ acceptance_criteria:
   - Distinct Forgejo and Gitea adapter/profile fixtures cover old and new product versions, supported API-schema variance, multiple instances with identical repository names, API disabled while Git transport remains available, read-only credentials, SSH-only transport, custom SSH ports, and instance-scoped private CA.
   - Provider capability fixtures distinguish API, Git transport, and Actions state; Actions disabled, no runner, no workflow, insufficient permission, unsupported, and unknown never collapse into one unavailable state or disable proven fetch/publish.
   - RepositoryContext tests cover Git plus Gitea, Jujutsu plus Forgejo, no automation binding, same-forge automation, and automation on a different provider/instance/account/host; AutomationBinding is never inferred from RepositoryForgeBinding, remote origin, repository name, or display label.
-  - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture fabricates Origin Actions.
+  - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture invents a hosted automation service from a transport remote or check observation.
   - Security negatives cover certificate bytes or local paths instead of scoped CA refs, missing or mismatched known-host proof, invalid SSH ports, raw credentials/secrets, Authorization forwarded across redirect-origin change, unapproved localhost/metadata targets, stale provider/binding/catalog/currentness generations, denied permission, and missing FileSafe decision for local writes or downloads.
   - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately and preserve typed self-host inputs/current owner refs. PWIZ-021's precommit read/necessary-source-auth exception requires exact actual owner admission; repository/filesystem/Project mutation waits for reviewed commit. Tests reject broader authority, synthetic accounts/IDs, duplicate dispatch, and false readiness; owner return advances without a second confirmation.
   - Each of the exact nine admissions cmd.forge.repository.fork, cmd.forge.pipeline.approve, cmd.forge.review.checks, cmd.forge.repository.policy.preview, cmd.forge.repository.policy.apply, cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.release.list, and cmd.forge.release.asset.download receives one valid request plus a rejected permission, guard, or currentness case as required by its owner contract.

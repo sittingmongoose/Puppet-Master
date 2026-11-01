@@ -115,7 +115,7 @@ preserved_exact_tokens:
 - workspace_id
 negative_constraints:
 - Do not overload provider.
-- Do not use bare origin for Cursor Origin.
+- Do not infer a provider from a Git remote named origin.
 - Do not infer durable identity from a path or focused UI state.
 owner_hints:
 - Plans/Source_Control_System.md
@@ -920,8 +920,7 @@ acceptance_criteria:
   no secret bytes.
 - Credentials and Authorization are stripped on redirect-origin change; localhost/metadata targets fail closed without
   explicit existing policy; FileSafe and execution-time currentness remain mandatory for local writes.
-- repository_automation is the sole canonical automation panel identity; github_actions is migration-read only and no
-  remote name fabricates an Origin Actions service.
+- repository_automation is the sole canonical automation panel identity; github_actions is migration-read only and no remote name creates a hosted automation service.
 - Static Plans, schema, fixtures, command targets, or wiring do not establish adapters, native handlers, runtime behavior,
   events, security proof, Slint rendering, readiness, or certification.
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
@@ -1188,7 +1187,7 @@ negative_constraints:
 - Do not turn unavailable or unknown checks into zero failed checks or unsupported.
 - Do not infer a remote, account, forge, or repository from focus, current branch, display path, remote name, or shared
   commit objects.
-- Do not make multi-remote publication atomic or retry/duplicate an Origin-mirror write automatically.
+- Do not make multi-remote publication atomic or retry/duplicate an admitted-mirror write automatically.
 - Do not translate Stage or Commit into Jujutsu squash, snapshot, hidden commit, or stash.
 - Do not claim a runtime resolver, adapter, remote effect, or native GUI from static owner/schema/fixture evidence.
 ```

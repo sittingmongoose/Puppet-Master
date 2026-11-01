@@ -4697,10 +4697,12 @@ route; they do not assert that a dispatcher, handler, persistence path, or nativ
 Every new row is default-disabled with `handler_unavailable` until those executable surfaces and fresh
 runtime evidence exist.
 
+DL-273, Jared 2026-11-01: shared Git/Jujutsu clone routes use the current Settings Source Control manager and admitted Forge connections. Existing command ids, sole handlers, typed results and exact caller returns remain; no retired service manager is a reverse consumer.
+
 | Wiring row | Command | Specified target | Reverse GUI consumers | Effect/return |
 |---|---|---|---|---|
-| `catalog.source_control_repository_clone` | `cmd.source_control.repository.clone` | `handlers::source_control::repository_clone` | Onboarding first project; Settings SCM/Origin | Owner receipt plus exact caller return; no Project row until registration succeeds. |
-| `catalog.jujutsu_git_clone` | `cmd.jujutsu.git.clone` | `handlers::jujutsu::git_clone` | Onboarding first project; Settings SCM/Origin | JJ operation receipt plus exact caller return. |
+| `catalog.source_control_repository_clone` | `cmd.source_control.repository.clone` | `handlers::source_control::repository_clone` | Onboarding first project; Settings Source Control | Owner receipt plus exact caller return; no Project row until registration succeeds. |
+| `catalog.jujutsu_git_clone` | `cmd.jujutsu.git.clone` | `handlers::jujutsu::git_clone` | Onboarding first project; Settings Source Control | JJ operation receipt plus exact caller return. |
 | `catalog.restore_preview` | `cmd.restore.preview` | `handlers::backup_restore::preview_restore` | Onboarding restore; Settings Backup/Restore; Doctor recovery | Read-only validation/preview receipt; no activation. |
 | `catalog.server_connect` | `cmd.server.connect` | `handlers::server::connect` | Onboarding discovery; Settings Server; Doctor | Exact connect/reconnect/resume result and focus return. |
 | `catalog.server_bootstrap_start` | `cmd.server.bootstrap.start` | `handlers::server::bootstrap_start` | Onboarding post-claim; Settings Server | Observable bootstrap receipt; unavailable without native handler. |

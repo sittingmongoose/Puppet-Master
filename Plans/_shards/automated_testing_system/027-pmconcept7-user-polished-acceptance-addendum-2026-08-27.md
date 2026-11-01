@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3459-L4143
+Source lines: L3462-L4149
 
-Source SHA256: `0746ac1eb5942f027f3ff75e5989bc0e6e9126d4c5f42b269bcd21a703e26f75`
+Source SHA256: `a45e6169936eb924348a5cd5d5a7a97d052569e51eb830818d6fafa8aeb0dbde`
 
 ---
 
@@ -518,6 +518,9 @@ canonical_text: >-
   handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not
   exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with
   expected_event_types=[] until their native and Event Authority evidence exists.
+  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
+  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+
 gui_related: true
 gui_classification_reason: The matrix validates visible Source Control and Actions & Pipelines provider projection, migration, capability, disabled-reason, accessibility, and recovery behavior as well as non-GUI contract/security boundaries.
 depends_on: [ATS-020, ATS-041, FGI-012, FGI-013, SCS-013]
@@ -526,7 +529,7 @@ acceptance_criteria:
   - Distinct Forgejo and Gitea adapter/profile fixtures cover old and new product versions, supported API-schema variance, multiple instances with identical repository names, API disabled while Git transport remains available, read-only credentials, SSH-only transport, custom SSH ports, and instance-scoped private CA.
   - Provider capability fixtures distinguish API, Git transport, and Actions state; Actions disabled, no runner, no workflow, insufficient permission, unsupported, and unknown never collapse into one unavailable state or disable proven fetch/publish.
   - RepositoryContext tests cover Git plus Gitea, Jujutsu plus Forgejo, no automation binding, same-forge automation, and automation on a different provider/instance/account/host; AutomationBinding is never inferred from RepositoryForgeBinding, remote origin, repository name, or display label.
-  - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture fabricates Origin Actions.
+  - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture invents a hosted automation service from a transport remote or check observation.
   - Security negatives cover certificate bytes or local paths instead of scoped CA refs, missing or mismatched known-host proof, invalid SSH ports, raw credentials/secrets, Authorization forwarded across redirect-origin change, unapproved localhost/metadata targets, stale provider/binding/catalog/currentness generations, denied permission, and missing FileSafe decision for local writes or downloads.
   - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately and preserve typed self-host inputs/current owner refs. PWIZ-021's precommit read/necessary-source-auth exception requires exact actual owner admission; repository/filesystem/Project mutation waits for reviewed commit. Tests reject broader authority, synthetic accounts/IDs, duplicate dispatch, and false readiness; owner return advances without a second confirmation.
   - Each of the exact nine admissions cmd.forge.repository.fork, cmd.forge.pipeline.approve, cmd.forge.review.checks, cmd.forge.repository.policy.preview, cmd.forge.repository.policy.apply, cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.release.list, and cmd.forge.release.asset.download receives one valid request plus a rejected permission, guard, or currentness case as required by its owner contract.

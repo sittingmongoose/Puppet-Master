@@ -6,7 +6,7 @@
 
 ## 0. Scope
 
-Jujutsu is a first-class local source-control backend, exactly `scm_backend=jujutsu`. It is not a Git command skin, a forge, an Origin mode, a branch alias, or a compatibility-only feature. Every JJ operation preserves change ID, immutable commit ID, operation ID, workspace ID, bookmarks, expected operation/revision, writer lease, topology identity, Permissions decision, FileSafe decision, and idempotency.
+Jujutsu is a first-class local source-control backend, exactly `scm_backend=jujutsu`. It is not a Git command skin, a forge, a hosting-service mode, a branch alias, or a compatibility-only feature. Every JJ operation preserves change ID, immutable commit ID, operation ID, workspace ID, bookmarks, expected operation/revision, writer lease, topology identity, Permissions decision, FileSafe decision, and idempotency.
 
 JJ workspaces are not Git worktrees. JJ bookmarks are not Git branches. `jj undo` and `jj op restore` are backend-native recovery mechanisms; FileSafe safe points complement them but do not replace, replay, or silently override them. In a colocated repository with an active `.jj` store, Jujutsu is the sole mutation authority by default. Git reads may coexist; Git mutation requires an explicit compatibility preflight and exact pre/post JJ operation IDs. In the Jujutsu 0.44.0 colocated profile, `jj git import` and `jj git export` requested capability remains typed but effective capability is false by default because upstream disables those commands for a race condition. There is no implicit reconciliation or fallback Git mutation; only an exact certified adapter gate plus exact live probe can admit either capability.
 
@@ -438,7 +438,7 @@ This document and its command schema/fixtures are static planning/contract canon
 - Jujutsu `0.44.0` is retained only as an initial packet certification input pending current official re-verification. For a colocated workspace, `jj git import` and `jj git export` are effective false by default because of the upstream race; their typed command model does not authorize dispatch without an exact certified adapter gate and live probe.
 - `cmd.jj.*` is compatibility-only. It receives no peer handler, policy path, event family, or receipt identity.
 - Direct UI-to-process `jj` execution, free-form CLI scraping, branch/bookmark aliasing, FileSafe-as-JJ-undo, concurrent Git/JJ mutation, implicit import/export reconciliation, and fallback Git mutation are forbidden.
-- Origin/JJ mutation remains Preview until the current certification matrix covers clone/fetch/push/bookmark/force-with-lease/colocation/helper/mode/history/object-format behavior. Unsupported combinations return typed degraded or unavailable results.
+- DL-273, Jared 2026-11-01: retired Source Control provider/Jujutsu routes are not offered. Admitted combinations retain the current clone/fetch/push/bookmark/force-with-lease/colocation/helper/mode/history/object-format certification gates; unsupported combinations return typed degraded or unavailable results.
 - This owner does not define forge authority, plugin manifests, installation lifecycle, secret custody, GUI geometry, command registry storage, or event persistence.
 
 ### 7.1 Migration

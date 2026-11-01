@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L61
+Source lines: L1-L64
 
-Source SHA256: `6d840220f57da91cbc1ebfc8046c0f2d5d829091db83fc71c28cdfd7dfbefd72`
+Source SHA256: `3fa9d044916755425c79349d1f7b7434b70e69b3d724b272858d64ba93a60cb6`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-11-01: DL-273 removal follow-through keeps admitted Source Control, Git/Jujutsu clone and shared connection consumers; current testing/evidence obligations use admitted routes plus retirement refusals. Stored retired selections invalidate their authority and Review through PWIZ-024. Shared remote-name, browser-origin, provenance, currentness and publication safeguards remain.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Automated_Testing_System.md#ATS-020, ContractName:Plans/Planning_Wizard.md#PWIZ-024
 
 - 2026-11-01: DL-273 records Jared’s answers, including Gitea self-managed only and retirement of Cursor Origin source control (Cursor AI unchanged): hosted Forgejo is not offered; Forgejo and Gitea are servers the person runs. Hosting terms must permit AI-written Projects. Published and embedded profile variants follow FGI-011; existing commands, settings and owner verification remain. Repository-restricted Forgejo token support is deliberately left for now with the current account-based flow unchanged.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Forge_Integrations.md#FGI-011, ContractName:Plans/Planning_Wizard.md#PWIZ-024

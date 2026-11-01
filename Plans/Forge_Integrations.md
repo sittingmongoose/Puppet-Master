@@ -486,8 +486,7 @@ acceptance_criteria:
 - Visible actions converge on one canonical command with exact provider/binding/target/currentness/permission payload.
 - Every one of the 52 canonical Forge commands has one schema-valid request and one rejected permission/guard/currentness
   negative fixture.
-- GitHub retains its provider-native Actions content inside the generic shell; a Git remote named Origin never fabricates
-  an Origin Actions service.
+- GitHub retains its provider-native Actions content inside the generic shell; a Git remote name never creates a hosted automation service.
 - Legacy hosted records migrate only from validated provider identity; ambiguous records remain blocked.
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
@@ -701,7 +700,7 @@ The common static command contract is now structurally specified for all 52 cano
 - `cmd.origin.*`, `cmd.gitlab.*`, `cmd.azure_devops.*`, generic `cmd.bitbucket.*`, and provider-specific peer common shapes are forbidden for new primary behavior.
 - Existing GitHub command aliases are retained only under their GitHub owner until central command adjudication; this doc does not silently rename them.
 - `github_actions` is retained only as a migration-read and route/bookmark/deep-link alias to `repository_automation`; it is never a second canonical panel occupant.
-- Provider-native service headings are never derived from a Git remote name; in particular, **Origin Actions** must not be fabricated.
+- Provider-native service headings come only from admitted AutomationBinding evidence; a Git remote name or check observation never creates a hosted automation service (DL-273, Jared 2026-11-01).
 - Packet retry counts, dedupe window sizes, API versions, support floors, tiers, and license rules are signed catalog inputs, not timeless constants.
 - Terminal prose scraping, raw token persistence, authority inference from mirror direction, newest-review inference, and partial-as-complete presentation are forbidden.
 - Automatic repository cleanup is forbidden: delete never runs as rollback, as part of setup resume, speculatively while the remote effect is unknown, or on provider-scope reuse.
@@ -1045,7 +1044,7 @@ preserved_exact_tokens:
 - already_connected
 negative_constraints:
 - Do not treat a selected provider or verified account as a repository binding.
-- Do not represent Cursor Origin as no-host, local-only, or public-by-default.
+- Do not convert a retired provider or hosted variant into a local-only or public-by-default fallback.
 - Do not offer duplicate built-in and official-page sign-in choices.
 - Do not collapse GitLab hosted/self-managed, Azure cloud/self-managed, or Bitbucket Cloud/Data Center requirements.
 - Do not collapse Forgejo and Gitea into one product, adapter, API schema, capability result, or account identity.
@@ -1097,7 +1096,7 @@ acceptance_criteria:
 - AutomationBinding never silently inherits provider/account/authority from RepositoryForgeBinding and every automation/runner
   request carries its exact binding generation.
 - repository_automation is the only canonical occupant; binding selection is shown only when multiple bindings exist,
-  provider headings come from the selected adapter, and no remote name fabricates a service such as Origin Actions.
+  provider headings come from the selected adapter, and no remote name creates a hosted automation service.
 - 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or

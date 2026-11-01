@@ -2,15 +2,17 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2573-L2630
+Source lines: L2573-L2632
 
-Source SHA256: `e201a74616baa4a718587a08dd882d49bcbc61a191d22a1429a5e2e608fb4c66`
+Source SHA256: `8879b7cba450e20f2d87ac54268bb05912404e2f138ad6aad29696f626266178`
 
 ---
 
 ## Universal touch-closure and projection-owner addendum - 2026-08-31
 
-Every capability touched by the Settings, Product Onboarding, Guided Tour, Doctor, Server/WAN/Backup, Browser/Capture, SCM/Forge/Origin, plugin, and full-thread-performance wave must have one machine-readable row in `Plans/touch_closure.json`. A row is complete only when it routes one requirement to one canonical owner and PlanUnit, one DRY schema or typed local UI-action contract, one command/handler path where a domain operation exists, all intended GUI consumers in reverse, and named test/evidence and residual-risk boundaries. Paint, typography, animation tokens, hover-overlay presentation, and local disclosure state remain Final GUI/UI-action concerns and must not be promoted into false domain commands.
+DL-273, Jared 2026-11-01: retired provider capabilities are excluded from the live consumer roster; shared lifecycle and admitted Forge consumers remain.
+
+Every capability touched by the Settings, Product Onboarding, Guided Tour, Doctor, Server/WAN/Backup, Browser/Capture, SCM/Forge, plugin, and full-thread-performance wave must have one machine-readable row in `Plans/touch_closure.json`. A row is complete only when it routes one requirement to one canonical owner and PlanUnit, one DRY schema or typed local UI-action contract, one command/handler path where a domain operation exists, all intended GUI consumers in reverse, and named test/evidence and residual-risk boundaries. Paint, typography, animation tokens, hover-overlay presentation, and local disclosure state remain Final GUI/UI-action concerns and must not be promoted into false domain commands.
 
 Settings, Onboarding, Guided Tour, Doctor, and PMConcept7 remain consumers. They may cache and render owner projections, open exact owner routes, and observe `ObservableWork` and receipts, but they cannot duplicate Server, route, backup, Browser, capture, SCM, forge, plugin, Project, Named Plan, installation, authentication, update, storage, or repair state machines. `AuthBrowserSession` is outside agent, adapter, capture, inspection, replay, export, and restore authority. A concept simulation is not a native handler, production wiring receipt, runtime result, or Slint certification.
 

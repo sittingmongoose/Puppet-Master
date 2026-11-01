@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11291-L11553
+Source lines: L11291-L11555
 
-Source SHA256: `a101f0dc1ef3353c0d66e8ee8a12fa46c451ccdadd57e5a6c7ce3d8d40209c92`
+Source SHA256: `2e87243617d7f2d85d1750c68023b622842618273e6da9c66158770ce3850721`
 
 ---
 
@@ -16,10 +16,12 @@ dispatcher and handler are evidenced. All rows use their exact `state.commands.<
 `.disabled_reason` projections, keyboard/pointer parity, deterministic focus return, a typed owner result,
 and receipt/projection-only effects with an empty EventRecord set.
 
+DL-273, Jared 2026-11-01: shared Git/Jujutsu clone routes use the current Settings Source Control manager and admitted Forge connections. Existing command ids, sole handlers, typed results and exact caller returns remain; no retired service manager is a reverse consumer.
+
 | Command ID | Label | Owner request -> result | Sole specified target | Visible reverse consumers |
 |---|---|---|---|---|
-| `cmd.source_control.repository.clone` | Clone Git Repository | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
-| `cmd.jujutsu.git.clone` | Clone with Jujutsu | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
+| `cmd.source_control.repository.clone` | Clone Git Repository | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Product Onboarding first-project branch; Settings Source Control manager |
+| `cmd.jujutsu.git.clone` | Clone with Jujutsu | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Product Onboarding first-project branch; Settings Source Control manager |
 | `cmd.restore.preview` | Preview Restore | `backup_restore_command_request` -> `backup_restore_command_result` | `handlers::backup_restore::preview_restore` | Product Onboarding restore branch; Settings Backup/Restore manager; Doctor recovery route |
 | `cmd.server.connect` | Connect Server | `command_payload` -> `command_result` | `handlers::server::connect` | Product Onboarding discovered/known Server branch; Settings Server manager; Doctor connectivity route |
 | `cmd.server.bootstrap.start` | Start Server Bootstrap | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::server::bootstrap_start` | Product Onboarding post-claim standalone/container branch; Settings Server manager |
