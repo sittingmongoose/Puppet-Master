@@ -17,8 +17,7 @@
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
     O55.sound.play('sheet');
   }
-  /* a service by the name the person picked it by: GitHub Enterprise, Gitea Cloud (Opus p74; Codeberg's own naming
-     waits for Jared's ruling on offering it at all) */
+  /* a service by the name the person picked it by: GitHub Enterprise, Gitea Cloud (Opus p74) */
   const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : id === 'gitea' && variant === 'gitea_cloud' ? T('online.service.giteaCloud') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
@@ -258,7 +257,8 @@
   const VARIANTS = {
     github: [['hosted', 'GitHub.com'], ['self_managed', null]], gitlab: [['hosted', 'GitLab.com'], ['self_managed', 'otherServer']],
     azure_devops: [['cloud', 'azureServices'], ['self_managed', 'azureServer']], bitbucket_cloud: [['cloud', 'bbCloud']], bitbucket_data_center: [['data_center', 'bbDc']],
-    forgejo: [['forgejo_cloud', 'forgejoCloud'], ['forgejo_self_managed', 'otherServer']], gitea: [['gitea_cloud', 'giteaCloud'], ['gitea_self_managed', 'otherServer']], cursor_origin: [['preview', null]]
+    /* (Forgejo is only ever a server of its own: no hosted choice, so no kind to pick, just its address) */
+    forgejo: [['forgejo_self_managed', 'otherServer']], gitea: [['gitea_cloud', 'giteaCloud'], ['gitea_self_managed', 'otherServer']], cursor_origin: [['preview', null]]
   };
   /* a server the person names: a self-managed one, Data Center, and a team's own Gitea Cloud (FF-08: never an example) */
   const needsAddress = (forge, variant) => O55.fixtures.needsAddress(forge, variant);
