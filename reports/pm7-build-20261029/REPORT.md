@@ -1,3 +1,29 @@
+# Plans lane — final FO-16/FO-18/FO-19 close-out, 2026-11-01
+
+**13/13 effective focused/generation/guard commands PASS.** Canonical/source commit `84faebbb8c3ac85c7594dad2dff4511f4ae6cb16` is pushed to both remotes. Integration `0cf2bf59e4` merged cleanly; `origin/main` is unchanged at `34b9ab2843`. Final report-only head is mailed after push. Coverage: **212 rows / 1060 required cells**, three added.
+
+| Item | Owner and result | Proof |
+|---|---|---|
+| **FO-16** | PWIZ-022 / F3-663 / DR-020: another option ends old refusal feedback without a cheer. Original rejection and current validation remain. | Seven isolated-source cases. |
+| **FO-18** | MS-122 / F3-520/598/600/663 / DR-080: no usable AI or Free Models means calm Almost ready before any look’s celebration starts. | Fourteen source cases, including ten look identifiers, usable free AI and late readiness loss. |
+| **FO-19** | PWIZ-022 / F3-663 / DR-080: long details wrap in their pane; a fingerprint hash stays whole after the algorithm when needed. Comparison/copy data and trust confirmation remain. | Four shared-renderer value/format cases. No pixel/layout claim. |
+| **Coverage / companions** | Nine existing units / five owners plus the dated index line. No new command, binding, setting, schema or event; existing rows remain exact. | [Coverage](CHANGE-COVERAGE.md), [adjudication](FOOTAGE-ADJUDICATION.md), byte-preservation guard. |
+| **Census** | 1010 settings; 485 bindings / 63 source families; 716 Touch rows / 141 profiles; 1271 production rows; 22 status keys. | Existing pins and data unchanged; build/canon checks pass. |
+| **Derived** | 7275 units / 29340 acceptance units / 96 indexed docs; 2977 shards / 99 sources. | Generator, shard check and index validation pass. Runtime readiness remains incomplete. |
+| **Page** | No consumed Settings input changed; no rebuild. The merged page passes --check. | No Concepts file changed after integration. |
+
+**Questions remain Jared’s:** Codeberg naming/admission and Forgejo restricted-token identity, recorded in [OWNER-QUESTIONS.md](OWNER-QUESTIONS.md). No ruling is changed. FO-17’s concept-only direct-open mechanism stays out of canon and coverage. No merge or ruling conflict was found.
+
+**Checks:** the source probe now has **58 cases / 25 added**. PM7’s 161 schema cases, canon, onboarding-rulings contracts, product-only boundary/history, coverage, preservation, shards and index checks pass. I initially started index validation before generation finished; the stale-artifact result is retained as a diagnostic. Its serial rerun passes, with no failure waived.
+
+**Evidence:** [verification.json](verification.json), SHA-256 `3af11039942a4b6d86c58b2febbc9af2dca895970367d2e1233c12beacc2d510`; **761 retained artifact hashes**, all **729 prior** hashes unchanged, and **24 current input hashes**. Portable guards/results are under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-*`.
+
+Main’s Spec_Lock, auto-decisions, `.evidence`, migration `pds-20261101-002-current-planunit-snapshot` and baseline recorded at `40e8ccd704` remain exact. The added canon makes existing seals stale as expected; the assigned governance lane owns the eventual reseal. No browsers, full gates, dry landing, landing lock, landing, snapshot/baseline refresh or reseal. No temporary browser, server, worktree, branch or scratch directory was created. T3 mail rings this thread.
+
+Earlier checkpoints below retain their original inputs and findings.
+
+---
+
 # Plans lane — footage review close-out, 2026-11-01
 
 **17/17 effective focused/generation/guard checks PASS.** Canonical/source commit `9a205b1c162b3fa4039558f75b32017d4ed2d443` is pushed to both remotes. It includes integration `7d2dd568be` and main `34b9ab2843`. The final report-only head is mailed after push. The [adjudication table](FOOTAGE-ADJUDICATION.md) maps every one of the **54** product items to its source and owner. [Coverage](CHANGE-COVERAGE.md) is **209 rows / 1045 required cells**.
