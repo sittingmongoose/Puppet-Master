@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4234
+Source lines: L3496-L4242
 
-Source SHA256: `76a2f7a76e28cf0713df17325f97c14111dbc7a223197cd0b5057aa67b38c5e5`
+Source SHA256: `2623f1c74452b681db5d1925f36177a42634ccc8110b4c8c648a884ae3ef1345`
 
 ---
 
@@ -212,7 +212,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Onboarding Source Control service producers consume the admission gate in PWIZ-024
+  and UIW-015 for their current effective selection, including restored controls and incoming actions.
+  Failed admission settles locally before the existing owner route; an unpicked draft cannot validate a
+  retired view choice. No new row, command, handler, event or return path is introduced.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions,
   transitions, reverse wiring, and owner-routed GUI behavior.
@@ -452,6 +457,9 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: Existing routes remain unchanged for admitted choices, while retired choices from any producer
+  state reach no auth or service owner.'
+
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - Plans/product_onboarding_contracts.schema.json

@@ -5633,7 +5633,12 @@ canonical_text: 'The 171-row server command-gap adjudication and six retained Eg
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Source Control provider-aware command and auth consumers recheck current
+  Forge-owner admission against the effective request selection before dispatch. Saved rendering, transient
+  control state or a different unpicked draft grants no provider authority and cannot start work for a
+  retired service or variant; existing command ids, sole handlers, typed results and exact returns remain.'
 gui_related: true
 gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser,
   Forge, Source Control, and palette consumers with exact availability and disabled reasons.
@@ -5664,6 +5669,9 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: A request for a retired provider or variant fails before provider or auth work regardless of
+  selection provenance; the current admitted routes keep their existing commands and fences.'
+
 validation_surfaces:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.production.json

@@ -1226,7 +1226,13 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Every Onboarding producer that uses a Source Control service choice consumes
+  PWIZ-024 current Forge admission before auth, discovery, setup or another service-owner handoff. Restored
+  or uncommitted controls and incoming actions must agree with the actual admitted effective selection; no
+  control value or unpicked main draft supplies an alternate authority path. Refusal uses the existing local
+  disabled or rejected settlement.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus
   return, and Details disclosure.
@@ -1394,6 +1400,9 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: Entry and activation checks cover saved control choices independently of the main draft; a retired
+  service emits no auth or service-owner request.'
+
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36668-L38201
+Source lines: L36668-L38209
 
-Source SHA256: `55e7754cd783ef95f76a8a73a2d19cdb114826e9ae55a5cd61a9a40cbc4fc468`
+Source SHA256: `bcdc00dc0182d5e9bbe56bbfb3b1dad39e30e85d2a73d5292d769412feafd9d1`
 
 ---
 
@@ -358,7 +358,12 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.
 
-  DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.'
+  DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.
+
+  DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current
+  admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open
+  sign-in merely because the main online-service draft is unpicked; the person must select an admitted
+  choice again.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -679,6 +684,9 @@ acceptance_criteria:
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
 - 'DL-273: A retired saved Source Control selection requires explicit admitted selection and fresh owner verification; the GUI cannot show its old authorization or Review as current.'
+
+- 'DL-273: Both control availability and activation refuse retired service choices from any state source
+  before an auth or service-owner handoff; explicit reselection remains available.'
 
 validation_surfaces:
 - Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced

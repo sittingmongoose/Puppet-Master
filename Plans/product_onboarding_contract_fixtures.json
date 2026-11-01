@@ -14051,6 +14051,15 @@
         "source_access_authorization_refs": [],
         "project_created": false
       }
+    },
+    {
+      "name": "DL273.invalid.action.retired_service_choice_from_saved_control",
+      "definition": "onboarding_action_request",
+      "base_valid": "valid.request.source_control_setup.select_forgejo_draft_only",
+      "patch": {
+        "choice": "forge_cursor_origin"
+      },
+      "expected_error": "DL-273: a retired service choice is refused by current action admission before auth or another owner handoff, regardless of saved-control provenance"
     }
   ],
   "resolved_owner_inputs": {

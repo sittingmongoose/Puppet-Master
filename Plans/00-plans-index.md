@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-11-01: DL-273 activation consumes current Forge admission for every selection source, including saved or uncommitted controls and incoming actions. Retired service choices cannot start sign-in, discovery, setup or other owner work; an unpicked main draft grants no exception. Existing commands, wiring, Settings keys and return paths remain.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Planning_Wizard.md#PWIZ-024, ContractName:Plans/UI_Wiring_Rules.md#UIW-015
+
 - 2026-11-01: DL-273 removal follow-through keeps admitted Source Control, Git/Jujutsu clone and shared connection consumers; current testing/evidence obligations use admitted routes plus retirement refusals. Stored retired selections invalidate their authority and Review through PWIZ-024. Shared remote-name, browser-origin, provenance, currentness and publication safeguards remain.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Automated_Testing_System.md#ATS-020, ContractName:Plans/Planning_Wizard.md#PWIZ-024
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7760-L8119
+Source lines: L7760-L8127
 
-Source SHA256: `2e87243617d7f2d85d1750c68023b622842618273e6da9c66158770ce3850721`
+Source SHA256: `da493e3e4147f6ada2c2415dc9703ccd751c096ac216ce2252ecd1345092530d`
 
 ---
 
@@ -109,7 +109,12 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
-  mirror authority.'
+  mirror authority.
+
+  DL-273, Jared 2026-11-01: Onboarding local actions that could start Source Control service work consume
+  PWIZ-024 admission before the existing owner handoff, including a choice not yet committed into the main
+  draft. Unpicked draft state never authorizes stale control state. Existing typed disabled or rejected
+  settlement carries no service operation, owner call or auth handoff for a retired choice.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local
   Product Onboarding actions.
@@ -219,6 +224,9 @@ acceptance_criteria:
   only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
+- 'DL-273: The same current admitted choice is checked before service-owner routing for restored controls and
+  incoming actions; no retired selection reaches sign-in or service work through a local Next action.'
+
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - Plans/product_onboarding_contracts.schema.json

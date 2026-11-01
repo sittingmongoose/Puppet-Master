@@ -19798,7 +19798,12 @@ canonical_text: 'Jared decided on 2026-11-01 that hosted Forgejo is not offered:
   while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
   and cannot restore a retired service, review, CI, auth or mirror capability.
 
-  DL-273, Jared 2026-11-01: Retired services and hosted variants cannot return through saved onboarding drafts. Their selection, address, account, repository, credential and authorization references and Review confirmation are invalidated, followed by explicit admitted service/address/account selection and fresh owner checks; never silently relabel a hosted tenant as self-managed.'
+  DL-273, Jared 2026-11-01: Retired services and hosted variants cannot return through saved onboarding drafts. Their selection, address, account, repository, credential and authorization references and Review confirmation are invalidated, followed by explicit admitted service/address/account selection and fresh owner checks; never silently relabel a hosted tenant as self-managed.
+
+  DL-273, Jared 2026-11-01: Retirement applies to every source of a Source Control service choice, including
+  saved or uncommitted controls and incoming actions before they become main-draft selections. Current
+  admission is checked again at activation; a retired service or variant cannot start protected sign-in,
+  discovery, setup or other service work. An unpicked main draft grants no exception.'
 gui_related: true
 gui_classification_reason: Changes the Forgejo choices shown in onboarding and Settings while preserving the deferred
   authentication flow.
@@ -19821,6 +19826,9 @@ acceptance_criteria:
   while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
   and cannot restore a retired service, review, CI, auth or mirror capability.'
 - 'DL-273: A saved draft for a retired service or hosted variant grants no authority after loading or resuming; PWIZ-024 requires explicit admitted selection and current validation before Review.'
+
+- 'DL-273: Retired service actions are refused before any auth or service-owner handoff regardless of where
+  the selected value came from.'
 
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-new-contracts

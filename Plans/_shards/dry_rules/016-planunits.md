@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2073
+Source lines: L265-L2081
 
-Source SHA256: `8879b7cba450e20f2d87ac54268bb05912404e2f138ad6aad29696f626266178`
+Source SHA256: `2ee9163141078a9ed56d59700128756b51cb1c18109a0f7fe60e02b9748b8245`
 
 ---
 
@@ -167,7 +167,12 @@ canonical_text: 'Consumer docs for orchestration, routing, runtime identity, app
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.
 
-  DL-273, Jared 2026-11-01: Saved-draft entry and resume consume the same Forge admission and PWIZ-024 invalidation rule. A retired service cannot keep credentials, authorization or Review authority by being relabelled as another variant or provider.'
+  DL-273, Jared 2026-11-01: Saved-draft entry and resume consume the same Forge admission and PWIZ-024 invalidation rule. A retired service cannot keep credentials, authorization or Review authority by being relabelled as another variant or provider.
+
+  DL-273, Jared 2026-11-01: One Forge admission rule is consumed at entry, resume and activation over the
+  actual effective selection. A separate control-state cache, incoming action or unpicked main draft cannot
+  bypass it and start a retired service. Validation and action availability consume the same rule before
+  protected sign-in or other service work.'
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -188,6 +193,9 @@ acceptance_criteria:
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
   mirror authority.'
 - 'DL-273: Every saved onboarding entry/resume path consumes the owner retirement rule; no second alias or migration path carries retired service identity or approval into an admitted choice.'
+
+- 'DL-273: No producer keeps a second admission list or bypasses the owner with saved or transient control
+  state; availability and activation share the current gate.'
 
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
