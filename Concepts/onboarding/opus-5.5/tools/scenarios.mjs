@@ -935,6 +935,31 @@ def('pr36', 'fresh+restoreFails', 'Situation restoreFails: the first restore sto
   await d.primary(); await d.untilScreen('r-done', 12000); A.ok(true, 'restored on the second try');
 });
 /* (pr37, the expiring pairing request, is the Server lane's: their SCR-15 pairing outcomes carry it) */
+/* RV-11: Pip's cheer means something succeeded; moving on, choosing another way or skipping is not a success */
+const pipLines = async (d) => d.page.evaluate(() => { window.__pipLines = []; let last = ''; window.__pipT = setInterval(() => { const t = ((document.querySelector('#pm-o55-onboarding .pst-bt') || {}).textContent || '').trim(); if (t && t !== last) { last = t; window.__pipLines.push(t); } }, 80); });
+const pipSaid = (d) => d.page.evaluate(() => { clearInterval(window.__pipT); return window.__pipLines.slice(); });
+def('pr48', 'homeNasPm', 'RV-11: a pairing turned down, then Choose another way: Pip does not cheer "Approved this time!", nothing was approved', async (d, A) => {
+  await d.openOnboarding(); await conceptOn(d);
+  await d.page.evaluate(() => { window.O55.ui.close('skip'); window.O55.ui.open({ fresh: true, screen: 'nas-pmpair' }); }); await d.settle();
+  await d.act('pair'); await sleep(900);
+  await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="demoHint"][data-arg="nas-pmpair:outcome|0"]', 'the turned-down demo answer');
+  await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key^=\"pairfail\"]')", 'turned down', 12000); await sleep(1500);
+  await pipLines(d); await d.act('another'); await sleep(3000);
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Approved|this time/i.test(x)), 'no cheer after Choose another way (' + JSON.stringify(l) + ')');
+});
+def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the online copy: Pip does not say "Back online"', async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('online'); await d.primary();
+  if ((await d.screen()) !== 'online-service') { await d.page.evaluate(() => window.O55.ui.go('online-service')); await d.settle(); }
+  if (await d.state(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="others"]'); return b && b.getAttribute('aria-expanded') !== 'true'; })) await d.act('others');
+  await d.act('pick', 'gitlab'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed in', 12000); await d.primary();
+  for (let i = 0; i < 4 && (await d.screen()) !== 'review'; i++) await d.primary();
+  await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit && window.O55.S.sess.commit.code === 'network'", 'network failure', 25000); await sleep(1500);
+  await pipLines(d); await d.act('askSkip'); await d.act('skipOnline');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'made without the copy', 25000); await sleep(3000);
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ')');
+});
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
 const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);

@@ -22,6 +22,7 @@
     const gateKey = JSON.stringify([cmdId, Object.assign(S.ctx(), opts.ctx || {})]);
     if (cur && cur.state === 'refused' && cur.gateKey === gateKey) return Promise.resolve(cur);
     inflight.add(key);
+    const startedAt = performance.now(); /* (a success counts for a fault only when it was started after it: RV-11) */
     /* an operation belongs to the run that started it: after Run Onboarding Again its late reports are dropped */
     const epoch = S.epoch || 0, stale = () => (S.epoch || 0) !== epoch;
     /* opts.sound = { done?: event|false (default 'success'), fail?: event|false (default 'error'),
@@ -45,7 +46,14 @@
         if (i > shown) shown = i;
       }
       /* owners' completion handlers update the session first, so the refresh shows the settled state in one frame */
-      if (st.state === 'done') { const ev = snd.done === undefined ? 'success' : snd.done; if (ev && showing()) O55.sound.play(ev, { step: st.phases.length, intensity: snd.intensity }); opts.onDone && opts.onDone(S, st); }
+      if (st.state === 'done') {
+        const ev = snd.done === undefined ? 'success' : snd.done; if (ev && showing()) O55.sound.play(ev, { step: st.phases.length, intensity: snd.intensity });
+        /* the operation succeeded: Pip's cheer is for this, never for an error leaving the screen (RV-11). Said before the
+           screen takes its result, whose redraw is the one that shows the fault gone; an owner answer the screen then
+           refuses is back on screen as a fault, which a cheer never passes */
+        window.dispatchEvent(new CustomEvent('o55:succeeded', { detail: { kind: 'op', key, startedAt, screen: here } }));
+        opts.onDone && opts.onDone(S, st);
+      }
       if (st.state === 'failed') { const ev = snd.fail === undefined ? 'error' : snd.fail; if (ev && showing()) O55.sound.play(ev); opts.onFail && opts.onFail(S, st); }
       if (!opts.quiet) O55.ui.refresh();
       /* NieR Mode's Pod reports a finished operation that the screen still shows (66-nier-window.js) */

@@ -612,7 +612,9 @@
         S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
-      skipOnline(S) { if (S.sess.commit.recovery) return; const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
+      /* (skipping is moving on: the Project made without its online copy is not the failed copy's success, so Pip does not
+         cheer "Back online" for it; RV-11) */
+      skipOnline(S) { if (S.sess.commit.recovery) return; if (O55.ui.movedOn) O55.ui.movedOn(); const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
       next(S) { const then = md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'; return O55.away && O55.away.needed(S) ? O55.away.start(S, then) : O55.ui.go(then); }
     },
     onBack: () => false

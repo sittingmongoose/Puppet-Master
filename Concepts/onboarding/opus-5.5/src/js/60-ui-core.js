@@ -450,7 +450,14 @@
      layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
-  let lastOops = null, cheering = null, lastLine = null, holdLineT = null;
+  let lastOops = null, cheering = null, lastLine = null, holdLineT = null, lastSuccess = null;
+  /* Pip's cheer means something succeeded (RV-11): an operation finished or an owner's answer was adopted
+     (o55:succeeded, 62-flow.js F.op and 30-owners.js adopt), never an error leaving the screen */
+  window.addEventListener('o55:succeeded', (e) => {
+    const d = e.detail || {};
+    lastSuccess = { at: performance.now(), startedAt: d.startedAt != null ? d.startedAt : performance.now(), screen: d.screen || (S.sess && S.sess.screen) };
+    if (S.open) O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 0);
+  });
   function stageOf() {
     const host = S.root && S.root.querySelector('.o55-stage');
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
@@ -487,10 +494,38 @@
     /* The cheer is for the owner's result, not for the error leaving the screen: while a retry is under way (an
        operation running, a wait's loader showing) Pip thinks with the screen, and cheers once it has succeeded; a
        second failure brings the oops back (Astra M01) */
-    const pending = !oops && lastOops && (/^(signingIn|installing|testing|checking|working|waiting|looking|reading)$/.test(spec.lineId) || spec.pip.mood === 'think'
-      || Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('.o55-ldwrap, [data-pip-loader]')));
-    const cheer = !oops && !pending && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops : null;
-    if (oops) lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null }; else if (!pending) lastOops = null;
+    /* RV-11: the cheer needs a real success for the thing that failed. A fault read from a banner, a note or a row waits
+       for an operation or an owner's answer that succeeded after it appeared (a retry); a field's error, for that field
+       to be there again, filled and without it (or such a success); a refused press, for that press to go through. A
+       fault that only left (another way chosen, a skip, a token instead of a sign-in) is no success: Pip goes quiet. */
+    const now = performance.now();
+    if (lastOops && lastOops.screen !== S.sess.screen) lastOops = null;
+    let cheer = null;
+    if (oops) {
+      const same = lastOops && lastOops.key === oops.key;
+      const fieldEl = oops.el && oops.el.closest && oops.el.closest('.o55-field[data-key]');
+      /* (a success while the fault still shows did not put it right: it never counts later) */
+      let since = same ? lastOops.since : now; if (lastSuccess && lastSuccess.at >= since) since = lastSuccess.at + 1;
+      lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null, since, field: same ? lastOops.field : (fieldEl ? fieldEl.getAttribute('data-key') : null) };
+    } else if (lastOops) {
+      const won = !!(lastSuccess && lastSuccess.at >= lastOops.since && lastSuccess.startedAt >= lastOops.since - 100 && lastSuccess.screen === S.sess.screen);
+      let ok = won, gone = false;
+      if (lastOops.refused) {
+        const r = lastOops.refused, c = layer && Array.from(layer.querySelectorAll('[data-o55-do]')).find((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg);
+        ok = ok || !!(c && c.getAttribute('aria-disabled') !== 'true'); gone = !c;
+      } else if (lastOops.field) {
+        const f = layer && layer.querySelector(`.o55-field[data-key="${CSS.escape(lastOops.field)}"]`), i = f && f.querySelector('input, textarea');
+        ok = ok || !!(f && i && i.type !== 'password' && String(i.value || '').trim() && !f.querySelector('.o55-err'));
+        gone = !f;
+      }
+      /* (a field or a control away while something runs, such as a key being checked, is not the person moving on) */
+      /* (some screens redraw into their waiting state a moment before the operation registers: the waiting pill or Pip's
+         waiting line count too, 73-screens-ai.js keyCheck) */
+      const running = Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('[aria-busy="true"], .o55-ldwrap, [data-pip-loader], .o55-pill-wait'))
+        || /^(signingIn|installing|testing|checking|working|waiting|looking|reading|connecting)$/.test(spec.lineId || '') || (spec.pip && spec.pip.mood === 'think');
+      if (ok && lastOops.face === 'oops') { cheer = lastOops; lastOops = null; }
+      else if (ok || (gone && !running) || now - lastOops.since > 30000) lastOops = null; /* put right without a cheer of its own, moved on, or long ago */
+    }
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
     if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
@@ -519,6 +554,8 @@
     /* (a switch of Plain English and Expert puts the other version in place at once: no retyping, no jump) */
     st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
+  /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
+  O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
   O55.pipStage.holdsTip = holdsTip;
 

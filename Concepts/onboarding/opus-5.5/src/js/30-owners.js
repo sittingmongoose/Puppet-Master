@@ -295,6 +295,8 @@
     /* a one-shot fault, once the screen has tried to adopt it, gives way to the owner's next answer */
     function adoptOnce(req, res, cur) {
       const v = adopt(req, res, cur);
+      /* an owner's answer adopted is a real success for Pip to cheer (RV-11) */
+      if (v && v.ok) { try { window.dispatchEvent(new CustomEvent('o55:succeeded', { detail: { kind: 'adopt', operation: req && req.operation, startedAt: performance.now() } })); } catch (_) {} }
       const b = res && begun[res.requestId];
       if (b && b.res === res && once.has(res)) { b.res = undefined; b.n = (b.n || 1) + 1; }
       return v;
