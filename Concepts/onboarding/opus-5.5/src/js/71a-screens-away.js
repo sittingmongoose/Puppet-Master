@@ -26,7 +26,7 @@
   function proxyFile(S) {
     const d = md(S), A2 = window.PM51 && window.PM51.sysAway;
     if (!A2 || typeof A2.awayConfig !== 'function' || !FILE_NAME[d.proxy_kind]) return null;
-    const u = ((S.sess.server || {}).kind === 'cloud' ? S.env.unclaimedCloud : S.env.unclaimed) || {};
+    const kind = (S.sess.server || {}).kind, u = (kind === 'cloud' ? S.env.unclaimedCloud : kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed) || {};
     const host = String(d.proxy_hostname || '').replace(/^https:\/\//, '').replace(/\/$/, '');
     try { return { name: FILE_NAME[d.proxy_kind], text: A2.awayConfig({ proxy: KIND_NAME[d.proxy_kind], domain: host }, u.address) }; } catch (_) { return null; }
   }

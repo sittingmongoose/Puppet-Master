@@ -262,6 +262,8 @@
           projects: [{ id: 'company-site', name: 'Company Site', updated: 'today' }], accounts: [] }
       ],
       unclaimed: { id: 'pm:new', name: 'truenas.local', address: 'truenas.local', seed: 'pm-new-44be', setupCode: '482 913' },
+      /* (GLM-2: another computer is not the NAS: its own name, address and identity over the same unclaimed Server) */
+      unclaimedPc: { name: 'studio-pc.local', address: 'studio-pc.local', seed: 'pm-pc-5d10' },
       /* a rented cloud computer never shows up on the home network: it is reached by the address its setup prints */
       unclaimedCloud: { id: 'pm:cloud', name: '203.0.113.24', address: '203.0.113.24', seed: 'pm-cloud-8e21', setupCode: '482 913' },
       /* folders that already live on the work computer when it is a Server (browsed through the paired Server) */

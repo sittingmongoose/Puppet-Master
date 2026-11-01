@@ -170335,6 +170335,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           projects: [{ id: 'company-site', name: 'Company Site', updated: 'today' }], accounts: [] }
       ],
       unclaimed: { id: 'pm:new', name: 'truenas.local', address: 'truenas.local', seed: 'pm-new-44be', setupCode: '482 913' },
+      /* (GLM-2: another computer is not the NAS: its own name, address and identity over the same unclaimed Server) */
+      unclaimedPc: { name: 'studio-pc.local', address: 'studio-pc.local', seed: 'pm-pc-5d10' },
       /* a rented cloud computer never shows up on the home network: it is reached by the address its setup prints */
       unclaimedCloud: { id: 'pm:cloud', name: '203.0.113.24', address: '203.0.113.24', seed: 'pm-cloud-8e21', setupCode: '482 913' },
       /* folders that already live on the work computer when it is a Server (browsed through the paired Server) */
@@ -179256,7 +179258,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* A rented computer is claimed with the one-time setup code its cloud provider's console shows once Puppet Master is
      installed there: no address to type and no setup page on the internet (Jared, C2 A, 2026-10-31). It is named as
      what it is, not by its address. */
-  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') }) : S.env.unclaimed);
+  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') })
+    : S.sess.server.kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed);
   /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
      from the name the person gives it) */
   const reachedAt = (S) => unclaimed(S).address;
@@ -182041,7 +182044,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function proxyFile(S) {
     const d = md(S), A2 = window.PM51 && window.PM51.sysAway;
     if (!A2 || typeof A2.awayConfig !== 'function' || !FILE_NAME[d.proxy_kind]) return null;
-    const u = ((S.sess.server || {}).kind === 'cloud' ? S.env.unclaimedCloud : S.env.unclaimed) || {};
+    const kind = (S.sess.server || {}).kind, u = (kind === 'cloud' ? S.env.unclaimedCloud : kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed) || {};
     const host = String(d.proxy_hostname || '').replace(/^https:\/\//, '').replace(/\/$/, '');
     try { return { name: FILE_NAME[d.proxy_kind], text: A2.awayConfig({ proxy: KIND_NAME[d.proxy_kind], domain: host }, u.address) }; } catch (_) { return null; }
   }

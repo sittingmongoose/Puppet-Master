@@ -15,7 +15,8 @@
   /* A rented computer is claimed with the one-time setup code its cloud provider's console shows once Puppet Master is
      installed there: no address to type and no setup page on the internet (Jared, C2 A, 2026-10-31). It is named as
      what it is, not by its address. */
-  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') }) : S.env.unclaimed);
+  const unclaimed = (S) => (cloud(S) ? Object.assign({}, S.env.unclaimedCloud, { name: T('server.wait.cloudName') })
+    : S.sess.server.kind === 'pc' ? Object.assign({}, S.env.unclaimed, S.env.unclaimedPc || {}) : S.env.unclaimed);
   /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
      from the name the person gives it) */
   const reachedAt = (S) => unclaimed(S).address;
