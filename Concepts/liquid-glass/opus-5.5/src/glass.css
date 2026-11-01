@@ -826,6 +826,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-in
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 0 .5px var(--lg-line) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-inputwrap:focus-within, .o55-field :is(input, textarea):not(.o55-inputwrap *):focus) { box-shadow: inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .8), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
+/* a refused field (p32): its edge in the look's refused orange, as in every look; focused, the focus ring stays outside it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :is(.o55-inputwrap, input, textarea) { box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 0 1.5px var(--accent-orange) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :is(.o55-inputwrap:focus-within, input:focus, textarea:focus) { box-shadow: inset 0 0 0 1.5px var(--accent-orange), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-inputwrap :is(input, textarea) { background: transparent !important; border: 0 !important; box-shadow: none !important; outline: none !important; }
 /* segments and the step rail: a fill track, the lens chooses */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg { border: 0 !important; border-radius: 10px !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 2px !important; }

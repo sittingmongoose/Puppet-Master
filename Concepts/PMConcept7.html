@@ -26735,7 +26735,11 @@ html[data-theme^="retro"], html[data-o55-nier="on"] { --pm-ctl-r: 0px; --pm-ctl-
    Glass surfaces are rgba() in the app, so floating panels composite them over --background (lesson: see-through). */
 #pm-o55-onboarding { position: fixed; inset: 0; z-index: 2147482000; display: grid; place-items: center; font-family: var(--body-font, Inter, system-ui, sans-serif); color: var(--text-primary);
   --o55-accent: var(--accent-blue); --o55-on-accent: #fff; --o55-r: 14px; --o55-card-r: 11px; --o55-btn-r: 9px; --o55-pad: 44px;
-  --o55-win-bg: var(--surface); --o55-card-bg: color-mix(in srgb, var(--surface) 88%, var(--text-primary) 3%); --o55-line: var(--border); }
+  --o55-win-bg: var(--surface); --o55-card-bg: color-mix(in srgb, var(--surface) 88%, var(--text-primary) 3%); --o55-line: var(--border);
+  /* an empty radio ring or check box (.o55-check) is how a choice reads as one you can make: 3:1 against its card in every
+     look (WCAG 1.4.11; p70, Opus pass 2: the line it drew with stood 1.27-2.85:1 in eight of the ten looks, Glass Dark
+     1.64), the look's own ink, faded */
+  --o55-ring: color-mix(in srgb, var(--text-primary) 65%, transparent); }
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
@@ -26953,7 +26957,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
 #pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
-.o55-check { width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--o55-line); transition: all 200ms ease; flex: none; }
+.o55-check { width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--o55-ring); transition: all 200ms ease; flex: none; }
 /* a card's radio circle keeps the last column whether or not the card has a tag, so every circle in a list lines up
    (Astra m03: an untagged card's circle took the tag's column, a gap short of the tagged one's) */
 .o55-card > .o55-check { grid-column: 4; }
@@ -27086,6 +27090,13 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-namefield.o55-invalid inp
 #pm-o55-onboarding[data-family="glass"] :is(.o55-field input):focus,
 #pm-o55-onboarding[data-family="glass"] :is(.o55-field textarea):focus,
 #pm-o55-onboarding[data-family="glass"] .o55-inputwrap:focus-within { outline: none; border-color: var(--o55-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--o55-accent) 45%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+/* p32 (Opus pass 2): a refused field keeps the refused edge in every look. Glass's wells and Retro's 2 px box are set with
+   the window's id and outranked .o55-field.o55-invalid input, so a refused field there looked like any other, and a field
+   with a prefix (the online copy's name after its owner) draws its edge on the wrap, which no look marked. NieR Mode keeps
+   its own error edge (11-window-nier.css); the Liquid Glass layer draws its fields' edges as shadows (glass.css). */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-field.o55-invalid > :where(input):not(.t7:not(*)),
+html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-field.o55-invalid > :where(textarea):not(.t7:not(*)),
+html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-field.o55-invalid > :is(.o55-inputwrap) { border-color: var(--accent-orange); }
 /* Friendly: a thick paper card with an ink edge and a flat paper shadow, like its signs */
 html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-namefield input { border: 2px solid var(--o55-ink); border-radius: 14px; background: var(--o55-card-bg);
   box-shadow: 0 3px 0 color-mix(in srgb, var(--text-primary) 18%, transparent); }
@@ -27475,7 +27486,8 @@ html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-switch span { top: 3
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-toggle.o55-on .o55-switch { background: var(--o55-nier-ink); box-shadow: none; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-toggle.o55-on .o55-switch span { transform: translateX(18px); background: var(--o55-nier-on-ink); }
 /* the radio mark: a square; chosen, a paper square with an ink core (it sits on the ink block) */
-html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-check { width: 14px; height: 14px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); background: transparent; transition: none; }
+/* its ring at 65% ink, as every look's (--o55-ring, p70): at half ink it stood 2.85:1 on NieR Light's paper */
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-check { width: 14px; height: 14px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .65); background: transparent; transition: none; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-paper); }
 /* the "?" disclosure, the sheet, the code lines: hairline boxes */
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-q { border-width: 1px; font-family: var(--mono-font); }
@@ -70623,6 +70635,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-fi
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :where(.o55-inputwrap:focus-within):not(.t7.t7.t7:not(*)):not(t7:not(*)),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-field :is(input, textarea):not(.o55-inputwrap *):focus) { box-shadow: inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .8), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
+/* a refused field (p32): its edge in the look's refused orange, as in every look; focused, the focus ring stays outside it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :is(.o55-inputwrap),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :where(input):not(.t7:not(*)),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :where(textarea):not(.t7:not(*)) { box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 0 1.5px var(--accent-orange) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :is(.o55-inputwrap:focus-within),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :where(input:focus):not(.t7.t7:not(*)),
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-field.o55-invalid > :where(textarea:focus):not(.t7.t7:not(*)) { box-shadow: inset 0 0 0 1.5px var(--accent-orange), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-inputwrap :is(input),
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-inputwrap :is(textarea) { background: transparent !important; border: 0 !important; box-shadow: none !important; outline: none !important; }
 /* segments and the step rail: a fill track, the lens chooses */
