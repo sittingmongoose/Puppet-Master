@@ -4,6 +4,8 @@
 //   is what a person sees, with no anti-aliasing in it.
 // - p32: a refused field keeps the refused edge (orange; NieR Mode's own error ink): the port field after 99999 is typed,
 //   and a field with a prefix (the online copy's name after its owner), drawn by the wizard's own field component.
+// - FO-19: on that screen the fingerprints (.o55-kv) show whole: no sideways scroll, nothing past the pane, and a value
+//   that fits on one line stays unbroken (a fingerprint that wraps keeps its hash whole), at 1920 and 1280 wide.
 // - p28: the changed-ID warning on "Is this the right device?" (nas-identity) reads as a warning: its fill as painted is
 //   within 45° of the warning colour's hue (Glass's blue frost turned a thin wash grey-blue), and its edge and its icon
 //   are in the warning colour.
@@ -148,4 +150,50 @@ export default async function (t) {
 	}
 	warnRows.forEach((x) => t.log('p28 ' + x));
 	await t.check('p28: the changed-ID warning reads as a warning in every look (its fill within 45° of the warning hue, its edge and icon in the warning colour)', warnBad.length === 0, warnBad.join('; '));
+
+	// FO-19: on the same screen, the fingerprint and the old one (.o55-kv) show whole: the pane has no horizontal scroll,
+	// every value ends inside the pane, and a value that fits on one line is not broken. At 1920 and 1280 wide.
+	const kvBad = [], kvRows = [];
+	for (const [w, h] of [[1920, 1080], [1280, 800]]) {
+		await t.viewport(w, h);
+		for (const look of LOOKS) {
+			if (!(await applyLook(t, f, look, kvBad))) continue;
+			const r = await f.evaluate((l) => {
+				const layer = document.querySelector(l), sc = layer && layer.querySelector('.o55-scroll'), pane = document.querySelector('#pm-o55-onboarding .o55-pane');
+				const dds = [...(layer ? layer.querySelectorAll('.o55-kv dd') : [])];
+				if (!sc || !dds.length) return null;
+				const pr = pane.getBoundingClientRect();
+				return {
+					scroll: sc.scrollWidth - sc.clientWidth,
+					rows: dds.map((dd) => {
+						const b = dd.getBoundingClientRect(), range = document.createRange(); range.selectNodeContents(dd);
+						const lines = new Set([...range.getClientRects()].filter((x) => x.width > 0).map((x) => Math.round(x.top))).size;
+						const m = document.createElement('span'); m.textContent = dd.textContent; m.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
+						dd.appendChild(m); const natural = m.getBoundingClientRect().width; m.remove();
+						// a fingerprint (SHA256:...) that wraps keeps its hash whole where the hash fits: its first and last characters on one line
+						let hashWhole = null;
+						const pre = /^[A-Z][A-Z0-9]{2,}:/.exec(dd.textContent);
+						if (pre) {
+							const hash = dd.textContent.slice(pre[0].length), hm = document.createElement('span'); hm.textContent = hash; hm.style.cssText = m.style.cssText;
+							dd.appendChild(hm); const hw = hm.getBoundingClientRect().width; hm.remove();
+							const at = (i) => { let n = 0; for (const node of dd.childNodes) { if (node.nodeType !== 3) continue; if (i < n + node.length) { const rr = document.createRange(); rr.setStart(node, i - n); rr.setEnd(node, i - n + 1); return Math.round(rr.getBoundingClientRect().top); } n += node.length; } return null; };
+							if (hw <= dd.clientWidth + 0.5) hashWhole = at(pre[0].length) === at(dd.textContent.length - 1);
+						}
+						return { text: dd.textContent.slice(0, 18), right: Math.round(b.right - pr.right), over: dd.scrollWidth - dd.clientWidth, lines, fits: natural <= dd.clientWidth + 0.5, natural: Math.round(natural), room: dd.clientWidth, hashWhole };
+					})
+				};
+			}, L);
+			if (!r) { kvBad.push(`${look} ${w}: no fingerprint on screen`); continue; }
+			kvRows.push(`${look} ${w}: pane scrolls ${r.scroll} px sideways; ` + r.rows.map((x) => `"${x.text}…" ${x.lines} line(s)${x.hashWhole === null ? '' : x.hashWhole ? ', hash whole' : ', hash BROKEN'}, ${x.natural}/${x.room} px, ends ${x.right} px from the pane's edge`).join('; '));
+			if (r.scroll > 1) kvBad.push(`${look} ${w}: the pane scrolls ${r.scroll} px sideways`);
+			r.rows.forEach((x) => {
+				if (x.right > 0 || x.over > 1) kvBad.push(`${look} ${w}: "${x.text}…" runs ${Math.max(x.right, x.over)} px past its edge`);
+				if (x.fits && x.lines > 1) kvBad.push(`${look} ${w}: "${x.text}…" fits on one line but is broken in ${x.lines}`);
+				if (x.hashWhole === false) kvBad.push(`${look} ${w}: "${x.text}…" breaks inside its hash, which fits on a line`);
+			});
+		}
+	}
+	await t.viewport(1920, 1080);
+	kvRows.forEach((x) => t.log('FO-19 ' + x));
+	await t.check('FO-19: the fingerprints show whole in every look, at 1920 and 1280 wide (no sideways scroll, nothing past the pane, unbroken where it fits)', kvBad.length === 0, kvBad.slice(0, 10).join('; '));
 }
