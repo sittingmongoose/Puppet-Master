@@ -17,8 +17,8 @@
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
     O55.sound.play('sheet');
   }
-  /* a service by the name the person picked it by: GitHub Enterprise, Gitea Cloud (Opus p74) */
-  const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : id === 'gitea' && variant === 'gitea_cloud' ? T('online.service.giteaCloud') : (O55.fixtures.forge(id) || {}).name || id);
+  /* a service by the name the person picked it by: GitHub Enterprise for GitHub's own server (Opus p74) */
+  const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
   /* a concept demo's ready choices under a step that needs a real service (pm7-onb's O55.flow.hint), each taking one
@@ -257,13 +257,13 @@
   const VARIANTS = {
     github: [['hosted', 'GitHub.com'], ['self_managed', null]], gitlab: [['hosted', 'GitLab.com'], ['self_managed', 'otherServer']],
     azure_devops: [['cloud', 'azureServices'], ['self_managed', 'azureServer']], bitbucket_cloud: [['cloud', 'bbCloud']], bitbucket_data_center: [['data_center', 'bbDc']],
-    /* (Forgejo is only ever a server of its own: no hosted choice, so no kind to pick, just its address) */
-    forgejo: [['forgejo_self_managed', 'otherServer']], gitea: [['gitea_cloud', 'giteaCloud'], ['gitea_self_managed', 'otherServer']], cursor_origin: [['preview', null]]
+    /* (Forgejo and Gitea are only ever a server of their own: no hosted choice, so no kind to pick, just its address) */
+    forgejo: [['forgejo_self_managed', 'otherServer']], gitea: [['gitea_self_managed', 'otherServer']]
   };
-  /* a server the person names: a self-managed one, Data Center, and a team's own Gitea Cloud (FF-08: never an example) */
+  /* a server the person names: a self-managed one or Data Center (FF-08: never an example) */
   const needsAddress = (forge, variant) => O55.fixtures.needsAddress(forge, variant);
   /* The service, variant and address this screen shows, its Continue checks and next() uses: one reading, so the button is
-     never enabled for a choice next() reads differently (GLM review: Gitea Cloud's untouched variant needed an address
+     never enabled for a choice next() reads differently (GLM review: an untouched variant that needed an address
      next() read and foot() didn't). Unset, it is the plan's own service, variant and address (a Review Fix, a resumed
      run), else GitHub; an untouched variant is the service's first. */
   function serviceChoice(S) {
@@ -276,14 +276,14 @@
     /* an address belongs to the server it was typed for: one per service and variant, never carried to another */
     const key = sel + '|' + variant, typed = (ol.addresses || {})[key];
     const raw = typed != null ? typed : same && d.forge_instance_url && needsAddress(forge, variant) ? d.forge_instance_url : '';
-    const address = String(raw || '').trim(), asks = needsAddress(forge, variant), tenant = variant === 'gitea_cloud';
+    const address = String(raw || '').trim(), asks = needsAddress(forge, variant);
     /* the address check every server address uses (O55.endpoint): a refused one says why, under the field and on
        Continue, and a bare host name gets https:// with the field saying so (Opus RV-16: http:// refused with no reason) */
-    const example = T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint');
+    const example = T('online.service.addressHint');
     const res = asks ? O55.endpoint.check(address) : null, words = asks ? O55.endpoint.hint(res, res && res.empty ? example : '') : { hint: '', error: '' };
     /* (Continue's reason: what is wrong, or that the address is missing, never the example: Opus MAJOR 11) */
     words.reason = words.error || (asks && res && res.empty ? T('missing.instance') : example);
-    return { sel, forge, variant, key, typed, asks, address, url: res && res.ok ? res.url : '', ok: !asks || res.ok, words, tenant };
+    return { sel, forge, variant, key, typed, asks, address, url: res && res.ok ? res.url : '', ok: !asks || res.ok, words };
   }
   /* a field and the line under it brought into sight: a server's address when a choice brings it (it can sit below the
      fold: MAJOR 11); a refused branch name with its rule, in the middle, clear of Continue's note (Opus p43) */
@@ -305,20 +305,20 @@
     title: (S) => (OL(S).purpose === 'source' ? T('online.service.titleSource') : T('online.service.title')),
     lead: () => T('online.service.lead'),
     body(S) {
-      const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant, tenant = c.tenant;
+      const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant;
       let out = C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
       /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
       let under = '';
-      if (sel !== 'github' && sel !== 'github_enterprise' && sel !== 'cursor_origin') {
+      if (sel !== 'github' && sel !== 'github_enterprise') {
         const vs = sel === 'bitbucket_cloud' ? [['cloud', 'bbCloud'], ['data_center', 'bbDc']] : VARIANTS[forge] || [];
         if (vs.length > 1) under += C.segmented({ do: 'variant', value: variant, label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
       }
       if (c.asks) {
-        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: c.typed != null ? c.typed : c.address, placeholder: tenant ? 'https://' : 'https://git.example.com', hint: c.words.hint, error: c.words.error, invalid: !!c.words.error, valid: c.ok });
-        const good = tenant ? 'https://platyr.gitea.test' : 'https://git.platyr.test';
+        under += C.field({ bind: 'address', label: T('online.service.addressLabel'), value: c.typed != null ? c.typed : c.address, placeholder: 'https://git.example.com', hint: c.words.hint, error: c.words.error, invalid: !!c.words.error, valid: c.ok });
+        const good = 'https://git.platyr.test';
         under += demo('online-service:address', [{ label: good, outcome: 'works', fills: [['address', good]] }, { label: 'http://git.platyr.test', outcome: 'wrong', fills: [['address', 'http://git.platyr.test']] }], !c.ok);
       }
-      const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise', 'cursor_origin'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), tag: id === 'cursor_origin' ? T('online.service.preview') : '', quiet: true, under: id === sel ? under : '' }));
+      const others = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise'].map((id) => ({ v: id, glyph: 'cloud', title: T('online.service.' + id), quiet: true, under: id === sel ? under : '' }));
       out += F.more(ol.others || sel !== 'github', T('online.service.others'), 'others', C.cards('pick', others, sel, { cls: 'o55-choices-quiet' }), 'others');
       return out;
     },
@@ -339,7 +339,7 @@
         const patch = { online_mode: mode, forge, forge_provider_variant: variant, forge_instance_url: url };
         /* another service, server or use: its sign-in, chosen Project, owner, project, visibility and sign-in method go
            with the old one, together (FF-11: an organization's Internal carried into Gitea; FF-12: a Forgejo token carried
-           into Gitea Cloud); Back and Continue with the same one keeps them (Opus p74: the chosen Project was cleared) */
+           into another server); Back and Continue with the same one keeps them (Opus p74: the chosen Project was cleared) */
         if (d.online_mode !== mode || d.forge !== forge || d.forge_provider_variant !== variant || (url && d.forge_instance_url !== url)) {
           Object.assign(patch, { forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', source_access_authorization_refs: [],
             repository_owner_scope: 'personal', repository_container: '', repository_project: '', repository_visibility: null });
@@ -445,7 +445,6 @@
     if (!o) return '';
     if (d.forge === 'gitlab' && o.visibility && o.visibility !== 'public') return T('online.details.cap.gitlab' + (o.visibility === 'internal' ? 'Internal' : ''), { org: o.name });
     if (d.forge === 'bitbucket_cloud' && p && p.private) return T('online.details.cap.bitbucket', { project: p.name });
-    if (d.forge === 'cursor_origin' && o.scope === 'personal' && world(S).owners.length) return T('online.details.cap.origin');
     if ((d.forge === 'forgejo' || d.forge === 'gitea') && o.profile && o.profile !== 'public' && vis.includes('public')) return T('online.details.cap.profile' + (o.profile === 'limited' ? 'Limited' : 'Private'), { org: o.name, host: hostOf(d) });
     return '';
   }

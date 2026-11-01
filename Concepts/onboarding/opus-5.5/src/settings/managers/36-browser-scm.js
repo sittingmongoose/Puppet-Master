@@ -28,7 +28,6 @@
   function render() {
     const x = b(); const ready = x.state === 'Ready';
     const gh = forges().find(f => f.status === 'active');
-    const origin = forges().find(f => f.id === 'cursor-origin');
     const git = tools().find(t => t.id === 'git');
     const scSummary = `${gh ? `${gh.name} connected` : 'No code service connected'} · ${git && git.status === 'ready' ? 'Git ready' : 'Git not installed'}`;
     const body = [
@@ -50,13 +49,11 @@
         title: 'Depends on', help: 'Other parts of Puppet Master the browser works with.',
         body: PM51.rows([
           { label: 'Source Control', help: 'Where the browser finds the code it is testing.', value: scSummary, action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },
-          { label: 'Cursor Origin', help: 'Optional. Lets the browser read and write Origin repositories.', value: origin && origin.status === 'active' ? `Connected as ${origin.defaultAccount}` : 'Not connected', muted: !(origin && origin.status === 'active'), action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },
           { label: 'Named Plans', help: 'The browser follows the plan it is verifying.', value: 'Managed in Planning Wizard', action: { label: 'Open Planning Wizard', icon: 'map', action: 'pm51-browser-wizard' } }
         ])
       }),
       PM51.advanced([
         PM51.section({ title: 'Capture policy', body: PM51.kv([['What is captured', 'Screenshots and short clips of pages the assistant opened'], ['Never captured', 'Sign-in pages, password fields, and anything you mark private'], ['Where they live', 'With the Goal or thread that made them'], ['Before saving', txt(REDACT)], ['Kept for', txt(RETAIN)]]) }),
-        PM51.section({ title: 'Cursor Origin preview', body: PM51.kv([['What it adds', 'Read and write to Origin repositories from the browser flow'], ['Mirroring', 'Can mirror a GitHub repository'], ['Sign-in', 'Origin CLI in your own browser; the assistant never signs in for you'], ['Rollback', 'Every change is reversible']]) }),
         PM51.section({ title: 'Technical details', body: PM51.kv([['Runtime state', ready ? 'Idle' : 'Unavailable'], ['Surface', 'Ordinary browser only; no native runtime'], ['Session', 'Ephemeral; not recorded'], ['Automation', 'Unavailable'], ['Runs on', host()], ['Slow pages', 'Captured once the page settles'], ['Low-resource mode', 'Stills only']]) + '<div style="margin-top:10px">' + PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-browser-diagnostics' }) + '</div>' })
       ].join(''))
     ].join('');

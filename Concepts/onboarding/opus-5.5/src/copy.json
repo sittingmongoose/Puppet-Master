@@ -653,9 +653,7 @@
       "bitbucket_data_center": "Bitbucket Data Center",
       "forgejo": "Forgejo",
       "gitea": "Gitea",
-      "cursor_origin": "Cursor Origin",
       "github_enterprise": "GitHub Enterprise",
-      "preview": "Preview",
       "hosted": "{name}.com",
       "selfManaged": "My company's own server",
       "addressLabel": "Server address",
@@ -664,11 +662,8 @@
       "azureServer": "Azure DevOps Server",
       "bbCloud": "Bitbucket Cloud",
       "bbDc": "Bitbucket Data Center",
-      "giteaCloud": "Gitea Cloud",
       "ownServer": "My own server",
-      "otherServer": "Another server",
-      "tenantLabel": "Your Gitea Cloud address",
-      "tenantHint": "The https address your team's Gitea Cloud has"
+      "otherServer": "Another server"
     },
     "signin": {
       "eyebrow": "Online copy",
@@ -835,8 +830,7 @@
         "bitbucket_cloud": "Use letters or numbers: its web address keeps them, turns the rest into dashes, and holds up to 62.",
         "bitbucket_data_center": "Start with a letter or number; then letters, numbers, spaces, - . or _.",
         "forgejo": "Use letters, numbers, - . or _ only, up to 100.",
-        "gitea": "Use letters, numbers, - . or _ only, up to 100.",
-        "cursor_origin": "Use letters, numbers, - . or _ only, up to 100."
+        "gitea": "Use letters, numbers, - . or _ only, up to 100."
       },
       "branchRule": "A branch name can't have spaces, two dots in a row or ~ ^ : ? * [ \\, can't start with - and can't end with / or a dot.",
       "spelled": "Saved as {name}",
@@ -847,8 +841,7 @@
         "azOrg": "Organization",
         "collection": "Collection",
         "workspace": "Workspace",
-        "dcProject": "Which project keeps it?",
-        "team": "Whose account keeps it?"
+        "dcProject": "Which project keeps it?"
       },
       "kind": {
         "organization": "Organization",
@@ -859,7 +852,6 @@
         "workspace": "Workspace",
         "dcProject": "Project",
         "personal": "Your personal project",
-        "team": "Team codebase",
         "profile": {
           "limited": "seen only by signed-in people",
           "private": "seen only by its members"
@@ -874,7 +866,6 @@
         "gitlab": "{org} is a private group, so copies in it are private too.",
         "gitlabInternal": "{org} is an internal group, so copies in it can be private or internal, not public.",
         "bitbucket": "{project} is a private project, so copies in it are private.",
-        "origin": "Copies in your own account are always private. Choose your team to share it with them.",
         "profileLimited": "{org} is seen only by people signed in to {host}, so even an Everyone copy is seen only by them.",
         "profilePrivate": "{org} is seen only by its members, so even an Everyone copy is seen only by them."
       },
@@ -889,12 +880,6 @@
           "internal": {
             "title": "Everyone signed in to {host}",
             "sub": "Anyone with an account on this server"
-          }
-        },
-        "cursor_origin": {
-          "internal": {
-            "title": "Everyone in {org}",
-            "sub": "People on your team with access to its codebase"
           }
         },
         "bitbucket_data_center": {

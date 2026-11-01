@@ -1090,27 +1090,6 @@
       "addressLabel": "Service address"
     },
     {
-      "id": "cursor-origin",
-      "name": "Cursor Origin",
-      "kind": "hosted",
-      "auth": "Origin CLI browser sign-in",
-      "status": "not-connected",
-      "accounts": 0,
-      "defaultAccount": "None",
-      "scopes": [],
-      "ssh": "Not tested",
-      "lastTest": "Not run",
-      "pushAccess": "Not set up",
-      "reviewLabel": "Pull requests",
-      "automationLabel": "Not available",
-      "lastCheck": "",
-      "help": "Read and write. Can mirror GitHub.",
-      "modes": [
-        "Native",
-        "Mirrored from GitHub"
-      ]
-    },
-    {
       "id": "generic-git",
       "name": "Git or SSH repository",
       "kind": "generic",
