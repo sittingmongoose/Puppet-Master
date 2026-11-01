@@ -1702,7 +1702,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "850f323361c1d32d81cd5d03659ba656c7512eb546a13b396dd0aeb68a06e546",
+      "sha256": "6cbf9b3a7ad87b100a7c3bc1c712e41c9e29fd4df68636b207e934cabddf3ebd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -2528,7 +2528,7 @@
         "future security adapter registry",
         "future verify dispatcher"
       ],
-      "line_count": 1991,
+      "line_count": 1995,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -2600,7 +2600,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "022714c6dfd752a7fdad61c89f73bff221bff795f995b56853b9ea4de6250824",
+      "sha256": "abc21e33e32e576849dff9a2dd4be50146e381d18c530f3151bb287d96c92263",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -5208,7 +5208,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e",
+      "sha256": "4a4c74bc35bb00b91f4c52096110c4d7ffb6e93b3e11f9405ca4198da0d1eaae",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 357
@@ -5802,7 +5802,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 19675,
+      "line_count": 19680,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 241,
       "plan_unit_ids": [
@@ -6216,7 +6216,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "bd04085c76b5641bda17f4bbb1b4699b473c0a7c7b4cc7e8a01886127f4582f4",
+      "sha256": "8386e5ad5ec45a9bf2b019242d2e4b968daf9989eaee707a0a62920be74acc16",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 241
@@ -6685,7 +6685,7 @@
         "storage_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be",
+      "sha256": "6619f5c128250a6a9db8b53a12861de3504308a6db538c56b6eaab402935ec77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71,
@@ -6941,7 +6941,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "d0cc39238102b109a3cf45f7cb5551f742116c3e1753b99b2711bfbec9e96b66",
+      "sha256": "d364a4e2236c3b386e30789a96e6fcd7ce8c47c8b47c778bff57fe0ac6156d60",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 128
@@ -8601,7 +8601,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5",
+      "sha256": "dedbe112e3a163f5db7b5dc3a1a550406aade0981b97598d7efee2304e8d3982",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 647,
@@ -15080,7 +15080,7 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "1e299088a3d0037ce0196eb4ed10991ab66deb43a6e7b8a7412fbe5b54facd7b",
+      "sha256": "e1d796098e6ac6f42202fed33903fe8c953025b0a15fc8de08abd58ae6f8b07e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50,
@@ -17083,7 +17083,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "6036b30a812233edbf0bef2b245d12421f646cdbda6669ab390587c28def4e7d",
+      "sha256": "0ae93e5637dcb0b333516aecf071c145ac679bc77caae51c7bade24ccf79f1dc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -18254,10 +18254,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 223,
+        "False": 225,
         "True": 110
       },
-      "heading_count": 809,
+      "heading_count": 811,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18321,6 +18321,7 @@
         "Plans/redaction_transform_registry.schema.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
+        "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_boot_history_floor.schema.json",
@@ -18351,9 +18352,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29003,
+      "line_count": 29215,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 333,
+      "plan_unit_count": 335,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -18687,7 +18688,9 @@
         "SP-342",
         "SP-343",
         "SP-344",
-        "SP-345"
+        "SP-345",
+        "SP-346",
+        "SP-347"
       ],
       "reasoning_tiers": [
         "high",
@@ -18729,6 +18732,7 @@
         "goal_verification_decided_historical_authority_confusion",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
+        "group_commit_frame_drift",
         "historical_goal_event_source_and_checkpoint_authority",
         "historical_scheduling_source_and_checkpoint_authority",
         "history_projection_drift",
@@ -18779,6 +18783,7 @@
         "safe_point_restore_storage_drift",
         "second_source_of_truth",
         "seglog_compression_profile_drift",
+        "seglog_container_format_drift",
         "seglog_durability_recovery_drift",
         "silent_data_loss",
         "source_history_identity_safety_or_false_recovery",
@@ -18807,10 +18812,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd",
+      "sha256": "4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 329,
+        "accepted": 331,
         "retired": 3,
         "superseded": 1
       },
@@ -18821,7 +18826,7 @@
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 269,
+        "requirement": 271,
         "schema_contract": 23,
         "security_contract": 1,
         "storage_contract": 27,
@@ -19081,6 +19086,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+        "python3 scripts/pm-storage-profile-check.py",
         "python3 scripts/pm-storage-recovery-contracts.py --self-test",
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
@@ -21109,7 +21115,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-31T22:34:35Z",
+  "generated_at_utc": "2026-11-01T07:01:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21117,13 +21123,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3583,
+      "False": 3585,
       "True": 3685
     },
-    "plan_unit_count": 7268,
+    "plan_unit_count": 7270,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7060,
+      "accepted": 7062,
       "retired": 185,
       "superseded": 23
     },
@@ -21193,7 +21199,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5542,
+      "requirement": 5544,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

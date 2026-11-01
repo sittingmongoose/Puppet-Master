@@ -1,3 +1,11 @@
+# Plans lane — footage review batch in progress, 2026-11-01
+
+Integration `7d2dd568be` and main `34b9ab2843` are incorporated. Main brings SP-346/SP-347, DL-270 companions, its governance reseal, the baseline recorded at `40e8ccd704` and current migration `pds-20261101-002-current-planunit-snapshot`. Protected governance, snapshot and baseline are exact main; none is refreshed. The only merge conflicts were **919 generated shard/index paths**, resolved by regeneration. Owner-unit preservation passes: **7161 top-level units**, no overlapping changed unit or ID collision. DL-272 is free for the footage alignment record.
+
+The batch source is `BATCH-FOOTAGE-REVIEW.md`. Source/canon adjudication and the new Free Models disable command companions follow this checkpoint, prose first. The earlier 15-check result below is historical and does not certify this new footage input. Focused checks only; no browsers, full gates, dry landing, lock, landing or reseal. The lead is notified of rule conflicts/open owner questions as they are established.
+
+---
+
 # Plans lane — storage main and final weak-key close-out, 2026-10-31
 
 **All 15 effective focused/generation/guard checks PASS.** Storage main `683e603ac1` is incorporated by pushed merge `3030c0061b`; final GUI integration `ed1f82fed7` brings srv `d1abe18d58`. The resulting head is mailed after push. **No source follow-up remains.** No browsers, full gates, dry landing, landing lock, landing, migration/baseline refresh or reseal.

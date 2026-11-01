@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L4841-L4989
 
-Source SHA256: `29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be`
+Source SHA256: `6619f5c128250a6a9db8b53a12861de3504308a6db538c56b6eaab402935ec77`
 
 ---
 
@@ -14,7 +14,7 @@ DL-270 gives each storage rule one owning unit, and a few numbers appear in more
 
 | Rule | Single owner | What only the owner states | Known consumers (point only) |
 |---|---|---|---|
-| Sealed-segment compression | `Plans/storage-plan.md` SP-335 | zstd level 3 in about 256 KiB blocks, level 9 in 1 MiB frames, the ceiling of level 9, the active segment's `flags=0`, the SeglogFrameV2 compression flag, codec id and dictionary id | `Plans/Contracts_V0.md` (frame wire form), RAS-016 (cites the ceiling), SP-337 (cites the level for text payloads) |
+| Sealed-segment compression | `Plans/storage-plan.md` SP-335 | zstd level 3 in about 256 KiB blocks, level 9 in 1 MiB blocks, the ceiling of level 9, the active segment's `flags=0`; SP-346 owns the sealed container bytes and the reserved compression descriptor (amended 2026-11-01, DL-270) | `Plans/Contracts_V0.md` (frame wire form), RAS-016 (cites the ceiling), SP-337 (cites the level for text payloads) |
 | Durability | SP-336 | one data sync per ordinary group, the barrier-class events, the three full-flush calls and F_BARRIERFSYNC, batching of streamed output, atomic store creation, redb quick repair | `Plans/Executor_Protocol.md` final flush, SP-236, SP-286 |
 | Payloads | SP-337 | the 16 KiB inline cap, the BLAKE3 id, pack files, the base64 admission error, reference counts, garbage collection holds | `Plans/Tools.md` (T-168), `Plans/Contracts_V0.md` web payloads, `Plans/Prompt_Pipeline.md` (PP-070), `Plans/Project_Output_Artifacts.md`, SP-331 background images, SP-343 media |
 | Chat pages | SP-338 (store, page limits, open-path gate numbers) and `Plans/assistant-chat-design.md` ACD-242 (load-older paging in the chat) | 50-item pages of at most 256 KiB, thread_head, hot tail, first page 150 ms at p95, warm or cold, at most 2 MiB read | `Plans/FinalGUISpec.md` F3-416, DR-052, SP-344 |

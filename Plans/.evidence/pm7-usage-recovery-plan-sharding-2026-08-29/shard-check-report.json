@@ -1,5 +1,5 @@
 {
-  "body_reconstruction_checked": 2954,
+  "body_reconstruction_checked": 2972,
   "body_reconstruction_mismatches": 0,
   "config_path": "Plans/sharding_config.json",
   "docs": [
@@ -188,11 +188,11 @@
       "source": "Plans/Orchestrator_Page.md"
     },
     {
-      "body_reconstruction_checked": 88,
+      "body_reconstruction_checked": 89,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/storage-plan",
       "failures": [],
-      "shard_count": 88,
+      "shard_count": 89,
       "source": "Plans/storage-plan.md"
     },
     {
@@ -284,11 +284,11 @@
       "source": "Plans/Executor_Protocol.md"
     },
     {
-      "body_reconstruction_checked": 54,
+      "body_reconstruction_checked": 55,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_command_catalog",
       "failures": [],
-      "shard_count": 54,
+      "shard_count": 55,
       "source": "Plans/UI_Command_Catalog.md"
     },
     {
@@ -364,11 +364,11 @@
       "source": "Plans/Containers_Registry_and_Unraid.md"
     },
     {
-      "body_reconstruction_checked": 38,
+      "body_reconstruction_checked": 39,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/dry_rules",
       "failures": [],
-      "shard_count": 38,
+      "shard_count": 39,
       "source": "Plans/DRY_Rules.md"
     },
     {
@@ -460,11 +460,11 @@
       "source": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
     },
     {
-      "body_reconstruction_checked": 32,
+      "body_reconstruction_checked": 33,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/ui_wiring_rules",
       "failures": [],
-      "shard_count": 32,
+      "shard_count": 33,
       "source": "Plans/UI_Wiring_Rules.md"
     },
     {
@@ -516,11 +516,11 @@
       "source": "Plans/Prompt_Pipeline.md"
     },
     {
-      "body_reconstruction_checked": 46,
+      "body_reconstruction_checked": 47,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/wiring_matrix",
       "failures": [],
-      "shard_count": 46,
+      "shard_count": 47,
       "source": "Plans/Wiring_Matrix.md"
     },
     {
@@ -596,19 +596,19 @@
       "source": "Plans/event_record.schema.json"
     },
     {
-      "body_reconstruction_checked": 5,
+      "body_reconstruction_checked": 7,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/storage_value_registry.schema",
       "failures": [],
-      "shard_count": 5,
+      "shard_count": 7,
       "source": "Plans/storage_value_registry.schema.json"
     },
     {
-      "body_reconstruction_checked": 579,
+      "body_reconstruction_checked": 590,
       "body_reconstruction_mismatches": 0,
       "dir": "Plans/_shards/storage_value_registry",
       "failures": [],
-      "shard_count": 579,
+      "shard_count": 590,
       "source": "Plans/storage_value_registry.json"
     },
     {
@@ -798,13 +798,13 @@
   ],
   "docs_checked": 99,
   "failures": [],
-  "generated_at_utc": "2026-10-29T20:00:55Z",
+  "generated_at_utc": "2026-11-01T04:17:17Z",
   "mode": "check",
   "output_root": "Plans/_shards",
   "root_index_failures": [],
   "root_index_path": "Plans/00-plans-index.md",
   "schema_id": "pm.plan_shards.report.v1",
-  "shards_checked": 2954,
+  "shards_checked": 2972,
   "source_count": 99,
   "status": "pass"
 }

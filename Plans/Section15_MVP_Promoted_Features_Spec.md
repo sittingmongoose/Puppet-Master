@@ -11786,15 +11786,14 @@ original identity. If Storage's own reconciliation establishes that no original
 event exists, the existing pre-commit rule applies: the unexposed resource is
 disposed or stays fenced and no creation is published. The Browser owner never
 asks for a first mint from a missing receipt, lost delivery, tail absence or a
-supplied never-issued flag; only Storage's own writer reaches
-`storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
-current protected group, after the original source/manifest barriers and complete
+supplied never-issued flag; only Storage's own writer issues, when the group's commit frame is durable
+(SP-336, SP-347; amended 2026-11-01 for DL-270), after its complete
 current group/source/dedupe/restore checks. Missing or conflicting custody keeps
 the operation recovery-required under the existing failure behavior. A proper
 subset, lost previously issued custody, restored old pending request or ambiguous
-original group stays fenced under that behavior. In-place restart after actual
-protected promotion follows SP-286's original group handoff without reconstructing
-old transient capabilities. A verified older restore does not make omitted
+original group stays fenced under that behavior. After an in-place restart,
+recovery finds each group's issuance recoverable or absent (SP-286, SP-336), keeping
+the loss and restore fences, without reconstructing old transient capabilities. A verified older restore does not make omitted
 creation work fresh: only an actual newly accepted owner creation after the
 coordinator's completed restore occurrence/session may use its fresh-operation
 admission, and lost or restored creation requests, reserved workspace identities
@@ -12050,15 +12049,16 @@ retry is not a first-mint request and repeats no reset. A committed frame with
 lost acknowledgement then returns the original available result without a second
 reset or event. The Browser owner never asks for a first mint from a missing
 receipt, lost delivery, tail absence or a supplied never-issued flag; only
-Storage's own writer reaches `storage.first_append_receipt.issue.v2`, for an
-authenticated never-issued complete current protected group, after the original
-source/manifest barriers and complete current group/source/dedupe/restore checks.
+Storage's own writer issues, when the group's commit frame is durable (SP-336,
+SP-347; amended 2026-11-01 for DL-270), after its complete current
+group/source/dedupe/restore checks.
 Missing or conflicting custody keeps the path unavailable under the existing
 failure behavior; it never proves no effect, restores the old generation or
 repeats the reset. A proper subset, lost previously issued custody, restored old
 pending request or ambiguous original group stays fenced under that behavior.
-In-place restart after actual protected promotion follows SP-286's original group
-handoff without reconstructing old transient capabilities. A verified older
+After an in-place restart, recovery finds each group's issuance recoverable or absent
+(SP-286, SP-336), keeping the loss and restore fences, without reconstructing old
+transient capabilities. A verified older
 restore does not make omitted reset work fresh: only an actual newly accepted
 owner reset after the coordinator's completed restore occurrence/session may use
 its fresh-operation admission, and lost or restored reset requests and pending
