@@ -1692,7 +1692,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "78941a4c2a875f0ff368c0226ff8ad1c407a65f0c9ae884a9e62db04ea3f3bb2",
+      "sha256": "53f1e682256924a2832f8719d299c3e749e2fde402edee41d40fb0ba5761b6f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -5195,7 +5195,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "e7808ce179ef796679a95e5a9b1372df9149de6f920f02455a9d5f41613fae0e",
+      "sha256": "55901c62bd087dc2eb82235744227af6409316701045e7a62e31172e9a5f725a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 357
@@ -5787,7 +5787,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 17312,
+      "line_count": 17314,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 214,
       "plan_unit_ids": [
@@ -6168,7 +6168,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "f964ed61cdad8c92c3644df0d134512252259ac5950d5e433982434b27c29e43",
+      "sha256": "7fbf21b62c6bfb2e32c574d168bb8e1473d05c6834c591eb5ab9d6d23ddac348",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 214
@@ -18145,10 +18145,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 223,
+        "False": 225,
         "True": 110
       },
-      "heading_count": 809,
+      "heading_count": 811,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18212,6 +18212,7 @@
         "Plans/redaction_transform_registry.schema.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
+        "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_boot_history_floor.schema.json",
@@ -18242,9 +18243,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 28928,
+      "line_count": 29086,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 333,
+      "plan_unit_count": 335,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -18578,7 +18579,9 @@
         "SP-342",
         "SP-343",
         "SP-344",
-        "SP-345"
+        "SP-345",
+        "SP-346",
+        "SP-347"
       ],
       "reasoning_tiers": [
         "high",
@@ -18620,6 +18623,7 @@
         "goal_verification_decided_historical_authority_confusion",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
+        "group_commit_frame_drift",
         "historical_goal_event_source_and_checkpoint_authority",
         "historical_scheduling_source_and_checkpoint_authority",
         "history_projection_drift",
@@ -18670,6 +18674,7 @@
         "safe_point_restore_storage_drift",
         "second_source_of_truth",
         "seglog_compression_profile_drift",
+        "seglog_container_format_drift",
         "seglog_durability_recovery_drift",
         "silent_data_loss",
         "source_history_identity_safety_or_false_recovery",
@@ -18698,10 +18703,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976",
+      "sha256": "a0c3bc6389c9c786fc9c70976a2634ca9b5069d38669857fce3f90a8fa1ff63c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 329,
+        "accepted": 331,
         "retired": 3,
         "superseded": 1
       },
@@ -18712,7 +18717,7 @@
         "migration": 1,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 269,
+        "requirement": 271,
         "schema_contract": 23,
         "security_contract": 1,
         "storage_contract": 27,
@@ -20992,7 +20997,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-31T21:26:42Z",
+  "generated_at_utc": "2026-11-01T01:02:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21000,13 +21005,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3580,
+      "False": 3582,
       "True": 3635
     },
-    "plan_unit_count": 7215,
+    "plan_unit_count": 7217,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7010,
+      "accepted": 7012,
       "retired": 182,
       "superseded": 23
     },
@@ -21075,7 +21080,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5520,
+      "requirement": 5522,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -502,6 +502,62 @@
       ],
       "expected_class": "Corrupt",
       "expected_code": "duplicate_header_envelope_identity"
+    },
+    {
+      "id": "control_bit_on_event_frame",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          15,
+          2
+        ],
+        [
+          40,
+          130
+        ],
+        [
+          41,
+          75
+        ],
+        [
+          42,
+          112
+        ],
+        [
+          43,
+          90
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "control_header_mismatch"
+    },
+    {
+      "id": "compressed_and_control_bits",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          15,
+          3
+        ],
+        [
+          40,
+          113
+        ],
+        [
+          41,
+          219
+        ],
+        [
+          42,
+          130
+        ],
+        [
+          43,
+          108
+        ]
+      ],
+      "expected_class": "Unsupported",
+      "expected_code": "unsupported_flags"
     }
   ]
 }

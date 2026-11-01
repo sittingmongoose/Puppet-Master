@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L17312
+Source lines: L14505-L17314
 
-Source SHA256: `f964ed61cdad8c92c3644df0d134512252259ac5950d5e433982434b27c29e43`
+Source SHA256: `7fbf21b62c6bfb2e32c574d168bb8e1473d05c6834c591eb5ab9d6d23ddac348`
 
 ---
 
@@ -2768,12 +2768,14 @@ canonical_text: >-
   for remote transport. Where earlier text conflicts, DL-270 and those units win. A sweep of every plan document
   by a reading wave, with verification, brought the other owners into line in the same landing, including the
   commands, settings, GUI, wiring and DRY companions. DL-270 adds no settings row: budgets, thresholds and cache
-  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Still pending: SeglogFrameV2's
-  exact codec and dictionary byte fields and the receipt fields its commit frame carries; rewriting the Case L
-  proof tables to SP-336's publication and recovery sequence; the data-root paths (SP-015); and the registry,
-  schema and fixture companions, including the budget values. Card 4's 150 ms applies to warm and cold opens
-  alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four requirements,
-  thresholds and mechanics are the review's reading, not Jared's words.
+  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Its companions landed after it:
+  SP-346 for SeglogFrameV2's reserved compression descriptor and the sealed segment container, SP-347 for the
+  commit frame and its receipt fields, the First append receipt custody section and CV-339 rewritten to SP-336's
+  publication and recovery sequence, the data-root paths in SP-015, and the storage registry's storage_profile
+  with its schema, holding each family's file, group and value limit and the budget values. Only the governance
+  reseal remains outside it. Card 4's 150 ms applies to warm and cold opens alike. Spec_Lock's forbid_sqlite is
+  unchanged. The option labels are the cards' words; the four requirements, thresholds and mechanics are the
+  review's reading, not Jared's words.
 gui_related: false
 gui_classification_reason: "Records owner decisions on storage, compression and durability."
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17069-L18030
+Source lines: L17069-L18032
 
-Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
+Source SHA256: `a0c3bc6389c9c786fc9c70976a2634ca9b5069d38669857fce3f90a8fa1ff63c`
 
 ---
 
@@ -175,13 +175,13 @@ The prefix is exactly 48 bytes, packed without host alignment. Offsets are zero-
 | 8 | 1 | `frame_version` | `2` |
 | 9 | 2 | `header_length` | Encoded header bytes; at most `4096` before semantic validation |
 | 11 | 4 | `payload_length` | Stored full EventRecord bytes; at most `16777216` before semantic validation |
-| 15 | 1 | `flags` | `0` on the active segment: uncompressed, no other bits admitted. Amended 2026-10-31 (DL-270, SP-335): a sealed, repacked segment may set a compression flag bit, and its frames then carry a codec id and a dictionary id; their byte placement is the SP-335 schema companion. The active segment stays `0`. |
+| 15 | 1 | `flags` | `0` for an EventRecord frame. Amended 2026-10-31 (DL-270): bit 1 (`0x02`) marks the group commit control frame (SP-347); bit 0 (`0x01`) is reserved for the write-time compression descriptor at +44 (SP-346) and stays `unsupported_flags` until a later decision admits it; other bits are unsupported. Sealed segments are compressed as whole blocks in a container, so their frames keep these flags. |
 | 16 | 8 | `segment_generation` | Exact uint64 matching selected segment authority |
 | 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present |
 | 32 | 4 | `header_crc32` | CRC of exact stored header bytes |
 | 36 | 4 | `payload_crc32` | CRC of exact stored payload bytes |
 | 40 | 4 | `prefix_crc32` | CRC of all 48 prefix bytes with bytes 40 through 43 zeroed |
-| 44 | 4 | `reserved` | `0` |
+| 44 | 4 | `reserved` | `0`. Amended 2026-10-31 (DL-270): when flags bit 0 is admitted, +44 is `payload_codec`, +45 is `0` and +46 to +47 is `dictionary_id` (SP-346); with bit 0 clear all four bytes stay `0`. |
 
 Sequence zero is representable; absence of a prior verified record is separate state and MUST NOT be represented by a fabricated sequence-zero cursor. Generation and sequence MUST NOT narrow to u32, signed i64, or binary64. Length admission uses checked remaining-file bounds. Frame end is `start + 48 + header_length + payload_length` only after those bounds pass.
 
@@ -211,7 +211,7 @@ Validation order is mandatory:
 
 1. Check magic.
 2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
-3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): the frame also admits SP-335's compressed profile, a flags bit with a codec id and a dictionary id, for sealed segments; the active segment stays `flags=0`.
+3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission. Amended 2026-10-31 (DL-270): flags admits `0` and bit 1 (`0x02`), the group commit control frame, whose header must be the control header or the frame is `control_header_mismatch` (SP-347); bit 0 (`0x01`) reserves the write-time compression descriptor at +44 and stays `unsupported_flags` until a later decision admits it (SP-346). Sealed segments are compressed as whole blocks in a sealed container, so the frames they hold are unchanged.
 4. Enforce header/payload caps and checked remaining-file bounds.
 5. Match selected segment generation and strict sequence progression.
 6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
@@ -242,6 +242,8 @@ Loss disposition is closed:
 | No later valid candidate | truncate only if wholly unacknowledged tail; otherwise preserve/seal | remainder unavailable; mutation blocked |
 | Any possible loss at/below durable watermark | never clean or silently accepted | global integrity block until verified backup restore or separately governed future loss acceptance |
 
+Amended 2026-10-31 (DL-270, SP-336, SP-347): the durable watermark is the end of the last valid commit frame. Groups past the manifest's latest publication that end in a valid commit frame are issued, and adopting them rebuilds their missing custody rows from that frame; member frames after the last valid commit frame are an unacknowledged tail, truncated with any invalid EOF and never adopted as a new group. On macOS, ordinary groups missing after a power loss within their durability class are not loss at or below the watermark (SP-336).
+
 SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
 
 #### Manifest, append acknowledgement, and sequence authority
@@ -250,7 +252,7 @@ SourceRef: `SEG-D-001` through `SEG-D-005`, `Case-L:L-004`
 
 Append success, as amended 2026-10-31 (DL-270, SP-336): an ordinary commit group succeeds after one data sync of its complete segment bytes (`F_BARRIERFSYNC` on macOS), with the durable watermark carried in the segment's own frames. Barrier-class events (approvals, safe points, receipts the UI waits on) get a full flush: `F_FULLFSYNC`, `FlushFileBuffers` or `fdatasync`. Atomic manifest promotion and parent-directory synchronization apply at creation, rotation and other structural changes, not per group. The earlier rule of two barriers per append (segment `sync_all`, then manifest watermark promotion plus parent-directory synchronization) is retired.
 
-After this durability barrier, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
+After this durability barrier, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`; since DL-270 that custody is the group's durable commit frame, and the custody rows follow without a sync of their own (SP-336, SP-347). `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
 
 Sequence ranges are durably leased in blocks of 4,096 before issuance; unused IDs after crash are abandoned, never reused. Gaps are legal only with closed reason `allocator_lease_abandoned | corruption_loss | retention_compaction`.
 
@@ -272,7 +274,7 @@ SourceRef: `SEG-D-012` through `SEG-D-016`, `Case-L:L-013`, `Case-L:L-028`
 
 Every destructive/namespace-changing recovery persists a same-directory intent with deterministic recovery ID, target preimage hash/length, exact postcondition, and manifest precondition before mutation. Restart applies from the precondition, continues from the exact postcondition, or fails closed on a third state. Semantic recovery events dedupe by deterministic ID.
 
-Rotation seals pending groups, persists intent, closes/renames the old active, creates `.opening`, promotes one new active, publishes the manifest, and removes the intent. Startup resolves zero/two-active states from intent+manifest+ranges; ambiguity fails closed, never by mtime.
+Rotation seals pending groups, persists intent, closes/renames the old active, creates `.opening`, promotes one new active, publishes the manifest, and removes the intent. Startup resolves zero/two-active states from intent+manifest+ranges; ambiguity fails closed, never by mtime. Amended 2026-10-31 (DL-270): before any manifest publication the segments it covers are fully flushed and a synced redb commit makes the custody rows of their groups durable, so recovery never needs a commit frame from before the manifest's latest publication (SP-336, SP-347).
 
 Tail truncation records target length and prefix/tail hashes, truncates only matching preimage, synchronizes file, publishes watermark/recovery epoch, and dedupes the barrier recovery event. Active midstream corruption seals degraded; closed corruption never changes bytes.
 

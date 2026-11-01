@@ -71,7 +71,7 @@ Per-project memory stores (deterministic default):
 - Assistant Memory Tantivy index: `.puppet-master/project/state/assistant_memory_index/`
 - Assistant Memory USearch index: `.puppet-master/project/state/assistant_memory_vectors.usearch`
 
-Amended 2026-10-31 (DL-270): these project-local paths are a layout reference only. SP-345 places every store directory per OS (inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux) and keeps the project scope as a subfolder. Its exact paths are a companion change in SP-015 and the documents that name them. That change also updates the AMS-007 preserved_exact_tokens and acceptance criterion and the `system.redb` path above; until then the paths stay as written.
+Amended 2026-10-31 (DL-270): these are project-scoped stores, so each `.puppet-master/project/state/...` path above resolves to `<data root>/projects/<project_id>/state/...`, and the data root is fixed per OS by SP-015 (`.noindex` on macOS, Local AppData on Windows, the XDG data directory on Linux). The paths keep their written form in AMS-007 and resolve through that one rule.
 
 Note: This document does not change the canonical system-storage default in `Plans/storage-plan.md` (app-global redb layout). The `system.redb` path above is the project-state reference path for memory-local packaging/project-scoped state mode.
 

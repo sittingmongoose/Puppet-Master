@@ -406,7 +406,7 @@
     {
       "id": "FIRST-RECEIPT-N01",
       "status": "NOT_RUN",
-      "expected": "Before exposure, both actual barriers and one complete immutable all-member custody transaction have committed."
+      "expected": "Before exposure, the group's commit frame is durable after one segment sync (a full flush for a barrier-class group, whose custody rows also commit durably first); an ordinary group's custody rows follow without their own sync and rebuild identically from the frame after a crash (DL-270, SP-336, SP-347)."
     },
     {
       "id": "FIRST-RECEIPT-N02",
@@ -416,7 +416,7 @@
     {
       "id": "FIRST-RECEIPT-N03",
       "status": "NOT_RUN",
-      "expected": "An actual fresh post-restore owner operation may publish under current source/lease authority and retain compact admission through an in-place crash before first issuance."
+      "expected": "An actual fresh post-restore owner operation may publish under current source/lease authority with its compact admission carried in the group's commit frame; an in-place crash before that frame is durable leaves the group never issued, and after it the group replays (DL-270, SP-336, SP-347)."
     },
     {
       "id": "FIRST-RECEIPT-N04",

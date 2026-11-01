@@ -115507,5 +115507,2261 @@
         ]
       }
     }
-  ]
+  ],
+  "storage_profile": {
+    "schema_id": "pm.storage_value_registry.storage_profile.v1",
+    "owner_units": [
+      "DL-270",
+      "SP-337",
+      "SP-339",
+      "SP-340",
+      "SP-345"
+    ],
+    "value_limit_bytes": 16384,
+    "budget_rule": "Derived budgets are held by eviction and rebuild; canonical budgets are advisory: a group over budget raises the storage-health notice and offers reclaim within one maintenance cycle, and PM never refuses a write or prunes canonical history because of a budget (SP-340). Values are owner defaults, shown read-only, not settings.",
+    "groups": [
+      {
+        "group_id": "event_log",
+        "label": "Event log",
+        "canonical_budget_bytes": 53687091200,
+        "derived_budget_bytes": 8589934592,
+        "holds": "seglog segments, sealed segment containers and their indexes (SP-335)"
+      },
+      {
+        "group_id": "payloads",
+        "label": "Attachments and large output",
+        "canonical_budget_bytes": 53687091200,
+        "derived_budget_bytes": null,
+        "holds": "content-addressed payload packs and their index (SP-337)"
+      },
+      {
+        "group_id": "conversations",
+        "label": "Chats and transcripts",
+        "canonical_budget_bytes": 4294967296,
+        "derived_budget_bytes": 8589934592,
+        "holds": "chat, thread, transcript and notebook records; render pages (SP-338)"
+      },
+      {
+        "group_id": "runs_and_goals",
+        "label": "Runs, goals and plans",
+        "canonical_budget_bytes": 4294967296,
+        "derived_budget_bytes": 4294967296,
+        "holds": "run, goal, node, schedule and plan records and their projections"
+      },
+      {
+        "group_id": "usage",
+        "label": "Usage",
+        "canonical_budget_bytes": 1073741824,
+        "derived_budget_bytes": 1073741824,
+        "holds": "usage records under ai.usage.usage-retention, canonical daily totals, derived rollups (UF-108)"
+      },
+      {
+        "group_id": "settings_and_layout",
+        "label": "Settings and layout",
+        "canonical_budget_bytes": 268435456,
+        "derived_budget_bytes": 268435456,
+        "holds": "settings, layout, widget and UI state"
+      },
+      {
+        "group_id": "projects_and_sources",
+        "label": "Projects and sources",
+        "canonical_budget_bytes": 2147483648,
+        "derived_budget_bytes": 2147483648,
+        "holds": "project, source control, forge, account, backup and integration records"
+      },
+      {
+        "group_id": "coordination_and_storage",
+        "label": "Coordination and storage internals",
+        "canonical_budget_bytes": 2147483648,
+        "derived_budget_bytes": 2147483648,
+        "holds": "coordination, receipts, recovery, maintenance and integrity records"
+      },
+      {
+        "group_id": "search_and_indexes",
+        "label": "Search indexes",
+        "canonical_budget_bytes": null,
+        "derived_budget_bytes": 17179869184,
+        "holds": "Tantivy, regex and vector indexes and other derived lookups"
+      },
+      {
+        "group_id": "analytics_archive",
+        "label": "History archive",
+        "canonical_budget_bytes": null,
+        "derived_budget_bytes": 17179869184,
+        "holds": "Parquet archive and DuckDB state, rebuilt from seglog (SP-341)"
+      },
+      {
+        "group_id": "caches",
+        "label": "Caches",
+        "canonical_budget_bytes": null,
+        "derived_budget_bytes": 17179869184,
+        "holds": "remote Git caches and other caches; the saved web pages cache follows web.fetch.cache-size"
+      },
+      {
+        "group_id": "system",
+        "label": "Other",
+        "canonical_budget_bytes": 1073741824,
+        "derived_budget_bytes": 1073741824,
+        "holds": "families no other group names"
+      }
+    ],
+    "family_profiles": {
+      "approved_plan_pack": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "plan_approved_outbox": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "plan_compile_run": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "compiler_wave_contract": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "workgraph_draft": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "worknode_request": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_intake_report": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "attempt_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_record_index": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "blocked_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "run_record_legacy_baseline": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "node_record_legacy_baseline": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "execution_unit_context_store": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "receipt_record_baseline": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "attempt_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "concern_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "runtime_artifact_projector_families": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "worktree_lane_thread_families": {
+        "redb_file": "derived",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "project_attention_account_families": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "provider_runtime_identity_families": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_workspace_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_section_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_tab_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_pane_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_leaf_pane_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_workgroup_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "editor_terminal_panel_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_session_record": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_command_block": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "tooling_skill_debug_families": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "github_bundle_note_preview_browser_families": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_projection_families": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "analytics_rollup_families": {
+        "redb_file": "derived",
+        "storage_group": "usage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_project_state_and_config_families": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "coordination_event_records": {
+        "redb_file": "seglog",
+        "storage_group": "event_log",
+        "encoding_target": "seglog_messagepack",
+        "encoding_note": "unchanged"
+      },
+      "coordination_read_model_projections": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "coordination_debug_mirror_exports": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "retired",
+        "encoding_note": "retired with coordination.debug_mirror_exported; pm export emits no event (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "migration_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "editor_buffer_recovery_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "editor_workspace_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "hotreload_state": {
+        "redb_file": "canonical",
+        "storage_group": "system",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "onboarding_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "safe_point_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "safe_point_restore_transaction": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_id_dedupe_index": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_idempotency_dedupe_index": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_dedupe_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "retention_hold_record": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "recovery_anchor_record": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_maintenance_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_quarantine_record": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_deletion_record": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "runtime_topology_projection": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "installation_lifecycle_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "environment_connection_state": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "environment_domain_sync_state": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "runtime_resource_admission": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "observable_work_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "operational_awareness_projection": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "prompt_runtime_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "permission_snapshot_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "provider_dispatch_admission_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "installation_inventory_record": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "capability_provisioning_operation": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "conditional_rule_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "conditional_rule_intervention_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "runtime_resource_lease": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "bsd_runtime_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "dev_session_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "eval_session_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "thread_command_outbox_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "replay_snapshot_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "stream_coalescing_record": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "thread_shell_projection": {
+        "redb_file": "derived",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "pinned_summary_projection": {
+        "redb_file": "derived",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "thread_detail_projection": {
+        "redb_file": "derived",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "mcp_server_lifecycle_record": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "operational_attribution_record": {
+        "redb_file": "canonical",
+        "storage_group": "usage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_runtime_lineage_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "requested_effective_runtime": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "recovery_unavailable_resolution_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "home_workspace_layout": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "home_workspace_layout_v2": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "dashboard_board_layout": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "widget_presets": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "home_named_layouts": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "working_notebook_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "working_notebook_entry_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "notebook_checkpoint_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "context_transition_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "run_started_index_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "browser_workspace_created_index_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_created_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_creation_commit": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_retention_summary": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_create_result": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_record_index_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "browser_workspace_reset_index_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "seglog_observability_adoption": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "seglog_observability_producer_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "seglog_observability_reader_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "home_layout_transaction_slot": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "json_canonical",
+        "encoding_note": "json_canonical stays: the exact retained first-native reader of the existing slot (storage-plan, Home3 slot rules)",
+        "max_value_bytes": 16384
+      },
+      "home_layout_operation_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "home_layout_event_reader_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "event_append_receipt_custody": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_body_record": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_objective_revision": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_objective_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_body_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_body_mutation_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "restore_point_expiry_commit": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_expired_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_deletion_commit": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_deleted_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "projection_checkpoint",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "restore_point_delete_result": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_integrity_finding": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "json_canonical",
+        "encoding_note": "json_canonical stays: a canonical file that must be writable when the main store is broken (SP-339)"
+      },
+      "platform_capability_decision": {
+        "redb_file": "canonical",
+        "storage_group": "system",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "boot_recovery_control": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "boot_recovery_history_floor": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "boot_recovery_history_anchor": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_recovery_action_custody": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "goal_start_command_custody": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "seglog_current": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "seglog_manifest": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "seglog_sequence_allocator": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_pending_generation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_active_generation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_compaction_journal": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_survivor_map": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_removal_map": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_translation_map": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_core_descriptor": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_candidate": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_carrier_snapshot": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_index_snapshot": {
+        "redb_file": "file",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_target_manifest_snapshot": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "storage_compaction_terminal": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "storage_compaction_retirement_intent": {
+        "redb_file": "file",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged"
+      },
+      "goal_update_source_audit": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_update_input_content": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_update_progress": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_update_terminal_audit": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_source_audit": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_host_stop_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_stop_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_progress": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "json_canonical",
+        "encoding_note": "json_canonical stays: the stored-profile union is pinned by scripts/pm-implementation-readiness.py; it moves when its owner bumps the profile and the pin",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_control_publication": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "json_canonical",
+        "encoding_note": "json_canonical stays: the stored-profile union is pinned by scripts/pm-implementation-readiness.py; it moves when its owner bumps the profile and the pin",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_terminal_audit": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "json_canonical",
+        "encoding_note": "json_canonical stays: the stored-profile union is pinned by scripts/pm-implementation-readiness.py; it moves when its owner bumps the profile and the pin",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_writer_domain": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_writer_domain_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_binding_revision": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_binding_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_plan_binding": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_binding_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_execution_binding_pending_resolution": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_binding_selection": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_cancel_assignment_audit": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "assistant_plan_record": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "assistant_plan_run": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "execution_schedule": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "project_automation_pause": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "quota_resume_consent": {
+        "redb_file": "canonical",
+        "storage_group": "usage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "execution_schedule_run_binding": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "plan_cancel_effect": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "schedule_quota_cancel_effect": {
+        "redb_file": "canonical",
+        "storage_group": "usage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "assistant_plan_cancel_result": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "plan_cancel_source_origin": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "assistant_plan_run_retirement": {
+        "redb_file": "canonical",
+        "storage_group": "conversations",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_activation_abort": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_native_compile_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_native_request_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_certified_graph_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_native_intake_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_provisioning_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_activation_decision_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_completion_requirement_source": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_born_worknode": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_worknode_materialization_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_installed_workgraph": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_goal_run_required_set": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_goal_run_body": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_goal_run_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_activation_transition": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_entrypoint_staging": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_activation_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_start_outbox_intent": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_native_source_control": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_original_source_origin": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_original_input_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_native_compile_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_compile_certification_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_aggregate_intake_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_executor_preflight_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_test_capability_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_model_resolution_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_worknode_request_set_live_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_compiler_live_capture_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_aggregate_intake_live_capture_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_provisioning_live_input_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_models_request_live_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "native_plan_compile_checkpoint": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "native_plan_compile_certification_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_aggregate_intake_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "ats_test_capability_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "models_plans_to_code_resolution_receipt": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_activation_request_set_decision": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "native_plan_compile_artifact": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "native_plan_compile_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "activation_operational_origin": {
+        "redb_file": "canonical",
+        "storage_group": "system",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_source_control_preflight_receipt_source": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_sc_receipt_original_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_worknode": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_worknode_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_attempt_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_run_execution_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_attempt_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_worknode_transition": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_worknode_completion": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_native_operation_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_original_input_capture": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_original_publication_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_run_operation_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_workflow_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_current_pointer": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_workflow_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_workflow_update": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_inventory_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_coverage_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_scheduler_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_dispatch_admission": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_handoff_ack": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_scheduler_stop": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_mutation_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_workflow_lineage_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_cancel_intent": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_cancel_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_cancel_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_cancel_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_cancel_event_candidate": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "executor_filesafe_invocation_binding": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_filesafe_journal_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_filesafe_journal_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_probe_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_member_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_membership": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_shutdown_admission": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_signal_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_wait_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_stream_finalization": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_normalized_admission": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_writer_cut": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_required_flush": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_termination_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_shutdown_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_source_origin": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_shutdown_recovery": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_process_source_head": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_domain_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_capability_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_capability_disposition": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_obligation_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_domain_cut": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_event_admission": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_writer_cut": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_final_flush": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_head": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_recovery": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_reservation_allocation": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_compile_join": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_workflow_join": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "executor_safestop_pre_attempt_effect": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "workflow_start_candidate": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_start_commit": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_start_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "workflow_start_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_workflow_cancel_readiness": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_workflow_cancel_scope_proof": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_workflow_cancel_late_assignment": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_cancelled_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_cancelled_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "workflow_standard_result": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "workflow_standard_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "workflow_standard_capture_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_birth": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_control": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_intent": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_eventphase": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_commit": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_origin": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_certified_event_release": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_cancelled_certified_projection": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "goal_run_started_cancelled_certified_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "application_update_check_schedule": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "terminal_appearance_presets": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      }
+    },
+    "planned_families": [
+      {
+        "family_id": "render_page_store",
+        "owner_unit": "SP-338",
+        "redb_file": "derived",
+        "storage_group": "conversations",
+        "max_value_bytes": 16384,
+        "key_shape": "render_page:v1:{thread_id}:{page_seq} and render_page_head:v1:{thread_id}",
+        "authority_class": "derived_rebuildable",
+        "note": "thread_head, sealed 50-item pages and the hot tail; rebuilt from seglog; registered by its own admission landing"
+      },
+      {
+        "family_id": "payload_pack_index",
+        "owner_unit": "SP-337",
+        "redb_file": "canonical",
+        "storage_group": "payloads",
+        "max_value_bytes": 16384,
+        "key_shape": "payload:v1:{blake3_hex}",
+        "authority_class": "canonical_non_rebuildable",
+        "note": "BLAKE3 id to pack, offset, length, media type and reference count; registered by its own admission landing"
+      },
+      {
+        "family_id": "usage_daily_totals",
+        "owner_unit": "UF-108",
+        "redb_file": "canonical",
+        "storage_group": "usage",
+        "max_value_bytes": 16384,
+        "key_shape": "usage_daily_total:v1:{utc_date}:{account_id}:{provider_id}:{model_id}",
+        "authority_class": "canonical_non_rebuildable",
+        "note": "written before the detail it summarizes expires, backed up, never rebuilt from events; registered by its own admission landing"
+      },
+      {
+        "family_id": "sealed_segment_index",
+        "owner_unit": "SP-346",
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "max_value_bytes": 16384,
+        "key_shape": "sealed_segment:v1:{segment_generation}",
+        "authority_class": "derived_rebuildable",
+        "note": "per sealed container: block table, sequence and thread index; rebuilt from the container; registered by its own admission landing"
+      },
+      {
+        "family_id": "analytics_archive_manifest",
+        "owner_unit": "SP-341",
+        "redb_file": "derived",
+        "storage_group": "analytics_archive",
+        "max_value_bytes": 16384,
+        "key_shape": "analytics_archive:v1:{family}:{yyyy_mm}",
+        "authority_class": "derived_rebuildable",
+        "note": "Parquet file list and seglog coverage per family and month; registered by its own admission landing"
+      }
+    ],
+    "whole_document_keys": [
+      {
+        "key": "settings:v1",
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "layout": "per_key_rows",
+        "note": "one row per setting under the settings:v1 prefix at its next schema version; the scope part of the row key follows the settings-scope design, and DL-270 adds no setting"
+      },
+      {
+        "key": "config:v1",
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "layout": "per_key_rows",
+        "note": "one row per config section (permissions, shortcuts, LSP registry, Search defaults, file manager) at its next schema version; tool_permissions stays a projection of the TOML files"
+      }
+    ]
+  }
 }

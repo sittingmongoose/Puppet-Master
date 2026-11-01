@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L2393-L15116
 
-Source SHA256: `2362ea563cef2d2740749be369836fa51d418d826e8f5f22cc9c2bd8c9e36976`
+Source SHA256: `a0c3bc6389c9c786fc9c70976a2634ca9b5069d38669857fce3f90a8fa1ff63c`
 
 ---
 
@@ -869,7 +869,7 @@ plan_unit_id: SP-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The exact macOS and project-local paths are still to be fixed in this unit."
+canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local. Amended 2026-10-31 (DL-270): the root and every store directory follow SP-345: inside a directory ending .noindex on macOS, under AppData on Windows, in the XDG data directory on Linux. Project-local stores, including regex_index, are not exempt: they sit under that app data root keyed by project_id, and PM never writes a .noindex directory or any other marker into a user's project folder. The data root is ~/Library/Application Support/puppet-master.noindex/ on macOS, %LOCALAPPDATA%/puppet-master/ (Local AppData, which does not roam) on Windows and $XDG_DATA_HOME/puppet-master/ (default ~/.local/share/puppet-master/) on Linux. Project-scoped stores live under <data root>/projects/<project_id>/: a plan path written .puppet-master/project/state/<x> resolves to <data root>/projects/<project_id>/state/<x>, and .puppet-master/cache/<x> to <data root>/projects/<project_id>/cache/<x>. Every other .puppet-master/ path names a project file that people or Git use and stays in the project folder."
 gui_related: false
 gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
 split_recommended: false
@@ -1567,7 +1567,7 @@ canonical_text: >-
   MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently
   validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain
   separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
-  2026-10-31 (DL-270): SP-335 adds a compressed profile for sealed segments, and SP-339 retires the always-on JSON
+  2026-10-31 (DL-270): SP-335 compresses sealed segments as whole blocks in a sealed container (SP-346), SP-347 adds the group commit control frame, and SP-339 retires the always-on JSON
   mirrors; the active segment keeps flags zero.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
