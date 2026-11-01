@@ -149,9 +149,11 @@ def('s09', 'nameTaken', 'Name taken before a remote effect: review, change the n
   await d.state(() => window.O55.projectRecovery.replayOriginal(window.O55.S.sess.commit));
   A.eq(await d.state(() => window.O55.S.sess.commit.original.key), failedKey, 'replay keeps the failed original key');
   A.ok(await d.state(() => window.O55.S.sess.commit.state === 'failed' && !window.O55.S.sess.commit.projectId), 'replay performs no creation');
-  await d.act('reviewAgain'); await readyPrimary(d); await d.act('edit', 'safe');
-  await d.act('online'); await d.primary(); await d.primary();
-  A.eq(await d.screen(), 'online-details', 'change the name through the reviewed setup'); await d.type('repo', 'book-club-site'); await d.primary(); await d.primary();
+  /* (RV-12) Review keeps the name GitHub refused as the thing to fix, never as checked; its Fix opens the name */
+  await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'fresh review');
+  A.eq(await d.state(() => window.O55.draft.missing(window.O55.S.sess.drafts.main)[0] && window.O55.draft.missing(window.O55.S.sess.drafts.main)[0].key), 'missing.repoTaken', 'Review says the refused name is used');
+  await d.act('edit', 'online-details');
+  A.eq(await d.screen(), 'online-details', 'change the name through the reviewed setup'); await d.type('repo', 'book-club-site'); await d.primary();
   A.eq(await d.screen(), 'review', 'changed name returns to review');
   A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });

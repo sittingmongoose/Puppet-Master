@@ -155,6 +155,7 @@
     "bbProject": "Choose the Bitbucket project first.",
     "visibility": "Choose who can see it first.",
     "repoName": "Fix the name first: the service won't accept it as it is.",
+    "repoTaken": "The online copy's name is already used there. Change it first.",
     "branch": "Fix the main branch name first."
   },
   "art": {
@@ -655,7 +656,9 @@
     "signin": {
       "eyebrow": "Online copy",
       "title": "Sign in to {name}",
-      "lead": "Puppet Master only asks {name} for access to the Project you choose.",
+      "lead": "Puppet Master works only on the Project you set up here. {name}'s page shows the access it asks for before you agree.",
+      "leadToken": "Puppet Master works only on the Project you set up here. What the token you make can reach is said below, before you paste it.",
+      "leadCloud": "Sign in to find your backup. {name}'s page shows the access it asks for before you agree.",
       "signIn": "Sign in",
       "create": "Create account",
       "connected": "Use {account}",
@@ -663,7 +666,7 @@
       "another": "Use a different account",
       "waiting": "Waiting for you in your browser…",
       "noBrowser": "Browser didn't open?",
-      "codeLead": "Go to {url} and enter this code:",
+      "codeLead": "On any device, go to {url} and enter this code:",
       "codeExpires": "The code expires in 15 minutes.",
       "signedIn": "Signed in as {account}",
       "createOpened": "{name}'s sign-up page opened",
@@ -671,6 +674,7 @@
       "email": "Check your email to confirm your new account",
       "confirmed": "I confirmed it",
       "token": "Use an access token instead",
+      "browserInstead": "Sign in on {name}'s page instead",
       "tokenLabel": "Access token",
       "tokenHint": "Create one on your server under Settings › Applications. It is kept in your system keychain, never in Puppet Master's files.",
       "tokenBad": "That token was not accepted.",
@@ -680,16 +684,16 @@
       "simUser": "Username",
       "simEmail": "Email",
       "simButton": "Create account",
-      "linkCopied": "Sign-in link copied: {url}. Paste it into your browser.",
-      "linkCopiedNone": "Open your browser and sign in there, then come back.",
+      "linkLead": "On any device, open {url} and finish signing in there. This screen carries on by itself.",
+      "linkNone": "Open a browser on any device and sign in there. This screen carries on by itself.",
       "tokenLead": "{host} signs in with an access token you make there. Paste it below.",
       "createOn": "No account on {host} yet? Create one",
       "tokenHow": {
         "forgejo": "Make one on {host} under Settings › Applications.",
         "gitea": "Make one on {host} under Settings › Applications.",
         "bitbucket_data_center": "Make one on {host} under your profile › Manage account › HTTP access tokens.",
-        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens.",
-        "gitlab": "Make one on {host} under Preferences › Access tokens.",
+        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens › Fine-grained tokens.",
+        "gitlab": "Make one on {host}: your avatar › Edit profile › Access › Personal access tokens.",
         "azure_devops": "Make one on {host} under User settings › Personal access tokens."
       },
       "scopes": {
@@ -697,37 +701,61 @@
           "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
           "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
           "detailExisting": "Allow it Read and write for repository, and Read for user.",
-          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user.",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "An unrestricted (All) token: it reaches every repository and organization the account can on {host}. Creating a repository needs the user or organization scope, which tokens restricted to specific repositories cannot carry.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one: Forgejo's tokens for chosen Projects can't read your account. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "An unrestricted (All) token: Forgejo allows only repository and issue scopes on tokens restricted to specific repositories, and this sign-in reads the account (read:user) to name it and list its repositories. It reaches every repository the account can; Puppet Master uses only the chosen one."
         },
         "gitea": {
           "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
           "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
           "detailExisting": "Allow it Read and write for repository, and Read for user.",
-          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user.",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "Gitea token scopes are by kind (repository, user, organization), not by repository: it reaches every repository the account can on {host}.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "Gitea token scopes are by kind, not by repository: write:repository and read:user reach every repository the account can on {host}; Puppet Master uses only the chosen one."
         },
         "bitbucket_data_center": {
           "detailNew": "Give it Admin for both Project and Repository: only that level can make a new copy.",
           "detailNewExpert": "Project admin and repository admin: the only HTTP access token level that can create a repository.",
           "detailExisting": "Give it Read for Project and Write for Repository.",
-          "detailExistingExpert": "Project read and repository write: clone and push."
+          "detailExistingExpert": "Project read and repository write: clone and push.",
+          "reachNew": "A personal token reaches every project and Project you can on {host}, at the levels you give it. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A personal HTTP access token acts with your permissions on every project and repository, capped at the levels chosen. A project or repository token stays inside one, but cannot be made before the copy exists.",
+          "reachExisting": "A personal token reaches every project and Project you can on {host}, at the levels you give it. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A personal HTTP access token acts with your permissions on every project and repository, capped at the levels chosen. A repository HTTP access token (made in that repository's settings, by its admins) would reach only it."
         },
         "github": {
-          "detailNew": "Tick the repo box.",
-          "detailNewExpert": "A classic token with the repo scope, or a fine-grained token with Administration and Contents set to read and write.",
-          "detailExisting": "Tick the repo box.",
-          "detailExistingExpert": "A classic token with the repo scope, or a fine-grained token with Contents set to read and write."
+          "detailNew": "Give it access to All repositories, with Administration and Contents set to Read and write.",
+          "detailNewExpert": "A fine-grained token: All repositories, with Administration and Contents read and write (for a copy in an organization, that organization as its resource owner). A classic token with the repo scope also works.",
+          "detailExisting": "Give it access to that Project under Only select repositories, with Contents set to Read and write.",
+          "detailExistingExpert": "A fine-grained token: the repository under Only select repositories, Contents read and write. A classic token with the repo scope also works.",
+          "reachNew": "It reaches every Project of the account or organization you make it for. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "Fine-grained, All repositories: every repository of its resource owner (a classic repo token: every repository you can reach).",
+          "reachExisting": "It reaches only the Project you select when you make it.",
+          "reachExistingExpert": "Fine-grained, Only select repositories: only the chosen repository (a classic repo token would reach every repository you can)."
         },
         "gitlab": {
           "detailNew": "Tick api and write_repository.",
           "detailNewExpert": "Scopes api (create the project) and write_repository (push over HTTPS).",
           "detailExisting": "Tick read_api and write_repository.",
-          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS)."
+          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS).",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A personal access token acts as your account on every project you can reach on {host}; its scopes limit what kind of access, not which projects.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A personal access token acts as your account on every project you can reach on {host}; a project access token (where the server allows them) would reach only that project."
         },
         "azure_devops": {
           "detailNew": "Under Code, choose Read, write, & manage.",
           "detailNewExpert": "Scope vso.code_manage (Code: read, write and manage).",
           "detailExisting": "Under Code, choose Read & write.",
-          "detailExistingExpert": "Scope vso.code_write (Code: read and write)."
+          "detailExistingExpert": "Scope vso.code_write (Code: read and write).",
+          "reachNew": "It reaches every Project you can in the organization you make it for. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A PAT scoped to one organization (or all you can access, if chosen) with Code read, write and manage: every repository you can reach there.",
+          "reachExisting": "It reaches every Project you can in the organization you make it for, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A PAT scoped to one organization with Code read and write: every repository you can reach there."
         }
       },
       "demo": {
@@ -747,8 +775,12 @@
       "privacy": "Who can see it",
       "private": "Only you",
       "privateSub": "And people you invite",
+      "privateOrg": "Members of {org} who can see its private Projects",
+      "privateOrgSub": "And people you add",
+      "privateDcNone": "People with access to the project you choose",
       "public": "Everyone",
       "publicSub": "Anyone on the internet can see it",
+      "publicServerSub": "Anyone who can open {host}",
       "internal": "Everyone in {org}",
       "internalSub": "People in your organization",
       "azurePrivacy": "Follows your Azure DevOps project's settings",
@@ -868,7 +900,9 @@
       "copyTo": "Copy kept on this computer in {path}",
       "private": "Private",
       "public": "Public",
-      "empty": "No Projects found in this account.",
+      "updated": "updated {when}",
+      "empty": "No Projects found in {account} on {name}. If yours is in another account, sign in with that one.",
+      "another": "Sign in with another account",
       "copyToServer": "The copy is kept on {name}. You can choose another place on the next page.",
       "noMatch": "No Project matches that search."
     }
@@ -1131,6 +1165,9 @@
     "titleRestore": "Ready to restore {name}",
     "titleLater": "Ready to finish setup",
     "lead": "Nothing has been created yet. Check it, then create it in one step.",
+    "leadAdd": "Nothing has changed yet. Check it, then add it in one step.",
+    "leadOnline": "Nothing has been copied yet. Check it, then add it in one step.",
+    "leadRestore": "Nothing has been restored yet. Check it, then restore it in one step.",
     "leadLater": "Nothing will be created now.",
     "groups": {
       "project": "Project",
@@ -1156,6 +1193,7 @@
       "existing_online": "{repo} from {service}",
       "restore": "Backup of {project}",
       "device": "Files on {device}",
+      "deviceNew": "A new, empty folder: {device}",
       "devicePaired": "Files on {device}, through its Puppet Master"
     },
     "fresh": "Start fresh",
@@ -1167,6 +1205,7 @@
       "folder": "A folder is made in {path}",
       "useFolder": "Puppet Master starts using {path}",
       "history": "Safe History starts saving every version",
+      "historyKept": "Safe History keeps the history it arrives with and saves every new version",
       "clone": "The Project is copied from {service}",
       "restore": "The backup is brought back",
       "online": "An online copy is made on {service} · {privacy}",
@@ -1177,6 +1216,7 @@
       "remotePublic": "Next, {host} is set up, putting your Server's sign-in page on the internet"
     },
     "checked": "Checked just now",
+    "nameUsed": "name already used there",
     "changed": "{what} changed since you chose it. Take a look.",
     "create": "Create Project",
     "add": "Add Project",
@@ -1205,10 +1245,14 @@
   "creating": {
     "eyebrow": "Creating",
     "title": "Creating {name}",
+    "titleAdd": "Adding {name}",
+    "titleOnline": "Bringing in {name}",
+    "titleRestore": "Restoring {name}",
     "lead": "This takes a moment. You can close the window; it keeps going.",
     "phases": {
       "folder": "Making the folder",
       "history": "Starting Safe History with {kind}",
+      "historyKept": "Picking up its history with {kind}",
       "historyInstall": "Installing {kind} for Safe History",
       "clone": "Copying from {service}",
       "restore": "Bringing back the backup",
@@ -1519,6 +1563,7 @@
     "lead": "{name} is set up.",
     "leadLater": "Puppet Master is set up. Create a Project whenever you like.",
     "project": "Project",
+    "online": "Online copy",
     "ai": "AI",
     "free": "Free Models",
     "backup": "Backup",

@@ -824,8 +824,8 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
+          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else (for Forgejo and Gitea, a hosted one). Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (its own https address, run by an organisation or by you), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
@@ -870,6 +870,11 @@
           "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
           "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
+        "tokenOff": {
+          "title": "Browser sign-in",
+          "text": "Back to signing in on the service's own page in your browser. The token box is emptied.",
+          "expert": "Returns to the browser (OAuth) sign-in; the token field is cleared and nothing is kept."
+        },
         "field:token": {
           "title": "Access token",
           "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
@@ -880,10 +885,20 @@
           "text": "Shows a short code instead. Open the address it gives on any device and type the code there.",
           "expert": "Device-code sign-in: open the address shown on any device and enter the code there."
         },
-        "copyLink": {
+        "showLink": {
           "title": "Browser didn't open?",
-          "text": "Copies the sign-in link, so you can paste it into your browser yourself.",
-          "expert": "Copies the sign-in URL to open in a browser yourself."
+          "text": "Shows the sign-in page's address, to open in a browser on any device. This screen carries on once you've signed in there.",
+          "expert": "Shows the service's sign-in URL with Open the page and Copy address, to finish the browser sign-in on any device; a fresh wait starts."
+        },
+        "openPage": {
+          "title": "Open the page",
+          "text": "Tries again to open the sign-in page in this device's browser.",
+          "expert": "Opens the sign-in page (or the device-code page) in the default browser again."
+        },
+        "copyPage": {
+          "title": "Copy address",
+          "text": "Copies the page's address, so you can open it on another device.",
+          "expert": "Copies the sign-in page URL (or the device-code page URL) to the clipboard."
         },
         "copy:dcode": {
           "title": "Copy the code",
@@ -892,8 +907,8 @@
         },
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes.",
-          "expert": "Issues a new device code; each lasts 15 minutes."
+          "text": "Makes a fresh code if this one ran out. The time it has left shows under it.",
+          "expert": "Issues a new device code; it lasts as long as the service allows (GitHub and Microsoft 15 minutes, GitLab 5), shown under it."
         },
         "signupBack": {
           "title": "Back to sign in",
@@ -933,9 +948,9 @@
           "expert": "Opens Azure DevOps to create a team project there; refresh here to pick it."
         },
         "vis:private": {
-          "title": "Only you",
-          "text": "Only you, and people you give access, can see it. Right for most Projects.",
-          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
+          "title": "Private",
+          "text": "On your own account, only you and people you invite can see it. Under an organization, group, workspace or team, its members who can see its private Projects can too, and people you add. Right for most Projects.",
+          "expert": "private: on a personal owner, the owner and invited collaborators; on an organization, group, workspace or team, members whose role or team grants read on its private repositories, plus users granted access (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
@@ -988,6 +1003,11 @@
           "title": "Choose the Project",
           "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
           "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
+        },
+        "otherAccount": {
+          "title": "Another account",
+          "text": "Signs in with another account on the same service, then lists the Projects it can reach.",
+          "expert": "Signs in with another account on this service and lists the repositories that account can reach."
         }
       },
       "safe": {
@@ -1013,7 +1033,7 @@
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. Only you see it unless you share it.",
+          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. It stays private unless you choose otherwise.",
           "expert": "A remote repository on the service you choose, pushed from your local history; its visibility is set when it is created."
         },
         "backup": {
@@ -1144,13 +1164,13 @@
         },
         "rename": {
           "title": "Change the name",
-          "text": "Pick another name for the online copy, since that one is already used there.",
-          "expert": "The repository name is taken on the service: choose another name and the attempt resumes."
+          "text": "Pick another name for the online copy, since that one is already used there. The name field opens ready to type into.",
+          "expert": "The repository name is taken on the service: choose another; on GitHub that is a fresh reviewed attempt, elsewhere the failed phase resumes."
         },
         "skipOnline": {
           "title": "Skip the online copy",
-          "text": "Finish without the online copy. You can add one later from Settings.",
-          "expert": "Finishes without creating the remote repository; add a remote later in Settings."
+          "text": "Finish without the online copy. You can add one later from Settings. On GitHub, nothing was made, so Review shows the plan without it first.",
+          "expert": "Drops the remote repository from the plan: on GitHub (failed before any effect) back to Review for a fresh attempt, elsewhere the remaining phases carry on. Add a remote later in Settings."
         },
         "askSkip": {
           "title": "Skip the online copy",
@@ -1792,7 +1812,7 @@
         "enter": "This is its name online.",
         "typing": "Ooh, a name for the copy.",
         "available": "That name's free. Lovely.",
-        "vis:private": "Only you? Then just you, and who you invite.",
+        "vis:private": "Private? Then only people with access see it.",
         "vis:public": "Everyone? Then anyone online can see it.",
         "vis:internal": "Your organisation? Then only its people see it."
       },
@@ -1983,7 +2003,8 @@
         "teamProject": "Pick the team project first.",
         "visibility": "Who can see it? Pick one first.",
         "branch": "That branch name won't do yet.",
-        "repoName": "The service won't take that name."
+        "repoName": "The service won't take that name.",
+        "repoTaken": "That name's used there already."
       },
       "connect": {
         "route": {
@@ -2086,7 +2107,19 @@
           "fail": "Oh no. That sign-in didn't finish."
         },
         "details": {
-          "taken": "That name's already taken there."
+          "taken": "That name's already taken there.",
+          "nameRule": {
+            "github": "That name won't do there. See the rule under it?",
+            "gitlab": "That name won't do there. See the rule under it?",
+            "azure_devops": "That name won't do there. See the rule under it?",
+            "bitbucket_cloud": "That name won't do there. See the rule under it?",
+            "bitbucket_data_center": "That name won't do there. See the rule under it?",
+            "forgejo": "That name won't do there. See the rule under it?",
+            "gitea": "That name won't do there. See the rule under it?",
+            "cursor_origin": "That name won't do there. See the rule under it?"
+          },
+          "nameReserved": "That name's kept for the service itself.",
+          "branchRule": "That branch name won't do yet."
         }
       },
       "safe": {
@@ -2120,7 +2153,8 @@
             "unknownOnly": "Still unclear. Let's check again.",
             "confirmFirst": "Check which online copy to delete first.",
             "openUnavailable": "I can't open that in this preview.",
-            "other": "That isn't available yet. Nothing changed."
+            "other": "That isn't available yet. Nothing changed.",
+            "deleted": "The online copy is gone. Let's review it again."
           }
         }
       },
@@ -2200,7 +2234,8 @@
         "teamProject": "Team project picked!",
         "visibility": "Got it. That's settled.",
         "branch": "Good branch name!",
-        "repoName": "That name works!"
+        "repoName": "That name works!",
+        "repoTaken": "A fresh name. Lovely."
       },
       "connect": {
         "route": {
@@ -2303,7 +2338,19 @@
           "fail": "Signed in! There we go."
         },
         "details": {
-          "taken": "That name's free. Lovely."
+          "taken": "That name's free. Lovely.",
+          "nameRule": {
+            "github": "That name works there now!",
+            "gitlab": "That name works there now!",
+            "azure_devops": "That name works there now!",
+            "bitbucket_cloud": "That name works there now!",
+            "bitbucket_data_center": "That name works there now!",
+            "forgejo": "That name works there now!",
+            "gitea": "That name works there now!",
+            "cursor_origin": "That name works there now!"
+          },
+          "nameReserved": "A name of its own. Good.",
+          "branchRule": "That branch name works!"
         }
       },
       "safe": {
@@ -2337,7 +2384,8 @@
             "unknownOnly": "A clear answer. Phew.",
             "confirmFirst": "That's the one.",
             "openUnavailable": "Ready to open.",
-            "other": "Available now."
+            "other": "Available now.",
+            "deleted": "A fresh start. Here we go!"
           }
         }
       },

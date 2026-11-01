@@ -295,7 +295,7 @@
         bitbucket_cloud: { accounts: [], login: 'jared-p', owners: [{ id: 'jared-workspace', name: 'jared-workspace', projects: [{ key: 'WEB', name: 'Website', private: false }, { key: 'PRIV', name: 'Private work', private: true }] }],
           repos: [{ id: '{4a1c9e2b-7d3f-4b8a-9e1c-5f2d7a3b8c60}', name: 'garden-site', owner: 'jared-workspace / Website', container: 'jared-workspace', scope: 'organization', project: 'WEB', projectName: 'Website', private: true, updated: '3 weeks ago' }], taken: [], signup: true },
         /* a Data Center copy lives in a project (by its key), or in the person's own personal project (~USER) */
-        bitbucket_data_center: { accounts: [], login: 'jared', owners: [{ id: 'PROJ', name: 'Projects (PROJ)', publicAccess: true }, { id: '~JARED', name: 'Your personal projects (~JARED)', scope: 'personal', publicAccess: true }],
+        bitbucket_data_center: { accounts: [], login: 'jared', owners: [{ id: 'PROJ', name: 'Projects (PROJ)', publicAccess: true }, { id: '~JARED', name: 'Your personal project (~JARED)', scope: 'personal', publicAccess: true }],
           repos: [{ id: '87', name: 'build-tools', owner: 'PROJ', container: 'PROJ', scope: 'organization', private: true, updated: 'last month' }], taken: [], signup: false },
         /* hosted Forgejo is Codeberg; another Forgejo server is its own world */
         forgejo: { accounts: [], login: 'jared', owners: [], repos: [{ id: '20914', name: 'home-lab', owner: 'jared', container: '', private: true, updated: 'yesterday' }], taken: [], signup: true,
