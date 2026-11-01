@@ -119,7 +119,7 @@ html[data-lg="on"][data-theme^="glass"] #pm-o55-onboarding .o55-under { border-c
 .o55-steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; font-size: 14px; color: var(--text-secondary); }
 .o55-steps li::marker { color: var(--o55-accent); font-weight: 700; }
 .o55-codeline { display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 12px; border-radius: calc(var(--o55-card-r) * 0.8); background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
-.o55-codeline code { flex: 1; min-width: 0; font: 500 12.5px/1.45 ui-monospace, 'SF Mono', Menlo, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-all; } /* a key or command is read whole before it is copied, so it wraps */
+.o55-codeline code { flex: 1; min-width: 0; font: 500 12.5px/1.45 ui-monospace, 'SF Mono', Menlo, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; text-wrap: balance; } /* a key or command is read whole before it is copied, so it wraps: at a space where it can, in lines of even length (a command keeps its words whole and "| sh" stays with what it runs: "| s" / "h" and a lone "sh" looked like two commands, m9), anywhere in a token too long for the line */
 .o55-codeline > :last-child { align-self: flex-start; flex: none; }
 .o55-will { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
 .o55-will li { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; line-height: 1.45; color: var(--text-secondary); }

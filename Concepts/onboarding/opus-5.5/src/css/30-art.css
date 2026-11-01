@@ -5,7 +5,9 @@
    pauses while the page is hidden, while a drag is under way (the stage's data-paused, set while body.pm-resizing)
    and while a screen change is held;
    Reduced Motion (the stage's data-reduced) stops them all: nothing swings, travels, flickers or trails. */
-.o55-scene-host { position: relative; overflow: hidden; }
+/* clipped, never scrollable (FO-15: a scene whose world reaches past its box was scrolled by focus or scrollIntoView and
+   slid inside its panel); Pip's stage and the look tiles' art both host a scene */
+.o55-scene-host { position: relative; overflow: hidden; overflow: clip; }
 /* a look tile's Pip (Pick a look, NieR's thumbnail): the kit's still tile, centred in the tile's art */
 .o55-tilepip { position: absolute; inset: 0; display: grid; place-items: center; }
 .o55-tilepip > svg { width: auto; height: 82%; max-width: 92%; }
@@ -17,7 +19,7 @@
 #pm-o55-onboarding .pst-nsq { display: inline-block; width: 6px; height: 6px; background: currentColor; vertical-align: 1px; }
 /* Pip's stage: layers, the speech bubble, the Retro monitor and each world's HUD (Opus 5.5 concept). */
 @property --st-tint { syntax: '<color>'; inherits: true; initial-value: #c3b1e4; }
-#pm-o55-onboarding .pst { position: relative; overflow: hidden; isolation: isolate; transition: --st-tint .9s ease; container-type: size; }
+#pm-o55-onboarding .pst { position: relative; overflow: hidden; overflow: clip; isolation: isolate; transition: --st-tint .9s ease; container-type: size; } /* (clip, never scrollable: FO-15) */
 #pm-o55-onboarding .pst-wall, #pm-o55-onboarding .pst-svg, #pm-o55-onboarding .pst-overlay, #pm-o55-onboarding .pst-content { position: absolute; inset: 0; width: 100%; height: 100%; }
 #pm-o55-onboarding .pst-svg { display: block; }
 #pm-o55-onboarding .pst-overlay { pointer-events: none; }
@@ -127,7 +129,7 @@
   radial-gradient(130% 90% at 50% 0%, #393b40, #26272b 58%, #1b1c1f); }
 #pm-o55-onboarding .pst-face { position: absolute; left: 11px; right: 11px; top: 11px; bottom: 30px; border: 13px solid; border-color: #141517 #1f2023 #34363b #1f2023; border-radius: 10px; background: #08090a;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .6), 0 2px 0 rgba(255, 255, 255, .07), inset 0 0 0 1px rgba(255, 255, 255, .03); }
-#pm-o55-onboarding .pst-tube { position: absolute; inset: 0; overflow: hidden; border-radius: 20px / 18px; background: #071109; isolation: isolate;
+#pm-o55-onboarding .pst-tube { position: absolute; inset: 0; overflow: hidden; overflow: clip; border-radius: 20px / 18px; background: #071109; isolation: isolate;
   box-shadow: 0 0 0 2px #040505, 0 0 28px 6px rgba(18, 251, 86, .14); animation: pstFlicker 4.2s steps(1, end) infinite; }
 #pm-o55-onboarding .pst-brand { position: absolute; left: 0; right: 0; bottom: 6px; height: 18px; display: flex; align-items: center; justify-content: center; font: 700 9px/1 'IBM Plex Mono', ui-monospace, monospace; letter-spacing: .34em; color: rgba(255, 255, 255, .2); text-shadow: 0 1px 0 rgba(0, 0, 0, .7); }
 #pm-o55-onboarding .pst-led { position: absolute; right: 24px; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: #12fb56; box-shadow: 0 0 6px 1px rgba(18, 251, 86, .8), inset 0 0 1px #fff; }
@@ -162,7 +164,7 @@
 /* Retro Light is paper, not a screen: continuous form rising out of the printer at the foot of the stage. The
    bail bar holds the paper to the platen, the head rides the line it prints, the paper feeds in steps. */
 #pm-o55-onboarding .pst[data-tube="teletype"] { background: #f4ecdd; }
-#pm-o55-onboarding .pst-sheet { position: absolute; inset: 0; overflow: hidden; background: #f4ecdd; isolation: isolate; }
+#pm-o55-onboarding .pst-sheet { position: absolute; inset: 0; overflow: hidden; overflow: clip; background: #f4ecdd; isolation: isolate; }
 #pm-o55-onboarding .pst-grain { position: absolute; inset: 0; z-index: 5; pointer-events: none; mix-blend-mode: multiply; opacity: .5;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .26  0 0 0 .12 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
   linear-gradient(90deg, rgba(120, 100, 66, .1), transparent 7%, transparent 93%, rgba(120, 100, 66, .1)); }

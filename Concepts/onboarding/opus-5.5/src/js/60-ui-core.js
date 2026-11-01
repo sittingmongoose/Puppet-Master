@@ -450,7 +450,7 @@
      layout (wide: the tall pane beside the screen; narrow: a strip above it; short: a short strip) and Reduced Motion. */
   const LAYOUT = { wide: 'portrait', narrow: 'banner', short: 'compact' };
   const stageLayout = () => LAYOUT[S.root.getAttribute('data-o55-layout')] || 'portrait';
-  let lastOops = null, cheering = null;
+  let lastOops = null, cheering = null, lastLine = null, holdLineT = null;
   function stageOf() {
     const host = S.root && S.root.querySelector('.o55-stage');
     if (!host || !O55.pipStage || !O55.pipStage.h.kit()) return null; /* the kit is the glyph system's head module */
@@ -473,6 +473,9 @@
     if (!oops && o && o.refused) oops = o.refused;
     const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg));
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
+    /* a fault still shows that Pip has no line for: Pip stays on it (its general line) instead of cheering the one it
+       replaced; a cheer comes only when the screen shows no fault at all (RV-6) */
+    if (!oops && layer && !layer.classList.contains('o55-hold') && O55.pipOops.faultShown(layer)) oops = { key: null, face: 'oops' };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
     /* a look only looked at: Pip's bubble types its line without its voice (Jared's O6, "no sound on hover"); the line
@@ -486,17 +489,27 @@
        second failure brings the oops back (Astra M01) */
     const pending = !oops && lastOops && (/^(signingIn|installing|testing|checking|working|waiting|looking|reading)$/.test(spec.lineId) || spec.pip.mood === 'think'
       || Object.values(S.sess.ops || {}).some((x) => x && x.state === 'running') || !!(layer && layer.querySelector('.o55-ldwrap, [data-pip-loader]')));
-    const cheer = !oops && !pending && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops.key : null;
+    const cheer = !oops && !pending && lastOops && lastOops.screen === S.sess.screen && lastOops.face === 'oops' ? lastOops : null;
     if (oops) lastOops = { key: oops.key, face: oops.face, screen: S.sess.screen, refused: oops.refused || null }; else if (!pending) lastOops = null;
     /* the cheer is said through, even while the screen settles around it (its line would otherwise be replaced by the
        next refresh's ordinary one) */
-    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
+    if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen }; spec.sayNow = true; }
     if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
     if (cheering) { spec.say = cheering.text; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
        world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
        change on click. It is a little too busy with it changing on hover") */
     st.tryOn(null);
+    /* while the person types, Pip keeps the line it said for typing: the screen's own line (looking, found) waits until the
+       typing pauses, so the bubble does not flip at each key (m13, Connect: "Type it in. I'll go and knock." / "Looking f…"
+       / "Type it in."). A fault or a cheer still speaks at once; a screen whose stage answers each letter (Name) is left be */
+    const sdef = SCREENS.defs[S.sess.screen], typingNow = !!S.typedAt && performance.now() - S.typedAt < 1200;
+    const singing = !!(sdef && sdef.typing && S.pipTyping && sdef.typing(S, S.pipTyping));
+    if (typingNow && !singing && !oops && !cheer && !cheering && lastLine && lastLine.screen === S.sess.screen && lastLine.lineId === 'typing' && spec.lineId !== 'typing') {
+      spec.say = lastLine.say; spec.lineId = 'typing'; if (lastLine.mood) spec.pip.mood = lastLine.mood;
+      if (!holdLineT) holdLineT = O55.motion.real.setTimeout(() => { holdLineT = null; if (S.open) renderScene(); }, 1250);
+    }
+    lastLine = { say: spec.say, lineId: spec.lineId, mood: spec.pip && spec.pip.mood, screen: S.sess.screen };
     /* a fault shown now wins over a feeling still held from a moment before (a cheer, a pick) */
     if (oops) st.moodOverride = null;
     st.direct(spec);
@@ -826,6 +839,7 @@
   function onInput(e) { const t = e.target.closest('[data-o55-bind]'); if (t) typed(t, e.type, e); }
   /* a bound field changed (typing, or O55.ui.fill): type is 'input' or 'change', e the event or null */
   function typed(t, type, e) {
+    if (type === 'input') S.typedAt = performance.now(); /* (Pip keeps its typing line while this is recent: renderScene) */
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     /* typing ticks quietly in the family's material (never for a protected field); a screen whose stage answers each

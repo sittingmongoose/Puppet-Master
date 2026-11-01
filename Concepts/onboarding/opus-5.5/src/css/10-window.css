@@ -129,7 +129,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 
 /* body: stage + pane */
 .o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
-.o55-stage { position: relative; overflow: hidden; border-right: 1px solid var(--o55-line); background: var(--background); }
+/* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
+   and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
+   painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
+.o55-stage { position: relative; overflow: hidden; overflow: clip; border-right: 1px solid var(--o55-line); background: var(--background); }
 .o55-pane { position: relative; overflow: hidden; min-height: 0; }
 .o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
