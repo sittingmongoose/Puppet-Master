@@ -19,7 +19,7 @@
   "filesafe": "safe details: FileSafe switch",
   "online_mode": "safe: Online copy row (Not now -> none, a service -> new); begin > online -> existing",
   "forge": "online-service: GitHub card + Other services list",
-  "forge_provider_variant": "online-service: .com / self-managed / Services / Server / Cloud / Data Center / hosted Forgejo-Gitea",
+  "forge_provider_variant": "online-service: .com / self-managed / Services / Server / Cloud / Data Center / Gitea Cloud",
   "forge_instance_url": "online-service: server address field (self-managed variants)",
   "forge_instance_profile": "online-service: Forgejo/Gitea server address + Use an access token instead",
   "forge_account_action": "online-signin: Sign in / Create account / already connected account row",
@@ -91,7 +91,14 @@
   "23": "c-route > My own web address (connect): manual address, no proxy setup on this device",
   "24": "c-route / away > Remote Link: paste the link",
   "25": "online-signin: an already connected account row carries its account ref",
-  "26": "ex-online: the reviewed online Project carries its repository ref"
+  "26": "ex-online: the reviewed online Project carries its repository ref",
+  "27": "online-details (Cursor Origin): your own copy is private only (forgeRules visibility)",
+  "28": "online-details (GitHub): your own copy is private or public; internal only for an organization (forgeRules visibility)",
+  "29": "online-details / ex-repos (Bitbucket): a workspace or Data Center project is required (forgeRules.needs, the pick carries it)",
+  "30": "online-details / ex-repos (Bitbucket Cloud): a project in the workspace is required (forgeRules.needs, the pick carries it)",
+  "31": "away > My own web address: Puppet Master makes the settings file for Caddy (default), NGINX or Traefik (draft normalize)",
+  "32": "c-route > Remote Link (connect): the link is required (draft remoteMissing)",
+  "33": "away > My own web address (new Server): make the settings file, or use a proxy I already run"
  },
  "screens": {
   "welcome": {
