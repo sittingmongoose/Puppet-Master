@@ -59,7 +59,7 @@
       Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', repository_visibility: null });
     } else {
       if (d.forge === 'none') d.forge = 'github';
-      const variants = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed', 'forgejo_cloud'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] }[d.forge];
+      const variants = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] }[d.forge];
       if (!variants.includes(d.forge_provider_variant)) d.forge_provider_variant = variants[0];
       if (d.forge === 'cursor_origin') d.forge_instance_url = 'https://origin.cursor.com';
       /* a hosted variant's own address; a server the person names is never filled in for them (FF-08: no example host) */
@@ -113,7 +113,7 @@
   function allowedVisibility(d) { return O55.forgeRules.visibility(envOf(), d); }
 
   /* The sign-in a server offers decides the profile's method: a hosted service with a sign-in app registered for Puppet
-     Master (Codeberg, Gitea Cloud) signs in in the browser (OAuth with PKCE); another server, with none, by an access
+     Master (Gitea Cloud) signs in in the browser (OAuth with PKCE); another server, with none, by an access
      token the person makes there (kept by the credential owner). The method actually used is saved (forge_auth_method).
      A server installed under a path (https://example.org/git) keeps it; the API and SSH details are the usual ones until
      the Forge owner's probe after sign-in (probe_performed false). */

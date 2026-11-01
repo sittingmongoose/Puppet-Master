@@ -794,8 +794,8 @@
         },
         "pick:forgejo": {
           "title": "Forgejo",
-          "text": "A free service people run on their own servers. Codeberg is the best-known one. Pick it if you have an account on Codeberg or another Forgejo server.",
-          "expert": "Codeberg (browser sign-in or a token) or another Forgejo instance at its https address (a personal access token)."
+          "text": "A free service people run on their own servers. Pick it if your account is on a Forgejo server, then type its address.",
+          "expert": "A Forgejo instance at its https address, signed in with a personal access token."
         },
         "pick:gitea": {
           "title": "Gitea",
@@ -819,8 +819,8 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else (for Forgejo and Gitea, a hosted one). Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it), self-managed / Data Center (its own https address, run by an organisation or by you), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
+          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else (for Gitea, a hosted one). Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (its own https address, run by an organisation or by you), Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",

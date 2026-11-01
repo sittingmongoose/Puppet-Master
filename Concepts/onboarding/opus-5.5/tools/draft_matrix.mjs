@@ -30,7 +30,7 @@ try {
     mk('connect own web address', 'connect_existing', { server_ref: 'server:home-nas', remote_mode: 'reverse_proxy', remote_more: true, proxy_hostname: 'https://pm.example.net' });
     mk('connect remote link', 'connect_existing', { server_ref: 'server:home-nas', remote_mode: 'remote_link', remote_more: true, remote_endpoint: 'pm-remote-link:home-nas/7Q2K' });
     mk('connect vpn networks', 'connect_existing', { server_ref: 'server:home-nas', include_vpn_networks: true, connection_pairing: 'code' });
-    for (const [forge, variants] of Object.entries({ github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed', 'forgejo_cloud'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] })) {
+    for (const [forge, variants] of Object.entries({ github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed', 'gitea_cloud'], cursor_origin: ['preview'] })) {
       for (const variant of variants) {
         const base = { project_name: 'Book club website', online_mode: 'new', forge, forge_provider_variant: variant, repository_name: 'book-club-website', forge_account_action: 'sign_in_during_setup', forge_account_ref: 'account:' + forge + ':jared' };
         /* a server the person names (self-managed, Data Center, a team's Gitea Cloud): the plan never invents one */
