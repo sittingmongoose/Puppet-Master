@@ -36807,8 +36807,8 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   opens its local/online/device choices in the joined tray before sibling alternatives. The four semantic intents new/existing_local/existing_online/restore
   remain available; no unrelated More/Other disclosure hides a source route. Safe History is the beginner-facing local
   version timeline: Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe
-  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin may
-  hold a separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
+  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea may hold a
+  separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
   it uses familiar words and never exposes the internal term `shell`, raw command/route/schema identifiers, owner names,
   host/environment vocabulary, provider matrices, diagnostics dashboards, network topology, or unexplained source-control
   jargon. Optional owner-routed branches cover opening an existing or online project, restoring a backup, keeping history
@@ -37005,12 +37005,17 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   host, prefill, artificial wait or Studio behavior.
 
 
-  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail
-  values. MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment,
-  including NieR. F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
+  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663
+  consumes these rules with unchanged choice, identity and Creating gates.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
-  motion.
+gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
 depends_on:
 - F3-519
@@ -37087,9 +37092,9 @@ acceptance_criteria:
   and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
   choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
   initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
-  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection,
-  visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge,
-  never as a no-host or local-only preview.'
+  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea account verification, repository creation/selection,
+  visibility, and binding remain explicit forge/auth owner routes. Forgejo and Gitea each require the person’s own server
+  (DL-273).'
 - An online copy becomes ready only after both a current verified account identity and the exact repository binding exist;
   Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project
   selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract
@@ -37322,15 +37327,23 @@ acceptance_criteria:
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
   host, prefill, artificial wait or Studio behavior.'
 - 'DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
-  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR.
-  F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663
+  consumes these rules with unchanged choice, identity and Creating gates.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
-  - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
-  - "tests/test_pm_onboarding_phases.py"
-  - "tests/test_pm_settings_draft_transfer.py"
-  - "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior."
-  - "future ten-theme, Reduced Motion, interruption, reversal, and short-window film review"
+- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
+  eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
+  Guided Tour contract)
+- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions,
+  durable bounded draft, exact commit/result binding and phase continuation)
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
+- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal,
+  accessibility and short-window behavior.
+- future ten-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
 context_scope: product_onboarding_cinematic_presentation
@@ -37386,6 +37399,7 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -37418,7 +37432,6 @@ preserved_exact_tokens:
 - You can connect through a VPN too
 - Reverse proxy
 - Puppet Master Remote Link
-- Cursor Origin
 - SSH/SFTP
 - 1.2-1.5 seconds
 - 420-560 ms
@@ -37439,34 +37452,48 @@ preserved_exact_tokens:
 - Adjust NieR look
 - menuitemcheckbox
 negative_constraints:
-  - "Do not render Product Onboarding as a full-page route or replacement application experience."
-  - "Do not restore F3-411's four-screen/provider-first choreography."
-  - "Do not restore the predecessor five-stage simple-path order as the current main journey."
-  - "Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client into connect-existing, or bypass review_setup_plan before automatic_preparation."
-  - "Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment, Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner authorization."
-  - "Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding."
-  - "Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced Settings."
-  - "Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment."
-  - "Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an inert Set up access later action."
-  - "Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control vocabulary in user-visible onboarding copy."
-  - "Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state."
-  - "Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded A/B."
-  - "Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing Project binding exists."
-  - "Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI."
-  - "Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command."
-  - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
+- Do not render Product Onboarding as a full-page route or replacement application experience.
+- Do not restore F3-411's four-screen/provider-first choreography.
+- Do not restore the predecessor five-stage simple-path order as the current main journey.
+- Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client
+  into connect-existing, or bypass review_setup_plan before automatic_preparation.
+- Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented
+  Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment,
+  Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review
+  confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner
+  authorization.
+- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let
+  a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
+- Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced
+  Settings.
+- Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded
+  explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment.
+- Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an
+  inert Set up access later action.
+- Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control
+  vocabulary in user-visible onboarding copy.
+- Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block
+  landing; continuous Pip/world life is allowed only through F3-663’s bounded shared clock, paused hidden/offscreen/during
+  drags, or become required to understand state.
+- Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
+  effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
+  A/B.
+- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
+  Project binding exists.
+- Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
+- Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
+- Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work,
+  readiness, handler, native Slint, or certification claims.
 owner_boundary_notes:
-- Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control,
-  Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and
-  commands; Home owns only the visible relaunch trigger; Final GUI owns visual hierarchy and motion.
+- Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control, Server, Remote
+  Access, Backup/Restore, provider, and authentication owners retain their domain state and commands; Home owns only
+  the visible relaunch trigger; Final GUI owns visual hierarchy and motion.
 stale_retired_dispositions:
-- 'Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session
-  look choice.'
+- 'Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session look choice.'
 owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/Planning_Wizard.md
 ```
-
 ### F3-521 - Guided Tour Newbie-First Practice Presentation
 
 ```yaml
@@ -37531,12 +37558,29 @@ canonical_text: 'Guided Tour teaches through successful actions over the mounted
   Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local
   adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither
   seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite,
-  regenerate or send a chat reply.'
+  regenerate or send a chat reply.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, DL-186, PWIZ-035]
-unblocks: [F3-524, F3-598, F3-599]
+depends_on:
+- F3-520
+- PWIZ-023
+- ACD-431
+- ACD-484
+- F3-581
+- DL-180
+- DL-186
+- PWIZ-035
+unblocks:
+- F3-524
+- F3-598
+- F3-599
 acceptance_criteria:
 - The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction
   supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current
@@ -37592,8 +37636,8 @@ acceptance_criteria:
   remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable,
   and restores the same beat on close without clipping or losing the target.
 - Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe
-  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional
-  online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
+  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea can hold a separate optional online
+  copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
 - The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real
   composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra,
   simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled
@@ -37638,18 +37682,30 @@ acceptance_criteria:
   is a compatibility local adapter to this shared setting, not a tour-specific preference. Both bars reflect the same
   effective value; neither seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode
   change does not rewrite, regenerate or send a chat reply.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
-  - "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance."
-  - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
+- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first
+  static presentation consumer; story/actions reference the v3 owner definitions)
+- Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning,
+  eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe
+  checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery
+  or runtime acceptance)
+- Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion
+  disposition; concept simulation is not native or final visual acceptance.
+- future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
 risk_class: guided_tour_fake_state_or_story_loss
 reasoning_tier: high
 context_scope: guided_tour_newbie_first_practice_presentation
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - future native Slint Guided Tour overlay components
-node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
+- Plans/FinalGUISpec.md
+- future native Slint Guided Tour overlay components
+node_compile_hint:
+  mode: guided_tour_directed_beginner_film_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - Plans/Planning_Wizard.md#PWIZ-023
 - Plans/assistant-chat-design.md#ACD-431
@@ -37660,6 +37716,7 @@ source_lineage:
 - Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009
   (the widget step as built; concept lineage only)
 - Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - Planning Wizard
 - Assistant Chat
@@ -37719,13 +37776,19 @@ negative_constraints:
 - Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence,
   native Slint, or certification claims.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
-  - "Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired."
+- 'Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from
+  the workspace practice (PWIZ-035 owns the new steps).'
+- 'Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving
+  it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired.'
 owner_boundary_notes:
-  - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
-owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
+- Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant
+  Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority;
+  Final GUI owns story, focus, overlay, copy presentation, and motion.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Planning_Wizard.md
+- Plans/assistant-chat-design.md
 ```
-
 ### F3-522 - Operational Doctor K3 Workspace Presentation
 
 ```yaml
@@ -38162,11 +38225,44 @@ canonical_text: 'Final GUI presents one canonical repository_automation side-pan
   verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
   written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
   one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
-  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.'
+  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
+gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected
+  states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
-depends_on: [F3-019, F3-042, F3-043, F3-049, F3-050, F3-229, F3-448, F3-453, F3-460, F3-461, F3-476, F3-481, F3-519, F3-520, F3-522, SSYS-026, PWIZ-025, N2-156, SRV-013, FGI-012, BRS-012, BRS-013, BRS-014, BRS-015, BRS-016, RAS-015]
+depends_on:
+- F3-019
+- F3-042
+- F3-043
+- F3-049
+- F3-050
+- F3-229
+- F3-448
+- F3-453
+- F3-460
+- F3-461
+- F3-476
+- F3-481
+- F3-519
+- F3-520
+- F3-522
+- SSYS-026
+- PWIZ-025
+- N2-156
+- SRV-013
+- FGI-012
+- BRS-012
+- BRS-013
+- BRS-014
+- BRS-015
+- BRS-016
+- RAS-015
 unblocks: []
 acceptance_criteria:
 - The left Activity Bar retains exactly ten canonical occupants and replaces `github_actions` one-for-one with `repository_automation`;
@@ -38237,46 +38333,93 @@ acceptance_criteria:
 - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain
   handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler,
   permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json"
-  - "Plans/final_gui_interaction_contract_fixtures.json"
-  - "Plans/forge_integration_contracts.schema.json"
-  - "Plans/backup_restore_system_contracts.schema.json"
-  - "Plans/remote_access_system_contracts.schema.json"
-  - "future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures"
-  - "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures"
-  - "future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests"
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/backup_restore_system_contracts.schema.json
+- Plans/remote_access_system_contracts.schema.json
+- future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures
+- future protected-handoff/no-capture and immutable-snapshot exact-return fixtures
+- future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers
-implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation Slint components, future K3 Backup Slint components, future Onboarding Slint components, future Doctor Slint components, future Remote Access Slint components]
-node_compile_hint: {mode: final_gui_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- future repository automation Slint components
+- future K3 Backup Slint components
+- future Onboarding Slint components
+- future Doctor Slint components
+- future Remote Access Slint components
+node_compile_hint:
+  mode: final_gui_cross_owner_consumer_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-001
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
-  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
-  - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
-preserved_exact_tokens: [repository_automation, Actions & Pipelines, github_actions, DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, Tailscale, Built into Puppet Master, Connection engine, K3 Tome Tabs, PMConcept7, handler_unavailable, "expected_event_types=[]"]
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-001
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
+- packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
+- packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- repository_automation
+- Actions & Pipelines
+- github_actions
+- DestinationCard
+- ScopeCoverageSummary
+- SnapshotBrowser
+- RestorePreview
+- RecoveryKitHandoff
+- VerificationBadge
+- RetentionPreview
+- ObservableWorkProgress
+- Tailscale
+- Built into Puppet Master
+- Connection engine
+- K3 Tome Tabs
+- PMConcept7
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
-  - Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic host shell.
-  - Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or Origin checks with an Origin-hosted CI engine.
-  - Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
-  - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
-  - Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status ownership into Final GUI.
-  - Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by tsnet.
-  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation authority.
-  - Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance, accessibility, readiness, or certification proof from Plans/static/concept material.
+- Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
+- Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic
+  host shell.
+- Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or
+  Origin checks with an Origin-hosted CI engine.
+- Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser
+  content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
+- Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
+- Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status
+  ownership into Final GUI.
+- Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by
+  tsnet.
+- Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation
+  authority.
+- Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance,
+  accessibility, readiness, or certification proof from Plans/static/concept material.
 owner_boundary_notes:
-  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only; Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth and effects.
-owner_hints: [Plans/FinalGUISpec.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Planning_Wizard.md, Plans/newtools.md, Plans/Settings_System.md]
+- Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only;
+  Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth
+  and effects.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Forge_Integrations.md
+- Plans/Backup_Restore_System.md
+- Plans/Remote_Access_System.md
+- Plans/Planning_Wizard.md
+- Plans/newtools.md
+- Plans/Settings_System.md
 ```
-
 ## Source Control And Provider-Operational GUI Depth Repair - 2026-09-02
 
 ### F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics
@@ -38286,98 +38429,180 @@ plan_unit_id: F3-529
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Source Control header identifies repository/workspace plus compact local-engine and hosting-service labels;
-  its detail disclosure shows Home Server, Execution Environment, Source Location path, distinct remote fetch
-  and push targets, authentication, and observed revision without overloading the header with infrastructure.
-  Its minimum section census is changes/diff; Git staging/commit or Jujutsu Current Change; branch/bookmark
-  tracking; remotes/publication; history/graph; conflicts; Git-only stashes; worktrees/workspaces; review requests;
-  changed files/comments/checks; recovery/Jujutsu operation history; and source-protection/Backup route. Every
-  additional live section is retained or explicitly migrated. Git renders Staged/Unstaged, index-aware diff,
-  Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current Change @, description and parent/change
-  context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change ID plus current commit ID,
-  rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation Log; staging and
-  stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides a Git
-  mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
-  native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview
-  shows the actual destination/refspec, Origin mirror write-through, protection, and CI/cost effects. Publish and
-  review creation are separate unless one explicit combined preview lists both effects; expected-head fencing,
-  remote limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states
-  remain visible, with no blanket Origin read-only badge. `ui.source_control.profile.preview` is a typed owner-local
-  view action that lets the concept or future comparison surface switch between Git and Jujutsu presentation without
-  changing the Project's configured backend, repository binding, workspace, history, or persistent state. Actions &
-  Pipelines selects AutomationBinding only when more than one service applies and shows current revision checks, pinned and available definitions, active/recent
-  runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy or the provider's available
-  trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables links,
-  and external/unsupported explanation. `ui.repository_automation.binding.select` is a typed owner-local action
-  that changes only which already-authorized AutomationBinding presentation is selected; it registers no domain
-  command or semantic handler, emits no domain EventRecord, grants no provider authority, and mutates neither the
-  repository binding nor the AutomationBinding. `ui.source_control.backup_history.open` is a typed owner-local,
-  read-only navigation action that carries exact project, repository, immutable revision, Backup-owner route, deep
-  link, currentness, accessibility, and return-context identity into the Backup owner; it never requests restore,
-  starts restore, or mutates Source Control or Backup state. Provider-native headings and names remain GitHub Actions, GitLab
-  Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no
-  invented definitions and Origin checks never imply Origin Actions. Files uses engine-correct decoration/ignore,
-  useful repository/source badges, read-only Backup preview, and Restore this file. Artifacts distinguishes
-  provider CI artifacts, Puppet Master runtime outputs, and Backup exports while preserving expiry, checksum,
-  provenance, explicit import/download, and never auto-executing a download. Testing/Run & Debug may link checks
-  and reproduction receipts but does not treat remote CI as local proof. Assistant Chat receives compact
-  capability/receipt data without another forge/host banner. Bottom/status shows truthful publication, Backup,
-  and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
-  repository, revision, provider artifact, Backup, and initiating Client/Server destination identity.
-  Amended 2026-10-09 (DL-163): the Jujutsu view's operation section is labelled Operation Log, JJI-006's registered
-  string, where this unit said Operation History; the rail presents Jujutsu's five views as its own tab strip
-  (F3-623, F3-624). Edit works on a change chosen in History, not only on @; Discard edits is
-  cmd.jujutsu.change.restore on the current change, back to its parent; the protected state Jujutsu renders is
-  immutable, read from the adapter's immutable set rather than from what was pushed; and rewritten and abandoned
-  show as a change's evolution facts and in operation details.
+canonical_text: 'The Source Control header identifies repository/workspace plus compact local-engine and hosting-service
+  labels; its detail disclosure shows Home Server, Execution Environment, Source Location path, distinct remote fetch
+  and push targets, authentication, and observed revision without overloading the header with infrastructure. Its minimum
+  section census is changes/diff; Git staging/commit or Jujutsu Current Change; branch/bookmark tracking; remotes/publication;
+  history/graph; conflicts; Git-only stashes; worktrees/workspaces; review requests; changed files/comments/checks; recovery/Jujutsu
+  operation history; and source-protection/Backup route. Every additional live section is retained or explicitly migrated.
+  Git renders Staged/Unstaged, index-aware diff, Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current
+  Change @, description and parent/change context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change
+  ID plus current commit ID, rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation
+  Log; staging and stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides
+  a Git mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
+  native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview shows
+  the actual destination/refspec, explicit admitted mirror write-through, protection, and CI/cost effects. Publish and
+  review creation are separate unless one explicit combined preview lists both effects; expected-head fencing, remote
+  limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states remain visible,
+  with no provider-wide read-only badge inferred from one unavailable action. `ui.source_control.profile.preview` is
+  a typed owner-local view action that lets the concept or future comparison surface switch between Git and Jujutsu presentation
+  without changing the Project''s configured backend, repository binding, workspace, history, or persistent state. Actions
+  & Pipelines selects AutomationBinding only when more than one service applies and shows current revision checks, pinned
+  and available definitions, active/recent runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy
+  or the provider''s available trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables
+  links, and external/unsupported explanation. `ui.repository_automation.binding.select` is a typed owner-local action
+  that changes only which already-authorized AutomationBinding presentation is selected; it registers no domain command
+  or semantic handler, emits no domain EventRecord, grants no provider authority, and mutates neither the repository
+  binding nor the AutomationBinding. `ui.source_control.backup_history.open` is a typed owner-local, read-only navigation
+  action that carries exact project, repository, immutable revision, Backup-owner route, deep link, currentness, accessibility,
+  and return-context identity into the Backup owner; it never requests restore, starts restore, or mutates Source Control
+  or Backup state. Provider-native headings and names remain GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket
+  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and Origin checks never
+  imply Origin Actions. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
+  preview, and Restore this file. Artifacts distinguishes provider CI artifacts, Puppet Master runtime outputs, and Backup
+  exports while preserving expiry, checksum, provenance, explicit import/download, and never auto-executing a download.
+  Testing/Run & Debug may link checks and reproduction receipts but does not treat remote CI as local proof. Assistant
+  Chat receives compact capability/receipt data without another forge/host banner. Bottom/status shows truthful publication,
+  Backup, and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
+  repository, revision, provider artifact, Backup, and initiating Client/Server destination identity. Amended 2026-10-09
+  (DL-163): the Jujutsu view''s operation section is labelled Operation Log, JJI-006''s registered string, where this
+  unit said Operation History; the rail presents Jujutsu''s five views as its own tab strip (F3-623, F3-624). Edit works
+  on a change chosen in History, not only on @; Discard edits is cmd.jujutsu.change.restore on the current change, back
+  to its parent; the protected state Jujutsu renders is immutable, read from the adapter''s immutable set rather than
+  from what was pushed; and rewritten and abandoned show as a change''s evolution facts and in operation details.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction contract.
-depends_on: [F3-528, SCS-015, SCS-016, FGI-014, FGI-015, GAAAF-016, GAAAF-017]
+gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction
+  contract.
+depends_on:
+- F3-528
+- SCS-015
+- SCS-016
+- FGI-014
+- FGI-015
+- GAAAF-016
+- GAAAF-017
 unblocks: []
 acceptance_criteria:
-  - Live pre/post inventory maps every Source Control and hosted-admin section, control, state, command, and disposition; the packet minimum is never used to delete an unlisted live section.
-  - Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid actions.
-  - Protected branch, rejected push, Origin mirror mapping, stale review head, one-to-many partial push, and review-API-unavailable/push-ready fixtures show exact target and outcome truth.
-  - Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented steps, and existing pinned GitHub workflows/rerun controls survive.
-  - "`ui.source_control.profile.preview` request/result fixtures require an exact current repository projection, selected `git|jj` presentation profile, accessibility and return context, deterministic focus settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false backend/repository/workspace/history mutation facts; it never dispatches `cmd.source_control.backend.select`."
-  - "`ui.repository_automation.binding.select` request/result fixtures require at least two explicit candidate AutomationBinding refs, exact selected binding and capability/currentness refs, deterministic return settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false repository/automation mutation facts; the profile has `domain_command_registered=false`, `semantic_domain_handler=null`, and `domain_event_emitted=false`."
-  - "`ui.source_control.backup_history.open` request/result fixtures require the Backup owner, `backup_history_repository_revision` route kind, exact repository revision, Backup route and deep-link refs, deterministic target-open settlement, and false restore/source/Backup mutation facts; navigation never implies `cmd.backup.restore.preview`, `cmd.backup.restore.execute`, or any other Backup mutation."
-  - Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
-  - Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts never auto-execute and remote CI is never local test proof.
-  - Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals, secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner registration remain impossible.
-validation_surfaces: [Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future native Slint width/theme/keyboard/touch/accessibility/provider fixtures]
+- Live pre/post inventory maps every Source Control and hosted-admin section, control, state, command, and disposition;
+  the packet minimum is never used to delete an unlisted live section.
+- Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid
+  actions.
+- Protected branch, rejected push, explicit admitted mirror mapping, stale review head, one-to-many partial push, and
+  review-API-unavailable/push-ready fixtures show exact target and outcome truth.
+- Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented
+  steps, and existing pinned GitHub workflows/rerun controls survive.
+- '`ui.source_control.profile.preview` request/result fixtures require an exact current repository projection, selected
+  `git|jj` presentation profile, accessibility and return context, deterministic focus settlement, `presentation_only=true`,
+  `persistent_state_mutation=false`, and false backend/repository/workspace/history mutation facts; it never dispatches
+  `cmd.source_control.backend.select`.'
+- '`ui.repository_automation.binding.select` request/result fixtures require at least two explicit candidate AutomationBinding
+  refs, exact selected binding and capability/currentness refs, deterministic return settlement, `presentation_only=true`,
+  `persistent_state_mutation=false`, and false repository/automation mutation facts; the profile has `domain_command_registered=false`,
+  `semantic_domain_handler=null`, and `domain_event_emitted=false`.'
+- '`ui.source_control.backup_history.open` request/result fixtures require the Backup owner, `backup_history_repository_revision`
+  route kind, exact repository revision, Backup route and deep-link refs, deterministic target-open settlement, and false
+  restore/source/Backup mutation facts; navigation never implies `cmd.backup.restore.preview`, `cmd.backup.restore.execute`,
+  or any other Backup mutation.'
+- Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved
+  layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
+- Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts
+  never auto-execute and remote CI is never local test proof.
+- Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals,
+  secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner
+  registration remain impossible.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- future native Slint width/theme/keyboard/touch/accessibility/provider fixtures
 risk_class: gui_backend_provider_effect_or_evidence_misrepresentation
 reasoning_tier: high
 context_scope: source_control_review_automation_and_related_surface_presentation
-implementation_surfaces: [Plans/FinalGUISpec.md, Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, future Source Control and repository_automation Slint components]
-node_compile_hint: {mode: static_gui_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- future Source Control and repository_automation Slint components
+node_compile_hint:
+  mode: static_gui_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:31-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:39-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:55-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
-  - source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:170-220
-  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:4-72
-  - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
-  - source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
-  - source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
-  - Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label, Jujutsu tab strip in F3-623 and F3-624)
-preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation Log, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced, ui.source_control.profile.preview, ui.repository_automation.binding.select, ui.source_control.backup_history.open, owner_local_typed_ui_controller, backup_history_repository_revision]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:31-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:39-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:55-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
+- source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:170-220
+- source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:4-72
+- source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
+- source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
+- source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
+- Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label, Jujutsu tab strip in F3-623 and F3-624)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- Staged
+- Unstaged
+- Commit
+- Current Change
+- New Change
+- Edit
+- Split
+- Squash
+- Abandon
+- Operation Log
+- Pull request
+- Merge request
+- outcome_unknown
+- Actions & Pipelines
+- GitHub Actions
+- GitLab Pipelines
+- Azure Pipelines
+- Bitbucket Pipelines
+- Forgejo Actions
+- Gitea Actions
+- Restore this file
+- Synced
+- ui.source_control.profile.preview
+- ui.repository_automation.binding.select
+- ui.source_control.backup_history.open
+- owner_local_typed_ui_controller
+- backup_history_repository_revision
 negative_constraints:
-  - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git mutation.
-  - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
-  - Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin blanket read-only.
-  - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner registration.
-  - Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler, emit a domain EventRecord, persist a preview or provider/binding selection, dispatch backend selection from the profile preview, change backend/repository/workspace/history/RepositoryForgeBinding/AutomationBinding state, start restore, or mutate Source Control/Backup state.
-  - Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content, or count Backup statistics as model usage.
-  - Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness proof from static Plans/schema/fixtures.
+- Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git
+  mutation.
+- Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
+- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin
+  blanket read-only.
+- Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner
+  registration.
+- Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler,
+  emit a domain EventRecord, persist a preview or provider/binding selection, dispatch backend selection from the profile
+  preview, change backend/repository/workspace/history/RepositoryForgeBinding/AutomationBinding state, start restore,
+  or mutate Source Control/Backup state.
+- Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content,
+  or count Backup statistics as model usage.
+- Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness
+  proof from static Plans/schema/fixtures.
 owner_boundary_notes:
-  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, routes, and the two typed owner-local request/result profiles only; Forge owns AutomationBinding truth, Backup owns history/restore truth, and all semantic effects remain with their named domain owners.
+- Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, routes, and the
+  two typed owner-local request/result profiles only; Forge owns AutomationBinding truth, Backup owns history/restore
+  truth, and all semantic effects remain with their named domain owners.
 ```
-
 ### F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation
 
 ```yaml

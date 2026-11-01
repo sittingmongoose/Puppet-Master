@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36668-L38134
+Source lines: L36668-L38197
 
-Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
+Source SHA256: `ee87cd10e44cab812acbcd8fd3d7d3cc886ea1f73a3d19c9be5fdef34ead7831`
 
 ---
 
@@ -150,8 +150,8 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   opens its local/online/device choices in the joined tray before sibling alternatives. The four semantic intents new/existing_local/existing_online/restore
   remain available; no unrelated More/Other disclosure hides a source route. Safe History is the beginner-facing local
   version timeline: Git is the recommended local engine, Jujutsu is an alternative local engine with no account, FileSafe
-  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin may
-  hold a separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
+  adds complementary local recovery points, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea may hold a
+  separate optional online copy without replacing local history. User-visible copy assumes no coding or IDE knowledge:
   it uses familiar words and never exposes the internal term `shell`, raw command/route/schema identifiers, owner names,
   host/environment vocabulary, provider matrices, diagnostics dashboards, network topology, or unexplained source-control
   jargon. Optional owner-routed branches cover opening an existing or online project, restoring a backup, keeping history
@@ -348,12 +348,17 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   host, prefill, artificial wait or Studio behavior.
 
 
-  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail
-  values. MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment,
-  including NieR. F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
+  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663
+  consumes these rules with unchanged choice, identity and Creating gates.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
-  motion.
+gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
 depends_on:
 - F3-519
@@ -430,9 +435,9 @@ acceptance_criteria:
   and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
   choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
   initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
-  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, and eligible Cursor Origin account verification, repository creation/selection,
-  visibility, and binding remain explicit forge/auth owner routes. Cursor Origin is presented as a hosted Git forge,
-  never as a no-host or local-only preview.'
+  owner, while GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea account verification, repository creation/selection,
+  visibility, and binding remain explicit forge/auth owner routes. Forgejo and Gitea each require the person’s own server
+  (DL-273).'
 - An online copy becomes ready only after both a current verified account identity and the exact repository binding exist;
   Already connected must select and verify both and is never a no-op. Account creation, sign-in, organization/namespace/workspace/project
   selection, repository name, allowed visibility, and optional repository details follow the selected forge's owner contract
@@ -665,15 +670,23 @@ acceptance_criteria:
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
   host, prefill, artificial wait or Studio behavior.'
 - 'DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
-  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR.
-  F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR. F3-663
+  consumes these rules with unchanged choice, identity and Creating gates.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
-  - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
-  - "tests/test_pm_onboarding_phases.py"
-  - "tests/test_pm_settings_draft_transfer.py"
-  - "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior."
-  - "future ten-theme, Reduced Motion, interruption, reversal, and short-window film review"
+- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
+  eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
+  Guided Tour contract)
+- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions,
+  durable bounded draft, exact commit/result binding and phase continuation)
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
+- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal,
+  accessibility and short-window behavior.
+- future ten-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
 context_scope: product_onboarding_cinematic_presentation
@@ -729,6 +742,7 @@ source_lineage:
 - PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
   Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
   are source lineage only.
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -761,7 +775,6 @@ preserved_exact_tokens:
 - You can connect through a VPN too
 - Reverse proxy
 - Puppet Master Remote Link
-- Cursor Origin
 - SSH/SFTP
 - 1.2-1.5 seconds
 - 420-560 ms
@@ -782,34 +795,48 @@ preserved_exact_tokens:
 - Adjust NieR look
 - menuitemcheckbox
 negative_constraints:
-  - "Do not render Product Onboarding as a full-page route or replacement application experience."
-  - "Do not restore F3-411's four-screen/provider-first choreography."
-  - "Do not restore the predecessor five-stage simple-path order as the current main journey."
-  - "Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client into connect-existing, or bypass review_setup_plan before automatic_preparation."
-  - "Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment, Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner authorization."
-  - "Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding."
-  - "Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced Settings."
-  - "Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment."
-  - "Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an inert Set up access later action."
-  - "Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control vocabulary in user-visible onboarding copy."
-  - "Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block landing; continuous Pip/world life is allowed only through F3-663’s bounded shared clock, paused hidden/offscreen/during drags, or become required to understand state."
-  - "Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded A/B."
-  - "Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing Project binding exists."
-  - "Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI."
-  - "Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command."
-  - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
+- Do not render Product Onboarding as a full-page route or replacement application experience.
+- Do not restore F3-411's four-screen/provider-first choreography.
+- Do not restore the predecessor five-stage simple-path order as the current main journey.
+- Do not restore the superseded seven-stage presentation, insert first_project/source_control_setup/server_storage_client
+  into connect-existing, or bypass review_setup_plan before automatic_preparation.
+- Do not broaden the selected-source authentication/read-only-preflight exception beyond PWIZ-029's individually consented
+  Server-owned `puppet_master` pairing with bound `source_access_authorization_refs` into broad provider setup, enrollment,
+  Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review
+  confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner
+  authorization.
+- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let
+  a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
+- Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced
+  Settings.
+- Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded
+  explainers, decorative duplicate warning/confirmation cards, or clipped hover/text treatment.
+- Do not add a stage-skipping Review choices shortcut, a redundant discovery button after the route is selected, or an
+  inert Set up access later action.
+- Do not expose `shell`, command/schema/route IDs, owner names, host/environment terminology, or unexplained developer/source-control
+  vocabulary in user-visible onboarding copy.
+- Do not make animation block input or delay navigation except O12 B’s Creating Continue/Ready wait for the last block
+  landing; continuous Pip/world life is allowed only through F3-663’s bounded shared clock, paused hidden/offscreen/during
+  drags, or become required to understand state.
+- Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
+  effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
+  A/B.
+- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
+  Project binding exists.
+- Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
+- Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
+- Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work,
+  readiness, handler, native Slint, or certification claims.
 owner_boundary_notes:
-- Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control,
-  Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and
-  commands; Home owns only the visible relaunch trigger; Final GUI owns visual hierarchy and motion.
+- Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control, Server, Remote
+  Access, Backup/Restore, provider, and authentication owners retain their domain state and commands; Home owns only
+  the visible relaunch trigger; Final GUI owns visual hierarchy and motion.
 stale_retired_dispositions:
-- 'Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session
-  look choice.'
+- 'Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session look choice.'
 owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/Planning_Wizard.md
 ```
-
 ### F3-521 - Guided Tour Newbie-First Practice Presentation
 
 ```yaml
@@ -874,12 +901,29 @@ canonical_text: 'Guided Tour teaches through successful actions over the mounted
   Existing cmd.settings.transaction.preview/apply owns the write. ui.guided_tour.toggle_eli5 is a compatibility local
   adapter to this shared setting, not a tour-specific preference. Both bars reflect the same effective value; neither
   seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode change does not rewrite,
-  regenerate or send a chat reply.'
+  regenerate or send a chat reply.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, DL-186, PWIZ-035]
-unblocks: [F3-524, F3-598, F3-599]
+depends_on:
+- F3-520
+- PWIZ-023
+- ACD-431
+- ACD-484
+- F3-581
+- DL-180
+- DL-186
+- PWIZ-035
+unblocks:
+- F3-524
+- F3-598
+- F3-599
 acceptance_criteria:
 - The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction
   supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current
@@ -935,8 +979,8 @@ acceptance_criteria:
   remain discoverable without a checklist wall. An expanded library yields the callout where needed, stays keyboard-reachable,
   and restores the same beat on close without clipping or losing the target.
 - Teacher says Safe History is local, Git or Jujutsu organizes that local timeline without a Git/Jujutsu account, FileSafe
-  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, or eligible Cursor Origin can hold a separate optional
-  online copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
+  is complementary, and GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo or Gitea can hold a separate optional online
+  copy; it never calls Git or Jujutsu a shared home, account, website, or hosted copy.
 - The opening Teacher practice uses the real guide selector, Teacher selection, supplied prompt sent through the real
   composer, a streamed local same-conversation answer, and same-answer ELI5 (Explain this reply simply adds one extra,
   simpler reply; the original reply is not rewritten, DL-126) before workspace practice; the thread is subtly labeled
@@ -981,18 +1025,30 @@ acceptance_criteria:
   is a compatibility local adapter to this shared setting, not a tour-specific preference. Both bars reflect the same
   effective value; neither seeds a separate Off state. Dual copy stays limited to tips/help under DL-126, and the mode
   change does not rewrite, regenerate or send a chat reply.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
-  - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
-  - "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance."
-  - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
+- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first
+  static presentation consumer; story/actions reference the v3 owner definitions)
+- Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning,
+  eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe
+  checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery
+  or runtime acceptance)
+- Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion
+  disposition; concept simulation is not native or final visual acceptance.
+- future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
 risk_class: guided_tour_fake_state_or_story_loss
 reasoning_tier: high
 context_scope: guided_tour_newbie_first_practice_presentation
 implementation_surfaces:
-  - Plans/FinalGUISpec.md
-  - future native Slint Guided Tour overlay components
-node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
+- Plans/FinalGUISpec.md
+- future native Slint Guided Tour overlay components
+node_compile_hint:
+  mode: guided_tour_directed_beginner_film_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - Plans/Planning_Wizard.md#PWIZ-023
 - Plans/assistant-chat-design.md#ACD-431
@@ -1003,6 +1059,7 @@ source_lineage:
 - Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009
   (the widget step as built; concept lineage only)
 - Plans/Decision_Log.md#DL-259 (Jared 2026-10-31; shared interaction mode)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - Planning Wizard
 - Assistant Chat
@@ -1062,13 +1119,19 @@ negative_constraints:
 - Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence,
   native Slint, or certification claims.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
-  - "Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired."
+- 'Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from
+  the workspace practice (PWIZ-035 owns the new steps).'
+- 'Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving
+  it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired.'
 owner_boundary_notes:
-  - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
-owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
+- Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant
+  Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority;
+  Final GUI owns story, focus, overlay, copy presentation, and motion.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Planning_Wizard.md
+- Plans/assistant-chat-design.md
 ```
-
 ### F3-522 - Operational Doctor K3 Workspace Presentation
 
 ```yaml

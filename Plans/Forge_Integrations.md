@@ -6,7 +6,7 @@
 
 ## 0. Scope
 
-Puppet Master models a hosted forge independently from local source control. The closed forge identity is `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|generic_host|cursor_origin|none`; `none` is valid only in source-control context and has no forge binding. Forgejo and Gitea are separate provider identities and separate adapters even when they reuse HTTP/auth/pagination/error/cache primitives; `forgejo_or_gitea` is forbidden as a permanent API identity. A forge never becomes an `scm_backend`, local workspace, mutation lease, model provider, or generic `provider` string.
+Puppet Master models a hosted forge independently from local source control. The closed forge identity is `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|generic_host|none`; `none` is valid only in source-control context and has no forge binding. Forgejo and Gitea are separate provider identities and separate adapters even when they reuse HTTP/auth/pagination/error/cache primitives; `forgejo_or_gitea` is forbidden as a permanent API identity. A forge never becomes an `scm_backend`, local workspace, mutation lease, model provider, or generic `provider` string.
 
 Every forge request carries exact provider, provider variant, normalized host, stable account ID, PM `repo_id`, provider repository ID, organization/workspace/project locator, repository binding generation, requested/effective authority role, requested/effective capability, adapter and signed catalog generation, credential or grant ref, expected revision/currentness, authorization, idempotency, and immutable review revision when applicable. Automation and runner requests additionally carry the independent `automation_binding_ref` and expected automation-binding generation; those values are never inferred from the repository binding.
 
@@ -40,7 +40,7 @@ ContractRef: ContractName:Plans/Forge_Integrations.md, SchemaID:pm.forge.reposit
 | GitLab | `Plans/GitLab_Integration.md` | Provider variants, MR/pipeline/tier/version behavior. |
 | Azure DevOps | `Plans/Azure_DevOps_Integration.md` | Organization/project/repository/PR/policy/build/access/Server behavior. |
 | Bitbucket Cloud/Data Center | `Plans/Bitbucket_Integration.md` | Distinct provider identities, PR/pipeline/build-status/version/license behavior. |
-| Cursor Origin Preview | `Plans/Cursor_Origin_Integration.md` | Eligibility, modes, authority/mirrors, App/token/webhook/API/CLI/JJ/health. |
+| Retired source-control proposal | `Plans/Cursor_Origin_Integration.md` | DL-273 retirement anchors only; no operational offering or route. |
 | Credentials, secrets and account selection | `Plans/Multi-Account.md`, `Plans/Permissions_System.md`, credential broker owners | Hold raw secrets and account policy; forge stores refs and grants only. |
 | Shared install/auth/connection lifecycle and ObservableWork | `Plans/Shared_Integration_Runtime.md` | Execute lifecycle; forge supplies provider needs and domain receipt facts. |
 | Official pages and URL dispatch | owning Browser/Permissions/official-page dispatcher contracts | Validate allowlisted destinations; forge provides route identity only. |
@@ -60,32 +60,68 @@ plan_unit_id: FGI-001
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  Plans/Forge_Integrations.md owns provider-neutral forge binding, authority, capabilities, mirrors, reviews,
-  pipelines, independent automation binding, apps, webhooks, API compatibility, commands, events, receipts,
-  degradation and projections. forge_provider is independent of scm_backend; each provider owner maps native
-  behavior into this common contract, and Forgejo and Gitea remain distinct provider and adapter identities.
+canonical_text: Plans/Forge_Integrations.md owns provider-neutral forge binding, authority, capabilities, mirrors, reviews,
+  pipelines, independent automation binding, apps, webhooks, API compatibility, commands, events, receipts, degradation
+  and projections. forge_provider is independent of scm_backend; each provider owner maps native behavior into this common
+  contract, and Forgejo and Gitea remain distinct provider and adapter identities.
 gui_related: true
-gui_classification_reason: Common forge identity controls visible reviews, pipelines, source-of-truth, mirror, and setup projections.
-depends_on: [SCS-001, PDS-003]
-unblocks: [FGI-002, FGI-003, FGI-004, FGI-005, FGI-006, FGI-007, FGI-008, ORI-001, GLI-001, ADO-001, BBI-001]
+gui_classification_reason: Common forge identity controls visible reviews, pipelines, source-of-truth, mirror, and setup
+  projections.
+depends_on:
+- SCS-001
+- PDS-003
+unblocks:
+- FGI-002
+- FGI-003
+- FGI-004
+- FGI-005
+- FGI-006
+- FGI-007
+- FGI-008
+- GLI-001
+- ADO-001
+- BBI-001
 acceptance_criteria:
-  - Every hosted repository has one typed provider/variant/host/account/repository binding.
-  - Local backend and forge provider remain independent.
-  - Forgejo and Gitea never collapse into a permanent combined API identity.
-  - Provider owners extend common records without duplicating them.
-validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json]
+- Every hosted repository has one typed provider/variant/host/account/repository binding.
+- Local backend and forge provider remain independent.
+- Forgejo and Gitea never collapse into a permanent combined API identity.
+- Provider owners extend common records without duplicating them.
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
 risk_class: forge_parallel_owner_or_provider_overload
 reasoning_tier: high
 context_scope: common_forge_owner
-implementation_surfaces: [Plans/Forge_Integrations.md, future forge facade]
-node_compile_hint: {mode: common_forge_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-05, source_ref:egolite-register:TS-04]
-preserved_exact_tokens: [forge_provider, RepositoryForgeBinding, AutomationBinding, github, gitlab, azure_devops, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, generic_host, cursor_origin]
-negative_constraints: [Do not treat a forge as scm_backend., Do not overload provider., Do not create a separate common contract per provider., Do not define forgejo_or_gitea as a permanent provider or API identity.]
-owner_hints: [Plans/Forge_Integrations.md]
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- future forge facade
+node_compile_hint:
+  mode: common_forge_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:egolite-register:SCM-05
+- source_ref:egolite-register:TS-04
+preserved_exact_tokens:
+- forge_provider
+- RepositoryForgeBinding
+- AutomationBinding
+- github
+- gitlab
+- azure_devops
+- bitbucket_cloud
+- bitbucket_data_center
+- forgejo
+- gitea
+- generic_host
+negative_constraints:
+- Do not treat a forge as scm_backend.
+- Do not overload provider.
+- Do not create a separate common contract per provider.
+- Do not define forgejo_or_gitea as a permanent provider or API identity.
+owner_hints:
+- Plans/Forge_Integrations.md
 ```
-
 ### FGI-002 - Repository Authority Roles And Mirror Topology
 
 ```yaml
@@ -93,33 +129,61 @@ plan_unit_id: FGI-002
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  A repository binding models storage, review, checks, issues, transport and mirror authority roles independently;
-  its legacy automation role is compatibility projection only and AutomationBinding is the sole hosted-automation
-  selector. MirrorTopology records source, destination, authoritative binding, requested/effective mode,
-  exact revision fence, dedupe key, lag, health and transition receipt. Detach, reconnect and authority transfer
-  require human disclosure, current revisions, Permissions/FileSafe, durable receipt, recovery and capability re-resolution.
+canonical_text: A repository binding models storage, review, checks, issues, transport and mirror authority roles independently;
+  its legacy automation role is compatibility projection only and AutomationBinding is the sole hosted-automation selector.
+  MirrorTopology records source, destination, authoritative binding, requested/effective mode, exact revision fence,
+  dedupe key, lag, health and transition receipt. Detach, reconnect and authority transfer require human disclosure,
+  current revisions, Permissions/FileSafe, durable receipt, recovery and capability re-resolution.
 gui_related: true
-gui_classification_reason: Authority, source of truth, mirror health, lag, detach and reconnect are visible state and actions.
-depends_on: [FGI-001, SCS-002]
-unblocks: [FGI-003, FGI-007, FGI-008, ORI-002]
+gui_classification_reason: Authority, source of truth, mirror health, lag, detach and reconnect are visible state and
+  actions.
+depends_on:
+- FGI-001
+- SCS-002
+unblocks:
+- FGI-003
+- FGI-007
+- FGI-008
 acceptance_criteria:
-  - Authority roles cannot be inferred from mirror direction or remote name.
-  - Repository hosting authority cannot select or imply automation service/provider/account authority.
-  - Mirror mutations require current authority and revision fences.
-  - Detach and reconnect preserve transition, recovery, dedupe and capability evidence.
-validation_surfaces: [MirrorTopology fixtures, split-authority tests, stale detach and duplicate delivery tests]
+- Authority roles cannot be inferred from mirror direction or remote name.
+- Repository hosting authority cannot select or imply automation service/provider/account authority.
+- Mirror mutations require current authority and revision fences.
+- Detach and reconnect preserve transition, recovery, dedupe and capability evidence.
+validation_surfaces:
+- MirrorTopology fixtures
+- split-authority tests
+- stale detach and duplicate delivery tests
 risk_class: split_brain_forge_authority
 reasoning_tier: high
 context_scope: forge_authority_and_mirrors
-implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future mirror coordinator]
-node_compile_hint: {mode: forge_authority_mirror_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:ORI-01, source_ref:egolite-register:SCM-05]
-preserved_exact_tokens: [storage, review, checks, automation, issues, transport, mirror, MirrorTopology, revision fence, dedupe]
-negative_constraints: [Do not call a mirror authoritative by direction alone., Do not detach without a human warning and durable receipt., Do not silently mutate a secondary provider.]
-owner_hints: [Plans/Forge_Integrations.md, Plans/Cursor_Origin_Integration.md]
+implementation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- future mirror coordinator
+node_compile_hint:
+  mode: forge_authority_mirror_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:egolite-register:ORI-01
+- source_ref:egolite-register:SCM-05
+preserved_exact_tokens:
+- storage
+- review
+- checks
+- automation
+- issues
+- transport
+- mirror
+- MirrorTopology
+- revision fence
+- dedupe
+negative_constraints:
+- Do not call a mirror authoritative by direction alone.
+- Do not detach without a human warning and durable receipt.
+- Do not silently mutate a secondary provider.
+owner_hints:
+- Plans/Forge_Integrations.md
 ```
-
 ### FGI-003 - Requested Effective Capabilities And Degradation
 
 ```yaml
@@ -288,31 +352,58 @@ plan_unit_id: FGI-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  Forge app records store stable installation identity, account, non-secret grant refs, state and credential-key
+canonical_text: Forge app records store stable installation identity, account, non-secret grant refs, state and credential-key
   ref only. Token leases are least-privilege, repository/scope-bound, expiring and revocable and persist no raw token.
   Webhooks verify provider signature over raw body before parsing, validate time/context, reject replay, dedupe by stable
   delivery identity, acknowledge quickly, process asynchronously, and preserve retry/inspection/redelivery/recovery state.
 gui_related: true
 gui_classification_reason: App/grant/reauthorization and webhook health/recovery are visible Settings state and actions.
-depends_on: [FGI-003]
-unblocks: [FGI-007, FGI-008, ORI-003]
+depends_on:
+- FGI-003
+unblocks:
+- FGI-007
+- FGI-008
 acceptance_criteria:
-  - Raw secrets never enter forge records, events, logs, Project files, chat, prompts, or ordinary receipts.
-  - Signature verification occurs before payload parse and replay/dedupe checks precede effects.
-  - Duplicate delivery produces at most one effect and remains inspectable.
-validation_surfaces: [app/token/webhook schema fixtures, secret scans, signature-before-parse tests, replay/dedupe/redelivery tests]
+- Raw secrets never enter forge records, events, logs, Project files, chat, prompts, or ordinary receipts.
+- Signature verification occurs before payload parse and replay/dedupe checks precede effects.
+- Duplicate delivery produces at most one effect and remains inspectable.
+validation_surfaces:
+- app/token/webhook schema fixtures
+- secret scans
+- signature-before-parse tests
+- replay/dedupe/redelivery tests
 risk_class: forge_secret_or_webhook_replay
 reasoning_tier: high
 context_scope: forge_apps_webhooks_security
-implementation_surfaces: [Plans/forge_integration_contracts.schema.json, future credential broker, future webhook ingress]
-node_compile_hint: {mode: forge_app_webhook_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:ORI-02..03, source_ref:egolite-register:SEC-02..03]
-preserved_exact_tokens: [ForgeAppInstallation, ForgeInstallationTokenLease, raw-body, signature before parse, replay, dedupe, redelivery]
-negative_constraints: [Do not persist raw tokens., Do not parse before signature verification., Do not perform duplicate delivery effects., Do not expose webhook or broker IPC publicly.]
-owner_hints: [Plans/Forge_Integrations.md, Plans/Multi-Account.md, Plans/Permissions_System.md]
+implementation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- future credential broker
+- future webhook ingress
+node_compile_hint:
+  mode: forge_app_webhook_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:egolite-register:ORI-02..03
+- source_ref:egolite-register:SEC-02..03
+preserved_exact_tokens:
+- ForgeAppInstallation
+- ForgeInstallationTokenLease
+- raw-body
+- signature before parse
+- replay
+- dedupe
+- redelivery
+negative_constraints:
+- Do not persist raw tokens.
+- Do not parse before signature verification.
+- Do not perform duplicate delivery effects.
+- Do not expose webhook or broker IPC publicly.
+owner_hints:
+- Plans/Forge_Integrations.md
+- Plans/Multi-Account.md
+- Plans/Permissions_System.md
 ```
-
 ### FGI-007 - API Compatibility, Rate Budgets, And Fallback Ladder
 
 ```yaml
@@ -365,35 +456,87 @@ plan_unit_id: FGI-008
 unit_type: validation
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  Forge review and hosting behavior appears in Source Control and its Settings manager, while hosted automation uses
-  exactly one canonical `repository_automation` occupant labeled Actions & Pipelines, never a panel per provider.
-  Provider-native PR/MR, Actions/Pipelines/build/check wording comes from the selected repository or independent
-  automation adapter. Every visible action dispatches one cmd.forge.* or shared setup command with exact binding,
-  target, permission and currentness data, returns a typed receipt and ObservableWork when async, and never infers
-  automation authority from the Git remote, display name, or RepositoryForgeBinding.
+canonical_text: 'Forge review and hosting behavior appears in Source Control and its Settings manager, while hosted automation
+  uses exactly one canonical `repository_automation` occupant labeled Actions & Pipelines, never a panel per provider.
+  Provider-native PR/MR, Actions/Pipelines/build/check wording comes from the selected repository or independent automation
+  adapter. Every visible action dispatches one cmd.forge.* or shared setup command with exact binding, target, permission
+  and currentness data, returns a typed receipt and ObservableWork when async, and never infers automation authority
+  from the Git remote, display name, or RepositoryForgeBinding.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit defines visible common forge placement, vocabulary, actions, progress, health, and migration state.
-depends_on: [FGI-002, FGI-003, FGI-004, FGI-005, FGI-006, FGI-007, SCS-005]
+gui_classification_reason: This unit defines visible common forge placement, vocabulary, actions, progress, health, and
+  migration state.
+depends_on:
+- FGI-002
+- FGI-003
+- FGI-004
+- FGI-005
+- FGI-006
+- FGI-007
+- SCS-005
 unblocks: []
 acceptance_criteria:
-  - No provider adds a dedicated rail/panel or provider-specific command namespace; `github_actions` is migration-read/route input only and normalizes to `repository_automation`.
-  - Visible actions converge on one canonical command with exact provider/binding/target/currentness/permission payload.
-  - Every one of the 52 canonical Forge commands has one schema-valid request and one rejected permission/guard/currentness negative fixture.
-  - GitHub retains its provider-native Actions content inside the generic shell; a Git remote named Origin never fabricates an Origin Actions service.
-  - Legacy hosted records migrate only from validated provider identity; ambiguous records remain blocked.
-validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider GUI fixtures, command/wiring census, migration fixtures, accessibility and degraded-state tests]
+- No provider adds a dedicated rail/panel or provider-specific command namespace; `github_actions` is migration-read/route
+  input only and normalizes to `repository_automation`.
+- Visible actions converge on one canonical command with exact provider/binding/target/currentness/permission payload.
+- Every one of the 52 canonical Forge commands has one schema-valid request and one rejected permission/guard/currentness
+  negative fixture.
+- GitHub retains its provider-native Actions content inside the generic shell; a Git remote named Origin never fabricates
+  an Origin Actions service.
+- Legacy hosted records migrate only from validated provider identity; ambiguous records remain blocked.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- provider GUI fixtures
+- command/wiring census
+- migration fixtures
+- accessibility and degraded-state tests
 risk_class: forge_gui_command_or_migration_drift
 reasoning_tier: high
 context_scope: forge_gui_settings_commands_migration
-implementation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json]
-node_compile_hint: {mode: forge_gui_command_migration_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:UI-01..03, source_ref:egolite-register:CT-01..02]
-preserved_exact_tokens: [cmd.forge.*, Pull Request, Merge Request, Ready with limits, Needs attention, Not available]
-negative_constraints: [Do not create cmd.origin.*, cmd.gitlab.*, cmd.azure_devops.*, or cmd.bitbucket.* primary namespaces., Do not infer provider from display copy., Do not call command dispatch completion.]
-owner_hints: [Plans/Forge_Integrations.md, Plans/Source_Control_System.md, Plans/Settings_System.md]
+implementation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: forge_gui_command_migration_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:egolite-register:UI-01..03
+- source_ref:egolite-register:CT-01..02
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- cmd.forge.*
+- Pull Request
+- Merge Request
+- Ready with limits
+- Needs attention
+- Not available
+negative_constraints:
+- Do not create cmd.origin.*
+- cmd.gitlab.*
+- cmd.azure_devops.*
+- or cmd.bitbucket.* primary namespaces.
+- Do not infer provider from display copy.
+- Do not call command dispatch completion.
+owner_hints:
+- Plans/Forge_Integrations.md
+- Plans/Source_Control_System.md
+- Plans/Settings_System.md
 ```
-
 ## 3. Contracts, Schemas, Events, Or Data Shapes
 
 `Plans/forge_integration_contracts.schema.json` owns common Draft 2020-12 record shapes, including provider-neutral discriminated command request, result, error, availability, disabled-reason, currentness, target, confirmation, allowlisted official-page/protected-browser handoff, webhook-redelivery, and receipt records. `Plans/forge_integration_contract_fixtures.json` owns provider-neutral positive and negative examples, including one valid request and one rejected permission-negative for every canonical Forge command plus focused provider-identity, stale/partial-currentness, mirror, immutable review, pipeline, webhook, protected-browser, confirmation, effect-unknown, and secret-boundary negatives. Provider fixture files validate adapter-profile and provider-specific cases against the common schema; they do not create competing provider schemas.
@@ -726,28 +869,26 @@ owner_doc: Plans/Forge_Integrations.md
 canonical_text: 'An onboarding online copy is an optional hosted Git destination independent from local Git or Jujutsu.
   It becomes ready only through an explicit current account verification and an explicit repository binding; selecting
   its uncreated draft requires neither a phantom account nor a phantom repository. Provider-specific host, owner/container,
-  repository, visibility, eligibility, and capability requirements remain visible and typed. Cursor Origin Preview is
-  an eligible hosted Git destination with Private visibility for personal repositories and Private or Internal for eligible
-  team codebases, never a no-host pseudo-option. Reusing an existing connection selects and verifies the exact account
-  and repository rather than skipping setup. Protected sign-in and explicit external account creation are distinct owner-controlled
-  handoffs. PWIZ-021''s precommit exception permits only current owner-authorized read-only checks/listing and necessary
-  selected-source authentication. MACS-005 owns first-time sign-in. The existing cmd.forge.repository.list command has
-  a closed repository_list_scope account-container variant with a verified real account, no Project/repository binding,
-  zero repository generation, and no mutation. Its request/result/error/availability/receipt all preserve that scope;
-  it creates neither a new command nor a standalone storage/event family. Repository creation/binding and content movement
-  remain inside the exact reviewed Project owner''s commit chain. DL-259, Jared 2026-10-31: D1 A: the online-service
-  step creates or selects a code repository; onboarding does not publish a website, GitHub Pages, GitLab Pages or another
-  site. Local-only Project choices remain valid. Audit FF-01..12: Review binds the exact provider/instance/account and
-  repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal repositories
-  cannot be Internal. Origin personal repositories are Private; eligible team codebases may be Private or Internal. GitLab
-  uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized
-  workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project
-  key, including a supported personal Project. Azure Services binds organization and team Project; Server binds collection
-  URI and team Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific
-  naming and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must
-  match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
-  with expandable exact details and owner-routed Edit links.
+  repository, visibility, eligibility, and capability requirements remain visible and typed. Reusing an existing connection
+  selects and verifies the exact account and repository rather than skipping setup. Protected sign-in and explicit external
+  account creation are distinct owner-controlled handoffs. PWIZ-021''s precommit exception permits only current owner-authorized
+  read-only checks/listing and necessary selected-source authentication. MACS-005 owns first-time sign-in. The existing
+  cmd.forge.repository.list command has a closed repository_list_scope account-container variant with a verified real
+  account, no Project/repository binding, zero repository generation, and no mutation. Its request/result/error/availability/receipt
+  all preserve that scope; it creates neither a new command nor a standalone storage/event family. Repository creation/binding
+  and content movement remain inside the exact reviewed Project owner''s commit chain. DL-259, Jared 2026-10-31: D1 A:
+  the online-service step creates or selects a code repository; onboarding does not publish a website, GitHub Pages,
+  GitLab Pages or another site. Local-only Project choices remain valid. Audit FF-01..12: Review binds the exact provider/instance/account
+  and repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal
+  repositories cannot be Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy.
+  Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility; Data
+  Center resolves an actual project key, including a supported personal Project. Azure Services binds organization and
+  team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
+  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo and
+  Gitea are self-managed only (DL-273). Each requires a real instance profile (DL-273). Provider/owner changes invalidate
+  incompatible visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability.
+  The selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.
 
 
   DL-272 RV-14, 2026-11-01: Private under an organization, group, workspace or team means its members permitted to see
@@ -763,21 +904,33 @@ canonical_text: 'An onboarding online copy is an optional hosted Git destination
   remains owner identity but is not substituted for that type label.
 
 
-  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only
-  forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
-  variants. A retired hosted variant value is not a valid current instance, adapter or setup-plan profile and
-  grants no account, repository or connection authority. Returning to a self-managed choice still requires its
-  explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
-  existing account-based identification, authentication and repository selection remain unchanged, with no new
-  restricted-token support admitted.
+  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
+  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.
 
 
-  DL-273, Jared 2026-11-01: Puppet Master’s Projects are AI-written. A hosting provider whose terms forbid AI-
-  generated Projects is ineligible; the Forgejo option is only a server the person runs.'
+  DL-273, Jared 2026-11-01: Puppet Master’s Projects are AI-written. A hosting provider whose terms forbid AI- generated
+  Projects is ineligible; the Forgejo option is only a server the person runs.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification, and exact disabled reasons in Product Onboarding.
-depends_on: [FGI-001, FGI-003, FGI-006, FGI-008, SCS-011]
-unblocks: [PWIZ-024]
+gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification,
+  and exact disabled reasons in Product Onboarding.
+depends_on:
+- FGI-001
+- FGI-003
+- FGI-006
+- FGI-008
+- SCS-011
+unblocks:
+- PWIZ-024
 acceptance_criteria:
 - A hosted-copy draft records the selected provider/variant/host, source/container intent and desired visibility. Only
   actual verified identities populate account/repository refs; absent or uncreated targets remain explicitly absent.
@@ -806,10 +959,6 @@ acceptance_criteria:
   flow.
 - Gitea requires the same typed self-host fields through a distinct Gitea adapter and product identity; shared primitives
   never imply permanent Forgejo API equivalence, and API-disabled does not disable proven Git transport.
-- Cursor Origin requires a current Preview eligibility projection, verified eligible account/team owner, fixed hosted
-  Origin service identity, and repository binding; onboarding permits Private for personal repositories and Private or
-  Internal for eligible team codebases, keeping Public unavailable, and allows normal Git or Jujutsu-backed clone/fetch/push
-  through certified transports.
 - Local-only Safe History stays valid with `forge_provider=none`; no forge account or repository is required until the
   user explicitly chooses an online copy or `Bring one from online`.
 - Before commit, explicit source access may consume owner-authorized read-only preflight/current eligibility and account-scoped
@@ -827,16 +976,16 @@ acceptance_criteria:
 - 'DL-259, Jared 2026-10-31: D1 A: the online-service step creates or selects a code repository; onboarding does not
   publish a website, GitHub Pages, GitLab Pages or another site. Local-only Project choices remain valid. Audit FF-01..12:
   Review binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible
-  enterprise organization capability; personal repositories cannot be Internal. Origin personal repositories are Private;
-  eligible team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance
-  visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility
-  compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure Services binds
-  organization and team Project; Server binds collection URI and team Project; selecting an existing repository carries
-  its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible
-  visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
-  selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
-  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
+  enterprise organization capability; personal repositories cannot be Internal. GitLab uses the exact personal/group/subgroup
+  namespace and instance visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default
+  Project with visibility compatibility; Data Center resolves an actual project key, including a supported personal Project.
+  Azure Services binds organization and team Project; Server binds collection URI and team Project; selecting an existing
+  repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a
+  fabricated Internal value; Forgejo and Gitea are self-managed only (DL-273). Each requires a real instance profile
+  (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific
+  naming and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must
+  match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
+  with expandable exact details and owner-routed Edit links.'
 - 'DL-272 RV-14, 2026-11-01: Private under an organization, group, workspace or team means its members permitted to see
   private Projects plus people explicitly added, not every member and not Only you. Only you applies only to a personal
   owner; Data Center copy follows its Project permissions.'
@@ -844,20 +993,36 @@ acceptance_criteria:
   Its grouping Project remains selected metadata and is not inserted into that path.'
 - 'DL-272 M7-AZURE-KIND, 2026-11-01: An Azure team Project shows Uses Git as the human-readable type. Its actual GUID
   remains owner identity but is not substituted for that type label.'
-- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired hosted variant
+- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
   value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
-  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
-  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
-  and repository selection remain unchanged, with no new restricted-token support admitted.'
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.'
 - 'DL-273, Jared 2026-11-01: Puppet Master’s Projects are AI-written. A hosting provider whose terms forbid AI-generated
   Projects is ineligible; the Forgejo option is only a server the person runs.'
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider-specific positive/negative fixtures, future protected-auth and repository-binding owner-return fixtures]
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- provider-specific positive/negative fixtures
+- future protected-auth and repository-binding owner-return fixtures
 risk_class: onboarding_forge_account_repository_or_provider_requirement_drift
 reasoning_tier: high
 context_scope: onboarding_forge_provider_binding
-implementation_surfaces: [Plans/Forge_Integrations.md, future forge facade, future Product Onboarding owner adapter]
-node_compile_hint: {mode: forge_onboarding_binding_contract, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- future forge facade
+- future Product Onboarding owner adapter
+node_compile_hint:
+  mode: forge_onboarding_binding_contract
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - user-correction:2026-09-01-forge-onboarding-requirements
 - Plans/product_onboarding_contracts.schema.json
@@ -866,17 +1031,29 @@ source_lineage:
   Source spellings are lineage, not product API.
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
-preserved_exact_tokens: [github, gitlab, azure_devops, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin, Private, Internal, already_connected]
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- github
+- gitlab
+- azure_devops
+- bitbucket_cloud
+- bitbucket_data_center
+- forgejo
+- gitea
+- Private
+- Internal
+- already_connected
 negative_constraints:
-  - Do not treat a selected provider or verified account as a repository binding.
-  - Do not represent Cursor Origin as no-host, local-only, or public-by-default.
-  - Do not offer duplicate built-in and official-page sign-in choices.
-  - Do not collapse GitLab hosted/self-managed, Azure cloud/self-managed, or Bitbucket Cloud/Data Center requirements.
-  - Do not collapse Forgejo and Gitea into one product, adapter, API schema, capability result, or account identity.
-  - Do not infer provider, account, repository, owner, visibility, eligibility, or readiness from display text or remote URL alone.
-  - Do not broaden precommit read-only listing/selected-source authentication into repository, filesystem, Project or unrelated-provider mutation; do not fabricate IDs to satisfy a repository-bound request.
+- Do not treat a selected provider or verified account as a repository binding.
+- Do not represent Cursor Origin as no-host, local-only, or public-by-default.
+- Do not offer duplicate built-in and official-page sign-in choices.
+- Do not collapse GitLab hosted/self-managed, Azure cloud/self-managed, or Bitbucket Cloud/Data Center requirements.
+- Do not collapse Forgejo and Gitea into one product, adapter, API schema, capability result, or account identity.
+- Do not infer provider, account, repository, owner, visibility, eligibility, or readiness from display text or remote
+  URL alone.
+- Do not broaden precommit read-only listing/selected-source authentication into repository, filesystem, Project or unrelated-provider
+  mutation; do not fabricate IDs to satisfy a repository-bound request.
 ```
-
 ## Forgejo/Gitea, Automation Binding, And Generic Shell Reconciliation - 2026-09-01
 
 ### FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority
@@ -886,40 +1063,84 @@ plan_unit_id: FGI-012
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  Forgejo and Gitea are distinct closed-enum provider identities with distinct adapters and version/API-schema
-  capability profiles. RepositoryForgeBinding remains repository-hosting authority. AutomationBinding separately
-  identifies automation service/provider/instance/account, optional repository-binding relationship, capability,
-  catalog, permission, currentness and binding generation; it may differ from the Git host. Exactly one canonical
-  repository_automation panel occupant labeled Actions & Pipelines renders provider-native content and accepts
-  github_actions only as migration-read/route/bookmark/deep-link input.
+canonical_text: 'Forgejo and Gitea are distinct closed-enum provider identities with distinct adapters and version/API-schema
+  capability profiles. RepositoryForgeBinding remains repository-hosting authority. AutomationBinding separately identifies
+  automation service/provider/instance/account, optional repository-binding relationship, capability, catalog, permission,
+  currentness and binding generation; it may differ from the Git host. Exactly one canonical repository_automation panel
+  occupant labeled Actions & Pipelines renders provider-native content and accepts github_actions only as migration-read/route/bookmark/deep-link
+  input.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines the canonical Actions & Pipelines route, visible provider headings, binding selector, unsupported states, and one-occupant migration.
-depends_on: [FGI-001, FGI-003, FGI-005, FGI-008]
+gui_classification_reason: Defines the canonical Actions & Pipelines route, visible provider headings, binding selector,
+  unsupported states, and one-occupant migration.
+depends_on:
+- FGI-001
+- FGI-003
+- FGI-005
+- FGI-008
 unblocks: []
 acceptance_criteria:
-  - The provider enum includes separate forgejo and gitea tokens; a combined forgejo_or_gitea identity is invalid.
-  - Typed instance profiles carry custom HTTPS/API roots, API base path, SSH host/port, scoped private-CA ref, known-host proof, account/organization, detected product/version/API schema, independent API/Git/Actions state, auth method, permission/currentness refs, and no secret bytes.
-  - PAT is the default self-host route; OAuth PKCE is admitted only with an explicitly registered instance flow.
-  - API-disabled does not disable proven Git fetch/publish; Actions disabled, no runner, no workflow, insufficient permission, unsupported and unknown remain distinct.
-  - Credentials and authorization headers are stripped on redirect-origin change; local/metadata targets remain denied unless an existing explicit policy approves them; CA trust is instance-scoped.
-  - AutomationBinding never silently inherits provider/account/authority from RepositoryForgeBinding and every automation/runner request carries its exact binding generation.
-  - repository_automation is the only canonical occupant; binding selection is shown only when multiple bindings exist, provider headings come from the selected adapter, and no remote name fabricates a service such as Origin Actions.
-validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider/version/trust/API-Git-Actions fixtures, shell migration and one-occupant fixtures]
+- The provider enum includes separate forgejo and gitea tokens; a combined forgejo_or_gitea identity is invalid.
+- Typed instance profiles carry custom HTTPS/API roots, API base path, SSH host/port, scoped private-CA ref, known-host
+  proof, account/organization, detected product/version/API schema, independent API/Git/Actions state, auth method, permission/currentness
+  refs, and no secret bytes.
+- PAT is the default self-host route; OAuth PKCE is admitted only with an explicitly registered instance flow.
+- API-disabled does not disable proven Git fetch/publish; Actions disabled, no runner, no workflow, insufficient permission,
+  unsupported and unknown remain distinct.
+- Credentials and authorization headers are stripped on redirect-origin change; local/metadata targets remain denied
+  unless an existing explicit policy approves them; CA trust is instance-scoped.
+- AutomationBinding never silently inherits provider/account/authority from RepositoryForgeBinding and every automation/runner
+  request carries its exact binding generation.
+- repository_automation is the only canonical occupant; binding selection is shown only when multiple bindings exist,
+  provider headings come from the selected adapter, and no remote name fabricates a service such as Origin Actions.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- provider/version/trust/API-Git-Actions fixtures
+- shell migration and one-occupant fixtures
 risk_class: self_host_identity_automation_authority_or_shell_conflation
 reasoning_tier: high
 context_scope: forgejo_gitea_automation_binding_and_shell
-implementation_surfaces: [Plans/Forge_Integrations.md, future Forgejo adapter, future Gitea adapter, future repository_automation Slint shell]
-node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md, packet_corrected_slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt, packet_corrected_slice:machine__domain_contracts.schema.json__part-002__lines-000201-000420.txt]
-preserved_exact_tokens: [forgejo, gitea, RepositoryForgeBinding, AutomationBinding, repository_automation, "Actions & Pipelines", github_actions, "Connect automation service"]
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- future Forgejo adapter
+- future Gitea adapter
+- future repository_automation Slint shell
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- packet_corrected_slice:machine__provider_profiles.json__part-003__lines-000401-000620.txt
+- packet_corrected_slice:machine__domain_contracts.schema.json__part-002__lines-000201-000420.txt
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- forgejo
+- gitea
+- RepositoryForgeBinding
+- AutomationBinding
+- repository_automation
+- Actions & Pipelines
+- github_actions
+- Connect automation service
 negative_constraints:
-  - Do not infer automation authority from the repository host, remote name, or ForgeBinding.
-  - Do not persist certificate bytes, credentials, authorization headers, OAuth codes, tokens, runner tokens, secrets, or variables in these records.
-  - Do not forward authorization across redirect origins or widen localhost/metadata access.
-  - Do not claim native adapters, runtime handlers, panel implementation, or verified provider support from Plans, schemas, fixtures, or concept evidence.
+- Do not infer automation authority from the repository host, remote name, or ForgeBinding.
+- Do not persist certificate bytes, credentials, authorization headers, OAuth codes, tokens, runner tokens, secrets,
+  or variables in these records.
+- Do not forward authorization across redirect origins or widen localhost/metadata access.
+- Do not claim native adapters, runtime handlers, panel implementation, or verified provider support from Plans, schemas,
+  fixtures, or concept evidence.
 ```
-
 ### FGI-013 - Nine Distinct Event-Silent Forge Command Admissions
 
 ```yaml
@@ -972,65 +1193,102 @@ plan_unit_id: FGI-014
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
-canonical_text: >-
-  Cursor Origin is a read/write Git host whose clone/fetch/pull/push authority is operation-, branch-,
-  credential-, policy-, and currentness-specific; mirror mode preserves mapped GitHub write/review/CI authority
-  and never becomes a provider-wide read-only flag or a duplicate-push path. Origin review operations use a
-  pinned and golden-tested official CLI adapter where no stable public API is established. It requires JSON
-  output and explicit repository/head/base/target for PR list/view/create/diff/checks/edit/ready/draft,
-  review/comment/thread reply-resolve-reopen, merge/close/reopen, and stale-version refresh. Read-only PR view
-  is distinct from checkout; create --push still requires publication preview/approval; Cursor Agent auth is
-  not proof of Origin access. GitHub-owned mirror workflows, issues, checks, secrets, settings, and history stay
-  GitHub-owned, while .github workflow files are ordinary Git tree content. Native Windows Origin CLI support
-  remains unverified from WSL-only documentation; offer explicit WSL or remote-compatible setup without
-  implicitly enabling WSL or degrading unrelated Windows capability. Forgejo and Gitea Actions separately
-  probe feature enablement, versioned API operations, runner availability, definitions, runs, logs, artifacts,
-  dispatch/cancel/rerun, permissions, secrets/variables, and runner labels; no GitHub endpoint rewrite is
-  assumed. GitHub retains direct API behavior with no hidden gh requirement. GitLab retains Merge requests,
-  Pipelines, approval/mergeability, native stages/jobs/traces/artifacts/manual actions/child pipelines. Azure
-  Services and Server separate Repos, Pipelines, organization/project/account, auth/version, branch policies,
-  deployment approvals, and Git from unsupported TFVC; Services uses Entra rather than new legacy Azure DevOps
-  OAuth. Bitbucket Cloud and Data Center retain separate identity, auth, URL, version, review, restriction, and
-  CI profiles; Data Center never inherits Cloud Pipelines. Generic Git remains transport-only, local/non-Git
-  Projects receive no fake review/CI, Jujutsu is never a cloud account, and saved hosting/automation bindings
-  rather than a remote named origin choose among fork/upstream/multi-forge routes.
+canonical_text: 'DL-273 retires the former source-control service operation profiles. Shared exact-target, revision,
+  permission, publication-preview and no-duplicate-mirror safeguards remain for admitted providers. Forgejo and Gitea
+  Actions separately probe feature enablement, versioned API operations, runner availability, definitions, runs, logs,
+  artifacts, dispatch/cancel/rerun, permissions, secrets/variables, and runner labels; no GitHub endpoint rewrite is
+  assumed. GitHub retains direct API behavior with no hidden gh requirement. GitLab retains Merge requests, Pipelines,
+  approval/mergeability, native stages/jobs/traces/artifacts/manual actions/child pipelines. Azure Services and Server
+  separate Repos, Pipelines, organization/project/account, auth/version, branch policies, deployment approvals, and Git
+  from unsupported TFVC; Services uses Entra rather than new legacy Azure DevOps OAuth. Bitbucket Cloud and Data Center
+  retain separate identity, auth, URL, version, review, restriction, and CI profiles; Data Center never inherits Cloud
+  Pipelines. Generic Git remains transport-only, local/non-Git Projects receive no fake review/CI, Jujutsu is never a
+  cloud account, and saved hosting/automation bindings rather than a remote named origin choose among fork/upstream/multi-forge
+  routes.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Provider-native labels, capability reasons, setup alternatives, review/checks, CI hierarchy, and external-only fallbacks are visible in Source Control and Actions & Pipelines.
-depends_on: [FGI-001, FGI-002, FGI-003, FGI-004, FGI-005, FGI-006, FGI-012]
-unblocks: [SCS-016, FGI-015, F3-529]
+gui_classification_reason: Provider-native labels, capability reasons, setup alternatives, review/checks, CI hierarchy,
+  and external-only fallbacks are visible in Source Control and Actions & Pipelines.
+depends_on:
+- FGI-001
+- FGI-002
+- FGI-003
+- FGI-004
+- FGI-005
+- FGI-006
+- FGI-012
+unblocks:
+- SCS-016
+- FGI-015
+- F3-529
 acceptance_criteria:
-  - Origin standalone and GitHub-mirror fixtures preserve exact Git, review, CI, issue, and write authority without duplicate publication or dispatch.
-  - Recorded Origin CLI reads, writes, errors, auth interfaces, and stale-head cases bind an explicit repository and revision; PR creation never unexpectedly publishes.
-  - WSL-off native Windows shows a narrow Origin-tool limitation plus explicit WSL/remote options and does not install WSL or mark Puppet Master globally degraded.
-  - Forgejo/Gitea can read runs while dispatch is unavailable and distinguish no runner, no workflow, no permission, unsupported, external-only, and unknown.
-  - GitHub regression inventory remains complete; GitLab, Azure, and Bitbucket fixtures retain provider vocabulary, identity, auth, hierarchy, and feature gaps without guessed parity.
-  - No-remote, generic SSH Git, JJ plus Origin, and GitHub-fork/GitLab-upstream fixtures never fabricate a forge, change default remote, or cross-publish.
-validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future Origin golden output, provider version, auth, capability, and multi-forge routing fixtures]
+- Forgejo/Gitea can read runs while dispatch is unavailable and distinguish no runner, no workflow, no permission, unsupported,
+  external-only, and unknown.
+- GitHub regression inventory remains complete; GitLab, Azure, and Bitbucket fixtures retain provider vocabulary, identity,
+  auth, hierarchy, and feature gaps without guessed parity.
+- No-remote, generic SSH Git, JJ plus an admitted forge, and GitHub-fork/GitLab-upstream fixtures never fabricate a forge,
+  change default remote, or cross-publish.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- provider version
+- auth
+- capability
+- and multi-forge routing fixtures
 risk_class: provider_parity_fabrication_mirror_duplicate_effect_or_platform_overclaim
 reasoning_tier: high
 context_scope: origin_and_provider_specific_operation_profiles
-implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future provider adapters]
-node_compile_hint: {mode: static_provider_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- future provider adapters
+node_compile_hint:
+  mode: static_provider_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:7-13
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:39-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:47-53
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:55-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:63-69
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:71-77
-  - source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:11-151
-preserved_exact_tokens: [create --push, JSON, -R, Pull request, Merge request, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, TFVC, WSL, external_only]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:7-13
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:39-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:47-53
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:55-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:63-69
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md:71-77
+- source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:11-151
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- Pull request
+- Merge request
+- GitHub Actions
+- GitLab Pipelines
+- Azure Pipelines
+- Bitbucket Pipelines
+- Forgejo Actions
+- Gitea Actions
+- TFVC
+- WSL
+- external_only
 negative_constraints:
-  - Do not infer Origin access from Cursor Agent auth, current directory, current branch, or a remote named origin.
-  - Do not represent Origin as blanket read-only, fabricate Origin Actions, duplicate mirror CI, or copy GitHub secrets/settings/history through code mirroring.
-  - Do not install or enable WSL implicitly or treat WSL documentation as native Windows support proof.
-  - Do not rewrite GitHub endpoints for Forgejo/Gitea, guess GitLab/Azure/Bitbucket equivalents, or inherit Cloud features into self-hosted variants.
-  - Do not force local-only or generic Git Projects into forge setup, and do not offer Jujutsu as hosting.
-  - Do not claim implemented adapters, current vendor support, runtime effects, or platform certification from this static contract.
+- Do not install or enable WSL implicitly or treat WSL documentation as native Windows support proof.
+- Do not rewrite GitHub endpoints for Forgejo/Gitea, guess GitLab/Azure/Bitbucket equivalents, or inherit Cloud features
+  into self-hosted variants.
+- Do not force local-only or generic Git Projects into forge setup, and do not offer Jujutsu as hosting.
+- Do not claim implemented adapters, current vendor support, runtime effects, or platform certification from this static
+  contract.
+- Do not infer one provider authority from Cursor AI authentication or a Git remote name, or duplicate an admitted mirror
+  write.
 ```
-
 ### FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix
 
 ```yaml
@@ -1039,18 +1297,18 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Forge_Integrations.md
 canonical_text: 'The required provider-profile set is exactly github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed,
-  azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native,
-  cursor_origin_github_mirror, and generic_git. The independent local-VCS set is git, jj_git_colocated, jj_git_noncolocated,
-  and none. Each profile reports explicit status, evidence/probe, reason, and freshness for Git transport, repository
-  discovery/create, review read/write/approve/merge, checks, definitions, run/log/artifact read, dispatch/cancel/rerun,
-  webhook/poll, branch policy, secrets/variables, runner management, release assets, and external URL fallback; no GitHub-compatible
-  boolean grants parity. Instance trust validates normalized host, tenant/account, API base path, scoped private CA,
-  redirects/pagination, SSH host key, and explicit localhost/metadata policy before credentials, without global TLS disable
-  or cross-origin Authorization. Authentication is provider- and instance-scoped, and what a provider profile itself
-  carries is the closed field set of its own schema: the setup methods it admits, in `provider_adapter_profile.auth_methods`,
-  together with its capability and reason vocabulary, its version or tier gate and its catalog reference. The other six
-  facts are each recorded by a named existing surface rather than by the profile record: the issuer by `Plans/GitHub_API_Auth_and_Flows.md`
-  and by `provider_instance_profile.oauth_registration_ref` for a registered instance flow; the allowed host by `provider_instance_profile.normalized_host`
+  azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, and generic_git.
+  The independent local-VCS set is git, jj_git_colocated, jj_git_noncolocated, and none. Each profile reports explicit
+  status, evidence/probe, reason, and freshness for Git transport, repository discovery/create, review read/write/approve/merge,
+  checks, definitions, run/log/artifact read, dispatch/cancel/rerun, webhook/poll, branch policy, secrets/variables,
+  runner management, release assets, and external URL fallback; no GitHub-compatible boolean grants parity. Instance
+  trust validates normalized host, tenant/account, API base path, scoped private CA, redirects/pagination, SSH host key,
+  and explicit localhost/metadata policy before credentials, without global TLS disable or cross-origin Authorization.
+  Authentication is provider- and instance-scoped, and what a provider profile itself carries is the closed field set
+  of its own schema: the setup methods it admits, in `provider_adapter_profile.auth_methods`, together with its capability
+  and reason vocabulary, its version or tier gate and its catalog reference. The other six facts are each recorded by
+  a named existing surface rather than by the profile record: the issuer by `Plans/GitHub_API_Auth_and_Flows.md` and
+  by `provider_instance_profile.oauth_registration_ref` for a registered instance flow; the allowed host by `provider_instance_profile.normalized_host`
   and `api_base_path` under `restricted_network_target_policy`; the non-secret token owner by `provider_instance_profile.credential_ref`,
   `token_lease.credential_ref` and `app_installation.credential_key_ref`; the requested scopes by `api_compatibility.scopes`
   and `token_lease.scope_grant_refs`; refresh and revoke by `token_lease.state`, `expires_at_utc` and `ttl_seconds` with
@@ -1059,24 +1317,22 @@ canonical_text: 'The required provider-profile set is exactly github_cloud, gith
   plus separate Git helper; GitLab registered OAuth/PKCE or scoped PAT; Azure Services Entra and Server supported on-prem
   auth; Bitbucket Cloud OAuth/current scoped API token and Data Center supported instance token; Microsoft Entra is the
   Azure Services issuer rather than a new legacy Azure DevOps OAuth registration; Forgejo/Gitea guided scoped PAT by
-  default or registered OAuth/PKCE; Origin official CLI browser auth plus verified Git helper. Account passwords and
-  silent ordinary admin scope grants are forbidden. Hosted administration enumerates read and write independently for
-  repository/branch policy, CI environments/deployment approvals, secrets/variables, runner list/register/remove, and
-  release assets using versioned adapter field schemas. Unsupported operations route to a labeled official external surface,
-  secret values enter through the human-only broker and are never read back from metadata, and runner registration requires
-  an exact Execution Host and consent rather than following from CI enablement. DL-259, Jared 2026-10-31: Audit FF-01..12:
-  Review binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible
-  enterprise organization capability; personal repositories cannot be Internal. Origin personal repositories are Private;
-  eligible team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance
-  visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility
-  compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure Services binds
-  organization and team Project; Server binds collection URI and team Project; selecting an existing repository carries
-  its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal
-  value; Forgejo is self-managed only, while Gitea retains hosted and self-managed choices. Each requires a real instance
-  profile (DL-273). Provider/owner changes invalidate incompatible
-  visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability. The
-  selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
-  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.
+  default or registered OAuth/PKCE. Account passwords and silent ordinary admin scope grants are forbidden. Hosted administration
+  enumerates read and write independently for repository/branch policy, CI environments/deployment approvals, secrets/variables,
+  runner list/register/remove, and release assets using versioned adapter field schemas. Unsupported operations route
+  to a labeled official external surface, secret values enter through the human-only broker and are never read back from
+  metadata, and runner registration requires an exact Execution Host and consent rather than following from CI enablement.
+  DL-259, Jared 2026-10-31: Audit FF-01..12: Review binds the exact provider/instance/account and repository or creation
+  target. GitHub Internal requires an eligible enterprise organization capability; personal repositories cannot be Internal.
+  GitLab uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized
+  workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project
+  key, including a supported personal Project. Azure Services binds organization and team Project; Server binds collection
+  URI and team Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use
+  Public/Private repository privacy, not a fabricated Internal value; Forgejo and Gitea are self-managed only (DL-273).
+  Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth
+  choices; current provider-specific naming and Git ref validation precede availability. The selected actual auth method
+  and least-privilege scopes must match the saved instance profile. Review shows privacy, target/instance, branch and
+  material creation consequences, with expandable exact details and owner-routed Edit links.
 
 
   DL-272 RV-16, 2026-11-01: Self-managed source-control addresses use the shared endpoint validator. An empty address
@@ -1095,11 +1351,22 @@ canonical_text: 'The required provider-profile set is exactly github_cloud, gith
 
 
   DL-272 M6-SIGNUP-NOTE, 2026-11-01: A self-managed service’s sign-up-disabled information is neutral guidance, not an
-  authentication failure or a Pip fault. Account authorization still requires the normal owner result.'
+  authentication failure or a Pip fault. Account authorization still requires the normal owner result.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: The matrix supplies setup cards, permission labels, precise disabled reasons, trust prompts, admin forms, and external-only navigation.
-depends_on: [FGI-014, GAAAF-015, SIR-033]
-unblocks: [F3-529]
+gui_classification_reason: The matrix supplies setup cards, permission labels, precise disabled reasons, trust prompts,
+  admin forms, and external-only navigation.
+depends_on:
+- FGI-014
+- GAAAF-015
+- SIR-033
+unblocks:
+- F3-529
 acceptance_criteria:
 - All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit
   state/probe/reason rather than generic compatibility.
@@ -1119,17 +1386,15 @@ acceptance_criteria:
   route; GitHub retained administration is inventoried and no live section is silently dropped.
 - 'DL-259, Jared 2026-10-31: Audit FF-01..12: Review binds the exact provider/instance/account and repository or creation
   target. GitHub Internal requires an eligible enterprise organization capability; personal repositories cannot be Internal.
-  Origin personal repositories are Private; eligible team codebases may be Private or Internal. GitLab uses the exact
-  personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized workspace and
-  explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project key, including
-  a supported personal Project. Azure Services binds organization and team Project; Server binds collection URI and team
-  Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private
-  repository privacy, not a fabricated Internal value; Forgejo is self-managed only, while Gitea retains hosted and
-  self-managed choices. Each requires a real instance profile (DL-273).
-  Provider/owner changes invalidate incompatible visibility/container/auth choices; current provider-specific naming
-  and Git ref validation precede availability. The selected actual auth method and least-privilege scopes must match
-  the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences, with
-  expandable exact details and owner-routed Edit links.'
+  GitLab uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds an authorized
+  workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an actual project
+  key, including a supported personal Project. Azure Services binds organization and team Project; Server binds collection
+  URI and team Project; selecting an existing repository carries its owner-resolved Project identity. Forgejo/Gitea use
+  Public/Private repository privacy, not a fabricated Internal value; Forgejo and Gitea are self-managed only (DL-273).
+  Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth
+  choices; current provider-specific naming and Git ref validation precede availability. The selected actual auth method
+  and least-privilege scopes must match the saved instance profile. Review shows privacy, target/instance, branch and
+  material creation consequences, with expandable exact details and owner-routed Edit links.'
 - 'DL-272 RV-16, 2026-11-01: Self-managed source-control addresses use the shared endpoint validator. An empty address
   is missing; a bare valid host is normalized with https:// for use; a rejected address gives its actual reason by the
   field and Continue. No example or typed address proves identity or authentication.'
@@ -1141,12 +1406,28 @@ acceptance_criteria:
   broader disclosed grant; no sample credential is canon.'
 - 'DL-272 M6-SIGNUP-NOTE, 2026-11-01: A self-managed service’s sign-up-disabled information is neutral guidance, not
   an authentication failure or a Pip fault. Account authorization still requires the normal owner result.'
-validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider matrix/trust/admin fixtures]
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- Plans/protected_auth_browser_contracts.schema.json
+- Plans/protected_auth_browser_contract_fixtures.json
+- future provider matrix/trust/admin fixtures
 risk_class: capability_matrix_scope_trust_or_admin_authority_conflation
 reasoning_tier: high
 context_scope: provider_capability_auth_trust_and_admin_matrix
-implementation_surfaces: [Plans/Forge_Integrations.md, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future capability catalog and admin adapters]
-node_compile_hint: {mode: static_matrix_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- future capability catalog and admin adapters
+node_compile_hint:
+  mode: static_matrix_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:7-13
 - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:15-21
@@ -1161,16 +1442,35 @@ source_lineage:
 - source_ref:corrected-slice:machine__provider_profiles.json__part-004__lines-000601-000692.txt:601-692
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
-preserved_exact_tokens: [github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo, gitea, cursor_origin_native, cursor_origin_github_mirror, generic_git, Microsoft Entra, guided scoped PAT, registered OAuth/PKCE, human-only broker, auth_methods, credential_access]
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- github_cloud
+- github_enterprise
+- gitlab_saas
+- gitlab_self_managed
+- azure_devops_services
+- azure_devops_server
+- bitbucket_cloud
+- bitbucket_data_center
+- forgejo
+- gitea
+- generic_git
+- Microsoft Entra
+- guided scoped PAT
+- registered OAuth/PKCE
+- human-only broker
+- auth_methods
+- credential_access
 negative_constraints:
-  - Do not use one GitHub-compatible boolean, universal username/password form, global TLS bypass, or cross-origin Authorization.
-  - Do not request account passwords, deprecated Bitbucket app passwords, new legacy Azure DevOps OAuth, or silent admin scopes for ordinary work.
-  - Do not treat metadata names as secret values or offer Reveal where the provider cannot return a value.
-  - Do not register a runner without exact Execution Host targeting and explicit consent or merely because Actions/Pipelines is enabled.
-  - Do not fabricate mutation success when an API is unsupported or unimplemented.
-  - Do not claim live vendor currentness, runtime security, provider access, or admin implementation from static matrix/schema/fixtures.
+- Do not use one GitHub-compatible boolean, universal username/password form, global TLS bypass, or cross-origin Authorization.
+- Do not request account passwords, deprecated Bitbucket app passwords, new legacy Azure DevOps OAuth, or silent admin
+  scopes for ordinary work.
+- Do not treat metadata names as secret values or offer Reveal where the provider cannot return a value.
+- Do not register a runner without exact Execution Host targeting and explicit consent or merely because Actions/Pipelines
+  is enabled.
+- Do not fabricate mutation success when an API is unsupported or unimplemented.
+- Do not claim live vendor currentness, runtime security, provider access, or admin implementation from static matrix/schema/fixtures.
 ```
-
 ## DL-043 Accepted Jujutsu Planning Addendum - 2026-09-11
 
 This addendum compiles the specified DL-043 answers as accepted planning requirements. It does not change current command/provider enums, admit typed schema variants, register handlers/events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. Declined dispositions receive no PlanUnits. Cross-owner command, GUI, wiring, Contracts, Permissions/FileSafe and Backup amendments remain with their canonical owners.

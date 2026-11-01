@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38280-L38445
+Source lines: L38423-L38670
 
-Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
+Source SHA256: `ee87cd10e44cab812acbcd8fd3d7d3cc886ea1f73a3d19c9be5fdef34ead7831`
 
 ---
 
@@ -17,98 +17,180 @@ plan_unit_id: F3-529
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  The Source Control header identifies repository/workspace plus compact local-engine and hosting-service labels;
-  its detail disclosure shows Home Server, Execution Environment, Source Location path, distinct remote fetch
-  and push targets, authentication, and observed revision without overloading the header with infrastructure.
-  Its minimum section census is changes/diff; Git staging/commit or Jujutsu Current Change; branch/bookmark
-  tracking; remotes/publication; history/graph; conflicts; Git-only stashes; worktrees/workspaces; review requests;
-  changed files/comments/checks; recovery/Jujutsu operation history; and source-protection/Backup route. Every
-  additional live section is retained or explicitly migrated. Git renders Staged/Unstaged, index-aware diff,
-  Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current Change @, description and parent/change
-  context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change ID plus current commit ID,
-  rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation Log; staging and
-  stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides a Git
-  mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
-  native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview
-  shows the actual destination/refspec, Origin mirror write-through, protection, and CI/cost effects. Publish and
-  review creation are separate unless one explicit combined preview lists both effects; expected-head fencing,
-  remote limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states
-  remain visible, with no blanket Origin read-only badge. `ui.source_control.profile.preview` is a typed owner-local
-  view action that lets the concept or future comparison surface switch between Git and Jujutsu presentation without
-  changing the Project's configured backend, repository binding, workspace, history, or persistent state. Actions &
-  Pipelines selects AutomationBinding only when more than one service applies and shows current revision checks, pinned and available definitions, active/recent
-  runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy or the provider's available
-  trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables links,
-  and external/unsupported explanation. `ui.repository_automation.binding.select` is a typed owner-local action
-  that changes only which already-authorized AutomationBinding presentation is selected; it registers no domain
-  command or semantic handler, emits no domain EventRecord, grants no provider authority, and mutates neither the
-  repository binding nor the AutomationBinding. `ui.source_control.backup_history.open` is a typed owner-local,
-  read-only navigation action that carries exact project, repository, immutable revision, Backup-owner route, deep
-  link, currentness, accessibility, and return-context identity into the Backup owner; it never requests restore,
-  starts restore, or mutates Source Control or Backup state. Provider-native headings and names remain GitHub Actions, GitLab
-  Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no
-  invented definitions and Origin checks never imply Origin Actions. Files uses engine-correct decoration/ignore,
-  useful repository/source badges, read-only Backup preview, and Restore this file. Artifacts distinguishes
-  provider CI artifacts, Puppet Master runtime outputs, and Backup exports while preserving expiry, checksum,
-  provenance, explicit import/download, and never auto-executing a download. Testing/Run & Debug may link checks
-  and reproduction receipts but does not treat remote CI as local proof. Assistant Chat receives compact
-  capability/receipt data without another forge/host banner. Bottom/status shows truthful publication, Backup,
-  and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
-  repository, revision, provider artifact, Backup, and initiating Client/Server destination identity.
-  Amended 2026-10-09 (DL-163): the Jujutsu view's operation section is labelled Operation Log, JJI-006's registered
-  string, where this unit said Operation History; the rail presents Jujutsu's five views as its own tab strip
-  (F3-623, F3-624). Edit works on a change chosen in History, not only on @; Discard edits is
-  cmd.jujutsu.change.restore on the current change, back to its parent; the protected state Jujutsu renders is
-  immutable, read from the adapter's immutable set rather than from what was pushed; and rewritten and abandoned
-  show as a change's evolution facts and in operation details.
+canonical_text: 'The Source Control header identifies repository/workspace plus compact local-engine and hosting-service
+  labels; its detail disclosure shows Home Server, Execution Environment, Source Location path, distinct remote fetch
+  and push targets, authentication, and observed revision without overloading the header with infrastructure. Its minimum
+  section census is changes/diff; Git staging/commit or Jujutsu Current Change; branch/bookmark tracking; remotes/publication;
+  history/graph; conflicts; Git-only stashes; worktrees/workspaces; review requests; changed files/comments/checks; recovery/Jujutsu
+  operation history; and source-protection/Backup route. Every additional live section is retained or explicitly migrated.
+  Git renders Staged/Unstaged, index-aware diff, Commit, stash, branches/upstream, and Worktrees. Jujutsu renders Current
+  Change @, description and parent/change context, New Change/Edit/Split/Squash/Abandon, bookmarks/tracking, stable change
+  ID plus current commit ID, rewritten/abandoned/conflicted state, local/remote bookmarks, Workspaces, and Operation
+  Log; staging and stash are hidden, operation restore is previewed and distinct from Backup, and no UI-only action hides
+  a Git mutation. Reviews use one common list shell while detail preserves Pull request or Merge request vocabulary,
+  native status, source/target refs, author, draft, permissions, threads, checks, and currentness. Publish preview shows
+  the actual destination/refspec, explicit admitted mirror write-through, protection, and CI/cost effects. Publish and
+  review creation are separate unless one explicit combined preview lists both effects; expected-head fencing, remote
+  limitation reasons, per-target fan-out outcome, outcome_unknown, and API-unavailable/push-ready states remain visible,
+  with no provider-wide read-only badge inferred from one unavailable action. `ui.source_control.profile.preview` is
+  a typed owner-local view action that lets the concept or future comparison surface switch between Git and Jujutsu presentation
+  without changing the Project''s configured backend, repository binding, workspace, history, or persistent state. Actions
+  & Pipelines selects AutomationBinding only when more than one service applies and shows current revision checks, pinned
+  and available definitions, active/recent runs, queued/scheduled/manual gates, run detail, native stage/job/step hierarchy
+  or the provider''s available trace, streamed logs, artifacts/retention, environments/deployments/approvals, runner/secrets/variables
+  links, and external/unsupported explanation. `ui.repository_automation.binding.select` is a typed owner-local action
+  that changes only which already-authorized AutomationBinding presentation is selected; it registers no domain command
+  or semantic handler, emits no domain EventRecord, grants no provider authority, and mutates neither the repository
+  binding nor the AutomationBinding. `ui.source_control.backup_history.open` is a typed owner-local, read-only navigation
+  action that carries exact project, repository, immutable revision, Backup-owner route, deep link, currentness, accessibility,
+  and return-context identity into the Backup owner; it never requests restore, starts restore, or mutates Source Control
+  or Backup state. Provider-native headings and names remain GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket
+  Pipelines, Forgejo Actions, or Gitea Actions as proven; Generic Git has no invented definitions and Origin checks never
+  imply Origin Actions. Files uses engine-correct decoration/ignore, useful repository/source badges, read-only Backup
+  preview, and Restore this file. Artifacts distinguishes provider CI artifacts, Puppet Master runtime outputs, and Backup
+  exports while preserving expiry, checksum, provenance, explicit import/download, and never auto-executing a download.
+  Testing/Run & Debug may link checks and reproduction receipts but does not treat remote CI as local proof. Assistant
+  Chat receives compact capability/receipt data without another forge/host banner. Bottom/status shows truthful publication,
+  Backup, and connector work without routine Synced, secrets, or Backup-as-token-usage. Cross-panel routes preserve exact
+  repository, revision, provider artifact, Backup, and initiating Client/Server destination identity. Amended 2026-10-09
+  (DL-163): the Jujutsu view''s operation section is labelled Operation Log, JJI-006''s registered string, where this
+  unit said Operation History; the rail presents Jujutsu''s five views as its own tab strip (F3-623, F3-624). Edit works
+  on a change chosen in History, not only on @; Discard edits is cmd.jujutsu.change.restore on the current change, back
+  to its parent; the protected state Jujutsu renders is immutable, read from the adapter''s immutable set rather than
+  from what was pushed; and rewritten and abandoned show as a change''s evolution facts and in operation details.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction contract.
-depends_on: [F3-528, SCS-015, SCS-016, FGI-014, FGI-015, GAAAF-016, GAAAF-017]
+gui_classification_reason: This unit is the canonical detailed user-visible Source Control and Actions & Pipelines interaction
+  contract.
+depends_on:
+- F3-528
+- SCS-015
+- SCS-016
+- FGI-014
+- FGI-015
+- GAAAF-016
+- GAAAF-017
 unblocks: []
 acceptance_criteria:
-  - Live pre/post inventory maps every Source Control and hosted-admin section, control, state, command, and disposition; the packet minimum is never used to delete an unlisted live section.
-  - Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid actions.
-  - Protected branch, rejected push, Origin mirror mapping, stale review head, one-to-many partial push, and review-API-unavailable/push-ready fixtures show exact target and outcome truth.
-  - Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented steps, and existing pinned GitHub workflows/rerun controls survive.
-  - "`ui.source_control.profile.preview` request/result fixtures require an exact current repository projection, selected `git|jj` presentation profile, accessibility and return context, deterministic focus settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false backend/repository/workspace/history mutation facts; it never dispatches `cmd.source_control.backend.select`."
-  - "`ui.repository_automation.binding.select` request/result fixtures require at least two explicit candidate AutomationBinding refs, exact selected binding and capability/currentness refs, deterministic return settlement, `presentation_only=true`, `persistent_state_mutation=false`, and false repository/automation mutation facts; the profile has `domain_command_registered=false`, `semantic_domain_handler=null`, and `domain_event_emitted=false`."
-  - "`ui.source_control.backup_history.open` request/result fixtures require the Backup owner, `backup_history_repository_revision` route kind, exact repository revision, Backup route and deep-link refs, deterministic target-open settlement, and false restore/source/Backup mutation facts; navigation never implies `cmd.backup.restore.preview`, `cmd.backup.restore.execute`, or any other Backup mutation."
-  - Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
-  - Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts never auto-execute and remote CI is never local test proof.
-  - Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals, secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner registration remain impossible.
-validation_surfaces: [Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, future native Slint width/theme/keyboard/touch/accessibility/provider fixtures]
+- Live pre/post inventory maps every Source Control and hosted-admin section, control, state, command, and disposition;
+  the packet minimum is never used to delete an unlisted live section.
+- Git, Jujutsu, and no-forge profiles render at narrow/default/wide widths with stable selection/focus and only engine-valid
+  actions.
+- Protected branch, rejected push, explicit admitted mirror mapping, stale review head, one-to-many partial push, and
+  review-API-unavailable/push-ready fixtures show exact target and outcome truth.
+- Every provider profile consumes the automation section matrix; missing step APIs show a job trace rather than invented
+  steps, and existing pinned GitHub workflows/rerun controls survive.
+- '`ui.source_control.profile.preview` request/result fixtures require an exact current repository projection, selected
+  `git|jj` presentation profile, accessibility and return context, deterministic focus settlement, `presentation_only=true`,
+  `persistent_state_mutation=false`, and false backend/repository/workspace/history mutation facts; it never dispatches
+  `cmd.source_control.backend.select`.'
+- '`ui.repository_automation.binding.select` request/result fixtures require at least two explicit candidate AutomationBinding
+  refs, exact selected binding and capability/currentness refs, deterministic return settlement, `presentation_only=true`,
+  `persistent_state_mutation=false`, and false repository/automation mutation facts; the profile has `domain_command_registered=false`,
+  `semantic_domain_handler=null`, and `domain_event_emitted=false`.'
+- '`ui.source_control.backup_history.open` request/result fixtures require the Backup owner, `backup_history_repository_revision`
+  route kind, exact repository revision, Backup route and deep-link refs, deterministic target-open settlement, and false
+  restore/source/Backup mutation facts; navigation never implies `cmd.backup.restore.preview`, `cmd.backup.restore.execute`,
+  or any other Backup mutation.'
+- Capability transitions ready/auth expired/restored/service disabled/no runner/unsupported/unknown/stale retain saved
+  layout, do not reorder rail icons or jump focus, and expose exact remediation or Open in service behavior.
+- Files, Artifacts, Testing, Chat, and bottom/status deep links preserve exact identities; downloaded provider artifacts
+  never auto-execute and remote CI is never local test proof.
+- Hosted administration renders read/write independently for repository/branch policy, environments/deployment approvals,
+  secrets/variables, runners, and release assets from versioned provider schemas; secret readback and implicit runner
+  registration remain impossible.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- future native Slint width/theme/keyboard/touch/accessibility/provider fixtures
 risk_class: gui_backend_provider_effect_or_evidence_misrepresentation
 reasoning_tier: high
 context_scope: source_control_review_automation_and_related_surface_presentation
-implementation_surfaces: [Plans/FinalGUISpec.md, Plans/final_gui_interaction_contracts.schema.json, Plans/final_gui_interaction_contract_fixtures.json, future Source Control and repository_automation Slint components]
-node_compile_hint: {mode: static_gui_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- future Source Control and repository_automation Slint components
+node_compile_hint:
+  mode: static_gui_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:31-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:39-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:55-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
-  - source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:170-220
-  - source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:4-72
-  - source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
-  - source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
-  - source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
-  - Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label, Jujutsu tab strip in F3-623 and F3-624)
-preserved_exact_tokens: [Staged, Unstaged, Commit, Current Change, New Change, Edit, Split, Squash, Abandon, Operation Log, Pull request, Merge request, outcome_unknown, Actions & Pipelines, GitHub Actions, GitLab Pipelines, Azure Pipelines, Bitbucket Pipelines, Forgejo Actions, Gitea Actions, Restore this file, Synced, ui.source_control.profile.preview, ui.repository_automation.binding.select, ui.source_control.backup_history.open, owner_local_typed_ui_controller, backup_history_repository_revision]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:31-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:39-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md:55-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:39-45
+- source_ref:corrected-slice:machine__requirements.json__part-004__lines-000601-000820.txt:170-220
+- source_ref:corrected-slice:machine__requirements.json__part-005__lines-000801-001020.txt:4-72
+- source_ref:corrected-slice:machine__requirements.json__part-011__lines-002001-002196.txt:142-158
+- source_ref:corrected-slice:machine__panel_sections.json__part-001__lines-000001-000220.txt:1-220
+- source_ref:corrected-slice:machine__panel_sections.json__part-002__lines-000201-000263.txt:201-263
+- Plans/Decision_Log.md#DL-163 (2026-10-09; Operation Log label, Jujutsu tab strip in F3-623 and F3-624)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- Staged
+- Unstaged
+- Commit
+- Current Change
+- New Change
+- Edit
+- Split
+- Squash
+- Abandon
+- Operation Log
+- Pull request
+- Merge request
+- outcome_unknown
+- Actions & Pipelines
+- GitHub Actions
+- GitLab Pipelines
+- Azure Pipelines
+- Bitbucket Pipelines
+- Forgejo Actions
+- Gitea Actions
+- Restore this file
+- Synced
+- ui.source_control.profile.preview
+- ui.repository_automation.binding.select
+- ui.source_control.backup_history.open
+- owner_local_typed_ui_controller
+- backup_history_repository_revision
 negative_constraints:
-  - Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git mutation.
-  - Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
-  - Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin blanket read-only.
-  - Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner registration.
-  - Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler, emit a domain EventRecord, persist a preview or provider/binding selection, dispatch backend selection from the profile preview, change backend/repository/workspace/history/RepositoryForgeBinding/AutomationBinding state, start restore, or mutate Source Control/Backup state.
-  - Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content, or count Backup statistics as model usage.
-  - Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness proof from static Plans/schema/fixtures.
+- Do not show Git staging/stash in Jujutsu, label Jujutsu edits as unstaged Git, or map a Jujutsu action to hidden Git
+  mutation.
+- Do not infer provider, automation, auth, target, or outcome from remote name, display label, focus, or cached selection.
+- Do not combine publish and review effects without listing both, flatten outcome_unknown to failure, or paint Origin
+  blanket read-only.
+- Do not invent provider steps, workflows, pipelines, definitions, CI engines, admin success, secret readback, or runner
+  registration.
+- Do not register any of these `ui.*` local actions as a domain command, route one through a semantic-domain handler,
+  emit a domain EventRecord, persist a preview or provider/binding selection, dispatch backend selection from the profile
+  preview, change backend/repository/workspace/history/RepositoryForgeBinding/AutomationBinding state, start restore,
+  or mutate Source Control/Backup state.
+- Do not equate provider CI with local proof, auto-execute downloaded artifacts, show routine Synced, expose secret content,
+  or count Backup statistics as model usage.
+- Do not claim native Slint, visual, motion, accessibility, performance, handler, provider, runtime, security, or readiness
+  proof from static Plans/schema/fixtures.
 owner_boundary_notes:
-  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, routes, and the two typed owner-local request/result profiles only; Forge owns AutomationBinding truth, Backup owns history/restore truth, and all semantic effects remain with their named domain owners.
+- Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, routes, and the
+  two typed owner-local request/result profiles only; Forge owns AutomationBinding truth, Backup owns history/restore
+  truth, and all semantic effects remain with their named domain owners.
 ```
-
 ### F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation
 
 ```yaml

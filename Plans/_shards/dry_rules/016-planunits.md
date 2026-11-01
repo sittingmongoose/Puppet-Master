@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2058
+Source lines: L265-L2069
 
-Source SHA256: `08ee186752cc01d0c87586113e20efa00b71c9310c490fa113cc7e7e5254caf5`
+Source SHA256: `b9dedc7fea74f0dc423055ac0a8a152845146be233c472052853e60c9a259e00`
 
 ---
 
@@ -152,14 +152,20 @@ plan_unit_id: DR-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/DRY_Rules.md
-canonical_text: 'Consumer docs for orchestration, routing, runtime identity, approval, or worktree/lane behavior
-  consume owning contracts instead of restating feature-local canon.
+canonical_text: 'Consumer docs for orchestration, routing, runtime identity, approval, or worktree/lane behavior consume
+  owning contracts instead of restating feature-local canon.
 
 
-  DL-273, Jared 2026-11-01: The Forge owner supplies one provider/variant admission rule to onboarding, Settings,
-  command validation and the stored onboarding bundle. Retiring hosted Forgejo removes its variant from those consumers
-  together; no consumer maintains a second list or treats a retired value as verified authority. The separate restricted-token
-  deferral leaves existing auth ownership unchanged.'
+  DL-273, Jared 2026-11-01: The Forge owner supplies one provider/variant admission rule to onboarding, Settings, command
+  validation and the stored onboarding bundle. Retiring hosted Forgejo removes its variant from those consumers together;
+  no consumer maintains a second list or treats a retired value as verified authority. The separate restricted-token
+  deferral leaves existing auth ownership unchanged.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: false
 gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
 split_recommended: false
@@ -168,12 +174,17 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
-- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries
+  from the source span remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
-- 'DL-273, Jared 2026-11-01: The Forge owner supplies one provider/variant admission rule to onboarding, Settings,
-  command validation and the stored onboarding bundle. Retiring hosted Forgejo removes its variant from those consumers
-  together; no consumer maintains a second list or treats a retired value as verified authority. The separate restricted-token
+- 'DL-273, Jared 2026-11-01: The Forge owner supplies one provider/variant admission rule to onboarding, Settings, command
+  validation and the stored onboarding bundle. Retiring hosted Forgejo removes its variant from those consumers together;
+  no consumer maintains a second list or treats a retired value as verified authority. The separate restricted-token
   deferral leaves existing auth ownership unchanged.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -189,6 +200,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0004
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - orchestration
 - routing
@@ -204,7 +216,6 @@ owner_boundary_notes: []
 owner_hints:
 - Plans/DRY_Rules.md
 ```
-
 ### DR-006 - Owner-First Reconciliation
 
 ```yaml

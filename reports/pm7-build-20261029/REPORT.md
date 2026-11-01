@@ -1,3 +1,12 @@
+# Plans lane — DL-273 additional removals in progress, 2026-11-01
+
+Jared’s additional answer is recorded in the unlanded DL-273: Gitea is self-managed only and Cursor Origin source control is removed. Cursor AI remains unchanged. Nine ORI owner anchors are retired in place with no operational offering; generic Git/mirror/auth safeguards remain in their existing owners. The lead approved this retirement treatment in1101191011-e8cd.
+
+Prose phase is complete across owner/index/crosswalk/command/settings/DRY/wiring/GUI units. Companion narrowing, the dedicated inspector’s removal, fixture changes, source merge, fresh checks and a delta audit/dry follow. The prior green checks below certify the earlier source, not this amendment.
+
+The former source packet is hash-pinned historical input. Its existing current_requirement_amendments layer will supersede the retired offers; source-body hashes and protected governance will not be refreshed. No browser, landing lock or landing.
+
+---
 # Plans lane — DL-273 follow-up complete, 2026-11-01
 
 **Final dry exit 1: zero blocking items and no timeouts.** Exact audited and checked head `7a133bfc8bc61aedc868ce09b646033148310aad`, based on main `07dbf437860b1a1fd560b9b4dbcfcfb863490f68`, is pushed. The independent Sol 6.1 max audit has zero open blockers, majors or minors. This close-out changes report metadata only; its final SHA is mailed after push.

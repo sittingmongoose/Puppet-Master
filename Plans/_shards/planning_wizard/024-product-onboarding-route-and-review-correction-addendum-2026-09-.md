@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2557-L2836
+Source lines: L2565-L2850
 
-Source SHA256: `24865422702cec8e4b3b3384e63636d852a2a8d75ccfea33b632dc7e88973ab5`
+Source SHA256: `18f868fbe0b8206017ffe7c5b5d42057ce506adeed4804309deaab95ace7db30`
 
 ---
 
@@ -33,39 +33,38 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   choice remains the easy local-work default. The wizard says AI accounts available in this setup, not every AI. Existing
   Settings routes and owners retain the advanced capabilities. Audit FF-01..12: Review binds the exact provider/instance/account
   and repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal
-  repositories cannot be Internal. Origin personal repositories are Private; eligible team codebases may be Private or
-  Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds
-  an authorized workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an
-  actual project key, including a supported personal Project. Azure Services binds organization and team Project; Server
-  binds collection URI and team Project; selecting an existing repository carries its owner-resolved Project identity.
-  Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth choices;
-  current provider-specific naming and Git ref validation precede availability. The selected actual auth method and least-privilege
-  scopes must match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
-  with expandable exact details and owner-routed Edit links. DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google
-  Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible, SFTP and WebDAV backup choices, retaining their exact owner
-  family/profile/locator identity. Azure Blob, Google Cloud Storage and REST-server destinations remain available in
-  Settings > Backup & Restore, with a clear pointer. The Backup owner still supports all eleven registered families.
-  D2 A: repository object-format selection and its permanence acknowledgement belong in Settings, not onboarding. Existing-repository
-  format observation, unknown/capability handling and the Source Control owner’s safeguards remain unchanged. DL-259
-  H8: Naming and Review show the actual resolved NFS, SMB or already-connected share/path selected by the source owner,
-  preserving its identity instead of displaying an empty local-only field. DL-259 late integration, 2026-10-31: for an
-  unnamed Project using the automatic local destination, Name shows the base destination plus “in a folder with your
-  Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master, in a folder with your Project''s
-  name”. A placeholder or unselected suggestion never supplies a chosen folder leaf. Typing a name or explicitly choosing
-  a suggestion adds that current draft name; clearing it restores the generic line. The local-location picker’s On this
-  computer card names the base destination. Existing folders and selected network/mounted/remote sources still display
-  their actual resolved location under H8. These are truthful draft previews and create no folder or Project before the
-  reviewed commit. DL-259 late integration, 2026-10-31: a typed online-service address belongs to that service and its
-  hosted/self-managed variant. Switching choices retains each choice’s own draft text for return and never substitutes
-  another service’s address. An untouched or resumed choice resolves its actual current service, default variant and
-  address consistently. Only the selected service/variant/address enters the reviewed setup plan. Changing the service,
-  variant or instance invalidates incompatible account, repository, visibility and auth/preflight proofs under the existing
-  owners. Remembered address text conveys no authentication or readiness and creates no setting, account registry or
-  new durable storage family. DL-259 late integration, 2026-10-31: the online-copy/import service screen’s displayed
-  selection, Continue availability/reason and activation consume one current resolved service/variant/address validation
-  result. A missing or invalid required address keeps Continue unavailable, and activation rechecks that same current
-  choice before any navigation, draft acceptance or owner dispatch; refusal has no partial effect or crash. Untouched
+  repositories cannot be Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy.
+  Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility; Data
+  Center resolves an actual project key, including a supported personal Project. Azure Services binds organization and
+  team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
+  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo and
+  Gitea are self-managed only (DL-273). Each requires a real instance profile (DL-273). Provider/owner changes invalidate
+  incompatible visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability.
+  The selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.
+  DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible,
+  SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud
+  Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup
+  owner still supports all eleven registered families. D2 A: repository object-format selection and its permanence acknowledgement
+  belong in Settings, not onboarding. Existing-repository format observation, unknown/capability handling and the Source
+  Control owner’s safeguards remain unchanged. DL-259 H8: Naming and Review show the actual resolved NFS, SMB or already-connected
+  share/path selected by the source owner, preserving its identity instead of displaying an empty local-only field. DL-259
+  late integration, 2026-10-31: for an unnamed Project using the automatic local destination, Name shows the base destination
+  plus “in a folder with your Project’s name”. With the factory base the line is “Kept in Documents › Puppet Master,
+  in a folder with your Project''s name”. A placeholder or unselected suggestion never supplies a chosen folder leaf.
+  Typing a name or explicitly choosing a suggestion adds that current draft name; clearing it restores the generic line.
+  The local-location picker’s On this computer card names the base destination. Existing folders and selected network/mounted/remote
+  sources still display their actual resolved location under H8. These are truthful draft previews and create no folder
+  or Project before the reviewed commit. DL-259 late integration, 2026-10-31: a typed online-service address belongs
+  to that service and its hosted/self-managed variant. Switching choices retains each choice’s own draft text for return
+  and never substitutes another service’s address. An untouched or resumed choice resolves its actual current service,
+  default variant and address consistently. Only the selected service/variant/address enters the reviewed setup plan.
+  Changing the service, variant or instance invalidates incompatible account, repository, visibility and auth/preflight
+  proofs under the existing owners. Remembered address text conveys no authentication or readiness and creates no setting,
+  account registry or new durable storage family. DL-259 late integration, 2026-10-31: the online-copy/import service
+  screen’s displayed selection, Continue availability/reason and activation consume one current resolved service/variant/address
+  validation result. A missing or invalid required address keeps Continue unavailable, and activation rechecks that same
+  current choice before any navigation, draft acceptance or owner dispatch; refusal has no partial effect or crash. Untouched
   defaults, Review Edit and resumed choices use that same interpretation. Protect Connect and restore destination Continue
   likewise recheck their displayed owner prerequisites at activation. Existing domain permission, exact identity, generation
   and currentness gates remain authoritative; a visually enabled button alone never authorizes owner work.
@@ -115,16 +114,21 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   through the existing auth owner. Opening a token form or typing a token does not mark it Ready.
 
 
-  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only
-  forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
-  variants. A retired hosted variant value is not a valid current instance, adapter or setup-plan profile and
-  grants no account, repository or connection authority. Returning to a self-managed choice still requires its
-  explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
-  existing account-based identification, authentication and repository selection remain unchanged, with no new
-  restricted-token support admitted.'
+  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
+  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review
-  projection, and defer behavior.
+gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection,
+  and defer behavior.
 depends_on:
 - PWIZ-021
 - SCS-012
@@ -142,9 +146,6 @@ acceptance_criteria:
   mounted, SMB, NFS, and SSH storage choices do not force Server or Client identity.
 - Local Safe History explicitly selects Git or Jujutsu without an account; FileSafe is an independent complementary safeguard;
   an online copy is optional and requires a verified forge account plus an explicit repository binding.
-- Cursor Origin is a real eligible hosted Git destination in `Bring one from online` and optional online-copy setup,
-  with Private visibility for personal repositories and Private or Internal for eligible team codebases; it is never
-  rendered as a no-host or no-repository pseudo-option.
 - The connect-existing stage first records one of four routes — Local or VPN, Tailscale with hosted or Headscale control,
   Reverse proxy, or Puppet Master Remote Link; bounded read-only discovery may project candidate endpoints before Review,
   while identity verification and pairing by approval, code, or QR remain owner-controlled work after confirmation.
@@ -167,16 +168,16 @@ acceptance_criteria:
   The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts available in this
   setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. Audit FF-01..12: Review
   binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible enterprise
-  organization capability; personal repositories cannot be Internal. Origin personal repositories are Private; eligible
-  team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility
-  policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility;
-  Data Center resolves an actual project key, including a supported personal Project. Azure Services binds organization
-  and team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
-  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth
-  choices; current provider-specific naming and Git ref validation precede availability. The selected actual auth method
-  and least-privilege scopes must match the saved instance profile. Review shows privacy, target/instance, branch and
-  material creation consequences, with expandable exact details and owner-routed Edit links.'
+  organization capability; personal repositories cannot be Internal. GitLab uses the exact personal/group/subgroup namespace
+  and instance visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with
+  visibility compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure
+  Services binds organization and team Project; Server binds collection URI and team Project; selecting an existing repository
+  carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated
+  Internal value; Forgejo and Gitea are self-managed only (DL-273). Each requires a real instance profile (DL-273). Provider/owner
+  changes invalidate incompatible visibility/container/auth choices; current provider-specific naming and Git ref validation
+  precede availability. The selected actual auth method and least-privilege scopes must match the saved instance profile.
+  Review shows privacy, target/instance, branch and material creation consequences, with expandable exact details and
+  owner-routed Edit links.'
 - 'DL-259, Jared 2026-10-31: D2 A: onboarding offers NAS, Google Drive, OneDrive, Amazon S3, Backblaze B2, S3-compatible,
   SFTP and WebDAV backup choices, retaining their exact owner family/profile/locator identity. Azure Blob, Google Cloud
   Storage and REST-server destinations remain available in Settings > Backup & Restore, with a clear pointer. The Backup
@@ -230,12 +231,16 @@ acceptance_criteria:
   every supported service, rather than naming only GitHub. It promises repository setup, not website publishing.'
 - 'DL-272 M8-CHECK-TOKEN, 2026-11-01: The token validation action says Check token and checks the current protected input
   through the existing auth owner. Opening a token form or typing a token does not mark it Ready.'
-- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired hosted variant
+- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
   value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
-  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
-  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
-  and repository selection remain unchanged, with no new restricted-token support admitted.'
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -270,6 +275,7 @@ source_lineage:
   Source spellings are lineage, not product API.
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - Start a new project
 - Open a folder here
@@ -285,6 +291,6 @@ negative_constraints:
 - Do not conflate local Safe History, FileSafe, and optional forge hosting.
 - Do not add a recognition checkbox or claim reachability establishes trust.
 - Do not create new commands, handlers, owner engines, or runtime-readiness evidence in Onboarding.
-- Do not expand bounded selected-source access into precommit Project/repository/filesystem/Settings mutation or
-  broad provider setup.
+- Do not expand bounded selected-source access into precommit Project/repository/filesystem/Settings mutation or broad
+  provider setup.
 ```

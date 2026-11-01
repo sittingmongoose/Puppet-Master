@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2555
+Source lines: L1781-L2563
 
-Source SHA256: `24865422702cec8e4b3b3384e63636d852a2a8d75ccfea33b632dc7e88973ab5`
+Source SHA256: `18f868fbe0b8206017ffe7c5b5d42057ce506adeed4804309deaab95ace7db30`
 
 ---
 
@@ -178,56 +178,56 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   bound to the exact operation, initiating Client/session/generation and execution host. Changing account, host or route
   invalidates stale validation; another account of the same provider has a distinct identity. Audit FF-01..12: Review
   binds the exact provider/instance/account and repository or creation target. GitHub Internal requires an eligible enterprise
-  organization capability; personal repositories cannot be Internal. Origin personal repositories are Private; eligible
-  team codebases may be Private or Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility
-  policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility;
-  Data Center resolves an actual project key, including a supported personal Project. Azure Services binds organization
-  and team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
-  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth
-  choices; current provider-specific naming and Git ref validation precede availability. The selected actual auth method
-  and least-privilege scopes must match the saved instance profile. Review shows privacy, target/instance, branch and
-  material creation consequences, with expandable exact details and owner-routed Edit links. DL-259, Jared 2026-10-31,
-  D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its default auth surface. A user
-  key bills that user’s plan and a service-account key its owning team; these remain distinct account/billing identities.
-  cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it does not rename or absorb the
-  SDK entry. alibaba_token_plan is a separate direct-provider entry for Alibaba Token Plan, a monthly-credit subscription
-  with its own key and Singapore route identity, distinct from Alibaba Coding Plan and DashScope pay-as-you-go. MiniMax
-  M Plan is the current label, with MiniMax Coding Plan retained as a former-name/search alias; OpenCode Console replaces
-  the Zen display name and is a pay-as-you-go gateway. A label change never changes a saved provider/account ID. DL-259
-  P18/D5: any currently usable free route contributes to the same AI readiness summary as a usable paid route. A free-only
-  setup can be Ready; catalog presence or sign-in alone still cannot prove usability. DL-259 srv final, 2026-10-31: what
-  the person actually set up is what the app shows. Enter/finish binds the shell, Settings and status views to the stable
-  Client, Server, Execution Host, route and Project identities supplied by current owner results and registries, with
-  their actual readiness/deferred state. Display names never become IDs, and the reviewed setup plan is intent rather
-  than effective state. Onboarding creates no second account/server/Project registry or durable handoff writer; its initial
-  context is a non-authoritative join of existing owner receipts/projections, followed by their normal updates. No concept-global
-  object, event or store key is a product contract. DL-259 P10 / QA2 M7, 2026-10-31: retain the provider category the
-  person chose under No account yet when returning to AI setup, and present that category’s providers first. This is
-  reversible local navigation/draft state, not a persisted preference, account connection, provider readiness result
-  or owner mutation. DL-259 late integration, 2026-10-31: pressing the AI phase’s Skip for now immediately acknowledges
-  the skipped choice and brings its concise skipped-state/consequence message into view at the start of that step, rather
-  than leaving the feedback below a long provider list. It does not wait for detection, sign-in or key checks. Optional
-  Free Models remains available and continuation reflects the explicit phase skip. No account becomes Ready from skipping;
-  current paid/free account usability still comes from its owner. This phase skip remains distinct from whole-session
-  Skip. Reduced Motion reveals the feedback in its settled position. DL-259 FO-4, 2026-10-31: onboarding provider rows
-  and connected-account summaries show the category and concise product/account identity without billing explanations,
-  prices, limits or extra-usage pitches. Retain useful category names and exact account/product distinctions; this presentation
-  rule does not alter the provider owner’s charging model, auth surface, account identity or credential custody. DL-259
-  FO-9 final, 2026-10-31: Creating’s checklist and block stack share the accepted owner’s phase/effect projection. When
-  GitHub creation only partly settles, show only verified completed phases as checked or landed blocks; the phase proven
-  to have failed may show failure and unexecuted/unproven phases remain pending. Unexecuted or unproven phases stay pending
-  through an incomplete or unclear result until a later accepted owner result from Continue Setup or Check again proves
-  those effects settled. The checklist, stage block count and stage progress use that same result; a settled phase keeps
-  its block and an unproven phase has no completed block. Refresh alone neither completes a phase nor repeats a settled
-  remote create. Transport completion and animation never prove the later registration, settings or connection steps.
-  The recovery banner/actions, Continue availability and Ready use that same current owner result; O12’s last-block landing
-  condition is additional to owner completion, never a replacement for it. DL-271 FO-11, 2026-10-31: where an OpenCode
-  server requires its own HTTP Basic credentials, the Password field asks for that server’s password, not an AI provider’s
-  API key or the person’s Puppet Master sign-in. Its hint states that distinction and identifies credential custody in
-  the OS keychain on the selected execution host, through the existing credential owner. Optional server auth stays optional
-  when the server needs none. Protected entry, secret-free readback and exact host/account binding remain; an API-key-only
-  hint is used only on an actual API-key field.
+  organization capability; personal repositories cannot be Internal. GitLab uses the exact personal/group/subgroup namespace
+  and instance visibility policy. Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with
+  visibility compatibility; Data Center resolves an actual project key, including a supported personal Project. Azure
+  Services binds organization and team Project; Server binds collection URI and team Project; selecting an existing repository
+  carries its owner-resolved Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated
+  Internal value; Forgejo and Gitea are self-managed only (DL-273). Each requires a real instance profile (DL-273). Provider/owner
+  changes invalidate incompatible visibility/container/auth choices; current provider-specific naming and Git ref validation
+  precede availability. The selected actual auth method and least-privilege scopes must match the saved instance profile.
+  Review shows privacy, target/instance, branch and material creation consequences, with expandable exact details and
+  owner-routed Edit links. DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry,
+  with API key as its default auth surface. A user key bills that user’s plan and a service-account key its owning team;
+  these remain distinct account/billing identities. cursor_cli keeps browser login as its default and an advanced optional
+  CLI-key path; it does not rename or absorb the SDK entry. alibaba_token_plan is a separate direct-provider entry for
+  Alibaba Token Plan, a monthly-credit subscription with its own key and Singapore route identity, distinct from Alibaba
+  Coding Plan and DashScope pay-as-you-go. MiniMax M Plan is the current label, with MiniMax Coding Plan retained as
+  a former-name/search alias; OpenCode Console replaces the Zen display name and is a pay-as-you-go gateway. A label
+  change never changes a saved provider/account ID. DL-259 P18/D5: any currently usable free route contributes to the
+  same AI readiness summary as a usable paid route. A free-only setup can be Ready; catalog presence or sign-in alone
+  still cannot prove usability. DL-259 srv final, 2026-10-31: what the person actually set up is what the app shows.
+  Enter/finish binds the shell, Settings and status views to the stable Client, Server, Execution Host, route and Project
+  identities supplied by current owner results and registries, with their actual readiness/deferred state. Display names
+  never become IDs, and the reviewed setup plan is intent rather than effective state. Onboarding creates no second account/server/Project
+  registry or durable handoff writer; its initial context is a non-authoritative join of existing owner receipts/projections,
+  followed by their normal updates. No concept-global object, event or store key is a product contract. DL-259 P10 /
+  QA2 M7, 2026-10-31: retain the provider category the person chose under No account yet when returning to AI setup,
+  and present that category’s providers first. This is reversible local navigation/draft state, not a persisted preference,
+  account connection, provider readiness result or owner mutation. DL-259 late integration, 2026-10-31: pressing the
+  AI phase’s Skip for now immediately acknowledges the skipped choice and brings its concise skipped-state/consequence
+  message into view at the start of that step, rather than leaving the feedback below a long provider list. It does not
+  wait for detection, sign-in or key checks. Optional Free Models remains available and continuation reflects the explicit
+  phase skip. No account becomes Ready from skipping; current paid/free account usability still comes from its owner.
+  This phase skip remains distinct from whole-session Skip. Reduced Motion reveals the feedback in its settled position.
+  DL-259 FO-4, 2026-10-31: onboarding provider rows and connected-account summaries show the category and concise product/account
+  identity without billing explanations, prices, limits or extra-usage pitches. Retain useful category names and exact
+  account/product distinctions; this presentation rule does not alter the provider owner’s charging model, auth surface,
+  account identity or credential custody. DL-259 FO-9 final, 2026-10-31: Creating’s checklist and block stack share the
+  accepted owner’s phase/effect projection. When GitHub creation only partly settles, show only verified completed phases
+  as checked or landed blocks; the phase proven to have failed may show failure and unexecuted/unproven phases remain
+  pending. Unexecuted or unproven phases stay pending through an incomplete or unclear result until a later accepted
+  owner result from Continue Setup or Check again proves those effects settled. The checklist, stage block count and
+  stage progress use that same result; a settled phase keeps its block and an unproven phase has no completed block.
+  Refresh alone neither completes a phase nor repeats a settled remote create. Transport completion and animation never
+  prove the later registration, settings or connection steps. The recovery banner/actions, Continue availability and
+  Ready use that same current owner result; O12’s last-block landing condition is additional to owner completion, never
+  a replacement for it. DL-271 FO-11, 2026-10-31: where an OpenCode server requires its own HTTP Basic credentials, the
+  Password field asks for that server’s password, not an AI provider’s API key or the person’s Puppet Master sign-in.
+  Its hint states that distinction and identifies credential custody in the OS keychain on the selected execution host,
+  through the existing credential owner. Optional server auth stays optional when the server needs none. Protected entry,
+  secret-free readback and exact host/account binding remain; an API-key-only hint is used only on an actual API-key
+  field.
 
 
   DL-272 RV-1/RV-17 and Free Models, 2026-11-01: provider setup remains post-Project-commit. Existing Ready accounts
@@ -242,16 +242,20 @@ canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage
   writes, endpoint mutation or PM trust before their existing commit/Review boundaries.
 
 
-  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only
-  forgejo_self_managed and requires the person’s actual server address; Gitea retains its own admitted
-  variants. A retired hosted variant value is not a valid current instance, adapter or setup-plan profile and
-  grants no account, repository or connection authority. Returning to a self-managed choice still requires its
-  explicit address and current owner verification. Jared left repository-restricted Forgejo tokens for now;
-  existing account-based identification, authentication and repository selection remain unchanged, with no new
-  restricted-token support admitted.'
+  DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
+  value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
-  presentation.
+gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state presentation.
 depends_on:
 - SIR-003
 - PSB-001
@@ -341,16 +345,15 @@ acceptance_criteria:
   Client/session/generation and execution host. Changing account, host or route invalidates stale validation; another
   account of the same provider has a distinct identity. Audit FF-01..12: Review binds the exact provider/instance/account
   and repository or creation target. GitHub Internal requires an eligible enterprise organization capability; personal
-  repositories cannot be Internal. Origin personal repositories are Private; eligible team codebases may be Private or
-  Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy. Bitbucket Cloud binds
-  an authorized workspace and explicit chosen/default Project with visibility compatibility; Data Center resolves an
-  actual project key, including a supported personal Project. Azure Services binds organization and team Project; Server
-  binds collection URI and team Project; selecting an existing repository carries its owner-resolved Project identity.
-  Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo is self-managed
-  only, while Gitea retains hosted and self-managed choices. Each requires a real instance profile (DL-273). Provider/owner changes invalidate incompatible visibility/container/auth choices;
-  current provider-specific naming and Git ref validation precede availability. The selected actual auth method and least-privilege
-  scopes must match the saved instance profile. Review shows privacy, target/instance, branch and material creation consequences,
-  with expandable exact details and owner-routed Edit links.'
+  repositories cannot be Internal. GitLab uses the exact personal/group/subgroup namespace and instance visibility policy.
+  Bitbucket Cloud binds an authorized workspace and explicit chosen/default Project with visibility compatibility; Data
+  Center resolves an actual project key, including a supported personal Project. Azure Services binds organization and
+  team Project; Server binds collection URI and team Project; selecting an existing repository carries its owner-resolved
+  Project identity. Forgejo/Gitea use Public/Private repository privacy, not a fabricated Internal value; Forgejo and
+  Gitea are self-managed only (DL-273). Each requires a real instance profile (DL-273). Provider/owner changes invalidate
+  incompatible visibility/container/auth choices; current provider-specific naming and Git ref validation precede availability.
+  The selected actual auth method and least-privilege scopes must match the saved instance profile. Review shows privacy,
+  target/instance, branch and material creation consequences, with expandable exact details and owner-routed Edit links.'
 - 'DL-259, Jared 2026-10-31, D4/D6: cursor_sdk is the separate Cursor SDK direct-provider entry, with API key as its
   default auth surface. A user key bills that user’s plan and a service-account key its owning team; these remain distinct
   account/billing identities. cursor_cli keeps browser login as its default and an advanced optional CLI-key path; it
@@ -402,12 +405,16 @@ acceptance_criteria:
 - 'DL-272 RV-3: in connect-existing only, an explicit native-Client Tailscale/Headscale Sign in may precede the Server
   list through the existing auth owner. This narrow human-authorized exception does not admit provider setup, Project
   writes, endpoint mutation or PM trust before their existing commit/Review boundaries.'
-- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed
-  and requires the person’s actual server address; Gitea retains its own admitted variants. A retired hosted variant
+- 'DL-273, Jared 2026-11-01: hosted Forgejo is not offered. Forgejo exposes only forgejo_self_managed and requires the
+  person’s actual server address; Gitea also exposes only its self-managed variant (DL-273). A retired hosted variant
   value is not a valid current instance, adapter or setup-plan profile and grants no account, repository or connection
-  authority. Returning to a self-managed choice still requires its explicit address and current owner verification.
-  Jared left repository-restricted Forgejo tokens for now; existing account-based identification, authentication
-  and repository selection remain unchanged, with no new restricted-token support admitted.'
+  authority. Returning to a self-managed choice still requires its explicit address and current owner verification. Jared
+  left repository-restricted Forgejo tokens for now; existing account-based identification, authentication and repository
+  selection remain unchanged, with no new restricted-token support admitted.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -461,25 +468,26 @@ source_lineage:
   Source spellings are lineage, not product API.
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
 - Delete Repository
 negative_constraints:
-- Do not create a Project, destination, history, repository, clone/import, Settings apply, sync/backup binding or
-  broad provider work before the reviewed commit.
+- Do not create a Project, destination, history, repository, clone/import, Settings apply, sync/backup binding or broad
+  provider work before the reviewed commit.
 - Do not treat selected-source auth consent as broad provider, repository or Project authority.
 - Do not fabricate Project/account/profile/installation identities or copy secrets.
-- Do not add an Onboarding engine, command family, wrapper command, second Settings copy catalog or Free Models
-  credential model.
+- Do not add an Onboarding engine, command family, wrapper command, second Settings copy catalog or Free Models credential
+  model.
 - Do not restore provider-first/four/five/seven/nine-stage predecessors as current producers.
 - Do not synthesize readiness or progress from time, cache or UI state.
 - Do not turn the modal into a full-page route or nested-modal manager.
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
 stale_retired_dispositions:
-  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
+- 'Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice,
+  including NieR Mode.'
 ```
-
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
 
 ```yaml

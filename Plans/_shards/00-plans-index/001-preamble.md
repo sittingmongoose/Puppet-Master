@@ -4,13 +4,13 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L1-L61
 
-Source SHA256: `b1dc9b19938b51d29c12e2775e956266a8033cfb5dc848bc94feac29850205d9`
+Source SHA256: `6d840220f57da91cbc1ebfc8046c0f2d5d829091db83fc71c28cdfd7dfbefd72`
 
 ---
 
 # Plans Index (authoritative map)
 
-- 2026-11-01: DL-273 records Jared’s answers: hosted Forgejo is not offered; Forgejo is a server the person runs. Hosting terms must permit AI-written Projects. Published and embedded profile variants follow FGI-011; existing commands, settings and owner verification remain. Repository-restricted Forgejo token support is deliberately left for now with the current account-based flow unchanged.
+- 2026-11-01: DL-273 records Jared’s answers, including Gitea self-managed only and retirement of Cursor Origin source control (Cursor AI unchanged): hosted Forgejo is not offered; Forgejo and Gitea are servers the person runs. Hosting terms must permit AI-written Projects. Published and embedded profile variants follow FGI-011; existing commands, settings and owner verification remain. Repository-restricted Forgejo token support is deliberately left for now with the current account-based flow unchanged.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Forge_Integrations.md#FGI-011, ContractName:Plans/Planning_Wizard.md#PWIZ-024
 
 - 2026-11-01: DL-272 final FO-16/FO-18/FO-19 delta: another choice ends the old refusal without a cheer; no usable AI or Free Models keeps Almost ready calm in every look; long detail values wrap with a fingerprint hash whole on its own line when needed. Existing validation, identity confirmation and O12 gates remain. DL-273 subsequently closes hosted Forgejo by removal and records restricted-token support as deliberately left for now.

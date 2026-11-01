@@ -7852,10 +7852,22 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   fences remain unchanged. DL-259 FO-6/FO-7/FO-8/FO-9, 2026-10-31: protected-field redraw, Copy acknowledgment and answered
   pairing create no new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
   fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
-  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
+  Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
+gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local
+  Product Onboarding actions.
+depends_on:
+- PWIZ-021
+- PWIZ-022
+- PWIZ-023
+- UCC-102
+- CS-053
 unblocks: []
 acceptance_criteria:
 - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration,
@@ -7952,16 +7964,20 @@ acceptance_criteria:
   new command, receipt or event. Existing local actions retain their owner handoffs and exact operation/generation/return
   fences. Submit reads live protected input (PWIZ-022); refresh does not repeat a completed pairing request (SRV-004);
   Creating checks/blocks consume the current owner’s verified effects (PWIZ-021), including partial GitHub recovery.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - Plans/product_onboarding_contracts.schema.json
-  - Plans/product_onboarding_contract_fixtures.json
+- python3 scripts/pm-plan-index.py validate
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
 risk_class: onboarding_command_lineage_revival
 reasoning_tier: high
 context_scope: product_onboarding_local_actions_and_command_lineage
 implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Planning_Wizard.md
 node_compile_hint:
   mode: product_onboarding_local_action_lineage
   create_worknodes: false
@@ -7991,89 +8007,116 @@ source_lineage:
   sweep; source implementation serviceChoice and address map are lineage only.
 - Concepts/onboarding/opus-5.5/src/js/73-screens-ai.js at cf0ae92b9a; 638b68f169 makes phase-skip feedback immediately
   visible. Source DOM keys, callback helpers and demonstration controls are not product APIs.
-source_atom_ids: [atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
-decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+source_atom_ids:
+- atom-0032
+- atom-0033
+- atom-0035
+- atom-0036
+- atom-0037
+- atom-0038
+- atom-0040
+- atom-0041
+- atom-0042
+- atom-0043
+- atom-0045
+- atom-0046
+- atom-0047
+decision_refs:
+- dec-0003
+- dec-0004
+- dec-0006
+- dec-0007
+- dec-0008
 preserved_exact_tokens:
-  - "cmd.onboarding.first_run.open"
-  - "cmd.onboarding.provider_setup.open"
-  - "cmd.onboarding.provider_setup.use_provider"
-  - "cmd.onboarding.skip_to_planning_wizard"
-  - "cmd.onboarding.free_models.review"
-  - "cmd.onboarding.free_models.defer"
-  - "cmd.onboarding.review_setup"
-  - "cmd.onboarding.open_planning_wizard"
-  - "cmd.onboarding.free_models.refresh"
-  - "cmd.onboarding.free_models.retry"
-  - "cmd.onboarding.free_models.setup"
-  - "cmd.health.provider_setup.open"
-  - "ui.onboarding.start"
-  - "ui.onboarding.next"
-  - "ui.onboarding.back"
-  - "ui.onboarding.close"
-  - "ui.onboarding.skip"
-  - "ui.onboarding.defer"
-  - "ui.onboarding.open_details"
-  - "ui.onboarding.more_ways"
-  - "ui.onboarding.choose_simple_path"
-  - "ui.onboarding.open_owner_flow"
-  - "ui.onboarding.run_automatic_preparation"
-  - "ui.onboarding.choose_first_project"
-  - "ui.onboarding.finish"
-  - "ui.onboarding.choose_look"
-  - "local_context"
-  - "skip_product_onboarding"
-  - "skip_optional_scope"
-  - "toggle_setup_options"
-  - "update_branch_state"
-  - "session_skipped"
-  - "optional_scope_skipped"
-  - "Set up a paid provider"
-  - "Skip for now"
-  - "Use this provider"
-  - "Sign in"
-  - "Set up provider"
-  - "Reconnect"
-  - "Review Free Models"
-  - "Maybe later"
-  - "Continue to Planning Wizard"
-  - "Open Planning Wizard"
-  - "Review setup"
-  - "onboarding_setup_state"
-  - "Teacher"
-  - "/teach"
-  - "cmd.onboarding.back"
-  - "cmd.onboarding.cancel"
-  - "cmd.onboarding.continue"
-  - "cmd.onboarding.defer"
-  - "cmd.onboarding.finish"
-  - "cmd.onboarding.open_details"
-  - "cmd.onboarding.resume"
-  - "cmd.onboarding.skip"
+- cmd.onboarding.first_run.open
+- cmd.onboarding.provider_setup.open
+- cmd.onboarding.provider_setup.use_provider
+- cmd.onboarding.skip_to_planning_wizard
+- cmd.onboarding.free_models.review
+- cmd.onboarding.free_models.defer
+- cmd.onboarding.review_setup
+- cmd.onboarding.open_planning_wizard
+- cmd.onboarding.free_models.refresh
+- cmd.onboarding.free_models.retry
+- cmd.onboarding.free_models.setup
+- cmd.health.provider_setup.open
+- ui.onboarding.start
+- ui.onboarding.next
+- ui.onboarding.back
+- ui.onboarding.close
+- ui.onboarding.skip
+- ui.onboarding.defer
+- ui.onboarding.open_details
+- ui.onboarding.more_ways
+- ui.onboarding.choose_simple_path
+- ui.onboarding.open_owner_flow
+- ui.onboarding.run_automatic_preparation
+- ui.onboarding.choose_first_project
+- ui.onboarding.finish
+- ui.onboarding.choose_look
+- local_context
+- skip_product_onboarding
+- skip_optional_scope
+- toggle_setup_options
+- update_branch_state
+- session_skipped
+- optional_scope_skipped
+- Set up a paid provider
+- Skip for now
+- Use this provider
+- Sign in
+- Set up provider
+- Reconnect
+- Review Free Models
+- Maybe later
+- Continue to Planning Wizard
+- Open Planning Wizard
+- Review setup
+- onboarding_setup_state
+- Teacher
+- /teach
+- cmd.onboarding.back
+- cmd.onboarding.cancel
+- cmd.onboarding.continue
+- cmd.onboarding.defer
+- cmd.onboarding.finish
+- cmd.onboarding.open_details
+- cmd.onboarding.resume
+- cmd.onboarding.skip
 negative_constraints:
-  - Do not register, alias, normalize, or wire any retained cmd.onboarding.* token into the current Product Onboarding flow.
-  - Do not register, alias, normalize, wire, or assign a handler to any of the eight packet candidate cmd.onboarding.* tokens.
-  - Do not treat ui.onboarding.* typed local actions as semantic commands or catalog rows.
-  - Do not let Skip, Close, Defer, Details, or Ready-screen arrival mark Doctor/Health or any owner subsystem Ready.
-  - Do not create an Onboarding-owned backend or replay owner work through a generic wrapper.
-  - Do not accept an absent/open-ended local_context, arbitrary/raw payload copy, secret-bearing value, or ambiguous more_ways/skip variant.
-  - Do not turn Product Onboarding into a routed page or add browser/route Back or breadcrumb chrome; typed Back remains local modal choreography.
-  - Do not claim native dispatcher, native Slint controller, persistence adapter, or runtime proof from schemas, fixtures, static gates, PMConcept7, or browser verification.
-  - Do not make Teacher discovery depend on slash-command knowledge.
-  - Do not create a second Teacher command payload language separate from UCC-102 and CS-053.
-  - Do not generate wiring JSON, WorkNodes, NodeSeeds, or executable queues during this compile phase.
+- Do not register, alias, normalize, or wire any retained cmd.onboarding.* token into the current Product Onboarding
+  flow.
+- Do not register, alias, normalize, wire, or assign a handler to any of the eight packet candidate cmd.onboarding.*
+  tokens.
+- Do not treat ui.onboarding.* typed local actions as semantic commands or catalog rows.
+- Do not let Skip, Close, Defer, Details, or Ready-screen arrival mark Doctor/Health or any owner subsystem Ready.
+- Do not create an Onboarding-owned backend or replay owner work through a generic wrapper.
+- Do not accept an absent/open-ended local_context, arbitrary/raw payload copy, secret-bearing value, or ambiguous more_ways/skip
+  variant.
+- Do not turn Product Onboarding into a routed page or add browser/route Back or breadcrumb chrome; typed Back remains
+  local modal choreography.
+- Do not claim native dispatcher, native Slint controller, persistence adapter, or runtime proof from schemas, fixtures,
+  static gates, PMConcept7, or browser verification.
+- Do not make Teacher discovery depend on slash-command knowledge.
+- Do not create a second Teacher command payload language separate from UCC-102 and CS-053.
+- Do not generate wiring JSON, WorkNodes, NodeSeeds, or executable queues during this compile phase.
 compatibility_only_notes:
-  - The eleven cmd.onboarding.* identifiers are retained for source search, audit, and one-time migration only; they are not aliases for ui.onboarding.* actions or owner commands.
-  - The eight packet candidate cmd.onboarding.* tokens are separate source-lineage candidates rejected as commands, aliases, and handlers because typed local ui.onboarding.* actions own their semantics.
-  - The command-era cmd.health.provider_setup.open reference grants Product Onboarding no Health/Doctor ownership; current owner work is launched only through typed owner route or intent.
+- The eleven cmd.onboarding.* identifiers are retained for source search, audit, and one-time migration only; they are
+  not aliases for ui.onboarding.* actions or owner commands.
+- The eight packet candidate cmd.onboarding.* tokens are separate source-lineage candidates rejected as commands, aliases,
+  and handlers because typed local ui.onboarding.* actions own their semantics.
+- The command-era cmd.health.provider_setup.open reference grants Product Onboarding no Health/Doctor ownership; current
+  owner work is launched only through typed owner route or intent.
 stale_retired_dispositions:
-  - The registered onboarding command-family interpretation, provider-first choreography, legacy onboarding_setup_state mutation path, and generic Onboarding handler are retired by PWIZ-021 through PWIZ-023.
+- The registered onboarding command-family interpretation, provider-first choreography, legacy onboarding_setup_state
+  mutation path, and generic Onboarding handler are retired by PWIZ-021 through PWIZ-023.
 owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/Wiring_Matrix.md
-  - Plans/FinalGUISpec.md
-  - Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/FinalGUISpec.md
+- Plans/Planning_Wizard.md
 ```
-
 ## Ledger Compile Addendum - pldg-20260630-001-feature-intake
 
 This addendum compiles containerized-host command and route obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
@@ -12357,13 +12400,13 @@ These 232 rows are the reverse-GUI projection of CS-074. They register no synthe
 |---|---|---|---|---|
 | `cmd.artifacts.create_demonstration_video` | Artifacts Create Demonstration Video | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_create_demonstration_video` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
 | `cmd.artifacts.inspect_capture_provenance` | Artifacts Inspect Capture Provenance | `Plans/Test_Capture_and_Motion_Evidence.md#TCME-008` | `handlers::test_capture::artifacts_inspect_capture_provenance` | Testing session cards, Runtime Artifacts, playback, provenance, Settings; Plans/Automated_Testing_System.md; Plans/Runtime_Artifacts_Panel.md; Plans/Section15_MVP_Promoted_Features_Spec.md; return: Exact capture session/artifact and caller focus. |
-| `cmd.auth_profile.cancel` | Auth Profile Cancel | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::cancel` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.retry` | Auth Profile Retry | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::retry` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.select` | Auth Profile Select | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::select` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.sign_in` | Auth Profile Sign In | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_in` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.sign_out` | Auth Profile Sign Out | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_out` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.submit_code` | Auth Profile Submit Code | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::submit_code` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
-| `cmd.auth_profile.verify` | Auth Profile Verify | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::verify` | Forge/Cursor Origin provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.cancel` | Auth Profile Cancel | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::cancel` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.retry` | Auth Profile Retry | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::retry` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.select` | Auth Profile Select | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::select` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.sign_in` | Auth Profile Sign In | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_in` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.sign_out` | Auth Profile Sign Out | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::sign_out` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.submit_code` | Auth Profile Submit Code | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::submit_code` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
+| `cmd.auth_profile.verify` | Auth Profile Verify | `Plans/Multi-Account_Connection_Spec.md#MACS-004` | `handlers::multi_account::verify` | Forge provider setup and owner-routed Doctor remediation; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Settings_System.md; return: Plans/multi_account_contracts.schema.json#/$defs/ReturnSettlement; exact initiating Client typed, runtime restoration unproved. |
 | `cmd.backup.browse` | Backup Browse | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_browse` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
 | `cmd.backup.cancel` | Backup Cancel | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_cancel` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
 | `cmd.backup.delete` | Backup Delete | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::backup_delete` | Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact backup/restore source, preview, result, and caller focus. |
@@ -12394,44 +12437,44 @@ These 232 rows are the reverse-GUI projection of CS-074. They register no synthe
 | `cmd.browser.workspace.close` | Browser Workspace Close | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_close` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; return: Exact workspace/page/generation and caller focus. |
 | `cmd.browser.workspace.create` | Browser Workspace Create | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_create` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; return: Exact workspace/page/generation and caller focus. |
 | `cmd.browser.workspace.reset` | Browser Workspace Reset | `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-157` | `handlers::browser_program::workspace_reset` | Browser workspace/page/program controls, Settings, Doctor, Testing; Plans/Settings_System.md; Plans/newtools.md; Plans/Test_Capture_and_Motion_Evidence.md; return: Exact workspace/page/generation and caller focus. |
-| `cmd.forge.connection.reauthorize` | Forge Connection Reauthorize | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::connection_reauthorize` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.mirror.connect` | Forge Mirror Connect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_connect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.mirror.detach` | Forge Mirror Detach | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_detach` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.mirror.inspect` | Forge Mirror Inspect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_inspect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.mirror.sync` | Forge Mirror Sync | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_sync` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.cancel` | Forge Pipeline Cancel | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.list` | Forge Pipeline List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.open_in_browser` | Forge Pipeline Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.open_job` | Forge Pipeline Open Job | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_job` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.open_logs` | Forge Pipeline Open Logs | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_logs` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.refresh` | Forge Pipeline Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.retry` | Forge Pipeline Retry | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_retry` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.pipeline.run` | Forge Pipeline Run | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_run` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.repository.list` | Forge Repository List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.repository.open_in_browser` | Forge Repository Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.repository.refresh` | Forge Repository Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.approve` | Forge Review Approve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_approve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.checkout` | Forge Review Checkout | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.close` | Forge Review Close | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.comment` | Forge Review Comment | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.connection.reauthorize` | Forge Connection Reauthorize | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::connection_reauthorize` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.connect` | Forge Mirror Connect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_connect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.detach` | Forge Mirror Detach | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_detach` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.inspect` | Forge Mirror Inspect | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_inspect` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.mirror.sync` | Forge Mirror Sync | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_sync` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.cancel` | Forge Pipeline Cancel | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.list` | Forge Pipeline List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_in_browser` | Forge Pipeline Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_job` | Forge Pipeline Open Job | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_job` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.open_logs` | Forge Pipeline Open Logs | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_logs` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.refresh` | Forge Pipeline Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.retry` | Forge Pipeline Retry | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_retry` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.pipeline.run` | Forge Pipeline Run | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_run` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.list` | Forge Repository List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.open_in_browser` | Forge Repository Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.repository.refresh` | Forge Repository Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::repository_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.approve` | Forge Review Approve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_approve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.checkout` | Forge Review Checkout | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.close` | Forge Review Close | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.comment` | Forge Review Comment | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.create` | Create Review | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_create` | Existing provider-discriminated Create Review controls under UCC-122; exact account, repository, source/target revisions and initiating route/focus; provider-owner availability and return, no synthetic control. |
-| `cmd.forge.review.edit` | Forge Review Edit | `Plans/Forge_Integrations.md#FGI-022` | `handlers::forge::review_edit` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.mark_ready` | Forge Review Mark Ready | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.edit` | Forge Review Edit | `Plans/Forge_Integrations.md#FGI-022` | `handlers::forge::review_edit` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.mark_ready` | Forge Review Mark Ready | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.merge` | Merge Review | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_merge` | Existing provider-discriminated Merge Review controls under UCC-122; exact review, repository, preflight and confirmation context; return to that review and initiating route/focus, no synthetic control. |
-| `cmd.forge.review.open` | Forge Review Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.open_in_browser` | Forge Review Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.refresh` | Forge Review Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.reopen` | Forge Review Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.request_changes` | Forge Review Request Changes | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_request_changes` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.thread.list` | Forge Review Thread List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.thread.reopen` | Forge Review Thread Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.thread.reply` | Forge Review Thread Reply | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reply` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.thread.resolve` | Forge Review Thread Resolve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_resolve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.version.compare` | Forge Review Version Compare | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_compare` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.review.version.open` | Forge Review Version Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.webhook.delivery.list` | Forge Webhook Delivery List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_delivery_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.forge.webhook.redeliver` | Forge Webhook Redeliver | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_redeliver` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
-| `cmd.installation.select` | Installation Select | `Plans/Shared_Integration_Runtime.md#SIR-030` | `handlers::installation::select` | Settings provider actions, Cursor Origin setup, Forge setup, Doctor owner-routed remediation; Plans/Settings_System.md; Plans/Forge_Integrations.md; Plans/Cursor_Origin_Integration.md; Plans/newtools.md; Plans/Release_Supply_Chain.md; return: Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement plus exact continuation; runtime activation/focus/continuation settlement unproved. |
+| `cmd.forge.review.open` | Forge Review Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.open_in_browser` | Forge Review Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.refresh` | Forge Review Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.reopen` | Forge Review Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.request_changes` | Forge Review Request Changes | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_request_changes` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.list` | Forge Review Thread List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.reopen` | Forge Review Thread Reopen | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reopen` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.reply` | Forge Review Thread Reply | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_reply` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.thread.resolve` | Forge Review Thread Resolve | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_thread_resolve` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.version.compare` | Forge Review Version Compare | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_compare` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.version.open` | Forge Review Version Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_version_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.webhook.delivery.list` | Forge Webhook Delivery List | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_delivery_list` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.webhook.redeliver` | Forge Webhook Redeliver | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::webhook_redeliver` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.installation.select` | Installation Select | `Plans/Shared_Integration_Runtime.md#SIR-030` | `handlers::installation::select` | Settings provider actions, Forge setup, Doctor owner-routed remediation; Plans/Settings_System.md; Plans/Forge_Integrations.md; Plans/newtools.md; Plans/Release_Supply_Chain.md; return: Plans/shared_integration_runtime.schema.json#/$defs/ReturnSettlement plus exact continuation; runtime activation/focus/continuation settlement unproved. |
 | `cmd.jujutsu.bookmark.create` | Jujutsu Bookmark Create | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_create` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
 | `cmd.jujutsu.bookmark.delete` | Jujutsu Bookmark Delete | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_delete` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |
 | `cmd.jujutsu.bookmark.move` | Jujutsu Bookmark Move | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::bookmark_move` | Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log; Plans/Source_Control_System.md; Plans/Forge_Integrations.md; Plans/Settings_System.md; return: Exact repository/workspace/change/operation and caller focus. |

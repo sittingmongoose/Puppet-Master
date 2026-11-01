@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38136-L38278
+Source lines: L38199-L38422
 
-Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
+Source SHA256: `ee87cd10e44cab812acbcd8fd3d7d3cc886ea1f73a3d19c9be5fdef34ead7831`
 
 ---
 
@@ -37,11 +37,44 @@ canonical_text: 'Final GUI presents one canonical repository_automation side-pan
   verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
   written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
   one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
-  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.'
+  & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
+gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected
+  states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
-depends_on: [F3-019, F3-042, F3-043, F3-049, F3-050, F3-229, F3-448, F3-453, F3-460, F3-461, F3-476, F3-481, F3-519, F3-520, F3-522, SSYS-026, PWIZ-025, N2-156, SRV-013, FGI-012, BRS-012, BRS-013, BRS-014, BRS-015, BRS-016, RAS-015]
+depends_on:
+- F3-019
+- F3-042
+- F3-043
+- F3-049
+- F3-050
+- F3-229
+- F3-448
+- F3-453
+- F3-460
+- F3-461
+- F3-476
+- F3-481
+- F3-519
+- F3-520
+- F3-522
+- SSYS-026
+- PWIZ-025
+- N2-156
+- SRV-013
+- FGI-012
+- BRS-012
+- BRS-013
+- BRS-014
+- BRS-015
+- BRS-016
+- RAS-015
 unblocks: []
 acceptance_criteria:
 - The left Activity Bar retains exactly ten canonical occupants and replaces `github_actions` one-for-one with `repository_automation`;
@@ -112,42 +145,90 @@ acceptance_criteria:
 - No command or EventRecord is admitted by this GUI unit. All new Forge, Backup, and connector command families remain
   handler_unavailable and event-silent with expected_event_types=[] until owner schema, central command, sole handler,
   permission, receipt/ObservableWork, persistence, production/reverse wiring, and executable evidence close independently.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json"
-  - "Plans/final_gui_interaction_contract_fixtures.json"
-  - "Plans/forge_integration_contracts.schema.json"
-  - "Plans/backup_restore_system_contracts.schema.json"
-  - "Plans/remote_access_system_contracts.schema.json"
-  - "future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures"
-  - "future protected-handoff/no-capture and immutable-snapshot exact-return fixtures"
-  - "future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests"
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/backup_restore_system_contracts.schema.json
+- Plans/remote_access_system_contracts.schema.json
+- future legacy-panel migration/no-duplicate-occupant and provider-capability transition fixtures
+- future protected-handoff/no-capture and immutable-snapshot exact-return fixtures
+- future native Slint ten-theme/width/keyboard/touch/Reduced-Motion/virtualization tests
 risk_class: generic_shell_migration_or_protected_recovery_presentation_leak
 reasoning_tier: high
 context_scope: final_gui_forge_backup_tsnet_consumers
-implementation_surfaces: [Plans/FinalGUISpec.md, future repository automation Slint components, future K3 Backup Slint components, future Onboarding Slint components, future Doctor Slint components, future Remote Access Slint components]
-node_compile_hint: {mode: final_gui_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- future repository automation Slint components
+- future K3 Backup Slint components
+- future Onboarding Slint components
+- future Doctor Slint components
+- future Remote Access Slint components
+node_compile_hint:
+  mode: final_gui_cross_owner_consumer_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-001
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
-  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
-  - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
-preserved_exact_tokens: [repository_automation, Actions & Pipelines, github_actions, DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, Tailscale, Built into Puppet Master, Connection engine, K3 Tome Tabs, PMConcept7, handler_unavailable, "expected_event_types=[]"]
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#finalgui-strings-routes-and-planned-ui-file-inventory
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-001
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
+- packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
+- packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+- Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- repository_automation
+- Actions & Pipelines
+- github_actions
+- DestinationCard
+- ScopeCoverageSummary
+- SnapshotBrowser
+- RestorePreview
+- RecoveryKitHandoff
+- VerificationBadge
+- RetentionPreview
+- ObservableWorkProgress
+- Tailscale
+- Built into Puppet Master
+- Connection engine
+- K3 Tome Tabs
+- PMConcept7
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
-  - Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic host shell.
-  - Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or Origin checks with an Origin-hosted CI engine.
-  - Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
-  - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
-  - Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status ownership into Final GUI.
-  - Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by tsnet.
-  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation authority.
-  - Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance, accessibility, readiness, or certification proof from Plans/static/concept material.
+- Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
+- Do not merge Source Control with Actions & Pipelines, or erase GitHub-specific semantics while migrating the generic
+  host shell.
+- Do not conflate Forgejo with Gitea, Git transport with API readiness, repository hosting with automation binding, or
+  Origin checks with an Origin-hosted CI engine.
+- Do not display or capture Recovery Key/Kit bytes, connector secrets/state, provider credentials, protected browser
+  content, reusable auth URLs, cookies, IPC secrets, raw paths, or unbounded logs.
+- Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
+- Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status
+  ownership into Final GUI.
+- Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by
+  tsnet.
+- Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation
+  authority.
+- Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance,
+  accessibility, readiness, or certification proof from Plans/static/concept material.
 owner_boundary_notes:
-  - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only; Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth and effects.
-owner_hints: [Plans/FinalGUISpec.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Planning_Wizard.md, Plans/newtools.md, Plans/Settings_System.md]
+- Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only;
+  Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth
+  and effects.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/Forge_Integrations.md
+- Plans/Backup_Restore_System.md
+- Plans/Remote_Access_System.md
+- Plans/Planning_Wizard.md
+- Plans/newtools.md
+- Plans/Settings_System.md
 ```

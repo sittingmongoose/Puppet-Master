@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5392-L5650
+Source lines: L5392-L5696
 
-Source SHA256: `ff3540dbfd76c19d85589fb950b3d7bfe55fce2014828371ac5267075e4e6669`
+Source SHA256: `1f1b51da01195221a677f48421f8e60ac0bd2ea99c9969c433b0cfc92bf7cb7a`
 
 ---
 
@@ -243,27 +243,73 @@ plan_unit_id: CS-073
 unit_type: command_registration
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction admits cmd.project.unarchive through the existing Project action family.
+canonical_text: 'The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact
+  primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections,
+  with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction
+  admits cmd.project.unarchive through the existing Project action family.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
-depends_on: [CS-070, CS-071, CS-072]
-unblocks: [UCC-151, WM-050, UIW-016]
+gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser,
+  Forge, Source Control, and palette consumers with exact availability and disabled reasons.
+depends_on:
+- CS-070
+- CS-071
+- CS-072
+unblocks:
+- UCC-151
+- WM-050
+- UIW-016
 acceptance_criteria:
-  - Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
-  - cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent handler or production row; predecessor local requests cannot replay as mutation authority.
-  - The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and the three existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not duplicated.
-  - Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only effect, and complete reverse consumers.
-  - Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor and rejection has no production row.
-  - Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual, performance, or runtime proof.
-validation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py, scripts/pm-plans-verify.py]
+- Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references
+  collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under
+  USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+- cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive
+  target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent
+  handler or production row; predecessor local requests cannot replay as mutation authority.
+- The 103 unique central obligations are covered by the 100 distinct primary definitions in this section and the three
+  existing authentication primaries in CS-066/UCC-145; authentication start/cancel/resume are not duplicated.
+- Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only
+  effect, and complete reverse consumers.
+- Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor
+  and rejection has no production row.
+- Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual,
+  performance, or runtime proof.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
+- Plans/touch_closure.json
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: central_command_denominator_or_phantom_handler_drift
 reasoning_tier: high
 context_scope: server_egolite_central_command_closure
-implementation_surfaces: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
-node_compile_hint: {mode: central_command_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.production.json
+- Plans/touch_closure.json
+node_compile_hint:
+  mode: central_command_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:server-command-gap-adjudication:rows-1-171
+- source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 negative_constraints:
-  - Do not register an alias, typed local predecessor, or rejected spelling as a primary command.
-  - Do not treat a sole future handler path or production-intent row as native implementation proof.
-  - Do not emit an unadmitted EventRecord family.
+- Do not register an alias, typed local predecessor, or rejected spelling as a primary command.
+- Do not treat a sole future handler path or production-intent row as native implementation proof.
+- Do not emit an unadmitted EventRecord family.
 ```

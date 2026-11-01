@@ -1558,18 +1558,37 @@ plan_unit_id: SSYS-026
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  Settings retains exactly 38 manager descriptors while presenting one visible Data Backup and Retention
-  grouping over three stable typed child/detail descriptors; extending the existing Source Control manager for
-  separate Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting Remote Access
-  through one normal human Tailscale card plus Advanced Connection engine detail. Every action routes to its
-  semantic owner with exact scope, target, generation, continuation, availability, disabled reason, and return
-  focus. Settings owns no forge adapter, Backup engine, scheduler, key service, connector process, auth broker,
-  Doctor probe, handler, or EventRecord family. Amended Q22, Jared 2026-10-30 (DL-257): the current
-  family/variant and inventory census supersede earlier counts.
+canonical_text: 'Settings retains exactly 38 manager descriptors while presenting one visible Data Backup and Retention
+  grouping over three stable typed child/detail descriptors; extending the existing Source Control manager for separate
+  Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting Remote Access through one normal
+  human Tailscale card plus Advanced Connection engine detail. Every action routes to its semantic owner with exact scope,
+  target, generation, continuation, availability, disabled reason, and return focus. Settings owns no forge adapter,
+  Backup engine, scheduler, key service, connector process, auth broker, Doctor probe, handler, or EventRecord family.
+  Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: This unit defines visible K3 manager grouping, cards, actions, disabled states, exact routing, and protected handoff presentation.
-depends_on: [SSYS-012, SSYS-014, SSYS-015, SSYS-017, SSYS-020, SSYS-022, FGI-012, BRS-012, BRS-013, BRS-014, BRS-015, BRS-016, RAS-015, N2-156]
+gui_classification_reason: This unit defines visible K3 manager grouping, cards, actions, disabled states, exact routing,
+  and protected handoff presentation.
+depends_on:
+- SSYS-012
+- SSYS-014
+- SSYS-015
+- SSYS-017
+- SSYS-020
+- SSYS-022
+- FGI-012
+- BRS-012
+- BRS-013
+- BRS-014
+- BRS-015
+- BRS-016
+- RAS-015
+- N2-156
 unblocks: []
 acceptance_criteria:
 - The registry remains exactly 38 keys. `storage-retention-recovery`, `server-backup-restore`, and `project-backup` retain
@@ -1609,44 +1628,78 @@ acceptance_criteria:
 - All K3 geometry, DL-257/Q22 ten built-in variants across five families, focus, keyboard/touch, virtualization, localization,
   Reduced Motion, exact-return, and truthful unavailable-state acceptance remains required; static text, schemas, fixtures,
   or concept rendering prove none of the native/runtime lanes.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - "Plans/settings_system_contracts.schema.json"
-  - "Plans/settings_system_contract_fixtures.json"
-  - "Plans/forge_integration_contracts.schema.json"
-  - "Plans/backup_restore_system_contracts.schema.json"
-  - "Plans/remote_access_system_contracts.schema.json"
-  - "future 38-key/grouping/compatibility-route and exact-scope fixtures"
-  - "future protected-key/no-capture and provider-capability transition fixtures"
-  - "future K3 ten-theme/width/keyboard/Reduced-Motion/native Slint tests"
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/backup_restore_system_contracts.schema.json
+- Plans/remote_access_system_contracts.schema.json
+- future 38-key/grouping/compatibility-route and exact-scope fixtures
+- future protected-key/no-capture and provider-capability transition fixtures
+- future K3 ten-theme/width/keyboard/Reduced-Motion/native Slint tests
 risk_class: settings_parallel_runtime_or_manager_topology_drift
 reasoning_tier: high
 context_scope: settings_forge_backup_tsnet_consumers
-implementation_surfaces: [Plans/Settings_System.md, future typed Settings owner projections]
-node_compile_hint: {mode: settings_cross_owner_consumer_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Settings_System.md
+- future typed Settings owner projections
+node_compile_hint:
+  mode: settings_cross_owner_consumer_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#settings-owner
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
-  - scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
-  - packet:03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md#FORGE-004
-  - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
-  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-001
-  - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-002
-  - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
-preserved_exact_tokens: [38, K3 Tome Tabs, Data Backup and Retention, server, "project:{id}", Actions & Pipelines, repository_automation, Forgejo, Gitea, Tailscale, Built into Puppet Master, Connection engine, handler_unavailable, "expected_event_types=[]"]
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md#settings-owner
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md#4.2
+- scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_tsnet_reconciliation.md#4
+- packet:03_ORIGIN_FORGEJO_GITEA_AND_PROVIDER_PROFILES.md#FORGE-004
+- packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-005
+- packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-001
+- packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md#BGUI-002
+- packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- 38
+- K3 Tome Tabs
+- Data Backup and Retention
+- server
+- project:{id}
+- Actions & Pipelines
+- repository_automation
+- Forgejo
+- Gitea
+- Tailscale
+- Built into Puppet Master
+- Connection engine
+- handler_unavailable
+- expected_event_types=[]
 negative_constraints:
-  - Do not add, remove, rename, or collapse a manager key or add an ordinary settings-inventory row for dynamic owner state.
-  - Do not duplicate forge, automation, Backup, scheduler, encryption/key, connector, authentication, or Doctor logic in Settings.
-  - Do not call Forgejo a Gitea alias, infer automation from a Git remote named Origin, or infer API readiness from Git transport.
-  - Do not expose Recovery Key/Kit bytes, connector secrets, provider credentials, private CA bytes, browser content, or unredacted protected-auth state.
-  - Do not add a Backup, forge-specific, Tailscale, Server, or Sync Activity Bar item.
-  - Do not revive a bakeoff process or alter selected K3 geometry and PM7 theme authority.
-  - Do not claim handler, runtime, native Slint, security, provider, visual, performance, accessibility, or readiness completion from this Plans-only update.
+- Do not add, remove, rename, or collapse a manager key or add an ordinary settings-inventory row for dynamic owner state.
+- Do not duplicate forge, automation, Backup, scheduler, encryption/key, connector, authentication, or Doctor logic in
+  Settings.
+- Do not call Forgejo a Gitea alias, infer automation from a Git remote named Origin, or infer API readiness from Git
+  transport.
+- Do not expose Recovery Key/Kit bytes, connector secrets, provider credentials, private CA bytes, browser content, or
+  unredacted protected-auth state.
+- Do not add a Backup, forge-specific, Tailscale, Server, or Sync Activity Bar item.
+- Do not revive a bakeoff process or alter selected K3 geometry and PM7 theme authority.
+- Do not claim handler, runtime, native Slint, security, provider, visual, performance, accessibility, or readiness completion
+  from this Plans-only update.
 owner_boundary_notes:
-  - Settings owns shell/navigation, ordinary Project-bound setting semantics, and bounded owner projections only.
-  - Forge_Integrations owns provider/instance and AutomationBinding semantics; Backup_Restore_System owns backup/recovery; Remote_Access_System owns connector/routes; newtools owns Doctor routing.
-owner_hints: [Plans/Settings_System.md, Plans/Forge_Integrations.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/newtools.md, Plans/FinalGUISpec.md]
+- Settings owns shell/navigation, ordinary Project-bound setting semantics, and bounded owner projections only.
+- Forge_Integrations owns provider/instance and AutomationBinding semantics; Backup_Restore_System owns backup/recovery;
+  Remote_Access_System owns connector/routes; newtools owns Doctor routing.
+owner_hints:
+- Plans/Settings_System.md
+- Plans/Forge_Integrations.md
+- Plans/Backup_Restore_System.md
+- Plans/Remote_Access_System.md
+- Plans/newtools.md
+- Plans/FinalGUISpec.md
 ```
-
 ## Puppet Master Assistant Redesign Settings Registration - 2026-09-03
 
 The approved Assistant redesign adds fifty settings. This section records their canonical inventory identities, the manager each belongs to, and the packet spelling each reconciles, and it fixes the boundary between what Settings stores and what the domain owners store.

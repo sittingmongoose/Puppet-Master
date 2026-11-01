@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4176
+Source lines: L3496-L4234
 
-Source SHA256: `b5fa4a1d682da5a3fedce565b8054cd33be33ecfe9b02fcf61f19e380f448bd0`
+Source SHA256: `b7d2c40ab57c9f5be9dad95df51b24a887301fd9348c215aaad211afda315ae6`
 
 ---
 
@@ -203,13 +203,30 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   not discovery or a trust grant. UIW-047/WM-099 register the one new Free Models disable producer.
 
 
-  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted
-  variants. Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile
-  or plan. Existing local actions and Forge/auth/Project command routes remain, and refuse a retired variant
-  before accepting or dispatching it. No new handler, command, setting or trust writer is added.'
+  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted variants.
+  Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
+  local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
+  it. No new handler, command, setting or trust writer is added.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
+gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions,
+  transitions, reverse wiring, and owner-routed GUI behavior.
+depends_on:
+- PWIZ-021
+- PWIZ-022
+- PWIZ-023
+- F3-520
+- ACD-484
+- DL-180
+- DL-186
+- PWIZ-035
+- SP-330
+- WM-090
 unblocks: []
 acceptance_criteria:
 - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not
@@ -259,7 +276,7 @@ acceptance_criteria:
   creates no parallel owner or generic mutation handler.
 - A new local Project routes through `cmd.project.new_local {init_git:true}`; `cmd.source_control.repository.init` has
   no request, alias, handler, or visible route.
-- Safe History backend selection (`git|jujutsu|null`) is local and independent from optional forge selection (`github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|cursor_origin|none|null`).
+- Safe History backend selection (`git|jujutsu|null`) is local and independent from optional forge selection (`github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|none|null`).
   Git and Jujutsu have no service accounts; account connection/sign-in or verified official signup-page handoff, repository
   list/create, backend-appropriate clone/publish, and Project registration follow their existing owners and exact terminal
   results.
@@ -431,19 +448,24 @@ acceptance_criteria:
   Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
   local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
   it. No new handler, command, setting or trust writer is added.'
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - Plans/product_onboarding_contracts.schema.json
-  - Plans/product_onboarding_contract_fixtures.json
-  - Plans/guided_tour_contracts.schema.json
-  - Plans/guided_tour_contract_fixtures.json
-  - future native Product Onboarding and Guided Tour local-action, owner-route, reverse-wiring, accessibility, and visual fixtures
+- python3 scripts/pm-plan-index.py validate
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Plans/guided_tour_contracts.schema.json
+- Plans/guided_tour_contract_fixtures.json
+- future native Product Onboarding and Guided Tour local-action, owner-route, reverse-wiring, accessibility, and visual
+  fixtures
 risk_class: onboarding_fake_command_or_parallel_owner_wiring
 reasoning_tier: high
 context_scope: product_onboarding_and_guided_tour_wiring
 implementation_surfaces:
-  - Plans/Wiring_Matrix.md
-  - future Product Onboarding and Guided Tour local-action and owner-route bindings
+- Plans/Wiring_Matrix.md
+- future Product Onboarding and Guided Tour local-action and owner-route bindings
 node_compile_hint:
   mode: product_onboarding_typed_local_action_wiring
   create_worknodes: false
@@ -490,127 +512,163 @@ source_lineage:
   Source spellings are lineage, not product API.
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
-source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
-decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+source_atom_ids:
+- atom-0016
+- atom-0032
+- atom-0033
+- atom-0035
+- atom-0036
+- atom-0037
+- atom-0038
+- atom-0040
+- atom-0041
+- atom-0042
+- atom-0043
+- atom-0045
+- atom-0046
+- atom-0047
+decision_refs:
+- dec-0003
+- dec-0004
+- dec-0006
+- dec-0007
+- dec-0008
 preserved_exact_tokens:
-  - "welcome"
-  - "simple_path"
-  - "first_project"
-  - "source_control_setup"
-  - "server_storage_client"
-  - "remote_access_setup"
-  - "review_setup_plan"
-  - "automatic_preparation"
-  - "ready"
-  - "path_kind"
-  - "queued_setup_plan_ref"
-  - "queued_setup_plan_revision"
-  - "reviewed_setup_plan_revision"
-  - "review_confirmation"
-  - "approved_setup_plan_sha256"
-  - "automatic_preparation_currentness_ref"
-  - "mapped_stage_counts"
-  - "mapped_path_counts"
-  - "scm_backend_selection"
-  - "forge_provider_selection"
-  - "ui.onboarding.start"
-  - "ui.onboarding.next"
-  - "ui.onboarding.back"
-  - "ui.onboarding.close"
-  - "ui.onboarding.skip"
-  - "ui.onboarding.defer"
-  - "ui.onboarding.open_details"
-  - "ui.onboarding.more_ways"
-  - "ui.onboarding.choose_simple_path"
-  - "ui.onboarding.open_owner_flow"
-  - "ui.onboarding.run_automatic_preparation"
-  - "ui.onboarding.choose_first_project"
-  - "ui.onboarding.finish"
-  - "ui.onboarding.choose_look"
-  - "usage"
-  - "planning_wizard"
-  - "chat_teacher"
-  - "ui.guided_tour.start"
-  - "ui.guided_tour.next"
-  - "ui.guided_tour.back"
-  - "ui.guided_tour.pause"
-  - "ui.guided_tour.resume"
-  - "ui.guided_tour.skip"
-  - "ui.guided_tour.focus_route"
-  - "ui.guided_tour.toggle_eli5"
-  - "tour_narration_only"
-  - "ui.guided_tour.finish"
-  - "ui.guided_tour.replay"
-  - "local_context"
-  - "skip_product_onboarding"
-  - "skip_optional_scope"
-  - "toggle_setup_options"
-  - "update_branch_state"
-  - "session_skipped"
-  - "optional_scope_skipped"
-  - "Set up a paid provider"
-  - "Use this provider"
-  - "Sign in"
-  - "Set up provider"
-  - "Reconnect"
-  - "Skip for now"
-  - "Review Free Models"
-  - "Maybe later"
-  - "Continue to Planning Wizard"
-  - "Open Planning Wizard"
-  - "onboarding_setup_state"
-  - "Provider setup is not finished"
-  - "Teacher"
-  - "cmd.onboarding.back"
-  - "cmd.onboarding.cancel"
-  - "cmd.onboarding.continue"
-  - "cmd.onboarding.defer"
-  - "cmd.onboarding.finish"
-  - "cmd.onboarding.open_details"
-  - "cmd.onboarding.resume"
-  - "cmd.onboarding.skip"
-  - "Explain this reply simply"
-  - "cmd.chat.eli5.explain_reply"
+- welcome
+- simple_path
+- first_project
+- source_control_setup
+- server_storage_client
+- remote_access_setup
+- review_setup_plan
+- automatic_preparation
+- ready
+- path_kind
+- queued_setup_plan_ref
+- queued_setup_plan_revision
+- reviewed_setup_plan_revision
+- review_confirmation
+- approved_setup_plan_sha256
+- automatic_preparation_currentness_ref
+- mapped_stage_counts
+- mapped_path_counts
+- scm_backend_selection
+- forge_provider_selection
+- ui.onboarding.start
+- ui.onboarding.next
+- ui.onboarding.back
+- ui.onboarding.close
+- ui.onboarding.skip
+- ui.onboarding.defer
+- ui.onboarding.open_details
+- ui.onboarding.more_ways
+- ui.onboarding.choose_simple_path
+- ui.onboarding.open_owner_flow
+- ui.onboarding.run_automatic_preparation
+- ui.onboarding.choose_first_project
+- ui.onboarding.finish
+- ui.onboarding.choose_look
+- usage
+- planning_wizard
+- chat_teacher
+- ui.guided_tour.start
+- ui.guided_tour.next
+- ui.guided_tour.back
+- ui.guided_tour.pause
+- ui.guided_tour.resume
+- ui.guided_tour.skip
+- ui.guided_tour.focus_route
+- ui.guided_tour.toggle_eli5
+- tour_narration_only
+- ui.guided_tour.finish
+- ui.guided_tour.replay
+- local_context
+- skip_product_onboarding
+- skip_optional_scope
+- toggle_setup_options
+- update_branch_state
+- session_skipped
+- optional_scope_skipped
+- Set up a paid provider
+- Use this provider
+- Sign in
+- Set up provider
+- Reconnect
+- Skip for now
+- Review Free Models
+- Maybe later
+- Continue to Planning Wizard
+- Open Planning Wizard
+- onboarding_setup_state
+- Provider setup is not finished
+- Teacher
+- cmd.onboarding.back
+- cmd.onboarding.cancel
+- cmd.onboarding.continue
+- cmd.onboarding.defer
+- cmd.onboarding.finish
+- cmd.onboarding.open_details
+- cmd.onboarding.resume
+- cmd.onboarding.skip
+- Explain this reply simply
+- cmd.chat.eli5.explain_reply
 stale_retired_dispositions:
-  - "server_setup is superseded seven-stage source lineage only; current wiring uses server_storage_client."
-  - "The five-chapter chat_teacher, shell_navigation, panel_layout, widget_workspace, planning_wizard order is retired source lineage and never a current Tour route."
-  - "ui.guided_tour.restore_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated consumers."
-  - "ui.guided_tour.keep_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated consumers."
-  - "ui.guided_tour.toggle_reduced_motion is retired as a Tour action; Settings remains the sole Reduced Motion owner for every consumer."
-  - "cmd.onboarding.first_run.open is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.provider_setup.open is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.provider_setup.use_provider is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.skip_to_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.free_models.review is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.free_models.defer is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.review_setup is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.open_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.free_models.refresh is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.free_models.retry is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias."
-  - "cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases, and handlers."
-  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat practice retires; the workspace chapter practises the \"+\" menu, opening a file from the rail, splitting by dragging a tab and adding a widget to the dashboard tab, and the tour captures and restores the v2 Home layout record."
-  - "Amended 2026-10-10 (DL-186; P1 B, P10): the widget practice teaches Upcoming resets on the Home dashboard, added then moved or resized, its widget commands naming the Home board in room."
+- server_setup is superseded seven-stage source lineage only; current wiring uses server_storage_client.
+- The five-chapter chat_teacher, shell_navigation, panel_layout, widget_workspace, planning_wizard order is retired source
+  lineage and never a current Tour route.
+- ui.guided_tour.restore_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated
+  consumers.
+- ui.guided_tour.keep_layout is retired as a Tour action; existing layout-owner commands remain available to unrelated
+  consumers.
+- ui.guided_tour.toggle_reduced_motion is retired as a Tour action; Settings remains the sole Reduced Motion owner for
+  every consumer.
+- cmd.onboarding.first_run.open is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.provider_setup.open is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.provider_setup.use_provider is source-lineage-only; it is neither a production row nor a compatibility
+  alias.
+- cmd.onboarding.skip_to_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.free_models.review is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.free_models.defer is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.review_setup is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.open_planning_wizard is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.free_models.refresh is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.free_models.retry is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias.
+- cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details,
+  cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases,
+  and handlers.
+- 'Amended 2026-10-09 (DL-180): the move-or-dock-chat practice retires; the workspace chapter practises the "+" menu,
+  opening a file from the rail, splitting by dragging a tab and adding a widget to the dashboard tab, and the tour captures
+  and restores the v2 Home layout record.'
+- 'Amended 2026-10-10 (DL-186; P1 B, P10): the widget practice teaches Upcoming resets on the Home dashboard, added then
+  moved or resized, its widget commands naming the Home board in room.'
 negative_constraints:
-  - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
-  - Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.
-  - Do not give a local `ui.onboarding.*` action a fictitious domain handler or let it replay owner work.
-  - Do not accept open-ended local_context, raw/arbitrary payload copies, secret-bearing values, or ambiguous more_ways/skip variants.
-  - Do not claim native Slint, dispatcher, handler, persistence, or runtime wiring from schemas, static assertions, PMConcept7, or browser evidence.
-  - Do not turn the bounded modal into a route or add browser-style Back/breadcrumb chrome.
-  - Do not restore provider-first setup or insert peer advanced/Tour stages; paid-provider then Free Models are the PWIZ-021 post-Project phases, not pre-Project setup. Do not treat `ready` as universal owner readiness.
-  - Do not broaden current owner-authorized precommit reads/selected-source auth into mutation; do not accept stale revision/hash/path/continuation/currentness or a ref-shaped authorization claim. Exact reviewed Project commit remains mandatory before provider phases.
-  - Do not restore the retired five-chapter Tour, synthesize separate move/resize/configure/focus checkpoints, or admit retired restore-layout, keep-layout, or Tour-owned Reduced Motion actions.
-  - Do not let narration, timers, generic Next, look-alike controls, or browser/static fixtures fabricate a performed Tour checkpoint, owner result, native handler, production receipt, or completion.
-  - Do not persist Guided Tour scene, status, Teacher text, focus, motion, demonstrated-action, or completed-action state.
-  - Do not redefine installation, claim, pairing, remote access, provider auth, Project, backup/restore, update, Doctor, storage, or Planning Wizard engines in Wiring_Matrix.
+- Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
+- Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.
+- Do not give a local `ui.onboarding.*` action a fictitious domain handler or let it replay owner work.
+- Do not accept open-ended local_context, raw/arbitrary payload copies, secret-bearing values, or ambiguous more_ways/skip
+  variants.
+- Do not claim native Slint, dispatcher, handler, persistence, or runtime wiring from schemas, static assertions, PMConcept7,
+  or browser evidence.
+- Do not turn the bounded modal into a route or add browser-style Back/breadcrumb chrome.
+- Do not restore provider-first setup or insert peer advanced/Tour stages; paid-provider then Free Models are the PWIZ-021
+  post-Project phases, not pre-Project setup. Do not treat `ready` as universal owner readiness.
+- Do not broaden current owner-authorized precommit reads/selected-source auth into mutation; do not accept stale revision/hash/path/continuation/currentness
+  or a ref-shaped authorization claim. Exact reviewed Project commit remains mandatory before provider phases.
+- Do not restore the retired five-chapter Tour, synthesize separate move/resize/configure/focus checkpoints, or admit
+  retired restore-layout, keep-layout, or Tour-owned Reduced Motion actions.
+- Do not let narration, timers, generic Next, look-alike controls, or browser/static fixtures fabricate a performed Tour
+  checkpoint, owner result, native handler, production receipt, or completion.
+- Do not persist Guided Tour scene, status, Teacher text, focus, motion, demonstrated-action, or completed-action state.
+- Do not redefine installation, claim, pairing, remote access, provider auth, Project, backup/restore, update, Doctor,
+  storage, or Planning Wizard engines in Wiring_Matrix.
 owner_hints:
-  - Plans/Wiring_Matrix.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
-  - Plans/Planning_Wizard.md
+- Plans/Wiring_Matrix.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Planning_Wizard.md
 ```
-
 ### WM-040 - DRY Method Settings Wiring
 
 ```yaml

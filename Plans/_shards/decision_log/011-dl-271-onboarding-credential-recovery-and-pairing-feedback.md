@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19553-L19847
+Source lines: L19553-L19859
 
-Source SHA256: `672b27c878256c2cf3c7b2d874d42329ea4290a525a66dcc3b023afc9c286bed`
+Source SHA256: `9c654d392f392c648f57a832a9ad12516c5ab729d076c25d8ee1f7e57e7a384f`
 
 ---
 
@@ -239,16 +239,22 @@ plan_unit_id: DL-273
 unit_type: decision_record
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: 'Jared decided on 2026-11-01 that hosted Forgejo is not offered: Forgejo is a server the person
-  runs, represented only by forgejo_self_managed. A hosting provider whose terms forbid AI-generated Projects is
-  not useful to Puppet Master, because Puppet Master’s Projects are AI-written; such a host is ineligible. The earlier
-  hosted variant entered the source proposal in commit 3e1842da40 on 2026-09-02, not through a Jared ruling. Current
-  instance, adapter, onboarding and embedded storage profiles admit only the own-server Forgejo variant and require
-  the real address and normal owner verification, with no implicit account or repository authority. Gitea’s admitted
-  variants remain unchanged. On repository-restricted Forgejo tokens Jared said "we can leave it for now." That
-  question remains open and deliberately deferred; the existing account-based flow stays unchanged and no support
-  is admitted or permanently rejected. This closes DL-272’s hosted-provider admission question and records the restricted-token
-  deferral as decided.'
+canonical_text: 'Jared decided on 2026-11-01 that hosted Forgejo is not offered: Forgejo is a server the person runs,
+  represented only by forgejo_self_managed. A hosting provider whose terms forbid AI-generated Projects is not useful
+  to Puppet Master, because Puppet Master’s Projects are AI-written; such a host is ineligible. The earlier hosted variant
+  entered the source proposal in commit 3e1842da40 on 2026-09-02, not through a Jared ruling. Current instance, adapter,
+  onboarding and embedded storage profiles admit only the own-server Forgejo variant and require the real address and
+  normal owner verification, with no implicit account or repository authority. Gitea is self-managed only under this
+  same decision. On repository-restricted Forgejo tokens Jared said "we can leave it for now." That question remains
+  open and deliberately deferred; the existing account-based flow stays unchanged and no support is admitted or permanently
+  rejected. This closes DL-272’s hosted-provider admission question and records the restricted-token deferral as decided.
+
+
+  DL-273, Jared 2026-11-01: Forgejo and Gitea are servers the person runs, not hosted service choices. Cursor Origin
+  source control, its native/mirror profiles and its dedicated inspector are retired. Cursor as an AI provider is unchanged.
+  These hosted offerings were agent proposals, not selections Jared made; Gitea Cloud applicable terms could not be read,
+  while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
+  and cannot restore a retired service, review, CI, auth or mirror capability.'
 gui_related: true
 gui_classification_reason: Changes the Forgejo choices shown in onboarding and Settings while preserving the deferred
   authentication flow.
@@ -257,14 +263,19 @@ depends_on:
 - DL-272
 unblocks: []
 acceptance_criteria:
-- Forgejo choices and current profiles expose only forgejo_self_managed, for a server the person runs. There is
-  no offered hosted Forgejo route.
-- The same narrowed admission applies to the Forge owner, onboarding and its stored schema; providers whose terms
-  forbid AI-written Projects are ineligible.
+- Forgejo choices and current profiles expose only forgejo_self_managed, for a server the person runs. There is no offered
+  hosted Forgejo route.
+- The same narrowed admission applies to the Forge owner, onboarding and its stored schema; providers whose terms forbid
+  AI-written Projects are ineligible.
 - Repository-restricted token support remains open and left for now; existing account-based identification, authentication
   and repository selection remain unchanged.
-- The source proposal’s 2026-09-02 introduction is not recorded as a Jared approval. Existing commands, settings,
-  credentials and Project/permission/generation fences remain.
+- The source proposal’s 2026-09-02 introduction is not recorded as a Jared approval. Existing commands, settings, credentials
+  and Project/permission/generation fences remain.
+- 'DL-273, Jared 2026-11-01: Forgejo and Gitea are servers the person runs, not hosted service choices. Cursor Origin
+  source control, its native/mirror profiles and its dedicated inspector are retired. Cursor as an AI provider is unchanged.
+  These hosted offerings were agent proposals, not selections Jared made; Gitea Cloud applicable terms could not be read,
+  while Cursor terms restrict automated access. generic_git and generic_host remain independent transport-only identities
+  and cannot restore a retired service, review, CI, auth or mirror capability.'
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-new-contracts
 - python3 scripts/pm7-onboarding-rulings-check.py
@@ -285,11 +296,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- 'Jared 2026-11-01 via PM7 lead messages1101175626-78dd and1101175823-8b4a: unnamed own-server Forgejo rule, terms
-  compatibility with AI-written Projects, and restricted-token support left for now.'
-- Git commit3e1842da40cf2e03b48ad62687f95600fcf1d329, 2026-09-02, introduces the earlier hosted variant as source
-  material; not a Jared ruling.
+- 'Jared 2026-11-01 via PM7 lead messages1101175626-78dd and1101175823-8b4a: unnamed own-server Forgejo rule, terms compatibility
+  with AI-written Projects, and restricted-token support left for now.'
+- Git commit3e1842da40cf2e03b48ad62687f95600fcf1d329, 2026-09-02, introduces the earlier hosted variant as source material;
+  not a Jared ruling.
 - Fields8762cda61a658081878344ddff95f9916c1aa0f0 andf2a9b7a252f589b68cf2862b6b6a2a7c482dfff0, source lineage only.
+- 'Jared: You can remove both. Lead1101190655-f8ab. Retirement anchors authorized by lead1101191011-e8cd, 2026-11-01.'
 preserved_exact_tokens:
 - forgejo_self_managed
 - AI-written

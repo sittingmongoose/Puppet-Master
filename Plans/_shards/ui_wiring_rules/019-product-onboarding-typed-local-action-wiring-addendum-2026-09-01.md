@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1425
+Source lines: L1024-L1496
 
-Source SHA256: `3837ac45919354a6456667b06423b1be26eae5554b581f25f38e4e9b6e4f5edc`
+Source SHA256: `7dec3346be229ba1ba713ea5eff8a58be7e7bd28b42b8f9b3e43059a4731ee64`
 
 ---
 
@@ -204,14 +204,26 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   The new Free Models Turn off producer is UIW-047/WM-099, with one Models handler and no new event.
 
 
-  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted
-  variants. Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile
-  or plan. Existing local actions and Forge/auth/Project command routes remain, and refuse a retired variant
-  before accepting or dispatching it. No new handler, command, setting or trust writer is added.'
+  DL-273, Jared 2026-11-01: Provider choice, profile validation and owner dispatch consume FGI-011’s admitted variants.
+  Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
+  local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
+  it. No new handler, command, setting or trust writer is added.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
+gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus
+  return, and Details disclosure.
 split_recommended: false
-depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
+depends_on:
+- PWIZ-021
+- PWIZ-022
+- UCC-106
+- WM-041
+- UIW-013
 unblocks: []
 acceptance_criteria:
 - The exact action census is the fourteen named ui.onboarding.* IDs, and every authored control carries exactly one typed
@@ -365,12 +377,27 @@ acceptance_criteria:
   Hosted Forgejo is not offered; only forgejo_self_managed can identify Forgejo in a current profile or plan. Existing
   local actions and Forge/auth/Project command routes remain, and refuse a retired variant before accepting or dispatching
   it. No new handler, command, setting or trust writer is added.'
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- future native Product Onboarding request/result and accessibility fixtures
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
 context_scope: product_onboarding_typed_local_request_result
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json]
-node_compile_hint: {mode: product_onboarding_local_action_wiring, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/UI_Wiring_Rules.md
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/product_onboarding_contracts.schema.json
+node_compile_hint:
+  mode: product_onboarding_local_action_wiring
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - approved current Product Onboarding source/schema reconciliation
 - Plans/Planning_Wizard.md#PWIZ-021
@@ -400,13 +427,57 @@ source_lineage:
   Source spellings are lineage, not product API.
 - 'Jared 2026-11-01 via PM7 lead: hosted Forgejo is not offered; Forgejo repository-restricted tokens — we can leave
   it for now. Fields8762cda61a658081878344ddff95f9916c1aa0f0 is source lineage only.'
-preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- ui.onboarding.start
+- ui.onboarding.next
+- ui.onboarding.back
+- ui.onboarding.close
+- ui.onboarding.skip
+- ui.onboarding.defer
+- ui.onboarding.open_details
+- ui.onboarding.more_ways
+- ui.onboarding.choose_simple_path
+- ui.onboarding.open_owner_flow
+- ui.onboarding.run_automatic_preparation
+- ui.onboarding.choose_first_project
+- ui.onboarding.finish
+- ui.onboarding.choose_look
+- look_choice
+- look_previewed
+- preview_nier
+- toggle_look_menu
+- toggle_look_editor
+- pm.product_onboarding.action_request.v2
+- pm.product_onboarding.action_result.v2
+- local_context
+- skip_product_onboarding
+- skip_optional_scope
+- toggle_setup_options
+- update_branch_state
+- session_skipped
+- optional_scope_skipped
+- cmd.onboarding.back
+- cmd.onboarding.cancel
+- cmd.onboarding.continue
+- cmd.onboarding.defer
+- cmd.onboarding.finish
+- cmd.onboarding.open_details
+- cmd.onboarding.resume
+- cmd.onboarding.skip
 negative_constraints:
-  - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
-  - Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected result.
-  - Do not conflate Close, Skip, Defer, Finish, or Ready state.
-  - Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip combinations.
-  - Do not turn Product Onboarding into a page, nested modal, route-history surface, or breadcrumb flow.
-  - Do not claim native Slint, Storage, dispatcher, handler, runtime, accessibility, motion, or visual proof from schemas, fixtures, static assertions, or browser checks.
-owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
+- Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
+- Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected
+  result.
+- Do not conflate Close, Skip, Defer, Finish, or Ready state.
+- Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip
+  combinations.
+- Do not turn Product Onboarding into a page, nested modal, route-history surface, or breadcrumb flow.
+- Do not claim native Slint, Storage, dispatcher, handler, runtime, accessibility, motion, or visual proof from schemas,
+  fixtures, static assertions, or browser checks.
+owner_hints:
+- Plans/UI_Wiring_Rules.md
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 ```

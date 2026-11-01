@@ -6,7 +6,7 @@
 
 ## 0. Scope
 
-Puppet Master supports two independent local source-control backends, exactly `scm_backend=git|jujutsu`. Hosted service selection is a separate axis, exactly `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none`. Forgejo and Gitea are distinct provider and adapter identities; a permanent `forgejo_or_gitea` identity is forbidden. The generic word `provider` is not a durable discriminator for either axis, and bare `origin` never means Cursor Origin.
+Puppet Master supports two independent local source-control backends, exactly `scm_backend=git|jujutsu`. Hosted service selection is a separate axis, exactly `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none`. Forgejo and Gitea are distinct provider and adapter identities; a permanent `forgejo_or_gitea` identity is forbidden. The generic word `provider` is not a durable discriminator for either axis, and bare `origin` is only a Git remote name and never a provider identity.
 
 Every source-control operation resolves an exact Project, Plan/Goal/run/agent lineage when present, Project Home Server, Execution Host, Execution Environment, Source Location, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native immutable revision, installation/adapter/credential binding, independent repository-forge binding, optional independent `automation_binding_ref`, expected revision, writer lease, topology generation, permission decision, FileSafe decision, and idempotency key. `RepositoryForgeBinding` remains repository-hosting authority; `AutomationBinding` remains Forge-owned automation authority and may name a different provider, instance, account, or service. Paths, current directories, selected tabs, focused workspaces, remote names, branch labels, and account display names are descriptive only.
 
@@ -57,31 +57,69 @@ plan_unit_id: SCS-001
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  Plans/Source_Control_System.md is the sole owner for backend-neutral source-control identity, context,
-  commands, leases, setup projections, receipts, and adaptive Source Control behavior. scm_backend and
-  forge_provider are independent closed axes; provider, path, focus, remote name, and bare origin are not
-  identity authority. Git, Jujutsu, and each forge retain their native owner contracts behind this facade.
+canonical_text: 'Plans/Source_Control_System.md is the sole owner for backend-neutral source-control identity, context,
+  commands, leases, setup projections, receipts, and adaptive Source Control behavior. scm_backend and forge_provider
+  are independent closed axes; provider, path, focus, remote name, and bare origin are not identity authority. Git, Jujutsu,
+  and each forge retain their native owner contracts behind this facade.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
 gui_classification_reason: The owner boundary also determines the adaptive user-visible Source Control and Settings projections.
-depends_on: [PDS-003, SIR-001]
-unblocks: [SCS-002, SCS-003, SCS-004, SCS-005, SCS-006, JJI-001, FGI-001]
+depends_on:
+- PDS-003
+- SIR-001
+unblocks:
+- SCS-002
+- SCS-003
+- SCS-004
+- SCS-005
+- SCS-006
+- JJI-001
+- FGI-001
 acceptance_criteria:
-  - Every repository context carries explicit scm_backend and independent forge_provider.
-  - Paths, focus, remote names, and display handles cannot satisfy identity fields.
-  - Git, JJ, and forge fields cannot cross their tagged schema branches.
-validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json]
+- Every repository context carries explicit scm_backend and independent forge_provider.
+- Paths, focus, remote names, and display handles cannot satisfy identity fields.
+- Git, JJ, and forge fields cannot cross their tagged schema branches.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
 risk_class: source_control_parallel_owner_or_identity_drift
 reasoning_tier: high
 context_scope: neutral_source_control_owner
-implementation_surfaces: [Plans/Source_Control_System.md, future source-control facade]
-node_compile_hint: {mode: source_control_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [source_ref:egolite-register:SCM-01, source_ref:scm-origin-reaudit:2026-08-31]
-preserved_exact_tokens: [scm_backend, forge_provider, git, jujutsu, cursor_origin, none, repo_id, workspace_id]
-negative_constraints: [Do not overload provider., Do not use bare origin for Cursor Origin., Do not infer durable identity from a path or focused UI state.]
-owner_hints: [Plans/Source_Control_System.md]
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future source-control facade
+node_compile_hint:
+  mode: source_control_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:egolite-register:SCM-01
+- source_ref:scm-origin-reaudit:2026-08-31
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- scm_backend
+- forge_provider
+- git
+- jujutsu
+- none
+- repo_id
+- workspace_id
+negative_constraints:
+- Do not overload provider.
+- Do not use bare origin for Cursor Origin.
+- Do not infer durable identity from a path or focused UI state.
+owner_hints:
+- Plans/Source_Control_System.md
 ```
-
 ### SCS-002 - Repository Context And Backend-Native Revision Fences
 
 ```yaml
@@ -388,7 +426,7 @@ ContractRef: SchemaID:pm.source_control.credential_lease.v1, ContractName:Plans/
 
 ### 4.2 Source Control GUI
 
-Source Control is backend- and forge-adaptive, not Git-hardcoded. It never gains a dedicated JJ, GitLab, Azure DevOps, Bitbucket, or Cursor Origin rail item or panel. Human text uses Branches for Git and Bookmarks for JJ; PR or MR follows the effective forge. Underscore enums, hashes, operation IDs, command IDs, raw paths, credential refs, lease IDs, and adapter protocol details remain in Technical Details only.
+Source Control is backend- and forge-adaptive, not Git-hardcoded. It never gains a dedicated JJ, GitLab, Azure DevOps, Bitbucket, or a provider-specific rail item or panel. Human text uses Branches for Git and Bookmarks for JJ; PR or MR follows the effective forge. Underscore enums, hashes, operation IDs, command IDs, raw paths, credential refs, lease IDs, and adapter protocol details remain in Technical Details only.
 
 Every control dispatches one registered command. Disabled controls show an exact human reason and one or more allowed recovery actions. No spinner or elapsed timer invents work progress; setup, fetch, sync, publish, review, pipeline, mirror, and repair rows render `ObservableWork`.
 
@@ -402,7 +440,7 @@ The `source-control` manager domains are exactly **Local Tools**, **Repositories
 
 Setup follows cached state -> exact Host/Environment discovery -> tool availability/reuse/explicit install -> separate sign-in or official page -> safe validation -> repository and hosted container selection -> capability probe -> binding -> **Ready**, **Ready with limits**, **Needs attention**, or **Not available**. The shared Integration Runtime performs installation and maintenance; Source Control supplies the capability need and renders the result.
 
-Product Onboarding projects this flow as two independent beginner-facing choices. `scm_backend=git|jujutsu` is the local Safe History backend on the selected work computer. `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none` is an optional online-copy binding. Local history and an online copy may coexist; selecting a forge never disables local Git/Jujutsu, and selecting local-only never disables Source Control. FileSafe safe points complement Source Control and do not replace Git or Jujutsu. Git and Jujutsu are local tools and have no service accounts; GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo, Gitea, and Cursor Origin are optional services where an account and online repository may exist. Forgejo and Gitea setup preserves distinct typed instance, API, SSH, trust, product/version/schema, Git/API/Actions-state, credential-reference, and currentness fields; an API-disabled instance may still be Git-ready. No Git account, Jujutsu account, Git/Jujutsu signup, or Git/Jujutsu authentication route exists.
+Product Onboarding projects this flow as two independent beginner-facing choices. `scm_backend=git|jujutsu` is the local Safe History backend on the selected work computer. `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none` is an optional online-copy binding. Local history and an online copy may coexist; selecting a forge never disables local Git/Jujutsu, and selecting local-only never disables Source Control. FileSafe safe points complement Source Control and do not replace Git or Jujutsu. Git and Jujutsu are local tools and have no service accounts; GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea are optional services where an account and online repository may exist. Forgejo and Gitea setup preserves distinct typed instance, API, SSH, trust, product/version/schema, Git/API/Actions-state, credential-reference, and currentness fields; an API-disabled instance may still be Git-ready. No Git account, Jujutsu account, Git/Jujutsu signup, or Git/Jujutsu authentication route exists.
 
 For a new local Project, the reviewed commit uses Project System's `cmd.project.new_local` and its exact current setup binding. Project System resolves the confirmed draft's history choice; a consumer must not force `init_git:true` over an explicit no-history choice or substitute Git for Jujutsu. After the owner returns the actual identities, Source Control may detect, select, and bind the requested admitted local backend with `cmd.source_control.backend.detect`, `cmd.source_control.backend.select`, and `cmd.source_control.repository.bind`. `cmd.source_control.repository.init` does not exist and MUST NOT be registered, aliased, dispatched, or shown. Selecting Jujutsu is allowed only when the Jujutsu owner can establish or bind the exact certified repository/workspace state; a missing owner route is `handler_unavailable`/`not_available` with a human recovery route, never an inferred initialization.
 
@@ -673,16 +711,22 @@ plan_unit_id: SCS-011
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: Product Onboarding projects Source Control as an explicitly local Safe History backend (`git|jujutsu`)
-  plus an independent optional forge online-copy provider. A new local Project is created through Project System's
-  `cmd.project.new_local` with the exact reviewed Project-owned setup binding rather than a nonexistent Source Control init command; detected/selected
+canonical_text: 'Product Onboarding projects Source Control as an explicitly local Safe History backend (`git|jujutsu`)
+  plus an independent optional forge online-copy provider. A new local Project is created through Project System''s `cmd.project.new_local`
+  with the exact reviewed Project-owned setup binding rather than a nonexistent Source Control init command; detected/selected
   backend binding, account sign-in or verified official signup-page handoff, forge repository list/create, backend-native
-  clone/publish, and Project registration remain exact owner-routed operations. Jujutsu is a local backend with
-  no Jujutsu account. Draft choices do not dispatch; one explicit authorized owner action or reviewed commit dispatches
-  once and a current terminal owner return auto-advances.
+  clone/publish, and Project registration remain exact owner-routed operations. Jujutsu is a local backend with no Jujutsu
+  account. Draft choices do not dispatch; one explicit authorized owner action or reviewed commit dispatches once and
+  a current terminal owner return auto-advances.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Defines the beginner-facing Source Control setup choices, availability reasons, owner
-  returns, and online-copy/account routes used by Product Onboarding and Settings.
+gui_classification_reason: Defines the beginner-facing Source Control setup choices, availability reasons, owner returns,
+  and online-copy/account routes used by Product Onboarding and Settings.
 depends_on:
 - SCS-003
 - SCS-004
@@ -691,25 +735,28 @@ unblocks:
 - PWIZ-021
 acceptance_criteria:
 - Safe History copy says it is local and does not imply Git/Jujutsu is disabled or replaced.
-- '`scm_backend=git|jujutsu` and `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none`
+- '`scm_backend=git|jujutsu` and `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none`
   remain independent typed axes with local-only and local-plus-online fixtures.'
-- New local Project creation uses `cmd.project.new_local` and honors the confirmed history/backend choice without a consumer-forced Git default; `cmd.source_control.repository.init`
-  has no registration, alias, handler, wiring row, or visible route.
+- New local Project creation uses `cmd.project.new_local` and honors the confirmed history/backend choice without a consumer-forced
+  Git default; `cmd.source_control.repository.init` has no registration, alias, handler, wiring row, or visible route.
 - Git and Jujutsu retain backend-native clone, bind, publish, revision, workspace, FileSafe, permission, and receipt
   semantics; FileSafe complements rather than replaces Source Control.
 - Existing-account, sign-in, verified official account-signup page, repository list/create, clone/publish, and Project
   registration use only their canonical owner commands and exact terminal results.
-- No Git/Jujutsu service account or Git/Jujutsu signup is offered, stored, simulated, or claimed; account flows
-  name the selected forge.
-- Each explicit authorized owner action or reviewed commit dispatches once; draft options stay local; a current
-  terminal owner return auto-advances and no unchanged choice is reconfirmed through preview plus repeated Continue
-  controls.
+- No Git/Jujutsu service account or Git/Jujutsu signup is offered, stored, simulated, or claimed; account flows name
+  the selected forge.
+- Each explicit authorized owner action or reviewed commit dispatches once; draft options stay local; a current terminal
+  owner return auto-advances and no unchanged choice is reconfirmed through preview plus repeated Continue controls.
 - Protected AuthBrowserSession content remains human-only and absent from agents, adapters, capture, logs, receipts,
   persistence, and concept evidence.
-- Browser-concept simulation never claims a real provider account, repository creation, push, production handler,
-  native Slint binding, or readiness.
+- Browser-concept simulation never claims a real provider account, repository creation, push, production handler, native
+  Slint binding, or readiness.
 - Precommit source browsing and selected-source authentication are bounded by PWIZ-021/MACS-005; repository/history/clone/publish/binding
   mutation remains commit-fenced and broad provider setup remains post-Project.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
@@ -732,6 +779,7 @@ node_compile_hint:
 source_lineage:
 - Plans/FinalGUISpec.md#F3-520
 - user-correction:2026-09-01-safe-history-source-control-accounts
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
 negative_constraints:
 - Do not conflate local Safe History with an online backup or forge repository.
 - Do not claim Git or Jujutsu has a service account.
@@ -740,7 +788,6 @@ negative_constraints:
 - Do not require redundant confirmation of an unchanged choice.
 - Do not promote concept simulation into native or production evidence.
 ```
-
 ## Product-source acquisition and safety addendum - 2026-09-01
 
 ### SCS-012 - Local history, FileSafe, hosted binding, and source-transport separation
@@ -838,49 +885,93 @@ plan_unit_id: SCS-013
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  Source Control admits Forgejo and Gitea as distinct forge_provider values while retaining exactly git and
-  jujutsu as local backends. RepositoryContext carries RepositoryForgeBinding as repository-hosting authority and
-  may carry a separate automation_binding_ref owned by Forge Integrations; the automation service, provider,
-  instance, and account may differ from the repository host and are never inferred from a remote named origin.
-  Source Control links current checks and automation context to the sole repository_automation / Actions & Pipelines
-  shell without owning that shell, provider adapters, or automation commands.
+canonical_text: 'Source Control admits Forgejo and Gitea as distinct forge_provider values while retaining exactly git
+  and jujutsu as local backends. RepositoryContext carries RepositoryForgeBinding as repository-hosting authority and
+  may carry a separate automation_binding_ref owned by Forge Integrations; the automation service, provider, instance,
+  and account may differ from the repository host and are never inferred from a remote named origin. Source Control links
+  current checks and automation context to the sole repository_automation / Actions & Pipelines shell without owning
+  that shell, provider adapters, or automation commands.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: The contract controls provider-aware Source Control context and its visible handoff to the separate Actions & Pipelines shell.
-depends_on: [SCS-001, SCS-002, SCS-005, SCS-011, SCS-012, FGI-012]
+gui_classification_reason: The contract controls provider-aware Source Control context and its visible handoff to the
+  separate Actions & Pipelines shell.
+depends_on:
+- SCS-001
+- SCS-002
+- SCS-005
+- SCS-011
+- SCS-012
+- FGI-012
 unblocks: []
 acceptance_criteria:
-  - Forgejo and Gitea validate as separate provider identities for Git and Jujutsu contexts and never validate through forgejo_or_gitea.
-  - RepositoryContext may omit automation_binding_ref, bind automation on the same forge, or reference an automation service on a different host/account without changing RepositoryForgeBinding.
-  - API-disabled/Git-ready and expired-forge-auth/Git-SSH-ready fixtures keep fetch and publish available while only hosted/API actions require repair.
-  - Self-hosted inputs and owner projections retain normalized HTTPS/API paths, custom SSH port, scoped private-CA ref, known-host proof, product/version/API-schema, independent Git/API/Actions state, permission and currentness refs, and no secret bytes.
-  - Credentials and Authorization are stripped on redirect-origin change; localhost/metadata targets fail closed without explicit existing policy; FileSafe and execution-time currentness remain mandatory for local writes.
-  - repository_automation is the sole canonical automation panel identity; github_actions is migration-read only and no remote name fabricates an Origin Actions service.
-  - Static Plans, schema, fixtures, command targets, or wiring do not establish adapters, native handlers, runtime behavior, events, security proof, Slint rendering, readiness, or certification.
+- Forgejo and Gitea validate as separate provider identities for Git and Jujutsu contexts and never validate through
+  forgejo_or_gitea.
+- RepositoryContext may omit automation_binding_ref, bind automation on the same forge, or reference an automation service
+  on a different host/account without changing RepositoryForgeBinding.
+- API-disabled/Git-ready and expired-forge-auth/Git-SSH-ready fixtures keep fetch and publish available while only hosted/API
+  actions require repair.
+- Self-hosted inputs and owner projections retain normalized HTTPS/API paths, custom SSH port, scoped private-CA ref,
+  known-host proof, product/version/API-schema, independent Git/API/Actions state, permission and currentness refs, and
+  no secret bytes.
+- Credentials and Authorization are stripped on redirect-origin change; localhost/metadata targets fail closed without
+  explicit existing policy; FileSafe and execution-time currentness remain mandatory for local writes.
+- repository_automation is the sole canonical automation panel identity; github_actions is migration-read only and no
+  remote name fabricates an Origin Actions service.
+- Static Plans, schema, fixtures, command targets, or wiring do not establish adapters, native handlers, runtime behavior,
+  events, security proof, Slint rendering, readiness, or certification.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 validation_surfaces:
-  - Plans/source_control_contracts.schema.json
-  - Plans/source_control_contract_fixtures.json
-  - Plans/forge_integration_contracts.schema.json
-  - Plans/forge_integration_contract_fixtures.json
-  - Plans/product_onboarding_contracts.schema.json
-  - Plans/product_onboarding_contract_fixtures.json
-  - python3 scripts/pm-new-contracts-verify.py
-  - future Forgejo/Gitea transport/API/security/currentness and repository-automation handoff tests
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- Plans/forge_integration_contracts.schema.json
+- Plans/forge_integration_contract_fixtures.json
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- python3 scripts/pm-new-contracts-verify.py
+- future Forgejo/Gitea transport/API/security/currentness and repository-automation handoff tests
 risk_class: source_control_forge_identity_or_automation_authority_conflation
 reasoning_tier: high
 context_scope: forgejo_gitea_source_control_and_automation_reference
-implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future source-control facade]
-node_compile_hint: {mode: cross_owner_contract_propagation_only, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Forge_Integrations.md#FGI-012, source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md]
-preserved_exact_tokens: [forgejo, gitea, RepositoryForgeBinding, AutomationBinding, automation_binding_ref, repository_automation, "Actions & Pipelines", github_actions, FileSafe]
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- future source-control facade
+node_compile_hint:
+  mode: cross_owner_contract_propagation_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Forge_Integrations.md#FGI-012
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- forgejo
+- gitea
+- RepositoryForgeBinding
+- AutomationBinding
+- automation_binding_ref
+- repository_automation
+- Actions & Pipelines
+- github_actions
+- FileSafe
 negative_constraints:
-  - Do not collapse Forgejo and Gitea or infer either from repository names, remote names, URLs, or display labels.
-  - Do not infer AutomationBinding from RepositoryForgeBinding or move Forge-owned adapter/automation semantics into Source Control.
-  - Do not add a second automation shell, forge-specific rail panel, or provider-specific Source Control runtime.
-  - Do not emit a new EventRecord family; owner receipts and expected_event_types=[] remain event-silent until Event Authority acts.
-  - Do not claim runtime, native, security, visual, or readiness evidence from static contract propagation.
+- Do not collapse Forgejo and Gitea or infer either from repository names, remote names, URLs, or display labels.
+- Do not infer AutomationBinding from RepositoryForgeBinding or move Forge-owned adapter/automation semantics into Source
+  Control.
+- Do not add a second automation shell, forge-specific rail panel, or provider-specific Source Control runtime.
+- Do not emit a new EventRecord family; owner receipts and expected_event_types=[] remain event-silent until Event Authority
+  acts.
+- Do not claim runtime, native, security, visual, or readiness evidence from static contract propagation.
 ```
-
 ## Backup Source Closure And Restore Reconciliation - 2026-09-01
 
 ### SCS-014 - Backup Closure, Rebind, Merge, Remote Validation, And Owner Routes
@@ -987,73 +1078,120 @@ plan_unit_id: SCS-015
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  Each fetch, publish, review, merge, CI, or local mutation computes one EffectiveOperationCapability from
-  product support, adapter implementation, instance/version/tier/feature configuration, credential scopes,
-  repository and branch permissions, Puppet Master policy, current locks/revision, and connectivity. Support,
-  evidence, freshness, and availability remain separate. The exact availability vocabulary is ready,
-  not_configured, auth_required, permission_denied, policy_blocked, protected, unsupported, adapter_missing,
-  external_only, temporarily_unavailable, stale, and unknown; unknown is never flattened to unsupported and
-  cached permission never authorizes a mutation. The same revisioned decision feeds GUI, palette, natural
-  language, agents, Doctor, and dispatch, and execution rechecks it. RemoteOperationTarget binds the captured
-  Project, repository, remote, forge instance/account, immutable revision, distinct fetch URL, one or more
-  explicit push URLs/refspecs, and review binding. Fan-out is previewed and receipted per target, is not atomic,
-  and never duplicates a push to Cursor Origin and its mapped GitHub authority. Git preserves index/HEAD,
-  staged/unstaged, commit, stash, branch/upstream, and worktree semantics. Jujutsu preserves current @, stable
-  change ID, current commit ID, describe/new/edit/split/squash/abandon, bookmarks/tracking, conflicts,
-  workspaces, and operation history without a fake stage area or hidden Git commit/stash. Preserving a native
-  semantic here is a statement about the backend's meaning, not a promise that a canonical command dispatches it.
-  Colocated Git/JJ coordinates locks and imports/exports, and backend adoption is an explicit previewed migration.
+canonical_text: 'Each fetch, publish, review, merge, CI, or local mutation computes one EffectiveOperationCapability
+  from product support, adapter implementation, instance/version/tier/feature configuration, credential scopes, repository
+  and branch permissions, Puppet Master policy, current locks/revision, and connectivity. Support, evidence, freshness,
+  and availability remain separate. The exact availability vocabulary is ready, not_configured, auth_required, permission_denied,
+  policy_blocked, protected, unsupported, adapter_missing, external_only, temporarily_unavailable, stale, and unknown;
+  unknown is never flattened to unsupported and cached permission never authorizes a mutation. The same revisioned decision
+  feeds GUI, palette, natural language, agents, Doctor, and dispatch, and execution rechecks it. RemoteOperationTarget
+  binds the captured Project, repository, remote, forge instance/account, immutable revision, distinct fetch URL, one
+  or more explicit push URLs/refspecs, and review binding. Fan-out is previewed and receipted per target, is not atomic,
+  and never duplicates a push through an admitted mirror and its mapped authority. Git preserves index/HEAD, staged/unstaged,
+  commit, stash, branch/upstream, and worktree semantics. Jujutsu preserves current @, stable change ID, current commit
+  ID, describe/new/edit/split/squash/abandon, bookmarks/tracking, conflicts, workspaces, and operation history without
+  a fake stage area or hidden Git commit/stash. Preserving a native semantic here is a statement about the backend''s
+  meaning, not a promise that a canonical command dispatches it. Colocated Git/JJ coordinates locks and imports/exports,
+  and backend adoption is an explicit previewed migration.
+
+
+  DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
 gui_related: true
-gui_classification_reason: Capability states, remediation, remote previews, and backend-native actions directly determine visible controls and labels.
-depends_on: [SCS-002, SCS-003, SCS-004, SCS-013, FGI-012]
-unblocks: [SCS-016, F3-529]
+gui_classification_reason: Capability states, remediation, remote previews, and backend-native actions directly determine
+  visible controls and labels.
+depends_on:
+- SCS-002
+- SCS-003
+- SCS-004
+- SCS-013
+- FGI-012
+unblocks:
+- SCS-016
+- F3-529
 acceptance_criteria:
-  - A stale or invalid capability revision produces a typed recoverable failure at dispatch rather than a cached authorization.
-  - Pending operations retain their captured Project, account, repository, remote, and revision when active selection changes.
-  - >-
-    `merge_editor_available` is owned here and means exactly one thing: Puppet Master's own built-in structured merge
-    editor is present and usable for the selected conflicted file on this Host and Environment. It is not a statement
-    about any external merge tool, and the Git conflict-assistant preference that opens an external tool never sets it.
-    The owner rule set in DL-056: on a Jujutsu workspace the diff-open, merge-editor-open and Git external-merge-tool
-    preference surfaces are read-only or built-in-editor-only, so no external tool is handed a Jujutsu workspace to
-    write into. A control disabled by that scoping carries the typed reason `conflict_surface_read_only_on_jujutsu`
-    rather than appearing unavailable without explanation, and its safe next action is the value the existing closed
-    vocabulary already has, `inspect`; no new safe-next-action value is introduced. The save-back contract for a
-    Jujutsu conflict is deferred until the built-in editor's save path is designed, and until then nothing writes
-    conflict content back through
-    these surfaces.
-  - Partial fan-out identifies exactly which ref reached each target; shared commits never establish repository identity and an Origin mirror never triggers duplicate automatic publication.
-  - >-
-    Split is preserved as a Jujutsu semantic and is not dispatchable today, and canon says both. The canonical command
-    `cmd.jujutsu.change.split` expresses only a change id, while the native command with no path arguments opens an
-    interactive editor the workbench cannot host, so JJI-003 disables it before effect with
-    `interactive_editor_session_required`. The preserved-semantics sentence in this unit is therefore read as
-    expressible-but-not-dispatchable for split until a content-selection vocabulary is landed, which is an optional
-    capability outside this correction.
-  - Paired Git/Jujutsu fixtures retain engine-specific labels, commands, graph selection, and operation-history meaning; Jujutsu undo remains distinct from commit history and Backup restore.
-validation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future capability revision, remote fan-out, Git/JJ parity, and migration fixtures]
+- A stale or invalid capability revision produces a typed recoverable failure at dispatch rather than a cached authorization.
+- Pending operations retain their captured Project, account, repository, remote, and revision when active selection changes.
+- '`merge_editor_available` is owned here and means exactly one thing: Puppet Master''s own built-in structured merge
+  editor is present and usable for the selected conflicted file on this Host and Environment. It is not a statement about
+  any external merge tool, and the Git conflict-assistant preference that opens an external tool never sets it. The owner
+  rule set in DL-056: on a Jujutsu workspace the diff-open, merge-editor-open and Git external-merge-tool preference
+  surfaces are read-only or built-in-editor-only, so no external tool is handed a Jujutsu workspace to write into. A
+  control disabled by that scoping carries the typed reason `conflict_surface_read_only_on_jujutsu` rather than appearing
+  unavailable without explanation, and its safe next action is the value the existing closed vocabulary already has,
+  `inspect`; no new safe-next-action value is introduced. The save-back contract for a Jujutsu conflict is deferred until
+  the built-in editor''s save path is designed, and until then nothing writes conflict content back through these surfaces.'
+- Partial fan-out identifies exactly which ref reached each target; shared commits never establish repository identity
+  and a mirror never triggers duplicate automatic publication.
+- Split is preserved as a Jujutsu semantic and is not dispatchable today, and canon says both. The canonical command
+  `cmd.jujutsu.change.split` expresses only a change id, while the native command with no path arguments opens an interactive
+  editor the workbench cannot host, so JJI-003 disables it before effect with `interactive_editor_session_required`.
+  The preserved-semantics sentence in this unit is therefore read as expressible-but-not-dispatchable for split until
+  a content-selection vocabulary is landed, which is an optional capability outside this correction.
+- Paired Git/Jujutsu fixtures retain engine-specific labels, commands, graph selection, and operation-history meaning;
+  Jujutsu undo remains distinct from commit history and Backup restore.
+- 'DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
+  only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged.
+  generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or
+  mirror authority.'
+validation_surfaces:
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- future capability revision
+- remote fan-out
+- Git/JJ parity
+- and migration fixtures
 risk_class: stale_capability_cross_target_publication_or_backend_semantic_loss
 reasoning_tier: high
 context_scope: effective_capability_remote_target_and_native_backend
-implementation_surfaces: [Plans/Source_Control_System.md, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future source-control capability resolver and adapters]
-node_compile_hint: {mode: static_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- future source-control capability resolver and adapters
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:15-21
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:23-29
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:31-37
-  - source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:57-108
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-conflict-surface-scope-dl056
-  - source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08
-preserved_exact_tokens: [ready, not_configured, auth_required, permission_denied, policy_blocked, protected, unsupported, adapter_missing, external_only, temporarily_unavailable, stale, unknown, current @, change ID, commit ID, merge_editor_available, conflict_surface_read_only_on_jujutsu, inspect, cmd.jujutsu.change.split, interactive_editor_session_required]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:15-21
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:23-29
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/02_SOURCE_CONTROL_CAPABILITY_MODEL.md:31-37
+- source_ref:corrected-slice:machine__requirements.json__part-003__lines-000401-000620.txt:57-108
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-conflict-surface-scope-dl056
+- source_ref:pldg-20260917-001-jujutsu-continuation4-corrections:atom-jj-no-interactive-editor-session-c4-08
+- DL-273, Jared 2026-11-01 via lead1101190655-f8ab; removal of agent-proposed hosted offerings, Cursor AI unchanged.
+preserved_exact_tokens:
+- ready
+- not_configured
+- auth_required
+- permission_denied
+- policy_blocked
+- protected
+- unsupported
+- adapter_missing
+- external_only
+- temporarily_unavailable
+- stale
+- unknown
+- current @
+- change ID
+- commit ID
+- merge_editor_available
+- conflict_surface_read_only_on_jujutsu
+- inspect
+- cmd.jujutsu.change.split
+- interactive_editor_session_required
 negative_constraints:
-  - Do not turn unavailable or unknown checks into zero failed checks or unsupported.
-  - Do not infer a remote, account, forge, or repository from focus, current branch, display path, remote name, or shared commit objects.
-  - Do not make multi-remote publication atomic or retry/duplicate an Origin-mirror write automatically.
-  - Do not translate Stage or Commit into Jujutsu squash, snapshot, hidden commit, or stash.
-  - Do not claim a runtime resolver, adapter, remote effect, or native GUI from static owner/schema/fixture evidence.
+- Do not turn unavailable or unknown checks into zero failed checks or unsupported.
+- Do not infer a remote, account, forge, or repository from focus, current branch, display path, remote name, or shared
+  commit objects.
+- Do not make multi-remote publication atomic or retry/duplicate an Origin-mirror write automatically.
+- Do not translate Stage or Commit into Jujutsu squash, snapshot, hidden commit, or stash.
+- Do not claim a runtime resolver, adapter, remote effect, or native GUI from static owner/schema/fixture evidence.
 ```
-
 ### SCS-016 - Lossless Remote Records, Effect Reconciliation, Observation, And Agent Routing
 
 ```yaml
