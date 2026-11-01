@@ -196,6 +196,16 @@ export const tests = {
 		await t.text(row(W, 'copilot'), /book-club-crew \(organization\)/, 'P09: the organization is offered');
 		await W.$('[data-o55-do="entity"][data-arg="copilot|book-club-crew"]').click();
 		await waitRow(t, W, 'copilot', /(?=.*Ready)(?=.*through book-club-crew)/, 'P09: Ready with the chosen billing entity');
+		await act(W, 'copilot', 'manage').click(); await screenDone(W);
+		await W.$('[data-o55-do="addAnother"][data-arg="copilot"]').click(); await screenDone(W);
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'm11: the second Copilot account asks whose plan', 9000);
+		await W.$('[data-o55-do="entity"][data-arg="copilot|jared-studio"]').click();
+		await waitRow(t, W, 'copilot', /2 accounts/, 'm11: two Copilot accounts');
+		await act(W, 'copilot', 'manage').click(); await screenDone(W);
+		const lines = await W.frame.evaluate(() => Array.from(document.querySelectorAll('#pm-o55-onboarding [data-key="pv-copilot"] [data-key^="ac-"]')).map((e) => e.textContent.replace(/\s+/g, ' ').trim()));
+		await t.check('m11: "through" only for the organization\'s plan, never the person\'s own', lines.some((l) => /through book-club-crew/.test(l)) && !lines.some((l) => /through jared-studio/.test(l)), JSON.stringify(lines));
+		await act(W, 'copilot', 'manage').click(); await screenDone(W);
 		await act(W, 'qwen-coding', 'key').click(); await screenDone(W);
 		await t.check('D2: no China-region choice in the wizard (Settings has it)', (await W.$('[data-key="pv-qwen-coding"] [data-o55-do="region"]').count()) === 0, 'region control found');
 		await typeInto(W, '#o55f-key-qwen-coding', FAKE_KEY);
@@ -345,6 +355,15 @@ export const tests = {
 		await pol.locator('[data-o55-do="fkeyCheck"]').click();
 		const u2 = Date.now() + 6000; while (Date.now() < u2) { g = await pol.innerText(); if (/Ready/.test(g)) break; await W.frame.waitForTimeout(250); }
 		await t.check('a key route set up with the sample key reaches Ready (Pollinations)', /Ready/.test(g), g);
+		const rw = freeBox(W, 'free-routeway');
+		await rw.scrollIntoViewIfNeeded();
+		await rw.locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(600);
+		const vis = await W.frame.evaluate(() => {
+			const box = document.querySelector('#pm-o55-onboarding [data-key="free-more"]'), row = box.querySelector('[data-key="fr-free-routeway"]');
+			const b = box.getBoundingClientRect(), inBox = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); return r.top >= b.top - 1 && r.bottom <= b.bottom + 1; };
+			return { name: inBox(row.querySelector('.o55-rowtitle')), label: inBox(row.querySelector('label')), field: inBox(row.querySelector('input')) };
+		});
+		await t.check('m12: an opened row in More free options shows its name, its field label and the field together', vis.name && vis.label && vis.field, JSON.stringify(vis));
 		await t.viewport(1920, 1080);
 	}
 	,
