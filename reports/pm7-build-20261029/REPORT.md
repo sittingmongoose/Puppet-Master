@@ -1,3 +1,22 @@
+# Plans lane — combined removal source passes, 2026-11-01
+
+**Combined source 6f26c09b7b is pushed to both remotes. Expanded admission, build and mirror proof PASS.** Fields e47045096f is merged with all local Plans repairs. The lead's independent combined re-check and the final dry landing remain.
+
+| Area | Result |
+|---|---|
+| **Canon / companions** | All local R1–R4/R7/R8/R9 repairs pass. Current accepted units, test/evidence coverage, clone tables, production wiring and shared connection triggers consume admitted services; retired anchors remain source-only. Shared Git/Jujutsu, mirror, auth, revision, publication and exact-return guards stay. |
+| **GUI / saved drafts** | R5 removes the live automation option/profile, mirror sample and inline provider IDs. R6 invalidates retired identity/variant/address/account/repository/credential/auth refs and Review on entry/resume, requiring explicit reselection. Fields reports 43/43 on both page modes, including all three retired selections. Source-only markers are not new canonical fields. |
+| **Expanded proof** | 178 top-level schemas, 1593 positive cases and 6839 current unit records scanned; no active retired service identity or obligation. Four old-accepted provider inputs and three obsolete presentation shapes are refused. Actual selector/controller/projection checked; built page has zero raw matching aliases. First-host labels zero across 8781 tracked Plans/report files. |
+| **Counts / DRY / settings / commands** | 216 coverage rows/1080 cells; 1010 settings; 485 bindings/63 families; 715 Touch/140 profiles; 1271 production; 22 status keys. Existing shared commands/handlers/results/returns stay. DR-005 owns one admission/invalidation policy. |
+| **Derived / source parity** | 7276 units/29358 acceptance units/96 docs; 2977 shards/99 sources. Build --check PASS. Field mirror unchanged and exact: 63 fields/32 conditionals/0 unmapped. |
+| **Dry inputs / preservation** | 3560 fixture/audit files or links match the lead tree, with currentness root checked separately. Main remains 07dbf43786. Protected governance, fixed qualification inputs, snapshot and baseline have zero changed paths. |
+
+Expanded proof: /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v4.json, SHA-256 2ba43c70a7750a7911239ec3002a6fdd2978546368aefd0e06af763dc7b43f4d. Built page SHA-256 8c90002c6d1b26fd254913e07c79d5f26e0be778609aec53819e5900ec4633fe. [RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md), [RETIRED-SERVICES.md](RETIRED-SERVICES.md) and [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) map the complete scope.
+
+This checkpoint changes report metadata only after the checked combined source. No browser or server started by Plans; no landing lock, landing, reseal, snapshot refresh or baseline refresh. T3 mail rings this thread.
+
+---
+
 # Plans lane — local retirement audit repairs pass, 2026-11-01
 
 **Local repair source 4ebf8691fa is pushed to both remotes. All seven focused checks pass.** The lead's independent review closed R1–R4/R7 at691f51c37f. R8/R9 are now repaired locally; R5/R6 GUI source remains with fields. The final combined re-check and dry landing are pending.
