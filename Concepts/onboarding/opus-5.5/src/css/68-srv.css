@@ -11,3 +11,6 @@
 #pm-o55-onboarding [data-key="opt-seg-hosting"] { display: flex; flex-wrap: nowrap; align-items: center; }
 #pm-o55-onboarding [data-key="seg-hosting"] { flex: 1 1 auto; min-width: 0; }
 #pm-o55-onboarding [data-key="seg-hosting"] > button { flex: 1 1 0; min-width: 0; height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.2; white-space: normal; justify-content: center; text-align: center; }
+/* m10: a Remote Link set up away from home: its QR beside the link and its short code */
+#pm-o55-onboarding .o55-rlink { display: flex; gap: 14px; align-items: center; }
+#pm-o55-onboarding .o55-rlink-codes { flex: 1; min-width: 0; display: grid; gap: 8px; }

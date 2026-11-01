@@ -13,7 +13,7 @@
   const chapterOf = (S) => (N(S).purpose === 'backup' && (S.sess.restore || {}).scope !== 'project' ? 'computer' : 'project');
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
-  const words = (seed) => O55.art.identity(seed).words.join(' ');
+  const words = (seed) => [...new Set(O55.art.identity(seed).words)].join(' '); /* (never one word twice: m5) */
   /* No numeric priority: O55.sound ranks coinciding events itself. Owner operations name their
      done/fail/phase sounds in opts.sound (O55.flow.op): what discovery turns up is `found`, a wrong code or password
      is a soft `warn` (the field or banner says what to do), and an approval on the other device is `found`. */
@@ -187,13 +187,17 @@
       let out = C.identity(d.hostKey, words(d.hostKey), d.name + ' · ' + d.address);
       if (hs === 'known' || n.trusted) out += C.note(hs === 'known' ? T('nas.identity.known', { name: d.name }) : T('chrome.alreadyDone'), 'ok', 'check');
       if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedTitle', { name: d.name }))}</span></div>`;
-      out += C.details(S, 'fp', T('nas.identity.details'), C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : [])));
+      /* RV-5: the fingerprint is what to compare (a device's own settings show it, never Puppet Master's picture), so
+         it is in plain view, not folded away */
+      out += `<div data-key="fp">${C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : []))}</div>`;
       return out;
     },
     foot(S) {
       const hs = hostState(S), n = N(S);
       if (hs === 'changed' && !n.acceptedNew) return { secondary: [{ label: T('nas.identity.trustNew'), do: 'trustNew' }], primary: { label: T('nas.identity.stop'), do: 'stop' } };
-      return { primary: { label: hs === 'known' || n.trusted ? T('chrome.continue') : T('nas.identity.confirm'), do: 'trust' } };
+      if (hs === 'known' || n.trusted) return { primary: { label: T('chrome.continue'), do: 'trust' } };
+      /* (can't confirm it: Stop is right beside Yes, RV-5) */
+      return { secondary: [{ label: T('nas.identity.stop'), do: 'stop' }], primary: { label: T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
       trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
@@ -630,7 +634,7 @@
           const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
         }
-        if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
+        if (m === 'qr' && !fail && st && st.state === 'running') out += F.viewfinder(T('connect.pair.qrAim', { name: p.name }), waiting); /* (m16, FA-3) */
       }
       if (!fail && !n.paired) out += H('nas-pmpair:outcome', [['denied', 'refused'], ['expired', 'expired'], ['unreachable', 'noAnswer']].filter(([code]) => m !== 'code' || code === 'unreachable').map(([code, word]) => ({ label: T('connect.pair.hint.' + code), outcome: word, act: ['demoOutcome', code] })));
       if (fail) {

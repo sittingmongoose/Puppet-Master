@@ -406,6 +406,11 @@
           "title": "Remote Link or its code",
           "text": "The link your Server made, or the short code it shows. Your Server shows them in Settings › Server & Project Location › Away From Home.",
           "expert": "The Server-issued Remote Link (or its short code) from Settings › Server & Project Location › Away From Home; pairing still follows."
+        },
+        "tsSignIn": {
+          "title": "Sign in to Tailscale",
+          "text": "Signs this device in once, inside Puppet Master. No Tailscale app needed. Then your Puppet Masters on it show up here.",
+          "expert": "Logs this native Client's built-in tsnet node in through the protected auth owner, once per device; no host Tailscale app. Joining the tailnet grants no Puppet Master trust: pairing still does."
         }
       },
       "c-pair": {
@@ -499,8 +504,8 @@
         },
         "selfMatch": {
           "title": "The words match",
-          "text": "Tick this only when the words here are the same as on this device. Nothing is paired until you approve.",
-          "expert": "Confirms the identity words shown here match this device's, so the pairing goes to the right device."
+          "text": "This device and the Server each work out three words from this pairing. Tick only if both lines show the same words. If they differ, another device asked, so don't approve.",
+          "expert": "Compares the identity words this Client derives from its own pairing key with those the Server derived from the candidate it received; a mismatch means a different device's request."
         }
       },
       "s-ready": {
@@ -1430,8 +1435,8 @@
       "nas-identity": {
         "trust": {
           "title": "Yes, this is my device",
-          "text": "Check this device's identity using information you already trust, like its own settings or whoever set it up. Choose this only when they match. If you can't confirm it, stop.",
-          "expert": "Trusts this SSH host key after you compare its fingerprint (shown as a picture and words) with one you already trust, like the device's own settings or its owner."
+          "text": "Check the fingerprint against one you already trust, like the device's own settings or whoever set it up. Choose this only when they match. If you can't confirm it, stop and ask them.",
+          "expert": "Trusts this SSH host key after you compare its SHA256 fingerprint with one from a source you already trust (the device's own settings or its administrator). Unconfirmed: stop."
         },
         "trustNew": {
           "title": "Trust the new ID",
@@ -1440,8 +1445,8 @@
         },
         "stop": {
           "title": "Stop",
-          "text": "Stops here and connects to nothing. The safe choice when you didn't reset the device.",
-          "expert": "Stops without connecting; nothing is trusted."
+          "text": "Stops here and connects to nothing. The safe choice when you can't confirm the fingerprint, or didn't reset the device.",
+          "expert": "Stops without connecting; nothing is trusted. Use it whenever the fingerprint can't be confirmed."
         }
       },
       "nas-key": {
@@ -1597,7 +1602,22 @@
         "person:installed": {
           "title": "I've added it",
           "text": "Press this once the settings file is in your proxy. Puppet Master then checks it works.",
-          "expert": "Continue to the reach, certificate and live-connection tests after installing the exported configuration."
+          "expert": "Continue to the reachability and live-connection tests after adding the exported configuration to your proxy."
+        },
+        "download:pxfile": {
+          "title": "Download settings file",
+          "text": "Saves the settings file to this computer, so you can add it to your proxy.",
+          "expert": "Downloads the generated reverse proxy configuration (Caddyfile, NGINX server block or Traefik dynamic config) for your proxy host."
+        },
+        "copy:pxfile": {
+          "title": "Copy the settings",
+          "text": "Copies the whole settings file, for a proxy where you paste the settings in.",
+          "expert": "Copies the generated proxy configuration to the clipboard, for paste-in config editors."
+        },
+        "copy:rcode": {
+          "title": "Copy the short code",
+          "text": "Copies the short code, easier to type on a phone than the link.",
+          "expert": "Copies the Remote Link's short code (the owner resolves it to the same link)."
         }
       }
     },
@@ -1885,8 +1905,8 @@
         "typing": "An address! I'll go and knock."
       },
       "nas-identity": {
-        "enter": "Is this your device? Check its picture.",
-        "known": "We've met before. Same picture!",
+        "enter": "Is this your device? Check its fingerprint.",
+        "known": "We've met before. Same fingerprint!",
         "trusted": "Trusted. Onward!"
       },
       "nas-key": {
@@ -1969,7 +1989,14 @@
         "route": {
           "none": "Hmm, I can't find it yet.",
           "addrMissing": "I need its address first.",
-          "addrNoAnswer": "Hmm, nobody answers at that address."
+          "addrNoAnswer": "Hmm, nobody answers at that address.",
+          "tailscale": {
+            "signInFirst": "Sign in first, then they show up.",
+            "signInFirstHs": "Sign in to Headscale first.",
+            "denied": "Tailscale said no this time.",
+            "expired": "Oops, the sign-in timed out.",
+            "hsDenied": "Headscale didn't let us in."
+          }
         },
         "pair": {
           "codeWrong": "Hmm, that code doesn't match.",
@@ -2179,7 +2206,14 @@
         "route": {
           "none": "There it is!",
           "addrMissing": "Got it. Let's look!",
-          "addrNoAnswer": "Better! Let's go."
+          "addrNoAnswer": "Better! Let's go.",
+          "tailscale": {
+            "signInFirst": "Signed in! There they are.",
+            "signInFirstHs": "Signed in! There they are.",
+            "denied": "Signed in this time!",
+            "expired": "Signed in this time!",
+            "hsDenied": "Headscale let us in!"
+          }
         },
         "pair": {
           "codeWrong": "That's the one. Paired!",

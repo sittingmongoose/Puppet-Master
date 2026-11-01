@@ -1082,6 +1082,21 @@ def('srv4', 'fresh+oldKeyLocked', "Situation oldKeyLocked: the SSH settings name
   A.eq(await d.screen(), 'nas-signin', 'Continue goes to sign in to add the new key');
   A.ok(await d.state(() => window.O55.S.sess.nas.key !== 'k-old'), 'the key going on is not the old one');
 });
+/* RV-3 (D7 B): Connect by Tailscale signs this device in once, before the list; a turned-down sign-in shows nothing */
+def('srv5', 'fresh', 'Connect by Tailscale: this device signs in once (turned down first, then yes) before its Puppet Masters show, then pairs', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  await d.act('pick', 'connect'); await d.primary(); A.eq(await d.screen(), 'c-route', 'connect route');
+  await connectRoutes(d); await d.act('route', 'tailscale');
+  const L = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) ';
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-key="under-tailscale"] [data-o55-do="pickServer"]')), 'no Puppet Masters listed before the sign-in');
+  await d.act('demoHint', 'c-route:tssignin|1'); /* (the demo hint: Tailscale says no) */
+  await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key=\"tsfail\"]')", 'turned down', 8000);
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding [data-key="under-tailscale"] [data-o55-do="pickServer"]')), 'turned down: still none listed');
+  await d.click(L + '[data-o55-do="tsSignIn"]', 'Sign in to Tailscale');
+  await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key=\"under-tailscale\"] [data-o55-do=\"pickServer\"][data-arg=\"pm:home\"]')", 'signed in: listed', 8000);
+  await d.act('pickServer', 'pm:home'); await d.primary(); A.eq(await d.screen(), 'c-review', 'review'); await d.primary();
+  A.eq(await d.screen(), 'c-pair', 'pairing'); await until(d, 'window.O55.S.sess.connect.paired', 'approved', 9000); A.ok(true, 'signed in once, then paired');
+});
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
@@ -1546,6 +1561,13 @@ def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it aw
   A.ok(await d.state(() => !Object.entries(window.O55.S.sess.ops).some(([k, v]) => k.startsWith('restore:') && v.phases.some((p) => p.key === 'remote'))), 'the restore itself sets up no way in');
   await d.untilScreen('away-setup', 8000);
   A.eq(await d.state(() => (window.O55.S.sess.awaySetup || {}).then || null), 'r-done', 'then the way in from away is its own step, and goes on to Restored');
+  /* RV-8: once it is set up, Restored names it on; goals and schedules stay paused (canon: separate remote activation) */
+  if (await d.state(() => !window.O55.S.sess.awaySetup.confirmed)) await d.act('start');
+  await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'waiting'", 'waits for the Tailscale sign-in', 12000);
+  await d.act('person', 'tsSignIn'); await until(d, "(window.O55.S.sess.awaySetup || {}).state === 'done'", 'set up', 20000);
+  await d.primary(); A.eq(await d.screen(), 'r-done', 'Restored');
+  const t = await layerText(d);
+  A.ok(/Goals and schedules stay paused/.test(t) && /away from home is on/.test(t) && !/outside access/.test(t), 'Restored: goals and schedules paused, the new way in on');
 });
 
 /* ---------------------------------------------------------------------------------------------- runner */
