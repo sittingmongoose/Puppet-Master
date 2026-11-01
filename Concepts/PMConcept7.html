@@ -310944,7 +310944,10 @@ try {
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
-    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true },
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
+      /* in the pane's content, centred in its scroller (margin-block: auto): a change of the content's height (a device
+         card's note, M6) or of the scroller's re-centres it */
+      follow: function (strip) { return [strip, strip.closest('.o55-content'), strip.closest('.o55-scroll')]; } },
     /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
        choices (pm7-terminal-customizer). In-flow indicators that slide with their own content (the home panels'
        plate, every other .pmw-ink-row) take the lens's material in glass.css instead, so they stay right through
@@ -311590,8 +311593,10 @@ try {
      is in the window's lens layer, and for 1-7 frames in Glass, until the next sheet sync. A strip's follow(strip) names
      the boxes whose size places it; when one of them changes size, the strip is synced in that delivery, after the
      frame's own layout and before its paint, so the chip moves in the frame the rail does (as the page tabs follow the
-     project box, in start()). A first report, or one with no change of size, syncs nothing. */
-  var followers = new Map(), followSize = new WeakMap(), followed = new WeakSet();
+     project box, in start()). A first report, or one with no change of size, syncs nothing. M6 (2026-11-01): the
+     wizard's SSH / SMB / NFS tabs, in content centred in the pane, moved 70-87 px when a device card's note came or went;
+     their chip followed 1-8 frames late, or stayed 35 px below them until something else synced. */
+  var followers = new Map(), followSize = new WeakMap(), followed = new WeakMap();
   var followWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
     var due = [];
     entries.forEach(function (en) {
@@ -311606,11 +311611,19 @@ try {
     due.forEach(function (x) { settleStrips.add(x); });
     syncPending();
   }) : null;
+  /* the boxes are named again at each sync of the strip: an app that redraws its content (the wizard's screens) keeps
+     the strip and replaces the box around it, which is then followed instead */
   function followStrip(strip, cfg) {
-    if (!followWatch || !cfg.follow || followed.has(strip)) return;
-    followed.add(strip);
-    cfg.follow(strip).forEach(function (e) {
-      if (!e) return;
+    if (!followWatch || !cfg.follow) return;
+    var now = cfg.follow(strip).filter(Boolean), was = followed.get(strip);
+    if (was && was.length === now.length && was.every(function (e, i) { return e === now[i]; })) return;
+    followed.set(strip, now);
+    (was || []).forEach(function (e) {
+      if (now.indexOf(e) >= 0) return;
+      var set = followers.get(e); if (!set) return;
+      set.delete(strip); if (!set.size) { followers.delete(e); followWatch.unobserve(e); }
+    });
+    now.forEach(function (e) {
       var set = followers.get(e); if (!set) { followers.set(e, set = new Set()); followWatch.observe(e); }
       set.add(strip);
     });
