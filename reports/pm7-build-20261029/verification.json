@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-11-01T16:51:34.945718+00:00",
+  "recorded_at_utc": "2026-11-01T20:27:37.095949+00:00",
   "native_runtime_certification": false,
   "step4": "landing_companions_repaired_full_dry_exit1_zero_blockers",
   "counts": {
@@ -33,8 +33,8 @@
     "default_parts": 24,
     "pip_size_sum": 61,
     "control_bindings": 485,
-    "touch_rows": 716,
-    "touch_profiles": 141,
+    "touch_rows": 715,
+    "touch_profiles": 140,
     "production_wiring_entries": 1271,
     "plan_units": 7276,
     "indexed_docs": 96,
@@ -43,16 +43,16 @@
     "pm7_bindings": 485,
     "pm7_source_families": 63,
     "shard_sources": 99,
-    "coverage_rows": 213,
-    "coverage_required_cells": 1065,
-    "acceptance_units": 29352,
+    "coverage_rows": 215,
+    "coverage_required_cells": 1075,
+    "acceptance_units": 29354,
     "schema_cases": 161,
     "final_review_source_cases": 89,
     "free_route_schema_cases": 12,
     "footage_source_cases": 58,
-    "new_contract_pairs": 41,
-    "new_contract_positive_cases": 1601,
-    "new_contract_negative_cases": 4206
+    "new_contract_pairs": 40,
+    "new_contract_positive_cases": 1593,
+    "new_contract_negative_cases": 3926
   },
   "commands": [
     {
@@ -187,7 +187,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "Independent Sol 6.1 max audit: zero open blockers, majors or minors at 7a133bfc8bc61aedc868ce09b646033148310aad",
+  "review_status": "Independent delta re-check pending for the additional removals at 6195bc86584dfe93f2823115bbf49b3e3d5433f9. Earlier Sol clearance remains pinned to 7a133bfc8b.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -4468,6 +4468,296 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/own-server-20261101/capture-repair-runner.stderr.txt",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v2.json",
+      "sha256": "8263af2d82ca6611c8c0d5b7c0b25fe91379c53119251df1cd3f9a183fda8397",
+      "bytes": 32209
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v2.py",
+      "sha256": "f7fb6f4b266fa77b0502cd81d6f609fef3202fa19aa525000c7c7f96632721dd",
+      "bytes": 8558
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v3.json",
+      "sha256": "072393ece6ebc53c439f5d3be922c685455151716cea0d296b8c2112467c5f1e",
+      "bytes": 31923
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v3.py",
+      "sha256": "7c19c4532de25ec4c9d2711ac72d2387c15a7a2df3f08cabf4921c89bc0950a0",
+      "bytes": 8558
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v3.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v3.stdout.txt",
+      "sha256": "61604eb0f080c5b2d086a5e86c4957c5af0019c4c240139e3320b9e693c2064b",
+      "bytes": 2583
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof.json",
+      "sha256": "7c69d43261731002b86cfcf0ee6a3c00f17003927f9c6b8ec4e6b2a46eda6b59",
+      "bytes": 29857
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof.py",
+      "sha256": "784b960eb933bba68924afa7fadb9dddd2fd98220dd9d645e71d3ac9539ac51d",
+      "bytes": 6304
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/companion-dispositions.json",
+      "sha256": "390d5b1e44dcbc865cab701548dfb2a12519fe7e2f06c5377e916db1db7098f0",
+      "bytes": 391
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r2.json",
+      "sha256": "8f978aa1747dda9cd80dc66a62c5bb24a8cc8bb2ef8fe88642db6243d8d5952a",
+      "bytes": 7816
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r2.stdout.txt",
+      "sha256": "aaee71f7d87f94fc4e776fec18820bff5407df85f41c6cd72ffb9dd5e7526d2b",
+      "bytes": 372
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r3.json",
+      "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
+      "bytes": 7228
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r3.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r3.stdout.txt",
+      "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.json",
+      "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
+      "bytes": 7228
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.stdout.txt",
+      "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts.json",
+      "sha256": "6965f9a657ce0482974c5b739b40a4cb3d8244a7b69a819daad4bf4907341af7",
+      "bytes": 9096
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts.stdout.txt",
+      "sha256": "0518670ea2bb304fa47a32557fbee237816f0dcb0662f58f4fd53d6b71b19042",
+      "bytes": 1012
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/dry-runner.py",
+      "sha256": "b18d77400f66233c61a0a51a20b0590dcad17f5dac40f039e50cf9cb9652bd28",
+      "bytes": 2351
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-final.json",
+      "sha256": "76c23832755eb7f44bf90344f5d57342a7bb7911f0dd5096bf258d9572d3c32a",
+      "bytes": 2719
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r2-runner.py",
+      "sha256": "4c1c4ebb918654f7c28a027690649efaa22676fec054b815da9f2b2a8a59704a",
+      "bytes": 1015
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r2-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r2-runner.stdout.txt",
+      "sha256": "3ed6a74fddd1f7b7ee685ef1f79cc672d28eb400fcb6394ed59dc006711c2ee7",
+      "bytes": 28
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r2-status.json",
+      "sha256": "3c9d3f0baccb44ab38cec546984a9f83c3adbb3ae12016947f863eef0edd8282",
+      "bytes": 763
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r3-runner.py",
+      "sha256": "dacdae086bc20e9d2b9d1612bb0673f76e3fd689ec9fc37392e21f665d7a27de",
+      "bytes": 946
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r3-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r3-runner.stdout.txt",
+      "sha256": "e73610eaf96cfc47c92845f92d9e13153622c56c4fd7a9d9db507cd15bb7e8b8",
+      "bytes": 15
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-r3-status.json",
+      "sha256": "507c8089936e5b8444567d17e705239d8b9e3d31ea118d376e53bce1fca28d9b",
+      "bytes": 494
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-runner.py",
+      "sha256": "4270a524c11672fb8500125049800f4f40a68382a946a1a754644dc35f7f175b",
+      "bytes": 1360
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-runner.stdout.txt",
+      "sha256": "ade0375b9187d8c85b8fd6611a197f95da2c740776470c88fb96516e637f3e9f",
+      "bytes": 61
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/focused-status.json",
+      "sha256": "8fc672681e02830cf458600d4bfdccf36479322e96549e2f1420d5005ab8e1e0",
+      "bytes": 2133
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/mirror-proof.json",
+      "sha256": "e36e6a2039ebeb2025ca69302a4389651f01a3fb6b584c8a2505ddb3cfc53b91",
+      "bytes": 310
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/narrow-schemas.py",
+      "sha256": "326eefd9cbcb801ffcb643a2a7011b0a3d70f69e8db97691761b64eded05b734",
+      "bytes": 4399
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/packet.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/packet.stdout.txt",
+      "sha256": "66e63b74ec230eccd7d86bea1f1281005e650ed5b7a1596407d6b91e10892c19",
+      "bytes": 765
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/prose-change-units.json",
+      "sha256": "3bb0e93d779db1324cc251f18bdc50feb751320dca037a0326beb669f6d66a6a",
+      "bytes": 691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/prose-consumer-cleanup.json",
+      "sha256": "b23e7dbabcfc24214049b3a08e4e3db2f7fe0dd4ca19bb584762004371b37bc2",
+      "bytes": 1737
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/readiness.json",
+      "sha256": "3b32a09b397bb260115b99d10f6839e20cb212136b7f8d92ec0f9e95379de470",
+      "bytes": 27170
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/readiness.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/readiness.stdout.txt",
+      "sha256": "c5015a6f41789d72006243e2cd97e3817f3402cc9ead13dfc84aa407b62ce122",
+      "bytes": 26563
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-focused-closure.py",
+      "sha256": "8216b1c041504c60da6dc9339d8906535a8e0ee98e20a7a668fc3a145eaf1a84",
+      "bytes": 9663
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retire-fixtures.py",
+      "sha256": "8fe800d9fe794e34282b2787cd3859afba40420cddd117cc251fb653670b573c",
+      "bytes": 6292
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retire-prose.py",
+      "sha256": "be387f57cafe4baa1abc89ace4ecd08c2dd923aa8117dac17d04d202f5270cf5",
+      "bytes": 6352
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retired-cli-negative.json",
+      "sha256": "5e41812cb1645313d5a260554b328310a2723347eb1a5412bf217b0028270008",
+      "bytes": 372
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retired-ori-units.json",
+      "sha256": "bd6e66a0795dafd4362e190e22ab679c4f11e63bf15da748a4b6e4414d957b29",
+      "bytes": 188
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/rulings-r2.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/rulings-r2.stdout.txt",
+      "sha256": "84911bfbc714db21e33cd52450ecff4e7e6c9b1cd8ae7bc064ba190c3499774f",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/rulings.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/rulings.stdout.txt",
+      "sha256": "4ac8b83959d6f4982c69f65b42c039edf222a7a5b6a24641d77128c338bbddfb",
+      "bytes": 1041
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/storage.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/storage.stdout.txt",
+      "sha256": "f3249cf54fb0ae81c2b1892d3b4d886942a08b4b9eede71174049149c1d1bc6b",
+      "bytes": 118
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/touch.json",
+      "sha256": "240eded7b2d37bef58a60fc6476c830f1966a3061999e1497dd7f8ddcbba83ce",
+      "bytes": 2905
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/touch.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/touch.stdout.txt",
+      "sha256": "240eded7b2d37bef58a60fc6476c830f1966a3061999e1497dd7f8ddcbba83ce",
+      "bytes": 2905
     }
   ],
   "reviews": [
@@ -4515,7 +4805,7 @@
   "cleanup": {
     "owned_browsers_started": 0,
     "owned_servers_started": 0,
-    "scratch": "No scratch/worktree/branch created. Detached dry runner finished; cited text proof and full reports/exports retained.",
+    "scratch": "No browser, server or extra worktree created. Cited text proof and diagnostic captures retained; final detached dry not yet started.",
     "T3_mail_delivery": "rings; no waiter"
   },
   "latest_amendment": "DL-273 additional removals in progress: Gitea self-managed only, Cursor Origin source control retired, Cursor AI preserved. Prior full results certify the earlier source only.",
@@ -6844,7 +7134,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "7a133bfc8bc61aedc868ce09b646033148310aad",
+  "canonical_source_commit": "6195bc86584dfe93f2823115bbf49b3e3d5433f9",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": true,
   "dry_landing_run_for_QA2": true,
@@ -6856,10 +7146,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 761,
+    "prior_count": 859,
     "all_prior_hashes_unchanged": true,
-    "current_count": 811,
-    "claim": "Every retained artifact has a SHA-256. Initial failed reports are preserved separately from the passing repair and full nonblocking dry result."
+    "current_count": 917,
+    "claim": "All prior path/hash/size manifest entries retained verbatim. Current delta text scripts, initial diagnostics and final passing proof are captured separately."
   },
   "historical_pre_DL259_commands": [
     {
@@ -7192,7 +7482,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
+  "source_commit_role": "source_commit retains the historical GUI/integration input. canonical_source_commit is the current DL-273 combined source and focused-proof target; the subsequent report-only commit is mailed after push.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -10542,7 +10832,7 @@
   },
   "DL273_additional_removals": {
     "prose_commit": "1d84dffe0b",
-    "phase": "focused_pass_final_grep_then_audit",
+    "phase": "awaiting_independent_delta_audit",
     "coverage_rows": 215,
     "required_cells": 1075,
     "retired_units": [
@@ -10569,7 +10859,7 @@
     "source_packet_body_hashes_unchanged": true,
     "current_packet_amendments": 16,
     "first_focused_results": "Touch and packet custody pass; storage passes; new-contracts/rulings corrected after empty schema branches and Teacher-topic pin. Readiness92 vs88 grows only currentness source drift (67 vs63).",
-    "final_dry": "pending",
+    "final_dry": "pending independent delta audit; earlier source dry is historical",
     "source_fields_final": "f226e60851",
     "active_positive_cases": 1593,
     "active_negative_cases": 3926,
@@ -10585,7 +10875,56 @@
     "shards": 2977,
     "shard_sources": 99,
     "format_repair": "Standard profile headings and compliance note restored; index validate PASS; nine ORI units stay retired.",
-    "grep_pending": "One obsolete Cursor_Origin reference in a defensive mirror-check explanation; fields cleaning it. Active schema/positive fixture matches zero.",
-    "obsolete_contract_reference": "cleaned by f226e60851 without changing guard"
-  }
+    "obsolete_contract_reference": "cleaned by f226e60851 without changing the guard",
+    "source_commit": "6195bc86584dfe93f2823115bbf49b3e3d5433f9",
+    "final_contracts_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.json",
+      "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
+      "exit_code": 0
+    },
+    "admission_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-grep-proof-v3.json",
+      "sha256": "072393ece6ebc53c439f5d3be922c685455151716cea0d296b8c2112467c5f1e",
+      "status": "pass",
+      "tracked_files_scanned": 8780,
+      "positive_fixture_records_scanned": 372,
+      "counterfactual_refusals": 4,
+      "active_schema_hits": 0,
+      "positive_fixture_hits": 0,
+      "built_page_hits": 0,
+      "first_removed_host_label_hits": 0
+    },
+    "last_positive_fixture_reference": "Hyphenated instance id in shared fan-out case rehomed to admitted Gitea at6195bc8658; partial-result, publication and identity guards unchanged."
+  },
+  "historical_pre_DL273_additional_counts": {
+    "settings": 1010,
+    "status_keys": 22,
+    "pip_parts": 25,
+    "default_parts": 24,
+    "pip_size_sum": 61,
+    "control_bindings": 485,
+    "touch_rows": 716,
+    "touch_profiles": 141,
+    "production_wiring_entries": 1271,
+    "plan_units": 7276,
+    "indexed_docs": 96,
+    "shards": 2977,
+    "sharded_sources": 99,
+    "pm7_bindings": 485,
+    "pm7_source_families": 63,
+    "shard_sources": 99,
+    "coverage_rows": 213,
+    "coverage_required_cells": 1065,
+    "acceptance_units": 29352,
+    "schema_cases": 161,
+    "final_review_source_cases": 89,
+    "free_route_schema_cases": 12,
+    "footage_source_cases": 58,
+    "new_contract_pairs": 41,
+    "new_contract_positive_cases": 1601,
+    "new_contract_negative_cases": 4206
+  },
+  "historical_pre_DL273_additional_review_status": "Independent Sol 6.1 max audit: zero open blockers, majors or minors at 7a133bfc8bc61aedc868ce09b646033148310aad",
+  "historical_pre_DL273_additional_source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
+  "current_live_report_manifest_sha256": "85d715e6c1e162faff7b3575b8d5a7863f3f0eafa780fa1ac687bc76f6fb85d9"
 }
