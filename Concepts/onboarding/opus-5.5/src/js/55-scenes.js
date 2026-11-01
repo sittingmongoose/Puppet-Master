@@ -21,7 +21,8 @@
   const stg = (scr, k, v) => { const t = O55.tx('pip.stage.screens.' + scr + '.' + k); return typeof t === 'string' ? fill(t, v) : ''; };
   const P = (kind, slot, o) => Object.assign({ id: kind, kind, slot }, o || {});
   const op = (S, key) => (O55.flow && key ? O55.flow.state(S, key) : null);
-  const forgeName = (S) => { const f = O55.fixtures.forge(md(S).forge); return f ? f.name : 'GitHub'; };
+  /* (by the name it was picked by: GitHub Enterprise, Gitea Cloud: pm7-fields, Opus p74) */
+  const forgeName = (S) => { const d = md(S), f = O55.fixtures.forge(d.forge); return f ? (O55.safe && O55.safe.forgeName ? O55.safe.forgeName(d.forge, d.forge_provider_variant) : f.name) : 'GitHub'; };
   /* the phase Creating is on: the one under way, else the first not done (the operation keeps no 'current') */
   const phaseNow = (S) => { const st = op(S, (S.sess.commit || {}).key), ph = (st && st.phases) || []; const a = ph.find((p) => p.status === 'active') || ph.find((p) => p.status !== 'done'); return a ? a.key : null; };
   /* the review's clipboard: ticked off line by line as the recheck finds each part ready */

@@ -124,6 +124,8 @@
     const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"${O55.tips.described('summary:' + k)}><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
+    /* the online copy the commit made or brought in (Opus p74: Ready never named it) */
+    if (cm.state === 'done' && d.online_mode !== 'none' && !cm.skipOnline && O55.review.onlineLine(S)) out += row('online', O55.review.onlineLine(S), true);
     /* a usable free route is an AI too: free-only is not "can't plan" (provider-login audit P18) */
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : free ? T('ready.aiFreeOnly') : T('ready.noAi'), ai.length > 0 || free > 0);
     out += row('free', free ? free + ' ' + T('free.ready').toLowerCase() : T('ready.noFree'), free > 0);

@@ -159,6 +159,10 @@
     if (d.online_mode === 'existing' && !d.repository_ref) r.push({ field: 'repository_ref', key: 'missing.repository' });
     /* the service's own needs: its address, owner, project, a visibility valid there, a name and branch it accepts */
     O55.forgeRules.needs(envOf(), d).forEach((m) => { if (!r.some((x) => x.field === m.field)) r.push(m); });
+    /* a name already used there, or one the service refused when the copy was made (Opus RV-12: Review showed it as
+       checked); the session keeps what the service said (O55.safe.nameTaken) */
+    const S = O55.S;
+    if (d.online_mode === 'new' && d.forge && d.forge !== 'none' && S && S.env && S.sess && O55.safe && O55.safe.nameTaken && !r.some((x) => x.field === 'repository_name') && O55.safe.nameTaken(S, d.repository_name, d)) r.push({ field: 'repository_name', key: 'missing.repoTaken', screen: 'online-details' });
     remoteMissing(d, r);
     return r;
   }

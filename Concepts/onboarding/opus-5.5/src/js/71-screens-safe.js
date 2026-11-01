@@ -17,7 +17,9 @@
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() ? 'auto' : 'smooth' });
     O55.sound.play('sheet');
   }
-  const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
+  /* a service by the name the person picked it by: GitHub Enterprise, Gitea Cloud (Opus p74; Codeberg's own naming
+     waits for Jared's ruling on offering it at all) */
+  const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : id === 'gitea' && variant === 'gitea_cloud' ? T('online.service.giteaCloud') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
   /* a concept demo's ready choices under a step that needs a real service (pm7-onb's O55.flow.hint), each taking one
@@ -71,6 +73,8 @@
     U.announce(text, win);
   }
   O55.ui.toast = (text) => toast(O55.S, text);
+  /* a toast that is no longer true leaves at once ("Your browser opened ..." once the person says it didn't: RV-15) */
+  function dropToast(S) { const el = S.root && S.root.querySelector('.o55-win .o55-toast'); if (el) { if (el.__gone) el.__gone.cancel(); el.remove(); } }
   /* (the sign-in reaches the service it was for, not whichever is chosen later: QA2 review N1) */
   O55.official.handlers.restoreCloud = (S, login) => { if (S.sess.restore) { S.sess.restore.reachedFor = 'cloud:' + ((S.sess.signin || {}).service || ''); S.sess.restore.account = login || null; } };
 
@@ -82,6 +86,15 @@
     const d = md(S), f = O55.fixtures.forge(si.service) || {};
     return f.device && !(d.forge === si.service && needsAddress(si.service, d.forge_provider_variant)) ? f.device : null;
   }
+  /* how long a device code lasts: the service's own (GitLab documents 300 seconds; GitHub and Microsoft 15 minutes) */
+  const CODE_TTL = { gitlab: 300000 };
+  const codeTtl = (si) => CODE_TTL[si.service] || 900000;
+  /* the page a sign-in finishes on when this browser did not open: the device-code page, or the sign-in page itself */
+  const bare = (u) => String(u || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const full = (u) => (u && !/^https?:/.test(u) ? 'https://' + u : u || null);
+  const pageUrl = (S, si) => (si.state === 'code' ? full(deviceFor(S, si)) : full(signinUrl(S, si)));
+  /* Open the page (the main action) and Copy address, under the sentence that names it */
+  const pageRow = (url) => (url ? `<div class="o55-inline" data-key="pagebtns">${O55.ui.btn({ label: T('ai.remote.open'), do: 'openPage', cls: 'o55-small' }, 'o55-primary')}${O55.ui.btn({ label: T('ai.remote.copy'), do: 'copyPage', cls: 'o55-small' }, 'o55-secondary')}</div>` : '');
   /* the ways a service's server lets this person sign in (O55.forgeRules: browser, device, token), the first the main one */
   const methodsOf = (S, si) => (si.kind === 'forge' ? RULES().auth(si.service, md(S).forge_provider_variant) : ['browser']);
   /* quiet: the caller's own screen change is the moment (Continue with an account that is already connected).
@@ -123,7 +136,9 @@
     scene: (S) => ({ id: 'online', beat: SI(S).state === 'done' ? 'signed' : 'signin' }),
     eyebrow: (S) => (SI(S).kind !== 'forge' ? T('safe.eyebrow') : OL(S).purpose === 'source' ? T('begin.eyebrow') : T('online.signin.eyebrow')),
     title: (S) => T('online.signin.title', { name: SI(S).name }),
-    lead: (S) => T('online.signin.lead', { name: SI(S).name }),
+    /* true for every service and way in (Astra FA-11 / RV-20: "only asks for access to the Project you choose" was not
+       true of the tokens it then asked for); what a token reaches is said in its form, before it is pasted */
+    lead: (S) => { const si = SI(S); return T(si.kind !== 'forge' ? 'online.signin.leadCloud' : methodsOf(S, si)[0] === 'token' ? 'online.signin.leadToken' : 'online.signin.lead', { name: si.name }); },
     body(S) {
       const si = SI(S), env = si.kind === 'forge' ? world(S) : { accounts: [], signup: true }, methods = methodsOf(S, si);
       /* a server with no sign-in app for Puppet Master (another Forgejo or Gitea server) signs in with an access token */
@@ -151,23 +166,36 @@
         const ts = F.state(S, 'token:' + si.service), d = md(S), host = (() => { try { return new URL(d.forge_instance_url).host; } catch (_) { return si.name; } })();
         const purpose = OL(S).purpose === 'source' ? 'existing' : 'new';
         if (methods[0] === 'token') out += `<p class="o55-hint" data-key="toklead">${U.esc(T('online.signin.tokenLead', { host }))}</p>`;
-        out += C.field({ bind: 'token', type: 'password', protected: true, typed: !!si.tokenTyped, label: T('online.signin.tokenLabel'), value: '', hint: T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), error: ts && ts.state === 'failed' ? T('online.signin.tokenBad') : '' });
+        /* what a token made this way can reach, said before it is pasted (RV-20), in the service's own terms */
+        out += C.note(O55.talk.t('online.signin.scopes.' + si.service + '.reach' + (purpose === 'new' ? 'New' : 'Existing'), { host }), 'info', 'lock');
+        /* how to make it stays in sight under a refusal (Opus p74: the refusal replaced it) */
+        const how = T('online.signin.tokenHow.' + si.service, { host }) + ' ' + O55.talk.t('online.signin.scopes.' + si.service + '.detail' + (purpose === 'new' ? 'New' : 'Existing')), bad = ts && ts.state === 'failed';
+        out += C.field({ bind: 'token', type: 'password', protected: true, typed: !!si.tokenTyped, label: T('online.signin.tokenLabel'), value: '', hint: bad ? '' : how, error: bad ? T('online.signin.tokenBad') : '', invalid: !!bad });
+        if (bad) out += `<p class="o55-hint" data-key="tokhow">${U.esc(how)}</p>`;
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('online.signin.tokenCheck'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
         out += demo('online-signin:token', [{ label: T('online.signin.demo.good'), outcome: 'works', fills: [['token', 'pm-demo-token-7f3a9c41']], act: ['tokenCheck'] }, { label: T('online.signin.demo.bad'), outcome: 'refused', fills: [['token', 'abc']], act: ['tokenCheck'] }], !(ts && ts.state === 'running'));
         if (methods[0] === 'token' && si.state === 'idle') {
           if (env.signup !== false) out += `<div class="o55-sublinks" data-key="tokcreate">${C.link(T('online.signin.createOn', { host }), 'create')}</div>`;
           else out += C.note(T('online.signin.admin'), 'info', 'person');
         }
+        /* a service with a browser sign-in: the way back to it (Opus p74: none from the token field) */
+        if (methods[0] !== 'token') out += `<div class="o55-sublinks" data-key="tokoff">${C.link(T('online.signin.browserInstead', { name: si.name }), 'tokenOff')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
-        /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
-        if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
-        else {
+        /* "Your browser opened ..." only while it did: never under a code or the page's address (Opus RV-15) */
+        const away = si.state === 'code' || si.remote === 'link';
+        out += `<div class="o55-row o55-row-wait" data-key="wait" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span>${away ? '' : `<span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span>`}</span></div>`;
+        /* Browser didn't open? A device code where the service has a device sign-in; otherwise its sign-in page, named
+           with Open the page and Copy address, as an AI account's (prov's RV-1 panel), never a silent copy and a toast */
+        if (si.state === 'waiting' && !away) out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'showLink')}</div>`;
+        else if (si.state === 'waiting') {
+          const url = signinUrl(S, si);
+          out += `<div class="o55-devicecode" data-key="dl"><span class="o55-hint">${U.esc(url ? T('online.signin.linkLead', { url: bare(url) }) : T('online.signin.linkNone'))}</span>${pageRow(url)}</div>`;
+        } else {
           const t = F.countdown(si.codeUntil || Date.now()), url = deviceFor(S, si);
           out += `<div class="o55-devicecode" data-key="dc"><span class="o55-hint">${U.esc(T('online.signin.codeLead', { url }))}</span><span class="o55-paircode">${U.esc(si.code || 'WDJB-MJHT')}</span>`
             + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
-            + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}</span></div>`
+            + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small', note: false }, 'o55-secondary')}</span>${pageRow(full(url))}</div>`
             + F.copyNote('dcode') + O55.tips.explainer('newCode');
         }
       }
@@ -186,13 +214,17 @@
     do: {
       useKnown(S) {},
       another(S) { SI(S).another = true; S.save(); O55.ui.refresh(); },
-      signIn(S) { const si = SI(S); si.state = 'waiting'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); O55.sound.play('tap'); waitForBrowser(S); },
-      copyLink(S) { const si = SI(S), url = signinUrl(S, si); if (url) { U.copyText(url); O55.sound.play('copy'); } O55.ui.toast(url ? T('online.signin.linkCopied', { url: url.replace(/^https:\/\//, '') }) : T('online.signin.linkCopiedNone')); },
-      code(S) { const si = SI(S); si.state = 'code'; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
-      newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
+      signIn(S) { const si = SI(S); si.state = 'waiting'; si.remote = null; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); O55.sound.play('tap'); waitForBrowser(S); },
+      /* the page stays in sight with its address; a new wait for it, as a device code's (RV-15) */
+      showLink(S) { const si = SI(S); dropToast(S); si.remote = 'link'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
+      openPage(S) { const si = SI(S), url = pageUrl(S, si); if (url) O55.official.open(S, { name: si.name, url }); },
+      copyPage(S) { const si = SI(S), url = pageUrl(S, si); if (!url) return; U.copyText(url); O55.sound.play('copy'); O55.ui.toast(T('ai.remote.copied', { url: bare(url) })); },
+      code(S) { const si = SI(S); dropToast(S); si.state = 'code'; si.remote = null; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
+      newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + codeTtl(si); si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); waitForBrowser(S, 7000); },
       create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       signupBack(S) { const si = SI(S); si.state = 'idle'; si.another = true; S.save(); O55.ui.refresh(); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
+      tokenOff(S) { const si = SI(S); si.state = 'idle'; si.tokenTyped = false; F.reset(S, 'token:' + si.service); S.save(); O55.ui.refresh(); },
       tokenCheck(S) {
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
         si.tokenTyped = false; si.attempt = (si.attempt || 0) + 1; F.reset(S, 'token:' + si.service);
@@ -224,7 +256,7 @@
 
   /* ================================================================== which service */
   const VARIANTS = {
-    github: [['hosted', 'GitHub.com'], ['self_managed', null]], gitlab: [['hosted', 'GitLab.com'], ['self_managed', null]],
+    github: [['hosted', 'GitHub.com'], ['self_managed', null]], gitlab: [['hosted', 'GitLab.com'], ['self_managed', 'otherServer']],
     azure_devops: [['cloud', 'azureServices'], ['self_managed', 'azureServer']], bitbucket_cloud: [['cloud', 'bbCloud']], bitbucket_data_center: [['data_center', 'bbDc']],
     forgejo: [['forgejo_cloud', 'forgejoCloud'], ['forgejo_self_managed', 'otherServer']], gitea: [['gitea_cloud', 'giteaCloud'], ['gitea_self_managed', 'otherServer']], cursor_origin: [['preview', null]]
   };
@@ -244,9 +276,28 @@
     /* an address belongs to the server it was typed for: one per service and variant, never carried to another */
     const key = sel + '|' + variant, typed = (ol.addresses || {})[key];
     const raw = typed != null ? typed : same && d.forge_instance_url && needsAddress(forge, variant) ? d.forge_instance_url : '';
-    const address = String(raw || '').trim(), asks = needsAddress(forge, variant);
-    return { sel, forge, variant, key, typed, asks, address, ok: !asks || F.isHttps(address), tenant: variant === 'gitea_cloud' };
+    const address = String(raw || '').trim(), asks = needsAddress(forge, variant), tenant = variant === 'gitea_cloud';
+    /* the address check every server address uses (O55.endpoint): a refused one says why, under the field and on
+       Continue, and a bare host name gets https:// with the field saying so (Opus RV-16: http:// refused with no reason) */
+    const example = T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint');
+    const res = asks ? O55.endpoint.check(address) : null, words = asks ? O55.endpoint.hint(res, res && res.empty ? example : '') : { hint: '', error: '' };
+    /* (Continue's reason: what is wrong, or that the address is missing, never the example: Opus MAJOR 11) */
+    words.reason = words.error || (asks && res && res.empty ? T('missing.instance') : example);
+    return { sel, forge, variant, key, typed, asks, address, url: res && res.ok ? res.url : '', ok: !asks || res.ok, words, tenant };
   }
+  /* a field and the line under it brought into sight: a server's address when a choice brings it (it can sit below the
+     fold: MAJOR 11); a refused branch name with its rule, in the middle, clear of Continue's note (Opus p43) */
+  /* (only as far as needed, at once: a smooth scroll is cancelled by the next keystroke; room keeps the field and its
+     line clear of the note a refused Continue shows above the foot) */
+  const showField = (S, id, room) => O55.motion.after(80, () => {
+    const i = S.open && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out) #' + id), f = i && i.closest('.o55-field'), sc = f && f.closest('.o55-scroll');
+    if (!sc) return;
+    const fr = f.getBoundingClientRect(), cr = sc.getBoundingClientRect(), gap = room == null ? 80 : room;
+    let dy = fr.bottom > cr.bottom - gap ? fr.bottom - (cr.bottom - gap) : 0;
+    if (fr.top - dy < cr.top + 8) dy = fr.top - cr.top - 8;
+    if (dy > 0) sc.scrollBy({ top: dy, behavior: 'auto' });
+  });
+  const showAddress = (S) => showField(S, 'o55f-address', 16);
   def('online-service', {
     chapter: 'project', stage: 'source_control_setup', charmSlot: 'online',
     scene: () => ({ id: 'online', beat: 'service' }),
@@ -263,7 +314,7 @@
         if (vs.length > 1) under += C.segmented({ do: 'variant', value: variant, label: T('online.service.others'), options: vs.map(([v, k]) => ({ v, label: k && k.includes('.') ? k : k ? T('online.service.' + k) : T('online.service.selfManaged') })) });
       }
       if (c.asks) {
-        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: c.typed != null ? c.typed : c.address, placeholder: tenant ? 'https://' : 'https://git.example.com', hint: T(tenant ? 'online.service.tenantHint' : 'online.service.addressHint'), valid: c.ok });
+        under += C.field({ bind: 'address', label: T(tenant ? 'online.service.tenantLabel' : 'online.service.addressLabel'), value: c.typed != null ? c.typed : c.address, placeholder: tenant ? 'https://' : 'https://git.example.com', hint: c.words.hint, error: c.words.error, invalid: !!c.words.error, valid: c.ok });
         const good = tenant ? 'https://platyr.gitea.test' : 'https://git.platyr.test';
         under += demo('online-service:address', [{ label: good, outcome: 'works', fills: [['address', good]] }, { label: 'http://git.platyr.test', outcome: 'wrong', fills: [['address', 'http://git.platyr.test']] }], !c.ok);
       }
@@ -274,23 +325,24 @@
     foot(S) {
       const ol = OL(S), c = serviceChoice(S);
       const sec = ol.purpose === 'copy' ? [{ label: T('safe.notNow'), do: 'notNow', cls: 'o55-ghost' }] : [];
-      return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: T(c.tenant ? 'online.service.tenantHint' : 'online.service.addressHint') } };
+      return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: c.words.reason } };
     },
     do: {
-      pick(S, v, el) { const ol = OL(S); ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); },
+      pick(S, v, el) { const ol = OL(S); ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
       others(S) { OL(S).others = !OL(S).others; S.save(); O55.ui.refresh(); },
-      variant(S, v) { OL(S).variant = v; S.save(); O55.ui.refresh(); },
+      variant(S, v) { OL(S).variant = v; S.save(); O55.ui.refresh(); showAddress(S); },
       notNow(S) { O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
       next(S) {
         const ol = OL(S), d = md(S), c = serviceChoice(S), forge = c.forge, variant = c.variant;
         if (!c.ok) return; /* (refused with its reason, as the button shows) */
-        const url = c.asks ? c.address : '';
-        const patch = { online_mode: ol.purpose === 'source' ? 'existing' : 'new', forge, forge_provider_variant: variant,
-          forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', source_access_authorization_refs: [], forge_instance_url: url };
-        /* another service or server: its owner, project, visibility and sign-in method go with the old one, together
-           (FF-11: an organization's Internal carried into Gitea; FF-12: a Forgejo token carried into Gitea Cloud) */
-        if (d.forge !== forge || d.forge_provider_variant !== variant || (url && d.forge_instance_url !== url)) {
-          Object.assign(patch, { repository_owner_scope: 'personal', repository_container: '', repository_project: '', repository_visibility: null });
+        const url = c.asks ? c.url : '', mode = ol.purpose === 'source' ? 'existing' : 'new';
+        const patch = { online_mode: mode, forge, forge_provider_variant: variant, forge_instance_url: url };
+        /* another service, server or use: its sign-in, chosen Project, owner, project, visibility and sign-in method go
+           with the old one, together (FF-11: an organization's Internal carried into Gitea; FF-12: a Forgejo token carried
+           into Gitea Cloud); Back and Continue with the same one keeps them (Opus p74: the chosen Project was cleared) */
+        if (d.online_mode !== mode || d.forge !== forge || d.forge_provider_variant !== variant || (url && d.forge_instance_url !== url)) {
+          Object.assign(patch, { forge_instance_profile: null, forge_account_action: null, forge_account_ref: '', repository_ref: '', source_access_authorization_refs: [],
+            repository_owner_scope: 'personal', repository_container: '', repository_project: '', repository_visibility: null });
           d.forge_auth_method = null; S.sess.azureProjects = null;
         }
         O55.draft.set(d, patch);
@@ -329,10 +381,18 @@
      person's own account only where the service has one), the project inside it where the service has those (Azure
      DevOps' team project, Bitbucket's project) under the choice it belongs to, the visibility valid there, and the
      service's own name rule. A choice another depends on settles that one at once (FF-02 to FF-06, FF-11). */
-  /* a name already used in that place: the service's own taken names, or a Project the account already has there */
-  function nameTaken(S, name) {
-    const w = world(S), n = String(name || '').trim().toLowerCase(), at = md(S).repository_container || '';
-    return w.taken.includes(n) || w.repos.some((r) => r.name.toLowerCase() === n && (r.container || '') === at);
+  /* a name already used in that place: the service's own taken names, a Project the account already has there, or a
+     name the service refused there when the copy was made (Opus RV-12: a refused name came back "Available") */
+  const placeOf = (d) => instanceKey(d) + '|' + (d.repository_container || '');
+  function nameTaken(S, name, d) {
+    d = d || md(S);
+    const w = RULES().world(S.env, d), n = String(name || '').trim().toLowerCase(), at = d.repository_container || '';
+    return !!n && (w.taken.includes(n) || w.repos.some((r) => r.name.toLowerCase() === n && (r.container || '') === at) || ((S.sess.refusedNames || {})[placeOf(d)] || []).includes(n));
+  }
+  /* the service said the name is used: kept with the session for that server and place, so details and Review say so */
+  function refuseName(S, d) {
+    const n = String(d.repository_name || '').trim().toLowerCase(), m = (S.sess.refusedNames = S.sess.refusedNames || {}), k = placeOf(d);
+    if (n && !(m[k] || []).includes(n)) m[k] = (m[k] || []).concat([n]);
   }
   const takenExample = (S) => { const w = world(S), at = md(S).repository_container || ''; const r = w.repos.find((x) => (x.container || '') === at); return r ? r.name : w.taken[0] || null; };
   const hostOf = (d) => { try { return new URL(d.forge_instance_url).host; } catch (_) { return ''; } };
@@ -370,7 +430,14 @@
   /* a visibility in the service's own terms (online.details.vis.<service>.<v>), else the common words */
   function visCopy(d, v, o) {
     const k = 'online.details.vis.' + d.forge + '.' + v, vars = { org: (o && o.name) || '', host: hostOf(d) };
+    /* (Data Center: a personal project is the person's own; before a project is chosen there is no {org} to name: p74) */
+    if (d.forge === 'bitbucket_data_center' && v === 'private' && !(o && o.id && o.scope !== 'personal')) return o && o.id ? { title: T('online.details.private'), sub: T('online.details.privateSub') } : { title: T('online.details.privateDcNone'), sub: T('online.details.vis.bitbucket_data_center.private.sub') };
     if (O55.tx(k + '.title')) return { title: O55.t(k + '.title', vars), sub: O55.t(k + '.sub', vars) };
+    /* a server of its own: Everyone is whoever can open it, not the whole internet (Opus p74) */
+    if (v === 'public' && needsAddress(d.forge, d.forge_provider_variant) && vars.host) return { title: T('online.details.public'), sub: T('online.details.publicServerSub', vars) };
+    /* a private copy an organization, group, workspace or team owns is seen by those of its members who can see its
+       private Projects, never "only you" (Opus RV-14) */
+    if (v === 'private' && o && o.id && o.scope !== 'personal') return { title: T('online.details.privateOrg', vars), sub: T('online.details.privateOrgSub') };
     return { title: v === 'internal' ? T('online.details.internal', vars) : T('online.details.' + v), sub: v === 'internal' ? T('online.details.internalSub') : T('online.details.' + v + 'Sub') };
   }
   /* why fewer visibilities are offered here, when the owner or project narrows them */
@@ -445,8 +512,9 @@
       /* 4. more options */
       const adv = C.field({ bind: 'desc', label: T('online.details.description'), value: d.repository_description }) + C.field({ bind: 'branch', label: T('online.details.branch'), value: d.repository_default_branch, error: branchError(d), invalid: !!branchError(d) })
         + C.toggle({ do: 'readme', on: d.repository_initialize_readme, label: T('online.details.readme'), sub: T('online.details.readmeSub') })
-        + C.segmented({ do: 'gitignore', value: d.repository_gitignore, label: T('online.details.gitignore'), options: Object.entries(O55.tx('online.details.gitignoreOpts')).map(([v, label]) => ({ v, label })) })
-        + C.segmented({ do: 'license', value: d.repository_license, label: T('online.details.license'), options: Object.entries(O55.tx('online.details.licenseOpts')).map(([v, label]) => ({ v, label })) });
+        /* (each choice under its own visible heading: Opus p74) */
+        + C.group(T('online.details.gitignore'), C.segmented({ do: 'gitignore', value: d.repository_gitignore, label: T('online.details.gitignore'), options: Object.entries(O55.tx('online.details.gitignoreOpts')).map(([v, label]) => ({ v, label })) }))
+        + C.group(T('online.details.license'), C.segmented({ do: 'license', value: d.repository_license, label: T('online.details.license'), options: Object.entries(O55.tx('online.details.licenseOpts')).map(([v, label]) => ({ v, label })) }));
       /* (open when its branch needs fixing, so the reason Continue waits is in sight) */
       out += F.more(!!S.sess.ui.onlineAdv || !!branchError(d), T('online.details.advanced'), 'adv', adv, 'adv');
       return out;
@@ -455,7 +523,15 @@
        has only one, it is chosen (shown, and changeable); Azure DevOps lists the team projects in it */
     enter(S) { detailDefaults(S); },
     /* (opened straight here by Demo Studio, the defaults land after the first drawing) */
-    mounted(S, layer, fresh) { if (fresh && detailDefaults(S)) O55.ui.refresh(); },
+    /* "Change the name" after the service refused it opens here with the name field ready to type into (RV-12) */
+    mounted(S, layer, fresh) {
+      if (fresh && detailDefaults(S)) O55.ui.refresh();
+      if (fresh && branchError(md(S))) showField(S, 'o55f-branch');
+      if (fresh && (S.sess.ui.focusName || (!nameError(md(S)) && nameTaken(S, md(S).repository_name)))) {
+        S.sess.ui.focusName = false; S.save();
+        O55.motion.after(120, () => { const i = S.open && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out) #o55f-repo'); if (i) { i.focus({ preventScroll: false }); i.select(); } });
+      }
+    },
     foot(S) {
       const d = md(S), taken = !nameError(d) && nameTaken(S, d.repository_name), need = RULES().needs(S.env, d)[0];
       const reason = !F.nonEmpty(d.repository_name) ? T('online.details.nameLabel', { name: forgeName(d.forge) }) : taken ? T('online.details.taken', { owner: d.repository_container || accountFor(S, d.forge) || '' })
@@ -492,14 +568,15 @@
       /* what was typed is kept for the hint only; the plan holds the name as the service spells it */
       repo(S, v) { const d = md(S), was = nameTaken(S, d.repository_name) || !!nameError(d); S.sess.ui.repoTyped = v; O55.draft.set(d, { repository_name: RULES().spell(d.forge, v) }); S.save(); O55.ui.refresh(); if (!was && (nameTaken(S, d.repository_name) || nameError(d))) O55.sound.play('warn', SND.warn); },
       desc(S, v) { O55.draft.set(md(S), { repository_description: v }); S.save(); },
-      branch(S, v) { const had = !!branchError(md(S)); O55.draft.set(md(S), { repository_default_branch: v.trim() }); S.save(); if (had !== !!branchError(md(S))) O55.ui.refresh(); }
+      branch(S, v) { const had = !!branchError(md(S)); O55.draft.set(md(S), { repository_default_branch: v.trim() }); S.save(); if (had !== !!branchError(md(S))) { O55.ui.refresh(); if (branchError(md(S))) showField(S, 'o55f-branch'); } }
     }
   });
 
   /* ================================================================== pick the online Project to bring in */
   /* A Project picked here carries where it lives with it: its owner and, where the service has them, its project (an
      Azure DevOps team project, a Bitbucket project), so nothing a later screen cannot supply is ever missing (FF-01). */
-  const repoRef = (forge, r) => forge + ':' + (r.container ? r.container + (r.projectName ? '/' + r.projectName : '') : r.owner) + '/' + r.name;
+  /* (the address's own path: an Azure DevOps team project is in it, a Bitbucket project is not: Opus p73) */
+  const repoRef = (forge, r) => forge + ':' + (r.container ? r.container + (r.projectName && forge === 'azure_devops' ? '/' + r.projectName : '') : r.owner) + '/' + r.name;
   def('ex-repos', {
     seed: (S) => seedOnline(S, true, 'source'),
     chapter: 'project', stage: 'first_project',
@@ -509,22 +586,29 @@
     lead: (S) => T('online.repos.lead', { account: accountFor(S, md(S).forge) || '', name: forgeName(md(S).forge, md(S).forge_provider_variant) }),
     body(S) {
       const d = md(S), w = world(S), q = String(S.sess.ui.repoQ || '').toLowerCase();
-      const list = w.repos.filter((r) => !q || r.name.includes(q)), sel = (w.repos.find((r) => repoRef(d.forge, r) === d.repository_ref) || {}).id;
+      const list = w.repos.filter((r) => !q || r.name.toLowerCase().includes(q)), sel = (w.repos.find((r) => repoRef(d.forge, r) === d.repository_ref) || {}).id;
+      const account = accountFor(S, d.forge) || w.login || '', svc = forgeName(d.forge, d.forge_provider_variant);
       let out = C.field({ bind: 'q', label: T('online.repos.search'), value: S.sess.ui.repoQ || '', placeholder: T('chrome.search') });
-      out += list.length ? C.cards('pick', list.map((r) => ({ v: r.id, glyph: 'cloud', title: r.name, sub: r.owner + ' · ' + (r.private ? T('online.repos.private') : T('online.repos.public')) + ' · ' + r.updated })), sel, { label: T('online.repos.title') }) : C.note(T(w.repos.length ? 'online.repos.noMatch' : 'online.repos.empty'), 'info');
+      out += list.length ? C.cards('pick', list.map((r) => ({ v: r.id, glyph: 'cloud', title: r.name, sub: r.owner + ' · ' + (r.private ? T('online.repos.private') : T('online.repos.public')) + ' · ' + T('online.repos.updated', { when: r.updated }) })), sel, { label: T('online.repos.title') })
+        : C.note(w.repos.length ? T('online.repos.noMatch') : T('online.repos.empty', { account, name: svc }), 'info');
+      if (!w.repos.length) out += `<div class="o55-sublinks" data-key="another">${C.link(T('online.repos.another'), 'otherAccount')}</div>`;
       if (d.repository_ref) out += `<p class="o55-locline" data-key="copyto">${C.small(O55.project.onServer(S) ? 'server' : 'computer', 16)}<span>${U.esc(O55.project.onServer(S) ? T('online.repos.copyToServer', { name: O55.project.serverName(S) }) : T('online.repos.copyTo', { path: O55.project.docsPath(S, d.project_name) }))}</span></p>`;
       return out;
     },
     foot: (S) => { const d = md(S), need = RULES().needs(S.env, d)[0]; return { primary: { label: T('chrome.continue'), do: 'next', disabled: !d.repository_ref || !!need, reason: !d.repository_ref ? T('missing.repository') : need ? T(need.key) : '' } }; },
     do: {
+      /* the name stays the person's once they typed one; it follows the pick only while it is the picked one's (p74) */
       pick(S, v) {
-        const d = md(S), r = world(S).repos.find((x) => x.id === v); if (!r) return;
-        O55.draft.set(d, { repository_ref: repoRef(d.forge, r), repository_name: r.name, project_name: O55.project.pretty(r.name),
+        const d = md(S), w = world(S), r = w.repos.find((x) => x.id === v); if (!r) return;
+        const was = w.repos.find((x) => repoRef(d.forge, x) === d.repository_ref), own = !!String(d.project_name || '').trim() && !(was && d.project_name === O55.project.pretty(was.name));
+        O55.draft.set(d, { repository_ref: repoRef(d.forge, r), repository_name: r.name, project_name: own ? d.project_name : O55.project.pretty(r.name),
           repository_owner_scope: r.scope || (r.container ? 'organization' : 'personal'), repository_container: r.container || '', repository_project: r.project || '',
           repository_visibility: r.private ? 'private' : 'public' });
         S.save(); O55.ui.refresh(); O55.owners.dispatch('cmd.forge.repository.list', { selected: r.id }, S.ctx(), () => ({ ok: true }));
       },
-      next(S) { if (RULES().needs(S.env, md(S)).length) return; O55.ui.go('name'); }
+      next(S) { if (RULES().needs(S.env, md(S)).length) return; O55.ui.go('name'); },
+      /* the Project is in another account: sign in with that one, then back to this list */
+      otherAccount(S) { const d = md(S); O55.official.signIn(S, { service: d.forge, name: forgeName(d.forge, d.forge_provider_variant), kind: 'forge', then: 'ex-repos' }); S.sess.signin.another = true; S.save(); O55.ui.refresh(); }
     },
     bind: { q(S, v) { S.sess.ui.repoQ = v; S.save(); O55.ui.refresh(); } }
   });
@@ -696,7 +780,7 @@
 
   /* (Use it away from home moved to 71a-screens-away.js with the Server lane, 2026-10-31) */
 
-  O55.safe = { forgeName, visCopy, hostOf };
+  O55.safe = { forgeName, visCopy, hostOf, nameTaken, refuseName };
 
   /* ================================================================== handed to the app at the end (O55.handoff) */
   /* What the person chose for keeping the work safe, as plain non-secret facts the app shows: how versions are kept,
