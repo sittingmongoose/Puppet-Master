@@ -136,6 +136,21 @@
   /* ------------------------------------------------------------------ review */
   const LEAD_BY_MODE = { existing_local: 'review.leadAdd', existing_online: 'review.leadOnline', restore: 'review.leadRestore' };
   const TITLE_BY_MODE = { existing_local: 'creating.titleAdd', existing_online: 'creating.titleOnline', restore: 'creating.titleRestore' };
+  /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a fresh review (new
+     revision) starts a new original attempt. The destination stays a private reservation until the terminal result
+     publishes it. (Review's Create, and a straight open of Creating, which has had no Create: its seed below) */
+  function startCommit(S) {
+    const d = md(S);
+    if (S.sess.commit && S.sess.commit.state !== 'none') return;
+    O55.draft.set(d, { review_confirmed: true });
+    const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
+    PR().resetRecovery(cm);
+    PR().beginOriginal(cm, d);
+    cm.pendingProjectId = PR().reserveDestinationId(d);
+    cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    S.save();
+  }
+
   def('review', {
     chapter: 'project', stage: 'review_setup_plan',
     scene: (S) => ({ id: 'route', beat: 'default', params: routeParams(S) }),
@@ -223,18 +238,7 @@
           if (!needsRemote(d)) return O55.ui.go('ready');
           O55.sound.play('commit', SND.prepare); return O55.away.start(S, 'ready');
         }
-        /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a
-           fresh review (new revision) starts a new original attempt. The destination stays a private
-           reservation until the terminal result publishes it. */
-        if (!S.sess.commit || S.sess.commit.state === 'none') {
-          O55.draft.set(d, { review_confirmed: true });
-          const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
-          PR().resetRecovery(cm);
-          PR().beginOriginal(cm, d);
-          cm.pendingProjectId = PR().reserveDestinationId(d);
-          cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
-          S.save();
-        }
+        startCommit(S);
         O55.sound.play('commit', SND.create);
         O55.ui.go('creating', { silent: true });
       }
@@ -550,6 +554,18 @@
     return st.blocksLanded() < phasesFor(S).length;
   }
   def('creating', {
+    /* opened straight (Demo Studio's Open at one screen): what Review's Create would have done, a name if the Project has
+       none and the reviewed commit started, and Review to go back to; else nothing ran and Continue stayed off with
+       "Finish recovery first" (final FO-17 sweep) */
+    seed(S) {
+      if (!S.sess.history.length) S.sess.history.push('review');
+      const d = md(S);
+      if (d.project_mode !== 'later' && (!S.sess.commit || S.sess.commit.state === 'none')) {
+        if (!d.project_name) O55.draft.set(d, { project_name: O55.fixtures.DEMO.projectName });
+        startCommit(S);
+      }
+      S.save();
+    },
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
     scene: (S) => { const done = shownPhases(S).filter((p) => p.status === 'done').length; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },

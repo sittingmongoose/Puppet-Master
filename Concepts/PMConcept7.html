@@ -170515,7 +170515,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
-  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
+  /* (projectName: the name a straight open of Creating gives a Project that has none yet, Demo Studio's Open at one screen) */
+  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp', projectName: 'Book club website' };
   /* the unclaimed Server a new-Server route finds, named as the kind and NAS brand it is (GLM-2, p3) */
   const NAS_HOST = { unraid: 'tower.local', synology: 'diskstation.local', qnap: 'qnap-nas.local' };
   function unclaimedFor(env, kind, platform) {
@@ -179124,6 +179125,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
   function seedConnect(S, step) {
     S.sess.active = 'connect';
+    /* the screen before, to go back to (c-pair's Use a code instead goes back to the review): FO-17 sweep */
+    if (!S.sess.history.length) S.sess.history.push(['c-route', 'c-review', 'c-pair'][step]);
     const d = cd(S), c = S.sess.connect;
     if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
     if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
@@ -179139,6 +179142,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     scene: (S) => ({ id: 'where', beat: 'connect' }),
     /* (back here from the pairing, by Back or the rail: the request it left waiting ends) */
     enter(S) { S.sess.active = 'connect'; if (S.sess.connect.run && !paired(S)) endRun(S, 'back'); },
+    /* opened straight (Demo Studio's Open at one screen), enter() never ran: the Connect context it sets, without which
+       the pairing finished and Continue stayed dim, the run adopted under the main context (final FO-17) */
+    seed(S) { S.sess.active = 'connect'; S.save(); },
     eyebrow: () => T('connect.route.eyebrow'),
     title: () => T('connect.route.title'),
     lead: () => T('connect.route.lead'),
@@ -180729,6 +180735,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
   function seedNas(S, id) {
     const n = N(S), d0 = md(S);
+    /* the screen before, to go back to (Stop, Try again after a refused password, Choose another): a straight open has
+       no history, and back() went nowhere (final FO-17 sweep) */
+    const before = { 'nas-identity': 'nas-find', 'nas-install': 'nas-signin', 'nas-mounted': 'nas-find' }[id];
+    if (before && !S.sess.history.length) S.sess.history.push(before);
+    /* a password typed on Sign in, as that screen leaves it (its add phase refused every try without one: FO-17 sweep) */
+    if (id === 'nas-install' && !n.pwOnce) n.pwOnce = true;
     if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
     if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!shareOf(S)) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
     if (id === 'nas-mounted') { n.method = 'mounted'; if (!n.volume) n.volume = volumes(S)[0]; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
@@ -182767,6 +182779,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ review */
   const LEAD_BY_MODE = { existing_local: 'review.leadAdd', existing_online: 'review.leadOnline', restore: 'review.leadRestore' };
   const TITLE_BY_MODE = { existing_local: 'creating.titleAdd', existing_online: 'creating.titleOnline', restore: 'creating.titleRestore' };
+  /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a fresh review (new
+     revision) starts a new original attempt. The destination stays a private reservation until the terminal result
+     publishes it. (Review's Create, and a straight open of Creating, which has had no Create: its seed below) */
+  function startCommit(S) {
+    const d = md(S);
+    if (S.sess.commit && S.sess.commit.state !== 'none') return;
+    O55.draft.set(d, { review_confirmed: true });
+    const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
+    PR().resetRecovery(cm);
+    PR().beginOriginal(cm, d);
+    cm.pendingProjectId = PR().reserveDestinationId(d);
+    cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    S.save();
+  }
+
   def('review', {
     chapter: 'project', stage: 'review_setup_plan',
     scene: (S) => ({ id: 'route', beat: 'default', params: routeParams(S) }),
@@ -182854,18 +182881,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           if (!needsRemote(d)) return O55.ui.go('ready');
           O55.sound.play('commit', SND.prepare); return O55.away.start(S, 'ready');
         }
-        /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a
-           fresh review (new revision) starts a new original attempt. The destination stays a private
-           reservation until the terminal result publishes it. */
-        if (!S.sess.commit || S.sess.commit.state === 'none') {
-          O55.draft.set(d, { review_confirmed: true });
-          const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
-          PR().resetRecovery(cm);
-          PR().beginOriginal(cm, d);
-          cm.pendingProjectId = PR().reserveDestinationId(d);
-          cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
-          S.save();
-        }
+        startCommit(S);
         O55.sound.play('commit', SND.create);
         O55.ui.go('creating', { silent: true });
       }
@@ -183181,6 +183197,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return st.blocksLanded() < phasesFor(S).length;
   }
   def('creating', {
+    /* opened straight (Demo Studio's Open at one screen): what Review's Create would have done, a name if the Project has
+       none and the reviewed commit started, and Review to go back to; else nothing ran and Continue stayed off with
+       "Finish recovery first" (final FO-17 sweep) */
+    seed(S) {
+      if (!S.sess.history.length) S.sess.history.push('review');
+      const d = md(S);
+      if (d.project_mode !== 'later' && (!S.sess.commit || S.sess.commit.state === 'none')) {
+        if (!d.project_name) O55.draft.set(d, { project_name: O55.fixtures.DEMO.projectName });
+        startCommit(S);
+      }
+      S.save();
+    },
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
     scene: (S) => { const done = shownPhases(S).filter((p) => p.status === 'done').length; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
@@ -184049,6 +184077,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ all providers (what pays for them) */
   const GROUPS = [['plan', 'subs'], ['use', 'apis'], ['own', 'own']];
   def('ai-all', {
+    /* opened straight (Demo Studio's Open at one screen): the AI screen it came from, since Done goes back (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: (S) => ({ id: 'power', beat: readyIds(S).length ? 'ready' : 'waiting', params: { n: readyIds(S).length } }),
     eyebrow: () => T('ai.eyebrow'),
@@ -184082,6 +184112,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the provider they signed up with (P10) */
   const SIGNUP = { sub: [['Claude', 'claude'], ['ChatGPT', 'codex']], api: [['Anthropic', 'anthropic-api'], ['Google AI Studio', 'gemini-api']] };
   def('ai-none', {
+    /* opened straight: the AI screen it came from, since Continue goes back there for a sign-up choice (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: () => ({ id: 'power', beat: 'waiting', params: { n: 0 } }),
     eyebrow: () => T('aiNone.eyebrow'),

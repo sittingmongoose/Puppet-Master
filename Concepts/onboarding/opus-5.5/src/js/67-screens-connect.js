@@ -194,6 +194,8 @@
      (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
   function seedConnect(S, step) {
     S.sess.active = 'connect';
+    /* the screen before, to go back to (c-pair's Use a code instead goes back to the review): FO-17 sweep */
+    if (!S.sess.history.length) S.sess.history.push(['c-route', 'c-review', 'c-pair'][step]);
     const d = cd(S), c = S.sess.connect;
     if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
     if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
@@ -209,6 +211,9 @@
     scene: (S) => ({ id: 'where', beat: 'connect' }),
     /* (back here from the pairing, by Back or the rail: the request it left waiting ends) */
     enter(S) { S.sess.active = 'connect'; if (S.sess.connect.run && !paired(S)) endRun(S, 'back'); },
+    /* opened straight (Demo Studio's Open at one screen), enter() never ran: the Connect context it sets, without which
+       the pairing finished and Continue stayed dim, the run adopted under the main context (final FO-17) */
+    seed(S) { S.sess.active = 'connect'; S.save(); },
     eyebrow: () => T('connect.route.eyebrow'),
     title: () => T('connect.route.title'),
     lead: () => T('connect.route.lead'),
