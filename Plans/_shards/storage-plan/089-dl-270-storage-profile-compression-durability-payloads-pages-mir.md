@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28239-L29126
+Source lines: L28242-L29139
 
-Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
+Source SHA256: `74eb16143a7c77409b21f3b509f9b20a8a8da3a65a1d2f46d48109da5a421b3c`
 
 ---
 
@@ -109,25 +109,33 @@ canonical_text: >-
   next durability checkpoint. Recovery first makes the active segment and recent packs durable with a full flush,
   because a frame can survive a process crash without its sync having returned, then scans from the last manifest
   checkpoint: a group whose valid commit frame lies within the durable tail is issued, and its missing custody
-  rows are rebuilt from that frame, identical to the ones exposed; a group without a valid commit frame was never
-  issued, and Case L-2 truncates its tail; custody rows without a durable commit frame are corruption and fence. A
-  barrier-class group also takes a full flush and commits its custody rows durably before acknowledging. The
-  manifest is promoted only at creation, rotation and structural changes. Restoring a backup rebuilds custody rows
-  beyond its redb snapshot from the restored segments' commit frames. A durability checkpoint, a full flush of the
-  active segment and of packs written since the last one followed by a durable redb commit, runs at most 1 s after
-  the first acknowledgement it would cover, whenever 8 MiB of acknowledged segment bytes or 64 MiB of non-durable
-  redb writes are outstanding, before every manifest publication and at clean shutdown; these are fixed owner
-  values in the storage registry's storage_profile. Every durable redb commit, in either redb file, follows a full
-  flush of the segments and packs written since the last one, so no durable row outlives the frames it depends on,
-  and an ordinary group lost on macOS leaves no durable trace. On macOS the checkpoint bounds what a power loss
-  can drop to about the last second of ordinary groups; on every OS it bounds redb's non-durable backlog. A failed
-  checkpoint is an I/O failure: new acknowledgements stop, storage health shows the fault, and the checkpoint
-  retries until it succeeds. This sequence supersedes Case L's per-group manifest promotion and its redb-commit
-  issuance boundary; storage-plan's First append receipt custody section and CV-339 follow it, and SP-347 defines
-  the commit frame. Pinned contract snapshots that still describe the earlier sequence, such as
+  rows are rebuilt from that frame, identical to the ones exposed; a group without a valid commit frame after that
+  flush is treated as never issued, and Case L-2 truncates its tail; on macOS that includes an ordinary group
+  acknowledged and then lost to a power cut within its class, which recovery cannot tell apart, and because
+  nothing durable and nothing barrier-class can refer to such a group, its identities are released and a retry
+  under one of its keys is new work; custody rows without a durable commit frame are corruption and fence, within
+  the range recovery scans; rows for groups before the manifest's latest publication, including lawfully retired
+  or compacted source (Case L-3), replay from the rows alone. A barrier-class group also takes a full flush and
+  commits its custody rows durably before acknowledging. The manifest is promoted only at creation, rotation and
+  structural changes. Restoring a backup rebuilds custody rows beyond its redb snapshot from the restored
+  segments' commit frames. A durability checkpoint, a full flush of the active segment and of packs written since
+  the last one followed by a durable redb commit, starts within 1 s of the first acknowledgement it would cover,
+  and whenever 8 MiB of acknowledged segment bytes or 64 MiB of non-durable redb writes are outstanding, before
+  every manifest publication and at clean shutdown; these are fixed owner values in the storage registry's
+  storage_profile. Every durable redb commit, in either redb file, follows a full flush of the segments and packs
+  written since the last one, so no durable row outlives the frames it depends on, and an ordinary group lost on
+  macOS leaves no durable trace; each such commit holds the group gate from its flush until it returns, so no
+  group is acknowledged in between. On macOS the checkpoint bounds what a power loss can drop to about the last
+  second of ordinary groups; on every OS it bounds redb's non-durable backlog. These are healthy-operation
+  targets: while a checkpoint is overdue, running late or failing, new acknowledgements wait for it, so slow or
+  failing I/O stretches the window only by the stall; a failed checkpoint is an I/O failure that storage health
+  shows, retried until it succeeds. This sequence supersedes Case L's per-group manifest promotion and its
+  redb-commit issuance boundary; storage-plan's First append receipt custody section and CV-339 follow it, and
+  SP-347 defines the commit frame. Pinned contract snapshots that still describe the earlier sequence, such as
   goal_certified_event_coordinator_contracts/protocol.md (F5b, F5c and its post-append prerequisite), keep their
-  bytes until their owners recertify them; SP-336 governs where they differ. On Linux and Windows every
-  acknowledged group survives power loss.
+  bytes until their owners recertify them; SP-336 governs where they differ, and the routes they describe are not
+  built as written: an implementation follows SP-336 and the profile is recertified before that route is enabled.
+  On Linux and Windows every acknowledged group survives power loss.
 gui_related: false
 gui_classification_reason: "Defines commit durability and store creation; no visible surface."
 split_recommended: false
@@ -141,9 +149,10 @@ acceptance_criteria:
   - "After kill -9, torn writes or a crash while a store is created, no acknowledged group is lost, duplicated or corrupted."
   - "After a simulated power cut nothing is reordered or corrupted, no barrier-class group is lost, and only on macOS may ordinary groups after the last full flush be missing."
   - "Receipt-custody rows rebuilt after a crash are identical to the ones exposed before it."
-  - "A group is issued exactly when its commit frame is durable, by the writer's sync or by recovery's flush: a group whose commit frame does not survive was never issued, and one whose frame survives is issued with the receipts sealed in it."
-  - "On macOS no acknowledged ordinary group stays uncovered by a full flush for more than 1 s while PM runs, and redb's non-durable backlog never exceeds 64 MiB."
+  - "A group is issued exactly when its commit frame is durable, by the writer's sync or by recovery's flush: one whose frame survives is issued with the receipts sealed in it, and one whose frame does not survive is treated as never issued, which on macOS can include an acknowledged ordinary group lost within its class."
+  - "In healthy operation on macOS a checkpoint starts within 1 s of the first acknowledgement it covers and before 64 MiB of non-durable redb writes accumulate; while one is overdue or failing, no new acknowledgement is given."
   - "After a macOS power loss no durable row refers to a missing ordinary group."
+  - "A durable redb commit never persists a row that depends on a group acknowledged after its full flush, in either redb file."
 validation_surfaces:
   - "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
   - "python3 scripts/pm-plan-index.py validate"
@@ -852,7 +861,8 @@ canonical_text: >-
   its bytes, and every custody row must equal its terms. The segment's durable watermark is the end of its last
   valid commit frame. Plans/seglog_frame_v2_wire_fixtures.json group_cases hold a one-member group with its commit
   frame, the receipts it yields and its group digest, plus a torn and a missing commit frame that leave the group
-  unissued.
+  unissued; it is a wire and recovery vector, a one-member barrier group built from the schema-only base event,
+  and complete custody rows are rebuilt by their own recipes.
 gui_related: false
 gui_classification_reason: "Defines a stored control frame; no visible surface."
 split_recommended: false

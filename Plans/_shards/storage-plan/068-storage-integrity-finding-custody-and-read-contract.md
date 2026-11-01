@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23388-L23664
+Source lines: L23391-L23667
 
-Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
+Source SHA256: `74eb16143a7c77409b21f3b509f9b20a8a8da3a65a1d2f46d48109da5a421b3c`
 
 ---
 
@@ -196,7 +196,7 @@ acceptance_criteria:
   existing family/policy/event objects, critical/MVP arrays and governance gates.
 - Use existing RP-AUTHORITY-INDEFINITE as an explicit technical source-lineage class assignment with
   exact mandatory backup, hold, migration and withdrawal custody.
-- Keep durable finding pending until actual safe source/manifest barriers and first-receipt custody
+- Keep durable finding pending until the group's durable commit frame (SP-336, SP-347) and first-receipt custody
   establish completion; no duplicate append, repair or report rollback.
 - Qualify shared original full-value custody adoption as a separate Integrity-specific prerequisite;
   old receipt-shaped/static capture values do not prove it.

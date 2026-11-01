@@ -3,7 +3,7 @@
 
 Checks what JSON Schema cannot: every registered family has exactly one profile, every group a profile
 or planned family names exists, canonical families sit in groups with a canonical budget and derived
-ones in groups with a derived budget, redb value limits stay within value_limit_bytes, planned family
+ones in groups with a derived budget, each storage kind maps to its physical file, group ids are unique, redb value limits stay within value_limit_bytes, planned family
 ids do not collide with registered ones, and owner units and documents exist. Prints a JSON report and
 exits 1 when anything fails. Read-only.
 """
@@ -12,6 +12,8 @@ import json, pathlib, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CANONICAL_KINDS = {"redb", "canonical_file", "redb_and_seglog", "seglog"}
 DERIVED_KINDS = {"redb_projection", "redb_checkpoint", "redb_index"}
+KIND_FILE = {"redb": "canonical", "redb_and_seglog": "canonical", "canonical_file": "file", "seglog": "seglog",
+             "redb_projection": "derived", "redb_checkpoint": "derived", "redb_index": "derived"}
 
 def main() -> int:
     reg = json.loads((ROOT / "Plans/storage_value_registry.json").read_text(encoding="utf-8"))
@@ -22,6 +24,7 @@ def main() -> int:
     families = {f["family_id"]: f for f in reg["families"]}
     profiles = prof["family_profiles"]
     groups = {g["group_id"]: g for g in prof["groups"]}
+    if len(groups) != len(prof["groups"]): errors.append("duplicate group_id in storage_profile.groups")
     for fid in sorted(set(families) - set(profiles)): errors.append(f"family without a profile: {fid}")
     for fid in sorted(set(profiles) - set(families)): errors.append(f"profile without a family: {fid}")
     limit = prof["value_limit_bytes"]
@@ -32,6 +35,7 @@ def main() -> int:
         if kind in CANONICAL_KINDS and g["canonical_budget_bytes"] is None: errors.append(f"{fid}: canonical family in group {g['group_id']} without a canonical budget")
         if kind in DERIVED_KINDS and g["derived_budget_bytes"] is None: errors.append(f"{fid}: derived family in group {g['group_id']} without a derived budget")
         if kind not in CANONICAL_KINDS | DERIVED_KINDS: errors.append(f"{fid}: unclassified storage_kind {kind}")
+        elif pr["redb_file"] != KIND_FILE[kind]: errors.append(f"{fid}: storage_kind {kind} must live in redb_file {KIND_FILE[kind]}, not {pr['redb_file']}")
         if pr["redb_file"] in ("canonical", "derived") and not (1 <= pr.get("max_value_bytes", 0) <= limit): errors.append(f"{fid}: redb value limit missing or above {limit}")
     units = set()
     for line in (ROOT / "Plans/.plan_index/plan_units.jsonl").read_text(encoding="utf-8").splitlines():

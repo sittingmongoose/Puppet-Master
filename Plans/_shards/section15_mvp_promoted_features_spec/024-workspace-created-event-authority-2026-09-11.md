@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11644-L11878
+Source lines: L11644-L11877
 
-Source SHA256: `767e747e5424267e8e7ede134159a1d29ec064ac7d208051604a53a1a743e560`
+Source SHA256: `f693ab1df396be761fe401bf1a8d61b0ff90dadce7bb90685a187513f199daaa`
 
 ---
 
@@ -106,14 +106,13 @@ original identity. If Storage's own reconciliation establishes that no original
 event exists, the existing pre-commit rule applies: the unexposed resource is
 disposed or stays fenced and no creation is published. The Browser owner never
 asks for a first mint from a missing receipt, lost delivery, tail absence or a
-supplied never-issued flag; only Storage's own writer reaches
-`storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
-current protected group, after the original source/manifest barriers and complete
+supplied never-issued flag; only Storage's own writer issues, when the group's commit frame is durable
+(SP-336, SP-347; amended 2026-11-01 for DL-270), after its complete
 current group/source/dedupe/restore checks. Missing or conflicting custody keeps
 the operation recovery-required under the existing failure behavior. A proper
 subset, lost previously issued custody, restored old pending request or ambiguous
-original group stays fenced under that behavior. In-place restart after actual
-protected promotion follows SP-286's original group handoff without reconstructing
+original group stays fenced under that behavior. After an in-place restart,
+recovery finds each group issued or never issued (SP-286) without reconstructing
 old transient capabilities. A verified older restore does not make omitted
 creation work fresh: only an actual newly accepted owner creation after the
 coordinator's completed restore occurrence/session may use its fresh-operation

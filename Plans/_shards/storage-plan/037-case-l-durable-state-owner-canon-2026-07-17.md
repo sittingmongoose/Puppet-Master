@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L17082-L18045
 
-Source SHA256: `1a95c4524fd0e070fc9cadf53873d7bfd905bf64cc8c20d44a62c1921c553793`
+Source SHA256: `74eb16143a7c77409b21f3b509f9b20a8a8da3a65a1d2f46d48109da5a421b3c`
 
 ---
 
@@ -218,7 +218,7 @@ Validation order is mandatory:
 7. Validate payload CRC over exact stored bytes.
 8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed. Amended 2026-11-01 (DL-270, SP-346): no frame transform is admitted, so the transform stays identity and a frame with flags bit 0 has already stopped at step 3 as `unsupported_flags`; a sealed segment is compressed as whole blocks in its container, which decodes to the original frame bytes before this order runs.
 9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission. Amended 2026-11-01 (DL-270), SP-347: a control frame's header must be the control header and its payload decodes as the closed commit payload instead; it is never dispatched as an EventRecord, and replay skips it.
-10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set. Amended 2026-11-01 (DL-270), SP-347: a control frame's event_id is exactly `seglog_commit:<segment_generation>:<sequence_id>` of its own prefix, and its members are exactly the EventRecord frames since the previous commit frame, in order.
+10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set. Amended 2026-11-01 (DL-270), SP-347: a control frame's event_id is exactly `seglog_commit:<segment_generation>:<sequence_id>` of its own prefix, and its members are exactly the EventRecord frames between the previous valid commit frame, or the end of a proven hole when that is later, and itself, in order. Frames before a hole whose own commit frame is damaged are issued by no later commit frame, and the damage is loss at or below the watermark; a complete group after the hole validates on its own.
 
 Missing required schema identity/version is malformed, not a future-version escape. Unsupported registered versions, unknown family mapping, and unavailable validation authority halt admission as `Unsupported` or `ResourceUnavailable`, not corruption. Semantic, no-secret, registry, scope-policy, and idempotency admission remain mandatory owner obligations. A caller-supplied validator, generation, previous sequence, or seen-ID set does not prove native custody of that authority.
 
@@ -664,7 +664,7 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after the group's single segment sync makes its commit frame durable (amended 2026-11-01, DL-270, SP-336, SP-347), with manifest and directory durability at structural changes and SP-286 custody following; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
   Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
   watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
   stores atomically.
