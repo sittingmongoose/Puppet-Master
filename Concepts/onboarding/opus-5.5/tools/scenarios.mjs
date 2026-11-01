@@ -993,7 +993,7 @@ def('pr43', 'fresh+serverOldAnswer', "Situation serverOldAnswer: approving this 
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
   await d.act('selfMatch'); await d.primary();
   await until(d, "window.O55.S.sess.server.orApproveErr === 'stale_nonce'", 'answered for an old code', 8000);
-  A.ok(/for an old code/.test(await layerText(d)), 'it says the answer was for an old code');
+  A.ok(/for an earlier request/.test(await layerText(d)), 'it says the answer was for an earlier request (p16: Approve again)');
   A.ok(await d.state(() => !window.O55.S.sess.server.claimed), 'nothing trusted');
   await d.primary(); await d.untilScreen('s-ready', 15000);
   A.ok(await d.state(() => !!window.O55.S.sess.server.selfTrustId), 'approving again trusts this computer');

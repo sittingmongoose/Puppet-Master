@@ -232,7 +232,9 @@
       "local": "On this network",
       "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well.",
       "addrMissing": "Enter its address first.",
-      "addrNoAnswer": "No Puppet Master answers at that address. Check it, or go back to the list."
+      "addrNoAnswer": "No Puppet Master answers at that address. Check it, or go back to the list.",
+      "noProjects": "no Projects",
+      "viaVpn": "Through your VPN"
     },
     "review": {
       "eyebrow": "Connect this device",
@@ -297,7 +299,9 @@
         "identity_mismatch": "Another computer answers",
         "protocol_mismatch": "Another version"
       },
-      "codeFirst": "Type the code first."
+      "codeFirst": "Type the code first.",
+      "yourWords": "On {name}, check it shows these words: {words}",
+      "sent": "New request sent."
     },
     "ready": {
       "eyebrow": "Connected",
@@ -336,11 +340,11 @@
     },
     "install": {
       "truenas": [
-        "Open TrueNAS on that computer",
+        "Open TrueNAS's web page in your browser",
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "unraid": [
-        "Open Unraid on that computer",
+        "Open Unraid's web page in your browser",
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "synology": [
@@ -471,7 +475,11 @@
       "wrongTarget": "That answer was for a different device or Server. Nothing was trusted.",
       "replayAdopt": "That answer was already used. Nothing more was trusted.",
       "runDone": "That request is answered. To add another device, choose New code.",
-      "tickWords": "Compare the words with the device's, then tick the box under them to approve."
+      "tickWords": "Compare the words with the device's, then tick the box under them to approve.",
+      "staleApprove": "That answer was for an earlier request. Nothing was trusted. Approve again.",
+      "wrongApprove": "That answer was for a different device or Server. Nothing was trusted. Approve again.",
+      "wrongClaim": "That answer was for a different device or Server. Nothing was trusted. Check again.",
+      "runDenied": "{name} was turned down. To let a device join, choose New code."
     }
   },
   "restore": {
@@ -505,7 +513,8 @@
       "cloud": {
         "title": "A cloud account",
         "sub": "Google Drive, OneDrive or a storage bucket"
-      }
+      },
+      "leadServer": "Nothing on {name} is replaced without asking."
     },
     "unlock": {
       "eyebrow": "Restore",
@@ -560,7 +569,7 @@
       "eyebrow": "Restored",
       "titleServer": "{name} is back",
       "titleHere": "Everything is back",
-      "lead": "{n} Projects are ready. AI accounts need a quick sign-in.",
+      "lead": "{n} Projects are ready. Sign in to your AI accounts when you open one.",
       "enter": "Enter Puppet Master",
       "open": "Open a Project",
       "create": "Create a new Project",
@@ -907,7 +916,7 @@
     "networkSub": "Uses a secure connection (SSH) by default",
     "serverTitle": "Where should its files live?",
     "withServer": "On {name}",
-    "withServerSub": "Recommended. The Server keeps them next to the work.",
+    "withServerSub": "The Server keeps them next to the work.",
     "onDevice": "On this device",
     "onDeviceSub": "{name} reaches them over the network",
     "networkDrive": "A network drive",
@@ -1111,7 +1120,7 @@
         "denied": "Tailscale didn't allow it. Nothing was set up. Try again, or do this later.",
         "expired": "The Tailscale sign-in ran out before it finished. Try again for a fresh one.",
         "deviceApproval": "Your Tailscale network needs an administrator to approve {name}. Approve it on Tailscale's admin page, then try again.",
-        "routeFailed": "The private address answered, but the live connection didn't work. Try again; if it keeps failing, do this later.",
+        "routeFailed": "The private address answered, but the live connection didn't work. Check that your network's access rules let your devices reach {name}, then try again.",
         "hsDenied": "Your Headscale server didn't let {name} in. Check with whoever runs it, then try again.",
         "hsUnreachable": "Your Headscale server didn't answer. Check its address and that it is running, then try again.",
         "unreachable": "{host} can't be reached from the internet. Your router or cloud firewall may need to let web traffic in, or your internet plan may share its address. Tailscale works without any of this.",
@@ -1559,7 +1568,9 @@
     "tourSub": "About {m} minutes. Uses a practice example; nothing changes.",
     "enter": "Enter Puppet Master",
     "createNow": "Create a Project now",
-    "aiFreeOnly": "Free Models only, with their limits"
+    "aiFreeOnly": "Free Models only, with their limits",
+    "away": "Away from home",
+    "awayLater": "Not set up yet. Finish it in Settings."
   },
   "nas": {
     "find": {
@@ -1632,7 +1643,8 @@
       "stop": "Stop",
       "details": "Show the technical fingerprint",
       "fingerprint": "SHA256 fingerprint",
-      "old": "Previously"
+      "old": "Previously",
+      "changedWarn": "This fingerprint isn't the one you trusted before."
     },
     "key": {
       "eyebrow": "Secure connection",
@@ -1786,7 +1798,7 @@
       "pair": "Pair",
       "another": "Choose another way",
       "useSsh": "Use SSH instead",
-      "doneLead": "This computer can open the folder you pick on {name}. Nothing on {name} has changed."
+      "doneLead": "This computer can open the folder you pick on {name}."
     }
   },
   "demo": {
@@ -2196,6 +2208,8 @@
     "query": "Leave out anything after a ? or a #.",
     "short": "That's too short for a Remote Link or its code.",
     "long": "That's too long for a Remote Link or its code.",
-    "added": "Puppet Master will use {url}"
+    "added": "Puppet Master will use {url}",
+    "linkSpaces": "A link or its code has no spaces in it.",
+    "linkScheme": "That's a web address. Paste the link or the code your Server shows."
   }
 }
