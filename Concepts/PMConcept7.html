@@ -27135,7 +27135,12 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 #pm-o55-onboarding[data-family="retro"] .o55-promise .o55-sg { border-radius: 0; }
 .o55-group { display: grid; gap: 10px; }
 .o55-grouptitle { margin: 6px 0 0; font: 700 12px/1.2 var(--body-font); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
-.o55-kv { display: grid; gap: 6px; margin: 0; } .o55-kv div { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: 13.5px; } .o55-kv dt { color: var(--text-muted); } .o55-kv dd { margin: 0; }
+/* a value (a fingerprint, an address) is all shown, inside the pane, in every look (FO-19: NieR's metrics pushed the
+   fingerprint, the very text a person compares, 11 px past the pane, with a sideways scroll; a plain 1fr column grows to
+   the longest unbroken word, so in the other looks it ran into the content's margin). Its column may be narrower than the
+   value, which then wraps where it must and nowhere else: a fingerprint after its SHA256: (61-components.js, kv), so the
+   hash itself stays whole */
+.o55-kv { display: grid; gap: 6px; margin: 0; } .o55-kv div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; font-size: 13.5px; } .o55-kv dt { color: var(--text-muted); } .o55-kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .o55-identity-chip { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 5%, transparent); }
 .o55-identity-chip > span { display: grid; gap: 2px; } .o55-idwords { font: 700 14px/1.3 var(--display-font, var(--body-font)); letter-spacing: 0.02em; } .o55-idcap { font-size: 12.5px; color: var(--text-muted); }
 .o55-sheet { display: grid; gap: 12px; padding: 16px; border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: color-mix(in srgb, var(--surface) 85%, var(--text-primary) 4%); }
@@ -177037,7 +177042,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + `<button type="button" class="o55-iconbtn" data-o55-do="sheet-close" aria-label="${esc(O55.t('chrome.done'))}"${U.attrs(X)}>${U.nx('close', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`
         + `<div class="o55-sheetbody">${body}</div>${foot ? `<div class="o55-sheetfoot">${foot}</div>` : ''}</div>`;
     },
-    kv(rows) { return `<dl class="o55-kv">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`; }
+    /* a value that wraps (FO-19) wraps after a fingerprint's algorithm (SHA256:), so the hash a person compares stays whole */
+    kv(rows) { return `<dl class="o55-kv">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v).replace(/^([A-Z][A-Z0-9]{2,}:)(?=\S)/, '$1<wbr>')}</dd></div>`).join('')}</dl>`; }
   };
 })();
 

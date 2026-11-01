@@ -227,6 +227,7 @@
         + `<button type="button" class="o55-iconbtn" data-o55-do="sheet-close" aria-label="${esc(O55.t('chrome.done'))}"${U.attrs(X)}>${U.nx('close', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`
         + `<div class="o55-sheetbody">${body}</div>${foot ? `<div class="o55-sheetfoot">${foot}</div>` : ''}</div>`;
     },
-    kv(rows) { return `<dl class="o55-kv">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`; }
+    /* a value that wraps (FO-19) wraps after a fingerprint's algorithm (SHA256:), so the hash a person compares stays whole */
+    kv(rows) { return `<dl class="o55-kv">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v).replace(/^([A-Z][A-Z0-9]{2,}:)(?=\S)/, '$1<wbr>')}</dd></div>`).join('')}</dl>`; }
   };
 })();
