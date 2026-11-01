@@ -404,7 +404,8 @@
   };
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
-  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
+  /* (projectName: the name a straight open of Creating gives a Project that has none yet, Demo Studio's Open at one screen) */
+  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp', projectName: 'Book club website' };
   /* the unclaimed Server a new-Server route finds, named as the kind and NAS brand it is (GLM-2, p3) */
   const NAS_HOST = { unraid: 'tower.local', synology: 'diskstation.local', qnap: 'qnap-nas.local' };
   function unclaimedFor(env, kind, platform) {
