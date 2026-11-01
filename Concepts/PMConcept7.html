@@ -175897,7 +175897,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* a press refused with its reason (Continue on an empty name): Pip says what is missing, and keeps saying so until
        the press would go through (Astra m02) */
     if (!oops && o && o.refused) oops = o.refused;
-    const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg));
+    const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg && (r.reason == null || (n.getAttribute('data-disabled-reason') || '') === r.reason))) /* (p35: a reason that changed is not still refused) */;
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
     const spec = O55.pipScenes.spec(S, { hover: S.pipHover, typing: S.pipTyping, oops, picked: o && o.picked });
     spec.screen = S.sess.screen;
@@ -176216,7 +176216,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const rf = t.getAttribute('data-reason-for'), rt = rf && t.closest('.o55-layer') && t.closest('.o55-layer').querySelector(rf);
       if (rt) rt.scrollIntoView({ block: 'center', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
       const said = reason && O55.pipOops && O55.pipOops.match(reason, S.sess.screen);
-      if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '' } } });
+      if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '', reason: reason || '' } } });
       return;
     }
     if (e) e.preventDefault();
