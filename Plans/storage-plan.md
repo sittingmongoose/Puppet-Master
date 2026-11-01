@@ -29035,8 +29035,8 @@ canonical_text: >-
   milliseconds), first_sequence, last_sequence members, an array of [event_id, sequence_id, byte_offset] in
   sequence order, and restore_admission, null or CV-339's closed object for a group published through a restore
   occurrence's fresh-operation admission. Each member's eleven AppendReceipt fields follow from it: the group
-  fields, the member triple, durability_state durable, and durable_end_offset, which is the commit frame's end
-  offset. A frame with bit 1 and any other header is control_header_mismatch; bits 0 and 1 together are
+  fields, the member triple, durability_state synced (CV-339), and durable_end_offset, which is the commit frame's
+  end offset. A frame with bit 1 and any other header is control_header_mismatch; bits 0 and 1 together are
   unsupported_flags while bit 0 is unadmitted. Readers skip control frames when replaying EventRecords and use
   them for issuance, receipts and recovery only; a valid commit frame within the durable tail marks its group
   issued (SP-336). CV-339's group_digest is computed over the member frames and the commit frame, with
