@@ -1,3 +1,13 @@
+# Independent R6 remains open; R10 corrected, 2026-11-01
+
+The independent 125-record probe at 3d94b18f82 confirms that R6 still has owner-producing paths past the current source guards. Create-account, details Next and repository pick can call owners; normalization/defaults can relabel a retired choice or silently choose GitHub. Source must reject the original effective selection before those changes and require an explicit new admitted selection. The eight-unit Source Control canon already requires this. Fields owns the common gate; final dry is held until independent closure at the corrected combined head.
+
+R10 is corrected at 8558fa10e6: invalid_case_count is 240, matching all 240 cases. Only coverage metadata changed; functional case counts and schema bytes are unchanged. R10-count-proof.json records the exact fixture hash. Static admission proof v5 passes at 3d94b18f82, with its stated DTO/selector/profile scope; it does not close R6 behavior.
+
+Coverage remains 217 rows/1085 cells. The prior first dry retains its exact source scope and all fourteen original captures. Protected governance, snapshot, baseline and qualification-source inputs remain unchanged.
+
+---
+
 # R6 activation follow-up at corrected source, 2026-11-01
 
 Source f778ff41ee includes fields 6070cf7d54 and the eight-unit activation clarification. Eight focused commands and the isolated typed-choice test PASS. The independent genuine old-picker case remained open at5274b07d5e; a new re-check at the corrected combined pin is required before final dry.

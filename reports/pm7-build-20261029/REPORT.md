@@ -1,3 +1,13 @@
+# Plans lane — R10 corrected; R6 source still open, 2026-11-01
+
+**R10 metadata fix 8558fa10e6 is pushed to both remotes.** All 240 rejection cases are declared. The independent 125-record source probe still finds R6 owner-handoff and reselection bypasses at 3d94b18f82. Fields is adding the common gate; the final dry is held until independent closure at the corrected combined head.
+
+Canon already covers any Source Control selection source and forbids retired-service auth, discovery, setup or owner work. No further product rule or command is needed for the confirmed source holes. Coverage stays 217 rows/1085 required cells. Static v5 proof PASS has a narrower scope and is not behavioral R6 closure. The eight focused commands, typed-choice proof and first dry below retain their recorded source scope.
+
+[RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md) records R6 and R10. No browser/server, landing, lock, reseal, baseline/snapshot or protected-input refresh. T3 mail rings this thread.
+
+---
+
 # Plans lane — corrected R6 candidate, 2026-11-01
 
 **Corrected source f778ff41ee includes fields 6070cf7d54; all eight focused checks PASS.** The genuine saved-picker R6 case remained open at 5274; the corrected combined pin goes to the lead for independent closure before the next final dry.

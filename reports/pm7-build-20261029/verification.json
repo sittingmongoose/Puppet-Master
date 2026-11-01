@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-11-01T21:54:43.866018+00:00",
+  "recorded_at_utc": "2026-11-01T22:14:29.184108+00:00",
   "native_runtime_certification": false,
   "step4": "landing_companions_repaired_full_dry_exit1_zero_blockers",
   "counts": {
@@ -190,7 +190,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "R1-R5/R7-R9 independently closed at5274; R6 remained there in a genuine old-picker partial session. Corrected6070 source plus f778 activation clarification await the final independent re-check.",
+  "review_status": "R1-R5/R7-R9 independently closed; R6 remains open at3d94 in125-record source probe. R10 metadata fixed at8558; final dry requires independent closure at corrected common-gate head.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -5436,6 +5436,46 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-activation-checkpoint.py",
       "sha256": "8a3a2d59287f5f4595b8af8bd935cba0776075a3e05f9c44aa50ba16c26ee6d5",
       "bytes": 11264
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R10-count-proof.json",
+      "sha256": "389a9e332cfdb80c6aa8beb9396de65e6d823ef9b0129fa506b762c4447531af",
+      "bytes": 297
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-open-at3d94-all-producers-mail.txt",
+      "sha256": "2cec44ffb7c5d0795f2d0cbd4b0eb6aaf74598b259630b8eb4b94467d0eb8900",
+      "bytes": 1323
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-open-at3d94-owner-dispatch-mail.txt",
+      "sha256": "af08be412466832dbf5375fe86986a82ef32927dd36f638e3d9f4f85ef36b2fc",
+      "bytes": 995
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-mirror-proof.json",
+      "sha256": "f191189f4cb4a5e8e6cee1744c71f4c004071a257d9ea2dfa2ba379a203948ef",
+      "bytes": 302
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.json",
+      "sha256": "17913c53f3d8344d06cc5f50f64ab5352786305c53123ea98c6e6cbe1dfd5da0",
+      "bytes": 33725
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.stdout.txt",
+      "sha256": "c4a622a68a82d7d924d7c5460cd9b323c720558ab7096710e5800c06cbe3dbe1",
+      "bytes": 2873
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-R10-R6-open-checkpoint.py",
+      "sha256": "ec177baad7256d5adca18e0885b1db6f288c15038b99daaa5c21216def3a68c4",
+      "bytes": 7262
     }
   ],
   "reviews": [
@@ -7812,7 +7852,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "f778ff41eef5971e8db8a3fbd3acd5edd9766b23",
+  "canonical_source_commit": "8558fa10e629374cd40277feb694c1ce7c255093",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": true,
   "dry_landing_run_for_QA2": true,
@@ -7824,10 +7864,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 991,
+    "prior_count": 1052,
     "all_prior_hashes_unchanged": true,
-    "current_count": 1052,
-    "claim": "All prior records retained verbatim; first dry captures independently hash-checked before this writer. Corrected activation proof is separate; final dry pending."
+    "current_count": 1060,
+    "claim": "Prior artifact records retained verbatim. Fourteen original first-dry captures hash-checked before and after writing; latest R6 remains open."
   },
   "historical_pre_DL259_commands": [
     {
@@ -11510,7 +11550,7 @@
   },
   "DL273_additional_removals": {
     "prose_commit": "1d84dffe0b",
-    "phase": "corrected_R6_activation_focused_pass_v5_and_independent_recheck_pending",
+    "phase": "R10_metadata_fixed_R6_common_owner_gate_pending",
     "coverage_rows": 217,
     "required_cells": 1085,
     "retired_units": [
@@ -11537,7 +11577,7 @@
     "source_packet_body_hashes_unchanged": true,
     "current_packet_amendments": 16,
     "first_focused_results": "Touch and packet custody pass; storage passes; new-contracts/rulings corrected after empty schema branches and Teacher-topic pin. Readiness92 vs88 grows only currentness source drift (67 vs63).",
-    "final_dry": "wait for independent R6 closure; use activation-final directory, never overwrite first captures",
+    "final_dry": "Held until independent R6 closure at corrected common-gate head. First dry frozen; next uses activation-final directory.",
     "source_fields_final": "6070cf7d54",
     "active_positive_cases": 1593,
     "active_negative_cases": 3926,
@@ -11561,9 +11601,11 @@
       "exit_code": 0
     },
     "admission_proof": {
-      "state": "v5 capture follows this committed checkpoint",
+      "state": "pass",
+      "checked_source_commit": "3d94b18f828a2ebd5a4b6259de939aa921bce326",
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.json",
-      "scope": "Static DTO/selector/profile/admission consistency; separate independent R6 transition closure required."
+      "sha256": "17913c53f3d8344d06cc5f50f64ab5352786305c53123ea98c6e6cbe1dfd5da0",
+      "scope": "Static DTO/selector/profile admission consistency; does not prove behavioral R6 closure."
     },
     "last_positive_fixture_reference": "Hyphenated instance id in shared fan-out case rehomed to admitted Gitea at6195bc8658; partial-result, publication and identity guards unchanged.",
     "historical_admission_proof_at619": {
@@ -11953,6 +11995,21 @@
         "sha256": "a91544138f2666072b5bc434baad436a31901143f0aa11a6f712f98e36e56916"
       },
       "new_setting_or_command_or_schema_field": false
+    },
+    "R10": {
+      "commit": "8558fa10e629374cd40277feb694c1ce7c255093",
+      "declared_invalid_cases": 240,
+      "actual_invalid_cases": 240,
+      "metadata_only": true,
+      "proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R10-count-proof.json",
+      "sha256": "389a9e332cfdb80c6aa8beb9396de65e6d823ef9b0129fa506b762c4447531af"
+    },
+    "R6_open_at3d94": {
+      "source": "3d94b18f828a2ebd5a4b6259de939aa921bce326",
+      "evidence_record_count": 125,
+      "remaining": "Owner handoffs, relabel/default before admission, explicit reselection and stale done/Next; common Source Control gate pending fields.",
+      "frozen_mail": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-open-at3d94-all-producers-mail.txt",
+      "sha256": "2cec44ffb7c5d0795f2d0cbd4b0eb6aaf74598b259630b8eb4b94467d0eb8900"
     }
   },
   "historical_pre_DL273_additional_counts": {
@@ -11985,5 +12042,5 @@
   },
   "historical_pre_DL273_additional_review_status": "Independent Sol 6.1 max audit: zero open blockers, majors or minors at 7a133bfc8bc61aedc868ce09b646033148310aad",
   "historical_pre_DL273_additional_source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
-  "current_live_report_manifest_sha256": "96e2ca56a82389233795f3c64e7fe5d4a55833b88e158820405eea959fe0e80b"
+  "current_live_report_manifest_sha256": "52383c339e164ecff1823ee102327ad18663e57331663a7400b597231393403a"
 }

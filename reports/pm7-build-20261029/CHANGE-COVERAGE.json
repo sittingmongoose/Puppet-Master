@@ -2784,8 +2784,8 @@
       "commands": "CS-073; UCC-106; existing ui.onboarding.next and service/auth owner routes; no new command, intent or handler",
       "settings": "none needed: Source Control admission is an owner rule, not a user preference or new setting key",
       "dry": "DR-005; entry, resume, availability and activation consume one current admission gate",
-      "companions": "Current admitted Forgejo request remains valid; replacing only choice with the former service is refused at the choice enum. Fields6070cf7d54 validates saved controls and every service/sign-in activation, and reports52/52 on both page modes; independent genuine-old-picker re-check pending. No schema/key/command/mirror shape changes.",
-      "state": "source_and_typed_refusal_pass_independent_R6_recheck_pending",
+      "companions": "Admitted Forgejo request remains valid; changing only choice to the former service is refused. Independent125-record probe at3d94 finds remaining owner handoffs, relabel/default and explicit-reselection gaps in source6070. Existing canon covers all; common gate is pending fields. No schema/key/command/mirror shape change.",
+      "state": "canon_and_typed_refusal_pass_independent_R6_owner_gate_open",
       "decision_ref": "DL-273"
     }
   ],
@@ -3389,7 +3389,7 @@
       "positive_cases": 1593,
       "negative_cases": 3926,
       "index_acceptance_units": 29366,
-      "independent_recheck": "pending at corrected combined candidate"
+      "independent_recheck": "R6 open at3d94; common Source Control owner gate pending fields. Final dry held until independent closure."
     }
   },
   "historical_DL273_first_removal": {
