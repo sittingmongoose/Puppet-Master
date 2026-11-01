@@ -200,7 +200,7 @@ Rule: Puppet Master MUST store Attempt Journal and Parent Summary artifacts in t
 ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
 
 Reserved runtime subtree note:
-- `.puppet-master/state/**` is reserved for project-local runtime state such as optional local seglog, redb files and recovery manifests (index_meta.json, seglog CURRENT and manifest), and backups, when enabled by `Plans/storage-plan.md`. Amended 2026-10-31 (DL-270): no JSON or JSONL mirror files of state live there (SP-339).
+- `.puppet-master/state/**` is reserved for project-local runtime state such as optional local seglog, redb files and recovery manifests (index_meta.json, seglog CURRENT and manifest), and backups, when enabled by `Plans/storage-plan.md`. Amended 2026-10-31 (DL-270): no JSON or JSONL mirror files of state live there (SP-339). Amended 2026-11-01 (DL-270, SP-015, SP-345): PM keeps no store in the project folder, so nothing is written under `.puppet-master/state/`; project-scoped runtime state lives under `<data root>/projects/<project_id>/state/`, and the subtree stays reserved so nothing else claims it.
 - `.puppet-master/project/**` remains the canonical staged Project Plan Package tree.
 - `.puppet-master/workspace/**` remains the non-canonical execution sidecar and MUST NOT be repurposed as canonical storage.
 

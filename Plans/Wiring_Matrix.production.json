@@ -8769,7 +8769,8 @@
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
         "Consume MACS-005 FirstTimeSourceAuthBinding only for necessary selected-source auth: owner-verified permission/consent/source/draft/hash/Client, null prior Project/profile/account/install, protected human handoff, owner-allocated identity after proof. Postcommit provider setup uses the real Project and ordinary owner contracts; no native proof is implied.",
-        "DL-259 late integration: when this operation is invoked from online-service copy/import, Protect or restore, the screen and its local Continue/Connect action use the same applicable current service/variant/address or destination validation. Invalid or stale prerequisites dispatch nothing. This adds no source-service prerequisite to other consumers. Remembered text is not auth/readiness proof; existing owner authorization, exact identity/generation, selected-source and Project commit fences remain required."
+        "DL-259 late integration: when this operation is invoked from online-service copy/import, Protect or restore, the screen and its local Continue/Connect action use the same applicable current service/variant/address or destination validation. Invalid or stale prerequisites dispatch nothing. This adds no source-service prerequisite to other consumers. Remembered text is not auth/readiness proof; existing owner authorization, exact identity/generation, selected-source and Project commit fences remain required.",
+        "DL-272 RV-3: an explicit native-Client Tailscale/Headscale sign-in may precede its Server list. Resolve current native Client/control-network owner and protected return; no cached discovery action initiates auth, no plain browser owns a node and no sign-in grants PM pairing or a Server listener."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.auth_profile_sign_in.disabled_reason, including handler_unavailable, without secrets or raw output.",
@@ -76706,6 +76707,62 @@
       ],
       "request_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/work_quit_request",
       "result_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/command_result"
+    },
+    "onboarding.free_models.route.disable": {
+      "ui_element_id": "onboarding.free_models.route.disable",
+      "ui_location": "Onboarding / Settings-guided rerun > Free Models route > Turn off",
+      "ui_command_id": "cmd.free_models.route.disable",
+      "handler_location": "handlers::models::disable_free_route",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "DL-272 CS-108/UCC-213: resolve stable route/provider/policy scope and current catalog/policy generations; no display-label identity or default target.",
+        "One idempotent Models mutation changes only this route future eligibility; preserve credentials, other routes, saved model order and dispatched snapshots.",
+        "Actor permission, writable storage and available sole handler are required; refusal or stale/unavailable owner leaves accepted state unchanged.",
+        "Accepted or already-disabled result matches request identity and carries the actual owner receipt; no optimistic concept success is native evidence."
+      ],
+      "evidence_required": "Static specified intent only. Native dispatch, Models binding/currentness/permission/writer gate, persistence, receipt and accessible return proof remain required. Owner MS-121/CS-108.",
+      "state_selector": "state.free_models.route_disable.enabled",
+      "disabled_reason_projection": "state.free_models.route_disable.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Models policy mutation receipt only; no new EventRecord family.",
+        "receipt_or_event_refs": [
+          "Plans/free_models_route_contracts.schema.json#/$defs/disable_result"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Turn off this named Free Models route.",
+        "keyboard_access": "Keyboard and pointer submit the same exact scoped request.",
+        "focus_management": "Keep/restore the invoking route row and refresh its actual owner state.",
+        "disabled_announcement": "Announce state.free_models.route_disable.disabled_reason."
+      },
+      "test_evidence": [
+        {
+          "test_id": "onboarding.free_models.route.disable.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Future native dispatch reaches the sole owner target with typed request."
+        },
+        {
+          "test_id": "onboarding.free_models.route.disable.projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Currentness and unavailable reason are owner-derived."
+        },
+        {
+          "test_id": "onboarding.free_models.route.disable.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Refusal/idempotent replay cannot duplicate effects; no new event emits."
+        },
+        {
+          "test_id": "onboarding.free_models.route.disable.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove visible control, keyboard/focus and disabled parity."
+        }
+      ],
+      "event_test_requirements": [
+        "Refusal and idempotent replay create no duplicate policy effect, credential revocation, in-flight cancellation or unadmitted event."
+      ],
+      "request_schema_ref": "Plans/free_models_route_contracts.schema.json#/$defs/disable_request",
+      "result_schema_ref": "Plans/free_models_route_contracts.schema.json#/$defs/disable_result"
     }
   }
 }

@@ -918,7 +918,12 @@ canonical_text: 'Production Settings targets Rust stable and Slint 1.17.1 with t
   A, Jared 2026-10-31: Settings retains the explicit always-on Server, manual private HTTPS, self-hosted Remote Link
   gateway, rarer SSH key types, China-region and local-server AI routes, and repository object-format controls; onboarding
   provides context-correct pointers without exposing those advanced choices. Amended DL-260, Jared 2026-10-31: only real
-  product behavior remains an implementation requirement.'
+  product behavior remains an implementation requirement.
+
+
+  DL-272: Your AI services reuses MA-045/046 protected setup/addition and Models MS-121’s exact-route Turn off. Existing
+  accounts remain Ready during an addition, credential types are named accurately, and Cancel preserves them. This route
+  action is not the whole-provider ai.models.provider-enabled switch and adds no ordinary settings row.'
 gui_related: true
 gui_classification_reason: This unit governs the Settings visual reference and future Slint implementation direction.
 depends_on: [SSYS-003, SSYS-010]
@@ -948,6 +953,9 @@ acceptance_criteria:
 - 'DL-259 D2 A, Jared 2026-10-31: Settings retains the explicit always-on Server, manual private HTTPS, self-hosted Remote
   Link gateway, rarer SSH key types, China-region and local-server AI routes, and repository object-format controls;
   onboarding provides context-correct pointers without exposing those advanced choices.'
+- 'DL-272: Your AI services reuses MA-045/046 protected setup/addition and Models MS-121’s exact-route Turn off. Existing
+  accounts remain Ready during an addition, credential types are named accurately, and Cancel preserves them. This route
+  action is not the whole-provider ai.models.provider-enabled switch and adds no ordinary settings row.'
 validation_surfaces: [future Slint build and runtime evidence]
 risk_class: concept_fixture_promoted_as_runtime_proof
 reasoning_tier: high
@@ -955,10 +963,12 @@ context_scope: settings_pmconcept_slint_boundary
 implementation_surfaces: [Plans/Settings_System.md, future Slint Settings components]
 node_compile_hint: {mode: settings_concept_portability_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Concepts/pm7-tools/settings_tome_source.py
-  - Concepts/pm7-tools/build_pm7.py
-  - Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html
-  - source_ref:chat:settings-canonical-owner-lane-2026-08-31
+- Concepts/pm7-tools/settings_tome_source.py
+- Concepts/pm7-tools/build_pm7.py
+- Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html
+- source_ref:chat:settings-canonical-owner-lane-2026-08-31
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [PMConcept7, Slint 1.17.1, concept_fixture_only, no certification claim]
 negative_constraints: [Do not call static or browser concept checks Slint proof., Do not claim portability or certification without fresh production evidence.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md]
@@ -2995,7 +3005,12 @@ canonical_text: 'Settings sets defaults and runs guided set-ups; it does no live
   refusal reads Older key type — too weak to use. Check this eligibility before an existing authorization, matching prior
   profile or passphrase/unlock state; those cannot make a weak key usable. A retained weak selection must be replaced
   by an owner-eligible key before the flow advances. Other keys keep their existing owner checks, identity binding and
-  custody; the shared list never exposes or moves a private half.'
+  custody; the shared list never exposes or moves a private half.
+
+
+  DL-272 RV-5, 2026-11-01: SSH identity confirmation shows the fingerprint for comparison with a source the person already
+  trusts, such as the device’s settings or its administrator. If it cannot be confirmed, Stop and ask; the picture or
+  a reachable address is not verification. Username means the account allowed to connect by SSH.'
 gui_related: true
 gui_classification_reason: Governs which Settings views may act on live work and how every guided set-up, permission profile, SSH key and transfer is presented.
 split_recommended: false
@@ -3017,6 +3032,9 @@ acceptance_criteria:
   a weak key usable. A retained weak selection must be replaced by an owner-eligible key before the flow advances. Other
   keys keep their existing owner checks, identity binding and custody; the shared list never exposes or moves a private
   half.'
+- 'DL-272 RV-5, 2026-11-01: SSH identity confirmation shows the fingerprint for comparison with a source the person already
+  trusts, such as the device’s settings or its administrator. If it cannot be confirmed, Stop and ask; the picture or
+  a reachable address is not verification. Username means the account allowed to connect by SSH.'
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_live_work_or_guided_setup_drift
@@ -3037,6 +3055,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
   - "Make a copy"
   - "Same as the project"

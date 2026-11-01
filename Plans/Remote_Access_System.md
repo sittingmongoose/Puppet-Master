@@ -248,7 +248,17 @@ canonical_text: 'Custom Domain is a first-class route with a dedicated-hostname 
   reports the actual PM-owner checks performed: endpoint reachability, protocol/API compatibility, expected Server identity
   and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
   a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
-  remain; missing or failed actual route checks cannot be called successful.'
+  remain; missing or failed actual route checks cannot be called successful.
+
+
+  DL-272 RV-4, 2026-11-01: The generated proxy configuration is available to download and copy on the setup step that
+  asks the person to install it. Caddy, NGINX and Traefik share the existing Settings generator; an existing proxy, including
+  Nginx Proxy Manager, gets no generated file. Certificates remain on the person’s systems.
+
+
+  DL-272 RV-13, 2026-11-01: A proxy DNS failure gives the required A-record value from the route owner. A live-connection
+  failure for generated configuration says to keep the generated file intact and enable WebSockets in any upstream proxy.
+  The failed proxy flow also offers Tailscale, with its own explicit setup/consent; changing route is not success.'
 gui_related: true
 gui_classification_reason: Proxy preview/generation/export, external origin, trusted proxies, tests, warnings, and manual endpoint actions are visible workflows.
 depends_on: [RAS-002, RAS-007]
@@ -276,6 +286,12 @@ acceptance_criteria:
   and pairing/auth, and the applicable WebSocket, stream, transfer, deep-link and callback checks. It never claims that
   a certificate is valid. Existing secure-transport, public-exposure consent, identity and reachability requirements
   remain; missing or failed actual route checks cannot be called successful.'
+- 'DL-272 RV-4, 2026-11-01: The generated proxy configuration is available to download and copy on the setup step that
+  asks the person to install it. Caddy, NGINX and Traefik share the existing Settings generator; an existing proxy, including
+  Nginx Proxy Manager, gets no generated file. Certificates remain on the person’s systems.'
+- 'DL-272 RV-13, 2026-11-01: A proxy DNS failure gives the required A-record value from the route owner. A live-connection
+  failure for generated configuration says to keep the generated file intact and enable WebSockets in any upstream proxy.
+  The failed proxy flow also offers Tailscale, with its own explicit setup/consent; changing route is not success.'
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future proxy spoofing and subpath negative tests]
 risk_class: reverse_proxy_identity_or_origin_bypass
 reasoning_tier: high
@@ -288,6 +304,8 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md — Owner answers C1–C4, Jared 2026-10-31; product-only
   rules, no hints.
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [Custom Domain, NGINX, Traefik, dedicated hostname, trusted proxy CIDRs, CGNAT, HTTPS, WSS]
 negative_constraints: [Do not promise arbitrary subpath hosting., Do not trust forwarded headers from unknown peers., Do not administer a user VPN.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Containers_Registry_and_Unraid.md]
@@ -874,33 +892,48 @@ canonical_text: 'Connecting this Client to an existing Puppet Master selects the
   VPN this device is already connected to, with no VPN switch, because the person turns a VPN on or off on their own
   device; hosted Tailscale may reuse current component/session/tailnet and peer projections without signing in; every
   route may consume cached known-endpoint data. Headscale control URL, reverse-proxy HTTPS URL, Remote Link/QR/short
-  code, and manual identity/address entry remain local draft inputs in this phase. Review/Apply is the sole execution
-  boundary: protected sign-in, Headscale enrollment, endpoint add/test, identity verification, pairing/trust, Remote
-  Link open, network configuration, and every route mutation begin only after confirmation through their canonical owners.
-  Manual identity/address entry appears only when safe discovery cannot return the intended Server. DL-259, Jared 2026-10-31:
-  D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted Remote Link gateway, rarer
-  SSH key types, China-region AI variants and local AI servers live in Settings, with a clear context-correct pointer
-  from onboarding. The ordinary This computer choice remains the easy local-work default. The wizard says AI accounts
-  available in this setup, not every AI. Existing Settings routes and owners retain the advanced capabilities. D7 B supersedes
-  the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS and Linux have their own built-in
-  Tailscale connection and sign in once through the shared protected auth owner, with no separate Tailscale app install.
-  The same signed PM-owned Go tsnet helper is supervised by its owning PM process. A Server keeps one active node per
-  stable server_id; a native Client installation keeps one active node per stable client_id, independent of Projects,
-  windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration, process, IPC, authorization,
-  egress and secure-state references prevent identity/key sharing or duplicate active nodes. Native Client nodes provide
-  bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server public listener. Server
-  nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default and unavailable on
-  Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work permission. A plain
-  browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable through the
-  device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host Tailscale
-  stays external and unmanaged. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and checks its
-  protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior, expiry/abuse
-  policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks; no grammar
-  or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat nonblank
-  text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
+  code, and manual identity/address entry remain local draft inputs in this phase. Review/Apply confirms route mutation,
+  endpoint add/test, Server identity acceptance, PM pairing/trust and Remote Link open. Separately, an explicit Sign
+  in action may authorize this native Client’s selected built-in Tailscale/Headscale connection before its Server list,
+  through the protected auth and connector owners; cached discovery itself never starts sign-in. No other pre-Review
+  mutation is admitted. Manual identity/address entry appears only when safe discovery cannot return the intended Server.
+  DL-259, Jared 2026-10-31: D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted
+  Remote Link gateway, rarer SSH key types, China-region AI variants and local AI servers live in Settings, with a clear
+  context-correct pointer from onboarding. The ordinary This computer choice remains the easy local-work default. The
+  wizard says AI accounts available in this setup, not every AI. Existing Settings routes and owners retain the advanced
+  capabilities. D7 B supersedes the former no-per-Client-node restriction. Native Puppet Master apps on Windows, macOS
+  and Linux have their own built-in Tailscale connection and sign in once through the shared protected auth owner, with
+  no separate Tailscale app install. The same signed PM-owned Go tsnet helper is supervised by its owning PM process.
+  A Server keeps one active node per stable server_id; a native Client installation keeps one active node per stable
+  client_id, independent of Projects, windows, tabs, sessions and Server endpoint selection. Owner-qualified configuration,
+  process, IPC, authorization, egress and secure-state references prevent identity/key sharing or duplicate active nodes.
+  Native Client nodes provide bounded Dial/stream access only to verified PM endpoints, not arbitrary proxying or a Server
+  public listener. Server nodes retain the automatic private listener; Funnel remains Server-only, explicit, off by default
+  and unavailable on Headscale. Human approval and reusable connection identity do not grant PM pairing/trust or work
+  permission. A plain browser tab has no embedded Tailscale connection: it needs Remote Link or a private endpoint reachable
+  through the device’s own Tailscale connection. It cannot be enrolled by a browser sign-in. Existing user-managed host
+  Tailscale stays external and unmanaged. DL-259 REMOTE-CODE-1 A, Jared 2026-10-31: the Remote Link owner issues and
+  checks its protected HTTPS link or opaque short code. Decide the actual code grammar, normalization/case behavior,
+  expiry/abuse policy and raw-code resolution protocol immediately before building PM, alongside D4’s pre-build checks;
+  no grammar or sample code is pinned in canon. Preserve the owner-defined representation, reject empty input, and treat
+  nonblank text as unverified draft rather than identity, pairing or Ready proof. After Review, the trusted owner validates/resolves
   it before the existing open and Server identity/pairing continuation. Unknown, expired or unresolvable input fails
   closed without another-Server fallback. This accepted pre-build verification point is not an unanswered product choice
-  or a wizard caveat.'
+  or a wizard caveat.
+
+
+  DL-272 RV-3, 2026-11-01: A native Client explicitly signs in once to its selected Tailscale or Headscale through the
+  protected auth owner before Connect lists Servers on that network; reuse a current owner-verified sign-in. Network
+  choice, Client identity and generation fence the return. This grants neither PM pairing nor a Server listener.
+
+
+  DL-272 M10-REMOTE-LINK, 2026-11-01: A newly issued Remote Link is shown with its owner-issued short code and QR, with
+  copy actions for its output. This adds no code alphabet, length, normalization or expiry rule; REMOTE-CODE-1 remains
+  the pre-build authority.
+
+
+  DL-272 REMOTE-LINK-ERROR, 2026-11-01: Remote Link input guidance and refusal refer to a link or code, not a generic
+  web address. Nonblank draft text is still unverified until the Remote Link owner resolves it.'
 gui_related: true
 gui_classification_reason: Defines the route chooser, discovery order, conditional fields, pairing handoff, manual fallback, and setup-later state consumed by Product Onboarding.
 depends_on: [RAS-001, RAS-003, RAS-005, RAS-006, SRV-004]
@@ -913,13 +946,11 @@ acceptance_criteria:
   any VPN this device is already connected to, without a switch, and the line `You can connect through a VPN too` says
   so; it never asks for a private address by default, installs/configures no VPN, and reveals manual Server name/address
   only when safe discovery cannot find the intended target.
-- Hosted Tailscale first consumes cached/current component, session, tailnet, and peer projections; a usable active tailnet
-  needs no sign-in and may expose read-only candidate endpoints before Review, while a missing/expired session offers
-  exactly one built-in protected sign-in only after Review/Apply. `Use existing connection` and `Use official page` are
-  not competing setup choices.
-- Headscale records the normalized HTTPS control URL and may consume cached known-endpoint projections before Review;
-  owner-managed approval/enrollment, authenticated discovery, and Server identity verification begin only after Review/Apply,
-  and Headscale never asks for hosted-Tailscale account sign-in.
+- Hosted Tailscale reuses current owner-verified native-Client authorization. A missing/expired session offers one explicit
+  protected Sign in before its Server list; completing it grants no PM trust or route mutation.
+- Headscale validates the selected control URL, then the native Client explicitly signs in to that control server through
+  its protected owner before authenticated Server listing. It never substitutes hosted-Tailscale account sign-in; endpoint
+  mutation, PM identity acceptance and pairing still wait for Review.
 - Existing-client Reverse proxy asks only for the existing protected HTTPS Puppet Master URL and the chosen pairing method;
   proxy kind, hosting and certificate belong only to new-Server/configuration setup; generation offers Caddy, NGINX and
   Traefik, while Nginx Proxy Manager is existing-only (DL-259 D3 A).
@@ -928,11 +959,9 @@ acceptance_criteria:
 - Read-only discovery may project candidate endpoints, but after Review/Apply every route must verify and resolve one
   exact existing `server_id` before pairing by approval, code, or QR; route possession, reachability, a device label,
   or a visible recognition checkbox never grants trust.
-- Product Onboarding may record route intent and draft inputs and consume cached owner data, already-detected account/session
-  status, known endpoints, and owner-bounded read-only LAN/VPN/active-tailnet discovery before Review. It performs no
-  login, enrollment, protected account verification, endpoint add/test, Remote Link open, identity acceptance, Server
-  selection as an owner mutation, pairing/trust grant, network configuration, or route mutation until the current Review
-  revision is confirmed.
+- Before Review, only owner-bounded read-only discovery, PWIZ-021 selected-source auth and the explicit native-Client
+  connection sign-in of DL-272 RV-3 are admitted. No concealed login, public listener, endpoint mutation, PM trust grant,
+  recovery or Project mutation is permitted.
 - Guided setup may choose `Not now`; connect-existing may defer and resume the session, but it cannot report connection
   Ready when no reviewed route can reach and pair the existing Server.
 - 'DL-259, Jared 2026-10-31: D2 A: explicit always-on Server setup on this computer, manual private HTTPS, a self-hosted
@@ -958,6 +987,14 @@ acceptance_criteria:
   identity, pairing or Ready proof. After Review, the trusted owner validates/resolves it before the existing open and
   Server identity/pairing continuation. Unknown, expired or unresolvable input fails closed without another-Server fallback.
   This accepted pre-build verification point is not an unanswered product choice or a wizard caveat.'
+- 'DL-272 RV-3, 2026-11-01: A native Client explicitly signs in once to its selected Tailscale or Headscale through the
+  protected auth owner before Connect lists Servers on that network; reuse a current owner-verified sign-in. Network
+  choice, Client identity and generation fence the return. This grants neither PM pairing nor a Server listener.'
+- 'DL-272 M10-REMOTE-LINK, 2026-11-01: A newly issued Remote Link is shown with its owner-issued short code and QR, with
+  copy actions for its output. This adds no code alphabet, length, normalization or expiry rule; REMOTE-CODE-1 remains
+  the pre-build authority.'
+- 'DL-272 REMOTE-LINK-ERROR, 2026-11-01: Remote Link input guidance and refusal refer to a link or code, not a generic
+  web address. Nonblank draft text is still unverified until the Remote Link owner resolves it.'
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/remote_access_system_contract_fixtures.json, future route-first LAN/VPN/Tailscale/Headscale/proxy/Remote-Link owner fixtures]
 risk_class: connect_existing_route_order_or_trust_conflation
 reasoning_tier: high
@@ -970,16 +1007,18 @@ source_lineage:
 - Plans/product_onboarding_contracts.schema.json
 - Concepts/pm7-tools/onboarding_cinematic_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/DECISIONS-ONBOARDING.md (Owner questions, Jared 2026-10-31; DL-259)
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens: [Local or VPN, You can connect through a VPN too, Tailscale, Headscale, Reverse proxy, Puppet Master Remote Link, approval, code, QR]
 negative_constraints:
-  - Do not discover before route selection or mutate before Review confirmation.
-  - Do not hide authentication, enrollment, endpoint mutation/testing, identity acceptance, pairing, trust, or network configuration inside pre-Review discovery/projection.
-  - Do not require a private VPN address when local-style discovery works.
-  - Do not show a switch for VPN discovery; turning a VPN on or off belongs to the person's own device.
-  - Do not show redundant Tailscale sign-in, existing-connection, or official-page choices.
-  - Do not generate or administer a reverse proxy for an existing-client connection.
-  - Do not hide Remote Link or add a recognition checkbox.
-  - Do not move Server identity, pairing, trust, authentication, or command ownership into Onboarding.
+- Do not mutate a route or PM trust before Review; only the named explicit preflight/auth exceptions are admitted.
+- Do not conceal login/enrollment in discovery or infer route/trust consent from the explicit native-Client sign-in.
+- Do not require a private VPN address when local-style discovery works.
+- Do not show a switch for VPN discovery; turning a VPN on or off belongs to the person's own device.
+- Do not show redundant Tailscale sign-in, existing-connection, or official-page choices.
+- Do not generate or administer a reverse proxy for an existing-client connection.
+- Do not hide Remote Link or add a recognition checkbox.
+- Do not move Server identity, pairing, trust, authentication, or command ownership into Onboarding.
 ```
 
 ## Go tsnet connector supersession addendum - 2026-09-01

@@ -170515,7 +170515,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
-  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
+  /* (projectName: the name a straight open of Creating gives a Project that has none yet, Demo Studio's Open at one screen) */
+  const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp', projectName: 'Book club website' };
   /* the unclaimed Server a new-Server route finds, named as the kind and NAS brand it is (GLM-2, p3) */
   const NAS_HOST = { unraid: 'tower.local', synology: 'diskstation.local', qnap: 'qnap-nas.local' };
   function unclaimedFor(env, kind, platform) {
@@ -176079,6 +176080,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
   O55.ui.cheerLog = () => cheerLog.slice();
+  /* another option of the same choice pressed after one was refused (a usable key after the too-old one): the refusal is
+     over and nothing was put right, so Pip leaves it, with no cheer, and says the new pick's own line (FO-16; the old card
+     stays refused in the list, which kept "That key is too old. Choose another." on) */
+  const choseOther = (action, arg) => !!(lastOops && lastOops.refused && lastOops.refused.do === action && (lastOops.refused.arg || '') !== (arg == null ? '' : String(arg)));
   /* the presses that leave a failed thing for another way, a skip or a cancel: whatever succeeds after one is not the
      failed thing put right, so a waiting cheer goes (RV-11; the lead, 2026-11-01: every flow where the person moves on,
      such as RV-13's Use Tailscale instead, whose Tailscale step otherwise cheered the failed web address). A retry is
@@ -176393,7 +176398,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
-    if (MOVED_ON.has(action)) O55.ui.movedOn();
+    if (MOVED_ON.has(action) || choseOther(action, arg)) O55.ui.movedOn();
     /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
@@ -176787,7 +176792,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (el) { press(el, null); return true; }
     const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
     if (!fn) return false;
-    if (MOVED_ON.has(action)) O55.ui.movedOn();
+    if (MOVED_ON.has(action) || choseOther(action, want)) O55.ui.movedOn();
     fn(S, want, null, null);
     return true;
   }
@@ -179124,6 +179129,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      (QA2 hunter H1: the picture check read "undefined · undefined" and Ready "{name} has 0 Projects") */
   function seedConnect(S, step) {
     S.sess.active = 'connect';
+    /* the screen before, to go back to (c-pair's Use a code instead goes back to the review): FO-17 sweep */
+    if (!S.sess.history.length) S.sess.history.push(['c-route', 'c-review', 'c-pair'][step]);
     const d = cd(S), c = S.sess.connect;
     if (!server(S) && S.env.pmServers[0]) choose(S, S.env.pmServers[0], { remote_mode: d.remote_mode || 'local_or_vpn', server_connection_mode: 'discover' });
     if (!d.connection_pairing) O55.draft.set(d, { connection_pairing: 'approval' });
@@ -179139,6 +179146,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     scene: (S) => ({ id: 'where', beat: 'connect' }),
     /* (back here from the pairing, by Back or the rail: the request it left waiting ends) */
     enter(S) { S.sess.active = 'connect'; if (S.sess.connect.run && !paired(S)) endRun(S, 'back'); },
+    /* opened straight (Demo Studio's Open at one screen), enter() never ran: the Connect context it sets, without which
+       the pairing finished and Continue stayed dim, the run adopted under the main context (final FO-17) */
+    seed(S) { S.sess.active = 'connect'; S.save(); },
     eyebrow: () => T('connect.route.eyebrow'),
     title: () => T('connect.route.title'),
     lead: () => T('connect.route.lead'),
@@ -180729,6 +180739,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
   function seedNas(S, id) {
     const n = N(S), d0 = md(S);
+    /* the screen before, to go back to (Stop, Try again after a refused password, Choose another): a straight open has
+       no history, and back() went nowhere (final FO-17 sweep) */
+    const before = { 'nas-identity': 'nas-find', 'nas-install': 'nas-signin', 'nas-mounted': 'nas-find' }[id];
+    if (before && !S.sess.history.length) S.sess.history.push(before);
+    /* a password typed on Sign in, as that screen leaves it (its add phase refused every try without one: FO-17 sweep) */
+    if (id === 'nas-install' && !n.pwOnce) n.pwOnce = true;
     if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
     if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!shareOf(S)) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
     if (id === 'nas-mounted') { n.method = 'mounted'; if (!n.volume) n.volume = volumes(S)[0]; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
@@ -182767,6 +182783,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ review */
   const LEAD_BY_MODE = { existing_local: 'review.leadAdd', existing_online: 'review.leadOnline', restore: 'review.leadRestore' };
   const TITLE_BY_MODE = { existing_local: 'creating.titleAdd', existing_online: 'creating.titleOnline', restore: 'creating.titleRestore' };
+  /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a fresh review (new
+     revision) starts a new original attempt. The destination stays a private reservation until the terminal result
+     publishes it. (Review's Create, and a straight open of Creating, which has had no Create: its seed below) */
+  function startCommit(S) {
+    const d = md(S);
+    if (S.sess.commit && S.sess.commit.state !== 'none') return;
+    O55.draft.set(d, { review_confirmed: true });
+    const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
+    PR().resetRecovery(cm);
+    PR().beginOriginal(cm, d);
+    cm.pendingProjectId = PR().reserveDestinationId(d);
+    cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    S.save();
+  }
+
   def('review', {
     chapter: 'project', stage: 'review_setup_plan',
     scene: (S) => ({ id: 'route', beat: 'default', params: routeParams(S) }),
@@ -182854,18 +182885,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           if (!needsRemote(d)) return O55.ui.go('ready');
           O55.sound.play('commit', SND.prepare); return O55.away.start(S, 'ready');
         }
-        /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a
-           fresh review (new revision) starts a new original attempt. The destination stays a private
-           reservation until the terminal result publishes it. */
-        if (!S.sess.commit || S.sess.commit.state === 'none') {
-          O55.draft.set(d, { review_confirmed: true });
-          const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
-          PR().resetRecovery(cm);
-          PR().beginOriginal(cm, d);
-          cm.pendingProjectId = PR().reserveDestinationId(d);
-          cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
-          S.save();
-        }
+        startCommit(S);
         O55.sound.play('commit', SND.create);
         O55.ui.go('creating', { silent: true });
       }
@@ -183181,6 +183201,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return st.blocksLanded() < phasesFor(S).length;
   }
   def('creating', {
+    /* opened straight (Demo Studio's Open at one screen): what Review's Create would have done, a name if the Project has
+       none and the reviewed commit started, and Review to go back to; else nothing ran and Continue stayed off with
+       "Finish recovery first" (final FO-17 sweep) */
+    seed(S) {
+      if (!S.sess.history.length) S.sess.history.push('review');
+      const d = md(S);
+      if (d.project_mode !== 'later' && (!S.sess.commit || S.sess.commit.state === 'none')) {
+        if (!d.project_name) O55.draft.set(d, { project_name: O55.fixtures.DEMO.projectName });
+        startCommit(S);
+      }
+      S.save();
+    },
     chapter: 'project', stage: 'automatic_preparation',
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
     scene: (S) => { const done = shownPhases(S).filter((p) => p.status === 'done').length; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
@@ -184049,6 +184081,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* ------------------------------------------------------------------ all providers (what pays for them) */
   const GROUPS = [['plan', 'subs'], ['use', 'apis'], ['own', 'own']];
   def('ai-all', {
+    /* opened straight (Demo Studio's Open at one screen): the AI screen it came from, since Done goes back (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: (S) => ({ id: 'power', beat: readyIds(S).length ? 'ready' : 'waiting', params: { n: readyIds(S).length } }),
     eyebrow: () => T('ai.eyebrow'),
@@ -184082,6 +184116,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the provider they signed up with (P10) */
   const SIGNUP = { sub: [['Claude', 'claude'], ['ChatGPT', 'codex']], api: [['Anthropic', 'anthropic-api'], ['Google AI Studio', 'gemini-api']] };
   def('ai-none', {
+    /* opened straight: the AI screen it came from, since Continue goes back there for a sign-up choice (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: () => ({ id: 'power', beat: 'waiting', params: { n: 0 } }),
     eyebrow: () => T('aiNone.eyebrow'),
@@ -184426,7 +184462,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     mounted(S, layer, fresh) {
       /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
       if (fresh) O55.shell.flushLook(4000);
-      if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
+      /* Almost ready (no AI and no free model) stays calm: no curtain call from any look's skin (the family one is
+         confetti, a crew cheer and a wink on Pip's stage; NieR's the bows and the sting), as no confetti here (FO-18: the
+         skin ran before the check below) */
+      if (!fresh || noAi(S) || O55.ui.skin('ready', layer, fresh)) return;
       /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
         if (noAi(S)) return; /* (no confetti for setup that can't plan yet) */
@@ -312683,7 +312722,11 @@ try {
      is synced in the frame the cover starts to lift, so the chips are there for the whole reveal (landing review GL-2).
      Other busy spells (a page slide, a Usage room change, the open onboarding window) defer nothing, and a strip inside
      the onboarding window never waits (GL-1). Nothing here is read from style or layout. */
-  var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
+  /* p77 (Opus pass 2, 2026-11-01): a wizard screen that is leaving (.o55-layer.o55-out) is parked too. Its strips' chips are
+     in the window's lens layer, not in the screen, so they stayed on the spot while the next screen came in under them
+     (Glass Dark: the QNAP tab's chip over "Set up truenas.local" for 10 frames; Basic and Friendly until the old screen
+     was removed). The wizard's layers are HOT, so the class that starts the leave is synced after that frame's layout. */
+  var STRIP_PARKED = '.pmed-prepared, [hidden], #pm-o55-onboarding .o55-layer.o55-out', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
   /* B6 packet 1, the Basic path (2026-10-16): a strip inside a content-visibility: auto section the browser is skipping
      (the editor's Customize groups out of view) is not drawn, and any read of it (its scroller walk, its box, even
@@ -312821,7 +312864,7 @@ try {
       queueSync();
     }, 140);
   }
-  var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
+  var HOT = '#pm-o55-onboarding .o55-pane > .o55-layer, [data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';
   /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
      first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
@@ -312859,6 +312902,8 @@ try {
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
          the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
       if (recs[i].type === 'childList' && recs[i].removedNodes.length) for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
+      /* a strip removed with its chip still shown (a wizard screen replaced while it was held): the chip goes in this frame */
+      if (!hot && recs[i].type === 'childList' && recs[i].removedNodes.length) lenses.forEach(function (L, s) { if (!s.isConnected && L.rect) hot = true; });
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;

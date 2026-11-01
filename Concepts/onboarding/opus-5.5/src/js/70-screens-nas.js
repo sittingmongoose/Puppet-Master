@@ -49,6 +49,12 @@
   const SEED_STEP = { 'nas-identity': 0, 'nas-pmpair': 0, 'nas-key': 1, 'nas-signin': 2, 'nas-install': 2, 'nas-folder': 3 };
   function seedNas(S, id) {
     const n = N(S), d0 = md(S);
+    /* the screen before, to go back to (Stop, Try again after a refused password, Choose another): a straight open has
+       no history, and back() went nowhere (final FO-17 sweep) */
+    const before = { 'nas-identity': 'nas-find', 'nas-install': 'nas-signin', 'nas-mounted': 'nas-find' }[id];
+    if (before && !S.sess.history.length) S.sess.history.push(before);
+    /* a password typed on Sign in, as that screen leaves it (its add phase refused every try without one: FO-17 sweep) */
+    if (id === 'nas-install' && !n.pwOnce) n.pwOnce = true;
     if (n.purpose === 'source' && d0.project_mode !== 'existing_local') O55.draft.set(d0, { project_mode: 'existing_local', project_transport: 'ssh', source_more: true });
     if (id === 'nas-smb' || id === 'nas-nfs') { n.method = id.slice(4); if (!shareOf(S)) n.share = (S.env.shares.find((x) => x.proto === n.method) || {}).id; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }
     if (id === 'nas-mounted') { n.method = 'mounted'; if (!n.volume) n.volume = volumes(S)[0]; if (n.purpose === 'source') O55.draft.set(d0, { project_transport: 'mounted' }); return S.save(); }

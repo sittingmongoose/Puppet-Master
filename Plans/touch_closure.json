@@ -8122,6 +8122,61 @@
         "cmd.terminal.rerun"
       ],
       "request_identity_schema_ref": "Plans/pm7_build_contracts.schema.json#/$defs/ReusedCatalogRequestIdentity"
+    },
+    {
+      "profile_id": "TCP-FREE-MODELS-ROUTE-DISABLE",
+      "requirement_refs": [
+        "Plans/Models_System.md#MS-121",
+        "Plans/Commands_System.md#CS-108",
+        "Plans/Wiring_Matrix.md#WM-099"
+      ],
+      "owner_plan": "Plans/Models_System.md",
+      "plan_unit": "MS-121",
+      "dry_contract_ref": "Plans/DRY_Rules.md#DR-020",
+      "payload_schema_ref": "Plans/free_models_route_contracts.schema.json#/$defs/disable_request",
+      "result_schema_ref": "Plans/free_models_route_contracts.schema.json#/$defs/disable_result",
+      "error_schema_ref": "Plans/free_models_route_contracts.schema.json#/$defs/error_code",
+      "availability_rule": "Known exact route and policy scope, current catalog/policy generation, available Models owner.",
+      "permission_gate": "Authorized actor and writer posture at the policy owner; no implicit scope, auth or credential authority.",
+      "disabled_reason_rule": "Actual projected stale/unknown/permission/storage/owner refusal, no optimistic success.",
+      "handler_owner": "handlers::models::disable_free_route",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static request/result shape conformance only; native dispatcher, owner validation/effect, persistence and receipt remain unproved.",
+      "gui_triggers": [
+        "onboarding.free_models.route.disable"
+      ],
+      "return_route": "Exact invoking route row, including Settings-guided rerun; no active/default target fallback.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md#UCC-213",
+        "Plans/pm7_control_bindings.json",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "event_refs": [
+        "No new event; Models owner receipt only."
+      ],
+      "receipt_refs": [
+        "Plans/free_models_route_contracts.schema.json#/$defs/disable_result"
+      ],
+      "observable_work": [
+        "Existing Models operation only; no native proof."
+      ],
+      "persistence_refs": [
+        "Existing Models policy owner only; no wrapper credential store or new storage family."
+      ],
+      "migration_refs": [
+        "No runtime/governance migration claimed."
+      ],
+      "test_refs": [
+        "Plans/free_models_route_contract_fixtures.json",
+        "scripts/pm-free-models-route-verify.py"
+      ],
+      "evidence_refs": [
+        "static_contract_only"
+      ],
+      "command_ids": [
+        "cmd.free_models.route.disable"
+      ]
     }
   ],
   "row_columns": [
@@ -13852,6 +13907,14 @@
       "ui.work_panel.open_surface",
       "partial",
       "Closed value branch and local clipboard/view owner; no runtime/Settings/event write. Native signal, refusal/success, focus and accessibility remain unproved."
+    ],
+    [
+      "TOUCH-FREEROUTE-001",
+      "TCP-FREE-MODELS-ROUTE-DISABLE",
+      "command",
+      "cmd.free_models.route.disable",
+      "partial",
+      "Native dispatcher, Models binding/currentness/permission/writer validation, persistence and actual receipt remain unproved."
     ]
   ],
   "excluded_tokens": [

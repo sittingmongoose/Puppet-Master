@@ -551,6 +551,8 @@
   /* ------------------------------------------------------------------ all providers (what pays for them) */
   const GROUPS = [['plan', 'subs'], ['use', 'apis'], ['own', 'own']];
   def('ai-all', {
+    /* opened straight (Demo Studio's Open at one screen): the AI screen it came from, since Done goes back (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: (S) => ({ id: 'power', beat: readyIds(S).length ? 'ready' : 'waiting', params: { n: readyIds(S).length } }),
     eyebrow: () => T('ai.eyebrow'),
@@ -584,6 +586,8 @@
      the provider they signed up with (P10) */
   const SIGNUP = { sub: [['Claude', 'claude'], ['ChatGPT', 'codex']], api: [['Anthropic', 'anthropic-api'], ['Google AI Studio', 'gemini-api']] };
   def('ai-none', {
+    /* opened straight: the AI screen it came from, since Continue goes back there for a sign-up choice (FO-17 sweep) */
+    seed(S) { if (!S.sess.history.length) { S.sess.history.push('ai'); S.save(); } },
     chapter: 'ai', stage: 'provider_setup',
     scene: () => ({ id: 'power', beat: 'waiting', params: { n: 0 } }),
     eyebrow: () => T('aiNone.eyebrow'),

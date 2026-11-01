@@ -19496,12 +19496,17 @@ canonical_text: >-
   for remote transport. Where earlier text conflicts, DL-270 and those units win. A sweep of every plan document
   by a reading wave, with verification, brought the other owners into line in the same landing, including the
   commands, settings, GUI, wiring and DRY companions. DL-270 adds no settings row: budgets, thresholds and cache
-  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Still pending: SeglogFrameV2's
-  exact codec and dictionary byte fields and the receipt fields its commit frame carries; rewriting the Case L
-  proof tables to SP-336's publication and recovery sequence; the data-root paths (SP-015); and the registry,
-  schema and fixture companions, including the budget values. Card 4's 150 ms applies to warm and cold opens
-  alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four requirements,
-  thresholds and mechanics are the review's reading, not Jared's words.
+  sizes are fixed owner values, while Jared reconsiders how settings are scoped. Its companions landed after it:
+  SP-346 for SeglogFrameV2's reserved compression descriptor and the sealed segment container, SP-347 for the
+  commit frame and its receipt fields, the First append receipt custody section and CV-339 rewritten to SP-336's
+  publication and recovery sequence, the data-root paths in SP-015, and the storage registry's storage_profile
+  with its schema, holding each family's file, group and value limit and the budget values. The companion audits
+  left three items for implementation, not planning: a producer-valid fixture that rebuilds complete custody rows
+  from frames; native crash, power-loss and recovery tests of the commit-frame sequence on all three operating
+  systems; and recertifying the pinned goal_certified_event_coordinator_contracts profile against SP-336 before
+  its route is enabled. Only the governance reseal remains outside it. Card 4's 150 ms applies to warm and cold
+  opens alike. Spec_Lock's forbid_sqlite is unchanged. The option labels are the cards' words; the four
+  requirements, thresholds and mechanics are the review's reading, not Jared's words.
 gui_related: false
 gui_classification_reason: "Records owner decisions on storage, compression and durability."
 split_recommended: false
@@ -19672,4 +19677,67 @@ owner_hints:
 - Plans/Provider_OpenCode.md
 - Plans/Settings_System.md
 - Plans/Server_System.md
+```
+
+
+### DL-272 — Footage review alignment, real product rules
+
+```yaml
+plan_unit_id: DL-272
+unit_type: decision_record
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: DL-272 records the PM7 lead’s 2026-11-01 footage batch at integration 7d2dd568be, not a new set of personal
+  rulings by Jared. Existing DL-126, DL-257, DL-259, DL-260 and DL-271 remain constraints. It aligns protected sign-in
+  fallback/addition/retry and per-service expiry, native-Client auth before listing under D7, matching identity/pairing
+  feedback, generated proxy files and actionable failures, truthful restore/Ready status, source-control validation/privacy/access/selection,
+  and fixed readable stage/indicator/Pip success behavior. It adds the single Models route-disable command of CS-108/UCC-213.
+  Stale canon’s global five-minute timeout and blanket pre-Review auth prohibition are amended only as specified by MA-047/RAS-014/PWIZ-021/025.
+  Remote Link grammar remains deferred by Jared’s REMOTE-CODE-1; XXXX-XXXX belongs only to pairing-code display. Forgejo
+  restricted-token support without account identity remains an owner question. Demo mechanics, samples, Studio situations, concept hosts, seeds, timings and source function names are
+  not product rules. No governance reseal, WorkNodes, NodeSeeds or native/runtime acceptance is supplied.
+gui_related: true
+gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
+split_recommended: false
+depends_on:
+- DL-259
+- DL-271
+unblocks: []
+acceptance_criteria:
+- DL-272 records the PM7 lead’s 2026-11-01 footage batch at integration 7d2dd568be, not a new set of personal rulings
+  by Jared. Existing DL-126, DL-257, DL-259, DL-260 and DL-271 remain constraints. It aligns protected sign-in fallback/addition/retry
+  and per-service expiry, native-Client auth before listing under D7, matching identity/pairing feedback, generated proxy
+  files and actionable failures, truthful restore/Ready status, source-control validation/privacy/access/selection, and
+  fixed readable stage/indicator/Pip success behavior. It adds the single Models route-disable command of CS-108/UCC-213.
+  Stale canon’s global five-minute timeout and blanket pre-Review auth prohibition are amended only as specified by MA-047/RAS-014/PWIZ-021/025.
+  Remote Link grammar remains deferred by Jared’s REMOTE-CODE-1; XXXX-XXXX belongs only to pairing-code display. Forgejo
+  restricted-token support without account identity remains an owner question. Demo mechanics, samples, Studio situations, concept hosts, seeds, timings and source function names are
+  not product rules. No governance reseal, WorkNodes, NodeSeeds or native/runtime acceptance is supplied.
+validation_surfaces:
+- python3 scripts/pm7-canon-check.py
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: owner_identity_and_truthful_feedback
+reasoning_tier: high
+context_scope: pm7_footage_review_20261101
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
+- Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+preserved_exact_tokens:
+- DL-272
+- DL-126
+- DL-259
+- DL-260
+- DL-271
+negative_constraints:
+- Do not infer native handlers, trust, success, credential authority or governance readiness from a concept or static
+  fixture.
+owner_hints:
+- Plans/Decision_Log.md
 ```

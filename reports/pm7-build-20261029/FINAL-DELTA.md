@@ -35,3 +35,12 @@ Six real product rows bring coverage to **155 rows / 775 cells**. Prior batches 
 | Excluded | FO-13 translation lookup/build-key checks; Studio oldKey/guestLater, seed data, concept-host fault states and artificial delays. | No product row or owner rule for these mechanics. |
 
 DL-271 is the sole new PlanUnit allocated by this feedback batch. Storage main683e603ac1 is incorporated with its DL-270 and reserved storage/command/GUI units intact. Prose conflicts were reread before companion reconciliation; no ledger compiled or reseal. The active settings union is 1010, Touch is 715 rows / 140 profiles and production wiring is 1270. The raw settings union includes the retired NieR override; it remains a migration input, not an active row. Main’s current migration run and landing baseline are inherited without refresh.
+
+
+## DL-272 footage review, 2026-11-01
+
+Integration7d2dd568be and main34b9ab2843 are incorporated. The 54 new real-product rows bring coverage to209/1045 cells. MA-047 and its walkthrough now use provider-owned device-code lifetime; RAS-014/PWIZ-021/025 admit only explicit native-Client sign-in before its Server list, with all route/trust/Project mutation fences retained. No Jared ruling changes. Pairing display form never pins Remote Link’s deferred protocol. Codeberg remains outside the batch.
+
+CS-108/UCC-213 and WM-099/UIW-047 define cmd.free_models.route.disable, its sole Models handler, typed shapes and shared producer. Native effect/persistence/receipt remain unproved. Census1010 settings,485 bindings/63 source families,716 Touch/141 profiles,1271 production. Existing account-manager description changes and the page was rebuilt with --publish-pm7; --check passes. No other GUI source was edited.
+
+All17 effective focused/generation/guard checks pass:161 PM7 cases,12 new route-shape cases,89 retained final-source and33 footage-source cases. Static proof is not rendering/native/audio acceptance. Historical decisions are exact to the post-main merge checkpoint. Main’s protected artifacts, migration and baseline are not refreshed. One open question for Jared: Forgejo repository-restricted tokens without account identity; existing behavior remains. See FOOTAGE-ADJUDICATION.md for every source/owner mapping.

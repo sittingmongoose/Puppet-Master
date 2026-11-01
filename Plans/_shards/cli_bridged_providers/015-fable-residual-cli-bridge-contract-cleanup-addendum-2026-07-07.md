@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1902-L2017
+Source lines: L1912-L2027
 
-Source SHA256: `4b3e7f475dac5eeb20aa335758c5c2e42053f155933c317d24befe4b4367c621`
+Source SHA256: `14848fb74a4cec851913f354270a3e30a71dad6dd4ef753ade4e4d4158c3cd78`
 
 ---
 

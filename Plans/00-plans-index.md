@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-11-01: DL-272 aligns the footage review with real product owners: truthful identity, auth/addition/retry/expiry, source-control names/privacy/access, proxy/restore status and fixed readable wizard feedback. CS-108/UCC-213 and WM-099/UIW-047 add exact-route Free Models Turn off, preserving credentials, other routes and in-flight work. D7, certificate custody, product-only canon and deferred Remote Link protocol remain; restricted Forgejo tokens remain an owner question.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-272, ContractName:Plans/Models_System.md#MS-121, ContractName:Plans/Remote_Access_System.md#RAS-014
+
 - 2026-10-31: DL-271 distinguishes OpenCode server-password custody, keeps Protect access guidance count-neutral and recovery-phrase wording format-neutral, refuses weak SSH keys before prior authorization, and separates initial request waiting from answered pairing. Long tokens wrap inside the bounded question note while vertical scrolling remains. Existing credential, Backup, key-list and trust owners remain.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-271, ContractName:Plans/Provider_OpenCode.md#PO-009, ContractName:Plans/Planning_Wizard.md#PWIZ-025, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/Server_System.md#SRV-004
 

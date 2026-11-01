@@ -578,6 +578,10 @@
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
   O55.ui.cheerLog = () => cheerLog.slice();
+  /* another option of the same choice pressed after one was refused (a usable key after the too-old one): the refusal is
+     over and nothing was put right, so Pip leaves it, with no cheer, and says the new pick's own line (FO-16; the old card
+     stays refused in the list, which kept "That key is too old. Choose another." on) */
+  const choseOther = (action, arg) => !!(lastOops && lastOops.refused && lastOops.refused.do === action && (lastOops.refused.arg || '') !== (arg == null ? '' : String(arg)));
   /* the presses that leave a failed thing for another way, a skip or a cancel: whatever succeeds after one is not the
      failed thing put right, so a waiting cheer goes (RV-11; the lead, 2026-11-01: every flow where the person moves on,
      such as RV-13's Use Tailscale instead, whose Tailscale step otherwise cheered the failed web address). A retry is
@@ -892,7 +896,7 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
-    if (MOVED_ON.has(action)) O55.ui.movedOn();
+    if (MOVED_ON.has(action) || choseOther(action, arg)) O55.ui.movedOn();
     /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
@@ -1286,7 +1290,7 @@
     if (el) { press(el, null); return true; }
     const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
     if (!fn) return false;
-    if (MOVED_ON.has(action)) O55.ui.movedOn();
+    if (MOVED_ON.has(action) || choseOther(action, want)) O55.ui.movedOn();
     fn(S, want, null, null);
     return true;
   }

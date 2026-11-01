@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L48055-L51426
+Source lines: L48083-L51504
 
-Source SHA256: `f3aa5d843b8be47217c8454812c28a5d99bcd3c22b6fdb52071155dde7425cf5`
+Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
 
 ---
 
@@ -2888,7 +2888,37 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
   long tokens in an opened question note wrap within its available width, so their full text is readable without horizontal
   scrolling. Keep vertical scrolling when the note exceeds its available height. This applies to Plain English and Expert,
   including NieR, and visual wrapping preserves the exact token for copying; it adds no second note renderer or per-family
-  content version.'
+  content version.
+
+
+  DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match
+  confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same
+  reason without granting trust.
+
+
+  DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer
+  that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still
+  shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected
+  when typing settles; an unrelated or earlier success cannot clear a later fault.
+
+
+  DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover
+  and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes
+  still respond to real window resizing and the existing narrow/short layouts.
+
+
+  DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface
+  in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused
+  states remain distinct.
+
+
+  DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped
+  field, without hiding keyboard focus or relying on its colour alone for the reason.
+
+
+  DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
+  against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
+  rules.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2965,6 +2995,24 @@ acceptance_criteria:
   is readable without horizontal scrolling. Keep vertical scrolling when the note exceeds its available height. This
   applies to Plain English and Expert, including NieR, and visual wrapping preserves the exact token for copying; it
   adds no second note renderer or per-family content version.'
+- 'DL-272 RV-19, 2026-11-01: A refused Approve action tells the person to compare the identity words and tick their match
+  confirmation. Its reason stays readable with the confirmation brought into view; keyboard and pointer receive the same
+  reason without granting trust.'
+- 'DL-272 RV6-RV11-PIP-SUCCESS, 2026-11-01: Pip’s success feedback requires a corresponding operation or owner answer
+  that succeeded after the fault, the same field put right, or the refused action becoming valid, with no fault still
+  shown. Moving on, skipping, cancelling or choosing another way is not success. A field/control must remain corrected
+  when typing settles; an unrelated or earlier success cannot clear a later fault.'
+- 'DL-272 FO-15, 2026-11-01: The guide’s stage stays fixed within its allocated layout: focus, keyboard navigation, hover
+  and help cannot scroll or displace that stage or its scene. Only intended form/help regions scroll; layout changes
+  still respond to real window resizing and the existing narrow/short layouts.'
+- 'DL-272 P70-RADIO-RING, 2026-11-01: An unselected radio/check ring remains distinguishable on its actual card surface
+  in every family and Light/Dark variant, with the existing non-text accessibility requirements. Selected and focused
+  states remain distinct.'
+- 'DL-272 P32-REFUSED-FIELD, 2026-11-01: A refused field has a readable invalid edge in every look, including a prefixed/wrapped
+  field, without hiding keyboard focus or relying on its colour alone for the reason.'
+- 'DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
+  against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
+  rules.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3002,6 +3050,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

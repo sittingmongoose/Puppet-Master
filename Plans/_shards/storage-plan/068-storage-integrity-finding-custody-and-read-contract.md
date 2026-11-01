@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23422-L23698
+Source lines: L23446-L23722
 
-Source SHA256: `65281667a65f5ace7eabd40195f302a8845841ab9eb013a3202b0cbcf76063dd`
+Source SHA256: `4c20fece81a7639df6076c086b49200a5fa865fb4a53a528df8ba930133370de`
 
 ---
 
@@ -22,7 +22,7 @@ Payload remains exactly its current schema, including seven failure classes, fou
 
 The new producer `storage.integrity_finding_capture.v1` runs only in the Storage validation/recovery coordinator under the actual root identity, aggregate ownership and stable source boundary. Bind storage instance, root generation/fingerprint, manifest precondition generation/hash, and target segment generation/name/state/hash/length before any separately authorized repair. The narrow report-writing capability never authorizes source mutation. Viewer, unsupported, root-mismatch and lost-lock modes cannot persist a finding or append; user approval cannot substitute for this authority.
 
-Adopt the exact current Case L-2 first profile rather than defining another codec. It has the packed 48-byte little-endian prefix, header CRC at +32, payload CRC at +36, prefix CRC at +40, and uint64 sequence at +24. The header is exactly `[1, event_id, event_type, schema_id, schema_version, payload_schema_id, scope_kind, project_id]`. The payload is canonical MessagePack of the complete closed EventRecord with all required-present nulls. Prefix/header/payload CRC32/ISO-HDLC, flags=0, caps, canonical numeric/string/container representation, reader/version dispatch and no generation-1 fallback follow Case L-2 unchanged. The 4 KiB header and 16 MiB inline payload caps are existing transport caps, not numeric-domain changes. Amended 2026-10-31 (DL-270): flags=0 is the profile of the active segment only. Sealed segments may carry SP-335's compression flag with codec and dictionary ids, validated before decode. The inline body of a record is capped at 16 KiB (SP-337), larger bodies being payload-store references, so 16 MiB is only an outer frame bound and never an admitted body size.
+Adopt the exact current Case L-2 first profile rather than defining another codec. It has the packed 48-byte little-endian prefix, header CRC at +32, payload CRC at +36, prefix CRC at +40, and uint64 sequence at +24. The header is exactly `[1, event_id, event_type, schema_id, schema_version, payload_schema_id, scope_kind, project_id]`. The payload is canonical MessagePack of the complete closed EventRecord with all required-present nulls. Prefix/header/payload CRC32/ISO-HDLC, flags=0, caps, canonical numeric/string/container representation, reader/version dispatch and no generation-1 fallback follow Case L-2 unchanged. The 4 KiB header and 16 MiB inline payload caps are existing transport caps, not numeric-domain changes. Amended 2026-10-31 (DL-270): flags=0 is the profile of every EventRecord frame; commit frames set bit 1 (SP-347), and sealed segments are compressed as whole blocks in a sealed container (SP-346), so their frames keep their bytes. The inline body of a record is capped at 16 KiB (SP-337), larger bodies being payload-store references, so 16 MiB is only an outer frame bound and never an admitted body size.
 
 Execute the existing mandatory stages in order: magic; complete prefix and prefix CRC; version/reserved/flags; caps and checked remaining-file bounds; generation and strict sequence; header CRC/decode; payload CRC; identity decompression bounds; full EventRecord/payload schema and scope admission; duplicate header/envelope/prefix identity and persisted-ID checks. A transient observation records the actual first failed stage/code and marks later stages unrun. No caller-provided decoder object, scan digest or all-true witness can replace actual byte validation against independently held original source-owner facts.
 
@@ -196,7 +196,7 @@ acceptance_criteria:
   existing family/policy/event objects, critical/MVP arrays and governance gates.
 - Use existing RP-AUTHORITY-INDEFINITE as an explicit technical source-lineage class assignment with
   exact mandatory backup, hold, migration and withdrawal custody.
-- Keep durable finding pending until actual safe source/manifest barriers and first-receipt custody
+- Keep durable finding pending until the group's durable commit frame (SP-336, SP-347) and first-receipt custody
   establish completion; no duplicate append, repair or report rollback.
 - Qualify shared original full-value custody adoption as a separate Integrity-specific prerequisite;
   old receipt-shaped/static capture values do not prove it.

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2022
+Source lines: L265-L2034
 
-Source SHA256: `29c1a7181f828f5996fbae02187816bfa7ce0f6f4b4c6028ee56a2607d31c4be`
+Source SHA256: `a3e2f1ce14094c7c94c9949634cbf96e77a2518c2f3096ebff97e9a46fc10116`
 
 ---
 
@@ -915,7 +915,13 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   existing execution-host credential owner. Backup form requirements come from the chosen family/auth method, not a second
   count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection and action guards,
   and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting versus answered
-  state; copy changes do not create another validator or trust writer.'
+  state; copy changes do not create another validator or trust writer.
+
+
+  DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
+  auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
+  corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
+  it never revokes provider credentials or rewrites other routes.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -946,6 +952,10 @@ acceptance_criteria:
   method, not a second count in Pip copy. The shared SSH-key eligibility result drives row availability, default selection
   and action guards, and is checked before prior authorization. Pairing feedback consumes the one owner run’s initial-waiting
   versus answered state; copy changes do not create another validator or trust writer.'
+- 'DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
+  auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
+  corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
+  it never revokes provider credentials or rewrites other routes.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -974,6 +984,8 @@ source_lineage:
   weak-key/waiting view dfbaacbad7. Provider/onboarding/server reports are source lineage only; no concept host, seeded
   situation, artificial delay or helper API is a product requirement. Lead 1031215509-a74e confirms unconditional weak-key
   refusal.'
+- DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
+  Source spellings are lineage, not product API.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer
