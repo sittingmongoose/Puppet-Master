@@ -26874,6 +26874,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
+/* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
+   column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
+.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top, auto); margin-bottom: auto; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }
@@ -27433,14 +27436,16 @@ html[data-o55-open] #o55np-reticle[data-o55nw-hide] { visibility: hidden !import
    dimmed, read as a broken render: films M8). The footer holds still: the new screen's footer is whole from its first
    frame and lies over the old one, so Back and Continue never blink. */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-st,
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-card),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-row),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-tile),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :where(.o55-card):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :where(.o55-row):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :where(.o55-tile):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main :is(.o55-opt > .o55-tipq),
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-promise li { animation-name: o55nw-in; animation-timing-function: step-end; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-st,
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-card),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-row),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-tile) { animation-name: o55nw-in-back; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :where(.o55-card):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :where(.o55-row):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :where(.o55-tile):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering.o55-in-back .o55-main :is(.o55-opt > .o55-tipq) { animation-name: o55nw-in-back; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-main.o55-st { animation-name: o55nw-fade; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-entering .o55-foot.o55-st { animation: none; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-pane > .o55-layer:is(.o55-out-fwd, .o55-out-back) { animation: o55nw-out 220ms step-end both; }
@@ -27837,13 +27842,14 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-ma
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] :is(.o55-eyebrow),
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] :is(.o55-title),
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] :is(.o55-foot) { animation: none; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-card),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-row),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-tile) { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :where(.o55-card):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :where(.o55-row):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :where(.o55-tile):not(.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-opt > .o55-tipq) { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-promise li { animation: o55nw-in var(--o55-step) step-end calc(440ms - .3 * var(--o55-step) + var(--ci, 0) * 80ms) both; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :where(.o55-st):not(.t7.t7:not(*)),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :is(.o55-main :is(.o55-card, .o55-row, .o55-tile)),
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :where(.o55-promise li):not(.t7.t7:not(*)) { animation-play-state: paused !important; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :where(.o55-st):not(.t7.t7.t7:not(*)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :is(.o55-main :is(.o55-card, .o55-row, .o55-tile, .o55-opt > .o55-tipq)),
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :where(.o55-promise li):not(.t7.t7.t7:not(*)) { animation-play-state: paused !important; }
 
 /* ============================================================================== H3: the rail walk, the counter roll */
 /* The current chapter's ink block walks the rail (66-nier-window.js railWalk): a block of the same size steps from the
@@ -28417,6 +28423,8 @@ html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, 
 .o55-entering .o55-foot.o55-st { animation: o55-fadeonly 220ms ease calc(var(--o55-enter-delay) + 60ms) both; }
 .o55-entering .o55-main .o55-card, .o55-entering .o55-main .o55-row, .o55-entering .o55-main .o55-tile, .o55-entering .o55-promise li {
   animation: o55-card-basic var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+/* a card's ? comes in with its card, never before it (p75) */
+.o55-entering .o55-main .o55-opt > .o55-tipq { animation: o55-fadeonly var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
 @keyframes o55-fadeonly { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-st-basic { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
 @keyframes o55-st-basic-back { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
@@ -28480,7 +28488,7 @@ html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, 
 #pm-o55-onboarding[data-family="retro"].o55-opening .o55-win { animation: o55-win-in-retro 460ms steps(6, end) both; }
 @keyframes o55-win-in-retro { 0% { clip-path: inset(49.6% 0 49.6% 0); opacity: 1; } 35% { clip-path: inset(49.6% 0 49.6% 0); } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
 #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-st { animation-delay: calc(260ms + var(--i, 0) * var(--o55-stagger)); }
-#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
+#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-opt > .o55-tipq, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
 
 #pm-o55-onboarding.o55-closing .o55-scrim { animation: o55-fadeout 320ms ease both; }
 #pm-o55-onboarding.o55-closing .o55-win { animation: o55-win-out 300ms cubic-bezier(0.3, 0, 1, 1) both; }
@@ -175983,6 +175991,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* (a switch of Plain English and Expert puts the other version in place at once: no retyping, no jump) */
     st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
+  /* the column's top, held from the moment the screen comes in (p76); a window resize centres it again */
+  function holdColumn(layer) {
+    if (!layer) return;
+    layer.removeAttribute('data-col-held');
+    const c = layer.querySelector('.o55-scroll > .o55-content'), sc = c && c.parentElement;
+    if (!c || !sc) return;
+    const top = Math.max(0, Math.round(c.offsetTop - sc.offsetTop)); /* (layout offsets: the window's opening scale does not count) */
+    layer.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
+  }
+  window.addEventListener('resize', () => { const l = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); if (l) holdColumn(l); });
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
@@ -176094,7 +176112,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
     O55.tips.write(layer); armLoaders(layer);
-    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
+    holdColumn(layer);
+    /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
+       space for 7-10 frames before their cards) */
+    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => {
+      n.style.setProperty('--ci', i);
+      const q = n.parentElement && n.parentElement.classList.contains('o55-opt') ? n.parentElement.querySelector(':scope > .o55-tipq') : null;
+      if (q) q.style.setProperty('--ci', i);
+    });
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();

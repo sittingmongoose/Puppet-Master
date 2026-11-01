@@ -138,6 +138,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
+/* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
+   column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
+.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top, auto); margin-bottom: auto; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }

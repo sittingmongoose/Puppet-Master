@@ -25,6 +25,8 @@
 .o55-entering .o55-foot.o55-st { animation: o55-fadeonly 220ms ease calc(var(--o55-enter-delay) + 60ms) both; }
 .o55-entering .o55-main .o55-card, .o55-entering .o55-main .o55-row, .o55-entering .o55-main .o55-tile, .o55-entering .o55-promise li {
   animation: o55-card-basic var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+/* a card's ? comes in with its card, never before it (p75) */
+.o55-entering .o55-main .o55-opt > .o55-tipq { animation: o55-fadeonly var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
 @keyframes o55-fadeonly { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-st-basic { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
 @keyframes o55-st-basic-back { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
@@ -88,7 +90,7 @@
 #pm-o55-onboarding[data-family="retro"].o55-opening .o55-win { animation: o55-win-in-retro 460ms steps(6, end) both; }
 @keyframes o55-win-in-retro { 0% { clip-path: inset(49.6% 0 49.6% 0); opacity: 1; } 35% { clip-path: inset(49.6% 0 49.6% 0); } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
 #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-st { animation-delay: calc(260ms + var(--i, 0) * var(--o55-stagger)); }
-#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
+#pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-main .o55-opt > .o55-tipq, #pm-o55-onboarding.o55-opening .o55-pane > .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
 
 #pm-o55-onboarding.o55-closing .o55-scrim { animation: o55-fadeout 320ms ease both; }
 #pm-o55-onboarding.o55-closing .o55-win { animation: o55-win-out 300ms cubic-bezier(0.3, 0, 1, 1) both; }

@@ -554,6 +554,16 @@
     /* (a switch of Plain English and Expert puts the other version in place at once: no retyping, no jump) */
     st.tip(t ? { id: S.tip.id, title: t.title, text: t.text } : null, !!S.talkSwitch);
   }
+  /* the column's top, held from the moment the screen comes in (p76); a window resize centres it again */
+  function holdColumn(layer) {
+    if (!layer) return;
+    layer.removeAttribute('data-col-held');
+    const c = layer.querySelector('.o55-scroll > .o55-content'), sc = c && c.parentElement;
+    if (!c || !sc) return;
+    const top = Math.max(0, Math.round(c.offsetTop - sc.offsetTop)); /* (layout offsets: the window's opening scale does not count) */
+    layer.style.setProperty('--o55-col-top', top + 'px'); layer.setAttribute('data-col-held', '');
+  }
+  window.addEventListener('resize', () => { const l = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); if (l) holdColumn(l); });
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
@@ -665,7 +675,14 @@
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
     O55.tips.write(layer); armLoaders(layer);
-    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
+    holdColumn(layer);
+    /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
+       space for 7-10 frames before their cards) */
+    layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => {
+      n.style.setProperty('--ci', i);
+      const q = n.parentElement && n.parentElement.classList.contains('o55-opt') ? n.parentElement.querySelector(':scope > .o55-tipq') : null;
+      if (q) q.style.setProperty('--ci', i);
+    });
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
     renderScene(false, hold); renderRail(); renderSound();
