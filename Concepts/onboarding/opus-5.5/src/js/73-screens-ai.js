@@ -137,23 +137,35 @@
 
   /* ------------------------------------------------------------------ what a row says */
   /* an account's name: who it is; a key has none, so its number (or, for a provider's second way, which key it is) */
-  const accLabel = (e) => e.who || (e.method === 'server' ? T('ai.acct.server') : e.family === 'api_key' && e.n === 1 ? T('ai.acct.altKey', { product: e.product }) : T('ai.acct.key', { n: e.n || 1 }));
+  /* (an OpenCode server is named by where it runs, never "OpenCode server" again under its own row: Opus p59) */
+  const accLabel = (e) => e.who || (e.method === 'server' ? billLine(null, e) : e.family === 'api_key' && e.n === 1 ? T('ai.acct.altKey', { product: e.product }) : T('ai.acct.key', { n: e.n || 1 }));
+  const isKey = (e) => !e.who && e.method === 'key' && !(e.family === 'api_key' && e.n === 1);
   function billLine(S, e) {
     /* "through" names an organization's plan only: a personal plan is the account itself (Opus review m11) */
     const extra = [e.workspace || '', e.entity && e.entity !== e.who ? T('ai.ctx.billing.via', { who: e.entity }) : ''].filter(Boolean);
     let b;
     if (e.method === 'server') b = e.mode === 'attached' ? T('ai.bill.attached', { address: e.endpoint || '' }) : T('ai.bill.managed', { host: e.hostRole === 'this_device' ? T('where.this.title').toLowerCase() : e.hostName });
     else if (e.plan) b = e.plan;
-    else if (e.bill === 'use') b = (prov(e.provider) || {}).freeLimits ? e.product : T('ai.bill.use', { product: e.product });
+    else if (e.bill === 'use') b = e.product === pname(prov(e.provider) || {}) ? '' : (prov(e.provider) || {}).freeLimits ? e.product : T('ai.bill.use', { product: e.product });
     else b = T('ai.bill.plan', { product: e.product });
-    return [b].concat(extra).join(' · ');
+    return [b].concat(extra).filter(Boolean).join(' · ');
   }
   function readyMeta(S, p) {
     const list = accts(S, p);
     /* an account's name, then what it uses where that adds something (an OpenAI API key needs no "OpenAI API" after it) */
-    if (list.length === 1) { const lab = accLabel(list[0]), bl = billLine(S, list[0]); return bl && !lab.includes(bl) ? lab + ' · ' + bl : lab; }
+    if (list.length === 1) { const lab = isKey(list[0]) ? T('ai.acct.oneKey') : accLabel(list[0]), bl = billLine(S, list[0]); return bl && !lab.includes(bl) ? lab + ' · ' + bl : lab; }
+    /* API keys are keys, not accounts (Opus p47) */
+    if (list.every(isKey)) return T('ai.acct.manyKeys', { n: list.length });
     return T('ai.acct.many', { n: list.length }) + ': ' + list.map(accLabel).join(', ');
   }
+  const dropToast = (S) => S.root && S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove());
+  /* a refused key or code, replaced by a new one: the refusal goes, and the row waits for its check (Pip waits with it
+     instead of cheering a check that hasn't run: the marker reads as a wait, 60-ui-core.js renderScene) */
+  function clearRefusal(S, opKey, rec) {
+    const st = F.state(S, opKey); if (!st || st.state !== 'failed') return false;
+    F.reset(S, opKey); rec.replaced = true; S.save(); O55.ui.refresh(); return true;
+  }
+  const waitMark = (rec) => (rec && rec.replaced ? '<span hidden data-pip-loader="check"></span>' : '');
   const btnIn = (label, act, arg, kind, o) => O55.ui.btn(Object.assign({ label, do: act, arg, cls: 'o55-small', tip: false }, o || {}), kind === 'primary' ? 'o55-primary' : 'o55-secondary');
 
   /* the key field of a provider (or of a Free Models route's own provider): what kind of key, where it is made, where
@@ -163,14 +175,18 @@
   /* the fixture's answer to a key: no connection, too short to be a key, one the vendor revoked (or that expired), or works */
   const keyVerdict = (v, offline) => (offline ? 'offline' : v.length < 12 ? 'key_rejected' : /revoked/i.test(v) ? 'key_revoked' : null);
   const hint = (id, items, when) => (F.hint ? F.hint(id, items, { when }) : '');
+  /* a key's name said once: "OpenAI API key", "Groq API key", "Cloudflare Workers AI API token" (Opus p66) */
+  const keyLabel = (name, token) => (token ? T('ai.tokenLabel', { name }) : / API$/.test(name) ? T('ai.keyLabelApi', { name }) : T('ai.keyLabel', { name }));
   function keyArea(S, o) {
     const ks = F.state(S, o.op), failed = ks && ks.state === 'failed';
-    const why = failed ? (ks.code === 'offline' ? T('ai.offline') : ks.code === 'key_revoked' ? T('ai.keyRevoked') : T('ai.keyBad', { name: o.name })) : '';
-    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, typed: !!o.typed, label: T('ai.keyLabel', { name: o.name }), value: '',
+    const label = keyLabel(o.name, o.token);
+    const why = failed ? (ks.code === 'offline' ? T('ai.offline') : ks.code === 'key_revoked' ? T('ai.keyRevoked') : T('ai.keyBad', { label })) : '';
+    let out = C.field({ bind: o.bind, id: 'o55f-' + o.bind.replace(':', '-'), type: 'password', protected: true, typed: !!o.typed, label, value: '',
       hint: T('ai.keyHint', { where: keychain(S) }), error: why, invalid: failed, tip: 'field:key' });
     out += hint('key:' + o.key, [{ label: DEMO_KEY, outcome: 'works', fills: [[o.bind, DEMO_KEY]] }, { label: DEMO_BAD, outcome: 'refused', fills: [[o.bind, DEMO_BAD]] }, { label: DEMO_REVOKED, outcome: 'revoked', fills: [[o.bind, DEMO_REVOKED]] }], !o.typed && !o.checking);
     if (o.more) out += o.more;
-    out += `<div class="o55-inline" data-key="kb-${U.esc(o.key)}">` + btnIn(T('ai.verify'), o.check, o.arg, 'secondary', { disabled: !o.typed || o.checking, reason: T('ai.keyLabel', { name: o.name }) })
+    out += o.wait || '';
+    out += `<div class="o55-inline" data-key="kb-${U.esc(o.key)}">` + btnIn(T('ai.verify'), o.check, o.arg, 'secondary', { disabled: !o.typed || o.checking || !!o.blocked, reason: o.blocked || label })
       + (o.from ? C.link(T('ai.keyFrom', { name: o.from.name }), o.fromDo, o.arg, { tip: false }) : '') + (o.other || '') + (o.cancel ? C.link(T('ai.cancel'), o.cancel, o.arg, { tip: false }) : '') + '</div>';
     return out;
   }
@@ -178,16 +194,17 @@
   function rowHtml(S, p) {
     const st = state(S, p), r = A(S).accounts[p.id] || {}, d = detected(S, p), cp = copiedFrom(S), w = way(p, r);
     const fromCopy = cp && cp.providers.includes(p.id);
-    let meta = T('ai.pairs.' + p.id) !== 'ai.pairs.' + p.id ? T('ai.pairs.' + p.id) : p.product;
+    let meta = T('ai.pairs.' + p.id) !== 'ai.pairs.' + p.id ? T('ai.pairs.' + p.id) : p.product !== pname(p) ? p.product : '';
     let pill = null, action = null, extra = '';
-    const ex = (k, html) => `<div class="o55-rowextra" data-key="${k}-${p.id}">${html}</div>`;
+    let inner = '';
+    const ex = (k, html) => { inner = html; return `<div class="o55-rowextra" data-key="${k}-${p.id}">${html}</div>`; };
     if (st === 'checking') pill = ['wait', T('ai.checking')];
     if (st === 'ready') {
       pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = { label: T('ai.manage'), do: 'manage', arg: p.id };
       if (r.dup) extra = ex('dup', C.note(T('ai.dup', { who: r.dup }), 'info'));
       if (r.manage) extra = ex('mg', manageHtml(S, p, r));
     }
-    if (st === 'install') { pill = ['needs', T('ai.notInstalled')]; action = { label: onServer(S) ? T('ai.installOn', { host: host(S).name }) : T('ai.install'), do: 'install', arg: p.id }; }
+    if (st === 'install') { pill = ['needs', T('ai.notInstalled')]; action = { label: onServer(S) ? T('ai.installOn', { host: host(S).name }) : w.tool ? T('ai.installTool', { tool: w.tool }) : T('ai.install'), do: 'install', arg: p.id }; }
     if (st === 'expired') { pill = ['fail', T('ai.expired.title')]; meta = T('ai.expired.body', { who: d.account || pname(p) }); action = { label: T('ai.signinFail.retry'), do: 'signin', arg: p.id }; }
     if (st === 'signin') { pill = ['needs', T('ai.notReady')]; action = { label: T('ai.signIn'), do: 'signin', arg: p.id }; }
     /* the provider's other way in, and Cancel while adding another account, as small links under a row at its start */
@@ -199,7 +216,7 @@
     else if (fromCopy) meta = T('ai.from', { project: cp.name }) + ' · ' + meta;
     else if (d && d.installed && !['ready', 'server', 'expired'].includes(st)) meta = (onServer(S) ? T('ai.foundOn', { host: host(S).name }) : T('ai.found')) + ' · ' + meta;
     /* inline states */
-    if (r.confirmInstall) extra = ex('ask', `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`);
+    if (r.confirmInstall) extra = ex('ask', `<span class="o55-labq">${U.esc(T('ai.installAsk', { name: w.tool || pname(p), host: hostName(S), vendor: p.vendor }))}${O55.tips.q('group:install')}</span>${O55.ui.btn({ label: T('ai.installGo'), do: 'installGo', arg: p.id, cls: 'o55-small', tip: false, by: 'group:install' }, 'o55-primary')}${O55.tips.explainer('group:install')}`);
     if (st === 'installing') { pill = ['wait', T('chrome.working')]; extra = ex('ph', F.phases(S, 'install:' + p.id + (r.method === 'alt' ? ':alt' : ''), ['download', 'install', 'verify'], { download: T('ai.installPhases.download', { vendor: p.vendor }), install: T('ai.installPhases.install'), verify: T('ai.installPhases.verify') })); }
     if (st === 'signingIn') {
       pill = ['wait', T('ai.signinWaitPill')]; meta = onServer(S) ? T('ai.signinWaitOn', { host: host(S).name }) : T('ai.signinWait');
@@ -211,7 +228,7 @@
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : null;
       const project = p.context === 'project' ? C.field({ bind: 'project:' + p.id, id: 'o55f-project-' + p.id, label: T('ai.ctx.project.label'), value: r.project || '', placeholder: 'my-project', hint: T('ai.ctx.project.hint'), tip: 'field:project' }) : '';
       extra = ex('key', keyArea(S, { bind: 'key:' + p.id, key: p.id, arg: p.id, op: 'key:' + p.id + ':' + (r.attempt || 0), name: w.auth === 'key' && r.method === 'alt' ? w.product : pname(p),
-        typed: r.keyTyped, checking: st === 'keyChecking', check: 'keyCheck', from: w.keyFrom || p.keyFrom, fromDo: 'keyFrom', more: project, cancel: r.adding ? 'cancelAdd' : null, other: st === 'keyEntry' ? otherWay : '' }));
+        typed: r.keyTyped, checking: st === 'keyChecking', check: 'keyCheck', from: w.keyFrom || p.keyFrom, fromDo: 'keyFrom', more: project, cancel: r.adding ? 'cancelAdd' : null, other: st === 'keyEntry' ? otherWay : '', wait: waitMark(r) }));
     }
     if (st === 'context' || st === 'contextChecking') { pill = st === 'contextChecking' ? ['wait', T('ai.checking')] : ['needs', T('ai.needsChoice')]; extra = ex('ctx', contextHtml(S, p, r)); }
     if (st === 'serverPick') { pill = ['needs', T('ai.notSetUp')]; meta = T('ai.pairs.opencode-runtime'); extra = ex('srv', serverHtml(S, p, r)); }
@@ -221,21 +238,34 @@
       extra = ex('ph', F.phases(S, k, order, { launch: T('ai.oc.phase.launch', { host: hostName(S) }), connect: T('ai.oc.phase.connect'), health: T('ai.oc.phase.health'), discover: T('ai.oc.phase.discover') }));
     }
     if (st === 'connectFailed') { pill = ['fail', T('ai.oc.failTitle')]; meta = T('ai.oc.fail'); action = { label: T('chrome.tryAgain'), do: 'server', arg: p.id }; }
+    /* adding another account (RV-17): the row stays Ready with the accounts it has, and the new sign-in or key is set
+       up under it, headed as an addition, so nothing reads as signed out */
+    const adding = !!r.adding && st !== 'ready' && accts(S, p).length > 0;
+    if (adding) {
+      const word = pill && (pill[0] !== 'needs' || st === 'context') ? pill[1] : '', said = ['signingIn', 'signinFailed'].includes(st) ? meta : '';
+      const cancel = C.link(T('ai.cancel'), 'cancelAdd', p.id, { tip: false }), go = (action ? btnIn(action.label, action.do, action.arg, 'primary') : '') + (st === 'signinFailed' ? cancel : '');
+      /* (a failed added sign-in is a fault Pip reads, data-pip-fault: its words sit under the Ready row, pm7-onb RV-11) */
+      const pf = st === 'signinFailed' ? ' data-pip-fault' : '';
+      extra = ex('adding', `<div class="o55-inline" data-key="addhead-${p.id}"><strong class="o55-addhead">${U.esc(T(w.auth === 'key' ? 'ai.addingKey' : 'ai.adding'))}</strong>${word ? `<span class="o55-hint"${pf}>${U.esc(word)}</span>` : ''}</div>`
+        + (said ? `<span class="o55-hint"${pf}>${U.esc(said)}</span>` : '') + (go ? `<div class="o55-inline" data-key="addgo-${p.id}">${go}</div>` : '') + inner
+        + (st === 'context' ? `<div class="o55-sublinks" data-key="addcancel-${p.id}">${cancel}</div>` : ''));
+      pill = ['ready', T('ai.ready')]; meta = readyMeta(S, p); action = null;
+    }
     const lead = `<span class="o55-plogo" style="--plh:${U.hash(p.vendor) % 360}" aria-hidden="true"><span class="o55-plogo-l">${U.esc(pname(p).slice(0, 1))}</span><span class="o55-plogo-m">${U.esc(mono(p))}</span></span>`;
-    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${st}">` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action, tip: 'provider:' + p.id }) + extra + '</div>';
+    return `<div class="o55-provider" data-key="pv-${p.id}" data-state="${adding ? 'ready' : st}"${adding ? ` data-adding="${st}"` : ''}>` + C.row({ key: p.id, lead, title: pname(p), meta, state: pill, action, tip: 'provider:' + p.id }) + extra + '</div>';
   }
 
   /* a Ready provider's accounts: each one, Remove it (wrong account), or add another of the same provider */
   function manageHtml(S, p, r) {
     let out = accts(S, p).map((e) => {
       if (r.removing === e.id) {
-        return `<div class="o55-inline" data-key="rm-${U.esc(e.id)}"><span class="o55-hint">${U.esc(T('ai.removeAsk', { who: accLabel(e), vendor: p.vendor }))}</span>`
+        return `<div class="o55-inline" data-key="rm-${U.esc(e.id)}"><span class="o55-hint">${U.esc(e.method === 'server' ? T('ai.removeAskServer') : T('ai.removeAsk', { who: accLabel(e), vendor: p.brand || p.vendor }))}</span>`
           + btnIn(T('ai.removeGo'), 'removeGo', e.id, 'primary') + C.link(T('ai.keep'), 'removeNo', p.id, { tip: false }) + '</div>';
       }
       const lab = accLabel(e), bl = billLine(S, e);
       return `<div class="o55-inline" data-key="ac-${U.esc(e.id)}"><span class="o55-hint">${U.esc(bl && !lab.includes(bl) ? lab + ' · ' + bl : lab)}</span>${C.link(T('ai.remove'), 'remove', e.id, { tip: false })}</div>`;
     }).join('');
-    if (p.auth !== 'server') out += `<div class="o55-inline" data-key="add-${p.id}">${btnIn(T('ai.addAnother', { name: pname(p) }), 'addAnother', p.id)}</div>`;
+    if (p.auth !== 'server') out += `<div class="o55-inline" data-key="add-${p.id}">${btnIn(T(p.auth === 'key' ? 'ai.addAnotherKey' : 'ai.addAnother', { name: pname(p) }), 'addAnother', p.id)}</div>`;
     return out;
   }
   /* Browser didn't open? Every way names its page (Astra RV-1): a device code typed on the vendor's page (device), the
@@ -266,23 +296,20 @@
       const cs = F.state(S, 'code:' + p.id + ':' + (r.attempt || 0)), failed = cs && cs.state === 'failed';
       return `<div class="o55-devicecode" data-key="pl-${p.id}"><span class="o55-hint">${U.esc(T('ai.pasteLead', { url: bare(pageOf(p, r)) }))}</span>${addressRow(p, r)}</div>`
         + C.field({ bind: 'paste:' + p.id, id: 'o55f-paste-' + p.id, type: 'password', protected: true, typed: !!r.pasteTyped, label: T('ai.pasteLabel'), value: '', error: failed ? T('ai.pasteBad') : '', invalid: failed, tip: 'field:paste' })
-        + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
+        + waitMark(r) + hint('paste:' + p.id, [{ label: 'K7QM-4XWD', outcome: 'works', fills: [['paste:' + p.id, 'K7QM-4XWD']] }, { label: '12', outcome: 'refused', fills: [['paste:' + p.id, '12']] }], !r.pasteTyped)
         + `<div class="o55-inline" data-key="pb-${p.id}">${btnIn(T('ai.pasteGo'), 'submitCode', p.id, 'secondary', { disabled: !r.pasteTyped || (cs && cs.state === 'running'), reason: T('ai.pasteLabel') })}</div>` + links;
     }
     return links;
   }
-  /* what a signed-in account still needs before it is Ready: whose Copilot plan, which Anthropic workspace */
+  /* what a signed-in account still needs before it is Ready: whose Copilot plan (an Anthropic key belongs to one
+     workspace, so it asks nothing: Opus p44). The question carries the ?, its choices none of their own (Opus p50). */
   function contextHtml(S, p, r) {
     const c = r.ctx || {};
-    if (p.context === 'billing') {
-      const orgs = ghOrgs(S);
-      return `<p class="o55-hint" data-key="ctxq-${p.id}">${U.esc(T('ai.ctx.billing.title'))}</p>` + C.cards('entity', [{ v: p.id + '|' + c.who, glyph: 'person', title: T('ai.ctx.billing.me', { who: c.who }) }]
-        .concat(orgs.map((o) => ({ v: p.id + '|' + o, glyph: 'globe', title: T('ai.ctx.billing.org', { org: o }) }))), null, { label: T('ai.ctx.billing.title') });
-    }
-    if (p.context === 'workspace') {
-      return `<p class="o55-hint" data-key="ctxq-${p.id}">${U.esc(T('ai.ctx.workspace.title'))}</p>` + C.cards('workspace', (p.workspaces || [T('ai.ctx.workspace.default')]).map((w) => ({ v: p.id + '|' + w, glyph: 'folder', title: w })), null, { label: T('ai.ctx.workspace.title') });
-    }
-    return '';
+    if (p.context !== 'billing') return '';
+    const orgs = ghOrgs(S);
+    return `<p class="o55-hint o55-labq" data-key="ctxq-${p.id}">${U.esc(T('ai.ctx.billing.title'))}${O55.tips.q('group:entity')}</p>${O55.tips.explainer('group:entity')}`
+      + C.cards('entity', [{ v: p.id + '|' + c.who, glyph: 'person', title: T('ai.ctx.billing.me', { who: c.who }), tip: false }]
+        .concat(orgs.map((o) => ({ v: p.id + '|' + o, glyph: 'globe', title: T('ai.ctx.billing.org', { org: o }), tip: false }))), null, { label: T('ai.ctx.billing.title') });
   }
   /* OpenCode: Puppet Master runs the server (installing OpenCode with consent where it is missing), or it attaches to
      one the person runs. The server's own username and password are its own, not a model provider's key. */
@@ -379,10 +406,15 @@
       cancelSignin(S, id) {
         const p = prov(id), r = R(S, id);
         O55.owners.dispatch('cmd.auth_profile.cancel', { provider_entry_id: p.settings, operation_ref: 'signin:' + id + ':' + (r.attempt || 0), client_id: S.env.client.id }, S.ctx(), () => ({ ok: true }));
-        r.attempt = (r.attempt || 0) + 1; r.remote = null; r.state = accts(S, p).length && !r.adding ? 'ready' : null; S.save(); O55.ui.refresh();
+        r.attempt = (r.attempt || 0) + 1; r.remote = null; r.replaced = false;
+        /* while adding another account, Cancel ends the addition: the row is as it was, Ready with its accounts */
+        if (r.adding && accts(S, p).length) return O55.screens.defs.ai.do.cancelAdd(S, id);
+        r.state = null; S.save(); O55.ui.refresh();
       },
       noBrowser(S, id) {
         const p = prov(id), r = R(S, id);
+        /* the notice that the browser opened is no longer true, and would cover the code's Copy (Opus p64) */
+        dropToast(S);
         if (p.remote === 'device' && r.method !== 'alt') {
           r.attempt = (r.attempt || 0) + 1; Object.assign(r, { remote: 'code', code: 'WDJB-MJHT', codeUntil: Date.now() + 900000 }); S.save(); O55.ui.refresh(); O55.sound.play('reveal');
           const attempt = r.attempt; tickCode(S);
@@ -403,7 +435,7 @@
       copySigninPage(S, id) { const p = prov(id), r = R(S, id), url = fullUrl(pageOf(p, r)); if (!url) return; U.copyText(url); O55.sound.play('copy'); O55.ui.toast(T('ai.remote.copied', { url: bare(url) })); },
       submitCode(S, id) {
         const p = prov(id), r = R(S, id), i = S.root.querySelector('#o55f-paste-' + id), v = i ? i.value.trim() : '';
-        if (i) i.value = ''; r.pasteTyped = false; S.save(); O55.ui.refresh();
+        if (i) i.value = ''; r.pasteTyped = false; r.replaced = false; S.save(); O55.ui.refresh();
         const attempt = r.attempt || 0;
         F.op(S, 'code:' + id + ':' + attempt, 'cmd.auth_profile.submit_code', [{ key: 'verify', ms: 900, fail: () => (v.length >= 4 ? null : 'code_rejected') }], { sound: { fail: 'warn' },
           payload: { provider_entry_id: p.settings, protected_input_ref: 'protected:' + id + ':' + attempt, protected_input_persisted: false, client_id: S.env.client.id },
@@ -415,21 +447,19 @@
       keyCheck(S, id) {
         const p = prov(id), r = R(S, id), w = way(p, r), i = S.root.querySelector('#o55f-key-' + id), v = i ? i.value.trim() : '';
         if (i) i.value = '';
-        r.keyTyped = false; r.state = 'keyChecking'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh();
+        r.keyTyped = false; r.replaced = false; r.state = 'keyChecking'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh();
         /* a late result of an older try never overwrites a newer one (pm7-srv's sweep) */
         const offline = offlineNow(S), at = r.attempt, current = () => r.attempt === at && r.state === 'keyChecking';
         F.op(S, 'key:' + id + ':' + r.attempt, 'cmd.integration.connection.test', [{ key: 'verify', ms: 900, fail: () => keyVerdict(v, offline) }], {
           payload: { provider_entry_id: p.settings, auth_family: w.family || 'api_key', method: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' }, /* a refused key is a soft warning under its field */
           onDone: () => {
             if (!current()) return;
-            if (p.context === 'workspace' && (p.workspaces || []).length > 1) { r.state = 'context'; r.ctx = { via: 'key' }; S.save(); O55.ui.refresh(); return; }
             addAccount(S, p, { via: 'key', workspace: p.context === 'project' && r.project ? T('ai.ctx.project.named', { project: r.project }) : null });
           },
           onFail: () => { if (!current()) return; r.state = 'keyEntry'; S.save(); O55.ui.refresh(); }
         });
       },
       entity(S, v) { pickContext(S, v, 'entity'); },
-      workspace(S, v) { pickContext(S, v, 'workspace'); },
       manage(S, id) { const r = R(S, id); r.manage = !r.manage; r.removing = null; r.dup = null; S.save(); O55.ui.refresh(); },
       remove(S, accId) { const e = A(S).list.find((x) => x.id === accId); if (!e) return; R(S, e.provider).removing = accId; S.save(); O55.ui.refresh(); },
       removeNo(S, id) { R(S, id).removing = null; S.save(); O55.ui.refresh(); },
@@ -446,12 +476,12 @@
       },
       addAnother(S, id) {
         const p = prov(id), r = R(S, id);
-        Object.assign(r, { adding: true, manage: false, dup: null, removing: null });
+        Object.assign(r, { adding: true, manage: false, dup: null, removing: null, project: '' });
         if (p.alt) r.method = undefined;
         if (startOf(S, p, r) === 'key') return O55.screens.defs.ai.do.key(S, id);
         r.state = 'signin'; S.save(); O55.ui.refresh();
       },
-      cancelAdd(S, id) { const p = prov(id), r = R(S, id); Object.assign(r, { adding: false, state: accts(S, p).length ? 'ready' : null, method: accts(S, p).length ? r.method : undefined, keyTyped: false }); S.save(); O55.ui.refresh(); },
+      cancelAdd(S, id) { const p = prov(id), r = R(S, id); Object.assign(r, { adding: false, state: accts(S, p).length ? 'ready' : null, method: accts(S, p).length ? r.method : undefined, keyTyped: false, replaced: false }); S.save(); O55.ui.refresh(); },
       server(S, id) { const r = R(S, id); r.state = 'serverPick'; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
       ocMode(S, v) { const r = R(S, 'opencode-runtime'); r.mode = v; S.save(); O55.ui.refresh(); },
       ocStart(S, id) {
@@ -487,7 +517,10 @@
       const [kind, id] = String(key).split(':'), r = A(S).accounts[id]; if (!r) return;
       if (kind === 'ocAddr' || kind === 'ocUser' || kind === 'project') { r[kind === 'ocAddr' ? 'endpoint' : kind === 'ocUser' ? 'user' : 'project'] = v; S.save(); O55.ui.refresh(); return; }
       const flag = kind === 'paste' ? 'pasteTyped' : kind === 'ocPass' ? 'secretTyped' : 'keyTyped';
-      const had = !!r[flag]; r[flag] = v.length > 0; if (had !== r[flag]) { S.save(); O55.ui.refresh(); }
+      const had = !!r[flag]; r[flag] = v.length > 0;
+      /* a new key or code takes the last refusal away from under its field (Opus p62) */
+      if (kind === 'key' || kind === 'paste') if (clearRefusal(S, (kind === 'key' ? 'key:' : 'code:') + id + ':' + (r.attempt || 0), r)) return;
+      if (had !== r[flag]) { S.save(); O55.ui.refresh(); }
     } }),
     onBack: () => false
   });
@@ -506,7 +539,7 @@
     const [id, choice] = String(v).split('|'), p = prov(id), r = R(S, id), c = r.ctx || {};
     r.state = 'contextChecking'; r.attempt = (r.attempt || 0) + 1; S.save(); O55.ui.refresh();
     F.op(S, 'ctx:' + id + ':' + r.attempt, 'cmd.auth_profile.select', [{ key: 'verify', ms: 700 }], { quiet: true,
-      payload: { provider_entry_id: p.settings, selection_kind: kind === 'entity' ? 'billing_entity' : 'workspace', host_id: host(S).id },
+      payload: { provider_entry_id: p.settings, selection_kind: 'billing_entity', host_id: host(S).id },
       onDone: () => r.state === 'contextChecking' && addAccount(S, p, { via: c.via || 'signin', who: c.who || null, entity: kind === 'entity' ? choice : null, workspace: kind === 'workspace' ? choice : null }) });
   }
   /* the device code's countdown keeps going while its row shows it */
@@ -525,7 +558,7 @@
     lead: () => T('ai.allLead'),
     body(S) {
       const q = String(S.sess.ui.aiQ || '').toLowerCase();
-      const match = (p) => !q || [pname(p), p.vendor, p.product, p.aka || ''].join(' ').toLowerCase().includes(q);
+      const match = (p) => !q || [pname(p), p.vendor, p.product, p.aka || '', p.alt ? p.alt.product || '' : '', p.alt ? p.alt.tool || '' : ''].join(' ').toLowerCase().includes(q);
       let out = C.field({ bind: 'q', label: T('chrome.search'), value: S.sess.ui.aiQ || '', placeholder: T('ai.searchPlaceholder') });
       if (onServer(S)) out += `<div class="o55-banner o55-banner-soft" data-key="where">${C.small('server', 18)}<span>${U.esc(T('ai.where', { host: host(S).name }))}</span></div>`;
       GROUPS.forEach(([bill, k]) => {
@@ -534,6 +567,7 @@
         const sub = O55.tx('ai.' + k + 'Sub');
         if (rows.length) out += C.group(T('ai.' + k), (sub ? `<p class="o55-hint">${U.esc(sub)}</p>` : '') + rows.map((p) => rowHtml(S, p)).join(''));
       });
+      if (q && !PROV().some(match)) out += `<p class="o55-hint" data-key="nomatch">${U.esc(T('ai.noMatch', { q: S.sess.ui.aiQ.trim() }))}</p>`;
       return out;
     },
     mounted(S) { O55.screens.defs.ai.mounted(S); },
@@ -590,23 +624,52 @@
     if (rec.state) return rec.state;
     return 'needs';
   }
+  /* a free route's sign-in page, its two actions beside the sentence that names it (as the AI rows' RV-1 fallback) */
+  const freeUrl = (r) => O55.fixtures.OFFICIAL.free[r.id] || (r.keyFrom && r.keyFrom.url) || null;
   function freeRow(S, r) {
     const st = freeState(S, r); if (!st) return '';
-    const rec = A(S).freeRows[r.id] || {}, acct = A(S).freeAccounts[r.id];
-    let meta = acct ? T('free.via', { provider: r.provider, who: acct }) : r.needs === 'none' && st === 'needs' ? T('free.noAccountNeeded', { provider: r.provider }) : st === 'needs' || st === 'keyEntry' || st === 'keyChecking' ? T('free.notConnected', { provider: r.provider }) : r.provider;
+    const rec = A(S).freeRows[r.id] || {}, acct = A(S).freeAccounts[r.id], own = r.provider === r.name;
+    /* a route named after its provider never says the name twice ("Kilo / Kilo": Opus p57) */
+    const via = (what) => (own ? String(what).charAt(0).toUpperCase() + String(what).slice(1) : T('free.via', { provider: r.provider, who: what }));
+    let meta = acct ? via(acct) : r.needs === 'none' ? (own ? T('free.noAccount') : T('free.noAccountNeeded', { provider: r.provider }))
+      : st === 'needs' || st === 'keyEntry' || st === 'keyChecking' ? (own ? T('free.needsKey') : T('free.notConnected', { provider: r.provider })) : own ? '' : r.provider;
+    if (r.needs === 'signin' && st === 'needs') meta = own ? T('free.needsSignin') : T('free.notConnected', { provider: r.provider });
     let pill = ['needs', r.needs === 'signin' ? T('free.needsSignin') : T('free.needsSetup')], action = { label: r.needs === 'signin' ? T('free.signIn') : r.needs === 'none' ? T('free.turnOn') : T('free.setup'), do: 'route', arg: r.id }, extra = '';
-    if (st === 'ready') { pill = ['ready', T('free.ready')]; action = null; }
+    /* a route that's set up can be turned off here (Opus p67: the AI card says "Add or change them") */
+    if (st === 'ready') { pill = ['ready', T('free.ready')]; action = { label: T('free.turnOff'), do: 'routeOff', arg: r.id }; }
     if (st === 'working') { pill = ['wait', T('chrome.working')]; action = null; }
     if (st === 'limited') { pill = ['needs', T('free.limited')]; meta = T('free.limitedMeta', { provider: r.provider }); action = { label: T('free.retry'), do: 'retry', arg: r.id }; }
     if (st === 'retired') { pill = ['needs', T('free.retired')]; meta = T('free.retiredMeta', { provider: r.provider }); action = null; }
+    /* a free route's sign-in waits for the person, as the AI rows do: Browser didn't open? and Cancel (Opus p53) */
+    if (st === 'signingIn') {
+      pill = ['wait', T('ai.signinWaitPill')]; meta = T('ai.signinWait'); action = null;
+      const url = freeUrl(r), page = rec.remote && url ? `<span class="o55-hint">${U.esc(T('ai.remote.linkLead', { url: bare(url) }))}</span><div class="o55-inline" data-key="faddr-${r.id}">`
+        + btnIn(T('ai.remote.open'), 'fopenPage', r.id, 'primary') + btnIn(T('ai.remote.copy'), 'fcopyPage', r.id) + '</div>' : '';
+      extra = `<div class="o55-rowextra" data-key="fw-${r.id}">${page}<div class="o55-sublinks" data-key="fnob-${r.id}">${rec.remote ? '' : C.link(T('online.signin.noBrowser'), 'fnoBrowser', r.id, { tip: false })}${C.link(T('ai.cancel'), 'fcancelSignin', r.id, { tip: false })}</div></div>`;
+    }
     if (st === 'keyEntry' || st === 'keyChecking') {
       pill = st === 'keyChecking' ? ['wait', T('ai.checking')] : pill; action = null;
-      extra = `<div class="o55-rowextra" data-key="fk-${r.id}">` + keyArea(S, { bind: 'fkey:' + r.id, key: r.id, arg: r.id, op: 'fkey:' + r.id + ':' + (rec.attempt || 0), name: r.provider,
-        typed: rec.keyTyped, checking: st === 'keyChecking', check: 'fkeyCheck', from: r.keyFrom, fromDo: 'fkeyFrom', cancel: 'fcancel' }) + '</div>';
+      /* Cloudflare Workers AI wants its account ID beside the API token (Opus p55); it isn't secret */
+      const acc = r.accountId ? C.field({ bind: 'facct:' + r.id, id: 'o55f-facct-' + r.id, label: T('free.accountId', { provider: r.provider }), value: rec.accountId || '', placeholder: '0123456789abcdef0123456789abcdef', tip: false }) : '';
+      extra = `<div class="o55-rowextra" data-key="fk-${r.id}">` + keyArea(S, { bind: 'fkey:' + r.id, key: r.id, arg: r.id, op: 'fkey:' + r.id + ':' + (rec.attempt || 0), name: r.provider, token: r.token,
+        typed: rec.keyTyped, checking: st === 'keyChecking', check: 'fkeyCheck', from: r.keyFrom, fromDo: 'fkeyFrom', cancel: 'fcancel', more: acc, wait: waitMark(rec),
+        blocked: r.accountId && !String(rec.accountId || '').trim() ? T('free.accountId', { provider: r.provider }) : '' }) + '</div>';
     }
-    /* a More free options row stays compact until it is set up: its name, its action and its ? */
+    /* a More free options row stays compact until it is set up: its name, what it needs, its action and its ? */
     const quiet = r.more && st === 'needs';
-    return `<div class="o55-provider" data-key="fr-${r.id}" data-state="${st}">` + C.row({ key: r.id, glyph: 'stack', title: r.name, meta: quiet ? '' : meta, state: quiet ? null : pill, action, tip: 'route:' + r.id }) + extra + '</div>';
+    return `<div class="o55-provider" data-key="fr-${r.id}" data-state="${st}">` + C.row({ key: r.id, glyph: 'stack', title: r.name, meta: quiet ? T(r.needs === 'none' ? 'free.noAccount' : r.needs === 'signin' ? 'free.needsSignin' : r.token ? 'free.needsToken' : 'free.needsKey') : meta, state: quiet ? null : pill, action, tip: 'route:' + r.id }) + extra + '</div>';
+  }
+  /* a free route's browser sign-in: the provider's page opens and the row waits for the person; Browser didn't open?
+     starts a new try whose page can be opened on any device. A late result of an older try is dropped. */
+  function freeSignin(S, r, remote) {
+    const a = A(S), rec = a.freeRows[r.id] = a.freeRows[r.id] || {};
+    Object.assign(rec, { state: 'signingIn', remote, attempt: (rec.attempt || 0) + 1 }); S.save();
+    if (!remote) O55.official.open(S, { name: r.provider, url: freeUrl(r) });
+    O55.ui.refresh(); O55.sound.play(remote ? 'reveal' : 'tap');
+    const at = rec.attempt;
+    F.op(S, 'free:' + r.id + ':' + at, 'cmd.free_models.route.enable', [{ key: 'browser', ms: remote ? 7000 : 2400 }, { key: 'enable', ms: 600 }], { quiet: true,
+      payload: { route: r.id, underlying_provider: r.provider, setup: 'sign_in', flow: remote ? 'browser_elsewhere' : 'browser' },
+      onDone: () => { if (rec.attempt !== at || rec.state !== 'signingIn') return; Object.assign(rec, { state: null, remote: false }); a.freeRoutes[r.id] = 'ready'; a.freeAccounts[r.id] = r.who || null; a.free = 'setup'; S.save(); O55.ui.refresh(); } });
   }
   def('free', {
     chapter: 'ai', stage: 'free_models_setup', charmSlot: 'free',
@@ -620,7 +683,7 @@
       /* the rest of the community list, behind one quiet closed disclosure that scrolls inside itself (Jared: "Show the
          3 upfront, hide the others behind some kind of advanced option") */
       const more = FR().filter((r) => r.more);
-      if (more.length) out += C.details(S, 'freeMore', T('free.more'), `<div class="o55-providers" data-key="free-more" style="max-height:min(44vh,360px);overflow-y:auto;overscroll-behavior:contain">${more.map((r) => freeRow(S, r)).join('')}</div>`);
+      if (more.length) out += F.more(!!S.sess.ui['details:freeMore'], T('free.moreN', { n: more.length }), 'freeMore', `<div class="o55-providers" data-key="free-more" style="max-height:min(44vh,360px);overflow-y:auto;overscroll-behavior:contain">${more.map((r) => freeRow(S, r)).join('')}</div>`, 'freeMore');
       if (readyIds(S).length) out += C.note(T('free.paidFirst'), 'info', 'spark');
       out += `<div class="o55-sublinks" data-key="attr">${C.link(T('free.attribution'), 'attribution')}</div>`;
       return out;
@@ -639,21 +702,33 @@
           });
           return;
         }
+        if (r.needs === 'signin') return freeSignin(S, r, false);
         f[id] = 'working'; S.save(); O55.ui.refresh();
         /* a route with nothing to enter (Kilo, LLM7, OVHcloud's sandbox) is simply turned on */
-        if (r.needs === 'signin') O55.official.open(S, { name: r.provider, url: O55.fixtures.OFFICIAL.free[r.id] || null });
-        F.op(S, 'free:' + id + ':' + Date.now(), 'cmd.free_models.route.enable', [{ key: 'enable', ms: r.needs === 'none' ? 800 : 1400 }], { quiet: true, payload: { route: id, underlying_provider: r.provider, setup: r.needs === 'none' ? 'no_credential' : 'sign_in' },
+        F.op(S, 'free:' + id + ':' + Date.now(), 'cmd.free_models.route.enable', [{ key: 'enable', ms: 800 }], { quiet: true, payload: { route: id, underlying_provider: r.provider, setup: 'no_credential' },
           onDone: () => { f[id] = 'ready'; a.freeAccounts[id] = r.who || null; a.free = 'setup'; S.save(); O55.ui.refresh(); } });
       },
+      fnoBrowser(S, id) { dropToast(S); freeSignin(S, FR().find((x) => x.id === id), true); },
+      fcancelSignin(S, id) { const rec = A(S).freeRows[id]; if (rec) Object.assign(rec, { attempt: (rec.attempt || 0) + 1, state: null, remote: false }); S.save(); O55.ui.refresh(); },
+      fopenPage(S, id) { const r = FR().find((x) => x.id === id); O55.official.open(S, { name: r.provider, url: freeUrl(r) }); },
+      fcopyPage(S, id) { const url = freeUrl(FR().find((x) => x.id === id)); if (!url) return; U.copyText(url); O55.sound.play('copy'); O55.ui.toast(T('ai.remote.copied', { url: bare(url) })); },
+      freeMore(S) { S.sess.ui['details:freeMore'] = !S.sess.ui['details:freeMore']; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); },
+      routeOff(S, id) {
+        const a = A(S), r = FR().find((x) => x.id === id);
+        O55.owners.dispatch('cmd.free_models.route.disable', { route: id, underlying_provider: r.provider }, S.ctx(), () => ({ ok: true }));
+        delete a.freeRoutes[id]; delete a.freeAccounts[id]; a.freeRows[id] = {};
+        if (!freeReady(S)) a.free = null;
+        S.save(); O55.ui.refresh(); O55.sound.play('tap');
+      },
       fkeyFrom(S, id) { const r = FR().find((x) => x.id === id); if (r && r.keyFrom) O55.official.open(S, { kind: 'page', name: r.keyFrom.name, url: r.keyFrom.url }); },
-      fcancel(S, id) { const rec = A(S).freeRows[id]; if (rec) { rec.state = null; rec.keyTyped = false; } S.save(); O55.ui.refresh(); },
+      fcancel(S, id) { const rec = A(S).freeRows[id]; if (rec) { rec.state = null; rec.keyTyped = false; rec.replaced = false; } S.save(); O55.ui.refresh(); },
       fkeyCheck(S, id) {
         const r = FR().find((x) => x.id === id), a = A(S), rec = a.freeRows[id] = a.freeRows[id] || {}, i = S.root.querySelector('#o55f-fkey-' + id), v = i ? i.value.trim() : '';
         if (i) i.value = '';
-        rec.keyTyped = false; rec.state = 'keyChecking'; rec.attempt = (rec.attempt || 0) + 1; S.save(); O55.ui.refresh();
+        rec.keyTyped = false; rec.replaced = false; rec.state = 'keyChecking'; rec.attempt = (rec.attempt || 0) + 1; S.save(); O55.ui.refresh();
         const offline = offlineNow(S), at = rec.attempt, current = () => rec.attempt === at && rec.state === 'keyChecking';
         F.op(S, 'fkey:' + id + ':' + rec.attempt, 'cmd.free_models.route.enable', [{ key: 'verify', ms: 900, fail: () => keyVerdict(v, offline) }, { key: 'enable', ms: 600 }], {
-          payload: { route: id, underlying_provider: r.provider, setup: 'api_key', host_id: host(S).id }, sound: { fail: 'warn' },
+          payload: { route: id, underlying_provider: r.provider, setup: 'api_key', host_id: host(S).id, account_id: r.accountId ? String(rec.accountId || '').trim() : undefined }, sound: { fail: 'warn' },
           onDone: () => { if (!current()) return; rec.state = null; a.freeRoutes[id] = r.limitedOnce && !rec.retried ? 'limited' : 'ready'; a.freeAccounts[id] = T('free.keyAccount'); a.free = 'setup'; S.save(); O55.ui.refresh(); },
           onFail: () => { if (!current()) return; rec.state = 'keyEntry'; S.save(); O55.ui.refresh(); } });
       },
@@ -668,8 +743,11 @@
       next(S) { O55.ui.go('ready'); }
     },
     bind: new Proxy({}, { get: (t, key) => (S, v) => {
-      const id = String(key).replace(/^fkey:/, ''), rec = A(S).freeRows[id]; if (!rec) return;
-      const had = !!rec.keyTyped; rec.keyTyped = v.length > 0; if (had !== rec.keyTyped) { S.save(); O55.ui.refresh(); }
+      const [kind, id] = String(key).split(':'), rec = A(S).freeRows[id]; if (!rec) return;
+      if (kind === 'facct') { const had = !!String(rec.accountId || '').trim(); rec.accountId = v; S.save(); if (had !== !!v.trim()) O55.ui.refresh(); return; }
+      const had = !!rec.keyTyped; rec.keyTyped = v.length > 0;
+      if (clearRefusal(S, 'fkey:' + id + ':' + (rec.attempt || 0), rec)) return;
+      if (had !== rec.keyTyped) { S.save(); O55.ui.refresh(); }
     } })
   });
 
@@ -696,5 +774,7 @@
   const register = () => { if (O55.handoff && O55.handoff.part) { O55.handoff.part('accounts', accountsPart); O55.handoff.part('free_routes', freePart); O55.handoff.part('installed_tools', installedPart); } };
   if (O55.handoff) register(); else Promise.resolve().then(register);
 
-  O55.ai = { readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host };
+  /* the provider whose account was added last on the work computer (the stage's tick lands on its orb: Opus p51) */
+  const lastReady = (S) => { const l = A(S).list.filter((e) => e.state === 'ready' && e.host === host(S).id); return l.length ? l[l.length - 1].provider : null; };
+  O55.ai = { readyIds, freeReady, shortlist, pname, mono, accounts: (S) => A(S).list.slice(), host, lastReady };
 })();

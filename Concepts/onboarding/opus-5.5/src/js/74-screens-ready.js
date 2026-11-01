@@ -124,12 +124,17 @@
     const row = (k, v, ok) => `<div class="o55-revrow" data-key="sum-${k}"${O55.tips.described('summary:' + k)}><span class="o55-revk"><span class="o55-labq">${U.esc(T('ready.' + k))}${O55.tips.q('summary:' + k)}</span></span><span class="o55-revv">${U.esc(v)}</span>${ok ? C.pill('ready', T('ai.ready')) : ''}</div>`;
     let out = '';
     if (cm.state === 'done') out += row('project', d.project_name + ' · ' + O55.review.whereWork(S), true);
+    /* the online copy the commit made or brought in (Opus p74: Ready never named it) */
+    if (cm.state === 'done' && d.online_mode !== 'none' && !cm.skipOnline && O55.review.onlineLine(S)) out += row('online', O55.review.onlineLine(S), true);
     /* a usable free route is an AI too: free-only is not "can't plan" (provider-login audit P18) */
     out += row('ai', ai.length ? ai.map((id) => O55.ai.pname(O55.fixtures.provider(id))).join(', ') : free ? T('ready.aiFreeOnly') : T('ready.noAi'), ai.length > 0 || free > 0);
     out += row('free', free ? free + ' ' + T('free.ready').toLowerCase() : T('ready.noFree'), free > 0);
+    /* (p37: a way in left for later is said, so Ready does not read like it was set up) */
+    if ((S.sess.awaySetup || {}).state === 'later') out += row('away', T('ready.awayLater'), false);
     out += row('backup', b.dest ? O55.backup.label(S, b.dest) + (b.state === 'done' ? '' : ' · ' + T('protect.later').toLowerCase()) : T('ready.noBackup'), b.state === 'done');
     return out;
   }
+  const noAi = (S) => !!O55.ai && !O55.ai.readyIds(S).length && !O55.ai.freeReady(S);
   def('ready', {
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'ready', beat: 'curtain' }),
@@ -144,10 +149,12 @@
       if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
       /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
+        if (noAi(S)) return; /* (no confetti for setup that can't plan yet) */
         O55.art.celebrate(st, { big: true, count: 46, at: [240, 260], under: A.famCall && A.famCall.lettered ? A.famCall.lettered(st && st.querySelector('.o55-scene-wrap:not(.o55-out) svg.o55-scene')) : null }); } });
     },
     eyebrow: () => T('ready.eyebrow'),
-    title: () => T('ready.title'),
+    /* no AI and no free models: Puppet Master can't plan yet, so it isn't "You're ready" (Opus p60) */
+    title: (S) => T(noAi(S) ? 'ready.titleNoAi' : 'ready.title'),
     lead: (S) => (md(S).project_mode !== 'later' && S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),
     body(S) {
       const later = md(S).project_mode === 'later' || !(S.sess.commit && S.sess.commit.state === 'done');

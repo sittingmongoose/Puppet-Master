@@ -93,7 +93,7 @@
           out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
-            .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
+            .concat(S.env.devices.filter((d) => !(n.purpose === 'storage' && workOn(S) === d.id)).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
           const chosen = n.device ? n.device + (n.fromConfig ? '|cfg' : '') : null;
           out += C.cards('device', cards.map((c) => (c.v === chosen && about ? Object.assign(c, { under: about }) : c)), chosen, { label: T('nas.find.titleSource') });
           about = '';
@@ -186,7 +186,7 @@
       const d = dev(S), hs = hostState(S), n = N(S);
       let out = C.identity(d.hostKey, words(d.hostKey), d.name + ' · ' + d.address);
       if (hs === 'known' || n.trusted) out += C.note(hs === 'known' ? T('nas.identity.known', { name: d.name }) : T('chrome.alreadyDone'), 'ok', 'check');
-      if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedTitle', { name: d.name }))}</span></div>`;
+      if (hs === 'changed' && !n.acceptedNew) out += `<div class="o55-banner o55-banner-warn" data-key="warn">${C.small('lock', 18)}<span>${U.esc(T('nas.identity.changedWarn', { name: d.name }))}</span></div>`; /* (p28: not the title again) */
       /* RV-5: the fingerprint is what to compare (a device's own settings show it, never Puppet Master's picture), so
          it is in plain view, not folded away */
       out += `<div data-key="fp">${C.kv([[T('nas.identity.fingerprint'), d.hostKey]].concat(hs === 'changed' ? [[T('nas.identity.old'), knownHosts(S)[hostId(S)]]] : []))}</div>`;
@@ -201,7 +201,8 @@
     },
     do: {
       trust(S) { const n = N(S); n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
-      trustNew(S) { N(S).acceptedNew = true; S.save(); O55.ui.refresh(); },
+      /* (p23: I reset it is the trust itself: the new ID is kept and the key step follows) */
+      trustNew(S) { const n = N(S); n.acceptedNew = true; n.trusted = true; knownHosts(S)[hostId(S)] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       stop(S) { O55.ui.back(); }
     }
   });
@@ -386,7 +387,7 @@
       const n = N(S);
       if (n.self) { const mk = F.state(S, 'sshmake:' + dev(S).id); return { primary: { label: T('nas.signin.selfCheck'), do: 'selfCheck', disabled: n.key === 'new' && !(mk && mk.state === 'done'), reason: T('nas.install.phases.make') } }; }
       const ready = F.nonEmpty(n.user) && n.pwTyped;
-      return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
+      return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.needBoth'), reasonFor: F.nonEmpty(n.user) ? '[data-key="field-pw"]' : '[data-key="field-user"]' } };
     },
     do: {
       selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); O55.sound.play('reveal'); makeIfNeeded(S); },
@@ -533,6 +534,8 @@
   /* The Server owner's pairing, as on Connect: the device's identity first, then approval from a device that already
      uses it, its code or its QR. Nothing is paired until the owner reports approval, no SSH key is added, and the
      person may use SSH instead. Turning away from a pairing cancels it and records nothing. */
+  /* (p20: the device the work already runs on is not another network drive for it) */
+  const workOn = (S) => { const p = (S.env.pmServers || []).find((x) => x.id === md(S).server_ref); return md(S).server_mode !== 'this_device' && p ? p.device : null; };
   const pmOf = (S) => { const d = dev(S); if (!d) return null; return S.env.pmServers.find((p) => p.device === d.id) || { id: 'pm:' + d.id, name: d.name, address: d.address, seed: d.hostKey, approver: '', code: '' }; };
   const pairKey = (S, part) => 'pmpair' + (part || '') + ':' + N(S).device + ':' + (N(S).pairTry || 0);
   const PAIR_MS = 600000;
@@ -611,7 +614,7 @@
         out += C.note(T('nas.pmpair.why', { name: p.name }), 'info', 'link');
         return out + C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
           { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: p.name }), tag: T('chrome.recommended') },
-          { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name }) },
+          { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name, address: p.address || (dev(S) || {}).address || '' }) },
           { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
         ], m, { label: T('connect.review.confirmTitle') }));
       }
@@ -622,7 +625,7 @@
         if (reached && !fail) {
           const v = pairCodes.get(tryId(S)) || '';
           out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeFirst'), reasonFor: '[data-key="field-pmcode"]' }, 'o55-secondary')}</div>`;
           out += H('nas-pmpair:code', [{ label: p.code || 'A7K9-M2Q4', outcome: 'works', fills: [['pmcode', p.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['pmcode', 'AAAA-BBBB']] }]);
         }
         if (cs && !fail) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
@@ -630,6 +633,7 @@
         out += F.phases(S, pairKey(S), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
         const st = F.state(S, pairKey(S));
         const waiting = !fail && st && st.state === 'running' && (st.phases || []).some((ph) => (ph.key === 'approve' || ph.key === 'qr') && ph.status === 'active');
+        if (waiting && m === 'approval') { let w = ''; try { w = [...new Set(O55.art.identity(String(p.id) + ':candidate:' + U.slug(S.env.client.name)).words)].slice(0, 3).join(' '); } catch (_) {} out += `<p class="o55-hint" data-key="mywords">${U.esc(T('connect.pair.yourWords', { name: p.name, words: w }))}</p>`; } /* (M2) */
         if (waiting && m === 'approval') {
           const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
@@ -656,7 +660,8 @@
     foot(S) {
       const n = N(S);
       if (!n.pairAsked) return { secondary: [{ label: T('nas.pmpair.useSsh'), do: 'useSsh' }], primary: { label: T('nas.pmpair.pair'), do: 'pair' } };
-      if (!n.paired) return { secondary: [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: n.pairFail || pairExpired(S) ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }) } };
+      const paneHasAnother = (PM_FAIL_ACTIONS[(n.pairFail && n.pairFail.code) || n.pairFail] || []).some((x) => x.do === 'another'); /* (p22: once) */
+      if (!n.paired) return { secondary: paneHasAnother ? [] : [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: n.pairFail || pairExpired(S) ? T('connect.pair.fail.reason') : T('connect.pair.phases.approveAny', { name: (pmOf(S) || {}).name || '' }) } };
       const ps = F.state(S, pairKey(S, 'perms'));
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(ps && ps.state === 'done'), reason: T('chrome.working') } };
     },
@@ -702,7 +707,7 @@
       let out = `<div class="o55-crumbs" data-key="crumbs">${C.small('server', 14)} ${U.esc(d.name)} <span aria-hidden="true">›</span> ${crumbs}${O55.tips.q('group:cd')}</div>${O55.tips.explainer('group:cd')}`;
       out += `<div class="o55-treelist" role="listbox" aria-label="${U.esc(T('nas.folder.title', { name: d.name }))}" data-key="list">`
         + (kids.length ? kids.map(({ name, isNew }) => `<button type="button" class="o55-treeitem${isNew ? ' o55-new' : ''}" role="option" data-o55-do="cd" data-arg="${U.esc(at + '/' + name)}" data-pm-hover-exempt="true" data-key="f-${U.esc(U.slug(name))}">${C.small('folder', 16)}<span>${U.esc(name)}</span>${isNew ? `<span class="o55-tag">${U.esc(T('nas.folder.newFolder'))}</span>` : ''}</button>`).join('') : `<p class="o55-hint">${U.esc(T('nas.folder.empty'))}</p>`) + '</div>';
-      if (n.adding) out += `<div class="o55-fieldrow" data-key="newf">${C.field({ bind: 'newName', label: T('nas.folder.newName'), value: n.newName || '', hint: T('nas.folder.newNote') })}${O55.ui.btn({ label: T('chrome.done'), do: 'addFolder', cls: 'o55-small', disabled: !F.nonEmpty(n.newName), reason: T('nas.folder.newName') }, 'o55-secondary')}</div>`;
+      if (n.adding) out += `<div class="o55-fieldrow" data-key="newf">${C.field({ bind: 'newName', label: T('nas.folder.newName'), value: n.newName || '', hint: T('nas.folder.newNote') })}${O55.ui.btn({ label: T('chrome.done'), do: 'addFolder', cls: 'o55-small', disabled: !F.nonEmpty(n.newName), reason: T('nas.folder.nameFirst'), reasonFor: '[data-key="field-newName"]' }, 'o55-secondary')}</div>`;
       else out += `<div class="o55-sublinks" data-key="add">${C.link(T('nas.folder.newFolder'), 'adding')}</div>`;
       if (readOnlyAt(S, at)) out += C.note(T('nas.folder.readOnly', { user: n.user || d.user }), 'warn', 'lock');
       else out += C.note(n.viaPm ? T('nas.install.donePaired', { name: d.name }) : T('nas.install.done'), 'ok', 'lock');
@@ -756,7 +761,7 @@
       if (st) out += F.phases(S, key, ['mount', 'read'], { mount: T('nas.smb.phases.mount'), read: T('nas.smb.phases.read') });
       return out;
     },
-    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T('nas.signin.passwordHint') } }; },
+    foot(S) { const n = N(S), sh = shareOf(S) || {}, st = F.state(S, 'smb:' + (n.share === 'manual' ? sh.path : n.share)); if (st && st.state === 'done') return { primary: { label: T('chrome.continue'), do: 'use' } }; return { primary: { label: T('nas.smb.check'), do: 'check', disabled: !shareOf(S) || !F.nonEmpty(n.user) || !n.pwTyped, reason: T(shareOf(S) ? 'nas.smb.needBoth' : 'missing.storage') } }; },
     do: {
       check(S) {
         const n = N(S), sh = shareOf(S); if (!sh) return;

@@ -155,6 +155,7 @@
     "bbProject": "Choose the Bitbucket project first.",
     "visibility": "Choose who can see it first.",
     "repoName": "Fix the name first: the service won't accept it as it is.",
+    "repoTaken": "The online copy's name is already used there. Change it first.",
     "branch": "Fix the main branch name first."
   },
   "art": {
@@ -232,7 +233,9 @@
       "local": "On this network",
       "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well.",
       "addrMissing": "Enter its address first.",
-      "addrNoAnswer": "No Puppet Master answers at that address. Check it, or go back to the list."
+      "addrNoAnswer": "No Puppet Master answers at that address. Check it, or go back to the list.",
+      "noProjects": "no Projects",
+      "viaVpn": "Through your VPN"
     },
     "review": {
       "eyebrow": "Connect this device",
@@ -247,7 +250,7 @@
       },
       "code": {
         "title": "Enter the code it shows",
-        "sub": "Open {name}'s page and read its code"
+        "sub": "On a device that already uses {name}: Settings › Server & Project Location › Pair a device. At home, also {address}/pair."
       },
       "qr": {
         "title": "Scan its QR code",
@@ -296,7 +299,10 @@
         "unreachable": "Can't be reached",
         "identity_mismatch": "Another computer answers",
         "protocol_mismatch": "Another version"
-      }
+      },
+      "codeFirst": "Type the code first.",
+      "yourWords": "On {name}, check it shows these words: {words}",
+      "sent": "New request sent."
     },
     "ready": {
       "eyebrow": "Connected",
@@ -335,11 +341,11 @@
     },
     "install": {
       "truenas": [
-        "Open TrueNAS on that computer",
+        "Open TrueNAS's web page in your browser",
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "unraid": [
-        "Open Unraid on that computer",
+        "Open Unraid's web page in your browser",
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "synology": [
@@ -351,16 +357,19 @@
         "Follow the install guide below: it shows which Puppet Master package to add, and where"
       ],
       "linux": [
-        "Open a terminal on it: the window where you type commands",
-        "Paste this line and press Enter"
+        "Open a terminal on that computer: the window where you type commands",
+        "Type this line there and press Enter",
+        "It shows a setup code: keep it open"
       ],
       "windows": [
-        "Download Puppet Master for Windows on that computer",
-        "Open it and choose Run as a Server"
+        "On that computer, open get.puppetmaster.app and download Puppet Master for Windows",
+        "Open it and choose Run as a Server",
+        "It shows a setup code: keep it open"
       ],
       "macos": [
-        "Download Puppet Master for Mac on that computer",
-        "Open it and choose Run as a Server"
+        "On that computer, open get.puppetmaster.app and download Puppet Master for Mac",
+        "Open it and choose Run as a Server",
+        "It shows a setup code: keep it open"
       ],
       "guide": "Open the install guide",
       "command": "curl -fsSL https://get.puppetmaster.app/server | sh"
@@ -435,7 +444,10 @@
       ],
       "codeHintCloud": "The one-time code your cloud provider's console shows, like 482 913",
       "selfOwn": "This device: {words}",
-      "selfGot": "{name} received: {words}"
+      "selfGot": "{name} received: {words}",
+      "tickWords": "Compare both lines, then tick 'The words match' to approve.",
+      "codeFirst": "Type the setup code from {name}'s setup page first.",
+      "codeFirstCloud": "Type the one-time code from your cloud provider's console first."
     },
     "ready": {
       "eyebrow": "New Server",
@@ -463,7 +475,12 @@
       "staleAdopt": "That answer was for an old code. Nothing was trusted. The device can ask again with the current code.",
       "wrongTarget": "That answer was for a different device or Server. Nothing was trusted.",
       "replayAdopt": "That answer was already used. Nothing more was trusted.",
-      "runDone": "That request is answered. To add another device, choose New code."
+      "runDone": "That request is answered. To add another device, choose New code.",
+      "tickWords": "Compare the words with the device's, then tick the box under them to approve.",
+      "staleApprove": "That answer was for an earlier request. Nothing was trusted. Approve again.",
+      "wrongApprove": "That answer was for a different device or Server. Nothing was trusted. Approve again.",
+      "wrongClaim": "That answer was for a different device or Server. Nothing was trusted. Check again.",
+      "runDenied": "{name} was turned down. To let a device join, choose New code."
     }
   },
   "restore": {
@@ -497,7 +514,8 @@
       "cloud": {
         "title": "A cloud account",
         "sub": "Google Drive, OneDrive or a storage bucket"
-      }
+      },
+      "leadServer": "Nothing on {name} is replaced without asking."
     },
     "unlock": {
       "eyebrow": "Restore",
@@ -506,7 +524,8 @@
       "leadAt": "The backup on {where} is locked. Enter the recovery phrase from your Recovery Kit. It is used once and never saved.",
       "label": "Recovery phrase",
       "hint": "Like: river candle orbit maple quiet lantern",
-      "wrong": "That phrase doesn't unlock this backup."
+      "wrong": "That phrase doesn't unlock this backup.",
+      "first": "Type the recovery phrase first."
     },
     "pick": {
       "eyebrow": "Restore",
@@ -551,7 +570,7 @@
       "eyebrow": "Restored",
       "titleServer": "{name} is back",
       "titleHere": "Everything is back",
-      "lead": "{n} Projects are ready. AI accounts need a quick sign-in.",
+      "lead": "{n} Projects are ready. Sign in to your AI accounts when you open one.",
       "enter": "Enter Puppet Master",
       "open": "Open a Project",
       "create": "Create a new Project",
@@ -655,7 +674,9 @@
     "signin": {
       "eyebrow": "Online copy",
       "title": "Sign in to {name}",
-      "lead": "{name} shows you what Puppet Master will be able to reach before you agree.",
+      "lead": "Puppet Master works only on the Project you set up here. {name}'s page shows the access it asks for before you agree.",
+      "leadToken": "Puppet Master works only on the Project you set up here. What the token you make can reach is said below, before you paste it.",
+      "leadCloud": "Sign in to find your backup. {name}'s page shows the access it asks for before you agree.",
       "signIn": "Sign in",
       "create": "Create account",
       "connected": "Use {account}",
@@ -663,7 +684,7 @@
       "another": "Use a different account",
       "waiting": "Waiting for you in your browser…",
       "noBrowser": "Browser didn't open?",
-      "codeLead": "Go to {url} and enter this code:",
+      "codeLead": "On any device, go to {url} and enter this code:",
       "codeExpires": "The code expires in 15 minutes.",
       "signedIn": "Signed in as {account}",
       "createOpened": "{name}'s sign-up page opened",
@@ -671,6 +692,7 @@
       "email": "Check your email to confirm your new account",
       "confirmed": "I confirmed it",
       "token": "Use an access token instead",
+      "browserInstead": "Sign in on {name}'s page instead",
       "tokenLabel": "Access token",
       "tokenHint": "Create one on your server under Settings › Applications. It is kept in your system keychain, never in Puppet Master's files.",
       "tokenBad": "That token was not accepted.",
@@ -680,16 +702,16 @@
       "simUser": "Username",
       "simEmail": "Email",
       "simButton": "Create account",
-      "linkCopied": "Sign-in link copied: {url}. Paste it into your browser.",
-      "linkCopiedNone": "Open your browser and sign in there, then come back.",
+      "linkLead": "On any device, open {url} and finish signing in there. This screen carries on by itself.",
+      "linkNone": "Open a browser on any device and sign in there. This screen carries on by itself.",
       "tokenLead": "{host} signs in with an access token you make there. Paste it below.",
       "createOn": "No account on {host} yet? Create one",
       "tokenHow": {
         "forgejo": "Make one on {host} under Settings › Applications.",
         "gitea": "Make one on {host} under Settings › Applications.",
         "bitbucket_data_center": "Make one on {host} under your profile › Manage account › HTTP access tokens.",
-        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens.",
-        "gitlab": "Make one on {host} under Preferences › Access tokens.",
+        "github": "Make one on {host} under Settings › Developer settings › Personal access tokens › Fine-grained tokens.",
+        "gitlab": "Make one on {host}: your avatar › Edit profile › Access › Personal access tokens.",
         "azure_devops": "Make one on {host} under User settings › Personal access tokens."
       },
       "scopes": {
@@ -697,37 +719,61 @@
           "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
           "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
           "detailExisting": "Allow it Read and write for repository, and Read for user.",
-          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user.",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "An unrestricted (All) token: it reaches every repository and organization the account can on {host}. Creating a repository needs the user or organization scope, which tokens restricted to specific repositories cannot carry.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one: Forgejo's tokens for chosen Projects can't read your account. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "An unrestricted (All) token: Forgejo allows only repository and issue scopes on tokens restricted to specific repositories, and this sign-in reads the account (read:user) to name it and list its repositories. It reaches every repository the account can; Puppet Master uses only the chosen one."
         },
         "gitea": {
           "detailNew": "Allow it Read and write for repository and user, and for organization if the copy goes in one.",
           "detailNewExpert": "Scopes: write:repository and write:user; write:organization for a copy in an organization.",
           "detailExisting": "Allow it Read and write for repository, and Read for user.",
-          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user."
+          "detailExistingExpert": "Scopes: write:repository (clone and push) and read:user.",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "Gitea token scopes are by kind (repository, user, organization), not by repository: it reaches every repository the account can on {host}.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "Gitea token scopes are by kind, not by repository: write:repository and read:user reach every repository the account can on {host}; Puppet Master uses only the chosen one."
         },
         "bitbucket_data_center": {
           "detailNew": "Give it Admin for both Project and Repository: only that level can make a new copy.",
           "detailNewExpert": "Project admin and repository admin: the only HTTP access token level that can create a repository.",
           "detailExisting": "Give it Read for Project and Write for Repository.",
-          "detailExistingExpert": "Project read and repository write: clone and push."
+          "detailExistingExpert": "Project read and repository write: clone and push.",
+          "reachNew": "A personal token reaches every project and Project you can on {host}, at the levels you give it. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A personal HTTP access token acts with your permissions on every project and repository, capped at the levels chosen. A project or repository token stays inside one, but cannot be made before the copy exists.",
+          "reachExisting": "A personal token reaches every project and Project you can on {host}, at the levels you give it. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A personal HTTP access token acts with your permissions on every project and repository, capped at the levels chosen. A repository HTTP access token (made in that repository's settings, by its admins) would reach only it."
         },
         "github": {
-          "detailNew": "Tick the repo box.",
-          "detailNewExpert": "A classic token with the repo scope, or a fine-grained token with Administration and Contents set to read and write.",
-          "detailExisting": "Tick the repo box.",
-          "detailExistingExpert": "A classic token with the repo scope, or a fine-grained token with Contents set to read and write."
+          "detailNew": "Give it access to All repositories, with Administration and Contents set to Read and write.",
+          "detailNewExpert": "A fine-grained token: All repositories, with Administration and Contents read and write (for a copy in an organization, that organization as its resource owner). A classic token with the repo scope also works.",
+          "detailExisting": "Give it access to that Project under Only select repositories, with Contents set to Read and write.",
+          "detailExistingExpert": "A fine-grained token: the repository under Only select repositories, Contents read and write. A classic token with the repo scope also works.",
+          "reachNew": "It reaches every Project of the account or organization you make it for. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "Fine-grained, All repositories: every repository of its resource owner (a classic repo token: every repository you can reach).",
+          "reachExisting": "It reaches only the Project you select when you make it.",
+          "reachExistingExpert": "Fine-grained, Only select repositories: only the chosen repository (a classic repo token would reach every repository you can)."
         },
         "gitlab": {
           "detailNew": "Tick api and write_repository.",
           "detailNewExpert": "Scopes api (create the project) and write_repository (push over HTTPS).",
           "detailExisting": "Tick read_api and write_repository.",
-          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS)."
+          "detailExistingExpert": "Scopes read_api (find the project) and write_repository (clone and push over HTTPS).",
+          "reachNew": "A token like this reaches every Project your account can on {host}. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A personal access token acts as your account on every project you can reach on {host}; its scopes limit what kind of access, not which projects.",
+          "reachExisting": "A token like this reaches every Project your account can on {host}, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A personal access token acts as your account on every project you can reach on {host}; a project access token (where the server allows them) would reach only that project."
         },
         "azure_devops": {
           "detailNew": "Under Code, choose Read, write, & manage.",
           "detailNewExpert": "Scope vso.code_manage (Code: read, write and manage).",
           "detailExisting": "Under Code, choose Read & write.",
-          "detailExistingExpert": "Scope vso.code_write (Code: read and write)."
+          "detailExistingExpert": "Scope vso.code_write (Code: read and write).",
+          "reachNew": "It reaches every Project you can in the organization you make it for. Puppet Master uses it only for the copy it makes here.",
+          "reachNewExpert": "A PAT scoped to one organization (or all you can access, if chosen) with Code read, write and manage: every repository you can reach there.",
+          "reachExisting": "It reaches every Project you can in the organization you make it for, not only this one. Puppet Master works only on the one you pick.",
+          "reachExistingExpert": "A PAT scoped to one organization with Code read and write: every repository you can reach there."
         }
       },
       "demo": {
@@ -747,8 +793,12 @@
       "privacy": "Who can see it",
       "private": "Only you",
       "privateSub": "And people you invite",
+      "privateOrg": "Members of {org} who can see its private Projects",
+      "privateOrgSub": "And people you add",
+      "privateDcNone": "People with access to the project you choose",
       "public": "Everyone",
       "publicSub": "Anyone on the internet can see it",
+      "publicServerSub": "Anyone who can open {host}",
       "internal": "Everyone in {org}",
       "internalSub": "People in your organization",
       "azurePrivacy": "Follows your Azure DevOps project's settings",
@@ -868,7 +918,9 @@
       "copyTo": "Copy kept on this computer in {path}",
       "private": "Private",
       "public": "Public",
-      "empty": "No Projects found in this account.",
+      "updated": "updated {when}",
+      "empty": "No Projects found in {account} on {name}. If yours is in another account, sign in with that one.",
+      "another": "Sign in with another account",
       "copyToServer": "The copy is kept on {name}. You can choose another place on the next page.",
       "noMatch": "No Project matches that search."
     }
@@ -898,7 +950,7 @@
     "networkSub": "Uses a secure connection (SSH) by default",
     "serverTitle": "Where should its files live?",
     "withServer": "On {name}",
-    "withServerSub": "Recommended. The Server keeps them next to the work.",
+    "withServerSub": "The Server keeps them next to the work.",
     "onDevice": "On this device",
     "onDeviceSub": "{name} reaches them over the network",
     "networkDrive": "A network drive",
@@ -1102,13 +1154,15 @@
         "denied": "Tailscale didn't allow it. Nothing was set up. Try again, or do this later.",
         "expired": "The Tailscale sign-in ran out before it finished. Try again for a fresh one.",
         "deviceApproval": "Your Tailscale network needs an administrator to approve {name}. Approve it on Tailscale's admin page, then try again.",
-        "routeFailed": "The private address answered, but the live connection didn't work. Try again; if it keeps failing, do this later.",
+        "routeFailed": "The private address answered, but the live connection didn't work. Check that your network's access rules let your devices reach {name}, then try again.",
         "hsDenied": "Your Headscale server didn't let {name} in. Check with whoever runs it, then try again.",
         "hsUnreachable": "Your Headscale server didn't answer. Check its address and that it is running, then try again.",
         "unreachable": "{host} can't be reached from the internet. Your router or cloud firewall may need to let web traffic in, or your internet plan may share its address. Tailscale works without any of this.",
         "dns": "{host} doesn't point to {name} yet. Change its address record where you bought the name, then try again. Changes can take a while.",
         "live": "The page opens, but live updates are blocked. Your proxy has to pass live connections through (WebSockets). Try again after fixing it.",
-        "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later."
+        "relay": "The Remote Link service didn't answer. Try again in a moment, or do this later.",
+        "dnsSet": "{host} doesn't point to {name} yet. Where you bought the name, set its A record to {ip}, then try again. Changes can take a while.",
+        "liveFile": "The page opens, but live updates are blocked. Use the settings file exactly as made. If something sits in front of your proxy, like Cloudflare, turn on WebSockets there, then try again."
       },
       "hint": {
         "denied": "Tailscale says no",
@@ -1121,7 +1175,12 @@
         "unreachable": "Can't be reached",
         "live_failed": "Live updates blocked",
         "relay_unavailable": "Link service down"
-      }
+      },
+      "useTailscale": "Use Tailscale instead"
+    },
+    "vpn": {
+      "title": "Only through a VPN you already use",
+      "sub": "A rented computer isn't on your home network. Your devices reach it over a VPN or private network you already run."
     }
   },
   "review": {
@@ -1131,6 +1190,9 @@
     "titleRestore": "Ready to restore {name}",
     "titleLater": "Ready to finish setup",
     "lead": "Nothing has been created yet. Check it, then create it in one step.",
+    "leadAdd": "Nothing has changed yet. Check it, then add it in one step.",
+    "leadOnline": "Nothing has been copied yet. Check it, then add it in one step.",
+    "leadRestore": "Nothing has been restored yet. Check it, then restore it in one step.",
     "leadLater": "Nothing will be created now.",
     "groups": {
       "project": "Project",
@@ -1156,6 +1218,7 @@
       "existing_online": "{repo} from {service}",
       "restore": "Backup of {project}",
       "device": "Files on {device}",
+      "deviceNew": "A new, empty folder: {device}",
       "devicePaired": "Files on {device}, through its Puppet Master"
     },
     "fresh": "Start fresh",
@@ -1167,6 +1230,7 @@
       "folder": "A folder is made in {path}",
       "useFolder": "Puppet Master starts using {path}",
       "history": "Safe History starts saving every version",
+      "historyKept": "Safe History keeps the history it arrives with and saves every new version",
       "clone": "The Project is copied from {service}",
       "restore": "The backup is brought back",
       "online": "An online copy is made on {service} · {privacy}",
@@ -1177,6 +1241,7 @@
       "remotePublic": "Next, {host} is set up, putting your Server's sign-in page on the internet"
     },
     "checked": "Checked just now",
+    "nameUsed": "name already used there",
     "changed": "{what} changed since you chose it. Take a look.",
     "create": "Create Project",
     "add": "Add Project",
@@ -1205,10 +1270,14 @@
   "creating": {
     "eyebrow": "Creating",
     "title": "Creating {name}",
+    "titleAdd": "Adding {name}",
+    "titleOnline": "Bringing in {name}",
+    "titleRestore": "Restoring {name}",
     "lead": "This takes a moment. You can close the window; it keeps going.",
     "phases": {
       "folder": "Making the folder",
       "history": "Starting Safe History with {kind}",
+      "historyKept": "Picking up its history with {kind}",
       "historyInstall": "Installing {kind} for Safe History",
       "clone": "Copying from {service}",
       "restore": "Bringing back the backup",
@@ -1325,9 +1394,11 @@
     "installOn": "Install on {host}",
     "signIn": "Sign In",
     "key": "Enter API Key",
-    "keyLabel": "API key for {name}",
+    "keyLabel": "{name} API key",
+    "keyLabelApi": "{name} key",
+    "tokenLabel": "{name} API token",
     "keyHint": "Paste the key, not your password. Kept in {where}. Never shown again.",
-    "keyBad": "That key wasn't accepted. Check it's the right key for {name}, then try again.",
+    "keyBad": "That key wasn't accepted. Check it's the right {label}, then try again.",
     "verify": "Check key",
     "installAsk": "Install {name} on {host}? It uses {vendor}'s official installer.",
     "installGo": "Install",
@@ -1336,7 +1407,7 @@
       "install": "Installing",
       "verify": "Checking it works"
     },
-    "signinWait": "Finish signing in in your browser.",
+    "signinWait": "Finish signing in with your browser.",
     "notReady": "Not signed in",
     "seeAll": "See all providers",
     "allTitle": "All providers",
@@ -1356,7 +1427,8 @@
       "cursor": "A Cursor API key, or Cursor's browser sign-in",
       "copilot": "The Copilot plan on your GitHub account",
       "qwen-coding": "Qwen and other models, with the plan's own key",
-      "qwen-token": "Not the Coding Plan",
+      "qwen-token": "Its own key, separate from the Coding Plan",
+      "zai": "GLM models, with the plan's own key",
       "kimi": "Kimi Code's own key, not Kimi Open Platform",
       "minimax": "Formerly the MiniMax Coding Plan",
       "anthropic-api": "Separate from a Claude plan",
@@ -1367,7 +1439,7 @@
       "xai-api": "Separate from Grok Build",
       "muse": "Muse Code plan, not the Meta Model API",
       "meta-api": "Separate from Muse Code",
-      "opencode-go": "Not the OpenCode server",
+      "opencode-go": "OpenCode's models, with a key from the OpenCode Console",
       "opencode-zen": "Formerly OpenCode Zen",
       "opencode-runtime": "Runs OpenCode itself. Its model accounts stay in OpenCode."
     },
@@ -1382,7 +1454,7 @@
     "keyFrom": "Get a key from {name}",
     "offline": "This computer is offline, so nothing could be checked. Connect to the internet, then try again.",
     "cancel": "Cancel",
-    "signinWaitOn": "Finish signing in in this device's browser. The sign-in is kept on {host}.",
+    "signinWaitOn": "Finish signing in with this device's browser. The sign-in is kept on {host}.",
     "signinWaitPill": "Waiting for you",
     "own": "Your own setup",
     "ownSub": "A server you run, or one Puppet Master runs for you.",
@@ -1390,7 +1462,8 @@
     "acct": {
       "key": "Key {n}",
       "altKey": "{product} key",
-      "server": "OpenCode server",
+      "oneKey": "Key added",
+      "manyKeys": "{n} keys",
       "many": "{n} accounts"
     },
     "bill": {
@@ -1400,6 +1473,12 @@
       "attached": "Your server at {address}"
     },
     "addAnother": "Add another {name} account",
+    "addAnotherKey": "Add another {name} key",
+    "adding": "Adding another account",
+    "addingKey": "Adding another key",
+    "removeAskServer": "Remove this OpenCode server from Puppet Master?",
+    "noMatch": "Nothing matches “{q}”.",
+    "installTool": "Install {tool}",
     "remove": "Remove",
     "removeAsk": "Remove {who} from Puppet Master? Your {vendor} account itself stays as it is.",
     "removeGo": "Remove",
@@ -1412,13 +1491,9 @@
         "org": "{org} (organization)",
         "via": "through {who}"
       },
-      "workspace": {
-        "title": "This key works in more than one workspace. Which one should it use?",
-        "default": "Default workspace"
-      },
       "project": {
         "label": "Google Cloud project ID (optional)",
-        "hint": "Leave it empty if your key isn't tied to a project.",
+        "hint": "Only needed if you use a Google Cloud project. Its ID is on the Google Cloud console's welcome page.",
         "named": "Project {project}"
       }
     },
@@ -1456,7 +1531,7 @@
     "skipped": "Skipped for now.",
     "alt": {
       "codex": "Use an OpenAI API key instead",
-      "cursor": "Sign in in the browser instead"
+      "cursor": "Sign in with the browser instead"
     },
     "main": {
       "codex": "Sign in with ChatGPT instead",
@@ -1511,14 +1586,22 @@
     "retiredMeta": "{provider} closed this service. Choose another.",
     "more": "More free options",
     "turnOn": "Turn on",
-    "noAccountNeeded": "{provider} · no account needed"
+    "noAccountNeeded": "{provider} · no account needed",
+    "noAccount": "No account needed",
+    "needsKey": "Needs a key",
+    "needsToken": "Needs an API token and account ID",
+    "turnOff": "Turn off",
+    "moreN": "{n} more free options",
+    "accountId": "{provider} account ID"
   },
   "ready": {
     "eyebrow": "Ready",
     "title": "You're ready",
+    "titleNoAi": "Almost ready",
     "lead": "{name} is set up.",
     "leadLater": "Puppet Master is set up. Create a Project whenever you like.",
     "project": "Project",
+    "online": "Online copy",
     "ai": "AI",
     "free": "Free Models",
     "backup": "Backup",
@@ -1530,7 +1613,9 @@
     "tourSub": "About {m} minutes. Uses a practice example; nothing changes.",
     "enter": "Enter Puppet Master",
     "createNow": "Create a Project now",
-    "aiFreeOnly": "Free Models only, with their limits"
+    "aiFreeOnly": "Free Models only, with their limits",
+    "away": "Away from home",
+    "awayLater": "Not set up yet. Finish it in Settings."
   },
   "nas": {
     "find": {
@@ -1603,7 +1688,8 @@
       "stop": "Stop",
       "details": "Show the technical fingerprint",
       "fingerprint": "SHA256 fingerprint",
-      "old": "Previously"
+      "old": "Previously",
+      "changedWarn": "This fingerprint isn't the one you trusted before."
     },
     "key": {
       "eyebrow": "Secure connection",
@@ -1659,7 +1745,8 @@
       "selfNot": "The key isn't on {name} yet. Check that the whole line was added, then check again.",
       "selfTitle": "Add your key to {name} yourself",
       "selfTop": "Puppet Master checks it right after. No password needed.",
-      "selfOff": "Add it for me with my password instead"
+      "selfOff": "Add it for me with my password instead",
+      "needBoth": "Type the account and its password first."
     },
     "install": {
       "eyebrow": "Secure connection",
@@ -1703,7 +1790,8 @@
       "newNote": "The folder is made when you create the Project.",
       "readOnly": "This folder is read-only for {user}. Choose another.",
       "use": "Use this folder",
-      "empty": "Empty folder"
+      "empty": "Empty folder",
+      "nameFirst": "Type a folder name first."
     },
     "smb": {
       "eyebrow": "Shared folder",
@@ -1722,7 +1810,8 @@
       "passwordHintOn": "Kept by {where} in its own password store, as for any shared folder. Puppet Master never stores it.",
       "more": "More sign-in options",
       "domain": "Domain or workgroup",
-      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise."
+      "domainHint": "Only if your network uses one, like a work network. Leave it empty otherwise.",
+      "needBoth": "Type the shared folder's account and password first."
     },
     "nfs": {
       "eyebrow": "NFS share",
@@ -1754,7 +1843,7 @@
       "pair": "Pair",
       "another": "Choose another way",
       "useSsh": "Use SSH instead",
-      "doneLead": "This computer can open the folder you pick on {name}. Nothing on {name} has changed."
+      "doneLead": "This computer can open the folder you pick on {name}."
     }
   },
   "demo": {
@@ -2164,6 +2253,8 @@
     "query": "Leave out anything after a ? or a #.",
     "short": "That's too short for a Remote Link or its code.",
     "long": "That's too long for a Remote Link or its code.",
-    "added": "Puppet Master will use {url}"
+    "added": "Puppet Master will use {url}",
+    "linkSpaces": "A link or its code has no spaces in it.",
+    "linkScheme": "That's a web address. Paste the link or the code your Server shows."
   }
 }

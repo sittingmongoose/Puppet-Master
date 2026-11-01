@@ -412,7 +412,8 @@
   /* An action button with a tip of its own (Try again, Check again, Trust this device) has its ? beside it (b.tip: false
      for none, or another id); in the footer the ? stays beside the button and its explainer opens in the content */
   function btn(b, cls, inFoot) {
-    const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
+    /* (b.reasonFor: the control a refused press points to, brought into view with its reason: RV-19) */
+    const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"${b.reasonFor ? ` data-reason-for="${U.esc(b.reasonFor)}"` : ''}` : '';
     const tid = b.tip === false || !O55.tips ? null : b.tip || O55.tips.exact(b.do, b.arg);
     /* (b.by: a group's note that describes this button, its ? drawn beside the question it answers) */
     const by = tid || (b.by && O55.tips ? b.by : null);
@@ -478,7 +479,7 @@
     /* a press refused with its reason (Continue on an empty name): Pip says what is missing, and keeps saying so until
        the press would go through (Astra m02) */
     if (!oops && o && o.refused) oops = o.refused;
-    const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg));
+    const still = (r) => !!(r && layer && Array.from(layer.querySelectorAll('[aria-disabled="true"][data-o55-do]')).some((n) => n.getAttribute('data-o55-do') === r.do && (n.getAttribute('data-arg') || '') === r.arg && (r.reason == null || (n.getAttribute('data-disabled-reason') || '') === r.reason))) /* (p35: a reason that changed is not still refused) */;
     if (!oops && lastOops && lastOops.refused && lastOops.screen === S.sess.screen && still(lastOops.refused)) oops = { key: lastOops.key, face: lastOops.face, refused: lastOops.refused };
     /* a fault still shows that Pip has no line for: Pip stays on it (its general line) instead of cheering the one it
        replaced; a cheer comes only when the screen shows no fault at all (RV-6) */
@@ -517,13 +518,14 @@
         const f = layer && layer.querySelector(`.o55-field[data-key="${CSS.escape(lastOops.field)}"]`), i = f && f.querySelector('input, textarea');
         ok = ok || !!(f && i && i.type !== 'password' && String(i.value || '').trim() && !f.querySelector('.o55-err'));
         gone = !f;
-        /* typing over a taken name makes it free at its first letter, and bad/name? breaks the rule a letter later: the
-           field's cheer waits until the typing stops and is said only if the field is still right then (FA-9) */
-        const typing = S.typedAt ? performance.now() - S.typedAt : Infinity;
-        if (ok && !won && typing < 1200) {
-          ok = false;
-          O55.motion.real.clearTimeout(holdCheerT); holdCheerT = O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 1250 - typing);
-        }
+      }
+      /* typing over a taken name makes it free at its first letter, and bad/name? breaks the rule a letter later; a refused
+         Continue goes through at the first letter of a new name or code too: a field's or a refused press's cheer waits
+         until the typing stops and is said only if it is still right then (FA-9) */
+      const typing = S.typedAt ? performance.now() - S.typedAt : Infinity;
+      if (ok && !won && (lastOops.field || lastOops.refused) && typing < 1200) {
+        ok = false;
+        O55.motion.real.clearTimeout(holdCheerT); holdCheerT = O55.motion.real.setTimeout(() => { if (S.open) renderScene(); }, 1250 - typing);
       }
       /* (a field or a control away while something runs, such as a key being checked, is not the person moving on) */
       /* (some screens redraw into their waiting state a moment before the operation registers: the waiting pill or Pip's
@@ -573,6 +575,12 @@
   window.addEventListener('resize', () => { const l = S.root && S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)'); if (l) holdColumn(l); });
   /* the person chose another way, skipped or left the step: a success that follows is not this fault's (RV-11) */
   O55.ui.movedOn = function movedOn() { lastOops = null; cheering = null; };
+  /* the presses that leave a failed thing for another way, a skip or a cancel: whatever succeeds after one is not the
+     failed thing put right, so a waiting cheer goes (RV-11; the lead, 2026-11-01: every flow where the person moves on,
+     such as RV-13's Use Tailscale instead, whose Tailscale step otherwise cheered the failed web address). A retry is
+     never one of them. */
+  const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
+    'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
   function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
   O55.pipStage.holdsTip = holdsTip;
 
@@ -641,7 +649,11 @@
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     if (!layer) return transition(null);
     const hadSheet = !!layer.querySelector('.o55-sheet[data-open="true"]');
+    /* a refusal's reason still showing outlives a redraw (a screen's own 1 s refresh took it away mid-read: RV-19); it
+       goes back where it was and its fade carries on from where it was */
+    const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     U.morph(layer, paneHtml(def));
+    if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
@@ -857,8 +869,10 @@
       O55.sound.play('warn'); /* a refusal with its reason is a soft warning, not a failure */
       if (!skin('refused', t)) O55.motion.play(t, [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }], { duration: 260, easing: 'ease-out' });
       showReason(t, reason);
+      const rf = t.getAttribute('data-reason-for'), rt = rf && t.closest('.o55-layer') && t.closest('.o55-layer').querySelector(rf);
+      if (rt) rt.scrollIntoView({ block: 'center', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
       const said = reason && O55.pipOops && O55.pipOops.match(reason, S.sess.screen);
-      if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '' } } });
+      if (said) renderScene(false, false, { refused: { key: said, face: O55.pipOops.face(said), refused: { do: t.getAttribute('data-o55-do'), arg: t.getAttribute('data-arg') || '', reason: reason || '' } } });
       return;
     }
     if (e) e.preventDefault();
@@ -875,6 +889,7 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
+    if (MOVED_ON.has(action)) O55.ui.movedOn();
     /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
     const log = O55.sound.log, last = log[log.length - 1], checked = t.getAttribute('aria-checked'), open = t.getAttribute('aria-expanded');
@@ -892,7 +907,7 @@
     const layer = t.closest('.o55-layer'); if (!layer) return;
     let tip = layer.querySelector('.o55-reason');
     if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
-    tip.textContent = reason; tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
+    tip.textContent = reason; tip.style.animationDelay = ''; tip.dataset.at = String(performance.now()); tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */
   const TYPE_MS = 120;
@@ -1268,6 +1283,7 @@
     if (el) { press(el, null); return true; }
     const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
     if (!fn) return false;
+    if (MOVED_ON.has(action)) O55.ui.movedOn();
     fn(S, want, null, null);
     return true;
   }

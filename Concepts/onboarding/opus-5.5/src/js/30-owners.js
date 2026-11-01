@@ -76,6 +76,7 @@
     'cmd.auth_profile.select': { owner: 'Auth', phase: 'postcommit_provider' },
     'cmd.auth_profile.sign_out': { owner: 'Auth', phase: 'postcommit_provider' },
     'cmd.free_models.route.enable': { owner: 'Models', phase: 'postcommit_free_models', canonical: false },
+    'cmd.free_models.route.disable': { owner: 'Models', phase: 'postcommit_free_models', canonical: false },
     /* shell and tour (local UI) */
     'cmd.panel.switch': { owner: 'Shell', phase: 'tour_local' }, 'cmd.persona.select': { owner: 'Chat', phase: 'tour_local' },
     'cmd.chat.send': { owner: 'Chat', phase: 'tour_local' }, 'cmd.chat.eli5.set': { owner: 'Chat', phase: 'tour_local' },

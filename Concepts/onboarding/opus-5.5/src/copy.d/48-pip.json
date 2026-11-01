@@ -5,7 +5,7 @@
         "provider:claude": {
           "title": "Claude",
           "text": "Uses a Claude plan, signed in through Claude's own app on the computer that does the work. The Anthropic API is a separate choice.",
-          "expert": "Claude Code CLI with its own browser sign-in (Claude plan, Console or company SSO); the CLI keeps its sign-in on the execution host. The Anthropic API is a separate provider."
+          "expert": "Claude Code CLI with its own browser sign-in to a Claude plan, personal or a company's; the CLI keeps its sign-in on the execution host. The Anthropic API, Console keys included, is a separate provider."
         },
         "provider:codex": {
           "title": "ChatGPT / Codex",
@@ -80,7 +80,7 @@
         "provider:anthropic-api": {
           "title": "Anthropic API",
           "text": "Anthropic's API, with a key from the Claude Console. Separate from a Claude plan.",
-          "expert": "Anthropic API key (sk-ant-…) from the Claude Console. A key that isn't tied to one workspace asks which workspace to use."
+          "expert": "Anthropic API key (sk-ant-…) from the Claude Console. Each key belongs to one workspace."
         },
         "provider:gemini-api": {
           "title": "Gemini API",
@@ -109,8 +109,8 @@
         },
         "pairing:code": {
           "title": "Enter the code it shows",
-          "text": "Open your Puppet Master's page on the other computer, read the code it shows and type it here. Good when no other device is at hand.",
-          "expert": "Pairing by code: the Server's page shows a short one-time code; entering it here proves this device is with you before it is trusted."
+          "text": "Read the code on a device that already uses it (Settings › Server & Project Location › Pair a device), or on its own page at home, and type it here. Good when no other device is at hand.",
+          "expert": "Pairing by code: the one-time 8-character code from Pair a device in Settings, or the Server's own page; entering it proves this device is with you before it is trusted."
         },
         "pairing:qr": {
           "title": "Scan its QR code",
@@ -198,11 +198,6 @@
           "title": "Whose Copilot plan",
           "text": "Copilot can come with your own GitHub plan or an organization's. Pick the one to use.",
           "expert": "Whose Copilot plan this account uses: your own or an organization's."
-        },
-        "group:workspace": {
-          "title": "Workspace",
-          "text": "Your key works in more than one Anthropic workspace. Pick the one to use.",
-          "expert": "Workspace context for a key that isn't scoped to one workspace."
         },
         "ocMode:managed": {
           "title": "Let Puppet Master run it",
@@ -416,8 +411,8 @@
       "c-pair": {
         "field:code": {
           "title": "Code from your Puppet Master",
-          "text": "The 8 letters and numbers its page shows, like A7K9-M2Q4. It proves this device is with you.",
-          "expert": "The one-time pairing code the Server's page shows (8 characters, like A7K9-M2Q4)."
+          "text": "The 8 letters and numbers from Pair a device in its Settings, or its own page, like A7K9-M2Q4. It proves this device is with you.",
+          "expert": "The one-time pairing code shown by Pair a device (Settings) or the Server's page (8 characters, like A7K9-M2Q4)."
         },
         "resend": {
           "title": "Send a new one",
@@ -461,9 +456,9 @@
           "expert": "Install the Server package for that machine's platform; it shows up here by itself once it is running."
         },
         "copy:install": {
-          "title": "Copy the install line",
-          "text": "Copies the line to paste into a terminal on that computer. A terminal is the window where you type commands.",
-          "expert": "Copies the install command for that machine's terminal (shell)."
+          "title": "Copy the line",
+          "text": "Copies the line, to paste on that computer if you reach it from this one. Otherwise type it there.",
+          "expert": "Copies the install command; run it on the target computer (paste over SSH or a remote session)."
         },
         "group:guide": {
           "title": "Open the install guide",
@@ -824,8 +819,8 @@
         },
         "group:variant": {
           "title": "Which edition",
-          "text": "The same service, run in different places: by the company itself, by your organisation on its own server, or (for Forgejo and Gitea) on a server someone else runs. Pick the one your account is on.",
-          "expert": "Hosted (the vendor runs it), self-managed / Data Center (your organisation runs it at its own https address), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
+          "text": "The same service, run in different places: by the company itself, or on a server of its own run by your organisation, by you or by someone else (for Forgejo and Gitea, a hosted one). Pick the one your account is on.",
+          "expert": "Hosted (the vendor runs it), self-managed / Data Center (its own https address, run by an organisation or by you), Codeberg for hosted Forgejo, Gitea Cloud (a dedicated instance per team, at its own address)."
         },
         "field:address": {
           "title": "Server address",
@@ -870,6 +865,11 @@
           "text": "A token is a long password made just for apps. Use it if you'd rather not sign in in the browser, or your server asks for one.",
           "expert": "Personal access token, scoped as listed under the box for this purpose (make a copy, or bring one in). Kept by the keychain owner; the plan records only that a token is used (auth_method pat_ref)."
         },
+        "tokenOff": {
+          "title": "Browser sign-in",
+          "text": "Back to signing in on the service's own page in your browser. The token box is emptied.",
+          "expert": "Returns to the browser (OAuth) sign-in; the token field is cleared and nothing is kept."
+        },
         "field:token": {
           "title": "Access token",
           "text": "Make it on the server with the permissions listed under the box, then paste it here. It stays in your computer's password store.",
@@ -880,10 +880,20 @@
           "text": "Shows a short code instead. Open the address it gives on any device and type the code there.",
           "expert": "Device-code sign-in: open the address shown on any device and enter the code there."
         },
-        "copyLink": {
+        "showLink": {
           "title": "Browser didn't open?",
-          "text": "Copies the sign-in link, so you can paste it into your browser yourself.",
-          "expert": "Copies the sign-in URL to open in a browser yourself."
+          "text": "Shows the sign-in page's address, to open in a browser on any device. This screen carries on once you've signed in there.",
+          "expert": "Shows the service's sign-in URL with Open the page and Copy address, to finish the browser sign-in on any device; a fresh wait starts."
+        },
+        "openPage": {
+          "title": "Open the page",
+          "text": "Tries again to open the sign-in page in this device's browser.",
+          "expert": "Opens the sign-in page (or the device-code page) in the default browser again."
+        },
+        "copyPage": {
+          "title": "Copy address",
+          "text": "Copies the page's address, so you can open it on another device.",
+          "expert": "Copies the sign-in page URL (or the device-code page URL) to the clipboard."
         },
         "copy:dcode": {
           "title": "Copy the code",
@@ -892,8 +902,8 @@
         },
         "newCode": {
           "title": "New code",
-          "text": "Makes a fresh code if this one ran out. Codes last 15 minutes.",
-          "expert": "Issues a new device code; each lasts 15 minutes."
+          "text": "Makes a fresh code if this one ran out. The time it has left shows under it.",
+          "expert": "Issues a new device code; it lasts as long as the service allows (GitHub and Microsoft 15 minutes, GitLab 5), shown under it."
         },
         "signupBack": {
           "title": "Back to sign in",
@@ -933,9 +943,9 @@
           "expert": "Opens Azure DevOps to create a team project there; refresh here to pick it."
         },
         "vis:private": {
-          "title": "Only you",
-          "text": "Only you, and people you give access, can see it. Right for most Projects.",
-          "expert": "private: visible to the owner and explicitly granted members (on Bitbucket Data Center, the project's permissions)."
+          "title": "Private",
+          "text": "On your own account, only you and people you invite can see it. Under an organization, group, workspace or team, its members who can see its private Projects can too, and people you add. Right for most Projects.",
+          "expert": "private: on a personal owner, the owner and invited collaborators; on an organization, group, workspace or team, members whose role or team grants read on its private repositories, plus users granted access (on Bitbucket Data Center, the project's permissions)."
         },
         "vis:public": {
           "title": "Everyone",
@@ -988,6 +998,11 @@
           "title": "Choose the Project",
           "text": "Only the Project you pick is copied, along with where it lives on the service. The line below shows where the working copy will be kept.",
           "expert": "The selected repository's provider id, owner and (Azure DevOps team project, Bitbucket project) container are carried into the plan, so nothing has to be entered again."
+        },
+        "otherAccount": {
+          "title": "Another account",
+          "text": "Signs in with another account on the same service, then lists the Projects it can reach.",
+          "expert": "Signs in with another account on this service and lists the repositories that account can reach."
         }
       },
       "safe": {
@@ -1013,7 +1028,7 @@
         },
         "online": {
           "title": "Online copy",
-          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. Only you see it unless you share it.",
+          "text": "A copy of your Project on a website such as GitHub: a second copy, and a way to work from another computer or share it. It stays private unless you choose otherwise.",
           "expert": "A remote repository on the service you choose, pushed from your local history; its visibility is set when it is created."
         },
         "backup": {
@@ -1127,6 +1142,11 @@
           "title": "Headscale address",
           "text": "The https:// address of your Headscale server, like https://headscale.example.com.",
           "expert": "Headscale control URL (https)."
+        },
+        "pick:vpn": {
+          "title": "Only through a VPN",
+          "text": "A computer you rent online is never on your home network. Choose this only if your devices already reach it over a VPN or private network you run. Nothing is opened to the internet.",
+          "expert": "An existing VPN or private network route to the cloud Server only; no Puppet Master remote route is configured and nothing is exposed publicly."
         }
       },
       "review": {
@@ -1144,13 +1164,13 @@
         },
         "rename": {
           "title": "Change the name",
-          "text": "Pick another name for the online copy, since that one is already used there.",
-          "expert": "The repository name is taken on the service: choose another name and the attempt resumes."
+          "text": "Pick another name for the online copy, since that one is already used there. The name field opens ready to type into.",
+          "expert": "The repository name is taken on the service: choose another; on GitHub that is a fresh reviewed attempt, elsewhere the failed phase resumes."
         },
         "skipOnline": {
           "title": "Skip the online copy",
-          "text": "Finish without the online copy. You can add one later from Settings.",
-          "expert": "Finishes without creating the remote repository; add a remote later in Settings."
+          "text": "Finish without the online copy. You can add one later from Settings. On GitHub, nothing was made, so Review shows the plan without it first.",
+          "expert": "Drops the remote repository from the plan: on GitHub (failed before any effect) back to Review for a fresh attempt, elsewhere the remaining phases carry on. Add a remote later in Settings."
         },
         "askSkip": {
           "title": "Skip the online copy",
@@ -1363,6 +1383,11 @@
           "title": "Create a Project now",
           "text": "Goes back to make your first Project now. What you already set up stays as it is.",
           "expert": "Returns to Begin to create the first Project now; what's already set up is kept."
+        },
+        "summary:away": {
+          "title": "Away from home",
+          "text": "Reaching it when you're out isn't set up yet. Finish it any time in Settings.",
+          "expert": "The remote route was left for later; Settings › Server & Project Location › Away From Home sets it up."
         }
       },
       "nas-find": {
@@ -1518,17 +1543,17 @@
       "nas-pmpair": {
         "useSsh": {
           "title": "Use SSH instead",
-          "text": "Connect with a key instead of pairing. Only needed if you would rather not pair with its Puppet Master.",
-          "expert": "Use SSH with a key instead of pairing with the device's Puppet Master."
+          "text": "Connect with a key instead of pairing. Helps when the device answers but its Puppet Master doesn't.",
+          "expert": "Use SSH with a key instead of pairing with the device's Puppet Master; works when SSH is reachable and Puppet Master isn't."
         },
         "another": {
           "title": "Choose another way",
-          "text": "Pick a different way to approve this computer, like a code instead of a request.",
-          "expert": "Choose another pairing method (code or QR instead of approval)."
+          "text": "Pick a different way to approve this computer.",
+          "expert": "Choose another pairing method."
         },
         "field:pmcode": {
           "title": "Code from the device",
-          "text": "The 8 letters and numbers its Puppet Master shows, like A7K9-M2Q4.",
+          "text": "The 8 letters and numbers its Puppet Master shows under Pair a device, like A7K9-M2Q4.",
           "expert": "The one-time pairing code the device's Puppet Master shows (8 characters)."
         },
         "resend": {
@@ -1582,11 +1607,11 @@
         "start": {
           "title": "Set it up",
           "text": "Starts setting up the way you chose to reach your Server away from home. Each step says what it is doing.",
-          "expert": "Starts the Remote Access owner's setup for the reviewed route; each step is a separate owner command."
+          "expert": "Starts setting up the reviewed way in; each step runs and reports on its own."
         },
         "later": {
           "title": "Do this later",
-          "text": "Stops here without setting it up. Everything else keeps working at home. Finish it any time in Settings.",
+          "text": "Stops here without setting it up. Nothing else changes. Finish it any time in Settings.",
           "expert": "Leaves the route not set up; Settings › Server & Project Location › Away From Home resumes it."
         },
         "person:tsSignIn": {
@@ -1618,6 +1643,16 @@
           "title": "Copy the short code",
           "text": "Copies the short code, easier to type on a phone than the link.",
           "expert": "Copies the Remote Link's short code (the owner resolves it to the same link)."
+        },
+        "useTailscale": {
+          "title": "Use Tailscale instead",
+          "text": "Stops the web address and sets up Tailscale: private, nothing opened to the internet, no address record or proxy. It asks you first.",
+          "expert": "Abandons the proxy route and starts the built-in Tailscale setup for this Server; asks for confirmation before any step runs."
+        },
+        "copy:dnsip": {
+          "title": "Copy the address",
+          "text": "Copies the address to put in the name's A record.",
+          "expert": "Copies the public IPv4 for the A record."
         }
       }
     },
@@ -1697,7 +1732,8 @@
         "group:suggest": "That name suits it.",
         "working": "Making it yours…",
         "selfMatch": "Same words? Then tick the box.",
-        "done": "It's yours now!"
+        "done": "It's yours now!",
+        "typing:code": "A code! Read it carefully."
       },
       "s-ready": {
         "enter": "Your Server is ready! Bring friends.",
@@ -1792,7 +1828,7 @@
         "enter": "This is its name online.",
         "typing": "Ooh, a name for the copy.",
         "available": "That name's free. Lovely.",
-        "vis:private": "Only you? Then just you, and who you invite.",
+        "vis:private": "Private? Then only people with access see it.",
         "vis:public": "Everyone? Then anyone online can see it.",
         "vis:internal": "Your organisation? Then only its people see it."
       },
@@ -1828,7 +1864,8 @@
         "route:headscale": "Your own Headscale. Very handy.",
         "route:reverse_proxy": "Your own web address. Smart.",
         "route:remote_link": "A Remote Link, then.",
-        "typing": "Ooh, an address. Type away."
+        "typing": "Ooh, an address. Type away.",
+        "pick:vpn": "Your own VPN. Tidy."
       },
       "review": {
         "enter": "Let me check everything…",
@@ -1891,7 +1928,8 @@
       },
       "ready": {
         "enter": "We're ready. Let's make something!",
-        "later": "All set. Make a Project whenever!"
+        "later": "All set. Make a Project whenever!",
+        "noAi": "No AI yet. Add one in Settings and I'll start thinking."
       },
       "nas-find": {
         "enter": "Looking on your network…",
@@ -1918,7 +1956,8 @@
         "notAdded": "That key isn't on it yet. I'll add it.",
         "pick:new": "A brand-new key, just for me!",
         "typing": "A passphrase. I won't peek.",
-        "testing": "Testing the key…"
+        "testing": "Testing the key…",
+        "typing:sshUser": "Which account? Type away."
       },
       "nas-signin": {
         "enter": "Just once, to add your key.",
@@ -1952,6 +1991,13 @@
       "nas-mounted": {
         "enter": "Which drive is it on?",
         "group:volume": "That drive? Easy."
+      },
+      "away-setup": {
+        "enter": "Let's set up the way in.",
+        "working": "Setting it up…",
+        "waiting": "Your turn. I'll wait.",
+        "done": "Done! Reachable away from home.",
+        "later": "Later is fine. It keeps."
       }
     },
     "oops": {
@@ -1983,7 +2029,8 @@
         "teamProject": "Pick the team project first.",
         "visibility": "Who can see it? Pick one first.",
         "branch": "That branch name won't do yet.",
-        "repoName": "The service won't take that name."
+        "repoName": "The service won't take that name.",
+        "repoTaken": "That name's used there already."
       },
       "connect": {
         "route": {
@@ -2016,7 +2063,10 @@
           "codeWrong": "That setup code doesn't match.",
           "ownerFail": "The Server turned that step down.",
           "evidenceMissing": "I couldn't confirm that step finished.",
-          "pendingHost": "No answer from the Server yet…"
+          "pendingHost": "No answer from the Server yet…",
+          "tickWords": "Compare the words, then tick the box.",
+          "codeFirst": "I need the setup code first.",
+          "codeFirstCloud": "I need the console's code first."
         },
         "ready": {
           "staleReq": "That request used the old code.",
@@ -2024,7 +2074,11 @@
           "wrongTarget": "That answer was meant for someone else!",
           "replayAdopt": "That answer was used already.",
           "codeMissing": "We need a new code first.",
-          "wordsMissing": "I can't see its words. Ask again?"
+          "wordsMissing": "I can't see its words. Ask again?",
+          "tickWords": "Check the words first, then tick.",
+          "staleApprove": "That answer was for an earlier request.",
+          "wrongApprove": "That answer was meant for someone else!",
+          "wrongClaim": "That answer was for another Server!"
         }
       },
       "restore": {
@@ -2052,7 +2106,8 @@
           }
         },
         "identity": {
-          "changedTitle": "Wait! Its ID has changed."
+          "changedTitle": "Wait! Its ID has changed.",
+          "changedWarn": "Wait! That fingerprint is new."
         },
         "key": {
           "passEmpty": "I need the passphrase first.",
@@ -2089,17 +2144,17 @@
         "details": {
           "taken": "That name's already taken there.",
           "nameRule": {
-            "github": "It won't take that name. The rule's just under it.",
-            "gitlab": "It won't take that name. The rule's just under it.",
-            "azure_devops": "It won't take that name. The rule's just under it.",
-            "bitbucket_cloud": "It won't take that name. The rule's just under it.",
-            "bitbucket_data_center": "It won't take that name. The rule's just under it.",
-            "forgejo": "It won't take that name. The rule's just under it.",
-            "gitea": "It won't take that name. The rule's just under it.",
-            "cursor_origin": "It won't take that name. The rule's just under it."
+            "github": "That name won't do there. See the rule under it?",
+            "gitlab": "That name won't do there. See the rule under it?",
+            "azure_devops": "That name won't do there. See the rule under it?",
+            "bitbucket_cloud": "That name won't do there. See the rule under it?",
+            "bitbucket_data_center": "That name won't do there. See the rule under it?",
+            "forgejo": "That name won't do there. See the rule under it?",
+            "gitea": "That name won't do there. See the rule under it?",
+            "cursor_origin": "That name won't do there. See the rule under it?"
           },
-          "nameReserved": "That name's kept for itself. Another one?",
-          "branchRule": "That branch name won't work. The rule's under it.",
+          "nameReserved": "That name's kept for the service itself.",
+          "branchRule": "That branch name won't do yet.",
           "azure": {
             "routeMissing": "I can't make one from here."
           }
@@ -2136,7 +2191,8 @@
             "unknownOnly": "Still unclear. Let's check again.",
             "confirmFirst": "Check which online copy to delete first.",
             "openUnavailable": "I can't open that in this preview.",
-            "other": "That isn't available yet. Nothing changed."
+            "other": "That isn't available yet. Nothing changed.",
+            "deleted": "The online copy is gone. Let's review it again."
           }
         }
       },
@@ -2158,13 +2214,14 @@
         "oc": {
           "fail": "No server answered there."
         },
-        "offline": "No connection right now."
+        "offline": "No internet here. Connect, then try again."
       },
       "like": {
         "unavailable": "That account isn't on this computer."
       },
       "free": {
-        "limited": "That one's reached its limit for now."
+        "limited": "That one's reached its limit for now.",
+        "limitedMeta": "That one's reached its limit for now."
       },
       "away": {
         "setup": {
@@ -2178,7 +2235,9 @@
             "unreachable": "The internet can't reach it yet.",
             "dns": "That name doesn't point here yet.",
             "live": "Live updates are blocked there.",
-            "relay": "The Remote Link isn't answering."
+            "relay": "The Remote Link isn't answering.",
+            "dnsSet": "That name points somewhere else.",
+            "liveFile": "Live updates are blocked."
           }
         }
       },
@@ -2192,7 +2251,9 @@
         "path": "Just the address, nothing after it.",
         "query": "Nothing after a ? or a #, please.",
         "short": "That's too short for a Remote Link.",
-        "long": "That's too long for a Remote Link."
+        "long": "That's too long for a Remote Link.",
+        "linkSpaces": "No spaces in a link, please.",
+        "linkScheme": "That's a web address, not the link."
       }
     },
     "cheer": {
@@ -2224,7 +2285,8 @@
         "teamProject": "Team project picked!",
         "visibility": "Got it. That's settled.",
         "branch": "Good branch name!",
-        "repoName": "That name works!"
+        "repoName": "That name works!",
+        "repoTaken": "A fresh name. Lovely."
       },
       "connect": {
         "route": {
@@ -2257,7 +2319,10 @@
           "codeWrong": "Code accepted!",
           "ownerFail": "Accepted this time!",
           "evidenceMissing": "Confirmed. All good.",
-          "pendingHost": "There it is. Answered!"
+          "pendingHost": "There it is. Answered!",
+          "tickWords": "Words checked. Approve away!",
+          "codeFirst": "Got the code!",
+          "codeFirstCloud": "Got the code!"
         },
         "ready": {
           "staleReq": "New request. Much better.",
@@ -2265,7 +2330,11 @@
           "wrongTarget": "Right device this time.",
           "replayAdopt": "All sorted.",
           "codeMissing": "Fresh code. Go!",
-          "wordsMissing": "There are the words."
+          "wordsMissing": "There are the words.",
+          "tickWords": "Words checked!",
+          "staleApprove": "Current answer. All good.",
+          "wrongApprove": "Right device this time.",
+          "wrongClaim": "Right Server this time."
         }
       },
       "restore": {
@@ -2293,7 +2362,8 @@
           }
         },
         "identity": {
-          "changedTitle": "New ID trusted. Carry on."
+          "changedTitle": "New ID trusted. Carry on.",
+          "changedWarn": "New ID trusted. Carry on."
         },
         "key": {
           "passEmpty": "Unlocked. Thank you!",
@@ -2330,17 +2400,17 @@
         "details": {
           "taken": "That name's free. Lovely.",
           "nameRule": {
-            "github": "That name works, and it's free. Lovely.",
-            "gitlab": "That name works, and it's free. Lovely.",
-            "azure_devops": "That name works, and it's free. Lovely.",
-            "bitbucket_cloud": "That name works, and it's free. Lovely.",
-            "bitbucket_data_center": "That name works, and it's free. Lovely.",
-            "forgejo": "That name works, and it's free. Lovely.",
-            "gitea": "That name works, and it's free. Lovely.",
-            "cursor_origin": "That name works, and it's free. Lovely."
+            "github": "That name works there now!",
+            "gitlab": "That name works there now!",
+            "azure_devops": "That name works there now!",
+            "bitbucket_cloud": "That name works there now!",
+            "bitbucket_data_center": "That name works there now!",
+            "forgejo": "That name works there now!",
+            "gitea": "That name works there now!",
+            "cursor_origin": "That name works there now!"
           },
-          "nameReserved": "That one's free to use. Lovely.",
-          "branchRule": "That branch name works.",
+          "nameReserved": "A name of its own. Good.",
+          "branchRule": "That branch name works!",
           "azure": {
             "routeMissing": "Ah, now we can!"
           }
@@ -2377,7 +2447,8 @@
             "unknownOnly": "A clear answer. Phew.",
             "confirmFirst": "That's the one.",
             "openUnavailable": "Ready to open.",
-            "other": "Available now."
+            "other": "Available now.",
+            "deleted": "A fresh start. Here we go!"
           }
         }
       },
@@ -2399,13 +2470,14 @@
         "oc": {
           "fail": "The server answered!"
         },
-        "offline": "Back online!"
+        "offline": "Back online. That worked!"
       },
       "like": {
         "unavailable": "Signed in. All set!"
       },
       "free": {
-        "limited": "Its limit reset. Ready!"
+        "limited": "Its limit reset. Ready!",
+        "limitedMeta": "Its limit reset. Ready!"
       },
       "away": {
         "setup": {
@@ -2419,7 +2491,9 @@
             "unreachable": "Reachable now. Hooray!",
             "dns": "The name points home now!",
             "live": "Live updates flow now!",
-            "relay": "Remote Link is up!"
+            "relay": "Remote Link is up!",
+            "dnsSet": "The name points home now!",
+            "liveFile": "Live updates flow now!"
           }
         }
       },
@@ -2433,7 +2507,9 @@
         "path": "All clear now.",
         "query": "Nice and clean!",
         "short": "That fits now!",
-        "long": "That fits now!"
+        "long": "That fits now!",
+        "linkSpaces": "That link looks right!",
+        "linkScheme": "That's the link!"
       }
     },
     "oopsAny": {

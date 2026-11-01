@@ -68,8 +68,16 @@
     return baseGo(id, opts);
   };
 
+  /* the NAS folder chosen was made with New folder (or sits inside one): it is new and empty, and Creating makes it
+     (Opus p21: it read as "Files on Home NAS" and no step made it) */
+  function newNasFolder(S) {
+    const d = md(S), n = S.sess.nas || {}, at = n.at || '';
+    if (d.project_mode !== 'existing_local' || d.project_transport === 'local' || d.project_transport === 'mounted' || n.purpose === 'storage' || !at) return false;
+    return (n.newFolders || []).some((f) => { const p = f.parent + '/' + f.name; return at === p || at.indexOf(p + '/') === 0; });
+  }
   function beginsAs(S) {
     const d = md(S);
+    if (newNasFolder(S)) return T('review.begins.deviceNew', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref });
     if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
     if (d.project_mode === 'existing_online') return T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
     if (d.project_mode === 'restore') return T('review.begins.restore', { project: d.project_name });
@@ -78,7 +86,7 @@
   function filesAt(S) {
     const d = md(S);
     if (d.project_mode === 'existing_local') return d.project_transport === 'local' ? d.local_location : (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref;
-    if (d.storage_mode === 'with_server') return T('name.withServer', { name: P().serverName(S) });
+    if (d.storage_mode === 'with_server') return P().serverName(S); /* (p14: "Files kept in · Garage Pi") */
     if (d.storage_mode === 'network_location') return d.storage_location.replace(/^[a-z]+:/, '');
     if (d.local_location_mode === 'custom' && d.local_location) return d.local_location;
     return P().docsPath(S, d.project_name);
@@ -88,7 +96,7 @@
   const needsRemote = (d) => d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
   /* (a web address of your own puts the Server's sign-in page on the internet: Review says so again, SCR-06) */
   const remoteWill = (d) => (d.remote_mode === 'reverse_proxy' ? T('review.will.remotePublic', { host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }) : T('review.will.remote'));
-  const remoteLabel = (d) => (d.remote_mode === 'local_or_vpn' ? T('away.home.title') : d.remote_mode === 'tailscale' ? (d.tailscale_control === 'headscale' ? T('connect.route.tailscale.headscale') + (d.headscale_url ? ' · ' + String(d.headscale_url).replace(/^https:\/\//, '').replace(/\/$/, '') : '') : 'Tailscale') : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
+  const remoteLabel = (d, S) => (d.remote_mode === 'local_or_vpn' ? T(S && (S.sess.server || {}).kind === 'cloud' ? 'away.vpn.title' : 'away.home.title') : d.remote_mode === 'tailscale' ? (d.tailscale_control === 'headscale' ? T('connect.route.tailscale.headscale') + (d.headscale_url ? ' · ' + String(d.headscale_url).replace(/^https:\/\//, '').replace(/\/$/, '') : '') : 'Tailscale') : d.remote_mode === 'reverse_proxy' ? d.proxy_hostname : T('away.link.title'));
   const buttonLabel = (d) => (d.project_mode === 'later' ? T('review.finish') : d.project_mode === 'new' ? T('review.create') : d.project_mode === 'restore' ? T('review.restoreBtn') : T('review.add'));
   /* The online copy as the plan holds it (FF-10): the service and its server, where it lives (the owner and, where the
      service has them, its project), and who can see it, in the service's own words; the rest of the plan for it in a
@@ -97,7 +105,9 @@
   const serviceLine = (d) => forgeName(d) + (O55.fixtures.needsAddress(d.forge, d.forge_provider_variant) && O55.safe.hostOf(d) ? ' (' + O55.safe.hostOf(d) + ')' : '');
   function livesAt(S, d) {
     const o = RU().ownerOf(S.env, d), p = RU().projectOf(S.env, d), acct = O55.official.accountFor(S, d.forge) || '';
-    return [o && o.id ? o.id : acct, p ? p.name || p.key : d.repository_project && d.forge !== 'azure_devops' ? d.repository_project : ''].filter(Boolean).join('/');
+    /* the address's own path: an Azure DevOps team project is in it; a Bitbucket project is not (Opus p73), so it is
+       named in the plan's details instead */
+    return [o && o.id ? o.id : acct, d.forge === 'azure_devops' && p ? p.name || p.key : ''].filter(Boolean).join('/');
   }
   const privacyLine = (S, d) => (d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility ? O55.safe.visCopy(d, d.repository_visibility, RU().ownerOf(S.env, d)).title : '');
   function onlinePlan(S, d) {
@@ -124,12 +134,15 @@
   }
 
   /* ------------------------------------------------------------------ review */
+  const LEAD_BY_MODE = { existing_local: 'review.leadAdd', existing_online: 'review.leadOnline', restore: 'review.leadRestore' };
+  const TITLE_BY_MODE = { existing_local: 'creating.titleAdd', existing_online: 'creating.titleOnline', restore: 'creating.titleRestore' };
   def('review', {
     chapter: 'project', stage: 'review_setup_plan',
     scene: (S) => ({ id: 'route', beat: 'default', params: routeParams(S) }),
     eyebrow: () => T('review.eyebrow'),
     title(S) { const d = md(S); return d.project_mode === 'later' ? T('review.titleLater') : T(d.project_mode === 'new' ? 'review.titleNew' : d.project_mode === 'restore' ? 'review.titleRestore' : 'review.titleAdd', { name: d.project_name }); },
-    lead: (S) => (md(S).project_mode === 'later' ? (needsRemote(md(S)) ? T('review.leadLaterAccess', { name: P().serverName(S) }) : T('review.leadLater')) : T('review.lead')),
+    /* (in the words of what the one step does: create, add, bring in, restore: Opus p63) */
+    lead: (S) => { const m = md(S).project_mode; return m === 'later' ? (needsRemote(md(S)) ? T('review.leadLaterAccess', { name: P().serverName(S) }) : T('review.leadLater')) : T(LEAD_BY_MODE[m] || 'review.lead'); },
     /* a backup to the NAS the Project's files now live on is no backup: it is dropped here, with the reason */
     enter(S) { S.sess.ui.returnTo = null; if (S.sess.backup.dest === 'nas' && O55.backup.filesOnNas(S)) { S.sess.backup.dest = null; S.sess.ui.backupDropped = true; } else S.sess.ui.backupDropped = false; },
     body(S) {
@@ -138,10 +151,14 @@
       const editLink = (edit) => { const l = C.link(T('review.edit'), 'edit', edit); if (asked) return l; asked = true; return `<span class="o55-opt o55-opt-inline" data-key="opt-group:edit">${l}${O55.tips.q('group:edit')}</span>`; };
       const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? editLink(edit) : ''}</div>${edit && asked && !row.noted ? (row.noted = true, O55.tips.explainer('group:edit')) : ''}`;
       const st = F.state(S, 'recheck:' + d.project_draft_revision);
-      let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
+      /* anything the plan still lacks leads, with the way to the screen that supplies it: never "Checked just now" above
+         a plan that cannot be created, nor its reason below the fold (Opus RV-12: a refused name read as checked) */
+      const miss = O55.draft.missing(d)[0];
+      let out = miss && d.project_mode !== 'later' ? `<div class="o55-banner o55-banner-warn" data-key="missing">${C.small('spark', 18)}<span>${U.esc(T(miss.key))}</span>${C.link(T('review.fix'), 'edit', miss.screen || FIX[miss.field] || 'begin')}</div>`
+        : st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
-        if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
+        if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d, S), 'away'));
         const willLater = [['seed', T('review.will.noProject')]].concat(needsRemote(d) ? [['globe', remoteWill(d)]] : []);
         out += C.group(T('review.willTitle', { button: buttonLabel(d) }), `<ul class="o55-will">${willLater.map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('')}</ul>`);
         return out;
@@ -152,10 +169,12 @@
       out += C.group(T('review.groups.project'), proj);
       out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where') + row('files', filesAt(S), d.project_mode === 'existing_local' ? 'begin' : 'name'));
       const fi = d.project_mode === 'existing_local' ? S.sess.folderInfo : null, kind = d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git';
-      let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
+      /* (a Project copied from its online home arrives with its history: Opus p74) */
+      let safe = row('history', (fi && fi.history ? T('review.savedExisting', { kind: fi.history === 'jujutsu' ? 'Jujutsu' : 'Git' }) : d.project_mode === 'existing_online' ? T('review.savedExisting', { kind }) : T('review.saved', { kind })) + (d.filesafe ? ' · FileSafe' : ''), 'safe');
       if (d.online_mode !== 'none') {
         const existing = d.project_mode === 'existing_online', at = existing ? 'ex-repos' : 'online-details';
-        safe += row('online', serviceLine(d) + ' · ' + livesAt(S, d) + '/' + d.repository_name, at);
+        const used = !existing && O55.safe.nameTaken(S, d.repository_name, d);
+        safe += row('online', serviceLine(d) + ' · ' + livesAt(S, d) + '/' + d.repository_name + (used ? ' · ' + T('review.nameUsed') : ''), at);
         if (d.online_mode === 'new' || privacyLine(S, d)) safe += row('privacy', privacyLine(S, d), existing ? null : at);
         safe += onlinePlan(S, d);
       }
@@ -164,18 +183,15 @@
       if (S.sess.backup.dest) safe += row('backup', O55.backup.whereLine(S, S.sess.backup.dest, S.sess.backup.sub) + ' · ' + T('review.backupLater'), 'backup'); else notSet.push(T('safe.backup.title').toLowerCase());
       if (S.sess.ui.backupDropped) safe += C.note(T('review.backupDropped', { name: O55.backup.label(S, 'nas') }), 'warn', 'vault');
       out += C.group(T('review.groups.safe'), safe);
-      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
+      if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d, S), 'away'));
       if (notSet.length) out += `<p class="o55-hint" data-key="notset">${U.esc(T('review.notSet', { list: notSet.join(', ') }))}</p>`;
-      /* anything the plan still lacks, with the way to the screen that supplies it */
-      const miss = O55.draft.missing(d)[0];
-      if (miss) out += `<div class="o55-banner o55-banner-warn" data-key="missing">${C.small('spark', 18)}<span>${U.esc(T(miss.key))}</span>${C.link(T('review.fix'), 'edit', miss.screen || FIX[miss.field] || 'begin')}</div>`;
       /* what the one click does */
       const will = [];
       if (d.project_mode === 'new') will.push(['folder', T('review.will.folder', { path: filesAt(S) })]);
       if (d.project_mode === 'existing_local') will.push(['folder', T('review.will.useFolder', { path: filesAt(S) })]);
       if (d.project_mode === 'existing_online') will.push(['cloud', T('review.will.clone', { service: forgeName(d) })]);
       if (d.project_mode === 'restore') will.push(['rewind', T('review.will.restore')]);
-      will.push(['history', T('review.will.history')]);
+      will.push(['history', T(d.project_mode === 'existing_online' ? 'review.will.historyKept' : 'review.will.history')]);
       if (d.online_mode === 'new') will.push(['cloud', T('review.will.online', { service: forgeName(d), privacy: privacyLine(S, d).toLowerCase() })]);
       if (d.settings_transfer.mode === 'copy_from_project') will.push(['stack', T('review.will.settings', { project: (S.sess.like && S.sess.like.name) || '' })]);
       if (needsRemote(d)) will.push(['globe', remoteWill(d)]);
@@ -231,6 +247,7 @@
     if (d.project_mode === 'later') return ['check'];
     if (d.project_mode === 'new') list.push('folder');
     if (d.project_mode === 'existing_local' && d.project_transport !== 'local') list.push('device');
+    if (newNasFolder(S)) list.push('folder');
     if (d.project_mode === 'existing_online') list.push('folder', 'clone');
     if (d.project_mode === 'restore') list.push('restore');
     const hasHistory = d.project_mode === 'existing_local' && S.sess.folderInfo && S.sess.folderInfo.history;
@@ -310,6 +327,7 @@
     if (cm.publishable) return publishAccepted(S);
     cm.state = v.state === 'verified_created' ? 'recovery' : v.state === 'unknown' ? 'unknown' : 'failed';
     cm.code = v.state === 'failed_before_effect' ? (cm.recovery.failure_reason || 'create_failed') : v.state;
+    if (cm.code === 'name_taken') O55.safe.refuseName(S, d); /* (the name stays refused there: details and Review say so, RV-12) */
     if (v.state === 'verified_created') { if (showing('creating')) O55.sound.play('error'); PR().armResumeRequest(OR, cm, d); }
     else if (v.state === 'failed_before_effect' && showing('creating')) O55.sound.play('error');
     S.save(); O55.ui.refresh();
@@ -380,7 +398,7 @@
       if (k === 'remote') O55.owners.dispatch(remoteCmd(d), { draft: d.project_draft_ref }, S.ctx(), () => ({ ok: true }));
       if (k === 'online') {
         const f = S.env.failures.online_copy;
-        if (f === 'name_taken' && !cm.renamed) return 'name_taken';
+        if (f === 'name_taken' && !cm.renamed) { O55.safe.refuseName(S, d); return 'name_taken'; }
         if (f === 'network' && !cm.networkRetried) { cm.networkRetried = true; S.save(); return 'network'; }
         cm.receipts = cm.receipts || {}; cm.receipts.online = 'fixture:online-copy:' + d.forge + ':' + d.repository_name;
       }
@@ -438,12 +456,14 @@
   }
   /* A failed GitHub attempt never retries in place: a fresh review (new draft revision) starts a new
      original attempt with a new idempotency key. */
-  function reviewFresh(S) {
+  function reviewFresh(S, stay) {
     discardStaged(S);
     O55.draft.set(md(S), { review_confirmed: false });
     S.sess.commit = { state: 'none' };
-    S.save(); O55.ui.go('review');
+    S.save(); if (!stay) O55.ui.go('review');
   }
+  /* GitHub's owner said the copy failed before anything was made there */
+  const githubRefused = (S) => { const cm = S.sess.commit || {}; return cm.state === 'failed' && !!cm.recovery && cm.recovery.remote_effect_state === 'failed_before_effect'; };
   const REASON_COPY = { central_dispatch_unavailable: 'waitingHost', concurrent_resume_active: 'claimBusy', forge_owner_gated: 'deleteGated', no_verified_binding: 'noBinding', remote_unknown_reconcile_only: 'unknownOnly', no_verified_remote_identity: 'noRemote', no_verified_recovery: 'noRemote', stale_setup_binding: 'stale', stale_generation: 'stale', stale_nonce: 'mismatch', stale_composition: 'stale', recovery_mismatch: 'mismatch', pending_no_result: 'pending', resume_armed: 'armed', delete_adopted: 'deleted', repository_deleted: 'deleted', delete_not_confirmed: 'confirmFirst', open_unavailable: 'openUnavailable', unknown_command: 'openUnavailable', needs_review_confirmation: 'openUnavailable' };
   function reasonCopy(code) { return T('creating.recovery.reasons.' + (REASON_COPY[code] || 'other')); }
   /* Plain recovery status; technical IDs live only in the details disclosure below it. */
@@ -470,19 +490,25 @@
           + `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
       }
       const msg = cm.code === 'name_taken' ? T('creating.taken', { service: svc, repo: d.repository_name }) : cm.code === 'network' ? T('creating.network', { service: svc }) : T(R + 'failedLead');
+      /* nothing was made on GitHub: a new name, no online copy, or the same plan reviewed again, each a fresh attempt
+         through Review (Opus RV-12: Review again was the only way, and showed the refused name as checked) */
+      const ways = (cm.code === 'name_taken' ? O55.ui.btn({ label: T('creating.rename', { service: svc }), do: 'rename', cls: 'o55-small' }, 'o55-secondary') : '')
+        + O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')
+        + O55.ui.btn({ label: T('creating.skipOnline'), do: 'skipOnline', cls: 'o55-small' }, 'o55-ghost');
       return `<div class="o55-banner o55-banner-warn" data-key="fail">${C.small('cloud', 18)}<span>${U.esc(msg)}</span></div>`
         + `<p class="o55-hint" data-key="freshattempt">${U.esc(T(R + 'freshAttempt'))}</p>`
-        + `<div class="o55-actions" data-key="safechoices">${O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')}</div>` + note;
+        + `<div class="o55-actions" data-key="safechoices">${ways}</div>` + note;
     }
     if (cm.state === 'recovery') {
       const r = cm.recovery, repo = repoDisplay(S);
       const gC = PR().effectiveContinue(O55.ownerResults, cm, d), gO = PR().effectiveOpen(cm), gD = PR().effectiveDelete(cm, O55.ownerResults);
-      let out = `<div class="o55-banner o55-banner-warn" data-key="recovery">${C.small('cloud', 18)}<span>${U.esc(T(R + 'notice', { repo, service: svc }))}</span></div>`;
+      /* the online copy deleted: the banner says so (never "was created" over a deleted copy: Opus p72), and the
+         half-made setup can only start again from a fresh review */
+      let out = cm.deleteReceipt ? `<div class="o55-banner o55-banner-info" data-key="recovery-deleted">${C.small('cloud', 18)}<span>${U.esc(T(R + 'reasons.deleted', { repo, service: svc }))}</span></div>`
+        : `<div class="o55-banner o55-banner-warn" data-key="recovery">${C.small('cloud', 18)}<span>${U.esc(T(R + 'notice', { repo, service: svc }))}</span></div>`;
       if (cm.settingsPublishError) out += C.note(T('creating.settingsPublishError'), 'warn', 'stack');
-      /* the online copy deleted: the half-made setup can only start again from a fresh review */
       if (cm.deleteReceipt) {
-        out += `<p class="o55-hint" data-key="deleted">${U.esc(T(R + 'reasons.deleted', { repo, service: svc }))}</p>`
-          + `<div class="o55-actions" data-key="safechoices">${O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`;
+        out += `<div class="o55-actions" data-key="safechoices">${O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`;
       } else {
         out += `<div class="o55-actions" data-key="routes">${btn(T(R + 'continue'), 'continueSetup', !gC.available, reasonCopy(gC.reason))}`
           + `${btn(T(R + 'open'), 'openRepo', !gO.available, reasonCopy(gO.reason))}${btn(T(R + 'delete'), 'deleteRepo', !gD.available, reasonCopy(gD.reason))}</div>`;
@@ -528,12 +554,12 @@
     /* (under NieR's art the scene carries the Project's name: its sign comes back with it, stamped) */
     scene: (S) => { const done = shownPhases(S).filter((p) => p.status === 'done').length; return { id: 'creating', beat: shownDone(S) ? 'done' : 'build', params: Object.assign({ step: done, total: phasesFor(S).length }, O55.theme().art === 'nier' ? { name: md(S).project_name || '' } : {}) }; },
     eyebrow: () => T('creating.eyebrow'),
-    title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return shownDone(S) ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
+    title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return shownDone(S) ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : TITLE_BY_MODE[md(S).project_mode] || 'creating.title', { name: nm }); },
     lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return shownDone(S) ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
     body(S) {
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d), github = PR().isGithubRemoteChain(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
-        history: T('creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
+        history: T(d.project_mode === 'existing_online' ? 'creating.phases.historyKept' : 'creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
       const details = cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null;
       let out = C.phases(shownPhases(S).map((p) => ({ key: p.key, label: labels[p.key], status: p.status, detail: details && details[p.key] }))) + savedLine(S, cm);
       if (github) {
@@ -607,14 +633,19 @@
         if (!v.ok) { cm.routeNote = v.reason; S.save(); O55.ui.refresh(); return; }
         cm.deleteConfirm = false; cm.routeNote = null; S.save(); O55.sound.play('success', SND.success); O55.ui.refresh();
       },
+      /* the name field, ready to type into; on GitHub a fresh attempt, so its Continue goes back to Review (RV-12) */
       rename(S) {
-        if (PR().isGithubRemoteChain(md(S))) return reviewFresh(S);
+        S.sess.ui.focusName = true;
+        if (PR().isGithubRemoteChain(md(S))) { reviewFresh(S, true); S.sess.ui.returnTo = { screen: 'review', from: 'online-details' }; S.save(); return O55.ui.go('online-details'); }
         S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
-      /* (skipping is moving on: the Project made without its online copy is not the failed copy's success, so Pip does not
-         cheer "Back online" for it; RV-11) */
-      skipOnline(S) { if (S.sess.commit.recovery) return; if (O55.ui.movedOn) O55.ui.movedOn(); const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
+      /* GitHub refused before making anything: the plan without its online copy goes back to Review, the fresh attempt's
+         confirmation (RV-12); elsewhere the failed phase is skipped and the rest carries on */
+      /* (skipping is moving on, never the failed copy's success: Pip does not cheer it; pm7-onb's RV-11 movedOn) */
+      skipOnline(S) {
+        if (githubRefused(S)) { if (O55.ui.movedOn) O55.ui.movedOn(); O55.draft.set(md(S), { online_mode: 'none' }); return reviewFresh(S); }
+        if (S.sess.commit.recovery) return; if (O55.ui.movedOn) O55.ui.movedOn(); const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); O55.sound.play('tap'); runCommit(S); },
       next(S) { const then = md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'; return O55.away && O55.away.needed(S) ? O55.away.start(S, then) : O55.ui.go(then); }
     },
     onBack: () => false
@@ -828,5 +859,7 @@
     onBack: () => false
   });
 
-  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone, phasesFor, shownPhases };
+  /* the online copy as Ready names it: its service, where it lives and its name */
+  const onlineLine = (S) => { const d = md(S); return d.online_mode === 'none' || !d.repository_name ? '' : serviceLine(d) + ' · ' + livesAt(S, d) + '/' + d.repository_name; };
+  O55.review = { routeParams, beginsAs, filesAt, whereWork, shownDone, phasesFor, shownPhases, onlineLine };
 })();

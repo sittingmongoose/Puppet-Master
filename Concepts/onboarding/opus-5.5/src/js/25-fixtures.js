@@ -35,7 +35,7 @@
       remote: 'paste', custody: 'cli', who: ['jared@gmail.com', 'jared@studio.example'] },
     { id: 'cursor', entry: 'cursor_sdk', settings: 'cursor-cli', name: 'Cursor', product: 'Cursor plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Cursor', likely: 4, custody: 'store',
       keyFrom: { name: 'your Cursor dashboard', url: 'https://cursor.com/dashboard/api' },
-      alt: { auth: 'signin', cli: 'cursor-agent', bill: 'plan', product: 'Cursor plan', custody: 'cli', entry: 'cursor_cli' }, who: ['jared@example.com', 'jared@studio.example'] },
+      alt: { auth: 'signin', cli: 'cursor-agent', tool: 'Cursor CLI', bill: 'plan', product: 'Cursor plan', custody: 'cli', entry: 'cursor_cli' }, who: ['jared@example.com', 'jared@studio.example'] },
     { id: 'grok', settings: 'grok', name: 'Grok Build', product: 'Grok Build plan', bill: 'plan', auth: 'signin', cli: 'grok', vendor: 'xAI', pair: 'xai-api',
       remote: 'device', custody: 'cli', who: ['jared@example.com', 'jared@studio.example'] },
     { id: 'muse', settings: 'muse', name: 'Muse Code', product: 'Muse Code plan', bill: 'plan', auth: 'signin', cli: 'muse', vendor: 'Meta', pair: 'meta-api',
@@ -48,7 +48,7 @@
       custody: 'store', keyFrom: { name: "Alibaba Cloud's Token Plan guide", url: 'https://www.alibabacloud.com/help/en/model-studio/token-plan-overview', guide: true } },
     { id: 'zai', settings: 'zai-coding', name: 'Z.AI Coding Plan', aka: 'GLM Coding Plan Zhipu', product: 'Z.AI Coding Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Z.AI',
       custody: 'store', keyFrom: { name: 'your Z.AI API keys page', url: 'https://z.ai/manage-apikey/apikey-list' } },
-    { id: 'kimi', settings: 'kimi-coding', name: 'Kimi Code', product: 'Kimi Code plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Moonshot',
+    { id: 'kimi', settings: 'kimi-coding', name: 'Kimi Code', product: 'Kimi Code plan', bill: 'plan', auth: 'key', cli: null, vendor: 'Moonshot', brand: 'Kimi',
       custody: 'store', keyFrom: { name: 'the Kimi Code console', url: 'https://www.kimi.com/code/console' } },
     { id: 'minimax', settings: 'minimax-coding', name: 'MiniMax M Plan', aka: 'MiniMax Coding Plan', product: 'MiniMax M Plan', bill: 'plan', auth: 'key', cli: null, vendor: 'MiniMax', canon: true,
       custody: 'store', keyFrom: { name: "MiniMax's M Plan guide", url: 'https://platform.minimax.io/docs/m-plan/intro', guide: true } },
@@ -62,7 +62,7 @@
        stay in OpenCode. */
     { id: 'opencode-runtime', entry: 'opencode', settings: 'opencode', name: 'OpenCode server', product: 'OpenCode server', bill: 'own', auth: 'server', cli: 'opencode', vendor: 'OpenCode', custody: 'server' },
     { id: 'anthropic-api', settings: 'anthropic-api', name: 'Anthropic API', product: 'Anthropic API', bill: 'use', auth: 'key', cli: null, pair: 'claude', vendor: 'Anthropic',
-      custody: 'store', context: 'workspace', workspaces: ['Default workspace', 'Side projects'], keyFrom: { name: 'the Claude Console', url: 'https://platform.claude.com/settings/keys' } },
+      custody: 'store', keyFrom: { name: 'the Claude Console', url: 'https://platform.claude.com/settings/keys' } },
     /* (freeLimits: AI Studio keys have free limits until billing is on, so a Ready line never says "billed by use") */
     { id: 'gemini-api', entry: 'gemini', settings: 'gemini-direct', name: 'Gemini API', product: 'Gemini API', bill: 'use', freeLimits: true, auth: 'key', cli: null, pair: 'antigravity', vendor: 'Google',
       custody: 'store', keyFrom: { name: 'Google AI Studio', url: 'https://aistudio.google.com/api-keys' } },
@@ -176,8 +176,10 @@
       ['free-onomeo', 'onomeo', 'key', 'https://onomeo.com/dashboard'],
       ['free-ovh', 'OVHcloud AI Endpoints', 'none', 'https://endpoints.ai.cloud.ovh.net'],
       ['free-scaleway', 'Scaleway', 'key', 'https://console.scaleway.com/iam/api-keys'],
-      ['free-cloudflare', 'Cloudflare Workers AI', 'key', 'https://dash.cloudflare.com'],
-      ['free-opencode', 'OpenCode Zen free models', 'key', 'https://opencode.ai/auth'],
+      /* Workers AI takes an API token with its account ID (Opus p55), made on the API Tokens page */
+      ['free-cloudflare', 'Cloudflare Workers AI', 'key', 'https://dash.cloudflare.com/profile/api-tokens', { provider: 'Cloudflare', token: true, accountId: true, keyName: "Cloudflare's API Tokens page" }],
+      /* (OpenCode Zen is now the OpenCode Console: the name All providers uses, Opus p54) */
+      ['free-opencode', 'OpenCode Console free models', 'key', 'https://opencode.ai/auth', { provider: 'OpenCode Console', keyName: 'the OpenCode Console' }],
       ['free-requesty', 'Requesty', 'key', 'https://app.requesty.ai/api-keys'],
       ['free-google', 'Google AI Studio', 'key', 'https://aistudio.google.com/apikey'],
       ['free-llm7', 'LLM7', 'none', 'https://token.llm7.io'],
@@ -188,9 +190,9 @@
       ['free-sambanova', 'SambaNova', 'key', 'https://cloud.sambanova.ai/apis'],
       ['free-vercel', 'Vercel AI Gateway', 'key', 'https://vercel.com/ai-gateway'],
       ['free-novita', 'Novita AI', 'key', 'https://novita.ai/settings/key-management'],
-      ['free-codestral', 'Codestral', 'key', 'https://console.mistral.ai/api-keys'],
+      ['free-codestral', 'Codestral', 'key', 'https://console.mistral.ai/codestral', { keyName: "Mistral's Codestral page" }],
       ['free-siliconflow', 'SiliconFlow', 'key', 'https://cloud.siliconflow.cn/account/ak']
-    ].map(([id, name, needs, url]) => ({ id, name, provider: name, needs, more: true, keyFrom: { name: name + "'s key page", url }, who: needs === 'signin' ? 'jared-p' : undefined }))
+    ].map(([id, name, needs, url, o]) => Object.assign({ id, name, provider: name, needs, more: true, keyFrom: { name: (o && o.keyName) || name + "'s key page", url }, who: needs === 'signin' ? 'jared-p' : undefined }, o ? { token: o.token, accountId: o.accountId, provider: o.provider || name } : {}))
   ];
 
   function folders() {
@@ -262,6 +264,10 @@
           projects: [{ id: 'company-site', name: 'Company Site', updated: 'today' }], accounts: [] }
       ],
       unclaimed: { id: 'pm:new', name: 'truenas.local', address: 'truenas.local', seed: 'pm-new-44be', setupCode: '482 913' },
+      /* (GLM-2: another computer is not the NAS: its own name, address and identity over the same unclaimed Server) */
+      unclaimedPc: { name: 'studio-pc.local', address: 'studio-pc.local', seed: 'pm-pc-5d10' },
+      /* the home's internet address, what a web address's A record points at (RV-13; a documentation range) */
+      homePublic: '198.51.100.24',
       /* a rented cloud computer never shows up on the home network: it is reached by the address its setup prints */
       unclaimedCloud: { id: 'pm:cloud', name: '203.0.113.24', address: '203.0.113.24', seed: 'pm-cloud-8e21', setupCode: '482 913' },
       /* folders that already live on the work computer when it is a Server (browsed through the paired Server) */
@@ -295,7 +301,7 @@
         bitbucket_cloud: { accounts: [], login: 'jared-p', owners: [{ id: 'jared-workspace', name: 'jared-workspace', projects: [{ key: 'WEB', name: 'Website', private: false }, { key: 'PRIV', name: 'Private work', private: true }] }],
           repos: [{ id: '{4a1c9e2b-7d3f-4b8a-9e1c-5f2d7a3b8c60}', name: 'garden-site', owner: 'jared-workspace / Website', container: 'jared-workspace', scope: 'organization', project: 'WEB', projectName: 'Website', private: true, updated: '3 weeks ago' }], taken: [], signup: true },
         /* a Data Center copy lives in a project (by its key), or in the person's own personal project (~USER) */
-        bitbucket_data_center: { accounts: [], login: 'jared', owners: [{ id: 'PROJ', name: 'Projects (PROJ)', publicAccess: true }, { id: '~JARED', name: 'Your personal projects (~JARED)', scope: 'personal', publicAccess: true }],
+        bitbucket_data_center: { accounts: [], login: 'jared', owners: [{ id: 'PROJ', name: 'Projects (PROJ)', publicAccess: true }, { id: '~JARED', name: 'Your personal project (~JARED)', scope: 'personal', publicAccess: true }],
           repos: [{ id: '87', name: 'build-tools', owner: 'PROJ', container: 'PROJ', scope: 'organization', private: true, updated: 'last month' }], taken: [], signup: false },
         /* hosted Forgejo is Codeberg; another Forgejo server is its own world */
         forgejo: { accounts: [], login: 'jared', owners: [], repos: [{ id: '20914', name: 'home-lab', owner: 'jared', container: '', private: true, updated: 'yesterday' }], taken: [], signup: true,
@@ -399,7 +405,15 @@
 
   /* values the demo hints offer that take a failure branch (62-flow.js O55.flow.hint); nothing real checks them */
   const DEMO = { wrongPassword: 'not-the-password', wrongPhrase: 'river candle orbit maple quiet lamp' };
+  /* the unclaimed Server a new-Server route finds, named as the kind and NAS brand it is (GLM-2, p3) */
+  const NAS_HOST = { unraid: 'tower.local', synology: 'diskstation.local', qnap: 'qnap-nas.local' };
+  function unclaimedFor(env, kind, platform) {
+    if (kind === 'cloud') return env.unclaimedCloud;
+    if (kind === 'pc') return Object.assign({}, env.unclaimed, env.unclaimedPc || {});
+    const h = NAS_HOST[platform]; return h ? Object.assign({}, env.unclaimed, { name: h, address: h, seed: env.unclaimed.seed + ':' + platform }) : env.unclaimed;
+  }
   O55.fixtures = {
+    unclaimedFor,
     PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders, DEMO,
     make(scenario) {
       const e = base();

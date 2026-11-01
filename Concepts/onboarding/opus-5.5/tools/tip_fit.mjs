@@ -27,6 +27,8 @@ const pageFile = resolve(opt('page', resolve(here, '../../../PMConcept7.html')))
 const out = resolve(raw[0] && !raw[0].startsWith('--') ? raw[0] : '/tmp/o55/tip_fit.json');
 const looks = opt('looks', 'basic,friendly,glass,retro,nier').split(',');
 const sizes = opt('sizes', '1100x760,1280x720').split(',').map((s) => s.split('x').map(Number));
+/* --screens a,b: only those screens' notes (a merge that changed a few); 'common' or 'chrome' measures the shared notes on ai-all */
+const only = opt('screens', '') ? new Set(opt('screens', '').split(',')) : null;
 const rows = [];
 let leaves = 0, wide = 0, moved = 0, switches = 0;
 /* in the page: open one note and measure it (on the stage, or in the form where the stage is a strip) */
@@ -137,7 +139,7 @@ for (const [w, h] of sizes) {
         if (window.PM_NIER) { const on = window.PM_NIER.on() || window.PM_NIER.wanted(); if (nier !== on) { window.PM_NIER.set(nier, { sound: false }); await new Promise((r) => setTimeout(r, 3200)); } }
       }, look);
       await sleep(500);
-      const screens = await page.evaluate(() => Object.keys(window.O55.screens.defs));
+      const screens = (await page.evaluate(() => Object.keys(window.O55.screens.defs))).filter((x) => !only || only.has(x));
       for (const mode of ['ELI5', 'Expert']) {
         await page.evaluate((m) => window.O55.talk.set(m, 'tip_fit'), mode);
         for (const screen of screens) {

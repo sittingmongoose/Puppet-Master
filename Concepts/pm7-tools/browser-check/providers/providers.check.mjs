@@ -214,9 +214,8 @@ export const tests = {
 		await act(W, 'anthropic-api', 'key').click(); await screenDone(W);
 		await typeInto(W, '#o55f-key-anthropic-api', FAKE_KEY);
 		await act(W, 'anthropic-api', 'keyCheck').click();
-		await waitRow(t, W, 'anthropic-api', /Needs a choice/, 'P09: a key that works in two workspaces asks which pays');
-		await W.$('[data-o55-do="workspace"]').click();
-		await waitRow(t, W, 'anthropic-api', /Ready/, 'P09: Ready once the workspace is chosen');
+		await waitRow(t, W, 'anthropic-api', /Ready/, 'Opus p44: an Anthropic key belongs to one workspace, so it asks nothing and is Ready');
+		await t.check('Opus p44: no workspace question', !/workspace/i.test(await rowText(W, 'anthropic-api')), await rowText(W, 'anthropic-api'));
 		await act(W, 'vertex', 'key').click(); await screenDone(W);
 		await t.visible(W.$('#o55f-project-vertex'), 'P09: Vertex asks for its project (optional)');
 	},
@@ -260,7 +259,7 @@ export const tests = {
 		await W.$('.o55-foot [data-o55-do="skip"]').click(); await screenDone(W);
 		await W.$('[data-o55-do="free"]').click(); await W.frame.waitForTimeout(900);
 		await freeBox(W, 'free-openrouter').locator('[data-o55-do="route"]').click();
-		const u = Date.now() + 6000; while (Date.now() < u) { if (/Ready/.test(await freeBox(W, 'free-openrouter').innerText())) break; await W.frame.waitForTimeout(250); }
+		const u = Date.now() + 9000; while (Date.now() < u) { if (/Ready/.test(await freeBox(W, 'free-openrouter').innerText())) break; await W.frame.waitForTimeout(250); }
 		await W.$('.o55-foot .o55-primary').click(); await W.frame.waitForTimeout(1500);
 		const sum = await W.frame.locator(`${ROOT} [data-key="sum-ai"]`).innerText().catch(() => '');
 		await t.check('P18: free-only says Free Models, not "can\'t plan"', /Free Models only/.test(sum) && !/can't plan/.test(sum), sum);
@@ -329,7 +328,7 @@ export const tests = {
 		const W = await open(t, 'free');
 		await W.frame.waitForSelector(`${ROOT} [data-key="fr-free-openrouter"]`, { timeout: 10000 });
 		await t.check('closed by default: none of the more routes is shown', (await W.frame.locator(`${ROOT} [data-key="fr-free-pollinations"]`).count()) === 0, 'more routes visible before opening');
-		const toggle = W.frame.locator(`${ROOT} [data-o55-do="details"][data-arg="freeMore"]`);
+		const toggle = W.frame.locator(`${ROOT} [data-o55-do="freeMore"]`);
 		await t.visible(toggle, 'one quiet "More free options" control');
 		await toggle.click(); await W.frame.waitForTimeout(600);
 		const box = W.$('[data-key="free-more"]');
@@ -421,6 +420,272 @@ export const tests = {
 		}
 		const all = await W.frame.locator(ROOT).innerText();
 		await t.check('no fallback without a destination', !/Open your browser and sign in there, then come back/.test(all), 'generic toast text present');
+	}
+	,
+	// Opus second pass, P2-2 minors in Providers and free models (p44-p69): each asserted by real clicks
+	async 'Opus pass 2 minors: providers'(t) {
+		let W = await toAll(t, { scenario: 'signedOut' });
+		const meta = async (id) => ((await W.$(`[data-key="pv-${id}"] > .o55-row .o55-rowmeta`).innerText({ timeout: 2000 }).catch(() => '')) || '').trim();
+		const key = async (id, text = FAKE_KEY) => { await typeInto(W, `#o55f-key-${id}`, text); await act(W, id, 'keyCheck').click(); };
+		const toast = async () => ((await W.frame.locator(`${ROOT} .o55-toast`).allInnerTexts().catch(() => [])) || []).join(' | ');
+		// p48: subtitles say something
+		const subs = { zai: await meta('zai'), 'qwen-token': await meta('qwen-token'), 'opencode-go': await meta('opencode-go') };
+		await t.check('p48: no subtitle repeats the name or only says what it is not', subs.zai !== 'Z.AI Coding Plan' && !/^Not the/.test(subs['qwen-token']) && !/^Not the/.test(subs['opencode-go']), JSON.stringify(subs));
+		// p66: the key's name said once; p44: an Anthropic key is Ready without a workspace question
+		await act(W, 'anthropic-api', 'key').click(); await screenDone(W);
+		const lab = ((await W.$('[data-key="pv-anthropic-api"] label').innerText().catch(() => '')) || '').trim();
+		await t.check('p66: the field says "Anthropic API key", not "API key for Anthropic API"', /^Anthropic API key/.test(lab) && !/API key for/.test(lab), lab);
+		await key('anthropic-api', 'short-key'); await W.frame.waitForTimeout(1500);
+		await t.text(row(W, 'anthropic-api'), /Check it's the right Anthropic API key/, "p66: the refusal names the key once");
+		// p62: a new key takes the refusal away, and Pip waits for its check
+		await typeInto(W, '#o55f-key-anthropic-api', FAKE_KEY); await W.frame.waitForTimeout(300);
+		const after = await rowText(W, 'anthropic-api');
+		await t.check('p62: the last refusal leaves once a new key is typed', !/wasn't accepted/.test(after), after.slice(0, 200));
+		await t.check('p62: Pip waits for the check instead of cheering it', (await W.$('[data-key="pv-anthropic-api"] [data-pip-loader]').count()) === 1, 'no wait marker');
+		await act(W, 'anthropic-api', 'keyCheck').click();
+		await waitRow(t, W, 'anthropic-api', /Ready/, 'p44: an Anthropic key is Ready without asking for a workspace', 6000);
+		await t.check('p44: no workspace question', !/workspace/i.test(await rowText(W, 'anthropic-api')), await rowText(W, 'anthropic-api'));
+		// p47: keys are keys; the row name is not repeated
+		await act(W, 'gemini-api', 'key').click(); await screenDone(W); await key('gemini-api');
+		await waitRow(t, W, 'gemini-api', /Ready/, 'Gemini API key Ready', 6000);
+		await t.crop('p47-gemini', row(W, 'gemini-api'), 'Gemini API Ready with one key');
+		await t.check('p47: one key reads "Key added", not "Key 1 · Gemini API"', (await meta('gemini-api')) === 'Key added', await meta('gemini-api'));
+		await act(W, 'gemini-api', 'manage').click(); await screenDone(W);
+		await t.text(row(W, 'gemini-api'), /Add another Gemini API key/, 'p47: Add another Gemini API key, not account');
+		await W.$('[data-o55-do="addAnother"][data-arg="gemini-api"]').click(); await screenDone(W);
+		await t.text(row(W, 'gemini-api'), /Adding another key/, 'p47: Adding another key');
+		await key('gemini-api'); await waitRow(t, W, 'gemini-api', /2 keys/, 'p47: two keys read "2 keys", not "2 accounts: Key 1, Key 2"', 6000);
+		// p49: Kimi's removal names the Kimi account
+		await act(W, 'kimi', 'key').click(); await screenDone(W); await key('kimi');
+		await waitRow(t, W, 'kimi', /Ready/, 'Kimi Code key Ready', 6000);
+		await act(W, 'kimi', 'manage').click(); await screenDone(W);
+		await W.$('[data-key="pv-kimi"] [data-o55-do="remove"]').click(); await screenDone(W);
+		await t.text(row(W, 'kimi'), /Your Kimi account itself stays/, 'p49: removal names the Kimi account, not Moonshot');
+		await W.$('[data-key="pv-kimi"] [data-o55-do="removeNo"]').click(); await screenDone(W);
+		// p68, p69: Vertex
+		await act(W, 'vertex', 'key').click(); await screenDone(W);
+		await t.text(row(W, 'vertex'), /Only needed if you use a Google Cloud project/, 'p69: the project hint says when it is needed');
+		await typeInto(W, '#o55f-project-vertex', 'my-project'); await key('vertex');
+		await waitRow(t, W, 'vertex', /Ready/, 'Vertex AI Ready with its project', 6000);
+		await act(W, 'vertex', 'manage').click(); await screenDone(W);
+		await W.$('[data-o55-do="addAnother"][data-arg="vertex"]').click(); await screenDone(W);
+		await t.check('p68: another Vertex AI key starts with an empty project', (await W.$('#o55f-project-vertex').inputValue()) === '', await W.$('#o55f-project-vertex').inputValue());
+		await W.$('[data-o55-do="cancelAdd"][data-arg="vertex"]').click(); await screenDone(W);
+		// p61: Cursor's browser sign-in installs Cursor CLI
+		await W.$('[data-o55-do="useAlt"][data-arg="cursor"]').click(); await screenDone(W);
+		await t.text(row(W, 'cursor'), /Install Cursor CLI/, 'p61: the missing piece is named: Install Cursor CLI');
+		await act(W, 'cursor', 'install').click(); await screenDone(W);
+		await t.text(row(W, 'cursor'), /Install Cursor CLI on this computer/, 'p61: the install question names Cursor CLI');
+		// p64, p66: Browser didn't open? takes the browser notice away; the wait reads "with your browser"
+		await act(W, 'codex', 'signin').click(); await W.frame.waitForTimeout(300);
+		await t.text(row(W, 'codex'), /Finish signing in with your browser\./, 'p66: "Finish signing in with your browser."');
+		const t1 = await toast();
+		await W.$('[data-o55-do="noBrowser"][data-arg="codex"]').click(); await W.frame.waitForTimeout(300);
+		const t2 = await toast();
+		await t.check('p64: the "browser opened" notice leaves when Browser didn\'t open? is pressed', /opened|open/i.test(t1) && !t2, JSON.stringify({ t1, t2 }));
+		await W.$('[data-o55-do="cancelSignin"][data-arg="codex"]').click(); await screenDone(W);
+		// p50: one ? on Copilot's question, none repeated on each choice
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'Copilot asks whose plan', 9000);
+		const qs = await W.frame.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding [data-key="pv-copilot"]'); return { onChoices: r.querySelectorAll('.o55-choices .o55-tipq').length, onQuestion: r.querySelectorAll('[data-key="ctxq-copilot"] .o55-tipq').length }; });
+		await t.check("p50: the question has the ?, the choices don't repeat it", qs.onChoices === 0 && qs.onQuestion === 1, JSON.stringify(qs));
+		await t.crop('p50-copilot', row(W, 'copilot'), "Copilot's whose-plan question with one ?, choices without");
+		// p51: the tick lands on the orb of the provider just made Ready
+		if (await act(W, 'antigravity', 'install').count()) { await act(W, 'antigravity', 'install').click(); await screenDone(W); await W.$('[data-o55-do="installGo"][data-arg="antigravity"]').click(); }
+		await waitRow(t, W, 'antigravity', /Not signed in/, 'Antigravity ready to sign in', 12000);
+		await act(W, 'antigravity', 'signin').click();
+		await waitRow(t, W, 'antigravity', /Ready/, 'Antigravity Ready', 9000);
+		const tgt = await W.frame.evaluate(() => { const sp = window.O55.pipScenes.spec(window.O55.S, {}); return { target: sp.target, props: sp.props.map((p) => p.id) }; });
+		await t.check('p51: the stage targets Antigravity\'s orb, not the last one (Cursor)', tgt.target === 'oantigravity', JSON.stringify(tgt));
+		// p45, p65: search
+		await typeInto(W, '#o55f-q', 'OpenAI API'); await screenDone(W);
+		await t.check('p65: searching "OpenAI API" finds ChatGPT / Codex', (await row(W, 'codex').count()) === 1, 'codex row missing');
+		await typeInto(W, '#o55f-q', 'zzqx'); await screenDone(W);
+		await t.text(W.$('[data-key="nomatch"]'), /Nothing matches/, 'p45: a search with no match says so');
+		await typeInto(W, '#o55f-q', ''); await screenDone(W);
+		// p59: the OpenCode server isn't named three times; its removal asks about the server
+		await act(W, 'opencode-runtime', 'server').click(); await screenDone(W);
+		await W.$('[data-o55-do="ocMode"][data-arg="managed"]').click(); await screenDone(W);
+		if (await W.$('[data-o55-do="installGo"][data-arg="opencode-runtime"]').count()) await W.$('[data-o55-do="installGo"][data-arg="opencode-runtime"]').click();
+		else await W.$('[data-o55-do="ocStart"]').click();
+		await waitRow(t, W, 'opencode-runtime', /Ready/, 'OpenCode server Ready', 12000);
+		const ocm = await meta('opencode-runtime');
+		await t.check('p59: the server line says where it runs, not "OpenCode server" again', !/OpenCode server/.test(ocm) && /Run by Puppet Master/.test(ocm), ocm);
+		await act(W, 'opencode-runtime', 'manage').click(); await screenDone(W);
+		await W.$('[data-key="pv-opencode-runtime"] [data-o55-do="remove"]').click(); await screenDone(W);
+		await t.text(row(W, 'opencode-runtime'), /Remove this OpenCode server from Puppet Master\?/, 'p59: removal asks about the server');
+		await t.check('p59: no "Your OpenCode account" on a server', !/Your OpenCode account/.test(await rowText(W, 'opencode-runtime')), await rowText(W, 'opencode-runtime'));
+		// p52: Pip has a line for offline
+		W = await open(t, 'ai', { scenario: 'aiOffline' });
+		await waitRow(t, W, 'claude', /Not installed|Not signed in/, 'offline situation loaded');
+		await W.$('.o55-sublinks [data-o55-do="all"]').click(); await W.frame.waitForTimeout(1200);
+		await act(W, 'xai-api', 'key').click(); await screenDone(W); await key('xai-api'); await W.frame.waitForTimeout(1500);
+		const oopsOff = await W.frame.evaluate(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); const o = window.O55.pipOops.read(l); return o && o.key; });
+		await t.check('p52: Pip reads "This computer is offline" (pip.oops.ai.offline)', oopsOff === 'ai.offline', String(oopsOff));
+	},
+	async 'Opus pass 2 minors: free models and Ready'(t) {
+		let W = await open(t, 'free');
+		await W.frame.waitForSelector(`${ROOT} [data-key="fr-free-openrouter"]`, { timeout: 10000 });
+		const fb = (id) => freeBox(W, id), ftext = async (id) => ((await fb(id).innerText().catch(() => '')) || '').replace(/\s+/g, ' ');
+		const toast = async () => ((await W.frame.locator(`${ROOT} .o55-toast`).allInnerTexts().catch(() => [])) || []).join(' | ');
+		// p53: OpenRouter's sign-in waits, has Browser didn't open? and Cancel
+		await fb('free-openrouter').locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(400);
+		let o = await ftext('free-openrouter');
+		await t.check('p53: the free sign-in waits for the person (not Ready at once)', /Waiting for you/.test(o) && !/Ready/.test(o) && /Browser didn't open\?/.test(o) && /Cancel/.test(o), o);
+		await fb('free-openrouter').locator('[data-o55-do="fnoBrowser"]').click(); await W.frame.waitForTimeout(400);
+		o = await ftext('free-openrouter');
+		await t.crop('p53-openrouter', fb('free-openrouter'), "OpenRouter free sign-in after Browser didn't open?: its page, Open and Copy, Cancel");
+		await t.check('p53: Browser didn\'t open? names the page, with Open and Copy', /openrouter\.ai/.test(o) && (await fb('free-openrouter').locator('[data-o55-do="fopenPage"]').count()) === 1 && (await fb('free-openrouter').locator('[data-o55-do="fcopyPage"]').count()) === 1, o);
+		await fb('free-openrouter').locator('[data-o55-do="fcancelSignin"]').click(); await W.frame.waitForTimeout(3500);
+		await t.check('p53: Cancel leaves it not set up, and the cancelled try never finishes', /Sign in/.test(await ftext('free-openrouter')) && !/Ready/.test(await ftext('free-openrouter')), await ftext('free-openrouter'));
+		await fb('free-openrouter').locator('[data-o55-do="route"]').click();
+		let u = Date.now() + 9000; while (Date.now() < u) { if (/Ready/.test(await ftext('free-openrouter'))) break; await W.frame.waitForTimeout(250); }
+		await t.check('p53: the person\'s sign-in completes it', /Ready/.test(await ftext('free-openrouter')), await ftext('free-openrouter'));
+		// p52: Pip has a line for a limit reached
+		await fb('free-groq').locator('[data-o55-do="route"]').click(); await screenDone(W);
+		await typeInto(W, '#o55f-fkey-free-groq', FAKE_KEY); await fb('free-groq').locator('[data-o55-do="fkeyCheck"]').click();
+		u = Date.now() + 8000; while (Date.now() < u) { if (/Limit reached/.test(await ftext('free-groq'))) break; await W.frame.waitForTimeout(250); }
+		const oopsLim = await W.frame.evaluate(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); const o = window.O55.pipOops.read(l); return o && o.key; });
+		await t.check('p52: Pip reads "Limit reached"', /^free\.limited/.test(String(oopsLim)), String(oopsLim));
+		// p58: More free options is a disclosure with its count and chevron
+		const tog = W.frame.locator(`${ROOT} [data-o55-do="freeMore"]`);
+		const tg = await tog.evaluate((b) => ({ text: b.innerText.trim(), svg: !!b.querySelector('svg'), q: !!b.querySelector('.o55-q'), exp: b.getAttribute('aria-expanded') }));
+		await t.check('p58: "20 more free options" with a chevron, not a help note', /^20 more free options$/.test(tg.text) && tg.svg && !tg.q && tg.exp === 'false', JSON.stringify(tg));
+		await t.crop('p58-toggle', W.$('[data-key="more-freeMore"]'), 'More free options as a disclosure with its count and chevron');
+		await tog.click(); await W.frame.waitForTimeout(500);
+		await t.crop('p57-more', W.$('[data-key="free-more"]'), 'More free options open: each compact row says what it needs');
+		// p57: compact rows say what they need; Kilo isn't "Kilo / Kilo" once on
+		await t.check('p57: a compact key row says it needs a key', /Needs a key/.test(await ftext('free-pollinations')), await ftext('free-pollinations'));
+		await t.check('p57: Kilo says no account is needed', /No account needed/.test(await ftext('free-kilo')), await ftext('free-kilo'));
+		await fb('free-kilo').scrollIntoViewIfNeeded(); await fb('free-kilo').locator('[data-o55-do="route"]').click();
+		u = Date.now() + 5000; while (Date.now() < u) { if (/Ready/.test(await ftext('free-kilo'))) break; await W.frame.waitForTimeout(250); }
+		const km = ((await fb('free-kilo').locator('.o55-rowmeta').innerText().catch(() => '')) || '').trim();
+		await t.check('p57: once on, Kilo\'s line is not its name again', km !== 'Kilo' && !/Kilo/.test(km), km);
+		// p67: a route that's set up can be turned off
+		await fb('free-kilo').locator('[data-o55-do="routeOff"]').click(); await screenDone(W);
+		await t.check('p67: Turn off takes it back to Turn on', /Turn on/.test(await ftext('free-kilo')) && !/Ready/.test(await ftext('free-kilo')), await ftext('free-kilo'));
+		// p54: OpenCode's free models use its current name and the Console
+		await t.check('p54: the free route says OpenCode Console, not Zen', /OpenCode Console free models/.test(await ftext('free-opencode')) && !/Zen/.test(await ftext('free-opencode')), await ftext('free-opencode'));
+		await fb('free-opencode').scrollIntoViewIfNeeded(); await fb('free-opencode').locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(500);
+		await t.text(fb('free-opencode'), /Get a key from the OpenCode Console/, 'p54: "Get a key from the OpenCode Console"');
+		await fb('free-opencode').locator('[data-o55-do="fcancel"]').click(); await screenDone(W);
+		// p55: Cloudflare Workers AI: an API token and its account ID, from the API Tokens page
+		await fb('free-cloudflare').scrollIntoViewIfNeeded(); await fb('free-cloudflare').locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(500);
+		const cf = await ftext('free-cloudflare');
+		await t.crop('p55-cloudflare', fb('free-cloudflare'), 'Cloudflare Workers AI: API token and account ID');
+		await t.check('p55: Cloudflare asks for its API token and its account ID', /Cloudflare API token/.test(cf) && /Cloudflare account ID/.test(cf) && (await W.$('#o55f-facct-free-cloudflare').count()) === 1, cf.slice(0, 300));
+		await fb('free-cloudflare').locator('[data-o55-do="fkeyFrom"]').click(); await W.frame.waitForTimeout(300);
+		await t.check("p55: Get a key opens Cloudflare's API Tokens page", /dash\.cloudflare\.com\/profile\/api-tokens/.test(await toast()), await toast());
+		await typeInto(W, '#o55f-fkey-free-cloudflare', FAKE_KEY); await W.frame.waitForTimeout(200);
+		await t.check('p55: Check waits for the account ID', (await fb('free-cloudflare').locator('[data-o55-do="fkeyCheck"]').getAttribute('aria-disabled')) === 'true', 'Check enabled without an account ID');
+		await typeInto(W, '#o55f-facct-free-cloudflare', '0123456789abcdef'); await W.frame.waitForTimeout(200);
+		await fb('free-cloudflare').locator('[data-o55-do="fkeyCheck"]').click();
+		u = Date.now() + 6000; while (Date.now() < u) { if (/Ready/.test(await ftext('free-cloudflare'))) break; await W.frame.waitForTimeout(250); }
+		await t.check('p55: token and account ID set it up', /Ready/.test(await ftext('free-cloudflare')), await ftext('free-cloudflare'));
+		// p56: Codestral's own key page
+		await fb('free-codestral').scrollIntoViewIfNeeded(); await fb('free-codestral').locator('[data-o55-do="route"]').click(); await W.frame.waitForTimeout(400);
+		await fb('free-codestral').locator('[data-o55-do="fkeyFrom"]').click(); await W.frame.waitForTimeout(300);
+		await t.check("p56: Codestral's Get a key opens Mistral's Codestral page", /console\.mistral\.ai\/codestral/.test(await toast()), await toast());
+		// p60: no AI and no free models: Ready doesn't say "You're ready" or cheer
+		W = await open(t, 'ai');
+		await waitRow(t, W, 'claude', /Not installed|Not signed in|Ready/, 'AI screen checked this computer');
+		await W.$('.o55-foot [data-o55-do="skip"]').click(); await screenDone(W);
+		await W.$('.o55-foot .o55-primary').click(); await W.frame.waitForTimeout(1500);
+		const rd = await W.frame.evaluate(() => ({ screen: window.O55.S.sess.screen, title: (document.querySelector('#pm-o55-onboarding .o55-title') || {}).textContent || '', line: window.O55.pipScenes.spec(window.O55.S, {}).lineId }));
+		await t.check('p60: no AI: Ready says "Almost ready" and Pip doesn\'t cheer', rd.screen === 'ready' && /Almost ready/.test(rd.title) && rd.line === 'noAi', JSON.stringify(rd));
+	}
+	,
+	// RV-17 (Opus second pass): Add another never makes a connected row read as signed out. The row keeps its Ready pill
+	// and its account line; the new sign-in, key or choice is set up under it, headed "Adding another account".
+	async 'RV-17: Add another keeps the row Ready with its accounts while the new one is set up'(t) {
+		const W = await toAll(t, { scenario: 'signedOut' });
+		const head = async (id) => {
+			const pill = ((await W.$(`[data-key="pv-${id}"] > .o55-row .o55-pill`).innerText({ timeout: 2000 }).catch(() => '')) || '').trim();
+			const meta = ((await W.$(`[data-key="pv-${id}"] > .o55-row .o55-rowmeta`).innerText({ timeout: 2000 }).catch(() => '')) || '').trim();
+			const adding = ((await W.$(`[data-key="adding-${id}"]`).innerText({ timeout: 1000 }).catch(() => '')) || '').replace(/\s+/g, ' ');
+			return { pill, meta, adding };
+		};
+		const kept = async (id, who, step, name) => {
+			const h = await head(id);
+			return t.check(name, /^Ready$/.test(h.pill) && h.meta.includes(who) && /Adding another (account|key)/.test(h.adding) && step.test(h.adding) && !/Not signed in/.test(h.pill + h.meta), JSON.stringify(h), { target: row(W, id) });
+		};
+		const add = async (id) => { await act(W, id, 'manage').click(); await screenDone(W); await W.$(`[data-o55-do="addAnother"][data-arg="${id}"]`).click(); await screenDone(W); };
+		// Claude: a browser sign-in
+		await act(W, 'claude', 'signin').click();
+		await waitRow(t, W, 'claude', /(?=.*Ready)(?=.*jared@example\.com)/, 'Claude Ready with its account', 9000);
+		await add('claude');
+		await kept('claude', 'jared@example.com', /Sign In/, 'Claude: Add another keeps Ready and jared@example.com; Sign In is under it');
+		await t.crop('adding-claude', row(W, 'claude'), 'Claude Ready with its account while another is added under it');
+		await act(W, 'claude', 'signin').click(); await W.frame.waitForTimeout(400);
+		await kept('claude', 'jared@example.com', /Waiting for you/, 'Claude: while the new sign-in waits, the row is still Ready with its account');
+		await W.$('[data-o55-do="cancelSignin"][data-arg="claude"]').click(); await screenDone(W);
+		let h = await head('claude');
+		await t.check('Claude: Cancel during the new sign-in ends the addition; the row is as it was', /^Ready$/.test(h.pill) && h.meta.includes('jared@example.com') && !h.adding, JSON.stringify(h));
+		await add('claude');
+		await W.$('[data-o55-do="cancelAdd"][data-arg="claude"]').click(); await screenDone(W);
+		h = await head('claude');
+		await t.check('Claude: Cancel before signing in ends the addition', /^Ready$/.test(h.pill) && !h.adding, JSON.stringify(h));
+		await add('claude');
+		await act(W, 'claude', 'signin').click();
+		await waitRow(t, W, 'claude', /2 accounts: jared@example\.com, jared@studio\.example/, 'Claude: the new account joins the first');
+		// Codex: its other way, a key, added under a ChatGPT account
+		await waitRow(t, W, 'codex', /Not signed in/, 'Codex ready to sign in');
+		await act(W, 'codex', 'signin').click();
+		await waitRow(t, W, 'codex', /Ready/, 'Codex Ready with ChatGPT', 9000);
+		const codexWho = (await head('codex')).meta;
+		await add('codex');
+		await W.$('[data-o55-do="useAlt"][data-arg="codex"]').click(); await screenDone(W);
+		await t.visible(W.$('#o55f-key-codex'), 'Codex: the key field is under the row');
+		await kept('codex', codexWho.split(' · ')[0], /OpenAI API key/, 'Codex: while a key is entered, the row is still Ready with its ChatGPT account');
+		await W.$('[data-o55-do="cancelAdd"][data-arg="codex"]').click(); await screenDone(W);
+		// Copilot: the second sign-in asks whose plan, under the first account
+		await waitRow(t, W, 'copilot', /Not signed in/, 'Copilot ready to sign in');
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'Copilot asks whose plan', 9000);
+		await W.$('[data-o55-do="entity"][data-arg="copilot|book-club-crew"]').click();
+		await waitRow(t, W, 'copilot', /(?=.*Ready)(?=.*through book-club-crew)/, 'Copilot Ready through book-club-crew');
+		await add('copilot');
+		await act(W, 'copilot', 'signin').click();
+		await waitRow(t, W, 'copilot', /Needs a choice/, 'Copilot: the second sign-in asks whose plan', 9000);
+		await kept('copilot', 'jared-p', /Needs a choice/, 'Copilot: while the second account asks whose plan, the row is still Ready with jared-p');
+		await t.check('Copilot: the first account keeps its plan line', (await head('copilot')).meta.includes('through book-club-crew'), (await head('copilot')).meta);
+		await t.crop('adding-copilot', row(W, 'copilot'), 'Copilot Ready with jared-p while the second account asks whose plan');
+		await W.$('[data-o55-do="entity"][data-arg="copilot|jared-studio"]').click();
+		await waitRow(t, W, 'copilot', /2 accounts: jared-p, jared-studio/, 'Copilot: both accounts once the second is chosen');
+	}
+	,
+	// RV-9 sweep: a sign-in that didn't finish, was offline, or has expired is over. Sign in again opens the
+	// vendor's page afresh as a new try whose browser step waits for the person again; the old try's result is dropped.
+	async 'RV-9: Sign in again is a fresh sign-in, its old completion cleared'(t) {
+		const opens = (W) => W.frame.evaluate(() => window.O55.owners.log.filter((e) => e.id === 'cmd.auth_profile.open_official_page').length);
+		const rec = (W, id) => W.frame.evaluate((id) => {
+			const S = window.O55.S, r = S.sess.ai.accounts[id] || {}, k = 'signin:' + id + ':' + (r.attempt || 0), op = (S.sess.ops || {})[k];
+			return { attempt: r.attempt || 0, state: r.state, failCode: r.failCode || null, remote: r.remote || null, op: op ? op.state : null, phases: op ? op.phases.map((p) => p.key + '=' + p.status).join(',') : '', accounts: S.sess.ai.list.filter((e) => e.provider === id).length };
+		}, id);
+		const CASES = [['antigravityOnce', 'antigravity', /Didn't sign in/, 'did not finish'], ['aiOffline', 'antigravity', /offline/, 'offline'], ['claudeExpired', 'claude', /Sign-in expired/, 'expired']];
+		for (const [scenario, id, failed, why] of CASES) {
+			const W = why === 'expired' ? await open(t, 'ai', { scenario }) : await toAll(t, { scenario });
+			if (await act(W, id, 'install').count()) { await act(W, id, 'install').click(); await screenDone(W); await W.$(`[data-o55-do="installGo"][data-arg="${id}"]`).click(); await waitRow(t, W, id, /Not signed in/, `${why}: ${id} installed, ready to sign in`, 12000); }
+			if (why !== 'expired') { await act(W, id, 'signin').click(); }
+			await waitRow(t, W, id, failed, `${why}: the row says the sign-in is over`, 8000);
+			const before = await rec(W, id), o1 = await opens(W);
+			await t.check(`${why}: nothing connected`, before.accounts === 0 && (why === 'expired' || before.op === 'failed'), JSON.stringify(before));
+			await act(W, id, 'signin').click(); await W.frame.waitForTimeout(200);
+			const fresh = await rec(W, id), o2 = await opens(W), txt = await rowText(W, id);
+			await t.check(`${why}: Sign in again opens the vendor's page again`, o2 === o1 + 1, `opens ${o1} -> ${o2}`);
+			await t.check(`${why}: a new try, cleared (new attempt, no old code or fallback)`, fresh.attempt === before.attempt + 1 && fresh.state === 'signingIn' && !fresh.failCode && !fresh.remote, JSON.stringify(fresh));
+			await t.check(`${why}: its browser step waits for the person again`, /^browser=(active|waiting),verify=waiting$/.test(fresh.phases) && fresh.op === 'running', fresh.phases);
+			await t.check(`${why}: the row waits for the person, not Ready`, /Waiting for you/.test(txt) && !/\bReady\b/.test(txt), txt.slice(0, 200));
+			await waitRow(t, W, id, /Ready/, `${why}: the person's new sign-in completes it`, 8000);
+		}
+		// a try left for "Browser didn't open?" never completes the row by itself: only the pasted code does
+		const W = await toAll(t);
+		if (await act(W, 'antigravity', 'install').count()) { await act(W, 'antigravity', 'install').click(); await screenDone(W); await W.$('[data-o55-do="installGo"][data-arg="antigravity"]').click(); }
+		await waitRow(t, W, 'antigravity', /Not signed in/, 'fallback: antigravity ready to sign in', 12000);
+		await act(W, 'antigravity', 'signin').click(); await W.frame.waitForTimeout(300);
+		await W.$('[data-o55-do="noBrowser"][data-arg="antigravity"]').click(); await W.frame.waitForTimeout(3200);
+		const left = await rec(W, 'antigravity');
+		await t.check('fallback: the browser try it replaced does not finish it', left.state === 'signingIn' && left.remote === 'paste' && left.accounts === 0, JSON.stringify(left));
 	}
 };
 

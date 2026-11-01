@@ -39,8 +39,8 @@
   function checkLink(value) {
     const v = String(value == null ? '' : value).trim();
     if (!v) return { ok: false, empty: true, error: null };
-    if (/\s/.test(v)) return fail('spaces');
-    if (/^http:\/\//i.test(v)) return fail('scheme');
+    if (/\s/.test(v)) return fail('linkSpaces');
+    if (/^http:\/\//i.test(v)) return fail('linkScheme');
     if (v.length < 6) return fail('short');
     if (v.length > 160) return fail('long');
     return { ok: true, url: v, form: /^[a-z][a-z0-9+.-]*:/i.test(v) ? 'link' : 'code' };

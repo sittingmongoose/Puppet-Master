@@ -9,7 +9,9 @@
   const allServers = (S) => S.env.pmServers.concat(S.env.vpnServers || []);
   const server = (S, id) => allServers(S).find((s) => s.id === (id || cd(S).server_ref)) || null;
   const words = (seed) => [...new Set(O55.art.identity(seed).words)].join(' '); /* (never one word twice: m5) */
-  const nProjects = (n) => T(n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
+  const nProjects = (n) => T(n === 0 ? 'connect.route.noProjects' : n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
+  /* M2: the words this device works out for its pairing request, to find on the Server's side when it is approved */
+  const mineWords = (S, id) => { try { return [...new Set(O55.art.identity(String(id) + ':candidate:' + U.slug(S.env.client.name)).words)].slice(0, 3).join(' '); } catch (_) { return ''; } };
   /* No numeric priority: O55.sound ranks coinciding events itself. Owner operations name their
      done/fail/phase sounds in opts.sound (O55.flow.op); a typed address that names a Server
      sounds `found` once, as the hint under the field turns into that Server's name. */
@@ -82,7 +84,7 @@
      (a web address, a Remote Link, an address typed instead of the list), what that address still needs comes first:
      "Choose your Puppet Master" there would name a list the screen does not show. */
   function routeReason(S) {
-    const d = cd(S), miss = O55.draft.missing(d), own = { reverse_proxy: 'proxy_hostname', remote_link: 'remote_endpoint' }[d.remote_mode];
+    const d = cd(S), miss = O55.draft.missing(d), own = { reverse_proxy: 'proxy_hostname', remote_link: 'remote_endpoint', tailscale: d.tailscale_control === 'headscale' ? 'headscale_url' : null }[d.remote_mode];
     if (d.remote_mode === 'tailscale' && tsKey(d) && !tsReady(S)) return T(d.tailscale_control === 'headscale' ? 'connect.route.tailscale.signInFirstHs' : 'connect.route.tailscale.signInFirst');
     const m = (own && miss.find((x) => x.field === own)) || miss[0];
     if (m && m.field === 'server_ref' && d.remote_mode === 'local_or_vpn' && S.sess.connect.manual) return T(String(S.sess.connect.addr || '').trim() ? 'connect.route.addrNoAnswer' : 'connect.route.addrMissing');
@@ -242,7 +244,7 @@
         else under += tsSignInBlock(S);
       } else if (mode === 'reverse_proxy') {
         const hit = resolveAddress(S, d.proxy_hostname, 'proxy'), w = O55.endpoint.hint(O55.endpoint.check(d.proxy_hostname, 'proxy'), '');
-        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
+        under += C.field({ bind: 'proxy', label: T('connect.route.proxy.label'), value: d.proxy_hostname, placeholder: 'https://pm.example.com', hint: hit ? hit.name + ' · ' + O55.endpoint.check(d.proxy_hostname, 'proxy').url : w.hint, error: w.error, invalid: !!w.error, valid: !!hit });
         under += H('c-route:proxy', [{ label: 'https://pm.example.net', outcome: 'works', fills: [['proxy', 'https://pm.example.net']] }, { label: 'https://pm.example.net/pm', outcome: 'wrong', fills: [['proxy', 'https://pm.example.net/pm']] }], { when: !hit });
         /* (its old-style explainer went: the route's ? says the same, QA round 2, Q8) */
       } else if (mode === 'remote_link') {
@@ -320,7 +322,7 @@
   });
 
   /* ------------------------------------------------------------------ C2: review and confirm */
-  const routeLabel = (d) => ({ local_or_vpn: T('connect.route.local'), tailscale: T(d.tailscale_control === 'headscale' ? 'connect.route.tailscale.headscale' : 'connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
+  const routeLabel = (d, s) => ({ local_or_vpn: T(s && s.via === 'vpn' ? 'connect.route.viaVpn' : 'connect.route.local'), tailscale: T(d.tailscale_control === 'headscale' ? 'connect.route.tailscale.headscale' : 'connect.route.tailscale.title'), reverse_proxy: T('connect.route.proxy.title'), remote_link: T('connect.route.link.title') })[d.remote_mode] || '';
   def('c-review', {
     seed: (S) => seedConnect(S, 0),
     chapter: 'computer', stage: 'review_setup_plan',
@@ -336,12 +338,12 @@
       if (paired(S)) out += `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone') + ' — ' + T('connect.pair.done', { name: s.name }))}</span></div>`;
       out += `<div class="o55-routeline" data-key="routeline" aria-label="${U.esc(T('connect.review.route'))}">`
         + `<span class="o55-routenode">${C.small('computer', 18)}<span>${U.esc(S.env.client.name)}</span></span>`
-        + `<span class="o55-routelink"><span>${U.esc(routeLabel(d))}</span></span>`
+        + `<span class="o55-routelink"><span>${U.esc(routeLabel(d, server(S)))}</span></span>`
         + `<span class="o55-routenode">${C.small('server', 18)}<span>${U.esc(s.name || '')}</span></span></div>`;
-      out += C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
+      if (!paired(S)) out += C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
         /* (which device approves is the Server's to say, once it knows this one: before pairing nothing names it, SCR-16) */
         { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.subAny', { name: s.name || '' }), tag: T('chrome.recommended') },
-        { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: s.name || '' }) },
+        { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: s.name || '', address: s.address || '' }) },
         { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
       ], d.connection_pairing, { label: T('connect.review.confirmTitle') }));
       return out;
@@ -398,7 +400,7 @@
         if (reached && !fail) {
           const v = typed.get(r.id) || '';
           out += C.field({ bind: 'code', label: T('connect.pair.codeLabel', { name: s.name }), value: v, placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: s.name }) : '', invalid: cs && cs.state === 'failed' });
-          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(v), reason: T('connect.pair.codeFirst'), reasonFor: '[data-key="field-code"]' }, 'o55-secondary')}</div>`;
           out += H('c-pair:code', [{ label: s.code || 'A7K9-M2Q4', outcome: 'works', fills: [['code', s.code || 'A7K9-M2Q4']] }, { label: 'AAAA-BBBB', outcome: 'wrong', fills: [['code', 'AAAA-BBBB']] }]);
           const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p>`;
@@ -408,6 +410,8 @@
         out += F.phases(S, runKey(r), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
         const st = F.state(S, runKey(r));
         const waiting = !fail && st && st.state === 'running' && (st.phases || []).some((p) => (p.key === 'approve' || p.key === 'qr') && p.status === 'active');
+        if (waiting && m === 'approval' && c.resent === r.id) out += `<p class="o55-hint" data-key="sent">${U.esc(T('connect.pair.sent'))}</p>`;
+        if (waiting && m === 'approval') out += `<p class="o55-hint" data-key="mywords">${U.esc(T('connect.pair.yourWords', { name: s.name, words: mineWords(S, s.id) }))}</p>`;
         if (waiting && m === 'approval') {
           const t = F.countdown(r.until);
           out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: t.m, s: t.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
@@ -428,7 +432,7 @@
     },
     do: {
       /* a new request, not the old one shown again: the old run ends and its answers no longer count (SCR-15) */
-      resend(S) { endRun(S, 'resend'); startRun(S); O55.ui.refresh(); U.announce(T('connect.pair.phases.approveAny', { name: (server(S) || {}).name || '' }), S.root.querySelector('.o55-win')); },
+      resend(S) { endRun(S, 'resend'); startRun(S); const nr = runOf(S); S.sess.connect.resent = nr ? nr.id : null; S.save(); O55.ui.refresh(); U.announce(T('connect.pair.sent'), S.root.querySelector('.o55-win')); }, /* (p24: says so) */
       newRequest(S) { endRun(S, 'retry'); startRun(S); O55.ui.refresh(); O55.sound.play('tap'); },
       /* (demo: a new request that the concept's Server answers this way: failures.pair_once, the Demo Studio hook) */
       demoOutcome(S, code) { if (!FAIL_ACTIONS[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.pair_once = code; endRun(S, 'retry'); startRun(S); O55.ui.refresh(); O55.sound.play('tap'); },

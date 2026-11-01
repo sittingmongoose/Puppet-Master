@@ -26,7 +26,7 @@
   function proxyFile(S) {
     const d = md(S), A2 = window.PM51 && window.PM51.sysAway;
     if (!A2 || typeof A2.awayConfig !== 'function' || !FILE_NAME[d.proxy_kind]) return null;
-    const u = ((S.sess.server || {}).kind === 'cloud' ? S.env.unclaimedCloud : S.env.unclaimed) || {};
+    const sv = S.sess.server || {}, u = O55.fixtures.unclaimedFor(S.env, sv.kind || 'nas', sv.platform) || {};
     const host = String(d.proxy_hostname || '').replace(/^https:\/\//, '').replace(/\/$/, '');
     try { return { name: FILE_NAME[d.proxy_kind], text: A2.awayConfig({ proxy: KIND_NAME[d.proxy_kind], domain: host }, u.address) }; } catch (_) { return null; }
   }
@@ -40,7 +40,8 @@
       Object.assign(sv, { kind: sv.kind || 'nas', claimed: true, confirmed: true, id: u.id, chainFor: u.id, displayName: sv.displayName || names[0] || u.name, selfTrustId: 'clienttrust:seed:' + u.id });
       O55.draft.set(d, { server_mode: 'new_server', server_ref: u.id, server_trust_confirmed: true, storage_mode: 'with_server' });
     }
-    if (d.remote_mode === 'none') O55.draft.set(d, { remote_mode: way || 'local_or_vpn', tailscale_control: way === 'tailscale' ? 'hosted' : d.tailscale_control });
+    const w = way || (sv.kind === 'cloud' ? 'tailscale' : 'local_or_vpn'); /* (RV-10: a cloud computer starts on Tailscale) */
+    if (d.remote_mode === 'none') O55.draft.set(d, { remote_mode: w, tailscale_control: w === 'tailscale' ? 'hosted' : d.tailscale_control });
     if (d.project_mode === 'new' && !String(d.project_name || '').trim()) { const sug = O55.tx('name.suggest'); O55.draft.set(d, { project_name: (Array.isArray(sug) && sug[0]) || 'Book club website' }); }
     S.save();
   }
@@ -55,9 +56,11 @@
     lead: (S) => T('away.lead', { name: serverName(S) }),
     body(S) {
       const d = md(S), mode = d.remote_mode, name = serverName(S);
-      const top = mode === 'tailscale' && d.tailscale_control !== 'headscale' ? 'anywhere' : mode === 'local_or_vpn' || mode === 'none' ? 'home' : 'more';
+      /* RV-10: a rented cloud computer is never on your home network: its private way is a VPN you already use */
+      const near = (S.sess.server || {}).kind === 'cloud' ? 'vpn' : 'home';
+      const top = mode === 'tailscale' && d.tailscale_control !== 'headscale' ? 'anywhere' : mode === 'local_or_vpn' || mode === 'none' ? near : 'more';
       let out = C.cards('pick', [
-        { v: 'home', glyph: 'computer', title: T('away.home.title'), sub: T('away.home.sub') },
+        { v: near, glyph: near === 'vpn' ? 'link' : 'computer', title: T('away.' + near + '.title'), sub: T('away.' + near + '.sub') },
         { v: 'anywhere', glyph: 'globe', title: T('away.anywhere.title'), sub: T('away.anywhere.sub'), tag: T('chrome.recommended') }
       ], top === 'more' ? null : top, { label: T('away.title') });
       /* each route's own questions sit under its card (QA round 2, Q7) */
@@ -102,7 +105,7 @@
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !!reason, reason } };
     },
     do: {
-      pick(S, v, el) { O55.draft.set(md(S), v === 'home' ? { remote_mode: 'local_or_vpn' } : { remote_mode: 'tailscale', tailscale_control: 'hosted' }); S.save(); O55.ui.refresh(); O55.ui.charm(el, T('away.' + v + '.title'), v === 'home' ? 'computer' : 'globe'); },
+      pick(S, v, el) { const near = v === 'home' || v === 'vpn'; O55.draft.set(md(S), near ? { remote_mode: 'local_or_vpn' } : { remote_mode: 'tailscale', tailscale_control: 'hosted' }); S.save(); O55.ui.refresh(); O55.ui.charm(el, T('away.' + v + '.title'), near ? (v === 'vpn' ? 'link' : 'computer') : 'globe'); },
       more(S) { O55.draft.set(md(S), { remote_more: !md(S).remote_more }); S.save(); O55.ui.refresh(); },
       route(S, v) { O55.draft.set(md(S), v === 'headscale' ? { remote_mode: 'tailscale', tailscale_control: 'headscale', remote_more: true } : { remote_mode: v, remote_more: true }); S.save(); O55.ui.refresh(); },
       hosting(S, v) { const own = v === 'existing_proxy'; O55.draft.set(md(S), { proxy_hosting: own ? 'existing_proxy' : 'generate_only', proxy_tls: null, proxy_kind: own ? null : KIND_NAME[md(S).proxy_kind] ? md(S).proxy_kind : 'caddy' }); S.save(); O55.ui.refresh(); },
@@ -210,6 +213,9 @@
     });
   }
   const HINT_WORD = { denied: 'refused', expired: 'expired', needs_device_approval: 'refused', route_failed: 'noAnswer', registration_denied: 'refused', hs_unreachable: 'noAnswer', dns_mismatch: 'wrong', unreachable: 'noAnswer', live_failed: 'noAnswer', relay_unavailable: 'noAnswer' };
+  /* the address an A record points at: the home's internet address, or a rented computer's own (RV-13) */
+  const publicIp = (S) => ((S.sess.server || {}).kind === 'cloud' ? (S.env.unclaimedCloud || {}).address : S.env.homePublic) || '';
+  const failWord = (S, code) => (code === 'dns_mismatch' && md(S).remote_mode === 'reverse_proxy' ? 'dnsSet' : code === 'live_failed' && md(S).proxy_hosting !== 'existing_proxy' ? 'liveFile' : FAIL_WORDS[code] || 'routeFailed');
   const FAIL_WORDS = { denied: 'denied', expired: 'expired', needs_device_approval: 'deviceApproval', route_failed: 'routeFailed', registration_denied: 'hsDenied', hs_unreachable: 'hsUnreachable', unreachable: 'unreachable', dns_mismatch: 'dns', live_failed: 'live', relay_unavailable: 'relay' };
   def('away-setup', {
     seed: (S) => { seedServer(S, 'tailscale'); if (!needsSetup(S)) O55.draft.set(md(S), { remote_mode: 'tailscale', tailscale_control: 'hosted' }); if (!A(S)) { O55.draft.set(md(S), { review_confirmed: true }); begin(S, 'ready'); } S.save(); },
@@ -228,11 +234,17 @@
       if (pf) out += `<div class="o55-codeline" data-key="pxfile"><code>${U.esc(pf.text)}</code>${F.copyBtn(pf.text, 'pxfile')}</div>${F.copyNote('pxfile')}`
         + `<div class="o55-sublinks" data-key="pxdownload">${O55.tips.opt('download:pxfile', `<a class="o55-btn o55-secondary o55-small" data-key="pxdl" download="${U.esc(pf.name)}" href="data:application/octet-stream;charset=utf-8,${encodeURIComponent(pf.text)}" data-pm-hover-exempt="true">${U.esc(T('away.setup.px.download'))}</a>`, 'o55-opt-inline', 'span')}</div>`;
       if (a.state === 'pending' && st) out += C.note(st.wait || T('server.confirm.pendingHost'), 'info', 'server');
-      if (a.link) out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
+      if (a.link && a.state !== 'failed') out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
         + `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>`
         + (a.code ? `<div class="o55-codeline" data-key="rcode"><code>${U.esc(a.code)}</code>${F.copyBtn(a.code, 'rcode')}</div>` : '') + `</div></div>`
         + F.copyNote('rlink') + F.copyNote('rcode') + `<p class="o55-hint" data-key="rlink-hint">${U.esc(T('away.setup.rl.share'))}</p>`;
-      if (a.state === 'failed' && a.fail) out += `<div class="o55-banner o55-banner-warn" data-key="awayfail">${C.small('lock', 18)}<span>${U.esc(T('away.setup.fail.' + (FAIL_WORDS[a.fail.code] || 'routeFailed'), { name, host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }))}</span></div>`;
+      if (a.state === 'failed' && a.fail) {
+        /* RV-13: a failure says what to do: the A record's value (with Copy), and for the file Puppet Master wrote, use
+           it as made and let live connections through whatever sits in front of the proxy */
+        const word = failWord(S, a.fail.code), ip = publicIp(S);
+        out += `<div class="o55-banner o55-banner-warn" data-key="awayfail">${C.small('lock', 18)}<span>${U.esc(T('away.setup.fail.' + word, { name, ip, host: String(d.proxy_hostname || '').replace(/^https:\/\//, '') }))}</span></div>`;
+        if (word === 'dnsSet') out += `<div class="o55-codeline" data-key="dnsip"><code>A  ${U.esc(String(d.proxy_hostname || '').replace(/^https:\/\//, ''))}  →  ${U.esc(ip)}</code>${F.copyBtn(ip, 'dnsip')}</div>${F.copyNote('dnsip')}`;
+      }
       /* the other answers the owner can give at a step, each tried once (failures.away_once) */
       const fails = [...new Set(steps.slice(a.step || 0).flatMap((x) => x.fail || []))];
       if (a.confirmed && !['done', 'later', 'failed'].includes(a.state)) out += H('away-setup:outcome', fails.map((code) => ({ label: T('away.setup.hint.' + code), outcome: HINT_WORD[code] || 'refused', act: ['demoOutcome', code] })));
@@ -246,7 +258,8 @@
       const later = { label: T('away.setup.later'), do: 'later', cls: 'o55-ghost' };
       if (a.state === 'done' || a.state === 'later') return { back: false, primary: { label: T('chrome.continue'), do: 'next' } };
       if (!a.confirmed) return { back: false, secondary: [later], primary: { label: T('away.setup.start'), do: 'start' } };
-      if (a.state === 'failed') return { back: false, secondary: [later], primary: { label: T('chrome.tryAgain'), do: 'retry' } };
+      /* (a web address that fails can always become the private way instead: RV-13) */
+      if (a.state === 'failed') return { back: false, secondary: md(S).remote_mode === 'reverse_proxy' ? [later, { label: T('away.setup.useTailscale'), do: 'useTailscale', cls: 'o55-ghost' }] : [later], primary: { label: T('chrome.tryAgain'), do: 'retry' } };
       if (a.state === 'waiting' && st) return { back: false, secondary: [later], primary: { label: T('away.setup.person.' + st.person), do: 'person', arg: st.person } };
       return { back: false, secondary: [later], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('chrome.working') } };
     },
@@ -260,8 +273,29 @@
       },
       /* (demo: the owner answers the next step this way, once: failures.away_once, the Demo Studio hook) */
       demoOutcome(S, code) { if (!HINT_WORD[code]) return; S.env.failures = S.env.failures || {}; S.env.failures.away_once = code; O55.sound.play('tap'); O55.ui.refresh(); },
-      retry(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) F.reset(S, stepKey(a, st)); a.state = 'idle'; a.fail = null; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh(); },
+      /* RV-9 (FA-7): a Tailscale sign-in that ran out or was turned down is over. Try again goes back to the person's own
+         sign-in, cleared (its step, its answer and their "signed in"), so a fresh sign-in page opens; any other failure
+         asks its own step again */
+      retry(S) {
+        const a = A(S); if (!a) return;
+        const steps = plan(S), st = steps[a.step], code = a.fail && a.fail.code;
+        const back = code === 'expired' || code === 'denied' ? steps.findIndex((x) => x.person === 'tsSignIn') : -1;
+        if (back >= 0 && back < a.step) {
+          const gone = steps.slice(back, a.step + 1);
+          gone.forEach((x) => F.reset(S, stepKey(a, x)));
+          a.done = a.done.filter((k) => !gone.some((x) => x.key === k));
+          a.people = Object.assign({}, a.people); delete a.people.tsSignIn;
+          a.step = back;
+        } else if (st) F.reset(S, stepKey(a, st));
+        a.state = 'idle'; a.fail = null; S.save(); O55.sound.play('tap'); run(S); O55.ui.refresh();
+      },
       /* Later: nothing more is set up now; the way in stays not set up and Settings finishes it (a clean finish) */
+      /* RV-13: the web address stops and the private way starts, asked first (its own Start is the confirmation) */
+      useTailscale(S) {
+        const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) O55.owners.cancelOp(stepKey(a, st));
+        O55.draft.set(md(S), { remote_mode: 'tailscale', tailscale_control: 'hosted' });
+        S.sess.awaySetup = null; begin(S, a.then, { ask: true }); S.save(); O55.sound.play('tap'); O55.ui.refresh();
+      },
       later(S) { const a = A(S); if (!a) return; const st = plan(S)[a.step]; if (st) O55.owners.cancelOp(stepKey(a, st)); a.state = 'later'; S.save(); O55.ui.refresh(); },
       next(S) { const a = A(S); O55.ui.go((a && a.then) || 'ready'); }
     },
