@@ -52,7 +52,7 @@
       "cmd.remote_access.private_endpoint.test",
       "cmd.remote_access.private_endpoint.remove"
     ],
-    "payload_positive_case_count": 44,
+    "payload_positive_case_count": 47,
     "compatibility_alias_count": 8,
     "compatibility_aliases": [
       {
@@ -3281,7 +3281,7 @@
         "schema_id": "pm.remote_access_system.tailscale_connector_configuration.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
         "implementation": "go_tsnet",
         "helper_binary": "pm-tailnet-connector",
         "artifact_ownership": "puppet_master_core_artifact",
@@ -3290,7 +3290,7 @@
         "full_tailscale_product_adopted": false,
         "control_server_kind": "hosted_tailscale",
         "headscale_origin_ref": null,
-        "secure_state_ref": "server-secure-state:connector:tsnet-hosted-01",
+        "secure_state_ref": "server-secure-state:connector:tsnet-native-client-dl259-01",
         "connector_version": "1.0.0",
         "state_schema_version": "1.0.0",
         "build_id": "pm-tailnet-connector-linux-amd64-build-01",
@@ -3319,7 +3319,7 @@
         "schema_id": "pm.remote_access_system.tailscale_connector_process_projection.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
         "connector_state": "needs_attention",
         "process_state": "blocked",
         "protocol_state": "compatible",
@@ -3347,9 +3347,9 @@
         "schema_id": "pm.remote_access_system.tailscale_authorization_session.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
-        "authentication_operation_id": "authentication-operation:tsnet-hosted-01",
-        "authorization_session_ref": "authorization-session:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
+        "authentication_operation_id": "authentication-operation:tsnet-native-client-dl259-01",
+        "authorization_session_ref": "authorization-session:tsnet-native-client-dl259-01",
         "control_server_kind": "hosted_tailscale",
         "state": "waiting_for_authorization",
         "operation_generation": 7,
@@ -3386,8 +3386,8 @@
         "schema_id": "pm.remote_access_system.tailscale_native_egress_policy.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
-        "policy_id": "policy:tailscale-native-egress:01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
+        "policy_id": "policy:tailscale-native-client-egress:dl259-01",
         "allowed_endpoint_refs": [
           "server-endpoint:approved-private-01"
         ],
@@ -3411,8 +3411,8 @@
         "schema_id": "pm.remote_access_system.tailscale_connector_ipc_envelope.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
-        "request_id": "request:connector-private-test:01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
+        "request_id": "request:connector-native-client-private-test:dl259-01",
         "idempotency_key": "idem-tsnet-private-test-01",
         "ipc_protocol_version": "1.0.0",
         "expected_connector_revision": 9,
@@ -3437,9 +3437,9 @@
       "value": {
         "schema_id": "pm.remote_access_system.tailscale_connector_receipt.v1",
         "schema_version": "1.0.0",
-        "receipt_id": "receipt:connector-private-test:01",
+        "receipt_id": "receipt:connector-native-client-private-test:dl259-01",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
         "server_endpoint_id": "server-endpoint:tsnet-private-01",
         "remote_route_id": "remote-route:tsnet-private-01",
         "connector_version": "1.0.0",
@@ -3484,7 +3484,7 @@
         "schema_id": "pm.remote_access_system.tailscale_connector_security_policy.v1",
         "schema_version": "1.0.0",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
         "secure_state_owner": "native_client_owner_permissioned_secure_state",
         "allowed_secret_location": "native_client_secure_state_only",
         "forbidden_secret_sinks": [
@@ -3518,7 +3518,7 @@
       "value": {
         "schema_id": "pm.remote_access_system.reverse_proxy_configuration.v1",
         "schema_version": "1.0.0",
-        "configuration_id": "reverse-proxy-config:nginx-01",
+        "configuration_id": "reverse-proxy-config:caddy-dl259-01",
         "server_id": "server:home-01",
         "proxy_family": "caddy",
         "deployment_form": "compose",
@@ -3537,7 +3537,7 @@
         "origin_policy": "exact_external_origin",
         "callback_policy": "validated_exact_return_context",
         "file_transfer_policy": "authenticated_bounded_stream",
-        "generated_artifact_ref": "artifact:reverse-proxy:nginx-01",
+        "generated_artifact_ref": "artifact:reverse-proxy:caddy-dl259-01",
         "test_receipt_ref": "receipt:remote-test:proxy-01",
         "state": "ready",
         "updated_at_utc": "2026-08-31T12:00:00Z",
@@ -3555,9 +3555,9 @@
       "value": {
         "record_type": "remote_access.command.payload.v1",
         "command_id": "cmd.remote_access.tailscale.setup.start",
-        "command_instance_id": "rcmd_case-000000000017",
-        "correlation_id": "corr_remote-000000000017",
-        "idempotency_key": "idem_remote-000000000017",
+        "command_instance_id": "rcmd_dl259-native-setup-0001",
+        "correlation_id": "corr_dl259-native-setup-0001",
+        "idempotency_key": "idem_dl259-native-setup-0001",
         "server_id": null,
         "client_id": "client:native-01",
         "session_id": "session:abcdefghijkl",
@@ -3567,7 +3567,7 @@
           "policy_generation": 3,
           "session_generation": 3
         },
-        "permission_snapshot_id": "perm_abcdefghijkl",
+        "permission_snapshot_id": "perm_dl259-native-0001",
         "return_context": {
           "surface_id": "settings.remote_access",
           "route_id": "settings/remote-access",
@@ -3591,11 +3591,11 @@
       "value": {
         "record_type": "remote_access.command.result.v1",
         "command_id": "cmd.remote_access.tailscale.setup.start",
-        "command_instance_id": "rcmd_result-000000000001",
-        "correlation_id": "corr_result-000000000001",
+        "command_instance_id": "rcmd_dl259-native-result-0001",
+        "correlation_id": "corr_dl259-native-result-0001",
         "server_id": null,
         "status": "succeeded",
-        "receipt_id": "rrcpt_result-00000000001",
+        "receipt_id": "rrcpt_dl259-native-result-0001",
         "resulting_route_generation": 6,
         "return_context": {
           "surface_id": "settings.remote_access",
@@ -3619,8 +3619,8 @@
       "value": {
         "record_type": "remote_access.command.error.v1",
         "command_id": "cmd.remote_access.tailscale.setup.start",
-        "command_instance_id": "rcmd_error-000000000001",
-        "correlation_id": "corr_error-000000000001",
+        "command_instance_id": "rcmd_dl259-native-error-0001",
+        "correlation_id": "corr_dl259-native-error-0001",
         "server_id": null,
         "remote_route_id": "remote-route:abcdefghijkl",
         "status": "failed",
@@ -3646,7 +3646,7 @@
         "record_type": "remote_access.command.availability.v1",
         "command_id": "cmd.remote_access.tailscale.setup.start",
         "server_id": null,
-        "connector_id": "connector:tsnet-hosted-01",
+        "connector_id": "connector:tsnet-native-client-dl259-01",
         "available": false,
         "currentness": "blocked",
         "evaluated_at": "2026-08-31T00:00:00Z",
@@ -3662,7 +3662,7 @@
         "disabled_reason": {
           "record_type": "remote_access.command.disabled_reason.v1",
           "command_id": "cmd.remote_access.tailscale.connector.check",
-          "connector_id": "connector:tsnet-hosted-01",
+          "connector_id": "connector:tsnet-native-client-dl259-01",
           "code": "handler_unavailable",
           "message": "The PM tailnet connector handler is unavailable.",
           "blocking_refs": [
@@ -3682,7 +3682,7 @@
       "value": {
         "record_type": "remote_access.command.permission.v1",
         "command_id": "cmd.remote_access.tailscale.setup.start",
-        "permission_snapshot_id": "perm_abcdefghijkl",
+        "permission_snapshot_id": "perm_dl259-native-0001",
         "server_id": null,
         "client_id": "client:native-01",
         "principal_id": "local-user",
@@ -3705,9 +3705,9 @@
         "request": {
           "record_type": "remote_access.command.payload.v1",
           "command_id": "cmd.remote_access.tailscale.setup.start",
-          "command_instance_id": "rcmd_case-000000000017",
-          "correlation_id": "corr_remote-000000000017",
-          "idempotency_key": "idem_remote-000000000017",
+          "command_instance_id": "rcmd_dl259-native-setup-0001",
+          "correlation_id": "corr_dl259-native-setup-0001",
+          "idempotency_key": "idem_dl259-native-setup-0001",
           "server_id": null,
           "client_id": "client:native-01",
           "session_id": "session:abcdefghijkl",
@@ -3717,7 +3717,7 @@
             "policy_generation": 3,
             "session_generation": 3
           },
-          "permission_snapshot_id": "perm_abcdefghijkl",
+          "permission_snapshot_id": "perm_dl259-native-0001",
           "return_context": {
             "surface_id": "settings.remote_access",
             "route_id": "settings/remote-access",
@@ -3737,11 +3737,11 @@
         "result": {
           "record_type": "remote_access.command.result.v1",
           "command_id": "cmd.remote_access.tailscale.setup.start",
-          "command_instance_id": "rcmd_case-000000000017",
-          "correlation_id": "corr_remote-000000000017",
+          "command_instance_id": "rcmd_dl259-native-setup-0001",
+          "correlation_id": "corr_dl259-native-setup-0001",
           "server_id": null,
           "status": "succeeded",
-          "receipt_id": "rrcpt_result-00000000001",
+          "receipt_id": "rrcpt_dl259-native-result-0001",
           "resulting_route_generation": 6,
           "return_context": {
             "surface_id": "settings.remote_access",
@@ -3766,9 +3766,9 @@
       "value": {
         "record_type": "remote_access.command.payload.v1",
         "command_id": "cmd.remote_access.proxy.preview",
-        "command_instance_id": "rcmd_case-000000000025",
-        "correlation_id": "corr_remote-000000000025",
-        "idempotency_key": "idem_remote-000000000025",
+        "command_instance_id": "rcmd_dl259-caddy-preview-0001",
+        "correlation_id": "corr_dl259-caddy-preview-0001",
+        "idempotency_key": "idem_dl259-caddy-preview-0001",
         "server_id": "server:abcdefghijkl",
         "server_endpoint_id": "server-endpoint:abcdefghijkl",
         "remote_route_id": "remote-route:abcdefghijkl",
@@ -3811,9 +3811,9 @@
       "value": {
         "record_type": "remote_access.command.payload.v1",
         "command_id": "cmd.remote_access.proxy.generate",
-        "command_instance_id": "rcmd_case-000000000026",
-        "correlation_id": "corr_remote-000000000026",
-        "idempotency_key": "idem_remote-000000000026",
+        "command_instance_id": "rcmd_dl259-caddy-generate-0001",
+        "correlation_id": "corr_dl259-caddy-generate-0001",
+        "idempotency_key": "idem_dl259-caddy-generate-0001",
         "server_id": "server:abcdefghijkl",
         "server_endpoint_id": "server-endpoint:abcdefghijkl",
         "remote_route_id": "remote-route:abcdefghijkl",
@@ -5456,7 +5456,8 @@
       "patch": {
         "owner_client_id": "client:another-01"
       },
-      "expected_error": "Native connector operation must name its owning initiating Client"
+      "expected_error": "Native connector operation must name its owning initiating Client",
+      "semantic_rule": "native_connector_client_owner_mismatch"
     },
     {
       "name": "DL259.command_result.browser_owner_refused",

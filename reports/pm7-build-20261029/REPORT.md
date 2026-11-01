@@ -1,3 +1,24 @@
+# Plans lane — landing repair close-out, 2026-11-01
+
+**Dry landing exit 1: zero blocking items, no timeouts.** Exact checked/source commit `4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4` is pushed to both remotes, on integration `7f3eecce64`, with main unchanged at `34b9ab2843`. All 18 items from the lead’s dry report are cleared. Final report-only head is mailed after push.
+
+| Area | Result |
+|---|---|
+| **Contracts** | All 14 failures fixed: 12 duplicate-ID groups, the closed additional-request census and one missing existing semantic-rule tag. Full validator PASS: 41 pairs, 1599 positives, 4201 negatives, 13 internal checks. |
+| **Readiness** | Both new stored-profile reference errors cleared; 90→88 total findings. Only 7 resource hash fields changed in 3 maps. Existing NonSecretRef/stored wrappers are exact; remaining Event Authority/legacy-fixture findings and governance staleness remain. |
+| **Evidence / graph** | The 16 nonblocking missing_ref rows point to 4 retired generated filenames. Old blobs match the untouched evidence and current replacement manifests/shards verify. No classifier change. |
+| **Coverage / scope** | Six companion/validator files; no new product rule, command, binding, setting, PlanUnit or coverage row. Existing 212 rows/1060 cells and all census pins remain. |
+| **Derived / GUI** | No owner Markdown or configured shard source changed; no regeneration needed. Shards/index and onboarding rulings pass. GUI bytes unchanged; no browser started. |
+| **Full dry** | Three aggregates and five complete exports retained. Raw statuses fail on expected staleness/existing findings; landing classifier exit 1, blocking 0, infrastructure 0. Baseline current and unchanged. |
+
+[LANDING-REPAIR.md](LANDING-REPAIR.md) has the cause/fix table; [LANDING-REPAIR.json](LANDING-REPAIR.json) has exact counts and 15 source hashes. [verification.json](verification.json), SHA-256 `8331acdccf57e22e74e62d9883689612d8da567347b83ce7b5362709bcaa379a`, retains **811 artifact hashes**, with all **761 prior hashes unchanged**. Full dry: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json`, SHA-256 `850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f`.
+
+Spec_Lock, auto_decisions, `.evidence`, `.implementation_readiness`, migration snapshot and baseline remain exactly main’s. No reseal, snapshot/baseline refresh, landing or landing lock. The expected stale seals and four old generated pointers remain for the lead’s report to Jared and the assigned governance refresh. Codeberg/Forgejo decisions remain Jared’s. The detached runner is complete; no browser, server, temporary worktree or temporary branch was created for this repair. T3 mail rings this thread.
+
+Earlier checkpoints retain their original inputs and findings.
+
+---
+
 # Plans lane — final FO-16/FO-18/FO-19 close-out, 2026-11-01
 
 **13/13 effective focused/generation/guard commands PASS.** Canonical/source commit `84faebbb8c3ac85c7594dad2dff4511f4ae6cb16` is pushed to both remotes. Integration `0cf2bf59e4` merged cleanly; `origin/main` is unchanged at `34b9ab2843`. Final report-only head is mailed after push. Coverage: **212 rows / 1060 required cells**, three added.

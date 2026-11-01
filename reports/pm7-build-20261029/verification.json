@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.pm7_plans_verification.v1",
-  "source_commit": "0cf2bf59e4d9048d65f56842c7b8bc75eda9be78",
+  "source_commit": "7f3eecce64ffb91cc36b7efa50e2a392c622218d",
   "aggregate_attribution_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
   "label_plan_commit": "7b706684d8",
   "late_label_correction_checks": "Historical focused label checks at 7b706684d8/543a85e5ff; current decision-amendment checks also preserve the final label-storage contract.",
@@ -23,9 +23,9 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-11-01T14:24:57.322200+00:00",
+  "recorded_at_utc": "2026-11-01T16:51:34.945718+00:00",
   "native_runtime_certification": false,
-  "step4": "small_final_delta_aligned_focused_pass",
+  "step4": "landing_companions_repaired_full_dry_exit1_zero_blockers",
   "counts": {
     "settings": 1010,
     "status_keys": 22,
@@ -49,148 +49,107 @@
     "schema_cases": 161,
     "final_review_source_cases": 89,
     "free_route_schema_cases": 12,
-    "footage_source_cases": 58
+    "footage_source_cases": 58,
+    "new_contract_pairs": 41,
+    "new_contract_positive_cases": 1599,
+    "new_contract_negative_cases": 4201
   },
   "commands": [
     {
-      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "command": "python3 scripts/pm-plans-verify.py validate-new-contracts --report /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-after.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-shards-generate.txt",
-      "sha256": "aae6d1a457d1cb6e9c237509a528cd41edac35e9cde4d71db88669839d5c8c86"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-after.json",
+      "sha256": "fce981b686bd018ab762125223ed4eafc709951e1ff9d2c0132ff59c4d2fe2d6",
+      "interpretation": "PASS"
     },
     {
-      "command": "python3 scripts/pm-plan-index.py generate",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-index-generate.txt",
-      "sha256": "7778fe491d8e3119497f92cdb4499f9db0ce0384afc7e10cc36cd5398ce45778"
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness --report /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-after.json",
+      "exit": 1,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-after.json",
+      "sha256": "a377d2388b0dc152dc0b49ccb940b0c615f0e6afc088a5394ce81e6c3136b543",
+      "interpretation": "new blockers cleared; existing/staleness findings remain"
     },
     {
-      "name": "builder",
-      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-builder.txt",
-      "sha256": "3ea413ccba3eddde43871c029475665c1d3a1fec9923913d4f45ef0f18c6cc3c"
-    },
-    {
-      "name": "build",
-      "command": "python3 scripts/pm7-build-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-build.txt",
-      "sha256": "80a16c82b06bab7d24cdfc2cb128dc0da3a5327fbf18dabef33b3e8c2fcaf91e"
-    },
-    {
-      "name": "canon",
-      "command": "python3 scripts/pm7-canon-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-canon.txt",
-      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056"
-    },
-    {
-      "name": "rulings",
-      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-rulings.txt",
-      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e"
-    },
-    {
-      "name": "boundary",
-      "command": "python3 scripts/pm7-demo-canon-check.py --history-base 4c974773cb",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-boundary.txt",
-      "sha256": "ef1d5da824a4fa3ecc85f73b03aa539e0c1e93749d47ac3ffcbbb89f8afcf111"
-    },
-    {
-      "name": "shards",
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-shards.txt",
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/shards-after.txt",
       "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8"
     },
     {
-      "name": "index",
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-index.txt",
-      "sha256": "ae83fe1e7291b7ef546eb65bd187d4898c3aecf3cde5196e9bab10c6b8123201"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/index-after.txt",
+      "sha256": "a91b353024cbaccdb5ab8d7221fbd581ed2438b3b08ee9faa486fd5f5dd592dc"
     },
     {
-      "name": "coverage",
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-coverage-check.py",
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
       "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-coverage.txt",
-      "sha256": "4aa61b9e36d121edbd9d52b81d984e97415dfa7fb071e55e5849f9b24e159c47"
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/rulings-after.txt",
+      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e"
     },
     {
-      "name": "guard",
-      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-guard.py",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-guard.txt",
-      "sha256": "1f319e149e76b735c87e918e8ed8e19a9a63fe883d0179dccf89e5854ecdf010"
-    },
-    {
-      "name": "diff",
-      "command": "git diff --check",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-diff.txt",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "command": "node scripts/pm7-footage-source-probe.cjs",
-      "exit": 0,
-      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-source.txt",
-      "sha256": "33f719546f51d2fc03d102df96d21c985d9971d9164c7755fa8220e323c6d526"
+      "command": "python3 scripts/pm-landing-check.py --base origin/main --json --keep-check-reports /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports",
+      "exit": 1,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json",
+      "sha256": "850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f",
+      "blocking": 0,
+      "infrastructure": []
     }
   ],
   "dry": {
-    "verified_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
-    "applies_to_latest_fix": false,
+    "verified_commit": "4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4",
+    "applies_to_latest_fix": true,
+    "exit": 1,
     "blocking": 0,
     "infrastructure": 0,
     "baseline_currency": {
-      "age_days": 0.06,
+      "age_days": 0.03,
       "ancestor": true,
       "base": "origin/main",
-      "base_commit": "6b88cf36dee05cf38fd8871ad2e510bec4a5a580",
-      "baseline_commit": "6d9a072b48b3d532593ec5f996e1d7fdd2ab5270",
+      "base_commit": "34b9ab2843954f0bf52e7748ca87dbc8662efeaf",
+      "baseline_commit": "40e8ccd7042c0cbabd936aa43578bcc9206c09b3",
       "max_age_days": 7,
-      "reason": "its commit 6d9a072b48b3 is an ancestor of the base origin/main (6b88cf36dee0) and 0.06 days older than it, within 7",
+      "reason": "its commit 40e8ccd7042c is an ancestor of the base origin/main (34b9ab284395) and 0.03 days older than it, within 7",
       "rule_two_applies": true
     },
     "new_branch_nonstale": 0,
-    "new_outside_branch_nonstale": 8,
-    "on_branch_stale_rows": 15478,
+    "new_outside_branch_nonstale": 16,
+    "on_branch_stale_rows": 26477,
     "on_branch_nonstale_rows": 0,
     "pre_existing_rows": 0,
     "grown_buckets": 0,
     "grown_subchecks": 11,
-    "truncated_comparisons": 2,
     "excused_by_kind": {
-      "artifact_hash_stale": 96,
-      "audit_closure_validator_error": 29,
+      "artifact_hash_stale": 136,
+      "audit_closure_validator_error": 35,
       "current_snapshot_batch_doc_invalid": 11,
-      "current_snapshot_coverage_not_exact_same_document_planunit_set": 1336,
-      "current_snapshot_live_bytes_mismatch": 54,
-      "current_snapshot_live_line_count_mismatch": 48,
-      "current_snapshot_live_sha256_mismatch": 54,
-      "current_snapshot_live_span_metadata_mismatch": 13423,
-      "current_snapshot_span_sha256_mismatch": 148,
-      "event_authority_currentness_source_drift": 74,
-      "pnc019_source_hash_stale": 14,
-      "stale_batch_report_sha256_after": 149,
-      "stale_hash": 38,
+      "current_snapshot_coverage_not_exact_same_document_planunit_set": 1340,
+      "current_snapshot_live_bytes_mismatch": 90,
+      "current_snapshot_live_line_count_mismatch": 86,
+      "current_snapshot_live_sha256_mismatch": 90,
+      "current_snapshot_live_span_metadata_mismatch": 23885,
+      "current_snapshot_span_byte_range_invalid": 3,
+      "current_snapshot_span_sha256_mismatch": 378,
+      "event_authority_currentness_source_drift": 126,
+      "pnc019_source_hash_stale": 18,
+      "stale_batch_report_sha256_after": 227,
+      "stale_hash": 48,
       "storage_value_registry_spec_lock_hash_stale": 4
     },
-    "not_run_for_qa_round2": true
+    "report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json",
+    "report_sha256": "850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f",
+    "complete_check_reports": "/mnt/Cursor/archive/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports",
+    "baseline_snapshot_refreshed": false
   },
   "failed_aggregate_groups": [
-    "verify_spec_lock",
-    "validate_plan_graph",
+    "validate_audit_closure",
     "validate_evidence",
-    "validate_prd_planning_runtime_contracts",
     "validate_implementation_readiness",
+    "validate_plan_graph",
     "validate_plan_migration",
     "validate_pm7_gui_fixtures",
-    "validate_audit_closure"
+    "validate_prd_planning_runtime_contracts",
+    "verify_spec_lock"
   ],
   "protected_governance_changes": [],
   "clean_committed_shard_check": {
@@ -203,7 +162,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "Historical GLM result remains pinned to17e87e52e0. Current small final delta has focused static/source checks only; no new independent, native, visual, audio or runtime acceptance claim.",
+  "review_status": "Historical GLM result stays pinned to17e87e52e0. The current companion repair has complete deterministic contract/readiness checks and a full dry landing at4dc5f29ff6, exit1/zero blockers; no new independent, visual, native or runtime certification claim.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -3994,6 +3953,256 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-source.txt",
       "sha256": "33f719546f51d2fc03d102df96d21c985d9971d9164c7755fa8220e323c6d526",
       "bytes": 444
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/core-inputs.json",
+      "sha256": "699983023759c397cc63d5b3fd3f753c22ad0c25b6d8fd1953966be0ecaf4b28",
+      "bytes": 1921
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-launch.json",
+      "sha256": "a1fc60da5b393771c5f9209ca73c1f76ce7e2e509e6b5ce800bea37f332c563f",
+      "bytes": 212
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-result.json",
+      "sha256": "f65b52b4a6b68e7c5766572fbb13dd11503e99c59e9dd5c5f142ed81fe08e9da",
+      "bytes": 1547
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-runner.py",
+      "sha256": "52bd981ffedb1f8b7d69e792fe550605d5c8ecadcc0b981d1d884b65caa835e8",
+      "bytes": 1878
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-runner.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-runner.stdout.txt",
+      "sha256": "a8323f510e77b7c75e53fbb227af3174fb0821f9a38601fb214c77bcb09202b7",
+      "bytes": 1611
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry-status.json",
+      "sha256": "f65b52b4a6b68e7c5766572fbb13dd11503e99c59e9dd5c5f142ed81fe08e9da",
+      "bytes": 1547
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json",
+      "sha256": "850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f",
+      "bytes": 35222360
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/evidence-before-summary.json",
+      "sha256": "513003ffef65444de838fc9759b3cf906eb74812ac28a7e7c6ab296083a703ac",
+      "bytes": 1382
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/evidence-before.json",
+      "sha256": "050a10a135c361631729cc77b7195a93f0f0175d23931316bac682ea7d276a54",
+      "bytes": 793875
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/evidence-before.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/evidence-before.stdout.txt",
+      "sha256": "ec55deab90f71e0b9ce4a3c76e491b843fd22533cf707facc6babb79699dadff",
+      "bytes": 791931
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/fixture-and-pin-repair.json",
+      "sha256": "d467f6b8190589a3916542f8f09a909408ac6e0efb420d9cb4939c4c2ce56537",
+      "bytes": 3577
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/focused-fixture-identity-guard.json",
+      "sha256": "d55d7618e77e525c969c4f4580f000bcd7cd6abd4547621dc17d3cbf5776239e",
+      "bytes": 772
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/generated-shard-staleness-proof.json",
+      "sha256": "38b04d2e628f9b928dbba0f99901ce09e0cdd1b2ff63372d4b34e00c132d6586",
+      "bytes": 3021
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/graph-before-summary.json",
+      "sha256": "1d84211e51b28de9c5f543d1ab39971d49f072d2fd0e246bed477084b0730ccd",
+      "bytes": 1379
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/graph-before.json",
+      "sha256": "31012326fd841ff8a7eec128f37b05e8ffbb8e39a283d85440d69620cf8502fa",
+      "bytes": 792060
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/graph-before.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/graph-before.stdout.txt",
+      "sha256": "77ea34effd6e62d8e9fa8e2b7ec8a44b6380c9e320cdae9f6c4fc28abb680762",
+      "bytes": 791933
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/ignored-inputs.json",
+      "sha256": "b8cafe5ce1709e985fd368be8a3e23ba87d5f491d1ae04179d460380f46657c4",
+      "bytes": 715380
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/index-after-result.json",
+      "sha256": "53e87b282f2d85060f697667a865b46f2601f3694666451d5bed56075cf79e69",
+      "bytes": 276
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/index-after.txt",
+      "sha256": "a91b353024cbaccdb5ab8d7221fbd581ed2438b3b08ee9faa486fd5f5dd592dc",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/audit-governance.json",
+      "sha256": "6ade65634eb1db0e4323737b1968f7fa08a56be8088b8f2be7fb43d67a33a719",
+      "bytes": 248522
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/exports/validate-evidence.json",
+      "sha256": "d9c2c787bb1feebb950d8bd76c18a3dbb8f5de47da7dc105e54bee9e6ec6529c",
+      "bytes": 770407
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/exports/validate-implementation-readiness.json",
+      "sha256": "5d30f15f2dc8a76db04fb4e75c55b78d43e566721033955317f7461b43ef0418",
+      "bytes": 25358
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/exports/validate-plan-graph.json",
+      "sha256": "9c60d5ea4440ad159e291c198e2b71784a2dcaab2f6ba0f8048979f7bd68d410",
+      "bytes": 768618
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/exports/validate-plan-migration.json",
+      "sha256": "0efea4d3c9ed6bd7f9f7553183c0d4aa2630ed79ec91e9283d3488ed6f4f9197",
+      "bytes": 57833
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+      "sha256": "55505cedf40c86080308d0c43abeddc1a5b8133b3647475dc1382ea23697af44",
+      "bytes": 382073
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/plan-migration-validate.json",
+      "sha256": "4bfb1e3780a355cab9b85bc15922104de37992e630b2cecbac96404bf4f54f47",
+      "bytes": 19745385
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports/run-gates.json",
+      "sha256": "b31b84ec1f441b40faf8d257f34870d7ba1aaee4ff08cd0a33828e4241516213",
+      "bytes": 140183
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/lead-before-dry.json",
+      "sha256": "9f6eae5051ed0d72a2a1257ef35120b416f7847d9b4653b3594b570d1072a3fe",
+      "bytes": 35272864
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-after.json",
+      "sha256": "fce981b686bd018ab762125223ed4eafc709951e1ff9d2c0132ff59c4d2fe2d6",
+      "bytes": 7372
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-after.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-after.stdout.txt",
+      "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6",
+      "bytes": 78
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-before.json",
+      "sha256": "b129d76e717a2b25eeed545b44f23fe3b0359381866c8ff0276cd21bbeafbc43",
+      "bytes": 20430
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-before.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/new-contracts-before.stdout.txt",
+      "sha256": "62ff915fcc739cac29bbb9447370e578ed540296a66ff546b21cedffdb523d40",
+      "bytes": 6607
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-after.json",
+      "sha256": "a377d2388b0dc152dc0b49ccb940b0c615f0e6afc088a5394ce81e6c3136b543",
+      "bytes": 26600
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-after.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-after.stdout.txt",
+      "sha256": "9cf6c4207db038e62fb9fe447d9835805acacd9c1ffd74e2461271f4a1471972",
+      "bytes": 25993
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-before-summary.json",
+      "sha256": "d2d0d86e86df38702babc05adde429bd7e5d10bac79288396f64ad3ae425f11d",
+      "bytes": 17963
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-before.json",
+      "sha256": "777e84fe6a2f56e049a9ece6059ca442de5d06c688f11e2eae9fb43d0984b5bf",
+      "bytes": 32442
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-before.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/readiness-before.stdout.txt",
+      "sha256": "010aeda94d56c0b228e127f78dd2283775955016a5dd7dda322d0fb24a35c7aa",
+      "bytes": 31835
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/repair-preservation.json",
+      "sha256": "a9cf0a718f3557364c0b7d8f4fee0b4369f7f54b8033ab4dfaca33b76510d6a3",
+      "bytes": 9652
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/rulings-after-result.json",
+      "sha256": "b21817c14e8a429d221fcde6d55f7430ff0d9b780148664b65ac014a62005afd",
+      "bytes": 284
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/rulings-after.txt",
+      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e",
+      "bytes": 804
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/shards-after-result.json",
+      "sha256": "1f717bc18ca99501e2b369deef90d9522a7098a98fd5d53b917bff2a8163cc7b",
+      "bytes": 313
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/shards-after.txt",
+      "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8",
+      "bytes": 111
     }
   ],
   "reviews": [
@@ -4041,10 +4250,10 @@
   "cleanup": {
     "owned_browsers_started": 0,
     "owned_servers_started": 0,
-    "scratch": "No scratch directory, worktree or branch created; cited text evidence and portable guards retained.",
+    "scratch": "No scratch/worktree/branch created. Detached dry runner finished; cited text proof and full reports/exports retained.",
     "T3_mail_delivery": "rings; no waiter"
   },
-  "latest_amendment": "DL-272 final FO-16/FO-18/FO-19; no new Jared ruling",
+  "latest_amendment": "PM7 landing companion repair,2026-11-01; no new product rule",
   "jared_decisions": {
     "source_commit": "e3f99b3992d0b8829a31993dc74ba04ec96a24c2",
     "source_parent_commit": "3349c39dbe6fa95c5b85e1de6c9004887073c52f",
@@ -5389,7 +5598,7 @@
     "future_full_check_owner": "lead landing check",
     "evidence_repair": "Interim manifest write replaced this pass wiring log; read-only wiring check rerun passed; manifest rebuilt and every retained hash verified. Product source unchanged."
   },
-  "latest_GUI_input": "0cf2bf59e4d9048d65f56842c7b8bc75eda9be78",
+  "latest_GUI_input": "7f3eecce64ffb91cc36b7efa50e2a392c622218d",
   "historical_GUI5abe_commands": [
     {
       "argv": [
@@ -6370,11 +6579,11 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "84faebbb8c3ac85c7594dad2dff4511f4ae6cb16",
-  "aggregate_results_apply_latest": false,
-  "full_gates_run_for_QA2": false,
-  "dry_landing_run_for_QA2": false,
-  "next_full_gates_and_dry": "await lead authorization",
+  "canonical_source_commit": "4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4",
+  "aggregate_results_apply_latest": true,
+  "full_gates_run_for_QA2": true,
+  "dry_landing_run_for_QA2": true,
+  "next_full_gates_and_dry": "Completed at the canonical source commit recorded above; final integration and landing belong to pm7-build.",
   "historical_clean_committed_shard_check": {
     "source_commit": "78af23f393d730766d7a354cea57bdcf34505bea",
     "exit": 0,
@@ -6382,10 +6591,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 729,
+    "prior_count": 761,
     "all_prior_hashes_unchanged": true,
-    "current_count": 761,
-    "claim": "Every artifact has a SHA-256; new artifacts also have byte counts. Initial overlapped-index diagnostic is retained separately; all final commands pass."
+    "current_count": 811,
+    "claim": "Every retained artifact has a SHA-256. Initial failed reports are preserved separately from the passing repair and full nonblocking dry result."
   },
   "historical_pre_DL259_commands": [
     {
@@ -6718,7 +6927,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "GUI input at0cf2bf59e4; canonical/source implementation snapshot at84faebbb8c3ac85c7594dad2dff4511f4ae6cb16. Final report-only head is mailed after push.",
+  "source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -8964,5 +9173,266 @@
       "waived": false
     },
     "no_browsers_full_gates_dry_landing_lock_landing_or_reseal": true
+  },
+  "historical_pre_landing_repair_commands": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-shards-generate.txt",
+      "sha256": "aae6d1a457d1cb6e9c237509a528cd41edac35e9cde4d71db88669839d5c8c86"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-index-generate.txt",
+      "sha256": "7778fe491d8e3119497f92cdb4499f9db0ce0384afc7e10cc36cd5398ce45778"
+    },
+    {
+      "name": "builder",
+      "command": "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-builder.txt",
+      "sha256": "3ea413ccba3eddde43871c029475665c1d3a1fec9923913d4f45ef0f18c6cc3c"
+    },
+    {
+      "name": "build",
+      "command": "python3 scripts/pm7-build-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-build.txt",
+      "sha256": "80a16c82b06bab7d24cdfc2cb128dc0da3a5327fbf18dabef33b3e8c2fcaf91e"
+    },
+    {
+      "name": "canon",
+      "command": "python3 scripts/pm7-canon-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-canon.txt",
+      "sha256": "0930c7319d51dcffe3a2fb501bf37519a2f64cc3fb632376a81d90d1ff8be056"
+    },
+    {
+      "name": "rulings",
+      "command": "python3 scripts/pm7-onboarding-rulings-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-rulings.txt",
+      "sha256": "5559d79bf791ca96015db072a2f880b402bc2830e457a2ee899931105e83a19e"
+    },
+    {
+      "name": "boundary",
+      "command": "python3 scripts/pm7-demo-canon-check.py --history-base 4c974773cb",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-boundary.txt",
+      "sha256": "ef1d5da824a4fa3ecc85f73b03aa539e0c1e93749d47ac3ffcbbb89f8afcf111"
+    },
+    {
+      "name": "shards",
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-shards.txt",
+      "sha256": "4394a448254d78602398fb277d3fd9f062c32a150df2ca023877a53ebb6f07f8"
+    },
+    {
+      "name": "index",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-index.txt",
+      "sha256": "ae83fe1e7291b7ef546eb65bd187d4898c3aecf3cde5196e9bab10c6b8123201"
+    },
+    {
+      "name": "coverage",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-coverage-check.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-coverage.txt",
+      "sha256": "4aa61b9e36d121edbd9d52b81d984e97415dfa7fb071e55e5849f9b24e159c47"
+    },
+    {
+      "name": "guard",
+      "command": "python3 /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-guard.py",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-guard.txt",
+      "sha256": "1f319e149e76b735c87e918e8ed8e19a9a63fe883d0179dccf89e5854ecdf010"
+    },
+    {
+      "name": "diff",
+      "command": "git diff --check",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-diff.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "node scripts/pm7-footage-source-probe.cjs",
+      "exit": 0,
+      "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/small-final-source.txt",
+      "sha256": "33f719546f51d2fc03d102df96d21c985d9971d9164c7755fa8220e323c6d526"
+    }
+  ],
+  "historical_pre_landing_repair_dry": {
+    "verified_commit": "586caa5fa12d30fe2ad33958d45fa62f5671aad9",
+    "applies_to_latest_fix": false,
+    "blocking": 0,
+    "infrastructure": 0,
+    "baseline_currency": {
+      "age_days": 0.06,
+      "ancestor": true,
+      "base": "origin/main",
+      "base_commit": "6b88cf36dee05cf38fd8871ad2e510bec4a5a580",
+      "baseline_commit": "6d9a072b48b3d532593ec5f996e1d7fdd2ab5270",
+      "max_age_days": 7,
+      "reason": "its commit 6d9a072b48b3 is an ancestor of the base origin/main (6b88cf36dee0) and 0.06 days older than it, within 7",
+      "rule_two_applies": true
+    },
+    "new_branch_nonstale": 0,
+    "new_outside_branch_nonstale": 8,
+    "on_branch_stale_rows": 15478,
+    "on_branch_nonstale_rows": 0,
+    "pre_existing_rows": 0,
+    "grown_buckets": 0,
+    "grown_subchecks": 11,
+    "truncated_comparisons": 2,
+    "excused_by_kind": {
+      "artifact_hash_stale": 96,
+      "audit_closure_validator_error": 29,
+      "current_snapshot_batch_doc_invalid": 11,
+      "current_snapshot_coverage_not_exact_same_document_planunit_set": 1336,
+      "current_snapshot_live_bytes_mismatch": 54,
+      "current_snapshot_live_line_count_mismatch": 48,
+      "current_snapshot_live_sha256_mismatch": 54,
+      "current_snapshot_live_span_metadata_mismatch": 13423,
+      "current_snapshot_span_sha256_mismatch": 148,
+      "event_authority_currentness_source_drift": 74,
+      "pnc019_source_hash_stale": 14,
+      "stale_batch_report_sha256_after": 149,
+      "stale_hash": 38,
+      "storage_value_registry_spec_lock_hash_stale": 4
+    },
+    "not_run_for_qa_round2": true
+  },
+  "historical_pre_landing_repair_failed_aggregate_groups": [
+    "verify_spec_lock",
+    "validate_plan_graph",
+    "validate_evidence",
+    "validate_prd_planning_runtime_contracts",
+    "validate_implementation_readiness",
+    "validate_plan_migration",
+    "validate_pm7_gui_fixtures",
+    "validate_audit_closure"
+  ],
+  "landing_repair": {
+    "schema_id": "pm.pm7_landing_repair.v1",
+    "canonical_source_commit": "4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4",
+    "integration_input": "7f3eecce64ffb91cc36b7efa50e2a392c622218d",
+    "base": "34b9ab2843954f0bf52e7748ca87dbc8662efeaf",
+    "prior_lead_blocking_count": 18,
+    "dry_exit_code": 1,
+    "blocking": 0,
+    "infrastructure": [],
+    "baseline_currency": {
+      "age_days": 0.03,
+      "ancestor": true,
+      "base": "origin/main",
+      "base_commit": "34b9ab2843954f0bf52e7748ca87dbc8662efeaf",
+      "baseline_commit": "40e8ccd7042c0cbabd936aa43578bcc9206c09b3",
+      "max_age_days": 7,
+      "reason": "its commit 40e8ccd7042c is an ancestor of the base origin/main (34b9ab284395) and 0.03 days older than it, within 7",
+      "rule_two_applies": true
+    },
+    "scope": "existing_contract_fixture_and_resource_companions_only_no_product_rule_change",
+    "changed_paths": [
+      "Plans/goal_cancel_schema_resources.json",
+      "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json",
+      "Plans/goal_workflow_cancel_schema_resources.json",
+      "Plans/product_onboarding_contract_fixtures.json",
+      "Plans/remote_access_system_contract_fixtures.json",
+      "scripts/pm-new-contracts-verify.py"
+    ],
+    "new_contracts": {
+      "before_failures": 14,
+      "after_failures": 0,
+      "duplicate_groups_fixed": 12,
+      "required_primary_commands": 44,
+      "named_additional_request_examples": 3,
+      "request_case_census": 47,
+      "wrong_Client_negative": "existing native_connector_client_owner_mismatch semantic rule",
+      "counts": {
+        "contract_pairs": 41,
+        "expansion_alias_records_checked": 36,
+        "expansion_alias_records_valid": 36,
+        "expansion_command_records_checked": 264,
+        "expansion_command_records_valid": 264,
+        "expansion_fixture_packs": 1,
+        "expansion_local_records_checked": 28,
+        "expansion_local_records_valid": 28,
+        "expansion_metaschemas_valid": 1,
+        "expansion_negative_records_checked": 21,
+        "expansion_negative_records_rejected": 21,
+        "internal_self_tests": 13,
+        "internal_self_tests_passed": 13,
+        "metaschemas_valid": 41,
+        "negative_cases": 4201,
+        "negative_cases_rejected": 4201,
+        "onboarding_storage_contracts_checked": 1,
+        "onboarding_storage_contracts_valid": 1,
+        "owner_compat_command_records_checked": 240,
+        "owner_compat_command_records_valid": 240,
+        "owner_local_records_checked": 28,
+        "owner_local_records_valid": 28,
+        "platform_policy_checks": 1,
+        "platform_policy_checks_passed": 1,
+        "positive_cases": 1599,
+        "positive_cases_valid": 1599,
+        "root_positive_cases_checked": 1411,
+        "root_positive_cases_valid": 1411,
+        "update_schedule_storage_checks": 1,
+        "update_schedule_storage_checks_passed": 1
+      }
+    },
+    "readiness": {
+      "before": 90,
+      "after": 88,
+      "new_reference_errors_before": 2,
+      "new_reference_errors_after": 0,
+      "resource_pin_updates": 7,
+      "NonSecretRef_unchanged": true,
+      "stored_wrapper_definition_changes": false,
+      "remaining": "pre-existing Event Authority/legacy-fixture failures and governance staleness"
+    },
+    "nonblocking_generated_refs": {
+      "unique_old_artifacts": 4,
+      "aggregate_copies": 16,
+      "evidence_unchanged": true,
+      "reason": "generated shard numbering/line ranges changed; old blobs match the unchanged evidence, current manifests and replacement shards verify",
+      "validator_classification_changed": false
+    },
+    "regeneration": {
+      "needed": false,
+      "reason": "no owner Markdown or configured shard source changed; existing shards and index validate",
+      "no_hand_edits": true
+    },
+    "protected_governance_snapshot_baseline_exact": true,
+    "coverage_rows": 212,
+    "new_product_rows": 0,
+    "new_commands_bindings_settings": 0,
+    "dry_report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/dry.json",
+    "dry_report_sha256": "850ee2efeff4caddb059b72bc27e86e118f374530f312fa18ee1536b03736c1f",
+    "complete_reports_and_exports": "/mnt/Cursor/archive/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/landing-repair-20261101/landing-check-reports",
+    "source_hashes": {
+      "Plans/goal_cancel_schema_resources.json": "2693619a063d9706cb0738e9cc2b6c21f1de5949f35586b2b3c6dea3727a4501",
+      "Plans/goal_workflow_cancel_schema_resources.json": "6d0398f3c8f92510045c698d41644131b2198047a952d2b01e8d713260f3ef00",
+      "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json": "a29a61b4cf6f3d8dcd935d51e8c5c7018143b9b1ca6570bfbcd34f0973d18294",
+      "Plans/product_onboarding_contract_fixtures.json": "21d70400dd8d24ee798b29af799f846ac403842696c4808759c1f0cb1eb58bc0",
+      "Plans/remote_access_system_contract_fixtures.json": "ec2b2e93573b8dd07f6482080e8b79400b7c3c8f8e3ef5530c62bc2c2f0f891f",
+      "scripts/pm-new-contracts-verify.py": "b22e14201d660e1f32ec93cc9a51399dec9f1cf4c2258c9ab3b6a7bfed5ef5ac",
+      "scripts/pm-landing-check.py": "d4979a6cdc728637188ded8ceb1702764b3924b18b6027c16164c87b03e8d079",
+      "Plans/shared_runtime_command_contracts.schema.json": "ac969914ce4792ecb64bd912f4f1f69b357cdf6b20ca76325935e211399115a0",
+      "Plans/ui_command_response.schema.json": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "Plans/goal_workflow_cancel_contracts/physical-profiles.json": "bd9bfeb3513d390a943706fef836dcb1bcb3e68ff7848b860ddb20330b0ca860",
+      "Plans/storage_value_registry.json": "83a1249a03353f839c4dae25d45fb3482c72f7aeeb75977ee2fb006c98a745be",
+      "Plans/Spec_Lock.json": "ce1b5f7f701c2e21c5f58ceff58ea7384af40f5a4829aa4d7881407d9c4d4a7e",
+      "Plans/auto_decisions.jsonl": "506f8869d533620b7309132a8041eb850e80787d936ddbf43e52770dd2afdc27",
+      "Plans/.plan_migration/current_run.json": "36341bad29c6880c6133a40725ee5d1669f266ea44115887d543698f943f80d2",
+      "reports/landing-checks/baseline.json": "c59d93c459851c8a30b8d2f4a4acd4e108210f34f7b38a89f8475606ab52b8f7"
+    },
+    "code_tests_complete_before_report_only_commit": true,
+    "landing_lock_or_landing_performed": false,
+    "prior_artifacts_unchanged": 761,
+    "result_bundle": "reports/pm7-build-20261029/LANDING-REPAIR.json"
   }
 }
