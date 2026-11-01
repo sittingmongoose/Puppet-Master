@@ -814,6 +814,9 @@ def('pr28', 'fresh', 'QA2 hunter H1: a screen opened straight has what the scree
   const ids = await d.page.evaluate(() => Object.keys(window.O55.screens.defs));
   A.ok(ids.length >= 40, ids.length + ' screens');
   for (const id of ids) {
+    /* a Project still being created keeps Creating on screen (ui.open's guard: nothing is left half-made), and opening
+       Creating straight starts one: the next screen waits for it to finish (final-onb's E1 diagnostics) */
+    await d.until(() => { const c = window.O55.S.sess && window.O55.S.sess.commit; return !(c && c.state === 'running'); }, { what: 'the Project being created before ' + id, timeout: 45000 });
     await d.page.evaluate((s) => window.O55.ui.open({ fresh: true, screen: s }), id);
     await d.until(new Function(`return !!document.querySelector('#pm-o55-onboarding .o55-layer[data-screen="${id}"]:not(.o55-out)')`), { what: id, timeout: 12000 }); await sleep(700);
     const r = await d.page.evaluate((s) => { const L = document.querySelector(`#pm-o55-onboarding .o55-layer[data-screen="${s}"]:not(.o55-out)`); const t = L.innerText;
@@ -947,7 +950,7 @@ def('pr48', 'homeNasPm', 'RV-11: a pairing turned down, then Choose another way:
   await d.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="demoHint"][data-arg="nas-pmpair:outcome|0"]', 'the turned-down demo answer');
   await until(d, "!!document.querySelector('#pm-o55-onboarding [data-key^=\"pairfail\"]')", 'turned down', 12000); await sleep(1500);
   await pipLines(d); await d.act('another'); await sleep(3000);
-  const l = await pipSaid(d); A.ok(!l.some((x) => /Approved|this time/i.test(x)), 'no cheer after Choose another way (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Approved|this time/i.test(x)), 'no cheer after Choose another way (' + JSON.stringify(l) + ')');
 });
 def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the online copy: Pip does not say "Back online"', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
@@ -960,7 +963,7 @@ def('pr49', 'flaky', 'RV-11: the online copy fails on the network, then Skip the
   await until(d, "window.O55.S.sess.commit && window.O55.S.sess.commit.code === 'network'", 'network failure', 25000); await sleep(1500);
   await pipLines(d); await d.act('askSkip'); await d.act('skipOnline');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'made without the copy', 25000); await sleep(3000);
-  const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+  const l = await pipSaid(d); A.ok(!l.some((x) => /Back online/i.test(x)), 'no "Back online" after skipping the copy (' + JSON.stringify(l) + ')');
 });
 def('pr50', 'fresh', "FA-9: a taken name, then bad/name? typed over it or chosen: Pip never says the name is free while the field shows an error; it says the rule's line, and cheers once the name passes the rule and is free", async (d, A) => {
   await d.openOnboarding(); await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-details' })); await d.settle(); await sleep(1500);
@@ -968,12 +971,12 @@ def('pr50', 'fresh', "FA-9: a taken name, then bad/name? typed over it or chosen
   await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
   /* typed: the first letter is a free, valid name; the cheer waits until the typing stops */
   await pipLines(d); await d.type('repo', 'b', { settle: false }); await d.type('repo', 'ad/name?', { clear: false, settle: false }); await sleep(3000);
-  let l = await pipSaid(d); A.ok(!free(l) && rule(l), "typed over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+  let l = await pipSaid(d); A.ok(!free(l) && rule(l), "typed over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
   await d.act('demoHint', 'online-details:name|0'); await sleep(2500);
   await pipLines(d); await d.act('demoHint', 'online-details:name|1'); await sleep(3000);
-  l = await pipSaid(d); A.ok(!free(l) && rule(l), "the bad/name? chip over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+  l = await pipSaid(d); A.ok(!free(l) && rule(l), "the bad/name? chip over the taken name: no 'free', the rule's line (" + JSON.stringify(l) + ')');
   await pipLines(d); await d.type('repo', 'book-club-site-ok'); await sleep(3000);
-  l = await pipSaid(d); A.ok(l.some((x) => /works there now|works, and it's free/.test(x)), 'a good name: the cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+  l = await pipSaid(d); A.ok(l.some((x) => /works there now|works, and it's free/.test(x)), 'a good name: the cheer (' + JSON.stringify(l) + ')');
 });
 def('pr51', 'fresh', 'FA-10: in Friendly, Glass and NieR, every prop and particle Pip\'s stage adds on Review, pairing and Ready is hidden or placed when it is inserted, and no frame shows one without its place', async (d, A) => {
   await d.openOnboarding();
@@ -1088,6 +1091,43 @@ def('pr58', 'nameTaken', "RV-12 with RV-11: GitHub refuses the name: Skip the on
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="repo"]') && !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-err')), 'the refused name shows as used in its field');
   await pipLines(d); await d.type('repo', 'book-club-site-2'); await sleep(3000);
   l = await pipSaid(d); A.ok((await cheersSince(d, rx)).length > 0, 'a new name in the field: a cheer (' + JSON.stringify(l) + ' ' + JSON.stringify(await cheersSince(d, rx)) + ')');
+});
+def('pr59', 'fresh+oldKey', "FO-16: the too-old key refused, then a usable key chosen: Pip leaves the refusal with no cheer (the new key's line on the pick, then the screen's), also after a redraw with nothing hovered", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('keys:nas-home') && v.state === 'done')", 'keys tested', 6000);
+  A.eq(await d.screen(), 'nas-key', 'Choose a key');
+  /* (as final-onb's film: the old key's own ? first, closed from its note, then the refused press) */
+  await d.page.evaluate(() => window.O55.ui.tip('pick:k-old')); await sleep(1500); await d.page.evaluate(() => window.O55.ui.closeTip && window.O55.ui.closeTip()); await sleep(1200);
+  const rx = await cheerRx(d); await pipLines(d);
+  await d.page.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"][data-arg="k-old"]').click());
+  await sleep(1500);
+  let l = await pipSaid(d); A.ok(l.some((x) => /too old/i.test(x)), 'the refused old key: its line (' + JSON.stringify(l) + ')');
+  await pipLines(d); await d.act('pick', 'k-ed'); await sleep(1200);
+  /* (the pointer moves on, as a person's does: the pick's hover line ends and what Pip holds shows) */
+  { const at = await d.state(() => { const r = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-title').getBoundingClientRect(); return [Math.round(r.left + 20), Math.round(r.top + r.height / 2)]; }); await d.page.mouse(at[0], at[1], { down: false, up: false }); } await sleep(4000);
+  await d.page.evaluate(() => window.O55.ui.refresh()); await sleep(1500); /* (a redraw with nothing hovered: what Pip holds is what it says) */
+  l = await pipSaid(d); const now = await d.state(() => ((document.querySelector('#pm-o55-onboarding .pst-bt') || {}).textContent || '').trim());
+  A.ok(!/too old/i.test(now), 'after choosing the usable key Pip no longer says the old one is too old (' + JSON.stringify(now) + ', ' + JSON.stringify(l) + ')');
+  A.eq((await cheersSince(d, rx)).length, 0, 'cheers for choosing another key');
+});
+def('pr60', 'fresh', 'FO-18: Almost ready (no AI, no free model) stays calm: no curtain call (no confetti, no crew cheer)', async (d, A) => {
+  await d.openOnboarding();
+  const s0 = await d.state(() => window.O55.sound.log.length);
+  const r = await d.page.evaluate(async () => {
+    const host = document.querySelector('#pm-o55-onboarding'), seen = { particles: 0 };
+    const mo = new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1 && n.matches && n.matches('g.pst-p') && (n.textContent || '').trim() !== 'z') seen.particles++; }))); /* (a sleeping Pip's z's are not a celebration) */
+    mo.observe(host, { childList: true, subtree: true });
+    window.O55.ui.open({ fresh: true, screen: 'ready' });
+    const t0 = performance.now(); while (performance.now() - t0 < 4000) await new Promise((res) => setTimeout(res, 100));
+    mo.disconnect(); return seen;
+  });
+  A.ok(await d.state(() => !window.O55.ai.readyIds(window.O55.S).length && !window.O55.ai.freeReady(window.O55.S)), 'no AI and no free model');
+  A.ok(/Almost ready/i.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-title').textContent)), 'the title says Almost ready');
+  A.eq(r.particles, 0, 'confetti or burst particles on Almost ready');
+  const snd = await d.state((m) => JSON.stringify(window.O55.sound.log.slice(m)), s0);
+  A.ok(!/crew|confetti/.test(snd), 'no crew cheer or confetti sound (' + snd.slice(0, 200) + ')');
 });
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */

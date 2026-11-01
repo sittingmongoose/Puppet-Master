@@ -146,7 +146,10 @@
     mounted(S, layer, fresh) {
       /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
       if (fresh) O55.shell.flushLook(4000);
-      if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
+      /* Almost ready (no AI and no free model) stays calm: no curtain call from any look's skin (the family one is
+         confetti, a crew cheer and a wink on Pip's stage; NieR's the bows and the sting), as no confetti here (FO-18: the
+         skin ran before the check below) */
+      if (!fresh || noAi(S) || O55.ui.skin('ready', layer, fresh)) return;
       /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
         if (noAi(S)) return; /* (no confetti for setup that can't plan yet) */
