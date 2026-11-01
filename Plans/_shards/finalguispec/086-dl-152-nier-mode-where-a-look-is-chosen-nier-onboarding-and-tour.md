@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43677-L44059
+Source lines: L43688-L44083
 
-Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
+Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
 
 ---
 
@@ -103,7 +103,13 @@ canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable th
   gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and
   reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices
   and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the
-  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.'
+  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
+
+
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
+  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
+  Creating owner-completion and last-block gates.'
 gui_related: true
 gui_classification_reason: Defines fifth-family NieR selection and how onboarding and the Guided Tour look (Q22)
   under it.
@@ -157,6 +163,10 @@ acceptance_criteria:
   At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping
   or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click
   or keyboard activation selects; silent hover does not select.'
+- 'DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This
+  eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion
+  and last-block gates.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -189,6 +199,9 @@ source_lineage:
   lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
   grid geometry is source evidence only.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - NieR Mode
 - Adjust NieR look

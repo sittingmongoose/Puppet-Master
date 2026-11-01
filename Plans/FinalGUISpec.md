@@ -37002,7 +37002,12 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
   and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
-  host, prefill, artificial wait or Studio behavior.'
+  host, prefill, artificial wait or Studio behavior.
+
+
+  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail
+  values. MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment,
+  including NieR. F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -37316,6 +37321,9 @@ acceptance_criteria:
   and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
   host, prefill, artificial wait or Studio behavior.'
+- 'DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR.
+  F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -37375,6 +37383,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - welcome
 - simple_path
@@ -43769,7 +43780,13 @@ canonical_text: 'Q22, Jared 2026-10-30 (DL-257): NieR is the fifth selectable th
   gives Basic, Friendly, Glass, Retro and NieR equal choice prominence. Each tile has an accessible family label and
   reachable question/Adjust controls where applicable. At narrow and short supported sizes the title, all five choices
   and footer remain readable and reachable without clipping or a hidden extra-family strip; the chooser fits above the
-  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.'
+  footer or scrolls within its bounded content area. Click or keyboard activation selects; silent hover does not select.
+
+
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
+  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
+  Creating owner-completion and last-block gates.'
 gui_related: true
 gui_classification_reason: Defines fifth-family NieR selection and how onboarding and the Guided Tour look (Q22)
   under it.
@@ -43823,6 +43840,10 @@ acceptance_criteria:
   At narrow and short supported sizes the title, all five choices and footer remain readable and reachable without clipping
   or a hidden extra-family strip; the chooser fits above the footer or scrolls within its bounded content area. Click
   or keyboard activation selects; silent hover does not select.'
+- 'DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This
+  eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion
+  and last-block gates.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -43855,6 +43876,9 @@ source_lineage:
   lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/found/REPORT.md — QA2 review M2/m4 five equal look choices;
   grid geometry is source evidence only.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - NieR Mode
 - Adjust NieR look
@@ -44597,6 +44621,12 @@ canonical_text: >-
   Motion places that block instantly (Jared 2026-10-30). O11 leaves the Tour untouched. Amended Q22, Jared
   2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration
   and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode.
+
+
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
+  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
+  Creating owner-completion and last-block gates.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.
@@ -44614,10 +44644,10 @@ acceptance_criteria:
 - With NieR Mode off, each of Basic, Friendly, Glass and Retro plays its own wake, act card and curtain call,
   in its Light and in its Dark variant, drawn only in its own materials.
 - The act card plays on the first forward arrival in a chapter of the run and is that chapter's one sting;
-  Back and forward again play no card; the curtain call plays on the first arrival at Ready.
+  Back and forward again play no card; the curtain call plays on the first arrival at Ready only when MS-122 reports usable AI.
 - Reduced Motion and low resource show each moment's end state at once, and a key or a press snaps a running
   moment to its end state; an act card never delays the next screen beyond NieR's act card.
-- Every onboarding screen settles in F3-663’s approved Pip world; Ready uses the Pip crew curtain call. No
+- Every onboarding screen settles in F3-663’s approved Pip world; Ready uses the Pip crew curtain call only when MS-122 reports usable AI. No
   earlier troupe/pixel-identical picture is required; O11 leaves the Tour’s existing scenes intact.
 - Large surfaces never flash/reverse opacity more than once per second. Pip uses the shared bounded transform
   rig and the approved CRT/world effects, gated by parts, visibility, drags, Reduced Motion and Animation speed.
@@ -44627,6 +44657,10 @@ acceptance_criteria:
   NieR part, sound setting or onboarding or tour action.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
   are created by this unit.
+- 'DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This
+  eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion
+  and last-block gates.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -44647,6 +44681,9 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - NieR Mode
 - APPROVED
@@ -50990,7 +51027,25 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
 
   DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
   against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
-  rules.'
+  rules.
+
+
+  DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal
+  feedback and lets Pip use the new option’s own line, without a cheer. The rejected option remains
+  unavailable for its original reason; choosing something else neither repairs nor authorizes it. The current
+  selection still receives its own validation and refusal, if any.
+
+
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
+  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
+  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
+  routes is not success and does not make planning available; a usable free route still counts as AI.
+
+
+  DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display
+  wrapping preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens
+  use the same rule in every look; identity comparison and explicit trust confirmation remain required.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -51085,6 +51140,18 @@ acceptance_criteria:
 - 'DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
   against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
   rules.'
+- 'DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal feedback
+  and lets Pip use the new option’s own line, without a cheer. The rejected option remains unavailable for its original
+  reason; choosing something else neither repairs nor authorizes it. The current selection still receives its own
+  validation and refusal, if any.'
+- 'DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state
+  has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound.
+  Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success and
+  does not make planning available; a usable free route still counts as AI.'
+- 'DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display wrapping
+  preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens use the same
+  rule in every look; identity comparison and explicit trust confirmation remain required.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -51124,6 +51191,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

@@ -2307,7 +2307,19 @@ canonical_text: 'Product Onboarding uses one bounded modal window over the visib
 
   DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
   operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
-  promise. Only tips/help have Plain English and technical versions.'
+  promise. Only tips/help have Plain English and technical versions.
+
+
+  DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal
+  feedback and lets Pip use the new option’s own line, without a cheer. The rejected option remains
+  unavailable for its original reason; choosing something else neither repairs nor authorizes it. The current
+  selection still receives its own validation and refusal, if any.
+
+
+  DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display
+  wrapping preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens
+  use the same rule in every look; identity comparison and explicit trust confirmation remain required.'
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -2371,6 +2383,14 @@ acceptance_criteria:
 - 'DL-272 T05-GITHUB-REACH, 2026-11-01: The GitHub access tip distinguishes the chosen Project on which Puppet Master
   operates from the actual grant or token reach. It must not turn a broad approved grant into a false one-Project access
   promise. Only tips/help have Plain English and technical versions.'
+- 'DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal feedback
+  and lets Pip use the new option’s own line, without a cheer. The rejected option remains unavailable for its original
+  reason; choosing something else neither repairs nor authorizes it. The current selection still receives its own
+  validation and refusal, if any.'
+- 'DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display wrapping
+  preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens use the same
+  rule in every look; identity comparison and explicit trust confirmation remain required.'
 validation_surfaces:
 - future native six-width visual fixtures
 - Reduced Motion traces
@@ -2395,6 +2415,9 @@ source_lineage:
   joined-choice tray; these source APIs/classes are not native product contracts.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 negative_constraints:
 - Do not block input on animation.
 - Do not require browser-only effects.

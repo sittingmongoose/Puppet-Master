@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L265-L2034
+Source lines: L265-L2045
 
-Source SHA256: `a3e2f1ce14094c7c94c9949634cbf96e77a2518c2f3096ebff97e9a46fc10116`
+Source SHA256: `fe8b8ba631e5db40e18e8da4c66872a8198ee1920aeee994d534ec9cca844bc6`
 
 ---
 
@@ -921,7 +921,12 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
   auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
   corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
-  it never revokes provider credentials or rewrites other routes.'
+  it never revokes provider credentials or rewrites other routes.
+
+
+  DL-272 FO-16, 2026-11-01: The shared fault/success projection consumes the current choice. Choosing a
+  different option ends the prior option’s refusal feedback without producing success or a cheer; the original
+  option’s eligibility and the new selection’s validation remain with their existing owner.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -956,6 +961,9 @@ acceptance_criteria:
   auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
   corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
   it never revokes provider credentials or rewrites other routes.'
+- 'DL-272 FO-16, 2026-11-01: The shared fault/success projection consumes the current choice. Choosing a different
+  option ends the prior option’s refusal feedback without producing success or a cheer; the original option’s eligibility
+  and the new selection’s validation remain with their existing owner.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -986,6 +994,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer
