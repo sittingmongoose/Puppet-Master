@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L55
+Source lines: L1-L58
 
-Source SHA256: `2666eefaecc40b1d036fb83f5b4fbd8f87887e402f9606be79bcb01a968185b1`
+Source SHA256: `9978998b4ddcb0e12f72f52eb6f6cb3c9549e16780faafef8c27524304b2ec6a`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-11-01: DL-272 final FO-16/FO-18/FO-19 delta: another choice ends the old refusal without a cheer; no usable AI or Free Models keeps Almost ready calm in every look; long detail values wrap with a fingerprint hash whole on its own line when needed. Existing validation, identity confirmation and O12 gates remain. Codeberg and Forgejo restricted-token questions stay open for Jared.
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-272, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/Models_System.md#MS-122, ContractName:Plans/FinalGUISpec.md#F3-663, ContractName:Plans/DRY_Rules.md#DR-080
 
 - 2026-11-01: DL-272 aligns the footage review with real product owners: truthful identity, auth/addition/retry/expiry, source-control names/privacy/access, proxy/restore status and fixed readable wizard feedback. CS-108/UCC-213 and WM-099/UIW-047 add exact-route Free Models Turn off, preserving credentials, other routes and in-flight work. D7, certificate custody, product-only canon and deferred Remote Link protocol remain; restricted Forgejo tokens remain an owner question.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-272, ContractName:Plans/Models_System.md#MS-121, ContractName:Plans/Remote_Access_System.md#RAS-014

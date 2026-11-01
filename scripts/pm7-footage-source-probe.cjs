@@ -61,4 +61,64 @@ for(const [name,test,expected] of scenarios){
  c=vm.createContext({oops:null,layer,lastOops:previous,lastSuccess:test.success?{at:9000,startedAt:test.old?100:8000,screen:'current'}:null,S:{open:true,sess:{screen:'current',ops:{}},typedAt:test.typing?9500:0},performance:{now:()=>10000},spec:{lineId:'ready',pip:{mood:'idle'}},CSS:{escape:x=>x},holdCheerT:null,O55:{pipOops:{faultShown:()=>!!test.fault},motion:{real:{clearTimeout(){},setTimeout(){return 1;}}}},renderScene(){}});
  vm.runInContext(faultGuard+success+'\nglobalThis.cheered = !!cheer;',c);need(c.cheered===expected,'RV-6/11 success meaning '+name);
 }counts.Pip_success=scenarios.length;
+/* FO-16: another choice is a move away from the refusal, not a repaired fault.
+   Exercise the actual choice predicate and move-on state reset, including the
+   cases that must keep the current fault. No simulated owner success is needed. */
+const selection=section(ui,'  O55.ui.movedOn =','  const MOVED_ON =');
+const choiceCases=[
+ ['another_key',{refused:{do:'key',arg:'old'}},'key','usable',true],
+ ['same_key',{refused:{do:'key',arg:'old'}},'key','old',false],
+ ['another_action',{refused:{do:'key',arg:'old'}},'continue','usable',false],
+ ['no_fault',null,'key','usable',false],
+ ['field_fault',{field:'address'},'key','usable',false],
+ ['empty_same',{refused:{do:'choice',arg:''}},'choice',null,false],
+ ['numeric_same',{refused:{do:'choice',arg:'7'}},'choice',7,false]
+];
+for(const [name,fault,action,arg,moves] of choiceCases){
+ c=vm.createContext({lastOops:fault,cheering:{text:'old cheer'},cheerLog:[],O55:{ui:{}}});
+ vm.runInContext(selection+'globalThis.otherChoice = choseOther;',c);
+ need(c.otherChoice(action,arg)===moves,'FO-16 refusal ownership '+name);
+ if(moves){c.O55.ui.movedOn();need(c.lastOops===null&&c.cheering===null,'FO-16 replacement choice kept a refusal or cheer');}
+ else need(c.lastOops===fault,'FO-16 unrelated choice cleared current fault '+name);
+}counts.refusal_selection=choiceCases.length;
+/* FO-18: the no-AI gate must precede every skin. Spies observe whether a
+   family moment or fallback burst can start; they do not assert painted frames. */
+const ready=read(OB+'js/74-screens-ready.js');
+const readiness=section(ready,'  const noAi =',"  def('ready',");
+const mounted=section(ready,'    mounted(S, layer, fresh) {','    eyebrow:');
+const title=section(ready,'    title: (S) =>','    lead:');
+function readyProbe(paid,free,skin=true){
+ const calls={skin:0,burst:0,timers:[]},s={open:true,sess:{screen:'ready'},root:{querySelector:()=>({querySelector:()=>null})}};
+ const state={paid,free};
+ const o={ai:{readyIds:()=>state.paid?['account-ref']:[],freeReady:()=>state.free?1:0},shell:{flushLook(){}},ui:{skin:()=>{calls.skin++;return skin;}},motion:{after:(_ms,fn)=>calls.timers.push(fn)},art:{celebrate:()=>calls.burst++}};
+ const ctx=vm.createContext({O55:o,T});
+ vm.runInContext(readiness+'globalThis.actions = ({'+mounted+title+'});',ctx);
+ return {calls,s,state,ctx};
+}
+for(const look of ['basic-light','basic-dark','friendly-light','friendly-dark','glass-light','glass-dark','retro-light','retro-dark','nier-light','nier-dark']){
+ const p=readyProbe(false,false);p.s.look=look;p.ctx.actions.mounted(p.s,{},true);
+ need(p.calls.skin===0&&p.calls.timers.length===0&&p.calls.burst===0,'FO-18 Almost ready started a celebration '+look);
+ need(p.ctx.actions.title(p.s)===T('ready.titleNoAi'),'FO-18 Almost ready title '+look);
+}
+for(const [paid,free] of [[true,false],[false,true]]){
+ const p=readyProbe(paid,free);p.ctx.actions.mounted(p.s,{},true);
+ need(p.calls.skin===1&&p.ctx.actions.title(p.s)===T('ready.title'),'FO-18 usable paid/free AI lost its eligible Ready moment');
+}
+let p=readyProbe(true,false);p.ctx.actions.mounted(p.s,{},false);
+need(p.calls.skin===0&&p.calls.timers.length===0,'FO-18 redraw repeated the Ready moment');
+p=readyProbe(true,false,false);p.ctx.actions.mounted(p.s,{},true);p.state.paid=false;
+for(const fn of p.calls.timers)fn();
+need(p.calls.timers.length===1&&p.calls.burst===0,'FO-18 deferred burst ignored lost AI readiness');counts.no_ai_curtain=14;
+/* FO-19: evaluate the shared renderer to preserve each complete value and
+   put the one soft break after the algorithm, rather than inside the hash. */
+const components=read(OB+'js/61-components.js'),kv=section(components,'    kv(rows) {','\n  };');
+c=vm.createContext({esc:s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')});
+vm.runInContext('globalThis.details = ({'+kv+'});',c);
+for(const [value,expected] of [
+ ['SHA256:'+'a'.repeat(64),'SHA256:<wbr>'+'a'.repeat(64)],
+ ['SHA512:'+'b'.repeat(128),'SHA512:<wbr>'+'b'.repeat(128)],
+ ['https://server.invalid/a/long/path','https://server.invalid/a/long/path'],
+ ['<span>value</span>','&lt;span&gt;value&lt;/span&gt;']
+])need(c.details.kv([['Identity',value]]).includes('<dd>'+expected+'</dd>'),'FO-19 renderer altered or split the compared value');
+counts.fingerprint_format=4;
 process.stdout.write(JSON.stringify({status:failures.length?'fail':'pass',counts,failures,claim_boundary:'actual_isolated_source_functions_only_no_browser_native_or_pixel_proof'},null,2)+'\n');process.exitCode=failures.length?1:0;

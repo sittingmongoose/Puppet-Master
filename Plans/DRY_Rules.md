@@ -1175,7 +1175,12 @@ canonical_text: 'UI /behavior docs need owner-defined operational policy before 
   DL-272: provider additions, credential failures, issued device-code expiry and field validation consume the existing
   auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
   corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
-  it never revokes provider credentials or rewrites other routes.'
+  it never revokes provider credentials or rewrites other routes.
+
+
+  DL-272 FO-16, 2026-11-01: The shared fault/success projection consumes the current choice. Choosing a
+  different option ends the prior option’s refusal feedback without producing success or a cheer; the original
+  option’s eligibility and the new selection’s validation remain with their existing owner.'
 gui_related: true
 gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
 split_recommended: false
@@ -1210,6 +1215,9 @@ acceptance_criteria:
   auth/domain owner rather than another timer or status store. Pip success consumes only a corresponding settled success/current
   corrected field or action, never disappearance, skip or another fault. Route Turn off uses the Models policy owner;
   it never revokes provider credentials or rewrites other routes.'
+- 'DL-272 FO-16, 2026-11-01: The shared fault/success projection consumes the current choice. Choosing a different
+  option ends the prior option’s refusal feedback without producing success or a cheer; the original option’s eligibility
+  and the new selection’s validation remain with their existing owner.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1240,6 +1248,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - UI `/behavior` docs
 - owner-defined operational policy layer
@@ -4741,7 +4752,13 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
   reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
   projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
-  or indicator engine.'
+  or indicator engine.
+
+
+  DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before
+  its moment starts. The shared details renderer keeps long values within the pane, placing a long
+  fingerprint’s hash whole on its own line after the algorithm label when wrapping is needed. Display wrapping
+  preserves the compared/copied value; no per-look readiness, trust or value-format authority is added.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -4771,6 +4788,10 @@ acceptance_criteria:
   reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
   projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
   or indicator engine.'
+- 'DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before its
+  moment starts. The shared details renderer keeps long values within the pane, placing a long fingerprint’s hash
+  whole on its own line after the algorithm label when wrapping is needed. Display wrapping preserves the compared/copied
+  value; no per-look readiness, trust or value-format authority is added.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -4795,6 +4816,9 @@ source_lineage:
   report FO-9 final.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.

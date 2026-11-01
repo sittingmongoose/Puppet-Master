@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36668-L38123
+Source lines: L36668-L38134
 
-Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
+Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
 
 ---
 
@@ -345,7 +345,12 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   PWIZ-024/FGI-011/015 own retained name refusals, owner-correct privacy, true token reach, current service address validation
   and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
-  host, prefill, artificial wait or Studio behavior.'
+  host, prefill, artificial wait or Studio behavior.
+
+
+  DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail
+  values. MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment,
+  including NieR. F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic
   motion.
@@ -659,6 +664,9 @@ acceptance_criteria:
   and action-specific Review/Creating/Ready summaries. MA-045/046/047 and Models MS-121/122 own protected provider additions,
   per-service device expiry and usable-AI readiness. Keep the actual human-readable labels, no sample credentials, concept
   host, prefill, artificial wait or Studio behavior.'
+- 'DL-272 FO-16/FO-18/FO-19, 2026-11-01: PWIZ-022 owns choice-scoped refusal feedback and full readable detail values.
+  MS-122’s no-AI Almost ready state suppresses all family celebrations before their Ready moment, including NieR.
+  F3-663 consumes these rules with unchanged choice, identity and Creating gates.'
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3 Guided Tour contract)"
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
@@ -718,6 +726,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - welcome
 - simple_path

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L48083-L51504
+Source lines: L48120-L51574
 
-Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
+Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
 
 ---
 
@@ -2918,7 +2918,25 @@ canonical_text: 'O1–O12, X2/X3, S3/S4/S9; DL-238. Pip replaces the troupe/unit
 
   DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
   against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
-  rules.'
+  rules.
+
+
+  DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal
+  feedback and lets Pip use the new option’s own line, without a cheer. The rejected option remains
+  unavailable for its original reason; choosing something else neither repairs nor authorizes it. The current
+  selection still receives its own validation and refusal, if any.
+
+
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
+  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
+  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
+  routes is not success and does not make planning available; a usable free route still counts as AI.
+
+
+  DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display
+  wrapping preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens
+  use the same rule in every look; identity comparison and explicit trust confirmation remain required.'
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -3013,6 +3031,18 @@ acceptance_criteria:
 - 'DL-272 P28-WARNING-BANNER, 2026-11-01: A warning banner remains visually identifiable and its warning text/icon readable
   against the actual surface in every look, including Glass. It retains its textual reason and existing contrast/accessibility
   rules.'
+- 'DL-272 FO-16, 2026-11-01: Choosing another option in the same choice ends the previous option’s refusal feedback
+  and lets Pip use the new option’s own line, without a cheer. The rejected option remains unavailable for its original
+  reason; choosing something else neither repairs nor authorizes it. The current selection still receives its own
+  validation and refusal, if any.'
+- 'DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state
+  has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound.
+  Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success and
+  does not make planning available; a usable free route still counts as AI.'
+- 'DL-272 FO-19, 2026-11-01: Long values wrap within their detail pane without clipping or a horizontal reading
+  scroll. A fingerprint can break after its algorithm label so the hash stays whole on its own line. Display wrapping
+  preserves the exact value compared, confirmed or copied. Initial and changed-fingerprint screens use the same
+  rule in every look; identity comparison and explicit trust confirmation remain required.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -3052,6 +3082,9 @@ source_lineage:
   refusal.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - ui.onboarding.open_details
 - Sound on — click to mute

@@ -1,8 +1,13 @@
-# Current owner question — footage review, 2026-11-01
+# Current owner questions — final delta, 2026-11-01
 
-**One question for Jared:** FORGEJO-RESTRICTED-TOKEN-IDENTITY. Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection?
+**Two questions remain Jared’s**, per lead mail 1101140232-5344. This delta makes no choice on either.
 
-RV-20’s actual-grant disclosure is recorded in FGI-015/PWIZ-022. Existing account-based authentication remains; repository-restricted/no-identity support is neither selected nor rejected by this batch. D4’s pre-build provider verification stays as ruled. Codeberg naming remains outside this lane’s batch.
+| ID | Question | Disposition |
+|---|---|---|
+| **FORGEJO-RESTRICTED-TOKEN-IDENTITY** | Should onboarding support Forgejo repository-restricted tokens when they cannot supply the account identity used by the current sign-in/list flow? What replaces that identity and repository selection? | Existing account-based behavior remains; support is neither selected nor rejected. RV-20’s actual-grant disclosure remains in FGI-015/PWIZ-022. |
+| **CODEBERG-NAMING-ADMISSION** | What Codeberg naming and hosted-service admission should product canon use? | The lead retains this choice for Jared. No naming/admission change is applied. |
+
+D4’s pre-build provider verification remains as ruled. FO-16/FO-18/FO-19 add no owner question or capability decision.
 
 ---
 

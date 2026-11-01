@@ -44,3 +44,20 @@ Integration7d2dd568be and main34b9ab2843 are incorporated. The 54 new real-produ
 CS-108/UCC-213 and WM-099/UIW-047 define cmd.free_models.route.disable, its sole Models handler, typed shapes and shared producer. Native effect/persistence/receipt remain unproved. Census1010 settings,485 bindings/63 source families,716 Touch/141 profiles,1271 production. Existing account-manager description changes and the page was rebuilt with --publish-pm7; --check passes. No other GUI source was edited.
 
 All17 effective focused/generation/guard checks pass:161 PM7 cases,12 new route-shape cases,89 retained final-source and33 footage-source cases. Static proof is not rendering/native/audio acceptance. Historical decisions are exact to the post-main merge checkpoint. Main’s protected artifacts, migration and baseline are not refreshed. One open question for Jared: Forgejo repository-restricted tokens without account identity; existing behavior remains. See FOOTAGE-ADJUDICATION.md for every source/owner mapping.
+
+
+## DL-272 final FO-16/FO-18/FO-19 delta, 2026-11-01
+
+Source/canon commit `84faebbb8c3ac85c7594dad2dff4511f4ae6cb16`, on integration `0cf2bf59e4`; main remains `34b9ab2843`. **3 additional coverage rows; 212 total / 1060 required cells.** Nine existing units in five owners plus the dated index line are amended; no new PlanUnit, command, binding, Settings row, payload or event.
+
+| Item | Kept product rule | Owner / companion result |
+|---|---|---|
+| **FO-16** | A different option ends the old refusal feedback without a cheer. | PWIZ-022 / F3-663 / DR-020; original rejection and current validation remain. Seven source cases. |
+| **FO-18** | No usable AI or Free Models means calm Almost ready in every look. | MS-122 / F3-520/598/600/663 / DR-080; all celebration paths gated before the family moment. Fourteen source cases. |
+| **FO-19** | Long details wrap in the pane; the hash stays whole after the fingerprint algorithm when needed. | PWIZ-022 / F3-663 / DR-080; exact comparison/copy data and trust confirmation remain. Four source-format cases, with no pixel claim. |
+
+All **13 effective focused/generation/guard commands pass**. The source probe now has 58 cases, 25 added. Shards and index were regenerated; 7275 units / 29340 acceptance units / 96 indexed documents; 2977 shards / 99 sources. Settings 1010, bindings 485, Touch 716 rows / 141 profiles and production wiring 1271 remain byte-for-byte unchanged. The merged page passes --check; no Settings/page input changed, so no rebuild was needed.
+
+The first index validation overlapped generation and reported stale artifacts. Its failed output is retained; the serial rerun after generation passes. No failure is waived. All 729 prior evidence hashes remain exact. No merge conflict, Jared ruling change, browser/full-gate/dry run, landing/lock or reseal. Main’s protected artifacts, snapshot and baseline remain exact.
+
+FO-17’s direct-open machinery is concept-only and excluded. Codeberg naming/admission and Forgejo restricted-token identity remain Jared’s two questions. Earlier report sections record their earlier input revisions and are not new acceptance claims.

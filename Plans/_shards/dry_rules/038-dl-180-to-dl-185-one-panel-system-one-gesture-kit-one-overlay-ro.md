@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3593-L4863
+Source lines: L3604-L4887
 
-Source SHA256: `a3e2f1ce14094c7c94c9949634cbf96e77a2518c2f3096ebff97e9a46fc10116`
+Source SHA256: `fe8b8ba631e5db40e18e8da4c66872a8198ee1920aeee994d534ec9cca844bc6`
 
 ---
 
@@ -1159,7 +1159,13 @@ canonical_text: 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q7/H2/H8:
   DL-272: the shared wizard renderer keeps the stage fixed, invalid edges/rings/warnings readable and refused-action
   reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
   projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
-  or indicator engine.'
+  or indicator engine.
+
+
+  DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before
+  its moment starts. The shared details renderer keeps long values within the pane, placing a long
+  fingerprint’s hash whole on its own line after the algorithm label when wrapping is needed. Display wrapping
+  preserves the compared/copied value; no per-look readiness, trust or value-format authority is added.'
 gui_related: true
 gui_classification_reason: Fixes shared joined-choice tray and option hint grammar across onboarding screens.
 split_recommended: false
@@ -1189,6 +1195,10 @@ acceptance_criteria:
   reasons in view. Its selected indicator follows the strip’s actual layout, including mode/content changes. One fault/success
   projection serves every screen and suppresses a cheer while any fault remains; no per-family validation, success timer
   or indicator engine.'
+- 'DL-272 FO-18/FO-19, 2026-11-01: One MS-122 Ready-eligibility result gates every family’s celebration before its
+  moment starts. The shared details renderer keeps long values within the pane, placing a long fingerprint’s hash
+  whole on its own line after the algorithm label when wrapping is needed. Display wrapping preserves the compared/copied
+  value; no per-look readiness, trust or value-format authority is added.'
 validation_surfaces:
 - python3 scripts/pm7-qa2-alignment-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -1213,6 +1223,9 @@ source_lineage:
   report FO-9 final.'
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens: []
 negative_constraints:
 - Do not draw follow-up choices below a different parent or duplicate the joined tray per screen.

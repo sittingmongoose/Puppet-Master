@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44546-L44666
+Source lines: L44570-L44703
 
-Source SHA256: `dff363d611d7c986608a61db0ec37dc3fa50f7c3b91f5ccda8e77f31c80851f7`
+Source SHA256: `9ace10c860bfd6282959a2c455eb31044157f72d5e581f571dcb5bce6e3690c3`
 
 ---
 
@@ -62,6 +62,12 @@ canonical_text: >-
   Motion places that block instantly (Jared 2026-10-30). O11 leaves the Tour untouched. Amended Q22, Jared
   2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration
   and retained Adjust controls. Retained historical/source tokens (not active overrides): NieR Mode.
+
+
+  DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound.
+  This eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s
+  Creating owner-completion and last-block gates.
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme
   families.
@@ -79,10 +85,10 @@ acceptance_criteria:
 - With NieR Mode off, each of Basic, Friendly, Glass and Retro plays its own wake, act card and curtain call,
   in its Light and in its Dark variant, drawn only in its own materials.
 - The act card plays on the first forward arrival in a chapter of the run and is that chapter's one sting;
-  Back and forward again play no card; the curtain call plays on the first arrival at Ready.
+  Back and forward again play no card; the curtain call plays on the first arrival at Ready only when MS-122 reports usable AI.
 - Reduced Motion and low resource show each moment's end state at once, and a key or a press snaps a running
   moment to its end state; an act card never delays the next screen beyond NieR's act card.
-- Every onboarding screen settles in F3-663’s approved Pip world; Ready uses the Pip crew curtain call. No
+- Every onboarding screen settles in F3-663’s approved Pip world; Ready uses the Pip crew curtain call only when MS-122 reports usable AI. No
   earlier troupe/pixel-identical picture is required; O11 leaves the Tour’s existing scenes intact.
 - Large surfaces never flash/reverse opacity more than once per second. Pip uses the shared bounded transform
   rig and the approved CRT/world effects, gated by parts, visibility, drags, Reduced Motion and Animation speed.
@@ -92,6 +98,10 @@ acceptance_criteria:
   NieR part, sound setting or onboarding or tour action.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
   are created by this unit.
+- 'DL-272 FO-18, 2026-11-01: The Ready curtain call is eligible only when MS-122 reports usable AI, including a
+  usable free route. Otherwise show the calm Almost ready state without a celebration or celebratory sound. This
+  eligibility check precedes NieR’s and every other family’s Ready moment; it does not change O12’s Creating owner-completion
+  and last-block gates.'
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -112,6 +122,9 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48
 - Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - NieR Mode
 - APPROVED

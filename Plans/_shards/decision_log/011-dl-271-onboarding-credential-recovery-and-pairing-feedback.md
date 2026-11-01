@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L19553-L19743
+Source lines: L19553-L19762
 
-Source SHA256: `0ab5c8cd5b08fb152674e39aafe8a06ee023160392e5a1f1734ce1a0860660d1`
+Source SHA256: `180b737ae2600e00fdd56c9c0a74e451653f67027aeaf4666e2c3bbd3ea910d4`
 
 ---
 
@@ -145,15 +145,25 @@ plan_unit_id: DL-272
 unit_type: decision_record
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: DL-272 records the PM7 lead’s 2026-11-01 footage batch at integration 7d2dd568be, not a new set of personal
-  rulings by Jared. Existing DL-126, DL-257, DL-259, DL-260 and DL-271 remain constraints. It aligns protected sign-in
-  fallback/addition/retry and per-service expiry, native-Client auth before listing under D7, matching identity/pairing
-  feedback, generated proxy files and actionable failures, truthful restore/Ready status, source-control validation/privacy/access/selection,
-  and fixed readable stage/indicator/Pip success behavior. It adds the single Models route-disable command of CS-108/UCC-213.
-  Stale canon’s global five-minute timeout and blanket pre-Review auth prohibition are amended only as specified by MA-047/RAS-014/PWIZ-021/025.
-  Remote Link grammar remains deferred by Jared’s REMOTE-CODE-1; XXXX-XXXX belongs only to pairing-code display. Forgejo
-  restricted-token support without account identity remains an owner question. Demo mechanics, samples, Studio situations, concept hosts, seeds, timings and source function names are
-  not product rules. No governance reseal, WorkNodes, NodeSeeds or native/runtime acceptance is supplied.
+canonical_text: 'DL-272 records the PM7 lead’s 2026-11-01 footage batch at integration 7d2dd568be, not a new set
+  of personal rulings by Jared. Existing DL-126, DL-257, DL-259, DL-260 and DL-271 remain constraints. It aligns
+  protected sign-in fallback/addition/retry and per-service expiry, native-Client auth before listing under D7,
+  matching identity/pairing feedback, generated proxy files and actionable failures, truthful restore/Ready status,
+  source-control validation/privacy/access/selection, and fixed readable stage/indicator/Pip success behavior. It
+  adds the single Models route-disable command of CS-108/UCC-213. Stale canon’s global five-minute timeout and blanket
+  pre-Review auth prohibition are amended only as specified by MA-047/RAS-014/PWIZ-021/025. Remote Link grammar
+  remains deferred by Jared’s REMOTE-CODE-1; XXXX-XXXX belongs only to pairing-code display. Forgejo restricted-token
+  support without account identity remains an owner question. Demo mechanics, samples, Studio situations, concept
+  hosts, seeds, timings and source function names are not product rules. No governance reseal, WorkNodes, NodeSeeds
+  or native/runtime acceptance is supplied.
+
+
+  Final delta FO-16/FO-18/FO-19, lead 2026-11-01, integration 0cf2bf59e4: choosing another option ends the old refusal
+  feedback without a cheer; no usable AI or Free Models means calm Almost ready in every look with no celebration;
+  long values wrap in their pane with a fingerprint’s hash whole on its own line after its algorithm when needed.
+  PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
+  Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
+  Jared’s open questions.'
 gui_related: true
 gui_classification_reason: Defines user-visible setup/feedback or its exact owner-routed control.
 split_recommended: false
@@ -171,6 +181,12 @@ acceptance_criteria:
   Remote Link grammar remains deferred by Jared’s REMOTE-CODE-1; XXXX-XXXX belongs only to pairing-code display. Forgejo
   restricted-token support without account identity remains an owner question. Demo mechanics, samples, Studio situations, concept hosts, seeds, timings and source function names are
   not product rules. No governance reseal, WorkNodes, NodeSeeds or native/runtime acceptance is supplied.
+- 'Final delta FO-16/FO-18/FO-19, lead 2026-11-01, integration 0cf2bf59e4: choosing another option ends the old
+  refusal feedback without a cheer; no usable AI or Free Models means calm Almost ready in every look with no celebration;
+  long values wrap in their pane with a fingerprint’s hash whole on its own line after its algorithm when needed.
+  PWIZ-022, MS-122, F3-520/598/600/663 and DR-020/080 own the amendments. No Jared ruling changes, new commands,
+  Settings rows or trust authority result. Codeberg naming/admission and Forgejo restricted-token support remain
+  Jared’s open questions.'
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-plan-index.py validate
@@ -187,6 +203,9 @@ node_compile_hint:
 source_lineage:
 - Lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01
 - Concepts/onboarding/opus-5.5 at7d2dd568be76874ff8b4d3e82bad3701226d248c (source lineage only)
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 preserved_exact_tokens:
 - DL-272
 - DL-126

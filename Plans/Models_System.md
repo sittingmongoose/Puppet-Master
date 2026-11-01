@@ -8387,7 +8387,13 @@ canonical_text: 'After an actual Project owner commit, first-run onboarding init
 
   DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
   ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
-  as AI.'
+  as AI.
+
+
+  DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready
+  state has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or
+  celebratory sound. Apply this eligibility check before any family-specific Ready moment. Skipping both AI
+  routes is not success and does not make planning available; a usable free route still counts as AI.'
 gui_related: true
 gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10
   copy, and readiness labels.
@@ -8416,6 +8422,10 @@ acceptance_criteria:
 - 'DL-272 READY-NO-AI, 2026-11-01: With neither a usable AI account nor a usable Free Models route, Ready is titled Almost
   ready and offers the existing later setup path; it does not imply that planning is available. A usable free route counts
   as AI.'
+- 'DL-272 FO-18, 2026-11-01: When neither an AI account nor a Free Models route is usable, the Almost ready state
+  has no celebration in any family or Light/Dark variant: no confetti, crew cheer, wink, bow or celebratory sound.
+  Apply this eligibility check before any family-specific Ready moment. Skipping both AI routes is not success and
+  does not make planning available; a usable free route still counts as AI.'
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - future first-run provider sequencing fixtures
@@ -8446,6 +8456,9 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
 - DL-272 footage review; integration 7d2dd568be76874ff8b4d3e82bad3701226d248c; lead BATCH-FOOTAGE-REVIEW.md, 2026-11-01.
   Source spellings are lineage, not product API.
+- PM7 final delta FO-16/FO-18/FO-19; lead mail 1101140232-5344, 2026-11-01; integration 0cf2bf59e4d9048d65f56842c7b8bc75eda9be78.
+  Actual 60-ui-core.js, 61-components.js, 74-screens-ready.js and 10-window.css under Concepts/onboarding/opus-5.5/src
+  are source lineage only.
 source_atom_ids:
 - atom-0016
 - atom-0033
