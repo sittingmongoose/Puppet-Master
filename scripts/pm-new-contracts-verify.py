@@ -206,6 +206,13 @@ SERVER_REMOTE_OWNER_CHECKS = {
         "primary_count": 44,
         "retired_schema": "Plans/remote_access_contracts.schema.json",
         "retired_fixture": "Plans/remote_access_contract_fixtures.json",
+        # DL-259 exercises both owner roles and generated Caddy configuration
+        # without replacing any of the 44 required primary-command cases.
+        "additional_payload_cases": {
+            "DL259.native_client.setup_request": "cmd.remote_access.tailscale.setup.start",
+            "DL259.Caddy.cmd.remote_access.proxy.preview": "cmd.remote_access.proxy.preview",
+            "DL259.Caddy.cmd.remote_access.proxy.generate": "cmd.remote_access.proxy.generate",
+        },
     },
 }
 
@@ -1513,9 +1520,16 @@ def validate_server_remote_inventory(
         for case in positives
         if case.get("definition") == "command_payload"
     }
-    expected_payload_names = {f"positive.payload.{command_id}" for command_id in primary_ids}
+    additional_payloads = check.get("additional_payload_cases", {})
+    expected_payload_names = {f"positive.payload.{command_id}" for command_id in primary_ids} | set(additional_payloads)
     if payload_case_names != expected_payload_names:
         findings.append({"code": "server_remote_payload_coverage_mismatch", "fixture": fixture_rel, "missing": sorted(expected_payload_names - payload_case_names), "extra": sorted(payload_case_names - expected_payload_names)})
+    payloads_by_name = {case.get("name", case.get("case_id")): case for case in positives if case.get("definition") == "command_payload"}
+    for name, command_id in additional_payloads.items():
+        case = payloads_by_name.get(name, {})
+        value = case.get("value", case.get("record", case.get("instance")))
+        if command_id not in primary_ids or not isinstance(value, dict) or value.get("command_id") != command_id:
+            findings.append({"code": "server_remote_additional_payload_command_mismatch", "fixture": fixture_rel, "case": name, "expected": command_id, "actual": value.get("command_id") if isinstance(value, dict) else None})
     if coverage.get("payload_positive_case_count") != len(expected_payload_names):
         findings.append({"code": "server_remote_payload_count_metadata_mismatch", "fixture": fixture_rel, "expected": len(expected_payload_names), "actual": coverage.get("payload_positive_case_count")})
 
