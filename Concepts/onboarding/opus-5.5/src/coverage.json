@@ -1,7 +1,7 @@
 {
- "generated_from": "Plans/product_onboarding_contracts.schema.json at 78af23f393 (t3/plans/pm7-plans-canon, Q22)",
+ "generated_from": "Plans/product_onboarding_contracts.schema.json at 2e5c733aeb (t3/plans/pm7-plans-canon, DL-273)",
  "setup_plan_fields": 63,
- "conditionals": 27,
+ "conditionals": 34,
  "unmapped_fields": [],
  "unmapped_conditionals": [],
  "fields": [
@@ -103,7 +103,7 @@
   {
    "field": "forge_provider_variant",
    "schema": "constraint",
-   "mapped": "online-service: .com / self-managed / Services / Server / Cloud / Data Center / hosted Forgejo-Gitea"
+   "mapped": "online-service: .com / self-managed / Services / Server / Cloud / Data Center / Gitea Cloud"
   },
   {
    "field": "forge_instance_url",
@@ -277,7 +277,7 @@
   },
   {
    "field": "proxy_tls",
-   "schema": "constraint",
+   "schema": "null",
    "mapped": "away > My own web address: free certificate / my own certificate"
   },
   {
@@ -417,7 +417,7 @@
    ],
    "then": [
     "forge in [\"github\", \"gitlab\", \"azure_devops\", \"bitbucket_cloud\", \"bitbucket_data_center\", \"forgejo\", \"gitea\", \"cursor_origin\"]",
-    "forge_provider_variant in [\"hosted\", \"self_managed\", \"cloud\", \"data_center\", \"preview\", \"forgejo_self_managed\", \"forgejo_cloud\", \"gitea_self_managed\", \"gitea_cloud\"]",
+    "forge_provider_variant in [\"hosted\", \"self_managed\", \"cloud\", \"data_center\", \"preview\", \"forgejo_self_managed\", \"gitea_self_managed\", \"gitea_cloud\"]",
     "forge_instance_url~https_url",
     "forge_account_action in [\"sign_in_during_setup\", \"create_account_during_setup\", \"already_connected\"]",
     "forge_account_ref~bounded_nonsecret_string",
@@ -519,9 +519,9 @@
     "forge=\"forgejo\""
    ],
    "then": [
-    "forge_provider_variant in [\"forgejo_self_managed\", \"forgejo_cloud\"]",
+    "forge_provider_variant in [\"forgejo_self_managed\"]",
     "forge_instance_profile:(constraint)",
-    "repository_visibility in [\"private\", \"public\", \"internal\"]"
+    "repository_visibility in [\"private\", \"public\"]"
    ],
    "else": null,
    "mapped": "online-service (Forgejo): server address -> instance profile"
@@ -534,7 +534,7 @@
    "then": [
     "forge_provider_variant in [\"gitea_self_managed\", \"gitea_cloud\"]",
     "forge_instance_profile:(constraint)",
-    "repository_visibility in [\"private\", \"public\", \"internal\"]"
+    "repository_visibility in [\"private\", \"public\"]"
    ],
    "else": null,
    "mapped": "online-service (Gitea): server address -> instance profile"
@@ -570,7 +570,8 @@
     "proxy_kind:null",
     "proxy_hosting:null",
     "proxy_hostname=\"\"",
-    "proxy_tls:null"
+    "proxy_tls:null",
+    "remote_endpoint=\"\""
    ],
    "else": null,
    "mapped": "c-route / away > On this network / Local or VPN"
@@ -588,7 +589,8 @@
     "proxy_kind:null",
     "proxy_hosting:null",
     "proxy_hostname=\"\"",
-    "proxy_tls:null"
+    "proxy_tls:null",
+    "remote_endpoint=\"\""
    ],
    "else": null,
    "mapped": "c-route / away > Tailscale"
@@ -601,7 +603,8 @@
    ],
    "then": [
     "tailscale_account_action=\"check_existing_then_sign_in_once\"",
-    "headscale_url=\"\""
+    "headscale_url=\"\"",
+    "remote_endpoint=\"\""
    ],
    "else": null,
    "mapped": "c-route / away > Tailscale hosted: sign in once"
@@ -614,7 +617,8 @@
    ],
    "then": [
     "tailscale_account_action=\"headscale_enrollment\"",
-    "headscale_url~https_url"
+    "headscale_url~https_url",
+    "remote_endpoint=\"\""
    ],
    "else": null,
    "mapped": "c-route / away > Tailscale > Headscale address"
@@ -692,6 +696,90 @@
    ],
    "else": null,
    "mapped": "ex-online: the reviewed online Project carries its repository ref"
+  },
+  {
+   "n": 27,
+   "if": [
+    "forge=\"cursor_origin\"",
+    "repository_owner_scope=\"personal\""
+   ],
+   "then": [
+    "repository_visibility=\"private\""
+   ],
+   "else": null,
+   "mapped": "online-details (Cursor Origin): your own copy is private only (forgeRules visibility)"
+  },
+  {
+   "n": 28,
+   "if": [
+    "forge=\"github\"",
+    "repository_owner_scope=\"personal\"",
+    "online_mode in [\"new\", \"existing\"]"
+   ],
+   "then": [
+    "repository_visibility in [\"private\", \"public\"]"
+   ],
+   "else": null,
+   "mapped": "online-details (GitHub): your own copy is private or public; internal only for an organization (forgeRules visibility)"
+  },
+  {
+   "n": 29,
+   "if": [
+    "forge in [\"bitbucket_cloud\", \"bitbucket_data_center\"]",
+    "online_mode in [\"new\", \"existing\"]"
+   ],
+   "then": [
+    "repository_container~bounded_nonsecret_non_empty_string"
+   ],
+   "else": null,
+   "mapped": "online-details / ex-repos (Bitbucket): a workspace or Data Center project is required (forgeRules.needs, the pick carries it)"
+  },
+  {
+   "n": 30,
+   "if": [
+    "forge=\"bitbucket_cloud\"",
+    "online_mode in [\"new\", \"existing\"]"
+   ],
+   "then": [
+    "repository_project~bounded_nonsecret_non_empty_string"
+   ],
+   "else": null,
+   "mapped": "online-details / ex-repos (Bitbucket Cloud): a project in the workspace is required (forgeRules.needs, the pick carries it)"
+  },
+  {
+   "n": 31,
+   "if": [
+    "proxy_hosting in [\"generate_only\"]"
+   ],
+   "then": [
+    "proxy_kind in [\"caddy\", \"nginx\", \"traefik\"]"
+   ],
+   "else": null,
+   "mapped": "away > My own web address: Puppet Master makes the settings file for Caddy (default), NGINX or Traefik (draft normalize)"
+  },
+  {
+   "n": 32,
+   "if": [
+    "remote_mode=\"remote_link\"",
+    "journey=\"connect_existing\""
+   ],
+   "then": [
+    "remote_endpoint:string"
+   ],
+   "else": null,
+   "mapped": "c-route > Remote Link (connect): the link is required (draft remoteMissing)"
+  },
+  {
+   "n": 33,
+   "if": [
+    "journey=\"new_or_local\"",
+    "remote_mode=\"reverse_proxy\""
+   ],
+   "then": [
+    "proxy_hosting in [\"generate_only\", \"existing_proxy\"]"
+   ],
+   "else": null,
+   "mapped": "away > My own web address (new Server): make the settings file, or use a proxy I already run"
   }
  ],
  "screens": {
