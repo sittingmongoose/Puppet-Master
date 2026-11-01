@@ -622,7 +622,7 @@
       "eyebrow": "Online copy",
       "title": "Where should the online copy live?",
       "titleSource": "Where is the Project stored?",
-      "lead": "GitHub is a free website that keeps an online copy of your work.",
+      "lead": "Pick the website that keeps your online copy.",
       "github": {
         "title": "GitHub",
         "sub": "Most popular. Free for private Projects."
@@ -733,7 +733,8 @@
       "demo": {
         "good": "Demo token",
         "bad": "abc"
-      }
+      },
+      "tokenCheck": "Check token"
     },
     "details": {
       "eyebrow": "Online copy",
@@ -1307,7 +1308,8 @@
     "goesTo": "Backups go to: {where}",
     "accountKind": {
       "personal": "for home"
-    }
+    },
+    "checkKit": "Check the kit"
   },
   "ai": {
     "eyebrow": "AI",
@@ -1421,9 +1423,7 @@
       }
     },
     "needsChoice": "Needs a choice",
-    "deviceLead": "On any device, open {vendor}'s sign-in page and enter this code.",
-    "pasteLead": "Open the sign-in link in any browser and finish there. The page then shows a code: paste it here.",
-    "copyLink": "Copy sign-in link",
+    "pasteLead": "On any device, open {url} and finish signing in. The page then shows a code: paste it here.",
     "pasteLabel": "Code from the page",
     "pasteGo": "Use this code",
     "pasteBad": "That code wasn't accepted. Copy it again from the page.",
@@ -1461,6 +1461,13 @@
     "main": {
       "codex": "Sign in with ChatGPT instead",
       "cursor": "Use an API key instead"
+    },
+    "remote": {
+      "open": "Open the page",
+      "codeLead": "On any device, go to {url} and enter this code:",
+      "linkLead": "On any device, open {url} and finish signing in there. This row carries on by itself.",
+      "copy": "Copy address",
+      "copied": "Address copied: {url}. Paste it into a browser on any device."
     }
   },
   "aiNone": {
