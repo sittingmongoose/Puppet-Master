@@ -1,3 +1,15 @@
+# Combined R6 gate and FO-20 checkpoint, 2026-11-02
+
+Core source9d31647f83 includes fieldsbc4f41773d and found05fa23d4ed. R10 was independently closed at8558fa10e6; its240 declared cases match the240 actual cases. R6 remains pending independent closure at the combined head. The unchanged125-record source probe passes locally at37fcbc2455:0 owner handoffs,62 normalization/preservation checks,10 admitted controls and3 disabled old-picker footers. FO-20 leaves those source files unchanged.
+
+F3-652 now explicitly covers unpinned rail flyouts, title-bar search and Settings guided setup windows. F3-654 retains4.5:1 for enabled interface text at every size; SSYS-042 and DR-067 retain the shared form/material owners. No new setting, command, binding or DTO field. The lead authorized correcting the setup-window assertion and one GPU run:42/42 checks in all ten looks, minimum text4.64:1, main action5.2:1, chosen edge5.12:1. Thirteen original captures are retained; four native crops were read. No motion or native-runtime acceptance is claimed.
+
+All five new focused commands PASS: shards, index, canon, onboarding rulings and build parity. Seven exact committed input hashes bind them to9d31647f83. All77 distinct active schema/fixture inputs across40 pairs and the validator remain byte-exact to8558; the prior40/1593-positive/3926-negative/13-self-test contract result remains applicable. The field mirror is unchanged63/32/0 and needs no refresh. Coverage218 rows/1090 cells;7276 units/29367 acceptance units/96 docs;2977 shards/99 sources.
+
+The final v6 static proof follows this committed report checkpoint. Independent R6 closure and the subsequent fresh final dry are still required. The prior dry and all fourteen captures remain frozen. No protected governance, qualification input, snapshot or baseline change; no landing, lock or reseal. The one GPU browser run ended and its temporary copy was removed.
+
+---
+
 # Independent R6 remains open; R10 corrected, 2026-11-01
 
 The independent 125-record probe at 3d94b18f82 confirms that R6 still has owner-producing paths past the current source guards. Create-account, details Next and repository pick can call owners; normalization/defaults can relabel a retired choice or silently choose GitHub. Source must reject the original effective selection before those changes and require an explicit new admitted selection. The eight-unit Source Control canon already requires this. Fields owns the common gate; final dry is held until independent closure at the corrected combined head.

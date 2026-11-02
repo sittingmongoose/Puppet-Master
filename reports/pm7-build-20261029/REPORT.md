@@ -1,3 +1,19 @@
+# Plans lane — combined R6 gate and FO-20, 2026-11-02
+
+**Core source9d31647f83 includes fieldsbc4f41773d and found05fa23d4ed. Five focused checks and42 GPU setup-window checks PASS.** The final v6 static proof follows the committed combined checkpoint. Independent R6 closure at that head and the subsequent fresh final dry remain pending.
+
+| Area | Result |
+|---|---|
+| **Canon / DRY** | F3-652 explicitly applies dense floating material to unpinned rail/search/setup surfaces, with docked sheet material retained. F3-654 keeps4.5:1 enabled text at every size; setup windows use the family tokens. Existing SSYS-042/DR-067 apply. DL-273 any-source admission canon already covers the R6 common gate. |
+| **Commands / wiring / settings** | No new command, key, binding or DTO.218 product coverage rows/1090 required cells;1010 settings;485 bindings/63 families;715 Touch/140 profiles;1271 production;22 status keys. |
+| **R6 / R10** | Local125-record R6 probe passes at37fcbc2455 with0 owner handoffs,62 preservation checks and3 explicit-reselection resumes. FO-20 changes no R6 source. Independent combined-head closure remains required. R10 count-only fix8558 is independently closed. |
+| **Focused / GPU proof** | Shards, index, canon, rulings and build PASS, bound by7 exact core hashes. The lead-authorized GPU setup-window check passes42/42 in ten looks; minimum enabled text4.64:1.13 raw captures retained; four native crops read. Found owns separate painted-backing proof. |
+| **Derived / mirror / custody** |7276 units/29367 acceptance units/96 docs;2977 shards/99 sources. Mirror63 fields/32 conditionals/0 unmapped, unchanged. All77 distinct active contract inputs across40 pairs are unchanged; earlier full contracts apply. All14 first-dry captures hash-exact; no final dry started. |
+
+Page SHA-256 eda904c158d1b30f63cd969272f41505ba9bc5036874d7c87de73f3f1bfad45d. [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) maps every required column; [RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md) separates local proof from independent closure. No landing, lock, reseal, protected-input, snapshot or baseline refresh. One authorized GPU check completed; its temporary files were removed after the captures were retained. T3 mail rings this thread.
+
+---
+
 # Plans lane — R10 corrected; R6 source still open, 2026-11-01
 
 **R10 metadata fix 8558fa10e6 is pushed to both remotes.** All 240 rejection cases are declared. The independent 125-record source probe still finds R6 owner-handoff and reselection bypasses at 3d94b18f82. Fields is adding the common gate; the final dry is held until independent closure at the corrected combined head.
