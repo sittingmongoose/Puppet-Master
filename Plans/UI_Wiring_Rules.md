@@ -1055,6 +1055,7 @@ activating.
 |---|---|
 | `ui.onboarding.start` | `source_surface=first_run` (the window opened by itself because no Project exists yet) paints a Basic Dark preview from the first frame, with Basic Dark preselected, whatever look was shown before; `source_surface=settings_rerun` (Run Onboarding Again) starts in the look on screen, NieR Mode included, preselected. Neither dispatches `cmd.theme.*` nor writes a setting (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
 | `ui.onboarding.choose_look` | Q22: `intent=choose_look` carries the closed `local_context.look_choice` for any of five families (including nier), mode or retained NieR parts/background; only changed fields are non-null. It previews and stores the session choice with `look_previewed`, with no Settings dispatch before the existing exact Project commit/finish boundary. `preview_nier` and independent `nier_mode` are retired. `toggle_look_menu` and `toggle_look_editor` carry look_choice null, toggle disclosure only and keep exact focus return. |
+| `ui.onboarding.back` | FO-22: consume PWIZ-021/PWIZ-024’s currently valid answer path, fresh-Review return and safe source-step resume destination. Preserve still-valid answers and existing commit/authorization fences; abandoned steps cannot reappear through Back or a subsequent Continue. |
 | `ui.onboarding.defer` | Before modal dismissal, durably write one resumable continuation snapshot preserving exact stage, selected path, active branch, bounded history, revision, continuation generation, initiating Client, and return-focus identity. It does not complete or skip the session and claims no owner mutation. |
 | `ui.onboarding.close` | Dismiss the modal and restore initiating focus without marking the session completed, skipped, deferred, or any owner Ready. It does not silently cancel owner work. |
 | `ui.onboarding.skip` | Record the explicit `skipped` session outcome without implying Onboarding-path completion or owner readiness. |
@@ -1232,7 +1233,12 @@ canonical_text: 'Product Onboarding exposes exactly fourteen typed local ui.onbo
   PWIZ-024 current Forge admission before auth, discovery, setup or another service-owner handoff. Restored
   or uncommitted controls and incoming actions must agree with the actual admitted effective selection; no
   control value or unpicked main draft supplies an alternate authority path. Refusal uses the existing local
-  disabled or rejected settlement.'
+  disabled or rejected settlement.
+
+  FO-22, 2026-11-02: Back, forward and resumed entry consume PWIZ-021/PWIZ-024’s one current-answer navigation
+  rule. Replacing a choice invalidates its inapplicable return steps as well as its incompatible authority; the
+  preserved valid return never revives an abandoned branch or discarded attempt. Existing typed envelopes, local
+  effects, reason/focus settlement and owner permission/currentness fences remain unchanged.'
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus
   return, and Details disclosure.
@@ -1402,6 +1408,8 @@ acceptance_criteria:
   mirror authority.'
 - 'DL-273: Entry and activation checks cover saved control choices independently of the main draft; a retired
   service emits no auth or service-owner request.'
+- 'FO-22: Back and resumed-entry wiring consume PWIZ-021/PWIZ-024’s current valid path, fresh-Review return and first-Back
+  service-chooser exit. No invalidated branch step or stale authority is restored, and no new typed field or owner handoff is introduced.'
 
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json

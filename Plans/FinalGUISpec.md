@@ -37020,7 +37020,12 @@ canonical_text: 'Product Onboarding is a beautiful, calm first impression presen
   DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current
   admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open
   sign-in merely because the main online-service draft is unpicked; the person must select an admitted
-  choice again.'
+  choice again.
+
+  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and
+  PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue;
+  fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown
+  as a choice to make, never as an empty service name, raw enum or unresolved placeholder.'
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -37344,6 +37349,8 @@ acceptance_criteria:
 
 - 'DL-273: Both control availability and activation refuse retired service choices from any state source
   before an auth or service-owner handoff; explicit reselection remains available.'
+- 'FO-22: Render only the currently valid PWIZ-021/PWIZ-024 steps on Back, fresh Review and resume; preserve still-valid
+  data and exact return destinations, show a human-readable missing choice, and never paint an empty Creating or unselected-service details screen.'
 
 validation_surfaces:
 - Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced

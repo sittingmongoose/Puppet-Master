@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2563
+Source lines: L1781-L2573
 
-Source SHA256: `eaef7e79a8b7af9281bbc9ab3ca730c41ae3e6b1d662cde1f8c05c0b59ca623a`
+Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
 
 ---
 
@@ -116,7 +116,12 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
-  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only preflight
+  six-stage connect-existing shortcut. FO-22, 2026-11-02: After an earlier answer is replaced or given up, Back visits
+  only steps that remain valid for the current choices and preserves still-valid answers; going forward cannot silently
+  reinstate the abandoned branch, its source or its authorization. Back from a fresh Review after a permitted discarded
+  attempt returns to the still-valid step before that attempt, never to an empty Creating screen or an implicit retry.
+  Existing Project/Forge recovery prerequisites and known-remote-effect fences still decide whether an attempt may be
+  discarded; Back neither undoes nor repeats settled owner work. Before the context-specific reviewed commit, only bounded read-only preflight
   and individually consented selected-source authentication may run. Project System commits the selected existing owner
   command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback, before broad
   provider setup. The actual committed Project then enters provider_setup, optional free_models_setup and truthful Ready.
@@ -313,6 +318,11 @@ acceptance_criteria:
   owner success.
 - Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished
   provider phase, and optional skip differs from whole-session Skip.
+- 'FO-22: After an earlier answer is replaced or given up, Back visits only steps that remain valid for the current choices
+  and preserves still-valid answers; going forward cannot silently reinstate the abandoned branch, its source or its authorization.
+  The rule still holds after repeated visits that left the earlier answer unchanged before its eventual replacement.'
+- 'FO-22: Back from a fresh Review after a permitted discarded attempt returns to the still-valid step before that attempt,
+  never to an empty Creating screen or an implicit retry. Existing Project/Forge recovery and remote-effect fences remain authoritative.'
 - Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately typed
   and permission bound.
 - Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.

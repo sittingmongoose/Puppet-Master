@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L1-L70
+Source lines: L1-L73
 
-Source SHA256: `35b8fa8a97867cec8c7fa95482480ab059de55e1ee7cf3088f684c8bb5d4e7b3`
+Source SHA256: `36868146ec9723c3ea4f4aeae69832073b237f8b00c0923dc41bec38d50a75c5`
 
 ---
 
 # Plans Index (authoritative map)
+
+- 2026-11-02: FO-22 makes onboarding Back follow the steps still valid for the current answers, preserves still-valid choices, and excludes abandoned branches. Back from a fresh Review after a permitted discarded attempt returns before that attempt; retired-service resume opens service choice and its first Back leaves that chooser. Existing typed actions and Project/Forge recovery, admission and authorization fences remain; no new setting, command or payload.
+  ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-024, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/UI_Wiring_Rules.md#UIW-015, ContractName:Plans/Wiring_Matrix.md#WM-041
 
 - 2026-11-02: FO-20 clarifies the shared Glass material for unpinned rail panels, title-bar search and Settings guided setup windows. Floating content obscures page text, docked panes keep sheet material, and each setup uses its family tokens with F3-654 text contrast. Existing overlay, command and preference owners apply.
   ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-654, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/DRY_Rules.md#DR-067

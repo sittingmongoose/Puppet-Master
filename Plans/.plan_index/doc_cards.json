@@ -75,7 +75,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6242,
+      "line_count": 6245,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -215,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "35b8fa8a97867cec8c7fa95482480ab059de55e1ee7cf3088f684c8bb5d4e7b3",
+      "sha256": "36868146ec9723c3ea4f4aeae69832073b237f8b00c0923dc41bec38d50a75c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -7763,7 +7763,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 51816,
+      "line_count": 51823,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 655,
       "plan_unit_ids": [
@@ -8566,7 +8566,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "5e9140d5c0f3ab7850533887afa9e715bf8d436a329b6000d2492394f22edc11",
+      "sha256": "24e83716556e9e5bfc5385aa2ebe8a1ba09da8b4d18b8ca8e97c8c2822c236ac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 647,
@@ -14409,7 +14409,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 3867,
+      "line_count": 3888,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -14469,7 +14469,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "eaef7e79a8b7af9281bbc9ab3ca730c41ae3e6b1d662cde1f8c05c0b59ca623a",
+      "sha256": "b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30,
@@ -19663,7 +19663,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 17165,
+      "line_count": 17172,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 191,
       "plan_unit_ids": [
@@ -19939,7 +19939,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "da493e3e4147f6ada2c2415dc9703ccd751c096ac216ce2252ecd1345092530d",
+      "sha256": "e3b85ba8e5121f6edb0a6729823cee13137bb719d75af7db86b33d95099aac84",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 189,
@@ -20063,7 +20063,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 3303,
+      "line_count": 3311,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -20143,7 +20143,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "f230e2be4fc93772cb07bfe644dc8b40af258b56479b8558232ae7aab589ead3",
+      "sha256": "9839be74b1158b51b7e6c1699218bd0394a8ff60c2e22a6c7119124ed3a8abc8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -20633,7 +20633,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 7312,
+      "line_count": 7320,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 77,
       "plan_unit_ids": [
@@ -20758,7 +20758,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "2623f1c74452b681db5d1925f36177a42634ccc8110b4c8c648a884ae3ef1345",
+      "sha256": "3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77
@@ -21088,7 +21088,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-02T00:18:55Z",
+  "generated_at_utc": "2026-11-02T11:23:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

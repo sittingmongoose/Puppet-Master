@@ -2809,6 +2809,40 @@
       "dry": "DR-040; F3-654 shared contrast and theme-token presentation, no false domain command",
       "companions": "Independent78c GPU walk PASS:70 checks,10 looks x3 steps,100 states,60 scroll stops,632 line observations; minimum painted4.58:1. Existing F3-654/SSYS-042/DR-040 apply; no new schema, command, wiring intent, setting or binding.",
       "state": "independently_closed_at78c1629c57"
+    },
+    {
+      "id": "FO-22-BACK-CURRENT",
+      "change": "After an answer changes or is given up, Back visits only steps valid for current choices; later Continue cannot silently restore an abandoned branch, source or authorization, including after repeated unchanged edits.",
+      "owner": "PWIZ-021; F3-520",
+      "wiring": "UIW-015; WM-041; existing Back and forward consumers use the owner-valid current path",
+      "commands": "UCC-106; existing ui.onboarding.back and ui.onboarding.next; no new action or semantic-domain command",
+      "settings": "none needed: mandatory navigation validity, not a preference or inventory row",
+      "dry": "DR-005; one owning current-answer path in PWIZ-021, consumed by rendering and navigation",
+      "companions": "Existing typed request/result, continuation and branch contracts stay. The new shared-kit back-after-change check exercises observable routes; independent source audit found the repeated-edit folder witness still open at bf05a56258. No private history DTO is introduced.",
+      "state": "pending_FO22_independent_source_and_canon_closure"
+    },
+    {
+      "id": "FO-22-REVIEW-RETURN",
+      "change": "Back from a fresh Review after a permitted discarded attempt returns to the still-valid preceding step, never empty Creating or an implicit retry; Project/Forge recovery and known-remote-effect fences still apply.",
+      "owner": "PWIZ-021; PWIZ-024; F3-520",
+      "wiring": "UIW-015; WM-041; current local Back/Review routes preserve valid return and owner boundaries",
+      "commands": "UCC-106; existing ui.onboarding.back/next; Project/Forge recovery commands unchanged and no new retry authority",
+      "settings": "none needed: recovery return behavior is owned by the session, with no user setting",
+      "dry": "DR-005; PWIZ-021 owns navigation while Project/Forge own discard, commit and recovery eligibility",
+      "companions": "No envelope, command registration, receipt or production row changes. Existing phase/recovery fixtures remain regression inputs; fields row4 covers real recovery navigation, not a new product fixture API.",
+      "state": "pending_FO22_independent_source_and_canon_closure"
+    },
+    {
+      "id": "FO-22-RETIRED-RESUME",
+      "change": "A resumed retired-service sign-in, details or repository-list step opens service choice; the first Back leaves it for the preceding valid step, without invalidated steps, raw missing-service text or inherited authority.",
+      "owner": "PWIZ-024; PWIZ-021; F3-520; DL-273",
+      "wiring": "UIW-015; WM-041; existing Session restoration, source-entry and Back routes share current admission and valid return",
+      "commands": "UCC-106; existing Session entry/resume and ui.onboarding.back; no resume command or additional owner handoff",
+      "settings": "none needed: current service admission and navigation are mandatory, not a new preference or key",
+      "dry": "DR-005; one Forge admission and PWIZ-024 invalidation/entry rule, consuming PWIZ-021 current-path navigation",
+      "companions": "Existing narrowed provider enums and retirement-refusal fixtures stay. Fields rowsB/9 test resumed service choice and first Back; actual source/independent review is required, with no concept screen id or cache migration field added to product schemas.",
+      "state": "pending_FO22_independent_source_and_canon_closure",
+      "decision_ref": "DL-273"
     }
   ],
   "sources": [
@@ -2884,7 +2918,9 @@
     }
   ],
   "unit_id_check": "pass",
-  "pending_sources": [],
+  "pending_sources": [
+    "FO-22 independent source/canon audit and correction of the repeated-unchanged-edit folder witness at bf05a56258; final proof/dry held for lead FO-22-closed signal."
+  ],
   "exclusions": [
     "QA2-Q18",
     "QA2-Q19",
@@ -3489,7 +3525,7 @@
       "source_report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-audit-final-at78c.md"
     }
   },
-  "final_verification": {
+  "historical_final_verification_at4b07": {
     "schema_id": "pm7.final_activation_verification.v1",
     "checked_commit": "4b07fa9d1a07e9ef7533fceffbd177d820faa8c5",
     "independently_audited_source_commit": "78c1629c570eafe780a503744af071d880fc4cd4",
@@ -3523,5 +3559,32 @@
     "protected_governance_changed_paths": [],
     "claim_boundary": "Independent source review plus static admission proof, concept GPU guards and nonblocking full dry at the checked commit. Following commit is report metadata only, with all product and test inputs identical. Raw aggregate governance checks remain failed on inherited/stale findings;715 native Touch residuals are not certified.",
     "recorded_at_utc": "2026-11-02T04:08:56.873705+00:00"
+  },
+  "FO22": {
+    "GUI_source": "bf05a562581a570258916e71be8376ec955357b2",
+    "page_sha256": "de5e5e8ea72750b922aff6795d0ec563d5aa9c1526c4dba9929d0b0d09d60f9c",
+    "lead_release_mail": "1102110559-45fe",
+    "source_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/source-custody.json",
+      "sha256": "1cadb5767abef93aeac1d3af97ce3d83d4ae5576af39b6e886e72d7b6f2af22c",
+      "verified_files": 60,
+      "manifest_lines_including_header": 61
+    },
+    "prose_adjudication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/prose-adjudication.json",
+      "sha256": "192d4bacd75ebfde67dece51e9969c73842695b9053a7664d6ae54dffedd6cf6"
+    },
+    "coverage_rows_added": [
+      "FO-22-BACK-CURRENT",
+      "FO-22-REVIEW-RETURN",
+      "FO-22-RETIRED-RESUME"
+    ],
+    "independent_status": "open: reachable repeated-edit source-path contamination, five Back presses / six visited screens",
+    "independent_witness": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/independent-repeat-edit-witness.json",
+      "sha256": "2ec145297986179c282e2b2a3650852611135a8ad70561e4680ff46c7778d5ab"
+    },
+    "proof_and_dry": "held; prior completed results apply only to4b07/f8db",
+    "no_new_commands_settings_or_contract_fields": true
   }
 }

@@ -1886,7 +1886,12 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: 'Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
-  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only preflight
+  six-stage connect-existing shortcut. FO-22, 2026-11-02: After an earlier answer is replaced or given up, Back visits
+  only steps that remain valid for the current choices and preserves still-valid answers; going forward cannot silently
+  reinstate the abandoned branch, its source or its authorization. Back from a fresh Review after a permitted discarded
+  attempt returns to the still-valid step before that attempt, never to an empty Creating screen or an implicit retry.
+  Existing Project/Forge recovery prerequisites and known-remote-effect fences still decide whether an attempt may be
+  discarded; Back neither undoes nor repeats settled owner work. Before the context-specific reviewed commit, only bounded read-only preflight
   and individually consented selected-source authentication may run. Project System commits the selected existing owner
   command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback, before broad
   provider setup. The actual committed Project then enters provider_setup, optional free_models_setup and truthful Ready.
@@ -2083,6 +2088,11 @@ acceptance_criteria:
   owner success.
 - Back is reversible before commit and cannot uncreate a committed Project; Close/resume preserves draft or unfinished
   provider phase, and optional skip differs from whole-session Skip.
+- 'FO-22: After an earlier answer is replaced or given up, Back visits only steps that remain valid for the current choices
+  and preserves still-valid answers; going forward cannot silently reinstate the abandoned branch, its source or its authorization.
+  The rule still holds after repeated visits that left the earlier answer unchanged before its eventual replacement.'
+- 'FO-22: Back from a fresh Review after a permitted discarded attempt returns to the still-valid step before that attempt,
+  never to an empty Creating screen or an implicit retry. Existing Project/Forge recovery and remote-effect fences remain authoritative.'
 - Help/disclosures are bounded ephemeral typed local actions; source and provider owner commands remain separately typed
   and permission bound.
 - Ready starts no Goals, Plans, agents, builds or provider requests; optional Guided Tour follows PWIZ-023.
@@ -2687,7 +2697,14 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   must pass current Forge-owner admission regardless of whether the choice comes from the main draft, saved
   or uncommitted controls, or an incoming action. An unpicked online-service draft cannot authorize an
   obsolete restored card choice. A retired selection cannot start protected sign-in, discovery, setup or
-  other service work; the existing typed disabled or rejected result settles before any owner handoff.'
+  other service work; the existing typed disabled or rejected result settles before any owner handoff.
+
+  FO-22, 2026-11-02, DL-273 follow-through: Source-control sign-in, details and repository-list steps require a current
+  admitted service selection; Back skips them when that prerequisite has been invalidated. A resumed session whose
+  retired Source Control choice invalidates its current sign-in, details or repository-list step opens the service
+  chooser; the first Back leaves that chooser for the preceding still-valid step instead of reopening an invalidated
+  step or looping. The missing choice is presented as a service to choose again, not a raw empty-value label. Explicit
+  admitted selection and fresh owner validation remain required; redirecting supplies no service or authorization.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection,
   and defer behavior.
@@ -2808,6 +2825,10 @@ acceptance_criteria:
 - 'DL-273: A retired service or variant from saved or uncommitted control state or an incoming action is
   refused at activation before auth, discovery, setup or other owner work, even when the main draft is still
   unpicked.'
+- 'FO-22: A resumed session whose retired Source Control choice invalidates its current sign-in, details or repository-list
+  step opens the service chooser; the first Back leaves that chooser for the preceding still-valid step instead of reopening
+  an invalidated step or looping. Inapplicable source steps stay out of Back; a missing service has human-readable reselection
+  feedback and grants no owner authority.'
 
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json

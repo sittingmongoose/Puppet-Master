@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3496-L4242
+Source lines: L3496-L4250
 
-Source SHA256: `2623f1c74452b681db5d1925f36177a42634ccc8110b4c8c648a884ae3ef1345`
+Source SHA256: `3f8150617657a7e9de14a5815e7cc3097714249b08ea146d6967ac8137771f7b`
 
 ---
 
@@ -217,7 +217,12 @@ canonical_text: 'Current Product Onboarding wiring consumes PWIZ-021''s owner-de
   DL-273, Jared 2026-11-01: Onboarding Source Control service producers consume the admission gate in PWIZ-024
   and UIW-015 for their current effective selection, including restored controls and incoming actions.
   Failed admission settles locally before the existing owner route; an unpicked draft cannot validate a
-  retired view choice. No new row, command, handler, event or return path is introduced.'
+  retired view choice. No new row, command, handler, event or return path is introduced.
+
+  FO-22, 2026-11-02: Reverse navigation and resumed entry consume PWIZ-021/PWIZ-024’s valid path for the current
+  answers, including the fresh-Review return and first Back from the service chooser. Existing local actions preserve
+  valid answers and exact focus/continuation identity; no abandoned branch or discarded attempt is routed as current
+  work. No production row, command, handler, event, preference or typed payload is added.'
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions,
   transitions, reverse wiring, and owner-routed GUI behavior.
@@ -237,9 +242,10 @@ acceptance_criteria:
 - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not
   re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing
   or Project Later as fake completed work.
-- Back consumes the exact durable path history: connect-existing `remote_access_setup` returns to `simple_path`, while
+- Back consumes the exact durable history of the currently valid path under PWIZ-021: connect-existing `remote_access_setup` returns to `simple_path`, while
     main-path `remote_access_setup` returns to `server_storage_client`; no skipped shortcut stage is synthesized into
-    reverse wiring.
+    reverse wiring. FO-22 excludes steps invalidated by a replaced answer or permitted discarded attempt rather than
+    replaying their obsolete history.
 - The exact current action set contains the fourteen named `ui.onboarding.*` IDs; every authored control emits one typed
   local action and no action is registered as a UICommand, domain event, or production wiring row. `simple_path` and
   `ui.onboarding.choose_simple_path` are current visible behavior.
@@ -459,6 +465,8 @@ acceptance_criteria:
   mirror authority.'
 - 'DL-273: Existing routes remain unchanged for admitted choices, while retired choices from any producer
   state reach no auth or service owner.'
+- 'FO-22: Back/forward/resumed-entry consumers share PWIZ-021/PWIZ-024’s current valid path, fresh-Review return and
+  service-chooser exit; valid history stays reversible without reopening abandoned steps, owner work or stale authority.'
 
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2565-L2864
+Source lines: L2575-L2885
 
-Source SHA256: `eaef7e79a8b7af9281bbc9ab3ca730c41ae3e6b1d662cde1f8c05c0b59ca623a`
+Source SHA256: `b73c7dd92c540a1fc7c7a978302bb3bd760b6d277c4f5b7a36e637a448122d77`
 
 ---
 
@@ -133,7 +133,14 @@ canonical_text: 'Product Onboarding keeps the four First Project intents new/exi
   must pass current Forge-owner admission regardless of whether the choice comes from the main draft, saved
   or uncommitted controls, or an incoming action. An unpicked online-service draft cannot authorize an
   obsolete restored card choice. A retired selection cannot start protected sign-in, discovery, setup or
-  other service work; the existing typed disabled or rejected result settles before any owner handoff.'
+  other service work; the existing typed disabled or rejected result settles before any owner handoff.
+
+  FO-22, 2026-11-02, DL-273 follow-through: Source-control sign-in, details and repository-list steps require a current
+  admitted service selection; Back skips them when that prerequisite has been invalidated. A resumed session whose
+  retired Source Control choice invalidates its current sign-in, details or repository-list step opens the service
+  chooser; the first Back leaves that chooser for the preceding still-valid step instead of reopening an invalidated
+  step or looping. The missing choice is presented as a service to choose again, not a raw empty-value label. Explicit
+  admitted selection and fresh owner validation remain required; redirecting supplies no service or authorization.'
 gui_related: true
 gui_classification_reason: Defines the visible First Project choices, connect-existing order, editable live Review projection,
   and defer behavior.
@@ -254,6 +261,10 @@ acceptance_criteria:
 - 'DL-273: A retired service or variant from saved or uncommitted control state or an incoming action is
   refused at activation before auth, discovery, setup or other owner work, even when the main draft is still
   unpicked.'
+- 'FO-22: A resumed session whose retired Source Control choice invalidates its current sign-in, details or repository-list
+  step opens the service chooser; the first Back leaves that chooser for the preceding still-valid step instead of reopening
+  an invalidated step or looping. Inapplicable source steps stay out of Back; a missing service has human-readable reselection
+  feedback and grants no owner authority.'
 
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json

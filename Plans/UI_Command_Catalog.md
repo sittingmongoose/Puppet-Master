@@ -7863,7 +7863,12 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   DL-273, Jared 2026-11-01: Onboarding local actions that could start Source Control service work consume
   PWIZ-024 admission before the existing owner handoff, including a choice not yet committed into the main
   draft. Unpicked draft state never authorizes stale control state. Existing typed disabled or rejected
-  settlement carries no service operation, owner call or auth handoff for a retired choice.'
+  settlement carries no service operation, owner call or auth handoff for a retired choice.
+
+  FO-22, 2026-11-02: The existing ui.onboarding.back and forward local actions consume PWIZ-021/PWIZ-024’s
+  current-answer path, fresh-Review return and retired-service resume rules. Navigation cannot revive an abandoned
+  branch or owner authorization. This refines existing local choreography without a new action, command, handler,
+  result field or production row.'
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local
   Product Onboarding actions.
@@ -7975,6 +7980,8 @@ acceptance_criteria:
   mirror authority.'
 - 'DL-273: The same current admitted choice is checked before service-owner routing for restored controls and
   incoming actions; no retired selection reaches sign-in or service work through a local Next action.'
+- 'FO-22: Existing Back/forward local actions consume the current-answer and resume navigation rules in PWIZ-021/PWIZ-024;
+  no abandoned branch or discarded attempt becomes a new owner operation, and the fourteen-action census remains unchanged.'
 
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
