@@ -224,6 +224,11 @@ function signalRail(next) {
   if (!s) return;
   var mode = next.rail === 'fold' ? 'overlay' : next.rail === 'ease' ? 'eased' : 'docked';
   setAttr(s, 'data-pm-rail-fold', mode === 'docked' ? null : mode);
+  /* the overlay floats over the page's content, not over the wallpaper: it takes Glass's floating material, a dense menu
+     (a live blur under a heavy tint; glass.js mounts what carries data-lg-surface, and nothing in other looks reads it).
+     Docked, it is part of the left panel's frosted sheet again (FO-20: unpinned, Home's text read through it) */
+  setAttr(s, 'data-lg-surface', mode === 'overlay' ? 'menu' : null);
+  setAttr(s, 'data-lg-dense', mode === 'overlay' ? '' : null);
   var width = mode === 'overlay' ? 280 : mode === 'eased' ? LADDER.railEased : Math.round(next.railWidth || 0);
   var key = mode + ':' + width;
   if (key === lastFold) return;

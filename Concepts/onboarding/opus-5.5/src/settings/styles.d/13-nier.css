@@ -489,6 +489,9 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings .o55g-wrap.o55g-wra
   --o55-win-bg: #36342c;
 }
 /* ---- end of generated tables ---- */
+/* a chosen setup card is darkened by the ink: its line and note take the main ink, as its name does (the secondary ink read
+   3.2-3.8:1 there, FO-20's sweep) */
+html[data-o55-nier] #panel-settings .o55g-card.is-on :is(.o55g-cardsub, .o55g-cardmeta) { color: var(--text-primary); }
 
 /* The ground. The head boot script paints <html> inline (and #pm-boot-paint) in Basic Dark before Settings load, and
    never takes it back; the parchment wins over it while NieR Mode is on. */

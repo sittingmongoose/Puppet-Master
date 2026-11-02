@@ -17,8 +17,10 @@
   box-shadow: 0 0 0 1px var(--d-line), 0 18px 44px rgba(0, 0, 0, .26);
   animation: d-fold-in 420ms cubic-bezier(.34, 1.4, .64, 1);
 }
-/* Glass: the shell's slot already is a frosted box (gradient pane, backdrop blur, rim, shadow, radius, all
-   !important), so the overlay keeps it and only glides in */
+/* Glass: the overlay floats over the page's content, so the home layer marks it a dense Glass menu (data-lg-surface,
+   44-narrow.js) and glass.js gives it the floating material, a live blur under a heavy tint, with its rim, shadow and
+   radius; here it only glides in. (The Liquid Glass layer makes the docked slot clear, part of the left panel's sheet:
+   left clear over the page, the page read through it, FO-20.) */
 §{glass}@#sidePanelSlot[data-pm-rail-fold="overlay"] {
   animation: d-fold-in 480ms cubic-bezier(.16, 1, .3, 1);
 }
