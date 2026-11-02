@@ -1,6 +1,6 @@
 # PM7 real-product change coverage
 
-Current source: independently audited `78c1629c57`, including DL-273, FO-20 and FO-21. **219 rows / 1095 required owner/wiring/commands/settings/DRY cells**. Audit: zero open blockers, majors or minors. R6 is closed; V7 and fresh final dry are released by the lead and run after this report-only checkpoint. Earlier checks retain their source scope; no native/runtime certification is claimed.
+Current source: independently audited `78c1629c57`, including DL-273, FO-20 and FO-21. **219 rows / 1095 required owner/wiring/commands/settings/DRY cells**. Zero open scoped audit findings. Final V7 PASS and fresh dry exit1/blocking0/infra0 bind `4b07fa9d1a07e9ef7533fceffbd177d820faa8c5`; all product bytes remain exact. Four shared-kit surface runs pass 213 checks. This closure changes report metadata only; no native certification.
 
 | ID | Real product change | Owner prose | Wiring | Commands | Settings inventory | DRY | Companions/proof | State |
 |---|---|---|---|---|---|---|---|---|

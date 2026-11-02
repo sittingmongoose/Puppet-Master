@@ -2884,9 +2884,7 @@
     }
   ],
   "unit_id_check": "pass",
-  "pending_sources": [
-    "Final V7 and fresh dry on the requested test-only descendant; product source remains independently audited78c."
-  ],
+  "pending_sources": [],
   "exclusions": [
     "QA2-Q18",
     "QA2-Q19",
@@ -3490,5 +3488,40 @@
       "minimum_painted_contrast": 4.58,
       "source_report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-audit-final-at78c.md"
     }
+  },
+  "final_verification": {
+    "schema_id": "pm7.final_activation_verification.v1",
+    "checked_commit": "4b07fa9d1a07e9ef7533fceffbd177d820faa8c5",
+    "independently_audited_source_commit": "78c1629c570eafe780a503744af071d880fc4cd4",
+    "page_sha256": "f8dbebbcde3d82502601766c61d263f40a2cfa8434652906d5ac5619fcbbf22c",
+    "R6_closed": true,
+    "open_findings": 0,
+    "v7": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v7-final.json",
+      "sha256": "f2839ceef5d136a05a20a8f89c86eb1e476215f39d3f970a4afb9d9a4b063805",
+      "exit_code": 0,
+      "status": "pass",
+      "source_commit": "4b07fa9d1a07e9ef7533fceffbd177d820faa8c5"
+    },
+    "dry": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-final/dry.json",
+      "sha256": "34b982422967a45ffa6bb77deaf835b49ba7c87da612513159ece6eef8b1721f",
+      "summary_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/activation-final/summary.json",
+      "summary_sha256": "e144ad782a2aa04f5eb2988cb813356cd31ba3248c62a8e0fa343d2231d549e1",
+      "exit_code": 1,
+      "blocking": 0,
+      "infrastructure": []
+    },
+    "kit": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-kit-proof.json",
+      "sha256": "33b3d781ec2cb095818f37c5512927c291dd029f7feddb39dc680029802dfa39",
+      "completed_surface_combinations": 4,
+      "completed_checks": 213
+    },
+    "coverage_rows": 219,
+    "required_cells": 1095,
+    "protected_governance_changed_paths": [],
+    "claim_boundary": "Independent source review plus static admission proof, concept GPU guards and nonblocking full dry at the checked commit. Following commit is report metadata only, with all product and test inputs identical. Raw aggregate governance checks remain failed on inherited/stale findings;715 native Touch residuals are not certified.",
+    "recorded_at_utc": "2026-11-02T04:08:56.873705+00:00"
   }
 }

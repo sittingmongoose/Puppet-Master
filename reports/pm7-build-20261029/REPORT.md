@@ -1,3 +1,20 @@
+# Plans lane — final verification complete, 2026-11-02
+
+**Final admission proof PASS; fresh dry landing exit 1, 0 blockers, 0 infrastructure findings.** Both bind clean commit 4b07fa9d1a07e9ef7533fceffbd177d820faa8c5; this final checkpoint changes report metadata only. Product source and the page remain byte-identical to the independently audited 78c1629c57.
+
+| Area | Result |
+|---|---|
+| **Canon / coverage** | DL-273 retirement and current-selection rules, owners and companions are independently closed. 219 product rows / 1095 required owner/wiring/commands/settings/DRY cells; 1010 settings; 485/63 bindings; 715/140 Touch; 1271 production; 22 status keys. No open scoped audit findings. |
+| **Final V7** | Static admission/projection checks PASS. 1593 active positive cases, 178 top-level schemas, provider controls, current units and the built page scanned; no active retired admission. Exact proof SHA-256 f2839ceef5d136a05a20a8f89c86eb1e476215f39d3f970a4afb9d9a4b063805. |
+| **Regression guards** | Shared kit identity 35 normal / 41 sandbox and own-servers 65 normal / 72 sandbox PASS: 213 checks, 0 console/uncaught/request errors. Original assertions preserved; original identity hash confirmed. Interrupted earlier attempt retained separately. |
+| **Dry attribution** | 7237 new rows and 7435 branch rows are staleness; zero nonstale new/branch findings. Both aggregate governance reports retain their raw failure status. Three aggregate reports and five complete exports retained; no timeout. Expected governance staleness needs the assigned owner's later reseal. |
+| **Source / derived** | Page f8dbebbc unchanged. 7276 PlanUnits / 29367 acceptance units / 96 docs; 2977 shards / 99 sources. Canon/index/shards untouched by the test/report follow-up. Mirror 63 fields / 32 conditionals / 0 unmapped remains exact. |
+| **Custody / cleanup** | Earlier 14 dry, 13 FO-20 GPU, 22 kit-attempt files and 14 final dry captures remain hash-exact. Six owned browser starts total, 0 running; no server/recording/scratch remains. No landing, lock, reseal, protected input, snapshot or baseline change. |
+
+Evidence root: /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/. Final dry: activation-final/dry.json (SHA-256 34b982422967a45ffa6bb77deaf835b49ba7c87da612513159ece6eef8b1721f). Full source/command/hash binding is in verification.json and final-verification-record.json. The completed dry uses the required full-checkout inputs; the checked commit and tree stayed fixed throughout. 715 native Touch residuals remain outside this concept certification.
+
+---
+
 # Plans lane — R6 guards shipped; final dry next, 2026-11-02
 
 **Both requested R6 guards pass normal-file and sandbox runs.** The tests are now in the shared kit with their original assertions preserved. Only the layout adapter and README are new; the audited product page stays byte-identical to78c1629c57.
