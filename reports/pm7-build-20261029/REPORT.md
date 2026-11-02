@@ -1,3 +1,19 @@
+# Plans lane — R6 guards shipped; final dry next, 2026-11-02
+
+**Both requested R6 guards pass normal-file and sandbox runs.** The tests are now in the shared kit with their original assertions preserved. Only the layout adapter and README are new; the audited product page stays byte-identical to78c1629c57.
+
+| Area | Result |
+|---|---|
+| **Tests** | Identity35 normal/41 sandbox; own-servers65 normal/72 sandbox. All four completed runs pass with zero console errors, uncaught errors or failed requests. One earlier normal identity attempt stopped on external SIGTERM; retained separately and superseded by the complete passing retry. |
+| **Source custody** | Original identity SHA-2564f2205fac313c7313a0fe8515d73c3a5426465b43cfb588cdee674aa4f215546 confirmed. Both adapted assertion bodies reverse exactly to the retained originals. Shared kit boot uses its existing normal/sandbox implementation. |
+| **Product / coverage** | Pagef8dbebbc remains identical; Plans and production sources unchanged.219 rows/1095 required cells;1010 settings;485/63 bindings;715/140 Touch;1271 production;22 status keys. No new product row or schema. |
+| **Final verification** | Initial V7 passed at0ef65db2b0 and remains frozen. A new final V7 and fresh dry will bind this requested test-only descendant before handoff. Neither result is claimed in advance. |
+| **Cleanup / limits** | Six owned GPU browser runs total, including earlier FO-20 and the interrupted attempt; all closed. Exact captures retained. No recording/server, landing, lock, reseal, snapshot/baseline or protected-governance change. |
+
+Raw proof: service-removals-20261101/R6-kit-proof.json under the retained Plans evidence root. Existing independent78c closure remains0 blockers/0 majors/0 minors. Concept tests do not close715 native Touch residuals.
+
+---
+
 # Plans lane — independent closure at78c; final checks released, 2026-11-02
 
 **Audit at78c1629c57:0 blockers,0 majors,0 minors. R6 is closed.** Lead1102030750-ce85 releases V7 and the fresh final dry. This checkpoint rebinds the earlier42/9e metadata to the independently verified source; it changes reports only and preserves the page byte-for-byte.

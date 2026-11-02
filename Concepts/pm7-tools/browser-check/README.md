@@ -23,6 +23,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 | Check file | What it asserts |
 |---|---|
+| `identity` | R6 identity and completion guards: the frozen fields-lane generated matrix, kind/declared-part conflicts, admitted/AI/drive controls, stale-sign-in cleanup and keyless admitted completion. Owner-start matrices are synthetic; completion has separate checks. Defaults to T3 sandbox; run once with `--set sandbox=0` and `--set sandbox=1`. |
+| `own-servers` | Current Source Control offerings in onboarding/Settings, shipped-page retirement scan, invalidated saved/partial selections, explicit reselection and current-service continuation. Same two surface switches. |
 | `boot` | Ready (`data-pmr-ready`, `PM_THEME`), default Basic Dark, main content on top, shell painted, no overflow, no console errors. Lists one full frame. |
 | `looks` | All ten looks (Basic, Friendly, Retro, Glass and NieR, light and dark). Each applies (`data-theme`, `PM_NIER.on()`), paints, has its main content on top and has no overflow. Frames are saved for `diff`. |
 | `widths` | 860, 1024, 1280, 1390 and 1920 wide, plus narrow 740 and short 1280x500. Main content is visible with no overflow. Frames are saved for `diff`. |
@@ -38,6 +40,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | `studio-screens` | FO-17's kind: every screen in Demo Studio › Onboarding › Open at one screen, opened from its row in a fresh page with the situation set by its chips, is walked by real clicks through its next three screens (`--set depth=`), or to the window closing on a finish screen: the primary when it is on, else a demo hint that works, a first choice, a sample in an empty field, then the screen's own buttons. It fails where a screen reaches no other screen (nothing changed for 30 s), which is how a screen opened straight shows a context only its `enter()` sets (c-route's pairing never finished). The situations `oldKey`, `oldKeyWorks` and `oldKeyLocked` are walked on the NAS key screens and `guestLater` on the Server pairing screens. `--set only=c-route,nas-key` walks some, `--set extras=0` leaves the situations out. About 40 minutes. |
 
 "No overflow" means: no sideways page scroll, no element painted past the right edge outside a scroller or clipper, and no text clipped without an ellipsis. Screen-reader-only labels and layers that aren't on top are ignored.
+
+The R6 checks keep the original fields test assertions through `helpers/onboarding-fields.mjs`; only the helper API, page default and sandbox navigation are adapted to this kit. They do not add a native provider or migration contract.
 
 ## Helpers for lane checks
 
