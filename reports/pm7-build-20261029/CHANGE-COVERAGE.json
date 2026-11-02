@@ -2772,8 +2772,8 @@
       "commands": "UCC-106; ui.onboarding.next; existing owner validation and Review gates, no new command",
       "settings": "none needed: saved onboarding admission policy, no ordinary preference or new key",
       "dry": "DR-005; one admission/invalidation rule for entry and resume",
-      "companions": "Published/stored onboarding schemas reject retired choices; fields e47045096f applies one offered-set invalidation rule on entry/resume and reports43/43 regressions on each page mode. Expanded admission proof checks current selectors/profiles, schema refusal and shared guards. No source-only marker becomes a canonical setup field.",
-      "state": "covered_by_current_contract_fields_source_and_static_proof",
+      "companions": "Published/stored schemas reject retired choices. Fieldsbc4f41773d and the125-record source probe cover42 retired normalization/resume cases and20 admitted/mixed-cache controls, with3 genuine old-picker resumes requiring a new choice. The source-only marker is not a canonical field; independent combined-head review pending.",
+      "state": "source_probe_pass_independent_combined_R6_review_pending",
       "decision_ref": "DL-273"
     },
     {
@@ -2784,9 +2784,20 @@
       "commands": "CS-073; UCC-106; existing ui.onboarding.next and service/auth owner routes; no new command, intent or handler",
       "settings": "none needed: Source Control admission is an owner rule, not a user preference or new setting key",
       "dry": "DR-005; entry, resume, availability and activation consume one current admission gate",
-      "companions": "Admitted Forgejo request remains valid; changing only choice to the former service is refused. Independent125-record probe at3d94 finds remaining owner handoffs, relabel/default and explicit-reselection gaps in source6070. Existing canon covers all; common gate is pending fields. No schema/key/command/mirror shape change.",
-      "state": "canon_and_typed_refusal_pass_independent_R6_owner_gate_open",
+      "companions": "Admitted Forgejo request remains valid; changing only choice to the former service is refused. Fieldsbc4f41773d adds the shared owner/action gate before normalization/default. Unchanged125-record source probe passes at37fcbc2455:0 owner handoffs,62 preservation checks,3 disabled old-picker footers. No schema/key/command/mirror shape change; independent combined-head closure pending.",
+      "state": "source_probe_pass_independent_combined_R6_review_pending",
       "decision_ref": "DL-273"
+    },
+    {
+      "id": "FO-20",
+      "change": "Glass floating rail/search/setup surfaces obscure page text; guided setups consume family tokens and shared text contrast",
+      "owner": "F3-652; F3-654; SSYS-042",
+      "wiring": "none needed: existing rail/search/Settings setup routes; material correction adds no handoff",
+      "commands": "none needed: existing actions and owners; no semantic command change",
+      "settings": "none needed: existing Theme family state; no new preference or inventory row",
+      "dry": "DR-067; F3-652 shared floating menu material and family tokens",
+      "companions": "Existing QA2PresentationPolicy.glass.Settings_modal_fill and F3-654; no new DTO/ID. Found05fa23d4ed source merged. Lead-authorized GPU setup-window check42/42 in ten looks, text>=4.5:1 at every size; minimum4.64. Five focused checks PASS; independent combined-head review pending.",
+      "state": "source_owner_and_focused_checks_pass_independent_combined_review_pending"
     }
   ],
   "sources": [
@@ -3301,9 +3312,9 @@
     "new_rows": [
       "DL273-OWN-SERVER-FORGEJO"
     ],
-    "coverage_rows": 215,
-    "required_cells": 1075,
-    "fields_source": "a5c103cbf6",
+    "coverage_rows": 218,
+    "required_cells": 1090,
+    "fields_source": "bc4f41773d",
     "fields_coverage_mirror": "99226a97b5_merged",
     "new_commands_bindings_settings": 0,
     "new_product_rule": "hosted_Forgejo_not_offered",
@@ -3389,8 +3400,9 @@
       "positive_cases": 1593,
       "negative_cases": 3926,
       "index_acceptance_units": 29366,
-      "independent_recheck": "R6 open at3d94; common Source Control owner gate pending fields. Final dry held until independent closure."
-    }
+      "independent_recheck": "Local125-record source probe passes at37fcbc2455; independent R6 closure pending at the final FO-20 combined head."
+    },
+    "historical_first_fields_source": "a5c103cbf6"
   },
   "historical_DL273_first_removal": {
     "decision_ref": "DL-273",
@@ -3417,5 +3429,26 @@
     "strict_live_label_cleanup": true,
     "live_label_matches": 0,
     "protected_label_matches": 0
+  },
+  "FO20": {
+    "source_commit": "05fa23d4ed4832667e46e1a9b1dbd35410643613",
+    "owner_clarification": "F3-652",
+    "contrast_owner": "F3-654",
+    "setup_owner": "SSYS-042",
+    "dry_owner": "DR-067",
+    "new_schema_binding_command_key": false,
+    "prose_first_record": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO20-prose-phase.json",
+    "GPU_check_authorization": "1102001356-06bb",
+    "native_acceptance_claim": false,
+    "GPU_check_result": {
+      "checks": 42,
+      "failed": 0,
+      "looks": 10,
+      "text_min": 4.64,
+      "action_min": 5.2,
+      "chosen_edge_min": 5.12,
+      "proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO20-browser-proof.json",
+      "scope": "computed-color text contrast and overlap in one GPU setup-window check; not native certification"
+    }
   }
 }

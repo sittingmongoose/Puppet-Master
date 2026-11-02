@@ -1,5 +1,8 @@
 # Plans Index (authoritative map)
 
+- 2026-11-02: FO-20 clarifies the shared Glass material for unpinned rail panels, title-bar search and Settings guided setup windows. Floating content obscures page text, docked panes keep sheet material, and each setup uses its family tokens with F3-654 text contrast. Existing overlay, command and preference owners apply.
+  ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-654, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/DRY_Rules.md#DR-067
+
 - 2026-11-01: DL-273 activation consumes current Forge admission for every selection source, including saved or uncommitted controls and incoming actions. Retired service choices cannot start sign-in, discovery, setup or other owner work; an unpicked main draft grants no exception. Existing commands, wiring, Settings keys and return paths remain.
   ContractRef: ContractName:Plans/Decision_Log.md#DL-273, ContractName:Plans/Planning_Wizard.md#PWIZ-024, ContractName:Plans/UI_Wiring_Rules.md#UIW-015
 
