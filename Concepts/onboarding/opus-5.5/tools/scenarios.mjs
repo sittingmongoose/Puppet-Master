@@ -1142,6 +1142,17 @@ def('pr61', 'fresh', "FO-23: on a service's own-server sign-in Pip promises no n
   await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-signin' })); await d.settle(); await sleep(2500); const b2 = await bubble();
   A.ok(!/only ask for this one|only this one/i.test(b2) && /can reach/.test(b2), 'the sign-in line promises no narrower reach (' + JSON.stringify(b2) + ')');
 });
+def('pr62', 'fresh', "FO-24: Review for a Project later on a new Server with access from away says that access will be set up after Finish setup, never that it is set up, in Plain English and Expert", async (d, A) => {
+  await toNewServer(d, A); await d.act('later'); await d.act('pick', 'anywhere'); await d.primary();
+  A.eq(await d.screen(), 'review', 'Review');
+  const lead = () => d.state(() => (document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-lead') || {}).textContent || '');
+  for (const mode of ['ELI5', 'Expert']) {
+    await d.page.evaluate((m) => window.O55.talk.set(m, 'scenario'), mode); await d.settle(); await sleep(600);
+    const l = await lead(), will = await d.state(() => (document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-will') || {}).textContent || '');
+    A.ok(/will be set up/.test(l) && !/is set up|are set up|has been set up/.test(l), mode + ': the lead says access will be set up (' + JSON.stringify(l) + ')');
+    A.ok(/Next, access away from home is set up/.test(will), mode + ': the Finish setup list still says it comes next');
+  }
+});
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
 const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);
