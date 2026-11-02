@@ -805,9 +805,11 @@
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
     if (from && from.leave) from.leave(S);
+    if (S.sess.ui.openedAt && S.sess.ui.openedAt !== id) delete S.sess.ui.openedAt;
+    if (O55.branch) O55.branch.reconcile(S);
     prune();
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
-    if (!opts.fromHistory) stamp(S.sess.screen, id);
+    if (opts.noHistory && !opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.sess.ui.openedAt = id;
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
     stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
@@ -835,53 +837,26 @@
     go(prev, { dir: 'back', noHistory: true, fromHistory: true });
   }
   /* ---------------------------------------------------------------- the active branch
-     (FO-22's class: final-onb BACK-STATE-GAPS-78C; Sol's repeated Edit at bf05a56258)
-     A chooser asks an answer that picks a branch. On the main path (SPINE): which computer (where, 66), how the Project
-     begins (begin: its Continue records it, 69), where its files live (name, 69), the online copy that Safe opened (safe:
-     a new one each time a copy is given up, 71), whether an attempt is made (review: given up is none again, 72). Inside
-     a branch: the online copy's service (online-service, applied by its Continue,
-     71), how the NAS is reached (nas-find, 70), the Connect route (c-route, 67); each answer is written only on its own
-     chooser. Every other screen belongs to the chooser that opened it, directly or through the screens between, and
-     was entered under that chooser's answer then: go() stamps it so. A screen whose chooser's answer has since been
-     replaced, or whose chooser is itself off the branch, is off the active branch. Every history entry of it goes, each
-     one and not only the latest (Back and the rail never walk it), and it refuses its own actions and fields, so a
-     stale screen that history ever reaches again can write nothing. Answers kept unchanged keep their steps. */
-  const SPINE = ['welcome', 'look', 'where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
-  const ANSWERS = {
-    where: (s) => s.ui.where || 'this',
-    begin: (s) => (s.drafts.main.project_mode === 'later' ? 'later' : s.ui.beganAs || ''),
-    name: (s) => s.drafts.main.storage_mode || '',
-    safe: (s) => String((s.online && s.online.gen) || 0),
-    review: (s) => (s.commit && s.commit.state && s.commit.state !== 'none' ? 'attempt' : ''),
-    'online-service': (s) => { const d = s.drafts.main; return [d.online_mode, d.forge, d.forge_provider_variant || '', d.forge_instance_url || ''].join('|'); },
-    'nas-find': (s) => ((s.nas && s.nas.method) || 'ssh') + '|' + ((s.nas && s.nas.device) || ''),
-    'c-route': (s) => (s.drafts.connect && s.drafts.connect.server_connection_mode) || ''
-  };
-  const chooser = (id) => SPINE.includes(id) || !!ANSWERS[id];
-  const answerOf = (owner) => (ANSWERS[owner] ? String(ANSWERS[owner](S.sess)) : '');
-  /* entering a screen forward: the chooser it belongs to, and that chooser's answer now */
-  function stamp(from, id) {
-    if (SPINE.includes(id) || from === id) return;
-    const b = S.sess.branch = S.sess.branch || {};
-    const owner = chooser(from) ? from : b[from] && b[from].owner;
-    if (owner && owner !== id) b[id] = { owner, answer: answerOf(owner) }; else delete b[id];
-  }
+     (canon FO-22: Back visits only steps that remain valid for the current choices, and going on never reinstates an
+     abandoned branch, its source or its authorization). Whether a step applies is a pure function of the person's current
+     answers, declared per step in 76-branch.js (O55.branch); nothing is recorded at navigation time, so a history from any
+     build, a Review Edit or a jump is judged alike. The one exception is a tool's straight jump (Demo Studio's Open at one
+     screen, a ?o55=screen= link, a check's noHistory jump to a step its answers do not lead to): that step applies while it
+     is the screen on show, never once left, and never to Back or a resumed session. */
   function onBranch(id) {
-    for (let at = id, n = 0; n < 12; n++) {
-      const st = S.sess && S.sess.branch && S.sess.branch[at];
-      if (!st) return true;
-      if (answerOf(st.owner) !== st.answer) return false;
-      if (SPINE.includes(st.owner)) return true;
-      at = st.owner;
-    }
-    return true;
+    if (S.sess && S.sess.ui && S.sess.ui.openedAt === id && S.sess.screen === id) return true;
+    return !O55.branch || O55.branch.applies(id, S);
   }
-  /* a screen off the active branch is never shown: what would show it (a wrong history, a resumed session, a redraw
-     after its answer went) shows the chooser it belongs to, as FO-22's entry redirect does for an identity that does not
-     resolve; so it never draws, and never writes even the defaults its drawing would fill */
+  /* a step that does not apply is never shown: what would show it (a history entry, a resumed session, a redraw after its
+     answer went) shows the last step in the history that does apply, as FO-22's entry redirect does for an identity that
+     does not resolve; so it never draws, and never writes even the defaults its drawing would fill */
   function settleBranch() {
-    for (let n = 0; n < 12 && S.sess && !onBranch(S.sess.screen); n++) S.sess.screen = S.sess.branch[S.sess.screen].owner;
+    if (!S.sess || onBranch(S.sess.screen)) return;
+    const h = S.sess.history || [];
+    let to = null; while (h.length) { const id = h.pop(); if (onBranch(id) && SCREENS.defs[id]) { to = id; break; } }
+    S.sess.screen = to || 'welcome';
   }
+
   /* the history keeps only the active branch, and no entry for the screen you are on (a resumed screen that gave way) */
   function prune() {
     const out = [];
@@ -1188,8 +1163,9 @@
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
-    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; if (S.sess.branch) delete S.sess.branch[opts.screen]; }
+    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.sess.ui.openedAt = opts.screen; }
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
+    if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the

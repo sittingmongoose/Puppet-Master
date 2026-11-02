@@ -290,6 +290,9 @@
      accounts recorded for retired servers go, an unfinished commit starts again from Review, and a screen of the old
      service's own steps gives way to choosing the service */
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
+    /* a session saved before Safe's copy answer existed wanted a copy if it was choosing one: on its picker or steps, or
+       with a service picked there (76-branch.js reads the answer; once set, it is the person's) */
+    const olm = OL(S); if (olm.wanted === undefined) olm.wanted = olm.purpose === 'copy' && (olm.forge != null || ['online-service', 'online-signin', 'online-details'].includes(S.sess && S.sess.screen));
     const drafts = (S.sess && S.sess.drafts) || {};
     Object.keys(drafts).forEach((k) => { if (drafts[k] && typeof drafts[k] === 'object') O55.draft.normalize(drafts[k]); });
     /* the session's own state is checked whatever the draft holds (a card picked and closed before Continue) */
@@ -326,7 +329,9 @@
   function cleanOnline(S) {
     const ol = OL(S); let changed = false;
     if (ol.forge != null && !CARDS.includes(ol.forge)) { ol.forge = null; ol.variant = null; ol.mustPick = true; changed = true; }
-    if (ol.variant != null && !(ol.forge ? kindsOf(ol.forge) : CARDS.flatMap(kindsOf)).includes(ol.variant)) { ol.variant = null; changed = true; }
+    /* (a kind no longer offered takes its card with it: a saved pick of a retired kind resumes with nothing chosen, never
+       relabelled as the card's current kind: Astra AST-1, R6) */
+    if (ol.variant != null && !(ol.forge ? kindsOf(ol.forge) : CARDS.flatMap(kindsOf)).includes(ol.variant)) { ol.variant = null; ol.forge = null; ol.mustPick = true; changed = true; }
     Object.keys(ol.addresses || {}).forEach((k) => { const [c, v] = k.split('|'); if (!CARDS.includes(c) || !kindsOf(c).includes(v)) { delete ol.addresses[k]; changed = true; } });
     return changed;
   }
@@ -343,9 +348,10 @@
        at all, never clamped to an offered kind with its old address, and the person picks again) */
     const planOk = !!d.forge && d.forge !== 'none' && O55.draft.offered(d.forge, d.forge_provider_variant);
     if (d.forge && d.forge !== 'none' && !planOk && !ol.forge) ol.mustPick = true;
-    const planned = planOk ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
+    /* (a copy or source given up: the picker chooses nothing for the person, without the retired-service note) */
+    const planned = planOk && !ol.unchosen ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
     /* (R6) after a retired service the person chooses again: nothing is picked for them */
-    const sel = ol.forge || planned || (d.forge_retired || ol.mustPick ? null : 'github'), same = !!planned && sel === planned;
+    const sel = ol.forge || planned || (d.forge_retired || ol.mustPick || ol.unchosen ? null : 'github'), same = !!planned && sel === planned;
     if (!sel) return { sel: null, forge: null, variant: null, key: '', typed: null, asks: false, address: '', url: '', ok: false, words: { hint: '', error: '', reason: T('missing.service') } };
     let variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (same ? (d.forge === 'bitbucket_data_center' ? 'data_center' : d.forge_provider_variant) : null);
     const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && variant === 'data_center' ? 'bitbucket_data_center' : sel;
@@ -383,7 +389,7 @@
     lead: () => T('online.service.lead'),
     body(S) {
       const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant;
-      let out = (md(S).forge_retired || ol.mustPick) && !sel ? C.note(T('online.service.retired'), 'info', 'cloud') : '';
+      let out = ((md(S).forge_retired && md(S).forge_retired.forge) || ol.mustPick) && !sel ? C.note(T('online.service.retired'), 'info', 'cloud') : '';
       out += C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
       /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
       let under = '';
@@ -406,10 +412,11 @@
       return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: c.words.reason } };
     },
     do: {
-      pick(S, v, el) { if (!CARDS.includes(v)) return; const ol = OL(S); ol.mustPick = false; ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
+      pick(S, v, el) { if (!CARDS.includes(v)) return; const ol = OL(S); ol.mustPick = false; ol.unchosen = false; ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
       others(S) { OL(S).others = !OL(S).others; S.save(); O55.ui.refresh(); },
       variant(S, v) { if (!kindsOf(serviceChoice(S).sel).includes(v)) return; OL(S).variant = v; S.save(); O55.ui.refresh(); showAddress(S); },
-      notNow(S) { O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
+      /* (Not now gives the copy up, even before any Continue: Astra AST-2) */
+      notNow(S) { const ol = OL(S); ol.wanted = false; ol.forge = null; ol.variant = null; ol.unchosen = true; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
       next(S) {
         const ol = OL(S), d = md(S), c = serviceChoice(S), forge = c.forge, variant = c.variant;
         if (!c.ok || !O55.draft.offered(forge, variant)) return; /* (refused with its reason, as the button shows; never a service or kind not offered) */
@@ -848,7 +855,8 @@
     do: {
       backend(S, v) { O55.draft.set(md(S), { history_backend: v }); S.save(); O55.ui.refresh(); },
       filesafe(S) { const on = !md(S).filesafe; O55.draft.set(md(S), { filesafe: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
-      online(S) { OL(S).purpose = 'copy'; S.save(); O55.ui.go('online-service'); },
+      /* (Safe wants an online copy: the answer that keeps its picker and steps on the person's path, 76-branch.js) */
+      online(S) { const ol = OL(S); ol.purpose = 'copy'; ol.wanted = true; S.save(); O55.ui.go('online-service'); },
       backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); seeSheet(S); },
       /* another place, or another service for it, drops the access details typed for the old one */
       bdest(S, v, el) { const b = S.sess.backup, to = v === 'none' ? null : v; if (b.dest !== to) { b.sub = null; b.access = {}; } b.dest = to; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, SUBS[v] ? T('safe.backup.' + v) : backupLabel(S, v), 'vault'); },
@@ -887,17 +895,16 @@
     return goOn.call(this, id, opts);
   };
   O55.safe = { forgeName, visCopy, hostOf, nameTaken, refuseName, sourceOk };
-  /* An online copy given up (Not now after choosing one, Skip the online copy at Creating, Later, a Project no longer
-     brought in from online): the plan's copy goes from set to none. Every way it goes is a draft change, so it is
-     noticed here, once: the copy that Safe opened is over, and the picker and steps that served it leave the active
-     branch (60-ui-core: Safe's answer is this count), so Back never offers them, nor Continue from them, again
-     (FO-22, final-onb's Skip witness at bf05a56258). */
+  /* An online copy given up (Not now, Skip the online copy at Creating, Later, a Project no longer brought in from
+     online): the plan's copy goes from set to none, a draft change, noticed here once. Safe no longer wants a copy, so its
+     picker and steps leave the person's path (76-branch.js), and the picker's choice goes: added again, it starts with
+     nothing chosen (FO-22, final-onb's Skip witness at bf05a56258). */
   const setDraft = O55.draft.set;
   O55.draft.set = function (d, patch) {
     const S = O55.S, main = S && S.sess && S.sess.drafts && S.sess.drafts.main;
     const gaveUp = !!main && d === main && !!patch && patch.online_mode === 'none' && !!d.online_mode && d.online_mode !== 'none';
     const r = setDraft.apply(this, arguments);
-    if (gaveUp) { const ol = OL(S); ol.gen = (ol.gen || 0) + 1; }
+    if (gaveUp) { const ol = OL(S); ol.wanted = false; ol.forge = null; ol.variant = null; ol.unchosen = true; }
     return r;
   };
 
