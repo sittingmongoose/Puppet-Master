@@ -24,7 +24,9 @@
     O55.sound.play('sheet');
   }
   /* a service by the name the person picked it by: GitHub Enterprise for GitHub's own server (Opus p74) */
-  const forgeName = (id, variant) => (id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
+  /* (a service not chosen, as a retired one leaves a resumed plan, reads as one to choose again, never by its key:
+     Safe showed "none" for it, BACK-STATE-GAPS-78C row 9) */
+  const forgeName = (id, variant) => (!id || id === 'none' ? T('review.serviceToChoose') : id === 'github' && variant === 'self_managed' ? T('online.service.github_enterprise') : (O55.fixtures.forge(id) || {}).name || id);
   const instanceKey = (d) => [d.forge || '', d.forge_provider_variant || '', (() => { try { const u = new URL(d.forge_instance_url || ''); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return ''; } })()].join('|');
   const RULES = () => O55.forgeRules;
   /* a concept demo's ready choices under a step that needs a real service (pm7-onb's O55.flow.hint), each taking one
@@ -279,7 +281,7 @@
     bind: {
       token(S, v) { const had = !!SI(S).tokenTyped; SI(S).tokenTyped = v.length > 0; if (had !== SI(S).tokenTyped) { S.save(); O55.ui.refresh(); } }
     },
-    skipOnBack: (S) => SI(S).state === 'done'
+    skipOnBack: (S) => SI(S).state === 'done' || !sourceOkFor('online-signin', S)
   });
 
   /* (Opus R6, Sol re-audit) a session saved before Jared's 2026-11-01 removals is resumed through the same rule as a plan:
@@ -295,15 +297,17 @@
     let touched = cleanOnline(S);
     if (isSource(S.sess.signin) && !siOffered(S)) { S.sess.signin = {}; touched = true; }
     ['forgeAccounts', 'refusedNames'].forEach((m) => Object.keys(S.sess[m] || {}).forEach((key) => { if (!offeredKey(key)) { delete S.sess[m][key]; touched = true; } }));
-    if (touched && S.sess.screen === 'online-signin' && !(S.sess.signin && S.sess.signin.service)) S.sess.screen = 'online-service';
+    /* (the steps walked since choosing the service go with it: the first Back from the service leaves it) */
+    const giveWay = (to) => { S.sess.screen = to; if (O55.ui.forgetSince) O55.ui.forgetSince(to); };
+    if (['online-signin', 'online-details', 'ex-repos'].includes(S.sess.screen) && !sourceOkFor(S.sess.screen, S)) { giveWay('online-service'); touched = true; }
     if (touched) S.save();
     const d = drafts.main; if (!d || !d.forge_retired) return;
     const ol = OL(S); ol.forge = null; ol.variant = null;
     if (S.sess.signin && S.sess.signin.kind === 'forge') S.sess.signin = {};
     Object.keys(S.sess.forgeAccounts || {}).forEach((key) => { const [f, v] = key.split('|'); if (!O55.draft.offered(f, v)) delete S.sess.forgeAccounts[key]; });
     if (S.sess.commit && !['running', 'done'].includes(S.sess.commit.state)) S.sess.commit = { state: 'none' };
-    if (['online-signin', 'online-details', 'ex-repos'].includes(S.sess.screen)) S.sess.screen = 'online-service';
-    else if (S.sess.screen === 'creating' && S.sess.commit.state === 'none') S.sess.screen = 'review';
+    if (['online-signin', 'online-details', 'ex-repos'].includes(S.sess.screen)) giveWay('online-service');
+    else if (S.sess.screen === 'creating' && S.sess.commit.state === 'none') giveWay('review');
     S.save();
   }]);
 
@@ -536,6 +540,7 @@
     return Object.keys(patch).length > 0 || listed;
   }
   def('online-details', {
+    skipOnBack: (S) => !sourceOkFor('online-details', S), /* (never shown for a plan with no service: Back passes it) */
     seed: (S) => seedOnline(S, true),
     chapter: 'project', stage: 'source_control_setup',
     scene: () => ({ id: 'online', beat: 'signed' }),
@@ -651,6 +656,7 @@
   /* (the address's own path: an Azure DevOps team project is in it, a Bitbucket project is not: Opus p73) */
   const repoRef = (forge, r) => forge + ':' + (r.container ? r.container + (r.projectName && forge === 'azure_devops' ? '/' + r.projectName : '') : r.owner) + '/' + r.name;
   def('ex-repos', {
+    skipOnBack: (S) => !sourceOkFor('ex-repos', S),
     seed: (S) => seedOnline(S, true, 'source'),
     chapter: 'project', stage: 'first_project',
     scene: () => ({ id: 'online', beat: 'signed' }),
@@ -812,11 +818,12 @@
       let onlineState, onlineBtn = '';
       /* a folder that already has an online copy keeps it: show it, and do not offer a second one */
       const folderOnline = d.project_mode === 'existing_local' && fi && fi.online;
-      if (d.project_mode === 'existing_online') onlineState = forgeName(d.forge, d.forge_provider_variant) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '');
+      const unchosen = !d.forge || d.forge === 'none';
+      if (d.project_mode === 'existing_online') onlineState = unchosen ? forgeName(d.forge) : forgeName(d.forge, d.forge_provider_variant) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '');
       else if (folderOnline && d.online_mode === 'none') onlineState = forgeName(folderOnline.forge) + ' · ' + folderOnline.repo + ' · ' + T('safe.online.linked');
       else if (d.online_mode === 'new') {
         const privacy = d.forge === 'azure_devops' ? T('online.details.azurePrivacy') : d.repository_visibility ? visCopy(d, d.repository_visibility, RULES().ownerOf(S.env, d)).title : '';
-        onlineState = T('safe.online.set', { service: forgeName(d.forge, d.forge_provider_variant), privacy });
+        onlineState = unchosen ? forgeName(d.forge) : T('safe.online.set', { service: forgeName(d.forge, d.forge_provider_variant), privacy });
         onlineBtn = C.link(T('chrome.change'), 'online');
       } else {
         onlineState = T('safe.online.notNow') + ' · ' + T('safe.online.sub');
@@ -868,8 +875,14 @@
   }
   const sourceOk = (S) => sourceOkFor(S && S.sess && S.sess.screen, S);
   const goOn = O55.ui.go;
+  /* a source-control screen is never shown for an identity that does not resolve (a plan with no service after Not now,
+     a retired pick dropped on resume): a jump to it lands on choosing the service, Back passes it (skipOnBack), and a
+     resumed session does not open on it. One held so anyway (a hand-built session; no route reaches it) still moves
+     only back or to choosing the service, never on with the identity it cannot resolve (Sol R6's direct navigation) */
+  const ENTRY_GATED = ['online-signin', 'online-details', 'ex-repos'];
   if (typeof goOn === 'function') O55.ui.go = function (id, opts) {
     const S = O55.S;
+    if (S && S.sess && ENTRY_GATED.includes(id) && !sourceOkFor(id, S)) return goOn.call(this, 'online-service', opts);
     if (S && S.sess && SOURCE_SCREENS.includes(S.sess.screen) && !sourceOk(S) && id !== 'online-service' && !(opts && opts.dir === 'back')) return false;
     return goOn.call(this, id, opts);
   };

@@ -463,11 +463,14 @@
   }
   /* A failed GitHub attempt never retries in place: a fresh review (new draft revision) starts a new
      original attempt with a new idempotency key. */
+  /* (the given-up attempt leaves the history with Creating: Back from the fresh Review goes where it went before the
+     attempt, never to a Creating with nothing in it, which had no way on and no Back: BACK-STATE-GAPS-78C row 4) */
   function reviewFresh(S, stay) {
     discardStaged(S);
     O55.draft.set(md(S), { review_confirmed: false });
     S.sess.commit = { state: 'none' };
-    S.save(); if (!stay) O55.ui.go('review');
+    if (!stay) O55.ui.forgetSince('review');
+    S.save(); if (!stay) O55.ui.go('review', { noHistory: true });
   }
   /* GitHub's owner said the copy failed before anything was made there */
   const githubRefused = (S) => { const cm = S.sess.commit || {}; return cm.state === 'failed' && !!cm.recovery && cm.recovery.remote_effect_state === 'failed_before_effect'; };
@@ -655,7 +658,7 @@
       /* the name field, ready to type into; on GitHub a fresh attempt, so its Continue goes back to Review (RV-12) */
       rename(S) {
         S.sess.ui.focusName = true;
-        if (PR().isGithubRemoteChain(md(S))) { reviewFresh(S, true); S.sess.ui.returnTo = { screen: 'review', from: 'online-details' }; S.save(); return O55.ui.go('online-details'); }
+        if (PR().isGithubRemoteChain(md(S))) { reviewFresh(S, true); S.sess.ui.returnTo = { screen: 'review', from: 'online-details' }; S.save(); return O55.ui.go('online-details', { noHistory: true }); }
         S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
       },
       askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },

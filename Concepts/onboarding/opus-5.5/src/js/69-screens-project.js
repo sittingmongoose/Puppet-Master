@@ -99,12 +99,14 @@
       sub(S, v) { const was = S.sess.ui.beginSub; S.sess.ui.beginSub = v; S.save(); O55.ui.refresh(); if (was !== v) swapBeginning(S, 1); },
       /* a Project can wait, but a new Server is being set up now: its access away from home is still asked (canon
          skips only the provider phases for a deferred Project) */
-      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
+      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; O55.ui.forgetSince('begin'); S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
       next(S) {
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
         /* switching how the Project begins drops what the abandoned beginning filled in */
         const began = sel === 'existing' ? 'existing:' + sub : sel;
-        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d);
+        /* (and the abandoned beginning's steps leave the history: chosen again from Review's Edit, Back never walks its
+           folder, repository, NAS or restore steps, nor continues from them: BACK-STATE-GAPS-78C row 5) */
+        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) { resetBeginning(S, d); O55.ui.forgetSince('begin'); }
         S.sess.ui.beganAs = began;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
         if (sel === 'new') { O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', project_source_ref: '', source_more: false }, clearOnline)); S.save(); return O55.ui.go('name'); }

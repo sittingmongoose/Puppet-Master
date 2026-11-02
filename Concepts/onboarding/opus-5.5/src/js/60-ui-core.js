@@ -827,6 +827,12 @@
     if (!prev) return;
     go(prev, { dir: 'back', noHistory: true });
   }
+  /* A step whose answer is replaced there (a new beginning chosen from Review's Edit, a fresh Review after a failed
+     attempt) or that a resumed session lands on instead (a step of a retired service giving way): what the history
+     walked since that step's last visit belonged to the old answer, so it goes, and Back from the step goes where it went
+     the first time. Use another way (Connect) and Use a shared folder (NAS) cut their history the same way. Back never
+     walks an abandoned answer's steps (FO-22's class, final-onb BACK-STATE-GAPS-78C). */
+  function forgetSince(id) { const h = S.sess.history || [], at = h.lastIndexOf(id); if (at >= 0) S.sess.history = h.slice(0, at); }
 
   /* the waits' loaders (L6) start once they are on the page (the loader owner, PM_PIP_LOADER) */
   const armLoaders = (layer) => { const P = window.PM_PIP_LOADER; if (P && typeof P.mount === 'function' && layer.querySelector('[data-pip-loader]')) try { P.mount(layer); } catch (_) {} };
@@ -1306,5 +1312,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
+  Object.assign(O55.ui, { S, build, open, close, go, back, forgetSince, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
 })();
