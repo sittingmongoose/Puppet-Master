@@ -186,6 +186,59 @@ const keepRepo = async (A) => { await A.click('edit', 'begin', 'begin'); await A
   if ((await A.snap()).screen === 'online-signin') await signedIn(A); await A.screen('ex-repos'); const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); await A.click('next'); await toReview(A); };
 const keepRestore = async (A) => { await A.click('edit', 'begin', 'begin'); await A.click('next', undefined, 'r-source'); await A.click('source', 'kit'); await A.click('kit', 'kit-loom'); await pressOn(A); await A.screen('r-pick');
   const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); await pressOn(A); await A.sleep(800); await toReview(A); };
+/* a Project on Home NAS over SSH, walked by clicks to its folder; again from Begins as with the same device and folder */
+const throughNas = async (A) => {
+  for (let i = 0; i < 14; i++) {
+    const s = await A.snap();
+    if (['name', 'review', 'like', 'safe'].includes(s.screen)) return;
+    if (s.screen === 'nas-identity') { if (await A.has('trust')) await A.click('trust'); else await pressOn(A); }
+    else if (s.screen === 'nas-key') { await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:nas-home') && v.state === 'done'), null, 8000); await A.waitEnabled('next').catch(() => {}); await pressOn(A); }
+    else if (s.screen === 'nas-signin') { if (await A.frame().locator('#o55f-user').count()) await A.fill('o55f-user', 'jared'); if (await A.frame().locator('#o55f-pw').count()) await A.fill('o55f-pw', 'correct horse'); await pressOn(A); }
+    else if (s.screen === 'nas-install') { await A.waitFor(() => { const b = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, 15000); await pressOn(A); }
+    else if (s.screen === 'nas-folder') { if (await A.has('cd', '/volume1/projects')) await A.click('cd', '/volume1/projects'); await A.click('use'); }
+    else await pressOn(A);
+    await A.sleep(900);
+  }
+};
+const toNasProject = async (A) => { await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+  await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); await toReview(A); };
+const keepNas = async (A) => { await A.click('edit', 'begin', 'begin'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+  await A.waitEnabled('next'); await pressOn(A); await A.sleep(900); await throughNas(A); await toReview(A); };
+const NAS_STEPS = ['nas-find', 'nas-identity', 'nas-key', 'nas-signin', 'nas-install', 'nas-pmpair', 'nas-folder', 'nas-smb', 'nas-nfs', 'nas-mounted'];
+/* ---------------------------------------------------------------- every Review Edit target (row 10)
+   final-onb's BACK-STATE-BF05 reconciliation lists the Review Edit sequences; rows 5, 6 and 8 run Begins as, This
+   computer › a Server and the kit restore. Row 10 runs the rest: each Edit kept twice with the same answer, then changed. */
+const onToReview = async (A, choose = {}) => { for (let i = 0; i < 14; i++) { const s = await A.snap(); if (s.screen === 'review') return; if (choose[s.screen]) { await choose[s.screen](A, s); delete choose[s.screen]; } else { await A.waitEnabled(s.primary && s.primary.action || 'next').catch(() => {}); await pressOn(A); } await A.sleep(700); } await A.screen('review'); };
+const viaReview = (target, fn) => async (A) => { await A.screen('review'); await A.click('edit', target); await A.sleep(700); await fn(A); await A.sleep(400); if ((await A.snap()).screen !== 'review') await onToReview(A); };
+const stay = async () => {};
+/* a new Server on Home NAS: the concept host's owner answers stand in for the Server, as tools/scenarios.mjs's
+   finishServerSetup gives them (a disclosed fixture); every step is a click */
+const ownerAnswers = (A, key) => A.frame().evaluate((key) => { const S = O55.S, req = S.sess.server[key]; if (!req) throw new Error('no owner request ' + key); const ref = 'fixture:' + req.id;
+  const res = Object.assign({}, req, { id: ref + ':result', requestId: req.id, outcome: 'ok', postcondition: { ok: true, evidence: ref + ':postcondition' } });
+  if (req.operation === 'cmd.client.pair.start') { res.pairing_run = { id: ref + ':pairing-run', state: 'waiting', server: req.server, candidate: req.candidate, generation: req.generation, expires_at: Date.now() + 120000 }; res.identity = { words: 'river candle orbit' }; }
+  else if (req.operation === 'cmd.client.pair.approve') res.trust = { id: ref + ':trust', server: req.server, client: req.client, candidate: req.candidate, run_id: req.run_id };
+  O55.ownerResults.inject(res); }, key);
+const retry = async (A) => { if (await A.has('retry')) await A.click('retry'); else await A.frame().evaluate(() => O55.ui.act('retry')); await A.sleep(500); };
+async function toNewServer(A) {
+  await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600);
+  await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:new"]'), null, 8000); await A.click('pick', 'pm:new'); await pressOn(A); await A.sleep(600);
+  await A.fill('o55f-code', '482 913'); await pressOn(A);
+  /* the page's concept host answers the Server's owner requests itself; where one is left pending, the fixture answers it */
+  for (let i = 0; i < 30 && (await A.snap()).screen !== 's-ready'; i++) {
+    const st = await A.frame().evaluate(() => { const v = O55.S.sess.server; return { claim: v.orClaimErr, boot: v.orBootErr, run: v.orRunErr, approve: v.orApproveErr, runOk: !!v.orRunOk, self: !!v.selfConfirmed }; });
+    if (st.claim === 'pending_no_result') { await ownerAnswers(A, 'orClaimReq'); await retry(A); }
+    else if (st.boot === 'pending_no_result') { await ownerAnswers(A, 'orBootReq'); await retry(A); }
+    else if (st.run === 'pending_no_result') { await ownerAnswers(A, 'orRunReq'); await retry(A); }
+    else if (st.approve === 'pending_no_result') { await ownerAnswers(A, 'orApproveReq'); await pressOn(A); }
+    else if (st.runOk && !st.self && await A.has('selfMatch')) { await A.click('selfMatch'); await A.sleep(300); await pressOn(A); }
+    await A.sleep(700);
+  }
+  await A.screen('s-ready'); await pressOn(A); await A.screen('begin');
+}
+const SERVER_STEPS = ['s-kind', 's-wait', 's-confirm', 's-ready'];
+const toNameNas = async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Book club site');
+  await A.click('change'); await A.click('loc', 'network', 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+  await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); await onToReview(A); };
 const keepWhere = async (A) => { await A.click('edit', 'where', 'where'); await A.click('pick', 'this'); await A.click('next'); await toReview(A); };
 /* (the owner fixture's network failure is one-shot: it is armed again for each repeated attempt, a disclosed fixture) */
 const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'review'); await A.frame().evaluate(() => { O55.S.env.failures.online_copy = 'network'; }); await A.waitEnabled('commit'); await A.click('commit', undefined, 'creating');
@@ -222,10 +275,15 @@ export const tests = {
     await row(t, '4 skip (network)', { scenario: 'fresh+flaky', establish: toCreatingFailed, keep: keepAttempt, invalidate: async (A) => { if (await A.has('askSkip')) await A.click('askSkip'); await A.click('skipOnline'); await A.sleep(1500); },
       after: async (A, bad) => { const v = await copyGone(A); if (v) bad.push('4 skip (network): the plan ' + v); } });
   },
-  async 'row 5 · the Project beginning kept twice from Review, then changed (online › Later, folder › New), and folder › New › folder › New; Back and on, and nothing of the old one comes back'(t) {
+  async 'row 5 · every Begins-as source kept twice from Review, then changed (online › Later, folder › New, Home NAS › New and › Later, restore › Later; restore › New is row 8), and folder › New › folder › New, Later › online again; Back and on, and nothing of the old one comes back'(t) {
     await row(t, '5 online > Later', { establish: toRepoProject, keep: keepRepo, invalidate: editBegin('later'), stale: [{ on: 'review|safe|name', x: 'jared-p' }, { on: 'review|safe', x: 'recipe-app' }], choose: name,
       after: abandoned(['online-service', 'online-signin', 'ex-repos']), force: ['ex-repos'] });
     await row(t, '5 folder > New', { establish: toFolderProject, keep: keepFolder, invalidate: editBegin('new'), stale: [{ on: 'review|name|safe|away', x: 'recipe-app' }], choose: name, after: abandoned(['ex-folder']), force: ['ex-folder'] });
+    /* Home NAS (final-onb's FO-22 witness at bf05a56258: Back reached the old "Choose a folder on Home NAS"), kept twice,
+       then New and then Later; and a restore kept twice, then Later (row 8 gives it up for New) */
+    await row(t, '5 NAS > New', { establish: toNasProject, keep: keepNas, invalidate: editBegin('new'), stale: [{ on: 'review|name|safe|away', x: 'Home NAS' }], choose: name, after: abandoned(NAS_STEPS), force: ['nas-folder'] });
+    await row(t, '5 NAS > Later', { establish: toNasProject, keep: keepNas, invalidate: editBegin('later'), stale: [{ on: 'review|safe|away', x: 'Home NAS' }], choose: name, after: abandoned(NAS_STEPS), force: ['nas-folder'] });
+    await row(t, '5 restore > Later', { establish: toKitRestore, keep: keepRestore, invalidate: editBegin('later'), stale: [{ on: 'review|safe', x: 'Loom' }], choose: name, after: abandoned(['r-source', 'r-unlock', 'r-pick', 'r-preview']), force: ['r-pick'] });
     /* answers changed back and forth: every segment of each abandoned answer goes, the one returned to keeps its own */
     await row(t, '5 folder > New > folder > New', { establish: toFolderProject, keep: async (A, i) => { await keepFolder(A); if (i === 0) { await editBegin('new')(A); await A.fill('o55f-name', 'Fresh one'); await A.click('next'); await toReview(A);
         await A.click('edit', 'begin', 'begin'); await A.click('pick', 'existing'); await A.click('sub', 'folder'); await A.click('next', undefined, 'ex-folder'); await A.click('pick', '~/Documents/recipe-app'); await A.click('next'); await toReview(A); } },
@@ -287,5 +345,47 @@ export const tests = {
       await row(t, `9b admitted at ${at} (browser-written)`, { establish: async (A) => { await writtenAt(A, at); },
         invalidate: async (A, bad) => {}, choose: Object.assign({ name: async (A) => { await A.fill('o55f-name', 'Notes'); await A.click('next'); } }, pickerOn),
         after: async (A, bad, back) => { if (back[0] !== at) bad.push(`9b admitted at ${at}: resumed on ${back[0]}, not where it was closed`); } });
+  },
+  async 'row 10a · Review Edit kept twice, then changed: Safe (copy removed; service GitHub › GitLab; own-server address; history Git › Jujutsu; backup Home NAS › Google Drive), online details, repository, Project name and files place'(t) {
+    const copyEst = async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); await toReview(A); };
+    await row(t, '10a Ar Safe kept > copy removed', { establish: copyEst, keep: viaReview('safe', stay),
+      invalidate: viaReview('safe', async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); }), noReturn: copyGone, after: abandoned(['online-service', 'online-signin', 'online-details']) });
+    await row(t, '10a 3r service kept > GitLab', { establish: copyEst, keep: viaReview('safe', keepCopy),
+      invalidate: viaReview('safe', async (A) => { await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitlab'); await A.click('next', undefined, 'online-signin'); await signedIn(A); await A.screen('online-details'); await A.click('next', undefined, 'safe'); }),
+      stale: [{ on: 'online-details|online-signin|safe|review', x: 'GitHub' }], choose: pickerOn });
+    await row(t, '10a 3r address kept > another', { establish: async (A) => { await toDetails(A, 'gitea', 'gitea_self_managed', GITEA); await A.click('next', undefined, 'safe'); await toReview(A); }, keep: viaReview('safe', keepCopy),
+      invalidate: viaReview('safe', async (A) => { await A.click('online', undefined, 'online-service'); await A.fill('o55f-address', 'https://gitea2.platyr.test'); await A.click('next', undefined, 'online-signin'); await A.signIn(); await A.click('next', undefined, 'online-details'); await A.click('next', undefined, 'safe'); }),
+      stale: [{ on: 'online-details|online-signin|safe|review', x: 'gitea.platyr.test' }], choose: pickerOn });
+    await row(t, '10a H history kept > Jujutsu, FileSafe off', { establish: async (A) => { await A.toSafe('Notes'); await toReview(A); }, keep: viaReview('safe', stay),
+      invalidate: viaReview('safe', async (A) => { await A.click('backend', 'jujutsu'); if ((await A.frame().evaluate(() => O55.S.sess.drafts.main.filesafe))) { if (!(await A.has('filesafe'))) await A.click('details', 'hist'); await A.click('filesafe'); } }),
+      after: async (A, bad) => { const d = await A.frame().evaluate(() => [O55.S.sess.drafts.main.history_backend, O55.S.sess.drafts.main.filesafe]); if (d[0] !== 'jujutsu' || d[1]) bad.push('10a H: history came back as ' + JSON.stringify(d)); } });
+    await row(t, '10a 8r backup kept > Google Drive', { establish: async (A) => { await A.toSafe('Notes'); await A.click('backup'); await A.click('bdest', 'nas'); await A.click('sheet-close').catch(() => {}); await toReview(A); },
+      keep: viaReview('backup', async (A) => { await A.click('bdest', 'nas'); }), invalidate: viaReview('backup', async (A) => { await A.click('bdest', 'gdrive'); }), stale: [{ on: 'review', x: 'Home NAS' }] });
+    await row(t, '10a 3r details kept > another name and privacy', { establish: async (A) => { await A.toSafe('Book club'); await A.click('online', undefined, 'online-service'); await A.service('github', 'hosted'); await A.signIn(); await A.click('next', undefined, 'online-details'); await A.click('next', undefined, 'safe'); await toReview(A); },
+      keep: viaReview('online-details', stay), invalidate: viaReview('online-details', async (A) => { await A.fill('o55f-repo', 'garden-plot'); await A.sleep(300); if (await A.has('vis', 'public')) await A.click('vis', 'public'); }),
+      stale: [{ on: 'safe|review', x: 'book-club' }], after: async (A, bad) => { const n = await A.frame().evaluate(() => O55.S.sess.drafts.main.repository_name); if (n !== 'garden-plot') bad.push('10a 3r details: the name came back as ' + n); } });
+    await row(t, '10a 9r repository kept > another', { establish: toRepoProject, keep: viaReview('ex-repos', async (A) => { const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); }),
+      invalidate: viaReview('ex-repos', async (A) => { const ps = (await A.snap()).buttons.filter((b) => b.action === 'pick'); await A.click('pick', ps[1].arg); }), stale: [{ on: 'review|safe', x: 'recipe-app' }] });
+    await row(t, '10a 10 name and files kept > another name, automatic place', { establish: async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'new'); await A.click('next', undefined, 'name');
+        await A.fill('o55f-name', 'Book club site'); await A.click('change'); await A.click('loc', 'custom'); await A.click('sheet-close').catch(() => {}); await onToReview(A); },
+      keep: viaReview('name', stay), invalidate: viaReview('name', async (A) => { await A.fill('o55f-name', 'Garden notes'); await A.click('change'); await A.click('loc', 'auto'); await A.click('sheet-close').catch(() => {}); }),
+      stale: [{ on: 'name|like|safe|review|away', x: 'Book club site' }] });
+  },
+  async 'row 10b · Review Edit kept twice, then changed: Computer (a completed new Server › This computer), files place on Home NAS › this computer, settings copied › fresh, Begins as after Review again (New › existing folder), and access from away (Tailscale › home)'(t) {
+    await row(t, '10b 6r Server kept > This computer', { establish: async (A) => { await toNewServer(A); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Notes'); await onToReview(A); },
+      keep: viaReview('where', async (A) => { await pressOn(A); }), invalidate: viaReview('where', async (A) => { await A.click('pick', 'this'); await A.click('next'); }),
+      after: abandoned(SERVER_STEPS), choose: { where: async (A) => { await A.click('pick', 'this'); await A.click('next'); } } });
+    await row(t, '10b files on Home NAS kept > this computer', { establish: toNameNas, keep: viaReview('name', stay),
+      invalidate: viaReview('name', async (A) => { await A.click('change'); await A.click('loc', 'auto'); await A.click('sheet-close').catch(() => {}); }), after: abandoned(NAS_STEPS), stale: [{ on: 'name|safe|review', x: 'Home NAS' }], force: ['nas-folder'] });
+    await row(t, '10b 11 settings copied kept > fresh', { scenario: 'returning', establish: async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Notes'); await A.click('next', undefined, 'like');
+        const p = (await A.snap()).buttons.find((b) => b.action === 'pick' && b.arg !== 'fresh'); await A.click('pick', p.arg); await onToReview(A); },
+      keep: viaReview('like', stay), invalidate: viaReview('like', async (A) => { await A.click('pick', 'fresh'); }),
+      after: async (A, bad) => { const m = await A.frame().evaluate(() => O55.S.sess.drafts.main.settings_transfer.mode); if (m === 'copy_from_project') bad.push('10b 11: the copied settings came back'); } });
+    await row(t, '10b 4r Begins as after Review again kept > existing folder', { scenario: 'fresh+nameTaken', establish: async (A) => { await toCreatingFailed(A); await A.click('reviewAgain', undefined, 'review'); },
+      keep: viaReview('begin', async (A) => { await A.click('next'); }), invalidate: viaReview('begin', async (A) => { await A.click('pick', 'existing'); await A.click('sub', 'folder'); await A.click('next', undefined, 'ex-folder'); await A.click('pick', '~/Documents/recipe-app'); await A.click('next'); }),
+      after: abandoned(['creating']), force: ['creating'], choose: name });
+    await row(t, '10b 12 away kept > home', { establish: async (A) => { await toNewServer(A); await A.click('later', undefined, 'away'); await A.click('pick', 'anywhere'); await A.click('next', undefined, 'review'); },
+      keep: viaReview('away', stay), invalidate: viaReview('away', async (A) => { await A.click('pick', 'home'); }), stale: [{ on: 'review', x: 'Tailscale' }],
+      choose: { begin: async (A) => { await A.click('later'); }, away: async (A) => { await A.click('pick', 'home'); await pressOn(A); } } });
   }
 };
