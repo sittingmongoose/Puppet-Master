@@ -1,15 +1,22 @@
 // FO-20 and FO-21: Settings' setup window (kit.d/60-wizard.js, 45-setup.css) reads in all ten looks, at every step. Settings
-// › Source Control › Add another account or instance › GitLab, always in T3's sandbox (t.openInSandbox's default flags,
-// whatever --set sandbox says). The window is walked as a person walks it: every card of a step is chosen in turn, fields
+// › Source Control › Add another account or instance › GitLab, in T3's sandbox (t.openInSandbox's default flags) unless
+// --set sandbox=0. The window is walked as a person walks it: every card of a step is chosen in turn, fields
 // are filled with obvious test text, a step's own buttons are pressed (sign-in, the check), then Continue, to the last step.
 // At every state each scroller is wheeled from top to bottom, and every line of text the window shows is read from painted
 // pixels: its darkest stem against its own local ground (the commonest colour in the line's box), 4.5:1 at every size
 // (F3-654); a token pair can say a colour passes where the painted text does not (FO-21: the token instructions, read at
 // 3.2:1); the main action's words count once it can be pressed. Also per step: no overflow or clipped text (t.noOverflow on
 // the window). A native crop of the token step, scrolled to its instructions, per look.
-// --set looks=friendly-light,basic-dark: those looks only.
+// Fail closed (Sol F3): per look the window must name Sign in › Git access › Check, the walk must visit all three in order
+// and end with the window finished by its last action, the token instructions must have been read and cropped, and each
+// step must give its lines; an early break or a missing state fails. --set looks=friendly-light,basic-dark: those looks
+// only. --set sandbox=0: a normal page instead of T3's sandbox. --set selftest=empty|nocontinue: break the window on purpose
+// (its content emptied, or its main action removed): the check must fail.
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
+// what a walk of Connect GitLab must cover: its three steps in order, ended by its last action; lines read per step and in all
+const STEPS = ['Sign in', 'Git access', 'Check'];
+const MIN_STEP_LINES = 8, MIN_LINES = 40;
 
 async function openSetup(t, f, look) {
 	await f.evaluate(() => document.getElementById('tab-settings').click());
@@ -53,11 +60,16 @@ export default async function (t) {
 	const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]); };
 	const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
 	for (const look of looks) {
-		const f = await t.app.open({ sandbox: true });
+		const f = await t.app.open({ sandbox: t.app.sandboxed(true) });   // T3's sandbox unless --set sandbox=0
 		const why = await openSetup(t, f, look);
 		if (why) { bad.push(`${look}: ${why}`); continue; }
 		const seen = new Map();   // a line of text, read once: its words and where it sits in the window -> the worst reading
-		let states = 0, steps = 0, scrolls = 0, cropped = false;
+		let states = 0, steps = 0, scrolls = 0, cropped = false, curStep = 0;
+		const stepLines = new Map();   // step number -> the lines read while it showed
+		// the steps the window names, before anything is chosen
+		const rail = await f.evaluate(() => [...document.querySelectorAll('.o55g-win .o55g-railitem')].map((e) => e.textContent.trim()));
+		// --set selftest=empty|nocontinue: the window is broken on purpose, to show this check fails when it can't walk it
+		if (t.args.selftest) await f.evaluate((how) => { const w = document.querySelector('.o55g-win'); if (how === 'empty') { w.querySelectorAll('.o55g-layer, .o55g-main, .o55g-card').forEach((e) => { e.innerHTML = ''; }); } w.querySelectorAll('.o55g-foot .btn.o55g-primary').forEach((e) => e.remove()); }, String(t.args.selftest));
 		// every line of text the window shows now, from the painted pixels of the window
 		const readVisible = async (label) => {
 			const runs = await f.evaluate(() => {
@@ -94,6 +106,7 @@ export default async function (t) {
 				// the darkest stem: the pixel that stands furthest from that ground
 				let best = 1, stem = ground;
 				for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const i = (y * png.width + x) * 4, px = [png.data[i], png.data[i + 1], png.data[i + 2]], cr = ratio(px, ground); if (cr > best) { best = cr; stem = px; } }
+				if (!stepLines.has(curStep)) stepLines.set(curStep, new Set()); stepLines.get(curStep).add(run.key);
 				const was = seen.get(run.key);
 				if (!was || best < was.cr) seen.set(run.key, { cr: best, text: run.text, cls: run.cls, size: run.size, stem: stem.map(Math.round), ground: ground.map(Math.round), where: label });
 			}
@@ -130,9 +143,11 @@ export default async function (t) {
 		};
 		const click = async (sel, i = 0) => { const p = await f.evaluate(([s, k]) => { const e = [...document.querySelectorAll(s)].filter((x) => x.getBoundingClientRect().width > 0)[k]; if (!e) return null; e.scrollIntoView({ block: 'center' }); const b = e.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, [sel, i]); if (!p) return false; await t.page.mouse.click(p.x, p.y); await f.waitForTimeout(900); return true; };
 		const L = '.o55g-win .o55g-layer:not(.o55g-out)';
+		const visited = []; let endState = null, brokeWhy = null;
 		for (let step = 1; step <= 6; step++) {
-			steps = step;
+			steps = step; curStep = step;
 			const name = await f.evaluate(() => { const c = document.querySelector('.o55g-railitem[data-state="current"]'); return c ? c.textContent.trim() : '?'; });
+			visited.push(name);
 			await readAll(`step ${step} (${name})`);
 			await t.noOverflow(`${look} step ${step} (${name}): no overflow or clipped text`, { scope: '.o55g-win' });
 			// every card of the step, chosen in turn (the last stays chosen: the path forward)
@@ -143,16 +158,30 @@ export default async function (t) {
 			for (let b = 0; b < 3; b++) { if (!(await click(`${L} .btn.primary:not([aria-disabled="true"]):not(:disabled)`, 0))) break; await f.waitForTimeout(1500); }
 			await readAll(`step ${step} (${name}), done`);
 			const before = name;
-			if (!(await click('.o55g-foot .btn.o55g-primary:not([aria-disabled="true"]):not(:disabled)'))) break;
+			if (!(await click('.o55g-foot .btn.o55g-primary:not([aria-disabled="true"]):not(:disabled)'))) { brokeWhy = `step ${step} (${name}) has no main action that can be pressed`; break; }
 			await f.waitForTimeout(1300);
-			const now = await f.evaluate(() => { const w = document.querySelector('.o55g-win'); if (!w) return 'closed'; const c = document.querySelector('.o55g-railitem[data-state="current"]'); return c ? c.textContent.trim() : '?'; });
-			if (now === 'closed' || now === before) break;
+			const now = await f.evaluate(() => { const w = document.querySelector('.o55g-win'); if (!w || !w.isConnected || !w.getBoundingClientRect().width) return 'closed'; const c = document.querySelector('.o55g-railitem[data-state="current"]'); return c ? c.textContent.trim() : '?'; });
+			if (now === 'closed') { endState = 'closed'; break; }
+			if (now === before) { brokeWhy = `step ${step} (${name}): its main action did not move on`; break; }
 		}
+		if (!endState && !brokeWhy) brokeWhy = `still open after ${steps} steps`;
 		const worst = [...seen.values()].sort((a, b) => a.cr - b.cr);
 		const fails = worst.filter((x) => x.cr < 4.5);
 		rows.push(`${look}: ${steps} steps, ${states} states (the look put back ${relooks} times), ${scrolls} scroll stops, ${seen.size} lines read; lowest ${worst.length ? worst[0].cr.toFixed(2) : '-'}:1 ("${worst.length ? worst[0].text : ''}", ${worst.length ? worst[0].cls : ''})`);
 		fails.forEach((x) => { bad.push(`${look}: "${x.text}" ${x.cr.toFixed(2)}:1`); t.log(`${look} FAILS "${x.text}" ${x.cr.toFixed(2)}:1 (${x.cls} ${x.size}; stem rgb(${x.stem}) on rgb(${x.ground}); ${x.where})`); });
-		if (!cropped) t.log(`${look}: the token step was not reached for a crop`);
+		// the walk itself must have happened: a window that could not be walked, or was walked short, fails here
+		const problems = [];
+		const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+		if (!same(rail, STEPS)) problems.push(`the window names ${rail.join(' › ') || 'no steps'} (expected ${STEPS.join(' › ')})`);
+		if (!same(visited, STEPS)) problems.push(`the walk went ${visited.join(' › ') || 'nowhere'} (expected ${STEPS.join(' › ')})`);
+		if (brokeWhy) problems.push(brokeWhy);
+		if (endState !== 'closed') problems.push('the last step\'s main action did not finish the window');
+		const tokenRead = [...seen.values()].some((x) => /pm51-field-help/.test(x.cls) && /token/i.test(x.where));
+		if (!tokenRead) problems.push('the token instructions (Use a token instead) were not read');
+		if (!cropped) problems.push('the token step was not reached for its crop');
+		STEPS.forEach((n, i) => { const k = (stepLines.get(i + 1) || new Set()).size; if (k < MIN_STEP_LINES) problems.push(`step ${i + 1} (${n}): ${k} lines read (at least ${MIN_STEP_LINES})`); });
+		if (seen.size < MIN_LINES) problems.push(`${seen.size} lines read in all (at least ${MIN_LINES})`);
+		await t.check(`${look}: walked ${STEPS.join(' › ')} to its end and read the token instructions (${seen.size} lines; per step ${STEPS.map((n, i) => (stepLines.get(i + 1) || new Set()).size).join('/')})`, problems.length === 0, problems.join('; '));
 	}
 	rows.forEach((r) => t.log(r));
 	await t.check(`the setup window reads at every step (painted text 4.5:1 at every size, F3-654; ${looks.length} looks)`, bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
