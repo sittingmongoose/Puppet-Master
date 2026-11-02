@@ -80,19 +80,19 @@ export default async function (t) {
 			if (!(await on.count())) break;
 			await on.first().click(); await t.page.waitForTimeout(150);
 		}
-		if (c.twist) { const chip = f.locator(`#pmds-sheet [data-pmds-do="pick-twist"][data-arg="${c.twist}"]`); if (!(await chip.count())) { t.check(`${name}: the situation is listed`, false, 'no chip'); continue; } await chip.click(); }
+		if (c.twist) { const chip = f.locator(`#pmds-sheet [data-pmds-do="pick-twist"][data-arg="${c.twist}"]`); if (!(await chip.count())) { await t.check(`${name}: the situation is listed`, false, 'no chip'); continue; } await chip.click(); }
 		const sit = await f.evaluate(() => window.O55.studio.currentSituation());
 		const row = f.locator(`#pmds-sheet [data-pmds-do="open-screen"][data-arg="${c.screen}"]`);
-		if ((await row.getAttribute('aria-disabled')) === 'true') { t.check(`${name}: on this page`, false, 'its row is off'); continue; }
+		if ((await row.getAttribute('aria-disabled')) === 'true') { await t.check(`${name}: on this page`, false, 'its row is off'); continue; }
 		await row.scrollIntoViewIfNeeded(); await row.click();
 		const opened = await f.waitForFunction((s) => window.O55.S.open && window.O55.S.sess && window.O55.S.sess.screen === s, c.screen, { timeout: 15000 }).then(() => true, () => false);
-		if (!opened) { t.check(`${name}: opens from its row`, false, 'screen ' + (await f.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen))); continue; }
+		if (!opened) { await t.check(`${name}: opens from its row`, false, 'screen ' + (await f.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen))); continue; }
 		for (const [act, arg] of c.pre || []) {
 			const sel = `${LAYER} [data-o55-do="${act}"]` + (arg != null ? `[data-arg="${arg}"]` : '');
 			/* (a control that shows once the screen is waiting, such as c-pair's Use a code instead, is waited for) */
 			const shown = await f.waitForSelector(sel, { state: 'visible', timeout: 10000 }).then(() => true, () => false);
 			const el = f.locator(sel);
-			if (!shown) { t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s'); break; }
+			if (!shown) { await t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s'); break; }
 			await el.first().scrollIntoViewIfNeeded(); await el.first().click();
 		}
 		const path = [c.screen];
@@ -128,8 +128,8 @@ export default async function (t) {
 		}
 		const detail = end || `${path.join(' > ')}: stuck on ${path[path.length - 1]} for ${Math.round((Date.now() - changedAt) / 1000)} s: primary ${now && now.primary ? `"${now.primary.label}" ${now.primary.off ? 'off: ' + (now.primary.reason || 'no reason') : 'on'}` : 'none'}, context ${now && now.active}, situation ${sit}; pressed ${trail.slice(-8).join(' > ')}`;
 		if (!end) stuck.push(name);
-		t.check(`${name}: walks by clicks from its row through its next screens`, !!end, detail);
+		await t.check(`${name}: walks by clicks from its row through its next screens`, !!end, detail);
 		if (t.log) t.log(`${name}: ${detail}`);
 	}
-	t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${cases.length} cases`);
+	await t.check('every screen in Open at one screen walks on by clicks', !stuck.length, stuck.join(', ') || `${cases.length} cases`);
 }
