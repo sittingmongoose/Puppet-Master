@@ -1673,27 +1673,6 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     "addressLabel": "Service address"
   },
   {
-    "id": "cursor-origin",
-    "name": "Cursor Origin",
-    "kind": "hosted",
-    "auth": "Origin CLI browser sign-in",
-    "status": "not-connected",
-    "accounts": 0,
-    "defaultAccount": "None",
-    "scopes": [],
-    "ssh": "Not tested",
-    "lastTest": "Not run",
-    "pushAccess": "Not set up",
-    "reviewLabel": "Pull requests",
-    "automationLabel": "Not available",
-    "lastCheck": "",
-    "help": "Read and write. Can mirror GitHub.",
-    "modes": [
-      "Native",
-      "Mirrored from GitHub"
-    ]
-  },
-  {
     "id": "generic-git",
     "name": "Git or SSH repository",
     "kind": "generic",
@@ -14043,8 +14022,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     { id: 'defaults', label: 'Defaults & Safety' },
     { id: 'actions', label: 'Actions & Pipelines' }
   ];
-  const VERB = { github: 'Connect GitHub', 'github-enterprise': 'Connect GitHub Enterprise', gitlab: 'Connect GitLab', 'gitlab-self': 'Connect GitLab', azure: 'Connect Azure DevOps', 'azure-server': 'Connect Azure DevOps Server', bitbucket: 'Connect Bitbucket', 'bitbucket-dc': 'Connect Bitbucket', forgejo: 'Connect Forgejo', gitea: 'Connect Gitea', 'cursor-origin': 'Connect Cursor Origin', 'generic-git': 'Add repository' };
-  const API = { github: 'api.github.com', gitlab: 'gitlab.com/api/v4', azure: 'dev.azure.com', bitbucket: 'api.bitbucket.org/2.0', 'cursor-origin': 'origin.cursor.com' };
+  const VERB = { github: 'Connect GitHub', 'github-enterprise': 'Connect GitHub Enterprise', gitlab: 'Connect GitLab', 'gitlab-self': 'Connect GitLab', azure: 'Connect Azure DevOps', 'azure-server': 'Connect Azure DevOps Server', bitbucket: 'Connect Bitbucket', 'bitbucket-dc': 'Connect Bitbucket', forgejo: 'Connect Forgejo', gitea: 'Connect Gitea', 'generic-git': 'Add repository' };
+  const API = { github: 'api.github.com', gitlab: 'gitlab.com/api/v4', azure: 'dev.azure.com', bitbucket: 'api.bitbucket.org/2.0' };
   const TOOL_USES = { git: 'Branches', jj: 'Bookmarks', 'git-lfs': 'Large files' };
   const TOOL_PATH = { git: '/usr/bin/git', jj: '/usr/local/bin/jj', 'git-lfs': '/usr/bin/git-lfs' };
   const TOOL_HELP = { git: 'Git names its lines of work branches.', jj: 'Jujutsu names its lines of work bookmarks.', 'git-lfs': 'Keeps big files out of the main history.' };
@@ -14110,7 +14089,6 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       { label: 'Accounts', help: 'You can sign in with more than one.', value: f.accounts ? String(f.accounts) : 'None', muted: !f.accounts },
       { label: 'Reviews are called', help: 'What this service names a code review.', value: f.reviewLabel },
       { label: 'Automation', help: 'What runs builds and tests on this service.', value: f.automationLabel },
-      f.modes ? { label: 'Mode', help: 'Native keeps the code on Cursor Origin. Mirrored copies it from GitHub.', control: PM51.segmented(f.mode || f.modes[0], f.modes, { action: 'pm51-source-mode', data: { id: f.id }, label: 'Cursor Origin mode' }) } : null,
       { label: 'Default for new repositories', help: 'New repositories are created here.', control: on ? PM51.toggle(cfg().service === f.name, { action: 'pm51-source-default-service', data: { id: f.id }, label: 'Default for new repositories' }) : '<span class="pm51-row-value is-muted">Connect first</span>' },
       { label: 'Connection', help: on ? (f.lastCheck ? `Checked ${f.lastCheck}` : 'Not checked yet') : 'Nothing to check until it is connected', action: { label: 'Check connection', icon: 'test', action: 'pm51-source-check', data: { id: f.id } } }
     ];
@@ -14536,7 +14514,6 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   function render() {
     const x = b(); const ready = x.state === 'Ready';
     const gh = forges().find(f => f.status === 'active');
-    const origin = forges().find(f => f.id === 'cursor-origin');
     const git = tools().find(t => t.id === 'git');
     const scSummary = `${gh ? `${gh.name} connected` : 'No code service connected'} · ${git && git.status === 'ready' ? 'Git ready' : 'Git not installed'}`;
     const body = [
@@ -14553,13 +14530,11 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
         title: 'Depends on', help: 'Other parts of Puppet Master the browser works with.',
         body: PM51.rows([
           { label: 'Source Control', help: 'Where the browser finds the code it is testing.', value: scSummary, action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },
-          { label: 'Cursor Origin', help: 'Optional. Lets the browser read and write Origin repositories.', value: origin && origin.status === 'active' ? `Connected as ${origin.defaultAccount}` : 'Not connected', muted: !(origin && origin.status === 'active'), action: { label: 'Open Source Control', icon: 'arrowRight', action: 'pm51-go', data: { domain: 'source', workspace: 'source-manager' } } },
           { label: 'Named Plans', help: 'The browser follows the plan it is verifying.', value: 'Managed in Planning Wizard', action: { label: 'Open Planning Wizard', icon: 'map', action: 'pm51-browser-wizard' } }
         ])
       }),
       PM51.advanced([
         PM51.section({ title: 'Capture policy', body: PM51.kv([['What is captured', 'Screenshots and short clips of pages the assistant opened'], ['Never captured', 'Sign-in pages, password fields, and anything you mark private'], ['Where they live', 'With the Goal or thread that made them'], ['Before saving', 'Secrets are blurred'], ['Kept for', x.keepDays === 0 || x.keepDays === '0' ? 'Until you delete them' : `${x.keepDays} days`]]) }),
-        PM51.section({ title: 'Cursor Origin preview', body: PM51.kv([['What it adds', 'Read and write to Origin repositories from the browser flow'], ['Mirroring', 'Can mirror a GitHub repository'], ['Sign-in', 'Origin CLI in your own browser; the assistant never signs in for you'], ['Rollback', 'Every change is reversible']]) }),
         PM51.section({ title: 'Performance notes', body: PM51.kv([['Frame pacing', '16.7 ms per frame at 60 frames per second'], ['Slow pages', 'The assistant waits for the page to settle before capturing'], ['Low-resource mode', 'Captures drop to stills only'], ['Reporting', 'Typical, slow, and slowest frames, plus any delayed ones']]) }),
         PM51.section({ title: 'Technical details', body: PM51.kv([['Runtime state', ready ? 'Idle' : 'Unavailable'], ['Surface', 'Ordinary browser only; no native runtime'], ['Session', 'Ephemeral; not recorded'], ['Automation', 'Unavailable'], ['Runs on', host()]]) + '<div style="margin-top:10px">' + PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-browser-diagnostics' }) + '</div>' })
       ].join(''))

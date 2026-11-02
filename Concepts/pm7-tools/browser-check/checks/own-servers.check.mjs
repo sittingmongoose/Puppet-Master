@@ -25,7 +25,7 @@ export const tests = {
     await t.check('no Preview tag left in the list', !/\bPreview\b/.test(s.text), '');
     const rows = await A.frame().evaluate(() => (O55.fixtures.FORGES || []).map((f) => f.id));
     const table = await A.frame().evaluate(() => ['github', 'gitlab', 'azure_devops', 'bitbucket_cloud', 'bitbucket_data_center', 'forgejo', 'gitea'].map((id) => [id, (O55.fixtures.forge(id) || {}).variants]));
-    await t.check('the service table holds only the kept services', rows.length ? JSON.stringify(rows) === JSON.stringify(KEPT_ROWS) : true, JSON.stringify(rows));
+    await t.check('the service table holds only the kept services', rows.length > 0 && JSON.stringify(rows) === JSON.stringify(KEPT_ROWS), JSON.stringify(rows));
     await t.check('Gitea and Forgejo have one kind each, their own server', JSON.stringify(table.find((x) => x[0] === 'gitea')[1]) === '["gitea_self_managed"]' && JSON.stringify(table.find((x) => x[0] === 'forgejo')[1]) === '["forgejo_self_managed"]', JSON.stringify(table));
     await t.shot('own-servers-others', 'Other services: GitLab, Azure DevOps, Bitbucket, Forgejo, Gitea, GitHub Enterprise');
     await A.click('pick', 'gitea'); s = await A.snap();
