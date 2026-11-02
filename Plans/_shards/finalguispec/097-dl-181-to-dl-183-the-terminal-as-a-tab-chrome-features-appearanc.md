@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L48356-L51810
+Source lines: L48356-L51816
 
-Source SHA256: `bcdc00dc0182d5e9bbe56bbfb3b1dad39e30e85d2a73d5292d769412feafd9d1`
+Source SHA256: `5e9140d5c0f3ab7850533887afa9e715bf8d436a329b6000d2492394f22edc11`
 
 ---
 
@@ -1670,7 +1670,11 @@ canonical_text: 'Liquid Glass is the Glass look in Light and Dark, not a new the
   hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that
   plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot
   read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change
-  or extra backdrop-filter. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
+  or extra backdrop-filter. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. FO-20 clarification, 2026-11-02: unpinned rail flyouts and the title-bar
+  search popup are dense floating menu surfaces, rather than in-flow pane or field fills. They consume the shared
+  Glass menu material and obscure underlying page text. Docked rail panels retain the sheet material. Settings guided
+  setup windows consume the selected family tokens, with dense readable Glass backing in the Glass variants. Their
+  future-step labels, secondary notes, chosen-card text and action labels retain F3-654 in all ten variants.'
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1690,6 +1694,7 @@ acceptance_criteria:
   - "Glass's warm-up is best effort under ACD-475 and changes no Glass look."
   - "Selecting Glass Light or Glass Dark always uses Liquid Glass over the shared Wallpaper; no flag, material control or shortcut selects an old Glass fallback or a material off state."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+  - "FO-20: unpinned Glass rail flyouts, title-bar search and Settings setup windows obscure underlying page text; docked panels keep their sheet material. All setup families retain their tokens and F3-654 text contrast, including secondary and chosen-card text."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1704,6 +1709,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "Concepts/home-redesign/src/panels/js/44-narrow.js and Concepts/onboarding/opus-5.5/src/settings/styles.d/45-setup.css at 05fa23d4ed (FO-20 source lineage; not native acceptance)"
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md,
   SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296
   and 306; not implementation evidence)
