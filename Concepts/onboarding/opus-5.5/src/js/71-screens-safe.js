@@ -297,8 +297,8 @@
     let touched = cleanOnline(S);
     if (isSource(S.sess.signin) && !siOffered(S)) { S.sess.signin = {}; touched = true; }
     ['forgeAccounts', 'refusedNames'].forEach((m) => Object.keys(S.sess[m] || {}).forEach((key) => { if (!offeredKey(key)) { delete S.sess[m][key]; touched = true; } }));
-    /* (the steps walked since choosing the service go with it: the first Back from the service leaves it) */
-    const giveWay = (to) => { S.sess.screen = to; if (O55.ui.forgetSince) O55.ui.forgetSince(to); };
+    /* (Back from the service it gives way to leaves it at once: Back passes an entry for the screen it is on, 60-ui-core) */
+    const giveWay = (to) => { S.sess.screen = to; };
     if (['online-signin', 'online-details', 'ex-repos'].includes(S.sess.screen) && !sourceOkFor(S.sess.screen, S)) { giveWay('online-service'); touched = true; }
     if (touched) S.save();
     const d = drafts.main; if (!d || !d.forge_retired) return;

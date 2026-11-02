@@ -361,10 +361,11 @@
   function railJump(ch) {
     flushOpen();
     if (!canBack()) return;
+    prune();
     const at = backTo(ch); if (at < 0) return;
     const id = S.sess.history[at];
     S.sess.history = S.sess.history.slice(0, at);
-    go(id, { dir: 'back', noHistory: true });
+    go(id, { dir: 'back', noHistory: true, fromHistory: true });
   }
   /* A choice made: a helper in the scene cheers for it and the rail's marker for this chapter gives a small bump. The
      choice is still recorded per chapter. (Choices used to fly up and hang on the rail as small icons; people read
@@ -652,6 +653,7 @@
   function refresh() {
     flushOpen();
     if (!S.open) return;
+    if (!onBranch(S.sess.screen)) return transition(null);
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const layer = S.root.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
     if (!layer) return transition(null);
@@ -666,11 +668,12 @@
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
     if (sheet) sheet.scrollIntoView({ block: 'nearest', behavior: O55.motion.reduced() || skin('stepped') ? 'auto' : 'smooth' });
     renderScene(); renderSound();
-    def.mounted && def.mounted(S, layer, false);
+    if (onBranch(S.sess.screen)) def.mounted && def.mounted(S, layer, false); /* (off the branch: no checks or ops start) */
     skin('refresh', layer);
   }
 
   function transition(dir) {
+    settleBranch();
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     O55.motion.quiet(1400);
     const pane = S.root.querySelector('.o55-pane');
@@ -722,7 +725,7 @@
     /* the scene heading takes programmatic focus when the screen settles, unless the person is already inside it */
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
-    def.mounted && def.mounted(S, layer, true);
+    if (onBranch(S.sess.screen)) def.mounted && def.mounted(S, layer, true);
     if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); O55.motion.real.setTimeout(armStageTokens, 1600); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
@@ -802,13 +805,15 @@
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
     if (from && from.leave) from.leave(S);
+    prune();
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
+    if (!opts.fromHistory) stamp(S.sess.screen, id);
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
     stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
-    if (def.enter) def.enter(S, opts);
+    if (def.enter && onBranch(id)) def.enter(S, opts);
     /* the music follows the journey: the chapter's chord, and how far along the person is (the first forward sound
        after a chapter change becomes that chapter's own sting, O55.sound's chapterSting) */
     /* (a skin that plays this chapter's sting itself, on a beat of its own, claims it: NieR's act card lands on it and
@@ -822,17 +827,66 @@
     flushOpen();
     const def = SCREENS.defs[S.sess.screen];
     if (def && def.onBack && def.onBack(S) === false) return;
+    prune();
     let prev = S.sess.history.pop();
-    while (prev && SCREENS.defs[prev] && SCREENS.defs[prev].skipOnBack && SCREENS.defs[prev].skipOnBack(S)) prev = S.sess.history.pop();
+    /* (never back to the screen you are on: a resumed step that gave way to it, an entry a skipped step hid) */
+    while (prev && (prev === S.sess.screen || (SCREENS.defs[prev] && SCREENS.defs[prev].skipOnBack && SCREENS.defs[prev].skipOnBack(S)))) prev = S.sess.history.pop();
     if (!prev) return;
-    go(prev, { dir: 'back', noHistory: true });
+    go(prev, { dir: 'back', noHistory: true, fromHistory: true });
   }
-  /* A step whose answer is replaced there (a new beginning chosen from Review's Edit, a fresh Review after a failed
-     attempt) or that a resumed session lands on instead (a step of a retired service giving way): what the history
-     walked since that step's last visit belonged to the old answer, so it goes, and Back from the step goes where it went
-     the first time. Use another way (Connect) and Use a shared folder (NAS) cut their history the same way. Back never
-     walks an abandoned answer's steps (FO-22's class, final-onb BACK-STATE-GAPS-78C). */
-  function forgetSince(id) { const h = S.sess.history || [], at = h.lastIndexOf(id); if (at >= 0) S.sess.history = h.slice(0, at); }
+  /* ---------------------------------------------------------------- the active branch
+     (FO-22's class: final-onb BACK-STATE-GAPS-78C; Sol's repeated Edit at bf05a56258)
+     A chooser asks an answer that picks a branch. On the main path (SPINE): which computer (where, 66), how the Project
+     begins (begin: its Continue records it, 69), where its files live (name, 69), whether an attempt is made (review:
+     given up is none again, 72). Inside a branch: the online copy's service (online-service, applied by its Continue,
+     71), how the NAS is reached (nas-find, 70), the Connect route (c-route, 67); each answer is written only on its own
+     chooser. Every other screen belongs to the chooser that opened it, directly or through the screens between, and
+     was entered under that chooser's answer then: go() stamps it so. A screen whose chooser's answer has since been
+     replaced, or whose chooser is itself off the branch, is off the active branch. Every history entry of it goes, each
+     one and not only the latest (Back and the rail never walk it), and it refuses its own actions and fields, so a
+     stale screen that history ever reaches again can write nothing. Answers kept unchanged keep their steps. */
+  const SPINE = ['welcome', 'look', 'where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
+  const ANSWERS = {
+    where: (s) => s.ui.where || 'this',
+    begin: (s) => (s.drafts.main.project_mode === 'later' ? 'later' : s.ui.beganAs || ''),
+    name: (s) => s.drafts.main.storage_mode || '',
+    review: (s) => (s.commit && s.commit.state && s.commit.state !== 'none' ? 'attempt' : ''),
+    'online-service': (s) => { const d = s.drafts.main; return [d.online_mode, d.forge, d.forge_provider_variant || '', d.forge_instance_url || ''].join('|'); },
+    'nas-find': (s) => ((s.nas && s.nas.method) || 'ssh') + '|' + ((s.nas && s.nas.device) || ''),
+    'c-route': (s) => (s.drafts.connect && s.drafts.connect.server_connection_mode) || ''
+  };
+  const chooser = (id) => SPINE.includes(id) || !!ANSWERS[id];
+  const answerOf = (owner) => (ANSWERS[owner] ? String(ANSWERS[owner](S.sess)) : '');
+  /* entering a screen forward: the chooser it belongs to, and that chooser's answer now */
+  function stamp(from, id) {
+    if (SPINE.includes(id) || from === id) return;
+    const b = S.sess.branch = S.sess.branch || {};
+    const owner = chooser(from) ? from : b[from] && b[from].owner;
+    if (owner && owner !== id) b[id] = { owner, answer: answerOf(owner) }; else delete b[id];
+  }
+  function onBranch(id) {
+    for (let at = id, n = 0; n < 12; n++) {
+      const st = S.sess && S.sess.branch && S.sess.branch[at];
+      if (!st) return true;
+      if (answerOf(st.owner) !== st.answer) return false;
+      if (SPINE.includes(st.owner)) return true;
+      at = st.owner;
+    }
+    return true;
+  }
+  /* a screen off the active branch is never shown: what would show it (a wrong history, a resumed session, a redraw
+     after its answer went) shows the chooser it belongs to, as FO-22's entry redirect does for an identity that does not
+     resolve; so it never draws, and never writes even the defaults its drawing would fill */
+  function settleBranch() {
+    for (let n = 0; n < 12 && S.sess && !onBranch(S.sess.screen); n++) S.sess.screen = S.sess.branch[S.sess.screen].owner;
+  }
+  /* the history keeps only the active branch, and no entry for the screen you are on (a resumed screen that gave way) */
+  function prune() {
+    const out = [];
+    (S.sess.history || []).forEach((id) => { if (onBranch(id) && out[out.length - 1] !== id) out.push(id); });
+    while (out.length && out[out.length - 1] === S.sess.screen) out.pop();
+    S.sess.history = out;
+  }
 
   /* the waits' loaders (L6) start once they are on the page (the loader owner, PM_PIP_LOADER) */
   const armLoaders = (layer) => { const P = window.PM_PIP_LOADER; if (P && typeof P.mount === 'function' && layer.querySelector('[data-pip-loader]')) try { P.mount(layer); } catch (_) {} };
@@ -902,6 +956,7 @@
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
     if (!fn) { const g = O55.actions[action]; if (g) return g(S, arg, t, e); console.warn('O55: no action', action); return; }
+    if (!onBranch(S.sess.screen)) { O55.sound.play('warn'); return; } /* (off the active branch: it applies nothing) */
     if (MOVED_ON.has(action) || choseOther(action, arg)) O55.ui.movedOn();
     /* the handler's own sound (a sheet opening, a finding, a screen change) is the click's one sound; otherwise the
        generic one answers by role. Controls whose handler always plays (a look tile) opt out with data-o55-sound. */
@@ -936,7 +991,7 @@
     if (type === 'input' && t.type !== 'password' && !t.hasAttribute('data-o55-protected') && !(def && def.typing && def.typing(S, key)) && performance.now() - lastType >= TYPE_MS) { lastType = performance.now(); O55.sound.play('type'); }
     const fn = def && def.bind && def.bind[key];
     const v = t.type === 'checkbox' ? t.checked : t.value;
-    if (fn) fn(S, v, t, e);
+    if (fn && onBranch(S.sess.screen)) fn(S, v, t, e);
   }
   function onKey(e) {
     e.stopPropagation(); /* shell trap: typed keys never reach the app's global shortcuts */
@@ -1131,8 +1186,9 @@
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
-    if (opts.screen && SCREENS.defs[opts.screen]) S.sess.screen = opts.screen;
+    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; if (S.sess.branch) delete S.sess.branch[opts.screen]; }
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
+    settleBranch(); prune();
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
        screen's own seed(S), which fills only what is missing (QA2 hunter H1; opt out with seed: false) */
@@ -1296,6 +1352,7 @@
     if (el) { press(el, null); return true; }
     const def = SCREENS.defs[S.sess.screen], fn = (def && def.do && def.do[action]) || O55.actions[action];
     if (!fn) return false;
+    if (def && def.do && def.do[action] && !onBranch(S.sess.screen)) return false;
     if (MOVED_ON.has(action) || choseOther(action, want)) O55.ui.movedOn();
     fn(S, want, null, null);
     return true;
@@ -1312,5 +1369,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, forgetSince, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill });
 })();
