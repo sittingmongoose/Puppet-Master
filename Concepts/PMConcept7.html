@@ -25654,7 +25654,10 @@ html[data-theme^="retro"] #panel-settings .o55g-fly { border-radius: 0; }
 /* ---- fields, groups and rows inside a step ---------------------------------------------------------------------- */
 #panel-settings .o55g-win .pm51-field { display: grid; gap: 6px; }
 #panel-settings .o55g-win .pm51-field-label { font: 650 13px/1.3 var(--body-font); color: var(--text-secondary); }
-#panel-settings .o55g-win .pm51-field-help { font-size: 12.5px; line-height: 1.45; color: var(--text-muted); }
+/* a field's help is an instruction to follow (where to make a token, what a key is for): the window's secondary ink, as its
+   lead and card lines, 4.5:1 in every look (FO-21: the muted ink read 2.97:1 in Friendly Light and under 4.5 in Basic Dark,
+   Friendly Dark, Retro Dark and NieR Dark) */
+#panel-settings .o55g-win .pm51-field-help { font-size: 12.5px; line-height: 1.45; color: var(--text-secondary); }
 #panel-settings .o55g-win .o55g-layer :is(.pm51-field, .o55-setup-fields, .o55-plg-search) :is(input.text-control),
 #panel-settings .o55g-win .o55g-layer :is(.pm51-field, .o55-setup-fields, .o55-plg-search) :where(textarea):not(.t7:not(*)):not(t7:not(*)),
 #panel-settings .o55g-win .o55g-layer :is(.pm51-field, .o55-setup-fields, .o55-plg-search) :where(.form-textarea):not(.t7:not(*)):not(t7:not(*)),
@@ -69857,6 +69860,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .btn.primary {
   background: var(--lg-sel) !important; background-image: none !important; color: var(--lg-on-sel) !important; border-color: transparent !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 6px 16px -10px var(--lg-shadow) !important;
 }
+/* Glass Light's selection blue is 88 % opaque: over Settings' light sheets its white words read 4.45:1 (FO-21's sweep; F3-654
+   asks 4.5:1 at every size), so its buttons take the same blue whole (5.98:1). Glass Dark's lighter blue reads 5.1:1 as it is */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings .btn.primary { background: rgb(from var(--lg-sel) r g b / 1) !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    2. The scene: the wallpaper, crisp, full bleed; nothing between it and the sheets. The base's cloudscape, sky overlay
