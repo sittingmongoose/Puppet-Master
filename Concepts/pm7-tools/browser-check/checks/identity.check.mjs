@@ -75,11 +75,11 @@ export const tests = {
       return { retiredBad: retiredBad.slice(0, 40), retiredCount: retiredBad.length, admittedBad, tally, mixed, counts };
     }, [RETIRED, ADMITTED, SHAPES, [...SOUND]]);
     t.log('actions per screen ' + r.counts + ' · retired calls ' + r.tally.retiredCalls + ' · admitted sound ' + r.tally.admittedSoundOk + '/' + r.tally.admittedSound + ' · admitted contradicting refused ' + r.tally.admittedContradictRefused + '/' + r.tally.admittedContradict);
-    t.check('no retired identity in any cache shape reaches an owner, moves forward or starts a sign-in (every registered action)', !r.retiredCount, r.retiredCount + ' bad: ' + JSON.stringify(r.retiredBad).slice(0, 1500));
+    await t.check('no retired identity in any cache shape reaches an owner, moves forward or starts a sign-in (every registered action)', !r.retiredCount, r.retiredCount + ' bad: ' + JSON.stringify(r.retiredBad).slice(0, 1500));
     const should = r.admittedBad.filter((b) => b.admitted === 'should reach its owner'), contra = r.admittedBad.filter((b) => b.admitted === 'contradicting claim reached the owner');
-    t.check('every admitted service and kind with a sound identity still reaches its owner', !should.length, should.length + ': ' + JSON.stringify(should).slice(0, 900));
-    t.check('an admitted service with a claim that contradicts the plan is refused', !contra.length, contra.length + ': ' + JSON.stringify(contra).slice(0, 900));
-    t.check('Cursor the AI provider and the backup drives work beside every stale retired cache', !r.mixed.length, JSON.stringify(r.mixed).slice(0, 900));
+    await t.check('every admitted service and kind with a sound identity still reaches its owner', !should.length, should.length + ': ' + JSON.stringify(should).slice(0, 900));
+    await t.check('an admitted service with a claim that contradicts the plan is refused', !contra.length, contra.length + ': ' + JSON.stringify(contra).slice(0, 900));
+    await t.check('Cursor the AI provider and the backup drives work beside every stale retired cache', !r.mixed.length, JSON.stringify(r.mixed).slice(0, 900));
   },
   async 'generated: every kind tag with every service, and every declared-part conflict, is refused unless the identity is sound; real drives restore'(t) {
     const A = onboardingApp(t); await A.boot(); await A.toSafe('Notes'); await A.click('online', undefined, 'online-service');
@@ -134,7 +134,7 @@ export const tests = {
       return { bad: bad.slice(0, 40), badCount: bad.length, kindCalls, drivesOk, drivesTried, soundOk, soundTried, conflicts: conflicts.length };
     });
     t.log('kind x service calls ' + r.kindCalls + ' · drives ' + r.drivesOk + '/' + r.drivesTried + ' · sound ' + r.soundOk + '/' + r.soundTried + ' · conflicts ' + r.conflicts);
-    t.check('no kind tag lets any service but a real cloud drive (restore) or the sound plan service act; every declared-part conflict is refused; controls work', !r.badCount, r.badCount + ': ' + JSON.stringify(r.bad).slice(0, 1600));
+    await t.check('no kind tag lets any service but a real cloud drive (restore) or the sound plan service act; every declared-part conflict is refused; controls work', !r.badCount, r.badCount + ': ' + JSON.stringify(r.bad).slice(0, 1600));
   },
   async 'real cloud drives restore end to end: the restore sign-in opens, completes and records that drive'(t) {
     for (const drive of ['gdrive', 'onedrive']) {
@@ -144,7 +144,7 @@ export const tests = {
       await A.screen('online-signin'); await A.click('signIn');
       await A.waitFor(() => O55.S.sess.signin.state === 'done', null, 12000).catch(() => {});
       const got = await A.frame().evaluate(() => ({ state: O55.S.sess.signin.state, reached: (O55.S.sess.restore || {}).reachedFor || null }));
-      t.check(drive + ': the restore sign-in opens, completes and records that drive', opened && got.state === 'done' && got.reached === 'cloud:' + drive, JSON.stringify({ opened, ...got }));
+      await t.check(drive + ': the restore sign-in opens, completes and records that drive', opened && got.state === 'done' && got.reached === 'cloud:' + drive, JSON.stringify({ opened, ...got }));
     }
   },
   async 'item 3 (Sol: settled): with an unpicked plan, resume keeps the admitted choice, address, account and refused names; only the stale sign-in clears; retired ones go'(t) {
@@ -168,7 +168,7 @@ export const tests = {
           signin: !S.sess.signin.service, accounts: Object.keys(S.sess.forgeAccounts || {}).join() === key, refused: Object.keys(S.sess.refusedNames || {}).join() === key + '|team' }; }, [card, forge, variant]);
       if (!(st.online && st.signin && st.accounts && st.refused)) fails.push({ card, variant, ...st });
     }
-    t.check('all ten admitted kinds keep their choice, address, account and refused names; the stale sign-in clears; the retired entries go', !fails.length, JSON.stringify(fails));
+    await t.check('all ten admitted kinds keep their choice, address, account and refused names; the stale sign-in clears; the retired entries go', !fails.length, JSON.stringify(fails));
   },
   async 'completion: an admitted sign-in saved with no key (Sept 26 pages) completes, and Continue goes on'(t) {
     const A = onboardingApp(t); await A.boot(); await A.toSafe('Notes'); await A.click('online', undefined, 'online-service');
@@ -183,10 +183,10 @@ export const tests = {
     await A.click('signIn');
     await A.waitFor(() => O55.S.sess.signin.state === 'done', null, 12000).catch(() => {});
     let s = await A.snap();
-    t.check('the sign-in completes (not left waiting)', s.signin.state === 'done' && !!s.draft.forge_account_ref, JSON.stringify({ st: s.signin.state, ref: s.draft.forge_account_ref }));
-    t.check('it now carries the plan\'s key', s.signin.instance_key === 'github|hosted|https://github.com', String(s.signin.instance_key));
-    t.check('Continue is on', !s.primary.disabled, JSON.stringify(s.primary));
+    await t.check('the sign-in completes (not left waiting)', s.signin.state === 'done' && !!s.draft.forge_account_ref, JSON.stringify({ st: s.signin.state, ref: s.draft.forge_account_ref }));
+    await t.check('it now carries the plan\'s key', s.signin.instance_key === 'github|hosted|https://github.com', String(s.signin.instance_key));
+    await t.check('Continue is on', !s.primary.disabled, JSON.stringify(s.primary));
     await A.click('next', undefined, 'online-details'); s = await A.snap();
-    t.check('Continue goes on to the details', s.screen === 'online-details', s.screen);
+    await t.check('Continue goes on to the details', s.screen === 'online-details', s.screen);
   }
 };

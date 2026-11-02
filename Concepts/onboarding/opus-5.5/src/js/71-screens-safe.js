@@ -887,6 +887,19 @@
     return goOn.call(this, id, opts);
   };
   O55.safe = { forgeName, visCopy, hostOf, nameTaken, refuseName, sourceOk };
+  /* An online copy given up (Not now after choosing one, Skip the online copy at Creating, Later, a Project no longer
+     brought in from online): the plan's copy goes from set to none. Every way it goes is a draft change, so it is
+     noticed here, once: the copy that Safe opened is over, and the picker and steps that served it leave the active
+     branch (60-ui-core: Safe's answer is this count), so Back never offers them, nor Continue from them, again
+     (FO-22, final-onb's Skip witness at bf05a56258). */
+  const setDraft = O55.draft.set;
+  O55.draft.set = function (d, patch) {
+    const S = O55.S, main = S && S.sess && S.sess.drafts && S.sess.drafts.main;
+    const gaveUp = !!main && d === main && !!patch && patch.online_mode === 'none' && !!d.online_mode && d.online_mode !== 'none';
+    const r = setDraft.apply(this, arguments);
+    if (gaveUp) { const ol = OL(S); ol.gen = (ol.gen || 0) + 1; }
+    return r;
+  };
 
   /* ================================================================== handed to the app at the end (O55.handoff) */
   /* What the person chose for keeping the work safe, as plain non-secret facts the app shows: how versions are kept,

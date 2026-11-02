@@ -1,7 +1,8 @@
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 // Back after a change (final-onb BACK-STATE-GAPS-78C, FO-22's class): a finished subflow is invalidated, then Back walks
-// all the way to the start of history and the wizard goes forward again. Every row uses real clicks (a saved session is
-// written to the page's store and resumed with the Resume chip's click, as Route B). Each screen Back or forward paints
+// all the way to the start of history and the wizard goes forward again. Every row uses real clicks. A saved session is
+// browser-written where a public route makes one (walked by clicks, Close, then the Resume chip); one naming a retired
+// service has no public route, so it is constructed in the page's store and resumed with the chip, and labelled so. Each screen Back or forward paints
 // is judged the same way: no raw {placeholder}, i18n key, enum key, "none", undefined or null in its visible text; no
 // address or account of the invalidated answer; every Back press moves; and a Continue that is refused says why and has a
 // way on. Forward drives to Review, choosing only where a screen asks for a choice. Each row with an Edit or a change
@@ -37,6 +38,25 @@ async function walkBack(A, stale, bad, label) {
   }
   return seq;
 }
+/* Back to the start as walkBack does, and at each stop Continue once and Back again: going on from any screen Back still
+   reaches must not bring the given-up answer back (canon FO-22). Never on Review or after it: that Continue creates. */
+const NO_CONTINUE = ['welcome', 'look', 'review', 'creating', 'protect', 'ai', 'ai-all', 'ai-none', 'free', 'ready'];
+async function walkBackContinuing(A, stale, bad, label, back) {
+  const seq = []; let s = await look(A);
+  for (let i = 0; i < 40; i++) {
+    seq.push(s.screen); judge(s, stale, label + ' Back#' + i, bad);
+    if (!NO_CONTINUE.includes(s.screen) && s.primary && s.primary.on) {
+      await pressOn(A); const n = await look(A), v = await back(A);
+      if (v) bad.push(`${label} Back#${i}: Continue on ${s.screen} ${v}`);
+      if (n.screen !== s.screen && n.back) { await pressBack(A); const r = await look(A); if (r.screen !== s.screen) { bad.push(`${label} Back#${i}: Back after Continue on ${s.screen} went to ${r.screen}`); s = r; continue; } }
+    }
+    if (!s.back) break;
+    await pressBack(A); const was = s.screen; s = await look(A);
+    if (s.screen === was) { bad.push(`${label} Back#${i}: Back on ${was} went nowhere`); break; }
+  }
+  return seq;
+}
+const copyGone = (A) => A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return d.online_mode === 'none' ? null : `brought the online copy back (${d.online_mode}, ${d.forge})`; });
 async function forward(A, stale, bad, label, choose = {}, until = 'review') {
   const seq = [], used = new Set(); let stuck = 0;
   for (let i = 0; i < 40; i++) {
@@ -52,15 +72,16 @@ async function forward(A, stale, bad, label, choose = {}, until = 'review') {
   }
   bad.push(`${label}: never reached ${until}`); return seq;
 }
-async function row(t, label, { scenario, establish, keep, times = 2, invalidate, stale = [], choose = {}, until = 'review', after, force = [] }) {
+async function row(t, label, { scenario, establish, keep, times = 2, invalidate, stale = [], choose = {}, until = 'review', after, force = [], noReturn }) {
   const A = onboardingApp(t), bad = []; await A.boot(scenario ? { scenario } : {});
   await establish(A); if (keep) for (let i = 0; i < times; i++) await keep(A, i);
   await invalidate(A);
-  const back = await walkBack(A, stale, bad, label), fwd = await forward(A, stale, bad, label, choose, until);
+  const back = noReturn ? await walkBackContinuing(A, stale, bad, label, noReturn) : await walkBack(A, stale, bad, label), fwd = await forward(A, stale, bad, label, choose, until);
+  if (noReturn) { const v = await noReturn(A); if (v) bad.push(`${label}: at the end the plan ${v}`); }
   if (after) await after(A, bad, back, fwd);
   for (const id of force) await forceStale(A, id, bad, label);
   t.log(`${label}\n  Back ${back.join(' > ')}\n  fwd  ${fwd.join(' > ')}${bad.length ? '\n  ' + bad.join('\n  ') : ''}`);
-  t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
+  await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
 }
 /* the abandoned screen reached anyway, as a wrong history would reach it. Shown: it gives way to a screen on the active
    branch and nothing is written, not even what drawing it would fill in; or, where it does draw, its option and
@@ -135,6 +156,20 @@ async function resumeAt(A, kind, at) {
   }, [kind, at]);
   await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400);
 }
+/* a session the page itself wrote: walked by clicks to the screen with an admitted own Gitea server, Close pressed, then
+   resumed by the Resume chip's click */
+const GITEA = 'https://gitea.platyr.test';
+async function writtenAt(A, at) {
+  if (at === 'ex-repos') { await fromBegin(A, 'online'); await A.click('next', undefined, 'online-service'); await A.service('gitea', null, GITEA); await A.signIn(); await A.click('next', undefined, 'ex-repos'); }
+  else {
+    await A.toSafe('Notes'); await A.click('online', undefined, 'online-service');
+    if (at === 'online-service') { await pickSvc(A, 'gitea'); await A.fill('o55f-address', GITEA); await A.sleep(300); }
+    else { await A.service('gitea', null, GITEA); if (at !== 'online-signin') { await A.signIn(); await A.click('next', undefined, 'online-details');
+      if (at !== 'online-details') { await A.click('next', undefined, 'safe'); if (at === 'review') await toReview(A); } } }
+  }
+  await A.screen(at); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+  await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 10000 }); await A.sleep(1400);
+}
 const RETIRED_STALE = [{ on: 'online-signin|online-details|ex-repos|safe|review', x: 'retired.example.test' }, { on: 'online-signin|online-details|ex-repos|safe|review', x: 'Gitea Cloud' }];
 const pickerOn = { 'online-service': async (A, s) => { if (s.acts.includes('notNow')) await A.click('notNow'); else { await A.click('pick', 'github'); await A.click('next'); } },
   'online-signin': async (A) => { await A.signIn(); await A.click('next'); },
@@ -157,11 +192,12 @@ const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'revi
   await A.waitFor(() => ['failed', 'recovery', 'unknown'].includes(O55.S.sess.commit.state), null, 25000); await A.sleep(600); };
 
 export const tests = {
-  async 'row A · Safe › GitHub › sign in › details › Safe › Change kept twice › Change › Not now, then Back to the start and on'(t) {
+  async 'row A · Safe › GitHub › sign in › details › Safe › Change kept twice › Change › Not now, then Back to the start (Continue tried at each stop) and on'(t) {
     await row(t, 'A', { establish: async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
-      invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); }, force: ['online-details'] });
+      invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); }, force: ['online-details', 'online-service'],
+      noReturn: copyGone, after: abandoned(['online-service', 'online-signin', 'online-details']) });
   },
-  async 'row B · a saved Safe naming retired hosted Gitea, resumed, Back to the start and on; the admitted own server still shows its steps'(t) {
+  async 'row B · a saved Safe naming retired hosted Gitea (constructed record), resumed, Back to the start and on; an admitted own server saved at Review (constructed) still shows its steps'(t) {
     await row(t, 'B retired', { establish: (A) => resumeAt(A, 'retired', 'safe'), invalidate: async () => {}, stale: RETIRED_STALE, choose: pickerOn });
     await row(t, 'B admitted', { establish: (A) => resumeAt(A, 'admitted', 'review'), invalidate: async () => {}, after: async (A, bad, back) => { if (!back.includes('online-details')) bad.push('the admitted own server lost its details step: ' + back.join(' > ')); } });
   },
@@ -173,13 +209,18 @@ export const tests = {
       invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.fill('o55f-address', 'https://gitea2.platyr.test'); await A.click('next', undefined, 'online-signin'); },
       stale: [{ on: 'online-details|online-signin|ex-repos|safe|review|away', x: 'gitea.platyr.test' }], choose: pickerOn, force: ['online-details'] });
   },
-  async 'row 4 · a failed online copy (network: reviewed again twice first; name taken), then Review again, Change the name or Skip the online copy, then Back and on'(t) {
+  async 'row 4 · a failed online copy (network: reviewed again twice first; name taken), then Review again, Change the name or Skip the online copy (no copy step left on Back, Continue tried at each stop), then Back and on'(t) {
     /* (a taken name is not tried again as it was: its attempts repeat on the network failure) */
     await row(t, '4 review again (network)', { scenario: 'fresh+flaky', establish: toCreatingFailed, keep: keepAttempt, invalidate: async (A) => { await A.click('reviewAgain', undefined, 'review'); }, force: ['creating'] });
     await row(t, '4 review again (name taken)', { scenario: 'fresh+nameTaken', establish: toCreatingFailed, invalidate: async (A) => { await A.click('reviewAgain', undefined, 'review'); }, force: ['creating'] });
     await row(t, '4 change the name (GitHub)', { scenario: 'fresh+nameTaken', establish: toCreatingFailed, invalidate: async (A) => { await A.click('rename', undefined, 'online-details'); } });
-    await row(t, '4 skip (GitHub refused)', { scenario: 'fresh+nameTaken', establish: toCreatingFailed, invalidate: async (A) => { if (await A.has('askSkip')) await A.click('askSkip'); await A.click('skipOnline'); await A.sleep(1200); }, stale: [{ on: 'review|safe', x: 'jared-p' }] });
-    await row(t, '4 skip (network)', { scenario: 'fresh+flaky', establish: toCreatingFailed, keep: keepAttempt, invalidate: async (A) => { if (await A.has('askSkip')) await A.click('askSkip'); await A.click('skipOnline'); await A.sleep(1500); } });
+    /* Skip the online copy gives the copy up: its picker, sign-in and details leave Back, and Continue from every screen
+       Back still reaches leaves it given up (final-onb's FO-22 witness at bf05a56258: the picker came back with GitHub
+       chosen and Continue on) */
+    await row(t, '4 skip (GitHub refused)', { scenario: 'fresh+nameTaken', establish: toCreatingFailed, invalidate: async (A) => { if (await A.has('askSkip')) await A.click('askSkip'); await A.click('skipOnline'); await A.sleep(1200); }, stale: [{ on: 'review|safe', x: 'jared-p' }],
+      noReturn: copyGone, after: abandoned(['online-service', 'online-signin', 'online-details']), force: ['online-service'] });
+    await row(t, '4 skip (network)', { scenario: 'fresh+flaky', establish: toCreatingFailed, keep: keepAttempt, invalidate: async (A) => { if (await A.has('askSkip')) await A.click('askSkip'); await A.click('skipOnline'); await A.sleep(1500); },
+      after: async (A, bad) => { const v = await copyGone(A); if (v) bad.push('4 skip (network): the plan ' + v); } });
   },
   async 'row 5 · the Project beginning kept twice from Review, then changed (online › Later, folder › New), and folder › New › folder › New; Back and on, and nothing of the old one comes back'(t) {
     await row(t, '5 online > Later', { establish: toRepoProject, keep: keepRepo, invalidate: editBegin('later'), stale: [{ on: 'review|safe|name', x: 'jared-p' }, { on: 'review|safe', x: 'recipe-app' }], choose: name,
@@ -199,7 +240,7 @@ export const tests = {
         return { repo: d.repository_ref, name: d.project_name, picked: [...l.querySelectorAll('[data-o55-do="pick"][aria-checked="true"], [data-o55-do="pick"].o55-on')].map((x) => x.getAttribute('data-arg')), on: !!p && !p.disabled && p.getAttribute('aria-disabled') !== 'true' }; });
       if (r.repo || r.picked.length || r.on || r.name === 'Recipe app') bad.push(`after Later, the repository list again holds the old choice: ${JSON.stringify(r)}`);
       t.log('5 online > Later > online again: ' + JSON.stringify(r));
-      t.check('5 online (kept twice) > Later > online again: the old repository and its name do not come back', !bad.length, bad.join(' | ')); }
+      await t.check('5 online (kept twice) > Later > online again: the old repository and its name do not come back', !bad.length, bad.join(' | ')); }
     /* and where Back still reaches the old folder step, Continue from it brings none of the old folder into the new Project */
     { const A = onboardingApp(t), bad = []; await A.boot(); await toFolderProject(A); await keepFolder(A); await editBegin('new')(A); await A.fill('o55f-name', 'Fresh one'); await A.click('next'); await A.sleep(600);
       for (let i = 0; i < 12 && (await A.snap()).screen !== 'ex-folder' && (await look(A)).back; i++) await pressBack(A);
@@ -207,7 +248,7 @@ export const tests = {
       if (at === 'ex-folder') { await pressOn(A); await A.sleep(700); }
       const fwd = await forward(A, [{ on: 'review|safe|name|away', x: 'recipe-app' }], bad, '5 folder > New, on from where Back stops', { name: async (A) => { await A.click('next'); } });
       t.log(`5 folder > New, on from where Back stops (${at})\n  fwd ${fwd.join(' > ')}${bad.length ? '\n  ' + bad.join('\n  ') : ''}`);
-      t.check('5 folder (kept once) > New: Continue from where Back stops keeps nothing of the old folder', !bad.length, bad.join(' | ')); }
+      await t.check('5 folder (kept once) > New: Continue from where Back stops keeps nothing of the old folder', !bad.length, bad.join(' | ')); }
   },
   async 'row 6 · the computer kept twice from Review, then changed (This computer › a Server), then Back and on'(t) {
     await row(t, '6', { establish: async (A) => { await A.toSafe('Notes'); await toReview(A); }, keep: keepWhere, invalidate: async (A) => { await A.click('edit', 'where', 'where'); await A.click('pick', 'server'); await A.click('next'); await A.sleep(1500); },
@@ -236,9 +277,15 @@ export const tests = {
       invalidate: async (A) => { await A.click('bdest', 'gdrive'); }, stale: [{ on: 'review', x: 'Home NAS' }] });
     await row(t, '8 restore given up', { establish: toKitRestore, keep: keepRestore, invalidate: editBegin('new'), stale: [{ on: 'review|safe|name', x: 'Loom' }], choose: name, after: abandoned(['r-source', 'r-unlock', 'r-pick', 'r-preview']), force: ['r-pick'] });
   },
-  async 'row 9 · saved sessions resumed at the picker, sign-in, details, Safe, Review and the repository list (retired hosted Gitea; admitted own server), then Back and on'(t) {
-    for (const [kind, at] of [['retired', 'online-signin'], ['retired', 'online-details'], ['retired', 'review'], ['retired', 'ex-repos'], ['admitted', 'online-details'], ['admitted', 'ex-repos']])
-      await row(t, `9 ${kind} at ${at}`, { establish: (A) => resumeAt(A, kind, at), invalidate: async () => {}, stale: kind === 'retired' ? RETIRED_STALE : [],
+  async 'row 9a · saved sessions naming retired hosted Gitea (constructed records: no public route can make one), resumed at the picker, sign-in, details, Safe, Review and the repository list, then Back and on'(t) {
+    for (const at of ['online-service', 'online-signin', 'online-details', 'safe', 'review', 'ex-repos'])
+      await row(t, `9a retired at ${at} (constructed)`, { establish: (A) => resumeAt(A, 'retired', at), invalidate: async () => {}, stale: RETIRED_STALE,
         choose: Object.assign({ name: async (A) => { await A.fill('o55f-name', 'Notes'); await A.click('next'); } }, pickerOn) });
+  },
+  async 'row 9b · saved sessions naming an admitted own Gitea server (browser-written: walked by clicks, closed and resumed by the chip), at the picker, sign-in, details, Safe, Review and the repository list, then Back and on'(t) {
+    for (const at of ['online-service', 'online-signin', 'online-details', 'safe', 'review', 'ex-repos'])
+      await row(t, `9b admitted at ${at} (browser-written)`, { establish: async (A) => { await writtenAt(A, at); },
+        invalidate: async (A, bad) => {}, choose: Object.assign({ name: async (A) => { await A.fill('o55f-name', 'Notes'); await A.click('next'); } }, pickerOn),
+        after: async (A, bad, back) => { if (back[0] !== at) bad.push(`9b admitted at ${at}: resumed on ${back[0]}, not where it was closed`); } });
   }
 };

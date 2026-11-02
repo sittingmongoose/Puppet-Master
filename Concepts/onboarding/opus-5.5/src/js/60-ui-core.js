@@ -837,8 +837,9 @@
   /* ---------------------------------------------------------------- the active branch
      (FO-22's class: final-onb BACK-STATE-GAPS-78C; Sol's repeated Edit at bf05a56258)
      A chooser asks an answer that picks a branch. On the main path (SPINE): which computer (where, 66), how the Project
-     begins (begin: its Continue records it, 69), where its files live (name, 69), whether an attempt is made (review:
-     given up is none again, 72). Inside a branch: the online copy's service (online-service, applied by its Continue,
+     begins (begin: its Continue records it, 69), where its files live (name, 69), the online copy that Safe opened (safe:
+     a new one each time a copy is given up, 71), whether an attempt is made (review: given up is none again, 72). Inside
+     a branch: the online copy's service (online-service, applied by its Continue,
      71), how the NAS is reached (nas-find, 70), the Connect route (c-route, 67); each answer is written only on its own
      chooser. Every other screen belongs to the chooser that opened it, directly or through the screens between, and
      was entered under that chooser's answer then: go() stamps it so. A screen whose chooser's answer has since been
@@ -850,6 +851,7 @@
     where: (s) => s.ui.where || 'this',
     begin: (s) => (s.drafts.main.project_mode === 'later' ? 'later' : s.ui.beganAs || ''),
     name: (s) => s.drafts.main.storage_mode || '',
+    safe: (s) => String((s.online && s.online.gen) || 0),
     review: (s) => (s.commit && s.commit.state && s.commit.state !== 'none' ? 'attempt' : ''),
     'online-service': (s) => { const d = s.drafts.main; return [d.online_mode, d.forge, d.forge_provider_variant || '', d.forge_instance_url || ''].join('|'); },
     'nas-find': (s) => ((s.nas && s.nas.method) || 'ssh') + '|' + ((s.nas && s.nas.device) || ''),

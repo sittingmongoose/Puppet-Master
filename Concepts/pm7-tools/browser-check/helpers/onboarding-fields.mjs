@@ -34,10 +34,10 @@ export function onboardingApp(t) {
         f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (scenario ? '&o55scenario=' + encodeURIComponent(scenario) : ''), sandbox, settleMs: 1500 });
         await screen('welcome', 40000);
         const env = await f.evaluate(() => ({ origin: String(self.origin), storage: (() => { try { return 'ok:' + localStorage.length; } catch (e) { return e.name; } })() }));
-        t.check(sandbox ? 'opaque origin, no storage' : 'normal page (file://) with storage', sandbox ? env.origin === 'null' && env.storage === 'SecurityError' : /^ok/.test(env.storage), JSON.stringify(env));
+        await t.check(sandbox ? 'opaque origin, no storage' : 'normal page (file://) with storage', sandbox ? env.origin === 'null' && env.storage === 'SecurityError' : /^ok/.test(env.storage), JSON.stringify(env));
         await click(t, 'start', undefined, 'look'); await click(t, 'pickFamily', look[0]); await click(t, 'pickMode', look[1]);
         const th = (await snap()).theme;
-        t.check(`look ${look.join(' ')} applied`, th.chosen === look[0] && th.mode === look[1], JSON.stringify(th));
+        await t.check(`look ${look.join(' ')} applied`, th.chosen === look[0] && th.mode === look[1], JSON.stringify(th));
         await click(t, 'next', undefined, 'where');
       },
       click, fill, type, snap: () => snap(), screen: (t, id) => screen(id), sleep: (t, ms) => sleep(ms),
