@@ -2,8 +2,8 @@
 // never rendered from 2026-09-27 until 2026-11-02 (a selector outranked them), so this reads them in all ten looks: Settings
 // › Source Control › Add another account or instance › GitLab, always in T3's sandbox (t.openInSandbox's default flags,
 // whatever --set sandbox says). Per look: a native crop of the window; the audit's overflow and clipped text on the window
-// (t.noOverflow); and text contrast from the window's computed colours laid over its opaque ground, 4.5:1 for body text and
-// 3:1 for large text, the same for text on the accent (the primary button), and 3:1 for the chosen card's accent edge.
+// (t.noOverflow); and text contrast from the window's computed colours laid over its opaque ground, 4.5:1 at any size
+// (F3-654), the same for text on the accent (the primary button), and 3:1 for the chosen card's accent edge.
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 
 async function openSetup(t, f, look) {
@@ -69,8 +69,8 @@ export default async function (t) {
 				const c = getComputedStyle(e); if (c.visibility === 'hidden' || +c.opacity === 0) continue;
 				if (e.closest('[aria-disabled="true"], :disabled, [aria-hidden="true"]')) continue;
 				const fg = rgba(c.color), bgc = bgOf(e), cr = ratio(over(fg, bgc), bgc);
-				const size = parseFloat(c.fontSize), bold = +c.fontWeight >= 700, large = size >= 24 || (bold && size >= 18.66);
-				const need = large ? 3 : 4.5, txt = e.textContent.trim().slice(0, 28);
+				// 4.5:1 at any size: interface text in Puppet Master's canon (F3-654) has no large-text allowance
+				const need = 4.5, txt = e.textContent.trim().slice(0, 28);
 				texts.push({ txt, cr: +cr.toFixed(2), need });
 				if (cr < need) fails.push(`"${txt}" ${cr.toFixed(2)}:1 (needs ${need}; ${e.tagName.toLowerCase()}.${String(e.className).split(' ').filter(Boolean).slice(0, 2).join('.')} ${c.color} opacity ${c.opacity} on rgb(${bgc.map(Math.round).join(',')}))`);
 			}
@@ -95,5 +95,5 @@ export default async function (t) {
 		info.fails.forEach((x) => { bad.push(`${look}: ${x.replace(/ \(needs.*$/, '')}`); t.log(`${look} FAILS ${x}`); });
 	}
 	rows.forEach((r) => t.log(r));
-	await t.check('the setup window reads in all ten looks (text 4.5:1, large text 3:1, the chosen edge 3:1)', bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
+	await t.check('the setup window reads in all ten looks (text 4.5:1 at any size, the chosen edge 3:1)', bad.length === 0, bad.slice(0, 12).join('; ') + (bad.length > 12 ? ` (+${bad.length - 12} more)` : ''));
 }
