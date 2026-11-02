@@ -1129,6 +1129,19 @@ def('pr60', 'fresh', 'FO-18: Almost ready (no AI, no free model) stays calm: no 
   const snd = await d.state((m) => JSON.stringify(window.O55.sound.log.slice(m)), s0);
   A.ok(!/crew|confetti/.test(snd), 'no crew cheer or confetti sound (' + snd.slice(0, 200) + ')');
 });
+def('pr61', 'fresh', "FO-23: on a service's own-server sign-in Pip promises no narrower reach than the screen says: a method-neutral line, and the token form's own line", async (d, A) => {
+  await d.openOnboarding(); await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-service' })); await d.settle(); await sleep(1200);
+  if (await d.state(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="others"]'); return b && b.getAttribute('aria-expanded') !== 'true'; })) await d.act('others');
+  /* Gitea on its own server signs in by token only, as final-onb's film: the token form at once */
+  await d.act('pick', 'gitea'); await d.act('variant', 'gitea_self_managed'); await d.type('address', 'https://git.example.org'); await d.primary();
+  A.eq(await d.screen(), 'online-signin', 'sign in to your own Gitea');
+  const bubble = () => d.state(() => ((document.querySelector('#pm-o55-onboarding .pst-bt') || {}).textContent || '').trim());
+  await sleep(2500); const b1 = await bubble();
+  A.ok(!/only ask for this one|only this one/i.test(b1) && /token/i.test(b1) && /can reach/.test(b1), "the token form's own line, beside the note on what the token reaches (" + JSON.stringify(b1) + ')');
+  /* a browser sign-in (GitHub): the line is method-neutral */
+  await d.page.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'online-signin' })); await d.settle(); await sleep(2500); const b2 = await bubble();
+  A.ok(!/only ask for this one|only this one/i.test(b2) && /can reach/.test(b2), 'the sign-in line promises no narrower reach (' + JSON.stringify(b2) + ')');
+});
 /* Branches only injected results reached, now Demo Studio situations answered once by the concept owner host (the lead,
    2026-10-31, from final-onb: "Jared wants every flow"); each is left again by clicks */
 const layerText = (d) => d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)').textContent);
