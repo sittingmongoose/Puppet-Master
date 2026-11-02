@@ -1,3 +1,19 @@
+# Plans lane — independent closure at78c; final checks released, 2026-11-02
+
+**Audit at78c1629c57:0 blockers,0 majors,0 minors. R6 is closed.** Lead1102030750-ce85 releases V7 and the fresh final dry. This checkpoint rebinds the earlier42/9e metadata to the independently verified source; it changes reports only and preserves the page byte-for-byte.
+
+| Area | Result |
+|---|---|
+| **Source / closure** | Audited78c includes FO-21 and all R6 repairs. Actual current identity governs admission/completion; admitted, drive/AI and late-result controls pass. No new Plan rule, private-cache fixture, command, key, binding or DTO. |
+| **Coverage / census** |219 product rows/1095 required cells;1010 settings;485/63 bindings;715/140 Touch;1271 production;22 status keys.7276 units/29367 acceptance units;2977 shards/99 sources. |
+| **Independent proof** | R6 witnesses13 normal-file/15 sandbox PASS; FO-21 painted walk70 PASS in10 looks x3 steps,minimum4.58:1. Source proof and manifest hashes verified and retained. Concept evidence does not close715 native Touch residuals. |
+| **Final check inputs** |3560 required files/links match the lead checkout; currentness present and tree full. No copying, snapshot/baseline refresh or governance change. V7 then fresh dry run on the following clean metadata head; no further source edit. |
+| **Custody** | Earlier14 dry and13 GPU captures remain hash-exact; new dry has its own directory. One earlier authorized Plans GPU run is complete; no browser/server remains owned. |
+
+Page SHA-256 f8dbebbcde3d82502601766c61d263f40a2cfa8434652906d5ac5619fcbbf22c. [RE-AUDIT-RESPONSES.md](RE-AUDIT-RESPONSES.md) records the closure; [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) maps each required column. Final V7 and dry results are recorded after their clean-head runs. No landing, lock, reseal, protected-input, snapshot or baseline refresh.
+
+---
+
 # Plans lane — FO-21 merged; R6 still open, 2026-11-02
 
 **Core507d34b3b4 contains fields42c8660736 and found79b84a717f; combined page rebuilt and build parity PASS.** Coverage is219 product rows/1095 required cells. R6 remains independently open; final dry is held for the lead's explicit closure.
