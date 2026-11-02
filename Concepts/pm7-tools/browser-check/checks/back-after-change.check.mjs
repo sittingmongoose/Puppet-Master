@@ -239,6 +239,40 @@ const SERVER_STEPS = ['s-kind', 's-wait', 's-confirm', 's-ready'];
 const toNameNas = async (A) => { await A.click('pick', 'this'); await A.click('next', undefined, 'begin'); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Book club site');
   await A.click('change'); await A.click('loc', 'network', 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
   await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); await onToReview(A); };
+/* ---------------------------------------------------------------- forward re-entry and cross-kind switches (row 11)
+   Sol's FO22-A2/A3 at e9b704975a: an answer given up, then the same kind chosen again, revived the old pick with Continue
+   on; another kind kept the old online repository. A re-entered picker chooses nothing, Continue off; after an explicit
+   pick, neither the draft nor Review holds anything of the abandoned answer. */
+const PICKS = '[data-o55-do="pick"],[data-o55-do="device"],[data-o55-do="source"],[data-o55-do="kit"],[data-o55-do="volume"],[data-o55-do="share"]';
+async function emptyPicker(A, bad, label) {
+  const r = await A.frame().evaluate((PICKS) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), p = l && l.querySelector('.o55-foot .o55-primary');
+    const picked = [...l.querySelectorAll(PICKS)].filter((x) => x.getAttribute('aria-checked') === 'true' || x.classList.contains('o55-on')).map((x) => x.getAttribute('data-o55-do') + ':' + x.getAttribute('data-arg'));
+    return { screen: O55.S.sess.screen, picked, on: !!p && !p.disabled && p.getAttribute('aria-disabled') !== 'true' }; }, PICKS);
+  if (r.picked.length || r.on) bad.push(`${label}: ${r.screen} re-entered with ${r.picked.join(', ') || 'nothing'} chosen and Continue ${r.on ? 'on' : 'off'}`);
+  return r;
+}
+async function noStale(A, bad, label, forbid) {
+  await A.screen('review');
+  const r = await A.frame().evaluate(() => ({ draft: JSON.stringify(O55.S.sess.drafts.main), review: document.querySelector('.o55-pane > .o55-layer:not(.o55-out)').innerText }));
+  for (const x of forbid) { if (r.draft.toLowerCase().includes(x.toLowerCase())) bad.push(`${label}: the draft still holds "${x}" (${(r.draft.match(new RegExp('"[a-z_]+":[^,]{0,40}' + x.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&'), 'i')) || [''])[0]})`);
+    if (r.review.includes(x)) bad.push(`${label}: Review still shows "${x}"`); }
+}
+const editBeginTo = async (A) => { await A.screen('review'); await A.click('edit', 'begin', 'begin'); };
+const goNew = async (A) => { await editBeginTo(A); await A.click('pick', 'new'); await A.click('next'); await A.sleep(500); if ((await A.snap()).screen === 'name') { await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } await onToReview(A); };
+const goFolder = async (A, bad, label, path) => { await editBeginTo(A); await A.click('pick', 'existing'); await A.click('sub', 'folder'); await A.click('next', undefined, 'ex-folder'); await A.sleep(400);
+  if (bad) await emptyPicker(A, bad, label); await A.click('pick', path); await A.waitEnabled('next'); await A.click('next'); await onToReview(A, { name: async (A) => { await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } }); };
+const goOnline = async (A, bad, label, idx) => { await editBeginTo(A); await A.click('pick', 'existing'); await A.click('sub', 'online'); await A.click('next', undefined, 'online-service'); await A.sleep(400);
+  if (bad) await emptyPicker(A, bad, label + ' (service)'); await A.click('pick', 'github'); await A.click('next'); await settle(A, ['online-signin', 'ex-repos']); if ((await A.snap()).screen === 'online-signin') await signedIn(A); await A.screen('ex-repos'); await A.sleep(400);
+  if (bad) await emptyPicker(A, bad, label + ' (repository)'); const ps = (await A.snap()).buttons.filter((b) => b.action === 'pick'); await A.click('pick', ps[idx].arg); await A.waitEnabled('next'); await A.click('next');
+  await onToReview(A, { name: async (A) => { if (!(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } }); };
+const goRestore = async (A, bad, label) => { await editBeginTo(A); await A.click('pick', 'restore'); await A.click('next', undefined, 'r-source'); await A.sleep(400);
+  if (bad) await emptyPicker(A, bad, label + ' (where the backup is)'); await A.click('source', 'kit'); await A.click('kit', 'kit-loom'); await pressOn(A); await A.screen('r-pick'); await A.sleep(400);
+  if (bad) await emptyPicker(A, bad, label + ' (which backup)'); const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); await pressOn(A); await A.sleep(800);
+  await onToReview(A, { name: async (A) => { if (!(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } }); };
+const goNas = async (A, bad, label) => { await editBeginTo(A); await A.click('pick', 'existing'); await A.click('sub', 'device'); await A.click('next', undefined, 'nas-find');
+  await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000); await A.sleep(400); if (bad) await emptyPicker(A, bad, label + ' (device)');
+  await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await throughNas(A); await onToReview(A, { name: async (A) => { if (!(await A.frame().evaluate(() => O55.S.sess.drafts.main.project_name))) await A.fill('o55f-name', 'Fresh one'); await A.click('next'); } }); };
+async function flow(t, label, fn) { const A = onboardingApp(t), bad = []; await A.boot(); await fn(A, bad); t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500)); }
 const keepWhere = async (A) => { await A.click('edit', 'where', 'where'); await A.click('pick', 'this'); await A.click('next'); await toReview(A); };
 /* (the owner fixture's network failure is one-shot: it is armed again for each repeated attempt, a disclosed fixture) */
 const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'review'); await A.frame().evaluate(() => { O55.S.env.failures.online_copy = 'network'; }); await A.waitEnabled('commit'); await A.click('commit', undefined, 'creating');
@@ -257,10 +291,10 @@ export const tests = {
   async 'row 3 · the service kept twice, then another (GitHub › GitLab); the own-server address kept twice, then another, then Back and on'(t) {
     await row(t, '3 service', { establish: async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
       invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await pickSvc(A, 'gitlab'); await A.click('next', undefined, 'online-signin'); },
-      stale: [{ on: 'online-details|online-signin|ex-repos|safe|review|away', x: 'GitHub' }, { on: 'online-details|safe|review', x: 'jared-p' }], choose: pickerOn, force: ['online-details'] });
+      stale: [{ on: 'online-details|online-signin|ex-repos|safe|review|away', x: 'GitHub' }, { on: 'online-details|safe|review', x: 'jared-p' }], choose: pickerOn });
     await row(t, '3 address', { establish: async (A) => { await toDetails(A, 'gitea', 'gitea_self_managed', 'https://gitea.platyr.test'); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
       invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.fill('o55f-address', 'https://gitea2.platyr.test'); await A.click('next', undefined, 'online-signin'); },
-      stale: [{ on: 'online-details|online-signin|ex-repos|safe|review|away', x: 'gitea.platyr.test' }], choose: pickerOn, force: ['online-details'] });
+      stale: [{ on: 'online-details|online-signin|ex-repos|safe|review|away', x: 'gitea.platyr.test' }], choose: pickerOn });
   },
   async 'row 4 · a failed online copy (network: reviewed again twice first; name taken), then Review again, Change the name or Skip the online copy (no copy step left on Back, Continue tried at each stop), then Back and on'(t) {
     /* (a taken name is not tried again as it was: its attempts repeat on the network failure) */
@@ -292,7 +326,8 @@ export const tests = {
        forward never silently reinstates the abandoned branch or its source) */
     { const A = onboardingApp(t), bad = []; await A.boot(); await toRepoProject(A); await keepRepo(A); await editBegin('later')(A); await A.screen('review');
       if (await A.has('edit', 'begin')) await A.click('edit', 'begin', 'begin'); else for (let i = 0; i < 6 && (await A.snap()).screen !== 'begin'; i++) await pressBack(A);
-      await A.screen('begin'); await A.click('pick', 'existing'); await A.click('sub', 'online'); await A.click('next', undefined, 'online-service'); await A.click('next');
+      await A.screen('begin'); await A.click('pick', 'existing'); await A.click('sub', 'online'); await A.click('next', undefined, 'online-service'); await A.sleep(400);
+      await emptyPicker(A, bad, '5 online > Later > online again (service)'); await A.click('pick', 'github'); await A.click('next');
       await settle(A, ['online-signin', 'ex-repos']); if ((await A.snap()).screen === 'online-signin') await signedIn(A); await A.screen('ex-repos');
       const r = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main, l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), p = document.querySelector('.o55-foot .o55-primary');
         return { repo: d.repository_ref, name: d.project_name, picked: [...l.querySelectorAll('[data-o55-do="pick"][aria-checked="true"], [data-o55-do="pick"].o55-on')].map((x) => x.getAttribute('data-arg')), on: !!p && !p.disabled && p.getAttribute('aria-disabled') !== 'true' }; });
@@ -387,5 +422,70 @@ export const tests = {
     await row(t, '10b 12 away kept > home', { establish: async (A) => { await toNewServer(A); await A.click('later', undefined, 'away'); await A.click('pick', 'anywhere'); await A.click('next', undefined, 'review'); },
       keep: viaReview('away', stay), invalidate: viaReview('away', async (A) => { await A.click('pick', 'home'); }), stale: [{ on: 'review', x: 'Tailscale' }],
       choose: { begin: async (A) => { await A.click('later'); }, away: async (A) => { await A.click('pick', 'home'); await pressOn(A); } } });
+  },
+  async 'row 11a · forward re-entry: folder, online, restore and Home NAS given up for New, then the same kind again; Safe copy given up, then added again; backup place given up, then chosen again; a completed Server given up for This computer, then chosen again'(t) {
+    await flow(t, '11a folder > New > folder', async (A, bad) => { await toFolderProject(A); await goNew(A); await goFolder(A, bad, '11a folder', '~/Desktop/garden notes'); await noStale(A, bad, '11a folder', ['recipe-app']);
+      const d = await A.frame().evaluate(() => O55.S.sess.drafts.main); if (!/garden/.test(d.project_source_ref)) bad.push('11a folder: the new folder was not written: ' + d.project_source_ref); });
+    await flow(t, '11a online > New > online', async (A, bad) => { await toRepoProject(A); await goNew(A); await goOnline(A, bad, '11a online', 1); await noStale(A, bad, '11a online', ['recipe-app']);
+      const d = await A.frame().evaluate(() => O55.S.sess.drafts.main); if (!d.repository_ref || /recipe-app/.test(d.repository_ref)) bad.push('11a online: the new repository was not written: ' + d.repository_ref); });
+    await flow(t, '11a restore > New > restore', async (A, bad) => { await toKitRestore(A); await goNew(A); await goRestore(A, bad, '11a restore'); });
+    await flow(t, '11a Home NAS > New > Home NAS', async (A, bad) => { await toNasProject(A); await goNew(A); await goNas(A, bad, '11a NAS'); });
+    await flow(t, '11a Safe copy given up > added again', async (A, bad) => { await toDetails(A); await A.click('next', undefined, 'safe'); await toReview(A);
+      await A.click('edit', 'safe'); await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); await onToReview(A);
+      await A.click('edit', 'safe'); await A.click('online', undefined, 'online-service'); await A.sleep(400); await emptyPicker(A, bad, '11a copy (service)');
+      await pickSvc(A, 'gitlab'); await A.click('next', undefined, 'online-signin'); await signedIn(A); await A.screen('online-details'); await A.click('next', undefined, 'safe'); await onToReview(A); await noStale(A, bad, '11a copy', ['GitHub']); });
+    await flow(t, '11a backup place given up > chosen again', async (A, bad) => { await A.toSafe('Notes'); await A.click('backup'); await A.click('bdest', 'nas'); await A.click('sheet-close').catch(() => {}); await toReview(A);
+      await A.click('edit', 'backup'); await A.click('bdest', 'none'); await A.click('sheet-close').catch(() => {}); await onToReview(A);
+      await A.click('edit', 'safe'); await A.click('backup'); await A.click('bdest', 'nas'); const b = await A.frame().evaluate(() => O55.S.sess.backup); if (b.sub || Object.keys(b.access || {}).length) bad.push('11a backup: Home NAS came back with ' + JSON.stringify({ sub: b.sub, access: b.access }));
+      await A.click('sheet-close').catch(() => {}); await onToReview(A); });
+    /* (a set-up Server is settled work outside the plan: chosen again, it is offered as the Server already set up) */
+    await flow(t, '11a Server given up > chosen again', async (A, bad) => { await toNewServer(A); await A.click('pick', 'new'); await A.click('next', undefined, 'name'); await A.fill('o55f-name', 'Notes'); await onToReview(A);
+      await A.click('edit', 'where', 'where'); await A.click('pick', 'this'); await A.click('next'); await onToReview(A);
+      const d1 = await A.frame().evaluate(() => O55.S.sess.drafts.main); if (d1.server_ref || d1.server_mode !== 'this_device') bad.push('11a Server: This computer kept the Server: ' + JSON.stringify({ ref: d1.server_ref, mode: d1.server_mode }));
+      await A.click('edit', 'where', 'where'); await A.click('pick', 'server'); await A.click('next'); await onToReview(A, { begin: async (A) => { await A.click('pick', 'new'); await A.click('next'); } }); });
+  },
+  async 'row 11b · cross-kind switches of Begins as: online › restore, folder › online, Home NAS › restore, restore › online, online › folder, Home NAS › folder'(t) {
+    await flow(t, '11b online > restore', async (A, bad) => { await toRepoProject(A); await goRestore(A, null, ''); await noStale(A, bad, '11b online > restore', ['recipe-app', 'jared-p/']);
+      const d = await A.frame().evaluate(() => O55.S.sess.drafts.main); if (d.online_mode !== 'none' || d.repository_ref) bad.push('11b online > restore: ' + JSON.stringify({ online: d.online_mode, repo: d.repository_ref })); });
+    await flow(t, '11b folder > online', async (A, bad) => { await toFolderProject(A); await goOnline(A, null, '', 1); await noStale(A, bad, '11b folder > online', ['~/Documents/recipe-app', 'folder:home', 'preflight:folder']); });
+    await flow(t, '11b Home NAS > restore', async (A, bad) => { await toNasProject(A); await goRestore(A, null, ''); await noStale(A, bad, '11b NAS > restore', ['volume1', 'ssh-key:', 'Home NAS']); });
+    await flow(t, '11b restore > online', async (A, bad) => { await toKitRestore(A); await goOnline(A, null, '', 1); await noStale(A, bad, '11b restore > online', ['kit-loom', 'Loom']); });
+    await flow(t, '11b online > folder', async (A, bad) => { await toRepoProject(A); await goFolder(A, null, '', '~/Desktop/garden notes'); await noStale(A, bad, '11b online > folder', ['recipe-app', 'jared-p/']); });
+    await flow(t, '11b Home NAS > folder', async (A, bad) => { await toNasProject(A); await goFolder(A, null, '', '~/Desktop/garden notes'); await noStale(A, bad, '11b NAS > folder', ['volume1', 'ssh-key:', 'Home NAS']); });
+  },
+  async 'row 12 · each review finding at e9b: AST-1 saved hosted Gitea and Forgejo picks resume with nothing chosen; AST-2 Not now before any Continue; AST-3 a saved folder session with no branch data; AST-4 repository Edit, then New and a new copy; AST-5 default boot after a fault scenario (Sol A2 and A3 are rows 11a and 11b)'(t) {
+    /* AST-1 (constructed records: no public route on this build picks a retired kind) */
+    for (const [card, variant] of [['gitea', 'gitea_cloud'], ['forgejo', 'forgejo_cloud']])
+      await flow(t, `12 AST-1 saved ${variant} pick resumed (constructed)`, async (A, bad) => {
+        await A.toSafe('Notes'); await A.click('online', undefined, 'online-service'); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(800);
+        await A.frame().evaluate(([card, variant]) => { const saved = O55.store.get('onboarding', null); saved.started = 'ast1-' + Date.now(); saved.status = 'closed'; saved.screen = 'online-service';
+          saved.online = { purpose: 'copy', forge: card, variant, wanted: true, addresses: { [card + '|' + variant]: 'https://retired.example.test' } };
+          Object.assign(saved.drafts.main, { online_mode: 'none', forge: 'none', forge_provider_variant: null, forge_instance_url: '' });
+          O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, [card, variant]);
+        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400);
+        await emptyPicker(A, bad, `AST-1 ${variant}`);
+        if (await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) #o55f-address').count()) { await A.fill('o55f-address', 'https://new.example.test'); await A.sleep(400); }
+        const r = await A.frame().evaluate(() => { const p = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary'); return { on: !!p && !p.disabled && p.getAttribute('aria-disabled') !== 'true', variant: O55.S.sess.drafts.main.forge_provider_variant }; });
+        if (r.on || r.variant) bad.push(`AST-1 ${variant}: an address alone turns Continue on or writes a kind: ${JSON.stringify(r)}`); });
+    /* AST-2 */
+    await row(t, '12 AST-2 Not now before any Continue', { establish: async (A) => { await A.toSafe('Notes'); }, invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); },
+      noReturn: copyGone, after: abandoned(['online-service', 'online-signin', 'online-details']), force: ['online-service'] });
+    /* AST-3 (a folder session closed and resumed: this build keeps no branch data, so its record has the predecessor's shape) */
+    await row(t, '12 AST-3 resumed folder session > New', { establish: async (A) => { await toFolderProject(A); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+        await A.frame().evaluate(() => { const saved = O55.store.get('onboarding', null); delete saved.branch; O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); });
+        await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1400); await A.screen('review'); },
+      invalidate: async (A) => { await editBegin('new')(A); await A.fill('o55f-name', 'Astra new project'); await A.click('next'); await onToReview(A); },
+      noReturn: (A) => A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return d.project_source_ref || /recipe-app/.test(d.local_location) ? `brought the old folder back (${d.project_source_ref}, ${d.local_location})` : null; }),
+      after: abandoned(['ex-folder']), force: ['ex-folder'], choose: name });
+    /* AST-4 */
+    await row(t, '12 AST-4 repository Edit kept > New > new GitHub copy', { establish: async (A) => { await toRepoProject(A); await viaReview('ex-repos', async (A) => { const p = (await A.snap()).buttons.find((b) => b.action === 'pick'); await A.click('pick', p.arg); })(A); },
+      invalidate: async (A) => { await editBegin('new')(A); await A.fill('o55f-name', 'Astra replacement'); await A.click('next'); await onToReview(A);
+        await A.click('edit', 'safe'); await A.click('online', undefined, 'online-service'); await A.click('pick', 'github'); await A.click('next'); await settle(A, ['online-signin', 'online-details']);
+        if ((await A.snap()).screen === 'online-signin') await signedIn(A); await A.screen('online-details'); await A.fill('o55f-repo', 'astra-replacement'); await A.sleep(300); await A.click('next'); await onToReview(A); },
+      noReturn: (A) => A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return d.repository_ref || d.repository_name !== 'astra-replacement' || d.online_mode !== 'new' ? `changed the new copy (${d.online_mode}, ${d.repository_name}, ${d.repository_ref})` : null; }),
+      after: abandoned(['ex-repos']), force: ['ex-repos'], choose: name });
+    /* AST-5 */
+    await flow(t, '12 AST-5 default boot after a fault scenario', async (A, bad) => { await A.boot({ scenario: 'fresh+sshNotAllowed' }); await A.boot();
+      const sc = await A.frame().evaluate(() => { try { return O55.store.get('scenario', ''); } catch (e) { return 'unreadable'; } }); if (sc && sc !== 'fresh') bad.push('AST-5: the default boot kept scenario ' + sc); });
   }
 };

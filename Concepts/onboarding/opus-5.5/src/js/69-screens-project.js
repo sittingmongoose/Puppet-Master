@@ -48,13 +48,25 @@
      and a name taken from any of them (never one the person typed) belong to the beginning that filled them in: they
      were carried into a new Project planned inside the old folder, and into a NAS folder's history (logic crawl).
      Facts about the person's devices (a trusted NAS, a key added to it) stay. */
-  function resetBeginning(S, d) {
-    O55.draft.set(d, Object.assign({ local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local' },
-      S.sess.ui.nameTouched ? {} : { project_name: '' }));
-    S.sess.folderInfo = null;
-    if (S.sess.nas) { delete S.sess.nas.at; delete S.sess.nas.folderLabel; }
+  /* A beginning given up (canon FO-22, Sol's FO22-A2 and A3 at e9b704975a): everything derived from it goes here, once,
+     before Continue takes any branch, so no branch's early return can keep a piece of it. Its picker's choice and
+     completed check (the folder, the NAS device and mounted volume), the preflight and source-access references they
+     wrote, the restore, and for an online source its service, server, account, repository and name, with the service
+     picker choosing nothing; picking the same kind again starts empty with Continue off. Settled work outside the plan
+     stays (a sign-in already made, a key already installed on the NAS, a host already trusted). */
+  function resetBeginning(S, d, was) {
+    O55.draft.set(d, Object.assign({ local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local',
+      preflight_result_refs: [], source_access_authorization_refs: [] }, S.sess.ui.nameTouched ? {} : { project_name: '' }));
+    S.sess.folderInfo = null; S.sess.folder = null;
+    Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(folder|mounted|smb|nfs):/.test(k)) F.reset(S, k); });
+    if (S.sess.nas) { if (S.sess.nas.purpose === 'source' || was === 'existing:device') S.sess.nas = null; else { delete S.sess.nas.at; delete S.sess.nas.folderLabel; } }
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
+    if (was === 'existing:online' || d.project_mode === 'existing_online') {
+      O55.draft.set(d, { online_mode: 'none', forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_ref: '', forge_account_action: null,
+        repository_ref: '', repository_name: '', repository_owner_scope: 'personal', repository_container: '', repository_project: '', repository_visibility: null });
+      d.forge_auth_method = null; S.sess.azureProjects = null; S.sess.online = { purpose: 'copy', unchosen: true };
+    }
   }
   /* a new beginning is hung on the string: the sign swings with it and its icon pops in */
   const stage = (S) => S.root.querySelector('.o55-stage');
@@ -101,12 +113,13 @@
          skips only the provider phases for a deferred Project) */
       /* (Later gives up the beginning chosen before: its repository goes, and choosing any beginning again starts it
          clean, so going on never brings the old source back: canon FO-22) */
-      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none', repository_ref: '' }); S.sess.ui.begin = null; S.sess.ui.beganAs = 'later'; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
+      later(S) { if (S.sess.ui.beganAs && S.sess.ui.beganAs !== 'later') resetBeginning(S, md(S), S.sess.ui.beganAs);
+        O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none', repository_ref: '' }); if (S.sess.online) S.sess.online.wanted = false; S.sess.ui.begin = null; S.sess.ui.beganAs = 'later'; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
       next(S) {
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
         /* switching how the Project begins drops what the abandoned beginning filled in */
         const began = sel === 'existing' ? 'existing:' + sub : sel;
-        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d);
+        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d, S.sess.ui.beganAs);
         S.sess.ui.beganAs = began;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
         if (sel === 'new') { O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', project_source_ref: '', source_more: false }, clearOnline)); S.save(); return O55.ui.go('name'); }
@@ -261,6 +274,8 @@
       change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); seeSheet(S); },
       loc(S, v) {
         const d = md(S);
+        /* (files on the NAS given up: its device, folder and checks go with it, as a beginning's do) */
+        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
         if (v === 'custom') O55.draft.set(d, { local_location_mode: 'custom', local_location: d.local_location || '~/Documents/' + (d.project_name || 'Project'), storage_mode: 'this_device' });
         if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
