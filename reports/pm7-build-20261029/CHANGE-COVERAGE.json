@@ -2784,8 +2784,8 @@
       "commands": "CS-073; UCC-106; existing ui.onboarding.next and service/auth owner routes; no new command, intent or handler",
       "settings": "none needed: Source Control admission is an owner rule, not a user preference or new setting key",
       "dry": "DR-005; entry, resume, availability and activation consume one current admission gate",
-      "companions": "Admitted Forgejo request remains valid; changing only choice to the former service is refused. Fieldsbc4f41773d adds the shared owner/action gate before normalization/default. Unchanged125-record source probe passes at37fcbc2455:0 owner handoffs,62 preservation checks,3 disabled old-picker footers. No schema/key/command/mirror shape change; independent combined-head closure pending.",
-      "state": "source_probe_pass_independent_combined_R6_review_pending",
+      "companions": "Typed retired choice refusal remains valid. Source42c shared identity resolver is merged, but independent audit confirms cloud-tag classification and masked conflicting-alias bypasses. Existing canon already requires refusal. Source repair/independent closure remain pending; no new schema/key/command/mirror field.",
+      "state": "R6_source_identity_repair_open_at42c",
       "decision_ref": "DL-273"
     },
     {
@@ -2798,6 +2798,17 @@
       "dry": "DR-067; F3-652 shared floating menu material and family tokens",
       "companions": "Existing QA2PresentationPolicy.glass.Settings_modal_fill and F3-654; no new DTO/ID. Found05fa23d4ed source merged. Lead-authorized GPU setup-window check42/42 in ten looks, text>=4.5:1 at every size; minimum4.64. Five focused checks PASS; independent combined-head review pending.",
       "state": "source_owner_and_focused_checks_pass_independent_combined_review_pending"
+    },
+    {
+      "id": "FO-21",
+      "change": "Setup field instructions and Glass Light Settings primary-button text meet the shared settled contrast floor",
+      "owner": "F3-654; SSYS-042; F3-652",
+      "wiring": "none needed: existing Settings form and button routes; paint-only correction",
+      "commands": "none needed: no semantic action or owner handoff changes",
+      "settings": "none needed: shared ink/fill correction, no new preference or inventory row",
+      "dry": "DR-040; F3-654 shared contrast and theme-token presentation, no false domain command",
+      "companions": "Found79b84a717f CSS and painted setup-window walk merged; rebuilt with R6 source42c. Found reports all ten looks pass, minimum4.59:1. No new schema/DTO/ID; build parity PASS. The prior42-check FO20 run covered the initial screen and computed colours, not all later instructions.",
+      "state": "source_merged_existing_owner_covers_paint_final_combined_check_pending"
     }
   ],
   "sources": [
@@ -3312,9 +3323,9 @@
     "new_rows": [
       "DL273-OWN-SERVER-FORGEJO"
     ],
-    "coverage_rows": 218,
-    "required_cells": 1090,
-    "fields_source": "bc4f41773d",
+    "coverage_rows": 219,
+    "required_cells": 1095,
+    "fields_source": "42c8660736",
     "fields_coverage_mirror": "99226a97b5_merged",
     "new_commands_bindings_settings": 0,
     "new_product_rule": "hosted_Forgejo_not_offered",
@@ -3400,7 +3411,7 @@
       "positive_cases": 1593,
       "negative_cases": 3926,
       "index_acceptance_units": 29366,
-      "independent_recheck": "Local125-record source probe passes at37fcbc2455; independent R6 closure pending at the final FO-20 combined head."
+      "independent_recheck": "R6 still open at42c: cloud classification and conflicting declared aliases; further source repair and lead closure pending."
     },
     "historical_first_fields_source": "a5c103cbf6"
   },
@@ -3450,5 +3461,21 @@
       "proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO20-browser-proof.json",
       "scope": "computed-color text contrast and overlap in one GPU setup-window check; not native certification"
     }
+  },
+  "FO21": {
+    "found_source": "79b84a717f5c793df7706b8ac6f1e8e05fb8b95d",
+    "merged_core_commit": "507d34b3b42346ff553561299642ed1af96299a0",
+    "binding": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-merge-source-binding.json",
+    "owner_prose_change": false,
+    "why": "F3-654 already requires4.5:1 for instructions and action labels at every size against the actual composited background; SSYS-042 keeps one setup form.",
+    "new_schema_command_setting_binding": false,
+    "found_painted_check_claim": {
+      "looks": 10,
+      "minimum": 4.59,
+      "claim_owner": "found",
+      "source": "79b84a717f"
+    },
+    "new_browser_started_by_Plans": false,
+    "prose_review_preceded_coverage": true
   }
 }

@@ -1,3 +1,15 @@
+# FO-21 merged; R6 remains open, 2026-11-02
+
+Core507d34b3b4 merges fields42c8660736 and found79b84a717f. The only merge conflict was generated PMConcept7; it was rebuilt from the cleanly merged source. Build parity PASS. Three R6 files are byte-exact to42c and four FO-21 style/test/docs files to79b. No Plan or generated Plan bytes changed fromea559; no regeneration is needed.
+
+FO-21 field instructions use secondary ink; Glass Light primary buttons use the existing blue at full opacity. F3-654 already requires4.5:1 at every text size against the actual composite. SSYS-042 and DR-040 retain the shared form/theme-token owners; no new prose rule, command, key, binding or DTO. One coverage row makes219/1095. Found reports the new painted-pixel walk passes ten looks with minimum4.59:1; Plans ran no new browser. The earlier42-check FO-20 setup run covered the initial screen and computed colours; it did not establish later-step instruction contrast.
+
+The formal ea559 audit closed FO-20 and the canon/companion delta, leaving only R6. At42c the independent audit confirms cloud-tag classification escape and conflicting aliases masked by truthy selection; the source resolver is bypassed or does not see every declared part. Fields/lead have the evidence. Mixed-cache test applicability remains under review, not an additional confirmed finding. Existing eight-unit admission canon already covers the repair.
+
+Final dry is held until the lead confirms R6 closed. V7 is prepared only, for the final repaired combined pin. First-dry14 and earlier GPU13 captures remain hash-exact. No new browser, full gate/dry, protected-input refresh, landing, lock, snapshot/baseline change or reseal.
+
+---
+
 # Combined R6 gate and FO-20 checkpoint, 2026-11-02
 
 Core source9d31647f83 includes fieldsbc4f41773d and found05fa23d4ed. R10 was independently closed at8558fa10e6; its240 declared cases match the240 actual cases. R6 remains pending independent closure at the combined head. The unchanged125-record source probe passes locally at37fcbc2455:0 owner handoffs,62 normalization/preservation checks,10 admitted controls and3 disabled old-picker footers. FO-20 leaves those source files unchanged.

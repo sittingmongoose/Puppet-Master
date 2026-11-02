@@ -23,7 +23,7 @@
     "companion_fix1_guard_artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/companions-r1-builder.log"
   },
   "branch": "t3/plans/pm7-plans-canon",
-  "recorded_at_utc": "2026-11-02T00:24:48.612754+00:00",
+  "recorded_at_utc": "2026-11-02T01:53:48.595486+00:00",
   "native_runtime_certification": false,
   "step4": "landing_companions_repaired_full_dry_exit1_zero_blockers",
   "counts": {
@@ -43,8 +43,8 @@
     "pm7_bindings": 485,
     "pm7_source_families": 63,
     "shard_sources": 99,
-    "coverage_rows": 218,
-    "coverage_required_cells": 1090,
+    "coverage_rows": 219,
+    "coverage_required_cells": 1095,
     "acceptance_units": 29367,
     "schema_cases": 161,
     "final_review_source_cases": 89,
@@ -190,7 +190,7 @@
     "historical": true,
     "applies_to_latest_amendment": false
   },
-  "review_status": "R1-R5/R7-R10 independently closed; correctedR6 bc4 common gate plusFO20 await independent closure at combined head. Local125-record source probe passes; final dry held.",
+  "review_status": "FO20/canon/companions independently closed atea559; R6 remains open at42c for cloud classification and alias masking. FO21 merged; no final dry release.",
   "artifacts": [
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/closed-dry-landing.exit",
@@ -5706,6 +5706,101 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/summarize-activation-final-dry.py",
       "sha256": "33cff1e03cced691c365656873747e579c3b25edec887e9a8b7e3d38f47dc31b",
       "bytes": 4067
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/42c-build-check.log",
+      "sha256": "d486bd9e1a1829b243774624d5658240edfc2523d9b114c3169d290088f08c12",
+      "bytes": 727
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/42c-merge-checkpoint.json",
+      "sha256": "d0c84983432c8fac7117a882c469d019e8acff021cbb5243eb7c8a8aaadc46d0",
+      "bytes": 619
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-found-report-at79b.md",
+      "sha256": "8321da6b15fcc176c106a4777f4aaf396f7b6175dee16eff363d48ed2c4acd5a",
+      "bytes": 62034
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-found-source-mail.txt",
+      "sha256": "22f074ba9d30571065ea7b89c9e697f00d1c6b9d2243a698296d25c8020c12bd",
+      "bytes": 2587
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-merge-build-check.log",
+      "sha256": "d486bd9e1a1829b243774624d5658240edfc2523d9b114c3169d290088f08c12",
+      "bytes": 727
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-merge-publish.log",
+      "sha256": "d2a0e354b47b9b1c94fdeaba76e79dfcd95022cdf85efa9150b410cfb1f8fd97",
+      "bytes": 695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-merge-source-binding.json",
+      "sha256": "d016bbb0613da4b7ff9a4381a84a34da765fd2034140b0df940062cde7277a21",
+      "bytes": 1691
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-cloud-alias-at42c-mail.txt",
+      "sha256": "f70a98f9f3704ffe6dcbfe54ddf57d501d510fe351be0d8d38e46ab161b850ac",
+      "bytes": 1447
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-variantless-at-ea559-mail.txt",
+      "sha256": "94480044ed4752e2bda2b319443c0a7ab0b8671799645f9f2e11758be3336ad8",
+      "bytes": 1139
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-variantless-expanded-at-ea559-mail.txt",
+      "sha256": "b87d2f475e74b8b6b82f3d9d26d97f774c5104f4f9a46e220bbd458e0c792468",
+      "bytes": 751
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v6.json",
+      "sha256": "941c5dfc7be81536ba01359a37b9fba52346c9467f8583be24845811ebb0bbef",
+      "bytes": 33725
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v6.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v6.stdout.txt",
+      "sha256": "c81b8170ad6cd25c5993270dafe196b438becfabf490148db32a167767fb47c8",
+      "bytes": 2873
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v7.py",
+      "sha256": "c01696871728c1b5fe9477eaaa095b38e6586babf15a3e1fd29f65943bf5d9cb",
+      "bytes": 14538
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/fields-R6-identity-class-mail.txt",
+      "sha256": "be3eea8d65eef2da26fe8c790de3544de2c5224640e47ab6779fc8048a01a1ff",
+      "bytes": 4217
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-audit-at-ea559-summary.json",
+      "sha256": "f55b65d7a3aa013f074b3d01b21ef5db2984984f18bff010f5576328281e90f6",
+      "bytes": 1440
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-audit-at-ea559.md",
+      "sha256": "b1ca5aae4e0c5cbc181a37556c569520a5b6eeed5f6cc1d484616aeb84aa31db",
+      "bytes": 11695
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/independent-final-at-ea559-mail.txt",
+      "sha256": "2174171c95840801454565477e3dcffa931cbf1710f9f790c8eb5693b8085763",
+      "bytes": 1670
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/record-FO21-checkpoint.py",
+      "sha256": "a6e6e7c7ac7a1b198d6d9b12494d854ac4bc50fef4ff43e01523e614f1cbb772",
+      "bytes": 13320
     }
   ],
   "reviews": [
@@ -8097,7 +8192,7 @@
       "sha256": "fcf99ee4aabd2c6cd9a2709ec699ac0c381dad76580763366a62d1890a9b487c"
     }
   ],
-  "canonical_source_commit": "9d31647f83a270b3434c2054a04e97a9f664f0bf",
+  "canonical_source_commit": "507d34b3b42346ff553561299642ed1af96299a0",
   "aggregate_results_apply_latest": false,
   "full_gates_run_for_QA2": true,
   "dry_landing_run_for_QA2": true,
@@ -8109,10 +8204,10 @@
     "source_hashes_match_commit": true
   },
   "artifact_integrity": {
-    "prior_count": 1060,
+    "prior_count": 1106,
     "all_prior_hashes_unchanged": true,
-    "current_count": 1106,
-    "claim": "Prior records retained verbatim;14 first-dry and13 GPU captures hash-checked before/after writing. Final dry remains gated."
+    "current_count": 1125,
+    "claim": "All prior records retained verbatim;14 original dry and13 GPU captures verified before and after report writing. No final dry started."
   },
   "historical_pre_DL259_commands": [
     {
@@ -8445,7 +8540,7 @@
       "artifact": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/onb-rulings-coverage-check.json"
     }
   ],
-  "source_commit_role": "source_commit is historical integration provenance. canonical_source_commit9d31647f83 is the checked core. The following combined report pin changes metadata only and is used for v6 and independent review.",
+  "source_commit_role": "source_commit is historical provenance. canonical_source_commit507d34b3b4 is the combined GUI core checked by build parity; the following report-only head is not independent R6 closure.",
   "srv_final": {
     "base_commit": "ad73d6fe6d97ad8513760be09db962127274ed71",
     "source_report": "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/srv/REPORT.md",
@@ -11795,9 +11890,9 @@
   },
   "DL273_additional_removals": {
     "prose_commit": "1d84dffe0b",
-    "phase": "combined_R6_common_gate_FO20_focused_pass_v6_review_pending",
-    "coverage_rows": 218,
-    "required_cells": 1090,
+    "phase": "FO21_merged_R6_cloud_alias_source_repair_pending",
+    "coverage_rows": 219,
+    "required_cells": 1095,
     "retired_units": [
       "ORI-001",
       "ORI-002",
@@ -11822,8 +11917,8 @@
     "source_packet_body_hashes_unchanged": true,
     "current_packet_amendments": 16,
     "first_focused_results": "Touch and packet custody pass; storage passes; new-contracts/rulings corrected after empty schema branches and Teacher-topic pin. Readiness92 vs88 grows only currentness source drift (67 vs63).",
-    "final_dry": "Held until independent R6 closure at the combined R6+FO20 head. Prepared activation-final directory has no run.",
-    "source_fields_final": "bc4f41773d",
+    "final_dry": "Held until explicit lead R6 closure; fresh directory prepared, not started.",
+    "source_fields_final": "42c8660736",
     "active_positive_cases": 1593,
     "active_negative_cases": 3926,
     "internal_self_tests": 13,
@@ -11839,16 +11934,15 @@
     "shard_sources": 99,
     "format_repair": "Standard profile headings and compliance note restored; index validate PASS; nine ORI units stay retired.",
     "obsolete_contract_reference": "cleaned by f226e60851 without changing the guard",
-    "source_commit": "9d31647f83a270b3434c2054a04e97a9f664f0bf",
+    "source_commit": "507d34b3b42346ff553561299642ed1af96299a0",
     "final_contracts_report": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/contracts-r4.json",
       "sha256": "73c49818d448d266cc94ed876c58157c41c228f1d85a5488398a9f9e4eac9da1",
       "exit_code": 0
     },
     "admission_proof": {
-      "state": "v6 follows the committed combined checkpoint",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v6.json",
-      "scope": "Static DTO/selector/profile admission consistency; separate independent R6 behavior closure required."
+      "state": "v7 prepared for final repaired combined pin; not run while R6 remains known open",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v7.json"
     },
     "last_positive_fixture_reference": "Hyphenated instance id in shared fan-out case rehomed to admitted Gitea at6195bc8658; partial-result, publication and identity guards unchanged.",
     "historical_admission_proof_at619": {
@@ -11970,7 +12064,7 @@
       "sha256": "e645ca26f1623683ad7f05e5763f8012bb72ca4122087feaeaf4f21e39db04d6"
     },
     "retired_extra_Windows_negative": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/retired-windows-negative.json",
-    "built_page_sha256": "eda904c158d1b30f63cd969272f41505ba9bc5036874d7c87de73f3f1bfad45d",
+    "built_page_sha256": "72009ef7ac82c5f60e677643cb4040a0da9f8e5266a3e4111de2d91a8161badc",
     "build_check_exit_code": 0,
     "mirror_proof": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/combined-mirror-proof.json",
@@ -12268,6 +12362,22 @@
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v5.json",
       "sha256": "17913c53f3d8344d06cc5f50f64ab5352786305c53123ea98c6e6cbe1dfd5da0",
       "scope": "Static DTO/selector/profile admission consistency; does not prove behavioral R6 closure."
+    },
+    "historical_admission_proof_at_ea559": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/admission-proof-v6.json",
+      "sha256": "941c5dfc7be81536ba01359a37b9fba52346c9467f8583be24845811ebb0bbef",
+      "checked_source_commit": "ea559eb9569084d8c5c1b72d51b52008620e8941",
+      "state": "pass",
+      "scope": "Static only; R6 remained open in independent source audit."
+    },
+    "R6_remaining_at42c": {
+      "findings": [
+        "cloud-tag classification escape",
+        "conflicting aliases hidden by truthy selection"
+      ],
+      "frozen_mail": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/R6-cloud-alias-at42c-mail.txt",
+      "sha256": "f70a98f9f3704ffe6dcbfe54ddf57d501d510fe351be0d8d38e46ab161b850ac",
+      "no_new_canon_rule_needed": true
     }
   },
   "historical_pre_DL273_additional_counts": {
@@ -12300,7 +12410,7 @@
   },
   "historical_pre_DL273_additional_review_status": "Independent Sol 6.1 max audit: zero open blockers, majors or minors at 7a133bfc8bc61aedc868ce09b646033148310aad",
   "historical_pre_DL273_additional_source_commit_role": "GUI/integration input7f3eecce64; exact repaired companion source and full dry snapshot at4dc5f29ff6f1f1031b1e37126ca47c09c8db8ba4. Final report-only head is mailed after push.",
-  "current_live_report_manifest_sha256": "b0189888c8f76697108c10fad9e4b37b532b7dbb9f50e28debc8450eb14539b5",
+  "current_live_report_manifest_sha256": "8c587997a8d12dffe98a820daf6a475a76e938a3baead904b5fd0af763ffe459",
   "FO20": {
     "source_core_commit": "9d31647f83a270b3434c2054a04e97a9f664f0bf",
     "fields": "bc4f41773d",
@@ -12352,5 +12462,41 @@
     "reason": "Published page already contains source correction; prose and test assertion do not alter the page build inputs. Build parity passes.",
     "distinct_active_contract_input_files_unchanged": 77,
     "schema_fixture_pairs": 40
+  },
+  "FO21": {
+    "source_core_commit": "507d34b3b42346ff553561299642ed1af96299a0",
+    "source_binding": {
+      "checked_core_commit": "507d34b3b42346ff553561299642ed1af96299a0",
+      "R6_source": "42c8660736",
+      "FO21_source": "79b84a717f",
+      "source_hashes": {
+        "Concepts/onboarding/opus-5.5/src/js/30-owners.js": "a4f4d13d5d78cbf77ee7fe61679d2304505529ba42fd724db63df03662757e5e",
+        "Concepts/onboarding/opus-5.5/src/js/35-draft.js": "e9dc342a27474bb01bc602f89932705716b7e6c9264e5716d6bf1b6f693d2b70",
+        "Concepts/onboarding/opus-5.5/src/js/71-screens-safe.js": "00fbe219ec8e1ec4b00fab63a5c274fb5c28f9ccaa984a9fec3936cee6b467e4",
+        "Concepts/liquid-glass/opus-5.5/src/glass.css": "125ae3a55ab0bc8f9cef62868e79ba2a5a0655d0ce6afaeb4102734c01ce0346",
+        "Concepts/onboarding/opus-5.5/src/settings/styles.d/45-setup.css": "457f546811911cbdd61ac2d53232941c36bf3b1333ca3838eb83a0daed98e4fe",
+        "Concepts/pm7-tools/browser-check/checks/setup-window.check.mjs": "5eaec865d862070fd03f7b67bbe41df7cf312975c61bf76664f5bd1312678641",
+        "Concepts/pm7-tools/browser-check/README.md": "09fbebdde10c9a7fc11c7604d7169ca29783811e080e074f53aa8e3f63e30c24"
+      },
+      "all_R6_and_FO21_sources_exact": true,
+      "page_sha256": "72009ef7ac82c5f60e677643cb4040a0da9f8e5266a3e4111de2d91a8161badc",
+      "build_check_exit_code": 0,
+      "build_log": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-merge-build-check.log",
+      "build_log_sha256": "d486bd9e1a1829b243774624d5658240edfc2523d9b114c3169d290088f08c12",
+      "generated_merge_conflict_only": "Concepts/PMConcept7.html; selected generated ours then rebuilt from both sources",
+      "Plans_bytes_changed_since_ea559": [],
+      "no_shard_or_index_generation_needed": true,
+      "R6_closed": false,
+      "final_dry_released": false
+    },
+    "source_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO21-found-report-at79b.md",
+      "sha256": "8321da6b15fcc176c106a4777f4aaf396f7b6175dee16eff363d48ed2c4acd5a"
+    },
+    "found_claim": "Painted-pixel all-step walk passes ten looks, minimum4.59:1 at79b84a717f. Not rerun by Plans.",
+    "new_Plan_prose_or_DTO_command_key": false,
+    "coverage_rows": 219,
+    "required_cells": 1095,
+    "old_setup_test_scope": "Initial screen/computed colours only; earlier42-check pass is not all-step painted contrast."
   }
 }

@@ -1,3 +1,19 @@
+# Plans lane — FO-21 merged; R6 still open, 2026-11-02
+
+**Core507d34b3b4 contains fields42c8660736 and found79b84a717f; combined page rebuilt and build parity PASS.** Coverage is219 product rows/1095 required cells. R6 remains independently open; final dry is held for the lead's explicit closure.
+
+| Area | Result |
+|---|---|
+| **FO-21 / owners** | Setup instructions use readable secondary ink and Glass Light primary fills use the existing full blue. F3-654/SSYS-042 already govern the result; DR-040 keeps it in shared theme presentation. No new command/key/binding/DTO or prose rule. |
+| **Merge / proof** | Only generated PMConcept7 conflicted; rebuilt from both sources. All3 R6 files match42c; all4 FO-21 style/test/docs files match79b. Build --check PASS. Found reports painted text walk passes ten looks, minimum4.59:1; no new Plans browser run. |
+| **R6** | The independent ea559 audit closes FO-20/canon/companions. New42c review confirms cloud-tag escape and masked conflicting aliases. Existing eight-unit any-source canon covers it; source repair/closure remains pending. |
+| **Counts / derived** |219/1095;1010 settings;485/63 bindings;715/140 Touch;1271 production;22 status keys. Plan bytes unchanged fromea559:7276 units/29367 acceptance units/96 docs and2977 shards/99 sources. No regeneration needed. |
+| **Custody / limits** | Earlier14 dry and13 GPU captures hash-exact. V7 prepared only; final dry not started. No protected governance, fixed input, snapshot/baseline, landing, lock or reseal change. |
+
+Page SHA-256 72009ef7ac82c5f60e677643cb4040a0da9f8e5266a3e4111de2d91a8161badc. [CHANGE-COVERAGE.md](CHANGE-COVERAGE.md) maps all five required columns. The earlier42-check setup result was first-screen/computed-colour evidence, not later-step painted contrast. T3 mail rings this thread; fields/lead have the current R6 findings.
+
+---
+
 # Plans lane — combined R6 gate and FO-20, 2026-11-02
 
 **Core source9d31647f83 includes fieldsbc4f41773d and found05fa23d4ed. Five focused checks and42 GPU setup-window checks PASS.** The final v6 static proof follows the committed combined checkpoint. Independent R6 closure at that head and the subsequent fresh final dry remain pending.
