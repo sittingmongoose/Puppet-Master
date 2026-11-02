@@ -64,7 +64,11 @@
          credentials, authorization refs and Review all go, and the person chooses the service, its address and the
          account again (forge_retired, a draft-only marker never exported, keeps the service unpicked until then). An
          address is never kept as if it were a server of its own. */
-      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || (d.forge_provider_variant && !KINDS[d.forge].includes(d.forge_provider_variant)))) retire(d);
+      /* (every kind the draft declares is read, its credential profile's too; identity carried with no kind at all is
+         unresolved, never defaulted onto a kind it was not given for) */
+      const prof = d.forge_instance_profile, declared = [d.forge_provider_variant, prof && prof.provider_variant].filter(Boolean);
+      const bearing = !!(d.forge_account_ref || d.repository_ref || prof || (d.source_access_authorization_refs || []).length);
+      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || (!d.forge_provider_variant && bearing) || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
       if (!(d.forge === 'none' && d.forge_retired)) {
         if (d.forge !== 'none') d.forge_retired = null; /* (a service chosen again) */
         if (d.forge === 'none') d.forge = 'github';
@@ -120,7 +124,26 @@
 
   /* the services and kinds offered (Jared 2026-11-01: Forgejo and Gitea on servers of their own only, DL-273) */
   const KINDS = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed'] };
-  const offered = (forge, variant) => !!KINDS[forge] && (!variant || KINDS[forge].includes(variant));
+  /* exact: a service and kind both offered; a missing kind is never read as fine (Sol R6) */
+  const offered = (forge, variant) => !!KINDS[forge] && !!variant && KINDS[forge].includes(variant);
+  /* (Sol R6, the identity class) The source-control identity anything acts for is the plan's own service and kind (the
+     effective selection), exactly offered. A claim (a sign-in, an owner target, a cache key) may only agree with it: each
+     part it states (service, kind, server) must match the plan, and a part it leaves out is taken from the plan, never
+     read as fine. An unresolved plan (no service or kind, retired, inconsistent) or a contradicting claim is refused. */
+  const keyParts = (key) => { const p = String(key == null ? '' : key).split('|'); return { forge: p[0] || null, variant: p[1] || null, server: p.slice(2).join('|') || null }; };
+  const serverOf = (url) => { try { const u = new URL(url); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return null; } };
+  function sourceIdentity(S, claim) {
+    const d = S && S.sess && S.sess.drafts && S.sess.drafts.main;
+    if (!d || d.forge_retired || !offered(d.forge, d.forge_provider_variant)) return { ok: false, reason: 'unresolved' };
+    const id = { ok: true, forge: d.forge, variant: d.forge_provider_variant, server: serverOf(d.forge_instance_url) };
+    if (!claim) return id;
+    if (claim.unresolved) return { ok: false, reason: 'unresolved' };
+    const k = keyParts(claim.instance_key), stated = [[claim.forge || claim.service, id.forge], [claim.keyForge, id.forge], [k.forge, id.forge], [claim.variant, id.variant], [k.variant, id.variant]];
+    if (stated.some(([got, want]) => got != null && got !== '' && got !== want)) return { ok: false, reason: 'inconsistent' };
+    const server = claim.server || k.server;
+    if (server && id.server && serverOf(server) !== id.server && server !== id.server) return { ok: false, reason: 'inconsistent' };
+    return id;
+  }
   function retire(d) {
     d.forge_retired = { forge: d.forge, variant: d.forge_provider_variant || null };
     Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null,
@@ -206,5 +229,5 @@
     }
   }
 
-  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility, offered, KINDS };
+  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility, offered, KINDS, sourceIdentity };
 })();

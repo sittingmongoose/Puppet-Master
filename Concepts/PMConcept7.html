@@ -170880,21 +170880,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      (forge_target) or when a source-control screen sends it for a forge sign-in (or, on the plan's own screens, for the
      plan's service). Every other auth profile (Cursor the AI provider, the backup drives) is never judged here. */
   const SOURCE_SCREENS = new Set(['online-service', 'online-signin', 'online-details', 'ex-repos']);
-  function forgeTarget(id, payload) {
+  /* the claim a command makes about its forge: null when it is not a source-control command for a forge; {} for the plan
+     itself; otherwise the claim (an owner target, or the sign-in that sent it) the resolver must find consistent */
+  function forgeClaim(id, payload) {
     const p = payload || {}, S = O55.S;
     if (p.forge_target) return p.forge_target;
-    if (!S || !S.sess) return null;
-    const d = S.sess.drafts && S.sess.drafts.main, plan = d ? { forge: d.forge, variant: d.forge_provider_variant || null } : null;
-    if (/^cmd\.forge\./.test(id)) return plan;
-    if (!/^cmd\.auth_profile\./.test(id) || !SOURCE_SCREENS.has(S.sess.screen)) return null;
+    if (/^cmd\.forge\./.test(id)) return {};
+    if (!/^cmd\.auth_profile\./.test(id) || !S || !S.sess || !SOURCE_SCREENS.has(S.sess.screen)) return null;
     const si = S.sess.signin || {};
-    if (si.kind === 'forge') { const [f, v] = String(si.instance_key || '').split('|'); return { forge: si.service, variant: v || null, keyForge: f }; }
-    return S.sess.screen === 'online-details' || S.sess.screen === 'ex-repos' ? plan : null;
+    if (si.kind === 'cloud') return null; /* (a cloud account's sign-in for a restore is not source control) */
+    if (si.service) return { service: si.service, instance_key: si.instance_key };
+    return {}; /* (no sign-in: the plan itself, never nothing) */
   }
   function forgeRefusal(id, payload) {
-    const t = forgeTarget(id, payload), offered = O55.draft && O55.draft.offered;
-    if (!t || !offered) return null;
-    return offered(t.forge, t.variant) && (!t.keyForge || t.keyForge === t.forge) ? null : 'service_not_offered';
+    const claim = forgeClaim(id, payload), resolve = O55.draft && O55.draft.sourceIdentity;
+    if (!claim) return null;
+    if (!resolve) return 'service_not_offered';
+    return resolve(O55.S, Object.keys(claim).length ? claim : null).ok ? null : 'service_not_offered';
   }
   function allowed(id, ctx, payload) {
     const row = TABLE[id]; if (!row) return { ok: false, reason: 'unknown_command' };
@@ -171602,7 +171604,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          credentials, authorization refs and Review all go, and the person chooses the service, its address and the
          account again (forge_retired, a draft-only marker never exported, keeps the service unpicked until then). An
          address is never kept as if it were a server of its own. */
-      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || (d.forge_provider_variant && !KINDS[d.forge].includes(d.forge_provider_variant)))) retire(d);
+      /* (every kind the draft declares is read, its credential profile's too; identity carried with no kind at all is
+         unresolved, never defaulted onto a kind it was not given for) */
+      const prof = d.forge_instance_profile, declared = [d.forge_provider_variant, prof && prof.provider_variant].filter(Boolean);
+      const bearing = !!(d.forge_account_ref || d.repository_ref || prof || (d.source_access_authorization_refs || []).length);
+      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || (!d.forge_provider_variant && bearing) || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
       if (!(d.forge === 'none' && d.forge_retired)) {
         if (d.forge !== 'none') d.forge_retired = null; /* (a service chosen again) */
         if (d.forge === 'none') d.forge = 'github';
@@ -171658,7 +171664,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* the services and kinds offered (Jared 2026-11-01: Forgejo and Gitea on servers of their own only, DL-273) */
   const KINDS = { github: ['hosted', 'self_managed'], gitlab: ['hosted', 'self_managed'], azure_devops: ['cloud', 'self_managed'], bitbucket_cloud: ['cloud'], bitbucket_data_center: ['data_center'], forgejo: ['forgejo_self_managed'], gitea: ['gitea_self_managed'] };
-  const offered = (forge, variant) => !!KINDS[forge] && (!variant || KINDS[forge].includes(variant));
+  /* exact: a service and kind both offered; a missing kind is never read as fine (Sol R6) */
+  const offered = (forge, variant) => !!KINDS[forge] && !!variant && KINDS[forge].includes(variant);
+  /* (Sol R6, the identity class) The source-control identity anything acts for is the plan's own service and kind (the
+     effective selection), exactly offered. A claim (a sign-in, an owner target, a cache key) may only agree with it: each
+     part it states (service, kind, server) must match the plan, and a part it leaves out is taken from the plan, never
+     read as fine. An unresolved plan (no service or kind, retired, inconsistent) or a contradicting claim is refused. */
+  const keyParts = (key) => { const p = String(key == null ? '' : key).split('|'); return { forge: p[0] || null, variant: p[1] || null, server: p.slice(2).join('|') || null }; };
+  const serverOf = (url) => { try { const u = new URL(url); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return null; } };
+  function sourceIdentity(S, claim) {
+    const d = S && S.sess && S.sess.drafts && S.sess.drafts.main;
+    if (!d || d.forge_retired || !offered(d.forge, d.forge_provider_variant)) return { ok: false, reason: 'unresolved' };
+    const id = { ok: true, forge: d.forge, variant: d.forge_provider_variant, server: serverOf(d.forge_instance_url) };
+    if (!claim) return id;
+    if (claim.unresolved) return { ok: false, reason: 'unresolved' };
+    const k = keyParts(claim.instance_key), stated = [[claim.forge || claim.service, id.forge], [claim.keyForge, id.forge], [k.forge, id.forge], [claim.variant, id.variant], [k.variant, id.variant]];
+    if (stated.some(([got, want]) => got != null && got !== '' && got !== want)) return { ok: false, reason: 'inconsistent' };
+    const server = claim.server || k.server;
+    if (server && id.server && serverOf(server) !== id.server && server !== id.server) return { ok: false, reason: 'inconsistent' };
+    return id;
+  }
   function retire(d) {
     d.forge_retired = { forge: d.forge, variant: d.forge_provider_variant || null };
     Object.assign(d, { forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_action: null,
@@ -171744,7 +171769,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
   }
 
-  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility, offered, KINDS };
+  O55.draft = { FIELDS, create, set, normalize, exportPlan, missing, allowedVisibility, offered, KINDS, sourceIdentity };
 })();
 
 /* ---- js/36-endpoint.js ---- */
@@ -181608,7 +181633,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   O55.official = {
     handlers: {},
     /* (R6: no sign-in starts for a service or kind not offered, whatever the session says) */
-    signIn(S, o) { if (o.kind === 'forge' && !O55.draft.offered(o.service, md(S).forge_provider_variant)) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
+    signIn(S, o) { if ((o.kind || 'cloud') !== 'cloud' && !O55.draft.sourceIdentity(S, { service: o.service }).ok) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
     accountFor,
     /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
        only when the concept knows the real one. */
@@ -181649,9 +181674,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   const SI = (S) => S.sess.signin || {};
   /* the forge a sign-in is for, as the owner's gate reads it (30-owners.js forgeTarget); nothing for a cloud account */
-  const targetOf = (si) => { if (!si || si.kind !== 'forge') return null; const [f, v] = String(si.instance_key || '').split('|'); return { forge: si.service, variant: v || null, keyForge: f }; };
+  const isSource = (si) => !!(si && si.service && si.kind !== 'cloud');
+  const targetOf = (si) => { if (!isSource(si)) return null; const id = O55.draft.sourceIdentity(O55.S, { service: si.service, instance_key: si.instance_key }); return id.ok ? { forge: id.forge, variant: id.variant } : { forge: si.service, variant: null, unresolved: true }; };
   /* the sign-in in the session is for a service and kind still offered (a forge one), or for a cloud account */
-  const siOffered = (S) => { const si = SI(S); if (si.kind !== 'forge') return true; const [f, v] = String(si.instance_key || si.service || '').split('|'); return O55.draft.offered(si.service, v || null) && f === si.service; };
+  /* the sign-in screen acts for its sign-in when there is one, else for the plan itself; only a cloud account's sign-in
+     (restore) is not source control. Nothing missing is ever read as fine */
+  const siOffered = (S) => { const si = SI(S); if (si.kind === 'cloud') return true; return O55.draft.sourceIdentity(S, isSource(si) ? { service: si.service, instance_key: si.instance_key } : null).ok; };
   /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */
   function signinUrl(S, si) { return si.kind === 'forge' ? O55.official.forgeUrl(S, si.service) : (O55.fixtures.OFFICIAL.backup[si.service] || null); }
   function deviceFor(S, si) {
@@ -182411,7 +182439,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function sourceOkFor(scr, S) {
     if (!S || !S.sess || !SOURCE_SCREENS.includes(scr) || scr === 'online-service') return true;
     if (scr === 'online-signin') return siOffered(S);
-    const d = md(S); return O55.draft.offered(d.forge, d.forge_provider_variant);
+    return O55.draft.sourceIdentity(S).ok;
   }
   const sourceOk = (S) => sourceOkFor(S && S.sess && S.sess.screen, S);
   const goOn = O55.ui.go;

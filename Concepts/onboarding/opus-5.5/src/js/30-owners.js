@@ -94,21 +94,23 @@
      (forge_target) or when a source-control screen sends it for a forge sign-in (or, on the plan's own screens, for the
      plan's service). Every other auth profile (Cursor the AI provider, the backup drives) is never judged here. */
   const SOURCE_SCREENS = new Set(['online-service', 'online-signin', 'online-details', 'ex-repos']);
-  function forgeTarget(id, payload) {
+  /* the claim a command makes about its forge: null when it is not a source-control command for a forge; {} for the plan
+     itself; otherwise the claim (an owner target, or the sign-in that sent it) the resolver must find consistent */
+  function forgeClaim(id, payload) {
     const p = payload || {}, S = O55.S;
     if (p.forge_target) return p.forge_target;
-    if (!S || !S.sess) return null;
-    const d = S.sess.drafts && S.sess.drafts.main, plan = d ? { forge: d.forge, variant: d.forge_provider_variant || null } : null;
-    if (/^cmd\.forge\./.test(id)) return plan;
-    if (!/^cmd\.auth_profile\./.test(id) || !SOURCE_SCREENS.has(S.sess.screen)) return null;
+    if (/^cmd\.forge\./.test(id)) return {};
+    if (!/^cmd\.auth_profile\./.test(id) || !S || !S.sess || !SOURCE_SCREENS.has(S.sess.screen)) return null;
     const si = S.sess.signin || {};
-    if (si.kind === 'forge') { const [f, v] = String(si.instance_key || '').split('|'); return { forge: si.service, variant: v || null, keyForge: f }; }
-    return S.sess.screen === 'online-details' || S.sess.screen === 'ex-repos' ? plan : null;
+    if (si.kind === 'cloud') return null; /* (a cloud account's sign-in for a restore is not source control) */
+    if (si.service) return { service: si.service, instance_key: si.instance_key };
+    return {}; /* (no sign-in: the plan itself, never nothing) */
   }
   function forgeRefusal(id, payload) {
-    const t = forgeTarget(id, payload), offered = O55.draft && O55.draft.offered;
-    if (!t || !offered) return null;
-    return offered(t.forge, t.variant) && (!t.keyForge || t.keyForge === t.forge) ? null : 'service_not_offered';
+    const claim = forgeClaim(id, payload), resolve = O55.draft && O55.draft.sourceIdentity;
+    if (!claim) return null;
+    if (!resolve) return 'service_not_offered';
+    return resolve(O55.S, Object.keys(claim).length ? claim : null).ok ? null : 'service_not_offered';
   }
   function allowed(id, ctx, payload) {
     const row = TABLE[id]; if (!row) return { ok: false, reason: 'unknown_command' };

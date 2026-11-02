@@ -48,7 +48,7 @@
   O55.official = {
     handlers: {},
     /* (R6: no sign-in starts for a service or kind not offered, whatever the session says) */
-    signIn(S, o) { if (o.kind === 'forge' && !O55.draft.offered(o.service, md(S).forge_provider_variant)) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
+    signIn(S, o) { if ((o.kind || 'cloud') !== 'cloud' && !O55.draft.sourceIdentity(S, { service: o.service }).ok) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
     accountFor,
     /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
        only when the concept knows the real one. */
@@ -89,9 +89,12 @@
 
   const SI = (S) => S.sess.signin || {};
   /* the forge a sign-in is for, as the owner's gate reads it (30-owners.js forgeTarget); nothing for a cloud account */
-  const targetOf = (si) => { if (!si || si.kind !== 'forge') return null; const [f, v] = String(si.instance_key || '').split('|'); return { forge: si.service, variant: v || null, keyForge: f }; };
+  const isSource = (si) => !!(si && si.service && si.kind !== 'cloud');
+  const targetOf = (si) => { if (!isSource(si)) return null; const id = O55.draft.sourceIdentity(O55.S, { service: si.service, instance_key: si.instance_key }); return id.ok ? { forge: id.forge, variant: id.variant } : { forge: si.service, variant: null, unresolved: true }; };
   /* the sign-in in the session is for a service and kind still offered (a forge one), or for a cloud account */
-  const siOffered = (S) => { const si = SI(S); if (si.kind !== 'forge') return true; const [f, v] = String(si.instance_key || si.service || '').split('|'); return O55.draft.offered(si.service, v || null) && f === si.service; };
+  /* the sign-in screen acts for its sign-in when there is one, else for the plan itself; only a cloud account's sign-in
+     (restore) is not source control. Nothing missing is ever read as fine */
+  const siOffered = (S) => { const si = SI(S); if (si.kind === 'cloud') return true; return O55.draft.sourceIdentity(S, isSource(si) ? { service: si.service, instance_key: si.instance_key } : null).ok; };
   /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */
   function signinUrl(S, si) { return si.kind === 'forge' ? O55.official.forgeUrl(S, si.service) : (O55.fixtures.OFFICIAL.backup[si.service] || null); }
   function deviceFor(S, si) {
@@ -851,7 +854,7 @@
   function sourceOkFor(scr, S) {
     if (!S || !S.sess || !SOURCE_SCREENS.includes(scr) || scr === 'online-service') return true;
     if (scr === 'online-signin') return siOffered(S);
-    const d = md(S); return O55.draft.offered(d.forge, d.forge_provider_variant);
+    return O55.draft.sourceIdentity(S).ok;
   }
   const sourceOk = (S) => sourceOkFor(S && S.sess && S.sess.screen, S);
   const goOn = O55.ui.go;
