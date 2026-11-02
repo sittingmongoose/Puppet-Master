@@ -132,16 +132,21 @@
      read as fine. An unresolved plan (no service or kind, retired, inconsistent) or a contradicting claim is refused. */
   const keyParts = (key) => { const p = String(key == null ? '' : key).split('|'); return { forge: p[0] || null, variant: p[1] || null, server: p.slice(2).join('|') || null }; };
   const serverOf = (url) => { try { const u = new URL(url); return u.protocol + '//' + u.host.toLowerCase() + u.pathname.replace(/\/+$/, ''); } catch (_) { return null; } };
+  /* every part a claim declares, each on its own (no alias stands in for another: Sol R6) */
+  const said = (v) => v != null && v !== '';
+  const norm = (u) => serverOf(u) || String(u);
+  function declared(claim) {
+    const k = keyParts(claim.instance_key);
+    return { forges: [claim.forge, claim.service, claim.keyForge, k.forge].filter(said), variants: [claim.variant, k.variant].filter(said), servers: [claim.server, k.server].filter(said).map(norm) };
+  }
   function sourceIdentity(S, claim) {
+    if (claim && claim.unresolved) return { ok: false, reason: 'unresolved' };
     const d = S && S.sess && S.sess.drafts && S.sess.drafts.main;
     if (!d || d.forge_retired || !offered(d.forge, d.forge_provider_variant)) return { ok: false, reason: 'unresolved' };
     const id = { ok: true, forge: d.forge, variant: d.forge_provider_variant, server: serverOf(d.forge_instance_url) };
     if (!claim) return id;
-    if (claim.unresolved) return { ok: false, reason: 'unresolved' };
-    const k = keyParts(claim.instance_key), stated = [[claim.forge || claim.service, id.forge], [claim.keyForge, id.forge], [k.forge, id.forge], [claim.variant, id.variant], [k.variant, id.variant]];
-    if (stated.some(([got, want]) => got != null && got !== '' && got !== want)) return { ok: false, reason: 'inconsistent' };
-    const server = claim.server || k.server;
-    if (server && id.server && serverOf(server) !== id.server && server !== id.server) return { ok: false, reason: 'inconsistent' };
+    const c = declared(claim);
+    if (c.forges.some((x) => x !== id.forge) || c.variants.some((x) => x !== id.variant) || c.servers.some((x) => x !== c.servers[0] || (id.server && x !== id.server))) return { ok: false, reason: 'inconsistent' };
     return id;
   }
   function retire(d) {

@@ -101,9 +101,10 @@
     if (p.forge_target) return p.forge_target;
     if (/^cmd\.forge\./.test(id)) return {};
     if (!/^cmd\.auth_profile\./.test(id) || !S || !S.sess || !SOURCE_SCREENS.has(S.sess.screen)) return null;
-    const si = S.sess.signin || {};
-    if (si.kind === 'cloud') return null; /* (a cloud account's sign-in for a restore is not source control) */
-    if (si.service) return { service: si.service, instance_key: si.instance_key };
+    const si = S.sess.signin || {}, drives = (O55.fixtures && O55.fixtures.OFFICIAL && O55.fixtures.OFFICIAL.backup) || {};
+    /* (only a real cloud drive's sign-in for a restore is outside source control, never a kind tag on its own) */
+    if (si.kind === 'cloud' && Object.prototype.hasOwnProperty.call(drives, si.service)) return null;
+    if (si.service) return { service: si.service, forge: si.forge, keyForge: si.keyForge, variant: si.variant, server: si.server, instance_key: si.instance_key };
     return {}; /* (no sign-in: the plan itself, never nothing) */
   }
   function forgeRefusal(id, payload) {

@@ -48,7 +48,8 @@
   O55.official = {
     handlers: {},
     /* (R6: no sign-in starts for a service or kind not offered, whatever the session says) */
-    signIn(S, o) { if ((o.kind || 'cloud') !== 'cloud' && !O55.draft.sourceIdentity(S, { service: o.service }).ok) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
+    /* (only an explicit cloud kind on a real drive is outside source control: no kind defaults to it) */
+    signIn(S, o) { if (!isCloudDrive({ kind: o.kind, service: o.service }) && !O55.draft.sourceIdentity(S, { service: o.service }).ok) return false; S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || null, then: o.then, done: o.done || null, state: 'idle', instance_key: o.kind === 'forge' ? instanceKey(md(S)) : o.service }; S.save(); O55.ui.go('online-signin'); },
     accountFor,
     /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
        only when the concept knows the real one. */
@@ -88,13 +89,21 @@
   O55.official.handlers.restoreCloud = (S, login) => { if (S.sess.restore) { S.sess.restore.reachedFor = 'cloud:' + ((S.sess.signin || {}).service || ''); S.sess.restore.account = login || null; } };
 
   const SI = (S) => S.sess.signin || {};
+  /* the identity a sign-in completes for, resolved as every check resolves it (a part it left out, such as a key a
+     sign-in saved before keys existed, is the plan's): a cloud drive by its own name, nothing for one not offered */
+  const resolvedKey = (S, si) => { if (isCloudDrive(si)) return 'drive:' + si.service; const id = O55.draft.sourceIdentity(S, claimOf(si)); return id.ok ? id.forge + '|' + id.variant + '|' + (id.server || '') : null; };
   /* the forge a sign-in is for, as the owner's gate reads it (30-owners.js forgeTarget); nothing for a cloud account */
-  const isSource = (si) => !!(si && si.service && si.kind !== 'cloud');
-  const targetOf = (si) => { if (!isSource(si)) return null; const id = O55.draft.sourceIdentity(O55.S, { service: si.service, instance_key: si.instance_key }); return id.ok ? { forge: id.forge, variant: id.variant } : { forge: si.service, variant: null, unresolved: true }; };
+  /* only a real cloud drive's sign-in (restore: OFFICIAL.backup) is outside source control; any other service, whatever
+     its kind tag, is a source-control identity */
+  const isCloudDrive = (si) => !!si && si.kind === 'cloud' && Object.prototype.hasOwnProperty.call(O55.fixtures.OFFICIAL.backup || {}, si.service);
+  const isSource = (si) => !!(si && si.service && !isCloudDrive(si));
+  /* a sign-in's claim: every part it declares */
+  const claimOf = (si) => ({ service: si.service, forge: si.forge, keyForge: si.keyForge, variant: si.variant, server: si.server, instance_key: si.instance_key });
+  const targetOf = (si) => { if (!isSource(si)) return null; const id = O55.draft.sourceIdentity(O55.S, claimOf(si)); return id.ok ? { forge: id.forge, variant: id.variant } : { forge: si.service, variant: null, unresolved: true }; };
   /* the sign-in in the session is for a service and kind still offered (a forge one), or for a cloud account */
   /* the sign-in screen acts for its sign-in when there is one, else for the plan itself; only a cloud account's sign-in
      (restore) is not source control. Nothing missing is ever read as fine */
-  const siOffered = (S) => { const si = SI(S); if (si.kind === 'cloud') return true; return O55.draft.sourceIdentity(S, isSource(si) ? { service: si.service, instance_key: si.instance_key } : null).ok; };
+  const siOffered = (S) => { const si = SI(S); if (isCloudDrive(si)) return true; return O55.draft.sourceIdentity(S, isSource(si) ? claimOf(si) : null).ok; };
   /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */
   function signinUrl(S, si) { return si.kind === 'forge' ? O55.official.forgeUrl(S, si.service) : (O55.fixtures.OFFICIAL.backup[si.service] || null); }
   function deviceFor(S, si) {
@@ -119,7 +128,8 @@
   function completeSignIn(S, login, action, quiet, method) {
     const si = SI(S);
     if (!siOffered(S)) return false;
-    if (!login || (si.kind === 'forge' && si.instance_key !== instanceKey(md(S)))) return false;
+    if (!login || !resolvedKey(S, si)) return false;
+    if (isSource(si) && !si.instance_key) si.instance_key = instanceKey(md(S)); /* (the plan's, for a sign-in saved without one) */
     si.state = 'done'; si.account = login;
     if (si.kind === 'forge') {
       S.sess.forgeAccounts[si.instance_key] = login;
@@ -135,10 +145,10 @@
   /* The person finishes in their browser; the fixture completes after a while. A newer attempt (device code, a new
      code) supersedes an older wait, so a stale wait never completes the sign-in. */
   function waitForBrowser(S, ms) {
-    const si = SI(S), attempt = si.attempt || 0, identity = si.instance_key, key = 'signin:' + U.slug(identity) + ':' + attempt;
+    const si = SI(S), attempt = si.attempt || 0, identity = resolvedKey(S, si), key = 'signin:' + U.slug(identity || si.service) + ':' + attempt;
     /* (a sign-in that does not finish leaves the screen saying so, with Sign in again: online.signin.fail) */
     const fails = O55.fixtures.signinFails(S.env, si.service);
-    const same = (cur) => cur.service === si.service && cur.instance_key === identity && (si.kind !== 'forge' || instanceKey(md(S)) === identity) && (cur.attempt || 0) === attempt;
+    const same = (cur) => cur.service === si.service && !!identity && resolvedKey(S, cur) === identity && (cur.attempt || 0) === attempt;
     F.op(S, key, 'cmd.auth_profile.sign_in', [{ key: 'browser', ms: fails ? 2000 : ms || 2700, fail: () => (fails ? 'signin_incomplete' : null) }], { payload: { forge_target: targetOf(si) }, quiet: true, sound: { done: false, fail: 'warn' }, onDone: () => {
       const cur = SI(S);
       if (same(cur) && ['waiting', 'code'].includes(cur.state)) { cur.recovered = !!cur.failed; cur.failed = false; completeSignIn(S, si.kind === 'forge' ? world(S).login || 'jared-p' : 'jared@example.com', 'sign_in_during_setup', false, 'oauth'); }
@@ -246,7 +256,7 @@
         if (!siOffered(S)) return;
         const si = SI(S), i = S.root.querySelector('#o55f-token'), v = i ? i.value.trim() : ''; if (i) i.value = '';
         si.tokenTyped = false; si.attempt = (si.attempt || 0) + 1; F.reset(S, 'token:' + si.service);
-        const mine = { service: si.service, instance_key: si.instance_key, attempt: si.attempt };
+        const mine = { service: si.service, identity: resolvedKey(S, si), attempt: si.attempt };
         F.op(S, 'token:' + si.service, 'cmd.auth_profile.sign_in', [{ key: 'verify', ms: 800, fail: () => (v.length >= 8 ? null : 'token_rejected') }], { payload: { forge_target: targetOf(si) },
           sound: { done: false, fail: 'warn' }, /* a refused token is a soft warning under its field; done sounds in completeSignIn */
           /* A late check belongs to the sign-in it was typed for (pm7-srv's sweep): after Back and another service's
@@ -254,7 +264,7 @@
              says pat_ref (normalize) with the credential's reference. */
           onDone: () => {
             const cur = SI(S);
-            if (cur.service !== mine.service || cur.instance_key !== mine.instance_key || (cur.attempt || 0) !== mine.attempt || instanceKey(md(S)) !== mine.instance_key || cur.state === 'done') return;
+            if (cur.service !== mine.service || !mine.identity || resolvedKey(S, cur) !== mine.identity || (cur.attempt || 0) !== mine.attempt || cur.state === 'done') return;
             completeSignIn(S, world(S).login || 'jared', 'sign_in_during_setup', false, 'token');
           }
         });
@@ -283,7 +293,7 @@
     /* the session's own state is checked whatever the draft holds (a card picked and closed before Continue) */
     const offeredKey = (key) => { const [f, v] = String(key || '').split('|'); return O55.draft.offered(f, v || null); };
     let touched = cleanOnline(S);
-    if (S.sess.signin && S.sess.signin.kind === 'forge' && !siOffered(S)) { S.sess.signin = {}; touched = true; }
+    if (isSource(S.sess.signin) && !siOffered(S)) { S.sess.signin = {}; touched = true; }
     ['forgeAccounts', 'refusedNames'].forEach((m) => Object.keys(S.sess[m] || {}).forEach((key) => { if (!offeredKey(key)) { delete S.sess[m][key]; touched = true; } }));
     if (touched && S.sess.screen === 'online-signin' && !(S.sess.signin && S.sess.signin.service)) S.sess.screen = 'online-service';
     if (touched) S.save();
