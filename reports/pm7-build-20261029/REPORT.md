@@ -1,3 +1,23 @@
+# Plans lane — FO-22 canon reviewed; source repair open, 2026-11-02
+
+**Canon core 0801112071 on fields bf05a56258 passes independent review with zero new canon findings. Seven static/build checks pass; FO22-A1 remains the only source major.** Page SHA-256 is de5e5e8ea72750b922aff6795d0ec563d5aa9c1526c4dba9929d0b0d09d60f9c, unchanged from the supplied source. Fresh admission proof and dry are held for the lead’s FO-22-closed signal; the earlier results below apply only to 4b07/f8db. Independent review 1102113811-6514 reports 0 blockers, 1 source major and 0 minors; R6 remains closed.
+
+| Proposed product rule | Existing canon / missing part | Amendment |
+|---|---|---|
+| Back follows current answers | Reversible Back and preservation of still-valid data existed; abandoned steps and source restoration were not explicit. | PWIZ-021 excludes abandoned paths and silent forward restoration, including repeated unchanged visits before replacement. |
+| Fresh Review after a discarded attempt | Recovery and fresh-attempt fences existed; the Back destination was unspecified. | PWIZ-021 returns to the valid step before the permitted discarded attempt, never empty Creating or implicit retry. Project/Forge remote-effect and recovery gates remain. |
+| Retired-service resume | PWIZ-024 already invalidated retired identity and authority; safe visible entry and the first Back were not explicit. | PWIZ-024 opens service choice for an invalidated source step, skips inapplicable steps on Back, and makes the first Back leave the chooser. Missing choice uses human language. |
+
+F3-520, UCC-106, UIW-015 and WM-041 consume those two owners. Six existing units change only canonical_text/acceptance_criteria, with seven ACs added. The dated index line and only the six edited shard groups are regenerated. Coverage adds three real-product rows: 222/1110. DR-005 already requires one owning contract; no new DRY rule is needed. No settings, public DTO, action, command, binding, event, handler or production row is introduced; all40 active contract pairs/77 distinct inputs and census companions stay byte-identical.
+
+Focused results at clean 0801112071: canon, onboarding rulings, Touch, wiring, shards, index and build parity PASS. The additional onboarding suite passes 41/42; its unchanged main storage-census assertion expects 295 families while main/current both contain 301 with identical family-id order and 27 unchanged retention policies. This inherited test pin is left untouched and separately attributed. Index PASS is bound to 3560 matching full-checkout inputs and currentness receipt 4745247092bae7ecb84843f80c461d45b709856de3142a87b8ffbe151d46e8f3; 87 inherited lifecycle-certification failures remain. This is index consistency, not native certification.
+
+Independent source finding remains open at bf05: repeated unchanged Begin edits followed by New can leave an abandoned folder step on Back; Continue there restores the old source path. Five Back presses visit six screens. The new rule covers this route; source repair belongs to fields. Fields’ own nine-row/regression captures are retained as source-scoped evidence, not promoted to independent closure. The three exact rule sentences and per-column mappings are in CHANGE-COVERAGE and the retained prose-adjudication record.
+
+Counts: 1010 settings; 485 bindings/63 families; 715 Touch/140 profiles; 1271 production; 22 status keys. 7276 units/29374 acceptance units/96 docs; 2977 shards/99 sources. 715 native Touch residuals remain. Evidence: service-removals-20261101/FO22-20261102. The fields manifest has 61 lines: one header and 60 verified files; 58 non-page files retained and the two pages remain pinned in Git. All 63 earlier original captures are hash-exact. No browser/server, landing, lock, reseal, protected-input, snapshot or baseline change.
+
+---
+
 # Plans lane — final verification complete, 2026-11-02
 
 **Final admission proof PASS; fresh dry landing exit 1, 0 blockers, 0 infrastructure findings.** Both bind clean commit 4b07fa9d1a07e9ef7533fceffbd177d820faa8c5; this final checkpoint changes report metadata only. Product source and the page remain byte-identical to the independently audited 78c1629c57.

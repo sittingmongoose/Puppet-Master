@@ -2819,7 +2819,7 @@
       "settings": "none needed: mandatory navigation validity, not a preference or inventory row",
       "dry": "DR-005; one owning current-answer path in PWIZ-021, consumed by rendering and navigation",
       "companions": "Existing typed request/result, continuation and branch contracts stay. The new shared-kit back-after-change check exercises observable routes; independent source audit found the repeated-edit folder witness still open at bf05a56258. No private history DTO is introduced.",
-      "state": "pending_FO22_independent_source_and_canon_closure"
+      "state": "canon_independently_passed_at0801112071_source_FO22_A1_open"
     },
     {
       "id": "FO-22-REVIEW-RETURN",
@@ -2830,7 +2830,7 @@
       "settings": "none needed: recovery return behavior is owned by the session, with no user setting",
       "dry": "DR-005; PWIZ-021 owns navigation while Project/Forge own discard, commit and recovery eligibility",
       "companions": "No envelope, command registration, receipt or production row changes. Existing phase/recovery fixtures remain regression inputs; fields row4 covers real recovery navigation, not a new product fixture API.",
-      "state": "pending_FO22_independent_source_and_canon_closure"
+      "state": "canon_independently_passed_at0801112071_source_FO22_A1_open"
     },
     {
       "id": "FO-22-RETIRED-RESUME",
@@ -2841,7 +2841,7 @@
       "settings": "none needed: current service admission and navigation are mandatory, not a new preference or key",
       "dry": "DR-005; one Forge admission and PWIZ-024 invalidation/entry rule, consuming PWIZ-021 current-path navigation",
       "companions": "Existing narrowed provider enums and retirement-refusal fixtures stay. Fields rowsB/9 test resumed service choice and first Back; actual source/independent review is required, with no concept screen id or cache migration field added to product schemas.",
-      "state": "pending_FO22_independent_source_and_canon_closure",
+      "state": "canon_independently_passed_at0801112071_source_FO22_A1_open",
       "decision_ref": "DL-273"
     }
   ],
@@ -2919,7 +2919,7 @@
   ],
   "unit_id_check": "pass",
   "pending_sources": [
-    "FO-22 independent source/canon audit and correction of the repeated-unchanged-edit folder witness at bf05a56258; final proof/dry held for lead FO-22-closed signal."
+    "FO22-A1 source repair and independent source closure; fresh admission proof/dry remain held for the lead FO-22-closed signal."
   ],
   "exclusions": [
     "QA2-Q18",
@@ -3585,6 +3585,62 @@
       "sha256": "2ec145297986179c282e2b2a3650852611135a8ad70561e4680ff46c7778d5ab"
     },
     "proof_and_dry": "held; prior completed results apply only to4b07/f8db",
-    "no_new_commands_settings_or_contract_fields": true
+    "no_new_commands_settings_or_contract_fields": true,
+    "canon_core": "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+    "owner_units": [
+      "PWIZ-021",
+      "PWIZ-024",
+      "F3-520",
+      "UCC-106",
+      "UIW-015",
+      "WM-041"
+    ],
+    "new_acceptance_criteria": 7,
+    "coverage_rows": 222,
+    "required_cells": 1110,
+    "focused_static_build_passed": [
+      "canon",
+      "rulings",
+      "touch",
+      "wiring",
+      "shards",
+      "index",
+      "build"
+    ],
+    "inherited_onboarding_test_failure": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/inherited-test-attribution.json",
+      "sha256": "262b8c0d69708f555aa0d58965ab3aca12946f3c5349d26095d16fab54883e8b"
+    },
+    "focused_result": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/focused-result.json",
+      "sha256": "78743ed314bc72c73fcb2fb57299b5ca034c51a78feadc89343daa0d868f9248"
+    },
+    "full_context_readiness_binding": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/readiness-input-binding.json",
+      "sha256": "a222fa87b8c350625fc17b78135d6b234120eb73857d8e2a376c2e6ad6683a18"
+    },
+    "core_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/focused-core-manifest.json",
+      "sha256": "1e8c6056a0cf9e8bb684633b70f3ae744ac97c2df8017d455a59a57f3629426b"
+    },
+    "v_and_dry": "held for lead FO-22-closed signal",
+    "independent_canon_review": {
+      "core_commit": "08011120711dd093ea3d5d3f8fcf8e4607bae025",
+      "message_id": "1102113811-6514",
+      "canon_status": "pass",
+      "new_canon_findings": 0,
+      "scoped_counts": {
+        "blocker": 0,
+        "major": 1,
+        "minor": 0
+      },
+      "only_open_item": "FO22-A1 reachable repeated unchanged Begin edit; abandoned folder restored into New",
+      "R6": "closed",
+      "FO22": "open",
+      "proof_and_dry": "held",
+      "mail_copy": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-build-20261029/plans/service-removals-20261101/FO22-20261102/independent-canon-review-mail.txt",
+      "mail_copy_sha256": "6b7dce3857b9d3c2bfdb5029da34ef7fb71270e73b3cd50f82a4cfafb332bc7f",
+      "formal_report": "Auditor will finalize after checking the report-only descendant; conclusion explicitly released for use."
+    }
   }
 }
