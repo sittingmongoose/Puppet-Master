@@ -30,8 +30,10 @@ export function onboardingApp(t) {
   async function type(t, id, value) { await settled(); const l = f.locator('#' + id); await l.click(); await l.fill(''); await l.pressSequentially(value, { delay: 15 }); await sleep(150); return snap(); }
   const helpers = {
       // fresh wizard in Basic Light, at "Where should Puppet Master do the work?"
-      async boot(t, { look = ['basic', 'light'], scenario = '' } = {}) {
-        f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (scenario ? '&o55scenario=' + encodeURIComponent(scenario) : ''), sandbox, settleMs: 1500 });
+      /* (a fresh test world each time: without a scenario the page would restore the last one stored, a fault scenario of
+         an earlier case included: Astra AST-5) */
+      async boot(t, { look = ['basic', 'light'], scenario = 'fresh' } = {}) {
+        f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=' + encodeURIComponent(scenario || 'fresh'), sandbox, settleMs: 1500 });
         await screen('welcome', 40000);
         const env = await f.evaluate(() => ({ origin: String(self.origin), storage: (() => { try { return 'ok:' + localStorage.length; } catch (e) { return e.name; } })() }));
         await t.check(sandbox ? 'opaque origin, no storage' : 'normal page (file://) with storage', sandbox ? env.origin === 'null' && env.storage === 'SecurityError' : /^ok/.test(env.storage), JSON.stringify(env));

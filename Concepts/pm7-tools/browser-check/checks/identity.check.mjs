@@ -170,6 +170,19 @@ export const tests = {
     }
     await t.check('all ten admitted kinds keep their choice, address, account and refused names; the stale sign-in clears; the retired entries go', !fails.length, JSON.stringify(fails));
   },
+  async 'normalize: a saved plan naming Gitea or Forgejo with no kind (an address, no refs) or an empty service resumes unpicked, nothing relabelled or kept (Muse MU-2, MU-m1)'(t) {
+    const CASES = [['gitea', 'https://gitea.example.test', 'new'], ['forgejo', 'https://forgejo.example.test', 'new'], ['gitea', 'https://gitea.example.test', 'existing'], ['', '', 'new']];
+    for (const [forge, url, mode] of CASES) {
+      const A = onboardingApp(t); await A.boot(); await A.toSafe('Notes'); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900);
+      await A.frame().evaluate(([forge, url, mode]) => { const saved = O55.store.get('onboarding', null); saved.started = 'mu2-' + Date.now(); saved.status = 'closed'; saved.screen = 'safe';
+        Object.assign(saved.drafts.main, { online_mode: mode, forge, forge_provider_variant: null, forge_instance_url: url, forge_instance_profile: null, forge_account_ref: '', repository_ref: '', source_access_authorization_refs: [], forge_retired: null },
+          mode === 'existing' ? { project_mode: 'existing_online' } : {});
+        O55.store.set('onboarding', saved); if (O55.boot && O55.boot.chip) O55.boot.chip(); }, [forge, url, mode]);
+      await A.frame().locator('#o55-resume [data-o55-chip="resume"]').click(); await A.sleep(1500);
+      const d = await A.frame().evaluate(() => { const d = O55.S.sess.drafts.main; return { forge: d.forge, v: d.forge_provider_variant, url: d.forge_instance_url, prof: !!d.forge_instance_profile }; });
+      await t.check(`${forge || '(empty)'} with no kind, ${mode}: resumes unpicked, no own-server relabel, no address kept`, (d.forge === 'none' || !d.forge) && !/_self_managed$/.test(d.v || '') && !d.url && !d.prof, JSON.stringify(d));
+    }
+  },
   async 'completion: an admitted sign-in saved with no key (Sept 26 pages) completes, and Continue goes on'(t) {
     const A = onboardingApp(t); await A.boot(); await A.toSafe('Notes'); await A.click('online', undefined, 'online-service');
     await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(800);

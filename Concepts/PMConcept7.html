@@ -171614,8 +171614,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* (every kind the draft declares is read, its credential profile's too; identity carried with no kind at all is
          unresolved, never defaulted onto a kind it was not given for) */
       const prof = d.forge_instance_profile, declared = [d.forge_provider_variant, prof && prof.provider_variant].filter(Boolean);
-      const bearing = !!(d.forge_account_ref || d.repository_ref || prof || (d.source_access_authorization_refs || []).length);
-      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || (!d.forge_provider_variant && bearing) || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
+      /* (a service with no kind is unpicked, refs or none: an address alone never makes it a server of its own, Muse MU-2;
+         an empty service is unpicked too, never read as a kind list, MU-m1) */
+      if (d.forge !== 'none' && (!d.forge || !KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || !d.forge_provider_variant || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
       if (!(d.forge === 'none' && d.forge_retired)) {
         if (d.forge !== 'none') d.forge_retired = null; /* (a service chosen again) */
         if (d.forge === 'none') d.forge = 'github';
@@ -176388,9 +176389,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!SCREENS.defs[id]) { console.warn('O55: unknown screen', id); return; }
     const from = SCREENS.defs[S.sess.screen];
     if (from && from.leave) from.leave(S);
+    if (S.sess.ui.openedAt && S.sess.ui.openedAt !== id) delete S.sess.ui.openedAt;
+    if (O55.branch) O55.branch.reconcile(S);
     prune();
     if (!opts.replace && S.sess.screen !== id && !opts.noHistory) S.sess.history.push(S.sess.screen);
-    if (!opts.fromHistory) stamp(S.sess.screen, id);
+    if (opts.noHistory && !opts.fromHistory && O55.branch && !O55.branch.applies(id, S)) S.sess.ui.openedAt = id;
     S.resumedShownOn = null;
     if (S.tip) { S.tip = null; skin('tip', null); }
     stopHover(); hv.want = null; S.pipHover = null; S.pipTyping = null;
@@ -176418,53 +176421,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     go(prev, { dir: 'back', noHistory: true, fromHistory: true });
   }
   /* ---------------------------------------------------------------- the active branch
-     (FO-22's class: final-onb BACK-STATE-GAPS-78C; Sol's repeated Edit at bf05a56258)
-     A chooser asks an answer that picks a branch. On the main path (SPINE): which computer (where, 66), how the Project
-     begins (begin: its Continue records it, 69), where its files live (name, 69), the online copy that Safe opened (safe:
-     a new one each time a copy is given up, 71), whether an attempt is made (review: given up is none again, 72). Inside
-     a branch: the online copy's service (online-service, applied by its Continue,
-     71), how the NAS is reached (nas-find, 70), the Connect route (c-route, 67); each answer is written only on its own
-     chooser. Every other screen belongs to the chooser that opened it, directly or through the screens between, and
-     was entered under that chooser's answer then: go() stamps it so. A screen whose chooser's answer has since been
-     replaced, or whose chooser is itself off the branch, is off the active branch. Every history entry of it goes, each
-     one and not only the latest (Back and the rail never walk it), and it refuses its own actions and fields, so a
-     stale screen that history ever reaches again can write nothing. Answers kept unchanged keep their steps. */
-  const SPINE = ['welcome', 'look', 'where', 'begin', 'name', 'like', 'safe', 'away', 'review'];
-  const ANSWERS = {
-    where: (s) => s.ui.where || 'this',
-    begin: (s) => (s.drafts.main.project_mode === 'later' ? 'later' : s.ui.beganAs || ''),
-    name: (s) => s.drafts.main.storage_mode || '',
-    safe: (s) => String((s.online && s.online.gen) || 0),
-    review: (s) => (s.commit && s.commit.state && s.commit.state !== 'none' ? 'attempt' : ''),
-    'online-service': (s) => { const d = s.drafts.main; return [d.online_mode, d.forge, d.forge_provider_variant || '', d.forge_instance_url || ''].join('|'); },
-    'nas-find': (s) => ((s.nas && s.nas.method) || 'ssh') + '|' + ((s.nas && s.nas.device) || ''),
-    'c-route': (s) => (s.drafts.connect && s.drafts.connect.server_connection_mode) || ''
-  };
-  const chooser = (id) => SPINE.includes(id) || !!ANSWERS[id];
-  const answerOf = (owner) => (ANSWERS[owner] ? String(ANSWERS[owner](S.sess)) : '');
-  /* entering a screen forward: the chooser it belongs to, and that chooser's answer now */
-  function stamp(from, id) {
-    if (SPINE.includes(id) || from === id) return;
-    const b = S.sess.branch = S.sess.branch || {};
-    const owner = chooser(from) ? from : b[from] && b[from].owner;
-    if (owner && owner !== id) b[id] = { owner, answer: answerOf(owner) }; else delete b[id];
-  }
+     (canon FO-22: Back visits only steps that remain valid for the current choices, and going on never reinstates an
+     abandoned branch, its source or its authorization). Whether a step applies is a pure function of the person's current
+     answers, declared per step in 76-branch.js (O55.branch); nothing is recorded at navigation time, so a history from any
+     build, a Review Edit or a jump is judged alike. The one exception is a tool's straight jump (Demo Studio's Open at one
+     screen, a ?o55=screen= link, a check's noHistory jump to a step its answers do not lead to): that step applies while it
+     is the screen on show, never once left, and never to Back or a resumed session. */
   function onBranch(id) {
-    for (let at = id, n = 0; n < 12; n++) {
-      const st = S.sess && S.sess.branch && S.sess.branch[at];
-      if (!st) return true;
-      if (answerOf(st.owner) !== st.answer) return false;
-      if (SPINE.includes(st.owner)) return true;
-      at = st.owner;
-    }
-    return true;
+    if (S.sess && S.sess.ui && S.sess.ui.openedAt === id && S.sess.screen === id) return true;
+    return !O55.branch || O55.branch.applies(id, S);
   }
-  /* a screen off the active branch is never shown: what would show it (a wrong history, a resumed session, a redraw
-     after its answer went) shows the chooser it belongs to, as FO-22's entry redirect does for an identity that does not
-     resolve; so it never draws, and never writes even the defaults its drawing would fill */
+  /* a step that does not apply is never shown: what would show it (a history entry, a resumed session, a redraw after its
+     answer went) shows the last step in the history that does apply, as FO-22's entry redirect does for an identity that
+     does not resolve; so it never draws, and never writes even the defaults its drawing would fill */
   function settleBranch() {
-    for (let n = 0; n < 12 && S.sess && !onBranch(S.sess.screen); n++) S.sess.screen = S.sess.branch[S.sess.screen].owner;
+    if (!S.sess || onBranch(S.sess.screen)) return;
+    const h = S.sess.history || [];
+    let to = null; while (h.length) { const id = h.pop(); if (onBranch(id) && SCREENS.defs[id]) { to = id; break; } }
+    S.sess.screen = to || 'welcome';
   }
+
   /* the history keeps only the active branch, and no entry for the screen you are on (a resumed screen that gave way) */
   function prune() {
     const out = [];
@@ -176771,8 +176747,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
-    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; if (S.sess.branch) delete S.sess.branch[opts.screen]; }
+    if (opts.screen && SCREENS.defs[opts.screen]) { S.sess.screen = opts.screen; S.sess.ui.openedAt = opts.screen; }
     if (!SCREENS.defs[S.sess.screen]) S.sess.screen = 'welcome';
+    if (!opts.screen && O55.branch) O55.branch.reconcile(S);
     settleBranch(); prune();
     if (opts.screen && opts.committed !== false && POSTCOMMIT.has(S.sess.screen) && !S.ctx().committed) seedCommit();
     /* a screen opened straight (Demo Studio's Open at one screen) gets what the screens before it would have left: the
@@ -180499,13 +180476,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      and a name taken from any of them (never one the person typed) belong to the beginning that filled them in: they
      were carried into a new Project planned inside the old folder, and into a NAS folder's history (logic crawl).
      Facts about the person's devices (a trusted NAS, a key added to it) stay. */
-  function resetBeginning(S, d) {
-    O55.draft.set(d, Object.assign({ local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local' },
-      S.sess.ui.nameTouched ? {} : { project_name: '' }));
-    S.sess.folderInfo = null;
-    if (S.sess.nas) { delete S.sess.nas.at; delete S.sess.nas.folderLabel; }
+  /* A beginning given up (canon FO-22, Sol's FO22-A2 and A3 at e9b704975a): everything derived from it goes here, once,
+     before Continue takes any branch, so no branch's early return can keep a piece of it. Its picker's choice and
+     completed check (the folder, the NAS device and mounted volume), the preflight and source-access references they
+     wrote, the restore, and for an online source its service, server, account, repository and name, with the service
+     picker choosing nothing; picking the same kind again starts empty with Continue off. Settled work outside the plan
+     stays (a sign-in already made, a key already installed on the NAS, a host already trusted). */
+  function resetBeginning(S, d, was) {
+    O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local',
+      preflight_result_refs: [], source_access_authorization_refs: [] }, S.sess.ui.nameTouched ? {} : { project_name: '' }));
+    S.sess.folderInfo = null; S.sess.folder = null;
+    Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(folder|mounted|smb|nfs):/.test(k)) F.reset(S, k); });
+    if (S.sess.nas) { if (S.sess.nas.purpose === 'source' || was === 'existing:device') S.sess.nas = null; else { delete S.sess.nas.at; delete S.sess.nas.folderLabel; } }
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
+    if (was === 'existing:online' || d.project_mode === 'existing_online') {
+      O55.draft.set(d, { online_mode: 'none', forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_ref: '', forge_account_action: null,
+        repository_ref: '', repository_name: '', repository_owner_scope: 'personal', repository_container: '', repository_project: '', repository_visibility: null });
+      d.forge_auth_method = null; S.sess.azureProjects = null; S.sess.online = { purpose: 'copy', unchosen: true };
+    }
   }
   /* a new beginning is hung on the string: the sign swings with it and its icon pops in */
   const stage = (S) => S.root.querySelector('.o55-stage');
@@ -180552,12 +180541,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          skips only the provider phases for a deferred Project) */
       /* (Later gives up the beginning chosen before: its repository goes, and choosing any beginning again starts it
          clean, so going on never brings the old source back: canon FO-22) */
-      later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none', repository_ref: '' }); S.sess.ui.begin = null; S.sess.ui.beganAs = 'later'; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
+      later(S) { if (S.sess.ui.beganAs && S.sess.ui.beganAs !== 'later') resetBeginning(S, md(S), S.sess.ui.beganAs);
+        O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none', repository_ref: '' }); if (S.sess.online) S.sess.online.wanted = false; S.sess.ui.begin = null; S.sess.ui.beganAs = 'later'; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
       next(S) {
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
         /* switching how the Project begins drops what the abandoned beginning filled in */
         const began = sel === 'existing' ? 'existing:' + sub : sel;
-        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d);
+        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d, S.sess.ui.beganAs);
         S.sess.ui.beganAs = began;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
         if (sel === 'new') { O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', project_source_ref: '', source_more: false }, clearOnline)); S.save(); return O55.ui.go('name'); }
@@ -180712,6 +180702,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       change(S) { S.sess.ui.sheet = 'loc'; S.save(); O55.ui.refresh(); seeSheet(S); },
       loc(S, v) {
         const d = md(S);
+        /* (files on the NAS given up: its device, folder and checks go with it, as a beginning's do) */
+        if (v !== 'network' && d.storage_mode === 'network_location' && S.sess.nas && S.sess.nas.purpose === 'storage') { S.sess.nas = null; Object.keys(S.sess.ops || {}).forEach((k) => { if (/^(mounted|smb|nfs):/.test(k)) F.reset(S, k); }); }
         if (v === 'auto') O55.draft.set(d, { local_location_mode: 'automatic', local_location: '', storage_mode: 'this_device' });
         if (v === 'custom') O55.draft.set(d, { local_location_mode: 'custom', local_location: d.local_location || '~/Documents/' + (d.project_name || 'Project'), storage_mode: 'this_device' });
         if (v === 'network') { S.sess.ui.sheet = null; S.sess.nas = Object.assign(S.sess.nas || {}, { purpose: 'storage' }); O55.draft.set(d, { storage_mode: 'network_location', storage_transport: 'ssh' }); S.save(); return O55.ui.go('nas-find'); }
@@ -181954,6 +181946,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      accounts recorded for retired servers go, an unfinished commit starts again from Review, and a screen of the old
      service's own steps gives way to choosing the service */
   O55.onOpen = (O55.onOpen || []).concat([(S) => {
+    /* a session saved before Safe's copy answer existed wanted a copy if it was choosing one: on its picker or steps, or
+       with a service picked there (76-branch.js reads the answer; once set, it is the person's) */
+    const olm = OL(S); if (olm.wanted === undefined) olm.wanted = olm.purpose === 'copy' && (olm.forge != null || ['online-service', 'online-signin', 'online-details'].includes(S.sess && S.sess.screen));
     const drafts = (S.sess && S.sess.drafts) || {};
     Object.keys(drafts).forEach((k) => { if (drafts[k] && typeof drafts[k] === 'object') O55.draft.normalize(drafts[k]); });
     /* the session's own state is checked whatever the draft holds (a card picked and closed before Continue) */
@@ -181990,7 +181985,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function cleanOnline(S) {
     const ol = OL(S); let changed = false;
     if (ol.forge != null && !CARDS.includes(ol.forge)) { ol.forge = null; ol.variant = null; ol.mustPick = true; changed = true; }
-    if (ol.variant != null && !(ol.forge ? kindsOf(ol.forge) : CARDS.flatMap(kindsOf)).includes(ol.variant)) { ol.variant = null; changed = true; }
+    /* (a kind no longer offered takes its card with it: a saved pick of a retired kind resumes with nothing chosen, never
+       relabelled as the card's current kind: Astra AST-1, R6) */
+    if (ol.variant != null && !(ol.forge ? kindsOf(ol.forge) : CARDS.flatMap(kindsOf)).includes(ol.variant)) { ol.variant = null; ol.forge = null; ol.mustPick = true; changed = true; }
     Object.keys(ol.addresses || {}).forEach((k) => { const [c, v] = k.split('|'); if (!CARDS.includes(c) || !kindsOf(c).includes(v)) { delete ol.addresses[k]; changed = true; } });
     return changed;
   }
@@ -182007,9 +182004,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        at all, never clamped to an offered kind with its old address, and the person picks again) */
     const planOk = !!d.forge && d.forge !== 'none' && O55.draft.offered(d.forge, d.forge_provider_variant);
     if (d.forge && d.forge !== 'none' && !planOk && !ol.forge) ol.mustPick = true;
-    const planned = planOk ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
+    /* (a copy or source given up: the picker chooses nothing for the person, without the retired-service note) */
+    const planned = planOk && !ol.unchosen ? (d.forge === 'github' && d.forge_provider_variant === 'self_managed' ? 'github_enterprise' : d.forge === 'bitbucket_data_center' ? 'bitbucket_cloud' : d.forge) : null;
     /* (R6) after a retired service the person chooses again: nothing is picked for them */
-    const sel = ol.forge || planned || (d.forge_retired || ol.mustPick ? null : 'github'), same = !!planned && sel === planned;
+    const sel = ol.forge || planned || (d.forge_retired || ol.mustPick || ol.unchosen ? null : 'github'), same = !!planned && sel === planned;
     if (!sel) return { sel: null, forge: null, variant: null, key: '', typed: null, asks: false, address: '', url: '', ok: false, words: { hint: '', error: '', reason: T('missing.service') } };
     let variant = sel === 'github_enterprise' ? 'self_managed' : ol.variant || (same ? (d.forge === 'bitbucket_data_center' ? 'data_center' : d.forge_provider_variant) : null);
     const forge = sel === 'github_enterprise' ? 'github' : sel === 'bitbucket_cloud' && variant === 'data_center' ? 'bitbucket_data_center' : sel;
@@ -182047,7 +182045,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     lead: () => T('online.service.lead'),
     body(S) {
       const ol = OL(S), c = serviceChoice(S), sel = c.sel, forge = c.forge, variant = c.variant;
-      let out = (md(S).forge_retired || ol.mustPick) && !sel ? C.note(T('online.service.retired'), 'info', 'cloud') : '';
+      let out = ((md(S).forge_retired && md(S).forge_retired.forge) || ol.mustPick) && !sel ? C.note(T('online.service.retired'), 'info', 'cloud') : '';
       out += C.cards('pick', [{ v: 'github', glyph: 'cloud', title: T('online.service.github.title'), sub: T('online.service.github.sub'), tag: T('chrome.recommended') }], sel, { label: T('online.service.title') });
       /* a service's own questions (which kind of it, its address) sit under its card (QA round 2, Q7) */
       let under = '';
@@ -182070,10 +182068,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return { secondary: sec, primary: { label: T('chrome.continue'), do: 'next', disabled: !c.ok, reason: c.words.reason } };
     },
     do: {
-      pick(S, v, el) { if (!CARDS.includes(v)) return; const ol = OL(S); ol.mustPick = false; ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
+      pick(S, v, el) { if (!CARDS.includes(v)) return; const ol = OL(S); ol.mustPick = false; ol.unchosen = false; ol.forge = v; ol.variant = null; S.save(); O55.ui.refresh(); O55.ui.charm(el, T('online.service.' + (v === 'github' ? 'github.title' : v)), 'cloud'); showAddress(S); },
       others(S) { OL(S).others = !OL(S).others; S.save(); O55.ui.refresh(); },
       variant(S, v) { if (!kindsOf(serviceChoice(S).sel).includes(v)) return; OL(S).variant = v; S.save(); O55.ui.refresh(); showAddress(S); },
-      notNow(S) { O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
+      /* (Not now gives the copy up, even before any Continue: Astra AST-2) */
+      notNow(S) { const ol = OL(S); ol.wanted = false; ol.forge = null; ol.variant = null; ol.unchosen = true; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.go('safe', { dir: 'back' }); },
       next(S) {
         const ol = OL(S), d = md(S), c = serviceChoice(S), forge = c.forge, variant = c.variant;
         if (!c.ok || !O55.draft.offered(forge, variant)) return; /* (refused with its reason, as the button shows; never a service or kind not offered) */
@@ -182512,7 +182511,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     do: {
       backend(S, v) { O55.draft.set(md(S), { history_backend: v }); S.save(); O55.ui.refresh(); },
       filesafe(S) { const on = !md(S).filesafe; O55.draft.set(md(S), { filesafe: on }); S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff'); },
-      online(S) { OL(S).purpose = 'copy'; S.save(); O55.ui.go('online-service'); },
+      /* (Safe wants an online copy: the answer that keeps its picker and steps on the person's path, 76-branch.js) */
+      online(S) { const ol = OL(S); ol.purpose = 'copy'; ol.wanted = true; S.save(); O55.ui.go('online-service'); },
       backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); seeSheet(S); },
       /* another place, or another service for it, drops the access details typed for the old one */
       bdest(S, v, el) { const b = S.sess.backup, to = v === 'none' ? null : v; if (b.dest !== to) { b.sub = null; b.access = {}; } b.dest = to; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, SUBS[v] ? T('safe.backup.' + v) : backupLabel(S, v), 'vault'); },
@@ -182551,17 +182551,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return goOn.call(this, id, opts);
   };
   O55.safe = { forgeName, visCopy, hostOf, nameTaken, refuseName, sourceOk };
-  /* An online copy given up (Not now after choosing one, Skip the online copy at Creating, Later, a Project no longer
-     brought in from online): the plan's copy goes from set to none. Every way it goes is a draft change, so it is
-     noticed here, once: the copy that Safe opened is over, and the picker and steps that served it leave the active
-     branch (60-ui-core: Safe's answer is this count), so Back never offers them, nor Continue from them, again
-     (FO-22, final-onb's Skip witness at bf05a56258). */
+  /* An online copy given up (Not now, Skip the online copy at Creating, Later, a Project no longer brought in from
+     online): the plan's copy goes from set to none, a draft change, noticed here once. Safe no longer wants a copy, so its
+     picker and steps leave the person's path (76-branch.js), and the picker's choice goes: added again, it starts with
+     nothing chosen (FO-22, final-onb's Skip witness at bf05a56258). */
   const setDraft = O55.draft.set;
   O55.draft.set = function (d, patch) {
     const S = O55.S, main = S && S.sess && S.sess.drafts && S.sess.drafts.main;
     const gaveUp = !!main && d === main && !!patch && patch.online_mode === 'none' && !!d.online_mode && d.online_mode !== 'none';
     const r = setDraft.apply(this, arguments);
-    if (gaveUp) { const ol = OL(S); ol.gen = (ol.gen || 0) + 1; }
+    if (gaveUp) { const ol = OL(S); ol.wanted = false; ol.forge = null; ol.variant = null; ol.unchosen = true; }
     return r;
   };
 
@@ -184901,6 +184900,116 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* a result kept from an earlier visit is handed to the app again as the page starts */
   const kept = O55.store.get(KEY, null);
   if (kept && kept.schema === KEY) expose(kept, true);
+})();
+
+/* ---- js/76-branch.js ---- */
+/* O55.branch — which steps the person's current answers lead through (canon FO-22; Sol's FO22-A2/A3 and Astra's AST-2..4
+   at e9b704975a). Every step that is not on the main path says here, from the current answers alone (the plan's draft and
+   the answers the session keeps: how the Project begins, which computer, whether Safe wants an online copy, the NAS's
+   purpose and method, the restore, the attempt), whether it applies. Nothing is recorded at navigation time, so a history
+   written by any build, a Review Edit or a straight jump is judged the same way.
+   60-ui-core uses it: Back and the rail pass every step that does not apply, such a step is never drawn (what would show
+   it shows the last step that does), and its actions, fields and hooks are refused, so no Continue can write from it.
+   reconcile() clears, in one place, what a picker kept for an answer that no longer applies (its pick, its completed
+   checks, the references they wrote), so choosing that kind again starts with nothing chosen. Settled work outside the
+   plan stays: a sign-in already made, a key already installed, a host already trusted, a Server already set up. */
+(function () {
+  'use strict';
+  const O55 = window.O55;
+  const md = (S) => S.sess.drafts.main;
+  const where = (S) => (S.sess.ui && S.sess.ui.where) || 'this';
+  /* how the Project begins: the plan says (an existing online or local Project, a restore, later); while a restore is
+     still being chosen the plan is not yet a restore, and the beginning's Continue has recorded it (69) */
+  function began(S) {
+    const d = md(S), b = S.sess.ui && S.sess.ui.beganAs;
+    switch (d.project_mode) {
+      case 'later': return 'later';
+      case 'existing_online': return 'existing:online';
+      case 'existing_local': return d.project_transport === 'local' ? 'existing:folder' : 'existing:device';
+      case 'restore': return 'restore';
+      default: return b === 'restore' || (!b && S.sess.restore && S.sess.restore.scope === 'project') ? 'restore' : 'new';
+    }
+  }
+  const attempt = (S) => !!(S.sess.commit && S.sess.commit.state && S.sess.commit.state !== 'none');
+  const restoring = (S) => { const r = S.sess.restore; return !!(r && r.scope) && (r.scope !== 'project' || began(S) === 'restore'); };
+  /* the restore's place is ready for its backups to be listed: a kit chosen, or the drive, NAS or bucket reached (Muse MU-1:
+     the backups of a place left are never offered) */
+  const placeReady = (S) => { const r = S.sess.restore || {}; return r.source === 'kit' ? !!r.kit : ['cloud', 'nas', 's3'].includes(r.source) ? !!r.reachedFor : !!r.source; };
+  /* the online source of an existing Project; Safe's online copy: chosen (the plan's copy is new) or being chosen (Add one
+     or Change pressed, not given up since: Not now, Skip the online copy, Later) */
+  const source = (S) => began(S) === 'existing:online';
+  const copy = (S) => !source(S) && (md(S).online_mode === 'new' || !!(S.sess.online && S.sess.online.wanted));
+  const resolves = (S) => !O55.draft || !O55.draft.sourceIdentity || O55.draft.sourceIdentity(S).ok;
+  /* the NAS: its purpose is a current answer, and its method picks the steps */
+  function nasFor(S) {
+    const n = S.sess.nas; if (!n) return false;
+    switch (n.purpose || 'source') {
+      case 'source': return began(S) === 'existing:device';
+      case 'storage': return md(S).storage_mode === 'network_location';
+      case 'backup': return restoring(S) && S.sess.restore.source === 'nas';
+      case 'dest': return attempt(S);
+      default: return true;
+    }
+  }
+  const method = (S) => (S.sess.nas && S.sess.nas.method) || 'ssh';
+  const nasBy = (m) => (S) => nasFor(S) && method(S) === m;
+  const RULES = {
+    'ex-folder': (S) => began(S) === 'existing:folder',
+    'online-service': (S) => source(S) || copy(S),
+    'online-signin': (S) => { const si = S.sess.signin || {}; if (si.kind && si.kind !== 'forge') return !!S.sess.restore || attempt(S);
+      return source(S) ? md(S).online_mode === 'existing' : copy(S) && md(S).online_mode === 'new'; },
+    'online-details': (S) => copy(S) && md(S).online_mode === 'new' && resolves(S),
+    'ex-repos': (S) => source(S) && resolves(S),
+    'nas-find': nasFor,
+    'nas-identity': nasBy('ssh'), 'nas-key': nasBy('ssh'), 'nas-signin': nasBy('ssh'), 'nas-install': nasBy('ssh'), 'nas-pmpair': nasBy('ssh'), 'nas-folder': nasBy('ssh'),
+    'nas-smb': nasBy('smb'), 'nas-nfs': nasBy('nfs'), 'nas-mounted': nasBy('mounted'),
+    'r-source': restoring, 'r-unlock': (S) => restoring(S) && placeReady(S), 'r-pick': (S) => restoring(S) && placeReady(S),
+    'r-preview': (S) => restoring(S) && !!S.sess.restore.pick, 'r-done': restoring,
+    'c-route': (S) => where(S) === 'connect', 'c-review': (S) => where(S) === 'connect', 'c-pair': (S) => where(S) === 'connect', 'c-ready': (S) => where(S) === 'connect',
+    's-kind': (S) => where(S) === 'server', 's-wait': (S) => where(S) === 'server', 's-confirm': (S) => where(S) === 'server', 's-ready': (S) => where(S) === 'server',
+    'creating': attempt, 'protect': attempt, 'ai': attempt, 'ai-all': attempt, 'ai-none': attempt, 'free': attempt, 'ready': attempt
+  };
+  function applies(id, S) {
+    const rule = RULES[id];
+    if (!rule || !S || !S.sess) return true;
+    try { return !!rule(S); } catch (_) { return true; }
+  }
+  /* what a picker kept for an answer that no longer applies goes: run on every screen change and on resume */
+  const F = () => O55.flow;
+  const dropOps = (S, re) => Object.keys(S.sess.ops || {}).forEach((k) => { if (re.test(k)) F().reset(S, k); });
+  const keepRefs = (list, re) => (list || []).filter((r) => !re.test(r));
+  function reconcile(S) {
+    if (!S || !S.sess || !S.sess.drafts) return false;
+    const d = md(S), b = began(S); let changed = false;
+    if (b !== 'existing:folder') {
+      if (S.sess.folder || S.sess.folderInfo) { S.sess.folder = null; S.sess.folderInfo = null; changed = true; }
+      if (Object.keys(S.sess.ops || {}).some((k) => /^folder:/.test(k))) { dropOps(S, /^folder:/); changed = true; }
+      if ((d.preflight_result_refs || []).some((r) => /^preflight:folder:/.test(r))) { O55.draft.set(d, { preflight_result_refs: keepRefs(d.preflight_result_refs, /^preflight:folder:/) }); changed = true; }
+    }
+    if (S.sess.nas && !nasFor(S)) {
+      if ((S.sess.nas.purpose || 'source') === 'source' || S.sess.nas.purpose === 'storage') {
+        S.sess.nas = null; dropOps(S, /^(mounted|smb|nfs):/); changed = true;
+        if ((d.source_access_authorization_refs || []).length || (d.preflight_result_refs || []).some((r) => /^preflight:paired-source:/.test(r))) {
+          O55.draft.set(d, { source_access_authorization_refs: keepRefs(d.source_access_authorization_refs, /^(ssh-key|pairing):/), preflight_result_refs: keepRefs(d.preflight_result_refs, /^preflight:paired-source:/) });
+        }
+      }
+    }
+    if (S.sess.restore && S.sess.restore.scope === 'project' && b !== 'restore') { S.sess.restore = null; changed = true; }
+    /* a Project restore whose backup is no longer the one picked (its source or place changed, or the restore was started
+       again): the plan's backup, its transport and the backup place the restore suggested go, and Review asks for a pick */
+    if (b === 'restore' && d.backup_source_ref && !(S.sess.restore && S.sess.restore.pick)) {
+      O55.draft.set(d, Object.assign({ backup_source_ref: '', backup_transport: 'local' }, S.sess.ui && S.sess.ui.nameTouched ? {} : { project_name: '' })); /* (nor its borrowed name) */
+      if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
+      changed = true;
+    }
+    if (!source(S) && d.online_mode === 'existing') {
+      O55.draft.set(d, { online_mode: 'none', forge: 'none', forge_provider_variant: null, forge_instance_url: '', forge_instance_profile: null, forge_account_ref: '', forge_account_action: null, repository_ref: '', repository_name: '' });
+      S.sess.online = Object.assign({}, S.sess.online, { forge: null, variant: null, unchosen: true, wanted: false }); changed = true;
+    }
+    if (!copy(S) && !source(S) && S.sess.online && (S.sess.online.forge || S.sess.online.variant)) { S.sess.online.forge = null; S.sess.online.variant = null; S.sess.online.unchosen = true; changed = true; }
+    return changed;
+  }
+  O55.branch = { applies, reconcile, began, copy, source };
 })();
 
 /* ---- js/80-tour-core.js ---- */

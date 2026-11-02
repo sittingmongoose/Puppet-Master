@@ -67,8 +67,9 @@
       /* (every kind the draft declares is read, its credential profile's too; identity carried with no kind at all is
          unresolved, never defaulted onto a kind it was not given for) */
       const prof = d.forge_instance_profile, declared = [d.forge_provider_variant, prof && prof.provider_variant].filter(Boolean);
-      const bearing = !!(d.forge_account_ref || d.repository_ref || prof || (d.source_access_authorization_refs || []).length);
-      if (d.forge && d.forge !== 'none' && (!KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || (!d.forge_provider_variant && bearing) || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
+      /* (a service with no kind is unpicked, refs or none: an address alone never makes it a server of its own, Muse MU-2;
+         an empty service is unpicked too, never read as a kind list, MU-m1) */
+      if (d.forge !== 'none' && (!d.forge || !KINDS[d.forge] || declared.some((v) => !KINDS[d.forge].includes(v)) || !d.forge_provider_variant || (prof && prof.provider && prof.provider !== d.forge))) retire(d);
       if (!(d.forge === 'none' && d.forge_retired)) {
         if (d.forge !== 'none') d.forge_retired = null; /* (a service chosen again) */
         if (d.forge === 'none') d.forge = 'github';
