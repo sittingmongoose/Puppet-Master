@@ -1121,6 +1121,16 @@ def('srv7', 'fresh', 'A new cloud Server: away from home starts on Tailscale; th
   A.ok(st.mode === 'tailscale' && st.cards.includes('anywhere:true:Also away from home'), 'Tailscale is preselected: ' + JSON.stringify(st));
   A.ok(st.cards.some((c) => /^vpn:false:Only through a VPN you already use/.test(c)) && !st.cards.some((c) => /Only at home/.test(c)), 'the private choice is a VPN you already use: ' + JSON.stringify(st.cards));
 });
+/* FO-31: back on the discovery step after setting it up, the Server it found says it is already set up */
+def('srv8', 'fresh', 'A new Server set up, then back to the step that found it: its card says it is already set up, and Continue goes on', async (d, A) => {
+  await toServerCode(d);
+  await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);
+  await d.act('selfMatch'); await d.primary(); await d.untilScreen('s-ready', 15000);
+  await d.back(); A.eq(await d.screen(), 's-confirm', 'back to setting it up');
+  await d.back(); A.eq(await d.screen(), 's-wait', 'back to where it was found');
+  const st = await d.state(() => ({ card: (document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-card[data-arg="pm:new"]') || {}).textContent || '', primary: (document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary') || {}).textContent || '' }));
+  A.ok(/Already set up as/.test(st.card) && !/Not set up yet/.test(st.card) && /Continue/.test(st.primary), 'the card says it is already set up: ' + JSON.stringify(st));
+});
 def('srv2', 'fresh+guestLater', "Situation guestLater: a new Server's Your Server is ready shows No requests yet and Check again; the device's request arrives about 15 s later", async (d, A) => {
   await toServerCode(d);
   await until(d, "window.O55.S.sess.server.orRunOk === true", 'claim, setup and reach answered', 15000);

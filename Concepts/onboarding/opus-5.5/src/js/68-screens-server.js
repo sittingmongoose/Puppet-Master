@@ -20,6 +20,7 @@
   /* the address the Server was found or reached at, which is also where its pairing page is (SCR-17: never one made
      from the name the person gives it) */
   const reachedAt = (S) => unclaimed(S).address;
+  const mine = (S, u) => !!(S.sess.server.claimed && u && S.sess.server.id === u.id); /* this Server is already set up and yours */
   O55.serverSetup = { address: (S) => (S.sess.server.claimed ? reachedAt(S) : '') };
   /* names that fit the kind of computer (a cloud computer is not a Home NAS) */
   /* names already on this network (the NAS found there, other Puppet Masters) are never suggested for a new Server: a
@@ -150,7 +151,7 @@
         out += `<div class="o55-row o55-row-wait" data-key="scan" aria-busy="true">${C.loader(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (kind !== 'cloud' && (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address))) {
-        out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
+        out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: mine(S, u) ? T('server.wait.yours', { name: sv.displayName || u.name }) : T('server.wait.notSetUp'), tag: '' }], sv.target, /* (FO-31: one already set up says so) */ { label: T('server.wait.title') });
       }
       if (kind === 'cloud') { /* (nothing to look for or type here) */ } else if (!sv.manual) out += `<div class="o55-sublinks" data-key="addr">${C.link(T('server.wait.address'), 'manualOn')}</div>`;
       else if (kind !== 'cloud') out += `<div class="o55-sublinks" data-key="scanlink">${C.link(T('server.wait.scan'), 'manualOff')}</div>`;
@@ -162,7 +163,7 @@
       if (st && st.state === 'done') return; /* a finished look must not rebuild its options on every refresh */
       F.op(S, discoverKey(S), 'cmd.server.discovery.refresh', DISCOVER_PHASES, DISCOVER_OPTS);
     },
-    foot: (S) => ({ primary: { label: T(cloud(S) ? 'server.wait.cloudNext' : 'server.wait.choose'), do: 'next', disabled: !cloud(S) && !S.sess.server.target, reason: T('server.wait.looking') } }),
+    foot: (S) => ({ primary: { label: mine(S, unclaimed(S)) ? T('chrome.continue') : T(cloud(S) ? 'server.wait.cloudNext' : 'server.wait.choose'), do: 'next', disabled: !cloud(S) && !S.sess.server.target, reason: T('server.wait.looking') } }),
     do: {
       pick(S, id, el) { S.sess.server.target = id; S.save(); O55.ui.refresh(); },
       manualOn(S) { S.sess.server.manual = true; S.save(); O55.ui.refresh(); },
