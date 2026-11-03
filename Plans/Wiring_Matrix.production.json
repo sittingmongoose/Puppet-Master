@@ -19618,7 +19618,7 @@
         {
           "test_id": "fb.catalog.chat_focus_thread_context_details.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.focus_thread_context_details reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.chat.focus_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. The PMConcept7 action targets the existing shared Context Detail Pane and preserves Assistant/thread/context identity across page re-seating. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.chat.focus_thread_context_details reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. The PMConcept7 action targets the existing shared Context Detail Pane and preserves Assistant/thread/context identity across page re-seating. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
@@ -69395,7 +69395,7 @@
         {
           "test_id": "fb.catalog.terminal_focus.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.focus reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.terminal.focus reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
@@ -69809,7 +69809,7 @@
         {
           "test_id": "fb.catalog.terminal_reveal.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.reveal reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.reveal has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.terminal.reveal reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
@@ -69896,7 +69896,7 @@
         {
           "test_id": "fb.catalog.terminal_show.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.show reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+          "requirement": "cmd.terminal.show reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
         }
       ],
       "event_test_requirements": [
@@ -82410,6 +82410,8 @@
         "effect_kind": "receipt",
         "description": "Strongly confirmed Storage-owned purge, separate from list-only remove; holds/retention/leases and deletion evidence remain required.",
         "receipt_or_event_refs": [
+          "storage_deletion_record",
+          "storage.deletion_lifecycle_changed",
           "Plans/project_system_contracts.schema.json#/$defs/project_action_result_v2"
         ]
       },
@@ -87978,6 +87980,11 @@
           "test_id": "fb.catalog.chat_place_set.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "draft place only, no thread creation, folder creation or EventRecord Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_place_set.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88031,6 +88038,11 @@
           "test_id": "fb.catalog.chat_move_preview.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "read-only plain statement/current manifest preview; no owner effect Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_preview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88084,6 +88096,11 @@
           "test_id": "fb.catalog.chat_move_apply.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "one owner-composed copy/check/Project listing/cutover/report; source history sealed, one live writer Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_apply.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88137,6 +88154,11 @@
           "test_id": "fb.catalog.chat_move_resume.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "resume only remaining owner effects under retained operation; no replay of settled steps Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_resume.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88190,6 +88212,11 @@
           "test_id": "fb.catalog.chat_move_cancel.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "owner safe cancellation/rollback; truthful partial recovery, never delete a remote repository Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_cancel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88243,6 +88270,11 @@
           "test_id": "fb.catalog.chat_move_undo_preview.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "read-only exact inverse and eligibility, no effect Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_undo_preview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88296,6 +88328,11 @@
           "test_id": "fb.catalog.chat_move_undo_apply.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "inverse only eligible unchanged writes; list-only remove for a new Project; preserve remote repos/branches/backups and independent canonical custody Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_move_undo_apply.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88349,6 +88386,11 @@
           "test_id": "fb.catalog.chat_continue_elsewhere.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "new linked chat on chosen Computer, never a live host retarget Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_continue_elsewhere.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88402,6 +88444,11 @@
           "test_id": "fb.catalog.chat_incoming_accept.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "receiver-owned acceptance of exact request; normal turn only under receiver authority Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_incoming_accept.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88455,6 +88502,11 @@
           "test_id": "fb.catalog.chat_incoming_decline.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "receiver-owned decline, no requested work Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_incoming_decline.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88508,6 +88560,11 @@
           "test_id": "fb.catalog.chat_chat_folder_open.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "exact folder navigation; no mkdir, mutation or EventRecord Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_chat_folder_open.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88561,6 +88618,11 @@
           "test_id": "fb.catalog.chat_chat_folder_delete.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "exact selected folder/content deletion under holds/FileSafe/destructive admission, distinct from chat tombstone Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.chat_chat_folder_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88614,6 +88676,11 @@
           "test_id": "fb.catalog.persona_save_as_override.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.persona_save_as_override.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88667,6 +88734,11 @@
           "test_id": "fb.catalog.mcp_server_copy.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.mcp_server_copy.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88720,6 +88792,11 @@
           "test_id": "fb.catalog.skill_copy.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.skill_copy.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88773,6 +88850,11 @@
           "test_id": "fb.catalog.plugin_copy_configuration.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Exact whole owner record/reach/switch copy with source hash and destination CAS; typed readback and compensation. No per-field merge, install, executable trust, credentials, private plugin data or live workflow content. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.plugin_copy_configuration.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88826,6 +88908,11 @@
           "test_id": "fb.catalog.server_settings_home_move.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Move preview/apply uses one writer-role generation switch after verified copy and old-writer fencing; peer trust only start/approve/reject/cancel/revoke for settings.follow, never Project/content authority. Join data choices use Settings transactions. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.server_settings_home_move.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88879,6 +88966,11 @@
           "test_id": "fb.catalog.server_settings_peer_trust.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Move preview/apply uses one writer-role generation switch after verified copy and old-writer fencing; peer trust only start/approve/reject/cancel/revoke for settings.follow, never Project/content authority. Join data choices use Settings transactions. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.server_settings_peer_trust.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88932,6 +89024,11 @@
           "test_id": "fb.catalog.project_rename.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Metadata display_name/revision/timestamp only, preserving folder/repository/Vault/ID and interior spaces Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.project_rename.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -88985,6 +89082,11 @@
           "test_id": "fb.catalog.source_control_repository_inspect.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Read-only bounded source inspection, no snapshot/hooks/filters/helpers, linking, origin trust or network mutation; explicit partial/omitted evidence Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.source_control_repository_inspect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89038,6 +89140,11 @@
           "test_id": "fb.catalog.source_control_remote_add.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Actual backend local remote configuration add, no overwrite of taken names, network/auth/publish or Git fallback for JJ Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.source_control_remote_add.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89091,6 +89198,11 @@
           "test_id": "fb.catalog.permissions_create_computer_rule.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Human durable rule at exact tagged Computer, normalized pattern/action/revision with owner readback; no preselected scope or Everywhere path rule Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.permissions_create_computer_rule.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89144,6 +89256,11 @@
           "test_id": "fb.catalog.build_grant_preview.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Read-only exact operations/resource/target manifest and blockers; no grant or run Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.build_grant_preview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89197,6 +89314,11 @@
           "test_id": "fb.catalog.build_grant_approve.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "One canonical human-approved Plan/revision/hash/build/resource grant, absent/revision CAS and issuer evidence Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.build_grant_approve.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89250,6 +89372,11 @@
           "test_id": "fb.catalog.build_grant_revoke.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Canonical grant revision/revocation epoch fences future dispatch; no automatic rollback Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.build_grant_revoke.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89303,6 +89430,11 @@
           "test_id": "fb.catalog.computer_use_stop.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Stop/fence only this actual chat/Computer/desktop/controller session and release only its controller; repeated Stop returns original/settled state Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.computer_use_stop.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89356,6 +89488,11 @@
           "test_id": "fb.catalog.runtime_automation_pause_set.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Canonical exact app Server or Project operational record/receipt; app unavailable result has null pause/projection and zero effect. No new EventRecord; runtime.automation_pause_changed remains non-emitting until admitted. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation."
+        },
+        {
+          "test_id": "fb.catalog.runtime_automation_pause_set.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89409,6 +89546,11 @@
           "test_id": "fb.catalog.server_ssh_trust.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Preview is bounded read-only and does not trust a host. Apply pins only the exact observed host/port/key in the existing Server SSH host-trust owner; a changed key blocks the old preview and requires a fresh explicit replacement preview/human decision showing both fingerprints; no silent replacement or unrelated trust widening. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation. Protected preview/apply remains on the initiating active Client and its exact SSH target/connection or setup draft. Before effect, a changed Client/target/route/permission/continuation refuses. After settlement an unavailable initiating caller yields caller_unavailable while the original completed result/work remains discoverable; no background approval or focused-tab retarget."
+        },
+        {
+          "test_id": "fb.catalog.server_ssh_trust.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [
@@ -89462,6 +89604,11 @@
           "test_id": "fb.catalog.server_ssh_public_key_install.owner_return",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Preview reads only the admitted exact account/key/authorized_keys state. Apply installs only the selected shared-list public-key reference into that remote account under captured authorized_keys CAS, preserves all unrelated entries, rejects weak keys before reuse, and requires exact durable readback. Symlink/unsafe permissions or unsupported remote atomicity refuses before write; no shell fallback, permission loosening, private-key transfer, credential copy or speculative remote repair. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation. Protected preview/apply remains on the initiating active Client and its exact SSH target/connection or setup draft. Before effect, a changed Client/target/route/permission/continuation refuses. After settlement an unavailable initiating caller yields caller_unavailable while the original completed result/work remains discoverable; no background approval or focused-tab retarget."
+        },
+        {
+          "test_id": "fb.catalog.server_ssh_public_key_install.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Planned requirement only, not executed evidence: render/control evidence must prove role/name, keyboard-pointer parity, focus return to the initiating Client and route, busy state, the owner-projected disabled reason and outcome announcement in every reverse consumer."
         }
       ],
       "event_test_requirements": [

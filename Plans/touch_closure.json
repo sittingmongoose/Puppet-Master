@@ -26835,7 +26835,13 @@
       "requirement_refs": [
         "Plans/Permissions_System.md#PS-144",
         "Plans/UI_Command_Catalog.md#UCC-217",
-        "Plans/Wiring_Matrix.md#WM-103"
+        "Plans/Wiring_Matrix.md#WM-103",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-144",
@@ -26849,7 +26855,7 @@
       "handler_owner": "handlers::permissions::create_project_rule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
+      "production_or_simulation": "Static owner/catalog and production-intent wiring only. Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
       "gui_triggers": [
         "Settings > Permissions > New project rule"
       ],
@@ -26897,7 +26903,13 @@
       "requirement_refs": [
         "Plans/Permissions_System.md#PS-144",
         "Plans/UI_Command_Catalog.md#UCC-217",
-        "Plans/Wiring_Matrix.md#WM-103"
+        "Plans/Wiring_Matrix.md#WM-103",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-144",
@@ -26911,7 +26923,7 @@
       "handler_owner": "handlers::permissions::delete_rule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
+      "production_or_simulation": "Static owner/catalog and production-intent wiring only. Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
       "gui_triggers": [
         "Settings > Permissions > Rule delete"
       ],
@@ -27083,7 +27095,13 @@
       "requirement_refs": [
         "Plans/Permissions_System.md#PS-144",
         "Plans/UI_Command_Catalog.md#UCC-217",
-        "Plans/Wiring_Matrix.md#WM-103"
+        "Plans/Wiring_Matrix.md#WM-103",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-144",
@@ -27097,7 +27115,7 @@
       "handler_owner": "handlers::permissions::reorder_rule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
+      "production_or_simulation": "Static owner/catalog and production-intent wiring only. Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
       "gui_triggers": [
         "Settings > Permissions > Rule list reorder"
       ],
@@ -27269,7 +27287,13 @@
       "requirement_refs": [
         "Plans/Permissions_System.md#PS-144",
         "Plans/UI_Command_Catalog.md#UCC-217",
-        "Plans/Wiring_Matrix.md#WM-103"
+        "Plans/Wiring_Matrix.md#WM-103",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-144",
@@ -27283,7 +27307,7 @@
       "handler_owner": "handlers::permissions::update_rule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
+      "production_or_simulation": "Static owner/catalog and production-intent wiring only. Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
       "gui_triggers": [
         "Settings > Permissions > Rule editor"
       ],
@@ -27331,7 +27355,13 @@
       "requirement_refs": [
         "Plans/Permissions_System.md#PS-144",
         "Plans/UI_Command_Catalog.md#UCC-217",
-        "Plans/Wiring_Matrix.md#WM-103"
+        "Plans/Wiring_Matrix.md#WM-103",
+        "Plans/Permissions_System.md#PS-065",
+        "Plans/Permissions_System.md#PS-072",
+        "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/Permissions_System.md#TOML-Persistence-Failure-And-Atomicity-Rules",
+        "Plans/UI_Command_Catalog.md#UCC-113",
+        "Plans/Settings_System.md#SSYS-023"
       ],
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-144",
@@ -27345,7 +27375,7 @@
       "handler_owner": "handlers::permissions::validate_rule",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
+      "production_or_simulation": "Static owner/catalog and production-intent wiring only. Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware defs await F-d companion materialization.",
       "gui_triggers": [
         "Settings > Permissions > Rule validation"
       ],
