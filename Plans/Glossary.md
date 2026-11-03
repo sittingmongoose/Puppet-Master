@@ -74,7 +74,7 @@ Canonical runtime and provider wording:
 - **Browser automation handoff** -- the Debug workflow pause when PM needs user help with auth, CAPTCHA, one-off repro, or a blocked modal flow. PM pauses the live `automation_session`, focuses the exact browser tab and `/step`, moves the investigation to `attention_required`, and resumes only from the paused step pointer or an explicit retry of the current repro step after the user finishes the requested action.
 - **Package/lane/worktree attribution** -- canonical attribution treats `/package/lane/worktree` lineage as first-class across `/usage` and `/storage`; `tier_id`, `/grouping`, and canonical-ish runtime-data labels are migration/source-lineage hints until mapped to package, seam, lane, worktree, and execution identity owners.
 - **Derived decomposition context (`decomposition_context`)** -- optional derived context may carry human-readable `/titles`, language `/domain/framework`, former tier grouping for help or migration, `subtask-focus` heuristics, and `parent-summary` or `/dependency` prompt conveniences, but it must not override canonical node, package, seam, lane, worktree, or attempt identity.
-- **Storage route identity** -- `Plans/storage-plan.md` / `/storage-plan.md` owns `usage_event_ref`, projection freshness, receipt pivots, bridge semantics, and project-scoped UI state naming for runtime/routing help entries.
+- **Storage route identity** -- `Plans/storage-plan.md` / `/storage-plan.md` owns `usage_event_ref`, projection freshness, receipt pivots, bridge semantics, and explicitly application- or Project-scoped UI state naming for runtime/routing help entries; identity is never the focused Project.
 - **Runtime artifact help** -- `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md` consumes `/Ledger`, `/link`, `task_id`, `cost_usage`, and cross-surface receipt linkage; artifact-panel and task-granularity wording are legacy/source-lineage aliases unless a current owner doc keeps them.
 - **Orchestrator page help** -- `Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` owns historical mode, worktree partitioning, precise usage behavior, `/deep-link`, and `/acceptance` help entries consumed by runtime/routing glossary terms.
 - **Final GUI route copy** -- `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` consumes `route_target` semantics; `resume_url` is not a stronger ad hoc primitive. Stale `Tiers` primary-surface wording is a source-lineage alias for the rewrite Orchestrator tab model, and widget-composition means only `Progress` is widget-composed inside Orchestrator.
@@ -86,9 +86,9 @@ Canonical runtime and provider wording:
 - **Legacy Orchestrator surface vocabulary** -- consumer docs must not revive stale `tier-era` execution terms, `widget-era` non-`Progress` Orchestrator assumptions, `standalone-surface` page models, non-canonical persona fields, or `tier_type` as a core node UI field. `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` keeps `Tiers` only as source-lineage/page-level compatibility wording for the tab-first Orchestrator rewrite, while `/phase` and tier/phase labels remain derived or `compatibility-only` view context.
 - **Widget hostability terms** -- `widget-hostability` and `widget-layout` are compatibility-only vocabulary for non-`Progress` Orchestrator surfaces; `/native` specialized tabs are not widget pages and must not be rebuilt as widget-hosted layouts.
 - **Projection-era event vocabulary** -- rewrite migration replaces `TierChanged`, `IterationStart`, and `TierTree` terms with current run summary, current activity projection, attention `/blocker` projection, seam health projection, package activity projection, promotion queue projection, lane `/worktree` projection, `/usage` account-pressure projection, and recent major events projection.
-- **Projects page runtime status** -- project list cards expose project name and `/path`, language badges, last-opened data, health indicator, and Orchestrator status values `idle/running/paused`; `/running/paused` is a source-lineage shorthand, not a separate state axis.
+- **Projects page runtime status** -- Projects renders `project_summary` and the exact owning status/attention facts: display name, full path, history, online copy and backup state. Health and work are owner projections, not fields in the Project registry. Stale or missing data is disclosed, never shown as healthy, zero or none. Open, Details and More use PJCT-012; `/running/paused` remains source-lineage shorthand, not a new state axis.
 - **Provider/account runtime machinery** -- `/account/model/runtime` is shared provider/account/model/runtime machinery; object families keep different lifecycle semantics and UI surfaces while consuming common `/account`, `/builder`, `/effective`, auth-account visibility, and requested/effective runtime identity.
-- **Plan/runtime projection split** -- GPT audit notes provide historical transfer context for the rule that plan structure and mutable runtime state stay separate; runtime truth lives in events, JSON sidecars, and `/projection` docs rather than plan-shard prose.
+- **Plan/runtime projection split** -- GPT audit notes provide historical transfer context for the rule that plan structure and mutable runtime state stay separate; runtime truth lives in registered events, canonical durable owner records and their derived projections rather than plan-shard prose; DL-270 forbids live JSON mirrors.
 - **Post-rewrite Glossary anchor** -- `Glossary.md` is not a `pre-rewrite` platform-name stub; it anchors `/runtime` and cross-doc meaning for Orchestrator, Source Control, search, history, ledger, and help.
 - **Route payload vocabulary** -- route payloads use canonical surface, `/tab/object`, and object terms; generic `page: string` payloads are retired or constrained when they hide non-canonical tab naming.
 - **Evidence wrapper alias terms** -- `/wrapper/alias` evidence records route, wrapper, and alias verification failures in a structured machine-readable form so a generic evidence model does not hide whether a wrapper command normalized to the canonical target.
@@ -183,7 +183,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 - **Canonical non-rebuildable state** -- a registry-declared durable value whose authority remains in its canonical store. Case L redb families with `canonical_non_rebuildable` recover through mandatory verified backup and MUST NOT be described as generic projections.
 - **Derived rebuildable state** -- a registry-declared index, checkpoint, mirror, or projection that may rebuild only from its materialized, retained, registered source. Rebuild success does not recreate missing canonical authority.
 - **Safe point** -- a runtime recovery anchor for exact worktree state, keyed canonically by `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}`. FileSafe exact-restores its manifest-owned state; it is not a user-facing Assistant Chat restore point.
-- **Restore point** -- an immutable Assistant Chat conversation-boundary record under `rp:{project_id}:{restore_point_id}`. Applying it creates a new thread/branch from the frozen conversation state while leaving the source thread and worktree unchanged. An optional safe-point ref is lineage only and never silently restores files.
+- **Restore point** -- an immutable Assistant Chat conversation-boundary record. The exact historical Project key is `rp:{project_id}:{restore_point_id}`; an app record uses the separately versioned, tagged app/Server binding owned by storage. Applying one creates a new conversation thread from its frozen boundary, preserving the source and restoring no files or Project worktree. It is separate from moving a chat into a Project. An optional safe-point ref remains lineage only.
 - **Storage backup** -- a verified shared-boundary copy of the canonical stores used for recovery and supported downgrade-by-restore. It is selected from startup recovery and applied with canonical stores offline; JSON/JSONL exports are not MVP backups.
 - **Migration journal** -- the storage-owned, crash-decidable state record for schema transition, verification, stamp ordering, rollback, and terminal receipt. It is not a safe point, restore point, or ordinary backup record.
 - **Exact-replace restore** -- FileSafe replacement of the complete manifest-owned state, never merge. Its atomicity is a durable journaled logical transaction with verified pre-restore rollback, per-path durable replacement, post-restore equality, and restart reconciliation; it does not claim a portable whole-worktree rename.
@@ -2099,8 +2099,10 @@ plan_unit_id: G-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: >-
+canonical_text: |-
   Canonical Case L vocabulary distinguishes application and project EventRecord scope, global event and scoped idempotency identity, projector_replay_only and dedupe_unavailable, canonical non-rebuildable versus derived rebuildable state, safe points, Assistant Chat restore points, storage backups, migration journals, exact-replace restore, durable atomic replace, snapshot custody, recovery and legal holds, exact Worktree baseline targets, truthful restore aftermath, and the closed projection freshness and health axes.
+
+  Application Goal, Crew, Assistant Plan/schedule and chat recovery use their deliberately selected scope-aware record/source/hash editions; original Project bytes remain exact. App restore points share the counterpart Server-wide 2,048 limit and the same retention/hold rules. Moving a chat preserves immutable source scope and uses explicit linked destination records or a separately admitted owner rebind; a conversation branch is not conversion or file restoration.
 gui_related: true
 gui_classification_reason: This unit standardizes user-visible and implementer-facing recovery, trust, scope, and storage terms consumed by GUI and non-GUI surfaces.
 split_recommended: false
@@ -2202,47 +2204,8 @@ plan_unit_id: G-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: >-
-  The words for the home centre's panels and tabs have one meaning each (DL-180, DL-181). A panel is a tab group in
-  the home centre: a leaf of the centre's split tree that can hold tabs of any kind (FinalGUISpec F3-630). A side
-  panel is one of the left rail's panels, such as Files, Search or Source Control (F3-481, F3-618); where a home panel
-  could be meant, say side panel, and the rail and the chat keep the cmd.panel.* vocabulary (UCC-138, UCC-203). A tab,
-  or panel tab where it could be confused, is one tab in a panel's strip, with an opaque, stable id whose prefix names
-  its kind; it is separate from the domain object it shows and lives in exactly one panel (F3-635). A tab kind is one
-  of the fifteen kinds of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript,
-  context, record, output (one tab; its channel switches inside it), problems, ports and debug_console. A tool kind is one of output, problems, ports and
-  debug_console, the runtime views that used to sit in the bottom zone; a tools panel is a panel that holds only tool
-  kinds and terminals, where those kinds land beside the terminals (F3-634). A workspace tab is still a project tab,
-  the tab that switches projects (workspace_tab_id, F3-038); where older text says editor/workspace tab for the place
-  a browser opens, it means a panel tab. A page is still a primary page reached from the activity bar, such as Home or
-  Usage; Home is the page that holds the panels, and the pages inside a browser tab are web pages. The Orchestrator
-  page's tabs and other in-page tabs are that page's own views, not panel tabs. A split is a row or a column of
-  panels, each with its own share of the space (F3-630). A named layout is a saved arrangement of the home centre: the
-  four that ship (Home, Build, Terminals 2x2, Focus) and any the user saves (F3-630). A preview tab is a panel's one
-  tab with an italic label that the next single-clicked file replaces, until a double click, an edit or a drag keeps
-  it (F3-634). A pinned tab is an icon-only tab at the left of its strip that never hides (F3-631). A dashboard tab is
-  a tab of kind dashboard showing one widget board; there may be several (F3-638, WS-030). A terminal tab is a tab of
-  kind terminal that holds exactly one terminal session (F3-640, SMPFS-180, G-010). The "+" menu is the menu the "+"
-  after a panel's last tab opens, whose rows open a kind as a new tab or as a new panel; an empty panel shows the same
-  rows as its launcher (F3-632). The "+N" list is the searchable list of a panel's tabs that do not fit, opened from
-  the plain "+N" at the end of its strip (F3-633). The chat column is neither a panel nor a tab (F3-637). Retired
-  words, kept only in lineage and migration text: terminal section, workgroup, sub-tab, quadrant, terminal pane, the
-  four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place; the
-  default Home layout's bottom row is an ordinary panel row.
-  Amended 2026-10-10 (DL-186, DL-187): a board is one widget board of the one board engine, the Usage page's or a
-  dashboard tab's; a dashboard tab shows exactly one board (WS-030). A built-in dashboard is Home, Metrics,
-  Monitoring or Agents, which can be reset but never renamed as a board or deleted; a custom dashboard is one a
-  person made with New dashboard, which they can rename and delete (D35). Start from is the Board menu's choice that
-  replaces a board's widgets with a set: the board's own default, a Usage room's set, the dashboard starter or a
-  saved preset. A preset, or saved preset where a size preset could be meant, is a board's arrangement that a person
-  saved and can rename or delete; it belongs to the person across projects and is applied through Start from. A
-  widget's size preset (WS-017) is always called a size preset where the two could be confused. A session sub-tab is
-  the Debug Console's switch between debug sessions inside its one tab (D33): it is view state, never a panel tab,
-  and it does not revive the retired terminal sub-tab.
-  Amended 2026-10-17 (DL-228, DL-230, Jared): a Usage widget is a card everywhere, on the Usage page, on its
-  boards and on a dashboard tab inside a Home panel: Hide card, Cards in <Room>, "N cards", Move card. The
-  concept's Usage copy is the reference wording with its "panel" read as "card", so a Usage card never reads as
-  a Home panel or the Home panel's Move panel.
+canonical_text: |-
+  The words for the home centre's panels and tabs have one meaning each (DL-180, DL-181). A panel is a tab group in the home centre: a leaf of the centre's split tree that can hold tabs of any kind (FinalGUISpec F3-630). A side panel is one of the left rail's panels, such as Files, Search or Source Control (F3-481, F3-618); where a home panel could be meant, say side panel, and the rail and the chat keep the cmd.panel.* vocabulary (UCC-138, UCC-203). A tab, or panel tab where it could be confused, is one tab in a panel's strip, with an opaque, stable id whose prefix names its kind; it is separate from the domain object it shows and lives in exactly one panel (F3-635). A tab kind is one of the fifteen kinds of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript, context, record, output (one tab; its channel switches inside it), problems, ports and debug_console. A tool kind is one of output, problems, ports and debug_console, the runtime views that used to sit in the bottom zone; a tools panel is a panel that holds only tool kinds and terminals, where those kinds land beside the terminals (F3-634). A workspace tab selects an explicit Project or No project application workspace (workspace_tab_id, F3-038, DL-287); its application variant carries project_id=null plus actual Computer/thread context and remains distinct from a panel tab; where older text says editor/workspace tab for the place a browser opens, it means a panel tab. A page is still a primary page reached from the activity bar, such as Home or Usage; Home is the page that holds the panels, and the pages inside a browser tab are web pages. The Orchestrator page's tabs and other in-page tabs are that page's own views, not panel tabs. A split is a row or a column of panels, each with its own share of the space (F3-630). A named layout is a saved arrangement of the home centre: the four that ship (Home, Build, Terminals 2x2, Focus) and any the user saves (F3-630). A preview tab is a panel's one tab with an italic label that the next single-clicked file replaces, until a double click, an edit or a drag keeps it (F3-634). A pinned tab is an icon-only tab at the left of its strip that never hides (F3-631). A dashboard tab is a tab of kind dashboard showing one widget board; there may be several (F3-638, WS-030). A terminal tab is a tab of kind terminal that holds exactly one terminal session (F3-640, SMPFS-180, G-010). The "+" menu is the menu the "+" after a panel's last tab opens, whose rows open a kind as a new tab or as a new panel; an empty panel shows the same rows as its launcher (F3-632). The "+N" list is the searchable list of a panel's tabs that do not fit, opened from the plain "+N" at the end of its strip (F3-633). The chat column is neither a panel nor a tab (F3-637). Retired words, kept only in lineage and migration text: terminal section, workgroup, sub-tab, quadrant, terminal pane, the four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place; the default Home layout's bottom row is an ordinary panel row. Amended 2026-10-10 (DL-186, DL-187): a board is one widget board of the one board engine, the Usage page's or a dashboard tab's; a dashboard tab shows exactly one board (WS-030). A built-in dashboard is Home, Metrics, Monitoring or Agents, which can be reset but never renamed as a board or deleted; a custom dashboard is one a person made with New dashboard, which they can rename and delete (D35). Start from is the Board menu's choice that replaces a board's widgets with a set: the board's own default, a Usage room's set, the dashboard starter or a saved preset. A preset, or saved preset where a size preset could be meant, is a board's arrangement that a person saved and can rename or delete; it belongs to the person across projects and is applied through Start from. A widget's size preset (WS-017) is always called a size preset where the two could be confused. A session sub-tab is the Debug Console's switch between debug sessions inside its one tab (D33): it is view state, never a panel tab, and it does not revive the retired terminal sub-tab. Amended 2026-10-17 (DL-228, DL-230, Jared): a Usage widget is a card everywhere, on the Usage page, on its boards and on a dashboard tab inside a Home panel: Hide card, Cards in <Room>, "N cards", Move card. The concept's Usage copy is the reference wording with its "panel" read as "card", so a Usage card never reads as a Home panel or the Home panel's Move panel.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false
@@ -2334,21 +2297,10 @@ plan_unit_id: G-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: 'W1–W9 terms (A5/B1/D1–D14/G4, 2026-10-29). Pip: Puppet Master’s mascot/brand and single agent
-  puppet primitive. Pip is not the unrelated tour word pip-done. Project box: The title bar’s option A Tab
-  secondary Project switcher. It does not replace the primary Projects view. Processes: Thread domain and platform
-  item/tab for owner-started processes, scripts, watchers, servers, browser sessions and scheduled work. Processes
-  are not To-Dos or a list of subagents. Question: An agent needs-you item counted once in Agents and its source
-  group. A process prompt is Needs input, not another question count. Needs input: A current detected process
-  prompt requiring a person’s answer. It does not imply a new agent question or authorize protected input.
-  Completion delivery: Per-work agent/user/quiet completion routing, independent of holds_reply. It is not
-  reply blocking or permission to wake a stopped thread. Lost (work): A process absent after owner reconciliation,
-  shown with warning. It is not an invented clean exit. ObservableWork: The shared owner record of work status,
-  scope, lineage and progress; ProcessFacts is subordinate. It is not a view-private process list. Operational
-  Awareness: The owner-derived cross-surface projection of work, agents, ports and freshness. It owns no second
-  runtime or competing list/count. Backgrounded: An ObservableWork runtime state. Task names a To-Do, not background
-  processes. Resources: Third platform work-panel tab for explicit server/environment CPU, memory and ports,
-  sampled only while open. There is no CPU/RAM status-bar item or implicit single-server reading.'
+canonical_text: |-
+  W1–W9 terms (A5/B1/D1–D14/G4, 2026-10-29). Pip: Puppet Master’s mascot/brand and single agent puppet primitive. Pip is not the unrelated tour word pip-done. Project box: The title bar’s option A Tab secondary Project switcher. It does not replace the primary Projects view. Processes: Thread domain and platform item/tab for owner-started processes, scripts, watchers, servers, browser sessions and scheduled work. Processes are not To-Dos or a list of subagents. Question: An agent needs-you item counted once in Agents and its source group. A process prompt is Needs input, not another question count. Needs input: A current detected process prompt requiring a person’s answer. It does not imply a new agent question or authorize protected input. Completion delivery: Per-work agent/user/quiet completion routing, independent of holds_reply. It is not reply blocking or permission to wake a stopped thread. Lost (work): A process absent after owner reconciliation, shown with warning. It is not an invented clean exit. ObservableWork: The shared owner record of work status, scope, lineage and progress; ProcessFacts is subordinate. It is not a view-private process list. Operational Awareness: The owner-derived cross-surface projection of work, agents, ports and freshness. It owns no second runtime or competing list/count. Backgrounded: An ObservableWork runtime state. Task names a To-Do, not background processes. Resources: Third platform work-panel tab for explicit server/environment CPU, memory and ports, sampled only while open. There is no CPU/RAM status-bar item or implicit single-server reading.
+
+  The Project box has a fixed No project row. Processes and Resources can show admitted application work on its named Computer while retaining exact scope and read-only shared-service boundaries. What the build did is an existing ObservableWork/History view of build action receipts and targets, not another action log. Computer, Device and Execution Environment have the distinct meanings in G-032; no invisible current Project supplies a work identity.
 gui_related: true
 gui_classification_reason: Names user-facing PM7 characters, controls and work states.
 split_recommended: false
@@ -2558,3 +2510,181 @@ surface_examples:
 - Resources tab and inspector.
 owner_ref: Plans/FinalGUISpec.md#F3-664
 ```
+
+### G-032 - Settings Levels Computer Device And Owner Things
+
+```yaml
+plan_unit_id: G-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: |-
+  Everywhere is the person's ordinary shared Settings level, not a grant to every account or Project. Computer is the named place doing the work: its PM Server and the Host where a path/program/hardware matters. Its key is tagged Server or execution_host, never an ambiguous raw ID. This computer is the current one. Device is the Client/display/input/speaker context in front of the person. Execution Environment means WSL/container or another existing resource environment under its Host; it is never a new settings level. One native Client/local Server may share a display name through ClientRecord.local_server_id without merging identities.
+
+  Own value means explicitly set at a declared level; Same as everywhere removes that own value. Changed means effective versus factory difference; Varies means other contexts differ; origin names the contributing level, and Details explains it. Keeps your settings names the chosen settings home, whose followers are read-only. A thing is an owner-held record with home, reach, Project switches and whole versions, separate from an ordinary row. Saved setups are detached configuration; Starters / My starters are Project-owned files. Notifications & limits is the copy label. Live counts and canonical row IDs come from the inventory owner, not this vocabulary.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-084
+- DR-085
+- DR-089
+unblocks: []
+acceptance_criteria:
+- Help uses each term consistently and points to its semantic owner.
+- Vocabulary adds no new runtime level, engine, authority or native claim.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: terminology_or_scope_conflation
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Glossary.md
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-061
+- Plans/Settings_System.md#SSYS-063
+- Plans/Server_System.md#SRV-016
+- Plans/Project_System.md#PJCT-011
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#G-032
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- Everywhere
+- Computer
+- Device
+- Execution Environment
+- Changed
+- Varies
+- Details
+negative_constraints:
+- Do not use Computer for Device or Execution Environment, Full for YOLO, or source lineage as execution authority.
+owner_hints:
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-061
+- Plans/Settings_System.md#SSYS-063
+- Plans/Server_System.md#SRV-016
+- Plans/Project_System.md#PJCT-011
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/Settings_System.md#SSYS-061, ContractName:Plans/Settings_System.md#SSYS-063, ContractName:Plans/Server_System.md#SRV-016, ContractName:Plans/Project_System.md#PJCT-011
+
+
+### G-033 - No Project Coverage Conversion And App Workflows
+
+```yaml
+plan_unit_id: G-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: |-
+  No project is a real application chat/workspace with project_id=null, a named work Computer and actual owner/thread/root context, not a hidden Project. Its chat folder is the visible lazy folder for saved files and commands; internal conversation/Plan records do not require one. A workspace tab can select this application workspace or a real Project; a panel tab still belongs to a Home panel.
+
+  Coverage is the quiet, mandatory account of requested sources, looked-in sources, omissions/reasons and partial ranges. A request to another chat uses existing request/spawn/await owners and the receiver's authority; a read grant is not mutation authority. Make a project from this chat and Move this chat into a project are distinct equal conversion choices. A linked successor is a new destination Goal/Plan/Crew record with source lineage, preserving immutable source binding. Rebind means a separately admitted owner association transaction, never ordinary metadata update. Undo lasts until first new work or seven days and cannot erase independent canonical/audit custody.
+
+  App Goals, Crew and the existing admitted collaboration kinds, Plan/Deep Plan, scheduled messages/tasks and app Pause are supported owner variants. Pause is Server-owned operational state, not a preference. Only Planning Wizard, PRD Builder and Orchestrator have no-project workflow gates. Actual Project-target/capability/permission requirements remain separate; Help never calls a moved transcript approval or a nullable field native availability.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-087
+- DR-088
+- DR-091
+- DR-092
+unblocks: []
+acceptance_criteria:
+- Help uses each term consistently and points to its semantic owner.
+- Vocabulary adds no new runtime level, engine, authority or native claim.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: terminology_or_scope_conflation
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Glossary.md
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#G-033
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- No project
+- project_id=null
+- Coverage
+- Undo
+- Rebind
+negative_constraints:
+- Do not use Computer for Device or Execution Environment, Full for YOLO, or source lineage as execution authority.
+owner_hints:
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/assistant-chat-design.md#ACD-510, ContractName:Plans/Goal_Runtime_System.md#GRS-087, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
+
+
+### G-034 - YOLO Full Build Grants And Verified Created Resources
+
+```yaml
+plan_unit_id: G-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: |-
+  YOLO is the runtime yolo automation mode, subject to DAE, FileSafe, trust, secrets, exact task/targets and parent/receiver ceilings. Full is a permission profile, not another word for YOLO. Mode authority is policy authority for admitted work, not a fabricated human approval or durable Always choice.
+
+  A build grant is the person's approval of one exact Project Plan/build's enumerated operations and resources. It does not travel to an app Goal, child with a wider ceiling or another Project through a message. A created-resource manifest records verified stable identity/generation and the grant's create receipt. Merely naming a pre-existing resource, a matching name/prefix or a namespace does not prove created ownership or authorize every child. Grant cleanup differs from ordinary YOLO's retained destructive-action asks, and never permits protected/main force-push. What the build did is the shared work/History view of real action targets/authority/outcomes. Stop uses the existing run owner; Undo means an eligible owner inverse, compensation is labeled as such, and No safe Undo states that no safe inverse exists.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-090
+unblocks: []
+acceptance_criteria:
+- Help uses each term consistently and points to its semantic owner.
+- Vocabulary adds no new runtime level, engine, authority or native claim.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: terminology_or_scope_conflation
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Glossary.md
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Run_Modes.md#RM-053
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#G-034
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- YOLO
+- Full
+- build grant
+- What the build did
+- No safe Undo
+negative_constraints:
+- Do not use Computer for Device or Execution Environment, Full for YOLO, or source lineage as execution authority.
+owner_hints:
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Run_Modes.md#RM-053
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md#PS-146, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/Run_Modes.md#RM-053

@@ -670,15 +670,15 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 ### Settings System ownership map (2026-08-31)
 
-`Plans/Settings_System.md` is the sole owner for the Settings surface and information architecture, every persisted ordinary setting's Project binding, fresh/no-Project defaults, All Settings search/facets/variable-height virtualization, atomic mutation and Restore Defaults, one-time exact-ID Project transfer, Settings manager grammar, and Settings-to-owner routing.
+`Plans/Settings_System.md` SSYS-002/059–065 is the sole owner for the Settings surface, per-row declared levels and effective resolver, one-writer level records, fresh and No project defaults, All Settings search/facets/virtualization, atomic mutation/reset, detached exact-ID copy, manager home/reach/version grammar and Settings-to-owner routing. DR-084/085/089 keep the resolver, copy and account-readiness engines single.
 
 The owner split is strict:
 
-- `Plans/settings_inventory.json` and its schema retain the exact 1010 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
+- `Plans/settings_inventory.json` and its schema own the reviewed ordinary-setting census and row metadata. 1010 is the pre-pass baseline, not a fixed final denominator; accepted additions and dispositions are counted after registration. The 38 manager keys are unchanged. Managers, actions, status, diagnostics, setup and unavailable-capability destinations are outside the row denominator.
 - `Plans/FinalGUISpec.md` retains shared GUI/theme-token ownership and consumes Settings placement; its earlier Settings shell/global/inheritance clauses are superseded where SSYS-001..SSYS-023 adjudicate them.
 - Storage, Permissions/FileSafe/Multi-Account, Shared Integration Runtime, Commands/Catalog/Wiring, provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain their named domain contracts. Settings renders policy, compact projections, exact availability, owner commands, receipts, and routes without implementing peer runtimes.
 - K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage only, not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
-- Every persisted ordinary setting is Project-scoped. An untouched fresh Project seeds Basic Dark only when no committed theme snapshot exists; an explicit saved selection or copied detached snapshot wins. A no-Project surface is ephemeral Basic Dark and rejects writes. The current inventory's non-Project scope vocabulary remains a deferred normalization, not contrary persistence authority.
+- Ordinary values use Default → Everywhere → the offered Computer or Device level → Project when present → existing owner/chat/run/tab levels, with Managed and protective combinations as SSYS-059 declares. No project omits Project and permits offered-level writes; it is not an ephemeral-only mode. Explicit stored values win over a fresh seed. The first frame reads the Settings-resolved look without a Basic Dark flash. q-035 is resolved by DL-281; no ledger source history is rewritten.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
@@ -705,7 +705,7 @@ This table is an ownership router, not a peer product owner. Later accepted owne
 |---|---|
 | Project/Vault/app-content sync, move, source relocation, update, or Sync-bundle behavior attributed generically to “Project Sync/Backbone” | `Plans/Project_Sync_and_Backbone.md` PSB-001 through PSB-003. |
 | Runtime resource quotas/governor behavior in `storage-plan.md` SP-228/SP-229 | Retired as behavior authority; `Plans/Shared_Integration_Runtime.md` SIR-006 is sole governor owner and Storage persists values only. |
-| Settings inheritance-only, global-persistence, or no-import/export clauses | `Plans/Settings_System.md` SSYS-001, SSYS-002, SSYS-007, SSYS-008, and SSYS-009 own current behavior; `Plans/settings_inventory.json` remains the 1010-ID machine inventory, with non-Project scope vocabulary deferred for normalization rather than treated as persistence authority. |
+| Settings inheritance-only, global-persistence, or no-import/export clauses | SSYS-002/059–065 and DR-084/085 own the accepted ladder, single writers and detached copy. q-035 is resolved in canon. Inventory `layering` determines offered levels; census is recomputed after accepted additions. Source-memory ledgers remain lineage only. |
 | One broad onboarding flow | Product Onboarding: `Plans/Planning_Wizard.md`/Final GUI; Installation/Deployment: SIR-003 plus Release Supply Chain/domain installer; Server Claim/Bootstrap: SIR-013. Project-content movement remains the separate downstream PSB service; visible routing is SMPFS-146. |
 | Doctor behavior spread across feature owners | `Plans/newtools.md` N2-151 owns the registry/router; domain owners retain probe truth and remediation. |
 | Workspace cleanup attributed to Storage or Worktree | `Plans/MiscPlan.md` M-084 is sole cleanup manager; Storage persists and Worktree supplies lifecycle facts. |
@@ -2127,8 +2127,10 @@ plan_unit_id: 0PI-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: >-
+canonical_text: |-
   The approval compatibility boundary preserves request_id to blocked_sequence as lineage routing, canonical blocked episode resolution before runtime mutation, approval_scope_key, ordered allowed_action_ids[], and the negative constraint that allowed_actions is not revived as a peer field family or generic approval widener.
+
+  The blocked_sequence/node form remains the Orchestrator compatibility branch. PS-145/148 and CV-365 define a separate scope-aware ordinary chat tool-approval envelope with real thread/run/Computer/tool/target; no fake node or blocked sequence is introduced for application work. Human, mode and build_grant authority stay distinct, and the owner's current approval/decline route is reused.
 gui_related: false
 gui_classification_reason: The unit records compatibility and runtime mutation boundary semantics rather than GUI behavior.
 split_recommended: false
@@ -2550,8 +2552,10 @@ plan_unit_id: 0PI-028
 unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
-canonical_text: >-
+canonical_text: |-
   The Plan map table widgets/config/media/wiring rows preserve Widget_System, Run_Graph_View, Orchestrator_Page, GUI checklist, Executor_Protocol, UI_Wiring_Rules, provider reference docs, BinaryLocator, Run_Modes, Personas, Permissions, Commands, Skills, Plugins, Formatters, Models, Media Generation, OpenCode Coverage Matrix, and Wiring Matrix scopes.
+
+  Current Settings, app workflow and Projects routing is registered by 0PI-069. Widget layouts and Home layout remain distinct owner records, now with explicit app/Project variants; app Goal/Crew/Plan/schedule availability does not admit Project-only Wizard/PRD/Orchestrator engines or change widget hostability.
 gui_related: true
 gui_classification_reason: The table rows cover widgets, graph view, orchestrator tabs, GUI checklist, UI wiring, permissions/settings, commands, skills/plugins/formatters/models/media GUI, and wiring matrix.
 split_recommended: false
@@ -6243,3 +6247,82 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-224, ContractName:Plans/Decis
 DL-230 quotes Jared's answers of 2026-10-17 and maps each to its owners. A family switch is live under the look's cover, and the restart rule is retired (F3-077, F3-244, F3-430). Planning is about half of the tour, which the accepted tour meets; the tour will be redone after the chat port and the Planning Wizard redesign (PWIZ-023, F3-521). The wallpaper gallery's arrows choose as they move (F3-653, SSYS-054). The editor sheet's opening guard stands (F3-650). Saved named layouts belong to the person in `home_named_layouts:v1`, their dashboard boards per project (F3-630, SP-330, UCC-200, CV-361). Testing's Errored uses the shared failed mark (F3-619). The concept's plain Settings wording is adopted with search aliases and option_labels (F3-441, DR-068). Six Usage rows are bound, chart-type starts new charts, and ledger-page-size and CSV export retire (UF-107). A Usage widget is a card everywhere (G-030, UF-093, F3-628). Glass under reduced transparency or more contrast has no requirement (F3-652). No governance reseal or native certification is claimed.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-230, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Glossary.md#G-030, ContractName:Plans/FinalGUISpec.md#F3-652
+
+### 0PI-069 - Pass Two Settings No Project Automation And Projects Owner Map
+
+```yaml
+plan_unit_id: 0PI-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: |-
+  Current pass-two ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models for its lead-accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+
+  ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
+
+  PJCT-009/PWIZ-037 owns shared reviewed setup/FO-22 and N15 Later; PJCT-010/FGI-023/024 owns admitted per-service create/recovery/contribution; SCS-025/JJI-023 owns inspection/native backend/Settings-only format; PJCT-011 owns Starters separately from Saved setups; PJCT-012 owns Split Project metadata/actions and BRS-032/033 owns Standard backup/archive/app restore lineage. PS-144–148, RM-053, CRAU-104 and HITL-038 own human/mode/build-grant admission; OSI-441 is the narrower child consumer, not a grant issuer.
+
+  CV-365–368 and SP-348–353 own the shared explicit scope/selected-version/hash/key/source/custody graphs; SP-353 is the dedicated permission snapshot/build-grant/manifest/revocation owner. The finite Plans/projects_refresh_command_bindings.json (pm.projects_refresh_command_bindings.v1) is a static packaged/import input owned by UCC-214, not native dispatch or runtime authority. Commands/Catalog/Matrix retain sole existing/new routes; UIW-048–052 and exact touch sources bind consumers, F3-668–674 renders them, WS-031 supplies app boards without hostability expansion, ATS-080–085 and TCME-007/008 define acceptance/evidence. DL-280–299 records approval and precise supersession; G-032–034 owns vocabulary. Preserve DL-270 substrate and exact historical bytes, DL-273 retirement/token deferral, current FO-22/Glass/return guards and every native NOT_RUN boundary. Canonical acceptance and generated indexes never create native handlers, Event Authority, executable queues, WorkNodes, readiness or governance seal.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-084
+- DR-085
+- DR-086
+- DR-087
+- DR-088
+- DR-089
+- DR-090
+- DR-091
+- DR-092
+unblocks: []
+acceptance_criteria:
+- Every approved card/default and request is routed to one semantic owner; shared consumers never implement peer engines.
+- Latest no-project rulings, resolved q-035, precise historical supersession and admitted service limits are coherent.
+- This is owner routing and indexability only, not runtime/readiness/governance or a ledger compile.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: owner_route_or_supersession_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/00-plans-index.md
+- Plans/Settings_System.md#SSYS-059
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Project_System.md#PJCT-009
+- Plans/Permissions_System.md#PS-147
+- Plans/Contracts_V0.md#CV-365
+- Plans/storage-plan.md#SP-348
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#0PI-069
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- q-035
+- No project
+- Starters
+- Saved setups
+- DL-280–299
+negative_constraints:
+- Do not revive retired services, older no-project workflow bans, duplicate writers/registries, source-memory authority
+  or native proof from routing.
+owner_hints:
+- Plans/Settings_System.md#SSYS-059
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Project_System.md#PJCT-009
+- Plans/Permissions_System.md#PS-147
+- Plans/Contracts_V0.md#CV-365
+- Plans/storage-plan.md#SP-348
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019, ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/storage-plan.md#SP-348

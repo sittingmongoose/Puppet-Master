@@ -217,7 +217,11 @@ Evidence for a changed surface identifies the exact subject and configuration an
 
 Capture cadence and health follow sections 2 and 4; raw and derived identities, provenance, and retention follow section 6 and its named owners. Evidence binds delivered-frame indexes and findings to exact subject, artifact, and configuration identities. Findings identify scenario/frame ranges, severity, disposition, repair, and replacement-capture references. Unresolved findings, missing replacement capture, incomplete review, or stale/mixed hashes cannot pass an evidence gate. Derived contact sheets or exports never replace original capture evidence.
 
+Additional pass-two scenarios are mandatory where touched: the Settings ladder, origin-word Details, Changed plus 1px control outline, offered-level menus, Varies, reset and detached copy/History/Undo; all 38 managers' home/reach/version and readiness states; the Split Projects library/detail states and every New Project source, source-inspection, online-copy, Starter, backup and recovery branch; No project selection, lazy folder, truthful Computer/offline state, full conversion/report/Undo and late-return races; explicit cross-project read coverage/incoming request; app Goal/Crew/Plan/Deep Plan and scheduled task/message cards, exact versions, Schedule Manager and app Pause/Stop; human/mode/build-grant review, live targets, Stop/revocation and No safe Undo; and session-bound computer-use strip/Stop without capturing protected input. Positive availability and typed unavailable/offline/stale/error states are separate cases. Test app and Project Home/board/layout context, all ten built-in look variants, Reduced Motion, narrow/long-content reflow, pointer/keyboard/focus and source-native capture-return identity. A stage awaiting native support remains an explicit not_run/unavailable scenario, never an omitted pass.
+
 Browser-concept evidence never certifies native Slint rendering, real platform integration, production handlers, assistive technology, network/WAN behavior, backup media, SCM providers, old hardware, or native performance. Concept-host costs are reported separately and never subtracted (Plans/Decision_Log.md#DL-217).
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-080, ContractName:Plans/Automated_Testing_System.md#ATS-085, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674, ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/Tools.md#T-186
 
 ## Owner / Consumer Map
 
@@ -416,14 +420,10 @@ plan_unit_id: TCME-007
 unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Test_Capture_and_Motion_Evidence.md
-canonical_text: >-
-  Capture evidence binds declared system and animation scenarios, delivered-frame cadence, review findings,
-  repairs, and replacement captures to exact subject, artifact, and configuration identities. Missing scenarios,
-  unresolved findings, incomplete review, stale or mixed identities, and missing replacement capture remain
-  failures or explicit evidence gaps. Raw/derived identity, capture integrity, provenance, and retention remain
-  governed by TCME-001 through TCME-004 and the named permission, artifact, and storage owners. Browser-concept
-  evidence never becomes native Slint or production-runtime certification. Concept-host costs are reported
-  separately and never subtracted (Plans/Decision_Log.md#DL-217).
+canonical_text: |-
+  Capture evidence binds declared system and animation scenarios, delivered-frame cadence, review findings, repairs, and replacement captures to exact subject, artifact, and configuration identities. Missing scenarios, unresolved findings, incomplete review, stale or mixed identities, and missing replacement capture remain failures or explicit evidence gaps. Raw/derived identity, capture integrity, provenance, and retention remain governed by TCME-001 through TCME-004 and the named permission, artifact, and storage owners. Browser-concept evidence never becomes native Slint or production-runtime certification. Concept-host costs are reported separately and never subtracted (Plans/Decision_Log.md#DL-217).
+
+  Section 10 also covers the full approved pass-two Settings/Projects/No project/app workflow/grant and computer-use scenario matrix. Each capture and finding joins the exact subject bytes/hash, schema/command/binding edition, app or Project/Computer context, theme/motion/viewport, scenario and delivered frame range. Late delivery preserves the original thread and composer destination or refuses before mutation. Report every omitted/not_run/blocked scenario and native gap explicitly. Computer-use consent does not authorize protected authentication capture, persistence of screen frames in chat, or a second capture service.
 gui_related: true
 gui_classification_reason: This unit governs scenario coverage and the integrity and declared scope of visual, motion, and interaction evidence.
 depends_on: [TCME-001, TCME-002, TCME-003, TCME-004]
@@ -484,8 +484,10 @@ plan_unit_id: TCME-008
 unit_type: command_binding
 status: accepted
 owner_doc: Plans/Test_Capture_and_Motion_Evidence.md
-canonical_text: >-
+canonical_text: |-
   Test Capture and Motion Evidence owns exactly 10 additional central command routes. Each command maps to the sole future handler shown in this addendum, consumes the existing owner-DRY request/result/error/availability/permission family, starts handler_unavailable, and earns no native implementation credit from a target string or production-intent row.
+
+  Existing ten command IDs and sole handlers remain; the pass adds reverse consumers and explicit scope-aware target/return variants only where the capture owner admits them. A No project capture binds its real Server/Host/Environment/thread/session and permitted target, never the focused Project. Selection or conversion cannot retarget an active capture or late attachment. Native absence and protected-auth exclusion stay unchanged.
 gui_related: true
 gui_classification_reason: Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named consumers expose some or all of these 10 commands and their exact disabled reasons.
 depends_on: [TCME-004, TCME-007]

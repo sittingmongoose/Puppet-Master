@@ -112,7 +112,7 @@ Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 
 | Aspect | Owner doc | Consumer docs |
 |---|---|---|
-| Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
+| Binding data model (0..1 worktree per thread; No project has none) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
 | Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
 | Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
 | Settings (10 keys) | assistant-chat-design.md | Settings_System.md, storage-plan.md, FinalGUISpec.md |
@@ -142,9 +142,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Pol
 
 ### 3.6A Settings system ownership
 
-`Plans/Settings_System.md` is the sole owner for the Settings shell and information architecture, all persisted ordinary setting values' Project binding, fresh/no-Project defaults, All Settings search/facets/variable-height virtualization, atomic mutation and Restore Defaults, detached exact-ID Project transfer, manager grammar, and Settings-to-domain routing.
+`Plans/Settings_System.md` SSYS-002/059–065 owns the Settings shell, ordinary-row classification and ladder, exact effective-value resolution, one writer per level, first paint, search/facets, mutation/reset, detached exact-ID copy and manager home/reach/whole-version grammar. DR-084/085/089 keep the resolver, copy and account-readiness engines single. A No project context skips Project and may read/write offered levels under actual authority.
 
-`Plans/settings_inventory.json` remains the 1010-ID ordinary-setting machine inventory (PM7 SSYS-056/057 admission). Its scope metadata routes applicability and domain ownership but does not authorize non-Project persistence. `Plans/FinalGUISpec.md` retains shared application-shell and theme-token ownership; Storage retains physical persistence; Permissions/FileSafe/Multi-Account retain authority and credential custody; Shared Integration Runtime plus Commands/Catalog/Wiring retain lifecycle commands; provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain runtime truth. Settings consumes those owners and must not implement peer operations.
+`Plans/settings_inventory.json` is the reviewed ordinary-row inventory; 1010 is the pre-pass starting count and the admitted additions require a recomputed census. Its `layering` metadata declares offered levels, combine operator and unavailable-level reasons. q-035 is resolved by DL-281, not still a non-Project persistence ban. Manager keys remain 38. `Plans/FinalGUISpec.md` retains shared application-shell and theme-token ownership; Storage retains physical persistence; Permissions/FileSafe/Multi-Account retain authority and credential custody; Shared Integration Runtime plus Commands/Catalog/Wiring retain lifecycle commands; provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain runtime truth. Settings consumes those owners and must not implement peer operations.
 
 K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage, not runtime authority or certification. Later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions supersede K3 content and behavior through SSYS-001..SSYS-017.
 
@@ -1000,11 +1000,10 @@ plan_unit_id: C-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  Assistant thread worktree binding is owned by assistant-chat-design, with the
-  owner table preserving binding data model, seglog events, commands, settings,
-  merge-back, pre-merge test gate, Source Control accordion/filter, worktree
-  record extension, FileManager toggle, and LSP root identity consumers.
+canonical_text: |-
+  Assistant thread worktree binding is owned by assistant-chat-design, with the owner table preserving binding data model, seglog events, commands, settings, merge-back, pre-merge test gate, Source Control accordion/filter, worktree record extension, FileManager toggle, and LSP root identity consumers.
+
+  Current cardinality is 0..1: genuine application threads have no Project worktree and use their actual Computer/chat-folder or granted root. Project worktree commands still need their real Project/repository/backend/lease. A missing binding never resolves to main or a synthetic Project.
 gui_related: true
 gui_classification_reason: The owner table includes settings, Source Control accordion/filter, FileManager toggle, and other user-visible controls.
 split_recommended: false
@@ -1532,12 +1531,10 @@ plan_unit_id: C-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  Rewrite-era cross-cutting field families, event names, account IDs,
-  account-routing semantics, requested/effective runtime resolution, stable
-  command IDs, command arguments, Glossary terms, and execution-core semantics
-  route to their owner docs, while UI_Command_Catalog does not own the deeper
-  route ontology by itself and structural owner-doc debt remains explicit.
+canonical_text: |-
+  Rewrite-era cross-cutting field families, event names, account IDs, account-routing semantics, requested/effective runtime resolution, stable command IDs, command arguments, Glossary terms, and execution-core semantics route to their owner docs, while UI_Command_Catalog does not own the deeper route ontology by itself and structural owner-doc debt remains explicit.
+
+  Application scope is the explicit CV-365/366 union, not a focus fallback. SSYS-059/060 owns level resolution/writers, ACD-508–511 owns No project and conversion, and GRS-086/087, CWR-045, APR-073/074 and SQR-019/020 own app workflows. Registry scope changes require selected versions and complete source/read/backup custody, not universal nullable codecs.
 gui_related: false
 gui_classification_reason: This unit defines owner routing and structural debt rather than UI presentation.
 split_recommended: true
@@ -3458,19 +3455,10 @@ plan_unit_id: C-052
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Crosswalk.md
-canonical_text: >-
-  The post-integration Forge, Backup, and PM-managed connector transaction routes
-  every semantic field to its existing domain owner and every cross-surface open,
-  continuation, and reverse-navigation flow through CV-327. Forge Integrations
-  owns distinct Forgejo/Gitea profiles, RepositoryForgeBinding, independent
-  AutomationBinding, and the sole repository_automation / Actions & Pipelines
-  occupant. Backup Restore owns destinations, repositories, RecoverySet/Kit,
-  immutable snapshots/capture sets, retention, browse/retrieve, and RestoreRun.
-  Source Control/JJ supply native closure and reconciliation only. Server owns
-  server_id/trust/pairing; Remote Access owns the PM connector and route provenance;
-  shared auth/runtime/storage owners retain their existing primitives and custody.
-  Crosswalk selects and orders these owners without copying their schemas, commands,
-  handlers, state machines, events, or runtime claims.
+canonical_text: |-
+  The post-integration Forge, Backup, and PM-managed connector transaction routes every semantic field to its existing domain owner and every cross-surface open, continuation, and reverse-navigation flow through CV-327. Forge Integrations owns distinct Forgejo/Gitea profiles, RepositoryForgeBinding, independent AutomationBinding, and the sole repository_automation / Actions & Pipelines occupant. Backup Restore owns destinations, repositories, RecoverySet/Kit, immutable snapshots/capture sets, retention, browse/retrieve, and RestoreRun. Source Control/JJ supply native closure and reconciliation only. Server owns server_id/trust/pairing; Remote Access owns the PM connector and route provenance; shared auth/runtime/storage owners retain their existing primitives and custody. Crosswalk selects and orders these owners without copying their schemas, commands, handlers, state machines, events, or runtime claims.
+
+  PJCT-009/PWIZ-037 owns shared reviewed setup; PJCT-010/FGI-023/024 owns each admitted create/fork handoff and recovery; SCS-025 owns read-only source inspection and local remote.add; PJCT-011 owns Starters separately from detached Saved setups. BRS-032/033 owns first-policy absent-key CAS, Standard retention, archive pause and Full Server app custody/restore lineage. PS-146/147/148 alone determines human/mode/build-grant authority. This expansion preserves DL-273 service retirement/token deferral and all exact existing receipt routes.
 gui_related: true
 gui_classification_reason: This boundary controls the visible Actions & Pipelines migration, exact snapshot/filter/focus return, Bootstrap recovery scope, endpoint provenance, and all consumer handoffs.
 split_recommended: false
@@ -3569,3 +3557,82 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decis
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### C-053 - Pass Two Settings App Workflow And Projects Owner Routing
+
+```yaml
+plan_unit_id: C-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: |-
+  Current pass-two ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models for its lead-accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+
+  ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
+
+  PJCT-009/PWIZ-037 owns shared reviewed setup/FO-22 and N15 Later; PJCT-010/FGI-023/024 owns admitted per-service create/recovery/contribution; SCS-025/JJI-023 owns inspection/native backend/Settings-only format; PJCT-011 owns Starters separately from Saved setups; PJCT-012 owns Split Project metadata/actions and BRS-032/033 owns Standard backup/archive/app restore lineage. PS-144–148, RM-053, CRAU-104 and HITL-038 own human/mode/build-grant admission; OSI-441 is the narrower child consumer, not a grant issuer.
+
+  CV-365–368 and SP-348–353 own the shared explicit scope/selected-version/hash/key/source/custody graphs; SP-353 is the dedicated permission snapshot/build-grant/manifest/revocation owner. The finite Plans/projects_refresh_command_bindings.json (pm.projects_refresh_command_bindings.v1) is a static packaged/import input owned by UCC-214, not native dispatch or runtime authority. Commands/Catalog/Matrix retain sole existing/new routes; UIW-048–052 and exact touch sources bind consumers, F3-668–674 renders them, WS-031 supplies app boards without hostability expansion, ATS-080–085 and TCME-007/008 define acceptance/evidence. DL-280–299 records approval and precise supersession; G-032–034 owns vocabulary. Preserve DL-270 substrate and exact historical bytes, DL-273 retirement/token deferral, current FO-22/Glass/return guards and every native NOT_RUN boundary. Canonical acceptance and generated indexes never create native handlers, Event Authority, executable queues, WorkNodes, readiness or governance seal.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-084
+- DR-085
+- DR-086
+- DR-087
+- DR-088
+- DR-089
+- DR-090
+- DR-091
+- DR-092
+unblocks: []
+acceptance_criteria:
+- Every approved card/default and request is routed to one semantic owner; shared consumers never implement peer engines.
+- Latest no-project rulings, resolved q-035, precise historical supersession and admitted service limits are coherent.
+- This is owner routing and indexability only, not runtime/readiness/governance or a ledger compile.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: owner_route_or_supersession_drift
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Crosswalk.md
+- Plans/Settings_System.md#SSYS-059
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Project_System.md#PJCT-009
+- Plans/Permissions_System.md#PS-147
+- Plans/Contracts_V0.md#CV-365
+- Plans/storage-plan.md#SP-348
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#C-053
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- q-035
+- No project
+- Starters
+- Saved setups
+- DL-280–299
+negative_constraints:
+- Do not revive retired services, older no-project workflow bans, duplicate writers/registries, source-memory authority
+  or native proof from routing.
+owner_hints:
+- Plans/Settings_System.md#SSYS-059
+- Plans/assistant-chat-design.md#ACD-508
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Project_System.md#PJCT-009
+- Plans/Permissions_System.md#PS-147
+- Plans/Contracts_V0.md#CV-365
+- Plans/storage-plan.md#SP-348
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019, ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/storage-plan.md#SP-348

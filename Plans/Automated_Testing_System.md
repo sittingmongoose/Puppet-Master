@@ -1650,76 +1650,188 @@ plan_unit_id: ATS-020
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  Automated acceptance consumes PWIZ-021's exact v2 main, connect-existing and explicit Project Later graphs.
-  First Project selections persist an uncreated draft; Settings copy requires explicit source selection and owner preview.
-  Only owner-authorized read-only preflight or necessary selected-source authentication may run before commit.
-  Exact Review and PJCT-007 binding admit one Project-owner commit chain; actual listed/persisted Project and required
-  owner results then admit paid-provider setup followed by Free Models, including after paid Skip. Close/resume/Back
-  never undo or replay commit. Four-screen/provider-first, five-stage, seven-stage and predecessor nine-stage records
-  migrate with path-correct counts and no auto-confirmation or owner-work replay; unresolved drafts return to unconfirmed
-  Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance
-  consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
-  `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
-  same-answer ELI5 as one extra, simpler reply from Explain this reply simply with the original reply unchanged (DL-126),
-  about half of meaningful actions and dwell in Planning (amended 2026-10-17, DL-230: it read at least half; the
-  accepted 20-step tour meets it), safe checkpoint recovery, and no work
-  started. Its eleven typed tour actions include Show Me but exclude the separate retired restore/keep-layout and
-  tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish
-  layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain
-  required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct.
-  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
-  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+canonical_text: |-
+  Automated acceptance preserves PWIZ-021's exact historical v2 graphs/replay and consumes PJCT-009/PWIZ-037's current shared setup paths, applicability and stage census. First Project selections persist an uncreated draft; Settings copy requires explicit source selection and owner preview. Only owner-authorized read-only preflight or necessary selected-source authentication may run before commit. Exact Review and PJCT-007 binding admit one Project-owner commit chain; for Project-bound setup, actual listed/persisted Project and required owner results then admit paid-provider setup followed by Free Models, including after paid Skip. N15 Later instead admits protected app AI setup on its named Computer without a Project commit, then lands in No project. Close/resume/Back never undo or replay commit. Four-screen/provider-first, five-stage, seven-stage and predecessor nine-stage records migrate with path-correct counts and no auto-confirmation or owner-work replay; unresolved drafts return to unconfirmed Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates, same-answer ELI5 as one extra, simpler reply from Explain this reply simply with the original reply unchanged (DL-126), about half of meaningful actions and dwell in Planning (amended 2026-10-17, DL-230: it read at least half; the accepted 20-step tour meets it), safe checkpoint recovery, and no work started. Its eleven typed tour actions include Show Me but exclude the separate retired restore/keep-layout and tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain required. Static, browser-concept, native runtime, accessibility, motion-quality, and visual evidence remain distinct. DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal; no retired Source Control service or hosted variant remains an optional selection or automation provider.
 
+  Current tests retain FO-22 current-answer applicability, valid Back/forward history, abandoned-branch invalidation and fresh Review after Edit. The approved intake covers six ways in, equal Git/JJ choices, selected-source read/auth only before commit and the current service admission at entry/resume/activation. Exact current owner return/readiness/phase results replace hard-coded predecessor stage counts. Static, concept, native, assistive-technology and motion verdicts stay separate.
 gui_related: true
 gui_classification_reason: Validates modal onboarding, optional three-chapter tour, owner-return states, accessibility, errors, and truthful Doctor/Health presentation.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, ACD-484, T-088, T-089, MI-028, MI-029, F2-155, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
-  - Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client` are omitted rather than silently executed.
-  - Tests enforce the exact fourteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look (DL-153); `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
-  - Precommit tests reject every owner dispatch except current owner-authorized read-only preflight or necessary selected-source authentication; actual owner request shape/hash, permission, capability, consent, source/draft/revision, Client/Host, focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never authorize work.
-  - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}` through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
-  - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null` and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none|null` axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than replaces the selected backend.
-  - Selected-source first-time sign-in consumes MACS-005 with null pre-existing Project/profile/account/install identities and protected human consent; only the auth owner allocates verified identity. FGI-011 account/container listing has no phantom repository/Project and cannot create/bind/publish. Actual repository and content mutations remain in the exact reviewed Project-owner chain; Onboarding never claims account creation.
-  - Forgejo/Gitea fixtures retain distinct instances/adapters, HTTPS/API base paths, SSH/custom port, scoped CA/known-host refs, product/version/API/Git/Actions currentness, PAT default and registered-flow-only OAuth PKCE. PWIZ-021's necessary-source read/auth admission is tested separately from forbidden precommit trust, repository mutation, filesystem write and automation; no secret bytes enter durable Onboarding state.
-  - "Server/Storage/Client and Remote Access remain independent owner-routed stages. Read-only selected-route discovery is not pairing/trust; identity/certificate mismatch blocks, and restore retains preview/preflight/verification/rollback/default secret exclusion. The source-auth exception cannot bypass Server/Remote Access/Restore mutation fences."
-  - "`review_setup_plan` shows the current path, revision, queued choices, consequences, and approved-plan hash. `Confirm and prepare` is person-confirmed, rejects stale/unconfirmed/expanded plans, dispatches the approved work at most once, and adds no redundant confirmation step."
-  - Automatic Preparation begins only after that confirmation, uses current owner projections and safe defaults, never silently invents probes or mutations across owner/security boundaries, and leaves provider/tool setup optional and deferrable.
-  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v2` across the owner-defined states/progress modes with exact session/draft/Project-commit/path/target/review/hash/continuation fences; stale results cannot replace state, and this phase cannot begin broad provider setup before actual Project commit.
-  - Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections cannot carry production readiness, native execution, or a production receipt.
-  - Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted, exported, replayed, or exposed to agents/adapters.
-  - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and current admitted-provider selections, with retired service or hosted-variant inputs refused under DL-273/PWIZ-024 without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
-  - Draft choices cause zero mutation. Only exact precommit read/source-auth admission permits those existing owner commands; current Review permits at most one Project commit chain, and matching terminal results advance without repeated Continue/confirm clicks. Tests reject acknowledgement-only, unlisted/unpersisted, wrong-Project/hash and unsettled selected-Settings results as commit proof.
-  - Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes Guided Tour secondary and optional; tour terminal behavior is validated against PWIZ-023's default restoration or explicit Keep followed by the real Planning Wizard, and exact Skip restoration.
-  - Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler exists.
-  - Request/result fixtures validate pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, and exact error/disabled reasons. All local results have no production receipt.
-  - local_context consumes PWIZ-021's closed v2 required/null/gated fields and phase-specific preflight/commit proofs rather than a testing-owned field list; missing, extra, raw, ambiguous and secret-bearing fields fail closed. Exact actual request/result/draft joins are exercised in addition to shape validation.
-  - Draft persistence tests validate every current Session through the deterministic offline existing-family bundle, bind the approved hash to actual bounded draft bytes, reject missing/tampered draft bodies, and fail schema/field/key drift in the standard contract gate. The physical-family and retention-policy denominators remain 88 and 24; this does not prove a native adapter.
-  - Settings tests require source/draft revision, exact eligible/explicit setting sets, exclusions, expiry and preview hash, reject draft apply, and require actual Project rebind plus ordinary current apply. Paid-provider Skip still offers Free Models, both phases require actual commit, and Close/resume/Back preserve that Project and settled phases.
-  - Tests separately cover more_ways setup/project disclosure (`toggle_setup_options` plus matching choice/scope and null branch) and branch-local update (`update_branch_state`, null choice, canonical branch), rejecting mixed or ambiguous combinations.
-  - Tests separately cover whole-session Skip (`skip_product_onboarding`, product_onboarding, null choice -> session_skipped/skipped) and optional Project/Remote-Access Skip (`skip_optional_scope` plus matching choice/scope/branch -> optional_scope_skipped/active), rejecting cross-normalization and false global skipped state.
-  - Defer must durably preserve exact path, stage, draft selections, review revision/confirmation state, independent local-backend and forge selections, active branch, bounded history, continuation generation, initiating Client, and return-focus identity before modal dismissal; resume restores that snapshot. Close is a non-completion dismissal with exact focus return, Skip records an explicit skipped session, and Details opens/closes ephemerally on the same stage with no persistence or owner command.
-  - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, the exact stage scope, a stable help-topic selection ref, and exact expanded state; it is keyboard reachable, accessibility-linked, same-stage, ephemeral, non-persistent, and owner-route-free.
-  - The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are each rejected as commands, aliases, handlers, and production-wiring rows; the eleven UCC-106 command-era tokens retain their separate source-lineage count.
-  - Migration tests cover four/five/seven/nine-stage predecessors using PWIZ-022/SP-252, preserve admissible choices/warnings/real owner results, quarantine secrets, return unresolved drafts to unconfirmed Review, and resume committed rows only with exact per-row revalidated Project/owner refs. Accepted/stale/dropped/quarantined/stage/path/committed-resume counts reconcile and reference the sole Storage migration receipt; nothing auto-confirms or replays domain work. Tour checkpoint rules remain separate under PWIZ-023.
-  - Back, Close, Skip, Do this later, Details, stale return, reconnect, interruption, reversal, resize, Reduced Motion, keyboard, focus, and screen-reader cases settle deterministically without false readiness; tests prove automatic first-run return prioritizes the genuinely active non-Home application tab before the Home fallback, exact explicit-initiator return, late-mounted body-sibling inertness and restoration, active stage/branch dialog naming, an inert outgoing layer with no duplicate IDs or focus candidates, transferred-and-cleared close-before-Tour focus ownership plus unavailable/throwing Tour fallback, distinct Basic/Friendly/Glass easing, fixed-bounds modal-window opacity/clipping across live cross-family theme changes, and Retro stepped opacity/translation keyframes with no scale; the flow remains one bounded modal and adds no browser-style Back/breadcrumb chrome.
-  - Guided Tour tests enforce the exact three-chapter order `chat_teacher`, `workspace`, `planning_wizard` and every current stable step; both predecessor controllers and v2's Usage-first/Chat-final expectations are migration inputs, not current acceptance.
-  - Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption during pre-cue/travel/arrival/settle. None may fabricate an action result.
-  - "Workspace tests verify real Chat movement with shared docked/undocked state and a real widget add/move/resize/focus result, reversible layout capture, exact Skip restoration, default Finish restoration, and explicit Keep. Amended 2026-10-09 (DL-180): the chat no longer moves or docks; it stays in its column and moves only by Pop out (Plans/FinalGUISpec.md#F3-637), so workspace tests verify that it stays there, that the workspace chapter's panel steps finish only on real panel results (Plans/Planning_Wizard.md#PWIZ-035), that the widget result lands on a dashboard tab's board (Plans/Widget_System.md#WS-030), and that Skip and default Finish restore the captured v2 Home layout (Plans/storage-plan.md#SP-330)."
-  - Planning tests bind meaningful action and dwell shares to a declared step census and require both shares to be at least one half. The book-club goal, three outcomes, who-can-edit decision, why, assumptions/unresolved choices, review, genuine changed answer, specific shared-access consequence, final real-page landing with committed Project, and no-work-start boundary all require observed results. An unsure answer stays unresolved; clicking Edit alone cannot choose an answer or complete the edit.
-  - Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question, a local answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) shows that same answer in simple words as one extra, simpler reply while the original reply stays unchanged; no ELI5 switch re-sends, regenerates or rewrites it (DL-126). Tests measure zero provider requests and zero usage increment, not merely a hard-coded declaration.
-  - Guided-example ownership survives Pause, later chapters, Finish, and Replay. Actual composer Enter/send and slash-command text remain on the deterministic local path; unrelated threads retain their existing handler. Interrupted or replaced local streams cannot append late chunks, clear another stream's busy state, replace the current lesson answer, or advance a different session/thread/step. Missing telemetry remains unavailable, never an inferred zero-use pass.
-  - Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout, ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5 reuse cmd.persona.select, cmd.chat.send, cmd.chat.eli5.set (the quick dot, later replies only), and cmd.chat.eli5.explain_reply (DL-126); local fixture adapters do not establish native handler registration or production receipts.
-  - The top controls place ELI5 beside Pause and Skip Tour. The brief opening explains ELI5 and Reduced Motion; the Tour reads the effective Settings-owned general.visual.reduce-animations preference without writing it or adding a motion-toggle screen. Reduced Motion retains sequence/cause-and-effect and action parity.
-  - Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
-  - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content, and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite, and never replay domain work.
-  - Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery panel; that Run Onboarding Again after a reload discards the checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; that a tour started from Settings, with Chat hidden, skips without a restoration failure; and that Settings offers Resume Guided Tour (`settings.guided_tour.resume`) only while a checkpoint can resume, beside Replay Guided Tour and Run Onboarding Again.
-  - Restoration tests include panel size shares and dock dimensions, hidden-panel order, widget geometry, repeated failed-then-successful restoration against the original snapshot, and stale-revision/persistence-failure rejection by the existing resize owner. Explicit Keep applies only to layout; it does not retain practice content or claim restoration. Default restoration cannot substitute a factory reset or unchecked layout assignment. Amended 2026-10-09 (DL-180): the restored layout is the v2 record's split tree, tab records and chat column (Plans/storage-plan.md#SP-330), and chat dock dimensions are lineage.
-  - Static schema/fixture gates, source-transform assertions, browser-concept verification, native Slint/runtime execution, accessibility certification, motion-quality review, and visual acceptance validate only their declared evidence layers and cannot substitute for one another.
-  - The retained exact 128-row packet denominator (SH 12, ONB 28, TOUR 11, DOC 24, IMP 10, TST 7, PERF 13, SRV 6, RA 17) is predecessor evidence only. Neither its ONB/Tour slices nor the v2 three-scene/ten-action fixtures prove the current tour. Tour acceptance uses three chapters, eleven typed tour actions, the declared stable-step/action/dwell census, and separate browser/static/native/runtime/accessibility/motion/visual verdicts. Onboarding revision reconciliation remains a separate obligation.
-  - Tests verify MCP/server unavailable rows and FileSafe fail-closed readiness remain visible Health/Doctor concerns when relevant.
+- Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order
+  definitions, not a testing-owned roster. Tests take the current path/count from PWIZ-021/PWIZ-037. Explicit Project
+  Later performs app AI setup on the named Computer and lands in No project without a fake Project; historical path
+  counts remain replay-only.
+- Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`,
+  `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client`
+  are omitted rather than silently executed.
+- Tests enforce the exact fourteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back,
+    ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
+    ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project,
+    ui.onboarding.finish, and ui.onboarding.choose_look (DL-153); `simple_path` and `ui.onboarding.choose_simple_path`
+    are current visible behavior, and no missing or extra typed action passes.
+- Precommit tests reject every owner dispatch except current owner-authorized read-only preflight or necessary selected-source
+  authentication; actual owner request shape/hash, permission, capability, consent, source/draft/revision, Client/Host,
+  focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never
+  authorize work.
+- First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection
+  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}`
+  through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible
+  route.
+- Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null`
+  and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none|null`
+  axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never
+  have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than
+  replaces the selected backend.
+- Selected-source first-time sign-in consumes MACS-005 with null pre-existing Project/profile/account/install identities
+  and protected human consent; only the auth owner allocates verified identity. FGI-011 account/container listing
+  has no phantom repository/Project and cannot create/bind/publish. Actual repository and content mutations remain
+  in the exact reviewed Project-owner chain; Onboarding never claims account creation.
+- Forgejo/Gitea fixtures retain distinct instances/adapters, HTTPS/API base paths, SSH/custom port, scoped CA/known-host
+  refs, product/version/API/Git/Actions currentness, PAT default and registered-flow-only OAuth PKCE. PWIZ-021's necessary-source
+  read/auth admission is tested separately from forbidden precommit trust, repository mutation, filesystem write and
+  automation; no secret bytes enter durable Onboarding state.
+- Server/Storage/Client and Remote Access remain independent owner-routed stages. Read-only selected-route discovery
+  is not pairing/trust; identity/certificate mismatch blocks, and restore retains preview/preflight/verification/rollback/default
+  secret exclusion. The source-auth exception cannot bypass Server/Remote Access/Restore mutation fences.
+- '`review_setup_plan` shows the current path, revision, queued choices, consequences, and approved-plan hash. `Confirm
+  and prepare` is person-confirmed, rejects stale/unconfirmed/expanded plans, dispatches the approved work at most
+  once, and adds no redundant confirmation step.'
+- Automatic Preparation begins only after that confirmation, uses current owner projections and safe defaults, never
+  silently invents probes or mutations across owner/security boundaries, and leaves provider/tool setup optional and
+  deferrable.
+- Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v2` across the owner-defined states/progress
+  modes with exact session/draft/Project-commit/path/target/review/hash/continuation fences; stale results cannot
+  replace state, and this phase cannot begin broad provider setup before actual Project commit.
+- Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and
+  `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections
+  cannot carry production readiness, native execution, or a production receipt.
+- Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner
+  proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted,
+  exported, replayed, or exposed to agents/adapters.
+- First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH,
+  restore, skip, and current admitted-provider selections, with retired service or hosted-variant inputs refused under
+  DL-273/PWIZ-024 without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
+- Draft choices cause zero mutation. Only exact precommit read/source-auth admission permits those existing owner
+  commands; current Review permits at most one Project commit chain, and matching terminal results advance without
+  repeated Continue/confirm clicks. Tests reject acknowledgement-only, unlisted/unpersisted, wrong-Project/hash and
+  unsettled selected-Settings results as commit proof.
+- Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes
+  Guided Tour secondary and optional; tour terminal behavior is validated against PWIZ-023's default restoration or
+  explicit Keep followed by the owner-approved real Project Planning Wizard or No project landing, and exact Skip
+  restoration.
+- Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's
+  canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler
+  exists.
+- Request/result fixtures validate pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2
+  for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation
+  write, no owner route/operation, and exact error/disabled reasons. All local results have no production receipt.
+- local_context consumes PWIZ-021's closed v2 required/null/gated fields and phase-specific preflight/commit proofs
+  rather than a testing-owned field list; missing, extra, raw, ambiguous and secret-bearing fields fail closed. Exact
+  actual request/result/draft joins are exercised in addition to shape validation.
+- Draft persistence tests validate every current Session through the deterministic offline existing-family bundle,
+  bind the approved hash to actual bounded draft bytes, reject missing/tampered draft bodies, and fail schema/field/key
+  drift in the standard contract gate. The physical-family and retention-policy denominators remain 88 and 24; this
+  does not prove a native adapter.
+- Settings tests require source/draft revision, exact eligible/explicit setting sets, exclusions, expiry and preview
+  hash, reject draft apply, and require actual Project rebind plus ordinary current apply. Paid-provider Skip still
+  offers Free Models, both phases require actual commit, and Close/resume/Back preserve that Project and settled phases.
+- Tests separately cover more_ways setup/project disclosure (`toggle_setup_options` plus matching choice/scope and
+  null branch) and branch-local update (`update_branch_state`, null choice, canonical branch), rejecting mixed or
+  ambiguous combinations.
+- Tests separately cover whole-session Skip (`skip_product_onboarding`, product_onboarding, null choice -> session_skipped/skipped)
+  and optional Project/Remote-Access Skip (`skip_optional_scope` plus matching choice/scope/branch -> optional_scope_skipped/active),
+  rejecting cross-normalization and false global skipped state.
+- Defer must durably preserve exact path, stage, draft selections, review revision/confirmation state, independent
+  local-backend and forge selections, active branch, bounded history, continuation generation, initiating Client,
+  and return-focus identity before modal dismissal; resume restores that snapshot. Close is a non-completion dismissal
+  with exact focus return, Skip records an explicit skipped session, and Details opens/closes ephemerally on the same
+  stage with no persistence or owner command.
+- Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`,
+  the exact stage scope, a stable help-topic selection ref, and exact expanded state; it is keyboard reachable, accessibility-linked,
+  same-stage, ephemeral, non-persistent, and owner-route-free.
+- The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer,
+  cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are each rejected
+  as commands, aliases, handlers, and production-wiring rows; the eleven UCC-106 command-era tokens retain their separate
+  source-lineage count.
+- Migration tests cover four/five/seven/nine-stage predecessors using PWIZ-022/SP-252, preserve admissible choices/warnings/real
+  owner results, quarantine secrets, return unresolved drafts to unconfirmed Review, and resume committed rows only
+  with exact per-row revalidated Project/owner refs. Accepted/stale/dropped/quarantined/stage/path/committed-resume
+  counts reconcile and reference the sole Storage migration receipt; nothing auto-confirms or replays domain work.
+  Tour checkpoint rules remain separate under PWIZ-023.
+- Back, Close, Skip, Do this later, Details, stale return, reconnect, interruption, reversal, resize, Reduced Motion,
+  keyboard, focus, and screen-reader cases settle deterministically without false readiness; tests prove automatic
+  first-run return prioritizes the genuinely active non-Home application tab before the Home fallback, exact explicit-initiator
+  return, late-mounted body-sibling inertness and restoration, active stage/branch dialog naming, an inert outgoing
+  layer with no duplicate IDs or focus candidates, transferred-and-cleared close-before-Tour focus ownership plus
+  unavailable/throwing Tour fallback, distinct Basic/Friendly/Glass easing, fixed-bounds modal-window opacity/clipping
+  across live cross-family theme changes, and Retro stepped opacity/translation keyframes with no scale; the flow
+  remains one bounded modal and adds no browser-style Back/breadcrumb chrome.
+- Guided Tour tests enforce the exact three-chapter order `chat_teacher`, `workspace`, `planning_wizard` and every
+  current stable step; both predecessor controllers and v2's Usage-first/Chat-final expectations are migration inputs,
+  not current acceptance.
+- Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include
+  unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption
+  during pre-cue/travel/arrival/settle. None may fabricate an action result.
+- 'Workspace tests verify real Chat movement with shared docked/undocked state and a real widget add/move/resize/focus
+  result, reversible layout capture, exact Skip restoration, default Finish restoration, and explicit Keep. Amended
+  2026-10-09 (DL-180): the chat no longer moves or docks; it stays in its column and moves only by Pop out (Plans/FinalGUISpec.md#F3-637),
+  so workspace tests verify that it stays there, that the workspace chapter''s panel steps finish only on real panel
+  results (Plans/Planning_Wizard.md#PWIZ-035), that the widget result lands on a dashboard tab''s board (Plans/Widget_System.md#WS-030),
+  and that Skip and default Finish restore the captured v2 Home layout (Plans/storage-plan.md#SP-330).'
+- Planning tests bind meaningful action and dwell shares to a declared step census and require both shares to be at
+  least one half. The book-club goal, three outcomes, who-can-edit decision, why, assumptions/unresolved choices,
+  review, genuine changed answer, specific shared-access consequence, final real-page landing with committed Project,
+  and no-work-start boundary all require observed results. An unsure answer stays unresolved; clicking Edit alone
+  cannot choose an answer or complete the edit.
+- Assistant Chat opens first; the real guide selector selects Teacher, the real composer sends the supplied question,
+  a local answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`)
+  shows that same answer in simple words as one extra, simpler reply while the original reply stays unchanged; no
+  ELI5 switch re-sends, regenerates or rewrites it (DL-126). Tests measure zero provider requests and zero usage increment,
+  not merely a hard-coded declaration.
+- Guided-example ownership survives Pause, later chapters, Finish, and Replay. Actual composer Enter/send and slash-command
+  text remain on the deterministic local path; unrelated threads retain their existing handler. Interrupted or replaced
+  local streams cannot append late chunks, clear another stream's busy state, replace the current lesson answer, or
+  advance a different session/thread/step. Missing telemetry remains unavailable, never an inferred zero-use pass.
+- Tests enforce the eleven-action tour census owned by PWIZ-023, including ui.guided_tour.show_me. Separate ui.guided_tour.restore_layout,
+  ui.guided_tour.keep_layout, and ui.guided_tour.toggle_reduced_motion actions remain rejected. Chat selection/send/ELI5
+  reuse cmd.persona.select, cmd.chat.send, cmd.chat.eli5.set (the quick dot, later replies only), and cmd.chat.eli5.explain_reply
+  (DL-126); local fixture adapters do not establish native handler registration or production receipts.
+- The top controls place ELI5 beside Pause and Skip Tour. The brief opening explains ELI5 and Reduced Motion; the
+  Tour reads the effective Settings-owned general.visual.reduce-animations preference without writing it or adding
+  a motion-toggle screen. Reduced Motion retains sequence/cause-and-effect and action parity.
+- Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across
+  resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
+- Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current
+  prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content,
+  and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe
+  checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the
+  earliest unsatisfied prerequisite, and never replay domain work.
+- Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that
+  a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary
+  arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery
+  panel; that Run Onboarding Again after a reload discards the checkpoint, snapshot ref, resume affordance, and any
+  restoration-pending notice; that a tour started from Settings, with Chat hidden, skips without a restoration failure;
+  and that Settings offers Resume Guided Tour (`settings.guided_tour.resume`) only while a checkpoint can resume,
+  beside Replay Guided Tour and Run Onboarding Again.
+- ? Restoration tests include panel size shares and dock dimensions, hidden-panel order, widget geometry, repeated
+    failed-then-successful restoration against the original snapshot, and stale-revision/persistence-failure rejection
+    by the existing resize owner. Explicit Keep applies only to layout; it does not retain practice content or claim
+    restoration. Default restoration cannot substitute a factory reset or unchecked layout assignment. Amended 2026-10-09
+    (DL-180)
+  : the restored layout is the v2 record's split tree, tab records and chat column (Plans/storage-plan.md#SP-330),
+    and chat dock dimensions are lineage.
+- Static schema/fixture gates, source-transform assertions, browser-concept verification, native Slint/runtime execution,
+  accessibility certification, motion-quality review, and visual acceptance validate only their declared evidence
+  layers and cannot substitute for one another.
+- The retained exact 128-row packet denominator (SH 12, ONB 28, TOUR 11, DOC 24, IMP 10, TST 7, PERF 13, SRV 6, RA
+  17) is predecessor evidence only. Neither its ONB/Tour slices nor the v2 three-scene/ten-action fixtures prove the
+  current tour. Tour acceptance uses three chapters, eleven typed tour actions, the declared stable-step/action/dwell
+  census, and separate browser/static/native/runtime/accessibility/motion/visual verdicts. Onboarding revision reconciliation
+  remains a separate obligation.
+- Tests verify MCP/server unavailable rows and FileSafe fail-closed readiness remain visible Health/Doctor concerns
+  when relevant.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-new-contracts-verify.py
@@ -1868,33 +1980,53 @@ preserved_exact_tokens:
   - "Explain this reply simply"
   - "cmd.chat.eli5.explain_reply"
 negative_constraints:
-  - Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor no-false-green tests.
-  - Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Paid-provider then Free Models is now the accepted post-Project-commit order, including Free Models after paid Skip; it does not restore provider-first setup.
-  - Do not hide or bypass current `simple_path`, `server_storage_client`, or `review_setup_plan`, or silently execute stages omitted by the connect-existing shortcut.
-  - Do not widen narrowly authorized precommit reads/selected-source authentication into Project/repository/filesystem mutation, pairing/trust/enrollment, or broad provider setup; do not infer authorization from shape/ref/availability alone.
-  - Do not migrate a predecessor directly into a confirmed Review or Automatic Preparation state, auto-confirm it, replay owner work, or report counts against the wrong current path.
-  - Do not register cmd.onboarding.* or treat a local ui.onboarding.* action as a semantic command.
-  - Do not register, alias, normalize, wire, or assign a handler to any packet candidate cmd.onboarding.* token.
-  - Do not treat Close as completion, Skip as completion, Defer as Skip, or Details as durable state or owner work.
-  - Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip intent/scope/choice/branch combinations.
-  - Do not add provider, advanced setup, or Guided Tour as a canonical Onboarding stage or gate.
-  - Do not replay owner work during migration/resume or persist raw Chat content, secrets, or transient geometry in the bounded tour checkpoint.
-  - Do not retain either predecessor tour controller or accept chapter order other than `chat_teacher`, `workspace`, `planning_wizard`.
-  - Do not replace real workspace practice with narration or treat a generic Options click as proof of a widget mutation.
-  - Do not satisfy a required Planning action from narration, a timer, generic Next, a look-alike, or an Edit button that silently picks an answer.
-  - Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer ELI5 as one extra, simpler reply, measured zero provider requests, and zero usage increment.
-  - Do not accept a Chat/Teacher ELI5 step that re-sends, regenerates or rewrites the example answer; its simpler version is one extra reply from Explain this reply simply (DL-126).
-  - Do not restore `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or `ui.guided_tour.toggle_reduced_motion` as current requests, aliases, handlers, or compatibility actions.
-  - Do not add a Guided Tour-specific Reduced Motion toggle or separate motion scene; the Tour only explains and honors the Settings-owned preference.
-  - Do not let callouts escape the viewport, point at stale geometry, or bypass scene-heading focus.
-  - Do not leave partial Chat state or lost focus after Skip; do not keep a demonstrated layout without explicit selection, report failed restoration as complete, leave the practice surface over the final Wizard, or start work.
-  - Do not treat predecessor packet counts or the v2 three-scene/ten-action fixtures as current acceptance.
-  - Do not hide critical blockers just to make onboarding look simpler.
-  - Do not treat `Connected` or `Logged in` as equivalent to Ready.
-  - Do not let the Ready screen imply that skipped provider, Server, pairing, restore, Project, Doctor, or runtime work is complete.
-  - Do not silently hide MCP/server degraded or unavailable rows from GUI/Doctor surfaces.
-  - Do not allow stale FileSafe graceful-degradation wording to permit disabled guards as Ready.
-  - Do not claim native runtime, native Slint, production persistence, accessibility certification, motion quality, or visual acceptance from schema, fixture, static, transform, or browser evidence.
+- Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent
+  local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct
+  migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor
+  no-false-green tests.
+- Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Project-bound
+  paid-provider then Free Models remains post-commit, including after paid Skip; N15 Later uses explicit app scope
+  after its actual app/Computer setup boundary. Neither restores provider-first Project creation.
+- Do not hide or bypass current `simple_path`, `server_storage_client`, or `review_setup_plan`, or silently execute
+  stages omitted by the connect-existing shortcut.
+- Do not widen narrowly authorized precommit reads/selected-source authentication into Project/repository/filesystem
+  mutation, pairing/trust/enrollment, or broad provider setup; do not infer authorization from shape/ref/availability
+  alone.
+- Do not migrate a predecessor directly into a confirmed Review or Automatic Preparation state, auto-confirm it, replay
+  owner work, or report counts against the wrong current path.
+- Do not register cmd.onboarding.* or treat a local ui.onboarding.* action as a semantic command.
+- Do not register, alias, normalize, wire, or assign a handler to any packet candidate cmd.onboarding.* token.
+- Do not treat Close as completion, Skip as completion, Defer as Skip, or Details as durable state or owner work.
+- Do not accept open-ended local_context, arbitrary/raw payload copies, secret-bearing values, or ambiguous more_ways/skip
+  intent/scope/choice/branch combinations.
+- Do not add provider, advanced setup, or Guided Tour as a canonical Onboarding stage or gate.
+- Do not replay owner work during migration/resume or persist raw Chat content, secrets, or transient geometry in
+  the bounded tour checkpoint.
+- Do not retain either predecessor tour controller or accept chapter order other than `chat_teacher`, `workspace`,
+  `planning_wizard`.
+- Do not replace real workspace practice with narration or treat a generic Options click as proof of a widget mutation.
+- Do not satisfy a required Planning action from narration, a timer, generic Next, a look-alike, or an Edit button
+  that silently picks an answer.
+- Do not complete Chat/Teacher without its real selection/composer, deterministic same-conversation reply, same-answer
+  ELI5 as one extra, simpler reply, measured zero provider requests, and zero usage increment.
+- Do not accept a Chat/Teacher ELI5 step that re-sends, regenerates or rewrites the example answer; its simpler version
+  is one extra reply from Explain this reply simply (DL-126).
+- Do not restore `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or `ui.guided_tour.toggle_reduced_motion`
+  as current requests, aliases, handlers, or compatibility actions.
+- Do not add a Guided Tour-specific Reduced Motion toggle or separate motion scene; the Tour only explains and honors
+  the Settings-owned preference.
+- Do not let callouts escape the viewport, point at stale geometry, or bypass scene-heading focus.
+- Do not leave partial Chat state or lost focus after Skip; do not keep a demonstrated layout without explicit selection,
+  report failed restoration as complete, leave the practice surface over the final Wizard, or start work.
+- Do not treat predecessor packet counts or the v2 three-scene/ten-action fixtures as current acceptance.
+- Do not hide critical blockers just to make onboarding look simpler.
+- Do not treat `Connected` or `Logged in` as equivalent to Ready.
+- Do not let the Ready screen imply that skipped provider, Server, pairing, restore, Project, Doctor, or runtime work
+  is complete.
+- Do not silently hide MCP/server degraded or unavailable rows from GUI/Doctor surfaces.
+- Do not allow stale FileSafe graceful-degradation wording to permit disabled guards as Ready.
+- Do not claim native runtime, native Slint, production persistence, accessibility certification, motion quality,
+  or visual acceptance from schema, fixture, static, transform, or browser evidence.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the workspace tests' real Chat movement with docked and undocked state retires; the chat stays in its column (F3-637), the workspace chapter's panel steps are PWIZ-035's, and Skip and Finish restore the v2 Home layout (SP-330)."
 owner_hints:
@@ -3960,18 +4092,10 @@ plan_unit_id: ATS-043
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  Automated Testing consumes the Forge, Source Control, and Product Onboarding contracts for distinct Forgejo
-  and Gitea identities, independent RepositoryForgeBinding and AutomationBinding authority, and the sole
-  repository_automation / Actions & Pipelines shell. Static schema and fixture validation covers closed types and
-  negative constraints. Runtime integration acceptance separately requires authorized provider instances/accounts,
-  exact versions and capability evidence, direct execution-time currentness and security checks, native owner
-  handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not
-  exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with
-  expected_event_types=[] until their native and Event Authority evidence exists.
-  DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal;
-  no retired Source Control service or hosted variant remains an optional selection or automation provider.
+canonical_text: |-
+  Automated Testing consumes the Forge, Source Control, and Product Onboarding contracts for distinct Forgejo and Gitea identities, independent RepositoryForgeBinding and AutomationBinding authority, and the sole repository_automation / Actions & Pipelines shell. Static schema and fixture validation covers closed types and negative constraints. Runtime integration acceptance separately requires authorized provider instances/accounts, exact versions and capability evidence, direct execution-time currentness and security checks, native owner handlers/receipts, accessibility and visual evidence, and honest NOT_RUN status where those environments do not exist. The nine newly admitted Forge commands remain handler_unavailable and event-silent with expected_event_types=[] until their native and Event Authority evidence exists. DL-273, Jared 2026-11-01: Current test obligations consume admitted Forge choices and prove retirement refusal; no retired Source Control service or hosted variant remains an optional selection or automation provider.
 
+  P1 adds exact create/recovery chains for every currently offered API profile; P2 adds GitHub/GH Enterprise contribution only, with head/base/original/fork joins and a native local_reconcile_only sync composition. Generic Git remains transport-only; GHES host-policy, Dedicated unoffered status, self-managed-only Forgejo/Gitea and the deferred restricted-token route remain. Acceptance distinguishes human, mode and build_grant publication authority and tests currentness/unknown effects instead of treating a transport response or UI boolean as success. ATS-083/084 owns this added matrix; prior Project exact fixtures remain unchanged.
 gui_related: true
 gui_classification_reason: The matrix validates visible Source Control and Actions & Pipelines provider projection, migration, capability, disabled-reason, accessibility, and recovery behavior as well as non-GUI contract/security boundaries.
 depends_on: [ATS-020, ATS-041, FGI-012, FGI-013, SCS-013]
@@ -6211,125 +6335,8 @@ plan_unit_id: ATS-076
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  The terminal tab (DL-181, DL-182, DL-183) is certified by its own matrix, under ATS-075's rules of
-  evidence: every case asserts the visible or recorded outcome, records commands, receipts, events and
-  writes, and passes only with zero console and page errors. Sessions
-  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, Plans/FinalGUISpec.md#F3-640): one session per
-  tab; moving, reordering, collapsing, maximizing or hiding the tab, splitting beside it, applying a named
-  layout and revealing it with `cmd.terminal.reveal` in any panel keep the same terminal_session_id, with
-  no restart, no replayed input, no second PTY and no change to shell-failure counting; Split opens a new
-  panel with a new session in the same folder and shell profile; closing a running terminal asks inline
-  first and closing ends its session; Reopen closed tab and a tab restored after a restart start a new
-  session in the same folder and profile and say so with the restored notice, never pretending to be the
-  old session; an ended session shows its inline row and dims the screen to 72 %. Chrome (F3-640): the tab
-  label, the exit code of a failed command and the agent mark; the header row's content, labels from a 520
-  px body width and icons below, hidden under 150 px of body height; the gutter and scrollbar widths at
-  399 and 400 px; the More, context and command-mark menus with exactly their items in order, opening in
-  the one overlay root; notices as inline rows, never modals and never side stripes; no session id, tab id
-  or nonce as text. Features (F3-641, SMPFS-183): command marks carry the terminal's secret, and a mark
-  with a missing or wrong secret stays output and draws no glyph; every command record carries `by` and
-  the mark menu names who typed it; a plain click on a link selects text, Ctrl+click (Cmd+click) on a
-  `path:line:col` reference opens the panel's preview tab at that line and column by F3-634,
-  Ctrl+double-click keeps it, Ctrl+Alt+click opens a new panel, a URL opens a Browser tab, and Open output
-  in an editor tab opens a buffer, never a preview; find with case, whole word, regular expressions,
-  highlight-all and its scrollbar marks; copy mode and quick select with their keys; the plain-text
-  buffer; the terminal's keys, the host keys it gives back, and every other Ctrl+key reaching the shell;
-  and no explain, fix, suggest or ask action and no inline completion anywhere in the tab. Appearance
-  (F3-642, F3-650, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
-  Plans/DRY_Rules.md#DR-068): verify layered field resolution, live writes and no-restart behavior against
-  those owners. Both full Customize entry points, This/All scope and preview docking follow F3-650 and
-  ATS-077; All terminals uses the Project Settings transaction, with no app-wide write. Contrast cases
-  consume F3-654 and F3-642's retained Off/3:1 program-output choices; import keeps its seven formats, 256
-  KB cap, no evaluation and fixed errors that never echo the file; cells remain whole device pixels with
-  no stripe at the padding. Effects (F3-643): only the focused, visible terminal animates; every effect
-  stops within 10 s of the last output or keystroke, after which no effects frames run until the next
-  output or keystroke; an effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware;
-  battery saver turns motion off; where no GPU draws the terminal the effects layer stays off, zero
-  effects frames run, plain static scanlines and glow paint and the Customize screen names what it could
-  not draw; Reduced Motion stops every moving part and keeps the static looks; Retro dark shows scanlines
-  and phosphor glow by default, and Full CRT and flicker are off by default in every look; flicker
-  defaults to 0.02 and never exceeds 0.03 of relative luminance; degauss is a one-shot action; NieR's
-  terminal touches follow their installed parts. Faces (F3-644): the six faces, JetBrains Mono, VT323,
-  Sixtyfour, Sixtyfour Raster, Departure Mono and Atkinson Hyperlegible Mono; JetBrains Mono in every look
-  but Retro, where VT323 is the default; each face at its default size and line height; JetBrains Mono's
-  bytes from the page's code face, never a second copy, and the terminal's own faces 84,572 bytes before
-  base64; box drawing, block, braille, powerline and sextant glyphs drawn by the terminal; every face
-  under a permissive licence. Images (SMPFS-181, F3-645): the complete kitty graphics protocol (direct,
-  file, temporary-file and shared-memory transmission, chunking, ids and placement ids, placements,
-  relative placements, the three z tiers, every delete selector, Unicode placeholders, animation frames,
-  control and compose, queries), sixel, and iTerm2 inline images single and multipart; the paint order;
-  images anchored to their cell through scroll, reflow and clipping; text over a sixel or iTerm2 image
-  cutting it out; output after an image waiting for its decode. The hardening cases, each asserting its
-  exact reply: a file medium that is not a regular file, a path under `/proc`, `/sys` or `/dev` other than
-  `/dev/shm`, a symlink loop, and a missing, unreadable or short file each answer exactly `EBADF:Failed to
-  read image file`; a temporary file is deleted only inside `/tmp` or `/dev/shm` and only with
-  `tty-graphics-protocol` in its path; shared memory is unlinked after reading; a remote (SSH) session and
-  a command an agent typed get the same `EBADF` for every file medium and may use direct transmission;
-  every error reply is one of SMPFS-181's fixed strings and never echoes what the program sent; a sequence
-  over its escape-sequence cap gets `EFBIG`; the per-screen-buffer image quota with its eviction order
-  (images without placements, then transient ones, then the least recently used), the animation-frame
-  pool, the per-side, iTerm2 and sixel limits, 2048-byte names, relative placements deeper than allowed
-  (`ETOODEEP`) and in a cycle (`ECYCLE`), and the fastest frame shown. An animated image pauses while its
-  terminal is hidden and under Reduced Motion. The accessible buffer and agent reads show `[image W×H px]`
-  (", animated" when it is), `[image]` for a Unicode-placeholder run, or a dropped image's placeholder
-  label, never image data. Saved scrollback (SP-332, SMPFS-181, F3-640, F3-645): what is saved and what
-  never is (the alternate screen, the command line being typed, selections and find highlights); a
-  restored terminal showing its lines, marks and images where they were, then the dim restored rule, then
-  the new prompt, with the restored notice; the 64 MiB quota per terminal, with text never giving way to
-  images and images dropped oldest first, an unreadable frame treated the same; each dropped image's cells
-  showing the dashed placeholder `[<name> <W>×<H> · not kept]` and the notice counting the images not
-  kept; placeholder ids on restored lines resolving only to restored images, so a new program reusing an
-  image id never paints into the old scrollback; a command still running when the page went away coming
-  back ended and indeterminate, "ended with the earlier session", never done; the write cadence (1.5 s
-  after output settles, at most every 5 s while output streams, and when the page hides, never rewriting
-  an unchanged terminal); Clear scrollback emptying the saved copy at the next save; a closed tab's copy
-  kept while the tab can be reopened and for at most 7 days; the 5 s load budget, past which the tab
-  starts without its scrollback and says so; and saved scrollback staying on this machine, excluded from
-  backups, exports and sync. Agents (SMPFS-182, F3-646, Plans/Contracts_V0.md#CV-362): the four inline
-  rows with their exact text and actions; a keystroke in a terminal an agent drives taking over at once,
-  the Paused row, and the agent's next write refused as `preempted`; Allow once letting exactly one
-  command through, after which the row, the mark and the writer lease go back to the human; Allow in this
-  terminal held in memory only and never stored, ending when the terminal closes, when the human takes
-  over by a keystroke, Take over or Stop, and when that agent's run ends, given again by Hand back for the
-  rest of that run, and never replacing command approval: every command typed under it still passes the
-  Tools policy engine with its own approval over that exact invocation
-  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, Plans/Permissions_System.md#PS-041); Deny
-  refusing the write and telling the agent; no control labelled Always allow here; a secret prompt showing
-  the padlock cursor and refusing agent input as `secret_input`; Interrupt sending SIGINT and Stop ending
-  the agent's run and returning the lease; agent-typed commands carrying the square gutter mark; an
-  agent-opened terminal landing in the background with the hollow square and never taking focus; input
-  protection outranking every grant and blocking an agent with an explicit blocked result and zero child
-  writes across tab moves, collapse, maximize, hide, layout apply and restore (ATS-047 P10); and agent
-  reads returning rendered text with a read state, never raw bytes and never images. Commands and wiring:
-  each terminal control dispatches its command of Plans/UI_Command_Catalog.md#UCC-201 and is in
-  Plans/UI_Wiring_Rules.md#UIW-042's census with its Plans/Wiring_Matrix.md#WM-091 row. Concept checks of
-  the terminal concept are concept evidence only, as ATS-075 says; native receipts name the revision,
-  platform, toolkit, renderer and transport, and a missing runner stays `not_run`. This amends ATS-047,
-  whose image exclusion DL-182 replaces, and takes over ATS-029's terminal identity fixtures. Amended
-  2026-10-10 (DL-187, DL-185): the matrix also certifies Jared's answers on the terminal and the chat's
-  finished command card, each case checking the owner's exact formats, labels and words rather than a copy
-  of them here. Tab marks (D34, F3-640, F3-631): no terminal tab shows a colour or icon of the person's
-  choosing on the strip. Secrets in saved scrollback (D36): every secret format
-  Plans/storage-plan.md#SP-332 and SMPFS-183 list is replaced in the saved copy before it is written, in
-  place, so the line keeps its width and every image anchor and mark stays put, with the label or mark
-  SP-332 gives; a private key keeps its BEGIN and END lines; command lines and link targets in the copy
-  are scrubbed the same way; the live screen keeps the original; and the restore notice counts the secrets
-  left out in SP-332's words. The total cap (D37, lead ruling F4): 512 MiB for every terminal's saved copy
-  together, fixed and not a setting, trimmed in the order SP-332 gives, each terminal keeping its 64 MiB.
-  Notifications (D38, lead ruling F5): OSC 9, OSC 777 and OSC 99 notifications behave as F3-641 and
-  SMPFS-183 say: a system notification only while Puppet Master is in the background, at most one every 3
-  s per terminal, Mute notifications as that tab's own state (ui.terminal.mute_notifications), absent
-  where the platform has no system notifications, and the web client's one inline permission notice after
-  a notification arrived. The chat's command card (Plans/assistant-chat-design.md#ACD-500, ACD-502): a
-  stopped command reads "Failed · exited 101", "Done · exited 0" or "Interrupted · exited 130", a failed
-  command with no exit code reads Failed alone and a command whose session ended while it ran reads Ended
-  with the earlier session; the lines above the preview are counted at the top as "N earlier lines";
-  Interrupted is muted and still; who ran it reads "You ran in <folder>" or the agent mark and "<Agent>
-  ran in <folder>"; Open in Terminal shows only with a live session, View output only without one and
-  Rerun in Terminal only once the command has stopped, as 24 px text buttons; at 360 px the failure line
-  keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text
-  reaches 4.5:1 and marks 3:1 in every look and mode.
+canonical_text: |-
+  The terminal tab (DL-181, DL-182, DL-183) is certified by its own matrix, under ATS-075's rules of evidence: every case asserts the visible or recorded outcome, records commands, receipts, events and writes, and passes only with zero console and page errors. Sessions (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, Plans/FinalGUISpec.md#F3-640): one session per tab; moving, reordering, collapsing, maximizing or hiding the tab, splitting beside it, applying a named layout and revealing it with `cmd.terminal.reveal` in any panel keep the same terminal_session_id, with no restart, no replayed input, no second PTY and no change to shell-failure counting; Split opens a new panel with a new session in the same folder and shell profile; closing a running terminal asks inline first and closing ends its session; Reopen closed tab and a tab restored after a restart start a new session in the same folder and profile and say so with the restored notice, never pretending to be the old session; an ended session shows its inline row and dims the screen to 72 %. Chrome (F3-640): the tab label, the exit code of a failed command and the agent mark; the header row's content, labels from a 520 px body width and icons below, hidden under 150 px of body height; the gutter and scrollbar widths at 399 and 400 px; the More, context and command-mark menus with exactly their items in order, opening in the one overlay root; notices as inline rows, never modals and never side stripes; no session id, tab id or nonce as text. Features (F3-641, SMPFS-183): command marks carry the terminal's secret, and a mark with a missing or wrong secret stays output and draws no glyph; every command record carries `by` and the mark menu names who typed it; a plain click on a link selects text, Ctrl+click (Cmd+click) on a `path:line:col` reference opens the panel's preview tab at that line and column by F3-634, Ctrl+double-click keeps it, Ctrl+Alt+click opens a new panel, a URL opens a Browser tab, and Open output in an editor tab opens a buffer, never a preview; find with case, whole word, regular expressions, highlight-all and its scrollbar marks; copy mode and quick select with their keys; the plain-text buffer; the terminal's keys, the host keys it gives back, and every other Ctrl+key reaching the shell; and no explain, fix, suggest or ask action and no inline completion anywhere in the tab. Appearance (F3-642, F3-650, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051, Plans/DRY_Rules.md#DR-068): verify layered field resolution, live writes and no-restart behavior against those owners. Both full Customize entry points, This/All scope and preview docking follow F3-650 and ATS-077; All terminals explicitly targets Everywhere through the same Settings transaction; offered Computer/Project own values and per-tab overrides resolve through the same owner, including No project. Contrast cases consume F3-654 and F3-642's retained Off/3:1 program-output choices; import keeps its seven formats, 256 KB cap, no evaluation and fixed errors that never echo the file; cells remain whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal animates; every effect stops within 10 s of the last output or keystroke, after which no effects frames run until the next output or keystroke; an effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; battery saver turns motion off; where no GPU draws the terminal the effects layer stays off, zero effects frames run, plain static scanlines and glow paint and the Customize screen names what it could not draw; Reduced Motion stops every moving part and keeps the static looks; Retro dark shows scanlines and phosphor glow by default, and Full CRT and flicker are off by default in every look; flicker defaults to 0.02 and never exceeds 0.03 of relative luminance; degauss is a one-shot action; NieR's terminal touches follow their installed parts. Faces (F3-644): the six faces, JetBrains Mono, VT323, Sixtyfour, Sixtyfour Raster, Departure Mono and Atkinson Hyperlegible Mono; JetBrains Mono in every look but Retro, where VT323 is the default; each face at its default size and line height; JetBrains Mono's bytes from the page's code face, never a second copy, and the terminal's own faces 84,572 bytes before base64; box drawing, block, braille, powerline and sextant glyphs drawn by the terminal; every face under a permissive licence. Images (SMPFS-181, F3-645): the complete kitty graphics protocol (direct, file, temporary-file and shared-memory transmission, chunking, ids and placement ids, placements, relative placements, the three z tiers, every delete selector, Unicode placeholders, animation frames, control and compose, queries), sixel, and iTerm2 inline images single and multipart; the paint order; images anchored to their cell through scroll, reflow and clipping; text over a sixel or iTerm2 image cutting it out; output after an image waiting for its decode. The hardening cases, each asserting its exact reply: a file medium that is not a regular file, a path under `/proc`, `/sys` or `/dev` other than `/dev/shm`, a symlink loop, and a missing, unreadable or short file each answer exactly `EBADF:Failed to read image file`; a temporary file is deleted only inside `/tmp` or `/dev/shm` and only with `tty-graphics-protocol` in its path; shared memory is unlinked after reading; a remote (SSH) session and a command an agent typed get the same `EBADF` for every file medium and may use direct transmission; every error reply is one of SMPFS-181's fixed strings and never echoes what the program sent; a sequence over its escape-sequence cap gets `EFBIG`; the per-screen-buffer image quota with its eviction order (images without placements, then transient ones, then the least recently used), the animation-frame pool, the per-side, iTerm2 and sixel limits, 2048-byte names, relative placements deeper than allowed (`ETOODEEP`) and in a cycle (`ECYCLE`), and the fastest frame shown. An animated image pauses while its terminal is hidden and under Reduced Motion. The accessible buffer and agent reads show `[image W×H px]` (", animated" when it is), `[image]` for a Unicode-placeholder run, or a dropped image's placeholder label, never image data. Saved scrollback (SP-332, SMPFS-181, F3-640, F3-645): what is saved and what never is (the alternate screen, the command line being typed, selections and find highlights); a restored terminal showing its lines, marks and images where they were, then the dim restored rule, then the new prompt, with the restored notice; the 64 MiB quota per terminal, with text never giving way to images and images dropped oldest first, an unreadable frame treated the same; each dropped image's cells showing the dashed placeholder `[<name> <W>×<H> · not kept]` and the notice counting the images not kept; placeholder ids on restored lines resolving only to restored images, so a new program reusing an image id never paints into the old scrollback; a command still running when the page went away coming back ended and indeterminate, "ended with the earlier session", never done; the write cadence (1.5 s after output settles, at most every 5 s while output streams, and when the page hides, never rewriting an unchanged terminal); Clear scrollback emptying the saved copy at the next save; a closed tab's copy kept while the tab can be reopened and for at most 7 days; the 5 s load budget, past which the tab starts without its scrollback and says so; and saved scrollback staying on this machine, excluded from backups, exports and sync. Agents (SMPFS-182, F3-646, Plans/Contracts_V0.md#CV-362): the four inline rows with their exact text and actions; a keystroke in a terminal an agent drives taking over at once, the Paused row, and the agent's next write refused as `preempted`; Allow once letting exactly one command through, after which the row, the mark and the writer lease go back to the human; Allow in this terminal held in memory only and never stored, ending when the terminal closes, when the human takes over by a keystroke, Take over or Stop, and when that agent's run ends, given again by Hand back for the rest of that run, and never replacing command approval: every command typed under it still passes the Tools policy engine with its own approval over that exact invocation (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, Plans/Permissions_System.md#PS-041); Deny refusing the write and telling the agent; no control labelled Always allow here; a secret prompt showing the padlock cursor and refusing agent input as `secret_input`; Interrupt sending SIGINT and Stop ending the agent's run and returning the lease; agent-typed commands carrying the square gutter mark; an agent-opened terminal landing in the background with the hollow square and never taking focus; input protection outranking every grant and blocking an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore (ATS-047 P10); and agent reads returning rendered text with a read state, never raw bytes and never images. Commands and wiring: each terminal control dispatches its command of Plans/UI_Command_Catalog.md#UCC-201 and is in Plans/UI_Wiring_Rules.md#UIW-042's census with its Plans/Wiring_Matrix.md#WM-091 row. Concept checks of the terminal concept are concept evidence only, as ATS-075 says; native receipts name the revision, platform, toolkit, renderer and transport, and a missing runner stays `not_run`. This amends ATS-047, whose image exclusion DL-182 replaces, and takes over ATS-029's terminal identity fixtures. Amended 2026-10-10 (DL-187, DL-185): the matrix also certifies Jared's answers on the terminal and the chat's finished command card, each case checking the owner's exact formats, labels and words rather than a copy of them here. Tab marks (D34, F3-640, F3-631): no terminal tab shows a colour or icon of the person's choosing on the strip. Secrets in saved scrollback (D36): every secret format Plans/storage-plan.md#SP-332 and SMPFS-183 list is replaced in the saved copy before it is written, in place, so the line keeps its width and every image anchor and mark stays put, with the label or mark SP-332 gives; a private key keeps its BEGIN and END lines; command lines and link targets in the copy are scrubbed the same way; the live screen keeps the original; and the restore notice counts the secrets left out in SP-332's words. The total cap (D37, lead ruling F4): 512 MiB for every terminal's saved copy together, fixed and not a setting, trimmed in the order SP-332 gives, each terminal keeping its 64 MiB. Notifications (D38, lead ruling F5): OSC 9, OSC 777 and OSC 99 notifications behave as F3-641 and SMPFS-183 say: a system notification only while Puppet Master is in the background, at most one every 3 s per terminal, Mute notifications as that tab's own state (ui.terminal.mute_notifications), absent where the platform has no system notifications, and the web client's one inline permission notice after a notification arrived. The chat's command card (Plans/assistant-chat-design.md#ACD-500, ACD-502): a stopped command reads "Failed · exited 101", "Done · exited 0" or "Interrupted · exited 130", a failed command with no exit code reads Failed alone and a command whose session ended while it ran reads Ended with the earlier session; the lines above the preview are counted at the top as "N earlier lines"; Interrupted is muted and still; who ran it reads "You ran in <folder>" or the agent mark and "<Agent> ran in <folder>"; Open in Terminal shows only with a live session, View output only without one and Rerun in Terminal only once the command has stopped, as 24 px text buttons; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode.
 gui_related: true
 gui_classification_reason: The certification exercises every visible behaviour of the terminal tab, its images, its appearance, its saved scrollback and its agent rows.
 split_recommended: false
@@ -6426,14 +6433,25 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
-  - "Amended 2026-10-14: The full Customize screen supersedes the old popover-only entry. Off/3:1 remain active for program output only, under Jared’s clarification recorded in DL-197; interface contrast remains F3-654’s floor."
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds criteria for the image placement limits (4,096 per screen buffer, 10,000 cells each) and for the permission row's hover tags, the Driving row kept between commands, the Agent input row with Revoke and no pre-approval wording."
-  - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
-  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
-  - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
-  - "Amended 2026-10-10 (DL-187, DL-185): certifies no chosen tab colours or icons on terminal tabs (D34), secrets scrubbed from saved scrollback (D36), the fixed 512 MiB total cap (D37), terminal notifications with the per-tab mute (D38), and the chat command card's finished words and actions (terminal SPEC section 11)."
+- 'Amended 2026-10-14: The full Customize screen supersedes the old popover-only entry. Off/3:1 remain active for
+  program output only, under Jared’s clarification recorded in DL-197; interface contrast remains F3-654’s floor.'
+- 'Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds criteria for the image placement limits (4,096 per screen
+  buffer, 10,000 cells each) and for the permission row''s hover tags, the Driving row kept between commands, the
+  Agent input row with Revoke and no pre-approval wording.'
+- 'Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through
+  the Settings transaction with the in this project hover tag and no app-wide value, replacing ''only Settings writes
+  the project default''.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults.'
+- 'Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule.'
+- 'Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor
+  and terminal.'
+- 'Amended 2026-10-09 (DL-182): ATS-047''s ''images remain outside approval'' is replaced; image protocols, their
+  hardening and saved scrollback with images are certified here.'
+- 'Amended 2026-10-10 (DL-187, DL-185): certifies no chosen tab colours or icons on terminal tabs (D34), secrets scrubbed
+  from saved scrollback (D36), the fixed 512 MiB total cap (D37), terminal notifications with the per-tab mute (D38),
+  and the chat command card''s finished words and actions (terminal SPEC section 11).'
+- 'Superseded in part by DL-281/283 (2026-11-03): the earlier L16 Project-only All terminals/no-app-write wording
+  above is historical lineage; All terminals now explicitly writes Everywhere.'
 owner_boundary_notes:
   - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."
 owner_hints:
@@ -6793,3 +6811,440 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Colla
 
 
 Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): current appearance contracts use five ordered families and ten variants. Earlier override-only or eight-theme evidence is historical, not current acceptance. Settings_System SSYS-043 owns the retired-key migration and retained NieR Adjust rows.
+
+### ATS-080 - Settings Layering Copy Readiness And Model Selection Acceptance
+
+```yaml
+plan_unit_id: ATS-080
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use the final F-d/A/D spelling map; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+
+  Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
+
+  Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
+
+  Model acceptance uses A's lead-accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-084
+- DR-085
+- DR-089
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-060
+- Plans/Settings_System.md#SSYS-062
+- Plans/Settings_System.md#SSYS-065
+- Plans/Models_System.md#MS-099
+- Plans/Multi-Account.md#MA-074
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-080
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- own_values
+- effective_values
+- theme_pair
+- 30-day
+- Conservative
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/Settings_System.md#SSYS-059
+- Plans/Settings_System.md#SSYS-060
+- Plans/Settings_System.md#SSYS-062
+- Plans/Settings_System.md#SSYS-065
+- Plans/Models_System.md#MS-099
+- Plans/Multi-Account.md#MA-074
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/Settings_System.md#SSYS-060, ContractName:Plans/Settings_System.md#SSYS-062, ContractName:Plans/Settings_System.md#SSYS-065, ContractName:Plans/Models_System.md#MS-099, ContractName:Plans/Multi-Account.md#MA-074
+
+
+### ATS-081 - Application Workflow Source Custody And Counterpart Limits
+
+```yaml
+plan_unit_id: ATS-081
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Static acceptance requires one explicit app/Project scope union and an exhaustive selected-version/adoption manifest for each admitted family. Application means genuine null Project with real Server/thread/Computer/Host/Environment/roots/permission/writer identity; outer/inner scope, reversible partitions and source joins agree. Preserve every original Project schema resource, physical codec/key, semantic/hash/idempotency domain and accepted source byte-for-byte. A nullable field or all-true client booleans is not an app-source proof. Each active source, create/update/cancel/association/append/first receipt/index/read/backup/retention/restore edge adopts the selected app edition or remains explicitly unavailable.
+
+  Test Goal concise body field count, four states, exact objective/currentness, direct Save versus approved proposal, Stop/cancel/continuation/history and non-rebuildable custody. Ordinary Goal/Plan/Crew updates reject null-to-Project binding mutation. Crew and all existing admitted collaboration kinds test real app parent, frozen participants/ceilings, evaluator/configuration, one scoped message board/coordinator and 16 KiB inline/payload-reference policy. Private notebooks/memory never become cross-read content. Plan/Deep Plan tests all six strategies, one current Plan, immutable approved revisions, adherence/To-Dos, Deep ledger/scoped bundle and Build/Crew/Goal/cancel source joins. Assistant bundles do not produce product Plans, NamedPlans, WorkNodes or Orchestrator activation.
+
+  Scheduling tests exact frozen text/attachments/destination and target version/hash/topology, one atomic Build At/window commit, actual Server timers, occurrence idempotency, DST gap/repeat, grace/missed policy, quota unknown reset/consent, offline/restart and final Stop/pause races. App Pause has a real independent epoch and user-only clear; missing custody is unavailable. No fallback Computer, duplicate timer/backlog burst or latest-target substitution.
+
+  Every app family uses one counterpart Server-wide bucket with the same actual limits, holds/retention/backup, including 2,048 restore points and 500 MB default web cache where their owners declare them; no per-chat cap reset or invented Goal/schedule cap. Test app root/tool/provider/To-Do/artifact/Usage/restore/compaction/notebook/memory/browser/terminal isolation. Retired goal.scheduled/goal.degraded/child/progress/replan/stop/verifier writers remain historical-only. goal_run.certified and actual native-v6/v7 Workflow/certified source paths retain their intrinsic Project-bound subjects and exact frozen banks. CV-329/SP-259 owns compaction; CV-334 is historical child-status exclusion and SP-319 is historical terminal-move inspection. App graph status is specified_unimplemented with runtime_enabled:false. Whole-resource source banks keep goal_runtime_contracts.schema.json, goal_body_custody.schema.json and full_thread_runtime_contracts.schema.json byte-exact; facade/send and local-preview successor definitions live in the new application_workflow_contracts.schema.json root, not by adding fields to those frozen files. Passive replay emits no effect, original Project fixtures stay exact and native/runtime certification remains NOT_RUN.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-091
+- DR-092
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/Contracts_V0.md#CV-365
+- Plans/Contracts_V0.md#CV-366
+- Plans/Contracts_V0.md#CV-368
+- Plans/storage-plan.md#SP-349
+- Plans/storage-plan.md#SP-351
+- Plans/storage-plan.md#SP-352
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Collaborative_Workflows.md#CWR-045
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-081
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- 2,048
+- 500 MB
+- NOT_RUN
+- goal.scheduled
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/Contracts_V0.md#CV-365
+- Plans/Contracts_V0.md#CV-366
+- Plans/Contracts_V0.md#CV-368
+- Plans/storage-plan.md#SP-349
+- Plans/storage-plan.md#SP-351
+- Plans/storage-plan.md#SP-352
+- Plans/Goal_Runtime_System.md#GRS-086
+- Plans/Collaborative_Workflows.md#CWR-045
+- Plans/Assistant_Plan_Runtime.md#APR-073
+- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-349, ContractName:Plans/storage-plan.md#SP-351, ContractName:Plans/storage-plan.md#SP-352, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Collaborative_Workflows.md#CWR-045, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019
+
+
+### ATS-082 - Every Conversion Family And Cutover Undo Race
+
+```yaml
+plan_unit_id: ATS-082
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Acceptance covers both equal conversion choices, new/existing Project, local/cross-Server and Regular/guarded YOLO using the same manifest engine. Every current NOPROJECT section 7.12 and TOUCHPOINTS-L2 section 8 row has an exact disposition: thread/messages/composer/questions; folder/files/attachments; immutable events/receipts/Usage/payloads; restore/revert/safe points/attention/handoff/Lens; Goal body/control/history/association/continuation; Crew definition/run/participant/transcript/board/lineage; coordination claims/keys/checkpoints; Plan/revisions/PlanRun/adherence/To-Dos/Deep ledger/bundle; schedules/windows/consents/occurrences; Project-only Wizard/PRD/Orchestrator state; native repository/worktree/forge/conflict identity; artifacts/shared refs; live terminal/dev/process/ports; browser/debug/testing; editor/buffers/absolute links; search/log/chat indexes and builder slots; Home/boards/panels/rail/dock/layout; memory/Teach/capsule/notebook/Persona; MCP/skills/plugins/custom commands/provider choices; permission/Always/FileSafe/trust; Server/Home Server/Vault/routes/WS auth/fairness; app/Project Stop/pause/History; backup/deletion/retention/quotas; and each inverse Undo. Goals, Crew, Plans and schedules cannot be marked nothing-to-move.
+
+  Positive cases require explicit statement/current preview/named apply/report/Undo, real new-Project listing before cutover, copy/hash verification before source removal, full destination-owned history, one live writer/index and preserved thread/source lineage. N25 defaults linked new records; a separately admitted rebind needs its complete owner transaction. Test active-task safe-stop/fence, pending approval settlement, exact target/step/To-Do maps and schedule hold/replacement with fresh consent and both stop contexts.
+
+  Inject failure at each copy/check/owner/commit/cutover/index boundary, cross-Server interruption/restart/resume/cancel, stale claim generation, late source writer and timer race. Duplicate apply/replay returns the original result; no repeated remote create, usage charge, source send or dual continuation occurs. Test keep-both/same/different/unsaved conflict, direct-main Advanced versus default separate draft, ambiguous/stale YOLO refusal and fresh destination authority. Undo rejects first new work or seven-day expiry, needs both Computers remotely, removes only eligible unchanged local effects, never remote repo/branch/backup/modified work or independent canonical/audit/shared custody, and never clears Stop. Restoring an old app backup consults lineage and cannot revive the sealed source.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-087
+- DR-091
+- DR-092
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/assistant-chat-design.md#ACD-511
+- Plans/Project_Sync_and_Backbone.md#PSB-007
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Backup_Restore_System.md#BRS-033
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-082
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- N25
+- Undo
+- seven-day
+- one live writer
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/assistant-chat-design.md#ACD-510
+- Plans/assistant-chat-design.md#ACD-511
+- Plans/Project_Sync_and_Backbone.md#PSB-007
+- Plans/Goal_Runtime_System.md#GRS-087
+- Plans/Assistant_Plan_Runtime.md#APR-074
+- Plans/Backup_Restore_System.md#BRS-033
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-510, ContractName:Plans/assistant-chat-design.md#ACD-511, ContractName:Plans/Project_Sync_and_Backbone.md#PSB-007, ContractName:Plans/Goal_Runtime_System.md#GRS-087, ContractName:Plans/Assistant_Plan_Runtime.md#APR-074, ContractName:Plans/Backup_Restore_System.md#BRS-033
+
+
+### ATS-083 - Mode Grant Read Receiver And Computer Use Authority
+
+```yaml
+plan_unit_id: ATS-083
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Positive cases cover Regular actual human approval and admitted YOLO ordinary Git/JJ/package/image/template push/publish/create with no extra ordinary yes, preserving exact target/privacy/currentness/capability and unknown-effect reconciliation. Distinguish human, mode and build_grant receipt/source editions; automation can never serialize as human_confirmed=true. Y1 success needs a current expected-head lease and a verified branch create receipt for this work; foreign/imported/unrelated/main/default/protected branch or lost lease refuses with no force fallback. Ordinary prune/delete/discard/Kubernetes asks remain without an exact grant.
+
+  Build-grant tests join exact Plan/revision/hash/build, allowed operation/resource selectors, current permission/account/Stop/revocation and verified created-resource UID/generation/receipt. Allow listed CI/deploy/container/publish operations and cleanup of grant-created resources only. Reject named pre-existing/same-name replacement/unlisted child/broad namespace or prune/modified-referenced/unrelated resource cleanup. Agent self-issue/expand/renew, wider children, app/cross-Project borrowed grant, changed Plan/target, restore/revocation and final-dispatch Stop races fail. FileSafe, safe points, source trust/loosening, durable Always, protected input, secrets, paid sign-up and human-only administration remain independent guards. Run-owner Stop and truthful Undo/compensation/No safe Undo use shared work/History.
+
+  App tool approval binds actual thread/run/Computer/tool/target and separate versioned app envelope, never fake node/blocked sequence. Read tests cover all/named/empty/offline/denied/partial/archived-skipped/missing index, source switch revoked during read, source-Computer route, scrubbed exposure/outward provenance and protected Project/PM-data/credential symlink exclusions. Sender/receiver Regular/YOLO pairs retain independent Off/Ask me/mode ceilings, exact approved body, expiry/order and three-round-trip cap. No read or settings.follow grant permits mutation. FileSafe-on listed home reads differ from FileSafe-off/no grant. Computer-use negatives cover absent desktop/DAE/provider namespace/disclosure, wrong app/Host/controller, protected auth and raw-frame persistence; targeted Stop/double-Esc fences only its own controller. N27 requires the exact explicit destination and fresh preview/authority, not a person-only approval click.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-090
+- DR-088
+- UIW-051
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/Permissions_System.md#PS-144
+- Plans/Permissions_System.md#PS-145
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Tools.md#T-185
+- Plans/Tools.md#T-186
+- Plans/Run_Modes.md#RM-053
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-083
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- human_confirmed=true
+- Y1
+- No safe Undo
+- settings.follow
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/Permissions_System.md#PS-144
+- Plans/Permissions_System.md#PS-145
+- Plans/Permissions_System.md#PS-146
+- Plans/Permissions_System.md#PS-147
+- Plans/Permissions_System.md#PS-148
+- Plans/Tools.md#T-185
+- Plans/Tools.md#T-186
+- Plans/Run_Modes.md#RM-053
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md#PS-144, ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/Permissions_System.md#PS-146, ContractName:Plans/Permissions_System.md#PS-147, ContractName:Plans/Permissions_System.md#PS-148, ContractName:Plans/Tools.md#T-185, ContractName:Plans/Tools.md#T-186, ContractName:Plans/Run_Modes.md#RM-053
+
+
+### ATS-084 - Shared Setup Forge Starter Backup And Project Action Acceptance
+
+```yaml
+plan_unit_id: ATS-084
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Verify the six ingress ways against the current PJCT-009/PWIZ-037 draft and actual owner joins, all ten offered API profiles plus transport-only generic Git, equal native Git/JJ choices and precommit read/auth versus mutation fences. Preserve nine historical registration kinds, add mounted_existing only through current mount/device proof, and keep online_import/fork_contribute as closed native clone provenance. Every create/fork chain verifies exact reviewed setup/consumer/real reserved identity, tagged remote effect result, local source, Settings rebind and registry receipts. Wrong original digest, fork-as-create, new_local remote receipt, booleans without joins, unknown retry/delete and repeat create refuse. Fresh fenced resume executes only remaining effects; original replay never resumes.
+
+  Read-only inspection covers local/Server/SSH/PM/SMB/NFS/mount, native revision/dirty/remotes/submodules/LFS/hooks and duplicate-copy evidence. Stale/partial/denied never means clean or none; inspection cannot bind origin, snapshot JJ or execute hooks/helpers. remote.add is local config only, rejects unsafe/taken names/credentials/stale leases and never publishes. GH/GHES fork/head/base/upstream and local_reconcile_only sync freeze both repositories/revisions/strategy, while other forges remain typed unsupported for contribution forks. DL-273, GHES host-policy, Dedicated unoffered, TFVC and token deferral stay enforced at entry/resume/activation.
+
+  Test spaces, invalid names, private-most Review, duplicate-copy Open suggestion, team branch default/direct alternative and display-name-only rename with CAS. Starters versus detached Saved setups uses exact content/version/scan/path manifest and no secrets/history/live bodies; other-app import stays unavailable. Source-location repoint and actual content move remain distinct. Backup tests destination before sign-in, exact device/NAS identity across transports, safe test/Use existing, first-policy absent-key CAS/replay, Standard 7/4/6 seed and Advanced counts/time/zone. Archive pauses schedule and keeps last-good without prune; unarchive restores eligibility without run or Stop clear. Full Server app custody/old-restore lineage and Project converted history remain coherent. Remove is list-only and Delete data has its own strong owner. Keep all FO-22, protected return and historical exact fixtures; native provider/media/backup proof remains NOT_RUN.
+gui_related: false
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
+  not visual implementation.
+depends_on:
+- DR-085
+- DR-086
+- DR-089
+- DR-090
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/Project_System.md#PJCT-009
+- Plans/Project_System.md#PJCT-010
+- Plans/Project_System.md#PJCT-011
+- Plans/Project_System.md#PJCT-012
+- Plans/Planning_Wizard.md#PWIZ-037
+- Plans/Source_Control_System.md#SCS-025
+- Plans/Forge_Integrations.md#FGI-023
+- Plans/Forge_Integrations.md#FGI-024
+- Plans/Jujutsu_Integration.md#JJI-023
+- Plans/Backup_Restore_System.md#BRS-032
+- Plans/Backup_Restore_System.md#BRS-033
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-084
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- mounted_existing
+- online_import
+- fork_contribute
+- Standard
+- NOT_RUN
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/Project_System.md#PJCT-009
+- Plans/Project_System.md#PJCT-010
+- Plans/Project_System.md#PJCT-011
+- Plans/Project_System.md#PJCT-012
+- Plans/Planning_Wizard.md#PWIZ-037
+- Plans/Source_Control_System.md#SCS-025
+- Plans/Forge_Integrations.md#FGI-023
+- Plans/Forge_Integrations.md#FGI-024
+- Plans/Jujutsu_Integration.md#JJI-023
+- Plans/Backup_Restore_System.md#BRS-032
+- Plans/Backup_Restore_System.md#BRS-033
+```
+
+ContractRef: ContractName:Plans/Project_System.md#PJCT-009, ContractName:Plans/Project_System.md#PJCT-010, ContractName:Plans/Project_System.md#PJCT-011, ContractName:Plans/Project_System.md#PJCT-012, ContractName:Plans/Planning_Wizard.md#PWIZ-037, ContractName:Plans/Source_Control_System.md#SCS-025, ContractName:Plans/Forge_Integrations.md#FGI-023, ContractName:Plans/Forge_Integrations.md#FGI-024, ContractName:Plans/Jujutsu_Integration.md#JJI-023, ContractName:Plans/Backup_Restore_System.md#BRS-032, ContractName:Plans/Backup_Restore_System.md#BRS-033
+
+
+### ATS-085 - Complete Touch GUI Motion And Truthful Evidence Boundaries
+
+```yaml
+plan_unit_id: ATS-085
+unit_type: acceptance_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  Every command/agent/typed local producer and reverse consumer in UIW-048 through UIW-052 has one exact disposition and a source-extracted touch row. Validate primary/alias/sole-handler/request/result/schema edition, owner/PlanUnit/DRY route, exact scope/state selector/closed disabled reason, permission/currentness, effect/receipt-or-event/no-persist, ObservableWork, persistence, return/focus and meaningful positive/negative cases. Aliases normalize before admission with no peer rows; rejected command spellings and unavailable P11 Import stay inert. Existing Project switch/open-new-tab and continuity/request primaries are amended once. An excluded control cannot conceal an incomplete required behavior.
+
+  Scenario evidence covers all changed Settings rows/panel/managers/copy; Split Projects/New Project and owner recovery; No project/draft/folder/Computer/offline; explicit read coverage/incoming requests; both conversions/report/Undo; app Goal/Crew/Plan/Deep Plan/Build At/Schedule Manager/pause; grant review/live targets/Stop/Undo; and allowed computer-use strip/Stop. Check all ten look variants, effective Reduced Motion, narrow/long-content reflow, accessible labels/reasons, keyboard/pointer equivalence, stale/late returns and stable focus. Keep the one Assistant node, board/rail/menu/hover/overlay/sound/loader owners, all PM7 Glass/FO-22/service-refusal rules and native source/composer capture-return fences. Cached/partial/offline/unknown data never presents healthy/zero/none or completed effects.
+
+  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Phase 2 runs focused checks after interface/companion freeze, serial derived-file generation and authorized full-tree aggregates; no raw capture, baseline excuse or governance reseal is introduced here.
+gui_related: true
+gui_classification_reason: This unit governs visible controls, context, feedback, accessibility or visual acceptance.
+depends_on:
+- DR-040
+- DR-041
+- UIW-048
+- UIW-049
+- UIW-050
+- UIW-051
+- UIW-052
+- TCME-007
+unblocks: []
+acceptance_criteria:
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
+  fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
+  scenarios as pass.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
+validation_surfaces:
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+risk_class: missing_scope_semantics_or_false_certification
+reasoning_tier: high
+context_scope: projects_refresh_pass2_20261103
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/UI_Wiring_Rules.md#UIW-048
+- Plans/UI_Wiring_Rules.md#UIW-052
+- Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
+- Plans/FinalGUISpec.md#F3-668
+- Plans/FinalGUISpec.md#F3-674
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-085
+- /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+preserved_exact_tokens:
+- UIW-048
+- UIW-052
+- FO-22
+- not_run
+negative_constraints:
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
+  by refreshing a baseline, or reseal governance in this pass.
+owner_hints:
+- Plans/UI_Wiring_Rules.md#UIW-048
+- Plans/UI_Wiring_Rules.md#UIW-052
+- Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
+- Plans/FinalGUISpec.md#F3-668
+- Plans/FinalGUISpec.md#F3-674
+```
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
