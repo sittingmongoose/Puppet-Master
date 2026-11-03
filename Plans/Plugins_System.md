@@ -57,7 +57,7 @@ ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md
 
 ### 2.1 Discovery paths
 
-Plugins are discovered from three sources in strict order:
+Plugins are discovered on the selected work Computer in the following strict order. In No project skip the Project-local source; library reach, local installation and requested/effective enablement stay separate under PLUG-071.
 
 | Priority | Source | Path / Config |
 |----------|--------|---------------|
@@ -164,7 +164,7 @@ PluginContext {
 }
 ```
 
-The `PluginContext` is the sole API surface for plugins. Plugins MUST NOT access Puppet Master internals outside this interface.
+`PluginContext` remains the sole plugin API; no direct PM-internals access is admitted. For chat/session execution, its separately versioned scope-aware envelope binds application-or-Project scope, nullable Project, real user/Computer/thread/session and exact owner generation (PLUG-071). Computer package discovery alone does not fabricate a chat identity. `plugin_data_dir` is selected by that full plugin/user/place/session authority, never by a shared null-Project key.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
@@ -253,7 +253,7 @@ ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW
 | Field | Value |
 |-------|-------|
 | **Fires** | After all plugins are initialized and before the first user message is processed. |
-| **Input** | `{ session_id: String, project_root: Option<PathBuf> }` |
+| **Input** | Versioned `{ session_id, project_root: Option<PathBuf>, scope_context }`; `scope_context` references the shared real user/Server/Host/Environment/thread identity and explicit application/Project discriminant. In No project `project_root=None`; no empty Project or focus-derived authority. |
 | **Returns** | `Continue` only. |
 
 #### `session.end`
@@ -395,6 +395,8 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contai
 
 ### 7.1 Config shape
 
+This is the owner configuration view, resolved under PLUG-071. Package installations and executable paths belong to the exact Computer; enablement and reach are explicit owner bindings consumed by the Settings resolver. The TOML example below is not a second universal config writer and cannot make copied packages trusted.
+
 ```toml
 [plugins]
 hook_timeout_ms = 5000
@@ -413,7 +415,7 @@ packages = [
 
 ### 7.2 Enable/disable
 
-Individual plugins can be disabled via `config.plugins.disabled.<plugin_id> = true`. Disabled plugins are not loaded. This persists across sessions.
+`config.plugins.disabled.<plugin_id>` remains the logical disabled view. PLUG-071 resolves the owner's library/Computer enablement and optional Project switch `extensions.plugins.plugin-on-off`; a disabled effective plugin is not loaded and the admitted choice persists at its actual home. No-project skips Project bindings. Changing or copying enablement neither installs nor trusts executable code.
 
 ### 7.3 Per-Persona plugin overrides
 
@@ -989,7 +991,11 @@ plan_unit_id: PLUG-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package list entries in strict priority order."
+canonical_text: >-
+  Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package
+  list entries in strict priority order. App discovery skips Project-local plugins and uses the same
+  remaining order on the exact Computer; library reach and installation readiness remain distinct
+  under PLUG-071.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -1014,6 +1020,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0008
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "DISCOVERY"
 - "Discovery paths"
@@ -1152,7 +1160,10 @@ plan_unit_id: PLUG-011
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Puppet Master must not auto-load executable plugin code from config without explicit user approval; config-only discovery does not imply execution approval."
+canonical_text: >-
+  Puppet Master must not auto-load executable plugin code from config without explicit user approval;
+  config-only discovery does not imply execution approval. A copied definition, enablement switch,
+  mirrored package or YOLO mode is not that executable-source approval.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -1177,6 +1188,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0012
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "Load order and execution model"
 - "Auto-load prohibition"
@@ -1203,7 +1216,11 @@ plan_unit_id: PLUG-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "First-time plugin load shows source, declared hooks, requested capabilities, and trust implications, and approval is version/hash-sensitive so source change requires new approval."
+canonical_text: >-
+  First-time plugin load shows source, declared hooks, requested capabilities, and trust implications,
+  and approval is version/hash-sensitive so source change requires new approval. Approval is bound to
+  the destination Computer and admitted package/capability identity; copies and whole Project versions
+  do not inherit it.
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -1227,6 +1244,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "first-time plugin load"
 - "source"
@@ -1407,7 +1426,12 @@ plan_unit_id: PLUG-016
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins initialize with PluginContext as the sole API surface for project root, global config, plugin data directory, hook registration, tool registration, and structured logging, and must not access Puppet Master internals outside it."
+canonical_text: >-
+  Plugins initialize with PluginContext as the sole API surface for project root, global config,
+  plugin data directory, hook registration, tool registration, and structured logging, and must not
+  access Puppet Master internals outside it. In app scope its versioned context additionally binds
+  user, Computer, thread and session with project_root=None; PLUGIN_DATA isolation never uses a shared
+  null-Project directory.
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -1431,6 +1455,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0017
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "PLUGIN-CONTEXT"
 - "PluginContext"
@@ -1610,7 +1636,11 @@ plan_unit_id: PLUG-020
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated approval at a higher trust posture than read-only hooks because they can inject malicious arguments after permission checks."
+canonical_text: >-
+  Plugins that declare arg-touching hooks require signed verification or explicitly /approved elevated
+  approval at a higher trust posture than read-only hooks because they can inject malicious arguments
+  after permission checks. Layering, app scope and owner copies cannot widen the admitted capability
+  ceiling or bypass final post-transform permission validation.
 gui_related: true
 gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
 split_recommended: false
@@ -1635,6 +1665,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0020
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0021
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "arg-touching hooks"
 - "higher-trust approval posture"
@@ -4247,7 +4279,7 @@ Package classification remains exactly `portable_conformant | portable_partial |
 
 Archive extraction and local-directory admission validate every entry before writing. Absolute paths, drive/UNC roots, parent traversal, alternate data streams, device names, hard links outside the package, and symlinks that resolve outside the normalized package root are rejected. The final extracted tree is re-walked without following untrusted links, hashed, and compared with the signed package manifest before activation.
 
-`PLUGIN_ROOT` is a read-only content root for the verified package generation. `PLUGIN_DATA` is a separate writable per-plugin data root with owner/scope/quota/retention identity; it cannot shadow executable content or escape to Project, config, credential, socket, or another plugin's data. GUI projections show safe source class, package identity, and redacted relative component labels; they do not expose private absolute entry/data paths, credential-store keys, internal sockets, or raw environment values.
+`PLUGIN_ROOT` is a read-only content root for the verified package generation. `PLUGIN_DATA` is a separate writable per-plugin data root with owner/scope/quota/retention identity; in app scope it additionally binds actual user/Server/thread/session and cannot use a common null-Project directory. It cannot shadow executable content or escape to Project, config, credential, socket, or another plugin's data. GUI projections show safe source class, package identity, and redacted relative component labels; they do not expose private absolute entry/data paths, credential-store keys, internal sockets, or raw environment values.
 
 A subprocess entry is represented as one exact executable token plus a bounded argv array; it is never reconstructed through a shell string. Environment variables are allowlisted and secret references remain broker-owned. Every external process uses a private runtime directory, bounded stdout/stderr/log capture, process-tree cancellation, timeout, crash budget, and `RuntimeResourceGovernor` admission. Off-loopback outbound transport is HTTPS-only and requires a declared allowlist plus Permissions/FileSafe/security approval. Plugins cannot open public ingress, debug/CDP, control, or callback sockets unless a named existing endpoint owner provides an authenticated, rate-gated, generation-fenced capability; possession of a plugin permission is not endpoint authority.
 
@@ -4568,3 +4600,97 @@ The following PKT-04 names are retained so packet extraction cannot silently dis
 `agent_plugin.discovered`, `agent_plugin.validated`, `agent_plugin.installed`, `agent_plugin.updated`, `agent_plugin.enabled`, `agent_plugin.disabled`, `agent_plugin.removed`, `agent_plugin.component_loaded`, `agent_plugin.component_skipped`, `agent_plugin.component_failed`, `agent_plugin.rollback_completed`.
 
 The typed lifecycle contract is stricter than retention alone. Install, update, enable, reload, remove, and rollback require non-null admitted package proof, at least one applicable conformance ref, an exact permission diff, and rollback evidence; update, reload, review changes, and rollback additionally require the fully typed update-diff identity. Enable admits only a PM-native or dual manifest. Reload additionally requires human confirmation and a separately referenced authority-change/revalidation decision. Remove requires an explicit owned-data disposition. When centrally registered and natively available, Scan, Validate, Review Changes, Open Details, and Open Logs are machine-declared no-effect results; Review Changes and the two open projections require bounded projections. In the current unregistered phase every exact command result is rejected with no state change. Every result settles one non-secret caller return context. These predicates remain static admission shapes, not package, handler, activation, rollback, or native proof.
+
+### PLUG-071 - Plugin Installation, Reach And Application Isolation
+
+```yaml
+plan_unit_id: PLUG-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: Plugins installs verified packages per Computer, with explicit definition home/reach and
+  resolver-driven enablement; project_switch_ids=[extensions.plugins.plugin-on-off] binds the switch to
+  plugin_id. A whole Project version is a whole verified owner package/configuration, never a field merge
+  or installation elsewhere. No-project discovery skips Project-local entries and requires allowed library/Computer
+  reach. For chat/session execution, the versioned PluginContext and session.start payload bind actual
+  application scope, project_root=None, user, Server/Host/Environment, thread and session. PLUGIN_ROOT
+  remains the verified read-only package root. PLUGIN_DATA is partitioned by plugin/user/place/session
+  ownership with the existing quota and retention; a null Project value cannot select another Project
+  or a common private-data directory. Copy sends only exact non-secret owner configuration/reach/switch
+  contributions through Settings preview/apply/rollback. It never installs executable code, grants first-load/version
+  trust, copies private plugin data or credentials, or widens permitted hooks/capabilities. Conversion
+  creates fresh destination context and revalidates installations, trust and policy; it never retargets
+  an admitted running hook or imports private session data as configuration. The owner contribution is
+  named in owner_thing_previews; scope_model and project_switch_ids describe its manager boundary. settings.follow
+  never grants thing mutation or Project content authority. The selected whole-version/copy operation
+  is cmd.plugin.copy_configuration through sole planned handler handlers::plugins::copy_configuration,
+  with Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationRequest and Plans/plugin_contracts.schema.json#/$defs/PluginCopyConfigurationResult.
+  The Settings batch invokes this owner contribution, including exact source hash/revision, destination
+  CAS, declared reach/switch deltas, readback and eligible compensation; it never writes owner records
+  directly. These registrations do not prove native availability; missing schema, handler, trust, installation
+  or currentness remains typed unavailable.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- PLUG-008
+- PLUG-011
+- PLUG-012
+- PLUG-016
+- PLUG-020
+- SSYS-061
+- SSYS-062
+unblocks: []
+acceptance_criteria:
+- Two app threads and a Project cannot collide through a null-key plugin data path.
+- A copied enabled plugin remains unavailable until the exact destination installation/trust/permission
+  gates pass.
+- Owner rollback restores previewed enablement/reach/configuration without undoing unrelated installation
+  or source changes.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Plugins_System.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md#4.1;4.5;5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+preserved_exact_tokens:
+- PluginContext
+- session.start
+- PLUGIN_ROOT
+- PLUGIN_DATA
+- project_switch_ids
+- extensions.plugins.plugin-on-off
+- owner_thing_previews
+- scope_model
+- settings.follow
+- cmd.plugin.copy_configuration
+- handlers::plugins::copy_configuration
+negative_constraints:
+- Do not copy tokens, private PLUGIN_DATA, user sign-ins or live hooks as settings.
+- Do not reclassify protected auth, arg-touching hooks or Project-only reach through an app context.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Plugins_System.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Plugins_System.md#PLUG-071, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

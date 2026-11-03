@@ -79,7 +79,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Ope
 
 <a id="STORAGE-LAYOUT"></a>
 
-Persona files are stored in a deterministic two-tier layout. Project-local Personas override global Personas by `persona_id`.
+Persona files keep their deterministic Project/library layout. Library home is Everywhere, kept on the settings home and mirrored read-only on each Computer. A Project version replaces the whole same-id library definition. Reach, declared Project switches, Computer availability and selection defaults are resolved as P-060 specifies; there is no per-field Persona merge or extra Computer Persona-root tier.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
@@ -89,7 +89,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 .puppet-master/personas/<persona_id>/PERSONA.md
 ```
 
-Scoped to the project workspace root. These Personas are available only when that project is active.
+Scoped to the project workspace root. These Personas are available only in an explicitly bound context of that Project, never in No project.
 
 ### 2.2 Global
 
@@ -97,17 +97,17 @@ Scoped to the project workspace root. These Personas are available only when tha
 ~/.config/puppet-master/personas/<persona_id>/PERSONA.md
 ```
 
-Available across all projects. Overridden by a project-local Persona with the same `persona_id`.
+Library Personas may be available to Every project (including No project) or only the named Projects, under P-060. An admitted whole Project version with the same persona_id replaces the library version for that Project. Library mirrors do not become writable homes.
 
 ### 2.3 Resolution order
 
 When resolving a Persona by `persona_id`:
-1. If `persona_id` is a protected built-in ID from §6, resolve the PM-owned bundled `PERSONA.md` definition first. User-created project or global files may not shadow protected built-ins.
-2. Check `.puppet-master/personas/<persona_id>/PERSONA.md` in the active project root.
-3. If not found, check `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`.
-4. If not found, the Persona is unresolved. The Orchestrator MUST fall back to a bare-context run (no Persona-specific instructions injected) and log a warning.
+1. Protected built-in IDs resolve to the PM-owned bundled definition. User library/Project versions cannot shadow them.
+2. For a real bound Project, check its whole version at `.puppet-master/personas/<persona_id>/PERSONA.md` and its declared switches/reach. Skip this step in No project.
+3. Resolve the permitted library version at `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`, with current Computer mirror/readiness and reach evidence.
+4. If unresolved, use the existing bare-context fallback and warning.
 
-**Folder-name invariant:** The folder name MUST match the `id` field in the PERSONA.md frontmatter. A mismatch is a validation error.
+**Folder-name invariant:** The folder name MUST match the PERSONA.md frontmatter `id`; a mismatch is a validation error.
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION
 ### 2.4 Built-in scope
@@ -224,11 +224,11 @@ Agent Config > Personas MUST provide:
 
 1. **Library view:** Table of all resolved Personas grouped by protected core, bundled specialty, project-local, global, imported seed, disabled, and advanced/internal where applicable. Columns: Name, ID, Scope, Chat selectable, Child/subagent eligible, Tags, Description (truncated), Readiness, and Source. Sorted alphabetically by display name inside each group; project-local entries sort before global when IDs match.
 
-2. **Create:** "New Persona" opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
+2. **Create:** "New Persona" opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Home selector: Project or Your library; No project offers Your library only. Computer installation/mirror status is separate, as P-060 specifies. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
 
 3. **Prompt visibility:** Selecting a row shows a prompt preview pane and an effective runtime/control summary. The editor must expose the stored Markdown body and a requested/effective compiled prompt preview when enough runtime context is available. Unsupported or skipped controls are shown as skipped, disabled, or clamped rather than silently accepted.
 
-4. **Edit:** Row click or edit opens the same editor pre-populated. Editing a global Persona while a project is active offers "Save as project override" (creates project-local copy) or "Save globally." Protected core built-ins are read-only in the editor; users can duplicate them under a non-reserved ID but cannot modify or shadow the protected ID.
+4. **Edit:** Open the same editor. Save writes the current thing home under expected revision and returns narrow Undo/re-target feedback. A library Persona can explicitly Make a version for [Project] through the existing save-as-override route; Go back to the library version removes only the eligible Project version. Protected core built-ins remain read-only; duplicate under a non-reserved ID only.
 
 5. **Disable and restore:** Bundled first-party specialty Personas can be disabled and restored to the shipped default after user customization. Protected core built-ins cannot be disabled. User-created and imported Personas can be deleted with confirmation.
 
@@ -480,7 +480,7 @@ Core Personas are protected PM-owned behavior contracts. They define the highest
 
 ### 11.1 Shared core rules
 
-- Core Personas default model/provider/runtime controls to `Auto` in the UI, stored as inherited/null fields unless a PM-owned definition explicitly sets a value. `Auto` means inherit from the parent run, surface, project policy, or resolver record according to `Plans/Models_System.md`.
+- Core Personas default model/provider/runtime controls to `Auto` in the UI, stored as inherited/null fields unless a PM-owned definition explicitly sets a value. `Auto` means inherit from the parent run, surface and the Settings/Models resolver with Everywhere, Computer and optional Project defaults, or the frozen resolver record according to `Plans/Models_System.md`.
 - Core Persona definitions are user-immutable and not deletable. PM may update their shipped definitions across product versions.
 - `explorer` and `bash` are subagent-only and are not available in the chat manual Persona picker.
 - `assistant` and `teacher` are direct user-facing Personas and are not hidden worker/subagent Personas.
@@ -982,7 +982,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Persona files use a deterministic two-tier layout where project-local Personas override global Personas by persona_id.
+  Persona files use the existing Project and library PERSONA.md roots. The library definition has an
+  Everywhere home on the settings home with read-only Computer mirrors; a Project version replaces the
+  entire same-id library definition by persona_id, never individual fields. P-060 owns home, reach,
+  declared switches, copy and save semantics; protected core built-ins cannot be shadowed.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
@@ -1004,7 +1007,9 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "STORAGE-LAYOUT"
   - "persona_id"
@@ -1219,16 +1224,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Agent Config > Personas is the primary Persona management surface and provides library, create, prompt visibility, edit, disable/restore, delete, and schema-validation workflows.
+  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized
+  inside Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
+  management surface. P-060 supplies its home, reach, whole-Project-version and Save feedback without
+  creating another editor.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Settings remains a routing/help surface, not the main Persona prompt browser or editor.
-  - The library groups resolved Personas by source/status and shows required columns.
-  - Create/edit/delete/disable/restore flows preserve protected core built-in restrictions.
+- Settings › Personas & Crews realizes the existing Agent Config > Personas library and editor; other pages route
+  or help only.
+- The library groups resolved Personas by source/status and shows the required columns plus owner home/reach.
+- Create/edit/delete/disable/restore preserve protected core built-in restrictions.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1241,8 +1250,10 @@ node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0020
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0020
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0021
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "Agent Config > Personas"
   - "Library view"
@@ -1252,8 +1263,8 @@ preserved_exact_tokens:
   - "Protected core built-ins"
   - "Schema validation on save"
 negative_constraints:
-  - "Settings is not the main Persona prompt browser or editor."
-  - "Protected core built-ins cannot be modified, disabled, deleted, or shadowed."
+- Do not add a second Persona editor or a per-field layered Persona definition.
+- Protected core built-ins cannot be modified, disabled, deleted, or shadowed.
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md"
   - "ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/Personas.md#PERSONA-VALIDATION"
@@ -3469,7 +3480,7 @@ This addendum repairs non-runtime persona rows without creating WorkNodes, imple
 
 - Repairs `sfk-bb3280798bd1706bc464fd91`: persona GUI command IDs are `cmd.persona.create`, `cmd.persona.edit`, `cmd.persona.disable`, `cmd.persona.restore`, `cmd.persona.delete`, `cmd.persona.save_as_override`, and `cmd.persona.validate_schema`.
 - Repairs `sfk-5ebb077583e46703c74baa39`: `crew.roles` is a map from `role_id` to `{display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]}`. Role tag values are `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, and `governance`.
-- Repairs `sfk-a0b10c29e5616a01ecab3d13`: persona selection fields are `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. `persona_selection_source` values are `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`.
+- Current selection fields remain `requested_persona`, `effective_persona`, `persona_selection_source`, `persona_policy_snapshot_id`, `fallback_reason_code?`, and `created_at_utc`. The scope-aware successor adds `everywhere_default` and `computer_default` beside `user_selected`, `project_default`, `role_default`, `policy_override`, and `fallback`. Historical Project resolution bytes/enums stay readable under their original version; F binds the successor schema before app dispatch. P-056/P-060 preserve immutable frozen identity.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
@@ -3494,14 +3505,23 @@ plan_unit_id: P-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
-canonical_text: Persona selection is an immutable requested/effective run input with an explicit scope and resolution ref; thread-local selection affects only future turns in that thread unless a separately authorized Goal or child snapshot freezes another value, and focus changes, sibling threads, branches, restores, or replay never silently copy or retarget Persona state.
+canonical_text: >-
+  Persona selection is an immutable requested/effective run input with an explicit scope and
+  resolution ref; thread-local selection affects only future turns in that thread unless a separately
+  authorized Goal or child snapshot freezes another value, and focus changes, sibling threads,
+  branches, restores, or replay never silently copy or retarget Persona state. Defaults resolve
+  through Everywhere, Computer and, only when bound, Project before a thread-local request; frozen
+  run/Goal snapshots stay immutable. No-project selection skips Project. Conversion creates a new
+  explicit destination resolution and retains the original Persona identity with historical turns.
 gui_related: false
 depends_on: [P-055, GRS-044]
 unblocks: []
 acceptance_criteria:
-  - CTX-013 preserves global default, Project default, thread-local request, and frozen run/Goal effective snapshots as distinct scopes.
-  - A branch or sibling re-answer can choose a different Persona only through a new explicit requested/effective resolution.
-  - Replay uses the historical immutable resolution rather than current settings.
+- CTX-013 distinguishes Everywhere default, Computer default, Project default, thread-local request and frozen run/Goal
+  snapshots.
+- A branch, sibling re-answer or converted chat selects a different Persona only through a new explicit requested/effective
+  resolution.
+- Replay uses the historical immutable resolution rather than current settings.
 validation_surfaces: [Persona scope and thread-locality fixtures]
 risk_class: persona_scope_or_replay_drift
 reasoning_tier: high
@@ -3509,7 +3529,9 @@ context_scope: persona_thread_locality
 implementation_surfaces: [Plans/Personas.md, Plans/assistant-chat-design.md]
 node_compile_hint: {mode: persona_scope_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CTX-013
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#CTX-013
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints: [Do not derive Persona from focused thread., Do not replay historical turns under current Persona settings., Do not copy a Persona to siblings implicitly.]
 ```
 
@@ -3692,3 +3714,100 @@ owner_hints: [Plans/Personas.md, Plans/Skills_System.md]
 ```
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Decision_Log.md#DL-218
+
+### P-060 - Persona Home, Reach, Whole Versions And Scoped Selection
+
+```yaml
+plan_unit_id: P-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: Personas owns each Persona as a whole record with stable persona_id, home, reach and revision.
+  A library home is Everywhere, kept on the settings home and mirrored read-only to Computers; a Project
+  home is the existing Project PERSONA.md root. Computer installation or mirrored availability is not
+  a new field-by-field Persona layer. Every project reach includes No project; Only these projects excludes
+  application-scope selection. Project switches declare project_switch_ids=[personas.library.disabled-bundled],
+  limited to mutable bundled specialties by stable ID; core built-ins cannot be disabled or shadowed.
+  Definition fields such as model, body, tool lists and skills remain whole Persona fields. A version
+  for a Project is an entire same-id definition through the existing save-as-override owner action. Save
+  writes the current home with expected revision and narrow Undo/re-target feedback. Selection defaults
+  use the Settings resolver through Everywhere, Computer, optional Project and thread, then the Models
+  owner resolves requested/effective runtime. Copy contributes an exact source hash/revision, destination
+  home, protected-ID check, owner apply/readback and compensating rollback to the Settings preview/apply/rollback
+  transaction. No-project create offers library, not an invented Project; conversion re-resolves future
+  turns and never changes frozen historical Persona inputs. The owner contribution is named in owner_thing_previews;
+  scope_model and project_switch_ids describe its manager boundary. settings.follow never grants thing
+  mutation or Project content authority. The selected whole-version/copy operation is cmd.persona.save_as_override
+  through sole planned handler handlers::persona::save_as_override, with Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_request
+  and Plans/shared_integration_runtime.schema.json#/$defs/persona_save_as_override_result. The Settings
+  batch invokes this owner contribution, including exact source hash/revision, destination CAS, declared
+  reach/switch deltas, readback and eligible compensation; it never writes owner records directly. These
+  registrations do not prove native availability; missing schema, handler, trust, installation or currentness
+  remains typed unavailable. Save-as-override requires a real destination Project and preserves the same
+  eligible persona_id; cmd.persona.duplicate remains the distinct-identity copy route, with its selected
+  persona_duplicate_request_v2/persona_duplicate_result_v2 definitions. Neither operation shadows protected
+  built-ins.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- P-013
+- P-056
+- SSYS-061
+- SSYS-062
+unblocks: []
+acceptance_criteria:
+- Editing a library Persona writes its home and shows that target with Undo; making a Project version
+  is explicit.
+- Protected-ID copies and per-field versions refuse; deleting a Project version reveals the library version.
+- No-project selection includes only permitted library reach; conversion records a fresh resolution without
+  changing earlier turns.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Personas.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; S8–S11; N12/N25
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/SETTINGS-PROPOSAL.md#4.1–4.6;5
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-B02
+preserved_exact_tokens:
+- persona_id
+- PERSONA.md
+- project_switch_ids
+- personas.library.disabled-bundled
+- Everywhere
+- Computer
+- No project
+- owner_thing_previews
+- scope_model
+- settings.follow
+- cmd.persona.save_as_override
+- handlers::persona::save_as_override
+negative_constraints:
+- Do not let Settings write PERSONA.md itself or copy credentials, histories, Goals or Plans as Persona
+  settings.
+- Do not derive the selected Persona from focus or silently modify siblings or frozen runs.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Personas.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Personas.md#P-060, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

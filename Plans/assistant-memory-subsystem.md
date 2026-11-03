@@ -18,7 +18,7 @@ This document is the canonical SSOT for **Assistant-only** memory continuity in 
 It defines the data model, verification gates, triggers, indexing, and GUI interactions for Assistant memory.
 It does not replace or redefine system event storage (`seglog` SSOT), system KV/search projections (`redb` + Tantivy), or the shared rules pipeline.
 
-Rule: Assistant memory MUST be implemented as a continuity/project-state subsystem that is separate from rules assembly and separate from non-Assistant agent execution paths.
+Rule: Assistant memory MUST be implemented as a continuity subsystem for an explicitly bound Project or thread-private app working set (AMS-054) that is separate from rules assembly and separate from non-Assistant agent execution paths.
 ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts
 
 Rule: Assistant memory MUST run fully in-process and local-only; it MUST NOT require external servers and MUST NOT use SQLite.
@@ -36,13 +36,13 @@ Canonical interface names:
 - `RealMemoryProvider` (Assistant-enabled implementation)
 - `NullMemoryProvider` (returns empty results; no-op writes)
 
-Required interface surface (logical contract; naming may vary in code):
-- `build_capsule(project_id, now) -> WorkingSetCapsule`
-- `search(project_id, query, now, k) -> Vec<MemoryGistHit>`
-- `record_access(project_id, gist_id, now) -> Result`
-- `upsert_gist(project_id, gist) -> Result`
-- `delete_gist(project_id, gist_id) -> Result`
-- `set_verification_state(project_id, gist_id, verification_state, now) -> Result`
+The scope-aware successor of the logical MemoryProvider contract takes an exact `memory_scope` rather than an implicit focused Project: either a real Project, or application scope with null Project and actual Computer/thread under AMS-054. Original Project callers/codecs remain compatibility inputs to that owner adapter.
+- `build_capsule(memory_scope, now) -> WorkingSetCapsule`
+- `search(memory_scope, query, now, k) -> Vec<MemoryGistHit>`
+- `record_access(memory_scope, gist_id, now) -> Result`
+- `upsert_gist(memory_scope, gist) -> Result`
+- `delete_gist(memory_scope, gist_id, now) -> Result`
+- `set_verification_state(memory_scope, gist_id, verification_state, now) -> Result`
 
 Rule: Compile-time wiring MUST route Assistant prompt assembly to `RealMemoryProvider`.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-chat-design.md#17-context--truncation
@@ -81,7 +81,7 @@ ContractRef: ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§
 Rule: Shared crates/libraries MAY be reused across subsystems, but file-level physical separation MUST remain in place.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
 
-Rule: Memory data MUST be project-scoped and project switching MUST swap active memory stores atomically at the project boundary.
+Rule: Memory bodies stay Project-scoped when bound to a Project and thread-private in the AMS-054 app working set. Switching place atomically selects the correct isolated view; conversion adopts destination memory only with explicit restricted gist/capsule carry-over and lineage. An app preferences row or read grant cannot select another thread's memory store.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-chat-design.md#11-threads-and-chat-management
 
 ---
@@ -96,7 +96,7 @@ Canonical record: `MemoryGist`.
 Required fields (conceptual contract):
 - Identity/scope:
   - `id` (stable ID)
-  - `project_id` (optional if DB is physically per-project)
+  - exact scope envelope: a real `project_id` for Project memory, or `project_id=null` with actual Computer/thread identity for AMS-054 app memory; physical separation never substitutes for explicit access identity
 - Classification:
   - `kind` (see §9.2)
   - `status` (e.g., `Active` | `Done` | `Archived`)
@@ -316,9 +316,9 @@ ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/assis
 
 ### 6.1 Always-loaded capsule (Verified-only by default)
 
-Always inject a tiny **Working Set capsule** for the active project:
+Inject the tiny **Working Set capsule** for the exact Project, or only the calling app thread under AMS-054:
 - Budget default: `350` tokens
-- Sections (fixed order): Project Capsule bullets, Current Thread paragraph, Recent decisions, Recent blockers
+- Sections keep their fixed order: Project Capsule bullets (empty for an app thread), Current Thread paragraph, Recent decisions, Recent blockers. Empty Project bullets never source another Project or chat.
 - Source: eligible gists selected by pins + activation scoring (eligibility defaults to `verification_state = Verified`)
 
 Rule: Capsule assembly MUST enforce the configured hard token cap before sending any Assistant prompt.
@@ -505,7 +505,7 @@ ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ConfigKey:assistan
 - `assistant.memory.allow_manual_verify_without_evidence` (default `false`)
 - `assistant.memory.allow_pinned_unverified_injection` (default `false`)
 
-Rule: Config resolution MUST be deterministic and project-scoped for memory behavior.
+Rule: The ten assistant.memory.* behavior keys resolve deterministically through Settings_System's admitted Everywhere/Computer/optional-Project and narrower levels. Content scope, memory tiers and injection authority remain AMS-054/AMS-046 boundaries; preference inheritance never merges memory.
 Gemini CLI provider-native settings set `model.compressionThreshold` default to `0.5`; if PM exposes or stores a `90%` compression threshold for assistant memory behavior, that value is an intentional PM override rather than alignment with provider-native defaults.
 ContractRef: ContractName:Plans/Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
 
@@ -678,7 +678,11 @@ plan_unit_id: AMS-003
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory is Assistant-only continuity and project state, separate from rules assembly, non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules pipeline.
+canonical_text: >-
+  Assistant memory is Assistant-only continuity and project state, separate from rules assembly,
+  non-Assistant execution paths, seglog storage, system redb/Tantivy projections, and the shared rules
+  pipeline. AMS-054 adds only a thread-private app working set/capsule; taught public_safe Everywhere
+  rules remain part of the rules pipeline, not shared personal memory.
 gui_related: false
 gui_classification_reason: Scope separation is backend architecture and owner-boundary behavior.
 depends_on: [AMS-002]
@@ -701,7 +705,9 @@ node_compile_hint:
   mode: assistant_memory_scope_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "Assistant-only"
   - "continuity/project-state subsystem"
@@ -869,10 +875,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  Assistant memory uses separate per-project physical stores for
-  assistant_memory.redb, assistant_memory_index, and
-  assistant_memory_vectors.usearch, preserving the system.redb project-state
-  note, file-level separation, and atomic project switching.
+  Project memory retains its separate physical stores assistant_memory.redb, assistant_memory_index
+  and assistant_memory_vectors.usearch, with written Project paths resolved through DL-270/SP-015 and
+  atomic Project-switch behavior. AMS-054 adds explicit app custody and thread-keyed access on the
+  work Computer, with separate scope-aware physical keys supplied by storage-plan. Nullable Project
+  never selects another thread or a Project store and creates no JSON/SQLite mirror. system.redb
+  remains the separate Project-state reference, and project switching selects the correct isolated
+  memory view.
 gui_related: false
 gui_classification_reason: Physical storage paths and project switching are backend storage behavior.
 depends_on: [AMS-004]
@@ -894,7 +903,9 @@ node_compile_hint:
   mode: assistant_memory_physical_stores
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - ".puppet-master/project/state/assistant_memory.redb"
   - ".puppet-master/project/state/assistant_memory_index/"
@@ -1989,15 +2000,19 @@ plan_unit_id: AMS-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Assistant memory configuration preserves all assistant.memory keys and deterministic project-scoped resolution for memory behavior.
+canonical_text: >-
+  Assistant memory preserves all assistant.memory.* behavior keys and resolves them deterministically
+  through the single Settings resolver at admitted Everywhere, Computer, optional Project and existing
+  narrower scopes. Resolving preferences does not merge memory tiers, stores, capsules or private
+  content across threads/Projects.
 gui_related: false
 gui_classification_reason: Memory config keys and project-scoped resolution are backend configuration behavior.
 depends_on: [AMS-029, AMS-030]
 unblocks: [AMS-034]
 acceptance_criteria:
-  - All assistant.memory config keys in the source span remain preserved.
-  - Config resolution is deterministic.
-  - Config resolution is project-scoped for memory behavior.
+- All existing assistant.memory config keys and defaults remain.
+- No-project behavior resolves without a Project step; Computer ceilings and narrower-context policy stay explicit.
+- Shared preferences cannot make another chat's gists or a Project ledger available.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2011,7 +2026,9 @@ node_compile_hint:
   mode: project_scoped_memory_config_keys
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
   - "assistant.memory.enabled"
   - "assistant.memory.capsule_budget_tokens"
@@ -2386,7 +2403,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL, compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger, assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models; Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task history/session handling into shared runtime.
+  P1-MEMORY-TIERING-CONTRACT (P1) is compiled as canonical Puppet Master intent for Agent memory, goal
+  memory, project memory, conversation history: Add MemoryTierContract: scope, writer authority, TTL,
+  compaction policy, retrieval trigger, injection budget, causality/supersession link, stale/retired
+  status, consolidation timeout, and failure semantics. The preserved PM gap/delta is: PM should
+  explicitly separate memory tiers: transcript/history, operational goal state, project/spec ledger,
+  assistant preference memory, tool/artifact memory, and ephemeral context working set. The observed
+  external-repo signal remains source-lineage evidence: Agent Zero reports chat history bloat and
+  memory-search/consolidation timeouts; Pi documents context persistence and handoff to other models;
+  Codex Goals/skills show durable objective and progressive disclosure; Cline SDK moves task
+  history/session handling into shared runtime. App scope preserves these tier boundaries with a
+  thread-only transcript/gist/capsule working set; a Goal, Plan, Crew, schedule, ledger or notebook is
+  never silently consolidated into personal memory.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -2426,6 +2454,8 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:12
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 source_atom_ids:
 - atom-0070
 external_atom_id: extrepo-20260703-0066
@@ -2618,7 +2648,16 @@ plan_unit_id: AMS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: "The Assistant-only memory boundary holds against every notebook path: notebook sharing, summaries, tool outputs, checkpoints, and handoffs never forward Assistant-only memory into disallowed agents, directly or through derived notes or paraphrase, and notebook absence is never a reason to wire workers to Assistant memory. Promotion from Working Notebook content runs only through the existing trigger contracts and evidence gates; notebook retrieval and memory injection are deduplicated and separately attributed in prompt assembly, and note-derived detail never becomes default memory injection because it was once a note. The verified-only, summary-first model and configured budgets are retained."
+canonical_text: >-
+  The Assistant-only memory boundary holds against every notebook path: notebook sharing, summaries,
+  tool outputs, checkpoints, and handoffs never forward Assistant-only memory into disallowed agents,
+  directly or through derived notes or paraphrase, and notebook absence is never a reason to wire
+  workers to Assistant memory. Promotion from Working Notebook content runs only through the existing
+  trigger contracts and evidence gates; notebook retrieval and memory injection are deduplicated and
+  separately attributed in prompt assembly, and note-derived detail never becomes default memory
+  injection because it was once a note. The verified-only, summary-first model and configured budgets
+  are retained. App Crew membership and explicit cross-Project read permission do not relax
+  Assistant-only or thread-private memory boundaries, including during conversion.
 gui_related: false
 gui_classification_reason: Memory boundaries are runtime behavior, not GUI work.
 depends_on: [AMS-044]
@@ -2634,9 +2673,11 @@ context_scope: assistant_memory
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/Working_Notebook.md, Plans/orchestrator-subagent-integration.md]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M01
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-M04
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A08
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M01
+- source_packet:PM-WNC-2026-09-05-v1:WNC-M04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A08
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N16/N25/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["NullMemoryProvider", "Assistant-only", "evidence gates", "separately attributed"]
 negative_constraints:
   - Do not wire workers to Assistant memory because a notebook is absent.
@@ -2903,7 +2944,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: >-
-  Export memory is the command cmd.chat.memory.export {scope}, with scope gists | teachings | all, registered by the owner's decision DL-130 (card p15, E-32). One command serves both producers, the Export action of the Memory surface and the Export action of the taught-rules document. It exports the gists, the taught rules, or both that Memory shows for the current project through the artifact owner and returns an ArtifactExportResult; it adds no memory store and never changes, verifies, pins or discards what it exports. Each gist goes out with its verification_state as stored, so an Unverified gist is never exported as Verified, and its EvidenceRef entries go out as the pointers they are (AMS-006), never as copies of the referenced content. The command is available when assistant memory and artifact export are both available (assistant_memory_available && artifact_export_available). Its catalog row belongs to Plans/UI_Command_Catalog.md.
+  Export memory is the command cmd.chat.memory.export {scope}, with scope gists | teachings | all,
+  registered by the owner's decision DL-130 (card p15, E-32). One command serves both producers, the
+  Export action of the Memory surface and the Export action of the taught-rules document. It exports
+  the gists, the taught rules, or both that Memory shows for the explicitly bound Project, or the
+  calling app thread with null project_id and actual Computer under AMS-054 through the artifact owner
+  and returns an ArtifactExportResult; it adds no memory store and never changes, verifies, pins or
+  discards what it exports. Each gist goes out with its verification_state as stored, so an Unverified
+  gist is never exported as Verified, and its EvidenceRef entries go out as the pointers they are
+  (AMS-006), never as copies of the referenced content. The command is available when assistant memory
+  and artifact export are both available (assistant_memory_available && artifact_export_available).
+  Its catalog row belongs to Plans/UI_Command_Catalog.md. No-project export cannot enumerate other app
+  threads or all Project memory.
 gui_related: true
 gui_classification_reason: Export is a user-visible action on the Memory surface and the taught-rules document.
 depends_on: [AMS-006, AMS-010, AMS-021]
@@ -2922,11 +2974,14 @@ context_scope: assistant_memory_gui
 implementation_surfaces: [Plans/assistant-memory-subsystem.md, Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/assistant_memory_contracts.schema.json]
 node_compile_hint: {mode: memory_contract_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT part N-7, card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
-  - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
-  - Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
-  - Plans/Decision_Log.md#DL-130
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.10 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-AMS-07 (WAIT part N-7,
+  card p15 E-32) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)
+- Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage
+- Plans/Decision_Log.md#DL-130
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["Export memory", "cmd.chat.memory.export", "gists | teachings | all", "ArtifactExportResult", "verification_state", "DL-130"]
 negative_constraints:
   - Do not mutate memory while exporting it.
@@ -2997,3 +3052,98 @@ owner_hints: [Plans/assistant-memory-subsystem.md, Plans/assistant-chat-design.m
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Decision_Log.md#DL-116
+
+### AMS-054 - Thread-Private App Memory And Explicit Carry-Over
+
+```yaml
+plan_unit_id: AMS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'No-project Assistant memory and its capsule are thread-only: application scope, project_id=null
+  and actual Computer/thread identify one working set, gist corpus and index view. The work Computer owns
+  local in-process custody under storage-plan, outside any Project Vault; another app chat never receives
+  it. Widest explicitly taught public_safe rules still apply through the rules owner, with Everywhere/Computer
+  and thread behavior preferences from Settings; rules and memory remain different tiers. Existing claim
+  verification, evidence pointers, Verified-only summary-first injection, 350-token capsule default, budgets,
+  retention/holds, provider exposure and NullMemoryProvider wiring for non-Assistant agents remain. Cross-Project
+  read grants, Crew membership and known gist IDs confer no memory access. MemoryProvider operations use
+  an explicit versioned Project-or-app-thread scope; no null or app string is interpolated as a Project
+  key. At conversion the destination Project memory is adopted for future work, and gist/capsule carry-over
+  is individually previewed, source-restricted and lineage-bound through its owner. Historical verification
+  and evidence are not upgraded, other chats'' memory is never merged, and a copied capsule grants no
+  authority. cmd.chat.memory.export keeps scope gists|teachings|all but exports only the bound Project
+  or app-thread view with nullable Project and actual thread/Computer metadata; no new command or memory
+  store is created. The selected app view is Plans/application_workflow_contracts.schema.json#/$defs/MemoryViewApplicationV1,
+  logical pm.assistant_memory.view.application.v1 version 1.0.0, with OriginalMemoryMutationSource in
+  Plans/application_workflow_sources.schema.json and complete source-graph adoption under CV-366. SP-349
+  owns assistant_memory.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(memory_id)};
+  this is a separate family, never nullable reinterpretation of a Project key or a shared app corpus.
+  Parent/thread/Computer, source/currentness, verification, canonical retention and Full Server Backup
+  joins must all hold; missing native/source/policy registration remains unavailable.'
+gui_related: false
+gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
+depends_on:
+- AMS-003
+- AMS-033
+- AMS-042
+- AMS-046
+- AMS-052
+- WN-021
+- CV-366
+- SP-349
+unblocks: []
+acceptance_criteria:
+- Two app chats on one Computer cannot retrieve, inject or export each other's gists by null scope or
+  shared preference.
+- Widest public_safe teachings still apply without forwarding private memory to workers or Crew.
+- Conversion and export retain source restrictions, stored verification_state and evidence pointers; absent
+  authority cannot become Verified or shared.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N16/N24/N25/N26
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#5;7.12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- project_id=null
+- MemoryProvider
+- NullMemoryProvider
+- public_safe
+- 350-token
+- cmd.chat.memory.export
+- gists
+- teachings
+- all
+negative_constraints:
+- Do not share an app-wide personal-memory corpus, merge other chats, reconstruct facts from events or
+  wire workers to RealMemoryProvider.
+- Do not carry memory/notes in Saved setups or treat a moved capsule as new destination authority.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/assistant-memory-subsystem.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#AMS-054, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365

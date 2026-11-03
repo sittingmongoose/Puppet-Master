@@ -239,14 +239,14 @@ All code paths that invoke `runner.execute()` should use prepare and cleanup so 
 | **Orchestrator** | `ExecutionEngine::execute_iteration` in `core/execution_engine.rs`; invoked by `orchestrator.rs` (e.g. `execute_iteration(&context)`). | `context.working_dir` (from lane/attempt worktree selection or `config.project.working_directory`). | **Yes.** Call `prepare_working_directory(work_dir)` before building/running the request and `cleanup_after_execution(work_dir)` after `execute` returns (success or failure), for each iteration. This is the main iteration path where cleanup matters most. |
 | **Interview (research)** | `interview/research_engine.rs`: `execute_research_ai_call` builds request and calls `runner.execute(&request)`. | Passed in as `working_dir: &Path`. | **Yes.** Call prepare before and cleanup after the execute so research runs don't leave cruft in the project directory. |
 | **Start chain** | `start_chain/prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs`: each builds an `ExecutionRequest` with a `working_directory` and calls `runner.execute(&request)`. | Each has its own `working_directory` (e.g. project path). | **Yes.** Use the same prepare/cleanup around each `execute` so PRD/requirements/architecture generation don't accumulate untracked files. |
-| **Conversation / wizard** | `app.rs`: `execute_ai_turn` builds request with `working_dir = std::env::current_dir()` and calls `runner.execute(&request)`. | `current_dir()` (process CWD, may not be project root). | **Optional but recommended.** If the conversation runs in a known project path, use that for prepare/cleanup; otherwise use `current_dir()` with the same policy, or skip cleanup when not in a "project" context to avoid cleaning the wrong directory. |
+| **Conversation / wizard** | Existing shared execute path through run_with_cleanup. | Exact frozen Project/worktree or admitted app Computer/chat/granted working directory. | Use the same wrapper; cleanup runs only for that exact admitted intended directory and owner inventory. No target means skip with disclosure, never process CWD/home inference. Planning Wizard itself still requires a Project. |
 
 **Implementation options**
 
 - **Option A (per call site):** At each call site, call `runner.prepare_working_directory(&request.working_directory).await?` before `execute`, and `runner.cleanup_after_execution(&request.working_directory).await` after `execute` returns. Ensures every path is explicit but duplicates the prepare/execute/cleanup pattern.
 - **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. "skip cleanup for interview") can be applied inside the wrapper.
 
-**Recommendation:** Use **Option B** so prepare/cleanup semantics live in one place and call sites (orchestrator, interviewer, start chain, conversation) are updated to call the wrapper instead of `runner.execute()` directly. The wrapper can read config to skip prepare/cleanup when desired (e.g. for one-off conversation from an arbitrary CWD).
+**Implementation choice:** Use the shared Option B wrapper. The resolved immutable Settings snapshot supplies cleanup behavior; MiscPlan supplies exact directory/owner inventory and admission. An arbitrary-directory app conversation is explicit Computer context and does not authorize cleanup merely by having a CWD.
 
 ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
@@ -472,12 +472,12 @@ The Config view remains an **8-tab** surface. Cleanup and evidence controls must
 | **Clear agent-output dir** | Same | Toggle: clear `.puppet-master/agent-output/` in prepare when Section 5 is implemented (default: true). |
 | **Remove build artifacts after run** | Same | Toggle: in cleanup_after_execution, remove known build dirs (e.g. target/) only; default false. |
 | **Evidence retention (days)** | Same or separate "Evidence" subsection | Number input or "Retain all"; maps to evidence.retention_days. Optional: "Prune on manual clean" checkbox. |
-| **"Clean workspace now" button** | **Doctor** (preferred) or Advanced | Runs prepare-style untracked cleanup (run_git_clean_with_excludes) for current project. Requires **project context**: use same project path as run (e.g. current project from Dashboard or config path). Confirmation modal; optional "Preview" (dry-run) that runs `git clean -fd -n` and shows list. If Doctor: add under a "Workspace" or "Git" category; if Config: under Advanced → Workspace. |
+| **Clean workspace now** | Existing Doctor/Advanced Workspace route. | One exact admitted intended directory: real Project/worktree, or the app chat/granted directory on the named Computer. Preview inventory, retention/allowlist, Permissions/FileSafe and verified receipts stay M-084-owned. Home, broad mounts, path escapes and another owner's artifacts refuse; no root is inferred from CWD. |
 | **"Clean all worktrees"** | Same as above (optional) | When worktrees are in use, offer "Clean current only" vs "Clean all active worktrees"; requires worktree list from worktree_manager (§9.1.8). |
 
 **Project context for Doctor and Clean workspace**
 
-- **Gap:** Doctor checks today may not receive the "active project" path; "Clean workspace now" must run in the **project directory** the user intends (e.g. selected project in Dashboard or the directory of the loaded config). Worktree plan §7.2 and §7.3: when running Doctor or starting a run, pass `current_project.path` or config hint so operations use the correct directory. Implement: when the user clicks "Clean workspace now" from Doctor (or Config), resolve project root from the same source as the run (e.g. `discover_config_path(Some(hint))` then parent dir, or `gui_config.project.working_directory`). Do not use `std::env::current_dir()` unless it is the intended project.
+- Doctor/Clean workspace receives the same exact owner/root identity as the run. In No project an explicitly selected admitted app directory is valid; without it disable with Choose the folder to clean. Project-native cleanup/worktree actions still require their true target. No config-discovery, home or broad-mount fallback is allowed.
 
 **Cross-plan GUI alignment**
 
@@ -493,7 +493,7 @@ The Config view remains an **8-tab** surface. Cleanup and evidence controls must
 - **Discoverability:** If cleanup lives only in Advanced, some users may miss it. Add a one-line mention in Doctor: "Workspace cleanup runs before each iteration when enabled in Config → Advanced → Workspace."
 - **Dry-run UX:** For "Clean workspace now," a "Preview" button could show a scrollable list of paths that would be removed (from `git clean -fd -n`); then "Confirm" runs the real clean. Requires parsing `git clean -n` output and showing in a modal or secondary view.
 - **State after clean:** After "Clean workspace now," the UI could show a toast: "Cleaned N files/dirs" or "Nothing to clean." Improves feedback.
-- **Missing project context:** When Doctor (or Config) has no project selected and no config path, "Clean workspace now" should be **disabled** with tooltip "Select a project or open a config to clean." Otherwise we might run clean in CWD or an wrong directory. Resolve project path from the same source as the run (current project, config path, or explicit selection).
+- **Missing exact root:** Disable Clean workspace only when no admitted intended directory is selected (or a required owner/target is unavailable), with a precise reason and picker. No project alone is not a refusal; home, broad mounts and escapes remain refused.
 
 ### 7.6 Leveraging platform CLI capabilities (hooks, skills, plugins, extensions)
 
@@ -633,7 +633,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:D
 
 **Data flow:**
 
-- **Discovery and list refresh:** List is built from `discover_skills(project_root)` using the ordered discovery paths (see §7.10). List is refreshed: (1) on opening the Skills tab; (2) after Add (Create/Import), Edit save, or Remove; (3) when user clicks "Refresh". Do not auto-refresh on a timer; user-initiated or after mutations only.
+- **Discovery and list refresh:** List is built from `discover_skills(project_root)` using the ordered discovery paths (see §7.10). List is refreshed: (1) on opening the Skills tab; (2) after Add (Create/Import), Edit save, or Remove; (3) when user clicks "Refresh". Do not auto-refresh on a timer; user-initiated or after mutations only. In No project pass project_root=None, skip Project roots and use the same allowed global/user roots through SS-039; this does not add arbitrary Computer source roots.
 - **Permissions:** Read from `GuiConfig.skill_permissions`; writes (per-skill or bulk) update config and persist; list re-renders with resolved permission per skill.
 
 **Error handling:**
@@ -749,7 +749,7 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | **Permission "ask": when and where** | **Defer to later:** "Ask" means prompt user before an agent loads the skill. When implemented: user is prompted **at the moment the runner would load the skill** (e.g. when building iteration context or when platform CLI would invoke the skill)--i.e. in-app, before or at run start, not inside the platform CLI. Where: modal or toast from the app (e.g. "Allow skill 'doc-lookup' for this run?" Allow / Deny / Always / Never). Implementation plan can mark "ask" as phase 2 and leave exact UI location to implementation. |
 | **Pattern precedence: explicit vs pattern** | **Decision:** **Explicit per-skill entry wins over pattern.** When resolving permission for a skill name, check explicit entries in `skill_permissions` first; if none match, then apply pattern rules (e.g. `doc-*: allow`). So a skill "doc-release" with explicit "deny" remains denied even if pattern "doc-*" is allow. Document in backend resolve logic and in bulk-permission UI. |
 | **"Import from path"** | **Decision:** **Copy into a discovery path.** "Import" means: user picks an existing folder containing `SKILL.md`; we copy that folder into a chosen discovery base (e.g. `.puppet-master/skills/<name>` or `~/.config/puppet-master/skills/<name>`). We do not persist arbitrary external paths (keeps discovery simple and portable). Validate name and frontmatter after copy. |
-| **Create skill when no project** | When no project is open (no project root), "Create new" skill: offer **global only** (e.g. `~/.config/puppet-master/skills/<name>`). Disable or hide "project" option when `project_root` is None. |
+| **Create skill when no project** | When no project is open (no project root), "Create new" skill: offer **global only** through the existing Skills owner/library home and exact Computer readiness; no Project or new Computer source root is synthesized (e.g. `~/.config/puppet-master/skills/<name>`). Disable or hide "project" option when `project_root` is None. |
 | **Edit: name change in frontmatter** | **Decision:** **Name in frontmatter must match directory name.** On save, if user changes `name` in frontmatter so it no longer matches the dir name: (1) reject with validation error "Name must match folder name", or (2) offer "Rename folder" to rename dir to match (then save). Prefer (1) for v1 to avoid accidental renames. |
 | **How runners receive skills** | **Decision:** MVP runtime delivery uses the canonical registry + permission filter + context bundling + `skill` tool path. Provider-native formats may be documented as interoperability inputs, but implementation does not require a separate per-provider native runtime delivery matrix. |
 | **Tests** | Add unit tests: `discover_skills` (mock dirs, order and deduplication); `load_skill` (valid/invalid frontmatter, name validation, dir-name match); `resolve_skill_permission` (exact + wildcard, default allow). See §8.9.7. |
@@ -1729,7 +1729,12 @@ plan_unit_id: M-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup runs only in the actual selected main repo, worktree, lane, attempt workspace, or worktree path used by the agent, and must not clean the main working tree for artifacts owned by another lane, attempt, or worktree.
+canonical_text: >-
+  Cleanup runs only in the actual selected main repo, worktree, lane, attempt workspace, or worktree
+  path used by the agent, and must not clean the main working tree for artifacts owned by another
+  lane, attempt, or worktree. An app conversation may clean only its one explicitly admitted
+  Computer/chat or granted directory through M-084; home, broad mounts, escapes and other owners'
+  artifacts remain refused.
 gui_related: false
 gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1754,6 +1759,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0014
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - paths.workspace
 - configured project root
@@ -2411,7 +2418,12 @@ plan_unit_id: M-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup and evidence settings must be modeled in one run/config schema with deterministic defaults and must be projected from the same GuiConfig/config path used by the rest of the app.
+canonical_text: >-
+  Cleanup and evidence settings must be modeled in one run/config schema with deterministic defaults
+  and must be projected from the same GuiConfig/config path used by the rest of the app. These are
+  Settings-owned behavior rows resolved through the single admitted Everywhere/Computer/Project ladder
+  into an immutable run snapshot; the cleanup inventory and receipts remain MiscPlan-owned operational
+  records.
 gui_related: false
 gui_classification_reason: The unit covers backend config schema and run-config projection rather than direct GUI presentation.
 split_recommended: true
@@ -2440,6 +2452,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0038
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0041
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - cleanup.untracked
 - cleanup.ignored
@@ -2546,7 +2560,12 @@ plan_unit_id: M-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Clean workspace now must run prepare-style workspace cleanup for the intended project path, with confirmations, optional dry-run/evidence pruning, clear feedback, and disabled-state safety when no project context exists.
+canonical_text: >-
+  Clean workspace now must run prepare-style workspace cleanup for the intended project path, with
+  confirmations, optional dry-run/evidence pruning, clear feedback, and disabled-state safety when no
+  exact admitted workspace directory exists. With no Project, it is available only for an explicitly
+  selected admitted chat/granted directory; missing exact scope is the disabled reason. No Project,
+  home, CWD or broad mount is guessed.
 gui_related: true
 gui_classification_reason: The unit defines user-visible manual cleanup actions, confirmation modals, previews, tooltips, toasts, and disabled states.
 split_recommended: true
@@ -2579,6 +2598,8 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0039
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0040
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0042
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Clean workspace now
 - run_git_clean_with_excludes
@@ -3120,7 +3141,12 @@ plan_unit_id: M-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Skill discovery and validation must follow the one-folder-per-skill SKILL.md package model, ordered project/global discovery roots, strict OpenCode-aligned name validation, frontmatter requirements, and required_tool_refs/optional_tool_refs readiness semantics.
+canonical_text: >-
+  Skill discovery and validation must follow the one-folder-per-skill SKILL.md package model, ordered
+  project/global discovery roots, strict OpenCode-aligned name validation, frontmatter requirements,
+  and required_tool_refs/optional_tool_refs readiness semantics. App discovery passes
+  project_root=None, skips Project-local roots and uses the same allowed user/global first-wins roots
+  and Computer readiness checks.
 gui_related: false
 gui_classification_reason: The unit covers backend discovery, package validation, and readiness metadata rather than direct GUI presentation.
 split_recommended: true
@@ -3148,6 +3174,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0045
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - SKILL.md
 - name
@@ -3986,7 +4014,11 @@ plan_unit_id: M-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Cleanup wrapper and config wiring must place cleanup settings in the run config snapshot, pass CleanupConfig explicitly through execution context, wrap CLI execution paths, and skip cleanup only when no intended project workspace exists.
+canonical_text: >-
+  Cleanup wrapper and config wiring must place cleanup settings in the run config snapshot, pass
+  CleanupConfig explicitly through execution context, wrap CLI execution paths, and skip cleanup when
+  no exact admitted intended workspace directory exists. For app work, no intended admitted Computer
+  directory means cleanup is skipped; a valid app directory does not require a synthetic Project.
 gui_related: false
 gui_classification_reason: The unit covers backend execution wiring and run-config propagation rather than direct GUI presentation.
 split_recommended: true
@@ -4016,6 +4048,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0053
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - run_with_cleanup(runner, request, config)
 - IterationContext
@@ -6413,12 +6447,13 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/MiscPlan.md
 canonical_text: >-
-  MiscPlan owns the sole Workspace Cleanup Manager policy and operation: exact
-  workspace/worktree target, inventory, allowlist, retention and sensitivity
-  classification, preview, Permissions and FileSafe decisions, resource
-  admission, deletion receipt, post-delete verification, restart reconciliation,
-  and recovery disclosure. Storage persists policy/receipts and Worktree owns
-  worktree lifecycle; neither is a peer cleanup manager.
+  MiscPlan owns the sole Workspace Cleanup Manager policy and operation: exact workspace/worktree
+  target, inventory, allowlist, retention and sensitivity classification, preview, Permissions and
+  FileSafe decisions, resource admission, deletion receipt, post-delete verification, restart
+  reconciliation, and recovery disclosure. Storage persists policy/receipts and Worktree owns worktree
+  lifecycle; neither is a peer cleanup manager. No-project Clean workspace uses the same
+  preview/inventory/retention/verification engine for one admitted directory and cannot turn home-read
+  authority or a cross-Project read grant into cleanup authority.
 gui_related: true
 gui_classification_reason: Cleanup preview, exclusions, retained evidence, blocked reasons, verification, and recovery are user-visible.
 depends_on: [M-020, M-021, M-061, SIR-006, W-084]
@@ -6435,6 +6470,8 @@ context_scope: workspace_cleanup_manager
 implementation_surfaces: [Plans/MiscPlan.md, Plans/FileSafe.md, Plans/Permissions_System.md, Plans/storage-plan.md, Plans/WorktreeGitImprovement.md]
 node_compile_hint: {mode: workspace_cleanup_manager_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#MGR-020
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#MGR-020
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints: [Do not use Storage or Worktree as a peer cleanup manager., Do not run broad recursive cleanup from an unresolved path., Do not claim deletion without verification.]
 ```

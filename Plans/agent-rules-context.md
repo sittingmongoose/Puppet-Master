@@ -7,7 +7,7 @@
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
-- Two durable rule scopes: Application (Puppet Master) level and Project level
+- Durable instruction sources: Everywhere application rules, applicable work-Computer application context, and real Project rules when bound; one app-wins instruction chain remains distinct from the ordinary Settings ladder.
 - Where each is stored and how they are fed into every agent
 - DRY: single rules pipeline consumed by orchestrator, interview, and Assistant
 
@@ -27,13 +27,13 @@ This rules model remains authoritative, and becomes more important under the rew
 
 ## Executive Summary
 
-Rule: Agents invoked by Puppet Master (orchestrator iterations, interview, Assistant) MUST receive **two durable rule scopes** so that global and project-specific policies are always applied.
+Rule: Every invocation uses the single rules pipeline with Everywhere and actual Computer application context, and real Project rules only when bound. In No project, `project_path=None` is normal and no application, thread or Computer identity is guessed.
 ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§4
 
 1. **Application-level rules (Puppet Master)** -- e.g. "Always use Context7 MCP." Apply to **every agent, everywhere**. Stored and configured at the **application** (Puppet Master) level and injected into every agent invocation regardless of project.
 2. **Project-level rules** -- e.g. "Always use DRY Method." Apply to **every agent that works on that project**. Stored at the **project** (target workspace) level and injected whenever the agent is operating in the context of that project.
 
-Rule: Both layers MUST be fed into every agent on every invocation (orchestrator iteration, interview turn, Assistant chat when attached to a project) via a **single rules pipeline** (DRY).
+Rule: Every applicable instruction source is fed through the single rules pipeline for Orchestrator, Interview and Assistant, including an app Assistant invocation. App rules win on conflict as ARC-008 states; ordinary Settings narrower-level selection does not reverse instruction precedence.
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ## Relationship to Other Plans
@@ -42,7 +42,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 |------|-----------|
 | **Plans/orchestrator-subagent-integration.md** | Orchestrator builds iteration prompts and injects context (e.g. context injection hook, coordination context). The **rules block** (application + project) must be included when building every iteration prompt or system prompt. Use the shared rules pipeline; do not duplicate rule content in the orchestrator. |
 | **Plans/interview-subagent-integration.md** | Interview builds prompts for research, validation, and phase Q&A. Application rules always injected; project rules injected when the interview is run for a specific (target) project. Use the shared rules pipeline. |
-| **Plans/assistant-chat-design.md** | Assistant chat sends context to the platform CLI. When the user is working in the context of a project, application rules + project rules must be included. When no project is selected, application rules only. Use the shared rules pipeline. |
+| **Plans/assistant-chat-design.md** | Assistant chat sends context to the platform CLI. When the user is working in the context of a project, application rules + project rules must be included. When no project is selected, application rules including the actual Computer context, with project_path=None. Use the shared rules pipeline. |
 | **AGENTS.md** | Today the Puppet Master repo's AGENTS.md contains rules like "Always use Context7 MCP." That content can be **one source** for default application rules (e.g. on first run or when no application rules file exists). Long term, application rules are a **configurable** list so the user can add/edit without editing AGENTS.md in the app repo. Current OpenAI Codex product docs support `AGENTS.md` as a native guidance surface for Codex tasks, so PM's AGENTS-centered canonical instruction model remains aligned with Codex. |
 
 Rules-context assembly consumes cache-friendly prompt assembly from `Plans/Prompt_Pipeline.md` and treats `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` as the external V0-to-A2A event mapping reference; this document does not re-own either contract.
@@ -56,7 +56,7 @@ The normative model is not a Phase/Task/Subtask/Iteration hierarchy and does not
 ### Application-Level Rules (Puppet Master)
 - **Scope:** every agent run under Puppet Master, regardless of whether the work is Assistant, Interview, Orchestrator, or a delegated child run
 - **Purpose:** global policies that apply everywhere
-- **Storage:** redb settings key `app.agent_rules.application_markdown`
+- **Storage:** owner record `app.agent_rules.application_markdown` at the Everywhere home, with applicable Computer application context and source revisions; F binds exact scope-aware storage refs without a second rule writer
 - **Bootstrap:** if empty, seed from the Puppet Master repo `AGENTS.md`
 
 ### Project-Level Rules
@@ -65,7 +65,7 @@ The normative model is not a Phase/Task/Subtask/Iteration hierarchy and does not
 - **Storage:** `<project_root>/.puppet-master/project-rules.md`
 
 ### Order and precedence
-- Application rules are always included first.
+- Everywhere application rules and applicable Computer application context form the application block, included first through the one rules pipeline. Computer scope does not turn Project rules into application rules.
 - Project rules are included when a project context exists.
 - Application rules win over project rules on conflict.
 - Node/work-package/attempt-specific context is **not** another rules layer; it belongs to the Work Bundle and Memory Bundle.
@@ -81,7 +81,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipel
 - **Callers:**
   - **Orchestrator:** When building the iteration prompt (or system prompt) for each node, call the rules pipeline with the current workspace path; prepend or append the returned block to the prompt (or inject via the context injection hook or a dedicated "rules injector" step).
   - **Interview:** When building any prompt that goes to an agent (research, validation, phase Q&A), call the rules pipeline with the interview's target project path; include the block in the prompt.
-  - **Assistant:** When the user has a project selected, call the rules pipeline with that project path and include the block in the context sent to the CLI. When no project is selected, call with `project_path: None` so only application rules are included.
+  - **Assistant:** When the user has a project selected, call the rules pipeline with that project path and include the block in the context sent to the CLI. When no project is selected, call with `project_path: None` so application rules including the actual work-Computer context are included; conversion reassembles future context from destination scope and leaves frozen history unchanged.
 - **DRY:** Rule content lives in one place per layer (application store, project file). The pipeline is the single place that assembles them; no copy-paste of "Context7" or "DRY" into multiple prompt builders.
   ContractRef: Primitive:DRYRules
 
@@ -238,14 +238,14 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
 Puppet Master should store these artifacts in a sidecar workspace by default:
 - prevents polluting user repos
 - allows consistent lifecycle management and truncation rules
-Recommended: `.puppet-master/workspace/<project>/<run>/<node>/` containing:
+Project sidecars retain their actual Project/run/node home. App sidecars live in the owning Server's app thread/run area, named by real Computer/thread/run identities without a Project placeholder; only admitted user-visible exports use the chat folder. Conversion reissues future sidecar context through its owner and never forwards unrelated journals or another run's private memory.
 - `AGENTS.md` (managed or user-owned depending on mode)
 - `parent_summary.md`
 - `attempt_journal.md`
 - attempt/run artifacts
 ---
 ## GUI Requirements (Product)
-Add “Context Injection” settings (per project; override per run optional):
+Context Injection behavior defaults use the one Settings resolver at admitted Everywhere/Computer/optional-Project and per-run levels; journal/summary/rules bodies remain their owners' data, not copied settings:
 1) Parent Summary — default ON
 2) Scoped AGENTS.md (beyond top-level) — default ON
 3) Attempt Journal — default ON
@@ -526,9 +526,13 @@ plan_unit_id: ARC-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: 'Every Puppet Master agent invocation must receive Application-level rules and Project-level rules through
-  the DRY single rules pipeline: application rules apply to every agent everywhere and project rules apply to every agent
-  working on that project.'
+canonical_text: >-
+  Every Puppet Master invocation uses the DRY single rules pipeline. Application rules consume the
+  Everywhere source plus the work Computer's applicable application context even when
+  project_path=None; Project-level rules are included only for the exact bound Project. Computer
+  context is not a Project identity or a new node/attempt rule hierarchy. ARC-008 keeps
+  application-instruction precedence; Settings layering resolves behavior/source choices without
+  reversing that priority.
 gui_related: false
 gui_classification_reason: This unit covers durable rules scope and injection policy, not GUI behavior.
 split_recommended: false
@@ -554,6 +558,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0004
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Executive Summary
 - Application-level rules (Puppet Master)
@@ -749,9 +755,14 @@ plan_unit_id: ARC-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Rule order and precedence preserves that application rules are always included first, project rules are included
-  only when project context exists, application rules win over project rules on conflict, and node/work-package/attempt-specific
-  context is not another rules layer because it belongs to Work Bundle and Memory Bundle.
+canonical_text: >-
+  Rule order and precedence preserves that application rules are always included first, project rules
+  are included only when project context exists, application rules win over project rules on conflict,
+  and node/work-package/attempt-specific context is not another rules layer because it belongs to Work
+  Bundle and Memory Bundle. Everywhere and Computer application context remain within the application
+  block; the Settings value resolver's narrower-wins policy cannot make Project instructions override
+  that block. Conversion performs a fresh rules assembly and drops inapplicable source-Project/sidecar
+  context.
 gui_related: false
 gui_classification_reason: This unit covers precedence and context-layer boundaries, not GUI behavior.
 split_recommended: false
@@ -777,6 +788,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0009
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Order and precedence
 - Application rules are always included first.
@@ -804,10 +817,15 @@ plan_unit_id: ARC-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: 'Feeding rules into every agent uses one rules pipeline API such as get_agent_rules_context(application_config,
-  project_path: Option<&Path>) -> String to return one formatted Application rules plus Project rules block; Orchestrator,
-  Interview, and Assistant all call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
-  builders.'
+canonical_text: >-
+  Feeding rules into every agent uses one rules pipeline API such as
+  get_agent_rules_context(application_config, project_path: Option<&Path>) -> String to return one
+  formatted Application rules plus Project rules block; Orchestrator, Interview, and Assistant all
+  call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
+  builders. The scope-aware input also names the actual work Computer, application/thread identity and
+  source revisions; project_path=None omits Project rules only. App sidecars use the owned app
+  thread/run area. Conversion re-resolves future context with lineage and never leaks unrelated-run
+  journals.
 gui_related: false
 gui_classification_reason: This unit covers prompt assembly API and callers, not GUI behavior.
 split_recommended: false
@@ -834,6 +852,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0010
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0011
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Feeding Rules Into Every Agent
 - Single Rules Pipeline (DRY)

@@ -26,7 +26,7 @@ The application shell is workspace-tab based.
 
 Rules:
 - a workspace tab is the primary user-visible working context
-- each workspace tab has exactly one active project at a time
+- each workspace tab has zero or one active Project; zero is the explicit No project workspace, with actual Computer and app layout identity
 - instant project switch changes the active project for the active workspace tab by default
 - a separate command opens a project in a new workspace tab instead of replacing the current tab context
 - detached windows are secondary shells tied to a parent workspace tab or to a detached-surface record; they are not a replacement for workspace tabs
@@ -137,7 +137,7 @@ Rules:
 
 #### 1.5.1 Assistant worktree integration
 
-Threads can optionally be bound to git worktrees, enabling isolated branch-per-thread workflows. This is an MVP feature gated behind a per-project setting.
+Threads can optionally be bound to git worktrees, enabling isolated branch-per-thread workflows. This is an MVP feature whose defaults resolve via Everywhere/Computer/Project settings; its PM worktree operations still require a real bound Project/repository.
 
 **Surface points:**
 - Chat header worktree button (visible when project is a git repo)
@@ -191,7 +191,7 @@ Retired 2026-10-09 (DL-181; lineage only): Terminal presentation vocabulary is e
 - Amended 2026-10-09 (DL-181): the section title, detached-window title and pane header retire; the tab label and its hover tag are `Plans/FinalGUISpec.md#F3-640`'s, and primary labels stay renameable. Terminal chrome has separate naming-surface layers: a stable `Terminal` section title, detached-window title, terminal-tab label, pane header, and accessibility name; volatile `/context/status`, `/command/status`, and high-priority attention state belong in `/badges` or secondary labels, while primary labels remain user-renamable.
 - Retired 2026-10-09 (DL-181; lineage only): Each terminal tab can be shown as a single pane or a two-by-two quadrant layout, and tab/pane order is user-controlled without changing runtime identity.
 - Retired 2026-10-09 (DL-181; lineage only): Supported tab layout families are explicit rather than arbitrary freeform geometry: one pane uses `single`; two panes use `two_columns` or `two_rows`; three panes use `three_columns`, `three_rows`, `main_left_stack_right`, `main_right_stack_left`, `main_top_stack_bottom`, or `main_bottom_stack_top`; four panes use `four_grid`, `main_left_two_stack_right`, `main_right_two_stack_left`, `main_top_three_stack_bottom`, `main_bottom_three_stack_top`, `four_columns`, or `four_rows`. Split and remove behavior transforms to the nearest valid family while preserving pane identity, and user-adjusted ratios survive until reset.
-- Terminal settings own a project-root default cwd plus user-configurable default working directory and appearance defaults, including `/theme/color`; section, tab, and pane names must be renameable and `/labeled` without changing runtime identity. Amended 2026-10-09 (DL-181, DL-183): appearance defaults follow the four-layer model of `Plans/FinalGUISpec.md#F3-642`; a terminal tab stays renameable, and sections and panes retire.
+- Terminal program/profile/start-folder records are local to the work Computer. Default cwd is the exact bound worktree/root, or the app chat/granted directory. Appearance/behavior defaults use the one Settings ladder and per-tab layer; fonts/screen rows retain Device scope. Existing terminal tab naming and session identity are unchanged (SMPFS-180); retired sections/panes stay retired.
 - Retired 2026-10-09 (DL-181; lineage only): Pane layout supports row and column splits, and removing a pane rebalances the remaining panes deterministically.
 - Amended 2026-10-09 (DL-181): terminal sections and the tab quadrant/window presentation retire. The layered terminal model covers shell placement/navigation, terminal section `/component` boundaries, session identity and lifecycle, tab `/quadrant/window` presentation, chat/tool command handoff, dev-session relationships, `/defaults/theming`, persistence `/restore/recovery`, and remote `/provider/platform` variants.
 
@@ -375,7 +375,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.
 The promoted feature set depends on one requested-vs-effective state model across terminal, browser, provider, tool, and project-scoped runtime behavior.
 
 Rules:
-- requested state is what the user, Persona, project, command, or settings surface asked for
+- requested state is what the user, Persona, explicit place/Computer/optional Project, command or Settings resolver asked for
 - effective state is what the runtime actually resolved and executed after permission, platform, renderer, shell-integration, health, capability, or policy evaluation
 - requested vs effective differences MUST be visible when they change available actions, session routing, restore behavior, or capability disclosure
 
@@ -392,7 +392,7 @@ This rule applies to:
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 Additional rules:
-- switching projects recalculates effective terminal, browser, tool, and provider state for the new project context
+- entering/leaving No project, changing the work Computer for a draft, switching Projects or completing conversion recomputes future terminal/browser/tool/provider state through the same owner resolver; existing processes and historical snapshots stay on their original Computer/roots
 - historical runtime and shell surfaces show frozen captured effective state rather than recomputing from current settings
 - requested preferences MUST NOT let the UI imply a terminal or shell capability that the effective runtime cannot currently provide
 - stale or degraded projections must `/revalidate` before mutating actions; read-only fallback uses explicit `/freshness`, `projection_freshness`, `projection_health`, pending-sync, and `degraded-copy` wording rather than vague uncertainty
@@ -444,7 +444,7 @@ The shell must expose background and blocked work consistently.
 
 Rules:
 - background activity from non-active projects or workspace tabs remains visible through badges, activity indicators, and attention-center entries
-- Shell project state consumes `projects:v1` and `project_state:v1:{project_id}` projections; `project_state` remains project-scoped, and non-active project activity stays visible through badges and attention surfaces.
+- Shell Project state still consumes `projects:v1`/`project_state:v1:{project_id}` only for real Projects. App chats/Goals/Crew/Plans/schedules use explicit application-scope shared work/attention projections with actual Computer/thread identity; no fake Project state record is created.
 - blocked episodes never disappear into silent state changes
 - if a feature opens a detached window or background session, its blocked or action-needed state still routes back to canonical shell attention surfaces
 - Attention routing separates surfaces by purpose: History is the canonical chronology of everything, Progress / Dashboard owns active operational attention and grouped counts, `/chat` and thread/chat are the direct user-action paths when the blocked owner or flow genuinely needs user input, and system notification is a sparse summon layer for high-value action-needed states.
@@ -455,6 +455,10 @@ Rules:
 - Project-attention rows are normalized `project-attention` items that can back attention-center rows, project-card badges, title-bar attention badges, command-palette "resume/fix" and `/fix` entries, and cross-surface "go to the right place" behavior.
 
 ## 3. Feature requirements
+
+Application availability consumes the chat/runtime owners: Goals, Crew, Plan/Deep Plan and scheduled messages/tasks are admitted with explicit app scope and the same counterpart limits. Only Planning Wizard, PRD Builder and Orchestrator have a no-project workflow gate. A Project-native operation (worktree/SCM/Project instructions or a Project-specific debug target) still needs its actual target and authority; that prerequisite is not a blanket chat-mode gate. Root/capability/permission failures keep their exact reasons.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-508, ContractName:Plans/Goal_Runtime_System.md#GRS-086, ContractName:Plans/Collaborative_Workflows.md#CWR-045, ContractName:Plans/Assistant_Plan_Runtime.md#APR-073, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019
 
 ### 3.1 Dangerous-Command Blocking (FileSafe)
 
@@ -472,17 +476,17 @@ ContractRef: ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum
 
 ### 3.2 Branching Conversations (Restore Then Fork)
 
-- a conversation branch starts only from an immutable Assistant Chat restore point stored as the materialized `restore_point_record` family at `rp:{project_id}:{restore_point_id}` with schema `pm.storage_value.restore_point_record.v1`; a runtime `safe_point_record`, FileSafe snapshot, runtime artifact projection, or generic “equivalent preserved state boundary” is not a substitute
+- a conversation branch starts only from an immutable Assistant Chat restore point stored as the materialized `restore_point_record` family at the unchanged Project `rp:{project_id}:{restore_point_id}`/`pm.storage_value.restore_point_record.v1`, or SP-349's `restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}` with the exact app source graph from CV-366/SMPFS-035; a runtime `safe_point_record`, FileSafe snapshot, runtime artifact projection, or generic “equivalent preserved state boundary” is not a substitute
 - the restore point freezes one inclusive source message boundary with source thread, conversation branch, context/provenance, attachment/citation refs, `record_sha256`, and optional `safe_point_id`; it contains no workspace file bodies, and the optional safe-point identity is lineage only
 - applying an `available` restore point verifies the expected record hash and materializes the frozen conversation boundary into a new `thread_id` and conversation `branch_id` (Amended 2026-10-31 (DL-270, SP-337): materializing creates the new thread and branch records only; they reference the frozen messages and attachment payloads by record id and BLAKE3 payload id and copy no message or payload content); the source thread, source conversation branch, source worktree, repository, branch, index, and files remain unchanged, and successful application does not consume the restore point
 - the lifecycle is immutable `available -> expired | deleted | corrupt`; application result is closed to `branched | refused | failed`, and only `branched` creates the new identities and `restore_point.applied` evidence
-- storage policy is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`; the cap is `2,048` per project and count pressure selects only the oldest eligible record; eligible expiry retains the required hash summary. Descendant branch, application, explicit preserve, legal-hold, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until owner-defined release evidence is durable. Section 15 consumes this policy and does not invent a timer, infer the release boundary, clear a ref, or redefine the owner-governed `expired` lifecycle transition
+- storage policy is `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: expiry eligibility begins inclusively at the owner-proven `reference_release + 7,776,000 seconds`; the cap is `2,048` per Project or shared owning-Computer app bucket and count pressure selects only the oldest eligible record; eligible expiry retains the required hash summary. Descendant branch, application, explicit preserve, legal-hold, in-flight application, source-lineage, live, recovery, backup, rollback, and maintenance refs override age and count eligibility until owner-defined release evidence is durable. Section 15 consumes this policy and does not invent a timer, infer the release boundary, clear a ref, or redefine the owner-governed `expired` lifecycle transition
 - deleting the source thread does not resurrect, modify, or silently restore it. If the immutable restore-point record and all required frozen boundary refs remain `available`, a later branch keeps the source hidden and creates only a new thread/branch labeled as new, not undo. If deletion/retention purged required boundary content, the action is `refused` with unavailable reason `source_deleted_content_unavailable`, creates nothing, does not reconstruct from a tombstone or backup projection, and leaves the record/status unchanged
 - `unavailable` is a derived command/UI availability posture, and deleted-source state is provenance; neither expands the closed restore-point status or application-result enums
-- create is idempotent on `{project_id, thread_id, source_message_id, idempotency_key}`: the same semantic request returns the original `restore_point_id`, while a conflicting digest fails without a duplicate. Replaying an identical branch command/application identity returns its original result and target identities; a deliberate second branch requires a new command identity. Delete may transition only an exact-hash `available` record whose permission, storage-writer, and descendant/application/preserve/legal/source-lineage holds admit it; replay returns the original delete result, while a stale hash or protected record is refused, no hold is cleared, and no second lifecycle transition is created
+- create is idempotent on `{scope_partition, owning_server_id, nullable project_id, thread_id, source_message_id, idempotency_key} in the new scope-aware app form (the historical Project identity recipe remains exact)`: the same semantic request returns the original `restore_point_id`, while a conflicting digest fails without a duplicate. Replaying an identical branch command/application identity returns its original result and target identities; a deliberate second branch requires a new command identity. Delete may transition only an exact-hash `available` record whose permission, storage-writer, and descendant/application/preserve/legal/source-lineage holds admit it; replay returns the original delete result, while a stale hash or protected record is refused, no hold is cleared, and no second lifecycle transition is created
 - branch labels, source-origin lineage, and branch origin time are visible in history/navigation surfaces
 - before branch creation, disclosure names the source thread/message boundary, whether the source is active, dirty, or deleted, and the new target; confirmation never implies workspace restoration because this operation changes conversation lineage only
-- the required commands are `cmd.chat.create_restore_point { project_id, thread_id, source_message_id, idempotency_key }`, `cmd.chat.branch_from_restore { project_id, restore_point_id, source_thread_id, expected_restore_point_sha256, new_thread_title? }`, and `cmd.chat.delete_restore_point { project_id, restore_point_id, expected_restore_point_sha256 }`. `UCC-126` owns their catalog registration; naming them here or having a catalog row is still insufficient for dispatch until `Plans/Wiring_Matrix.md` and `Plans/UI_Wiring_Rules.md` prove one handler and reverse coverage for each ID
+- existing `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore` and `cmd.chat.delete_restore_point` retain their UCC-126 owner/handlers and gain versioned app request/results with explicit scope/Computer/thread and expected hashes. Original Project schemas remain exact. Registration, wiring, reverse consumers and event/payload adoption must join before dispatch; naming an app form does not prove a handler.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md#Case-L-6, ContractName:Plans/storage_value_registry.json#/families/restore_point_record, ContractName:Plans/Contracts_V0.md#restore-point-lifecycle-event-registration, ContractName:Plans/Commands_System.md#conversation-restore-point-registration-dependency, ContractName:Plans/UI_Command_Catalog.md, DecisionID:PD-RSP-08
 
@@ -494,7 +498,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 ### 3.4 `@` Mention System for File References
 
-- `@` opens a picker rooted in the active project context
+- `@` opens the File Manager-owned exact-root picker in Project or app scope; foreign Project references require T-185 read authority and retain read-only source identity
 - recent files, modified files, symbol-aware results when available, and folder navigation are valid sources
 - the mention result must preserve the identity needed by prompt assembly and click-to-open behavior
 - the picker must work in Assistant and Interview chat surfaces
@@ -516,13 +520,13 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 - MCP support is host-managed capability resolution, not config passthrough only
 - server configuration, enable/disable, test connection, and runtime health are first-class UI behaviors
-- effective MCP tool availability is project-, Persona-, and permission-aware
+- effective MCP tool availability is aware of actual Computer, optional Project, owner reach, Persona and current permission, using MI-044
 - unhealthy MCP servers never produce silent success-shaped fallback
 
 ### 3.8 Project and Session Browser
 
 - the project/session browser is a real shell surface, not a placeholder concept
-- it shows projects plus per-project sessions/runs/threads as applicable
+- it shows Projects plus explicitly scoped app and Project sessions/runs/threads with actual Computer and truthful unavailable state
 - empty states, search/filter behavior, row actions, badges, and responsive collapse behavior are required
 - it is the main browse/history surface across projects, while active-thread navigation remains available directly in chat
 
@@ -536,7 +540,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ### 3.10 Multi-Tab and Multi-Window
 
-- workspace tabs are first-class and persist order, active tab, per-tab project identity, and local shell state
+- workspace tabs are first-class and persist order, active tab, per-tab explicit Project-or-No-project identity and Computer, and local shell state
 - windows may host one or more workspace tabs when the platform implementation supports it
 - drag-between-window support is optional, but fallback behavior must be defined and deterministic
 - close behavior must account for dirty editors, running dev sessions, active terminals, and detached children
@@ -714,7 +718,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 
 - default switch target is the active workspace tab only
 - an alternate command opens the target project in a new workspace tab
-- switching recalculates project-scoped config, sessions, terminal cwd, browser preview state, and effective tool/MCP/persona state
+- changing Project/No project/Computer and completing conversion recalculates future config, cwd/profile, browser scope and effective tool/MCP/Skill/Plugin/Persona/provider state; existing sessions remain at their original place under SMPFS-084
 - background activity from the old project remains visible through badges/attention surfaces
 - missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
 
@@ -750,7 +754,7 @@ Core rules:
 - PMConcept7 browser presentation is simulated/source-lineage projection only. Until fresh native BrowserRuntimeService and CEF build, launch, binding, and action-execution evidence exists for the claimed platform and slice, the production consumer state is `runtime_unavailable` or explicitly simulated; PMConcept7 HTML behavior, fixtures, screenshots, or browser runs are not evidence of native CEF availability or production BrowserAction/Browser Program execution.
 - DevTools model: embedded vs detached DevTools; who can open it, when, and agent/browser introspection flows are explicit. User-opened DevTools and agent introspection use Browser Program or Expert Browser Program named actions; raw browser-protocol scripting is not a PM browser contract.
 - screenshot-related labels and evidence/artifact actions remain user-facing named actions: browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape, chat rendering, privacy redaction rules, and runtime-artifact references. `/screenshot/devtools/automation` capabilities stay governed by named actions, artifact routing, permission disclosure, and requested/effective capability state.
-- Persistence + isolation: browser history, cookies, storage, per-project isolation, restore eligibility, and crash recovery are explicit ordinary browser-session state. Normal BrowserSessions are project-scoped and `automation_session` is isolated by default. Protected AuthBrowserSession uses only transient in-session state needed for the allowed human flow; it cannot be promoted, copied, captured, exported, restored, or treated as an ordinary persistent profile.
+- Persistence/isolation: ordinary browsing uses an explicit Project or app profile namespace with actual user/Computer/profile/session ownership (SMPFS-094/113). No-project null cannot collide with another scope. Automation is isolated by default. Protected AuthBrowserSession remains human-only/transient and cannot persist, promote, copy, capture, export or restore.
 - Runtime/process lifecycle: PM-managed browser helpers use a helper/subprocess layout with `/subprocess` startup, shutdown, crash detection, restart policy, sandboxing, and diagnostics surfaces. Failures surface as requested/effective runtime state instead of silent fallback.
 - Distribution + runtime layout: per-platform runtime bundle layout, update rules, signature/hash verification with `/hash` evidence, and uninstall/removal behavior with `/removal` evidence are required for macOS, Linux, and Windows packages.
 - Platform guarantee matrix: Linux/macOS/Windows guarantees are explicit; capability differences may be degraded-but-supported only when effective capability loss is disclosed before use.
@@ -764,7 +768,7 @@ Core rules:
 - Historical browser-control projects are source-lineage only. They do not define, replace, shape, or become a compatibility target for BrowserRuntimeService, Browser Program, Expert Browser Program, or PM browser-session options.
 - PM browser-session options are independently owned and versioned: persistent versus isolated profiles, snapshot modes, file-access controls, and output/session persistence never expose a raw external control endpoint as the product foundation.
 - Ordinary browser-session options may include persistent profiles through `profile: { name: string, saveChanges: boolean }`; `saveChanges` determines whether ordinary-session cookies and localStorage are written back after the session. This option is structurally unavailable to protected `AuthBrowserSession`, and `/localStorage` slash notation remains lineage for the canonical ordinary-session field.
-- Ordinary browser sessions are project-scoped profile/store subjects: `workspace_preview` uses the project profile; `detached_preview` shares the originating `workspace_preview` profile/state unless explicitly opened as a separate browsing session; and `automation_session` uses a separate ephemeral profile by default. Legacy `auth_session` profile/store text is retired: protected `AuthBrowserSession` has transient in-memory state only, no persistable profile/store identity, and no save, restore, copy, promote, capture, export, generic-navigation, agent, or tool path.
+- Ordinary `workspace_preview` uses the exact place's Project or app profile; detached preview shares that originating ordinary session only as explicitly admitted, while automation remains a separate ephemeral profile by default. Original Project codecs remain exact; the app form names actual user/Server/Host/Environment/profile/session identity. Protected AuthBrowserSession has no persistable profile or agent/tool/export/restore path.
 - Browser tab-cap handling is `no-silent-retargeting` / no LRU reuse: PM must prompt, block, explicitly close, or open detached rather than silently retargeting an existing browser subject.
 - PM independently owns its named action taxonomy: core automation, tab management, network controls, storage controls, diagnostic capture, coordinate fallback actions, PDF export, and testing/verification actions. Canonical actions include tab lifecycle `list/create/select/close` and waits for time, text, or text disappearance; slash-like `/create/select/close`, `/visual`, `/text/text`, or `/control` strings are not product commands.
 - Browser runtime direction keeps the browser `surface-class` taxonomy and the PM-managed CEF BrowserRuntimeService contract. Historical external projects are source-lineage only and create no PM runtime, facade, compatibility vocabulary, package, port, MCP route, command, or capture engine.
@@ -806,7 +810,7 @@ The machine owner is `Plans/section15_browser_program_contracts.schema.json`; ex
 A compile request carries:
 
 - `PMBrowserScriptSource` with grammar version and bounded UTF-8 source;
-- exact Project, Plan, Goal, run, attempt, thread, agent, Home Server, Execution Host, Environment, Source Location, BrowserSession, BrowserWorkspace, and ProgramWorkspace lineage where applicable;
+- explicit application-or-Project scope, nullable Project/Plan/Goal only when inapplicable, actual Server/Computer/thread/run/attempt/agent, working roots, Source Location where applicable, BrowserSession/BrowserWorkspace/ProgramWorkspace identity and current owner/lease generation; no Project Home Server is fabricated for app work;
 - requested capability profile and permission/FileSafe preflight refs;
 - independent action, representation, local-compute, output, artifact, time, memory, and segment limits;
 - source hash, compiler identity/hash, Browser Program API digest, capability-profile hash, and expected AST hash when reproducibility is required.
@@ -993,7 +997,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_C
 - project restore uses stable `project_id`, not raw path alone
 - workspace tabs restore independently
 - detached windows restore only when their surface class and platform support allow it
-- in-shell normal browser tabs restore by project and workspace tab and preserve profile scope
+- ordinary browser tabs restore by exact app-or-Project workspace/tab/profile/Computer identity without silently copying or switching profile stores
 - detached normal browsing restores with the originating normal browsing session when supported
 - protected AuthBrowserSession and automation sessions do not auto-resume or silently resume active work after restart
 - Protected AuthBrowserSession is ephemeral and never restores page content, profile state, captures, or automation authority. It must not auto-close on presumed success; completion is explicit human or provider/flow evidence rather than a hidden browser lifecycle guess.
@@ -1022,7 +1026,7 @@ Additional rules:
 - crash recovery preserves recoverable metadata and completed evidence artifacts when possible
 - terminal restart or replacement creates a new `terminal_session_id`; restoring a historical pane never synthesizes that new identity automatically
 - no browser or terminal session class may silently bleed storage into another profile scope
-- Persistent profiles are scoped by profile name and project; `profile: { name: string, saveChanges: boolean }` never allows cookies or localStorage to bleed into another profile scope, and disabled `saveChanges` keeps the session isolated even when it began from a named profile.
+- Persistent profiles are scoped by profile name and explicit Project or application user/Computer/profile/session ownership; `profile: { name: string, saveChanges: boolean }` never allows cookies or localStorage to bleed into another profile scope, and disabled `saveChanges` keeps the session isolated even when it began from a named profile.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 ## 6. Non-goals and anti-drift rules
@@ -1121,11 +1125,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a
-  workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity
-  remains visible through persistent shell regions. Amended 2026-10-29 (B1–B6; PM7): Project box A is an
-  admitted secondary project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu
-  without dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab.
+  The app shell is workspace-tab based: each workspace tab owns zero or one active project, with the
+  zero case explicitly labelled No project, project switching is a workspace-tab concern rather than a
+  title-bar project bar, and background, blocked, or failed activity remains visible through
+  persistent shell regions. Amended 2026-10-29 (B1–B6; PM7): Project box A is an admitted secondary
+  project switch entry; Projects view remains primary. Ctrl+Shift+P opens the box menu without
+  dispatch; ordinary pick switches active workspace, Ctrl/Cmd+Enter opens new workspace tab. The two
+  existing switch/open-new commands accept a discriminated Project or No project target and keep the
+  same source workspace identity; a null Project is never a fake registry Project.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation
   requirements.
@@ -1162,6 +1169,8 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0003
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0004
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N8/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 1. Canonical shell and surface model
 - 1.1 Shell ownership
@@ -1595,7 +1604,13 @@ plan_unit_id: SMPFS-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Assistant worktrees are an MVP per-project setting surfaced through chat header, thread selector icon, Source Control accordion, breadcrumb toggle, settings, and merge/test affordances without hiding project/worktree state.
+canonical_text: >-
+  Assistant worktrees are an MVP feature whose behavior defaults consume Everywhere/Computer/Project
+  Settings surfaced through chat header, thread selector icon, Source Control accordion, breadcrumb
+  toggle, settings, and merge/test affordances without hiding project/worktree state. A PM worktree
+  mutation still requires its real Project/repository/backend binding; its absence never gates app
+  Goal, Crew, Plan/Deep Plan or scheduling. The prior per-project setting is its own Project override,
+  not a universal app-workflow gate.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1625,6 +1640,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0011
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Assistant worktree integration
 - per-project setting
@@ -2935,7 +2952,13 @@ plan_unit_id: SMPFS-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Background activity, blocked episodes, action-needed states, attention-center rows, project-card badges, title-bar attention badges, command-palette resume/fix entries, and /fix routes normalize into visible canonical attention surfaces instead of unrelated UI hints.
+canonical_text: >-
+  Background activity, blocked episodes, action-needed states, attention-center rows, project-card
+  badges, title-bar attention badges, command-palette resume/fix entries, and /fix routes normalize
+  into visible canonical attention surfaces instead of unrelated UI hints. App
+  chat/Goal/Crew/Plan/schedule activity uses those same owner projections with explicit No
+  project/Computer identity; project_state remains Project-only and no placeholder Project is
+  synthesized.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -2965,6 +2988,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0022
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - project-attention
 - attention center
@@ -3169,14 +3194,22 @@ plan_unit_id: SMPFS-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Conversation branching starts only from an immutable Assistant Chat restore_point_record at the
-  canonical rp project key. Applying an available expected-hash boundary creates a new thread_id and
-  conversation branch_id, leaves the source thread and source worktree unchanged, restores no files,
-  treats an optional safe_point_id as lineage only, does not consume the record, and never substitutes
-  a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved boundary.
+canonical_text: Conversation branching starts only from an immutable Assistant Chat restore_point_record
+  in the explicitly Project or app scope namespace. Applying an available expected-hash boundary creates
+  a new thread_id and conversation branch_id, leaves the source thread and source worktree unchanged,
+  restores no files, treats an optional safe_point_id as lineage only, does not consume the record, and
+  never substitutes a runtime safe point, FileSafe snapshot, artifact projection, or generic preserved
+  boundary. Original Project keys/codecs stay exact; the app variant uses scope_partition=app with owning
+  Server and source thread, and shares one 2,048 bucket across that Computer's app chats. Current retention,
+  reference_release + 7,776,000 seconds, holds and typed results remain identical. The selected app record
+  is Plans/application_workflow_contracts.schema.json#/$defs/RestorePointApplicationV1, logical pm.restore_point.record.application.v1
+  version 1.0.0, with OriginalRestoreLifecycleSource in Plans/application_workflow_sources.schema.json.
+  CV-366 and SP-349 select only restore_point_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(restore_point_id)}
+  for app storage; rp:app and restore_point_record.v2:app are not aliases. Complete original-source/currentness/create/branch/delete/expiry/read/checkpoint/backup
+  adoption is required before dispatch; absent joins remain unavailable.
 gui_related: false
-gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership
+  requirements rather than visual presentation.
 split_recommended: false
 depends_on:
 - PDS-003
@@ -3191,18 +3224,32 @@ depends_on:
 - UCC-001
 - UCC-126
 - ACD-086
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
 - SMPFS-035 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
-- The materialized family is restore_point_record at rp:{project_id}:{restore_point_id} with schema pm.storage_value.restore_point_record.v1 and closed status available, expired, deleted, or corrupt.
-- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused and failed create none.
-- Successful application does not consume the record, change the source conversation, change SCM/worktree state, or invoke FileSafe restore.
-- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record; Section 15 does not invent an expiry window beyond the current registry policy.
-- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed only from an available record whose required frozen refs remain retained.
-- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs nothing from tombstone or backup projection, and leaves the record/status unchanged.
-- unavailable and deleted-source state remain derived availability/provenance facts and do not expand the closed status or application-result enums.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
+- Project restore_point_record keeps rp:{project_id}:{restore_point_id}/pm.storage_value.restore_point_record.v1
+  unchanged; F admits a distinct scope-aware app key/schema variant with the same closed status available,
+  expired, deleted, corrupt.
+- Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused
+  and failed create none.
+- Successful application does not consume the record, change the source conversation, change SCM/worktree
+  state, or invoke FileSafe restore.
+- Descendant branch, in-flight application, preserve, legal-hold, and source-lineage refs retain the record;
+  Section 15 does not invent an expiry window beyond the current registry policy.
+- Source-thread deletion is provenance, not permission to resurrect or mutate it; branching may proceed
+  only from an available record whose required frozen refs remain retained.
+- Purged required source content returns refused with source_deleted_content_unavailable, reconstructs
+  nothing from tombstone or backup projection, and leaves the record/status unchanged.
+- unavailable and deleted-source state remain derived availability/provenance facts and do not expand
+  the closed status or application-result enums.
+- App create/branch/delete and their idempotency identities bind actual Server/thread/partition with the
+  same cap/retention/holds; no sentinel Project or per-chat cap reset.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3222,6 +3269,9 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
 - Case-L:L-022
 - Case-L:PD-RSP-08
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N1/N24/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
 preserved_exact_tokens:
 - Branching Conversations (Restore Then Fork)
 - restore point
@@ -3230,7 +3280,7 @@ preserved_exact_tokens:
 - source branch
 - source thread remains intact
 - restore_point_record
-- "rp:{project_id}:{restore_point_id}"
+- rp:{project_id}:{restore_point_id}
 - pm.storage_value.restore_point_record.v1
 - available
 - expired
@@ -3241,11 +3291,17 @@ preserved_exact_tokens:
 - failed
 - source_deleted_content_unavailable
 negative_constraints:
-- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches, indexes, or worktrees.
-- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved state as a conversation restore point.
-- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict any record other than the oldest eligible record above `2,048` per project, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage, live, recovery, backup, rollback, or maintenance refs.
+- Do not use safe_point_id as restore-point identity or silently restore files, repositories, branches,
+  indexes, or worktrees.
+- Do not treat a runtime safe point, FileSafe snapshot, runtime artifact projection, or generic preserved
+  state as a conversation restore point.
+- Do not infer `reference_release`, expire before inclusive `reference_release + 7,776,000 seconds`, evict
+  any record other than the oldest eligible record above `2,048` in its Project or owning-Computer app
+  bucket, or bypass descendant-branch, application, preserve, legal-hold, in-flight-application, source-lineage,
+  live, recovery, backup, rollback, or maintenance refs.
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json,
+  ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -6050,10 +6106,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Instant project switch defaults to switching the active workspace tab, while an alternate command opens
-  the target project in a new workspace tab. Amended 2026-10-29 (B1/B6; PM7): Promote
+  Instant project switch defaults to switching the active workspace tab, while an alternate command
+  opens the target project in a new workspace tab. Amended 2026-10-29 (B1/B6; PM7): Promote
   cmd.project.switch_active_tab and cmd.project.open_in_new_workspace_tab into UCC-209/CS-105; the
-  title-bar menu is an additional producer using stable project_id and the same workspace owner.
+  title-bar menu is an additional producer using stable project_id and the same workspace owner. Both
+  existing commands gain an explicit No project target discriminant and real app workspace/Computer
+  context; they are amended, never registered a second time.
 gui_related: true
 gui_classification_reason: Defines visible Project box entry and keyboard command selection.
 split_recommended: false
@@ -6088,6 +6146,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N8/N12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - Instant Project Switch
 - default switch target
@@ -6111,7 +6171,14 @@ plan_unit_id: SMPFS-084
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Project switching recalculates project-scoped config, sessions, terminal cwd, browser preview state, effective tool/MCP/Persona state, preserves old project background activity through attention surfaces, and exposes deterministic missing-path, duplicate-path, and in-flight-run states.
+canonical_text: >-
+  Project switching, entering/leaving No project, changing the work Computer for a draft or completing
+  conversion recalculates project-scoped config only when bound and otherwise the app defaults, future
+  terminal cwd/profile, browser preview state and effective tool/MCP/Skill/Plugin/Persona/provider
+  state through the single resolver. Existing sessions and frozen snapshots remain bound to their
+  original Computer/roots. Old background activity stays visible through canonical attention. App
+  workspace state is separate from project_state; missing-path, duplicate-path and in-flight-run
+  states remain explicit, never a main-Project fallback.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -6141,6 +6208,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0046
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N5/N8/N12/N25
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - project-scoped config
 - sessions
@@ -6778,12 +6847,15 @@ plan_unit_id: SMPFS-094
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: |-
+canonical_text: >-
   Browser persistence covers history, cookies, storage, profile { name, saveChanges }, project-scoped
   ordinary BrowserSessions, workspace_preview/detached_preview sharing, isolated automation_session
   profiles, restore eligibility, and crash recovery. Protected AuthBrowserSession is the explicit
-  exception: it is human-only and ephemeral, uses a domain-restricted transient store, and cannot persist,
-  restore, copy, promote, capture, or export profile/content state.
+  exception: it is human-only and ephemeral, uses a domain-restricted transient store, and cannot
+  persist, restore, copy, promote, capture, or export profile/content state. Ordinary app browsing
+  uses an explicit application profile namespace with real
+  user/Server/Host/Environment/profile/session identity; null Project cannot collide with a Project or
+  another isolation scope. App scope does not admit protected auth persistence.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements
   rather than visual presentation.
@@ -6815,6 +6887,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'profile: { name: string, saveChanges: boolean }'
 - cookies
@@ -7547,7 +7621,11 @@ plan_unit_id: SMPFS-105
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Normal browser tabs restore by project and workspace tab while preserving profile scope; detached normal browsing restores with the originating normal browsing session when supported.
+canonical_text: >-
+  Normal browser tabs restore by project and workspace tab while preserving profile scope; detached
+  normal browsing restores with the originating normal browsing session when supported. App browser
+  tabs restore by explicit app workspace/tab/profile/Computer identity; conversion opens future
+  destination sessions and never silently retargets a live browser or copies auth state.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -7576,6 +7654,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - normal browser tabs
 - project
@@ -8032,11 +8112,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Ordinary BrowserSession or terminal session classes must not silently bleed storage into another profile
-  scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while
-  disabled saveChanges keeps the ordinary session isolated. Protected AuthBrowserSession is outside this
-  persistence facility: its domain-restricted transient store is never written back, copied, promoted,
-  captured, exported, or restored.
+  Ordinary BrowserSession or terminal session classes must not silently bleed storage into another
+  profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and
+  project while disabled saveChanges keeps the ordinary session isolated. Protected AuthBrowserSession
+  is outside this persistence facility: its domain-restricted transient store is never written back,
+  copied, promoted, captured, exported, or restored. In app scope the profile namespace is explicitly
+  application plus real user/Computer/profile/session ownership, rather than an empty Project
+  component. No Project cookie/localStorage state is inherited by a null key.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -8065,6 +8147,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - 'profile: { name: string, saveChanges: boolean }'
 - cookies
@@ -8521,7 +8605,11 @@ plan_unit_id: SMPFS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and browser model.
+canonical_text: >-
+  App-level-only tool permission scope is insufficient for the promoted project-switch, MCP, and
+  browser model. This is an execution permission-scope floor, not a prohibition on Everywhere Settings
+  defaults or real app-scoped chat/Goal/Crew/Plan/scheduled work. Each actual dispatch still binds its
+  exact place/Computer/thread/target and current authority.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -8550,6 +8638,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - app-level-only tool permission scope
 - project-switch
@@ -9349,38 +9439,77 @@ plan_unit_id: SMPFS-139
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Classical DAP debugging uses the shared DebugSessionRecord and DebugSessionBroker lifecycle bound to exact
-  ExecutionHostId, ExecutionEnvironmentId, SourceLocationId, adapter capability snapshot, owner, LeaseId,
-  generation, permission grant, policy, logs, artifacts, and cleanup. Typed protocol behavior covers launch and
-  attach, breakpoints, continue/pause/step, threads/stack/scopes/variables, evaluate,
-  modules/sources/disassembly/memory, output, disconnect/terminate, restart, and cleanup. Immediate-event waiters
-  are armed before triggering operations. Classical UI dispatch uses only concrete cmd.run_debug.* verbs;
-  cmd.debug.* remains assistant-investigation scoped and is never a DAP alias.
+canonical_text: Classical DAP debugging uses the shared DebugSessionRecord and DebugSessionBroker lifecycle
+  bound to exact ExecutionHostId, ExecutionEnvironmentId, SourceLocationId, adapter capability snapshot,
+  owner, LeaseId, generation, permission grant, policy, logs, artifacts, and cleanup. Typed protocol behavior
+  covers launch and attach, breakpoints, continue/pause/step, threads/stack/scopes/variables, evaluate,
+  modules/sources/disassembly/memory, output, disconnect/terminate, restart, and cleanup. Immediate-event
+  waiters are armed before triggering operations. Classical UI dispatch uses only concrete cmd.run_debug.*
+  verbs; cmd.debug.* remains assistant-investigation scoped and is never a DAP alias. No-project use,
+  where the exact debug target/capability is supported, binds explicit app scope, thread/Computer/working
+  root and real adapter/source identity. Project-specific presets still require their real Project; no
+  ghost target or hidden Orchestrator run is fabricated. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserWorkspaceApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This is the promoted debugger runtime and command-namespace boundary, not debugger surface presentation.
-depends_on: [SIR-008, ATS-030]
+gui_classification_reason: This is the promoted debugger runtime and command-namespace boundary, not debugger
+  surface presentation.
+depends_on:
+- SIR-008
+- ATS-030
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - DebugSessionRecord preserves exact topology, source, adapter, owner, lease/generation/epoch, permission, policy, log, artifact, and cleanup identity.
-  - Immediate stopped, output, exited, and terminated events cannot race ahead of their waiters, and late prior-generation events cannot mutate current state.
-  - cmd.run_debug.* is the only classical DAP family and every cmd.debug.* substitution or generic action alias is rejected.
-  - Restart and client-loss paths reconcile or terminate truthfully and never fabricate a live adapter.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-030 future executable matrix]
+- DebugSessionRecord preserves exact topology, source, adapter, owner, lease/generation/epoch, permission,
+  policy, log, artifact, and cleanup identity.
+- Immediate stopped, output, exited, and terminated events cannot race ahead of their waiters, and late
+  prior-generation events cannot mutate current state.
+- cmd.run_debug.* is the only classical DAP family and every cmd.debug.* substitution or generic action
+  alias is rejected.
+- Restart and client-loss paths reconcile or terminate truthfully and never fabricate a live adapter.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-030 future executable matrix
 risk_class: classical_debug_namespace_or_lifecycle_drift
 reasoning_tier: high
 context_scope: promoted_typed_debugsession
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Commands_System.md]
-node_compile_hint: {mode: promoted_debugsession_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Commands_System.md
+node_compile_hint:
+  mode: promoted_debugsession_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
-preserved_exact_tokens: [DebugSessionRecord, DebugSessionBroker, cmd.run_debug.*, cmd.debug.*, ExecutionHostId, ExecutionEnvironmentId, SourceLocationId]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- DebugSessionRecord
+- DebugSessionBroker
+- cmd.run_debug.*
+- cmd.debug.*
+- ExecutionHostId
+- ExecutionEnvironmentId
+- SourceLocationId
 negative_constraints:
-  - Do not mint or alias commands in this consumer PlanUnit.
-  - Do not route classical DAP operations through cmd.debug.*.
-  - Do not claim runtime proof from this PlanUnit or a schema alone.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Commands_System.md]
+- Do not mint or alias commands in this consumer PlanUnit.
+- Do not route classical DAP operations through cmd.debug.*.
+- Do not claim runtime proof from this PlanUnit or a schema alone.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Commands_System.md
 ```
 
 ### SMPFS-140 - Persistent EvalSession Policy Boundary
@@ -9390,38 +9519,80 @@ plan_unit_id: SMPFS-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Persistent evaluation uses EvalSessionRecord and EvalSessionBroker for product-approved sandboxed Python,
-  JavaScript, Ruby, and Julia kernels. Retained variables, bounded streaming output, redacted artifact spills,
-  restart, and cleanup are scoped to exact Project, Goal/run, worktree, ExecutionHostId,
-  ExecutionEnvironmentId, SourceLocationId, owner, LeaseId, runtime installation, policy, and artifact root; hidden
-  global kernels are prohibited. Local compute and external wait are accounted separately. Nested PM tool or
-  agent calls require explicit policy and independent single-use ProviderDispatchAdmissionReceipt consumption;
-  idle-time pause never suspends other resource, security, recursion, provider, output, or artifact limits.
+canonical_text: Persistent evaluation uses EvalSessionRecord and EvalSessionBroker for product-approved
+  sandboxed Python, JavaScript, Ruby, and Julia kernels. Retained variables, bounded streaming output,
+  redacted artifact spills, restart, and cleanup are scoped to exact Project, Goal/run, worktree, ExecutionHostId,
+  ExecutionEnvironmentId, SourceLocationId, owner, LeaseId, runtime installation, policy, and artifact
+  root; hidden global kernels are prohibited. Local compute and external wait are accounted separately.
+  Nested PM tool or agent calls require explicit policy and independent single-use ProviderDispatchAdmissionReceipt
+  consumption; idle-time pause never suspends other resource, security, recursion, provider, output, or
+  artifact limits. An app EvalSession instead binds application scope, real thread/Goal/run/Computer and
+  admitted roots under the same kernel limits and owner/session isolation; nullable Project does not create
+  a hidden global kernel. The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserSessionApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This unit defines evaluator sandbox, scope, accounting, and authority rather than a visible evaluator surface.
-depends_on: [SIR-008, SIR-009, ATS-031]
+gui_classification_reason: This unit defines evaluator sandbox, scope, accounting, and authority rather
+  than a visible evaluator surface.
+depends_on:
+- SIR-008
+- SIR-009
+- ATS-031
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - Kernel state cannot cross its explicit Project/run/worktree/topology/owner/session scope.
-  - Nested provider/tool/agent work independently satisfies policy and consumes valid dispatch admission without widening parent or session authority.
-  - CPU, memory, wall, idle, output, artifact, recursion, provider, FileSafe, permission, credential, and network limits remain independently enforceable.
-  - Crash, restart, lease loss, and cleanup fence late results and retain explicit variable/artifact disposition.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-031 future executable matrix]
+- Kernel state cannot cross its explicit Project/run/worktree/topology/owner/session scope.
+- Nested provider/tool/agent work independently satisfies policy and consumes valid dispatch admission
+  without widening parent or session authority.
+- CPU, memory, wall, idle, output, artifact, recursion, provider, FileSafe, permission, credential, and
+  network limits remain independently enforceable.
+- Crash, restart, lease loss, and cleanup fence late results and retain explicit variable/artifact disposition.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-031 future executable matrix
 risk_class: persistent_eval_scope_or_authority_escape
 reasoning_tier: high
 context_scope: promoted_persistent_evalsession
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/FileSafe.md]
-node_compile_hint: {mode: promoted_evalsession_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+node_compile_hint:
+  mode: promoted_evalsession_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
-preserved_exact_tokens: [EvalSessionRecord, EvalSessionBroker, ProviderDispatchAdmissionReceipt, Python, JavaScript, Ruby, Julia, hidden global kernels are prohibited]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- EvalSessionRecord
+- EvalSessionBroker
+- ProviderDispatchAdmissionReceipt
+- Python
+- JavaScript
+- Ruby
+- Julia
+- hidden global kernels are prohibited
 negative_constraints:
-  - Do not collapse persistent EvalSession into DAP frame evaluation.
-  - Do not inherit or reuse provider dispatch admission.
-  - Do not pause non-idle safety/resource limits during external wait.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md, Plans/Tools.md]
+- Do not collapse persistent EvalSession into DAP frame evaluation.
+- Do not inherit or reuse provider dispatch admission.
+- Do not pause non-idle safety/resource limits during external wait.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+- Plans/Tools.md
 ```
 
 ### SMPFS-141 - Test Debug Lease And Awareness Consumption
@@ -9431,38 +9602,77 @@ plan_unit_id: SMPFS-141
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: >-
-  Testing, classical debug, Eval, device, and browser work consume RuntimeResourceGovernor admission,
-  ObservableWork truth, LeaseCoordinator CAS lifecycles, and OperationalAwarenessService bounded projections.
-  Every executable request binds exact Project/Home Server, ExecutionHostId, ExecutionEnvironmentId,
+canonical_text: Testing, classical debug, Eval, device, and browser work consume RuntimeResourceGovernor
+  admission, ObservableWork truth, LeaseCoordinator CAS lifecycles, and OperationalAwarenessService bounded
+  projections. Every executable request binds exact Project/Home Server, ExecutionHostId, ExecutionEnvironmentId,
   SourceLocationId where applicable, topology generation, capability snapshot, holder, epoch, lease generation,
   policy, operation/attempt, and ObservableWorkId. Host-local enforcement may reject or reduce a coordinator
   proposal. Awareness is freshness-labeled and read-only; it never authorizes action or injects raw registries,
-  secrets, transcripts, page bodies, stacks, variables, or captures into prompts.
+  secrets, transcripts, page bodies, stacks, variables, or captures into prompts. The app form for admitted
+  chat/Goal/Crew/Assistant Plan/scheduled work binds null Project, its actual Server storage writer and
+  exact Computer/thread/roots. It has no Project Home Server/Vault lease; actual target/capability/permission
+  gates still apply. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates.
+  The application sibling uses Plans/application_workflow_contracts.schema.json#/$defs/BrowserProgramApplicationV1,
+  CV-366's exact whole app source graph and SP-349's distinct application physical family; creation/reset
+  consumes OriginalBrowserTransitionSource in Plans/application_workflow_sources.schema.json. Retain every
+  original Project source/hash/codec unchanged. Missing app native-source, writer/read/checkpoint/backup
+  or controller proof stays unavailable; protected-auth capture, profile migration and focus-based fallback
+  are forbidden.
 gui_related: false
-gui_classification_reason: This unit defines shared runtime admission and projection consumption rather than a visible surface.
-depends_on: [SIR-006, SIR-007, ATS-032]
+gui_classification_reason: This unit defines shared runtime admission and projection consumption rather
+  than a visible surface.
+depends_on:
+- SIR-006
+- SIR-007
+- ATS-032
+- CV-366
+- SP-349
 unblocks: []
 acceptance_criteria:
-  - Consumers do not create feature-local global governors, work state machines, lease authorities, or awareness registries.
-  - Stale holder, epoch, generation, topology, capability, or source identity cannot renew, release, publish, or mutate through a replacement lease.
-  - Awareness states current, partial, stale, unavailable, and conflicted carry source cursors/observed time and confer no authority.
-  - Queued, admitted, reduced, lease-held, awareness-current, or visible never means test/debug success.
-validation_surfaces: [python3 scripts/pm-plan-index.py validate, Plans/Automated_Testing_System.md ATS-032 future executable matrix]
+- Consumers do not create feature-local global governors, work state machines, lease authorities, or awareness
+  registries.
+- Stale holder, epoch, generation, topology, capability, or source identity cannot renew, release, publish,
+  or mutate through a replacement lease.
+- Awareness states current, partial, stale, unavailable, and conflicted carry source cursors/observed
+  time and confer no authority.
+- Queued, admitted, reduced, lease-held, awareness-current, or visible never means test/debug success.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Plans/Automated_Testing_System.md ATS-032 future executable matrix
 risk_class: shared_runtime_consumer_authority_fork
 reasoning_tier: high
 context_scope: promoted_test_debug_shared_runtime_consumption
-implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
-node_compile_hint: {mode: promoted_test_debug_runtime_consumption_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: promoted_test_debug_runtime_consumption_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
-preserved_exact_tokens: [RuntimeResourceGovernor, ObservableWork, LeaseCoordinator, OperationalAwarenessService, ExecutionHostId, ExecutionEnvironmentId, SourceLocationId]
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule
+  rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- RuntimeResourceGovernor
+- ObservableWork
+- LeaseCoordinator
+- OperationalAwarenessService
+- ExecutionHostId
+- ExecutionEnvironmentId
+- SourceLocationId
 negative_constraints:
-  - Do not create a second shared resource, lease, progress, or awareness owner.
-  - Do not inject raw operational registries into prompts.
-  - Do not convert admission or visibility into verification proof.
-owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
+- Do not create a second shared resource, lease, progress, or awareness owner.
+- Do not inject raw operational registries into prompts.
+- Do not convert admission or visibility into verification proof.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Automated_Testing_System.md
 ```
 
 ### SMPFS-142 - PM-Native Browser Program Architecture
@@ -9562,13 +9772,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Concurrent agents or browser-test tasks use isolated BrowserWorkspaces and dedicated BrowserPages unless an
-  owner-authorized read-only observer contract applies. Each action carries exact Server, ExecutionHostId,
-  ExecutionEnvironmentId, Project, Plan, Goal, run, attempt, agent, operation, BrowserSession, BrowserWorkspace,
-  BrowserPage, LeaseId/generation/epoch/holder, expected PageGeneration, and sequence. Exactly one mutating
-  LeaseCoordinator Browser page-controller lease is valid per BrowserPage PageGeneration. Navigation, redirect,
-  reload, crash/restore, and explicit handoff advance or revalidate PageGeneration; stale actions are rejected.
-  Read-only observation, focus, visibility, or tab selection never confers mutation authority.
+  Concurrent agents or browser-test tasks use isolated BrowserWorkspaces and dedicated BrowserPages
+  unless an owner-authorized read-only observer contract applies. Each action carries exact Server,
+  ExecutionHostId, ExecutionEnvironmentId, Project, Plan, Goal, run, attempt, agent, operation,
+  BrowserSession, BrowserWorkspace, BrowserPage, LeaseId/generation/epoch/holder, expected
+  PageGeneration, and sequence. Exactly one mutating LeaseCoordinator Browser page-controller lease is
+  valid per BrowserPage PageGeneration. Navigation, redirect, reload, crash/restore, and explicit
+  handoff advance or revalidate PageGeneration; stale actions are rejected. Read-only observation,
+  focus, visibility, or tab selection never confers mutation authority. App browser actions carry an
+  explicit application parent and real thread/Computer/root/session/lease identity; Project, Named
+  Plan and Goal refs are absent only when not applicable. This is a separately versioned app request,
+  never a nullable shortcut into protected sessions or an existing exact Project codec.
 gui_related: true
 gui_classification_reason: This unit governs concurrent visible/watchable pages, controller handoff, and user-observable mutation ownership.
 depends_on: [SMPFS-141, SMPFS-142, ATS-034]
@@ -9585,8 +9799,10 @@ context_scope: promoted_multi_agent_browser_fencing
 implementation_surfaces: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Shared_Integration_Runtime.md, Plans/Automated_Testing_System.md]
 node_compile_hint: {mode: promoted_browser_controller_fencing_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/04_LSP_DAP_EVAL_MCP_BROWSER_AND_WORKTREES.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: [BrowserWorkspace, BrowserPage, PageGeneration, LeaseCoordinator, one mutating controller lease per page generation]
 negative_constraints:
   - Do not share mutable BrowserWorkspace or BrowserPage state across agents by default.
@@ -11888,16 +12104,21 @@ unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  Newly define the browser.workspace.created-only producer commit and read-consumer
-  binding under DL-046. Only the authenticated ordinary BrowserRuntimeService.workspace
-  owner publishes the exact committed creation identity after the barrier AppendReceipt.
+  Newly define the browser.workspace.created-only producer commit and read-consumer binding under
+  DL-046. Only the authenticated ordinary BrowserRuntimeService.workspace owner publishes the exact
+  committed creation identity after the barrier AppendReceipt.
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
-  storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
-  effect and no authority to recreate or act on a live workspace. Since 2026-09-25 the current
-  reader is browser.workspace_inventory.created.v2@2.0.0 over storage.browser_workspace_created_index.v2@2.0.0
-  and the v2 checkpoint of SP-266; the v1 reader and checkpoint are compatibility custody. Lost-acknowledgement and
-  uncertain-append recovery resolves an issued original creation append only through the explicitly
-  adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
+  storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable effect and
+  no authority to recreate or act on a live workspace. Since 2026-09-25 the current reader is
+  browser.workspace_inventory.created.v2@2.0.0 over storage.browser_workspace_created_index.v2@2.0.0
+  and the v2 checkpoint of SP-266; the v1 reader and checkpoint are compatibility custody.
+  Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only
+  through the explicitly adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2. The new
+  accepted app behavior requires a separately versioned application creation wrapper/payload and
+  complete producer/receipt/index/read/backup graph with actual Server/Host/Environment/thread/session
+  identity. Existing Project payload bytes, source digests, v1/v2 reader contracts and non-admission
+  boundaries stay exact; absent app adoption remains handler_unavailable, never fabricated native
+  proof.
 gui_related: false
 gui_classification_reason: This is event, scope, identity and replay authority, not presentation.
 depends_on: [DL-046, SMPFS-166, CV-332, SP-286, CV-339]
@@ -11915,7 +12136,11 @@ reasoning_tier: high
 context_scope: browser_workspace_created_single_family
 implementation_surfaces: [Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage-plan.md]
 node_compile_hint: {mode: static_single_family_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-046, Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution]
+source_lineage:
+- Plans/Decision_Log.md#DL-046
+- Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - No sibling-family admission, new feature, event alias, protected-auth access, Browser session/profile physical-family admission or native-proof claim.
   - No runtime availability, currentness clearance, WorkNodes, NodeSeeds, frozen-audit rewrite or governance seal follows from this contract.
@@ -12108,14 +12333,16 @@ status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
   Newly define the browser.workspace.reset-only resolved owner transition and
-  browser.workspace_inventory.reset.v1@1.0.0 consumer under DL-046. The authenticated
-  original owner joins revision, strictly advancing generation, controller fencing,
-  request/result/receipt and scope before publishing the committed reset fact.
-  Failed or uncertain append after the reset effect requires original-operation
-  recovery, never a second reset, no-effect claim or generation rollback. That recovery
-  resolves an issued original reset append only through the explicitly adopted SP-286/CV-339
-  storage.first_append_receipt.resolve.v2 and, when no original event exists, retries only the
-  original append identity through the unchanged shared idempotency route.
+  browser.workspace_inventory.reset.v1@1.0.0 consumer under DL-046. The authenticated original owner
+  joins revision, strictly advancing generation, controller fencing, request/result/receipt and scope
+  before publishing the committed reset fact. Failed or uncertain append after the reset effect
+  requires original-operation recovery, never a second reset, no-effect claim or generation rollback.
+  That recovery resolves an issued original reset append only through the explicitly adopted
+  SP-286/CV-339 storage.first_append_receipt.resolve.v2 and, when no original event exists, retries
+  only the original append identity through the unchanged shared idempotency route. App reset uses an
+  explicitly versioned application scope/owner/controller/request/result/receipt graph. It retains the
+  original-operation lost-append and generation rules; original Project exact bytes/codecs stay
+  accepted unchanged and no client Boolean or documentation edit admits an app writer.
 gui_related: false
 gui_classification_reason: Defines ownership, identity, replay and recovery, not presentation.
 depends_on: [DL-046, SMPFS-166, CV-332, SP-278, SP-286, CV-339]
@@ -12132,7 +12359,11 @@ reasoning_tier: high
 context_scope: browser_workspace_reset_single_family
 implementation_surfaces: [Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/storage-plan.md]
 node_compile_hint: {mode: static_single_family_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/Decision_Log.md#DL-046, Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution]
+source_lineage:
+- Plans/Decision_Log.md#DL-046
+- Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 negative_constraints:
   - No sibling admission, new feature, protected-auth access, new retention policy, Browser physical owner family or current live generation inferred from event history.
   - No native authentication, receipt custody, end-to-end indexed-reset, durability, runtime, readiness, historical-audit closure or governance seal follows from synthetic checks.
@@ -12458,44 +12689,55 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  The terminal is one tab kind of the universal panels (`Plans/FinalGUISpec.md#F3-635`), and each terminal tab
-  holds exactly one terminal session. Presentation and `terminal_session_id` stay separate (SMPFS-015): the
-  terminal kind mints a new session when it opens a tab, the tab id is `terminal:<session>` taken from that first
-  session and stays the same for the life of the tab, and the tab's domain reference is the session it shows now.
-  There are no splits inside a terminal: Split opens a new panel beside this one with a new session in the same
-  folder and shell profile. Terminal sections, workgroups, sub-tabs, in-tab pane splits, the editor terminal stack,
-  the Quadrant layout, the pane layout families and the four-section and four-pane caps are retired; Terminals 2x2
-  is a named layout of four panels (`Plans/FinalGUISpec.md#F3-630`). A session survives every view change: moving
-  a terminal tab to another panel, collapsing or maximizing its panel, hiding it behind another tab or in the "+N"
-  list, applying a named layout and narrowing the window never end, restart or mint a session. Closing the tab ends
-  its session, after the tab first says what is still running ("Close this terminal? <process> is still running
-  and will be stopped."). When a session ends by itself the tab stays and shows an inline "Session ended" row (with
-  the exit code when it is not zero), Restart and Close tab, and its screen dims (the rows and the 72 % dim are
-  `Plans/FinalGUISpec.md#F3-640`'s); Restart starts a new session in the same tab. Reopen closed tab opens a new session in the same folder and profile. After Puppet Master restarts, a
-  terminal tab never pretends to be the old session (F3-226, F3-228): a session verified live is reattached
-  (`restored_live`, SMPFS-063, SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181,
-  `Plans/storage-plan.md#SP-332`) before a new local session starts in the same folder and profile, draws the dim rule
-  `── Restored <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
-  terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page
-  reloaded; this is a new session." The part in parentheses appears only when images were not kept; a reopened tab's
-  notice says it was reopened and that the earlier session ended when the tab closed; a local terminal tab whose saved copy did not load within SP-332's load budget starts without its scrollback and says so. The restore outcome of SMPFS-063
-  is recorded for the earlier session: `restored_live` only for a verified reattach; `restored_exited` when that
-  session had already ended before the restart, `restored_disconnected` when it was still running and did not
-  survive, and `restored_without_history` when its saved scrollback did not load. For local profiles in those three cases the restored scrollback is the review part, the new session below it is live with its own `terminal_session_id`, and the tab
-  is never left review-only; Restart and rerun stay the actions for a session that ends while the tab is open. A
-  command still running when the
-  earlier session ended comes back ended and indeterminate ("ended with the earlier session"), never done, through
-  this document's abnormal or indeterminate finalisation of command blocks. There is no broadcast input to several
-  terminals. The per-tab role setting `code.terminal.tab-role` retires; shell profiles (zsh, bash, pwsh and SSH
-  hosts) replace it. No AI feature lives in the terminal surface: no explain, fix, suggest, ask or completion
-  action. Explaining commands is the Teacher persona's job in the chat (`Plans/Personas.md` section 11.8), and
-  `code.terminal.explanations` retires.
-  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
-  Amended 2026-10-10 (DL-187): when the saved copy left secrets out (D36, Plans/storage-plan.md#SP-332), the
-  restore notice ends "N secrets were left out of the saved copy."; the restored lines show each left-out secret's
-  label, while a program's output in the new session is shown as printed. The shell profiles a terminal can start
-  are the shells installed on the computer and the SSH hosts (D39); the "+" menu lists them
-  (Plans/FinalGUISpec.md#F3-632).
+  The terminal is one tab kind of the universal panels (`Plans/FinalGUISpec.md#F3-635`), and each
+  terminal tab holds exactly one terminal session. Presentation and `terminal_session_id` stay
+  separate (SMPFS-015): the terminal kind mints a new session when it opens a tab, the tab id is
+  `terminal:<session>` taken from that first session and stays the same for the life of the tab, and
+  the tab's domain reference is the session it shows now. There are no splits inside a terminal: Split
+  opens a new panel beside this one with a new session in the same folder and shell profile. Terminal
+  sections, workgroups, sub-tabs, in-tab pane splits, the editor terminal stack, the Quadrant layout,
+  the pane layout families and the four-section and four-pane caps are retired; Terminals 2x2 is a
+  named layout of four panels (`Plans/FinalGUISpec.md#F3-630`). A session survives every view change:
+  moving a terminal tab to another panel, collapsing or maximizing its panel, hiding it behind another
+  tab or in the "+N" list, applying a named layout and narrowing the window never end, restart or mint
+  a session. Closing the tab ends its session, after the tab first says what is still running ("Close
+  this terminal? <process> is still running and will be stopped."). When a session ends by itself the
+  tab stays and shows an inline "Session ended" row (with the exit code when it is not zero), Restart
+  and Close tab, and its screen dims (the rows and the 72 % dim are `Plans/FinalGUISpec.md#F3-640`'s);
+  Restart starts a new session in the same tab. Reopen closed tab opens a new session in the same
+  folder and profile. After Puppet Master restarts, a terminal tab never pretends to be the old
+  session (F3-226, F3-228): a session verified live is reattached (`restored_live`, SMPFS-063,
+  SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181, `Plans/storage-plan.md#SP-332`)
+  before a new local session starts in the same folder and profile, draws the dim rule `── Restored
+  <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
+  terminal was restored with its scrollback (N images were not kept). Its earlier session ended when
+  the page reloaded; this is a new session." The part in parentheses appears only when images were not
+  kept; a reopened tab's notice says it was reopened and that the earlier session ended when the tab
+  closed; a local terminal tab whose saved copy did not load within SP-332's load budget starts
+  without its scrollback and says so. The restore outcome of SMPFS-063 is recorded for the earlier
+  session: `restored_live` only for a verified reattach; `restored_exited` when that session had
+  already ended before the restart, `restored_disconnected` when it was still running and did not
+  survive, and `restored_without_history` when its saved scrollback did not load. For local profiles
+  in those three cases the restored scrollback is the review part, the new session below it is live
+  with its own `terminal_session_id`, and the tab is never left review-only; Restart and rerun stay
+  the actions for a session that ends while the tab is open. A command still running when the earlier
+  session ended comes back ended and indeterminate ("ended with the earlier session"), never done,
+  through this document's abnormal or indeterminate finalisation of command blocks. There is no
+  broadcast input to several terminals. The per-tab role setting `code.terminal.tab-role` retires;
+  shell profiles (zsh, bash, pwsh and SSH hosts) replace it. No AI feature lives in the terminal
+  surface: no explain, fix, suggest, ask or completion action. Explaining commands is the Teacher
+  persona's job in the chat (`Plans/Personas.md` section 11.8), and `code.terminal.explanations`
+  retires. Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab),
+  as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  Amended 2026-10-10 (DL-187): when the saved copy left secrets out (D36,
+  Plans/storage-plan.md#SP-332), the restore notice ends "N secrets were left out of the saved copy.";
+  the restored lines show each left-out secret's label, while a program's output in the new session is
+  shown as printed. The shell profiles a terminal can start are the shells installed on the computer
+  and the SSH hosts (D39); the "+" menu lists them (Plans/FinalGUISpec.md#F3-632). This same
+  one-session tab model works in No project with an exact Computer/chat or granted cwd and host-local
+  shell profile. Settings resolves future defaults; a chat conversion never moves its PTY, process,
+  port or scrollback owner to another Computer, and future sessions resolve the destination. Protected
+  remote reconnect and every earlier restore/secret notice rule remain.
 gui_related: true
 gui_classification_reason: Owns the terminal's session and tab model that every visible terminal surface presents.
 split_recommended: false
@@ -12540,12 +12782,20 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - Plans/Decision_Log.md#DL-181
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D19)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 and 7; concept lineage only)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (worklist)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D11, D19)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 and 7; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3
+  (worklist)
 - Plans/Decision_Log.md#DL-187
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D39)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 7: the restore notice's secrets sentence, the shell list; concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D39)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 7: the restore notice''s
+  secrets sentence, the shell list; concept lineage only)'
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N6/N12/N24/N25; latest Goal/Crew/Plan/schedule rulings
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens:
 - "SMPFS-180"
 - "N secrets were left out of the saved copy."

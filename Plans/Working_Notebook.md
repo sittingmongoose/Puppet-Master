@@ -14,7 +14,7 @@ The notebook is continuity material, not authority. It is neither permanent Assi
 
 Working Notebook owns:
 
-- stable notebook identity, exact Project binding, and the five scope kinds (thread, worker lineage, coordinator run, participant, explicit shared slice);
+- stable notebook identity, exact application-or-Project place binding with real thread/Computer identity, and the five scope kinds (thread, worker lineage, coordinator run, participant, explicit shared slice);
 - the small typed entry envelope (ids, scope, revision, author, lifecycle, epistemic kind, provenance, validity context, effective restrictions) around flexible bounded Markdown or structured bodies;
 - attributed revisions with compare-and-swap and idempotency, supersession, and conflict visibility;
 - epistemic kinds `hypothesis | observation | rejected_approach | reference | continuation | user_note` and the freshness dimension `current | needs_revalidation | source_unavailable`;
@@ -39,7 +39,7 @@ It does not own:
 
 ### Requirements for a valid notebook action
 
-A durable notebook action requires one exact Project identity. When the active thread has no valid Project binding and no explicitly supported current-owner alternate scope, durable notebook actions are unavailable with a typed reason, no hidden global notebook store is created, and ordinary chat remains fully usable. Host-supplied metadata (identity, timestamps, scope, policy generation) is filled in by the host and is not restated by the model.
+A durable notebook action requires an exact admitted place plus its existing runtime scope. A Project notebook uses the real Project/Vault; WN-021 admits thread-private app scratch with `project_id=null`, actual Server/Computer/thread and a live app storage writer, before any Vault exists. Missing scope/current writer still yields a typed reason without a hidden Project. Host identity, timestamps and policy generation are host-filled, never model-supplied authority.
 
 ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Settings_System.md
 
@@ -186,7 +186,16 @@ plan_unit_id: WN-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: Notebook records are created lazily on the first explicit or material write; trivial exchanges produce no notebook, no note, and no fabricated usage call. Automatic capture is enabled by default only for material events during relevant long work material discoveries, rejected approaches, milestones affecting continuation, and required continuation handoffs. Capture never requires a separate helper LLM call per message. A Project-scoped user preference can disable optional automatic capture; disabling it does not delete existing notes, does not remove explicit authorized operations, and does not disable any mandatory ledger or workflow checkpoint owned by another owner.
+canonical_text: >-
+  Notebook records are created lazily on the first explicit or material write; trivial exchanges
+  produce no notebook, no note, and no fabricated usage call. Automatic capture is enabled by default
+  only for material events during relevant long work material discoveries, rejected approaches,
+  milestones affecting continuation, and required continuation handoffs. Capture never requires a
+  separate helper LLM call per message. A user preference resolved through Everywhere, Computer and
+  optional Project can disable optional automatic capture; disabling it does not delete existing
+  notes, does not remove explicit authorized operations, and does not disable any mandatory ledger or
+  workflow checkpoint owned by another owner. App scratch creation follows the same materiality rule
+  and does not require a Project Vault.
 gui_related: false
 gui_classification_reason: Capture policy is runtime behavior; the settings control surface is specified in Settings_System.
 depends_on: [WN-001]
@@ -204,8 +213,10 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/Settings_System.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-U02
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-U02
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["lazily", "material write", "no helper LLM call", "mandatory ledger"]
 negative_constraints:
   - Do not create empty notebook records for trivial exchanges.
@@ -223,7 +234,19 @@ plan_unit_id: WN-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: Notebooks use five scope kinds bound to existing runtime identities, with durable scope and author identity. thread binds one project/thread_id. worker_lineage binds one node/attempt lineage from the orchestrator runtime. coordinator_run binds one coordinating run/package. participant binds one collaboration run and participant slot. shared_slice binds one collaboration run plus an explicit recipient policy. Project boundaries always apply. There is no ambient all-project notebook and no default cross-thread injection; cross-project reads and shares are denied unless an existing explicit import flow authorizes them. Scopes are capabilities over existing runtime and storage, never a new hierarchy of agents, sessions, or Goals, and scope cannot be widened by editing body text.
+canonical_text: >-
+  Notebooks use five scope kinds bound to existing runtime identities, with durable scope and author
+  identity. thread binds one explicit place plus thread_id, with null Project in an app scratch
+  notebook. worker_lineage binds one node/attempt lineage from the orchestrator runtime.
+  coordinator_run binds one coordinating run/package. participant binds one collaboration run and
+  participant slot. shared_slice binds one collaboration run plus an explicit recipient policy.
+  Place/Project, thread and participant boundaries always apply. App Crew participant/shared_slice
+  scopes require their real admitted Crew parent; Project-only node scopes cannot be fabricated. There
+  is no ambient all-project notebook and no default cross-thread injection; cross-project reads and
+  shares are denied unless an existing explicit import flow authorizes them. Scopes are capabilities
+  over existing runtime and storage, never a new hierarchy of agents, sessions, or Goals, and scope
+  cannot be widened by editing body text. WN-021 owns the app scratch and fenced conversion form;
+  projects.* cannot read notebooks.
 gui_related: false
 gui_classification_reason: Scope binding semantics are runtime behavior, not GUI work.
 depends_on: [WN-001, OSI-435]
@@ -241,8 +264,10 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/orchestrator-subagent-integration.md, Plans/Collaborative_Workflows.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N04
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-I06
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-I06
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N24/N25/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["thread", "worker_lineage", "coordinator_run", "participant", "shared_slice", "no ambient all-project notebook"]
 negative_constraints:
   - Do not add ambient all-project notebooks or default full cross-thread injection.
@@ -403,7 +428,17 @@ plan_unit_id: WN-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: "Sharing selects exact note revisions and explicit recipients under current permissions and phase policy; it never copies all author context. Derived notes, capsule selections, handoffs, summaries, and search projections preserve the restrictions of their sources: paraphrasing, relabeling, or partial quoting of Assistant-only memory, protected evidence, or private participant material cannot widen access. If exact dependency isolation is unavailable, affected derived blocks are excluded or rebuilt conservatively rather than silently declassified. Private working slices are not shared by default, including with blind-phase reviewers. Bytes already sent to a provider cannot be recalled; restriction changes invalidate only future dispatch use and say so."
+canonical_text: >-
+  Sharing selects exact note revisions and explicit recipients under current permissions and phase
+  policy; it never copies all author context. Derived notes, capsule selections, handoffs, summaries,
+  and search projections preserve the restrictions of their sources: paraphrasing, relabeling, or
+  partial quoting of Assistant-only memory, protected evidence, or private participant material cannot
+  widen access. If exact dependency isolation is unavailable, affected derived blocks are excluded or
+  rebuilt conservatively rather than silently declassified. Private working slices are not shared by
+  default, including with blind-phase reviewers. Bytes already sent to a provider cannot be recalled;
+  restriction changes invalidate only future dispatch use and say so. App notebook scratch keeps the
+  same recipient/phase rules; explicit conversion/import never reclassifies private or Assistant-only
+  content as shared Project material.
 gui_related: false
 gui_classification_reason: Restriction semantics are runtime/permission behavior, not GUI work.
 depends_on: [WN-005, PS-120]
@@ -421,8 +456,10 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/Permissions_System.md]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-N12
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H05
+- source_packet:PM-WNC-2026-09-05-v1:WNC-N12
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H05
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N3/N25/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["exact note revisions", "explicit recipients", "cannot widen access", "already sent"]
 negative_constraints:
   - Do not widen access by paraphrase, relabel, partial quote, or export.
@@ -684,15 +721,23 @@ plan_unit_id: WN-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Working_Notebook.md
-canonical_text: "Notebook user preferences are persisted Project-scoped through Settings_System and the settings inventory: memory.notebook.auto-capture (toggle, default true), memory.notebook.resume-capsule (toggle, default true), memory.notebook.capsule-budget-tokens (number, default 512), and memory.notebook.injection-budget-tokens (number, default 1024). Budget values are ceilings, not reservations, and are further reduced by the Prompt_Pipeline allocation. There are no new global ordinary setting values and no silent inherited live settings. A durable notebook action with no valid Project binding is unavailable with a typed reason while ordinary chat remains usable; no hidden global notebook store is created."
+canonical_text: >-
+  Notebook behavior preferences resolve through Settings_System at the row's admitted Everywhere,
+  Computer and optional Project levels: memory.notebook.auto-capture=true,
+  memory.notebook.resume-capsule=true, memory.notebook.capsule-budget-tokens=512 and
+  memory.notebook.injection-budget-tokens=1024. Budgets are ceilings, not reservations, further
+  reduced by Prompt_Pipeline allocation. WN-021 admits thread-scoped app scratch without a Project
+  Vault. Settings transfer carries behavior values only, never notebook bodies, checkpoints, recipient
+  authority or references as content.
 gui_related: false
 gui_classification_reason: Settings registration is configuration data; the Settings pane itself is owned by FinalGUISpec/Settings_System patterns.
 depends_on: [WN-004, WN-017]
 unblocks: []
 acceptance_criteria:
-  - Setting IDs, types, defaults, and Project scope reconcile with the inventory schema.
-  - Disabling auto-capture does not grant sharing, clear notes, or disable mandatory checkpoints.
-  - No-Project durable notebook actions fail with the exact typed unavailable reason.
+- The four exact setting IDs/types/defaults use the one inventory/resolver and work without a Project at admitted
+  levels.
+- Disabling auto-capture neither shares/deletes notes nor disables mandatory checkpoints.
+- App scratch access remains thread/participant-scoped; conversion fences transfer before destination Vault activation.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
   - python3 scripts/pm-plans-verify.py json-syntax
@@ -702,12 +747,14 @@ context_scope: working_notebook
 implementation_surfaces: [Plans/Working_Notebook.md, Plans/Settings_System.md, Plans/settings_inventory.json]
 node_compile_hint: {mode: semantic_owner_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-X04
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A13
+- source_packet:PM-WNC-2026-09-05-v1:WNC-X04
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A13
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24/N26
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
 preserved_exact_tokens: ["memory.notebook.auto-capture", "memory.notebook.resume-capsule", "memory.notebook.capsule-budget-tokens", "memory.notebook.injection-budget-tokens", "ceilings, not reservations"]
 negative_constraints:
-  - Do not add global ordinary notebook settings or bypass Project scoping.
-  - Do not let settings transfer carry note bodies.
+- Do not put notebook content in ordinary settings, export, mirrors or copied setup values.
+- Do not add an ambient all-chat notebook, a fabricated Project Vault or a second notebook runtime.
 owner_hints: [Plans/Working_Notebook.md, Plans/Settings_System.md]
 ```
 
@@ -788,13 +835,13 @@ ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Tools.md
 
 ### Identity and scope
 
-Notebook identity: `notebook_id` is `nb_{ulid}`, minted once per notebook, immutable. Entry identity: `entry_id` is `wne_{ulid}`, stable across revisions. Project binding is the exact `project_id`. Scope kinds and bindings:
+Notebook identity remains `notebook_id=nb_{ulid}` and entry identity `entry_id=wne_{ulid}`, stable across revisions. The versioned scope envelope binds either its exact Project or application scope with `project_id=null`, actual Server/Computer and parent thread/Crew identity. Existing five kinds and their restricted recipients remain:
 
 | Scope kind | Binding (existing identity) | Default exposure |
 |---|---|---|
-| `thread` | project_id + thread_id (`thr_{ulid}`, Plans/assistant-chat-design.md) | The thread's Assistant and the authorized user; not other threads. |
+| `thread` | exact place + thread_id (`thr_{ulid}`), actual owning Computer; Project optional only for the admitted app form | That thread's Assistant and authorized user, never other app threads. |
 | `worker_lineage` | project_id + node/attempt lineage (run_id/node_id/attempt_id per Plans/Executor_Protocol.md) | The relevant worker and authorized recovery paths; not unrelated workers. |
-| `coordinator_run` | project_id + coordinating run/package identity | Authorized coordinating and recovery actors. |
+| `coordinator_run` | exact place + admitted coordinating run identity; a Project package exists only when actually bound | Authorized coordinating and recovery actors. |
 | `participant` | collaboration_run_id + participant_slot_id (Plans/Collaborative_Workflows.md) | That participant under current protocol; blind-phase restrictions apply. |
 | `shared_slice` | collaboration_run_id + explicit recipient/phase policy | Only the permitted roster/phase; no ambient cross-agent access. |
 
@@ -802,11 +849,11 @@ A copy or export receives destination-owned identity with restricted lineage; so
 
 ### Entry envelope
 
-Strict schema: `Plans/working_notebook_contracts.schema.json` (`$defs.working_notebook_entry_record`). Required envelope fields: `schema_id`, `notebook_id`, `entry_id`, `project_id`, `scope` (kind + binding refs), `revision` (monotonic integer + `revision_cas`), `author` (kind `user|agent|system` + actor ref), `created_at_utc`, `updated_at_utc`, `lifecycle` (`active|superseded|archived|tombstoned`), `epistemic_kind` (`hypothesis|observation|rejected_approach|reference|continuation|user_note`), `freshness` (`current|needs_revalidation|source_unavailable`), `body` (bounded UTF-8, at most 16 KiB inline), `payload_ref?` (content-addressed BLAKE3 payload-store reference, required when the body exceeds 16 KiB; the inline body is then a bounded excerpt or empty), `body_sha256`, `provenance_refs[]` (existing message/artifact/tool-result/commit/Plan/Goal/workflow identities), `validity_refs[]`, `restriction_refs[]` (effective restrictions inherited from sources), `supersedes_entry_revision?`. Revision mutations carry `request_id` (idempotency identity), `expected_revision`, `actor`, `policy_generation`, `operation`, and a typed outcome.
+Project forms remain exact; F adds the separately versioned WN-021 app envelope and matching checkpoint/operation schemas with explicit place/Computer/thread joins. Strict schema: `Plans/working_notebook_contracts.schema.json` (`$defs.working_notebook_entry_record`). Required envelope fields: `schema_id`, `notebook_id`, `entry_id`, `project_id`, `scope` (kind + binding refs), `revision` (monotonic integer + `revision_cas`), `author` (kind `user|agent|system` + actor ref), `created_at_utc`, `updated_at_utc`, `lifecycle` (`active|superseded|archived|tombstoned`), `epistemic_kind` (`hypothesis|observation|rejected_approach|reference|continuation|user_note`), `freshness` (`current|needs_revalidation|source_unavailable`), `body` (bounded UTF-8, at most 16 KiB inline), `payload_ref?` (content-addressed BLAKE3 payload-store reference, required when the body exceeds 16 KiB; the inline body is then a bounded excerpt or empty), `body_sha256`, `provenance_refs[]` (existing message/artifact/tool-result/commit/Plan/Goal/workflow identities), `validity_refs[]`, `restriction_refs[]` (effective restrictions inherited from sources), `supersedes_entry_revision?`. Revision mutations carry `request_id` (idempotency identity), `expected_revision`, `actor`, `policy_generation`, `operation`, and a typed outcome.
 
 ### Resume capsule and checkpoint
 
-`ResumeCapsule`: `notebook_id`, `scope`, `source_revisions[]`, `current_position`, `unresolved_issues[]`, `suggested_next_inspection`, `selected_refs[]`, `estimated_tokens`, `body_bytes`; bounds: at most 512 estimated tokens AND 2 KiB UTF-8 before admission. `notebook_checkpoint_record`: `checkpoint_id` (`nbc_{ulid}`), `notebook_id`, `project_id`, `required_entry_revisions[]`, `capsule_sha256`, `workflow_checkpoint_refs[]`, `source_visibility_generation`, `policy_generation`, `stop_epoch_observed`, `commit_receipt_ref`, `sequence`, `state` (`preparing|committed|failed|superseded`). The commit protocol (one data sync per commit group with the durable watermark inside the segment, manifest synced only at creation, rotation and structural change; read-after-commit) is owned by `Plans/storage-plan.md` (SP-336); this owner fixes required content. A notebook_checkpoint commit that gates a transition is a barrier-class event and takes a full flush. Amended 2026-10-31 (DL-270): SP-336; entry body limits: SP-337 (16 KiB inline, store-once payloads), SP-340 (16 KiB redb value cap).
+The WN-021 app variant carries the same exact scope and writer refs through capsule, checkpoint and every read/write/backup edge. Original Project schemas remain unchanged. `ResumeCapsule`: `notebook_id`, `scope`, `source_revisions[]`, `current_position`, `unresolved_issues[]`, `suggested_next_inspection`, `selected_refs[]`, `estimated_tokens`, `body_bytes`; bounds: at most 512 estimated tokens AND 2 KiB UTF-8 before admission. `notebook_checkpoint_record`: `checkpoint_id` (`nbc_{ulid}`), `notebook_id`, `project_id`, `required_entry_revisions[]`, `capsule_sha256`, `workflow_checkpoint_refs[]`, `source_visibility_generation`, `policy_generation`, `stop_epoch_observed`, `commit_receipt_ref`, `sequence`, `state` (`preparing|committed|failed|superseded`). The commit protocol (one data sync per commit group with the durable watermark inside the segment, manifest synced only at creation, rotation and structural change; read-after-commit) is owned by `Plans/storage-plan.md` (SP-336); this owner fixes required content. A notebook_checkpoint commit that gates a transition is a barrier-class event and takes a full flush. Amended 2026-10-31 (DL-270): SP-336; entry body limits: SP-337 (16 KiB inline, store-once payloads), SP-340 (16 KiB redb value cap).
 
 ### Tool surface
 
@@ -822,7 +869,7 @@ The following durable event families are specified as candidates with planned pa
 
 | Planned event_type | Payload minima | Disposition |
 |---|---|---|
-| `notebook.entry_committed` | notebook_id, entry_id, revision, project_id, scope kind | candidate_not_registered |
+| `notebook.entry_committed` | notebook_id, entry_id, revision, explicit place/nullable project_id, actual Computer/thread, scope kind (candidate only) | candidate_not_registered |
 | `notebook.entry_superseded` | notebook_id, entry_id, old/new revisions, actor | candidate_not_registered |
 | `notebook.checkpoint_committed` | checkpoint_id, notebook_id, required revisions hash, commit receipt ref | candidate_not_registered |
 | `notebook.checkpoint_failed` | checkpoint_id, typed failure reason | candidate_not_registered |
@@ -878,3 +925,104 @@ ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Plan_Doc
 Source lineage for this owner is the approved user direction handed off through packet `PM-WNC-2026-09-05-v1` (work item `wnc-20260905`); requirement IDs `WNC-*` are packet source IDs, not production identifiers. Implementation evidence, coverage records, and validation logs live under `Plans/.audits/wnc-20260905/implementation/` and are process artifacts, not canonical product evidence. Governance seal (shards, evidence, plan index, Spec Lock) is a separate phase per `Plans/Decision_Policy.md` after canonical inputs stabilize. Engineering defaults recorded in Section 3 are packet-authored resolutions within the approved scope; hard authority boundaries were not changed by tuning decisions.
 
 ContractRef: ContractName:Plans/Working_Notebook.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Plan_Document_System.md
+
+### WN-021 - App Scratch Notebook And Fenced Project Conversion
+
+```yaml
+plan_unit_id: WN-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Working_Notebook.md
+canonical_text: A notebook binds place plus thread or its existing worker_lineage/coordinator_run/participant/shared_slice
+  identities. No project uses genuine application scope, project_id=null with actual Server/Computer/thread
+  identity in the app writer's custody; it has no Project Vault or Project Home Server identity. Thread
+  scratch is lazy, private to that thread and its authorized Assistant/user. An admitted app Crew may
+  use only its explicit participant/shared_slice policy, never another thread's scratch. Existing five
+  scope kinds, host-filled metadata, entry/revision CAS, idempotency, source restrictions, 16 KiB inline/64
+  KiB request limits, payload-store spills, capsule and checkpoint budgets, retention/holds and event-candidate
+  dispositions remain. No projects.* read grant exposes notebook content; cross-Project sharing still
+  requires the existing explicit restricted import. Both conversion choices include exact entry revisions/checkpoint/payload
+  refs and target Vault in the manifest. PSB fencing settles or pauses writers, verifies source/destination,
+  copies/checks content, then completes the fenced cutover of the live association; partial cross-Computer
+  transfer stays paused/unlisted with Resume/Cancel. Destination identities retain source lineage/restrictions
+  and fresh authority. The sealed source serves only eligible move Undo and independent owner holds; it
+  cannot stay writable or restart. Conversion expiry does not delete canonical retained checkpoints or
+  shared payloads still referenced by their owners. Settings only resolves behavior preferences, never
+  notebook bodies or authority. CV-366 selects Plans/application_workflow_contracts.schema.json roots
+  WorkingNotebookApplicationV1, WorkingNotebookEntryApplicationV1 and WorkingNotebookCheckpointApplicationV1,
+  with OriginalNotebookMutationSource in Plans/application_workflow_sources.schema.json and the complete
+  Plans/application_workflow_source_graph.json adoption map. SP-349 alone owns working_notebook_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)},
+  working_notebook_entry_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)}:{hex(entry_id)}
+  and notebook_checkpoint_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(notebook_id)}:{hex(checkpoint_id)}.
+  Logical editions use .application.v1 version 1.0.0; proposed notebook v2:app keys are not aliases. Exact
+  Project sources/codecs remain unchanged. Native writer, source, checkpoint, retained payload and coherent
+  Full Server Backup joins must all be admitted before application mutation; absent registration stays
+  unavailable.
+gui_related: true
+gui_classification_reason: Owns user-visible manager, activity or control behavior.
+depends_on:
+- WN-004
+- WN-005
+- WN-007
+- WN-010
+- WN-014
+- WN-017
+- WN-018
+- PSB-007
+- CV-366
+- SP-349
+unblocks: []
+acceptance_criteria:
+- A talk-only trivial app chat produces no empty notebook or fake usage call.
+- App and Project notebooks cannot cross thread/place/participant visibility by opaque ID, derived summary
+  or projects.*.
+- Conversion, interruption, retry and Undo maintain one live writer and exact revision/payload/restriction
+  lineage; current holds outlive Undo.
+validation_surfaces:
+- Phase 2 F companion/schema and semantic fixtures (not run in phase 1).
+- Post-landing owner/command/wiring/touch reconciliation; native runtime and GUI evidence remain required.
+risk_class: scope_authority_or_custody_drift
+reasoning_tier: high
+context_scope: project_and_application_scope
+implementation_surfaces:
+- Plans/Working_Notebook.md
+- Plans/settings_system_contracts.schema.json
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-b; N12/N24/N25/N26
+- /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#5;7.12
+- 'Jared, 2026-11-03: "I approve the outstanding questions with their recommended settings."'
+- 'Jared, 2026-11-03: "Those look good, except goals and crew should be allowed in no project."'
+- 'Jared, 2026-11-03: "Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t."'
+- projects-refresh-20261030/pass2/plans-edit-requests/A-requests.md#A-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/D-requests.md#D-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-B01
+- projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-B01
+preserved_exact_tokens:
+- place plus thread
+- project_id=null
+- thread
+- worker_lineage
+- coordinator_run
+- participant
+- shared_slice
+- 16 KiB
+- 64 KiB
+negative_constraints:
+- Do not fabricate a Project Vault, a sixth notebook kind, an ambient shared scratch notebook or a provider-private
+  notebook store.
+- Do not interpret copied note text as verification, authorization or relaxed recipient access.
+- Do not infer an implemented handler, admitted event writer, native verification, WorkNode, NodeSeed
+  or governance clearance from this accepted contract.
+owner_hints:
+- Plans/Working_Notebook.md
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Working_Notebook.md#WN-021, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Contracts_V0.md#CV-365
