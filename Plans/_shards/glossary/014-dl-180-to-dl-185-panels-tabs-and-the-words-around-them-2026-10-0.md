@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L2194-L2690
+Source lines: L2194-L2685
 
-Source SHA256: `aaa7882123426666a9ae44cdab9761ed3715efaf857e59f964a31cb7e8492b61`
+Source SHA256: `ffdbb0c4c8fff711775c827f315e7a474fc12cdd7fced4e34b2521c2ca5213b4`
 
 ---
 
@@ -357,11 +357,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-061
-- Plans/Settings_System.md#SSYS-063
-- Plans/Server_System.md#SRV-016
-- Plans/Project_System.md#PJCT-011
+- Plans/Settings_System.md
+- Plans/Server_System.md
+- Plans/Project_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -422,10 +420,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -478,10 +475,8 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/Permissions_System.md#PS-146
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/Run_Modes.md#RM-053
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

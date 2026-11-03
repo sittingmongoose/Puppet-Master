@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1732-L1969
+Source lines: L1732-L1967
 
-Source SHA256: `c22fa261c6871094e282b9e6be4a42d4419bcdf31c95ac1b6a6aad89e3971c3c`
+Source SHA256: `8b49cd774649939f9dca6f40cc75f8fd90f485e136697c78ecdf311c0f56c12b`
 
 ---
 
@@ -218,11 +218,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Widget_System.md
-- Plans/storage-plan.md#SP-349
-- Plans/FinalGUISpec.md#F3-630
-- Plans/FinalGUISpec.md#F3-638
-- Plans/Widget_System.md#WS-030
-- Plans/usage-feature.md#UF-062
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+- Plans/usage-feature.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

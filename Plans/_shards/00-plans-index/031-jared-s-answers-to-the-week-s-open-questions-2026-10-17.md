@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L6245-L6328
 
-Source SHA256: `43574393aa5fba0f14ef58aa244d168ce7af634b201fe408f7fa286c55a98c8a`
+Source SHA256: `07eb6191df0e1330a806aae38f3763eeb348839e8e108a5209429d81dabe8245`
 
 ---
 
@@ -54,15 +54,15 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/00-plans-index.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
-- Plans/Project_System.md#PJCT-009
-- Plans/Permissions_System.md#PS-147
-- Plans/Contracts_V0.md#CV-365
-- Plans/storage-plan.md#SP-348
+- Plans/Settings_System.md
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Project_System.md
+- Plans/Permissions_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

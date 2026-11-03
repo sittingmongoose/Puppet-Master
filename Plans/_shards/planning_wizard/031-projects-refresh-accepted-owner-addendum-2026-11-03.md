@@ -4,7 +4,7 @@ Source: `Plans/Planning_Wizard.md`
 
 Source lines: L3927-L4061
 
-Source SHA256: `7578becdd2f6be0c7aca52532f04b6d53d6e1bdfceadd11461d48312638d4439`
+Source SHA256: `1673bcaf914022ab37b9867009b0a76435d4bdb3f41ecbec595e56ad1353c026`
 
 ---
 
@@ -73,7 +73,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pwiz_037
 implementation_surfaces:
 - Plans/Planning_Wizard.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
