@@ -32,12 +32,12 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 
 - HITL approvals should be represented as explicit **events** in the unified event model (seglog ledger)
 - "Pause for approval" must be reproducible/replayable (event stream + projections), not just an in-memory UI state
-- UI can change (Slint rewrite), but blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval requirements must not
+- UI can change while owner approval identities remain: package/seam gates keep their settings; side effects use PS-146/147/148 actual human/mode/grant authority. Protected decisions remain human, and ordinary YOLO publication never acquires a duplicate yes.
 
 ### Canonical HITL request contract
 
 
-The canonical human-in-the-loop contract remains a blocked-runtime overlay.
+Orchestrator node HITL remains the existing blocked-runtime overlay below. Application chat/Goal/Crew/Plan/scheduled tool decisions use the separately typed PS-145 thread/run/Computer/request/target envelope through the same host. Grant issuance uses PS-147 exact Project/Plan/build identity. HITL-038 distinguishes human, mode and prior-grant authority; do not null required node fields in the historical Orchestrator shape.
 
 Required runtime-facing fields are:
 - `run_id`
@@ -58,7 +58,7 @@ Rules:
 ### Shared-runtime HITL request and command alignment
 HITL is the approval consumer for shared-runtime, multi-lane execution. Assistant chat, validation-pass output, wizard-handoff payloads, DAE side-effect interception, and tool-event records must preserve `effective_account_id`, `requested_account`, `requested_account_id`, `execution_role`, permission posture, actor identity, lane identity, and `attempt_id` so a later reviewer can tell who asked, who approved, under which `/account/role`, on which `/package/lane/attempt`, and whether an `/always` policy was scoped safely. Any rewrite-alignment or post-hoc explanation that omits these fields is under-attributed and lane-unsafe.
 
-Runtime HITL persistence is keyed by blocked episode identity first. `checkpoints.hitl.{run_id}` and `checkpoints.hitl` are compatibility paths only; `/runtime/storage` records must distinguish concurrent pending-HITL episodes in the same run by `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `approval_scope_key`, actor/account/lane context, and approver identity. The event family must support a three-way join among the blocked episode, approval-identity record, and tool-level or /tool-definition request that triggered the wait.
+Orchestrator node HITL persistence is keyed by its blocked episode first. Application tool approvals have the PS-145 typed owner request identity through the shared host; no synthetic node/Project or second approval engine. `checkpoints.hitl.{run_id}` and `checkpoints.hitl` are compatibility paths only; `/runtime/storage` records must distinguish concurrent pending-HITL episodes in the same run by `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `approval_scope_key`, actor/account/lane context, and approver identity. The event family must support a three-way join among the blocked episode, approval-identity record, and tool-level or /tool-definition request that triggered the wait.
 
 The request-era contract remains documented only as a compatibility bridge. A historical `HITLRequest` with `request_id`, `tier_id`, `tier_type`, `request_kind = tier_boundary_approval`, `request_kind`, `allowed_actions`, `allowed_actions[]`, `/tier/request_kind/allowed_actions`, and `hitl.approval_requested` is subordinate to the runtime blocked episode. `allowed_action_ids[]` owns the active action order; any request-era `allowed_actions` array is a derived alias for old consumers and must not become a second action family.
 
@@ -118,7 +118,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storag
 
 Scope rules:
 - the front-door grant may cover repeated low-risk evidence reads and declared-scope temporary instrumentation actions only
-- high-risk mutations, auth/state mutation, publish-side effects, and other explicit-confirmation actions still require their own confirmations
+- A Debug front-door grant never itself approves high-risk/auth/publication effects. Those use PS-146 mode or PS-147 build authority where applicable and PS-148 retained person/target guards, without a repeated ordinary YOLO publication yes.
 - target binding falls back to `agent_session` only when the request is explicitly about PM's own run or `/session` behavior, or when no project-backed target is available
 - revoking the grant or finishing the investigation revokes the front-door scope as well
 
@@ -243,7 +243,7 @@ When the orchestrator is paused for HITL, the **Dashboard** must surface this as
 ContractRef: ContractName:Plans/assistant-chat-design.md
 
 - **Dashboard role:** The Dashboard shows **warnings** and **Calls to Action** that need or benefit from user attention. HITL approval is one such CtA: e.g. "Phase X complete -- approval required to continue" or "Task Y done -- approve to proceed."
-- **Addressable via Assistant:** These CtAs (including HITL prompts) can be **answered or addressed by the chat Assistant**. The user may:
+- **Addressable via Assistant:** The person may answer the exact current approval through an authenticated protected control hosted in chat. An agent may prepare a preview/summary but cannot issue/accept/confirm its own retained approval, build grant, source-loosening acceptance or durable Always. The user may:
   - Open the Assistant and respond there (e.g. "approve and continue," or ask for a summary before approving). The Assistant is the place where the user is prompted to interact with HITL when the Dashboard shows the CtA.
   - Or use a direct control on the Dashboard (e.g. "Approve & continue" button) if provided.
 - **Single concept:** Warnings/CtAs live on the Dashboard; the Assistant is one way to address them. So HITL prompts appear as Dashboard CtAs and are explicitly addressable via the Assistant. See **Plans/assistant-chat-design.md** for Dashboard warnings/CtAs and Assistant integration.
@@ -590,16 +590,21 @@ plan_unit_id: HITL-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: HITL is the approval consumer for shared-runtime multi-lane execution and must preserve effective_account_id, requested account fields, execution_role, permission posture, actor identity, lane identity, attempt_id, account/role, package/lane/attempt, and safely scoped always policy so later review can attribute who asked and who approved.
+canonical_text: The shared approval host preserves actual scope, thread/run/Computer/actor/account/attempt
+  and present lane/package identities. It renders actual human decisions, Permissions mode authority and previously
+  human-approved build grants distinctly under HITL-038. Missing Orchestrator node identity is not fabricated
+  for application tool approvals; receiving messages never answer protected approvals or impersonate a person.
 gui_related: false
 gui_classification_reason: This unit defines attribution and provenance fields, not GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-005 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -614,6 +619,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0010
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - shared-runtime
 - multi-lane execution
@@ -633,12 +642,14 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-006 - Blocked-Episode Persistence And Approval Identity Join
@@ -648,16 +659,23 @@ plan_unit_id: HITL-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Runtime HITL persistence is keyed by blocked episode identity first; checkpoints.hitl.{run_id} and checkpoints.hitl are compatibility paths only, and runtime storage must distinguish concurrent pending HITL episodes by run_id, node_id, blocked_sequence, optional attempt_id, approval_scope_key, actor/account/lane context, and approver identity while supporting a three-way join among the blocked episode, approval identity record, and triggering tool request.
+canonical_text: Orchestrator node HITL persistence remains keyed by run_id/node_id/blocked_sequence plus current
+  attempt, approval scope, actor/account/lane and actual approver, with its three-way tool-request join and
+  existing compatibility paths. Ordinary application chat/Goal/Crew/Plan/scheduled tool approval is the distinct
+  typed Permissions approval contract in PS-145/HITL-038, using real thread/run/Computer/target and request
+  identity, never nullable-node surgery on the historical Orchestrator codec.
 gui_related: false
 gui_classification_reason: This unit defines persistence and join semantics, not GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
+- PS-145
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-006 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -672,6 +690,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0010
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/Q11/N21/N22 reversals
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 preserved_exact_tokens:
 - checkpoints.hitl.{run_id}
 - checkpoints.hitl
@@ -689,12 +710,14 @@ compatibility_only_notes:
 - checkpoints.hitl.{run_id} and checkpoints.hitl are compatibility paths only.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-007 - Request-Era Compatibility Bridge And Axis Separation
@@ -1177,16 +1200,22 @@ plan_unit_id: HITL-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Tier boundaries are not a co-equal execution model; approvals do not bind to tier_id, surviving tier or phase labels are derived grouping/view concepts only, and approval and recovery bind to blocked runtime episodes anchored by run_id, node_id, blocked_sequence, and optional attempt_id.
+canonical_text: Tier/phase labels remain display groupings. Orchestrator node approvals bind the existing run_id/node_id/blocked_sequence/current
+  attempt contract. Application tool decisions instead use the PS-145 thread/run/Computer request envelope
+  through the same host, while build-grant issuance binds exact Project/Plan/build/currentness in PS-147. Neither
+  creates a competing tier approval model.
 gui_related: true
-gui_classification_reason: This unit governs displayed phase/task/subtask grouping labels and their non-authority over runtime scope.
+gui_classification_reason: This unit governs displayed phase/task/subtask grouping labels and their non-authority
+  over runtime scope.
 split_recommended: false
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-015 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1201,6 +1230,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0015
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - Derived Grouping Boundaries (DRY)
 - Tier boundaries
@@ -1215,7 +1248,8 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
@@ -1728,16 +1762,22 @@ plan_unit_id: HITL-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: Legacy tier-era runtime context, identifier, type, collection labels, and Phase-Task-Subtask wording are retired compatibility-only display/grouping aliases that must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state; canonical blocked-episode identity is run_id plus node_id plus blocked_sequence and owns lookup, replay, restart recovery, audit joins, and resolver routing.
+canonical_text: Legacy tier-era aliases remain retired for runtime payloads, keys, events and recovery. Orchestrator
+  node approval uses its existing blocked episode; application chat-tool approval uses PS-145 real scope/thread/run/Computer/request
+  identity without invented nodes. The shared approval host and canonical action semantics remain single; mode/grant
+  receipts are provenance, not a new human approval transport.
 gui_related: false
-gui_classification_reason: This unit defines runtime payload identity and retired compatibility vocabulary rather than GUI presentation.
+gui_classification_reason: This unit defines runtime payload identity and retired compatibility vocabulary
+  rather than GUI presentation.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-025 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1752,6 +1792,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0029
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 preserved_exact_tokens:
 - Tier-era compatibility retirement
 - legacy tier-era runtime canon
@@ -1766,15 +1810,18 @@ preserved_exact_tokens:
 - audit joins
 - resolver routing
 negative_constraints:
-- Legacy tier-era labels must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state.
+- Legacy tier-era labels must not appear in runtime-owned blocked payloads, approval events, persistence records,
+  cache keys, or recovery state.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The legacy tier-era runtime canon is retired.
 owner_boundary_notes:
-- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep
+  their own SSOT boundaries.
 owner_hints:
 - Plans/human-in-the-loop.md
-split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage
+  preserves exact source provenance without inventing subspans.
 ```
 
 ### HITL-026 - Blocked Classification, Action Enumeration, And Approval Outcome Identity
@@ -2227,16 +2274,22 @@ plan_unit_id: HITL-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu; approval choices are deny, once, for session, and always, batch web review may present one domain-grouped approval surface, question defaults to allow only when HITL is available and otherwise remains ask-gated, and HITL surfaces do not create a competing approval vocabulary.
+canonical_text: HITL consumes deny/once/for session/always without inventing local choices. Durable Always
+  requires explicit non-preselected admissible scope under PS-144; mode/grant automation creates no durable
+  rule. Batch/domain and question semantics remain owner-routed. Approval control producers act only on actual
+  current human decisions, not on ordinary YOLO publication already admitted by PS-146.
 gui_related: true
-gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts, terminal blocked-state handling, or approval labels.
+gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts,
+  terminal blocked-state handling, or approval labels.
 split_recommended: true
-depends_on: []
+depends_on:
+- HITL-038
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - This behavior is addressable through HITL-034 instead of broad HITL-001 source-preserving coverage.
-- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions,
+  owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2251,6 +2304,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0044
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S16/Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
 - Shared approval-ladder alignment (2026-04-04)
 - HITL-specific affordances
@@ -2275,12 +2331,15 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/human-in-the-loop.md owns HITL consumer alignment only.
-- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission behavior.
+- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission
+  behavior.
 owner_hints:
 - Plans/human-in-the-loop.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
-split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing subspans.
+split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block
+  consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing
+  subspans.
 ```
 
 ### HITL-035 - Ask-Flow And Terminal Block Consumer Alignment
@@ -2472,16 +2531,41 @@ plan_unit_id: HITL-037
 unit_type: requirement
 status: accepted
 owner_doc: Plans/human-in-the-loop.md
-canonical_text: 'The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity. Security, data destruction, billing, migration, legal/compliance, irreversible external effects, or similarly high-risk decisions may require explicit user confirmation under HITL policy. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, and reopen conditions. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent
-  install. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason, risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance, destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable user preference conflicts may block for user decision.'
+canonical_text: The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded
+  assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk
+  acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity. Security, data
+  destruction, billing, migration, legal/compliance, irreversible external effects, or similarly high-risk
+  decisions may require explicit user confirmation under HITL policy. Disabling or restricting automated testing
+  requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits,
+  WorkNodes, capability classes, reasons, risks, and reopen conditions. Global or privileged installation,
+  paid services, license acceptance, account creation, credential use, device enrollment, or material external
+  effects require applicable authority and may become a typed blocker rather than an unsafe silent install.
+  The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span,
+  reason, risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission
+  to leave TODOs is invalid. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile,
+  defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential,
+  or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance,
+  destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable
+  user preference conflicts may block for user decision. Existing applicable authority includes the exact PS-146
+  YOLO publication/Y1 ruling and PS-147 approved build grant; this general risk list must not re-prompt for
+  their covered actions. Grant issuance/expansion, paid signup, protected secrets/auth/trust and any unowned
+  or unlisted risky effect still require their own person decision under HITL-038. A named pre-existing resource
+  does not become deletion authority.
 gui_related: false
-gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
-depends_on: []
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual
+  presentation.
+depends_on:
+- HITL-038
+- PS-146
+- PS-147
 unblocks: []
 acceptance_criteria:
-- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
-- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
-- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical
+  product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits
+  through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts,
+  or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -2511,6 +2595,10 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
 - Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
 source_atom_ids:
 - atom-0053
 - atom-0062
@@ -2598,3 +2686,117 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 295` (explicitly_deferred; source line 1022; `sfk-ea3ced32a2d07a9cb2ebcf07`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] L4-16,37-91: "Provider-native correlation" and "Canonical HITL request contract" headings are either empty or list fields with no types/wire format/enum enumeration.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+### HITL-038 - Human Decisions, Mode Authority And Approved Build Grants
+
+```yaml
+plan_unit_id: HITL-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'The existing approval host renders three distinct authorities from Permissions: an actual
+  human decision, task-scoped mode authority and a previously human-approved build grant. PS-146 ordinary
+  YOLO push/publication/needed repository creation and PS-147 listed build actions need no repeated human
+  publication click. Their receipts never claim the person just approved them. Optional package/seam HITL
+  choices retain their settings and existing current blocked-node contracts; full automation does not silently
+  enable or disable those owner settings.
+
+
+  Issuing/expanding a BuildGrant requires the person at the exact Plan/manifest review. The review names allowed
+  operations/targets/created-resource cleanup and exclusions, Current Plan/hash/build and grant revisions;
+  an agent can prepare it but cannot call approve/accept/confirm/issue/renew to settle its own retained approval.
+  Protected secrets/auth/sign-in, trust/claim/pairing, Recovery Kit/export, S15 repository loosening, durable
+  Always and paid signup retain explicit person choice. Always names This project/This computer/Everywhere
+  without preselection; paths never offer Everywhere. No message, mode skip or build result becomes those
+  consents.
+
+
+  The host uses the real identity variant: Orchestrator node approval stays run_id/node_id/blocked_sequence/current
+  attempt; application chat/Goal/Crew/Assistant Plan/scheduled tool approval binds scope/thread/run/Computer/request/tool/target
+  under PS-145. This is one host and permission ladder with separate typed envelopes, not nullable required
+  node fields, synthetic nodes or an extra tier/request-era action model. Existing runtime approve/decline
+  commands gain only explicitly versioned owner-approved app request variants; no permissions-specific competing
+  approve/decline engine is minted. Build-grant approve/revoke are authority-record operations, not tool-approval
+  aliases.
+
+
+  Actual pending human decisions expose only their current canonical action set and exact target/currentness;
+  headless retained asks block honestly. Stop/revoke acts through the existing owners, prevents new effects
+  and never claims to undo completed remote work. What the build did is the shared History/work projection
+  with actual authority, outcome and safe Undo or explicitly labelled compensation/No safe Undo. Historical
+  approvals and immutable source snapshots remain inspectable after conversion and retain their owner''s audit
+  lifetime.
+
+
+  Goal objective Save/change retains user_direct|agent_proposed_user_approved and explicit Goal birth, independent
+  of ordinary YOLO tool authority. Saved Ask me first and retained schedule approvals cannot be answered by
+  agents or cleared by changing visible mode. SQR-019/020 owns authenticated user-only app pause changes and
+  its exact one-dispatch direct-user Send now/Build/resume exception; neither changes stored pause nor clears
+  task/source/destination holds. CV-365/366 and SP-353 supply exact app authority/source custody, independent
+  audit/backup/retention and historical restored evidence; current Settings, client claims or a copied grant
+  never become an actual human decision.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
+  user-visible.
+depends_on:
+- PS-144
+- PS-145
+- PS-146
+- PS-147
+- PS-148
+unblocks: []
+acceptance_criteria:
+- Mode/grant-authorized remote operations show truthful provenance and no duplicate human prompt.
+- Only a real current person action can issue/expand a grant, accept S15 loosening or create Always; agent
+  self-resolution fails.
+- App and Project blocked approvals use their correct typed identities and share canonical action semantics.
+- Headless retained ask, missing disclosure, Stop and stale decision all refuse without invented approval.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S15/S16/Y1/O1–O3; Q11/N21/N22
+  reversals
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D05
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-D01
+preserved_exact_tokens:
+- BuildGrant
+- This project
+- This computer
+- Everywhere
+- run_id/node_id/blocked_sequence
+- What the build did
+- No safe Undo
+- user_direct|agent_proposed_user_approved
+- Ask me first
+negative_constraints:
+- No forged approver, agent self-approval, hidden Always or blanket build authority.
+- No app node fabrication or weakening historical Orchestrator approval codecs.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/human-in-the-loop.md
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020

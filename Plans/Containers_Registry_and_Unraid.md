@@ -68,7 +68,7 @@ The existing `Containers & Registry` settings area remains the primary configura
   - repository selector/discovery
   - refresh repositories action
   - create repository action
-  - create-repository toggle in settings-level configuration, kept distinct from the mandatory confirmation used when creation becomes a remote side effect
+  - create-repository setting is a default only; actual effect uses Regular protected confirmation or PS-146/147 mode/build authority at the same writer
   - repository privacy control for creation flow
   - tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)
   - push policy (`manual` default; optional `after_build`)
@@ -122,7 +122,7 @@ Surface rules:
 - Kubernetes is a Docker Manager subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.
 - Unraid is integrated under `Publish / Unraid`; it does not require a separate top-level panel.
 - Docker Hub is one registry/provider capability inside Docker Manager, and Docker Manager must not split build, bake, compose, run, inspect, logs, publish, pull, `Registries / Docker Hub`, or `Publishing / Unraid` into unrelated mini-surfaces.
-- Docker Manager is a first-class side-panel surface, not only Settings > Advanced. Its canonical surface includes settings-level DockerHub actions such as the create-repository toggle and `/clear` auth recovery, while remote repository creation still requires the separate protected confirmation flow.
+- Docker Manager retains its first-class panel and Settings routes, create-repository default and /clear auth recovery. Remote creation uses the same owner effect with Regular confirmation or typed PS-146 YOLO/PS-147 grant authority, never duplicate publication prompts.
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Permissions_System.md
 
@@ -368,33 +368,20 @@ DockerHub API behavior must be documented clearly:
 - do not conflate image registry push with template distribution
 
 ### Missing repository behavior
-If the selected DockerHub repository does not exist:
-- Puppet Master may offer to create it automatically as part of first-push preparation
-- the creation step must be explicit and visible
-- the confirmation step must show:
-  - namespace
-  - repository name
-  - privacy
-- the confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting
+
+If the selected repository is missing, creation is a separate explicit visible effect naming namespace/repository/privacy and private default. It must be needed by the task or exactly selected in the current PS-147 grant.
 
 #### Repository creation confirmation flow
 
+`cmd.docker.create_repository` validates/preflights at its existing owner. In Regular, an unsatisfied create decision emits docker.repository.create.confirmation_requested and uses existing .confirm/.cancel human controls. In task YOLO or an exact approved build grant, typed current authority invokes the same domain creation writer directly and records actual mode/grant provenance; no fake click or model-call to .confirm resolves a protected human wait. No confirmation_requested is emitted unless waiting for a real person. Capability/auth/current target and private-by-default disclosure still apply.
 
-Repository creation is a two-step flow:
-
-1. `cmd.docker.create_repository` validates the proposed namespace/repository/privacy tuple and emits `docker.repository.create.confirmation_requested`.
-2. The confirmation modal shows namespace, repository name, privacy, and the private-by-default notice.
-3. Confirm dispatches `cmd.docker.create_repository.confirm`.
-4. Cancel dispatches `cmd.docker.create_repository.cancel`.
-
-This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
-
+Image-push and repository-create are separately evaluated effects. Regular Push image does not by itself approve a missing create. YOLO/grant authority may admit each needed effect without another human click, under CRAU-104/PS-146/147/148.
 ### Default repository privacy
 
 
 - default privacy for newly created repositories: private
-- the confirmation dialog must make this default explicit
-- the user may change privacy in the dialog before creation
+- the preview/result and any actual human confirmation make the private default explicit
+- the user may change privacy before creation through the reviewed target; task/grant execution cannot silently substitute destination or visibility
 
 ## Build, run, preview, and publish flow
 
@@ -479,8 +466,8 @@ Normative rules:
 - `push_policy = after_build` means Puppet Master automatically dispatches `cmd.orchestrator.push_image` **after** a successful local build result exists; it does **not** fold remote publish into `build_run`.
 - A direct user click on **Build** approves build only.
 - A direct user click on **Push image** approves image push only.
-- If the target DockerHub repository is missing, repository creation remains a separate side effect and requires its own confirmation/approval.
-- If managed Unraid template-repo push is later requested, that remote push is a separate side effect and requires its own approval.
+- Missing repository creation remains a separate admitted effect with Regular confirmation or exact PS-146/147 authority, without another ordinary YOLO yes.
+- Managed Unraid template push is a separate requested effect with its own target/receipt and Regular or PS-146/147 authority; it never creates a duplicate ordinary YOLO confirmation.
 - `docker.publish.failed` means Puppet Master attempted the publish operation and the operation failed at runtime.
 - `docker.publish.blocked` means Puppet Master intentionally did not execute the remote side effect because confirmation or permission approval was missing, rejected, or cancelled.
 
@@ -488,15 +475,11 @@ Normative rules:
 
 If `cmd.orchestrator.push_image` resolves a missing target repository:
 
-1. Puppet Master MUST preserve the local build result and enter `awaiting_repo_creation_confirmation`.
-2. Puppet Master MUST emit `docker.repository.create.confirmation_requested`.
-3. Confirming creation dispatches `cmd.docker.create_repository.confirm`.
-4. On successful repository creation, Puppet Master resumes the pending `cmd.orchestrator.push_image` attempt without forcing a rebuild.
-5. If repository creation is cancelled, rejected, or blocked by policy, Puppet Master MUST emit `docker.publish.blocked` with:
-   - `reason_code: repo_creation_not_confirmed`
-   - `blocked_step: create_repository`
-   - `allowed_action_ids[]`
-6. `docker.publish.blocked` MUST preserve the already-built local image/result so the user can retry without rebuilding.
+1. Preserve the already-built local image/result and evaluate the exact missing-repository create authority.
+2. Only an unsatisfied Regular human decision enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested; existing Confirm/Cancel remain person controls.
+3. Admitted task YOLO or current PS-147 grant calls the same domain creation writer with its true authority kind, not .confirm or human_confirmed=true.
+4. Resume the pending push without rebuild only after verified create success. Unknown remote outcomes reconcile before retry, never repeat a speculative create.
+5. Cancel/reject/policy/capability refusal emits docker.publish.blocked with the exact blocked_step, canonical reason and ordered allowed_action_ids[], preserving the local image/result. Only the actual missing human decision uses repo_creation_not_confirmed.
 
 - publish uses DockerHub-targeted image tags and namespace/repository selection
 - push policy remains `manual` by default with optional `after_build`
@@ -513,12 +496,10 @@ If `cmd.orchestrator.push_image` resolves a missing target repository:
 #### Auto-push approval and canonical publish-reference contract
 
 Approval rules:
-- `push_policy = after_build` does not grant standing approval for remote side effects.
-- Clicking **Build** approves only local build execution.
-- When a successful build reaches the auto-dispatch point, Puppet Master MUST evaluate `external_publish_side_effect` for `cmd.orchestrator.push_image`.
-- If publish approval is not satisfied at that point, Puppet Master MUST emit `docker.publish.blocked` with `blocked_step: push_image`, preserve the local build result, and surface **Push image** as the recovery CTA.
-- DockerHub repository creation and managed-template remote repo create/push remain separately approved side effects even when `push_policy = after_build` is enabled.
-
+- after_build selects timing only, and local Build approval remains local.
+- At actual publication dispatch, run PS-146/147/148 with exact image/registry/repository/namespace/currentness and actual authority.
+- Regular missing approval blocks with exact step and Push image recovery; task YOLO/grant-covered publication does not ask again.
+- Repository create and template create/push remain separate evaluated effects and receipts, not additional modals when authority already covers them.
 Canonical template source image selection:
 - If the project sets `primary_publish_tag`, use it.
 - Otherwise use the first tag emitted by the resolved tag-template list.
@@ -933,7 +914,7 @@ For orchestrator-linked rows, badges, receipts, disabled controls, and GUI help-
 - Blocked payload normalization treats legacy `reason_code` and `recovery_options[]` as compatibility inputs while runtime-facing blocked payloads use canonical `blocked_reason_code`, `allowed_action_ids`, and `allowed_action_ids[]`.
 
 ## Safety and constraints
-- repository creation confirmation is mandatory and non-bypassable
+- repository creation uses Regular protected confirmation or typed PS-146/147 mode/build authority; protected auth/secrets/trust/target gates still apply
 - secrets must not be written to redb, project files, YAML, or evidence
 - publish/template-repo flows must redact secrets in logs/evidence
 - docs must distinguish DockerHub image distribution from Unraid template distribution
@@ -951,7 +932,7 @@ The first-class scope above does **not** require initial automation for:
 - The GUI exposes both browser login and PAT entry, with PAT-recommended helper text and clear guidance.
 - The GUI shows requested auth mode and effective capability separately.
 - DockerHub namespace and repository discovery works from supported auth inputs.
-- Missing DockerHub repo creation is guarded by a mandatory non-bypassable confirmation showing namespace, repo name, and privacy.
+- Missing DockerHub repository create shows namespace/repo/privacy and private default; Regular actual human confirm and YOLO/grant authority use the same writer with distinct truthful receipts and no duplicate ordinary yes.
 - New repository creation defaults to private.
 - Puppet Master can build and run project containers for testing and provide user-openable access points when available.
 - Docker publish results surface digest/tag/registry info without leaking credentials.
@@ -1161,58 +1142,75 @@ plan_unit_id: CRAU-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  Containers & Registry settings expose DockerHub browser-login, PAT entry with
-  PAT-recommended helper/link text, stored-auth status, account/namespace
-  summary, validation and clear/remove credential actions, validate and /clear
-  auth actions, requested auth mode versus effective capability display,
-  namespace/repository discovery, refresh, create repository action, a
-  settings-level create-repository toggle distinct from mandatory remote
-  confirmation, repository privacy, tag template defaults, and push policy.
+canonical_text: 'DockerHub settings preserve browser-login/PAT distinction, account/namespace/capability validation,
+  auth clear/recovery, discovery, create-repository setting, privacy, tag and push defaults. Enabled defaults
+  never confer effect authority: Regular uses exact-effect approval; PS-146 YOLO and PS-147 grants use the
+  same protected domain writer without repeated publication yes. Private-most visibility and partial-capability
+  disclosure remain.'
 gui_related: true
 gui_classification_reason: DockerHub auth and repository controls are visible settings and action surfaces.
 split_recommended: true
-split_recommendation_reason: Source span S0006 combines auth controls, repository controls, runtime controls, and Unraid/template profile settings.
-depends_on: [CRAU-004]
-unblocks: [CRAU-026, CRAU-029, CRAU-030, CRAU-031]
+split_recommendation_reason: Source span S0006 combines auth controls, repository controls, runtime controls,
+  and Unraid/template profile settings.
+depends_on:
+- CRAU-004
+- CRAU-104
+- PS-146
+- PS-147
+unblocks:
+- CRAU-026
+- CRAU-029
+- CRAU-030
+- CRAU-031
 acceptance_criteria:
-  - Browser-login and PAT entry controls both remain present.
-  - Helper text explicitly says PAT is recommended and links or explains how to obtain a PAT.
-  - Requested auth mode and effective capability are displayed distinctly.
-  - The settings-level create-repository toggle remains distinct from mandatory confirmation when repository creation becomes a remote side effect.
-  - Tag template defaults preserve {commit}, {version}, {timestamp}, and future canonical tag variables.
-  - Push policy preserves manual default and optional after_build.
+- Browser-login and PAT entry controls both remain present.
+- Helper text explicitly says PAT is recommended and links or explains how to obtain a PAT.
+- Requested auth mode and effective capability are displayed distinctly.
+- The settings-level create-repository toggle remains distinct from mandatory confirmation when repository
+  creation becomes a remote side effect.
+- Tag template defaults preserve {commit}, {version}, {timestamp}, and future canonical tag variables.
+- Push policy preserves manual default and optional after_build.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: auth_capability_misrepresentation
 reasoning_tier: high
 context_scope: dockerhub_auth_repository_settings
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
-  - Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Permissions_System.md
 node_compile_hint:
   mode: gui_settings_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0006
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "browser-login button"
-  - "PAT entry field"
-  - "PAT is recommended"
-  - "`/clear` auth actions"
-  - "requested auth mode vs effective capability display"
-  - "create-repository toggle"
-  - "`{commit}`"
-  - "`{version}`"
-  - "`{timestamp}`"
-  - "`manual` default"
-  - "`after_build`"
+- browser-login button
+- PAT entry field
+- PAT is recommended
+- '`/clear` auth actions'
+- requested auth mode vs effective capability display
+- create-repository toggle
+- '`{commit}`'
+- '`{version}`'
+- '`{timestamp}`'
+- '`manual` default'
+- '`after_build`'
 negative_constraints:
-  - "The settings-level create-repository toggle must not replace protected confirmation for remote repository creation."
+- A settings toggle is never remote authority or a human approval receipt.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
-  - Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Permissions_System.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Containers & Registry settings expose DockerHub browser-login, PAT entry with PAT-recommended
+  helper/link text, stored-auth status, account/namespace summary, validation and clear/remove credential actions,
+  validate and /clear auth actions, requested auth mode versus effective capability display, namespace/repository
+  discovery, refresh, create repository action, a settings-level create-repository toggle distinct from mandatory
+  remote confirmation, repository privacy, tag template defaults, and push policy.'
 ```
 
 ### CRAU-006 - Unraid Visibility And Maintainer Profile Settings
@@ -2688,63 +2686,78 @@ plan_unit_id: CRAU-031
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  Missing DockerHub repository creation is an explicit protected remote
-  side-effect flow: Puppet Master may offer creation as part of first-push
-  preparation, but the creation step must be explicit and visible, confirmation
-  must show namespace, repository name, and privacy, YOLO modes, agent autonomy,
-  and fast-path settings cannot bypass confirmation, cmd.docker.create_repository
-  validates and emits docker.repository.create.confirmation_requested, confirm
-  dispatches cmd.docker.create_repository.confirm, cancel dispatches
-  cmd.docker.create_repository.cancel, approval of image push never implies
-  repository creation approval, default privacy is private, and the dialog makes
-  that default explicit while allowing the user to change privacy before creation.
+canonical_text: Missing-repository creation remains a separate, explicit and visible DockerHub effect naming
+  namespace/repository/privacy with private default. cmd.docker.create_repository validates and preflights;
+  Regular uses its existing protected human confirmation and confirm/cancel commands. Task-scoped YOLO or PS-147
+  build authority invokes the same owner creation path with typed authority evidence and no forged click. A
+  mode/grant route never emits confirmation_requested unless actually waiting for a person. Capability/auth/currentness
+  and truthful create/unknown/reconciled results remain mandatory.
 gui_related: true
-gui_classification_reason: Repository creation offer, confirmation modal, default privacy notice, confirm/cancel actions, and blocked fast paths are visible remote side-effect UX.
+gui_classification_reason: Repository creation offer, confirmation modal, default privacy notice, confirm/cancel
+  actions, and blocked fast paths are visible remote side-effect UX.
 split_recommended: true
-split_recommendation_reason: This unit covers missing-repository behavior, confirmation flow, and default privacy because they form one protected remote side-effect contract.
-depends_on: [CRAU-030, CRAU-015]
+split_recommendation_reason: This unit covers missing-repository behavior, confirmation flow, and default privacy
+  because they form one protected remote side-effect contract.
+depends_on:
+- CRAU-030
+- CRAU-015
+- CRAU-104
+- PS-146
+- PS-147
 unblocks: []
 acceptance_criteria:
-  - Missing repository creation is explicit and visible during first-push preparation.
-  - Confirmation shows namespace, repository name, and privacy.
-  - Confirmation cannot be bypassed by YOLO modes, agent autonomy, or any fast-path setting.
-  - cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested.
-  - Confirm dispatches cmd.docker.create_repository.confirm.
-  - Cancel dispatches cmd.docker.create_repository.cancel.
-  - Approving image push does not implicitly approve creation of a missing DockerHub repository.
-  - Newly created repositories default private, and the confirmation dialog makes that default explicit while allowing user change before creation.
+- Missing repository creation is explicit and visible during first-push preparation.
+- Confirmation shows namespace, repository name, and privacy.
+- Confirmation cannot be bypassed by YOLO modes, agent autonomy, or any fast-path setting.
+- cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested.
+- Confirm dispatches cmd.docker.create_repository.confirm.
+- Cancel dispatches cmd.docker.create_repository.cancel.
+- Approving image push does not implicitly approve creation of a missing DockerHub repository.
+- Newly created repositories default private, and the confirmation dialog makes that default explicit while
+  allowing user change before creation.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: remote_side_effect_bypass
 reasoning_tier: high
 context_scope: protected_missing_repository_creation
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
-  - Plans/Permissions_System.md
-  - Plans/Contracts_V0.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Permissions_System.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: hard_gate_confirmation_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0024
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0025
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0026
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0024
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0025
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0026
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "YOLO modes"
-  - "agent autonomy"
-  - "`cmd.docker.create_repository`"
-  - "`docker.repository.create.confirmation_requested`"
-  - "`cmd.docker.create_repository.confirm`"
-  - "`cmd.docker.create_repository.cancel`"
-  - "default privacy for newly created repositories: private"
+- YOLO modes
+- agent autonomy
+- '`cmd.docker.create_repository`'
+- '`docker.repository.create.confirmation_requested`'
+- '`cmd.docker.create_repository.confirm`'
+- '`cmd.docker.create_repository.cancel`'
+- 'default privacy for newly created repositories: private'
 negative_constraints:
-  - "Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository."
-  - "The confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting."
+- Image-push authority and repository-create authority are evaluated separately; missing target authority refuses.
+- No mode/grant authority may be encoded as a human clicking Confirm.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
-  - Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Permissions_System.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Missing DockerHub repository creation is an explicit protected remote side-effect
+  flow: Puppet Master may offer creation as part of first-push preparation, but the creation step must be explicit
+  and visible, confirmation must show namespace, repository name, and privacy, YOLO modes, agent autonomy,
+  and fast-path settings cannot bypass confirmation, cmd.docker.create_repository validates and emits docker.repository.create.confirmation_requested,
+  confirm dispatches cmd.docker.create_repository.confirm, cancel dispatches cmd.docker.create_repository.cancel,
+  approval of image push never implies repository creation approval, default privacy is private, and the dialog
+  makes that default explicit while allowing the user to change privacy before creation.'
 ```
 
 ### CRAU-032 - Buildx Build Preflight Contract
@@ -3320,50 +3333,62 @@ plan_unit_id: CRAU-043
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  Publishing is a two-step model: cmd.orchestrator.build_run performs local
-  build and preview preparation only, cmd.orchestrator.push_image performs
-  remote DockerHub publication only, direct Build approval approves build only,
-  direct Push image approval approves image push only, missing repository
-  creation and managed Unraid template-repo remote push remain separate side
-  effects, and docker.publish.failed remains distinct from docker.publish.blocked.
+canonical_text: 'Build and publication remain separate owner stages: cmd.orchestrator.build_run prepares a
+  local result; cmd.orchestrator.push_image publishes remotely. Build approval alone authorizes no remote effect,
+  but a separately approved PS-147 grant or task-scoped PS-146 YOLO can authorize each requested publication/create
+  step without another click. Each stage records its own exact target/authority/result. docker.publish.failed
+  means attempted failure; docker.publish.blocked means no effect, with the local result preserved.'
 gui_related: true
-gui_classification_reason: Build and Push image approvals, blocked outcomes, and user-facing side-effect separation are visible publish workflow behavior.
+gui_classification_reason: Build and Push image approvals, blocked outcomes, and user-facing side-effect separation
+  are visible publish workflow behavior.
 split_recommended: true
 split_recommendation_reason: Source span S0038 mixes approval UI with runtime side-effect outcome semantics.
-depends_on: [CRAU-032, CRAU-039]
-unblocks: [CRAU-044, CRAU-045]
+depends_on:
+- CRAU-032
+- CRAU-039
+- CRAU-104
+- PS-146
+- PS-147
+unblocks:
+- CRAU-044
+- CRAU-045
 acceptance_criteria:
-  - cmd.orchestrator.build_run performs local build/preview preparation only.
-  - cmd.orchestrator.push_image performs remote DockerHub publication only.
-  - push_policy after_build dispatches push_image after a successful local build result and does not fold remote publish into build_run.
-  - Direct Build approves only build, and direct Push image approves only image push.
-  - docker.publish.failed means an attempted publish failed at runtime.
-  - docker.publish.blocked means a remote side effect intentionally did not execute because confirmation or permission approval was missing, rejected, or cancelled.
+- cmd.orchestrator.build_run performs local build/preview preparation only.
+- cmd.orchestrator.push_image performs remote DockerHub publication only.
+- push_policy after_build dispatches push_image after a successful local build result and does not fold remote
+  publish into build_run.
+- Direct Build approves only build, and direct Push image approves only image push.
+- docker.publish.failed means an attempted publish failed at runtime.
+- docker.publish.blocked means a remote side effect intentionally did not execute because confirmation or permission
+  approval was missing, rejected, or cancelled.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: remote_side_effect_conflation
 reasoning_tier: high
 context_scope: publish_execution_approval_blocked_outcome
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
-  - Plans/Orchestrator_Page.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Orchestrator_Page.md
 node_compile_hint:
   mode: publish_approval_blocked_outcome
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0038
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0038
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "`cmd.orchestrator.build_run`"
-  - "`cmd.orchestrator.push_image`"
-  - "`push_policy = after_build`"
-  - "`docker.publish.failed`"
-  - "`docker.publish.blocked`"
+- '`cmd.orchestrator.build_run`'
+- '`cmd.orchestrator.push_image`'
+- '`push_policy = after_build`'
+- '`docker.publish.failed`'
+- '`docker.publish.blocked`'
 negative_constraints:
-  - "`cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template repos, or push remote template repos."
+- '`cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template
+  repos, or push remote template repos.'
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
 ### CRAU-044 - Missing Repository Push Resume
@@ -3373,49 +3398,63 @@ plan_unit_id: CRAU-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  When cmd.orchestrator.push_image resolves a missing target repository, Puppet
-  Master preserves the local build result, enters
-  awaiting_repo_creation_confirmation, emits
-  docker.repository.create.confirmation_requested, resumes the pending push after
-  successful repository creation without forcing rebuild, or emits
-  docker.publish.blocked with reason_code repo_creation_not_confirmed,
-  blocked_step create_repository, and allowed_action_ids[] while preserving the
-  local image/result.
+canonical_text: A missing repository preserves the local image/result. Only an unsatisfied human decision enters
+  awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested. Valid YOLO/grant
+  authority executes the same creation writer directly, records actual authority, then resumes the pending
+  push without rebuild after verified success. Refusal/cancel blocks the create step with canonical reason/actions;
+  unknown effect reconciles before retry and never repeats a speculative create.
 gui_related: true
-gui_classification_reason: Missing-repository confirmation, pending state, blocked payload, and retry affordance are visible publish workflow behavior.
+gui_classification_reason: Missing-repository confirmation, pending state, blocked payload, and retry affordance
+  are visible publish workflow behavior.
 split_recommended: false
-depends_on: [CRAU-031, CRAU-043]
-unblocks: [CRAU-045]
+depends_on:
+- CRAU-031
+- CRAU-043
+- CRAU-104
+- PS-146
+- PS-147
+unblocks:
+- CRAU-045
 acceptance_criteria:
-  - Missing repository during push preserves the local build result.
-  - The flow enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested.
-  - Successful repository creation resumes the pending push attempt without forcing rebuild.
-  - Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed, blocked_step create_repository, and allowed_action_ids[].
-  - docker.publish.blocked preserves the already-built local image/result for retry.
+- Missing repository during push preserves the local build result.
+- The flow enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested.
+- Successful repository creation resumes the pending push attempt without forcing rebuild.
+- Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed,
+  blocked_step create_repository, and allowed_action_ids[].
+- docker.publish.blocked preserves the already-built local image/result for retry.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: resume_state_loss
 reasoning_tier: high
 context_scope: missing_repository_push_resume
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: missing_repo_resume_contract
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0039
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0039
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "`awaiting_repo_creation_confirmation`"
-  - "`docker.repository.create.confirmation_requested`"
-  - "`reason_code: repo_creation_not_confirmed`"
-  - "`blocked_step: create_repository`"
-  - "`allowed_action_ids[]`"
+- '`awaiting_repo_creation_confirmation`'
+- '`docker.repository.create.confirmation_requested`'
+- '`reason_code: repo_creation_not_confirmed`'
+- '`blocked_step: create_repository`'
+- '`allowed_action_ids[]`'
 negative_constraints:
-  - "Repository creation resume must not force a rebuild when the local build result is preserved."
+- Repository creation resume must not force a rebuild when the local build result is preserved.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: When cmd.orchestrator.push_image resolves a missing target repository, Puppet Master
+  preserves the local build result, enters awaiting_repo_creation_confirmation, emits docker.repository.create.confirmation_requested,
+  resumes the pending push after successful repository creation without forcing rebuild, or emits docker.publish.blocked
+  with reason_code repo_creation_not_confirmed, blocked_step create_repository, and allowed_action_ids[] while
+  preserving the local image/result.'
 ```
 
 ### CRAU-045 - Auto Push Approval Gate
@@ -3425,49 +3464,66 @@ plan_unit_id: CRAU-045
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  push_policy = after_build does not grant standing approval for remote side
-  effects; at the auto-dispatch point Puppet Master evaluates
-  external_publish_side_effect for cmd.orchestrator.push_image, emits
-  docker.publish.blocked with blocked_step push_image when approval is absent,
-  preserves the local build result, surfaces Push image as recovery CTA, and
-  keeps DockerHub repository creation plus managed-template remote repo
-  create/push as separately approved side effects.
+canonical_text: 'push_policy=after_build schedules a separate publication stage and never supplies authority
+  itself. At final dispatch evaluate PS-146/147/148: Regular asks if the exact effect lacks approval; task
+  YOLO or an exact build grant proceeds without publication confirmation. Missing repo create and template-repo
+  create/push remain separate evaluated effects. Failed admission preserves the local result and exact blocked
+  step; no wrapper may reintroduce an ordinary YOLO yes.'
 gui_related: true
-gui_classification_reason: Auto-push blocked state, Push image recovery CTA, and separated approvals are visible publish workflow behavior.
+gui_classification_reason: Auto-push blocked state, Push image recovery CTA, and separated approvals are visible
+  publish workflow behavior.
 split_recommended: true
-split_recommendation_reason: Source span S0041 also includes canonical publish reference selection and tag template resolution.
-depends_on: [CRAU-043]
-unblocks: [CRAU-046, CRAU-047, CRAU-048]
+split_recommendation_reason: Source span S0041 also includes canonical publish reference selection and tag
+  template resolution.
+depends_on:
+- CRAU-043
+- CRAU-104
+- PS-146
+- PS-147
+unblocks:
+- CRAU-046
+- CRAU-047
+- CRAU-048
 acceptance_criteria:
-  - push_policy after_build does not grant standing approval for remote side effects.
-  - Build click approves only local build execution.
-  - Auto-dispatch evaluates external_publish_side_effect for cmd.orchestrator.push_image.
-  - Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result, and surfaces Push image as recovery CTA.
-  - Repository creation and managed-template remote repo create/push remain separately approved side effects.
+- push_policy after_build does not grant standing approval for remote side effects.
+- Build click approves only local build execution.
+- Auto-dispatch evaluates external_publish_side_effect for cmd.orchestrator.push_image.
+- Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result,
+  and surfaces Push image as recovery CTA.
+- Repository creation and managed-template remote repo create/push remain separately approved side effects.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: auto_push_bypass
 reasoning_tier: high
 context_scope: auto_push_approval_gate
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: auto_push_approval_gate
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "`push_policy = after_build`"
-  - "`external_publish_side_effect`"
-  - "`cmd.orchestrator.push_image`"
-  - "`blocked_step: push_image`"
-  - "Push image"
+- '`push_policy = after_build`'
+- '`external_publish_side_effect`'
+- '`cmd.orchestrator.push_image`'
+- '`blocked_step: push_image`'
+- Push image
 negative_constraints:
-  - "Auto-push must not grant standing approval for remote side effects."
+- Auto-push must not grant standing approval for remote side effects.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: push_policy = after_build does not grant standing approval for remote side effects;
+  at the auto-dispatch point Puppet Master evaluates external_publish_side_effect for cmd.orchestrator.push_image,
+  emits docker.publish.blocked with blocked_step push_image when approval is absent, preserves the local build
+  result, surfaces Push image as recovery CTA, and keeps DockerHub repository creation plus managed-template
+  remote repo create/push as separately approved side effects.'
 ```
 
 ### CRAU-046 - Canonical Publish Reference Selection
@@ -4960,45 +5016,56 @@ plan_unit_id: CRAU-076
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  hard_gate, HITL /blocked, and remote-side-effect actions use the canonical
-  approval/blocked flow and cannot be downgraded into generic UI confirmation;
-  action-specific confirmation rules remain distinct for create repository,
-  push, rollback, cleanup, delete, and cluster mutation flows with their own
-  reversibility and confirmation evidence.
+canonical_text: Docker/registry/Kubernetes controls consume canonical permission and blocked-action results,
+  including actual human, mode or prior build-grant authority. Retained hard gates remain hard gates; create/push/CI/deploy/cleanup
+  each preserve distinct targets, reversibility and receipts. Covered build operations need no repeated human
+  click, while unowned/unlisted/risky existing-resource operations remain approval-required or denied under
+  PS-146/147/148.
 gui_related: true
-gui_classification_reason: Approval/blocker rendering and confirmation copy are visible Docker Manager interaction behavior.
+gui_classification_reason: Approval/blocker rendering and confirmation copy are visible Docker Manager interaction
+  behavior.
 split_recommended: true
 split_recommendation_reason: Source span S0078 mixes approval taxonomy with identity, routing, and help semantics.
-depends_on: [CRAU-015, CRAU-031, CRAU-043, CRAU-075]
-unblocks: [CRAU-081, CRAU-084]
+depends_on:
+- CRAU-015
+- CRAU-031
+- CRAU-043
+- CRAU-075
+- CRAU-104
+- PS-148
+unblocks:
+- CRAU-081
+- CRAU-084
 acceptance_criteria:
-  - hard_gate and HITL /blocked remote-side-effect actions use canonical approval/blocked flow.
-  - Docker Manager may render blockers but must not downgrade them into generic local confirmation copy.
-  - Action-specific confirmation remains distinct from HITL approval.
-  - Non-bypassable hard_gate actions use allowed action IDs rather than generic modals.
+- hard_gate and HITL /blocked remote-side-effect actions use canonical approval/blocked flow.
+- Docker Manager may render blockers but must not downgrade them into generic local confirmation copy.
+- Action-specific confirmation remains distinct from HITL approval.
+- Non-bypassable hard_gate actions use allowed action IDs rather than generic modals.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: approval_bypass
 reasoning_tier: high
 context_scope: hard_gate_action_specific_confirmation
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: confirmation_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "`hard_gate`"
-  - "`/blocked`"
-  - "`remote-side-effect`"
-  - "`allowed_action_ids`"
+- '`hard_gate`'
+- '`/blocked`'
+- '`remote-side-effect`'
+- '`allowed_action_ids`'
 negative_constraints:
-  - "Docker Manager must not downgrade canonical blockers into generic UI confirmation."
+- Docker Manager must not downgrade canonical blockers into generic UI confirmation.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
 ### CRAU-077 - Requested Effective Execution Identity Disclosure
@@ -5223,51 +5290,66 @@ plan_unit_id: CRAU-081
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  Docker/Unraid safety constraints keep repository creation confirmation
-  mandatory and non-bypassable, keep secrets out of redb, project files, YAML,
-  and evidence, redact secrets in publish/template-repo logs and evidence,
-  distinguish DockerHub image distribution from Unraid template distribution,
-  preserve browser login and PAT as different inputs that may yield different
-  effective capability, and prevent UI overclaim when validation shows partial
-  repository-management capability.
+canonical_text: Repository create/publish follows PS-146 mode-aware authority or PS-147 exact build grants,
+  preserving private default and real target/capability disclosure. Secret values stay out of redb/project/YAML/evidence
+  and all logs are scrubbed. Image distribution and Unraid template distribution remain separate. Browser login/PAT
+  capability limits and partial-result/unknown-effect truth remain unchanged.
 gui_related: true
-gui_classification_reason: Confirmation, capability display, redaction, and distribution distinction are user-visible safety behavior.
+gui_classification_reason: Confirmation, capability display, redaction, and distribution distinction are user-visible
+  safety behavior.
 split_recommended: false
-depends_on: [CRAU-026, CRAU-028, CRAU-031, CRAU-045, CRAU-076]
-unblocks: [CRAU-082, CRAU-083]
+depends_on:
+- CRAU-026
+- CRAU-028
+- CRAU-031
+- CRAU-045
+- CRAU-076
+- CRAU-104
+unblocks:
+- CRAU-082
+- CRAU-083
 acceptance_criteria:
-  - Repository creation confirmation is mandatory and non-bypassable.
-  - Secrets are not written to redb, project files, YAML, or evidence.
-  - Publish/template-repo logs and evidence redact secrets.
-  - Docs distinguish DockerHub image distribution from Unraid template distribution.
-  - Browser login and PAT remain distinct inputs that may produce different effective capability.
-  - UI does not claim full repository-management support when validation shows partial capability.
+- Repository creation confirmation is mandatory and non-bypassable.
+- Secrets are not written to redb, project files, YAML, or evidence.
+- Publish/template-repo logs and evidence redact secrets.
+- Docs distinguish DockerHub image distribution from Unraid template distribution.
+- Browser login and PAT remain distinct inputs that may produce different effective capability.
+- UI does not claim full repository-management support when validation shows partial capability.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: secret_or_capability_overclaim
 reasoning_tier: high
 context_scope: docker_unraid_safety_constraints
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: docker_unraid_safety_constraints
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0079
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0079
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "redb"
-  - "YAML"
-  - "DockerHub image distribution"
-  - "Unraid template distribution"
-  - "browser login"
-  - "PAT"
+- redb
+- YAML
+- DockerHub image distribution
+- Unraid template distribution
+- browser login
+- PAT
 negative_constraints:
-  - "Secrets must not be written to redb, project files, YAML, or evidence."
-  - "The UI must not claim full repository-management support when validation shows only partial capability."
+- Secrets must not be written to redb, project files, YAML, or evidence.
+- The UI must not claim full repository-management support when validation shows only partial capability.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Docker/Unraid safety constraints keep repository creation confirmation mandatory
+  and non-bypassable, keep secrets out of redb, project files, YAML, and evidence, redact secrets in publish/template-repo
+  logs and evidence, distinguish DockerHub image distribution from Unraid template distribution, preserve browser
+  login and PAT as different inputs that may yield different effective capability, and prevent UI overclaim
+  when validation shows partial repository-management capability.'
 ```
 
 ### CRAU-082 - Initial Non Goals And Review Bounds
@@ -5322,44 +5404,63 @@ plan_unit_id: CRAU-083
 unit_type: acceptance_overlay
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
-canonical_text: >-
-  The end-to-end acceptance overlay preserves checklist assertions for DockerHub
-  auth, requested/effective capability display, namespace/repository discovery,
-  non-bypassable missing-repo creation, private default, build/run access,
-  publish result digest/tag/registry info, Unraid generation defaults, managed
-  template-repo defaults, ca_profile.xml generation/editability/scope, profile
-  image modes, and template-repo commit/push UX without creating separate
-  implementation scope.
+canonical_text: Acceptance proves DockerHub auth and partial capability, namespace/repository discovery, private-default
+  missing-repository create under Regular human approval and YOLO/grant authority, distinct build/publish,
+  target/digest/tag/registry results and Unraid/template defaults. It also proves grant-created cleanup versus
+  same-name/pre-existing denial, Stop/currentness and no secret leakage. Static fixtures are planning evidence
+  only, never native completion or a standalone WorkNode seed.
 gui_related: true
-gui_classification_reason: Acceptance criteria cover visible GUI auth, repository, Docker Manager, Unraid, and template-repo workflows.
+gui_classification_reason: Acceptance criteria cover visible GUI auth, repository, Docker Manager, Unraid,
+  and template-repo workflows.
 split_recommended: false
-depends_on: [CRAU-026, CRAU-029, CRAU-031, CRAU-035, CRAU-048, CRAU-070, CRAU-071, CRAU-072, CRAU-081, CRAU-082]
+depends_on:
+- CRAU-026
+- CRAU-029
+- CRAU-031
+- CRAU-035
+- CRAU-048
+- CRAU-070
+- CRAU-071
+- CRAU-072
+- CRAU-081
+- CRAU-082
+- CRAU-104
 unblocks: []
 acceptance_criteria:
-  - The S0081 acceptance checklist remains preserved as validation overlay.
-  - Acceptance bullets map to owner units rather than creating duplicate WorkNode or implementation scope.
+- The S0081 acceptance checklist remains preserved as validation overlay.
+- Acceptance bullets map to owner units rather than creating duplicate WorkNode or implementation scope.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: acceptance_coverage_drift
 reasoning_tier: standard
 context_scope: containers_registry_unraid_acceptance_overlay
 implementation_surfaces:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: acceptance_overlay
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0081
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0081
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-  - "PAT-recommended helper text"
-  - "New repository creation defaults to private"
-  - "digest/tag/registry info"
-  - "root `ca_profile.xml` plus maintainer folder plus `project-name.xml`"
+- PAT-recommended helper text
+- New repository creation defaults to private
+- digest/tag/registry info
+- root `ca_profile.xml` plus maintainer folder plus `project-name.xml`
 negative_constraints:
-  - "Acceptance overlay must not become a standalone WorkNode seed."
+- Acceptance overlay must not become a standalone WorkNode seed.
 owner_hints:
-  - Plans/Containers_Registry_and_Unraid.md
+- Plans/Containers_Registry_and_Unraid.md
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The end-to-end acceptance overlay preserves checklist assertions for DockerHub auth,
+  requested/effective capability display, namespace/repository discovery, non-bypassable missing-repo creation,
+  private default, build/run access, publish result digest/tag/registry info, Unraid generation defaults, managed
+  template-repo defaults, ca_profile.xml generation/editability/scope, profile image modes, and template-repo
+  commit/push UX without creating separate implementation scope.'
 ```
 
 ### CRAU-084 - Remote Side Effect Blocked Payload Normalization
@@ -6747,3 +6848,103 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/FileSafe.md
 ```
+
+### CRAU-104 - Mode-Aware Publication And Build-Granted Deployment
+
+```yaml
+plan_unit_id: CRAU-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: 'DockerHub repository creation/image push and managed template-repo create/push use Permissions
+  PS-146/147/148 with distinct effects and the existing domain writer. In Regular, missing authority enters
+  the real protected confirmation. Task YOLO and a current exact build grant may perform covered publication/create
+  without another human click, recording mode or build_grant provenance instead of human_confirmed=true. The
+  creation preview/report names namespace/repository/privacy with private default and capability limits. cmd.docker.create_repository
+  validates; its domain writer may execute directly only with typed current mode/grant evidence. Existing .confirm/.cancel
+  remain the human flow; a model cannot call .confirm to resolve a protected human wait. No confirmation_requested
+  event is emitted when no person decision is pending.
+
+
+  cmd.orchestrator.build_run remains local preparation and cmd.orchestrator.push_image a separate remote stage.
+  after_build determines timing, not authority. Each follow-on create/push/template step evaluates exact authority
+  once, so an admitted YOLO/grant build is not interrupted by duplicate publication modals. Preserve local
+  result on failure/block, resume without rebuild only after verified repository creation, and reconcile unknown
+  remote effects before retry. Result digest/tag/registry/namespace/platform and sanitized evidence remain
+  owner-proven, with truthful partial capability and blocked versus failed outcomes.
+
+
+  CI configuration/execution and Docker/Kubernetes deploy operations consume exact PS-147 resource/operation
+  selectors, account/runtime/cluster/namespace/UID, permission generation and Stop/revocation epoch at dispatch.
+  Listed non-destructive operations on named existing targets remain bounded; the risky-action no-repeat exception
+  is only for verified grant-created resources and explicitly allowed operations. A same-name replacement,
+  pre-existing/unrelated object, unlisted namespace child, broad prune or secret/paid-signup action gets no
+  automatic authority. Grant creation provenance comes from the real effect receipt, never a prefix or discovered
+  list item. FileSafe, DAE, network/trust/provider capability, scan/evidence and protected secret handling
+  still apply.
+
+
+  Every remote action feeds the existing ObservableWork/History What the build did projection with exact target/authority/outcome.
+  Reuse the run owner''s Stop and owner-provided true Undo/compensation, explicitly saying No safe Undo where
+  needed; stopping never erases or silently reverses in-flight effects. No parallel log, new build.* event
+  family, separate runner or runtime-evidence claim is introduced.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are user-visible.
+depends_on:
+- PS-146
+- PS-147
+- PS-148
+- F2-213
+- RM-053
+unblocks: []
+acceptance_criteria:
+- Regular protected confirm and YOLO/grant direct authority use the same sole creation writer and distinct
+  true receipts.
+- Successful build grants execute listed CI/deploy/publication without repeated prompts; unknown create preserves
+  result and reconciles before retry.
+- Grant-created exact-resource cleanup can pass; same-name/pre-existing/unrelated or unlisted resource refuses.
+- Stop/revoke/current target and capability drift prevents new effects and action rows remain honest.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1/O2/O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+preserved_exact_tokens:
+- cmd.docker.create_repository
+- cmd.orchestrator.build_run
+- cmd.orchestrator.push_image
+- after_build
+- human_confirmed=true
+- ObservableWork/History
+- What the build did
+- No safe Undo
+negative_constraints:
+- No build/publish stage folding, fake click, forged human approver or blanket cleanup.
+- No secret values in previews, YAML, redb, receipts, logs or fixture data.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Containers_Registry_and_Unraid.md
+```
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md

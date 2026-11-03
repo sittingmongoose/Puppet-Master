@@ -64,7 +64,7 @@ Worktree permission policy references `Plans/WorktreeGitImprovement.md`, `/Workt
 
 Decision policy integration preserves `Plans/Decision_Policy.md`, `/Decision_Policy.md`, and `/storage/runtime` deterministic policy ownership for executor, storage, and runtime surfaces that consume permission decisions.
 
-Remote side effects and mode-override semantics reconcile `ask/plan -> deny`, `/plan`, `/approval`, external_publish_side_effect, side-effect, and non-bypassable approval behavior so mutating remote publication cannot diverge by surface or mode.
+Remote side effects and mode override use PS-146 through PS-148: `ask/plan -> deny` task-file mutation, Regular exact-effect approvals, task-scoped YOLO ordinary push/publication and needed repository creation without another human yes, plus the exact human-approved build-grant exception. Retained FileSafe, trust, secrets, capability, target/currentness, receiver/parent and Stop checks remain. No surface may forge human approval or revive an ordinary YOLO publication ask.
 
 Provider-gap disclosure is separate from overrides: provider-gap states honored, skipped, and clamped describe requested/effective provider behavior and must not be collapsed into generic override wording.
 
@@ -200,8 +200,9 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PER
 | 2 | Parent/run ceiling | runtime envelope | Parent execution ceiling and inherited restriction patterns. |
 | 3 | Session cache | runtime | Prior explicit approvals scoped to the session. |
 | 4 | Persona overrides | `Plans/Personas.md` | Named permission profile for the active Persona. |
-| 5 | Project-level | `.puppet-master/permissions.toml` | Project-local rules. |
-| 6 | Global-level | user config | User-wide rules. |
+| 5 | Project-level | `.puppet-master/permissions.toml` | Actual Project-local rules, subject to PS-144 origin acceptance. |
+| 5b | Computer-level | owning Server/Execution Host rule records | Named Computer rules and host/path-bound Always choices. |
+| 6 | Everywhere | settings-home writer; read-only user-config projection | User-wide defaults; legacy global normalizes before policy. |
 | 7 | Defaults | this document | Hardcoded fallback table. |
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
@@ -209,13 +210,13 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
 Child inheritance rules:
 - Child runs inherit both action ceilings and restrictive argument-pattern rules from the parent chain.
 - Inheritance is additive-downward and merge-not-replace: a child may narrow authority, but MUST NOT widen or replace away inherited restrictions.
-- The permission chain is evaluated as Parent Agent -> Parent Session -> Child Session -> Child Agent, then project/global/default layers.
+- The permission chain remains Parent Agent -> Parent Session -> Child Session -> Child Agent, then Project/Computer/Everywhere/default layers. Grants compose only by the PS-148 intersection.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
 
 When multiple rules for the same permission key are simultaneously applicable, the most specific scope wins before falling back to the broader layer order in §2.4. Scope specificity is:
 
-`lane:{lane_id}` > `seam:{seam_id}` > `package:{package_id}` > project > global
+`lane:{lane_id}` > `seam:{seam_id}` > `package:{package_id}` > project > computer > everywhere (legacy global)
 
 Role-scoped account policy overrides use the same precedence chain. A rule may carry `allowed_roles`, `disallowed_roles`, `cooldown_policy_override`, and `switch_threshold_override`; these fields narrow which execution roles may use the account/pool and how cooldown or threshold switching applies, but they do not widen the parent/run permission ceiling.
 
@@ -224,7 +225,7 @@ Scope meanings:
 - `seam:{seam_id}` applies only at the named seam boundary, including cross-package transitions and other explicitly modeled boundary crossings.
 - `lane:{lane_id}` applies only within the identified execution lane and is the narrowest durable scope in the standard precedence model.
 
-This specificity order applies anywhere scoped permission material is evaluated, including session-cache approvals, durable project/global rules, and inherited parent/run ceilings. Ties within the same scope still use the layer order in §2.4 and last-match-wins behavior inside the selected ruleset (§3.1).
+This specificity order applies to session approvals, durable Project/Computer/Everywhere rules and inherited ceilings. Ties retain the §2.4 layer order and §3.1 last-match behavior. PS-144 safety-row resolution does not replace these per-rule semantics.
 
 ContractRef: Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals, Plans/Tools.md#10.7A Web-operation approval summary rules
 
@@ -264,7 +265,7 @@ This rule applies to:
 Display rule:
 - when requested and effective state differ, the effective state is what executes
 - the UI must disclose the difference and its reason on the owning surface rather than forcing the user to infer it from missing controls or failed calls
-- Approval UI must show which layer governs each tool's permission state, including project defaults, global defaults, user override, admin policy, mode override, session cache, Persona profile, project rule, global rule, and default when that source determines the effective result.
+- Approval UI shows the actual governing Project/Computer/Everywhere/Persona/session/user/Managed/mode source through the origin word and requested/effective reason. Historical global remains a normalized alias. Actual human, mode and build-grant authority are separately disclosed under PS-107/148.
 
 <a id="PRECEDENCE-LAYERS"></a>
 
@@ -375,7 +376,7 @@ The characters `~` and `$HOME` are expanded to the user's home directory **only 
 
 <a id="EXTERNAL-DIR-GUARD"></a>
 
-Any tool invocation that references a path outside the active project's working roots (as defined by the project configuration and workspace) triggers the `external_directory` permission key. Default: `ask` (see §7).
+`external_directory` applies outside the actual admitted working roots: Project/worktree roots or the app chat folder plus Read and change grants. Default remains `ask`, including YOLO. PS-145 permits only FileSafe-on task-needed listed home-folder reads through its explicit exclusions; that exception grants no write root or Project mutation. Turning FileSafe off removes it.
 
 An **external directory allowlist** defines paths that are pre-approved for external access. The allowlist is stored in the permissions config (§9). Paths on the allowlist bypass the `external_directory` guard.
 
@@ -401,7 +402,7 @@ When a user responds `always` to an `ask` prompt (§6.2), the system derives a s
 - **webfetch/webextract/webcrawl/webmap:** The normalized target origin and scope. Single-target reads and extraction use the concrete URL origin (`https://<domain>/*`); bounded crawl/map rules use the approved root origin plus an explicit crawl-scope discriminator, never a naked wildcard.
 - Web approval pre-population is deterministic: `websearch` and `webresearch` pre-populate `*`; `webfetch` and `webextract` pre-populate `https://<actual-host>/*` derived from the URL; `webcrawl` and `webmap` pre-populate `https://<actual-root-host>/*` derived from `root_url`. The `/suggest` value is a user-editable pre-population convenience, not a lock.
 
-The suggested pattern is displayed to the user during approval confirmation. The user MAY edit the pattern before a durable project/global rule is created, but the canonical approval anchor remains `approval_scope_key` plus blocked-episode identity rather than a UI session id.
+The suggested pattern is displayed and editable before the person explicitly chooses This project, This computer or Everywhere; no scope is preselected and paths never offer Everywhere. Approval binds approval_scope_key plus its real owner identity: the existing Orchestrator blocked episode, or PS-145 app thread/tool/request/target. A suggested pattern is not a FileSafe approved-command entry and never grants a whole command prefix outside that guard.
 
 ### 3.4A Web-operation permission-key derivation
 For canonical permission-key derivation, web operations use normalized suffixes rather than raw user-entered URLs:
@@ -442,7 +443,7 @@ Session-approval rules:
 - `For Session` for `websearch` and `webresearch` shows "Approve this tool for the rest of the current session" with suggested pattern `*`; this wildcard-only, tool-wide session behavior is tool-scoped and does not permit unrelated file/shell/network mutation tools.
 - `For Session` for `webfetch` and `webextract` shows "Approve this host/site for the rest of the current session" and approves the normalized host/domain, while `webcrawl` and `webmap` approve the normalized root host/domain; the user-facing pattern suggestion uses host-scoped forms such as `https://host.example/*` or `https://docs.example.com/*`. For example, approving `webcrawl` For Session on `https://docs.example.com/start` approves later crawl/map/extract/fetch calls only when they match the same allowed host pattern and same tool-key semantics.
 - The `/crawl/map/fetch` follow-on family shares the same normalized host/site matching rule when a `webcrawl` session approval grants follow-on read operations.
-- `Always` shows "Create durable permission rule", surfaces Project/Global scope selection when both scopes are valid, and creates the durable project/global permission rule through canonical permissions storage.
+- Always shows Create durable permission rule, lets the person explicitly choose This project/This computer/Everywhere without preselection and uses the selected canonical owner. No-project hides Project; paths never offer Everywhere; YOLO never creates Always.
 - `Deny` shows "Reject this invocation" and invokes the `reject-all-pending` cascade: reject this invocation and reject any other pending asks in the same approval batch/session that share the same approval ask.
 
 The approval summaries are rendered by `Plans/FinalGUISpec.md#15.7 Permission approval card widget` and the actual consumer sections that display the summaries.
@@ -473,7 +474,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 
 <a id="GUARD-EXTERNAL-DIR"></a>
 
-**Trigger:** A tool invocation references a path outside the project's working roots.
+**Trigger:** A tool invocation references a path outside its actual admitted working roots, with only the explicit PS-145 FileSafe-on listed home-read exception.
 
 **Default action:** `ask`.
 
@@ -493,7 +494,7 @@ Covered operations:
 
 **Default action:** `ask`
 
-**Behavior:** This guard is **non-bypassable**. `yolo` mode, scope-bound approval reuse, and generic prior allows MUST NOT suppress it. A direct user click approves only the exact remote side effect named by that clicked control. If one UI flow chains multiple remote side effects, Puppet Master MUST present a separate approval step for each remote side effect in execution order.
+**Behavior:** Evaluate each exact effect through PS-146/147/148. Regular asks when that effect lacks authority; task-scoped YOLO ordinary publication/needed repository creation and exact approved build-grant operations proceed without another publication yes. Target, privacy, capability/auth, FileSafe, trust, currentness and reconciliation remain. A direct user click approves only its named effect; follow-on effects are separately evaluated in order and record actual human/mode/grant authority.
 
 **Failure presentation:** When blocked or rejected, the runtime MUST surface an error object that identifies the blocked remote step, the guard name, and the exact recovery actions available from the current surface. Docker Manager and orchestrator surfaces MUST show the blocking reason inline; autonomous/chat-driven flows MUST also surface the block in chat/evidence output.
 
@@ -552,7 +553,7 @@ Core rules:
 
 ### 6.1 Approval UX, recovery, and audit visibility
 
-The existing low-level permission engine remains the base contract, while approval UI MUST preserve the four-step user choice set: `deny`, `once`, `for session`, and `always`. `once` approves only the current invocation; `for session` creates an ephemeral session-cache allow under the current `approval_scope_key`; `always` is the durable approval path for permanent permission-rule reuse, implemented as a revocable project rule or global rule through canonical permissions storage. When `always` is selected, the UI shows the suggested pattern derived from invocation context, lets the user choose Project or Global when both scopes are valid, and never implements durable approval through ad-hoc FileSafe allowlists or one-off UI side effects.
+The approval UI preserves deny, once, for session and always. Once authorizes one invocation; for session is ephemeral under approval_scope_key. Always is the durable person-choice path through the canonical Project/Computer/Everywhere rule owner with explicit, non-preselected place and pattern; paths never offer Everywhere and no-project hides This project. It never arises from YOLO, a message or a build grant. PS-144 owns origin acceptance/copy and durable rule creation; PS-145 owns app request identity; PS-148 distinguishes actual human, mode and grant authority. FileSafe exact approved-command lists are separate owner records, not implicit side effects of generic permission approval.
 
 Blocked-action recovery MUST be direct rather than a passive error string for permission policy, FileSafe, unavailable MCP, unavailable providers or services, and headless ask denial. The blocked payload carries `blocked_reason_code` plus ordered `allowed_action_ids[]`; UI surfaces render only those canonical actions, mapping permission blocks to approval or permission settings, FileSafe blocks to approval or FileSafe settings, unavailable MCP to integration authentication or configuration surfaces, unavailable providers to switch provider or `/model` or open Authentication or `/Health`, and headless ask denial to a message that interactive approval was unavailable plus the user action that can resume execution.
 
@@ -671,10 +672,10 @@ Rules:
 ### 8.0 Composition with precedence layers
 
 The resolution algorithm composes the strict layer precedence from §2.4 with the dispatch checks in this section. The flow is:
-1. Build the invocation context from the tool name, normalized arguments, target paths/hosts, runtime mode, parent/run ceiling, session state, Persona, project/global/default rules, and capability snapshot.
+1. Build the exact application/Project scope, thread/run/Computer/Host/Environment/roots, tool/final arguments, target, mode, parent/receiver ceiling, Persona, session, Project/Computer/Everywhere rules and capability snapshot.
 2. Apply the mode layer from §2.4 as the first permission candidate: `ask` and `plan` clamp mutating tools to `deny`; `yolo` clamps tool permissions to `allow` where provider/runtime policy permits. Later non-bypassable guards and capability checks may still return blocked/denied outcomes, but they do not rewrite the recorded mode-layer decision.
 3. Resolve the effective rule for each permission key through §2.4 layer order plus scope specificity, with inherited parent/run ceilings, role-scoped account policy, and session-cache approvals narrowing authority but never widening it.
-4. Run non-bypassable guards and capability gates, including full-string banned-command checks, external-directory checks, domain-sensitive remote-side-effect checks, executable trust checks, host/network policy, and capability availability.
+4. Apply PS-146 publication/Y1 or PS-147 exact build authority once, then intersect all PS-148 retained guards/capability checks: full command/root/FileSafe, source/executable trust, network/provider disclosure, auth, target/currentness, resource ownership, storage writer and Stop/revocation. Ordinary publication has no second human yes in YOLO.
 5. Persist requested/effective permission evidence, including `requested_permission_state`, `effective_permission_state`, `downgrade_reason`, `approval_scope_key`, `permission_snapshot_id?`, `blocked_reason_code`, and ordered `allowed_action_ids[]` when applicable.
 6. If an approved hook mutates arguments or execution context, re-run §2.4 rule resolution and all applicable guards on the modified invocation before dispatch.
 7. Dispatch only when the final effective decision is `allow` and all guards pass; `ask`, `deny`, blocked, unavailable, or capability-failed outcomes emit audit evidence and do not call the underlying tool.
@@ -718,18 +719,19 @@ Cleanup-sensitive approval and retention checks are permission-visible. If activ
 
 <a id="PERSISTENCE"></a>
 
-Permission configuration is stored at three durable layers plus one ephemeral layer.
+Permission configuration has Everywhere, Computer, Project and Persona owner homes plus the ephemeral session layer. PS-144 defines sole writers, read-only mirrors, origin metadata and atomic revision admission; runtime effective config is a projection.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
 | Layer | Location | Format | Lifetime |
 |-------|----------|--------|----------|
-| **Global** | `~/.config/puppet-master/permissions.toml` | TOML | Until user edits/deletes |
-| **Project** | `<project_root>/.puppet-master/permissions.toml` | TOML | Until user edits/deletes |
-| **Persona** | Named profiles referenced by `default_permissions_profile` in `PERSONA.md` frontmatter; stored alongside global permissions config at `~/.config/puppet-master/permission-profiles/<profile_id>.toml` | TOML | Until user edits/deletes |
-| **Session** | In-memory session cache | Runtime | Current session only; cleared on restart |
+| **Everywhere** | Settings-home writer; read-only `~/.config/puppet-master/permissions.toml` projection | Owner rule record / TOML compatibility | Until explicit edit/revoke |
+| **Computer** | Owning Server/Execution Host app rule family, tagged Computer key | Owner rule record | Until explicit edit/revoke |
+| **Project** | `<project_root>/.puppet-master/permissions.toml` | TOML | Until explicit edit/revoke |
+| **Persona** | Existing library profiles at `~/.config/puppet-master/permission-profiles/<profile_id>.toml` and declared whole Project versions | Owner profile record / TOML | Until explicit edit/revoke |
+| **Session** | In-memory approval cache under exact scope key | Runtime | Current run/session; cleared on restart |
 
-Durable approvals created through `create_project_rule` or `create_global_rule` are persisted in their owning config layer as metadata-bearing records with the logical fields `{ rule_id, tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. `rule_id` is a stable UUID generated at rule creation and is the canonical revocation/update key; `tool_pattern` is not unique and MUST NOT be used as the durable identity. File-level TOML projections MAY additionally expose these rules in the simpler per-tool tables shown below, but the stored rule identity and audit metadata remain part of the canonical durable record.
+Durable approvals use `cmd.permissions.create_project_rule`, `cmd.permissions.create_computer_rule` or the existing `cmd.permissions.create_global_rule` spelling normalized to Everywhere. The person selects the exact level/key and pattern; paths never go Everywhere. Persist rule_id, tool_pattern, action, scope_key, created_at, created_by_thread_id and issuer/origin/version/acceptance/revision metadata at the sole owner under CAS. rule_id remains the stable revoke/update key. User-config and simpler TOML views are projections, never second writers. PS-144 owns selected-rule/profile copy contributions and destination revalidation.
 
 ### 9.1 TOML format
 
@@ -916,17 +918,9 @@ A card for managing Persona-specific permission profiles:
 
 ### 10.8 Scope selector
 
-A toggle or tab strip at the top of the Permissions tab:
+A toggle or tab strip selects This project, This computer or Everywhere for the named context. Package, Seam and Lane are offered only when their real Project owner exists. With no Project, This project and nested scopes are hidden/disabled with the owner reason; Computer and eligible non-path Everywhere writes remain possible. Durable Always never preselects a scope, and a file/directory/executable-location rule never offers Everywhere.
 
-- **Global** — edits `~/.config/puppet-master/permissions.toml`.
-- **Project** (visible when a project is active) — edits `<project_root>/.puppet-master/permissions.toml`.
-- **Package** (visible when a package context is active) — edits package-scoped rules nested under the active project's permission configuration; inherits from Project until overridden.
-- **Seam** (visible when a seam context is active) — edits seam-boundary rules nested under the active project's permission configuration.
-- **Lane** (visible when a lane context is active) — edits lane-scoped rules nested under the active project's permission configuration.
-
-When no active-project context exists, durable `always` approval scope selection MUST offer only **Global**. The **Project** option is hidden/disabled and carries `/disabled` when a reason-code token is needed, preventing orphaned project-scoped rules with no project binding.
-
-Changes are saved to the selected scope's file. The effective (merged) permissions are displayed with layer-of-origin badges when in "Global" scope and a project is active.
+Changes go through the selected owner's canonical command and revision CAS, not a UI-private file save. The effective value uses the origin word (Computer/Project name/Everywhere) opening Details, with requested/effective and the narrowing reason. PS-144 owns this selector; Settings renders the shared row/panel grammar.
 
 The Settings GUI, command-palette, API/CLI, and automation surfaces all mutate permission rules through the same canonical permission commands and storage records. GUI-only affordances must not become the sole management path for durable approval creation, revocation, or inspection.
 
@@ -960,8 +954,8 @@ Threat model summary:
 Permissions are necessary but not sufficient. A tool is executable only when it is both capability-registered and permission-allowed; unregistered tools remain non-runnable even if a rule says `allow`.
 
 Sandbox/capability boundary rules:
-- `bash` executes in the user's environment and is not sandboxed beyond normal OS-level user permissions.
-- file-oriented tools are scoped to the active project root and configured working roots unless explicit policy broadens that access.
+- Shell execution obeys the selected HTE/DAE strategy. YOLO requires an admitted DAE-safe path; absence never permits unsandboxed direct-host execution.
+- File tools use actual Project or PS-145 application working roots, normalized Host/Environment identity and exclusions. Home-read consent does not make a write root or admit direct Project mutations.
 - web-oriented tools must respect configured domain allowlists and web-operation scope keys in addition to normal permission decisions.
 
 ### 10A.3 Audit trail
@@ -1005,7 +999,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 **AC-PM01:** The resolution algorithm (§8) MUST be deterministic: given identical inputs (tool name, invocation context, config, mode, session state), the result MUST always be the same.
 
 <a id="AC-PM02"></a>
-**AC-PM02:** Precedence layer ordering (§2.4) MUST be respected. A Persona override MUST take priority over project-level rules, which MUST take priority over global-level rules.
+**AC-PM02:** Preserve §2.4 per-rule precedence: Persona, Project, Computer layer 5b, Everywhere then defaults, intersected with parent/receiver and Managed ceilings. Resolve the safety-profile row through PS-144 without replacing rule matching.
 
 <a id="AC-PM03"></a>
 **AC-PM03:** Within a single ruleset, last-match-wins ordering (§3.1) MUST be applied. A rule appearing later in the list MUST override an earlier matching rule.
@@ -1014,10 +1008,10 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 **AC-PM04:** The `doom_loop` guard (§4.1) MUST trigger when the same tool is called with identical input 3 consecutive times (configurable threshold). The default action MUST be `ask`.
 
 <a id="AC-PM05"></a>
-**AC-PM05:** The `external_directory` guard (§4.2) MUST trigger for paths outside the project's working roots. Paths on the allowlist (§3.3) MUST bypass the guard.
+**AC-PM05:** external_directory uses actual Project/app roots and allowlist plus only PS-145 FileSafe-on listed home-read exception. Test FileSafe-off, symlink/excluded paths, read-only grants and no outside-project mutation, in Regular and YOLO.
 
 <a id="AC-PM06"></a>
-**AC-PM06:** The `always` response (§6.2) MUST bind approval to the canonical blocked episode and MAY reuse it only through an exact `approval_scope_key` match or explicit durable project/global rule creation. It MUST NOT create a blind session-wide allow.
+**AC-PM06:** Always binds the actual current owner request (Orchestrator blocked episode or PS-145 typed app request). Reuse requires an exact approval_scope_key or explicit person-created Project/Computer/Everywhere durable rule under PS-144. Never a blind session-wide allow, preselected scope or Everywhere path rule.
 
 <a id="AC-PM08"></a>
 **AC-PM08:** Default `.env` deny rules (§7.1) MUST deny reading `.env` and `.env.*` files while allowing `.env.example`.
@@ -1026,16 +1020,16 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 **AC-PM09:** The GUI Permissions tab (§10) MUST display all tool permission keys from §5, support granular rule editing (§10.3), and persist changes to the selected scope's config file (§10.8).
 
 <a id="AC-PM10"></a>
-**AC-PM10:** In `yolo` mode, all tools MUST resolve to `allow` (§8 step 1). In `ask`/`plan` modes, all mutating tools MUST resolve to `deny` (§8 step 1).
+**AC-PM10:** yolo supplies an ordinary allow candidate, including PS-146 push/publication; final dispatch still requires PS-148 retained gates and exact Y1/grant evidence. ask/plan deny task-file mutation while their admitted owner planning/To-Do records remain distinct. No duplicate publication yes or fabricated human receipt.
 
 <a id="AC-PM11"></a>
-**AC-PM11:** `create_project_rule` and `create_global_rule` (§6.4A) MUST persist durable approval records with `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`, survive restart, and be revocable from Settings → Permissions or `cmd.permissions.revoke`.
+**AC-PM11:** create_project_rule/create_computer_rule/create_global_rule persist owner rules with stable rule_id, metadata and revision; survive restart and revoke through cmd.permissions.revoke. No preselected Always scope, no orphan Project or Everywhere path rule, no copied source consent.
 
 <a id="AC-PM12"></a>
 **AC-PM12:** Web-operation permission keys (§3.4A) MUST derive `webextract:{domain}`, `webresearch:{query_category}`, `webcrawl:{domain}`, and `webmap:{domain}` from canonical normalized inputs, using registrable-domain normalization for URL-derived keys.
 
 <a id="AC-PM13"></a>
-**AC-PM13:** Scope specificity (§2.4B) MUST resolve `lane` over `seam`, `seam` over `package`, `package` over `project`, and `project` over `global`; package scope MUST inherit from project unless explicitly overridden.
+**AC-PM13:** Scope specificity is lane > seam > package > project > computer > everywhere (global alias normalized); package inherits Project. App context omits inapplicable Project rungs and never loses exact thread/run/Computer authority.
 
 <a id="AC-PM14"></a>
 **AC-PM14:** Context creation MUST run the seven-step narrowing flow in §8.0, and per-invocation dispatch MUST still execute the real-time precedence evaluation in §2.4 for each tool call within that context.
@@ -1063,20 +1057,11 @@ Covered operations include:
 
 ### 12A.2 Behavior
 
-- `push_policy = after_build` does not satisfy the “exact remote side effect requested” rule by itself. A Build click remains approval for local build only; the later auto-dispatched image push still requires `external_publish_side_effect` evaluation at the time it is about to run.
-- The same rule applies to follow-on managed template-repo creation and push steps: they are never implicitly approved by earlier local-only actions or by the existence of enabled defaults.
-
-- Default action: `ask`
-- This guard is **non-bypassable**
-- `yolo` mode MUST NOT auto-allow this guard
-- Session-scoped `always` approvals MUST NOT suppress this guard globally
-- A direct user click on the exact publish/create/push button counts as approval for **that one requested side effect only**
-- Follow-on side effects still require their own approval when they were not part of the same direct user action
-
-Example:
-- Clicking **Push image** may approve the image push itself
-- It does **not** auto-approve creating a missing DockerHub repo if the repo does not already exist
-- It does **not** auto-approve pushing the managed Unraid template repo unless that was the exact user action requested
+- after_build chooses timing only. Build approval alone is local; each later remote effect still evaluates external_publish_side_effect with exact target and currentness.
+- Regular asks for an unapproved exact effect. PS-146 task-scoped YOLO permits ordinary image/package/template push and needed repository creation without another yes. PS-147 permits listed build actions; protected exceptions remain in PS-148.
+- Source/visibility/private-default, capability/auth, FileSafe/trust, currentness, resource ownership and Stop still run. Session Always is never an unbounded global publication grant.
+- A direct click approves only its named effect. Separate effects have separate admissions and receipts in execution order; they need not each display a human dialog when mode/grant authority already covers them.
+- For example, Regular Push image does not by itself approve a missing repository create or template push; an admitted YOLO task evaluates and performs each needed publication effect without those extra ordinary asks, recording actual authority and outcomes.
 
 ### 12A.3 Failure behavior
 
@@ -1093,13 +1078,13 @@ Add the following entry to the §5 tool/special-guard key list:
 
 | Key | Category | Scope | Notes |
 |---|---|---|---|
-| `external_publish_side_effect` | Guard | Remote publication and remote repo mutation | Non-bypassable ask for DockerHub/Unraid remote side effects |
+| `external_publish_side_effect` | Guard | Remote publication and remote repo mutation | Regular ask; PS-146 YOLO publication and PS-147 exact build authority; retained gates still apply |
 
 Add the following entry to the §7 defaults table:
 
 | Key | Default | Rationale |
 |---|---|---|
-| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |
+| `external_publish_side_effect` | `ask` in Regular | PS-146 mode-aware ordinary publication and PS-147 build authority never remove target, privacy, capability, secret or currentness checks |
 
 ## Runtime blocked-Outcome Integration Addendum (2026-03-08)
 
@@ -1137,7 +1122,7 @@ Rules:
 - `blocked_preflight` is used for stale target, undeclared host, drift, or capability/preflight failures discovered before dispatch; these outcomes do not masquerade as `failure_class`
 - payload consumers must render blocked family + action ids without inventing local enum families or alias field names
 - Domain-sensitive operational sessions use permission classes instead of one generic run-command approval. Read-only inspection, interactive shell `/exec`, and network tunnel exposure are separate classes for `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward`; approvals for one class do not imply approval for another.
-- Tool permission and domain approval are separate: generic tool allow, `/session/YOLO`, or headless defaults never approve domain-sensitive Git push/force-push/prune/destructive discard (`/force-push/prune/destructive`), workflow `/cancel/rerun/admin` CRUD, image push/repo create/template push, or Kubernetes `/delete/exec/port-forward` operations. Protection-rule changes, `/namespace/workload` mutations, SCM destructive actions, `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward` require their own domain approval class.
+- Domain classes remain separate from generic tool allow. PS-146 permits task-scoped YOLO ordinary Git push/image/package/template publish/needed repo create, plus exact leased force-push on a PM-created work branch. Prune, remote branch/repository delete, destructive discard and Kubernetes delete/exec still ask unless explicitly within a human-approved PS-147 grant on verified grant-created resources. CI/workflow admin, Docker exec/attach, tunnels, protection changes and other classes keep their own exact authority; no namespace/name implies permission. PS-148 composes final admission and prohibits a duplicate ordinary YOLO publication yes.
 - `/queued` and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot. Approval may pause one node, block the whole run, or block only a follow-on step according to the blocked payload, but resumption always re-runs preflight when the target, policy, or permission snapshot may have changed.
 - Policy-denied, approval-missing, and preflight-failed outcomes remain distinct: `blocked_policy`, `blocked_approval`, and `blocked_preflight` choose different copy, recovery actions, and retry paths instead of collapsing into a generic blocked reason.
 - Mutating actions use a per-target in-flight operation key for `/dedupe` across the main window, detached windows, Dashboard, and Orchestrator shortcuts. Identical operations coalesce, while conflicting operations surface `operation_in_progress` with the owning target/action context.
@@ -1162,7 +1147,7 @@ A permission snapshot captures the resolved permission state at attempt start fo
 
 After any approval, policy, mode, or project change, a retry creates a new permission snapshot; the prior snapshot stays frozen for historical audit and never mutates in place.
 
-**Schema:**
+**Historical exact Project snapshot illustration:** The following shape and its original enum/hash recipe stay immutable for existing Project records. New Computer/Everywhere resolved sources use PS-144 versioned successor definitions; application evidence uses PS-145 separately versioned union. Do not rewrite historical payloads or make required node fields nullable to admit app work.
 ```json
 {
   "snapshot_id": "uuid",
@@ -1288,7 +1273,7 @@ Provider/LLM exposure rules apply before any diff, conflict hunk, workflow log, 
 
 Review, diff, export, `/evidence/history`, and provider features distinguish ephemeral in-memory view, scrubbed persisted blob, and user-exported file. Anything persisted, indexed, screenshotted through `/screenshots`, exported, or included in evidence/history records the redaction profile, whether mandatory scrub ran, and whether display may hide details.
 
-Remote-side-effect receipts include `approval_source`, `executing_subsystem`, and effective account / credential handle. `approval_source` values include `explicit confirm`, `cached permission`, `policy auto-allow`, and `browser fallback`. `executing_subsystem` values include `git`, `GitHub API`, `docker CLI`, `kubectl`, and `SSH remote`. This applies to push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent remote-side-effect actions.
+Remote receipts keep approval_source = explicit confirm/cached permission/policy auto-allow/browser fallback and executing_subsystem = git/GitHub API/docker CLI/kubectl/SSH remote with effective account and opaque credential handle. The PS-107/148 versioned authority supplement distinguishes actual human decision, task mode and prior build grant; policy auto-allow in YOLO never means a human clicked. Bind grant/issuer/revision/ownership refs where applicable, exact target/request/preflight/currentness, and truthful attempted/blocked/unknown/reconciled outcomes. Historical receipts are not rewritten.
 
 Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile. Amended 2026-10-31 (DL-270): pm export, pm db dump, pm inspect, pm tail and the in-app record inspector (SP-339) apply this same default masking and redaction profile; a fuller view needs the explicit fuller profile.
 
@@ -1695,17 +1680,25 @@ plan_unit_id: PS-009
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Mode override semantics reconcile ask/plan to deny, approval, external_publish_side_effect, side-effect, and non-bypassable remote publication approval so mutating remote side effects cannot diverge by surface or mode."
+canonical_text: Mode override and remote-side-effect admission use PS-146 through PS-148. ask/plan deny task-file
+  mutation; regular keeps effect-specific asks; yolo authorizes task-scoped ordinary git push, publication
+  and needed repository creation without another human yes. Retained guards, exact targets, currentness, Y1
+  and separately human-approved build grants remain enforced at final dispatch on every surface.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-005
+- PS-146
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-009 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-009 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1719,20 +1712,27 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "ask/plan -> deny"
-- "/plan"
-- "/approval"
-- "external_publish_side_effect"
-- "side-effect"
-- "non-bypassable approval"
+- ask/plan -> deny
+- /plan
+- /approval
+- external_publish_side_effect
+- side-effect
+- non-bypassable approval
 negative_constraints:
-- "Mutating remote publication cannot diverge by surface or mode."
+- No wrapper may reinstate an ordinary publication ask in YOLO or record mode authority as a human approval.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Mode override semantics reconcile ask/plan to deny, approval, external_publish_side_effect,
+  side-effect, and non-bypassable remote publication approval so mutating remote side effects cannot diverge
+  by surface or mode.'
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-010 - Provider Gap And Requested Effective Disclosure
@@ -2301,17 +2301,27 @@ plan_unit_id: PS-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission rules evaluate in strict layer precedence for mode override, parent/run ceiling, session cache, Persona overrides, project, global, and defaults, while child runs inherit restrictive action ceilings and argument-pattern rules additively without widening."
+canonical_text: Permission rules retain strict mode, parent/run, session and Persona precedence followed by
+  Project, Computer layer 5b, Everywhere and defaults. Computer is inserted between Project and Everywhere;
+  legacy global normalizes to everywhere before policy. Per-rule specificity and last-match behavior remain
+  Permissions-owned. Safety profile row resolution consumes SSYS-059 more_careful with Computer custom-profile
+  fallback, rather than replacing this rule resolver. All grants intersect parent/receiver ceilings, managed
+  policy and PS-148 retained guards; a child only narrows.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-019
+- PS-144
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-020 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-020 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2325,35 +2335,41 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0021
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S13/S15/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Deterministic precedence across layers"
-- "Mode override"
-- "Parent/run ceiling"
-- "Session cache"
-- "Persona overrides"
-- "Project-level"
-- "Global-level"
-- "Defaults"
-- "ask / plan"
-- "yolo"
-- "merge-not-replace"
-- "Parent Agent -> Parent Session -> Child Session -> Child Agent"
+- Deterministic precedence across layers
+- Mode override
+- Parent/run ceiling
+- Session cache
+- Persona overrides
+- Project-level
+- Global-level
+- Defaults
+- ask / plan
+- yolo
+- merge-not-replace
+- Parent Agent -> Parent Session -> Child Session -> Child Agent
+- Computer
+- Everywhere
+- more_careful
 negative_constraints:
-- "Higher-precedence layers shadow lower layers on a per-rule basis but do not replace the entire lower ruleset."
-- "A child may narrow authority, but must not widen or replace away inherited restrictions."
+- Higher-precedence layers shadow lower layers on a per-rule basis but do not replace the entire lower ruleset.
+- A child may narrow authority, but must not widen or replace away inherited restrictions.
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2"
-- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"
-- "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md"
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2'
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md'
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Run_Modes.md"
-- "Plans/Personas.md"
-- "Plans/Tools.md"
-- "Plans/orchestrator-subagent-integration.md"
-- "Plans/Executor_Protocol.md"
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
+- Plans/Personas.md
+- Plans/Tools.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/Executor_Protocol.md
 ```
 
 ### PS-021 - Scope Specificity And Account Aware Carryover Fields
@@ -2363,17 +2379,24 @@ plan_unit_id: PS-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Scope specificity resolves lane before seam before package before project before global, carries role-scoped account policy overrides, and preserves execution_entity_id, account_id, permission_scope, and approval_carryover_scope for multi-lane account-aware permission carry-through."
+canonical_text: Scope specificity remains lane before seam before package before project, then computer, then
+  everywhere (legacy global). Role-scoped account policy and execution_entity_id/account_id/permission_scope/approval_carryover_scope
+  still narrow the parent ceiling. No-project contexts skip Project/package/seam/lane rungs that lack an actual
+  owner; the Computer and explicit Everywhere choices remain available under PS-144.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-020
+- PS-144
 unblocks: []
 acceptance_criteria:
-- "PS-021 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-021 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2387,30 +2410,34 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0021
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "lane:{lane_id}"
-- "seam:{seam_id}"
-- "package:{package_id}"
-- "allowed_roles"
-- "disallowed_roles"
-- "cooldown_policy_override"
-- "switch_threshold_override"
-- "execution_entity_id"
-- "account_id"
-- "permission_scope"
-- "approval_carryover_scope"
-- "effective-account"
+- lane:{lane_id}
+- seam:{seam_id}
+- package:{package_id}
+- allowed_roles
+- disallowed_roles
+- cooldown_policy_override
+- switch_threshold_override
+- execution_entity_id
+- account_id
+- permission_scope
+- approval_carryover_scope
+- effective-account
 negative_constraints:
-- "Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only."
-- "Role-scoped account policy override fields narrow authority but do not widen the parent/run permission ceiling."
+- Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only.
+- Role-scoped account policy override fields narrow authority but do not widen the parent/run permission ceiling.
 preserved_contractrefs:
-- "ContractRef: Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals, Plans/Tools.md#10.7A Web-operation approval summary rules"
+- 'ContractRef: Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals, Plans/Tools.md#10.7A Web-operation
+  approval summary rules'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/FinalGUISpec.md"
-- "Plans/Tools.md"
+- Plans/Permissions_System.md
+- Plans/FinalGUISpec.md
+- Plans/Tools.md
 ```
 
 ### PS-022 - Requested Vs Effective Capability Disclosure
@@ -2639,19 +2666,29 @@ plan_unit_id: PS-026
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Any tool invocation referencing a path outside active project working roots triggers the external_directory permission key with default ask, except paths on the external directory allowlist, whose entries support wildcard syntax."
+canonical_text: 'external_directory compares canonical paths with the actual invocation''s working roots: a
+  Project''s admitted roots, or the application chat folder plus places explicitly granted Read and change.
+  Outside-root access checks the existing allowlist then configured allow/ask/deny, default ask, with no YOLO
+  bypass. PS-145 permits only task-needed, visibly listed non-secret home-folder reads while FileSafe is on;
+  that read exception creates no write root and excludes all Project folders, PM private data and credential/sign-in/mail/password-manager
+  roots. FileSafe off removes the home-read exception. A source Project is read through project tools and can
+  never be directly mutated from another scope, even by an external-directory approval.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-014
 - PS-024
 - PS-025
+- PS-145
 unblocks: []
 acceptance_criteria:
-- "PS-026 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-026 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2665,21 +2702,29 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0026
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N3/N6/N19
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "External directory guard"
-- "EXTERNAL-DIR-GUARD"
-- "external_directory"
-- "Default: ask"
-- "external directory allowlist"
-- "~/.cargo/**"
-- "/usr/local/include/**"
+- External directory guard
+- EXTERNAL-DIR-GUARD
+- external_directory
+- 'Default: ask'
+- external directory allowlist
+- ~/.cargo/**
+- /usr/local/include/**
 negative_constraints:
-- "Paths outside active project working roots must not bypass the external_directory guard unless covered by the allowlist."
+- Only the explicit PS-145 read exception or a valid scoped root/allowlist may satisfy external_directory;
+  mode alone never does.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N3/N6/N19: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Any tool invocation referencing a path outside active project working roots triggers
+  the external_directory permission key with default ask, except paths on the external directory allowlist,
+  whose entries support wildcard syntax.'
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-027 - Always Approval Pattern Suggestions
@@ -3114,18 +3159,28 @@ plan_unit_id: PS-035
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "external_directory triggers when a tool references a path outside project working roots, checks the external directory allowlist first, and otherwise applies the configured allow, ask, or deny action."
+canonical_text: 'external_directory compares canonical paths with the actual invocation''s working roots: a
+  Project''s admitted roots, or the application chat folder plus places explicitly granted Read and change.
+  Outside-root access checks the existing allowlist then configured allow/ask/deny, default ask, with no YOLO
+  bypass. PS-145 permits only task-needed, visibly listed non-secret home-folder reads while FileSafe is on;
+  that read exception creates no write root and excludes all Project folders, PM private data and credential/sign-in/mail/password-manager
+  roots. FileSafe off removes the home-read exception. A source Project is read through project tools and can
+  never be directly mutated from another scope, even by an external-directory approval.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-026
 - PS-033
+- PS-145
 unblocks: []
 acceptance_criteria:
-- "PS-035 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-035 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3139,23 +3194,31 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0031
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N3/N6/N19
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "external_directory"
-- "GUARD-EXTERNAL-DIR"
-- "project working roots"
-- "Default action: ask"
-- "external directory allowlist"
-- "allow"
-- "ask"
-- "deny"
-- "allowlist"
+- external_directory
+- GUARD-EXTERNAL-DIR
+- project working roots
+- 'Default action: ask'
+- external directory allowlist
+- allow
+- ask
+- deny
+- allowlist
 negative_constraints:
-- "Outside-root paths must not bypass the guard unless they match an allowlist entry."
+- Only the explicit PS-145 read exception or a valid scoped root/allowlist may satisfy external_directory;
+  mode alone never does.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 N3/N6/N19: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: external_directory triggers when a tool references a path outside project working
+  roots, checks the external directory allowlist first, and otherwise applies the configured allow, ask, or
+  deny action.'
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-036 - External Publish Guard Coverage
@@ -3165,18 +3228,26 @@ plan_unit_id: PS-036
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "external_publish_side_effect covers DockerHub repository creation, autonomous DockerHub image push, managed remote template repository creation, and managed Unraid template repository remote push as non-bypassable remote side-effect approvals."
+canonical_text: external_publish_side_effect remains the exact-target admission point for DockerHub repository
+  create/image push and managed template-repository create/push. Regular asks for each unapproved effect. Task-scoped
+  YOLO or an applicable PS-147 build grant records the PS-146 authority without an additional publication yes;
+  capability, auth, target/privacy, FileSafe, trust, currentness and remote reconciliation still run.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-009
 - PS-033
+- PS-146
+- PS-147
 unblocks: []
 acceptance_criteria:
-- "PS-036 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-036 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3190,25 +3261,32 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0032
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "external_publish_side_effect"
-- "DockerHub repository creation"
-- "DockerHub image push"
-- "managed remote template repository"
-- "managed Unraid template repository"
-- "Default action: ask"
-- "non-bypassable"
-- "yolo"
-- "scope-bound approval reuse"
-- "generic prior allows"
+- external_publish_side_effect
+- DockerHub repository creation
+- DockerHub image push
+- managed remote template repository
+- managed Unraid template repository
+- 'Default action: ask'
+- non-bypassable
+- yolo
+- scope-bound approval reuse
+- generic prior allows
 negative_constraints:
-- "yolo mode, scope-bound approval reuse, and generic prior allows must not suppress external_publish_side_effect."
+- Ordinary tool allow is not target identity, capability or secret authority.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: external_publish_side_effect covers DockerHub repository creation, autonomous DockerHub
+  image push, managed remote template repository creation, and managed Unraid template repository remote push
+  as non-bypassable remote side-effect approvals.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Containers_Registry_and_Unraid.md"
+- Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
 ### PS-037 - External Publish Approval And Failure Presentation
@@ -3218,17 +3296,25 @@ plan_unit_id: PS-037
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "A direct user click approves only the exact remote side effect named by that control, chained remote side effects require separate approvals in execution order, and blocked or rejected runtime errors identify the blocked step, guard, and recovery actions inline and in chat/evidence output."
+canonical_text: A direct user click approves only its named exact remote effect. Chained effects are evaluated
+  separately in execution order, asking in Regular unless that effect already has applicable authority; YOLO
+  publication and build-granted operations use PS-146/147 without repeated clicks. Every refusal names the
+  blocked step, guard and canonical recovery actions inline and in chat/evidence.
 gui_related: true
-gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+gui_classification_reason: This unit defines user-visible permission disclosure, approval presentation, settings
+  help, GUI references, or compact surface behavior.
 split_recommended: false
 depends_on:
 - PS-036
+- PS-146
+- PS-147
 unblocks: []
 acceptance_criteria:
-- "PS-037 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-037 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3242,27 +3328,34 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0032
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "direct user click"
-- "exact remote side effect"
-- "separate approval step"
-- "execution order"
-- "Failure presentation"
-- "blocked remote step"
-- "guard name"
-- "recovery actions"
-- "Docker Manager"
-- "orchestrator surfaces"
-- "chat/evidence output"
+- direct user click
+- exact remote side effect
+- separate approval step
+- execution order
+- Failure presentation
+- blocked remote step
+- guard name
+- recovery actions
+- Docker Manager
+- orchestrator surfaces
+- chat/evidence output
 negative_constraints:
-- "A direct click approval must not authorize a different remote side effect in the same chained flow."
+- A direct click approval must not authorize a different remote side effect in the same chained flow.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: A direct user click approves only the exact remote side effect named by that control,
+  chained remote side effects require separate approvals in execution order, and blocked or rejected runtime
+  errors identify the blocked step, guard, and recovery actions inline and in chat/evidence output.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Containers_Registry_and_Unraid.md"
-- "Plans/FinalGUISpec.md"
+- Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/FinalGUISpec.md
 ```
 
 ### PS-038 - Tool Permission Key Taxonomy
@@ -3438,19 +3531,26 @@ plan_unit_id: PS-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Approval UI preserves deny, once, for session, and always; once approves only the current invocation, for session creates an ephemeral session-cache allow under approval_scope_key, and always creates a revocable project or global rule through canonical permissions storage."
+canonical_text: Approval UI preserves deny, once, for session and always. Once covers one invocation; for session
+  is ephemeral under approval_scope_key. Always requires a person's explicit pattern and non-preselected This
+  project, This computer or Everywhere scope, writes a revocable owner record through create_project_rule/create_computer_rule/create_global_rule,
+  and is never inferred from YOLO. No-project hides This project. Paths are never Everywhere. PS-144 governs
+  source-origin acceptance; it is separate from durable Always and executable trust.
 gui_related: true
-gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
 split_recommended: false
 depends_on:
 - PS-019
 - PS-023
 - PS-027
+- PS-144
 unblocks: []
 acceptance_criteria:
-- "PS-041 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-041 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3464,25 +3564,32 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S15/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Approval UX, recovery, and audit visibility"
-- "deny"
-- "once"
-- "for session"
-- "always"
-- "approval_scope_key"
-- "Project"
-- "Global"
-- "canonical permissions storage"
-- "FileSafe allowlists"
-- "one-off UI side effects"
+- Approval UX, recovery, and audit visibility
+- deny
+- once
+- for session
+- always
+- approval_scope_key
+- Project
+- Global
+- canonical permissions storage
+- FileSafe allowlists
+- one-off UI side effects
+- This project
+- This computer
+- Everywhere
+- create_computer_rule
 negative_constraints:
-- "Durable approval must not be implemented through ad-hoc FileSafe allowlists or one-off UI side effects."
+- Durable approval must not be implemented through ad-hoc FileSafe allowlists or one-off UI side effects.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-042 - Blocked Recovery Payload Routing
@@ -3927,9 +4034,16 @@ plan_unit_id: PS-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission resolution composes precedence layers with dispatch checks by building invocation context, applying mode and scoped layers, running non-bypassable guards and capability gates, persisting requested/effective evidence, rechecking hook mutations, and dispatching only final allow outcomes."
+canonical_text: One admission pipeline builds explicit application/Project identity and canonical target context,
+  composes mode and all applicable ceilings/rules, evaluates PS-146 ordinary publication or PS-147 build authority,
+  and then intersects every PS-148 retained guard and capability. It persists immutable requested/effective
+  evidence and actual authority source, rechecks changed hook arguments and final targets immediately before
+  local or remote dispatch, and executes only final allow. App snapshots use PS-145 rather than fabricated
+  node/Project identities. An ask, deny, missing authority, stale target, unavailable capability or failed
+  audit append executes nothing.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-020
@@ -3937,11 +4051,18 @@ depends_on:
 - PS-022
 - PS-026
 - PS-036
+- PS-144
+- PS-145
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-050 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-050 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3956,33 +4077,38 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0037
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0038
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S13/Y1/O1–O3/N1/N27
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Resolution algorithm"
-- "Composition with precedence layers"
-- "mode layer"
-- "ask"
-- "plan"
-- "yolo"
-- "non-bypassable guards"
-- "requested_permission_state"
-- "effective_permission_state"
-- "downgrade_reason"
-- "permission_snapshot_id?"
-- "blocked_reason_code"
-- "allowed_action_ids[]"
-- "Dispatch only when the final effective decision is allow"
+- Resolution algorithm
+- Composition with precedence layers
+- mode layer
+- ask
+- plan
+- yolo
+- non-bypassable guards
+- requested_permission_state
+- effective_permission_state
+- downgrade_reason
+- permission_snapshot_id?
+- blocked_reason_code
+- allowed_action_ids[]
+- Dispatch only when the final effective decision is allow
 negative_constraints:
-- "ask, deny, blocked, unavailable, or capability-failed outcomes must emit audit evidence and must not call the underlying tool."
+- ask, deny, blocked, unavailable, or capability-failed outcomes must emit audit evidence and must not call
+  the underlying tool.
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md,
+  ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Run_Modes.md"
-- "Plans/Tools.md"
-- "Plans/Executor_Protocol.md"
-- "Plans/Contracts_V0.md"
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
+- Plans/Tools.md
+- Plans/Executor_Protocol.md
+- Plans/Contracts_V0.md
 ```
 
 ### PS-051 - Banned Command Full String Check
@@ -4204,18 +4330,26 @@ plan_unit_id: PS-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission configuration is stored across durable global, project, and persona layers plus an ephemeral in-memory session layer with the specified locations, TOML format, and lifetimes."
+canonical_text: Durable permission rules have Everywhere home at the settings-home writer, Computer home at
+  its execution Server/Host owner, Project home in its existing permissions TOML and Persona/profile home at
+  its existing owner; session approvals remain ephemeral. Global user-config TOML is a compatibility import/read-only
+  Everywhere projection, never a second writer. Computer path rules never sync to Everywhere. PS-144 defines
+  CAS, revocation and owner copy contributions.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-020
 - PS-021
+- PS-144
 unblocks: []
 acceptance_criteria:
-- "PS-055 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-055 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4229,27 +4363,33 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0042
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S7/S8/S15/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Persistence and storage"
-- "PERSISTENCE"
-- "Global"
-- "Project"
-- "Persona"
-- "Session"
-- "~/.config/puppet-master/permissions.toml"
-- "<project_root>/.puppet-master/permissions.toml"
-- "default_permissions_profile"
-- "permission-profiles"
-- "In-memory session cache"
+- Persistence and storage
+- PERSISTENCE
+- Global
+- Project
+- Persona
+- Session
+- ~/.config/puppet-master/permissions.toml
+- <project_root>/.puppet-master/permissions.toml
+- default_permissions_profile
+- permission-profiles
+- In-memory session cache
 negative_constraints: []
 preserved_contractrefs:
-- "ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#STORAGE-LAYOUT"
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#STORAGE-LAYOUT'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 S7/S8/S15/S16: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: Permission configuration is stored across durable global, project, and persona
+  layers plus an ephemeral in-memory session layer with the specified locations, TOML format, and lifetimes.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Decision_Policy.md"
-- "Plans/Personas.md"
+- Plans/Permissions_System.md
+- Plans/Decision_Policy.md
+- Plans/Personas.md
 ```
 
 ### PS-056 - Durable Approval Record Metadata
@@ -4259,18 +4399,26 @@ plan_unit_id: PS-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Durable approvals created through create_project_rule or create_global_rule persist in their owning config layer as metadata-bearing records with tool_pattern, action, optional scope_key, created_at, and created_by_thread_id."
+canonical_text: create_project_rule, create_computer_rule and create_global_rule persist durable rules at the
+  explicit Project, tagged Computer or Everywhere owner with rule_id, tool_pattern, action, scope_key, created_at
+  and created_by_thread_id plus issuer/origin/acceptance and revision metadata. Legacy global command spelling
+  targets Everywhere after normalization. Current owner revision CAS and canonical revoke/update by rule_id
+  apply; projection files do not become writers and no path rule may target Everywhere.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-041
 - PS-055
+- PS-144
 unblocks: []
 acceptance_criteria:
-- "PS-056 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-056 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4284,23 +4432,26 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0042
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S15/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "create_project_rule"
-- "create_global_rule"
-- "metadata-bearing records"
-- "tool_pattern"
-- "action"
-- "scope_key?"
-- "created_at"
-- "created_by_thread_id"
-- "File-level TOML projections"
+- create_project_rule
+- create_global_rule
+- metadata-bearing records
+- tool_pattern
+- action
+- scope_key?
+- created_at
+- created_by_thread_id
+- File-level TOML projections
 negative_constraints:
-- "Simpler per-tool TOML projections must not replace stored rule identity and audit metadata."
+- Simpler per-tool TOML projections must not replace stored rule identity and audit metadata.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-057 - TOML Permission Config Format
@@ -5078,19 +5229,26 @@ plan_unit_id: PS-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "The Permissions scope selector exposes Global, Project, Package, Seam, and Lane scopes when applicable, prevents orphan project rules when no project is active, saves selected scope files, and displays effective layer-of-origin badges."
+canonical_text: Permissions scope selection names This project, This computer and Everywhere, with existing
+  Package/Seam/Lane scopes only in valid real Project context. No-project hides This project and its nested
+  scopes. Always never preselects a place, and a path rule never offers Everywhere. Changes use the selected
+  owner's transaction; effective origin is an origin word opening Details, not a badge. GUI, palette and API
+  use the same canonical rule commands.
 gui_related: true
-gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
 split_recommended: false
 depends_on:
 - PS-021
 - PS-055
 - PS-064
+- PS-144
 unblocks: []
 acceptance_criteria:
-- "PS-071 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-071 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5104,26 +5262,33 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0056
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S4/S5/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Scope selector"
-- "Global"
-- "Project"
-- "Package"
-- "Seam"
-- "Lane"
-- "/disabled"
-- "selected scope"
-- "layer-of-origin badges"
-- "project-scoped rules"
+- Scope selector
+- Global
+- Project
+- Package
+- Seam
+- Lane
+- /disabled
+- selected scope
+- layer-of-origin badges
+- project-scoped rules
 negative_constraints:
-- "Durable always approval scope selection must not offer Project when no active project context exists."
+- Durable always approval scope selection must not offer Project when no active project context exists.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 S4/S5/S16: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The Permissions scope selector exposes Global, Project, Package, Seam, and Lane
+  scopes when applicable, prevents orphan project rules when no project is active, saves selected scope files,
+  and displays effective layer-of-origin badges.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/storage-plan.md"
-- "Plans/FinalGUISpec.md"
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
 ```
 
 ### PS-072 - Cross Surface Permission Mutation Parity
@@ -5291,19 +5456,27 @@ plan_unit_id: PS-075
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Permission allow is necessary but insufficient: tools must be capability-registered, unregistered tools remain non-runnable, file tools stay scoped to roots unless policy broadens access, and web tools honor domain allowlists and web-operation scope keys."
+canonical_text: 'Permission allow is necessary but insufficient: the tool must be capability-registered and
+  available on the actual Computer/Host/Environment and execution strategy. File access uses the explicit roots
+  and exclusions in PS-145; actual network effects retain domain policy, scoped provider disclosure and secret
+  scrub. yolo requires an admitted DAE path, never direct host execution as a fallback.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-017
 - PS-028
 - PS-035
+- PS-145
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-075 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-075 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5317,26 +5490,29 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0060
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N6/N10/Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "Capability gates and sandbox boundaries"
-- "capability-registered"
-- "permission-allowed"
-- "unregistered tools"
-- "non-runnable"
-- "bash"
-- "project root"
-- "working roots"
-- "domain allowlists"
-- "web-operation scope keys"
+- Capability gates and sandbox boundaries
+- capability-registered
+- permission-allowed
+- unregistered tools
+- non-runnable
+- bash
+- project root
+- working roots
+- domain allowlists
+- web-operation scope keys
 negative_constraints:
-- "Unregistered tools remain non-runnable even if a rule says allow."
+- Unregistered tools remain non-runnable even if a rule says allow.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Tools.md"
-- "Plans/FileSafe.md"
+- Plans/Permissions_System.md
+- Plans/Tools.md
+- Plans/FileSafe.md
 ```
 
 ### PS-076 - Permission Audit Trail Records
@@ -5550,9 +5726,13 @@ plan_unit_id: PS-080
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Acceptance criteria AC-PM01, AC-PM02, AC-PM03, AC-PM10, AC-PM13, and AC-PM14 cover deterministic resolution, precedence layer ordering, last-match wins, mode override behavior, scope specificity, and context narrowing."
+canonical_text: 'AC-PM01/02/03/10/13/14 prove deterministic per-rule precedence including Computer, last-match,
+  specificity and context narrowing. AC-PM10 separates the mode-layer candidate from final allow: YOLO ordinary
+  publication is allowed without another yes only through PS-146/148; ask/plan stay read-only toward task files,
+  with owner-authorized Plan/Goal/To-Do records distinct from task-file mutation.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-020
@@ -5560,11 +5740,16 @@ depends_on:
 - PS-024
 - PS-047
 - PS-050
+- PS-144
+- PS-146
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-080 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-080 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5578,31 +5763,34 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0066
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/Y1/N21 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Acceptance criteria"
-- "ACCEPTANCE"
-- "AC-PM01"
-- "AC-PM02"
-- "AC-PM03"
-- "AC-PM10"
-- "AC-PM13"
-- "AC-PM14"
-- "deterministic"
-- "Persona override"
-- "last-match-wins"
-- "yolo"
-- "ask/plan"
-- "lane"
-- "seam"
-- "package"
+- Acceptance criteria
+- ACCEPTANCE
+- AC-PM01
+- AC-PM02
+- AC-PM03
+- AC-PM10
+- AC-PM13
+- AC-PM14
+- deterministic
+- Persona override
+- last-match-wins
+- yolo
+- ask/plan
+- lane
+- seam
+- package
 negative_constraints: []
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md"
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Progression_Gates.md"
+- Plans/Permissions_System.md
+- Plans/Progression_Gates.md
 ```
 
 ### PS-081 - Guard Defaults And Web Key Acceptance Group
@@ -5612,20 +5800,27 @@ plan_unit_id: PS-081
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Acceptance criteria AC-PM04, AC-PM05, AC-PM08, and AC-PM12 cover doom_loop, external_directory, .env deny defaults, and derived web-operation permission keys."
+canonical_text: AC-PM04/05/08/12 preserve doom_loop, external_directory, .env deny and normalized web-operation
+  keys. AC-PM05 includes application working roots, the FileSafe-on listed home-read exception and its exclusions;
+  neither that exception nor an allowlisted path grants Project mutation, PM private-data access, secrets or
+  an Everywhere path rule.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-028
 - PS-034
 - PS-035
 - PS-047
+- PS-145
 unblocks: []
 acceptance_criteria:
-- "PS-081 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-081 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5639,29 +5834,32 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0066
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N3/N6/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 preserved_exact_tokens:
-- "AC-PM04"
-- "AC-PM05"
-- "AC-PM08"
-- "AC-PM12"
-- "doom_loop"
-- "external_directory"
-- ".env"
-- ".env.*"
-- ".env.example"
-- "webextract:{domain}"
-- "webresearch:{query_category}"
-- "webcrawl:{domain}"
-- "webmap:{domain}"
-- "registrable-domain"
+- AC-PM04
+- AC-PM05
+- AC-PM08
+- AC-PM12
+- doom_loop
+- external_directory
+- .env
+- .env.*
+- .env.example
+- webextract:{domain}
+- webresearch:{query_category}
+- webcrawl:{domain}
+- webmap:{domain}
+- registrable-domain
 negative_constraints: []
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md"
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Progression_Gates.md"
+- Plans/Permissions_System.md
+- Plans/Progression_Gates.md
 ```
 
 ### PS-082 - Approval Persistence And GUI Acceptance Group
@@ -5785,18 +5983,26 @@ plan_unit_id: PS-084
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "The DockerHub and Unraid addendum extends special-guard, tool-key, and default sections for remote publication and managed template-repo mutation coverage, reinforcing external_publish_side_effect rather than creating a rival owner."
+canonical_text: DockerHub/Unraid remote create, image push and template create/push consume the single external_publish_side_effect
+  owner with PS-146 mode-aware authority and PS-147 build grants, exact targets and durable outcomes; they
+  do not create a rival approval engine.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-033
 - PS-036
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-084 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-084 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5811,45 +6017,61 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0067
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0068
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "DockerHub / Unraid remote-side-effect guard addendum"
-- "external_publish_side_effect"
-- "DockerHub repository creation"
-- "DockerHub image push"
-- "managed remote template repo"
-- "remote push"
-- "publication visibility"
-- "remote repository state"
-- "remote distribution state"
+- DockerHub / Unraid remote-side-effect guard addendum
+- external_publish_side_effect
+- DockerHub repository creation
+- DockerHub image push
+- managed remote template repo
+- remote push
+- publication visibility
+- remote repository state
+- remote distribution state
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes:
-- "This source addendum reinforces PS-036 and does not create a competing owner for external publish guard semantics."
-stale_retired_dispositions: []
+- This source addendum reinforces PS-036 and does not create a competing owner for external publish guard semantics.
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The DockerHub and Unraid addendum extends special-guard, tool-key, and default sections
+  for remote publication and managed template-repo mutation coverage, reinforcing external_publish_side_effect
+  rather than creating a rival owner.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Containers_Registry_and_Unraid.md"
+- Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
-### PS-085 - External Publish Non Bypassable Behavior
+### PS-085 - External Publish Mode-Aware Behavior
 
 ```yaml
 plan_unit_id: PS-085
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Local build approval and enabled defaults do not approve later remote publication, external_publish_side_effect defaults to ask, is non-bypassable, and cannot be globally suppressed by yolo or session-scoped always approvals."
+canonical_text: 'A local Build click and enabled defaults are not remote authority. Each follow-on effect still
+  evaluates external_publish_side_effect at dispatch: Regular asks when authority is missing, task-scoped YOLO
+  permits ordinary publication/needed repository creation without another yes, and an exact approved build
+  grant covers its listed operations. Session approval never becomes an unbounded standing grant.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-036
 - PS-084
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-085 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-085 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5863,24 +6085,30 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0069
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "push_policy = after_build"
-- "Default action: ask"
-- "non-bypassable"
-- "yolo"
-- "Session-scoped always"
-- "Build click"
-- "remote publication"
-- "enabled defaults"
+- push_policy = after_build
+- 'Default action: ask'
+- non-bypassable
+- yolo
+- Session-scoped always
+- Build click
+- remote publication
+- enabled defaults
 negative_constraints:
-- "yolo mode must not auto-allow external_publish_side_effect."
-- "Session-scoped always approvals must not suppress this guard globally."
-- "Earlier local-only actions or enabled defaults do not implicitly approve follow-on remote side effects."
+- Session-scoped always approvals must not suppress this guard globally.
+- Earlier local-only actions or enabled defaults do not implicitly approve follow-on remote side effects.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Local build approval and enabled defaults do not approve later remote publication,
+  external_publish_side_effect defaults to ask, is non-bypassable, and cannot be globally suppressed by yolo
+  or session-scoped always approvals.'
 owner_hints:
-- "Plans/Permissions_System.md"
+- Plans/Permissions_System.md
 ```
 
 ### PS-086 - Exact Publish Action Approval UI Examples
@@ -5890,18 +6118,27 @@ plan_unit_id: PS-086
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Direct user clicks approve only the exact publish, create, or push side effect requested, preserving examples that Push image does not auto-approve creating a missing DockerHub repo or pushing a managed Unraid template repo unless that was the exact action."
+canonical_text: A user Publish/Create/Push click approves its exact effect only in Regular; separate follow-on
+  effects are evaluated separately. In YOLO a needed missing-repository create and requested template push
+  use PS-146 authority without extra clicks, preserving destination, private default, capability and result
+  evidence.
 gui_related: true
-gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+gui_classification_reason: This unit defines user-visible permission disclosure, approval presentation, settings
+  UI, GUI controls, or copy behavior.
 split_recommended: false
 depends_on:
 - PS-037
 - PS-085
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-086 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-086 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5915,23 +6152,30 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0069
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "direct user click"
-- "exact publish/create/push button"
-- "Push image"
-- "DockerHub repo"
-- "managed Unraid template repo"
-- "one requested side effect only"
-- "Follow-on side effects"
+- direct user click
+- exact publish/create/push button
+- Push image
+- DockerHub repo
+- managed Unraid template repo
+- one requested side effect only
+- Follow-on side effects
 negative_constraints:
-- "One clicked publish action cannot auto-approve different follow-on side effects."
+- One clicked publish action cannot auto-approve different follow-on side effects.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Direct user clicks approve only the exact publish, create, or push side effect requested,
+  preserving examples that Push image does not auto-approve creating a missing DockerHub repo or pushing a
+  managed Unraid template repo unless that was the exact action.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/FinalGUISpec.md"
-- "Plans/Containers_Registry_and_Unraid.md"
+- Plans/Permissions_System.md
+- Plans/FinalGUISpec.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
 ### PS-087 - External Publish Failure Preservation
@@ -5989,20 +6233,28 @@ plan_unit_id: PS-088
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "The tool and special-guard key list and defaults table include external_publish_side_effect as a Guard with default ask for remote publication and remote repository mutation."
+canonical_text: external_publish_side_effect remains a Guard with Regular default ask for remote publication/repository
+  mutation; PS-146 supplies task-scoped YOLO policy auto-allow and PS-147 exact build authority. The setting
+  safety.approvals.external-publish-ask describes Regular, not a hidden YOLO publication veto.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
+  or governance behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-033
 - PS-038
 - PS-057
 - PS-084
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-088 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-088 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6016,25 +6268,31 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0071
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Canonical key/default additions"
-- "Key"
-- "Category"
-- "Scope"
-- "Notes"
-- "Default"
-- "Rationale"
-- "external_publish_side_effect"
-- "Guard"
-- "Remote publication and remote repo mutation"
-- "ask"
+- Canonical key/default additions
+- Key
+- Category
+- Scope
+- Notes
+- Default
+- Rationale
+- external_publish_side_effect
+- Guard
+- Remote publication and remote repo mutation
+- ask
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: The tool and special-guard key list and defaults table include external_publish_side_effect
+  as a Guard with default ask for remote publication and remote repository mutation.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Tools.md"
+- Plans/Permissions_System.md
+- Plans/Tools.md
 ```
 
 ### PS-089 - Policy Denied Outcomes Are Blocked Outcomes
@@ -6216,20 +6474,31 @@ plan_unit_id: PS-092
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Domain-sensitive operational sessions and remote mutations use separate permission classes, so generic tool allow, /session/YOLO, or headless defaults never approve SCM destructive actions, workflow admin CRUD, image or template publish, Kubernetes mutations, docker exec or attach, kubectl exec, or kubectl port-forward."
+canonical_text: Domain classes remain separate from generic tool permission. PS-146 admits task-scoped YOLO
+  ordinary push/publication/needed repository creation and leased force-push on a PM-created branch for this
+  work. Prune, remote branch/repository delete, destructive discard and Kubernetes delete/exec still ask unless
+  the exact approved build grant covers that operation on demonstrably grant-created resources. Workflow admin,
+  Docker exec/attach, tunnels, protection changes and other domain actions retain their own authority checks;
+  no grant widens main/default/protected force-push, secret, auth, trust or paid-signup authority.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-018
 - PS-037
 - PS-084
 - PS-085
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-092 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-092 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6243,28 +6512,36 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "docker exec"
-- "docker attach"
-- "kubectl exec"
-- "kubectl port-forward"
-- "/force-push/prune/destructive"
-- "workflow /cancel/rerun/admin CRUD"
-- "image push"
-- "repo create"
-- "template push"
-- "Kubernetes /delete/exec/port-forward"
-- "domain approval class"
-negative_constraints:
-- "Generic tool allow, /session/YOLO, or headless defaults never approve domain-sensitive remote side effects."
+- docker exec
+- docker attach
+- kubectl exec
+- kubectl port-forward
+- /force-push/prune/destructive
+- workflow /cancel/rerun/admin CRUD
+- image push
+- repo create
+- template push
+- Kubernetes /delete/exec/port-forward
+- domain approval class
+negative_constraints: []
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/Decision_Policy.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Domain-sensitive operational sessions and remote mutations use separate permission
+  classes, so generic tool allow, /session/YOLO, or headless defaults never approve SCM destructive actions,
+  workflow admin CRUD, image or template publish, Kubernetes mutations, docker exec or attach, kubectl exec,
+  or kubectl port-forward.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/Containers_Registry_and_Unraid.md"
-- "Plans/GitHub_API_Auth_and_Flows.md"
+- Plans/Permissions_System.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/GitHub_API_Auth_and_Flows.md
 ```
 
 ### PS-093 - Queued Approval Preflight Binding
@@ -6755,19 +7032,31 @@ plan_unit_id: PS-102
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Domain approval and preflight decisions bind exact mutable targets for SCM, GitHub Actions, Docker, and Kubernetes, run static policy and cheap /precondition before approval, and run execution-time /revalidate before mutation; stale preflight evidence or changed target identity invalidates reuse."
+canonical_text: SCM, CI, Docker and Kubernetes admission binds operation class, normalized actual targets,
+  Computer/Host/Environment, account/route and relevant repo/worktree/branch/head or immutable resource UID.
+  App raw Git roots use explicit ad-hoc repo/root identity, never a fabricated Project. Static policy and cheap
+  preflight precede any human prompt; final execution revalidates current target, expected remote head/lease,
+  grant generation, ownership manifest, permission generation and Stop/revocation epoch. Changed identity or
+  lost lease refuses without remote effect.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-092
 - PS-093
 - PS-101
+- PS-145
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-102 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-102 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6781,38 +7070,42 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0076
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3/N6
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "project_id"
-- "repo_id"
-- "worktree_id"
-- "/worktree/context"
-- "branch"
-- "commit"
-- "repo_remote"
-- "workflow_id"
-- "run_id"
-- "/environment"
-- "runtime"
-- "registry_host"
-- "namespace"
-- "/repository"
-- "image_ref"
-- "kube_context"
-- "workload_ref"
-- "resource_ref"
-- "preflight_revision"
-- "/precondition"
-- "/revalidate"
+- project_id
+- repo_id
+- worktree_id
+- /worktree/context
+- branch
+- commit
+- repo_remote
+- workflow_id
+- run_id
+- /environment
+- runtime
+- registry_host
+- namespace
+- /repository
+- image_ref
+- kube_context
+- workload_ref
+- resource_ref
+- preflight_revision
+- /precondition
+- /revalidate
 negative_constraints:
-- "Approval of an action name alone must not approve a changed or under-bound mutable target."
+- Approval of an action name alone must not approve a changed or under-bound mutable target.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Stale-preflight evidence or changed target identity invalidates approval reuse and returns the action to blocked state."
+- Stale-preflight evidence or changed target identity invalidates approval reuse and returns the action to
+  blocked state.
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/GitHub_API_Auth_and_Flows.md"
-- "Plans/Containers_Registry_and_Unraid.md"
+- Plans/Permissions_System.md
+- Plans/GitHub_API_Auth_and_Flows.md
+- Plans/Containers_Registry_and_Unraid.md
 ```
 
 ### PS-103 - Admin Side Effect Guard Mappings
@@ -6822,20 +7115,28 @@ plan_unit_id: PS-103
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Source Control, GitHub Actions, Docker Manager, Docker Hub, and Kubernetes admin or hosted side effects use canonical permission and blocked-state guard rules when approval, capability, or auth prerequisites are missing."
+canonical_text: SCM, CI, registry, Docker and Kubernetes effects consume PS-146/147/148 once. Regular approval,
+  applicable YOLO mode authority or exact build-grant authority is recorded truthfully; missing capability/auth/target/retained
+  consent remains a typed non-executed blocker, never a revived generic publication yes.
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-084
 - PS-088
 - PS-089
 - PS-102
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-103 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-103 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -6849,26 +7150,35 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0077
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)"
-- "GitHub Actions rerun/cancel/dispatch"
-- "admin CRUD"
-- "Docker Hub repository creation"
-- "image push"
-- "managed template-repo create/push"
-- "Kubernetes mutating actions"
-- "external-side-effect guard model"
+- Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)
+- GitHub Actions rerun/cancel/dispatch
+- admin CRUD
+- Docker Hub repository creation
+- image push
+- managed template-repo create/push
+- Kubernetes mutating actions
+- external-side-effect guard model
 negative_constraints:
-- "External-side-effect and admin-gated behavior for this packet must use canonical permission and blocked-state rules."
+- External-side-effect and admin-gated behavior for this packet must use canonical permission and blocked-state
+  rules.
 preserved_contractrefs:
-- "ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md"
+- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md,
+  ContractName:Plans/Decision_Policy.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-03 Y1/O1–O3: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Source Control, GitHub Actions, Docker Manager, Docker Hub, and Kubernetes admin
+  or hosted side effects use canonical permission and blocked-state guard rules when approval, capability,
+  or auth prerequisites are missing.'
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/GitHub_API_Auth_and_Flows.md"
-- "Plans/Containers_Registry_and_Unraid.md"
-- "Plans/Decision_Policy.md"
+- Plans/Permissions_System.md
+- Plans/GitHub_API_Auth_and_Flows.md
+- Plans/Containers_Registry_and_Unraid.md
+- Plans/Decision_Policy.md
 ```
 
 ### PS-104 - Partial Auth Requested Effective Disclosure
@@ -7046,18 +7356,30 @@ plan_unit_id: PS-107
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "Remote-side-effect receipts record approval_source, executing_subsystem, effective account, and credential handle for push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent actions."
+canonical_text: 'Remote receipts retain approval_source, executing_subsystem, effective account and non-secret
+  credential handle. Existing explicit confirm/cached permission/policy auto-allow/browser fallback source
+  values remain meaningful: YOLO uses policy auto-allow with authority_kind=mode, effective mode, task/target/snapshot
+  refs; a previously approved build grant uses authority_kind=build_grant with grant/revision/issuer/ownership
+  refs; only an actual human decision has authority_kind=human. Existing exact receipt versions remain unchanged;
+  the versioned authority supplement is required for new admissions. No boolean human_confirmed may encode
+  mode or grant authority.'
 gui_related: false
-gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, or governance
+  behavior rather than visual presentation.
 split_recommended: false
 depends_on:
 - PS-100
 - PS-103
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- "PS-107 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
-- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+- PS-107 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
+  files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -7071,29 +7393,33 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 preserved_exact_tokens:
-- "Remote-side-effect receipts"
-- "approval_source"
-- "executing_subsystem"
-- "effective account"
-- "credential handle"
-- "explicit confirm"
-- "cached permission"
-- "policy auto-allow"
-- "browser fallback"
-- "git"
-- "GitHub API"
-- "docker CLI"
-- "kubectl"
-- "SSH remote"
+- Remote-side-effect receipts
+- approval_source
+- executing_subsystem
+- effective account
+- credential handle
+- explicit confirm
+- cached permission
+- policy auto-allow
+- browser fallback
+- git
+- GitHub API
+- docker CLI
+- kubectl
+- SSH remote
 negative_constraints:
-- "Remote-side-effect receipts must not omit provenance for approval source, executing subsystem, effective account, or credential handle."
+- Remote-side-effect receipts must not omit provenance for approval source, executing subsystem, effective
+  account, or credential handle.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
-- "Plans/Permissions_System.md"
-- "Plans/storage-plan.md"
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
 ```
 
 ### PS-108 - Sensitive Metadata Export Masking
@@ -7558,40 +7884,67 @@ plan_unit_id: PS-113
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Permission approval reuse must resolve through an `approval_scope_key` schema derived from the
-  runtime identity envelope plus tool/context/mode and including actor, lane, package, project, run,
-  account, tool, context, mode, requested identity, effective identity, execution_role, and
-  `approval_scope_level` inputs. Default carryover is narrow lane/run/actor scope: an approval must
-  not cross lane, run, project, or account boundaries unless `approval_scope_level` explicitly
-  permits that boundary, the scoped key records it, and the target permission class allows carryover.
-  Reject-cascade must evaluate the same scoped key instead of a single-session or single-lane
-  assumption.
+canonical_text: approval_scope_key includes explicit scope_kind/project_id, tagged Computer/Host/Environment,
+  actual roots, thread/run/actor/account and operation/target/mode identity, retaining lane/package/node only
+  where genuinely present. It never depends on visible Project or provider session alone. Cross-project read/send
+  grants are deliberate PS-145 scope exceptions; their exact boundaries are recorded and rechecked at source
+  and receiver. They never transfer mutation, mode, durable Always, protected consent or build-grant authority.
+  Children inherit only a narrower task and ceiling. Conversion reissues destination evidence and any old source
+  approval remains historical.
 gui_related: false
-gui_classification_reason: Approval scope keys and reject-cascade behavior are permission/runtime contracts, not visual presentation.
-depends_on: [CV-281]
+gui_classification_reason: Approval scope keys and reject-cascade behavior are permission/runtime contracts,
+  not visual presentation.
+depends_on:
+- CV-281
+- PS-145
+- PS-148
 unblocks: []
 acceptance_criteria:
-  - "`approval_scope_key` has a defined schema from the runtime identity envelope over actor/lane/package/project/run/account/tool/context/mode/requested/effective identity/execution_role/approval_scope_level."
-  - Default carryover remains narrow lane/run/actor scope; crossing lane, run, project, or account boundaries requires explicit `approval_scope_level`, scoped key coverage, and permission-class allowance.
-  - Reject-cascade is evaluated against scoped keys rather than global session state.
+- '`approval_scope_key` has a defined schema from the runtime identity envelope over actor/lane/package/project/run/account/tool/context/mode/requested/effective
+  identity/execution_role/approval_scope_level.'
+- Default carryover remains narrow lane/run/actor scope; crossing lane, run, project, or account boundaries
+  requires explicit `approval_scope_level`, scoped key coverage, and permission-class allowance.
+- Reject-cascade is evaluated against scoped keys rather than global session state.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
 risk_class: approval_scope_overreach
 reasoning_tier: high
 context_scope: permissions_approval_scope
-implementation_surfaces: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
-node_compile_hint: {mode: approval_scope_key_contract, create_worknodes: false}
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: approval_scope_key_contract
+  create_worknodes: false
 source_lineage:
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0032
-  - pldg-20260614-002-part-3-fable-cleanup:atom-0048
-preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "runtime identity envelope", "tool/context/mode", "narrow lane/run/actor default carryover", "approval_scope_level", "crossing lane, run, project, or account boundaries", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
+- pldg-20260614-002-part-3-fable-cleanup:atom-0032
+- pldg-20260614-002-part-3-fable-cleanup:atom-0048
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N3/N4/N18/N25/N27
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens:
+- Approval Scope Key
+- approval_scope_key
+- runtime identity envelope
+- tool/context/mode
+- narrow lane/run/actor default carryover
+- approval_scope_level
+- crossing lane, run, project, or account boundaries
+- actor/lane/run/account
+- session approval carryover
+- reject-cascade
+- single-session/single-lane
 negative_constraints:
-  - Do not allow approval reuse from a provider session id alone.
-  - Do not allow implicit cross-lane, cross-run, cross-project, or cross-account approval carryover.
-  - Do not preserve single-session/single-lane reject-cascade behavior without actor/lane/run/account identity scope.
-owner_hints: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+- Do not allow approval reuse from a provider session id alone.
+- Do not allow implicit cross-lane, cross-run, cross-project, or cross-account approval carryover.
+- Do not preserve single-session/single-lane reject-cascade behavior without actor/lane/run/account identity
+  scope.
+owner_hints:
+- Plans/Permissions_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/human-in-the-loop.md
 ```
 
 ## Ledger Compile Addendum - pldg-20260616-001
@@ -8047,24 +8400,26 @@ plan_unit_id: PS-121
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: Before PM sends a local image or screenshot to a separate vision provider, it evaluates project
-  policy, sensitivity/redaction state, source class, destination provider/account, and user disclosure permission.
-  The popup offers choices like reject, accept, and always accept; exact wording may differ. Always accept is explicit,
-  scoped by project_id, user/account identity, source class, destination provider/account or provider-family policy,
-  tool id, and sensitivity/redaction class, then remains visible, auditable, and revocable/resettable. PM must not
-  silently reroute images to a destination outside the accepted permission scope.
+canonical_text: Before a local image/screenshot reaches a separate vision provider, evaluate the actual application/Project
+  policy, source sensitivity/redaction, source class, provider/account and scoped human disclosure. Always
+  accept is explicit, visible and revocable, with no preselected This project/This computer/Everywhere choice;
+  paths never offer Everywhere. Its key retains user/account/source class/destination/tool/redaction class
+  and the selected scope; no-project binds thread/Computer, never a made-up Project. Task YOLO may skip an
+  ordinary computer_use ask but never creates, broadens or substitutes the provider/screen disclosure grant.
+  Changed provider/account/source sensitivity invalidates reuse.
 gui_related: true
-gui_classification_reason: Defines the user-visible disclosure popup, reject/accept/always-accept choices, settings
-  visibility, and revocation UI.
-depends_on: []
+gui_classification_reason: Approval, scope, provenance or action feedback is visible on the owning GUI surface.
+depends_on:
+- PS-144
+- PS-145
 unblocks:
 - RAP-035
 - ACD-425
 acceptance_criteria:
 - Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
 - Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build
+  tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -8096,6 +8451,9 @@ source_lineage:
 - Plans/FileSafe.md
 - Plans/Models_System.md
 - Plans/Media_Generation_and_Capabilities.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S16/N10
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
 source_atom_ids:
 - atom-0077
 - atom-0079
@@ -8145,15 +8503,15 @@ preserved_exact_tokens:
 - policy permits
 - disclosure permission covers the destination
 negative_constraints:
-- Do not silently send screenshots containing secrets or sensitive local/project context to another provider route.
+- Do not silently send screenshots containing secrets or sensitive local/project context to another provider
+  route.
 - Do not bypass the existing tool permission model just because the bridge is model-assistive.
 - Do not serialize revoked, blocked, expired, or omitted image artifacts as successful prompt content.
-- Do not make always-accept global, irreversible, hidden, or impossible to revoke.
 - Do not create an implicit always-accept rule without an explicit user choice.
 - Do not make always-accept hidden, global by accident, irreversible, or impossible to audit.
 - Do not keep prompting after an applicable always-accept rule exists.
-- Do not make always-accept global across all projects, providers, users, source types, or sensitivity classes by
-  accident.
+- Do not make always-accept global across all projects, providers, users, source types, or sensitivity classes
+  by accident.
 - Do not create a hidden permission rule that cannot be inspected or revoked.
 - Do not keep prompting after an applicable remembered permission exists.
 - Do not silently send sensitive screenshots or images to another provider without policy evaluation.
@@ -8162,6 +8520,8 @@ negative_constraints:
 - Do not silently reroute an image to a different provider/account than the user allowed.
 - Do not treat provider catalog visibility as proof that a route can currently process image input.
 - Do not hide usage/cost attribution when the bridge uses a separate model route.
+- An explicitly chosen Everywhere rule is bounded by all non-path source/provider/user/sensitivity dimensions;
+  no accidental broadening.
 owner_hints:
 - Plans/Permissions_System.md
 - Plans/FileSafe.md
@@ -8175,6 +8535,15 @@ owner_hints:
 - Plans/Models_System.md
 - Plans/Media_Generation_and_Capabilities.md
 - Plans/usage-feature.md
+stale_retired_dispositions:
+- '2026-11-03 S16/N10: current behavior is the replacement canonical_text; superseded source remains lineage
+  only. Superseded clause: Before PM sends a local image or screenshot to a separate vision provider, it evaluates
+  project policy, sensitivity/redaction state, source class, destination provider/account, and user disclosure
+  permission. The popup offers choices like reject, accept, and always accept; exact wording may differ. Always
+  accept is explicit, scoped by project_id, user/account identity, source class, destination provider/account
+  or provider-family policy, tool id, and sensitivity/redaction class, then remains visible, auditable, and
+  revocable/resettable. PM must not silently reroute images to a destination outside the accepted permission
+  scope.'
 ```
 
 ### PS-122 - Teach Guided Mutation Confirmation Gates
@@ -8961,7 +9330,7 @@ This addendum is canonical permission spec text for deferred non-runtime FABLE r
 Repairs rows `sfk-344077d4e91d4dba8a844f8b`, `sfk-95212a02bf1d39bbc2883d92`, and `sfk-c2365f0841b6e3af70ad6310`.
 
 - The `always` response contract is owned by Section 3.4 and consumed by AC-PM06. Any older `§6.2` reference to `always` is a source-lineage alias for Section 3.4.
-- Durable rule creation is owned by Section 9 and command IDs `cmd.permissions.create_project_rule` and `cmd.permissions.create_global_rule`. Any older `§6.4A` reference is a source-lineage alias for Section 9 durable approvals.
+- Durable rule creation is owned by Section 9 and PS-144 through cmd.permissions.create_project_rule, cmd.permissions.create_computer_rule and cmd.permissions.create_global_rule (Everywhere after normalization). Older §6.4A remains a source-lineage alias.
 - Scope specificity is owned by Section 2.4 plus the deterministic resolution algorithm in Section 8. Any older `§2.4B` reference maps to Section 2.4 scope precedence.
 - New references must use these owner sections and command IDs rather than the retired aliases.
 
@@ -8980,7 +9349,7 @@ Repairs row `sfk-fdf444265abf92192b7160bd`.
 Repairs rows `sfk-57ac0d8ad5d91758f6c339a1` and `sfk-6f3fd08bf73eb3f910729299`.
 
 - Settings route: `settings.permissions`.
-- Command IDs: `cmd.permissions.open`, `cmd.permissions.create_project_rule`, `cmd.permissions.create_global_rule`, `cmd.permissions.update_rule`, `cmd.permissions.reorder_rule`, `cmd.permissions.delete_rule`, `cmd.permissions.revoke`, `cmd.permissions.pick_external_directory`, and `cmd.permissions.validate_rule`.
+- Command IDs: cmd.permissions.open, cmd.permissions.create_project_rule, cmd.permissions.create_computer_rule, cmd.permissions.create_global_rule, cmd.permissions.update_rule, cmd.permissions.reorder_rule, cmd.permissions.delete_rule, cmd.permissions.revoke, cmd.permissions.pick_external_directory and cmd.permissions.validate_rule. PS-144 supplies explicit target/CAS and no-path-Everywhere admission.
 - Directory picker dispatch name: `permissions.external_directory.pick`.
 - Duplicate path error code: `external_directory_duplicate_path`.
 - Invalid glob error code: `external_directory_invalid_glob`.
@@ -9000,7 +9369,7 @@ Repairs row `sfk-613f7652b32c4e3abfe4f6e2`.
 | `domain.workflow_admin` | workflow cancel, rerun, admin mutation | hosted-provider auth alone |
 | `domain.image_publish` | registry image push, repo create, template publish | local build approval |
 
-Each domain approval records `approval_scope_key`, `permission_snapshot_id`, `target_identity`, `operation_class`, `expires_at_utc?`, and `revocation_rule_id?`.
+Each domain decision records approval_scope_key, permission_snapshot_id, target_identity, operation_class, expires_at_utc? and revocation_rule_id?, plus PS-107/148 versioned actual authority. The table names classes, not universal human prompts: PS-146 YOLO publication/Y1 and PS-147 exact grant-created-resource exceptions apply before PS-148 retained gates. The generic tool/session column cannot veto already admitted ordinary YOLO publication or invent a human decision.
 
 ### Permission Snapshot Reason-Code Enums
 
@@ -9038,7 +9407,7 @@ The storage registry must materialize this row separately and bind it to the str
 
 ### Application versus project identity and denial replay
 
-All new permission audit and `tool.denied` writes use EventRecord `2.0.0`. A project-bound invocation uses `scope_kind = project` and its non-empty `project_id`. An application-level invocation before project selection uses `scope_kind = application` and `project_id = null`; it emits the denial/audit EventRecord without fabricating a project-scoped permission-snapshot row. If a mutation-capable attempt requires durable permission evidence, it must already be bound to one project and one materialized permission snapshot.
+Permission audit/tool.denied uses EventRecord 2.0.0: actual Project identity or scope_kind=application with project_id=null and real thread/run/Computer. PS-145 supplies app durable mutation evidence without a synthetic Project/node or empty Project v1 key. The original Project payload/key remains exact. Every mutation-capable dependency needs its admitted materialized scope-matched snapshot; missing evidence or audit admission fails closed.
 
 Permission audit inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the view with `unsupported_schema_version` instead of presenting partial permission history. Event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` with application `app` or the registered reversible project partition. Permissions does not derive a lookup key from current UI project/account state, omit `event_id`, or treat the index as permission authority.
 
@@ -9063,47 +9432,66 @@ plan_unit_id: PS-132
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Permission snapshots use the separate project-scoped durable family
-  permission_snapshot_record.v1:{project_id}:{snapshot_id}; Permissions owns its
-  closed immutable payload, while storage owns row registration, retention, and
-  recovery. Safe points use canonical sp: identity and restore points use rp:
-  identity. Neither can reconstruct or authorize reuse of a permission snapshot,
-  and missing or corrupt snapshot evidence requires fresh admission authority.
+canonical_text: 'The existing permission_snapshot_record.v1:{project_id}:{snapshot_id} and its closed Project
+  payload remain exact and immutable. PS-145 adds a separately versioned application evidence contract with
+  scope_kind=application, project_id=null, real thread/run/Computer/roots and owner-matched storage custody.
+  Application tool decisions do not fabricate attempt/node/Project fields. Safe-point sp: and restore-point
+  rp: identities remain their owners'' contracts and can never reconstruct or authorize snapshot reuse. Missing/corrupt
+  evidence requires fresh admission; historical Settings and replay projections are not authority.'
 gui_related: false
-gui_classification_reason: The unit defines backend permission evidence identity, schema ownership, retention linkage, and recovery admission.
-depends_on: [PS-097, PS-098, SP-242]
+gui_classification_reason: The unit defines backend permission evidence identity, schema ownership, retention
+  linkage, and recovery admission.
+depends_on:
+- PS-097
+- PS-098
+- SP-242
+- PS-145
 unblocks: []
 acceptance_criteria:
-  - The permission snapshot payload carries schema, project/snapshot/attempt/node identity, immutable permission contexts, event ref, redaction, and integrity evidence.
-  - Registry and cross-reference checks find one permission snapshot family distinct from safe-point and restore-point rows.
-  - New safe-point writes use only the canonical sp key and may reference but never embed or reconstruct permission snapshot authority.
-  - Missing or corrupt permission snapshot evidence cannot authorize restore/retry reuse and creates a fresh-snapshot admission requirement.
-  - Blocked, recovery, preserved-run, audit, and legal holds outlive ordinary snapshot age or current Settings changes.
+- The permission snapshot payload carries schema, project/snapshot/attempt/node identity, immutable permission
+  contexts, event ref, redaction, and integrity evidence.
+- Registry and cross-reference checks find one permission snapshot family distinct from safe-point and restore-point
+  rows.
+- New safe-point writes use only the canonical sp key and may reference but never embed or reconstruct permission
+  snapshot authority.
+- Missing or corrupt permission snapshot evidence cannot authorize restore/retry reuse and creates a fresh-snapshot
+  admission requirement.
+- Blocked, recovery, preserved-run, audit, and legal holds outlive ordinary snapshot age or current Settings
+  changes.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future RSP-REGISTRY-001 and permission-snapshot custody fixtures
+- python3 scripts/pm-plan-index.py validate
+- future RSP-REGISTRY-001 and permission-snapshot custody fixtures
 risk_class: permission_snapshot_identity_recovery_drift
 reasoning_tier: high
 context_scope: case_l_permission_snapshot_custody
 implementation_surfaces:
-  - Plans/Permissions_System.md
-  - Plans/storage_value_registry.json
+- Plans/Permissions_System.md
+- Plans/storage_value_registry.json
 node_compile_hint:
   mode: case_l_permission_snapshot_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Case-L:L-021
-  - Case-L:PD-RSP-05
-  - Case-L:PD-RSP-06
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/REGISTRY_PROPOSED_ROWS.json
-  - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+- Case-L:L-021
+- Case-L:PD-RSP-05
+- Case-L:PD-RSP-06
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/REGISTRY_PROPOSED_ROWS.json
+- PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/RESTORE_SAFEPOINT_REPAIR_PLAN.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/N6/N24/N25
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
 negative_constraints:
-  - Do not make Permissions the safe-point or restore-point lifecycle owner.
-  - Do not reconstruct historical permission authority from current Settings or replay-only projection state.
+- Do not make Permissions the safe-point or restore-point lifecycle owner.
+- Do not reconstruct historical permission authority from current Settings or replay-only projection state.
 owner_hints:
-  - Plans/Permissions_System.md
+- Plans/Permissions_System.md
+preserved_exact_tokens: []
+stale_retired_dispositions:
+- '2026-11-03 N1/N6/N24/N25: current behavior is the replacement canonical_text; superseded source remains
+  lineage only. Superseded clause: Permission snapshots use the separate project-scoped durable family permission_snapshot_record.v1:{project_id}:{snapshot_id};
+  Permissions owns its closed immutable payload, while storage owns row registration, retention, and recovery.
+  Safe points use canonical sp: identity and restore points use rp: identity. Neither can reconstruct or authorize
+  reuse of a permission snapshot, and missing or corrupt snapshot evidence requires fresh admission authority.'
 ```
 
 ### PS-133 - Case L Denial Scope And Recovery Gate Composition
@@ -9162,17 +9550,14 @@ owner_hints:
 
 ## Shared runtime dispatch-admission boundary (2026-08-13)
 
-Provider dispatch admission consumes one immutable
-`permission_snapshot_record.v1:{project_id}:{snapshot_id}` by reference. It does
-not reinterpret, refresh, or replace permission authority. The snapshot must be
+Provider dispatch admission consumes one immutable materialized scope/version-matched permission snapshot by reference: the original Project family or PS-145 application evidence. It never fabricates Project/node fields or reinterprets, refreshes or replaces permission authority. The snapshot must be
 materialized, identity-matched to the current operation/attempt, non-corrupt, and
 current for the exact route, effective account, topology generation, and mutation
 intent before `ProviderDispatchAdmissionService` may issue its ephemeral
 `ProviderRequestPermit` / durable `ProviderDispatchAdmissionReceipt` evidence.
 The receipt also binds the existing Packet Admission decision, structured
 attachment-manifest hash/ref, host-local RuntimeResourceGovernor admission, and
-required-present project/thread/Goal/run/node/agent lineage; these refs do not
-replace permission authority.
+actual required lineage for its admitted workflow: thread/run/Computer and present Goal/Crew/Plan/agent identities; Project/node fields are required only for the real Project/Orchestrator variant. These refs do not replace permission authority.
 
 Permission `allow` is necessary but never sufficient. Mutation-capable work must
 also supply the independent FileSafe receipt refs for the exact finalized mutation
@@ -9190,36 +9575,59 @@ plan_unit_id: PS-134
 unit_type: security_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Provider dispatch admission consumes the immutable materialized permission
-  snapshot by exact attempt identity and cannot issue or consume a permit when the
-  snapshot is missing, corrupt, stale, mismatched, or superseded; permission allow
-  remains independently co-bound with FileSafe for mutation-capable work.
+canonical_text: 'Provider dispatch consumes one immutable materialized permission snapshot of the admitted
+  Project or application version, exact-matched to operation/attempt, thread/run/Computer/roots, route/account/topology,
+  request and authority revision. Required lineage is discriminated by actual workflow: app chat/Goal/Crew/Assistant
+  Plan/scheduled tasks do not invent nodes or a Project. A permit/receipt cannot refresh or replace authority;
+  missing/corrupt/stale/superseded evidence rejects dispatch before transmission. FileSafe finalized evidence
+  and runtime/resource admission remain independent requirements.'
 gui_related: false
-depends_on: [PS-132, PS-133, CV-325, SIR-009]
+depends_on:
+- PS-132
+- PS-133
+- CV-325
+- SIR-009
+- PS-145
+- PS-148
 unblocks: []
 acceptance_criteria:
-  - Dispatch admission references one exact permission_snapshot_record and never reconstructs it from current Settings or UI state.
-  - Every bound policy, account, route, target, topology, or request-byte change invalidates prior admission and triggers fresh evidence as applicable.
-  - Permission allow cannot bypass FileSafe, auth, provider readiness, budget, storage mode, or host-local resource admission.
-  - Permission and dispatch records contain refs, decisions, and hashes only and reject raw credentials, tokens, auth values, request bytes, and credential paths.
-  - Attachment-manifest, Packet Admission, host-local resource admission, and run/node lineage refs are identity-matched before dispatch and cannot authorize permission reuse.
+- Dispatch admission references one exact permission_snapshot_record and never reconstructs it from current
+  Settings or UI state.
+- Every bound policy, account, route, target, topology, or request-byte change invalidates prior admission
+  and triggers fresh evidence as applicable.
+- Permission allow cannot bypass FileSafe, auth, provider readiness, budget, storage mode, or host-local resource
+  admission.
+- Permission and dispatch records contain refs, decisions, and hashes only and reject raw credentials, tokens,
+  auth values, request bytes, and credential paths.
+- Attachment-manifest, Packet Admission, host-local resource admission, and run/node lineage refs are identity-matched
+  before dispatch and cannot authorize permission reuse.
 validation_surfaces:
-  - future permission-snapshot and provider-dispatch join fixtures
-  - future stale/missing/corrupt snapshot negative fixtures
+- future permission-snapshot and provider-dispatch join fixtures
+- future stale/missing/corrupt snapshot negative fixtures
 risk_class: stale_permission_dispatch_bypass
 reasoning_tier: high
 context_scope: shared_runtime_permission_admission
-implementation_surfaces: [Plans/Permissions_System.md, Plans/storage_value_registry.json, Plans/shared_runtime_contracts.schema.json]
-node_compile_hint: {mode: shared_runtime_permission_join, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/storage_value_registry.json
+- Plans/shared_runtime_contracts.schema.json
+node_compile_hint:
+  mode: shared_runtime_permission_join
+  create_worknodes: false
+  create_nodeseeds: false
 negative_constraints:
-  - Do not treat a provider permit as permission authority.
-  - Do not reuse a permission snapshot after its bound authority changes.
-owner_hints: [Plans/Permissions_System.md]
+- Do not treat a provider permit as permission authority.
+- Do not reuse a permission snapshot after its bound authority changes.
+owner_hints:
+- Plans/Permissions_System.md
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
-  - 'Plans/runtime_integration_disposition.json#items[PRM-012]'
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/03_PROVIDER_CONTEXT_TOOLS_RECOVERY_AND_COMPACTION.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md
+- Plans/runtime_integration_disposition.json#items[PRM-012]
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N1/N6/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+preserved_exact_tokens: []
 ```
 
 ### PS-135 - Browser State Minimum Export Boundary
@@ -9361,35 +9769,76 @@ plan_unit_id: PS-138
 unit_type: security_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Forgejo/Gitea hosting effects and repository_automation effects require current target-bound PM permission plus the exact independent provider or AutomationBinding capability. Readable metadata does not grant mutation, repository_automation never inherits interactive credentials or authority, protected secret values remain human-only write/reference inputs, and read_only or handler_unavailable states fail closed without disabling an independently ready Git transport.
+canonical_text: Forge hosting and repository_automation require current target-bound PM permission plus independent
+  provider or AutomationBinding capability. PS-146 makes ordinary publication/needed repository creation mode-aware;
+  PS-147 supplies exact listed CI/deployment build authority. Metadata, interactive credentials and generic
+  shell permission confer none of those capabilities. Secret values remain human-only write/reference inputs;
+  read_only and handler_unavailable refuse without disabling independently ready Git transport.
 gui_related: true
-gui_classification_reason: Source Control, Actions & Pipelines, provider administration, and protected secret forms expose capability, permission, read-only, unsupported, confirmation, and unavailable states.
-depends_on: [PS-123, PS-125, PS-135, SIR-032, GAAAF-015]
+gui_classification_reason: Source Control, Actions & Pipelines, provider administration, and protected secret
+  forms expose capability, permission, read-only, unsupported, confirmation, and unavailable states.
+depends_on:
+- PS-123
+- PS-125
+- PS-135
+- SIR-032
+- GAAAF-015
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-  - Git transport credentials, hosting API credentials, and repository_automation AutomationBinding remain independent and cannot authorize one another by provider selection or cached capability.
-  - Repository/branch policy, force-push, release assets, runner registration/removal, secrets/variables, and organization administration bind the exact instance, repository/environment/runner target, credential scope, permission/currentness snapshot, risk tier, confirmation, and operation generation.
-  - Read-only API capability permits bounded reads only; it does not dispatch mutation and does not mark an independently ready Git transport unavailable.
-  - Unsupported API, insufficient token scope, denied PM permission, stale capability/currentness, and handler_unavailable remain distinct denied outcomes.
-  - Secret values enter only through the protected human channel, are write-only/reference-only where providers prohibit readback, and remain unavailable to agents, adapters, Chat, Usage, logs, receipts, and recordings.
-  - Static permission fixtures and owner projections claim no provider mutation, secret isolation, runner registration, release upload, Git transport, or runtime evidence.
-validation_surfaces: [Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, future provider authorization/effect matrix]
+- Git transport credentials, hosting API credentials, and repository_automation AutomationBinding remain independent
+  and cannot authorize one another by provider selection or cached capability.
+- Repository/branch policy, force-push, release assets, runner registration/removal, secrets/variables, and
+  organization administration bind the exact instance, repository/environment/runner target, credential scope,
+  permission/currentness snapshot, risk tier, confirmation, and operation generation.
+- Read-only API capability permits bounded reads only; it does not dispatch mutation and does not mark an independently
+  ready Git transport unavailable.
+- Unsupported API, insufficient token scope, denied PM permission, stale capability/currentness, and handler_unavailable
+  remain distinct denied outcomes.
+- Secret values enter only through the protected human channel, are write-only/reference-only where providers
+  prohibit readback, and remain unavailable to agents, adapters, Chat, Usage, logs, receipts, and recordings.
+- Static permission fixtures and owner projections claim no provider mutation, secret isolation, runner registration,
+  release upload, Git transport, or runtime evidence.
+validation_surfaces:
+- Plans/shared_integration_runtime.schema.json
+- Plans/shared_integration_runtime_fixtures.json
+- Plans/protected_auth_browser_contracts.schema.json
+- Plans/protected_auth_browser_contract_fixtures.json
+- future provider authorization/effect matrix
 risk_class: provider_capability_or_automation_binding_authority_escalation
 reasoning_tier: high
 context_scope: post_integration_forge_and_repository_automation_permissions
-implementation_surfaces: [Plans/Permissions_System.md, Plans/shared_integration_runtime.schema.json, Plans/protected_auth_browser_contracts.schema.json]
-node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/shared_integration_runtime.schema.json
+- Plans/protected_auth_browser_contracts.schema.json
+node_compile_hint:
+  mode: permission_static_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:23-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md:124-131
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
-preserved_exact_tokens: [Forgejo, Gitea, repository_automation, AutomationBinding, read_only, handler_unavailable, human-only]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/05_FORGE_CAPABILITY_AND_AUTH_MATRIX.md:23-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/06_SOURCE_AUTHENTICATION_AND_INTERNAL_ROUTING.md:23-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/14_COMMAND_CONTRACTS.md:124-131
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/live_forge_reconciliation.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- Forgejo
+- Gitea
+- repository_automation
+- AutomationBinding
+- read_only
+- handler_unavailable
+- human-only
 negative_constraints:
-  - Do not infer provider identity, Git/API credential role, CI authority, secret authority, or mutation permission from a shell, provider label, selected repository, or discovered capability.
-  - Do not expose provider secret values or protected auth content to agents or adapters.
-  - Do not treat a static capability/permission row as execution or runtime authorization evidence.
+- Do not infer provider identity, Git/API credential role, CI authority, secret authority, or mutation permission
+  from a shell, provider label, selected repository, or discovered capability.
+- Do not expose provider secret values or protected auth content to agents or adapters.
+- Do not treat a static capability/permission row as execution or runtime authorization evidence.
 ```
 
 ### PS-139 - Backup Recovery And Connector Protected Effects
@@ -9399,39 +9848,90 @@ plan_unit_id: PS-139
 unit_type: security_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: >-
-  Backup destination authorization, repository unlock, browse, retrieve, restore, destructive maintenance, recovery-material export, connector identity reset, and public Funnel enablement are separate effects with separate target-bound permissions and protected human approvals. Tailnet identity is audit context only; AuthBrowserSession, Recovery Key, destination, and connector secrets are non-recordable, non-inspectable, and unavailable to agents/adapters, while protected, read_only, and handler_unavailable states fail closed.
+canonical_text: Backup destination authorization, unlock, browse, retrieve, restore, maintenance, recovery
+  export, identity reset and public exposure remain distinct target-bound effects. PS-147 is no authority to
+  prune pre-existing backups, delete a repository on failed setup/Undo, export Recovery Kit/secrets, reset
+  identity or enable public ingress without its protected person choice. Only an explicitly granted cleanup
+  of verified build-created resources is eligible for the created-resource exception. Secret/auth custody and
+  read_only/handler_unavailable fail-closed behavior remain unchanged.
 gui_related: true
-gui_classification_reason: Backup setup/restore, recovery-kit handoff, Remote Access, Funnel, and destructive confirmation surfaces display these distinct protected permission states.
-depends_on: [PS-075, PS-082, PS-095, PS-136, SIR-032, GAAAF-015]
+gui_classification_reason: Backup setup/restore, recovery-kit handoff, Remote Access, Funnel, and destructive
+  confirmation surfaces display these distinct protected permission states.
+depends_on:
+- PS-075
+- PS-082
+- PS-095
+- PS-136
+- SIR-032
+- GAAAF-015
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-  - Destination authentication does not unlock encrypted backup repositories; list/browse, retrieve/export, restore, key export, prune/delete, object-lock maintenance, and costly archival retrieval use separate applicable permissions.
-  - Recovery Key/kit export is owner-step-up, audience-bound, short-lived, exact-Client, no-store, and human-only; ordinary agents/adapters and snapshot browsers cannot reveal or redeem recovery material.
-  - In-place Project restore and Full Server replacement bind immutable snapshot/capture identity, exact target, permission/currentness generation, pre-restore recovery or explicit emergency consent, and destructive confirmation.
-  - Routine Backup credentials lack unnecessary prune/delete authority; protected prune/delete-all, retention-lock change, and billable archival retrieval require distinct current approval and keep the last known good recovery point unless explicitly overridden.
-  - Tailnet membership, connector WhoIs identity, or route reachability never grants PM, Backup, restore, forge, repository_automation, or administrator authority.
-  - Connector identity reset is distinct from disable/signout and destructive; Funnel enablement requires explicit public-exposure consent and all PM ingress security gates, while handler_unavailable/read_only/protected states cannot dispatch.
-  - AuthBrowserSession and connector/recovery/destination secret content remain human-only, non-recordable, non-inspectable, non-persistent in ordinary state, and unavailable to agents/adapters; static contracts claim no runtime isolation or successful effect.
-validation_surfaces: [Plans/protected_auth_browser_contracts.schema.json, Plans/protected_auth_browser_contract_fixtures.json, Plans/shared_integration_runtime.schema.json, Plans/shared_integration_runtime_fixtures.json, future Backup/restore/connector permission and secret-exclusion matrices]
+- Destination authentication does not unlock encrypted backup repositories; list/browse, retrieve/export, restore,
+  key export, prune/delete, object-lock maintenance, and costly archival retrieval use separate applicable
+  permissions.
+- Recovery Key/kit export is owner-step-up, audience-bound, short-lived, exact-Client, no-store, and human-only;
+  ordinary agents/adapters and snapshot browsers cannot reveal or redeem recovery material.
+- In-place Project restore and Full Server replacement bind immutable snapshot/capture identity, exact target,
+  permission/currentness generation, pre-restore recovery or explicit emergency consent, and destructive confirmation.
+- Routine Backup credentials lack unnecessary prune/delete authority; protected prune/delete-all, retention-lock
+  change, and billable archival retrieval require distinct current approval and keep the last known good recovery
+  point unless explicitly overridden.
+- Tailnet membership, connector WhoIs identity, or route reachability never grants PM, Backup, restore, forge,
+  repository_automation, or administrator authority.
+- Connector identity reset is distinct from disable/signout and destructive; Funnel enablement requires explicit
+  public-exposure consent and all PM ingress security gates, while handler_unavailable/read_only/protected
+  states cannot dispatch.
+- AuthBrowserSession and connector/recovery/destination secret content remain human-only, non-recordable, non-inspectable,
+  non-persistent in ordinary state, and unavailable to agents/adapters; static contracts claim no runtime isolation
+  or successful effect.
+validation_surfaces:
+- Plans/protected_auth_browser_contracts.schema.json
+- Plans/protected_auth_browser_contract_fixtures.json
+- Plans/shared_integration_runtime.schema.json
+- Plans/shared_integration_runtime_fixtures.json
+- future Backup/restore/connector permission and secret-exclusion matrices
 risk_class: recovery_or_connector_protected_effect_authority_escalation
 reasoning_tier: high
 context_scope: post_integration_backup_recovery_and_connector_permissions
-implementation_surfaces: [Plans/Permissions_System.md, Plans/protected_auth_browser_contracts.schema.json, Plans/shared_integration_runtime.schema.json]
-node_compile_hint: {mode: permission_static_contract_only, create_worknodes: false, create_nodeseeds: false}
+implementation_surfaces:
+- Plans/Permissions_System.md
+- Plans/protected_auth_browser_contracts.schema.json
+- Plans/shared_integration_runtime.schema.json
+node_compile_hint:
+  mode: permission_static_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/08_CLOUD_DESTINATIONS_AND_SIGN_IN.md:55-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/09_ENCRYPTION_RECOVERY_KEY_AND_DELIVERY.md:23-61
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md:15-69
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/11_BACKUP_AUTOMATION_RETENTION_AND_OPERATIONS.md:23-37
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md:31-45
-  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md:3-64
-  - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
-preserved_exact_tokens: [Backup Recovery Key, AuthBrowserSession, human-only, non-recordable, non-inspectable, handler_unavailable, read_only, Funnel, WhoIs]
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/08_CLOUD_DESTINATIONS_AND_SIGN_IN.md:55-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/09_ENCRYPTION_RECOVERY_KEY_AND_DELIVERY.md:23-61
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/10_RESTORE_BROWSE_RETRIEVE_GUI_AND_SAFETY.md:15-69
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/11_BACKUP_AUTOMATION_RETENTION_AND_OPERATIONS.md:23-37
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/13_TSNET_INTEGRATION_AND_CROSS_DOMAIN_BOUNDARIES.md:31-45
+- source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/tsnet/07_SECURITY_BACKUP_UPDATE_BOUNDARIES.md:3-64
+- source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_cross_owner_patch_map.md
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+preserved_exact_tokens:
+- Backup Recovery Key
+- AuthBrowserSession
+- human-only
+- non-recordable
+- non-inspectable
+- handler_unavailable
+- read_only
+- Funnel
+- WhoIs
 negative_constraints:
-  - Do not let tailnet membership, destination login, repository browse, or a capability projection substitute for effect-specific PM authorization.
-  - Do not expose Recovery Key, recovery kit, destination credential, connector state, authorization URL, pre-auth key, or AuthBrowserSession content to agents, adapters, logs, recordings, screenshots, receipts, Chat, or Usage.
-  - Do not claim restore, prune, archival retrieval, identity reset, Funnel exposure, secret isolation, or runtime authorization from static fixtures.
+- Do not let tailnet membership, destination login, repository browse, or a capability projection substitute
+  for effect-specific PM authorization.
+- Do not expose Recovery Key, recovery kit, destination credential, connector state, authorization URL, pre-auth
+  key, or AuthBrowserSession content to agents, adapters, logs, recordings, screenshots, receipts, Chat, or
+  Usage.
+- Do not claim restore, prune, archival retrieval, identity reset, Funnel exposure, secret isolation, or runtime
+  authorization from static fixtures.
 ```
 
 ## Additive Correction v4 — Sandboxed Plan Content And Uncommitted Grants (2026-09-03)
@@ -9632,9 +10132,10 @@ plan_unit_id: PS-143
 unit_type: security_contract
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: Local conflicts remain first-class local state, but publication of unresolved conflicts is blocked
-  by default and any advanced path requires a qualified compatible target and current effect-specific authority.
-  Bookmark selection and hosted workflow support never widen local mutation or credential authority.
+canonical_text: Publication of unresolved conflicts remains blocked by default; an advanced path requires a
+  qualified compatible Git/Jujutsu target and current effect-specific authority. PS-146 governs YOLO publication/Y1
+  and PS-147 exact build grants; backend qualification, expected heads, auth and FileSafe remain independent
+  checks. Bookmark/hosted workflow selection never widens local mutation, credentials or force-push authority.
 gui_related: false
 gui_classification_reason: Defines envelope or authorization owner requirements rather than visual presentation.
 depends_on:
@@ -9643,13 +10144,16 @@ depends_on:
 - JJI-019
 - FGI-016
 - FGI-017
+- PS-146
+- PS-147
+- PS-148
 unblocks: []
 acceptance_criteria:
-- Qualification is exact to adapter version, target and supported content behavior; unsupported or unknown compatibility
-  stays blocked. Advanced publication approval binds the reviewed unresolved-content/remote scope and cannot waive
-  branch protection, FileSafe, native expected-state fences or provider policy.
-- Conflicted-bookmark resolution displays exact alternatives and applies only an existing admitted bookmark mutation
-  with current permission and identity checks; selecting a visible candidate alone does not mutate.
+- Qualification is exact to adapter version, target and supported content behavior; unsupported or unknown
+  compatibility stays blocked. Advanced publication approval binds the reviewed unresolved-content/remote scope
+  and cannot waive branch protection, FileSafe, native expected-state fences or provider policy.
+- Conflicted-bookmark resolution displays exact alternatives and applies only an existing admitted bookmark
+  mutation with current permission and identity checks; selecting a visible candidate alone does not mutate.
 - One explicitly supported stack workflow is authorized at a time with independent publication and hosted review
   creation/update scopes, provider instance, immutable revisions, credentials and current permission. Partial
   success and effect_unknown cannot be retried as though no effects occurred.
@@ -9676,12 +10180,15 @@ source_lineage:
 - source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d039
 - source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d040
 - Plans/Decision_Log.md:DL-043
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
 negative_constraints:
-- 'Planning only: no new admitted command ID, native handler, runtime readiness, EventRecord family, schema widening,
-  WorkNode, NodeSeed or governance seal follows from this unit.'
-- Declined DL-043 dispositions remain declined; do not reopen them or add a third-party diff/source-control library,
-  external IDE/MCP interface, shared public service, custom publish hooks, specialized storage or specialized
-  AI workspace-review workflow.
+- 'Planning only: no new admitted command ID, native handler, runtime readiness, EventRecord family, schema
+  widening, WorkNode, NodeSeed or governance seal follows from this unit.'
+- Declined DL-043 dispositions remain declined; do not reopen them or add a third-party diff/source-control
+  library, external IDE/MCP interface, shared public service, custom publish hooks, specialized storage or
+  specialized AI workspace-review workflow.
 owner_boundary_notes:
 - Jujutsu and Source Control own native semantics and admitted command contracts; Final GUI owns presentation,
   Backup owns restore/completion/maintenance policy, FileManager owns newline behavior, Permissions and FileSafe
@@ -9694,4 +10201,897 @@ owner_hints:
 - Plans/FileManager.md
 - Plans/Forge_Integrations.md
 - Plans/FileSafe.md
+preserved_exact_tokens: []
 ```
+
+### PS-144 - Computer Rules, Safety Defaults And Repository-Origin Acceptance
+
+```yaml
+plan_unit_id: PS-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: 'Permissions owns rule matching and durable authority; Settings owns the single effective-value
+  resolver and level transactions. Profile in use and declared FileSafe/safety rows consume SSYS-059 more_careful:
+  compare Computer own and Project own values, use the more careful listed value, and when both are set and
+  either profile is custom use Computer own with its explicit reason. Everywhere supplies a default; Managed
+  and parent ceilings remain above all. Permission rule matching remains per_item under this owner''s specificity/deny/last-match
+  rules.
+
+
+  Insert Computer rule layer 5b between Project and Everywhere. Scope specificity is lane > seam > package
+  > project > computer > everywhere; absent Project context omits its nested rungs. `global` is compatibility
+  spelling normalized to `everywhere` before policy. New resolved_permissions source values are `preset|project|computer|everywhere|user_override|session`
+  in a versioned successor; historical exact snapshots keep their old enums. Mode and build-grant authority
+  are separate decision provenance, not new human source labels. Computer identity is a tagged Server key
+  or Execution Host key with exact Environment/root identity where relevant, never an ambiguous bare machine
+  string or a new Execution Environment level.
+
+
+  Everywhere rules have one Settings-home writer with bounded read-only user-config projections; Computer
+  rules have one owning Server/Host writer; Project TOML and library permission profiles keep their owners.
+  The existing `cmd.permissions.create_global_rule` now explicitly targets Everywhere; add `cmd.permissions.create_computer_rule`
+  at the same durable-rule owner. Existing create_project_rule/update/reorder/delete/revoke/validate routes
+  remain. Requests bind actor, explicit level/key, rule_id, normalized pattern/action, expected owning revision/hash
+  and operation id; result is the durable rule/revision/hash or a closed refusal. Rule creation uses atomic
+  owner CAS and immutable audit metadata; no offline write queue or second file writer. Copying a selected
+  permission profile/rule invokes this owner as a subtransaction of the one Settings preview/apply/rollback
+  engine, preserves stable source identity and origin, and never turns the copy into trusted executable code
+  or a source approval into destination authority. Portable non-path rules may be selected; Computer paths/credentials
+  are excluded and destination checks remain. Whole profile versions retain home/reach and declared Project
+  enablement, with no field-by-field policy merge.
+
+
+  Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`;
+  nothing is preselected. No-project hides This project. Rules about a file, directory, executable location,
+  root or other host-dependent target never offer Everywhere. The external-directory row remains `safety.protection.external-dir-allowlist`;
+  do not invent a second list. YOLO ordinary auto-allow creates neither an Always rule nor a FileSafe approved-command
+  entry. Explicit rules stay inspectable and revocable and do not silently expand with mode changes.
+
+
+  Repository-brought permission/config material carries origin and content/version identity distinct from
+  person-authored rules. Restrictive rules may apply. Anything looser than the person''s current accepted
+  policy is held until a human reviews and accepts that exact source/version and delta; changes invalidate
+  prior acceptance. This S15 acceptance remains required in YOLO and is separate from executable-source/version
+  trust and durable Always. Cloning/forking, copying settings, accepting a message, or approving a build never
+  accepts loosening. Agent Settings edits use the narrowest offered level in their own context; Regular Everywhere
+  changes ask, requested task-scoped YOLO Everywhere changes show the same preview and apply without that
+  ordinary yes. Agents cannot change Managed policy, credentials, settings home/peer trust, another Project''s
+  settings or their own blocked guard policy.
+
+
+  settings.follow is a read-only settings peer scope: it grants no Project/content access, tool dispatch or
+  grant authority. settings.everywhere.write is restricted to the authenticated owner devices admitted by
+  the Settings/Server owner; a read-only follower or limited member cannot acquire it through a mode, copy
+  or shared home. Existing peer trust and protected home/join decisions remain human-owned.
+
+
+  The finite existing safety-answer scalar rows are safety.rules.default-tool-permission, safety.approvals.doom-loop-action
+  and safety.protection.external-dir-action, each with careful_order deny→ask→allow. The profile order is
+  read_only→plan→regular→full (custom uses the stated Computer fallback), and the one FileSafe switch orders
+  On before Off. The per-tool-permissions and web-tool-permissions maps stay per_item: first resolve each
+  layer own answer for the exact permission key with existing owner matching/deny semantics, then protectively
+  combine simultaneous Computer-own and Project-own declared answers with deny before ask before allow. This
+  is not per-field profile merging or a reordering of independent granular durable-rule specificity. Do not
+  invent a fourth scalar ask row or generic internet-use toggle from imprecise source wording; actual web/network
+  policy retains its existing owner contract. Numeric declared limit rows use computer_ceiling through Settings/runtime
+  admission; Reduce motion keeps its separate Everywhere/Device/Project plus OS rule.
+
+
+  Agent Everywhere writes in Regular require a real current confirmation (agent_everywhere_needs_confirmation
+  when absent); requested or Everywhere-only task YOLO uses the same preview/CAS/writer checks and true mode
+  provenance. no_project_context applies only when the operation actually requires a real Project. settings.follow
+  permits reading the Everywhere mirror and submitting only the peer own Computer mirror, never an owner Client
+  write session, Project content or dispatch. settings.everywhere.write requires the authenticated owner Client
+  direct current settings-home session; it cannot be relayed over peer/tailnet trust. Limited/Member devices
+  may edit only their own offered screen values and explicitly admitted Project scope, never Computer/Everywhere.
+  Account choice reuses only the selected destination-local account/connection evidence; protected sign-in/profile
+  operations remain human, and copied refs or ready-but-unchosen accounts grant no authority.
+
+
+  Permission profiles/rules are owner things with explicit home/reach, whole Project versions and scope_model/project_switch_ids
+  descriptors under SSYS-061/062; list only actual owner-declared switches. The ordinary safety.rules.permission-preset
+  and safety.protection.filesafe-integration rows choose effective policy and never duplicate a profile body,
+  create another manager or become trust/install authority. Persona/MCP/Skill/Plugin/command copying cannot
+  relax protected built-ins or widen child/plugin/receiver ceilings. cmd.permissions.create_computer_rule
+  has sole planned handler handlers::permissions::create_computer_rule and the computer_rule_create_request/computer_rule_create_result
+  definitions in Plans/automation_authority_contracts.schema.json. SP-353 owns Computer-rule physical custody;
+  a request/result shape is not a canonical rule/source record. Missing immutable permission_rule_computer
+  record/source materialization keeps durable dispatch unavailable. A Project-specific agent task cannot silently
+  become an Everywhere request; a human row edit still defaults to its actual origin.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
+  user-visible.
+depends_on:
+- PS-017
+- PS-019
+unblocks: []
+acceptance_criteria:
+- Both built-in profile values select the declared careful order; custom-vs-set uses Computer own and reports
+  why.
+- Computer rules survive restart at their sole writer; same-revision races refuse without overwrite; no-project
+  creates no orphan Project rule.
+- YOLO skips only the ordinary requested Everywhere yes, never source-loosening acceptance or durable Always
+  choice.
+- A copied owner rule/profile rechecks origin, target and permission and rolls back through the owner; path/credential
+  entries never become Everywhere.
+- Profile/rule whole-copy descriptors retain declared switches and owner readback/rollback without copying
+  trust, installation, protected built-ins or child/plugin/receiver authority.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S3/S8/S13/S15/S16
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-D01
+preserved_exact_tokens:
+- Computer
+- Everywhere
+- This project
+- This computer
+- more_careful
+- per_item
+- create_computer_rule
+- safety.protection.external-dir-allowlist
+- global
+- careful_order
+- computer_ceiling
+- safety.rules.default-tool-permission
+- safety.approvals.doom-loop-action
+- safety.protection.external-dir-action
+- agent_everywhere_needs_confirmation
+- no_project_context
+- settings.follow
+- settings.everywhere.write
+- scope_model
+- project_switch_ids
+- safety.rules.permission-preset
+- safety.protection.filesafe-integration
+- permission_rule_computer
+negative_constraints:
+- Do not move Computer paths or credential bytes in Settings copies, mirrors, previews or exports.
+- Do not infer S15 acceptance from executable trust, a clone, a build grant or YOLO.
+- Do not reorder individual permission matching by treating all rules as the safety-profile row.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Settings_System.md#SSYS-061, ContractName:Plans/Settings_System.md#SSYS-062, ContractName:Plans/storage-plan.md#SP-353
+
+### PS-145 - Application Permission Evidence, Roots And Cross-Project Requests
+
+```yaml
+plan_unit_id: PS-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled message/task execution use scope_kind=application,
+  project_id=null and scope_partition=app with real thread and owning Server/Computer plus the actual run,
+  Host/Environment, actor/account and recorded roots required by that operation. Pure conversation/internal
+  planning may have an empty admitted-root set and null cwd; this never launches a process or falls back to
+  HOME/CWD/main. No visible Project, empty string, fake node or scratch Project supplies missing identity.
+  Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; an operation intrinsically
+  targeting a real Project still requires that target. Availability alone never authorizes execution. Plan/Deep
+  Plan remain read-only toward task files/system settings while their own Plan/To-Do/ledger records use admitted
+  owner commands.
+
+
+  The original Project permission_snapshot_record.v1 payload and hash inputs remain exact. Introduce a separately
+  versioned ApplicationPermissionSnapshot with snapshot_id, real thread/run and operation/attempt where actually
+  present, tagged Computer/Host/Environment, immutable root identities and root-grant revision, requested/effective
+  mode and account bindings, actor/surface/runtime/decision context, resolved permission evidence, target/currentness
+  refs, source receipt/event ref, redaction/integrity and policy/Stop generations. Node/package/seam/lane
+  fields exist only for real owners. Commit the evidence before mutation-capable run/attempt admission; audit
+  failure blocks dispatch. Storage owns its explicit app key family, retention/backup and single writer; never
+  interpolate an empty Project into the v1 key or reconstruct history from current Settings. App ordinary
+  tool asks use a distinct thread/tool/request/target-bound approval contract (candidate approval.chat_tool_requested/resolved)
+  through the shared approval host; do not null required node fields in Orchestrator approval payloads or
+  reuse cmd.runtime.approve without a typed app variant.
+
+
+  Working roots are the chat''s lazy visible folder and exact places admitted Read and change for this chat.
+  A Read only grant creates no write root. `external_directory` uses existing root/allowlist and configured
+  allow/ask/deny, default ask, in Regular and YOLO. FileSafe On permits task-needed listed home-folder reads
+  without the extra outside-root ask only after normalized identity and exclusions: all registered Project
+  folders wherever stored, PM private data including every .puppet-master area, secrets/.env/key/certificate
+  files, cloud/service/AI sign-in roots, browser profiles, mail, keychains and password managers are excluded.
+  FileSafe Off removes the freer home-read exception. The exception authorizes neither hidden Desktop/Downloads
+  scanning nor a root probe, write, trust expansion or cleanup. Raw PM-data file access remains denied; admitted
+  owner commands may create their own scoped Goal/Plan/history/permission records. Reads/changes show actual
+  Computer and paths in Activity under redaction policy. Clean workspace requires one exact admitted directory
+  and refuses home, broad mounts and escapes.
+
+
+  Changes outside the chat folder ask in Regular and need an admitted root in every mode. `system_change`
+  asks in Regular with no durable Always; YOLO skips only the ordinary tool ask once roots, OS authority,
+  DAE, FileSafe and domain guards admit the exact command. A registered Project is never directly writable
+  from outside its scope, even with an external-directory yes; ask its chat or explicitly convert this one.
+  App raw git/jj in a chat folder has its actual ad-hoc repository identity and PS-146 rights, not PM Project
+  worktree authority.
+
+
+  Permissions keys are: `other_projects_read` (Regular ask once per chat, explicit requested Project set;
+  Everywhere/Computer defaults), `other_projects_message` (Regular each exact send, scoped Allow for this
+  chat), `incoming_chat_messages` (receiving Project Ask me/allowed/Off), `computer_use` (Computer only, per-chat/per-app
+  task admission), `outward_after_cross_project_read` (Regular ask; scoped chat grant only), `system_change`
+  (Regular ask, no Always), plus existing `external_directory`. Map other_projects_read once to `safety.rules.cross-project-read-policy`,
+  incoming_chat_messages to `safety.rules.incoming-chat-messages`, computer_use to `safety.rules.computer-use`,
+  and external_directory to the existing safety.protection.external-dir-action and safety.protection.external-dir-allowlist.
+  The separate source Project row `safety.rules.allow-project-reading` is on by default and can refuse. Send/outward/system-change
+  decisions keep their actual owner scope; no extra scalar row is invented. These are the category-preserving
+  canonical inventory names. The earlier assistant.cross-project.* spellings are source-lineage proposals
+  only, never write aliases, extra rows or parallel permission stores.
+
+
+  Every chat may explicitly list/read/request other accessible Projects. projects.list exposes authorized
+  names/status only; reading Off reduces the entry to name only. Content uses the source Computer and each
+  source''s current access, Off, sensitivity and exposure checks; no notebooks, private memory, safe copies
+  or secrets are cross-readable. Regular consent offers This time/For this chat/Always on this computer/No;
+  a human naming or mentioning a Project grants only that named read. Task YOLO records scoped mode authority
+  for explicit named/all task scope, never ambient retrieval or forged human consent. Every read is listed
+  and uses the shared requested/looked_in/not_looked_in/partial coverage. Offline, inaccessible, archived-unless-named
+  and missing/rebuilding indexes report omissions; no silent focus fallback or false global none.
+
+
+  thread.request/spawn/await retain one bounded task, source/target lineage, per-thread ordering, idempotency
+  and at most three automatic round trips. The sender''s mode governs Send; the receiver''s own current mode/ceiling
+  and incoming Off/Ask me policy govern work. A human-reviewed exact send satisfies receiving Ask me only
+  for that request; a YOLO send is not human-reviewed. An unseen Regular Ask me request waits for Accept and
+  is read/answer-only until accepted; a YOLO receiver can skip its ordinary accept/N18 asks. Off refuses in
+  all modes. A message cannot answer an approval, alter settings/mode or transfer a grant. Replies retain
+  their own sender authority. No automatic Continue resets the three-round-trip budget. Starting another Project''s
+  Goal uses a request to that Project''s chat.
+
+
+  Once another Project was read, Regular outward actions (web open/form/network command/send/screen) require
+  the provenance-aware ask; plain searches remain listed. YOLO skips that extra outward ask for its task,
+  including ordinary push/publication, but retains provenance, actual network authorization, body/destination
+  currentness, FileSafe transfer, secrets and provider disclosure. No wrapper revives a generic publication
+  yes. computer_use requires the exact named supported desktop and permitted apps, a current scoped screen/provider
+  disclosure grant and scrub, protected-auth/password exclusion, visible using-screen strip and Stop/double-Esc.
+  YOLO skips only ordinary tool asks and cannot silently widen apps/Computer or create disclosure authority.
+  No admitted DAE-safe path means unavailable.
+
+
+  N27 permits a YOLO agent to invoke the same conversion owner only when the task clearly selects new Project
+  or names the existing destination and a fresh exact preview/authority join is valid. Ambiguous convert this
+  still asks which destination. Regular''s final apply remains person-driven. Statement, preview, per-effect
+  gates, report and Undo remain; main is never the YOLO default. N25 issues fresh destination permission/root/mode/Stop
+  evidence and linked new Goal/Plan/Crew records or a separately owner-admitted rebind; old immutable evidence
+  is never relabelled. Schedules freeze scope/target/text/version/mode and revalidate at actual timer dispatch
+  and conversion; missing evidence/Stop custody holds work. No source-folder grant, source YOLO, approval,
+  build grant or pause clearance transfers to the destination.
+
+
+  An unregistered setup source may be inspected read-only under its real source_context/draft/operation identity
+  and exact Computer/Host/Environment/transport, without inventing a Project lease or chat/run/node. Its bounded
+  read/audit receipt is distinct from the app mutation snapshot required before execution. Inspection cannot
+  run hooks/filters/helpers or create a Jujutsu snapshot, bind an observed origin, accept a fingerprint from
+  display text, write files or confer execution/trust authority. Starter source read/secret scan and destination
+  copy each have exact manifests, roots and separate permission/FileSafe evidence; symlink escapes, secrets
+  and unreviewed overwrite refuse. source_location.test/update only repoints after verified identity; project.move.*
+  owns file movement and cleanup. SSH trust/key-install remains at the shared Server/SSH/Auth owner with protected
+  identity, never a concept alias or cmd.project.ssh route. Conversion, source trust and copied account refs
+  transfer no root/disclosure/build authority.
+
+
+  Goal objective authority remains user_direct|agent_proposed_user_approved at its existing Goal owner: direct
+  Save is a current person action and an agent proposal requires the exact approved change. Goal birth is
+  explicit. YOLO, a read grant, incoming message, schedule or build grant never supplies objective-rewrite
+  or Goal-creation authority on its own.
+
+
+  CV-365 WorkflowScopeV2 and CV-366 select ApplicationPermissionSnapshot and ChatToolApprovalApplicationV1
+  in Plans/application_workflow_contracts.schema.json, with complete original-source/wrapper/hash joins through
+  Plans/application_workflow_sources.schema.json and the selected source graph. SP-353 owns permission_snapshot_record_application
+  and chat_tool_approval_application physical custody, single writer and audit/backup/retention. Original
+  Project snapshot/source/cancellation resources remain byte/hash exact. Neither client booleans, current
+  Settings, projections nor restored stale evidence authenticate current authority; missing original source
+  or materialization refuses dispatch. Canonical permission/tool decisions and required source evidence retain
+  their independent holds after chat Undo expiry.
+
+
+  The six explicit T-185 projects.* read tools share this policy; omitted scope means neither current Project
+  nor all Projects. A named file grants only that subject. Recheck source access/Off, phase/retention, normalized
+  path/content sensitivity and disclosure before each read and again before provider exposure. Discovery exposes
+  no inaccessible existence, private store or service/Stop/control authority. The three automatic round trips
+  may be extended only by a fresh person decision. Preview is ui.thread.request.preview/ui.thread.spawn.preview,
+  a local redacted projection; existing cmd.thread.request/cmd.thread.spawn keep their sole continuity handlers
+  and outbox. CV-365 owns the captured preview/send join; send validates actual source/receiver authority
+  immediately before durable commit.
+
+
+  computer_use is off until exact task/chat/app/Computer admission. It consumes the closed T-186 executable
+  census computer.screen, computer.pointer and computer.keys, with their sole Tools handlers and versioned
+  request/result definitions; computer.* is only a family selector. The current ActiveToolNamespaceReceipt,
+  supported adapter/provider/model/session, schema hashes, desktop/controller lease and generation, observation/app/window
+  geometry, permission/disclosure and Stop must join before capture or input. Protected sign-in/browser/password
+  and terminal secret surfaces are excluded before capture as well as input; a path unable to enforce that
+  boundary is unavailable. Scrubbed screen pictures are transient scoped provider inputs, absent from chat
+  history, evidence, exports and backups; bounded redacted action/target/outcome audit remains. Visible Stop
+  and double Esc call only cmd.computer_use.stop through handlers::computer_use::stop, fencing that controller
+  generation, cancelling its queued input and releasing only its own authority. No fourth computer.stop tool,
+  global mouse control or fabricated native namespace is admitted. Sends, purchases, installs, deletion, publication
+  and system changes still require exact effect authority; an unclassifiable effect cannot dispatch through
+  a generic click or key.
+
+
+  The same guarded N27 agent admission covers conversion Resume/Cancel and requested Undo for the clear new/existing
+  destination and current visible preview; it calls the registered owner directly, never a person-only button
+  or retained-approval control. Make a project from this chat and Move this chat into a project retain their
+  separate-draft/Keep both defaults, unsaved-file blocks, source/destination writer/lease/root/Stop checks
+  and exact report. Undo ends at new work or seven days, cannot delete changed work and never deletes remote
+  repositories, branches or backups. CV-367/SP-350 own the exhaustive N25 manifest and linked new Goal/Plan/Crew
+  records; optional explicit association rebind stays unavailable until its separate complete owner protocol
+  is admitted.
+
+
+  Delayed work freezes requested mode/model/account/configuration and exact text/attachments or Plan version/hash;
+  committing a schedule creates no standing permission or current-view YOLO authority. Scheduling-window,
+  quota-resume and continuation admission recheck original owner/source evidence, actual target/Computer/roots,
+  account/capability, receiver/parent ceiling, storage writer and task plus scope user_stop_epoch at eligibility
+  and immediately before effect. A saved Ask me first hold remains in YOLO. CV-368/SP-352 and SQR-019/020
+  own the independent Server application pause, application_automation_paused and app_automation_pause_unavailable;
+  absent/corrupt pause is unavailable, never off or a Settings seed. Only the authenticated user changes or
+  clears pause through cmd.runtime.automation_pause.set; paused=false clears no task latch. Agent work, a
+  new schedule, conversion, quota/window or reconnect cannot clear either app or Project pause. The exact
+  SQR direct-user Send now/Build/resume exception admits only its one dispatch with every other guard and
+  the stored pause unchanged. Conversion retains holds/per-run Stop and both scope epochs, then explicitly
+  re-admits exact destination targets/text/time/consent; no latest-version, other-account or source-grant
+  substitution.
+
+
+  SSH host trust/public-key installation consumes the exact protected Server/Remote Access protocol owned
+  by A; absent selected contract or native authority is typed unavailable, never an inferred remote key writer
+  behind an integration.connection.* or Client-pairing alias.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
+  user-visible.
+depends_on:
+- PS-144
+- PS-017
+- PS-019
+unblocks: []
+acceptance_criteria:
+- App Goal/Crew/Plan/scheduled task uses actual roots and immutable app evidence; original Project exact fixtures
+  remain valid.
+- FileSafe-on explicit home reads succeed only through exclusions; FileSafe-off, symlink-to-Project/PM/credential,
+  unknown roots and forbidden direct writes fail.
+- Regular/YOLO sender-receiver combinations preserve Off, true human review, bounded requests, three trips
+  and listed coverage.
+- Named supported desktop with valid disclosure is admitted; protected auth, changed provider/apps/Computer
+  or unavailable DAE path refuses.
+- N27 exact clear destination can apply with fresh preview; ambiguous/stale/destination-unauthorized cases
+  do not execute or transfer grants.
+- Delayed work uses frozen configuration plus fresh original-source/target/root evidence at eligibility and
+  dispatch; saved Ask me first, unavailable pause and task/scope Stop block even under YOLO.
+- Only the user changes pause or takes the exact one-dispatch SQR exception; conversion never clears holds,
+  substitutes a Plan/account, borrows a grant or repeats a source occurrence.
+- Closed T-186 tools refuse wrong app/window/controller/observation, unsupported namespace or protected capture/input;
+  Stop/double Esc fences only the admitted session.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards N3/N4/N6/N10/N18/N19/N24/N25/N27;
+  Q11 and N21/N22 reversal
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Plan mode and scheduled
+  tasks are also available in no project. It''s only planning wizard/prd builder/orchestrator that isn''t."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Q11
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Those look good,
+  except goals and crew should be allowed in no project."'
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D02
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D03
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D02
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D03
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D05
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-Fb01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-Fd03
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-Fd04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-D01
+preserved_exact_tokens:
+- scope_kind=application
+- project_id=null
+- scope_partition=app
+- ApplicationPermissionSnapshot
+- external_directory
+- other_projects_read
+- other_projects_message
+- incoming_chat_messages
+- computer_use
+- outward_after_cross_project_read
+- system_change
+- approval.chat_tool_requested/resolved
+- This time
+- For this chat
+- Always on this computer
+- Read and change
+- Read only
+- thread.request/spawn/await
+- N27
+- N25
+- safety.rules.cross-project-read-policy
+- safety.rules.incoming-chat-messages
+- safety.rules.allow-project-reading
+- safety.rules.computer-use
+- user_direct|agent_proposed_user_approved
+- ChatToolApprovalApplicationV1
+- ActiveToolNamespaceReceipt
+- computer.screen
+- computer.pointer
+- computer.keys
+- cmd.computer_use.stop
+- Keep both
+- seven days
+- user_stop_epoch
+- Ask me first
+- application_automation_paused
+- app_automation_pause_unavailable
+- paused=false
+negative_constraints:
+- No hidden cross-project index, memory or notebook sharing.
+- No fake Project/node/empty-string identity and no mutation by raw PM private-data access.
+- No outside-root mode bypass, image-disclosure fabrication, receiver-mode escalation or approval through
+  a message.
+- No schedule, conversion or reconnect may clear a Stop/pause or reinterpret historical approval as destination
+  authority.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/storage-plan.md#SP-352, ContractName:Plans/Tools.md#T-185, ContractName:Plans/Tools.md#T-186, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-019, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
+
+### PS-146 - YOLO Publication And Y1 Leased Force-Push
+
+```yaml
+plan_unit_id: PS-146
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: 'Jared''s ruling is verbatim: "YOLO mode needs to absolutely be able to git push and publish."
+  In an otherwise admitted task, yolo authorizes ordinary Git/Jujutsu remote push, package/image/template publication
+  and the needed remote repository creation without an extra publication yes. Regular retains its exact-effect
+  approvals. Each create/push/publish remains a distinct domain operation through the same owner writer, preflight
+  and result path; local Build approval, a toggle, authentication and a selected repository are not authority
+  by themselves. A clearly requested Everywhere settings write uses PS-144 ordinary mode authority, not an
+  implicit global Always.
+
+
+  external_publish_side_effect remains evaluated but no longer imposes a universal human click: ordinary yolo
+  publication records policy auto-allow/authority_kind=mode, task/snapshot/mode/target refs and actual executing
+  subsystem/account/credential handle. No human_confirmed=true or invented approver encodes that decision.
+  Exact destination, service admission, namespace/repository, visibility/private-most default, source/disclosure,
+  account/auth/provider capability, expected heads/currentness, DAE, FileSafe, network/transfer and secret/trust
+  checks remain. A needed missing-repository create must be explicit in the preview/report and separately admitted;
+  it need not stop for another human click in YOLO. No outgoing-after-read or container/forge wrapper restores
+  the ordinary publication ask.
+
+
+  Y1 is accepted as recommended: force-push is eligible without another ordinary approval only with an explicit
+  expected-head lease on a branch PM created for this work. Bind actual Computer/Host/repo/remote/branch, creation
+  receipt/task lineage and current remote head, enforce force-with-lease at execution, and refuse a lost lease.
+  The branch cannot be main, the actual default branch or protected; no build grant widens that exclusion.
+  A same-named branch, an imported branch or a branch PM made for unrelated work is not eligible. No --force-only
+  fallback, stale lease reuse or automatic branch retarget is allowed.
+
+
+  Prune, remote branch/repository deletion, destructive discard and Kubernetes delete/exec still ask with exact
+  targets in ordinary YOLO, unless a separately human-approved PS-147 grant covers the exact operation on demonstrably
+  grant-created resources. Other domain-sensitive actions keep their own authority class; secrets, protected
+  auth/trust, durable Always and paid signup remain person decisions. Named pre-existing resources do not receive
+  the created-resource risky-action exception. FileSafe still independently admits or refuses every command/resource
+  action; do not remove destructive patterns or approved-command boundaries to make Y1 work.
+
+
+  Receipts/report retain targets, effective authority, checks, local results and actual remote success/failure/indeterminate
+  state. Lost confirmation reconciles actual remote state before retry; it never repeats a speculative create/push
+  or marks success from transport alone. Stop prevents new dispatch; in-flight remote effects are reported
+  honestly. No safe inverse means the action says No safe Undo; any true inverse goes through fresh target/currentness
+  and retained guards.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are user-visible.
+depends_on:
+- PS-144
+- PS-145
+- PS-017
+- PS-019
+unblocks: []
+acceptance_criteria:
+- Regular asks and YOLO ordinary Git/package/image/template publish/needed repo creation proceed without redundant
+  approval.
+- PM-created work branch plus exact current lease succeeds; foreign/default/protected/main/unrelated branch
+  or lost lease refuses before effect.
+- 'Absent grant: prune, remote delete, discard and Kubernetes delete/exec still ask; changed target invalidates
+  authority.'
+- Mode receipts record no fabricated human confirmation; unknown remote outcomes reconcile before retry.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1; push/publish ruling; O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs to
+  absolutely be able to git push and publish."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+preserved_exact_tokens:
+- YOLO mode needs to absolutely be able to git push and publish.
+- external_publish_side_effect
+- policy auto-allow
+- authority_kind=mode
+- human_confirmed=true
+- force-with-lease
+- Y1
+- No safe Undo
+negative_constraints:
+- No generic tool allow, headless default or Full profile is substitute for target/capability/domain authority.
+- No main/default/protected force-push under mode or build grant.
+- No blanket removal of destructive FileSafe patterns or path/secret/trust boundaries.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### PS-147 - Plan-Bound Hands-Off Orchestrator Build Grant
+
+```yaml
+plan_unit_id: PS-147
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: 'O1–O3 approve a build grant once at exact human Plan approval for a Project-bound Planning
+  Wizard/Orchestrator build. The review lists the repositories to create/push, registry namespaces/package/image/template
+  destinations, CI configuration/execution and deployment targets with allowed operations. It also lists exclusions,
+  risky cleanup eligibility and actions with no safe Undo. Approval of a Plan alone is not an unbounded grant:
+  the person must approve the exact manifest. The Orchestrator then runs yolo within that grant without repeating
+  ordinary per-action human clicks. Application chat Goals/Crew/Assistant Plan builds and schedules cannot
+  issue a Project Orchestrator grant or obtain one through a message.
+
+
+  A BuildGrant binds grant_id and revision, actual issuing person and auth context/time, project_id, named_plan_id
+  plus exact approved revision/hash, reserved build_run_id, scope/Computer/Host/Environment/route/account,
+  allowed operation classes and typed stable target/resource selectors, permission snapshot and policy generation,
+  validity/expiry when set, revocation generation and current user Stop epoch. A new-resource selector names
+  exact provider/instance/account/parent container/namespace/name and creation constraints; it is not a wildcard
+  for all future resources. A named existing resource binds immutable ID and only its listed permissible operations.
+  Namespace grants enumerate allowed child kinds and operations; membership or a name prefix grants nothing.
+  The permission snapshot and grant digest must be committed before build admission. Plan, target, account,
+  permission ceiling or grant drift cannot widen authority; invalidated evidence blocks for refresh/review
+  and any expansion requires another human decision.
+
+
+  Permissions is the sole grant writer. Canonical commands are cmd.build_grant.preview, cmd.build_grant.approve
+  and cmd.build_grant.revoke with sole planned handlers handlers::permissions::build_grant_preview, handlers::permissions::build_grant_approve
+  and handlers::permissions::build_grant_revoke. Preview is read-only and returns exact manifest/ref/hash/owner
+  revisions, exclusions and blockers. Approve binds that current preview, current approved Plan/hash/build
+  identity, expected grant-absence/revision CAS, issuer and idempotency key; it is human-only, including expansion.
+  Revoke targets grant_id/revision under current actor authority, records revocation and fences all future
+  child/provider dispatch. Existing run-owner Start/Stop/abort commands remain the execution controls; no
+  second build runner or stop engine is introduced. Agent requests may prepare a preview but cannot resolve
+  their own protected approval, issue, expand, renew or un-revoke the grant.
+
+
+  Each actual successful create appends a CreatedResourceManifest entry joined to the exact grant/build/task/operation
+  receipt: provider/instance/account/parent, stable immutable resource ID/UID and generation, creation time,
+  idempotency identity and verified result evidence. A failed or unknown create is not ownership proof; reconcile
+  before adoption/retry. Pre-existing resources and a same-named replacement remain unowned regardless of
+  selector or prefix. Observe identity/generation immediately before mutation/cleanup; replacement, owner
+  drift, unknown provenance, user modification or other references/holds refuse the claimed automatic cleanup.
+
+
+  The grant can change its exact listed resources and delete only what the build itself demonstrably created.
+  The retained Y1 risky actions—prune, remote branch/repository delete, destructive discard and Kubernetes
+  delete/exec—avoid another ask only when that exact operation and verified grant-created object are inside
+  the approved grant. A named pre-existing target may receive listed non-destructive build/deploy operations,
+  but it never receives that risky-action exception. Broad Docker/system/registry prune cannot become a closed
+  owned-resource cleanup by naming a namespace. There is no failure-setup or conversion-Undo automatic remote-repository
+  deletion, no unrelated Project/environment mutation, no main/default/protected force-push, no secret value
+  exposure or Recovery Kit export, no protected sign-in/trust/claim/Always bypass, no paid signup or human-only
+  Azure team-project administration. Existing credentials may be consumed only as already-admitted opaque
+  references under their owner; the grant never acquires or exports secret bytes.
+
+
+  Every coordinator, task/child admission and final local/remote effect checks exact grant/Plan/build/task/target/permission/ownership
+  generations, parent ceiling and Stop/revocation epoch. Children receive at most their exact subset and cannot
+  transfer authority to another Project/run/chat or broaden selectors. Logical operation idempotency binds
+  exact operation/target/request under the grant; original historical receipts remain fixed and cannot re-authorize
+  an attempt after drift. A remote indeterminate outcome reconciles before repeating work. Stop/revoke races
+  fence new effects and late completions remain truthful rather than erased or re-executed.
+
+
+  O3''s live What the build did list is an existing ObservableWork/History projection of every remote action
+  and target, authority, outcome, time and linked owner receipt. It also exposes pending/blocked/unknown effects,
+  Stop and available true Undo or explicitly labelled compensation/No safe Undo. It is not a new parallel
+  action log or inferred build.* event family. Undo itself requires exact currentness/ownership/permission;
+  revoking or stopping does not delete resources or reverse completed external actions. End-of-run YOLO scans/reconciliation
+  and required verification still run. Static grant schemas/fixtures do not certify a native build, provider
+  path or resource-ownership proof.
+
+
+  The Project Home Server Permissions owner holds the canonical grant, ownership manifest and authority-receipt
+  references in the Project Vault under Storage-registered versioned families. These records are not disposable
+  projections and must be included coherently in Project Backup and retained with build/audit/recovery holds.
+  A restored grant is historical until the current owner, Plan, permission generation and Stop/revocation
+  checks re-admit it; backup restore never resurrects an active grant by itself.
+
+
+  SP-353 is the sole physical owner for build_grant, created_resource_manifest and grant_revocation, referring
+  to selected Permissions bodies and actual original authority sources. Missing immutable grant_revocation
+  record/source materialization keeps that dispatch path unavailable; command request/result shapes or restored
+  stale grants cannot substitute for current revocation authority. These records and required receipt/source
+  refs retain independent audit/backup/hold lifetimes after chat conversion or Undo expiry.'
+gui_related: true
+gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
+  user-visible.
+depends_on:
+- PS-146
+- PS-144
+- PS-145
+unblocks: []
+acceptance_criteria:
+- An exact approved Plan/grant admits listed repo/registry/CI/deployment operations without repeated human
+  clicks.
+- Grant-created exact object cleanup succeeds; pre-existing, same-name replacement, unrelated namespace/registry/repo,
+  unlisted child kind and broad prune refuse.
+- Plan/account/target/permission/Stop/revocation drift prevents effect and cannot be repaired by an agent
+  widening authority.
+- Children cannot mint grants or exceed parent/resource subsets; app Goal/Crew/Plan/schedule and cross-project
+  messages cannot adopt a Project grant.
+- Unknown create/push is reconciled before retry; action projection includes actual target/authority and no
+  unsafe invented Undo.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards O1/O2/O3; Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
+  going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
+  makes? Its hands off from the human in that process so I would think so."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards Y1
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs
+  to absolutely be able to git push and publish."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-D01
+preserved_exact_tokens:
+- BuildGrant
+- CreatedResourceManifest
+- cmd.build_grant.preview
+- cmd.build_grant.approve
+- cmd.build_grant.revoke
+- What the build did
+- ObservableWork/History
+- No safe Undo
+- O1–O3
+- grant_revocation
+negative_constraints:
+- No agent may issue, expand, renew or un-revoke its own grant.
+- No prefix, namespace membership, discovered capability or name proves grant-created ownership.
+- No risky pre-existing-resource exception, unrelated resource deletion, secret/trust/paid-signup bypass or
+  automatic setup/Undo repository deletion.
+- No build grant changes mandatory DAE, FileSafe, testing, custody, backup or recovery holds.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage-plan.md#SP-353
+
+### PS-148 - Single Automation Admission And Authority Intersection
+
+```yaml
+plan_unit_id: PS-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: 'All tool, domain, CLI/DAE interception, child, scheduled and remote-effect dispatch uses
+  one Permissions admission pipeline, policy.may_execute_tool(), on finalized operation context. Select a
+  legitimate authority source—actual human decision, scoped mode authority under PS-146, or a previously human-approved
+  PS-147 build grant—then intersect runtime/profile/Managed/parent/receiver ceilings, target/resource ownership,
+  capability/account/auth/route, root/trust/FileSafe/DAE, actual network/body disclosure, currentness, storage
+  integrity/writer and Stop/pause/revocation gates. Hook changes and final remote target/body changes require
+  revalidation before effect. A broad mode/profile/default or a receipt from another task does not substitute
+  for those independent joins.
+
+
+  Only ordinary asks covered by the exact mode/grant are skipped. Y1 risky actions retain PS-146 asks except
+  for the exact grant-created-resource exception. Grant issuance/expansion, durable Always, S15 source loosening,
+  protected secrets/auth/trust/claim, screen/provider disclosure and paid signup stay human decisions. Source
+  Project Off and receiver read-only/Regular ceilings are never widened by the sender. An app Goal, Crew,
+  Plan build or schedule uses its own immutable app authority and roots; duration/delegation/scheduling does
+  not mint a Project grant. A timer uses its frozen scope/target/configuration plus fresh actual eligibility,
+  not the visible chat''s mode. Conversion retires source dispatch and reissues destination authority under
+  N25/N27, retaining both source and destination Stop/pause fences; it never auto-resumes.
+
+
+  The immutable decision/dispatch receipt identifies authority_kind=human|mode|build_grant with the real human
+  decision or mode/task/snapshot or grant/issuer/revision reference. Keep approval_source compatibility values
+  and add versioned provenance rather than rewriting old exact codecs. Human confirmation is never fabricated.
+  Out-of-scope actions stop before effect with blocked_policy/blocked_approval/blocked_preflight as appropriate,
+  canonical blocked_reason_code and ordered allowed_action_ids[], exact target and executed=false. A headless
+  retained ask blocks with headless_ask_denied; absent handler/admitted contract/capability stays handler_unavailable
+  or its existing closed owner reason. Typed app tool approval and Orchestrator blocked-node approval remain
+  distinct envelopes through the same host.
+
+
+  Stop/revocation is enforced at every child admission and immediately before each new external effect. In-flight
+  outcomes and reconciliation retain truth and original idempotency; neither cancellation, reconnection, a
+  fresh setting nor projection replay clears a recovery hold, grants new authority or rewrites history. Ordinary
+  publication admitted under YOLO is not blocked again by a domain wrapper seeking another generic yes. No
+  static schema, browser/concept or fixture boolean proves native authority joins or execution.
+
+
+  Backup first-policy creation consumes the Backup owner absent-key CAS/current preview and confers no backup-completed,
+  repository-initialization, unlock, restore or prune authority. Archive pause is an owner-routed schedule
+  consequence and never destructive maintenance. Recovery Kit Save/Copy/Print/Test and secret export, protected
+  auth, paid account signup and ADO-008 external team-project administration remain person-owned even inside
+  an approved build. New UI results preserve the exact initiating Client/invocation/return context and continuation
+  generation; Back/Close is not cancellation of an already dispatched effect. New/changed commands remain
+  handler_unavailable until actual native admission; declared expected_event_types=[] or a static fixture
+  never invents a live producer.
+
+
+  CV-365/366 provide the selected scope, complete original-source/wrapper/hash graph and immutable app authority
+  edition; SP-353 owns its physical custody, not another permission resolver. Only actual Project Orchestrator
+  children inherit a narrowed BuildGrant subset. App/child/receiver work cannot borrow a foreign grant or
+  turn restored evidence into current authority. Goal user_direct|agent_proposed_user_approved objective authority,
+  S15 acceptance and every retained person decision remain separate from ordinary mode allow.
+
+
+  Delayed app Goal/Crew/Plan/message/task work uses the frozen request plus fresh PS-145 admission at owner
+  eligibility and immediately before effect, including actual task/scope user_stop_epoch, roots, account,
+  permission/writer and receiver/parent ceiling. Saved Ask me first remains a hold in YOLO. CV-368/SP-352
+  and SQR-019/020 own the independent Server app pause and exact one-dispatch direct-user exception; only
+  a real user may change or clear pause. application_automation_paused blocks and app_automation_pause_unavailable
+  fails closed, never treating missing custody as paused=false. Neither the exception nor a false clear erases
+  task latches or source/destination holds. Conversion explicitly re-admits the exact destination target/version,
+  consent and both scope epochs without borrowing current-view mode, another account or old authority.'
+gui_related: false
+gui_classification_reason: Defines permission, scope, admission and recovery policy consumed by UI owners.
+depends_on:
+- PS-144
+- PS-145
+- PS-146
+- PS-147
+- PS-017
+- PS-019
+unblocks: []
+acceptance_criteria:
+- All entry surfaces reach identical authority/guard outcomes for the same final context.
+- Mode/grant cannot forge human approval, transfer grants through messages/conversion or widen parent/receiver.
+- Final target/hook/Stop/revocation race refuses before effect and preserves historical snapshot/receipt.
+- Regular and headless retained asks block honestly; admitted YOLO publication receives no second generic
+  ask.
+- Delayed-work checks reject stale source/root/permission, saved Ask me first, missing pause, Stop and receiver/parent
+  widening; direct-user exceptions preserve authentic pause and every other guard.
+validation_surfaces:
+- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
+- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+risk_class: authority_scope_and_target_drift
+reasoning_tier: high
+context_scope: project_refresh_permissions_and_automation
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S13/S15/S16; N3/N4/N18/N25/N27;
+  Y1/O1–O3
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs
+  to absolutely be able to git push and publish."'
+- source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards approval envelope
+- 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "I approve the outstanding
+  questions with their recommended settings."'
+- 'source_ref:chat:lane-D-phase-1-instruction; Jared: "The other risky actions still ask, unless they fall
+  inside an approved build grant over things the build itself created."'
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D02
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D03
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/B-requests.md#B-D04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D02
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D03
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D04
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/C-requests.md#C-D05
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fb-requests.md#Fb-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fc-requests.md#Fc-D01
+- source_ref:projects-refresh-20261030/pass2/plans-edit-requests/Fd-requests.md#Fd-D01
+preserved_exact_tokens:
+- policy.may_execute_tool()
+- authority_kind=human|mode|build_grant
+- blocked_reason_code
+- allowed_action_ids[]
+- executed=false
+- headless_ask_denied
+- handler_unavailable
+- N25/N27
+- BuildGrant
+- user_direct|agent_proposed_user_approved
+- user_stop_epoch
+- Ask me first
+- application_automation_paused
+- app_automation_pause_unavailable
+- paused=false
+negative_constraints:
+- No second permission resolver, publication approval wrapper, action log or Stop implementation.
+- No final allow without durable current evidence and every retained independent gate.
+- Acceptance of this specification creates no native handler, active EventRecord producer, WorkNode, NodeSeed,
+  executable queue, production build task, readiness certification or governance seal.
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365, ContractName:Plans/Contracts_V0.md#CV-366, ContractName:Plans/Contracts_V0.md#CV-368, ContractName:Plans/storage-plan.md#SP-353, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-020
