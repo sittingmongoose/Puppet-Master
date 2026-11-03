@@ -185384,7 +185384,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      installed, or paired) before its folders (Astra AST-D1: another device chosen never inherits the first one's) */
   const nasN = (S) => S.sess.nas || {};
   const verified = (S) => !!(nasN(S).installed || nasN(S).paired);
-  const sshAt = (step) => (S) => nasBy('ssh')(S) && !!nasN(S).device && (step === 'identity' || step === 'pmpair' || (step === 'folder' ? verified(S) : !!nasN(S).trusted));
+  /* the way in to a device that runs Puppet Master is pairing, unless the person chose SSH instead (70's entry); its
+     identity step is SSH's, so it applies only on the SSH way, and pairing only on the pairing way (reader-795-f: Back
+     after the owned chain was rebuilt showed pairing for a NAS reached over SSH) */
+  const byPm = (S) => { const n = nasN(S), d = (S.env.devices || []).find((x) => x.id === n.device); return !!(d && d.pm) && !n.useSsh; };
+  const sshAt = (step) => (S) => nasBy('ssh')(S) && !!nasN(S).device && (step === 'identity' ? !byPm(S) : step === 'pmpair' ? byPm(S) : step === 'folder' ? verified(S) : !!nasN(S).trusted);
   /* a Project being set up now: Later sets none up, so its name, settings and safety steps are not on the way (final-onb
      FO22-Later: Back after Later walked the abandoned Project's Safe and Name) */
   const project = (S) => began(S) !== 'later';

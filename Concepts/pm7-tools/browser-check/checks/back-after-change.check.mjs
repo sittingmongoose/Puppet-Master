@@ -461,6 +461,8 @@ const BACK_HAS = { 'Home NAS files over SSH': ['nas-find', 'nas-identity', 'nas-
   'Home NAS source over SSH': ['nas-find', 'nas-identity', 'nas-key', 'nas-folder', 'begin'], 'Home NAS source mounted': ['nas-find', 'begin'], 'a completed new Server': ['s-kind', 's-ready', 'where'],
   'a connected existing Server': ['c-route', 'where'], 'restore from a Recovery Kit': ['r-source', 'r-pick', 'begin'], 'restore from a cloud drive': ['r-source', 'r-pick', 'begin'],
   'online import': ['online-service', 'ex-repos', 'begin'], 'online new copy': ['online-service', 'online-details', 'safe'], 'backup on Home NAS': ['safe'], 'backup on a cloud drive': ['safe'], 'away with Tailscale': ['away', 's-kind'] };
+/* the steps of another way in that a Back run must never show (reader-795-f: pairing shown for a NAS reached over SSH) */
+const BACK_NOT = { 'Home NAS files over SSH': ['nas-pmpair'], 'Home NAS source over SSH': ['nas-pmpair'] };
 const ABANDON = { 'Home NAS files over SSH': ['files on This computer', filesHere], 'Home NAS files mounted': ['files on This computer', filesHere], 'Home NAS source over SSH': ['Begins as New', beginNew],
   'Home NAS source mounted': ['Begins as New', beginNew], 'a completed new Server': ['This computer', computerHere], 'a connected existing Server': ['This computer', computerHere],
   'restore from a Recovery Kit': ['Begins as New', beginNew], 'restore from a cloud drive': ['Begins as New', beginNew], 'online import': ['Begins as New', beginNew],
@@ -899,6 +901,7 @@ export const tests = {
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind}: the plan holds references no answer gives: ${inv.join('; ')}`);
         const seq = await walkBack(A, [], bad, `20 ${kind}`), missed = (BACK_HAS[kind] || []).filter((x) => !seq.includes(x));
         if (missed.length) bad.push(`20 ${kind}: the Back run from Review leaves out still-current steps ${missed.join(', ')} (${seq.join(' > ')})`);
+        const foreign = (BACK_NOT[kind] || []).filter((x) => seq.includes(x)); if (foreign.length) bad.push(`20 ${kind}: the Back run shows another way in's steps ${foreign.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });
     /* abandoning an answer clears what it gave the plan (Astra AST-D6: files moved to This computer kept the NAS place and
        its key): each configuration's own answer given up, then every reference in the plan still describes an answer */
@@ -936,8 +939,22 @@ export const tests = {
         const first = await walkBack(A, [], bad, `20 ${kind} first`); const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
         const second = await walkBack(A, [], bad, `20 ${kind} second`);
         if (JSON.stringify(first) !== JSON.stringify(second)) bad.push(`the second Back run differs: ${first.join(' > ')} then ${second.join(' > ')}`);
-        const miss = (BACK_HAS[kind] || []).filter((x) => !second.includes(x)); if (miss.length) bad.push(`the second Back run leaves out ${miss.join(', ')}`); });
+        const miss = (BACK_HAS[kind] || []).filter((x) => !second.includes(x)); if (miss.length) bad.push(`the second Back run leaves out ${miss.join(', ')}`);
+        const foreign = (BACK_NOT[kind] || []).filter((x) => first.includes(x) || second.includes(x)); if (foreign.length) bad.push(`a Back run shows another way in's steps ${foreign.join(', ')}`); });
     }
+    /* reader-795-f: a Home NAS that runs Puppet Master, paired: its Back runs (before and after going on again unchanged)
+       show pairing and never the SSH steps */
+    await flow(t, '20 a paired Puppet Master NAS: Back, on again unchanged, Back again', async (A, bad) => { await A.boot({ scenario: 'fresh+homeNasPm' });
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
+      if ((await A.snap()).screen !== 'nas-pmpair') { bad.push('a Puppet Master NAS did not open pairing: on ' + (await A.snap()).screen); return; }
+      if (await A.has('pair')) await A.click('pair');
+      const paired = await A.frame().waitForFunction(() => !!(O55.S.sess.nas || {}).paired, null, { timeout: 20000 }).then(() => true).catch(() => false);
+      if (!paired) { t.log('20 PM NAS: pairing by approval did not complete in this fixture within 20 s; the case could not run'); return; }
+      const w0 = await keepOn(A); if (w0[w0.length - 1] !== 'review') { const w1 = await onToReview(A, nameOn).then(() => ['review']).catch(() => w0); if (w1[w1.length - 1] !== 'review') { bad.push('never reached Review: ' + w0.join(' > ')); return; } }
+      const first = await walkBack(A, [], bad, '20 PM NAS first'); const w = await keepOn(A); if (w[w.length - 1] !== 'review') { bad.push('never back to Review: ' + w.join(' > ')); return; }
+      const second = await walkBack(A, [], bad, '20 PM NAS second');
+      for (const [n, seq] of [['first', first], ['second', second]]) { if (!seq.includes('nas-pmpair')) bad.push(`the ${n} Back run leaves out pairing (${seq.join(' > ')})`); const ssh = seq.filter((x) => ['nas-identity', 'nas-key', 'nas-signin', 'nas-install'].includes(x)); if (ssh.length) bad.push(`the ${n} Back run shows SSH steps ${ssh.join(', ')} for a paired NAS`); } });
     /* Sol R4 on bd646e7e6d: the same host and the default port typed at the NAS step, then Continue: nothing changed, so
        nothing of the Home NAS is cleared */
     await flow(t, '20 the same NAS host and port typed, then Continue', async (A, bad) => { await toNasProject(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
