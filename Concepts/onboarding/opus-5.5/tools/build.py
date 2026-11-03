@@ -326,6 +326,19 @@ PIP_FAULT_EXEMPT = {
 }
 
 
+def pip_peek_problems() -> list[str]:
+    """A choice line that says the choice is made ("Bitbucket. In it goes.", "Light it is.", "OneDrive, then.") has a
+    peek: twin, the line said while that choice is only pointed at (FO-28: a hover read as a done pick)."""
+    say = copy_json().get('pip', {}).get('say', {})
+    done = re.compile(r"\bit is\b|, then\.|\bGot it\b|\bin it goes\b|\bup it goes\b|\bsorted\b|\bdone\b", re.I)
+    out = []
+    for scr, lines in say.items():
+        for k, v in (lines or {}).items():
+            if ':' in k and not k.startswith(('group:', 'peek:', 'typing')) and isinstance(v, str) and done.search(v) and f'peek:{k}' not in lines:
+                out.append(f"pip.say.{scr}.{k} says the choice is made ({v!r}) and has no pip.say.{scr}.peek:{k} for a hover")
+    return out
+
+
 def pip_fault_problems() -> list[str]:
     """Every fault the screens show has Pip's line (RV-6: a revoked key had none, so Pip read the screen as put right and
     cheered the key it had before). Collected from the screens' code: a field's error (and a why/err/msg variable that
@@ -461,6 +474,7 @@ def lint_sources() -> list[str]:
     walk(copy_json(), '')
     problems.extend(pip_key_problems())
     problems.extend(pip_fault_problems())
+    problems.extend(pip_peek_problems())
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
