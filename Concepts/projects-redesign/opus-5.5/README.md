@@ -38,8 +38,20 @@ What v2 adds, in Jared's words' order:
   "Finish protecting your work" (sign in, test, Recovery Kit, check it, turn on) and a full Backup plate.
 - **Contribute** (fork, keep the original as upstream, start a branch) or **Just copy it**, for someone else's Project.
 - **Starter files explained**, apart from Saved setups, with the proposed Settings › New projects › Starters page.
-- **From a chat with no project**: "Make this a project…" asks new or existing with nothing chosen, says what happens,
-  then opens New Project filled in.
+- **From a chat with no project** (N2, both first-class): "Make this a project…" asks new or existing with nothing
+  chosen and says what happens. The new path opens New Project filled in; the existing path picks the project, the files
+  (New, Same, Different), where they go (a separate draft branch first; the main version under Advanced), then a plain
+  statement, a live preview and **Move chat and files**, a report on the project's page and **Undo move**.
+- **Run mode** (Regular or YOLO, on the review strip): every yes-point says what YOLO does instead. Pushes, publishing,
+  making the online copy and forks go ahead and are reported, with Undo or plainly "can't be undone"; a force-push only
+  with a lease on a branch Puppet Master made. Sign-ins, a new device's identity, the Recovery Kit, FileSafe, putting
+  files back and deleting anything online or Puppet Master's data still ask. **More moments › An agent sets up a
+  Project** shows the difference.
+
+**Fix pass (2026-11-03)**: five full reviews fixed and Jared's decisions applied (P5 a copy you already have is said,
+never blocked; P7 folder names keep spaces; P8 retention is Standard or "Choose how many to keep"; P9 archived Projects
+pause their backups; P12 "Notifications and limits"; Q8 chat folders in `~/Puppet Master Chats`). See the "Fix pass"
+section of `BUILD-REPORT-split-v2.md`.
 
 New layer files: `layer/words.js` (every word), `layer/rules.js` (the service and backup rule tables), `layer/np.js` (the
 engine, no DOM), `layer/np-ui.js` (the section renderers, shared with the Project page's in-place forms) and
@@ -84,16 +96,19 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 - **Projects**: the demo set, first run with none yet, or 40 projects.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
 - **New Project**, **Folder missing**, **Setup didn't finish**: jump to those moments.
-- **More moments (C)**: From a chat, Contribute, Found online copy, Submodules and Git LFS, Jujutsu limits, Same online
-  copy as loom, Connect a new device, Backup setup, A fork (photo-sorter), Found not linked (legacy-app), Waiting for
-  Media NAS (garden-notes). Disabled for A, B and Today.
-- **Reset demo** puts every project back. **Reduced motion**.
+- **Run mode**: Regular or YOLO (C's yes-points say what YOLO does instead).
+- **More moments (C)**: From a chat (the chooser), From a chat › Move it into a project I have, An agent sets up a
+  Project (Regular asks, YOLO goes ahead), Contribute, Found online copy, Submodules and Git LFS, Jujutsu limits, Same
+  online copy as loom, Connect a new device, Backup setup, A fork (photo-sorter), Found not linked (legacy-app), Waiting
+  for Media NAS (garden-notes). Disabled for A, B and Today.
+- **Reset demo** puts every project back. **Reduced motion**. At 640 px New Project offers to set the chat aside for as
+  long as it is open.
 
 ## Open it
 
 - In the Concept Hub, or from any local server: `index.html` frames `../../PMConcept7.html?o55=off`.
 - As one file: `python3 tools/build_standalone.py OUTDIR [PMConcept7.html]` writes `OUTDIR/projects-concepts.html`
-  (about 33 MB) with PMConcept7 and the layer inside; it opens by double-click.
+  (about 39 MB) with PMConcept7 and the layer inside; it opens by double-click.
 
 ## How it reaches PMConcept7
 

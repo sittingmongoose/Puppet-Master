@@ -101,7 +101,7 @@
     if (svc === 'gitlab') {
       let out = [{ id: 'private', title: w('np.details.glPrivate'), sub: w('np.details.glPrivateSub') }];
       // Internal only on your own server, and only where that server allows it (checked, never assumed; FGI-011)
-      if (kd === 'own' && (!owner || owner.internalAllowed !== false)) out.push({ id: 'internal', title: w('np.details.glInternal', { host }), sub: w('np.details.glInternalSub') });
+      if (kd === 'own' && owner && owner.internalAllowed === true) out.push({ id: 'internal', title: w('np.details.glInternal', { host }), sub: w('np.details.glInternalSub') });
       out.push({ id: 'public', title: w('np.details.glPublic'), sub: kd === 'own' ? w('np.details.publicServerSub', { host }) : w('np.details.publicSub') });
       const open = { private: 0, internal: 1, public: 2 };
       if (owner && owner.cap) out = out.filter((v) => open[v.id] <= open[owner.cap]);
@@ -112,8 +112,10 @@
       const priv = [{ id: 'private', title: w('np.details.bbPrivate'), sub: w('np.details.bbPrivateSub') }];
       return project && project.private ? priv : priv.concat([{ id: 'public', title: w('np.details.bbPublic'), sub: w('np.details.publicSub') }]);
     }
+    // Forgejo and Gitea: an organization whose profile is limited shows even an Everyone copy only to people signed in there
+    const limited = owner && owner.profile === 'limited';
     return [isOrg ? { id: 'private', title: w('np.details.privateOrg', { org }), sub: w('np.details.privateOrgSub') } : { id: 'private', title: w('np.details.private'), sub: w('np.details.privateSub') },
-      { id: 'public', title: w('np.details.public'), sub: w('np.details.publicServerSub', { host }) }];
+      limited ? { id: 'public', title: w('np.details.glInternal', { host }), sub: w('np.details.cap.profile', { org, host }) } : { id: 'public', title: w('np.details.public'), sub: w('np.details.publicServerSub', { host }) }];
   }
   function capNote(svc, k, owner, project, host) {
     if (svc === 'gitlab' && owner && owner.cap === 'private') return w('np.details.cap.gitlab', { org: owner.label });
@@ -121,16 +123,21 @@
     if ((svc === 'forgejo' || svc === 'gitea') && owner && owner.profile === 'limited') return w('np.details.cap.profile', { org: owner.label, host });
     return '';
   }
-  /* git check-ref-format, in words */
+  /* git check-ref-format --branch, in words: no space, control character or ~ ^ : ? * [ \, no "..", "@{" or "//", not "@",
+     not starting with - or /, not ending with / or ., and no part that starts with . or ends with .lock */
   function branchProblem(n) {
     const v = String(n == null ? '' : n);
     if (!v.trim()) return w('np.access.branchEmpty');
-    if (/\s|\.\.|[~^:?*[\\]|@\{/.test(v) || /^-/.test(v) || /[/.]$/.test(v) || /\/\//.test(v) || /\.lock$/.test(v)) return w('np.access.branchBad');
+    if (/[\s\x00-\x1f\x7f~^:?*[\\]/.test(v) || /\.\.|@\{|\/\//.test(v) || v === '@' || /^[-/]/.test(v) || /[/.]$/.test(v)) return w('np.access.branchBad');
+    if (v.split('/').some((c) => !c || c.charAt(0) === '.' || /\.lock$/i.test(c))) return w('np.access.branchBad');
     return null;
   }
   const remoteProblem = (n, taken) => (!/^[A-Za-z0-9._-]+$/.test(String(n || '')) ? w('np.link.remoteBad') : taken && taken.indexOf(n) >= 0 ? w('np.link.remoteTaken', { remote: n }) : null);
   const folderNameProblem = (n) => (!String(n || '').trim() ? w('np.name.empty') : /[/\\:*?"<>|]/.test(n) ? w('np.loc.bad.chars') : null);
-  const folderSlug = (n) => String(n || '').trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+  /* P7 (Jared, 2026-11-03): a folder is named like its Project, spaces kept, as onboarding does; only characters a folder
+     can't hold go. idSlug is the demo's own record id, never shown */
+  const folderSlug = (n) => String(n || '').trim().replace(/[/\\:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').replace(/^\.+/, '').trim();
+  const idSlug = (n) => String(n || '').trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
 
   /* ------------------------------------------------------------------ backups: the eight families (BRS-013) */
   const FAMILIES = {
@@ -207,12 +214,13 @@
     const bucket = String(acc.bucket || '').trim().replace(/^s3:\/\//i, '');
     if (/aws_s3|backblaze_b2|s3_compatible/.test(fam)) {
       const addr = fam === 'backblaze_b2' ? String(acc.b2host || '').trim() : fam === 's3_compatible' ? String(acc.server || '').trim() : '';
-      return [FAMILIES[fam].label, addr, (bucket || 'your-bucket') + (bucket.indexOf('/') < 0 ? '/puppet-master/' + name : '')].filter(Boolean).join(' · ');
+      // a bucket with a folder of its own keeps it, and this Project's backups still get their own folder inside it
+      return [FAMILIES[fam].label, addr, (bucket || 'your-bucket').replace(/\/+$/, '') + (bucket.indexOf('/') < 0 ? '/puppet-master/' + name : '/' + name)].filter(Boolean).join(' · ');
     }
     const addr = String(acc.address || '').trim();
     return FAMILIES[fam].label + ' · ' + (addr ? addr.replace(/\/+$/, '') + '/' + name : 'the address you type, then /' + name);
   }
 
-  PJX.rules = { SERVICES, service, kind, key, ownerQ, projectNoun, auth, nameProblem, spell, slug, visibility, capNote, branchProblem, remoteProblem, folderNameProblem, folderSlug,
+  PJX.rules = { SERVICES, service, kind, key, ownerQ, projectNoun, auth, nameProblem, spell, slug, visibility, capNote, branchProblem, remoteProblem, folderNameProblem, folderSlug, idSlug,
     FAMILIES, SUBS, family, ACCESS, CHECK, DEMO_ACCESS, shown, fieldBad, fieldWords, accessProblem, place, RULE_TEXT };
 })(window);

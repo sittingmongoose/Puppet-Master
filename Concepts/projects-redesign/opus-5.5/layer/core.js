@@ -97,7 +97,7 @@
         activity: { key: 'working', word: 'Run #47 · Working', text: 'Compiling the seam graph', at: 'just now', runs: 1 },
         history: { backend: 'git', branch: 'main', worktrees: 4, changed: 3 },
         online: { service: 'GitHub', repo: 'jared/tastebook', state: 'complete', ahead: 0, behind: 0, privacy: 'Only you' },
-        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/tastebook on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '2 h ago', state: 'complete', size: '1.8 GB', versions: 31, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Oct 30' }, checked: 'Oct 30' },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/tastebook on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '2 h ago', state: 'complete', size: '1.8 GB', versions: 31, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Oct 30' }, checked: 'Oct 30', checkedOf: 'Oct 30, 3:00 AM' },
         sync: { devices: 2, state: 'complete' },
         attention: []
       },
@@ -109,7 +109,7 @@
         activity: { key: 'working', word: 'Working in the background', text: '2 agents running tests on lane api', at: '4 min ago', runs: 2 },
         history: { backend: 'git', branch: 'develop', worktrees: 2, changed: 0 },
         online: { service: 'GitLab', repo: 'acme/harbor', state: 'waiting', ahead: 1, behind: 0, privacy: 'Everyone in Acme', note: 'Sign-in expired' },
-        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: 'Yesterday', state: 'complete', size: '640 MB', versions: 12, include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: 'Aug 30' }, checked: 'Oct 29' },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: 'Yesterday', state: 'complete', size: '640 MB', versions: 12, include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: 'Aug 30' }, checked: 'Oct 29', checkedOf: 'Oct 28, 11:00 PM' },
         sync: { devices: 2, state: 'complete' },
         attention: [{ code: 'signed_out', key: 'waiting', title: 'Sign in to GitLab again', text: 'Merge requests and pipelines need it. Sending changes over SSH still works; 1 change is ready to send.', actions: ['sign_in', 'details'] }]
       },
@@ -121,7 +121,7 @@
         activity: { key: 'idle', word: 'Idle', text: 'Run #12 finished · all checks passed', at: 'Yesterday', runs: 0 },
         history: { backend: 'jujutsu', branch: 'main', worktrees: 1, changed: 0 },
         online: { service: 'GitHub', repo: 'jared/loom', state: 'info', ahead: 2, behind: 0, privacy: 'Everyone', note: '2 changes not sent yet' },
-        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/loom on Home NAS', schedule: 'Every week', time: '3:00 AM', last: '3 days ago', state: 'complete', size: '210 MB', versions: 8, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 28' },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/loom on Home NAS', schedule: 'Every week', time: '3:00 AM', last: '3 days ago', state: 'complete', size: '210 MB', versions: 8, include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 28', checkedOf: 'Oct 28, 3:00 AM' },
         sync: { devices: 1, state: 'complete' },
         attention: []
       },
@@ -148,7 +148,7 @@
         activity: { key: 'paused', word: 'Paused', text: 'Paused at safe point sp-12 · resume in the Orchestrator', at: '3 days ago', runs: 0 },
         history: { backend: 'git', branch: 'develop', worktrees: 2, changed: 7 },
         online: { service: null, repo: null, state: 'off', ahead: 0, behind: 0, found: { service: 'GitLab', repo: 'acme/legacy-app', remote: 'origin' } },
-        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: '9 days ago', state: 'warning', size: '2.3 GB', versions: 20, note: 'Last 8 backups didn’t run', include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: null }, checked: 'Oct 21' },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '11:00 PM', last: '9 days ago', state: 'warning', size: '2.3 GB', versions: 20, note: 'Last 8 backups didn’t run', include: 'all', keep: 'standard', kit: { saved: 'Aug 30', checked: null }, checked: 'Oct 21', checkedOf: 'Oct 21, 11:00 PM' },
         sync: { devices: 1, state: 'complete' },
         attention: [{ code: 'backup_overdue', key: 'warning', title: 'Backup is 9 days old', text: 'Daily backups to Google Drive stopped on Oct 21: the drive is full. Free space or choose another place.', actions: ['backup_now', 'backup_settings'] }]
       },
@@ -160,7 +160,7 @@
         activity: { key: 'idle', word: 'Idle', text: 'No work since Oct 22', at: '1 week ago', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 1, changed: null },
         online: { service: 'GitHub', repo: 'jared/experiment', state: 'complete', ahead: 0, behind: 0, privacy: 'Only you', note: 'Last sent Oct 22' },
-        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/experiment on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '8 days ago', state: 'complete', size: '96 MB', versions: 14, note: 'Last backup before the folder went missing', include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 22' },
+        backup: { dest: 'Home NAS', place: '/volume1/backups/puppet-master/experiment on Home NAS', schedule: 'Every night', time: '3:00 AM', last: '8 days ago', state: 'complete', size: '96 MB', versions: 14, note: 'Last backup before the folder went missing', include: 'all', keep: 'standard', kit: { saved: 'Sep 14', checked: 'Sep 14' }, checked: 'Oct 22', checkedOf: 'Oct 22, 3:00 AM' },
         sync: { devices: 1, state: 'complete' },
         attention: [{ code: 'folder_missing', key: 'blocked', title: 'Folder missing', text: 'Nothing is at /old/path/experiment any more. It may have been moved, renamed, or be on a drive that isn’t connected.', actions: ['repair'] }]
       },
@@ -172,7 +172,7 @@
         activity: { key: 'idle', word: 'Idle', text: 'No work since Oct 16', at: '2 weeks ago', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 1, changed: 0 },
         online: { service: null, repo: null, state: 'off', ahead: 0, behind: 0 },
-        backup: { dest: 'OneDrive', place: 'OneDrive · jared@outlook.com · Apps › Puppet Master', schedule: 'Every week', time: '2:00 AM', last: '5 days ago', state: 'complete', size: '18 MB', versions: 6, include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 27' },
+        backup: { dest: 'OneDrive', place: 'OneDrive · jared@outlook.com · Apps › Puppet Master', schedule: 'Every week', time: '2:00 AM', last: '5 days ago', state: 'complete', size: '18 MB', versions: 6, include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 27', checkedOf: 'Oct 27, 2:00 AM' },
         sync: { devices: 1, state: 'complete' },
         attention: [{ code: 'device_offline', key: 'offline', title: 'Can’t reach Media NAS', text: 'This Project’s files live on Media NAS, which didn’t answer at 7:42 PM. Its backup on OneDrive is safe.', actions: ['retry', 'details'] }]
       },
@@ -184,12 +184,12 @@
         activity: { key: 'waiting', word: 'Setup didn’t finish', text: 'Stopped at step 2 of 4', at: 'Today, 6:10 PM', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 0, changed: null },
         online: { service: 'GitHub', repo: 'jared/recipe-app', state: 'complete', ahead: 0, behind: 0, privacy: 'Only you', note: 'Created on GitHub' },
-        backup: { dest: 'Home NAS', schedule: 'Every night', last: null, state: 'pending', size: null, versions: 0, note: 'Starts after setup' },
+        backup: { dest: 'Home NAS', family: 'local_nas', place: '/volume1/backups/puppet-master/recipe-app on Home NAS', schedule: 'Every day', time: '2:00 AM', mode: 'daily', include: 'all', keep: 'standard', last: null, state: 'pending', size: null, versions: 0, kit: null, note: 'Starts after setup' },
         sync: { devices: 0, state: 'pending' },
         attention: [{ code: 'setup_unfinished', key: 'waiting', title: 'Setup didn’t finish', text: 'The GitHub repository jared/recipe-app was created, then copying it to this computer failed (the network dropped). Nothing else was made.', actions: ['resume', 'open_online', 'remove'] }],
         recovery: {
           settled: [{ label: 'Repository created on GitHub', ref: 'jared/recipe-app' }],
-          remaining: [{ label: 'Copy it to this computer', cmd: 'cmd.source_control.repository.clone' }, { label: 'Turn on nightly backups to Home NAS', cmd: 'cmd.backup.project.create' }, { label: 'Add it to your Projects', cmd: 'cmd.project.add_existing' }]
+          remaining: [{ label: 'Copy it to this computer', cmd: 'cmd.source_control.repository.clone' }, { label: 'Save the backup plan for Home NAS', cmd: 'cmd.backup.destination.add' }, { label: 'Add it to your Projects', cmd: 'cmd.project.add_existing' }]
         }
       },
       {
@@ -200,7 +200,7 @@
         activity: { key: 'idle', word: 'Idle', text: 'Run #6 finished · your change is on the branch my-change', at: '4 days ago', runs: 0 },
         history: { backend: 'git', branch: 'main', worktrees: 1, changed: 3 },
         online: { service: 'GitHub', repo: 'jared/photo-sorter', state: 'info', ahead: 0, behind: 0, privacy: 'Everyone', upstream: { service: 'GitHub', repo: 'openphoto/photo-sorter', behind: 4, branch: 'my-change', remote: 'upstream' }, note: '4 newer in the original' },
-        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '2:00 AM', last: 'Today, 2:00 AM', state: 'complete', include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 30', versions: 21, size: '310 MB' },
+        backup: { dest: 'Google Drive', place: 'Google Drive · jared@gmail.com · My Drive › Puppet Master', schedule: 'Every day', time: '2:00 AM', last: 'Today, 2:00 AM', state: 'complete', include: 'all', keep: 'standard', kit: { saved: 'Oct 2', checked: 'Oct 2' }, checked: 'Oct 30', checkedOf: 'Oct 30, 2:00 AM', versions: 21, size: '310 MB' },
         sync: { devices: 2, state: 'complete' },
         attention: [{ code: 'original_newer', key: 'info', title: '4 newer in the original', text: 'openphoto/photo-sorter has 4 changes your fork doesn’t have yet.', actions: ['get_original'] }]
       },
@@ -352,19 +352,22 @@
           { id: 'jared/slint-widgets', owner: 'jared', vis: 'Public', when: 'Oct 3', stack: 'Rust', size: '9 MB', sizeGB: 0.01, access: 'write' },
           { id: 'jared/photo-sorter', owner: 'jared', vis: 'Public', when: 'today', stack: 'Python', size: '40 MB', sizeGB: 0.04, access: 'write', forkOf: 'openphoto/photo-sorter' },
           { id: 'acme/harbor-mobile', owner: 'acme', vis: 'Internal', when: 'today', stack: 'Kotlin', size: '120 MB', sizeGB: 0.12, access: 'write', team: true },
-          { id: 'jared/rust-starter', owner: 'jared', vis: 'Private', when: 'Sep 2', stack: 'Rust', size: '1 MB', sizeGB: 0.001, access: 'write', template: true }
+          { id: 'jared/rust-starter', owner: 'jared', vis: 'Private', when: 'Sep 2', stack: 'Rust', size: '1 MB', sizeGB: 0.001, access: 'write', template: true },
+          { id: 'jared/loom', owner: 'jared', vis: 'Public', when: 'yesterday', stack: 'Rust', size: '26 MB', sizeGB: 0.03, access: 'write' },
+          { id: 'jared/lighting-rig', owner: 'jared', vis: 'Private', when: 'Oct 29', stack: 'Rust', size: '30 MB', sizeGB: 0.03, access: 'write' },
+          { id: 'jared/dotfiles', owner: 'jared', vis: 'Private', when: 'Oct 1', stack: 'Shell', size: '1 MB', sizeGB: 0.001, access: 'write', empty: true }
         ] },
       'ghe.server': { address: 'https://github.acme.test', signedIn: {}, owners: [{ id: 'acme-platform', label: 'acme-platform', kind: 'organization' }], taken: ['handbook'],
         repos: [{ id: 'acme-platform/handbook', owner: 'acme-platform', vis: 'Internal', when: 'yesterday', stack: 'Markdown', size: '4 MB', sizeGB: 0.004, access: 'write', team: true }] },
       'gitlab.com': { signedIn: { here: { account: 'jared@acme', method: 'browser', expired: true } },
         owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'acme', label: 'acme', kind: 'group', cap: 'private' }, { id: 'acme/platform', label: 'acme / platform', kind: 'subgroup', cap: 'private' }],
-        taken: ['billing-service'],
+        taken: ['acme/billing-service', 'acme/design-tokens', 'acme/game-jam'],
         repos: [
           { id: 'acme/billing-service', owner: 'acme', vis: 'Private', when: 'yesterday', stack: 'Go', size: '30 MB', sizeGB: 0.03, access: 'write', team: true },
           { id: 'acme/design-tokens', owner: 'acme', vis: 'Private', when: 'Sep 30', stack: 'JSON', size: '2 MB', sizeGB: 0.002, access: 'write', team: true },
           { id: 'acme/game-jam', owner: 'acme', vis: 'Private', when: 'Oct 28', stack: 'C# · Godot', size: '1.4 GB', sizeGB: 1.4, access: 'write', team: true, submodules: ['engine', 'assets/fonts'], lfs: '1.2 GB' }
         ] },
-      'gitlab.own': { address: 'https://git.platyr.test', signedIn: {}, owners: [{ id: 'jared', label: 'jared', kind: 'personal' }, { id: 'research', label: 'research', kind: 'group', cap: 'internal' }], taken: ['lab-notes'],
+      'gitlab.own': { address: 'https://git.platyr.test', signedIn: {}, owners: [{ id: 'jared', label: 'jared', kind: 'personal', internalAllowed: true }, { id: 'research', label: 'research', kind: 'group', cap: 'internal', internalAllowed: true }], taken: ['research/lab-notes'],
         repos: [{ id: 'research/lab-notes', owner: 'research', vis: 'Internal', when: 'Oct 20', stack: 'Markdown', size: '3 MB', sizeGB: 0.003, access: 'write', team: true }] },
       'azure.services': { signedIn: {}, owners: [{ id: 'acme', label: 'acme', kind: 'azOrg', projects: [{ id: 'Finance', label: 'Finance' }, { id: 'Mobile', label: 'Mobile' }, { id: 'Legacy', label: 'Legacy', tfvc: true }] }], taken: ['invoice-tool'],
         repos: [{ id: 'acme/Finance/invoice-tool', owner: 'acme', project: 'Finance', vis: 'Team project', when: 'Oct 25', stack: 'C# · .NET', size: '64 MB', sizeGB: 0.06, access: 'write', team: true },
@@ -467,9 +470,16 @@
     ],
     /* chats with no project [Depends: no-project] */
     chats: [
-      { id: 'chat-printer', title: 'Fix the printer', slug: 'fix-printer', folder: '/Users/jared/Puppet Master Chats/fix-printer', files: 14, sample: 'print-labels.py, labels.csv, README.md and 11 more', runsOn: 'here',
+      { id: 'chat-printer', title: 'Fix the printer', slug: 'fix-printer', folder: '~/Puppet Master Chats/fix-printer', files: 14, sample: 'print-labels.py, labels.csv, README.md and 11 more', runsOn: 'here',
+        messages: 32, attachments: 3, first: 'My label printer prints blank pages since the update.', last: 'Labels print again. I kept the fixed config in printer.conf.',
+        fileList: ['print-labels.py', 'labels.csv', 'README.md', 'printer.conf', 'notes.md', 'cups-test.log', 'label-template.svg', 'fonts/OCR-B.ttf', 'requirements.txt', 'test_labels.py', 'sample-1.png', 'sample-2.png', '.env.example', 'Makefile'],
         workedIn: { path: '~/Code/printer-tool', changed: 6 }, outside: ['~/.config/cups/printers.conf', '/etc/hosts'], folders: ['~/Downloads'] }
     ],
+    /* what a project already has where a chat's files would land, for "Move this chat into a project" [Depends: no-project] */
+    projectFiles: {
+      harbor: { 'README.md': 'different', Makefile: 'same' }, loom: { 'README.md': 'different' }, 'docs-site': { 'README.md': 'different', '.env.example': 'same' },
+      'photo-sorter': { 'requirements.txt': 'same', 'README.md': 'different' }, tastebook: { 'README.md': 'different', Makefile: 'different' }
+    },
     /* folders a device or share can browse, for the folder pickers [Demo only] */
     trees: {
       nas: { '/volume1': ['projects', 'backups'], '/volume1/projects': ['photo-sorter', 'home-automation', 'old-experiments'], '/volume1/backups': ['puppet-master'] },
@@ -503,10 +513,13 @@
     },
     backups: [
       { id: 'nas', where: 'Home NAS', kind: 'nas', sub: 'Nightly backups of 4 Projects', projects: ['tastebook', 'loom', 'experiment', 'old-portfolio', 'photo-sorter'], latest: 'Today, 3:00 AM', locked: false,
-        lineage: { tastebook: ['GitHub', 'jared/tastebook'], loom: ['GitHub', 'jared/loom'], experiment: ['GitHub', 'jared/experiment'], 'old-portfolio': ['GitHub', 'jared/portfolio'], 'photo-sorter': ['GitHub', 'jared/photo-sorter'] } },
-      { id: 'gdrive', where: 'Google Drive', kind: 'cloud', sub: 'Daily backups of 2 Projects', projects: ['harbor', 'legacy-app'], latest: 'Yesterday, 11:00 PM', locked: false, lineage: { harbor: ['GitLab', 'acme/harbor'] } },
+        lineage: { tastebook: ['GitHub', 'jared/tastebook'], loom: ['GitHub', 'jared/loom'], experiment: ['GitHub', 'jared/experiment'], 'old-portfolio': ['GitHub', 'jared/portfolio'], 'photo-sorter': ['GitHub', 'jared/photo-sorter'] },
+        manifest: { tastebook: { backend: 'git', branch: 'main', include: 'all' }, loom: { backend: 'jujutsu', branch: 'main', include: 'all' }, experiment: { backend: 'git', branch: 'main', include: 'all' }, 'old-portfolio': { backend: 'git', branch: 'main', include: 'all' }, 'photo-sorter': { backend: 'git', branch: 'my-change', include: 'all' } } },
+      { id: 'gdrive', where: 'Google Drive', kind: 'cloud', sub: 'Daily backups of 2 Projects', projects: ['harbor', 'legacy-app'], latest: 'Yesterday, 11:00 PM', locked: false, lineage: { harbor: ['GitLab', 'acme/harbor'] },
+        manifest: { harbor: { backend: 'git', branch: 'develop', include: 'all' }, 'legacy-app': { backend: 'git', branch: 'develop', include: 'all' } } },
       { id: 'kit', where: 'A Recovery Kit file', kind: 'kit', sub: 'The file you saved when you set up backups', projects: [], latest: null, file: 'Recovery Kit – Loom.pdf', in: 'Documents', points: 'nas' },
-      { id: 'drive', where: 'A folder or a drive', kind: 'folder', sub: 'Or a drive you plugged in', projects: ['recipe-ideas'], latest: 'Oct 3', path: '/Volumes/Backup Drive/Puppet Master', locked: true, phrase: 'river candle orbit maple quiet lantern' },
+      { id: 'drive', where: 'A folder or a drive', kind: 'folder', sub: 'Or a drive you plugged in', projects: ['recipe-ideas'], latest: 'Oct 3', path: '/Volumes/Backup Drive/Puppet Master', locked: true, phrase: 'river candle orbit maple quiet lantern',
+        manifest: { 'recipe-ideas': { backend: null, include: 'all' } } },
       { id: 'b2', where: 'Backblaze B2 · old-backups', kind: 'bucket', sub: 'A storage bucket', projects: [], latest: null, locked: false, empty: true }
     ],
     templates: [
@@ -521,7 +534,11 @@
   };
 
   /* ------------------------------------------------------------------ state, events */
-  const S = { opt: 'c', scenario: 'demo', world: null, mounted: null, root: null, ops: {} };
+  const S = { opt: 'c', scenario: 'demo', world: null, mounted: null, root: null, ops: {}, runMode: 'regular' };
+  /* the run mode (Plans/Run_Modes.md: runtime mode yolo, "YOLO" on screen; never the Full permission profile). YOLO lets
+     agents act without asking: pushes, publishing, making an online copy and forks go ahead and are reported; identity,
+     sign-in, trust and FileSafe checks still stop it, and deleting remote data still asks (Jared 2026-11-03; Y1 A) */
+  const yolo = () => S.runMode === 'yolo';
   const listeners = {};
   const on = (ev, fn) => { (listeners[ev] = listeners[ev] || []).push(fn); return () => { listeners[ev] = listeners[ev].filter((f) => f !== fn); }; };
   const emit = (ev, data) => (listeners[ev] || []).slice().forEach((fn) => { try { fn(data); } catch (e) { console.error('[pjx]', ev, e); } });
@@ -602,8 +619,11 @@
   }
   /* PMR.menu in the chat's picker style. items: [{ label, icon, meta, danger, disabled, run }] or groups
      [{ label, items }]; anchor: the button it hangs from */
+  /* the last menu's anchor, by its key: a dialog opened from a menu item returns focus there when its item is gone */
+  let menuFrom = null;
   function menu(anchor, groups, opts) {
     if (!(W.PMR && W.PMR.menu)) return;
+    menuFrom = anchor && anchor.getAttribute ? anchor.getAttribute('data-c-key') : null;
     const gs = Array.isArray(groups) && groups.length && groups[0].items ? groups : [{ items: groups }];
     const map = new Map();
     const m = {
@@ -639,13 +659,14 @@
       const first = f[0], last = f[f.length - 1];
       if (e.shiftKey && D.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && D.activeElement === last) { e.preventDefault(); first.focus(); }
     });
-    const prevFocus = D.activeElement;
+    const prevFocus = D.activeElement, fromKey = menuFrom;
+    menuFrom = null;
     const api = { el: box, body, foot, close, setActions };
     function setActions(actions) {
       foot.innerHTML = '';
       (actions || []).forEach((a) => {
         if (a.spacer) { foot.appendChild(h('span.pjx-grow')); return; }
-        const b = h('button', { type: 'button', class: ['pjx-btn', a.primary && 'is-primary', a.danger && 'is-danger', a.quiet && 'is-quiet'], 'data-pm-hover-visual-suppressed': a.disabled ? null : 'true', disabled: a.disabled ? true : null, html: (a.icon ? icon(a.icon, 15) : '') + '<span>' + esc(a.label) + '</span>' });
+        const b = h('button', { type: 'button', class: ['pjx-btn', a.primary && 'is-primary', a.danger && 'is-danger', a.quiet && 'is-quiet'], 'data-pm-hover-visual-suppressed': a.disabled ? null : 'true', 'data-cmd': a.cmd || null, disabled: a.disabled ? true : null, html: (a.icon ? icon(a.icon, 15) : '') + '<span>' + esc(a.label) + '</span>' });
         if (a.disabled && typeof a.disabled === 'string') tip(b, a.label, a.disabled);
         b.addEventListener('click', () => { if (!b.disabled && a.run) a.run(api); });
         foot.appendChild(b);
@@ -655,7 +676,16 @@
       // forget it first: a scrim removed from outside must not keep swallowing Escape
       const i = dialogs.indexOf(api); if (i >= 0) dialogs.splice(i, 1);
       if (!back.isConnected) return;
-      const done = () => { back.remove(); if (prevFocus && prevFocus.isConnected && prevFocus.focus) try { prevFocus.focus({ preventScroll: true }); } catch (e) { /* gone */ } else if (o.returnFocus) o.returnFocus(); if (o.onClose) o.onClose(why); };
+      // focus goes back where it came from: the control that opened it, or (opened from a menu item that is gone now) the
+      // menu's own button, or the dialog's own fallback
+      const done = () => {
+        back.remove();
+        const back2 = fromKey ? D.querySelector('[data-c-key="' + fromKey.replace(/"/g, '') + '"]') : null;
+        if (prevFocus && prevFocus.isConnected && prevFocus !== D.body && prevFocus.focus) { try { prevFocus.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
+        else if (o.returnFocus) o.returnFocus();
+        else if (back2) { try { back2.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
+        if (o.onClose) o.onClose(why);
+      };
       if (reduced()) done();
       else { back.setAttribute('data-leaving', ''); setTimeout(done, stepped() ? 120 : 160); }
     }
@@ -673,6 +703,25 @@
     if (D.querySelector('.pmr-menu.is-open')) return;   // the menu closes first
     e.stopPropagation(); top.close('esc');
   }, true);
+
+  /* ------------------------------------------------------------------ a yes-point, in Regular and in YOLO
+     yes({ title, kicker, body (node), okLabel, ok(yoloSkipped), guard (why YOLO still asks; never skipped), report: { title,
+     text, undo (fn) or cantUndo (words) } }). Regular: a sheet asks, and nothing happens before the named button. YOLO and
+     no guard: the act runs now and its report says YOLO didn't ask, with Undo or plainly that it can't be undone. YOLO and a
+     guard: the sheet asks anyway and says why YOLO still stops here. */
+  function yes(o) {
+    if (yolo() && !o.guard) {
+      Promise.resolve(o.ok(true)).then(() => {
+        const r = o.report || {};
+        toast(r.title || o.title, [r.text, r.cantUndo ? r.cantUndo : null, 'YOLO didn’t ask for a yes.'].filter(Boolean).join(' '), 'success', true);
+      });
+      return null;
+    }
+    const body = h('div', null, o.body || null, yolo() && o.guard ? h('div.pjx-yolo-line', { 'data-yolo': 'asks' }, h('span.pjx-st-mark', { html: calm('info', 14), 'aria-hidden': 'true' }), h('span', null, h('b', { text: 'YOLO still asks here. ' }), o.guard)) : null);
+    const dlg = dialog({ title: o.title, kicker: o.kicker, body, wide: o.wide,
+      actions: [{ spacer: true }, { label: o.cancelLabel || 'Cancel', run: () => dlg.close('cancel') }, { label: o.okLabel || 'OK', primary: !o.danger, danger: !!o.danger, disabled: o.disabled || null, run: () => { dlg.close('ok'); o.ok(false); } }] });
+    return dlg;
+  }
 
   /* ------------------------------------------------------------------ owner operations (simulated)
      run(id, kind, label, phases): phases [{ label, ms }]; the project shows the op as working while it runs; the world
@@ -704,6 +753,7 @@
   }
 
   const ACT = {
+    /* (every ACT names its Plans command; a yes-point in YOLO is decided by PJX.yes below) */
     /* cmd.project.open: navigation only; it never pauses work in another project (§4) */
     open(id, opts) {
       const p = get(id); if (!p) return;
@@ -724,13 +774,20 @@
     /* cmd.project.archive / cmd.project.unarchive: reversible; nothing on disk changes */
     async archive(id) {
       const p = get(id); if (!p) return;
-      await run(id, 'archive', 'Archiving', [{ label: 'Saving the list', ms: 380 }], () => { p.lifecycle = 'archived'; p.archivedAt = 'Archived today'; p.active = false; p.activity = { key: 'skipped', word: 'Archived', text: 'Archived today · files, history and backups kept', at: 'today' }; }, { cmd: 'cmd.project.archive' });
-      toast(p.name + ' archived', 'Its files, history and backups are untouched. Find it under Archived.', 'success');
+      await run(id, 'archive', 'Archiving', [{ label: 'Saving the list', ms: 380 }], () => {
+        p.lifecycle = 'archived'; p.archivedAt = 'Archived today'; p.active = false; p.activity = { key: 'skipped', word: 'Archived', text: 'Archived today · files, history and backups kept', at: 'today' };
+        // P9: an archived Project's backup schedule pauses; its last good backup is kept as it is
+        if (p.backup && p.backup.dest && p.backup.state !== 'off') { p.backup.pausedFrom = { state: p.backup.state, schedule: p.backup.schedule }; p.backup.state = 'paused'; p.backup.schedule = 'Paused while archived'; }
+      }, { cmd: 'cmd.project.archive' });
+      toast(p.name + ' archived', 'Its files, history and last good backup are kept. Its backup schedule is paused. Find it under Archived.', 'success');
     },
     async unarchive(id) {
       const p = get(id); if (!p) return;
-      await run(id, 'unarchive', 'Restoring to the list', [{ label: 'Saving the list', ms: 380 }], () => { p.lifecycle = 'listed'; p.archivedAt = null; p.activity = { key: 'idle', word: 'Idle', text: 'Back in your list', at: 'just now' }; }, { cmd: 'cmd.project.unarchive' });
-      toast(p.name + ' is back in your list', '', 'success');
+      await run(id, 'unarchive', 'Restoring to the list', [{ label: 'Saving the list', ms: 380 }], () => {
+        p.lifecycle = 'listed'; p.archivedAt = null; p.activity = { key: 'idle', word: 'Idle', text: 'Back in your list', at: 'just now' };
+        if (p.backup && p.backup.state === 'paused') { const was = p.backup.pausedFrom || {}; p.backup.state = was.state || (p.backup.last ? 'complete' : 'setup'); p.backup.schedule = was.schedule || 'Every day'; p.backup.pausedFrom = null; }
+      }, { cmd: 'cmd.project.unarchive' });
+      toast(p.name + ' is back in your list', p.backup && p.backup.dest ? 'Its backups to ' + p.backup.dest + ' run on their schedule again.' : '', 'success');
     },
     /* cmd.project.remove: list-only; Undo puts the same project back (same identity) */
     async remove(id) {
@@ -778,7 +835,7 @@
     async send(id) {
       const p = get(id); if (!p) return;
       await run(id, 'sync', 'Sending changes', [{ label: 'Sending ' + p.online.ahead + ' change' + (p.online.ahead > 1 ? 's' : ''), ms: 900 }], () => { p.online.ahead = 0; p.online.state = 'complete'; p.online.note = 'Up to date'; }, { cmd: p.history.backend === 'jujutsu' ? 'cmd.jujutsu.git.push' : 'cmd.source_control.remote.publish' });
-      toast('Sent to ' + p.online.service, p.online.repo + ' is up to date', 'success');
+      toast('Sent to ' + p.online.service, p.online.repo + ' is up to date. Sending can’t be undone on ' + p.online.service + '; a new change can reverse it.' + (yolo() ? ' YOLO didn’t ask for a yes.' : ''), 'success');
     },
     async signIn(id) {
       const p = get(id); if (!p) return;
@@ -833,13 +890,39 @@
       const p = get(id); if (!p || !p.recovery) return;
       const phases = p.recovery.remaining.map((r) => ({ label: r.label, ms: 900 }));
       await run(id, 'resume', 'Finishing setup', phases, () => {
-        p.lifecycle = 'listed'; p.where.pending = false; p.history.worktrees = 1; p.history.changed = 0;
-        p.backup.state = 'complete'; p.backup.last = NOW_LABEL; p.backup.versions = 1; p.backup.note = null; p.sync.state = 'complete';
+        p.lifecycle = 'listed'; p.where.pending = false; p.history.worktrees = 1; p.history.changed = 0; p.sync.state = 'complete';
+        // the backup plan was saved, nothing more: no sign-in, test, Recovery Kit or backup has run yet, so it is "not on
+        // yet" and "Finish protecting your work" opens, exactly as after an ordinary New Project
+        if (p.backup && p.backup.dest) Object.assign(p.backup, { state: 'setup', last: null, versions: 0, kit: null, checked: null, note: null, setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: false, access: /S3|B2|SFTP|WebDAV/.test(p.backup.dest) || null, open: true } });
         p.attention = []; p.recovery = null; p.activity = { key: 'idle', word: 'Ready', text: 'Ready to plan in the Planning Wizard', at: 'just now' };
       }, { cmd: 'cmd.project.resume_creation' });
-      toast(p.name + ' is ready', 'Setup finished without making a second repository.', 'success');
+      toast(p.name + ' is ready', 'Setup finished without making anything twice.' + (p.backup && p.backup.setup ? ' Its backup isn’t on yet: finish protecting your work on its page.' : ''), 'success');
     },
+    /* cmd.forge.repository.open_in_browser */
     openOnline(id) { const p = get(id); if (p && p.online.repo) toast('Opening ' + p.online.repo, 'In your browser, on ' + p.online.service + '.', 'info'); },
+    /* Setup didn't finish: check again what the service has (cmd.project.resume_creation's preflight; Handler pending G5) */
+    async checkAgain(id) {
+      const p = get(id); if (!p || !p.recovery) return;
+      const ref = (p.recovery.settled[0] || {}).ref || p.online.repo;
+      await run(id, 'check', 'Checking again', [{ label: 'Asking ' + (p.online.service || 'the service') + ' for ' + ref, ms: 800 }], () => { p.recovery.checked = 'just now'; }, { cmd: 'cmd.project.resume_creation (preflight)' });
+      toast(ref ? ref + ' is still on ' + (p.online.service || 'the service') : 'Checked again', 'Nothing changed there. Continue setup does only what is left.', 'info');
+    },
+    /* cmd.forge.repository.delete (Registered, Handler pending G5/SP-321): its own confirmation, never part of resume */
+    async deleteRemote(id) {
+      const p = get(id); if (!p || !p.online || !p.online.repo) return;
+      const repo = p.online.repo, svc = p.online.service, upstream = p.online.upstream;
+      await run(id, 'sync', 'Deleting ' + repo + ' on ' + svc, [{ label: 'Asking ' + svc + ' to delete ' + repo, ms: 900 }], () => {
+        if (upstream && S.world.facts.forks[upstream.repo] === repo) delete S.world.facts.forks[upstream.repo];
+        p.online = { service: null, repo: null, state: 'off', ahead: 0, behind: 0 };
+        if (p.recovery) {
+          const settled = p.recovery.settled; p.recovery.settled = [];
+          const undo = settled.map((x) => ({ label: /fork/i.test(x.label) ? 'Make your fork on ' + svc + ' again' : 'Make the online copy on ' + svc + ' again', cmd: /fork/i.test(x.label) ? 'cmd.forge.repository.fork' : 'cmd.project.new_github_repo' }));
+          p.recovery.remaining = undo.concat(p.recovery.remaining);
+          p.attention = (p.attention || []).map((a) => (a.code === 'setup_unfinished' ? Object.assign({}, a, { text: repo + ' was deleted on ' + svc + '. Nothing of this Project is left there. Continue setup makes it again, or remove it from the list.', actions: ['resume', 'remove'] }) : a));
+        }
+      }, { cmd: 'cmd.forge.repository.delete' });
+      toast(repo + ' was deleted on ' + svc, 'This can’t be undone. The Project here is unchanged.', 'success');
+    },
     replan(id) { const p = get(id); if (!p) return; toast('Planning Wizard', 'Re-planning ' + p.name + ' from its current settings.', 'info'); if (W.PM_PAGES) W.PM_PAGES.go('wizard'); },
     orchestrator(id) { const p = get(id); if (!p) return; if (W.PM_PAGES) W.PM_PAGES.go('orchestrator'); },
     reveal(id) { const p = get(id); if (p) toast('Shown in your file manager', p.where.path, 'info'); },
@@ -863,7 +946,7 @@
     async linkOnline(id, o) {
       const p = get(id); if (!p || !o) return;
       await run(id, 'sync', 'Linking the online copy', [{ label: 'Checking ' + o.repo + ' is this Project', ms: 700 }, { label: 'Linking ' + o.repo + ' on ' + o.service, ms: 600 }], () => {
-        p.online = { service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || 'Only you', note: 'Up to date' };
+        p.online = Object.assign({ service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || null, note: 'Up to date' }, o.identity || {});
       }, { cmd: 'cmd.source_control.repository.bind' });
       toast(p.name + ' is linked to ' + o.service, o.repo + ' · getting and sending changes works here now.', 'success');
     },
@@ -872,9 +955,9 @@
       const p = get(id); if (!p || !o) return;
       const jj = p.history && p.history.backend === 'jujutsu';
       await run(id, 'sync', 'Making the online copy', [{ label: 'Making ' + o.repo + ' on ' + o.service, ms: 900 }, { label: 'Sending the first version', ms: 800 }], () => {
-        p.online = { service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || 'Only you', note: 'Up to date' };
+        p.online = Object.assign({ service: o.service, repo: o.repo, state: 'complete', ahead: 0, behind: 0, privacy: o.privacy || null, note: 'Up to date' }, o.identity || {});
       }, { cmd: o.service === 'GitHub' ? 'cmd.project.new_github_repo' : 'gap:cmd.forge.repository.create (per-forge Project hand-off)' });
-      toast('The online copy of ' + p.name + ' is ready', o.service + ' · ' + o.repo + (jj ? ' · sent with Jujutsu' : ''), 'success');
+      toast('The online copy of ' + p.name + ' is ready', o.service + ' · ' + o.repo + (jj ? ' · sent with Jujutsu' : '') + '. Making it can’t be undone from here: delete it on ' + o.service + ' if you don’t want it.' + (yolo() ? ' YOLO didn’t ask for a yes.' : ''), 'success');
     },
     /* Gap (no fork sync): the concept chains fetch from the original, then bringing it into the main line */
     async getOriginal(id) {
@@ -883,7 +966,7 @@
       await run(id, 'sync', 'Getting the latest from the original', [{ label: 'Asking ' + up.repo + ' for its changes', ms: 700 }, { label: 'Bringing in ' + n + ' change' + (n === 1 ? '' : 's'), ms: 900 }], () => {
         up.behind = 0; p.online.note = 'Up to date with the original'; p.online.state = 'complete'; dropAttention(p, 'original_newer');
       }, { cmd: 'gap:fork sync (' + (jj ? 'cmd.jujutsu.git.fetch + cmd.jujutsu.change.rebase' : 'cmd.source_control.remote.fetch + cmd.source_control.remote.sync') + ')' });
-      toast(p.name + ' has the original’s latest', up.repo + ' · ' + n + ' change' + (n === 1 ? '' : 's') + ' brought in. Your branch ' + (up.branch || 'my-change') + ' is as it was.', 'success');
+      toast(p.name + ' has the original’s latest', up.repo + ' · ' + n + ' change' + (n === 1 ? '' : 's') + ' brought in. Your branch ' + (up.branch || 'my-change') + ' is as it was.' + (yolo() ? ' YOLO updated it on your fork with a force-push that checks nobody else changed it (PM made this branch); it didn’t ask.' : ''), 'success');
     },
     /* cmd.forge.review.create: inside one Project it is canon; from a fork to its original it is a Gap */
     offerChanges(id) {
@@ -899,15 +982,16 @@
       await run(id, 'sync', 'Making your fork', [{ label: 'Making your fork on ' + svc, ms: 900 }, { label: 'Linking the original as ' + (o.upstream || 'upstream'), ms: 500 }, { label: 'Starting your change’s branch ' + (o.branch || 'my-change'), ms: 500 }], () => {
         S.world.facts.forks[orig] = o.fork;
         p.online = { service: svc, repo: o.fork, state: 'complete', ahead: 0, behind: 0, privacy: 'Everyone', note: 'Up to date', upstream: { service: svc, repo: orig, behind: 0, branch: o.branch || 'my-change', remote: o.upstream || 'upstream' } };
+        p.online.readOnly = false; p.history.defaultBranch = p.history.defaultBranch || p.history.branch; p.history.branch = o.branch || 'my-change';
       }, { cmd: 'cmd.forge.repository.fork + gap:add remote' });
-      toast('Your fork ' + o.fork + ' is ready', 'The original stays linked as ' + (o.upstream || 'upstream') + '. Your change goes on ' + (o.branch || 'my-change') + '.', 'success');
+      toast('Your fork ' + o.fork + ' is ready', 'The original stays linked as ' + (o.upstream || 'upstream') + '. Your change goes on ' + (o.branch || 'my-change') + '. The fork can’t be undone from here: delete it on ' + svc + ' if you don’t want it.' + (yolo() ? ' YOLO didn’t ask for a yes.' : ''), 'success');
     },
     /* the backup setup (6.10, 10.3): destination, then 6.12.3's steps run on the Project's page */
     async setupBackupFull(id, plan, opts) {
       const p = get(id); if (!p || !plan) return;
       const add = opts && opts.add;
       await run(id, 'backup', add ? 'Adding another place' : 'Setting up backups', [{ label: 'Saving the backup plan', ms: 500 }], () => {
-        const rec = { dest: plan.dest, place: plan.place, family: plan.family, include: plan.include || 'all', mode: plan.mode || 'daily', time: plan.time || '2:00 AM', keep: plan.keep || 'standard',
+        const rec = { dest: plan.dest, place: plan.place, family: plan.family, include: plan.include || 'all', leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode || 'daily', time: plan.time || '2:00 AM', keep: plan.keep || 'standard', keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, locator: plan.locator ? Object.assign({}, plan.locator) : null,
           schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day', state: 'setup', last: null, versions: 0, kit: null,
           setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: !!plan.testFail, access: plan.access || null, open: true } };
         if (add) { p.backup.more = (p.backup.more || []).concat([rec]); p.backup.setup = Object.assign({}, rec.setup, { target: p.backup.more.length - 1 }); }
@@ -948,12 +1032,24 @@
     /* cmd.backup.destination.update + cmd.backup.policy.update */
     async changeBackup(id, plan) {
       const p = get(id); if (!p || !plan) return;
-      const moved = plan.dest !== p.backup.dest;
+      // a different place is a different destination identity: its family, or the details that say where (bucket, its
+      // folder, the server or address, the region), never the display label alone and never a schedule or key change
+      const b = p.backup, famOf = (x) => x.family || ({ 'Home NAS': 'local_nas', 'Google Drive': 'google_drive', OneDrive: 'onedrive' })[x.dest] || x.dest;
+      const where = (l) => ['bucket', 'b2host', 'server', 'region', 'address'].map((k) => String((l || {})[k] || '').trim().toLowerCase().replace(/\/+$/, '')).join('|');
+      const moved = famOf(plan) !== famOf(b) || where(plan.locator) !== where(b.locator);
       await run(id, 'backup', 'Saving the backup plan', [{ label: moved ? 'Checking ' + plan.dest : 'Saving when it runs and what it keeps', ms: 700 }], () => {
-        Object.assign(p.backup, { include: plan.include, mode: plan.mode, time: plan.time, keep: plan.keep, schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day' });
-        if (moved) Object.assign(p.backup, { dest: plan.dest, place: plan.place, family: plan.family, state: 'setup', setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: false, open: true } });
+        Object.assign(b, { include: plan.include, leaveOut: (plan.leaveOut || []).slice(), mode: plan.mode, time: plan.time, keep: plan.keep, keepCustom: plan.keepCustom ? Object.assign({}, plan.keepCustom) : null, schedule: plan.mode === 'manual' ? 'When you click Back up now' : 'Every day' });
+        if (!moved && plan.locator && Object.keys(plan.locator).length) b.locator = Object.assign({}, plan.locator);
+        if (moved) {
+          // receipts belong to the place that made them: the old place's backups stay there (and expire by its rules); the new
+          // one starts unprotected, with no versions, no Recovery Kit and nothing checked, until its own steps run
+          if (b.last) b.previous = { dest: b.dest, place: b.place, last: b.last, versions: b.versions || 0 };
+          Object.assign(b, { dest: plan.dest, place: plan.place, family: plan.family, locator: plan.locator ? Object.assign({}, plan.locator) : null, state: 'setup', last: null, versions: 0, size: null, kit: null, checked: null, checkedOf: null, note: null,
+            setup: { steps: ['todo', 'todo', 'todo', 'todo', 'todo'], fail: false, access: plan.access || null, open: true } });
+          dropAttention(p, 'backup_overdue');
+        }
       }, { cmd: moved ? 'cmd.backup.destination.update' : 'cmd.backup.policy.update' });
-      toast('Backup plan saved for ' + p.name, moved ? 'Finish the new place’s sign-in and test on its page.' : (plan.mode === 'manual' ? 'Backs up when you click Back up now.' : 'Every day at ' + plan.time + '.'), 'success');
+      toast('Backup plan saved for ' + p.name, moved ? 'The new place starts with no backups. Finish its sign-in, test and Recovery Kit on its page.' + (b.previous ? ' The backups on ' + b.previous.dest + ' stay there.' : '') : (plan.mode === 'manual' ? 'Backs up when you click Back up now.' : 'Every day at ' + plan.time + '.'), 'success');
     },
     /* cmd.backup.recovery_key.test */
     async checkKit(id, bad) {
@@ -963,17 +1059,21 @@
       return ok;
     },
     /* cmd.restore.preview, then cmd.restore.project_in_place: the safe point is the Restore owner's */
-    async restoreInPlace(id) {
+    async restoreInPlace(id, opts) {
       const p = get(id); if (!p || !p.backup || !p.backup.last) return;
-      await run(id, 'restore', 'Putting it back as it was', [{ label: 'Making a safe point of what’s there now', ms: 700 }, { label: 'Getting the backup of ' + p.backup.last, ms: 900 }, { label: 'Putting the files back', ms: 800 }], () => {
-        p.history.changed = 0; p.activity = { key: 'idle', word: 'Idle', text: 'Put back as it was on ' + p.backup.last + ' · a safe point keeps what was there', at: 'just now' };
+      opts = opts || {};
+      const pmOnly = p.backup.include === 'pm';
+      const ok = await run(id, 'restore', 'Putting it back as it was', [{ label: 'Making a safe point of what’s there now', ms: 700, fail: !!opts.safePointFails }, { label: 'Getting the backup of ' + p.backup.last, ms: 900 }, { label: pmOnly ? 'Putting its plans, chats and settings back' : 'Putting the files back', ms: 800 }], () => {
+        if (!pmOnly) p.history.changed = 0;
+        p.activity = { key: 'idle', word: 'Idle', text: 'Put back as it was on ' + p.backup.last + ' · a safe point keeps what was there', at: 'just now' };
       }, { cmd: 'cmd.restore.project_in_place' });
-      toast(p.name + ' is back as it was on ' + p.backup.last, 'What was there before is kept in a safe point.', 'success');
+      if (ok) toast(p.name + ' is back as it was ' + (/ago$/.test(p.backup.last) ? p.backup.last : 'on ' + p.backup.last), (pmOnly ? 'Its plans, chats and settings came back; its files weren’t in this backup and didn’t change. ' : '') + 'What was there before is kept in a safe point.', 'success');
+      else toast('Nothing was put back', 'Puppet Master couldn’t make the safe point first, so it changed nothing. Free some space and try again.', 'warn');
     },
     /* cmd.backup.test_restore */
     async tryRestore(id) {
       const p = get(id); if (!p || !p.backup || !p.backup.last) return;
-      await run(id, 'backup', 'Trying a restore', [{ label: 'Restoring it somewhere apart', ms: 900 }, { label: 'Checking every file', ms: 700 }, { label: 'Removing the trial copy', ms: 400 }], () => { p.backup.checked = 'Today'; }, { cmd: 'cmd.backup.test_restore' });
+      await run(id, 'backup', 'Trying a restore', [{ label: 'Restoring it somewhere apart', ms: 900 }, { label: 'Checking every file', ms: 700 }, { label: 'Removing the trial copy', ms: 400 }], () => { p.backup.checked = 'Today'; p.backup.checkedOf = p.backup.last; }, { cmd: 'cmd.backup.test_restore' });
       toast('The trial restore of ' + p.name + ' worked', 'Nothing changed. The backup of ' + p.backup.last + ' is checked.', 'success');
     },
     /* cmd.settings.open with a pm.settings_route_request.v1 naming the settings-transfer manager */
@@ -995,7 +1095,7 @@
     repair: { label: 'Fix…', icon: 'folder-search', run: (id) => emit('need-repair', { id }) },
     sign_in: { label: 'Sign in', icon: 'key', run: (id) => ACT.signIn(id) },
     details: { label: 'Details', icon: 'info', run: (id) => emit('need-details', { id }) },
-    setup_backup: { label: 'Set up backup', icon: 'safe', run: (id) => ACT.setupBackup(id) },
+    setup_backup: { label: 'Set up backup', icon: 'safe', run: (id) => { const c = S.mounted && CONCEPTS[S.mounted]; if (c && c.onBackup && c.onBackup({ id, step: 'setup' })) return; ACT.setupBackup(id); } },
     replan: { label: 'Re-plan', icon: 'plan', run: (id) => ACT.replan(id) },
     backup_now: { label: 'Back up now', icon: 'upload', run: (id) => ACT.backupNow(id) },
     backup_settings: { label: 'Change where', icon: 'settings', run: (id) => ACT.settings(id, 'Backup · where and when') },
@@ -1015,10 +1115,11 @@
     const g1 = { items: [
       p.lifecycle === 'archived' ? null : { label: 'Open', icon: 'open', meta: p.active ? 'Already open' : '', disabled: p.active ? 'It is the open project' : null, run: () => ACT.open(p.id) },
       { label: 'Project settings', icon: 'settings', run: () => ACT.settings(p.id) },
+      // Rename: canon has no cmd.project.rename yet (a Gap; card P10 adds it), so the dialog's Rename names it as gap:
       { label: 'Rename…', icon: 'edit', run: () => emit('need-rename', { id: p.id }) }
     ] };
     const g2 = { label: 'Keep it safe', items: [
-      p.backup.dest ? { label: 'Back up now', icon: 'upload', meta: s.backup.last ? 'Last ' + s.backup.last : '', run: () => ACT.backupNow(p.id) } : { label: 'Set up backup…', icon: 'safe', run: () => ACT.setupBackup(p.id) },
+      p.backup.dest ? { label: 'Back up now', icon: 'upload', meta: s.backup.last ? 'Last ' + s.backup.last : '', run: () => ACT.backupNow(p.id) } : { label: 'Set up backup…', icon: 'safe', run: () => ACTIONS.setup_backup.run(p.id) },
       p.online.service && p.online.behind ? { label: 'Get the latest', icon: 'download', meta: p.online.behind + ' newer', run: () => ACT.getLatest(p.id) } : null,
       p.online.service && p.online.ahead && p.online.state !== 'waiting' ? { label: 'Send changes', icon: 'upload', meta: p.online.ahead + ' to send', run: () => ACT.send(p.id) } : null,
       p.online.service ? { label: 'Open on ' + p.online.service, icon: 'globe', run: () => ACT.openOnline(p.id) } : null
@@ -1128,7 +1229,7 @@
   }
 
   /* ------------------------------------------------------------------ messages from index.html */
-  function report(type) { if (W.parent !== W) { try { W.parent.postMessage({ source: 'pjx', type, state: { opt: S.opt, scenario: S.scenario, look: look() } }, '*'); } catch (e) { /* no parent */ } } }
+  function report(type) { if (W.parent !== W) { try { W.parent.postMessage({ source: 'pjx', type, state: { opt: S.opt, scenario: S.scenario, look: look(), runMode: S.runMode } }, '*'); } catch (e) { /* no parent */ } } }
   function config(c) {
     const scen = c.scenario && c.scenario !== S.scenario;
     if (scen) { S.scenario = c.scenario; S.world = freshWorld(S.scenario); }
@@ -1144,6 +1245,7 @@
     else if (m.cmd === 'look') { await setLook(m.look); report('look-done'); }
     else if (m.cmd === 'act') act(m.act);
     else if (m.cmd === 'motion') { if (m.reduced) H.setAttribute('data-motion', 'reduced'); else if (H.getAttribute('data-motion') === 'reduced') H.removeAttribute('data-motion'); rerender(); }
+    else if (m.cmd === 'runmode') { S.runMode = m.mode === 'yolo' ? 'yolo' : 'regular'; H.setAttribute('data-pjx-run', S.runMode); emit('change', { why: 'runmode' }); report('state'); }
   });
   // 1 to 3 pick a concept and 0 shows today's page, here too (never while typing, never with a modifier, never in a dialog)
   D.addEventListener('keydown', (e) => {
@@ -1158,7 +1260,7 @@
   W.PJX = {
     version: 1, S, ENV, STATUS, ACT, ACTIONS,
     h, esc, icon, mark, calm, tip, wait, uid, reduced, stepped, look,
-    on, emit, toast, menu, dialog, run,
+    on, emit, toast, menu, dialog, run, yes, yolo, runMode: () => S.runMode, setRunMode: (m) => { S.runMode = m === 'yolo' ? 'yolo' : 'regular'; H.setAttribute('data-pjx-run', S.runMode); emit('change', { why: 'runmode' }); },
     all, get, listed, archived, primary, safety, counts, statusWord, moreItems, deleteItem, setActive,
     concept, mount, unmount, rerender, config, setLook, report, act
   };

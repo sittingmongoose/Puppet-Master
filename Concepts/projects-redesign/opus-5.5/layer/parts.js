@@ -131,13 +131,17 @@
       }
       if (st0.way === 'moveit') box.appendChild(F().group('Move to', F().field('New folder', F().keyed(F().textInput(st0.place, '', (v) => { st0.place = v; }), 'move-place'), 'Puppet Master copies it there, checks the copy, then switches over. The old folder is removed only after that, and only if you say so.')));
     }
+    // a check answers for the folder it looked at: a newer choice makes an older answer stale, and it is dropped
     async function check(path) {
+      const gen = st0.gen = (st0.gen || 0) + 1;
       st0.path = path; st0.checking = true; st0.probe = null; draw();
-      st0.probe = await ACT.testFolder(p.id, path); st0.checking = false; draw();
+      const pr = await ACT.testFolder(p.id, path);
+      if (st0.gen !== gen || st0.path !== path) return;
+      st0.probe = pr; st0.checking = false; draw();
     }
     fill();
     box.pjxPrimary = () => {
-      if (st0.way === 'find') return { label: 'Use this folder', disabled: !(st0.probe && st0.probe.same) ? 'Choose a folder that holds this project' : null, run: () => ACT.relocate(p.id, st0.path) };
+      if (st0.way === 'find') { const ok = !!(st0.probe && st0.probe.same && st0.probe.path === st0.path && !st0.checking); const path = st0.path; return { label: 'Use this folder', disabled: ok ? null : 'Choose a folder that holds this project', run: () => { if (ok && st0.probe && st0.probe.path === path) ACT.relocate(p.id, path); } }; }
       if (st0.way === 'clone') return { label: 'Copy it', run: () => ACT.cloneAgain(p.id, st0.place) };
       if (st0.way === 'restore') return { label: 'Restore', run: () => ACT.restoreSame(p.id, st0.place) };
       if (st0.way === 'drive') return { label: 'Check again', keep: true, run: async () => { st0.again = 'checking'; draw(); await PJX.wait(PJX.reduced() ? 200 : 900); st0.again = 'missing'; draw(); } };
@@ -208,7 +212,8 @@
     const p = PJX.get(id); if (!p) return null;
     const body = h('div', null,
       h('p.pjx-q-lead', { text: 'Nothing is deleted. Its folder, history, online copy and backups stay where they are.' }),
-      F().facts([{ key: 'info', text: 'Add it back any time: New Project › A folder on this computer.' }, p.where.missing ? { key: 'info', text: 'Its backups on ' + (p.backup.dest || 'your backup place') + ' are kept by their own schedule.' } : null]));
+      F().facts([{ key: 'info', text: 'Add it back any time: New Project › A folder on this computer.' }, p.where.missing ? { key: 'info', text: 'Its backups on ' + (p.backup.dest || 'your backup place') + ' are kept by their own schedule.' } : null]),
+      PJX.S.mounted === 'c' && PJX.npui && PJX.npui.yoloLine ? PJX.npui.yoloLine(PJX.w('np.yolo.remove')) : null);
     const dlg = PJX.dialog({ title: 'Remove ' + p.name + ' from your list?', body, actions: [{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: 'Remove from list', primary: true, run: () => { dlg.close('ok'); ACT.remove(id); } }] });
     return dlg;
   }
@@ -223,6 +228,7 @@
     body.appendChild(F().group('Not touched', F().facts([{ key: 'complete', text: 'Its folder ' + p.where.path }, p.online.service ? { key: 'complete', text: 'Its online copy on ' + p.online.service } : null, p.backup.dest ? { key: 'complete', text: 'Its backups on ' + p.backup.dest + ' (they expire by their own schedule)' } : null])));
     body.appendChild(F().facts([{ key: 'info', text: 'If something must keep it for a while (a retention hold), deletion waits and says why.' }]));
     body.appendChild(F().field('Type ' + p.name + ' to confirm', inp));
+    if (PJX.S.mounted === 'c' && PJX.npui && PJX.npui.yoloLine) { const y = PJX.npui.yoloLine(PJX.w('np.yolo.deleteData'), { asks: true }); if (y) body.appendChild(y); }
     let dlg = null;
     function paint() { dlg && dlg.setActions([{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: 'Delete Puppet Master’s data', danger: true, icon: 'trash', disabled: typed.trim() !== p.name ? 'Type the name first' : null, run: () => { dlg.close('ok'); ACT.deleteData(id); } }]); }
     dlg = PJX.dialog({ title: 'Delete Puppet Master’s data for ' + p.name + '?', kicker: 'Delete data', body });
@@ -240,7 +246,7 @@
       body.appendChild(F().field('Name', F().keyed(F().textInput(name, p.name, (v) => { name = v; draw(); paint(); }, { autofocus: true }), 'rename'), 'Only the name you see changes. Its folder, history and online copy keep theirs.', name !== p.name ? problem() : ''));
       const el = body.querySelector('[data-pjx-key="rename"]'); if (el && W.document.activeElement !== el) { el.focus(); el.setSelectionRange(name.length, name.length); }
     };
-    function paint() { dlg && dlg.setActions([{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: 'Rename', primary: true, disabled: name === p.name || problem() ? 'Type a new name' : null, run: () => { dlg.close('ok'); ACT.rename(id, name.trim()); } }]); }
+    function paint() { dlg && dlg.setActions([{ spacer: true }, { label: 'Cancel', run: () => dlg.close('cancel') }, { label: 'Rename', primary: true, cmd: 'gap:cmd.project.rename (P10)', disabled: name === p.name || problem() ? 'Type a new name' : null, run: () => { dlg.close('ok'); ACT.rename(id, name.trim()); } }]); }
     dlg = PJX.dialog({ title: 'Rename ' + p.name, body });
     draw(); paint();
     return dlg;
