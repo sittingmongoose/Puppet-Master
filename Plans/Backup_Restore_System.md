@@ -2091,7 +2091,7 @@ reasoning_tier: high
 context_scope: projects_refresh_brs_032
 implementation_surfaces:
 - Plans/Backup_Restore_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
@@ -2184,7 +2184,7 @@ reasoning_tier: high
 context_scope: projects_refresh_brs_033
 implementation_surfaces:
 - Plans/Backup_Restore_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false

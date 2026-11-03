@@ -420,7 +420,7 @@ context_scope: projects_refresh_20261103_macs_006
 implementation_surfaces:
 - Plans/Multi-Account_Connection_Spec.md
 - Plans/storage-plan.md
-- Future shared Rust interface model and sole owner services; no implementation claimed
+- future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
   mode: accepted_product_contract_pending_companion_and_native_evidence
   create_worknodes: false

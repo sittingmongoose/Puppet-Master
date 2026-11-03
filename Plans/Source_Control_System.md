@@ -2087,7 +2087,7 @@ reasoning_tier: high
 context_scope: projects_refresh_scs_025
 implementation_surfaces:
 - Plans/Source_Control_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false

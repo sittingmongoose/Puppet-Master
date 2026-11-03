@@ -697,7 +697,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pjct_009
 implementation_surfaces:
 - Plans/Project_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
@@ -788,7 +788,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pjct_010
 implementation_surfaces:
 - Plans/Project_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
@@ -861,7 +861,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pjct_011
 implementation_surfaces:
 - Plans/Project_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
@@ -938,7 +938,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pjct_012
 implementation_surfaces:
 - Plans/Project_System.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false

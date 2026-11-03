@@ -4916,9 +4916,7 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-060
-- Plans/Settings_System.md#SSYS-063
+- Plans/Settings_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -4967,10 +4965,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Settings_System.md#SSYS-062
-- Plans/Project_System.md#PJCT-009
-- Plans/Commands_System.md#CS-081
-- Plans/Multi-Account.md#MA-074
+- Plans/Settings_System.md
+- Plans/Project_System.md
+- Plans/Commands_System.md
+- Plans/Multi-Account.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5021,9 +5019,8 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Project_System.md#PJCT-009
-- Plans/Project_System.md#PJCT-010
-- Plans/Planning_Wizard.md#PWIZ-037
+- Plans/Project_System.md
+- Plans/Planning_Wizard.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5071,12 +5068,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/assistant-chat-design.md#ACD-511
-- Plans/Project_Sync_and_Backbone.md#PSB-007
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/assistant-chat-design.md
+- Plans/Project_Sync_and_Backbone.md
+- Plans/Goal_Runtime_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5127,9 +5123,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Tools.md#T-185
-- Plans/assistant-chat-design.md#ACD-509
-- Plans/Permissions_System.md#PS-145
+- Plans/Tools.md
+- Plans/assistant-chat-design.md
+- Plans/Permissions_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5178,9 +5174,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Multi-Account.md#MA-074
-- Plans/Multi-Account_Connection_Spec.md#MACS-006
-- Plans/Settings_System.md#SSYS-062
+- Plans/Multi-Account.md
+- Plans/Multi-Account_Connection_Spec.md
+- Plans/Settings_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5236,11 +5232,8 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Permissions_System.md#PS-144
-- Plans/Permissions_System.md#PS-146
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/Shared_Integration_Runtime.md#SIR-055
+- Plans/Permissions_System.md
+- Plans/Shared_Integration_Runtime.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5293,13 +5286,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Contracts_V0.md#CV-365
-- Plans/Contracts_V0.md#CV-366
-- Plans/Contracts_V0.md#CV-368
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Collaborative_Workflows.md#CWR-045
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/Collaborative_Workflows.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -5352,10 +5343,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/DRY_Rules.md
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
-- Plans/Scheduling_and_Quota_Resume.md#SQR-020
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Contracts_V0.md#CV-368
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

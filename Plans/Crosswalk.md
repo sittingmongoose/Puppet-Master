@@ -3598,15 +3598,15 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Crosswalk.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
-- Plans/Project_System.md#PJCT-009
-- Plans/Permissions_System.md#PS-147
-- Plans/Contracts_V0.md#CV-365
-- Plans/storage-plan.md#SP-348
+- Plans/Settings_System.md
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Project_System.md
+- Plans/Permissions_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

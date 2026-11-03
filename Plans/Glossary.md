@@ -2540,11 +2540,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-061
-- Plans/Settings_System.md#SSYS-063
-- Plans/Server_System.md#SRV-016
-- Plans/Project_System.md#PJCT-011
+- Plans/Settings_System.md
+- Plans/Server_System.md
+- Plans/Project_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -2605,10 +2603,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Scheduling_and_Quota_Resume.md#SQR-020
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -2661,10 +2658,8 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Glossary.md
-- Plans/Permissions_System.md#PS-146
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/Run_Modes.md#RM-053
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

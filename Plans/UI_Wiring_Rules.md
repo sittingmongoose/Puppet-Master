@@ -3074,11 +3074,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-063
-- Plans/Settings_System.md#SSYS-065
-- Plans/UI_Command_Catalog.md#UCC-214
-- Plans/Wiring_Matrix.md#WM-100
+- Plans/Settings_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -3143,13 +3141,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/assistant-chat-design.md#ACD-509
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/assistant-chat-design.md#ACD-511
-- Plans/Project_Sync_and_Backbone.md#PSB-007
-- Plans/UI_Command_Catalog.md#UCC-216
-- Plans/Wiring_Matrix.md#WM-102
+- Plans/assistant-chat-design.md
+- Plans/Project_Sync_and_Backbone.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -3216,14 +3211,13 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
-- Plans/Project_System.md#PJCT-009
-- Plans/Project_System.md#PJCT-012
-- Plans/Planning_Wizard.md#PWIZ-037
-- Plans/Source_Control_System.md#SCS-025
-- Plans/FileManager.md#F-084
-- Plans/Tools.md#T-187
-- Plans/UI_Command_Catalog.md#UCC-215
-- Plans/Wiring_Matrix.md#WM-101
+- Plans/Project_System.md
+- Plans/Planning_Wizard.md
+- Plans/Source_Control_System.md
+- Plans/FileManager.md
+- Plans/Tools.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -3289,15 +3283,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Collaborative_Workflows.md#CWR-045
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/UI_Command_Catalog.md#UCC-217
-- Plans/UI_Command_Catalog.md#UCC-218
-- Plans/Wiring_Matrix.md#WM-103
-- Plans/Wiring_Matrix.md#WM-104
+- Plans/Goal_Runtime_System.md
+- Plans/Collaborative_Workflows.md
+- Plans/Permissions_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -3364,13 +3354,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
-- Plans/Scheduling_and_Quota_Resume.md#SQR-020
-- Plans/Contracts_V0.md#CV-368
-- Plans/UI_Command_Catalog.md#UCC-219
-- Plans/Wiring_Matrix.md#WM-105
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

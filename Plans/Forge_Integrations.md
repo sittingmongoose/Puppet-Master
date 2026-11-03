@@ -1969,7 +1969,7 @@ reasoning_tier: high
 context_scope: projects_refresh_fgi_023
 implementation_surfaces:
 - Plans/Forge_Integrations.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
@@ -2049,7 +2049,7 @@ reasoning_tier: high
 context_scope: projects_refresh_fgi_024
 implementation_surfaces:
 - Plans/Forge_Integrations.md
-- Future existing owner handlers; handler_unavailable until native evidence
+- future existing owner handlers; handler_unavailable until native evidence
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false

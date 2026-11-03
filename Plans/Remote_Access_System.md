@@ -588,7 +588,7 @@ context_scope: projects_refresh_20261103_ras_017
 implementation_surfaces:
 - Plans/Remote_Access_System.md
 - Plans/server_system_contracts.schema.json
-- Future sole Server SSH owner and shared protected-auth broker; no implementation claimed
+- future sole Server SSH owner and shared protected-auth broker; no implementation claimed
 node_compile_hint:
   mode: accepted_product_contract_pending_companion_and_native_evidence
   create_worknodes: false

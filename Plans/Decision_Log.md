@@ -19979,9 +19979,8 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Decision_Log.md#DL-292
-- Plans/Project_System.md#PJCT-012
-- Plans/Settings_System.md#SSYS-002
+- Plans/Project_System.md
+- Plans/Settings_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20034,10 +20033,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-002
-- Plans/Settings_System.md#SSYS-059
-- Plans/Server_System.md#SRV-016
-- Plans/Glossary.md#G-032
+- Plans/Settings_System.md
+- Plans/Server_System.md
+- Plans/Glossary.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20090,9 +20088,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-060
-- Plans/Server_System.md#SRV-016
-- Plans/storage-plan.md#SP-348
+- Plans/Settings_System.md
+- Plans/Server_System.md
+- Plans/storage-plan.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20141,10 +20139,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-061
-- Plans/Settings_System.md#SSYS-063
-- Plans/FinalGUISpec.md#F3-670
-- Plans/DRY_Rules.md#DR-084
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20195,11 +20192,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-062
-- Plans/Multi-Account.md#MA-074
-- Plans/Multi-Account_Connection_Spec.md#MACS-006
-- Plans/DRY_Rules.md#DR-085
-- Plans/DRY_Rules.md#DR-089
+- Plans/Settings_System.md
+- Plans/Multi-Account.md
+- Plans/Multi-Account_Connection_Spec.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20250,10 +20246,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-065
-- Plans/Permissions_System.md#PS-144
-- Plans/Permissions_System.md#PS-146
-- Plans/Run_Modes.md#RM-053
+- Plans/Settings_System.md
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20305,11 +20300,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-065
-- Plans/FinalGUISpec.md#F3-468
-- Plans/DRY_Rules.md#DR-054
-- Plans/DRY_Rules.md#DR-056
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20362,10 +20355,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/assistant-chat-design.md#ACD-508
-- Plans/Server_System.md#SRV-017
-- Plans/Settings_System.md#SSYS-065
-- Plans/FinalGUISpec.md#F3-671
+- Plans/assistant-chat-design.md
+- Plans/Server_System.md
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20415,10 +20408,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Permissions_System.md#PS-145
-- Plans/FileSafe.md#F2-213
-- Plans/Tools.md#T-186
-- Plans/Tools.md#T-187
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/Tools.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20469,10 +20461,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Tools.md#T-185
-- Plans/Permissions_System.md#PS-145
-- Plans/assistant-chat-design.md#ACD-509
-- Plans/DRY_Rules.md#DR-088
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20521,9 +20513,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/assistant-chat-design.md#ACD-509
-- Plans/orchestrator-subagent-integration.md#OSI-439
-- Plans/Permissions_System.md#PS-145
+- Plans/assistant-chat-design.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/Permissions_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20575,12 +20567,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/assistant-chat-design.md#ACD-511
-- Plans/Project_Sync_and_Backbone.md#PSB-007
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/assistant-chat-design.md
+- Plans/Project_Sync_and_Backbone.md
+- Plans/Goal_Runtime_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20633,14 +20624,12 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Collaborative_Workflows.md#CWR-045
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
-- Plans/Scheduling_and_Quota_Resume.md#SQR-020
-- Plans/Working_Notebook.md#WN-021
-- Plans/assistant-memory-subsystem.md#AMS-054
+- Plans/Goal_Runtime_System.md
+- Plans/Collaborative_Workflows.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
+- Plans/Working_Notebook.md
+- Plans/assistant-memory-subsystem.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20697,9 +20686,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Project_System.md#PJCT-012
-- Plans/FinalGUISpec.md#F3-668
-- Plans/DRY_Rules.md#DR-085
+- Plans/Project_System.md
+- Plans/FinalGUISpec.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20749,10 +20738,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Project_System.md#PJCT-010
-- Plans/Forge_Integrations.md#FGI-023
-- Plans/Source_Control_System.md#SCS-025
-- Plans/Decision_Log.md#DL-273
+- Plans/Project_System.md
+- Plans/Forge_Integrations.md
+- Plans/Source_Control_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20803,9 +20791,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Forge_Integrations.md#FGI-024
-- Plans/GitHub_Integration.md#GI-032
-- Plans/Source_Control_System.md#SCS-025
+- Plans/Forge_Integrations.md
+- Plans/GitHub_Integration.md
+- Plans/Source_Control_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20855,9 +20843,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Project_System.md#PJCT-011
-- Plans/Settings_System.md#SSYS-062
-- Plans/DRY_Rules.md#DR-085
+- Plans/Project_System.md
+- Plans/Settings_System.md
+- Plans/DRY_Rules.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20907,10 +20895,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Jujutsu_Integration.md#JJI-023
-- Plans/Source_Control_System.md#SCS-025
-- Plans/Backup_Restore_System.md#BRS-032
-- Plans/Backup_Restore_System.md#BRS-033
+- Plans/Jujutsu_Integration.md
+- Plans/Source_Control_System.md
+- Plans/Backup_Restore_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -20961,10 +20948,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Permissions_System.md#PS-146
-- Plans/Permissions_System.md#PS-148
-- Plans/Run_Modes.md#RM-053
-- Plans/Containers_Registry_and_Unraid.md#CRAU-104
+- Plans/Permissions_System.md
+- Plans/Run_Modes.md
+- Plans/Containers_Registry_and_Unraid.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -21018,11 +21004,10 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Decision_Log.md
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/orchestrator-subagent-integration.md#OSI-441
-- Plans/human-in-the-loop.md#HITL-038
-- Plans/FinalGUISpec.md#F3-673
+- Plans/Permissions_System.md
+- Plans/orchestrator-subagent-integration.md
+- Plans/human-in-the-loop.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

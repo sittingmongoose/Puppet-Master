@@ -6849,12 +6849,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/Settings_System.md#SSYS-059
-- Plans/Settings_System.md#SSYS-060
-- Plans/Settings_System.md#SSYS-062
-- Plans/Settings_System.md#SSYS-065
-- Plans/Models_System.md#MS-099
-- Plans/Multi-Account.md#MA-074
+- Plans/Settings_System.md
+- Plans/Models_System.md
+- Plans/Multi-Account.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -6919,16 +6916,12 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/Contracts_V0.md#CV-365
-- Plans/Contracts_V0.md#CV-366
-- Plans/Contracts_V0.md#CV-368
-- Plans/storage-plan.md#SP-349
-- Plans/storage-plan.md#SP-351
-- Plans/storage-plan.md#SP-352
-- Plans/Goal_Runtime_System.md#GRS-086
-- Plans/Collaborative_Workflows.md#CWR-045
-- Plans/Assistant_Plan_Runtime.md#APR-073
-- Plans/Scheduling_and_Quota_Resume.md#SQR-019
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+- Plans/Collaborative_Workflows.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Scheduling_and_Quota_Resume.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -6995,12 +6988,11 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/assistant-chat-design.md#ACD-510
-- Plans/assistant-chat-design.md#ACD-511
-- Plans/Project_Sync_and_Backbone.md#PSB-007
-- Plans/Goal_Runtime_System.md#GRS-087
-- Plans/Assistant_Plan_Runtime.md#APR-074
-- Plans/Backup_Restore_System.md#BRS-033
+- Plans/assistant-chat-design.md
+- Plans/Project_Sync_and_Backbone.md
+- Plans/Goal_Runtime_System.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/Backup_Restore_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -7063,14 +7055,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/Permissions_System.md#PS-144
-- Plans/Permissions_System.md#PS-145
-- Plans/Permissions_System.md#PS-146
-- Plans/Permissions_System.md#PS-147
-- Plans/Permissions_System.md#PS-148
-- Plans/Tools.md#T-185
-- Plans/Tools.md#T-186
-- Plans/Run_Modes.md#RM-053
+- Plans/Permissions_System.md
+- Plans/Tools.md
+- Plans/Run_Modes.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -7136,17 +7123,12 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/Project_System.md#PJCT-009
-- Plans/Project_System.md#PJCT-010
-- Plans/Project_System.md#PJCT-011
-- Plans/Project_System.md#PJCT-012
-- Plans/Planning_Wizard.md#PWIZ-037
-- Plans/Source_Control_System.md#SCS-025
-- Plans/Forge_Integrations.md#FGI-023
-- Plans/Forge_Integrations.md#FGI-024
-- Plans/Jujutsu_Integration.md#JJI-023
-- Plans/Backup_Restore_System.md#BRS-032
-- Plans/Backup_Restore_System.md#BRS-033
+- Plans/Project_System.md
+- Plans/Planning_Wizard.md
+- Plans/Source_Control_System.md
+- Plans/Forge_Integrations.md
+- Plans/Jujutsu_Integration.md
+- Plans/Backup_Restore_System.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false
@@ -7219,11 +7201,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Automated_Testing_System.md
-- Plans/UI_Wiring_Rules.md#UIW-048
-- Plans/UI_Wiring_Rules.md#UIW-052
-- Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
-- Plans/FinalGUISpec.md#F3-668
-- Plans/FinalGUISpec.md#F3-674
+- Plans/UI_Wiring_Rules.md
+- Plans/Test_Capture_and_Motion_Evidence.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

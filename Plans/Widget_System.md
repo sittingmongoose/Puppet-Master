@@ -1939,11 +1939,9 @@ reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
 implementation_surfaces:
 - Plans/Widget_System.md
-- Plans/storage-plan.md#SP-349
-- Plans/FinalGUISpec.md#F3-630
-- Plans/FinalGUISpec.md#F3-638
-- Plans/Widget_System.md#WS-030
-- Plans/usage-feature.md#UF-062
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+- Plans/usage-feature.md
 node_compile_hint:
   mode: planning_contract
   create_worknodes: false

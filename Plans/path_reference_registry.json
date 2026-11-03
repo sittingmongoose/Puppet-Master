@@ -541,14 +541,14 @@
       "canonical_route": "Plans/Permissions_System.md",
       "evidence_refs": [
         "Plans/Permissions_System.md",
-        "Plans/Contracts_V0.md#CV-366"
+        "Plans/Contracts_V0.md"
       ],
       "allowed_contexts": [
         "Materialized data-contract references after phase-2 application",
         "PlanUnit implementation_surfaces"
       ],
       "validator_policy": "allow",
-      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified."
+      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified. Evidence anchors: Plans/Contracts_V0.md#CV-366."
     },
     {
       "raw_ref": "Plans/assistant_plan_runtime_contracts.schema.json",
@@ -558,14 +558,14 @@
       "canonical_route": "Plans/Assistant_Plan_Runtime.md",
       "evidence_refs": [
         "Plans/Assistant_Plan_Runtime.md",
-        "Plans/Contracts_V0.md#CV-366"
+        "Plans/Contracts_V0.md"
       ],
       "allowed_contexts": [
         "Materialized data-contract references after phase-2 application",
         "PlanUnit implementation_surfaces"
       ],
       "validator_policy": "allow",
-      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified."
+      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified. Evidence anchors: Plans/Contracts_V0.md#CV-366."
     },
     {
       "raw_ref": "Plans/cross_project_access_contracts.schema.json",
@@ -575,14 +575,14 @@
       "canonical_route": "Plans/Tools.md",
       "evidence_refs": [
         "Plans/Tools.md",
-        "Plans/Contracts_V0.md#CV-366"
+        "Plans/Contracts_V0.md"
       ],
       "allowed_contexts": [
         "Materialized data-contract references after phase-2 application",
         "PlanUnit implementation_surfaces"
       ],
       "validator_policy": "allow",
-      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified."
+      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified. Evidence anchors: Plans/Contracts_V0.md#CV-366."
     },
     {
       "raw_ref": "Plans/computer_use_contracts.schema.json",
@@ -592,14 +592,14 @@
       "canonical_route": "Plans/Tools.md",
       "evidence_refs": [
         "Plans/Tools.md",
-        "Plans/Contracts_V0.md#CV-366"
+        "Plans/Contracts_V0.md"
       ],
       "allowed_contexts": [
         "Materialized data-contract references after phase-2 application",
         "PlanUnit implementation_surfaces"
       ],
       "validator_policy": "allow",
-      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified."
+      "notes": "Accepted product data shape; native handlers/event/source adoption remain unavailable until separately verified. Evidence anchors: Plans/Contracts_V0.md#CV-366."
     },
     {
       "raw_ref": "Plans/application_workflow_contracts.schema.json",
@@ -653,13 +653,13 @@
       "match_kind": "exact",
       "canonical_route": "Plans/UI_Command_Catalog.md",
       "evidence_refs": [
-        "Plans/UI_Command_Catalog.md#UCC-214"
+        "Plans/UI_Command_Catalog.md"
       ],
       "allowed_contexts": [
         "Same-batch materialized static contract references"
       ],
       "validator_policy": "allow",
-      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority."
+      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority. Evidence anchors: Plans/UI_Command_Catalog.md#UCC-214."
     },
     {
       "raw_ref": "Plans/projects_refresh_command_bindings.fixtures.json",
@@ -668,13 +668,13 @@
       "match_kind": "exact",
       "canonical_route": "Plans/UI_Command_Catalog.md",
       "evidence_refs": [
-        "Plans/UI_Command_Catalog.md#UCC-214"
+        "Plans/UI_Command_Catalog.md"
       ],
       "allowed_contexts": [
         "Same-batch materialized static contract references"
       ],
       "validator_policy": "allow",
-      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority."
+      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority. Evidence anchors: Plans/UI_Command_Catalog.md#UCC-214."
     },
     {
       "raw_ref": "Plans/application_workflow_source_graph.json",
@@ -683,13 +683,13 @@
       "match_kind": "exact",
       "canonical_route": "Plans/Contracts_V0.md",
       "evidence_refs": [
-        "Plans/Contracts_V0.md#CV-366"
+        "Plans/Contracts_V0.md"
       ],
       "allowed_contexts": [
         "Same-batch materialized static contract references"
       ],
       "validator_policy": "allow",
-      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority."
+      "notes": "Static schema/fixture/source manifest; no native dispatch or producer authority. Evidence anchors: Plans/Contracts_V0.md#CV-366."
     }
   ]
 }
